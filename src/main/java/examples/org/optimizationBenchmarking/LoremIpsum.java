@@ -2,11 +2,15 @@ package examples.org.optimizationBenchmarking;
 
 import java.util.Random;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
-/** a lorem ipsum blind text */
-public class LoremIpsum {
+/**
+ * A class which can generate random text in the style of <a
+ * href="http://en.wikipedia.org/wiki/Lorem_ipsum">Lorem Ipsum</a>.
+ */
+public final class LoremIpsum {
 
   /** the internal text */
   private static final String[] TEXT = { "lorem", //$NON-NLS-1$
@@ -594,8 +598,12 @@ public class LoremIpsum {
     String s;
     int i;
 
-    im = ((includeMark != null) ? includeMark : LoremIpsum.TEXT[rand
-        .nextInt(LoremIpsum.TEXT.length)]);
+    if (includeMark != null) {
+      im = includeMark;
+    } else {
+      im = LoremIpsum.TEXT[rand.nextInt(LoremIpsum.TEXT.length)];
+    }
+
     do {
       first = true;
       out.append(TextUtils.LINE_SEPARATOR);
@@ -632,4 +640,8 @@ public class LoremIpsum {
     } while (rand.nextBoolean());
   }
 
+  /** the forbidden constructor */
+  private LoremIpsum() {
+    ErrorUtils.doNotCall();
+  }
 }

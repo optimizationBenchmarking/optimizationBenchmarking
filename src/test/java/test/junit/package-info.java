@@ -22,6 +22,5 @@
  * contains the tests for the classes in package
  * {@link org.optimizationBenchmarking.utils.text.transformations}.
  * </p>
- * <@packageStructure/> <@citations/>
  */
 package test.junit;

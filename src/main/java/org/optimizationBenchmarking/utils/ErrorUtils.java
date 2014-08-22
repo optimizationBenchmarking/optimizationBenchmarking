@@ -136,4 +136,13 @@ public final class ErrorUtils {
     oldError.addSuppressed(newError);
     return oldError;
   }
+
+  /**
+   * A placeholder for forbidden methods, such as forbidden private
+   * constructors.
+   */
+  public static final void doNotCall() {
+    throw new UnsupportedOperationException(//
+        "You are not allowed to call this method."); //$NON-NLS-1$
+  }
 }

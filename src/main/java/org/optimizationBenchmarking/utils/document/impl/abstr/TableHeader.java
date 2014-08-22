@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+
 /**
  * A table header.
  */
@@ -34,5 +36,41 @@ public class TableHeader extends TableSection {
           "A table header must have at least one row."); //$NON-NLS-1$
     }
     super.onClose();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final synchronized void beforeChildOpens(
+      final HierarchicalFSM child, final boolean hasOtherChildren) {
+
+    super.beforeChildOpens(child, hasOtherChildren);
+
+    if (!(child instanceof TableHeaderRow)) {
+      this.throwChildNotAllowed(child);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final synchronized void afterChildOpened(
+      final HierarchicalFSM child, final boolean hasOtherChildren) {
+
+    super.afterChildOpened(child, hasOtherChildren);
+
+    if (!(child instanceof TableHeaderRow)) {
+      this.throwChildNotAllowed(child);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final synchronized void afterChildClosed(
+      final HierarchicalFSM child) {
+
+    super.afterChildClosed(child);
+
+    if (!(child instanceof TableHeaderRow)) {
+      this.throwChildNotAllowed(child);
+    }
   }
 }

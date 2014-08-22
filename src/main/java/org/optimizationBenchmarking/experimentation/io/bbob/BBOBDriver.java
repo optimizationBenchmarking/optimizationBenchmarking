@@ -15,7 +15,12 @@ import org.optimizationBenchmarking.utils.io.structured.FileIODriver;
 import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedIntParser;
 
-/** A class for loading BBOB data sets. */
+/**
+ * A class for loading <a
+ * href="http://coco.gforge.inria.fr/doku.php">COCO/BBOB</a> data sets into
+ * the {@link org.optimizationBenchmarking.experimentation.data experiment
+ * data structures}.
+ */
 public class BBOBDriver extends FileIODriver<Object, ExperimentSetContext> {
 
   /** the globally shared instance */

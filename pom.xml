@@ -13,6 +13,7 @@
 		<url>http://www.optimizationBenchmarking.org/</url>
 		<name>optimizationBenchmarking.org</name>
 	</organization>
+
 	<properties>
 		<encoding>ISO-8859-1</encoding>
 		<project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
@@ -20,6 +21,14 @@
 		<junitVersion>4.11</junitVersion>
 		<commonsMathVersion>3.3</commonsMathVersion>
 	</properties>
+
+	<licenses>
+		<license>
+			<name>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<build>
 		<plugins>
@@ -83,6 +92,12 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.12.1</version>
 				<reportSets>
@@ -122,4 +137,12 @@
 		</dependency>
 
 	</dependencies>
+	<issueManagement>
+		<url>https://github.com/optimizationBenchmarking/optimizationBenchmarking/issues</url>
+		<system>Github</system>
+	</issueManagement>
+	<scm>
+		<url>https://github.com/optimizationBenchmarking/optimizationBenchmarking</url>
+	</scm>
+	<inceptionYear>2014</inceptionYear>
 </project>

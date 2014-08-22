@@ -8,9 +8,16 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * <p>
- * The base class for &quot;hierarchical&quot; APIs. The idea of an
- * hierarchical API is that we are able to declare the start and the end of
- * a scope and arbitrarily nest scopes. Each scope passes through states
+ * The base class for &quot;hierarchical&quot; APIs. Several APIs are
+ * hierarchical by nature, but usually defined in a flat way. The creation
+ * of XML documents is an example for this, or the creation of
+ * {@link org.optimizationBenchmarking.utils.bibliography bibliographic
+ * data}. The idea of our hierarchical API &ndash; discussed <a
+ * href="http://blog.it-weise.de/p/347">here</a> &ndash; is that we are
+ * able to declare the start and the end of a scope and arbitrarily nest
+ * scopes by using Java 7's <a href=
+ * "http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html"
+ * ><code>try-with-resources</code></a>. Each scope passes through states
  * regarding its hierarchical and open/closed status like a finite state
  * machine.
  * </p>

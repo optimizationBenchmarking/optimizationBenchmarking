@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.ITable;
@@ -11,7 +11,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * The base class for tables
  */
-public class Table extends DocumentPart implements ITable {
+public class Table extends DocumentPart implements ITable,
+    Iterable<TableCellDef> {
 
   /** the state when the caption has been created */
   private static final int STATE_CAPTION_CREATED = (DocumentElement.STATE_MAX_ELEMENT + 1);
@@ -87,7 +88,13 @@ public class Table extends DocumentPart implements ITable {
   private final boolean m_spansAllColumns;
 
   /** the table cells */
-  private final ArrayListView<TableCellDef> m_cells;
+  final TableCellDef[] m_cells;
+
+  /** the blocked columns */
+  final int[] m_blocked;
+
+  /** the links between cell index and definitions */
+  final int[] m_cellToDef;
 
   /**
    * Create a table
@@ -100,18 +107,19 @@ public class Table extends DocumentPart implements ITable {
    *          the label to use
    * @param spansAllColumns
    *          does the table span all columns=
-   * @param cells
-   *          the table cell def
+   * @param definition
+   *          the table cell definition
    */
   public Table(final SectionBody owner, final ILabel useLabel,
       final boolean spansAllColumns, final int index,
-      final TableCellDef... cells) {
+      final TableCellDef[] definition) {
     super(owner, null);
 
-    if (cells.length <= 0) {
-      throw new IllegalArgumentException(//
-          "A table must have at least one cell."); //$NON-NLS-1$
-    }
+    final TableCellDef[] cells;
+    int i, cc;
+
+    cells = definition.clone();
+    cc = _checkDef(cells);
 
     this.m_index = index;
     this.m_id = (owner.getOwner().m_id + this.renderTableIndex(index));
@@ -123,8 +131,54 @@ public class Table extends DocumentPart implements ITable {
       this.m_label = null;
     }
 
-    this.m_cells = new ArrayListView<>(cells);
+    this.m_cells = cells;
     this.m_spansAllColumns = spansAllColumns;
+
+    this.m_blocked = new int[cc];
+    this.m_cellToDef = new int[cc];
+
+    i = cc = 0;
+    for (final TableCellDef d : cells) {
+      if (d != TableCellDef.VERTICAL_SEPARATOR) {
+        this.m_cellToDef[i++] = cc;
+      }
+      cc++;
+    }
+  }
+
+  /**
+   * Check if the table definition is OK
+   * 
+   * @param def
+   *          the table definition
+   * @return the number of cells
+   */
+  static final int _checkDef(final TableCellDef[] def) {
+    int cells;
+
+    if (def == null) {
+      throw new IllegalArgumentException(//
+          "Table cell definition must not be null.");//$NON-NLS-1$
+    }
+
+    cells = 0;
+    for (TableCellDef d : def) {
+      if (d == null) {
+        throw new IllegalArgumentException(//
+            "No cell definition element can be null, but one of " + //$NON-NLS-1$
+                def + " is."); //$NON-NLS-1$
+      }
+      if (d != TableCellDef.VERTICAL_SEPARATOR) {
+        cells++;
+      }
+    }
+    if (cells <= 0) {
+      throw new IllegalArgumentException(//
+          "Table definition cannot be empty, i.e., must contain at least one regular cell - but " //$NON-NLS-1$
+              + def + " does not."); //$NON-NLS-1$
+    }
+
+    return cells;
   }
 
   /**
@@ -134,15 +188,6 @@ public class Table extends DocumentPart implements ITable {
    */
   public final Label getLabel() {
     return this.m_label;
-  }
-
-  /**
-   * Get the cell definition
-   * 
-   * @return the cell definition
-   */
-  public final ArrayListView<TableCellDef> getCellDefinition() {
-    return this.m_cells;
   }
 
   /**
@@ -187,12 +232,21 @@ public class Table extends DocumentPart implements ITable {
   }
 
   /**
-   * Get the number of rows
+   * Get the current number of rows
    * 
-   * @return the number of rows
+   * @return the current number of rows
    */
   public final int getRowCount() {
     return this.m_rowCount;
+  }
+
+  /**
+   * Obtain the cells per row
+   * 
+   * @return the cells per row
+   */
+  public final int getCellsPerRow() {
+    return this.m_blocked.length;
   }
 
   /** {@inheritDoc} */
@@ -382,5 +436,15 @@ public class Table extends DocumentPart implements ITable {
     this.fsmStateAssertAndSet(Table.STATE_FOOTER_CLOSED,
         DocumentElement.STATE_DEAD);
     super.onClose();
+  }
+
+  /**
+   * Get the cell definition
+   * 
+   * @return the cell definition
+   */
+  @Override
+  public final ArrayIterator<TableCellDef> iterator() {
+    return new ArrayIterator<>(this.m_cells);
   }
 }

@@ -16,7 +16,9 @@ import org.optimizationBenchmarking.utils.io.structured.FileIODriver;
 import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
 
-/** A class for loading TSPSuite data sets. */
+/** A class for loading <a href="http://www.logisticPlanning.org/tsp/">TSPSuite</a> data sets
+ * into the {@link org.optimizationBenchmarking.experimentation.data experiment data
+ * structures}.*/
 public class TSPSuiteDriver extends
     FileIODriver<Object, ExperimentSetContext> {
 
@@ -477,7 +479,7 @@ public class TSPSuiteDriver extends
       i.setFeatureValue(
           TSPSuiteDriver.SYMMETRIC,//
           "whether the TSP is symmetric, i.e., whether dist(i,j)=dist(j,i)",//$NON-NLS-1$
-          Boolean.valueOf(true),//
+          Boolean.TRUE,//
           "the TSP is symmetric");//$NON-NLS-1$
       i.setDescription("Drilling problem (Ludwig)."); //$NON-NLS-1$
 
@@ -491,7 +493,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.ALI535);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(535));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(202310));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("535 Airports around the globe (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, null,
           TSPSuiteDriver.GEO, "geographical distances"); //$NON-NLS-1$
@@ -500,7 +502,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.ATT48);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(48));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(10628));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("48 capitals of the US (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, null,
           TSPSuiteDriver.ATT,
@@ -510,7 +512,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.ATT532);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(532));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(27686));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("The so-called AT&amp;T532 is 532 city problem solved to optimality by Padberg and Rinaldi using branch-and-cut methods."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.ATT);
     }
@@ -518,7 +520,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.BAYG29);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(29));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1610));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("29 Cities in Bavaria, geographical distances (Gr&ouml;tschel,J&uuml;nger,Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO); // "UPPER_ROW");
     }
@@ -526,7 +528,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.BAYS29);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(29));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(2020));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("29 cities in Bavaria, street distances (Gr&ouml;tschel,J&uuml;nger,Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, null,
           TSPSuiteDriver.MATRIX,
@@ -537,7 +539,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.BERLIN52);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(52));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(7542));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("52 locations in Berlin (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -546,7 +548,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.BIER127);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(127));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(118282));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("127 Bierg&auml;rten (&quot;Beer Gardens&quot;, open-air beer restaurants) in Augsburg, Germany (J&uuml;nger/Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -555,7 +557,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.BRAZIL58);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(58));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(25395));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("58 cities in Brazil (Ferreira)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);// "UPPER_ROW");
     }
@@ -563,7 +565,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.BRD14051);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(14051));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(469385));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("West-Germany in the borders of 1989 (Bachem/Wottawa)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -572,7 +574,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.BRG180);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(180));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1950));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Bridge tournament problem (Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, null, "bridge", //$NON-NLS-1$
           "Bridge tournament problem"); //$NON-NLS-1$
@@ -581,7 +583,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.BURMA14);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(14));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(3323));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("14 cities in Burma (Zaw Win)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);
     }
@@ -589,7 +591,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.CH130);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(130));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(6110));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("130 city problem (Churritz)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -598,7 +600,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.CH150);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(150));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(6528));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("150 city Problem (churritz)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -607,7 +609,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.D198);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(198));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(15780));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -616,7 +618,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.D493);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(493));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(35002));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -625,7 +627,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.D657);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(657));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(48912));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -634,7 +636,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.D1291);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1291));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(50801));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -643,7 +645,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.D1655);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1655));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(62128));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -652,7 +654,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.D2103);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(2103));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(80450));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -661,7 +663,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.D15112);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(15112));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1573084));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Germany-Problem (A.Rohe)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -670,7 +672,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.D18512);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(18512));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(645238));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Germany (united with GDR, the former East Germany) (Bachem/Wottawa)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -679,7 +681,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.DANTZIG42);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(42));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(699));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("42 cities (Dantzig)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);// "LOWER_DIAG_ROW");
     }
@@ -687,7 +689,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.DSJ1000);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1000));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(18660188));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Clustered random problem (Johnson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, null,
           TSPSuiteDriver.CEIL_2D,
@@ -697,7 +699,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.EIL51);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(51));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(426));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("51-city problem (Christofides/Eilon)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -706,7 +708,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.EIL76);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(76));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(538));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("76-city problem (Christofides/Eilon)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -715,7 +717,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.EIL101);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(101));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(629));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("101-city problem (Christofides/Eilon)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -724,7 +726,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FL417);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(417));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(11861));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -733,7 +735,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FL1400);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1400));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(20127));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -742,7 +744,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FL1577);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1577));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(22249));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)"); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -751,7 +753,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FL3795);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(3795));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(28772));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -760,7 +762,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FNL4461);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(4461));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(182566));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("The new five provinces of Germany, i.e., the former GDR (Eastern Germany) (Bachem/Wottawa)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -769,7 +771,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FRI26);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(26));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(937));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("26 cities (Fricker)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);// "LOWER_DIAG_ROW");
                                                                           // $NON-NLS-1$
@@ -778,7 +780,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GIL262);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(262));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(2378));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("262-city problem (Gillet/Johnson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -787,7 +789,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR17);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(17));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(2085));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("17-city problem (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "LOWER_DIAG_ROW"
@@ -796,7 +798,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR21);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(21));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(2707));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("21-city problem (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "LOWER_DIAG_ROW"
@@ -805,7 +807,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR24);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(24));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1272));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("24-city problem (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "LOWER_DIAG_ROW"
@@ -814,7 +816,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR48);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(48));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(5046));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("48-city problem (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "LOWER_DIAG_ROW"
@@ -823,7 +825,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR96);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(96));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(55209));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Africa-Subproblem of 666-city TSP (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);
     }
@@ -831,7 +833,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR120);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(120));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(6942));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("120 cities in Germany (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);// "LOWER_DIAG_ROW");
     }
@@ -839,7 +841,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR137);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(137));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(69853));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("America-Subproblem of 666-city TSP (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);
     }
@@ -847,7 +849,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR202);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(202));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(40160));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Europe-Subproblem of 666-city TSP (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);
     }
@@ -855,7 +857,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR229);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(229));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(134602));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Asia/Australia-Subproblem of 666-city TSP (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);
     }
@@ -863,7 +865,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR431);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(431));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(171414));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Europe/Asia/Australia-Subproblem of 666-city TSP (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);
     }
@@ -871,7 +873,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.GR666);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(666));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(294358));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("666 cities around the world (Gr&ouml;tschel)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);
     }
@@ -879,7 +881,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.HK48);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(48));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(11461));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("48-city problem (Held/Karp)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "LOWER_DIAG_ROW");
@@ -888,7 +890,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.KROA100);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(100));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(21282));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("100-city problem A (Krolak/Felts/Nelson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -897,7 +899,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.KROB100);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(100));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(22141));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("100-city problem B (Krolak/Felts/Nelson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -906,7 +908,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.KROC100);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(100));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(20749));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("100-city problem C (Krolak/Felts/Nelson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -915,7 +917,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.KROD100);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(100));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(21294));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("100-city problem D (Krolak/Felts/Nelson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -924,7 +926,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.KROE100);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(100));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(22068));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("100-city problem E (Krolak/Felts/Nelson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -933,7 +935,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.KROA150);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(150));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(26524));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("150-city problem A (Krolak/Felts/Nelson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -942,7 +944,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.KROB150);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(150));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(26130));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("150-city problem B (Krolak/Felts/Nelson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -951,7 +953,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.KROA200);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(200));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(29368));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("200-city problem A (Krolak/Felts/Nelson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -960,7 +962,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.KROB200);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(200));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(29437));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("200-city problem B (Krolak/Felts/Nelson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -969,7 +971,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.LIN105);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(105));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(14379));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("105-city problem (Subproblem of lin318)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -978,7 +980,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.LIN318);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(318));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(42029));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("The problem is posed by Lin and Kernighan as an open tour with fixed ends, but it can easily be converted to a TSP. Padberg and Gr&ouml;tschel used a combination of cutting-plane and branch-and-bound methods to find the optimal tour for this problem."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -987,7 +989,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.NRW1379);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1379));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(56638));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("1379 Orte in Nordrhein-Westfalen (Bachem/Wottawa)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -996,7 +998,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.P654);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(654));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(34643));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1005,7 +1007,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PA561);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(561));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(2763));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("561-city problem (Kleinschmidt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// LOWER_DIAG_ROW;
@@ -1014,7 +1016,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PCB442);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(442));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(50778));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Gr&ouml;tschel/J&uuml;nger/Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1023,7 +1025,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PCB1173);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1173));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(56892));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (J&uuml;nger/Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1032,7 +1034,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PCB3038);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(3038));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(137694));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Junger/Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1041,7 +1043,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PLA7397);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(7397));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(23260728));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Programmed logic array (Johnson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.CEIL_2D);
@@ -1050,7 +1052,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PLA33810);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(33810));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(66048945));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Programmed logic array (Johnson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.CEIL_2D);
@@ -1059,7 +1061,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PLA85900);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(85900));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(142382641));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Programmed logic array (Johnson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.CEIL_2D);
@@ -1068,7 +1070,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR76);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(76));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(108159));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("76-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1077,7 +1079,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR107);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(107));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(44303));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("107-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1086,7 +1088,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR124);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(124));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(59030));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("124-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1095,7 +1097,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR136);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(136));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(96772));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("136-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1104,7 +1106,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR144);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(144));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(58537));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("144-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1113,7 +1115,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR152);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(152));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(73682));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("152-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1122,7 +1124,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR226);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(226));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(80369));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("226-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1131,7 +1133,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR264);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(264));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(49135));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("264-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1140,7 +1142,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR299);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(299));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(48191));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("299-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1149,7 +1151,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR439);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(439));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(107217));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("439-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1158,7 +1160,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR1002);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1002));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(259045));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("1002-city problem (Padberg/Rinaldi)"); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1167,7 +1169,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.PR2392);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(2392));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(378032));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("2392-city problem (Padberg/Rinaldi)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1176,7 +1178,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RAT99);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(99));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1211));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Rattled grid (Pulleyblank)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1185,7 +1187,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RAT195);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(195));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(2323));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Rattled grid (Pulleyblank)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1194,7 +1196,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RAT575);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(575));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(6773));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Rattled grid (Pulleyblank)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1203,7 +1205,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RAT783);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(783));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(8806));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Rattled grid (Pulleyblank): The city positions of this problem are obtained by small, random displacements from a regular 27&times;29 lattice. This problem has been solved to optimality by Cook et al."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1212,7 +1214,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RD100);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(100));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(7910));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("100-city random TSP (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1221,7 +1223,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RD400);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(400));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(15281));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("400-city random TSP (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1230,7 +1232,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RL1304);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1304));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(252948));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("1304-city TSP (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1239,7 +1241,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RL1323);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1323));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(270199));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("1323-city TSP (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1248,7 +1250,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RL1889);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1889));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(316536));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("1889-city TSP (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1257,7 +1259,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RL5915);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(5915));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(565530));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("5915-city TSP (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1266,7 +1268,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RL5934);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(5934));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(556045));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("5934-city TSP (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1275,7 +1277,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RL11849);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(11849));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(923288));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("11849-city TSP (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1284,7 +1286,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.SI175);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(175));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(21407));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("TSP (M. Hofmeister)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "UPPER_DIAG_ROW");
@@ -1293,7 +1295,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.SI535);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(535));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(48450));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("TSP (M. Hofmeister)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "UPPER_DIAG_ROW");
@@ -1302,7 +1304,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.SI1032);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1032));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(92650));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("TSP (M. Hofmeister)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "UPPER_DIAG_ROW");
@@ -1311,7 +1313,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.ST70);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(70));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(675));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("70-city problem (Smith/Thompson)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1320,7 +1322,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.SWISS42);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(42));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1273));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("42 cities in Switzerland (Fricker)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);// "FULL_MATRIX");
     }
@@ -1328,7 +1330,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.TS225);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(225));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(126643));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("225-city problem (J&uuml;nger,R&auml;cke,Tsch&ouml;cke)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1337,7 +1339,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.TSP225);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(225));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(3916));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("A TSP problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1346,7 +1348,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.U159);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(159));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(42080));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1355,7 +1357,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.U574);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(574));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(36905));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1364,7 +1366,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.U724);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(724));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(41910));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1373,7 +1375,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.U1060);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1060));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(224094));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1382,7 +1384,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.U1432);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1432));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(152970));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1391,7 +1393,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.U1817);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1817));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(57201));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1400,7 +1402,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.U2152);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(2152));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(64253));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1409,7 +1411,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.U2319);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(2319));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(234256));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Drilling problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1418,7 +1420,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.ULYSSES16);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(16));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(6859));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Odyssey of Ulysses (Gr&ouml;tschel/Padberg)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);
     }
@@ -1426,7 +1428,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.ULYSSES22);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(22));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(7013));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Odyssey of Ulysses (Gr&ouml;tschel/Padberg)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE, TSPSuiteDriver.GEO);
     }
@@ -1434,7 +1436,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.USA13509);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(13509));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(19982859));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("Cities with population at least 500 in the continental US. Contributed by David Applegate and Andre Rohe, based on the data set &quot;US.lat-long&quot; from the ftp site <a href=\"ftp://ftp.cs.toronto.edu\">ftp.cs.toronto.edu</a>. The file US.lat-long.Z can be found in the directory /doc/geography."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1443,7 +1445,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.VM1084);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1084));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(239297));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("1084-city problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1452,7 +1454,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.VM1748);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(1748));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(336556));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(true));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.TRUE);
       i.setDescription("1784-city problem (Reinelt)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.EUC_2D);
@@ -1461,7 +1463,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.BR17);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(17));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(39));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("17 city problem (Repetto)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1470,7 +1472,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FT53);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(53));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(6905));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1479,7 +1481,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FT70);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(70));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(38673));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1488,7 +1490,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FTV33);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(34));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1286));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1497,7 +1499,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FTV35);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(36));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1473));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1506,7 +1508,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FTV38);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(39));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1530));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1515,7 +1517,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FTV44);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(45));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1613));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1524,7 +1526,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FTV47);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(48));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1776));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1533,7 +1535,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FTV55);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(56));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1608));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1542,7 +1544,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FTV64);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(65));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1839));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1551,7 +1553,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FTV70);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(71));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1950));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1560,7 +1562,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.FTV170);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(171));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(2755));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1569,7 +1571,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.KRO124P);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(100));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(36230));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1578,7 +1580,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.P43);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(43));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(5620));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Repetto,Pekny)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1587,7 +1589,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RBG323);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(323));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1326));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Stacker crane application (Ascheuer)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1596,7 +1598,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RBG358);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(358));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(1163));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Stacker crane application (Ascheuer)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1605,7 +1607,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RBG403);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(403));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(2465));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Stacker crane application (Ascheuer)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1614,7 +1616,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RBG443);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(443));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(2720));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Stacker crane application (Ascheuer)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");
@@ -1623,7 +1625,7 @@ public class TSPSuiteDriver extends
       i.setName(TSPSuiteDriver.RY48P);
       i.setFeatureValue(TSPSuiteDriver.SCALE, Integer.valueOf(48));
       i.setLowerBound(TSPSuiteDriver.LENGTH, Long.valueOf(14422));
-      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.valueOf(false));
+      i.setFeatureValue(TSPSuiteDriver.SYMMETRIC, Boolean.FALSE);
       i.setDescription("Asymmetric TSP (Fischetti)."); //$NON-NLS-1$
       i.setFeatureValue(TSPSuiteDriver.DISTANCE_TYPE,
           TSPSuiteDriver.MATRIX);// "FULL_MATRIX");

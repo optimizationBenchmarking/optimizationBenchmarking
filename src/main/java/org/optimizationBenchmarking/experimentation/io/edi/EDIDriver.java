@@ -38,7 +38,12 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.numbers.XMLNumberAppender;
 import org.xml.sax.helpers.DefaultHandler;
 
-/** A driver for EDI input and output. */
+/**
+ * A driver for Experiment Data Interchange (EDI) input and output. EDI is
+ * our default, canonical format for storing and exchanging
+ * {@link org.optimizationBenchmarking.experimentation.data experiment data
+ * structures}.
+ */
 public final class EDIDriver extends
     XMLIODriver<Object, ExperimentSetContext> {
 
@@ -261,7 +266,7 @@ public final class EDIDriver extends
   @Override
   protected final DefaultHandler wrapLoadContext(
       final ExperimentSetContext loaderContext, final Logger logger) {
-    return new EDIContentHandler(null, loaderContext, logger);
+    return new _EDIContentHandler(null, loaderContext, logger);
   }
 
   /** {@inheritDoc} */

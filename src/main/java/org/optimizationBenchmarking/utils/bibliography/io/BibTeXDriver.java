@@ -29,7 +29,9 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransformer;
 
 /**
- * A driver for BibTeX IO of bibliographic data
+ * A driver for <a href="http://en.wikipedia.org/wiki/BibTeX">BibTeX</a> IO
+ * of bibliographic data. Currently, this API only supports output and
+ * cannot yet read BibTeX data.
  */
 public final class BibTeXDriver extends
     TextIODriver<Object, BibliographyBuilder> {
