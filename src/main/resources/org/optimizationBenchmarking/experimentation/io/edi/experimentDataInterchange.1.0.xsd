@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.optimizationBenchmarking.org/formats/experimentDataInterchange/experimentDataInterchange.1.0.xsd"
+	targetNamespace="http://www.optimizationBenchmarking.org/formats/experimentDataInterchange/experimentDataInterchange.1.0.xsd"
+	elementFormDefault="qualified">
+
+	<annotation>
+		<documentation>The XML Schema for the Experiment Data Interchange data
+			format version 1.0.
+		</documentation>
+	</annotation>
+
+
+	<element name="dimensions">
+		<complexType>
+			<sequence>
+				<element name="dimension" minOccurs="1" maxOccurs="unbounded">
+					<complexType>
+
+						<attribute name="name" type="token" use="required" />
+						<attribute name="description" type="normalizedString"
+							use="optional" />
+
+						<attribute name="dimensionType" use="required">
+							<simpleType>
+								<restriction base="string">
+									<enumeration value="iterationAlgorithmStep" />
+									<enumeration value="iterationFE" />
+									<enumeration value="iterationSubFE" />
+									<enumeration value="runtimeCPU" />
+									<enumeration value="runtimeNormalized" />
+									<enumeration value="qualityProblemDependent" />
+									<enumeration value="qualityProblemIndependent" />
+								</restriction>
+							</simpleType>
+						</attribute>
+						<attribute name="direction" use="required">
+							<simpleType>
+								<restriction base="string">
+									<enumeration value="decreasing" />
+									<enumeration value="decreasingStrictly" />
+									<enumeration value="increasing" />
+									<enumeration value="increasingStrictly" />
+								</restriction>
+							</simpleType>
+						</attribute>
+						<attribute name="dataType" use="required">
+							<simpleType>
+								<restriction base="string">
+									<enumeration value="byte" />
+									<enumeration value="short" />
+									<enumeration value="int" />
+									<enumeration value="long" />
+									<enumeration value="float" />
+									<enumeration value="double" />
+								</restriction>
+							</simpleType>
+						</attribute>
+
+						<attribute name="iLowerBound" type="long" use="optional" />
+						<attribute name="iUpperBound" type="long" use="optional" />
+						<attribute name="fLowerBound" type="double" use="optional" />
+						<attribute name="fUpperBound" type="double" use="optional" />
+					</complexType>
+				</element>
+			</sequence>
+
+		</complexType>
+	</element>
+
+	<element name="instances">
+		<complexType>
+			<sequence>
+				<element name="instance" minOccurs="1" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+							<element name="feature" minOccurs="1" maxOccurs="unbounded">
+								<complexType>
+									<attribute name="name" type="token" use="required" />
+									<attribute name="featureDescription" type="normalizedString"
+										use="optional" />
+									<attribute name="value" type="token" use="required" />
+									<attribute name="valueDescription" type="normalizedString"
+										use="optional" />
+								</complexType>
+							</element>
+
+							<element name="bounds" minOccurs="0" maxOccurs="unbounded">
+								<complexType>
+									<attribute name="dimension" type="token" use="required" />
+									<attribute name="iLowerBound" type="long" use="optional" />
+									<attribute name="iUpperBound" type="long" use="optional" />
+									<attribute name="fLowerBound" type="double" use="optional" />
+									<attribute name="fUpperBound" type="double" use="optional" />
+								</complexType>
+							</element>
+
+						</sequence>
+
+						<attribute name="name" type="token" use="required" />
+						<attribute name="description" type="normalizedString"
+							use="optional" />
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="experiment">
+		<complexType>
+			<sequence>
+				<element name="parameter" minOccurs="0" maxOccurs="unbounded">
+					<complexType>
+						<attribute name="name" type="token" use="required" />
+						<attribute name="parameterDescription" type="normalizedString" />
+						<attribute name="value" type="token" use="required" />
+						<attribute name="valueDescription" type="normalizedString" />
+					</complexType>
+				</element>
+				<element name="instanceRuns" minOccurs="1" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+							<element name="run" minOccurs="1" maxOccurs="unbounded">
+								<complexType>
+									<sequence>
+										<element name="p" minOccurs="1" maxOccurs="unbounded">
+											<complexType>
+												<choice minOccurs="0" maxOccurs="unbounded">
+													<element name="f" type="double" />
+													<element name="i" type="long" />
+												</choice>
+											</complexType>
+										</element>
+									</sequence>
+								</complexType>
+							</element>
+						</sequence>
+						<attribute name="instance" type="token" use="required" />
+					</complexType>
+				</element>
+			</sequence>
+
+			<attribute name="name" type="token" use="required" />
+			<attribute name="description" type="normalizedString" use="optional" />
+		</complexType>
+	</element>
+
+	<element name="experiments">
+		<complexType>
+			<sequence>
+				<element ref="tns:experiment" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="experimentData">
+		<complexType>
+			<sequence>
+				<element ref="tns:dimensions" minOccurs="0" maxOccurs="1" />
+				<element ref="tns:instances" minOccurs="0" maxOccurs="1" />
+				<element ref="tns:experiments" minOccurs="0" maxOccurs="1" />
+			</sequence>
+			<attribute name="version" type="string" fixed="1.0" />
+		</complexType>
+	</element>
+</schema>

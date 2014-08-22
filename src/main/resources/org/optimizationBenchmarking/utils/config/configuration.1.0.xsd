@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd"
+	targetNamespace="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd"
+	elementFormDefault="qualified">
+
+	<annotation>
+		<documentation>The XML Schema for the configurations 1.0.
+		</documentation>
+	</annotation>
+
+	<element name="parameter">
+		<complexType>
+			<attribute name="name" type="token" use="required" />
+			<attribute name="value" type="token" use="required" />
+		</complexType>
+	</element>
+
+	<element name="configuration">
+		<complexType>
+			<sequence>
+				<element ref="tns:parameter" minOccurs="0" maxOccurs="unbounded" />
+			</sequence>
+			<attribute name="version" type="string" fixed="1.0" />
+		</complexType>
+	</element>
+
+
+</schema>
