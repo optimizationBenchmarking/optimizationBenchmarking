@@ -28,7 +28,10 @@ import org.optimizationBenchmarking.utils.tasks.Task;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
-/** a creator for a data type subclass */
+/**
+ * An internal class for constructing the perfect classes for experimental
+ * data elements on-the-fly.
+ */
 final class _ClassBuilder extends Task<Parser<DataPoint>> implements
     Comparator<Dimension> {
 
