@@ -84,8 +84,8 @@ public abstract class Document extends DocumentElement implements
     super(null, out);
     this.m_styles = new StyleSet(this.createStyles());
     this.m_manager = new LabelManager();
-    this.m_documentPath = docPath;
-    this.m_basePath = docPath.getParent();
+    this.m_documentPath = DocumentElement._path(docPath);
+    this.m_basePath = DocumentElement._path(docPath.getParent());
   }
 
   /**

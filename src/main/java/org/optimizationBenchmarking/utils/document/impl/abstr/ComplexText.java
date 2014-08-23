@@ -4,9 +4,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IStyle;
-import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.document.spec.ITextMacroInvocation;
 import org.optimizationBenchmarking.utils.document.spec.TextMacro;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
@@ -90,22 +88,68 @@ public class ComplexText extends Text implements IComplexText {
     return this.m_style;
   }
 
-  @Override
-  public IText subscript() {
-    // TODO Auto-generated method stub
-    return null;
+  /**
+   * Create the in-line code
+   * 
+   * @return the in-line code
+   */
+  protected InlineCode createInlineCode() {
+    return new InlineCode(this);
   }
 
+  /** {@inheritDoc} */
   @Override
-  public IText superscript() {
-    // TODO Auto-generated method stub
-    return null;
+  public synchronized final InlineCode inlineCode() {
+    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
+    return this.createInlineCode();
   }
 
+  /**
+   * Create the sub-script text
+   * 
+   * @return the sub-script text
+   */
+  protected Subscript createSubscript() {
+    return new Subscript(this);
+  }
+
+  /** {@inheritDoc} */
   @Override
-  public IMath inlineMath() {
-    // TODO Auto-generated method stub
-    return null;
+  public synchronized final Subscript subscript() {
+    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
+    return this.createSubscript();
+  }
+
+  /**
+   * Create the super-script text
+   * 
+   * @return the super-script text
+   */
+  protected Superscript createSuperscript() {
+    return new Superscript(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final Superscript superscript() {
+    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
+    return this.createSuperscript();
+  }
+
+  /**
+   * Create an inline math object
+   * 
+   * @return the inline math context
+   */
+  protected InlineMath createInlineMath() {
+    return new InlineMath(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final InlineMath inlineMath() {
+    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
+    return this.createInlineMath();
   }
 
   @Override
@@ -128,4 +172,5 @@ public class ComplexText extends Text implements IComplexText {
     // TODO Auto-generated method stub
     return null;
   }
+
 }

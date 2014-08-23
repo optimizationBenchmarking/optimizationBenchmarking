@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * The base class for sections
  */
-public class Section extends _StyledElement implements ISection {
+public class Section extends ComplexObject implements ISection {
   /** the state when the header has been created */
   private static final int STATE_TITLE_CREATED = (DocumentElement.STATE_MAX_ELEMENT + 1);
   /** the state before the header */
@@ -41,20 +41,11 @@ public class Section extends _StyledElement implements ISection {
     Section.STATE_NAMES[Section.STATE_BODY_CLOSED] = "bodyClosed"; //$NON-NLS-1$
   }
 
-  /** the index of the section inside the owning section (starts at 1) */
-  private final int m_index;
-
   /** is this an appendix section? */
-  private final boolean m_isAppendix;
+  private boolean m_isAppendix;
 
   /** the depth of this section */
-  private final int m_depth;
-
-  /** the label */
-  private final Label m_label;
-
-  /** the section id */
-  final String m_id;
+  private int m_depth;
 
   /**
    * Create a new enumeration
@@ -66,19 +57,16 @@ public class Section extends _StyledElement implements ISection {
    * @param index
    *          the section index
    */
-  @SuppressWarnings("resource")
   protected Section(final DocumentPart owner, final ILabel useLabel,
       final int index) {
-    super(owner);
+    super(owner, useLabel, index);
+  }
 
+  /** {@inheritDoc} */
+  @Override
+  @SuppressWarnings("resource")
+  final void _constructorHook(final DocumentPart owner) {
     final Section o;
-
-    if (index <= 0) {
-      throw new IllegalArgumentException(//
-          "Section index must be greater or equal to 1."); //$NON-NLS-1$
-    }
-    this.m_index = index;
-
     if (owner instanceof DocumentFooter) {
       this.m_isAppendix = true;
       this.m_depth = 0;
@@ -99,47 +87,12 @@ public class Section extends _StyledElement implements ISection {
         }
       }
     }
-
-    if (o != null) {
-      this.m_id = (o.m_id + this.renderSectionIndex(index));
-    } else {
-      this.m_id = this.renderSectionIndex(index);
-    }
-
-    if (useLabel != null) {
-      this.m_label = this.m_doc.m_manager._getLabel(ELabelType.SECTION,
-          useLabel, this.m_id);
-    } else {
-      this.m_label = null;
-    }
   }
 
-  /**
-   * Get the label of this section
-   * 
-   * @return the label of this section
-   */
-  public final Label getLabel() {
-    return this.m_label;
-  }
-
-  /**
-   * Get the section id, i.e., a string holding all indexes of this and the
-   * owning sections
-   * 
-   * @return the section id
-   */
-  public final String getIndexes() {
-    return this.m_id;
-  }
-
-  /**
-   * Obtain the section index
-   * 
-   * @return the section index
-   */
-  public final int getIndex() {
-    return this.m_index;
+  /** {@inheritDoc} */
+  @Override
+  final ELabelType _labelType() {
+    return ELabelType.SECTION;
   }
 
   /**
@@ -182,14 +135,15 @@ public class Section extends _StyledElement implements ISection {
    *          the index to render
    * @return the section index string
    */
-  protected String renderSectionIndex(final int index) {
+  @Override
+  protected String renderIndex(final int index) {
     String s;
 
-    s = Integer.toString(index);
+    s = super.renderIndex(index);
     if ((this.m_isAppendix) && (this.m_depth <= 0)) {
-      return ('A' + s + '.');
+      return ('A' + s);
     }
-    return (s + '.');
+    return s;
   }
 
   /**

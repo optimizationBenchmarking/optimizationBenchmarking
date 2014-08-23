@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
-import java.net.URI;
-
 /**
  * The basic interface for blocks of texts.
  */
@@ -35,15 +33,20 @@ public interface ISectionBody extends IStructuredText, ISectionContainer {
    * @param size
    *          the figure size
    * @param path
-   *          a relative path used for creating an output path to store the
-   *          document under
+   *          a relative path (using '/' as separators) suggestion which
+   *          may be used for creating an output path to store the document
+   *          under, can also be {@code null} in which case a default path
+   *          may be used
    * @return the figure object
    */
   public abstract IFigure figure(final ILabel useLabel,
-      final EFigureSize size, final URI path);
+      final EFigureSize size, final String path);
 
   /**
-   * Create a series of figures in this block of text.
+   * Create a series of figures in this block of text. The provided
+   * relative {@code path} may be modified, resolved, or extended with a
+   * suffix to create a graphics file, if necessary. It may also be ignored
+   * entirely in cases where the document stores resources internally.
    * 
    * @param useLabel
    *          a label to use for the figure,
@@ -53,12 +56,29 @@ public interface ISectionBody extends IStructuredText, ISectionContainer {
    * @param size
    *          the size of the sub-figures
    * @param path
-   *          a relative path used for creating an output path to store the
-   *          document under
+   *          a relative path (using '/' as separators) suggestion which
+   *          may be used for creating an output path to store the document
+   *          under, can also be {@code null} in which case a default path
+   *          may be used
    * @return the figure series
    */
   public abstract IFigureSeries figureSeries(final ILabel useLabel,
-      final EFigureSize size, final URI path);
+      final EFigureSize size, final String path);
+
+  /**
+   * Create a code block in this block of text.
+   * 
+   * @param useLabel
+   *          a label to use for the code block,
+   *          {@link org.optimizationBenchmarking.utils.document.spec.ELabelType#AUTO}
+   *          if a label should be created, or {@code null} if this
+   *          component should not be labeled
+   * @param spansAllColumns
+   *          will the code span all columns ({@code true}) or not?
+   * @return the code object
+   */
+  public abstract ICode code(final ILabel useLabel,
+      final boolean spansAllColumns);
 
   /**
    * Create an equation

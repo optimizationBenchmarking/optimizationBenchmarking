@@ -21,7 +21,7 @@ public class TableFooterCell extends TableCell {
    */
   public TableFooterCell(final TableFooterRow owner, final int cols,
       final int rows, final TableCellDef[] def) {
-    super(owner, cols, rows, def);
+    super(owner, cols, rows, def, DocumentPart._plain(owner));
   }
 
   /** {@inheritDoc} */

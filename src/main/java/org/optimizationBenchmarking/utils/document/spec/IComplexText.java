@@ -51,11 +51,18 @@ public interface IComplexText extends IText, IStyleContext {
   public abstract IText superscript();
 
   /**
-   * Obtain an inline math context
+   * Obtain an in-line math context
    * 
-   * @return the inline math context
+   * @return the in-line math context
    */
   public abstract IMath inlineMath();
+
+  /**
+   * Obtain an in-line code context
+   * 
+   * @return the in-line code context
+   */
+  public abstract IText inlineCode();
 
   /**
    * Cite a set of bibliographic elements.

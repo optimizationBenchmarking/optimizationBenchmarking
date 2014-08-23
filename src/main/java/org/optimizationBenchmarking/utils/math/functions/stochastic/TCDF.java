@@ -38,12 +38,12 @@ public final class TCDF extends BinaryFunction {
     final int df;
     TDistribution d;
 
-    if ((dof >= 0l) && (dof < TS.length)) {
-      d = TS[(df = (int) dof)];
+    if ((dof >= 0l) && (dof < TCDF.TS.length)) {
+      d = TCDF.TS[(df = (int) dof)];
       if (d != null) {
         return d;
       }
-      return (TS[df] = new TDistribution(null, dof));
+      return (TCDF.TS[df] = new TDistribution(null, dof));
     }
 
     return new TDistribution(null, dof);

@@ -49,7 +49,7 @@ public class Itemization extends List<ItemizationItem> {
    *         itemizations is embedded, or {@code 0} if this is a top-level
    *         itemizations
    */
-  public final int getEnumerationDepth() {
+  public final int getItemizationDepth() {
     return this.m_itemDepth;
   }
 

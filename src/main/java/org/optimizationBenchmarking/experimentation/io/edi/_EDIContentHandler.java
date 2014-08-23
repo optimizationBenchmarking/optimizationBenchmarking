@@ -139,14 +139,14 @@ final class _EDIContentHandler extends DelegatingHandler {
 
       lb = _EDIContentHandler.__att(atts, EDIDriver.A_FLOAT_LOWER_BOUND);
       if (lb == null) {
-        lb = _EDIContentHandler
-            .__att(atts, EDIDriver.A_INTEGER_LOWER_BOUND);
+        lb = _EDIContentHandler.__att(atts,
+            EDIDriver.A_INTEGER_LOWER_BOUND);
       }
 
       ub = _EDIContentHandler.__att(atts, EDIDriver.A_FLOAT_UPPER_BOUND);
       if (ub == null) {
-        ub = _EDIContentHandler
-            .__att(atts, EDIDriver.A_INTEGER_UPPER_BOUND);
+        ub = _EDIContentHandler.__att(atts,
+            EDIDriver.A_INTEGER_UPPER_BOUND);
       }
 
       if ((lb != null) || (ub != null)) {

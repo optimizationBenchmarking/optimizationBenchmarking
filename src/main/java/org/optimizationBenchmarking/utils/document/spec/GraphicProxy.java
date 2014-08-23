@@ -23,7 +23,7 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ImageObserver;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
-import java.io.IOException;
+import java.nio.file.Path;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
@@ -48,12 +48,20 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
    * 
    * @param graphic
    *          the graphic to use
-   * @throws IOException
-   *           if io fails
+   * @param path
+   *          the path to the destination file, or {@code null} if none is
+   *          needed
+   * @param listener
+   *          the object to notify when we are closed, or {@code null} if
+   *          none needs to be notified
    */
-  @SuppressWarnings("unused")
-  protected GraphicProxy(final GT graphic) throws IOException {
-    super();
+  protected GraphicProxy(final GT graphic, final Path path,
+      final IGraphicListener listener) {
+    super(path, listener);
+    if (graphic == null) {
+      throw new IllegalArgumentException(//
+          "Delegate graphic must not be null for a proxy graphic."); //$NON-NLS-1$
+    }
     this.m_out = graphic;
   }
 
@@ -615,11 +623,24 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void close() {
+  protected void doClose() {
+    Throwable error;
+
+    error = null;
     try {
       this.closeInner(this.m_out);
-    } catch (final Throwable t) {
-      ErrorUtils.throwAsRuntimeException(t);
+    } catch (final Throwable tt) {
+      error = tt;
+    } finally {
+      try {
+        super.doClose();
+      } catch (final Throwable aa) {
+        error = ErrorUtils.aggregateError(error, aa);
+      }
+    }
+
+    if (error != null) {
+      ErrorUtils.throwAsRuntimeException(error);
     }
   }
 

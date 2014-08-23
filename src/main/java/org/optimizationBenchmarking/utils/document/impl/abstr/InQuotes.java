@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.charset.QuotationMarks;
 
 /** A text class for quoted text */
@@ -22,9 +21,15 @@ public final class InQuotes extends Text {
    * @param marks
    *          the marks
    */
-  protected InQuotes(final HierarchicalFSM owner, final int marks) {
+  protected InQuotes(final Text owner, final int marks) {
     super(owner, null);
     this.m_marks = marks;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected Text getOwner() {
+    return ((Text) (super.getOwner()));
   }
 
   /**

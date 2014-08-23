@@ -17,7 +17,7 @@ public class Enumeration extends List<EnumerationItem> {
    *          the owning text
    */
   @SuppressWarnings("resource")
-  protected Enumeration(final StructuredText owner) {
+  public Enumeration(final StructuredText owner) {
     super(owner);
 
     HierarchicalFSM o;

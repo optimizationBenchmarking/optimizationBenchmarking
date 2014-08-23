@@ -11,7 +11,7 @@ public class TableCaption extends ComplexText {
    *          the owner
    */
   public TableCaption(final Table owner) {
-    super(owner, null, owner.m_doc.m_styles.plain());
+    super(owner, null, DocumentPart._plain(owner));
   }
 
   /**

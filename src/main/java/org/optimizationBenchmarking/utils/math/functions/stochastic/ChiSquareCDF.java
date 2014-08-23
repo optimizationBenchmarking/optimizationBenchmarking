@@ -35,12 +35,13 @@ public final class ChiSquareCDF extends BinaryFunction {
   static final GammaDistribution _distribution(final int dof) {
     GammaDistribution d;
 
-    if ((dof >= 0) && (dof < GAMMAS.length)) {
-      d = GAMMAS[dof];
+    if ((dof >= 0) && (dof < ChiSquareCDF.GAMMAS.length)) {
+      d = ChiSquareCDF.GAMMAS[dof];
       if (d != null) {
         return d;
       }
-      return (GAMMAS[dof] = new GammaDistribution(null, (dof / 2d), 2d));
+      return (ChiSquareCDF.GAMMAS[dof] = new GammaDistribution(null,
+          (dof / 2d), 2d));
     }
     return new GammaDistribution(null, (dof / 2d), 2d);
   }

@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
+import org.optimizationBenchmarking.utils.document.spec.IStyle;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 
 /**
@@ -44,11 +45,13 @@ public class TableCell extends ComplexText implements
    *          the number of rows occupied by the cell
    * @param def
    *          the cell definition
+   * @param style
+   *          the style
    */
   @SuppressWarnings("resource")
   public TableCell(final TableRow owner, final int cols, final int rows,
-      final TableCellDef[] def) {
-    super(owner, null, DocumentPart._plain(owner));
+      final TableCellDef[] def, final IStyle style) {
+    super(owner, null, style);
 
     final TableSection ts;
     final int[] blocked;

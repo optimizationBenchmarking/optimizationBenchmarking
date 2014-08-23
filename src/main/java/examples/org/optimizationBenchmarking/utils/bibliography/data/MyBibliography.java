@@ -1,5 +1,6 @@
 package examples.org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibArticleBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
@@ -481,5 +482,10 @@ public class MyBibliography {
     BibTeXDriver.INSTANCE.storeText(MyBibliography.createMyBibliography(),
         t);
     t.flush();
+  }
+
+  /** the forbidden constructor */
+  private MyBibliography() {
+    ErrorUtils.doNotCall();
   }
 }

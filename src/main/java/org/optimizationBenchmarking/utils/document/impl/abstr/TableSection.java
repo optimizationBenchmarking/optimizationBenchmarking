@@ -76,7 +76,7 @@ public class TableSection extends DocumentPart implements ITableSection {
   /** {@inheritDoc} */
   @Override
   protected synchronized void onClose() {
-    for (int b : this.m_blocked) {
+    for (final int b : this.m_blocked) {
       if (b != this.m_rowCount) {
         throw new IllegalStateException(//
             "Inconsistency of table cells row span allocation: Table section ends after row " //$NON-NLS-1$
@@ -84,7 +84,8 @@ public class TableSection extends DocumentPart implements ITableSection {
       }
     }
 
-    this.fsmStateAssertAndSet(STATE_ALIFE, STATE_DEAD);
+    this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
+        DocumentElement.STATE_DEAD);
     super.onClose();
   }
 

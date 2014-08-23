@@ -16,9 +16,12 @@ import org.optimizationBenchmarking.utils.io.structured.FileIODriver;
 import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
 
-/** A class for loading <a href="http://www.logisticPlanning.org/tsp/">TSPSuite</a> data sets
- * into the {@link org.optimizationBenchmarking.experimentation.data experiment data
- * structures}.*/
+/**
+ * A class for loading <a
+ * href="http://www.logisticPlanning.org/tsp/">TSPSuite</a> data sets into
+ * the {@link org.optimizationBenchmarking.experimentation.data experiment
+ * data structures}.
+ */
 public class TSPSuiteDriver extends
     FileIODriver<Object, ExperimentSetContext> {
 

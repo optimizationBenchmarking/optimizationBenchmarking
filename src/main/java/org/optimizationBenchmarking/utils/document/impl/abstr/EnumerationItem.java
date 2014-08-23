@@ -12,7 +12,7 @@ public class EnumerationItem extends ListItem {
    * @param index
    *          the item index
    */
-  protected EnumerationItem(final Enumeration owner, final int index) {
+  public EnumerationItem(final Enumeration owner, final int index) {
     super(owner, index);
   }
 

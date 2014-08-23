@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * The base class for tables
  */
-public class Table extends DocumentPart implements ITable,
+public class Table extends ComplexObject implements ITable,
     Iterable<TableCellDef> {
 
   /** the state when the caption has been created */
@@ -75,15 +75,6 @@ public class Table extends DocumentPart implements ITable,
   /** the total number of rows */
   int m_rowCount;
 
-  /** the table index in the owning section */
-  private final int m_index;
-
-  /** the id of the table */
-  private final String m_id;
-
-  /** the label */
-  private final Label m_label;
-
   /** does the table span all columns */
   private final boolean m_spansAllColumns;
 
@@ -100,36 +91,26 @@ public class Table extends DocumentPart implements ITable,
    * Create a table
    * 
    * @param owner
-   *          the owning FSM
+   *          the owning section body
    * @param index
    *          the table index in the owning section
    * @param useLabel
    *          the label to use
    * @param spansAllColumns
-   *          does the table span all columns=
+   *          does the table span all columns
    * @param definition
    *          the table cell definition
    */
   public Table(final SectionBody owner, final ILabel useLabel,
       final boolean spansAllColumns, final int index,
       final TableCellDef[] definition) {
-    super(owner, null);
+    super(owner, useLabel, index);
 
     final TableCellDef[] cells;
     int i, cc;
 
     cells = definition.clone();
-    cc = _checkDef(cells);
-
-    this.m_index = index;
-    this.m_id = (owner.getOwner().m_id + this.renderTableIndex(index));
-
-    if (useLabel != null) {
-      this.m_label = this.m_doc.m_manager._getLabel(ELabelType.TABLE,
-          useLabel, this.m_id);
-    } else {
-      this.m_label = null;
-    }
+    cc = Table._checkDef(cells);
 
     this.m_cells = cells;
     this.m_spansAllColumns = spansAllColumns;
@@ -144,6 +125,12 @@ public class Table extends DocumentPart implements ITable,
       }
       cc++;
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final ELabelType _labelType() {
+    return ELabelType.TABLE;
   }
 
   /**
@@ -162,7 +149,7 @@ public class Table extends DocumentPart implements ITable,
     }
 
     cells = 0;
-    for (TableCellDef d : def) {
+    for (final TableCellDef d : def) {
       if (d == null) {
         throw new IllegalArgumentException(//
             "No cell definition element can be null, but one of " + //$NON-NLS-1$
@@ -182,15 +169,6 @@ public class Table extends DocumentPart implements ITable,
   }
 
   /**
-   * Get the label of this section
-   * 
-   * @return the label of this section
-   */
-  public final Label getLabel() {
-    return this.m_label;
-  }
-
-  /**
    * Does this table span all columns?
    * 
    * @return {@code true} if the table spans all columns, {@code false} if
@@ -198,26 +176,6 @@ public class Table extends DocumentPart implements ITable,
    */
   public final boolean spansAllColumns() {
     return this.m_spansAllColumns;
-  }
-
-  /**
-   * Get the index of the table within the owning section (starts at
-   * {@code 1})
-   * 
-   * @return the index of the table within the owning section
-   */
-  public final int getIndex() {
-    return this.m_index;
-  }
-
-  /**
-   * Get the index of the owning section combined with the table's index
-   * 
-   * @return the index of the owning section combined with the table's
-   *         index
-   */
-  public final String getIndexes() {
-    return this.m_id;
   }
 
   /**

@@ -20,7 +20,10 @@ public enum ELabelType {
   TABLE('t'),
 
   /** an equation */
-  EQUATION('e');
+  EQUATION('e'),
+
+  /** a code */
+  CODE('c');
 
   /** the label prefix separator */
   public static final char LABEL_PREFIX_SEPARATOR = '_';

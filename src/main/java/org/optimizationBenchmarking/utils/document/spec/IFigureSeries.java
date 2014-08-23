@@ -20,7 +20,12 @@ public interface IFigureSeries extends IDocumentPart {
    *          {@link org.optimizationBenchmarking.utils.document.spec.ELabelType#AUTO}
    *          if a label should be created, or {@code null} if this
    *          component should not be labeled
+   * @param path
+   *          a relative path (using '/' as separators) suggestion which
+   *          may be used for creating an output path to store the document
+   *          under, can also be {@code null} in which case a default path
+   *          may be used
    * @return the figure object
    */
-  public abstract IFigure figure(final ILabel useLabel);
+  public abstract IFigure figure(final ILabel useLabel, final String path);
 }

@@ -296,7 +296,7 @@ public enum EComparison {
     }
   },
 
-  /** less */
+  /** equal */
   EQUAL(0) {
 
     /** {@inheritDoc} */
@@ -970,4 +970,10 @@ public enum EComparison {
     return a.compareTo(b);
   }
 
+  /** the difference multiplier as integer */
+  static final int DIFFERENCE_MULTIPLIER_INT = 10;
+  /** the difference multiplier as long */
+  static final long DIFFERENCE_MULTIPLIER_LONG = EComparison.DIFFERENCE_MULTIPLIER_INT;
+  /** the maximum value we can multiply */
+  static final long MAX_MULTIPLY = (Long.MAX_VALUE / EComparison.DIFFERENCE_MULTIPLIER_LONG);
 }

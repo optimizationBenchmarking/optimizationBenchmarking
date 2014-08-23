@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
 /** A section. */
-public interface ISection extends IStyleContext, IDocumentPart {
+public interface ISection extends IDocumentPart {
 
   /**
    * Write the section title

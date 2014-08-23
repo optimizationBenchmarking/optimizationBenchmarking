@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.document.spec.IList;
 import org.optimizationBenchmarking.utils.document.spec.IStructuredText;
 import org.optimizationBenchmarking.utils.document.spec.IStyle;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
@@ -26,13 +25,13 @@ public class StructuredText extends ComplexText implements IStructuredText {
    * 
    * @return an enumeration
    */
-  protected IList createEnumeration() {
+  protected Enumeration createEnumeration() {
     return new Enumeration(this);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final synchronized IList enumeration() {
+  public final synchronized Enumeration enumeration() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     return this.createEnumeration();
   }
@@ -42,13 +41,13 @@ public class StructuredText extends ComplexText implements IStructuredText {
    * 
    * @return an itemization
    */
-  protected IList createItemization() {
+  protected Itemization createItemization() {
     return new Itemization(this);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final synchronized IList itemization() {
+  public final synchronized Itemization itemization() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     return this.createItemization();
   }

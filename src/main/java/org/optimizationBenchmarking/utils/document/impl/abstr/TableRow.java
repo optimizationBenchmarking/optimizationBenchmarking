@@ -83,14 +83,15 @@ public class TableRow extends DocumentPart implements ITableRow {
    */
   protected TableCell createCell(final int rowSpan, final int colSpan,
       final TableCellDef[] def) {
-    return new TableCell(this, rowSpan, colSpan, def);
+    return new TableCell(this, rowSpan, colSpan, def,
+        DocumentPart._plain(this));
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized TableCell cell(final int rowSpan, final int colSpan,
       final TableCellDef... definition) {
-    this.fsmStateAssert(STATE_ALIFE);
+    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     return this.createCell(rowSpan, colSpan,//
         (((definition == null) || (definition.length <= 0)) ? null
             : definition));
@@ -117,7 +118,7 @@ public class TableRow extends DocumentPart implements ITableRow {
 
   /** {@inheritDoc} */
   @Override
-  protected synchronized  void beforeChildOpens(
+  protected synchronized void beforeChildOpens(
       final HierarchicalFSM child, final boolean hasOtherChildren) {
 
     super.beforeChildOpens(child, hasOtherChildren);
@@ -129,7 +130,7 @@ public class TableRow extends DocumentPart implements ITableRow {
 
   /** {@inheritDoc} */
   @Override
-  protected synchronized  void afterChildOpened(
+  protected synchronized void afterChildOpened(
       final HierarchicalFSM child, final boolean hasOtherChildren) {
 
     super.afterChildOpened(child, hasOtherChildren);
@@ -141,8 +142,7 @@ public class TableRow extends DocumentPart implements ITableRow {
 
   /** {@inheritDoc} */
   @Override
-  protected synchronized  void afterChildClosed(
-      final HierarchicalFSM child) {
+  protected synchronized void afterChildClosed(final HierarchicalFSM child) {
 
     super.afterChildClosed(child);
 

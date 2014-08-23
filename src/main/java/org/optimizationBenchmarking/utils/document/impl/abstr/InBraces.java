@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.charset.Braces;
 
 /** A text class for braces text */
@@ -21,9 +20,15 @@ public final class InBraces extends Text {
    * @param marks
    *          the marks
    */
-  protected InBraces(final HierarchicalFSM owner, final int marks) {
+  protected InBraces(final Text owner, final int marks) {
     super(owner, null);
     this.m_braces = marks;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected Text getOwner() {
+    return ((Text) (super.getOwner()));
   }
 
   /**
