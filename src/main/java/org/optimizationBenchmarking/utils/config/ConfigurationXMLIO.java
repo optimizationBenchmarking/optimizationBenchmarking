@@ -29,17 +29,17 @@ public class ConfigurationXMLIO extends
       .toString();
 
   /** the configuration root element */
-  public static final String ELEMENT_CONFIGURATION_ROOT = "configuration";//$NON-NLS-1$
+  public static final String ELEMENT_CONFIGURATION_ROOT = "configuration"; //$NON-NLS-1$
   /** the configuration version attribute */
-  public static final String ATTRIBUTE_CONFIGURATION_VERSION = "version";//$NON-NLS-1$
+  public static final String ATTRIBUTE_CONFIGURATION_VERSION = "version"; //$NON-NLS-1$
   /** the configuration version attribute value */
-  public static final String ATTRIBUTE_VALUE_CONFIGURATION_VERSION = "1.0";//$NON-NLS-1$
+  public static final String ATTRIBUTE_VALUE_CONFIGURATION_VERSION = "1.0"; //$NON-NLS-1$
   /** the configuration parameter element */
-  public static final String ELEMENT_CONFIGURATION_PARAMETER = "parameter";//$NON-NLS-1$
+  public static final String ELEMENT_CONFIGURATION_PARAMETER = "parameter"; //$NON-NLS-1$
   /** the configuration parameter name attribute */
-  public static final String ATTRIBUTE_CONFIGURATION_PARAMETER_NAME = "name";//$NON-NLS-1$
+  public static final String ATTRIBUTE_CONFIGURATION_PARAMETER_NAME = "name"; //$NON-NLS-1$
   /** the configuration parameter value attribute */
-  public static final String ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE = "value";//$NON-NLS-1$
+  public static final String ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE = "value"; //$NON-NLS-1$
 
   /** the configuration xml */
   public static final ConfigurationXMLIO INSTANCE = new ConfigurationXMLIO();
@@ -62,7 +62,7 @@ public class ConfigurationXMLIO extends
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       schema = sf.newSchema(//
-          ConfigurationXMLIO.class.getResource("configuration.1.0.xsd"));//$NON-NLS-1$
+          ConfigurationXMLIO.class.getResource("configuration.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
       rec = a;
     } finally {

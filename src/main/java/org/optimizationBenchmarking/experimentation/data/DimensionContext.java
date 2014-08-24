@@ -33,7 +33,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * create
-   * 
+   *
    * @param element
    *          the owning element
    */
@@ -73,7 +73,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Get the experiment set builder owning this dimension context
-   * 
+   *
    * @return the experiment set builder owning this dimension context
    */
   public final ExperimentSetContext getBuilder() {
@@ -82,7 +82,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Get the parser used for the numbers in this dimension
-   * 
+   *
    * @return the parser used for the numbers
    */
   public synchronized final NumberParser<Number> getParser() {
@@ -91,7 +91,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Set the parser used for the numbers in this dimension
-   * 
+   *
    * @param parser
    *          the parser used for the numbers
    */
@@ -119,7 +119,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
    * <li><code>qualified.class.name:lowerBound:upperBound</code> + class
    * has a constructor taking two instances of {@link java.lang.Number}</li>
    * </ol>
-   * 
+   *
    * @param parserDesc
    *          the parser constant
    */
@@ -159,7 +159,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Try to obtain the parser via reflection.
-   * 
+   *
    * @param parserClass
    *          the parser class: must take two numbers as parameter
    * @param lowerBound
@@ -180,7 +180,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
       throw new RuntimeException(((((((//
           "Illegal parser class and configuration: " + //$NON-NLS-1$
           TextUtils.className(parserClass)) + ", '") + //$NON-NLS-1$
-          lowerBound) + "', '") + upperBound) + '.'), t);//$NON-NLS-1$
+          lowerBound) + "', '") + upperBound) + '.'), t); //$NON-NLS-1$
     }
 
     this.setParser(parser);
@@ -188,7 +188,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Try to obtain the parser via reflection.
-   * 
+   *
    * @param parserClass
    *          the parser class: must take two numbers as parameter
    * @param lowerBound
@@ -265,7 +265,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Set the type of this dimension
-   * 
+   *
    * @param type
    *          the dimension type
    */
@@ -285,7 +285,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Set the type as constant
-   * 
+   *
    * @param type
    *          the type
    */
@@ -295,7 +295,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Get the type of this dimension
-   * 
+   *
    * @return the type of this dimension
    */
   public synchronized final EDimensionType getType() {
@@ -304,7 +304,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Set the direction of this dimension
-   * 
+   *
    * @param direction
    *          the dimension direction
    */
@@ -325,7 +325,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Set the direction as constant
-   * 
+   *
    * @param direction
    *          the direction
    */
@@ -336,7 +336,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
   /**
    * Get the direction of this dimension
-   * 
+   *
    * @return the direction of this dimension
    */
   public synchronized final EDimensionDirection getDirection() {

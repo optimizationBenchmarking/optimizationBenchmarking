@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * Obtain a class.
- * 
+ *
  * @param <C>
  *          the base class type
  */
@@ -19,7 +19,7 @@ public final class FindClass<C> extends Task<Class<C>> {
 
   /**
    * Create the get-class action
-   * 
+   *
    * @param name
    *          the class name
    */
@@ -29,7 +29,7 @@ public final class FindClass<C> extends Task<Class<C>> {
 
   /**
    * Create the get-class action
-   * 
+   *
    * @param name
    *          the class name
    * @param base
@@ -52,7 +52,7 @@ public final class FindClass<C> extends Task<Class<C>> {
 
     n = TextUtils.prepare(this.m_name);
     if (n == null) {
-      throw new ClassNotFoundException("Cannot get class with null name.");//$NON-NLS-1$
+      throw new ClassNotFoundException("Cannot get class with null name."); //$NON-NLS-1$
     }
 
     try {
@@ -79,7 +79,7 @@ public final class FindClass<C> extends Task<Class<C>> {
    * Check whether {@code subClass} is really a sub-class of
    * {@code baseClass} and throw an {@link java.lang.ClassCastException}
    * otherwise
-   * 
+   *
    * @param subClass
    *          the sub class
    * @param baseClass
@@ -111,7 +111,7 @@ public final class FindClass<C> extends Task<Class<C>> {
     throw new ClassCastException("Cannot assign an instance of " + //$NON-NLS-1$
         a + " to a variable of type " + //$NON-NLS-1$
         b + ", i.e., " + a + //$NON-NLS-1$
-        " is not a sub-class of " + b + '.');//$NON-NLS-1$
+        " is not a sub-class of " + b + '.'); //$NON-NLS-1$
   }
 
 }

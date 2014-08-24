@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 /** the internal content handler */
 final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
   /** the string indicating the begin of a comment: {@value} */
-  private static final String COMMENT_START = "//";//$NON-NLS-1$
+  private static final String COMMENT_START = "//"; //$NON-NLS-1$
   /**
    * the identifier of the section in the log files which holds the
    * algorithm information
@@ -35,7 +35,7 @@ final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
    */
   private static final String DETERMINISTIC_INITIALIZATION_SECTION = "DETERMINISTIC_INITIALIZATION_SECTION"; //$NON-NLS-1$
   /** the string used to end sections: {@value} */
-  private static final String SECTION_END = "SECTION_END";//$NON-NLS-1$
+  private static final String SECTION_END = "SECTION_END"; //$NON-NLS-1$
 
   /** the hierarchical fsm stack */
   private final ExperimentSetContext m_esc;
@@ -54,7 +54,7 @@ final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
 
   /**
    * create
-   * 
+   *
    * @param esb
    *          the experiment set builder to use
    */
@@ -65,7 +65,7 @@ final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
 
   /**
    * Load the path.
-   * 
+   *
    * @param path
    *          the path
    * @param logger
@@ -129,7 +129,7 @@ final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
 
   /**
    * prepare a string for processing
-   * 
+   *
    * @param s
    *          the string
    * @return the result
@@ -154,7 +154,7 @@ final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
 
   /**
    * begin a run
-   * 
+   *
    * @param f
    *          the file
    * @return the run context to use

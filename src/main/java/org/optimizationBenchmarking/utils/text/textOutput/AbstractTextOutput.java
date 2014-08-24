@@ -185,7 +185,7 @@ public class AbstractTextOutput implements ITextOutput, IStreamEncoded {
         return new _StringBufferWrappedTextOutput(
             ((StringWriter) in).getBuffer());
       }
-      if (in instanceof _CharArrayWriterWrappedTextOutput) {
+      if (in instanceof CharArrayWriter) {
         return new _CharArrayWriterWrappedTextOutput((CharArrayWriter) in);
       }
       if (in instanceof NullWriter) {

@@ -20,7 +20,7 @@ public class ExperimentSetCreatorBBOBExample extends ExperimentSetCreator {
 
       BBOBDriver.INSTANCE.loadZIPArchive(ec,
           ExperimentSetCreatorBBOBExample.class
-              .getResourceAsStream("bbobExampleData.zip"));//$NON-NLS-1$
+              .getResourceAsStream("bbobExampleData.zip")); //$NON-NLS-1$
       return ec.getResult();
     } catch (final Throwable t) {
       if (t instanceof RuntimeException) {

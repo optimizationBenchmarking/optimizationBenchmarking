@@ -19,7 +19,7 @@ public abstract class BibRecordWithPublisherBuilder extends
 
   /**
    * create the website builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -33,7 +33,7 @@ public abstract class BibRecordWithPublisherBuilder extends
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_PUBLISHER_SET: {
-        append.append("publisherSet");//$NON-NLS-1$
+        append.append("publisherSet"); //$NON-NLS-1$
         return;
       }
       default: {
@@ -44,7 +44,7 @@ public abstract class BibRecordWithPublisherBuilder extends
 
   /**
    * Set the publisher
-   * 
+   *
    * @param publisher
    *          the publisher
    */
@@ -57,7 +57,7 @@ public abstract class BibRecordWithPublisherBuilder extends
     if ((this.m_publisher = this.normalize(publisher)) == null) {
       throw new IllegalArgumentException(//
           "Publisher  cannot be set to empty or null, but '" //$NON-NLS-1$
-              + publisher + "' is.");//$NON-NLS-1$
+              + publisher + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -83,7 +83,7 @@ public abstract class BibRecordWithPublisherBuilder extends
 
   /**
    * handle an organization with a given tag
-   * 
+   *
    * @param org
    *          the organization
    * @param tag
@@ -94,13 +94,13 @@ public abstract class BibRecordWithPublisherBuilder extends
       this.setPublisher(org);
     } else {
       throw new IllegalArgumentException("Organization with tag " + tag + //$NON-NLS-1$
-          " cannot be handled.");//$NON-NLS-1$
+          " cannot be handled."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set publisher
-   * 
+   *
    * @return the publisher builder
    */
   public synchronized final BibOrganizationBuilder setPublisher() {

@@ -35,7 +35,7 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
 
   /**
    * create the author builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -50,15 +50,15 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_PERSONAL_NAME_SET: {
-        append.append("personalNameSet");//$NON-NLS-1$
+        append.append("personalNameSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_FAMILY_NAME_SET: {
-        append.append("familyNameSet");//$NON-NLS-1$
+        append.append("familyNameSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_ORIGINAL_SPELLING_SET: {
-        append.append("originalSpellingSet");//$NON-NLS-1$
+        append.append("originalSpellingSet"); //$NON-NLS-1$
         return;
       }
       default: {
@@ -70,7 +70,7 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
   /**
    * Set the personal (given, first) name of this author (or editor,
    * supervisor, &hellip;)
-   * 
+   *
    * @param personalName
    *          the personal (given, first) name of this author (or editor,
    *          supervisor, &hellip;)
@@ -83,13 +83,13 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
     if ((this.m_personalName = this.normalize(personalName)) == null) {
       throw new IllegalArgumentException(//
           "Personal name cannot be empty or null, but '" //$NON-NLS-1$
-              + personalName + "' is.");//$NON-NLS-1$
+              + personalName + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * set the family name of this author (or editor, supervisor, &hellip;)
-   * 
+   *
    * @param familyName
    *          the family name of this author (or editor, supervisor,
    *          &hellip;)
@@ -102,14 +102,14 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
     if ((this.m_familyName = this.normalize(familyName)) == null) {
       throw new IllegalArgumentException(//
           "Family name cannot be empty or null, but '" //$NON-NLS-1$
-              + familyName + "' is.");//$NON-NLS-1$
+              + familyName + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the full name of the author, written in an obscure language with
    * no 1:1 transcription to English.
-   * 
+   *
    * @param originalSpelling
    *          the full name of the author, written in an obscure language
    *          with no 1:1 transcription to English
@@ -124,7 +124,7 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
       throw new IllegalArgumentException(//
           "If you set the original name spelling, it cannot be empty or null, but '" //$NON-NLS-1$
               + originalSpelling
-              + "' is. Maybe you should just not set it?");//$NON-NLS-1$
+              + "' is. Maybe you should just not set it?"); //$NON-NLS-1$
     }
   }
 

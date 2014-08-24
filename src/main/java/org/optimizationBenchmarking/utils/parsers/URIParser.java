@@ -42,13 +42,13 @@ public class URIParser extends Parser<URI> {
    * @return the cleansed version
    */
   private final URI __cleanse(final URI u) {
-    URI res;
+    final URI res;
 
     res = u.normalize();
 
-    if (res == null) {
-      res = u;
-    }
+    // if (res == null) {
+    // res = u;
+    // }
 
     this.validate(res);
     return res;

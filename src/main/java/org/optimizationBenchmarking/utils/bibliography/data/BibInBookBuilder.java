@@ -33,7 +33,7 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
 
   /**
    * create the website builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -47,19 +47,19 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_BOOK_SET: {
-        append.append("bookSet");//$NON-NLS-1$
+        append.append("bookSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_START_PAGE_SET: {
-        append.append("startPageSet");//$NON-NLS-1$
+        append.append("startPageSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_END_PAGE_SET: {
-        append.append("endPaeSet");//$NON-NLS-1$
+        append.append("endPaeSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_CHAPTER_SET: {
-        append.append("chapterSet");//$NON-NLS-1$
+        append.append("chapterSet"); //$NON-NLS-1$
         return;
       }
       default: {
@@ -70,7 +70,7 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
 
   /**
    * Set the start page
-   * 
+   *
    * @param startPage
    *          the start page
    */
@@ -82,13 +82,13 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
     if ((this.m_startPage = this.normalize(startPage)) == null) {
       throw new IllegalArgumentException(//
           "Start page cannot be set to empty or null, but '" //$NON-NLS-1$
-              + startPage + "' is.");//$NON-NLS-1$
+              + startPage + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the end page
-   * 
+   *
    * @param endPage
    *          the end page
    */
@@ -99,13 +99,13 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
     if ((this.m_endPage = this.normalize(endPage)) == null) {
       throw new IllegalArgumentException(//
           "End page cannot be set to empty or null, but '" //$NON-NLS-1$
-              + endPage + "' is.");//$NON-NLS-1$
+              + endPage + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the chapter
-   * 
+   *
    * @param chapter
    *          the chapter
    */
@@ -116,13 +116,13 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
     if ((this.m_chapter = this.normalize(chapter)) == null) {
       throw new IllegalArgumentException(//
           "Chapter name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + chapter + "' is.");//$NON-NLS-1$
+              + chapter + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the book
-   * 
+   *
    * @param book
    *          the book
    */
@@ -132,7 +132,7 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
         BibInBookBuilder.FLAG_BOOK_SET, FSM.FLAG_NOTHING);
     if (book == null) {
       throw new IllegalArgumentException(//
-          "Book cannot be set to empty or null.");//$NON-NLS-1$
+          "Book cannot be set to empty or null."); //$NON-NLS-1$
     }
     this.m_book = book;
   }

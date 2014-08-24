@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 
 /**
  * the internal file walker
- * 
+ *
  * @param <S>
  *          the storer type
  * @param <L>
@@ -31,7 +31,7 @@ final class _FileWalker<S, L> implements FileVisitor<Object> {
 
   /**
    * create
-   * 
+   *
    * @param loadContext
    *          the load context
    * @param logger
@@ -70,7 +70,7 @@ final class _FileWalker<S, L> implements FileVisitor<Object> {
       if ((this.m_logger != null)
           && (this.m_logger.isLoggable(Level.INFO))) {
         this.m_logger.info("Skipping directory '" + //$NON-NLS-1$
-            dir + "' and all of the sub-directories and files inside.");//$NON-NLS-1$
+            dir + "' and all of the sub-directories and files inside."); //$NON-NLS-1$
       }
 
       return FileVisitResult.SKIP_SUBTREE;
@@ -81,7 +81,7 @@ final class _FileWalker<S, L> implements FileVisitor<Object> {
       this.m_logger.info(//
           "Encountered object '" + //$NON-NLS-1$
               dir
-              + "' in preVisitDirectory which is not a path but claimes to be a directory (so we just skip it)?");//$NON-NLS-1$
+              + "' in preVisitDirectory which is not a path but claimes to be a directory (so we just skip it)?"); //$NON-NLS-1$
     }
 
     return FileVisitResult.SKIP_SUBTREE;
@@ -123,7 +123,7 @@ final class _FileWalker<S, L> implements FileVisitor<Object> {
     if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
       logger
           .info("Encountered object '" + file//$NON-NLS-1$
-              + "' in visitFile which is not a path but claimes to be a file (so we just ignore it)?");//$NON-NLS-1$
+              + "' in visitFile which is not a path but claimes to be a file (so we just ignore it)?"); //$NON-NLS-1$
     }
 
     return FileVisitResult.CONTINUE;
@@ -168,7 +168,7 @@ final class _FileWalker<S, L> implements FileVisitor<Object> {
       this.m_logger.info(//
           "Encountered object '" + //$NON-NLS-1$
               dir
-              + "' in postVisitDirectory which is not a path but claimes to be a directory (so we just ignore it)?");//$NON-NLS-1$
+              + "' in postVisitDirectory which is not a path but claimes to be a directory (so we just ignore it)?"); //$NON-NLS-1$
     }
 
     return FileVisitResult.CONTINUE;

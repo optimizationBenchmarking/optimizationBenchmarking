@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+
 /** an internal constant class for number resolution */
 final class _TextConst implements Comparable<_TextConst> {
 
@@ -375,7 +377,26 @@ final class _TextConst implements Comparable<_TextConst> {
     if (i != 0) {
       return i;
     }
+
     return Double.compare(this.m_d, o.m_d);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    return ((o == this) || ((o instanceof _TextConst) && (this
+        .compareTo((_TextConst) o) == 0)));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return HashUtils.combineHashes(HashUtils.combineHashes(
+        HashUtils.combineHashes(HashUtils.hashCode(this.m_b),
+            HashUtils.hashCode(this.m_d)),
+        HashUtils.combineHashes(HashUtils.hashCode(this.m_i),
+            HashUtils.hashCode(this.m_l))), HashUtils
+        .hashCode(this.m_state));
 
   }
 

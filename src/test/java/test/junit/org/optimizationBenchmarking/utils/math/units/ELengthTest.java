@@ -142,7 +142,7 @@ public class ELengthTest {
 
   /**
    * convert
-   * 
+   *
    * @param from
    *          the from unit
    * @param to
@@ -172,7 +172,7 @@ public class ELengthTest {
           " " + to + //$NON-NLS-1$
           (calc ? ("' - calculated '" + res + //$NON-NLS-1$
           "' instead.")//$NON-NLS-1$
-              : ("got an error instead.")));//$NON-NLS-1$
+              : ("got an error instead."))); //$NON-NLS-1$
     }
 
     calc = false;
@@ -189,7 +189,7 @@ public class ELengthTest {
           " " + to + //$NON-NLS-1$
           (calc ? ("' - calculated '" + re + //$NON-NLS-1$
           "' instead.")//$NON-NLS-1$
-              : ("got an error instead.")));//$NON-NLS-1$
+              : ("got an error instead."))); //$NON-NLS-1$
     }
   }
 
@@ -241,7 +241,7 @@ public class ELengthTest {
 
     /**
      * create
-     * 
+     *
      * @param from
      *          from
      * @param fromValue

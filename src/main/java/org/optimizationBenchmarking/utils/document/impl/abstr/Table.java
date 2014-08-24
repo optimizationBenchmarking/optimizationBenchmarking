@@ -57,7 +57,7 @@ public class Table extends ComplexObject implements ITable,
     Table.STATE_NAMES[Table.STATE_CAPTION_CREATED] = "captionCreated"; //$NON-NLS-1$
     Table.STATE_NAMES[Table.STATE_CAPTION_BEFORE_OPEN] = "captionBeforeOpen"; //$NON-NLS-1$
     Table.STATE_NAMES[Table.STATE_CAPTION_OPENED] = "captionOpened"; //$NON-NLS-1$
-    Table.STATE_NAMES[Table.STATE_CAPTION_CLOSED] = "captionClosed"; //$NON-NLS-1$    
+    Table.STATE_NAMES[Table.STATE_CAPTION_CLOSED] = "captionClosed"; //$NON-NLS-1$
     Table.STATE_NAMES[Table.STATE_HEADER_CREATED] = "headerCreated"; //$NON-NLS-1$
     Table.STATE_NAMES[Table.STATE_HEADER_BEFORE_OPEN] = "headerBeforeOpen"; //$NON-NLS-1$
     Table.STATE_NAMES[Table.STATE_HEADER_OPENED] = "headerOpened"; //$NON-NLS-1$
@@ -145,7 +145,7 @@ public class Table extends ComplexObject implements ITable,
 
     if (def == null) {
       throw new IllegalArgumentException(//
-          "Table cell definition must not be null.");//$NON-NLS-1$
+          "Table cell definition must not be null."); //$NON-NLS-1$
     }
 
     cells = 0;

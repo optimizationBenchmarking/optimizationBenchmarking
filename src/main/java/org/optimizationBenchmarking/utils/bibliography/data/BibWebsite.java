@@ -10,7 +10,7 @@ public final class BibWebsite extends BibRecordWithPublisher {
 
   /**
    * Create a new bibliography record
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -29,7 +29,7 @@ public final class BibWebsite extends BibRecordWithPublisher {
 
   /**
    * Create the website record
-   * 
+   *
    * @param direct
    *          direct?
    * @param authors
@@ -52,13 +52,13 @@ public final class BibWebsite extends BibRecordWithPublisher {
 
     if (this.m_url == null) {
       throw new IllegalArgumentException(//
-          "URL of a website must not be null.");//$NON-NLS-1$
+          "URL of a website must not be null."); //$NON-NLS-1$
     }
   }
 
   /**
    * Get the date
-   * 
+   *
    * @return the date
    */
   public final BibDate getDate() {

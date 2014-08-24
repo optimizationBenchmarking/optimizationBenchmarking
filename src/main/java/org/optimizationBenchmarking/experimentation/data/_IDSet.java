@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * <p>
  * A set with a unique ID.
  * </p>
- * 
+ *
  * @param <OT>
  *          the owner type
  * @param <DT>
@@ -24,7 +24,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data of the set
    * @param clone
@@ -42,7 +42,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
     int index1, index2;
 
     if (data == null) {
-      throw new IllegalArgumentException("Data must not be null.");//$NON-NLS-1$
+      throw new IllegalArgumentException("Data must not be null."); //$NON-NLS-1$
     }
 
     if (data.length <= 0) {
@@ -74,7 +74,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
 
   /**
    * Obtain the data
-   * 
+   *
    * @return the data array
    */
   public final ArraySetView<DT> getData() {
@@ -84,7 +84,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
   /**
    * Mark {@code element} as owned by this element and located at
    * {@code index}
-   * 
+   *
    * @param element
    *          the owned element
    * @param index
@@ -94,7 +94,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
     throw new UnsupportedOperationException(//
         TextUtils.className(this.getClass())
             + (((" does not know how to become an owner of '" + //$NON-NLS-1$
-            element) + "' at index ") + index) + '.');//$NON-NLS-1$
+            element) + "' at index ") + index) + '.'); //$NON-NLS-1$
   }
 
   /**
@@ -103,7 +103,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
    * as possible when it comes to creating our experiment evaluation data
    * structures, since any mistake may have severe impact on the evaluation
    * results we can get...
-   * 
+   *
    * @param element
    *          the single element to validate
    * @param index
@@ -135,7 +135,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
    * Validate two supposedly different elements to be included in this set.
    * Element {@code before} is located before element {@code after} in this
    * set.
-   * 
+   *
    * @param before
    *          the first element to validate
    * @param after
@@ -149,7 +149,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
       throw new IllegalArgumentException("No two elements in a " + //$NON-NLS-1$
           TextUtils.className(this.getClass())
           + " can be the same (referentially speaking), but '" + before + //$NON-NLS-1$
-          "' is included twice!");//$NON-NLS-1$
+          "' is included twice!"); //$NON-NLS-1$
     }
 
     if (before.equals(after) || after.equals(before)) {
@@ -157,7 +157,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
           TextUtils.className(this.getClass())
           + " can be equal, but '" + before + //$NON-NLS-1$
           "' and '" + after + //$NON-NLS-1$
-          "' are.");//$NON-NLS-1$
+          "' are."); //$NON-NLS-1$
     }
 
     if (before.getClass() != after.getClass()) {

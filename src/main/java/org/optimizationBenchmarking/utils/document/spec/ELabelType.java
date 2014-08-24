@@ -8,22 +8,22 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 public enum ELabelType {
 
   /** a label referencing a section */
-  SECTION('s'),
+  SECTION('s', "Section"), //$NON-NLS-1$
 
   /** a label referencing a figure section */
-  FIGURE('f'),
+  FIGURE('f', "Figure"), //$NON-NLS-1$,
 
   /** a label referencing a sub-figure */
-  SUBFIGURE('g'),
+  SUBFIGURE('g', "Figure"), //$NON-NLS-1$,
 
   /** a label referencing a table */
-  TABLE('t'),
+  TABLE('t', "Table"), //$NON-NLS-1$
 
   /** an equation */
-  EQUATION('e'),
+  EQUATION('e', "Equation"), //$NON-NLS-1$
 
   /** a code */
-  CODE('c');
+  CODE('c', "Listing"); //$NON-NLS-1$
 
   /** the label prefix separator */
   public static final char LABEL_PREFIX_SEPARATOR = '_';
@@ -38,14 +38,29 @@ public enum ELabelType {
   /** the prefix */
   private final char m_prefix;
 
+  /** the name */
+  private final String m_name;
+
   /**
    * create the label type
    * 
    * @param p
    *          the prefix char
+   * @param name
+   *          the name
    */
-  ELabelType(final char p) {
+  ELabelType(final char p, final String name) {
     this.m_prefix = p;
+    this.m_name = name;
+  }
+
+  /**
+   * Get the name of the label type
+   * 
+   * @return the name of the label type
+   */
+  public final String getName() {
+    return this.m_name;
   }
 
   /**

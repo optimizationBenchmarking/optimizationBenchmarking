@@ -29,7 +29,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Create a new bibliography record for things that are parts of book
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -63,7 +63,7 @@ public class BibInBook extends BibRecord {
 
     if ((this.m_endPage != null) ^ (this.m_startPage != null)) {
       throw new IllegalArgumentException(//
-          "If start or end page is specified, both need to be specified.");//$NON-NLS-1$
+          "If start or end page is specified, both need to be specified."); //$NON-NLS-1$
     }
     if ((this.m_startPage != null) && (this.m_endPage != null)) {
       try {
@@ -71,10 +71,10 @@ public class BibInBook extends BibRecord {
         j = Long.parseLong(this.m_endPage);
         if (i > j) {
           throw new IllegalArgumentException(//
-              "Start page cannot be greater than end page, but start page '"//$NON-NLS-1$ 
+              "Start page cannot be greater than end page, but start page '"//$NON-NLS-1$
                   + this.m_startPage + "' is " //$NON-NLS-1$
                   + i + " and end page '" //$NON-NLS-1$
-                  + this.m_endPage + "' is " + j);//$NON-NLS-1$
+                  + this.m_endPage + "' is " + j); //$NON-NLS-1$
         }
       } catch (final NumberFormatException x) {
         // ignore
@@ -85,7 +85,7 @@ public class BibInBook extends BibRecord {
 
     if ((this.m_chapter == null) && (this.m_startPage == null)) {
       throw new IllegalArgumentException(//
-          "Either pages or chapter need to be specified.");//$NON-NLS-1$
+          "Either pages or chapter need to be specified."); //$NON-NLS-1$
     }
 
     this.m_book = book;
@@ -105,7 +105,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the book containing this chapter or paper
-   * 
+   *
    * @return the bibliography editors
    */
   public BibBookRecord getBook() {
@@ -114,7 +114,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the start page
-   * 
+   *
    * @return the start page
    */
   public final String getStartPage() {
@@ -123,7 +123,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the end page
-   * 
+   *
    * @return the end page
    */
   public final String getEndPage() {
@@ -132,7 +132,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the chapter
-   * 
+   *
    * @return the chapter
    */
   public final String getChapter() {

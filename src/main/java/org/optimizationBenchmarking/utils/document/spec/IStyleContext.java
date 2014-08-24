@@ -42,13 +42,13 @@ public interface IStyleContext {
    * 
    * @return default style for emphasized text
    */
-  public abstract IStyle emphasized();
+  public abstract IStyle getEmphasizedStyle();
 
   /**
    * The plain text style
    * 
    * @return the plain text style
    */
-  public abstract IStyle plain();
+  public abstract IStyle getPlainStyle();
 
 }

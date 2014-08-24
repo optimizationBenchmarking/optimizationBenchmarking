@@ -29,7 +29,7 @@ public class StrictFloatParser extends NumberParser<Float> {
 
   /**
    * Validate the parsing result
-   * 
+   *
    * @param value
    *          the parsing result
    * @throws IllegalArgumentException
@@ -42,7 +42,7 @@ public class StrictFloatParser extends NumberParser<Float> {
 
   /**
    * Parse the string
-   * 
+   *
    * @param string
    *          the string
    * @return the return type
@@ -119,7 +119,7 @@ public class StrictFloatParser extends NumberParser<Float> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -128,7 +128,7 @@ public class StrictFloatParser extends NumberParser<Float> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {
@@ -198,7 +198,7 @@ public class StrictFloatParser extends NumberParser<Float> {
                     ((((d + " is not a valid float value, since it is out of the range [") + //$NON-NLS-1$
                     (-Float.MAX_VALUE)) + ',') + //
                     (Float.MAX_VALUE))
-                        + "].");//$NON-NLS-1$
+                        + "]."); //$NON-NLS-1$
               }
 
               if (((d > (0d)) && (d < Float.MIN_VALUE)) || //
@@ -207,7 +207,7 @@ public class StrictFloatParser extends NumberParser<Float> {
                     ((((d + " is not a valid float value, since its scale is too small. Non-zero values must be out of the range (") + //$NON-NLS-1$
                     (-Float.MIN_VALUE)) + ',') + //
                     (Float.MIN_VALUE))
-                        + ").");//$NON-NLS-1$
+                        + ")."); //$NON-NLS-1$
               }
 
               this.validateFloat((float) d);

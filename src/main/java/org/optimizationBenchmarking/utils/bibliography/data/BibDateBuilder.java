@@ -44,7 +44,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * create the author builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -54,7 +54,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * create the author builder
-   * 
+   *
    * @param owner
    *          the owner
    * @param tag
@@ -74,19 +74,19 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_YEAR_SET: {
-        append.append("yearSet");//$NON-NLS-1$
+        append.append("yearSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_MONTH_SET: {
-        append.append("monthSet");//$NON-NLS-1$
+        append.append("monthSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_QUARTER_SET: {
-        append.append("quarterSet");//$NON-NLS-1$
+        append.append("quarterSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_DAY_SET: {
-        append.append("daySet");//$NON-NLS-1$
+        append.append("daySet"); //$NON-NLS-1$
         return;
       }
       default: {
@@ -97,7 +97,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the year
-   * 
+   *
    * @param year
    *          the year
    */
@@ -114,7 +114,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the year
-   * 
+   *
    * @param year
    *          the year
    */
@@ -124,7 +124,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the month
-   * 
+   *
    * @param month
    *          the month
    */
@@ -142,7 +142,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the month
-   * 
+   *
    * @param month
    *          the month
    */
@@ -154,7 +154,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
     if (m == null) {
       throw new IllegalArgumentException(//
           "Month strings must not be null or empty, but '" //$NON-NLS-1$
-              + month + "' is.");//$NON-NLS-1$
+              + month + "' is."); //$NON-NLS-1$
     }
 
     res = null;
@@ -185,7 +185,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the quarter
-   * 
+   *
    * @param quarter
    *          the quarter
    */
@@ -203,7 +203,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the quarter
-   * 
+   *
    * @param quarter
    *          the quarter
    */
@@ -215,7 +215,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
     if (m == null) {
       throw new IllegalArgumentException(//
           "Quarter strings must not be null or empty, but '" //$NON-NLS-1$
-              + quarter + "' is.");//$NON-NLS-1$
+              + quarter + "' is."); //$NON-NLS-1$
     }
 
     res = null;
@@ -246,7 +246,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the day
-   * 
+   *
    * @param day
    *          the day
    */
@@ -264,7 +264,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the day
-   * 
+   *
    * @param day
    *          the day
    */
@@ -274,7 +274,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the whole data from a given date object
-   * 
+   *
    * @param date
    *          the date object
    */
@@ -284,7 +284,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the fields from a time stamp
-   * 
+   *
    * @param time
    *          a time stamp
    */
@@ -305,7 +305,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the whole data from a given calendar
-   * 
+   *
    * @param cal
    *          the calendar
    */

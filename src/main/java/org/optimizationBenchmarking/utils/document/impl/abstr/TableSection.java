@@ -80,7 +80,7 @@ public class TableSection extends DocumentPart implements ITableSection {
       if (b != this.m_rowCount) {
         throw new IllegalStateException(//
             "Inconsistency of table cells row span allocation: Table section ends after row " //$NON-NLS-1$
-                + this.m_rowCount + " but one cell spans to row " + b);//$NON-NLS-1$
+                + this.m_rowCount + " but one cell spans to row " + b); //$NON-NLS-1$
       }
     }
 

@@ -154,13 +154,13 @@ public abstract class Styles implements IStyleContext {
 
   /** {@inheritDoc} */
   @Override
-  public final IStyle emphasized() {
+  public final IStyle getEmphasizedStyle() {
     return this.m_emph;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final IStyle plain() {
+  public final IStyle getPlainStyle() {
     return this.m_plain;
   }
 }

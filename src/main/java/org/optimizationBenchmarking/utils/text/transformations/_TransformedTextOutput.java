@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /**
  * An implementation of the text output which forwards all text to an
  * underlying output while applying a specific text transformation.
- * 
+ *
  * @author Thomas Weise
  */
 class _TransformedTextOutput extends AbstractTextOutput {
@@ -16,7 +16,7 @@ class _TransformedTextOutput extends AbstractTextOutput {
 
   /**
    * create the transformed text output
-   * 
+   *
    * @param out
    *          the wrapped output
    */
@@ -61,7 +61,7 @@ class _TransformedTextOutput extends AbstractTextOutput {
   /**
    * This method is called when an unknown character is encountered. By
    * default it throws an {@link java.lang.UnsupportedOperationException}.
-   * 
+   *
    * @param ch
    *          the character
    * @throws UnsupportedOperationException
@@ -71,7 +71,7 @@ class _TransformedTextOutput extends AbstractTextOutput {
     throw new UnsupportedOperationException(//
         "No mapping known for character '" + //$NON-NLS-1$
             String.valueOf(ch) + "' (0x" + //$NON-NLS-1$
-            Integer.toHexString(ch) + ").");//$NON-NLS-1$
+            Integer.toHexString(ch) + ")."); //$NON-NLS-1$
 
   }
 }

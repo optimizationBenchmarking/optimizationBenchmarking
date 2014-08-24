@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * The base class for encodings.
- * 
+ *
  * @param <IST>
  *          the input stream type
  * @param <OST>
@@ -55,39 +55,39 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /** the ascii encoding */
   public static final TextEncoding ASCII = new TextEncoding(//
-      "ASCII", false);//$NON-NLS-1$
+      "ASCII", false); //$NON-NLS-1$
 
   /** the windows codepage 1252 encoding */
   public static final TextEncoding WINDOWS_1252 = new TextEncoding(//
-      "Cp1252", false);//$NON-NLS-1$
+      "Cp1252", false); //$NON-NLS-1$
 
   /** the big 5 encoding */
   public static final TextEncoding BIG_5 = new TextEncoding(//
-      "Big5", false);//$NON-NLS-1$
+      "Big5", false); //$NON-NLS-1$
 
   /** the gbk encoding */
   public static final TextEncoding GBK = new TextEncoding(//
-      "GBK", true);//$NON-NLS-1$
+      "GBK", true); //$NON-NLS-1$
 
   /** the GB2312 encoding */
   public static final TextEncoding GB2312 = new TextEncoding(//
-      "GB2312", false);//$NON-NLS-1$
+      "GB2312", false); //$NON-NLS-1$
 
   /** the utf-8 encoding */
   public static final TextEncoding UTF_8 = new TextEncoding(//
-      "UTF-8", false);//$NON-NLS-1$
+      "UTF-8", false); //$NON-NLS-1$
 
   /** the utf-16 big endian encoding */
   public static final TextEncoding UTF_16_BE = new TextEncoding(//
-      "UTF-16BE", false);//$NON-NLS-1$
+      "UTF-16BE", false); //$NON-NLS-1$
 
   /** the utf-16 little endian encoding */
   public static final TextEncoding UTF_16_LE = new TextEncoding(//
-      "UTF-16LE", false);//$NON-NLS-1$
+      "UTF-16LE", false); //$NON-NLS-1$
 
   /** the ISO-8859-1 encoding */
   public static final TextEncoding ISO_8859_1 = new TextEncoding(//
-      "ISO-8859-1", false);//$NON-NLS-1$
+      "ISO-8859-1", false); //$NON-NLS-1$
 
   static {
     synchronized (StreamEncoding.ENCODINGS) {
@@ -96,7 +96,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
           "us ascii", //$NON-NLS-1$
           "us_ascii"); //$NON-NLS-1$
 
-      StreamEncoding.BIG_5._register("big-5");//$NON-NLS-1$
+      StreamEncoding.BIG_5._register("big-5"); //$NON-NLS-1$
 
       StreamEncoding.GB2312._register("euc_cn", //$NON-NLS-1$
           "euc cn", //$NON-NLS-1$
@@ -110,9 +110,9 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
           "iso/iec 10646-1", //$NON-NLS-1$
           "iso 10646-1"); //$NON-NLS-1$
 
-      StreamEncoding.UTF_16_BE._register("unicodebig");//$NON-NLS-1$
+      StreamEncoding.UTF_16_BE._register("unicodebig"); //$NON-NLS-1$
 
-      StreamEncoding.UTF_16_LE._register("unicodelittle");//$NON-NLS-1$
+      StreamEncoding.UTF_16_LE._register("unicodelittle"); //$NON-NLS-1$
 
       StreamEncoding.ISO_8859_1._register("iso 8859-1", //$NON-NLS-1$
           "8859-1", //$NON-NLS-1$
@@ -134,7 +134,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * create the encoding
-   * 
+   *
    * @param standardName
    *          the standard name
    * @param autoRegister
@@ -151,7 +151,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * register this encoding under a set of names
-   * 
+   *
    * @param names
    *          the names
    */
@@ -161,7 +161,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
         if (StreamEncoding.ENCODINGS.containsKey(s)) {
           throw new IllegalStateException(//
               "There is already an encoding under name '" + s + //$NON-NLS-1$
-                  "'.");//$NON-NLS-1$
+                  "'."); //$NON-NLS-1$
         }
       }
 
@@ -173,7 +173,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap an input stream into a stream representing this encoding
-   * 
+   *
    * @param input
    *          the input stream to wrap
    * @return the wrapped stream
@@ -186,7 +186,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap an output stream into a stream representing this encoding
-   * 
+   *
    * @param output
    *          the output stream to wrap
    * @return the wrapped stream
@@ -200,7 +200,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap a reader into a stream representing this encoding
-   * 
+   *
    * @param input
    *          the reader to wrap
    * @return the wrapped stream
@@ -211,7 +211,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap a writer into a stream representing this encoding
-   * 
+   *
    * @param output
    *          the writer to wrap
    * @return the wrapped stream
@@ -222,21 +222,21 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Get the class of the output wrappers
-   * 
+   *
    * @return the class of the output wrappers
    */
   public abstract Class<OST> getOutputClass();
 
   /**
    * Get the class of the input wrappers
-   * 
+   *
    * @return the class of the input wrappers
    */
   public abstract Class<IST> getInputClass();
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -252,7 +252,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {
@@ -284,7 +284,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Try to get the encoding of a given object
-   * 
+   *
    * @param o
    *          the object
    * @return the encoding, or {@link #UNKNOWN} if none could be found
@@ -346,7 +346,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Obtain a text encoding identified by a given string
-   * 
+   *
    * @param s
    *          the string
    * @return the corresponding encoding
@@ -393,7 +393,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Extract an encoding from a print stream
-   * 
+   *
    * @param wr
    *          The print stream to get the encoding of.
    * @return The historical name of this encoding, or possibly
@@ -413,7 +413,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
     try {
 
-      f = c.getField("charOut");//$NON-NLS-1$
+      f = c.getField("charOut"); //$NON-NLS-1$
       if (f != null) {
         x = f.get(wr);
         if (x != wr) {
@@ -433,7 +433,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Extract an encoding from a writer
-   * 
+   *
    * @param wr
    *          The writer to get the encoding of.
    * @return The historical name of this encoding, or possibly
@@ -457,7 +457,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
     try {
 
-      f = c.getField("out");//$NON-NLS-1$
+      f = c.getField("out"); //$NON-NLS-1$
       if (f != null) {
         x = f.get(wr);
         if (x != wr) {
@@ -472,7 +472,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
     }
 
     try {
-      f = c.getField("lock");//$NON-NLS-1$
+      f = c.getField("lock"); //$NON-NLS-1$
       if (f != null) {
         x = f.get(wr);
         if (x != wr) {
@@ -492,7 +492,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Extract an encoding from a reader
-   * 
+   *
    * @param r
    *          The reader to get the encoding of.
    * @return The historical name of this encoding, or possibly
@@ -516,7 +516,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
     try {
 
-      f = c.getField("out");//$NON-NLS-1$
+      f = c.getField("out"); //$NON-NLS-1$
       if (f != null) {
         x = f.get(r);
         if (x != r) {
@@ -531,7 +531,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
     }
 
     try {
-      f = c.getField("lock");//$NON-NLS-1$
+      f = c.getField("lock"); //$NON-NLS-1$
       if (f != null) {
         x = f.get(r);
         if (x != r) {

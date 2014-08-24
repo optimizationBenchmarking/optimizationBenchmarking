@@ -41,7 +41,7 @@ public class AbstractMatrix implements IMatrix, ITextable {
     throw new IndexOutOfBoundsException(
         ((("Matrix access getDouble(" + row) + ',') + column + //$NON-NLS-1$
             " is invalid, the valid index range is (0.." + this.m() + //$NON-NLS-1$
-            ", 0.." + this.n()) + '.');//$NON-NLS-1$
+            ", 0.." + this.n()) + '.'); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
@@ -50,7 +50,7 @@ public class AbstractMatrix implements IMatrix, ITextable {
     throw new IndexOutOfBoundsException(
         ((("Matrix access getLong(" + row) + ',') + column + //$NON-NLS-1$
             " is invalid, the valid index range is (0.." + this.m() + //$NON-NLS-1$
-            ", 0.." + this.n()) + '.');//$NON-NLS-1$
+            ", 0.." + this.n()) + '.'); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
@@ -314,7 +314,7 @@ public class AbstractMatrix implements IMatrix, ITextable {
   /**
    * Copy a given matrix and by using as little permanent memory as
    * possible.
-   * 
+   *
    * @param matrix
    *          the matrix to copy
    * @return the copy of the matrix

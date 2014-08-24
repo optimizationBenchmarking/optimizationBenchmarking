@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 
@@ -22,6 +21,9 @@ public class SectionBody extends StructuredText implements ISectionBody {
 
   /** the code counter */
   private int m_codeCount;
+
+  /** the equation counter */
+  private int m_equationCount;
 
   /**
    * Create a section body
@@ -170,10 +172,24 @@ public class SectionBody extends StructuredText implements ISectionBody {
         (++this.m_codeCount));
   }
 
+  /**
+   * Create a equation
+   * 
+   * @param useLabel
+   *          the label to use, or {@code null} if none is needed
+   * @param index
+   *          the index of the equation
+   * @return the equation
+   */
+  protected Equation createEquation(final ILabel useLabel, final int index) {
+    return new Equation(this, useLabel, index);
+  }
+
+  /** {@inheritDoc} */
   @Override
-  public IMath equation(final ILabel useLabel) {
-    // TODO Auto-generated method stub
-    return null;
+  public synchronized final Equation equation(final ILabel useLabel) {
+    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
+    return this.createEquation(useLabel, (++this.m_equationCount));
   }
 
 }

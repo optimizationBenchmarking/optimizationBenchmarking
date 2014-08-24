@@ -133,7 +133,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * the element has been opened
-   * 
+   *
    * @see #open()
    */
   private static final int STATE_OPENED = (HierarchicalFSM.STATE_AFTER_AFTER_CHILD_OPENED_CHILD + 1);
@@ -262,7 +262,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owning element
    */
@@ -288,7 +288,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Get the owner
-   * 
+   *
    * @return the owner
    */
   protected HierarchicalFSM getOwner() {
@@ -307,7 +307,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
     if (fsm != null) {
       sb = new MemoryTextOutput();
       FSM._name(this, sb);
-      sb.append(" currently should not have any open children, but has child ");//$NON-NLS-1$      
+      sb.append(" currently should not have any open children, but has child "); //$NON-NLS-1$
       FSM._name(fsm, sb);
       sb.append('.');
       throw new IllegalStateException(sb.toString());
@@ -316,7 +316,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * assert that we are in a given state
-   * 
+   *
    * @param shouldState
    *          the state we should be in
    */
@@ -328,9 +328,9 @@ public class HierarchicalFSM extends FSM implements Closeable {
       sb = new MemoryTextOutput();
       sb.append("The element "); //$NON-NLS-1$
       FSM._name(this, sb);
-      sb.append(" should be in hierarchy state '");//$NON-NLS-1$
+      sb.append(" should be in hierarchy state '"); //$NON-NLS-1$
       sb.append(HierarchicalFSM.STATE_NAMES[shouldState]);
-      sb.append(" but is in hierarchy state '");//$NON-NLS-1$
+      sb.append(" but is in hierarchy state '"); //$NON-NLS-1$
       sb.append(HierarchicalFSM.STATE_NAMES[isState]);
       sb.append('.');
       throw new IllegalStateException(sb.toString());
@@ -380,7 +380,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
   /**
    * This method is called at most once for any child hierarchy element
    * that is opened.
-   * 
+   *
    * @param child
    *          the child that is about to be opened
    * @param hasOtherChildren
@@ -396,7 +396,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
       FSM._name(child, sb);
       sb.append(" is not a child element of element "); //$NON-NLS-1$
       FSM._name(this, sb);
-      sb.append(", so you cannot invoke 'beforeChildOpens' for it.");//$NON-NLS-1$
+      sb.append(", so you cannot invoke 'beforeChildOpens' for it."); //$NON-NLS-1$
       throw new IllegalArgumentException(sb.toString());
     }
 
@@ -413,7 +413,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Called before a child can execute its onOpen method
-   * 
+   *
    * @param element
    *          the child element
    * @return {@code true} if and only if there are other open children,
@@ -430,9 +430,9 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
     if (element.m_next != null) {
       sb = new MemoryTextOutput();
-      sb.append("Element ");//$NON-NLS-1$
+      sb.append("Element "); //$NON-NLS-1$
       FSM._name(element, sb);
-      sb.append(" cannot become a child element of element ");//$NON-NLS-1$
+      sb.append(" cannot become a child element of element "); //$NON-NLS-1$
       FSM._name(this, sb);
       sb.append(", because it has already a successor element, namely "); //$NON-NLS-1$
       FSM._name(element.m_next, sb);
@@ -450,9 +450,9 @@ public class HierarchicalFSM extends FSM implements Closeable {
       if (next == element) {
         sb = new MemoryTextOutput();
         FSM._name(element, sb);
-        sb.append(" cannot become a child element of element ");//$NON-NLS-1$
+        sb.append(" cannot become a child element of element "); //$NON-NLS-1$
         FSM._name(this, sb);
-        sb.append(", because it is already enqueued as opened.");//$NON-NLS-1$
+        sb.append(", because it is already enqueued as opened."); //$NON-NLS-1$
         throw new IllegalStateException(sb.toString());
       }
       prev = next;
@@ -480,7 +480,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
         sb = new MemoryTextOutput();
         sb.append("The child queue of element "); //$NON-NLS-1$
         FSM._name(this, sb);
-        sb.append(" has changed during the opening of child ");//$NON-NLS-1$
+        sb.append(" has changed during the opening of child "); //$NON-NLS-1$
         FSM._name(element, sb);
         sb.append('.');
         throw new IllegalStateException(sb.toString());
@@ -494,7 +494,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
   /**
    * This method is called at most once for any child hierarchy element
    * that is opened.
-   * 
+   *
    * @param child
    *          the child that is about to be opened
    * @param hasOtherChildren
@@ -509,9 +509,9 @@ public class HierarchicalFSM extends FSM implements Closeable {
       sb = new MemoryTextOutput();
       sb.append("Element "); //$NON-NLS-1$
       FSM._name(child, sb);
-      sb.append(" is not a child element of element ");//$NON-NLS-1$
+      sb.append(" is not a child element of element "); //$NON-NLS-1$
       FSM._name(this, sb);
-      sb.append(", so you cannot invoke 'afterChildOpened' for it.");//$NON-NLS-1$
+      sb.append(", so you cannot invoke 'afterChildOpened' for it."); //$NON-NLS-1$
       throw new IllegalArgumentException(sb.toString());
     }
 
@@ -526,7 +526,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Called after a child can execute its onOpen method
-   * 
+   *
    * @param element
    *          the child element
    * @param hasOtherChildren
@@ -553,7 +553,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
   /**
    * This method is invoked after a child has been closed, and in the same
    * sequence in which children are opened.
-   * 
+   *
    * @param child
    *          the child element
    */
@@ -573,9 +573,9 @@ public class HierarchicalFSM extends FSM implements Closeable {
       sb = new MemoryTextOutput();
       sb.append("Element "); //$NON-NLS-1$
       FSM._name(child, sb);
-      sb.append(" is not a child element of element ");//$NON-NLS-1$
+      sb.append(" is not a child element of element "); //$NON-NLS-1$
       FSM._name(this, sb);
-      sb.append(", so you cannot invoke 'afterChildClosed' for it.");//$NON-NLS-1$
+      sb.append(", so you cannot invoke 'afterChildClosed' for it."); //$NON-NLS-1$
       throw new IllegalArgumentException(sb.toString());
     }
   }
@@ -638,9 +638,9 @@ public class HierarchicalFSM extends FSM implements Closeable {
       sb = new MemoryTextOutput();
       sb.append("The element "); //$NON-NLS-1$
       FSM._name(this, sb);
-      sb.append(" should be in hierarchy state '");//$NON-NLS-1$
+      sb.append(" should be in hierarchy state '"); //$NON-NLS-1$
       sb.append(HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_OPENED]);
-      sb.append("', but is in hierarchy state ");//$NON-NLS-1$
+      sb.append("', but is in hierarchy state "); //$NON-NLS-1$
       sb.append(HierarchicalFSM.STATE_NAMES[oldState]);
       throw new IllegalStateException(sb.toString());
     }
@@ -649,7 +649,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
       sb = new MemoryTextOutput();
       sb.append("Cannot close "); //$NON-NLS-1$
       FSM._name(this, sb);
-      sb.append(" since it still has child elements, namely ");//$NON-NLS-1$
+      sb.append(" since it still has child elements, namely "); //$NON-NLS-1$
       FSM._name(this.m_childQueue, sb);
       sb.append('.');
       throw new IllegalStateException(sb.toString());
@@ -679,7 +679,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Throw an error indicating that the given child is not allowed.
-   * 
+   *
    * @param child
    *          the child
    */
@@ -690,10 +690,10 @@ public class HierarchicalFSM extends FSM implements Closeable {
     FSM._name(this, sb);
     sb.append(" is an instance of "); //$NON-NLS-1$
     sb.append(TextUtils.className(this.getClass()));
-    sb.append(" and does not allow the child element ");//$NON-NLS-1$
+    sb.append(" and does not allow the child element "); //$NON-NLS-1$
     FSM._name(child, sb);
     if (child != null) {
-      sb.append(", which is an instance of ");//$NON-NLS-1$
+      sb.append(", which is an instance of "); //$NON-NLS-1$
       sb.append(TextUtils.className(child.getClass()));
     }
     sb.append('.');

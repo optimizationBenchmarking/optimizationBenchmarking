@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /**
  * the hierarchical experiment set element
- * 
+ *
  * @param <CET>
  *          the collection element type
  * @param <CCT>
@@ -22,7 +22,7 @@ abstract class _HierarchicalCollection<CCT, CET extends _Context<CCT>, RT>
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -33,14 +33,14 @@ abstract class _HierarchicalCollection<CCT, CET extends _Context<CCT>, RT>
 
   /**
    * get the allowed child type
-   * 
+   *
    * @return the allowed child type
    */
   abstract Class<CET> _getChildType();
 
   /**
    * process the collection
-   * 
+   *
    * @param data
    *          the data
    * @return the result of processing the collection
@@ -70,7 +70,7 @@ abstract class _HierarchicalCollection<CCT, CET extends _Context<CCT>, RT>
           this.getClass().getSimpleName()
           + " must have at least one child of class " + //$NON-NLS-1$
           clazz.getSimpleName() + ", but " + this + //$NON-NLS-1$
-          " has none.");//$NON-NLS-1$
+          " has none."); //$NON-NLS-1$
     }
 
     for (; (--i) >= 0;) {
@@ -78,14 +78,14 @@ abstract class _HierarchicalCollection<CCT, CET extends _Context<CCT>, RT>
       if (o == null) {
         throw new IllegalStateException("No child of " + this//$NON-NLS-1$
             + " can be null, but the one at index " + i//$NON-NLS-1$
-            + " is.");//$NON-NLS-1$
+            + " is."); //$NON-NLS-1$
       }
       r = clazz.cast(o)._compile();
       if (r == null) {
         throw new IllegalStateException("No compiled child of " + this//$NON-NLS-1$
             + " can be null, but the one at index " + i//$NON-NLS-1$
             + " (" + o + //$NON-NLS-1$
-            ") compiles to null.");//$NON-NLS-1$
+            ") compiles to null."); //$NON-NLS-1$
       }
       list.set(i, r);
     }

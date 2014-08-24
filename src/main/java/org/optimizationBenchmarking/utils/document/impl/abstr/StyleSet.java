@@ -74,14 +74,14 @@ public final class StyleSet implements IStyleContext {
 
   /** {@inheritDoc} */
   @Override
-  public final IStyle emphasized() {
-    return this.m_styles.emphasized();
+  public final IStyle getEmphasizedStyle() {
+    return this.m_styles.getEmphasizedStyle();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final IStyle plain() {
-    return this.m_styles.plain();
+  public final IStyle getPlainStyle() {
+    return this.m_styles.getPlainStyle();
   }
 
 }

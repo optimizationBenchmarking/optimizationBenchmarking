@@ -141,12 +141,12 @@ public final class BibTeXDriver extends
 
     throw new IllegalArgumentException(//
         "Element '" + data + //$NON-NLS-1$
-            "' cannot be processed by BibTeX output driver.");//$NON-NLS-1$
+            "' cannot be processed by BibTeX output driver."); //$NON-NLS-1$
   }
 
   /**
    * store an in-collection record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -192,7 +192,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a bibliographic record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -244,12 +244,12 @@ public final class BibTeXDriver extends
 
     throw new IllegalArgumentException(//
         "Element '" + data + //$NON-NLS-1$
-            "' is of unknown type cannot be processed by BibTeX output driver.");//$NON-NLS-1$
+            "' is of unknown type cannot be processed by BibTeX output driver."); //$NON-NLS-1$
   }
 
   /**
    * put a string into a buffer
-   * 
+   *
    * @param name
    *          the string
    * @param buf
@@ -266,7 +266,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a field value start
-   * 
+   *
    * @param name
    *          the field name
    * @param buf
@@ -282,7 +282,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a record start
-   * 
+   *
    * @param name
    *          the field name
    * @param rec
@@ -301,7 +301,7 @@ public final class BibTeXDriver extends
 
   /**
    * end a field
-   * 
+   *
    * @param raw
    *          the output
    */
@@ -313,7 +313,7 @@ public final class BibTeXDriver extends
 
   /**
    * end a record
-   * 
+   *
    * @param raw
    *          the output
    */
@@ -323,7 +323,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a simple field
-   * 
+   *
    * @param name
    *          the field name
    * @param value
@@ -346,7 +346,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a pages field
-   * 
+   *
    * @param start
    *          the start page
    * @param end
@@ -378,7 +378,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a organization field
-   * 
+   *
    * @param name
    *          the field name
    * @param org
@@ -416,7 +416,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a date field
-   * 
+   *
    * @param start
    *          the start date
    * @param end
@@ -488,7 +488,7 @@ public final class BibTeXDriver extends
             raw.append(d1);
             raw.append("--}"); //$NON-NLS-1$
           } else {
-            raw.append(" # {--}");//$NON-NLS-1$
+            raw.append(" # {--}"); //$NON-NLS-1$
           }
           raw.append('#');
 
@@ -500,7 +500,7 @@ public final class BibTeXDriver extends
             raw.append(d2);
             raw.append(", }"); //$NON-NLS-1$
           } else {
-            raw.append(" # { }");//$NON-NLS-1$
+            raw.append(" # { }"); //$NON-NLS-1$
           }
         }
 
@@ -554,7 +554,7 @@ public final class BibTeXDriver extends
 
         // close up
         if (z1 || z2) {
-          raw.append(", }");//$NON-NLS-1$
+          raw.append(", }"); //$NON-NLS-1$
         }
 
       }
@@ -576,7 +576,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a full date
-   * 
+   *
    * @param date
    *          the date
    * @param raw
@@ -597,7 +597,7 @@ public final class BibTeXDriver extends
         raw.append(day);
         raw.append(", }"); //$NON-NLS-1$
       } else {
-        raw.append(" # {~}");//$NON-NLS-1$
+        raw.append(" # {~}"); //$NON-NLS-1$
       }
       raw.append('#');
     } else {
@@ -605,7 +605,7 @@ public final class BibTeXDriver extends
       if (q != null) {
         raw.append('{');
         raw.append(q.getLongName());
-        raw.append("~} # ");//$NON-NLS-1$
+        raw.append("~} # "); //$NON-NLS-1$
       }
     }
     raw.append(date.getYear());
@@ -613,7 +613,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a date field
-   * 
+   *
    * @param value
    *          the field value
    * @param raw
@@ -663,7 +663,7 @@ public final class BibTeXDriver extends
 
   /**
    * write an author field
-   * 
+   *
    * @param name
    *          the field name
    * @param value
@@ -720,7 +720,7 @@ public final class BibTeXDriver extends
 
   /**
    * store an article record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -763,7 +763,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a book record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -796,7 +796,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a thesis record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -840,7 +840,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a book inner record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -870,7 +870,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a proceedings inner record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -893,7 +893,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a proceedings record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -925,7 +925,7 @@ public final class BibTeXDriver extends
 
   /**
    * store an in-proceedings record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -970,7 +970,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a website record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -1004,7 +1004,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a technical report record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -1043,7 +1043,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a bibliography
-   * 
+   *
    * @param data
    *          the data
    * @param raw

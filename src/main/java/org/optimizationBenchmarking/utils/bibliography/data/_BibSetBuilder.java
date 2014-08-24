@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 /**
  * The internal, abstract base class for builders of sets of bibliographic
  * elements.
- * 
+ *
  * @param <DT>
  *          the element type
  * @param <BST>
@@ -23,7 +23,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /**
    * create the author builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -34,7 +34,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /**
    * create the array
-   * 
+   *
    * @param len
    *          the length
    * @return the array
@@ -43,14 +43,14 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /**
    * return the empty bib set
-   * 
+   *
    * @return the empty bib set
    */
   abstract BST _empty();
 
   /**
    * instantiate the type
-   * 
+   *
    * @param data
    *          the data
    * @return the type
@@ -59,7 +59,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /**
    * search for a given element
-   * 
+   *
    * @param element
    *          the element to find
    * @return the index where it is, or {@code -1} if it could not be found
@@ -81,7 +81,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /**
    * add an element
-   * 
+   *
    * @param element
    *          the element to add
    * @param throwOnExists
@@ -95,7 +95,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
     int i;
 
     if (element == null) {
-      throw new IllegalArgumentException("Element cannot be null.");//$NON-NLS-1$
+      throw new IllegalArgumentException("Element cannot be null."); //$NON-NLS-1$
     }
 
     this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);

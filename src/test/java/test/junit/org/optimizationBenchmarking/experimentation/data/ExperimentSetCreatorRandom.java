@@ -77,7 +77,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create the dimension set
-   * 
+   *
    * @param dsc
    *          the context
    * @param r
@@ -92,7 +92,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create the dimension set
-   * 
+   *
    * @param dsc
    *          the context
    * @param r
@@ -120,7 +120,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create a property map
-   * 
+   *
    * @param r
    *          the randomizer
    * @return the property map
@@ -141,7 +141,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create a property map
-   * 
+   *
    * @param map
    *          the map
    * @param canOmit
@@ -206,7 +206,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
             o = s = RandomUtils.longToString(
                 ExperimentSetCreatorRandom.NAMING, r.nextLong());
           } while (("true".equalsIgnoreCase(s)) || //$NON-NLS-1$
-              ("false".equalsIgnoreCase(s)));//$NON-NLS-1$
+              ("false".equalsIgnoreCase(s))); //$NON-NLS-1$
           break;
         }
         case 8: {
@@ -223,7 +223,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
             o = s = RandomUtils.longToString(
                 ExperimentSetCreatorRandom.NAMING, r.nextInt(10));
           } while (("true".equalsIgnoreCase(s)) || //$NON-NLS-1$
-              ("false".equalsIgnoreCase(s)));//$NON-NLS-1$
+              ("false".equalsIgnoreCase(s))); //$NON-NLS-1$
           break;
         }
       }
@@ -236,7 +236,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create the instance set
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -267,7 +267,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create the instance set
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -288,7 +288,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create a random data point
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dimss
@@ -476,7 +476,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create a random data point
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dimss
@@ -683,7 +683,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create a random run
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -768,7 +768,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create a random run
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -785,7 +785,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create a random run
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -811,7 +811,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create a random run
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -837,7 +837,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create the experiment set
-   * 
+   *
    * @param isc
    *          the context
    * @param dims
@@ -890,7 +890,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create the experiment set
-   * 
+   *
    * @param isc
    *          the context
    * @param dims
@@ -916,7 +916,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
   /**
    * create the experiment set
-   * 
+   *
    * @param isc
    *          the context
    * @param dims

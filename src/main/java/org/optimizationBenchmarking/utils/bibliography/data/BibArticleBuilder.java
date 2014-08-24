@@ -40,7 +40,7 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /**
    * create the article builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -55,27 +55,27 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_JOURNAL_SET: {
-        append.append("journalSet");//$NON-NLS-1$
+        append.append("journalSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_VOLUME_SET: {
-        append.append("volumeSet");//$NON-NLS-1$
+        append.append("volumeSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_NUMBER_SET: {
-        append.append("numberSet");//$NON-NLS-1$
+        append.append("numberSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_ISSN_SET: {
-        append.append("issnSet");//$NON-NLS-1$
+        append.append("issnSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_START_PAGE_SET: {
-        append.append("startPageSet");//$NON-NLS-1$
+        append.append("startPageSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_END_PAGE_SET: {
-        append.append("endPageSet");//$NON-NLS-1$
+        append.append("endPageSet"); //$NON-NLS-1$
         return;
       }
       default: {
@@ -86,7 +86,7 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /**
    * Set the volume
-   * 
+   *
    * @param volume
    *          the volume
    */
@@ -97,13 +97,13 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
     if ((this.m_volume = this.normalize(volume)) == null) {
       throw new IllegalArgumentException(//
           "Volume cannot be set to empty or null, but '" //$NON-NLS-1$
-              + volume + "' is.");//$NON-NLS-1$
+              + volume + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the number
-   * 
+   *
    * @param number
    *          the number
    */
@@ -114,13 +114,13 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
     if ((this.m_number = this.normalize(number)) == null) {
       throw new IllegalArgumentException(//
           "Number cannot be set to empty or null, but '" //$NON-NLS-1$
-              + number + "' is.");//$NON-NLS-1$
+              + number + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the journal
-   * 
+   *
    * @param journal
    *          the journal
    */
@@ -131,13 +131,13 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
     if ((this.m_journal = this.normalize(journal)) == null) {
       throw new IllegalArgumentException(//
           "Journal cannot be set to empty or null, but '" //$NON-NLS-1$
-              + journal + "' is.");//$NON-NLS-1$
+              + journal + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the issn
-   * 
+   *
    * @param issn
    *          the issn
    */
@@ -148,13 +148,13 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
     if ((this.m_issn = this.normalize(issn)) == null) {
       throw new IllegalArgumentException(//
           "ISSN cannot be set to empty or null, but '" //$NON-NLS-1$
-              + issn + "' is.");//$NON-NLS-1$
+              + issn + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the start page
-   * 
+   *
    * @param startPage
    *          the start page
    */
@@ -166,13 +166,13 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
     if ((this.m_startPage = this.normalize(startPage)) == null) {
       throw new IllegalArgumentException(//
           "Start page cannot be set to empty or null, but '" //$NON-NLS-1$
-              + startPage + "' is.");//$NON-NLS-1$
+              + startPage + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the end page
-   * 
+   *
    * @param endPage
    *          the end page
    */
@@ -184,7 +184,7 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
     if ((this.m_endPage = this.normalize(endPage)) == null) {
       throw new IllegalArgumentException(//
           "End page cannot be set to empty or null, but '" //$NON-NLS-1$
-              + endPage + "' is.");//$NON-NLS-1$
+              + endPage + "' is."); //$NON-NLS-1$
     }
   }
 

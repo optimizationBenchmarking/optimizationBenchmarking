@@ -13,21 +13,21 @@ public class BibThesis extends BibBook {
 
   /**
    * the thesis type
-   * 
+   *
    * @serial serial field
    */
   private final EThesisType m_type;
 
   /**
    * the school
-   * 
+   *
    * @serial serial field
    */
   private final BibOrganization m_school;
 
   /**
    * Create a new bibliography record
-   * 
+   *
    * @param authors
    *          the authors
    * @param type
@@ -67,7 +67,7 @@ public class BibThesis extends BibBook {
 
   /**
    * Create a new bibliography record
-   * 
+   *
    * @param authors
    *          the authors
    * @param type
@@ -109,13 +109,13 @@ public class BibThesis extends BibBook {
 
     if ((this.m_type = type) == null) {
       throw new IllegalArgumentException(//
-          "Thesis type must not be empty.");//$NON-NLS-1$
+          "Thesis type must not be empty."); //$NON-NLS-1$
     }
 
     this.m_school = school;
     if (this.m_school == null) {
       throw new IllegalArgumentException(//
-          "School must not be empty.");//$NON-NLS-1$
+          "School must not be empty."); //$NON-NLS-1$
     }
   }
 
@@ -130,7 +130,7 @@ public class BibThesis extends BibBook {
 
   /**
    * Get the thesis type
-   * 
+   *
    * @return the thesis type
    */
   public final EThesisType getType() {
@@ -139,7 +139,7 @@ public class BibThesis extends BibBook {
 
   /**
    * Get the school
-   * 
+   *
    * @return the school
    */
   public final BibOrganization getSchool() {

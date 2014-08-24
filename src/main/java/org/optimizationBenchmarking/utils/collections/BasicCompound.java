@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * The base class for all collections.
- * 
+ *
  * @param <ET>
  *          the element type
  */
@@ -35,7 +35,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
 
   /**
    * Visit the elements in this list
-   * 
+   *
    * @param visitor
    *          the visitor
    * @return {@code false} if the visitors {@code visit} method returned
@@ -111,7 +111,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
 
   /**
    * Get the number of elements of this compound data structure
-   * 
+   *
    * @return the number of elements of this compound data structure
    */
   public int size() {
@@ -120,7 +120,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
 
   /**
    * Check if this compound data structure is empty or not.
-   * 
+   *
    * @return {@code true} if the data structure is empty, {@code false}
    *         otherwise
    */
@@ -130,7 +130,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
 
   /**
    * Does this compound data structure contain a specific element?
-   * 
+   *
    * @param o
    *          the object to find
    * @return {@code true} if the object is contained, {@code false}
@@ -160,7 +160,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
 
   /**
    * transform the contents of this compound to an array
-   * 
+   *
    * @return the array
    */
   public Object[] toArray() {
@@ -182,7 +182,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
 
   /**
    * transform the contents of this compound to a specific array
-   * 
+   *
    * @param a
    *          the array
    * @return the array
@@ -214,7 +214,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
 
   /**
    * Check if all the elements in a collection are contained
-   * 
+   *
    * @param c
    *          the collection
    * @return {@code true} if all the collection's elements are contained,
@@ -239,7 +239,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
 
   /**
    * Clear this compound data structure
-   * 
+   *
    * @throws UnsupportedOperationException
    *           if not supported
    */
@@ -283,7 +283,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
     final MemoryTextOutput sb;
 
     if (this.isEmpty()) {
-      return "[]";//$NON-NLS-1$
+      return "[]"; //$NON-NLS-1$
     }
 
     sb = new MemoryTextOutput();
@@ -297,7 +297,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
    * modify the current compound, but it may return the compound itself. If
    * some of the elements do not meet the condition, a new compound may be
    * returned.
-   * 
+   *
    * @param predicate
    *          the predicate
    * @return a compound with the elements in this compound that meet the
@@ -335,7 +335,7 @@ public class BasicCompound<ET> implements Serializable, Iterable<ET>,
 
   /**
    * Check whether there is any element that meets the condition
-   * 
+   *
    * @param predicate
    *          the predicate
    * @return {@code true} if there is any element that meets the condition,

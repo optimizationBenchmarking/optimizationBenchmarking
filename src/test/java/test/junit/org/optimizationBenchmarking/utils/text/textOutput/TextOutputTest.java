@@ -18,7 +18,7 @@ import examples.org.optimizationBenchmarking.LoremIpsum;
 /**
  * A base class to test implementations of
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
- * 
+ *
  * @param <R>
  *          the root object type
  */
@@ -32,14 +32,14 @@ public abstract class TextOutputTest<R> extends TestBase {
 
   /**
    * create a root object
-   * 
+   *
    * @return the root object
    */
   protected abstract R createRootObject();
 
   /**
    * Get the string from a root object
-   * 
+   *
    * @param root
    *          the root object
    * @return the returned object
@@ -50,7 +50,7 @@ public abstract class TextOutputTest<R> extends TestBase {
 
   /**
    * Wrap a text output around a root object
-   * 
+   *
    * @param root
    *          the root object
    * @return the wrapped text output
@@ -59,7 +59,7 @@ public abstract class TextOutputTest<R> extends TestBase {
 
   /**
    * Perform one random test run.
-   * 
+   *
    * @param r
    *          the randomizer
    */
@@ -82,7 +82,7 @@ public abstract class TextOutputTest<R> extends TestBase {
 
   /**
    * Append a random object
-   * 
+   *
    * @param r
    *          the random number generator
    * @param sb
@@ -264,7 +264,7 @@ public abstract class TextOutputTest<R> extends TestBase {
     t.flush();
     Assert.assertEquals("", this.getString(root)); //$NON-NLS-1$
 
-    list.add("abc");//$NON-NLS-1$
+    list.add("abc"); //$NON-NLS-1$
     ESequenceMode.AND.appendSequence(ETextCase.AT_SENTENCE_START, list,
         true, t);
     t.flush();
@@ -277,7 +277,7 @@ public abstract class TextOutputTest<R> extends TestBase {
     t.flush();
     Assert.assertEquals("AbcabcAbc", this.getString(root)); //$NON-NLS-1$
 
-    list.add("def xyz");//$NON-NLS-1$
+    list.add("def xyz"); //$NON-NLS-1$
     ESequenceMode.AND.appendSequence(ETextCase.AT_SENTENCE_START, list,
         true, t);
     t.flush();
@@ -293,14 +293,14 @@ public abstract class TextOutputTest<R> extends TestBase {
 
     root = this.createRootObject();
     t = this.wrap(root);
-    list.add("Thomas Weise");//$NON-NLS-1$
+    list.add("Thomas Weise"); //$NON-NLS-1$
     ESequenceMode.EITHER_OR.appendSequence(ETextCase.AT_TITLE_START, list,
         false, t);
     t.flush();
     Assert.assertEquals("Either Abc, Def Xyz, or Thomas Weise",//$NON-NLS-1$
         this.getString(root));
 
-    list.add("Fritz Walter");//$NON-NLS-1$
+    list.add("Fritz Walter"); //$NON-NLS-1$
     ESequenceMode.ET_AL.appendSequence(ETextCase.AT_TITLE_START, list,
         false, t);
     t.flush();
@@ -310,7 +310,7 @@ public abstract class TextOutputTest<R> extends TestBase {
 
   /**
    * Create a random string
-   * 
+   *
    * @param r
    *          the randomizer
    * @return the string

@@ -52,7 +52,7 @@ public final class LabelManager {
         throw new IllegalArgumentException(//
             "A label of type '" + r.m_type + //$NON-NLS-1$
                 "' cannot be used to label an '" + //$NON-NLS-1$
-                type + "'.");//$NON-NLS-1$
+                type + "'."); //$NON-NLS-1$
       }
       this.setReferenceText(r, text);
       return r;
@@ -63,6 +63,23 @@ public final class LabelManager {
             "', only " + TextUtils.className(ELabelType.class) + //$NON-NLS-1$
             ".AUTO and instances of " + TextUtils.className(Label.class) + //$NON-NLS-1$
             " permitted."); //$NON-NLS-1$
+  }
+
+  /**
+   * create a label
+   * 
+   * @param type
+   *          the label type
+   * @param mark
+   *          the label mark
+   * @param refText
+   *          the reference text
+   * @return the label
+   */
+  protected Label doCreateLabel(final ELabelType type, final String mark,
+      final String refText) {
+    return new Label(this, type, mark, refText);
+
   }
 
   /**
@@ -88,7 +105,7 @@ public final class LabelManager {
     s = mto.toString();
     mto.clear();
 
-    return new Label(this, type, s, refText);
+    return this.doCreateLabel(type, s, refText);
   }
 
   /**

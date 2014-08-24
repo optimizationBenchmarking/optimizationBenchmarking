@@ -90,7 +90,7 @@ public interface IComplexText extends IText, IStyleContext {
    * @param labels
    *          the labels
    */
-  public abstract void referece(final ETextCase textCase,
+  public abstract void reference(final ETextCase textCase,
       final ESequenceMode sequenceMode, final ILabel... labels);
 
   /**

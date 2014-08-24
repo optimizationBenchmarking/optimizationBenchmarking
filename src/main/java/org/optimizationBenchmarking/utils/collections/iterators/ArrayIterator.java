@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 /**
  * an iterator for arrays
- * 
+ *
  * @param <T>
  *          the type
  */
@@ -18,7 +18,7 @@ public final class ArrayIterator<T> extends BasicListIterator<T> {
 
   /**
    * instantiate
-   * 
+   *
    * @param arr
    *          the m_array
    */
@@ -28,7 +28,7 @@ public final class ArrayIterator<T> extends BasicListIterator<T> {
 
   /**
    * instantiate
-   * 
+   *
    * @param arr
    *          the m_array
    * @param size
@@ -40,7 +40,7 @@ public final class ArrayIterator<T> extends BasicListIterator<T> {
 
   /**
    * instantiate
-   * 
+   *
    * @param arr
    *          the m_array
    * @param size
@@ -65,7 +65,7 @@ public final class ArrayIterator<T> extends BasicListIterator<T> {
 
   /**
    * Get the element at position {@code index}
-   * 
+   *
    * @param index
    *          the index
    * @return the element at that position
@@ -89,7 +89,7 @@ public final class ArrayIterator<T> extends BasicListIterator<T> {
     throw new NoSuchElementException(
         "The current position (" + this.m_pos + //$NON-NLS-1$
             ") is already at the end of the valid range (0.." + //$NON-NLS-1$
-            this.m_size + ").");//$NON-NLS-1$
+            this.m_size + ")."); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

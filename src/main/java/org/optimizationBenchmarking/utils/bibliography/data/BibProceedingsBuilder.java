@@ -13,14 +13,14 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * the location
-   * 
+   *
    * @serial serial field
    */
   private BibOrganization m_location;
 
   /**
    * the end date
-   * 
+   *
    * @serial serial field
    */
   private BibDate m_endDate;
@@ -32,7 +32,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * create the book builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -47,11 +47,11 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_LOCATION_SET: {
-        append.append("locationSet");//$NON-NLS-1$
+        append.append("locationSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_END_DATE_SET: {
-        append.append("endDateSet");//$NON-NLS-1$
+        append.append("endDateSet"); //$NON-NLS-1$
         return;
       }
       default: {
@@ -62,7 +62,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * Build the start date
-   * 
+   *
    * @return the builder for the start date
    */
   public final BibDateBuilder setStartDate() {
@@ -71,7 +71,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * Set the start date
-   * 
+   *
    * @param date
    *          the start date
    */
@@ -91,7 +91,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * Create the end date builder
-   * 
+   *
    * @return the end date builder
    */
   public synchronized final BibDateBuilder setEndDate() {
@@ -102,7 +102,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * Set the end date
-   * 
+   *
    * @param endDate
    *          the date
    */
@@ -119,7 +119,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * Set the location
-   * 
+   *
    * @param location
    *          the location
    */
@@ -131,13 +131,13 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
     if ((this.m_location = this.normalize(location)) == null) {
       throw new IllegalArgumentException(//
           "Location cannot be empty or null, but '" //$NON-NLS-1$
-              + location + "' is.");//$NON-NLS-1$
+              + location + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the location
-   * 
+   *
    * @return the location builder
    */
   public synchronized final BibOrganizationBuilder setLocation() {

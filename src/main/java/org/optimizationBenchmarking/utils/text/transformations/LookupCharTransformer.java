@@ -68,7 +68,7 @@ public class LookupCharTransformer extends CharTransformer {
 
   /**
    * instantiate
-   * 
+   *
    * @param resource
    *          the name of the resource file
    */
@@ -229,7 +229,7 @@ public class LookupCharTransformer extends CharTransformer {
           throw new IllegalArgumentException(//
               "Double mapping for char " + cur + //$NON-NLS-1$
                   "(0x" + Integer.toHexString(cur) + //$NON-NLS-1$
-                  "): " + Arrays.toString(ch));//$NON-NLS-1$
+                  "): " + Arrays.toString(ch)); //$NON-NLS-1$
         }
         last = cur;
       }

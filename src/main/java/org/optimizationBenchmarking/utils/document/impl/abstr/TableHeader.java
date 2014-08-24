@@ -25,7 +25,7 @@ public class TableHeader extends TableSection {
    * @return the style to use for header cells
    */
   protected IStyle headerCellStyle(final StyleSet styles) {
-    return styles.emphasized();
+    return styles.getEmphasizedStyle();
   }
 
   /** {@inheritDoc} */

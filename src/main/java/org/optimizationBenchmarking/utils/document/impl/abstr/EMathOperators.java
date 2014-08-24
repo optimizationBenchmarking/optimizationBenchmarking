@@ -76,7 +76,7 @@ public enum EMathOperators {
     if (maxParamCount < minParamCount) {
       throw new IllegalArgumentException(//
           "The maximum parameter count must be greater or equal to the minimum parameter counter, but is " //$NON-NLS-1$
-              + maxParamCount + " vs. " + minParamCount);//$NON-NLS-1$
+              + maxParamCount + " vs. " + minParamCount); //$NON-NLS-1$
     }
     this.m_minParamCount = minParamCount;
     this.m_maxParamCount = maxParamCount;

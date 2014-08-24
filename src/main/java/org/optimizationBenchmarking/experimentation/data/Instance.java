@@ -18,7 +18,7 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
 
   /**
    * Create the instance
-   * 
+   *
    * @param name
    *          the instance name
    * @param desc
@@ -42,25 +42,25 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
     if ((features == null) || (features.size() <= 0)) {
       throw new IllegalArgumentException((((//
           "Feature set of a problem instance must not be null or empty, but feature set of instance '" + //$NON-NLS-1$
-          n) + "' is ") + features) + '.');//$NON-NLS-1$
+          n) + "' is ") + features) + '.'); //$NON-NLS-1$
     }
     if (features.isGeneralized()) {
       throw new IllegalArgumentException((((//
           "Feature set of a problem instance must not be generalized, but feature set of instance '" + //$NON-NLS-1$
-          n) + "' is ") + features) + '.');//$NON-NLS-1$
+          n) + "' is ") + features) + '.'); //$NON-NLS-1$
     }
 
     if ((upper == null) || (upper.length < 1)) {
       throw new IllegalArgumentException(
           ("There must be at least one upper bound for one dimension for instance '" + //$NON-NLS-1$
           n)
-              + "' but there is none.");//$NON-NLS-1$
+              + "' but there is none."); //$NON-NLS-1$
     }
     if ((lower == null) || (lower.length < 1)) {
       throw new IllegalArgumentException(
           ("There must be at least one lower bound for one dimension for instance '" + //$NON-NLS-1$
           n)
-              + "' but there is none.");//$NON-NLS-1$
+              + "' but there is none."); //$NON-NLS-1$
     }
 
     if (lower.length != upper.length) {
@@ -85,7 +85,7 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
 
   /**
    * Get the features of this instance
-   * 
+   *
    * @return the features of this instance
    */
   public final FeatureSetting features() {
@@ -95,7 +95,7 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
   /**
    * Get the upper boundary of a given dimension for this benchmark
    * instance
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the upper boundary for dimension {@code dim} for this
@@ -108,7 +108,7 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
   /**
    * Get the lower boundary of a given dimension for this benchmark
    * instance
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the lower boundary for dimension {@code dim} for this
@@ -120,7 +120,7 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
 
   /**
    * Validate a given data point
-   * 
+   *
    * @param p
    *          the data point to be validated
    * @throws IllegalArgumentException

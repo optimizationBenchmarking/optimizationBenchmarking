@@ -40,7 +40,7 @@ public class FloatParser extends StrictFloatParser {
                     ((((("The finite double value " + d) + //$NON-NLS-1$
                         " is outside of the valid range [") + (-Float.MAX_VALUE)) + //$NON-NLS-1$
                         ',') + Float.MAX_VALUE)
-                        + "] of floats.");//$NON-NLS-1$
+                        + "] of floats."); //$NON-NLS-1$
               }
               if ((d > (-1d)) && (d < 1d)
                   && ((d > (-Float.MIN_VALUE)) && (d < Float.MIN_VALUE))) {
@@ -48,7 +48,7 @@ public class FloatParser extends StrictFloatParser {
                     ((((("The finite double value " + d) + //$NON-NLS-1$
                         " has a too small scale for the valid range [") + (-Float.MIN_VALUE)) + //$NON-NLS-1$
                         ',') + Float.MIN_VALUE)
-                        + "] of floats.");//$NON-NLS-1$
+                        + "] of floats."); //$NON-NLS-1$
               }
               retVal = ((float) d);
             }
@@ -86,7 +86,7 @@ public class FloatParser extends StrictFloatParser {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -95,7 +95,7 @@ public class FloatParser extends StrictFloatParser {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

@@ -29,7 +29,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * create
-   * 
+   *
    * @param element
    *          the owning element
    * @param builder
@@ -57,7 +57,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Get the experiment set builder owning this dimension context
-   * 
+   *
    * @return the experiment set builder owning this dimension context
    */
   public final ExperimentSetContext getBuilder() {
@@ -66,7 +66,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Validate a given boundary.
-   * 
+   *
    * @param bound
    *          the boundary
    * @param name
@@ -84,14 +84,14 @@ public final class InstanceContext extends _NamedContext<Instance> {
     if (bound == null) {
       throw new IllegalArgumentException(//
           "Boundaries must not be null, but instance '" + name + //$NON-NLS-1$
-              "' has at least one null boundary.");//$NON-NLS-1$
+              "' has at least one null boundary."); //$NON-NLS-1$
     }
 
     if (dim != null) {
       try {
         dim.m_parser.validate(bound);
       } catch (final Throwable t) {
-        throw new RuntimeException(("Illegal boundary: " + bound), t);//$NON-NLS-1$
+        throw new RuntimeException(("Illegal boundary: " + bound), t); //$NON-NLS-1$
       }
     }
 
@@ -118,12 +118,12 @@ public final class InstanceContext extends _NamedContext<Instance> {
           l2 = dim.m_parser.parseObject(bound).longValue();
         } catch (final Throwable t) {
           throw new RuntimeException(//
-              "Error when re-parsing boundary " + bound);//$NON-NLS-1$
+              "Error when re-parsing boundary " + bound); //$NON-NLS-1$
         }
         if (l2 != l1) {
           throw new IllegalArgumentException(((((//
               "Loss of fidelity with boundary '" + //$NON-NLS-1$
-              l1) + "': parsed to '") + l2) + '\'') + '.');//$NON-NLS-1$
+              l1) + "': parsed to '") + l2) + '\'') + '.'); //$NON-NLS-1$
         }
       }
 
@@ -152,12 +152,12 @@ public final class InstanceContext extends _NamedContext<Instance> {
           d2 = dim.m_parser.parseObject(bound).doubleValue();
         } catch (final Throwable t) {
           throw new RuntimeException(//
-              "Error when re-parsing boundary " + bound);//$NON-NLS-1$
+              "Error when re-parsing boundary " + bound); //$NON-NLS-1$
         }
         if (d2 != d1) {
           throw new IllegalArgumentException(((((//
               "Loss of fidelity with boundary '" + //$NON-NLS-1$
-              d1) + "': parsed to '") + d2) + '\'') + '.');//$NON-NLS-1$
+              d1) + "': parsed to '") + d2) + '\'') + '.'); //$NON-NLS-1$
         }
       }
 
@@ -173,7 +173,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * get the dimension set
-   * 
+   *
    * @return the dimension set
    */
   final DimensionSet _getDimensionSet() {
@@ -182,7 +182,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Define a feature with a given name and description
-   * 
+   *
    * @param name
    *          the feature name
    * @param desc
@@ -196,7 +196,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set a feature value.
-   * 
+   *
    * @param featureName
    *          the feature name
    * @param featureDescription
@@ -216,7 +216,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set a feature value.
-   * 
+   *
    * @param featureName
    *          the feature name
    * @param featureValue
@@ -232,7 +232,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set a feature value.
-   * 
+   *
    * @param featureName
    *          the feature name
    * @param featureValue
@@ -253,7 +253,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * extract and verify a dimension index
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the index
@@ -294,7 +294,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Parse a boundary to a number
-   * 
+   *
    * @param bound
    *          the boundary
    * @return the number
@@ -424,7 +424,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Get the lower boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the lower bound
@@ -435,7 +435,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set the lower boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound
@@ -465,7 +465,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set the lower boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound
@@ -494,7 +494,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Get the upper boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the upper bound
@@ -505,7 +505,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set the upper boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound
@@ -536,7 +536,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set the upper boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound

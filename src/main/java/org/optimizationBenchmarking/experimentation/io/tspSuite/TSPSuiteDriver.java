@@ -38,18 +38,18 @@ public class TSPSuiteDriver extends
   private static final String DISTANCE_TYPE = "type"; //$NON-NLS-1$
 
   /** Euclidean distance based on a list of 2D coordinates */
-  private static final String EUC_2D = "EUC_2D";//$NON-NLS-1$
+  private static final String EUC_2D = "EUC_2D"; //$NON-NLS-1$
   /** rounded-up Euclidean distance based on a list of 2D coordinates */
-  private static final String CEIL_2D = "CEIL_2D";//$NON-NLS-1$
+  private static final String CEIL_2D = "CEIL_2D"; //$NON-NLS-1$
   /**
    * geographical distance based on a list of longitude-latitude coordinate
    * pairs
    */
-  private static final String GEO = "GEO";//$NON-NLS-1$
+  private static final String GEO = "GEO"; //$NON-NLS-1$
   /** pseudo-Euclidean distance based on a list of 2D coordinates */
-  private static final String ATT = "ATT";//$NON-NLS-1$
+  private static final String ATT = "ATT"; //$NON-NLS-1$
   /** full distance matrix */
-  private static final String MATRIX = "mat";//$NON-NLS-1$
+  private static final String MATRIX = "mat"; //$NON-NLS-1$
 
   /** an instance name */
   private static final String BURMA14 = "burma14"; //$NON-NLS-1$
@@ -374,7 +374,7 @@ public class TSPSuiteDriver extends
 
   /**
    * get the instance name
-   * 
+   *
    * @param n
    *          the string
    * @return the instance name, or {@code null} if none found
@@ -395,7 +395,7 @@ public class TSPSuiteDriver extends
 
   /**
    * fill in the dimension set
-   * 
+   *
    * @param esb
    *          the experiment set builder
    */
@@ -462,7 +462,7 @@ public class TSPSuiteDriver extends
 
   /**
    * fill in the instance set
-   * 
+   *
    * @param esb
    *          the experiment set builder
    */
@@ -483,14 +483,14 @@ public class TSPSuiteDriver extends
           TSPSuiteDriver.SYMMETRIC,//
           "whether the TSP is symmetric, i.e., whether dist(i,j)=dist(j,i)",//$NON-NLS-1$
           Boolean.TRUE,//
-          "the TSP is symmetric");//$NON-NLS-1$
+          "the TSP is symmetric"); //$NON-NLS-1$
       i.setDescription("Drilling problem (Ludwig)."); //$NON-NLS-1$
 
       i.setFeatureValue(
           TSPSuiteDriver.DISTANCE_TYPE,
           "the distance measure",//$NON-NLS-1$
           TSPSuiteDriver.EUC_2D,
-          "nodes are points in the two-dimensional Euclidean plane");//$NON-NLS-1$
+          "nodes are points in the two-dimensional Euclidean plane"); //$NON-NLS-1$
     }
     try (final InstanceContext i = esb.createInstance()) {
       i.setName(TSPSuiteDriver.ALI535);

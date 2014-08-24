@@ -46,7 +46,7 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * create the website builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -61,27 +61,27 @@ public abstract class BibBookRecordBuilder extends
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_EDITORS_SET: {
-        append.append("editorsSet");//$NON-NLS-1$
+        append.append("editorsSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_SERIES_SET: {
-        append.append("seriesSet");//$NON-NLS-1$
+        append.append("seriesSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_VOLUME_SET: {
-        append.append("volumeSet");//$NON-NLS-1$
+        append.append("volumeSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_EDITION_SET: {
-        append.append("editionSet");//$NON-NLS-1$
+        append.append("editionSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_ISSN_SET: {
-        append.append("issnSet");//$NON-NLS-1$
+        append.append("issnSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_ISBN_SET: {
-        append.append("isbnSet");//$NON-NLS-1$
+        append.append("isbnSet"); //$NON-NLS-1$
         return;
       }
       default: {
@@ -92,7 +92,7 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the series
-   * 
+   *
    * @param series
    *          the series
    */
@@ -104,13 +104,13 @@ public abstract class BibBookRecordBuilder extends
     if ((this.m_series = this.normalize(series)) == null) {
       throw new IllegalArgumentException(//
           "Series name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + series + "' is.");//$NON-NLS-1$
+              + series + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the volume
-   * 
+   *
    * @param volume
    *          the volume
    */
@@ -122,13 +122,13 @@ public abstract class BibBookRecordBuilder extends
     if ((this.m_volume = this.normalize(volume)) == null) {
       throw new IllegalArgumentException(//
           "Volume name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + volume + "' is.");//$NON-NLS-1$
+              + volume + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the edition
-   * 
+   *
    * @param edition
    *          the edition
    */
@@ -140,13 +140,13 @@ public abstract class BibBookRecordBuilder extends
     if ((this.m_edition = this.normalize(edition)) == null) {
       throw new IllegalArgumentException(//
           "Edition name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + edition + "' is.");//$NON-NLS-1$
+              + edition + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the issn
-   * 
+   *
    * @param issn
    *          the issn
    */
@@ -157,13 +157,13 @@ public abstract class BibBookRecordBuilder extends
     if ((this.m_issn = this.normalize(issn)) == null) {
       throw new IllegalArgumentException(//
           "ISSN name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + issn + "' is.");//$NON-NLS-1$
+              + issn + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Create the editors setter
-   * 
+   *
    * @return the editors setter
    */
   public synchronized final BibAuthorsBuilder setEditors() {
@@ -174,7 +174,7 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the editors
-   * 
+   *
    * @param editors
    *          the editors list
    */
@@ -202,7 +202,7 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the isbn
-   * 
+   *
    * @param isbn
    *          the isbn
    */
@@ -213,7 +213,7 @@ public abstract class BibBookRecordBuilder extends
     if ((this.m_isbn = this.normalize(isbn)) == null) {
       throw new IllegalArgumentException(//
           "ISBN name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + isbn + "' is.");//$NON-NLS-1$
+              + isbn + "' is."); //$NON-NLS-1$
     }
   }
 

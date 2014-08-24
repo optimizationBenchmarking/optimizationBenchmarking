@@ -1,5 +1,6 @@
 package examples.org.optimizationBenchmarking.utils.hierarchy;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput;
 
 /**
@@ -7,7 +8,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput;
  * {@link org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput}
  * s.
  */
-public class HierarchicalAppendableExample1 {
+public final class HierarchicalAppendableExample1 {
 
   /**
    * The main method
@@ -28,6 +29,11 @@ public class HierarchicalAppendableExample1 {
       root.append("This is the end of the text."); //$NON-NLS-1$
     }
 
+  }
+
+  /** the forbidden constructor */
+  private HierarchicalAppendableExample1() {
+    ErrorUtils.doNotCall();
   }
 
 }

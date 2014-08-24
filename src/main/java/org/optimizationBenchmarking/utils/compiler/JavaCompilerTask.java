@@ -19,7 +19,7 @@ public class JavaCompilerTask extends Task<ClassLoader> {
 
   /**
    * create the compiler task
-   * 
+   *
    * @param data
    *          the data
    */
@@ -29,7 +29,7 @@ public class JavaCompilerTask extends Task<ClassLoader> {
 
   /**
    * create the compiler task
-   * 
+   *
    * @param data
    *          the data
    */
@@ -39,7 +39,7 @@ public class JavaCompilerTask extends Task<ClassLoader> {
 
   /**
    * Transform a collection to a list
-   * 
+   *
    * @param l
    *          the collection
    * @return the list
@@ -55,7 +55,7 @@ public class JavaCompilerTask extends Task<ClassLoader> {
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the data
    */
@@ -87,11 +87,11 @@ public class JavaCompilerTask extends Task<ClassLoader> {
       } else {
         s = "g"; //$NON-NLS-1$
         if (compiler.isSupportedOption(s) >= 0) {
-          options.add(s + ":none");//$NON-NLS-1$
+          options.add(s + ":none"); //$NON-NLS-1$
         } else {
           s = ('-' + s);
           if (compiler.isSupportedOption(s) >= 0) {
-            options.add(s + ":none");//$NON-NLS-1$
+            options.add(s + ":none"); //$NON-NLS-1$
           }
         }
 

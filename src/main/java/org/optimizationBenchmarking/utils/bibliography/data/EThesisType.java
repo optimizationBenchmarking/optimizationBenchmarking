@@ -10,7 +10,7 @@ public enum EThesisType {
   MASTER_THESIS("Master's Thesis"), //$NON-NLS-1$
 
   /** phd thesis */
-  PHD_THESIS("PhD Thesis");//$NON-NLS-1$
+  PHD_THESIS("PhD Thesis"); //$NON-NLS-1$
 
   /** get the types */
   static final EThesisType[] TYPES = EThesisType.values();
@@ -20,7 +20,7 @@ public enum EThesisType {
 
   /**
    * Create the thesis
-   * 
+   *
    * @param name
    *          the name
    */
@@ -30,7 +30,7 @@ public enum EThesisType {
 
   /**
    * Get the name of the thesis type
-   * 
+   *
    * @return the name of the thesis type
    */
   public final String getName() {

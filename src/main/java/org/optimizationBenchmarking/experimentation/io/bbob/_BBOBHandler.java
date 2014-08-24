@@ -40,7 +40,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger
    * @param esb
@@ -54,7 +54,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * load a stream
-   * 
+   *
    * @param f
    *          the file
    * @param list
@@ -148,7 +148,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
               if ((end1 > 0) && (start2 > end1) && (end2 > start2)) {
                 if (current == null) {
                   throw new IllegalStateException(//
-                      "Found log point, but not run begin in " + f);//$NON-NLS-1$
+                      "Found log point, but not run begin in " + f); //$NON-NLS-1$
                 }
 
                 d = DoubleParser.INSTANCE.parseDouble(s.substring(start2,
@@ -156,7 +156,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
                 if (d < -1e-12d) {
                   throw new IllegalArgumentException(
                       "value " + d + //$NON-NLS-1$
-                          " for f-f_opt is too negative for assuming numerical imprecision as reason and performing correction to zero.");//$NON-NLS-1$
+                          " for f-f_opt is too negative for assuming numerical imprecision as reason and performing correction to zero."); //$NON-NLS-1$
                 }
                 if (d <= 0d) {
                   if (d < 0d) {
@@ -164,7 +164,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
                         && (this.m_logger.isLoggable(Level.WARNING))) {
                       this.m_logger.warning(//
                           "Correction of negative objective value " + d + //$NON-NLS-1$
-                              " to 0 in file " + f);//$NON-NLS-1$
+                              " to 0 in file " + f); //$NON-NLS-1$
                     }
                   }
                   d = 0d;
@@ -188,13 +188,13 @@ final class _BBOBHandler implements Comparator<Number[]> {
             "Unrecoverable error in file " + f,//$NON-NLS-1$
             t);
       }
-      throw new IOException(("Error in file: " + f), t);//$NON-NLS-1$
+      throw new IOException(("Error in file: " + f), t); //$NON-NLS-1$
     }
   }
 
   /**
    * handle a data folder
-   * 
+   *
    * @param dat
    *          the dat file
    * @param tdat
@@ -274,7 +274,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * handle a data folder
-   * 
+   *
    * @param fid
    *          the function index
    * @param dir
@@ -415,7 +415,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * Handle a directory
-   * 
+   *
    * @param dir
    *          the directory
    * @throws Throwable
@@ -461,7 +461,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
                       throw new IllegalArgumentException(//
                           "Two data folders for function id " + dim + //$NON-NLS-1$
                               ": folder " + f + //$NON-NLS-1$
-                              " and " + dataFolders[dim]);//$NON-NLS-1$
+                              " and " + dataFolders[dim]); //$NON-NLS-1$
                     }
                     dataFolders[dim] = f;
                     dataFolderCount++;
@@ -469,7 +469,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
                   }
                   throw new IllegalArgumentException(//
                       "Illegal function id " + dim + //$NON-NLS-1$
-                          " of folder " + f);//$NON-NLS-1$
+                          " of folder " + f); //$NON-NLS-1$
                 } catch (final Throwable a) {
 
                   if ((this.m_logger != null)
@@ -524,7 +524,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * Load a given file into the experiment set context
-   * 
+   *
    * @param f
    *          the file
    * @throws Throwable

@@ -83,7 +83,7 @@ public class Section extends ComplexObject implements ISection {
           this.m_depth = (o.m_depth + 1);
         } else {
           throw new IllegalArgumentException(owner + //
-              " is not a valid container for a section.");//$NON-NLS-1$
+              " is not a valid container for a section."); //$NON-NLS-1$
         }
       }
     }

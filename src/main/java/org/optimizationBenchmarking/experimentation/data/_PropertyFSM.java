@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * then refined in a two-step process of {@link #_compile() compiling} and
  * {@link #_finalize() finalization}. (Of course, only one step is also
  * OK...)
- * 
+ *
  * @param <VT>
  *          the value type
  * @param <CT>
@@ -65,7 +65,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -99,7 +99,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * assert that all opened contexts have been closed
-   * 
+   *
    * @return the number of contexts
    */
   private final int __assertOpenCloseWhenClosed() {
@@ -121,7 +121,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
           "More contexts closed than opened: There are " + o + //$NON-NLS-1$
               " opened contexts in " + this + //$NON-NLS-1$
               " and " + c + //$NON-NLS-1$
-              " closed contexts.");//$NON-NLS-1$
+              " closed contexts."); //$NON-NLS-1$
     }
   }
 
@@ -138,7 +138,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * compile the contents of this map
-   * 
+   *
    * @param map
    *          the map to compile
    * @param count
@@ -152,7 +152,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * compile this property builder
-   * 
+   *
    * @return the result of the compilation process
    */
   synchronized final CT _compile() {
@@ -174,7 +174,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * create the finalized result
-   * 
+   *
    * @param compiled
    *          the result of the compilation process
    * @param count
@@ -188,7 +188,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * finalize the data structures and return the result
-   * 
+   *
    * @return the finalized data structures
    */
   synchronized final RT _finalize() {
@@ -217,7 +217,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * Get the result of the compilation process.
-   * 
+   *
    * @return the result of the compilation process
    */
   synchronized final CT _getCompilationResult() {
@@ -235,7 +235,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * Get the result of the finalization process.
-   * 
+   *
    * @return the result of the finalization process
    */
   synchronized final RT _getFinalizationResult() {
@@ -245,7 +245,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * Check a property name
-   * 
+   *
    * @param propertyName
    *          the property name
    * @return the formatted name
@@ -266,7 +266,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * create a new property fsm record
-   * 
+   *
    * @param propertyName
    *          the name of the property
    * @param propertyDesc
@@ -283,7 +283,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * Normalize local
-   * 
+   *
    * @param input
    *          the input
    * @return the result
@@ -300,7 +300,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * set the value of a property
-   * 
+   *
    * @param propertyName
    *          the name of the property
    * @param propertyDesc
@@ -328,7 +328,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * set the value of a property
-   * 
+   *
    * @param rec
    *          the record
    */
@@ -342,7 +342,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * set the value of a property
-   * 
+   *
    * @param propertyName
    *          the name of the property
    * @param propertyDesc
@@ -420,7 +420,7 @@ abstract class _PropertyFSM<VT extends _PropertyFSMRecord, CT, RT, OT>
 
   /**
    * get the property set
-   * 
+   *
    * @return the property set
    */
   @SuppressWarnings("rawtypes")

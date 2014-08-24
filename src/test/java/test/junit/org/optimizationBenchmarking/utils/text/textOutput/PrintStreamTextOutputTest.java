@@ -44,7 +44,7 @@ public class PrintStreamTextOutputTest extends
   protected final ITextOutput wrap(final ByteArrayOutputStream root) {
     try {
       return AbstractTextOutput
-          .wrap(new PrintStream(root, true, "UTF-16"));//$NON-NLS-1$
+          .wrap(new PrintStream(root, true, "UTF-16")); //$NON-NLS-1$
     } catch (final Throwable t) {
       Assert.fail();
     }

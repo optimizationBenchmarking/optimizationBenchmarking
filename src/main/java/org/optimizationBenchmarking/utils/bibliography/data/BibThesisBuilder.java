@@ -26,7 +26,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * create the thesis builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -40,11 +40,11 @@ public final class BibThesisBuilder extends BibBookBuilder {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_TYPE_SET: {
-        append.append("typeSet");//$NON-NLS-1$
+        append.append("typeSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_SCHOOL_SET: {
-        append.append("schoolSet");//$NON-NLS-1$
+        append.append("schoolSet"); //$NON-NLS-1$
         return;
       }
       default: {
@@ -55,7 +55,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * Set the school
-   * 
+   *
    * @param school
    *          the school
    */
@@ -66,13 +66,13 @@ public final class BibThesisBuilder extends BibBookBuilder {
     if ((this.m_school = this.normalize(school)) == null) {
       throw new IllegalArgumentException(//
           "School  cannot be set to empty or null, but '" //$NON-NLS-1$
-              + school + "' is.");//$NON-NLS-1$
+              + school + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the school
-   * 
+   *
    * @return the schoolbuilder
    */
   public synchronized final BibOrganizationBuilder setSchool() {
@@ -93,7 +93,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * Set the thesis type
-   * 
+   *
    * @param type
    *          the type
    */
@@ -103,13 +103,13 @@ public final class BibThesisBuilder extends BibBookBuilder {
         BibThesisBuilder.FLAG_TYPE_SET, FSM.FLAG_NOTHING);
     if ((this.m_type = type) == null) {
       throw new IllegalArgumentException(//
-          "Thesis type cannot be set to null.");//$NON-NLS-1$
+          "Thesis type cannot be set to null."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the type
-   * 
+   *
    * @param type
    *          the type
    */
@@ -121,7 +121,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
     if (m == null) {
       throw new IllegalArgumentException(//
           "Type strings must not be null or empty, but '" //$NON-NLS-1$
-              + type + "' is.");//$NON-NLS-1$
+              + type + "' is."); //$NON-NLS-1$
     }
 
     res = null;

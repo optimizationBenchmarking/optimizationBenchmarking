@@ -41,7 +41,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * create the author builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -62,23 +62,23 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_AUTHORS_SET: {
-        append.append("authorsSet");//$NON-NLS-1$
+        append.append("authorsSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_TITLE_SET: {
-        append.append("titleSet");//$NON-NLS-1$
+        append.append("titleSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_DATE_SET: {
-        append.append("dateSet");//$NON-NLS-1$
+        append.append("dateSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_URL_SET: {
-        append.append("urlSet");//$NON-NLS-1$
+        append.append("urlSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_DOI_SET: {
-        append.append("doiSet");//$NON-NLS-1$
+        append.append("doiSet"); //$NON-NLS-1$
         return;
       }
       default: {
@@ -89,7 +89,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Create the authors setter
-   * 
+   *
    * @return the authors setter
    */
   public synchronized final BibAuthorsBuilder setAuthors() {
@@ -100,7 +100,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Set the authors
-   * 
+   *
    * @param authors
    *          the authors list
    */
@@ -117,7 +117,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Create the date setter
-   * 
+   *
    * @return the date setter
    */
   synchronized BibDateBuilder setDate() {
@@ -128,7 +128,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Set the date
-   * 
+   *
    * @param date
    *          the date
    */
@@ -144,7 +144,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Set the title
-   * 
+   *
    * @param title
    *          the title
    */
@@ -155,13 +155,13 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
     if ((this.m_title = this.normalize(title)) == null) {
       throw new IllegalArgumentException(//
           "DocumentTitle cannot be empty or null, but '" //$NON-NLS-1$
-              + title + "' is.");//$NON-NLS-1$
+              + title + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the url
-   * 
+   *
    * @param url
    *          the url
    */
@@ -171,13 +171,13 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
         BibRecordBuilder.FLAG_URL_SET, FSM.FLAG_NOTHING);
     if ((this.m_url = this.normalize(BibRecord._makeURL(url))) == null) {
       throw new IllegalArgumentException(//
-          "URL cannot be set to null");//$NON-NLS-1$
+          "URL cannot be set to null"); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the url
-   * 
+   *
    * @param url
    *          the url
    */
@@ -196,7 +196,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Set the url
-   * 
+   *
    * @param url
    *          the url
    */
@@ -215,7 +215,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Set the doi
-   * 
+   *
    * @param doi
    *          the title
    */
@@ -226,7 +226,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
     if ((this.m_doi = this.normalize(BibRecord._makeDOI(doi))) == null) {
       throw new IllegalArgumentException(//
           "DOI cannot be set to empty or null, but '" //$NON-NLS-1$
-              + doi + "' is.");//$NON-NLS-1$
+              + doi + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -246,7 +246,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * handle before child opens
-   * 
+   *
    * @param child
    *          the child
    */
@@ -256,7 +256,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * handle a date with a given tag
-   * 
+   *
    * @param date
    *          the date
    * @param tag
@@ -267,13 +267,13 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
       this.setDate(date);
     } else {
       throw new IllegalArgumentException("Date with tag " + tag + //$NON-NLS-1$
-          " cannot be handled.");//$NON-NLS-1$
+          " cannot be handled."); //$NON-NLS-1$
     }
   }
 
   /**
    * handle a author set with a given tag
-   * 
+   *
    * @param authors
    *          the authors
    * @param tag
@@ -284,7 +284,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
       this.setAuthors(authors);
     } else {
       throw new IllegalArgumentException("Authors with tag " + tag + //$NON-NLS-1$
-          " cannot be handled.");//$NON-NLS-1$
+          " cannot be handled."); //$NON-NLS-1$
     }
   }
 
@@ -312,7 +312,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * handle after child closed
-   * 
+   *
    * @param child
    *          the child
    */

@@ -28,7 +28,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * create a record for articles
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -65,7 +65,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * create a record for technical records
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -106,21 +106,21 @@ public class BibArticle extends BibRecordWithPublisher {
     if (this.m_journal == null) {
       throw new IllegalArgumentException(//
           "Journal must not be null or empty, but '" + //$NON-NLS-1$
-              journal + "' is.");//$NON-NLS-1$
+              journal + "' is."); //$NON-NLS-1$
     }
 
     this.m_volume = (direct ? volume : TextUtils.normalize(volume));
     if (this.m_volume == null) {
       throw new IllegalArgumentException(//
           "Volume must not be null or empty, but '" + //$NON-NLS-1$
-              volume + "' is.");//$NON-NLS-1$
+              volume + "' is."); //$NON-NLS-1$
     }
 
     this.m_number = (direct ? number : TextUtils.normalize(number));
     if (this.m_number == null) {
       throw new IllegalArgumentException(//
           "Number must not be null or empty, but '" + //$NON-NLS-1$
-              number + "' is.");//$NON-NLS-1$
+              number + "' is."); //$NON-NLS-1$
     }
 
     this.m_startPage = (direct ? startPage : TextUtils
@@ -129,13 +129,13 @@ public class BibArticle extends BibRecordWithPublisher {
     if (this.m_startPage == null) {
       if (this.m_endPage != null) {
         throw new IllegalArgumentException(//
-            "Start page must not be empty if end page is defined.");//$NON-NLS-1$
+            "Start page must not be empty if end page is defined."); //$NON-NLS-1$
       }
     }
     if (this.m_endPage == null) {
       if (this.m_startPage != null) {
         throw new IllegalArgumentException(//
-            "End page must not be empty if start page is defined.");//$NON-NLS-1$
+            "End page must not be empty if start page is defined."); //$NON-NLS-1$
       }
     } else {
       if ((this.m_startPage != null) && (this.m_endPage != null)) {
@@ -144,10 +144,10 @@ public class BibArticle extends BibRecordWithPublisher {
           j = Long.parseLong(this.m_endPage);
           if (i > j) {
             throw new IllegalArgumentException(//
-                "Start page cannot be greater than end page, but start page '"//$NON-NLS-1$ 
+                "Start page cannot be greater than end page, but start page '"//$NON-NLS-1$
                     + this.m_startPage + "' is " //$NON-NLS-1$
                     + i + " and end page '" //$NON-NLS-1$
-                    + this.m_endPage + "' is " + j);//$NON-NLS-1$
+                    + this.m_endPage + "' is " + j); //$NON-NLS-1$
           }
         } catch (final NumberFormatException x) {
           // ignore
@@ -179,7 +179,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the date
-   * 
+   *
    * @return the date
    */
   public final BibDate getDate() {
@@ -188,7 +188,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the journal
-   * 
+   *
    * @return the journal
    */
   public final String getJournal() {
@@ -197,7 +197,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the volume
-   * 
+   *
    * @return the volume
    */
   public final String getVolume() {
@@ -206,7 +206,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the number
-   * 
+   *
    * @return the number
    */
   public final String getNumber() {
@@ -215,7 +215,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the start page
-   * 
+   *
    * @return the start page
    */
   public final String getStartPage() {
@@ -224,7 +224,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the end page
-   * 
+   *
    * @return the end page
    */
   public final String getEndPage() {
@@ -233,7 +233,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the issn
-   * 
+   *
    * @return the issn
    */
   public final String getISSN() {

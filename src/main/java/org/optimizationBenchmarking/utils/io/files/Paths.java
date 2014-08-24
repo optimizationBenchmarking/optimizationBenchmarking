@@ -36,7 +36,7 @@ public final class Paths {
    * {@link #getUserHomeDir() user's home directory}, and the
    * {@link #getJavaHomeDir() java home directory}. It also includes some
    * standard candidate folders. All folders in the list exist.
-   * 
+   *
    * @return the path
    */
   public static final Collection<File> getPath() {
@@ -143,7 +143,7 @@ public final class Paths {
   /**
    * Get the current directory, i.e., the directory in which this program
    * was executed
-   * 
+   *
    * @return the directory in which this program was executed
    */
   public static final File getCurrentDir() {
@@ -170,7 +170,7 @@ public final class Paths {
 
   /**
    * Get the java home directory
-   * 
+   *
    * @return java home directory
    */
   public static final File getJavaHomeDir() {
@@ -183,7 +183,7 @@ public final class Paths {
 
   /**
    * Get the user home directory
-   * 
+   *
    * @return user home directory
    */
   public static final File getUserHomeDir() {
@@ -196,7 +196,7 @@ public final class Paths {
 
   /**
    * Get the temp directory
-   * 
+   *
    * @return temp directory
    */
   public static final File getTempDir() {
@@ -212,7 +212,7 @@ public final class Paths {
 
       if (Paths.s_tempDir == null) {
         try {
-          f2 = File.createTempFile("test", "test");//$NON-NLS-1$;//$NON-NLS-2$;
+          f2 = File.createTempFile("test", "test"); //$NON-NLS-1$;//$NON-NLS-2$;
           if (f2 != null) {
             try {
               Paths.s_tempDir = Paths.__reduce(f2.getParent());
@@ -236,7 +236,7 @@ public final class Paths {
 
   /**
    * reduce the files
-   * 
+   *
    * @param fn
    *          the file
    * @return the reduced one

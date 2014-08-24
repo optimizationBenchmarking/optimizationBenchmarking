@@ -29,7 +29,7 @@ public final class BibTechReportBuilder extends
 
   /**
    * create the article builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -44,15 +44,15 @@ public final class BibTechReportBuilder extends
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_SERIES_SET: {
-        append.append("seriesSet");//$NON-NLS-1$
+        append.append("seriesSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_NUMBER_SET: {
-        append.append("numberSet");//$NON-NLS-1$
+        append.append("numberSet"); //$NON-NLS-1$
         return;
       }
       case FLAG_ISSN_SET: {
-        append.append("issnSet");//$NON-NLS-1$
+        append.append("issnSet"); //$NON-NLS-1$
         return;
       }
       default: {
@@ -75,7 +75,7 @@ public final class BibTechReportBuilder extends
 
   /**
    * Set the series
-   * 
+   *
    * @param series
    *          the volume
    */
@@ -87,13 +87,13 @@ public final class BibTechReportBuilder extends
     if ((this.m_series = this.normalize(series)) == null) {
       throw new IllegalArgumentException(//
           "Series cannot be set to empty or null, but '" //$NON-NLS-1$
-              + series + "' is.");//$NON-NLS-1$
+              + series + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the number
-   * 
+   *
    * @param number
    *          the number
    */
@@ -105,13 +105,13 @@ public final class BibTechReportBuilder extends
     if ((this.m_number = this.normalize(number)) == null) {
       throw new IllegalArgumentException(//
           "Number cannot be set to empty or null, but '" //$NON-NLS-1$
-              + number + "' is.");//$NON-NLS-1$
+              + number + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the issn
-   * 
+   *
    * @param issn
    *          the issn
    */
@@ -122,7 +122,7 @@ public final class BibTechReportBuilder extends
     if ((this.m_issn = this.normalize(issn)) == null) {
       throw new IllegalArgumentException(//
           "ISSN cannot be set to empty or null, but '" //$NON-NLS-1$
-              + issn + "' is.");//$NON-NLS-1$
+              + issn + "' is."); //$NON-NLS-1$
     }
   }
 

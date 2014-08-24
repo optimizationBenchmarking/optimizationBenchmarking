@@ -41,7 +41,7 @@ public abstract class DocumentPart extends DocumentElement implements
    * @return the default plain style
    */
   static final IStyle _plain(final DocumentPart part) {
-    return part.m_doc.plain();
+    return part.m_doc.getPlainStyle();
   }
 
   /**

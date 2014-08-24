@@ -47,7 +47,7 @@ public abstract class ComplexObject extends DocumentPart {
     this.m_index = index;
     this.m_localID = this.renderIndex(index);
 
-    oid = this._getOwnerID();
+    oid = ComplexObject._getOwnerID(owner);
     if (oid != null) {
       this.m_globalID = (oid + this.m_localID);
     } else {
@@ -55,7 +55,7 @@ public abstract class ComplexObject extends DocumentPart {
     }
 
     if (useLabel != null) {
-      this.m_label = this.m_doc.m_manager._getLabel(ELabelType.TABLE,
+      this.m_label = this.m_doc.m_manager._getLabel(this._labelType(),
           useLabel, this.m_globalID);
     } else {
       this.m_label = null;
@@ -84,13 +84,15 @@ public abstract class ComplexObject extends DocumentPart {
   /**
    * Get the owner id
    * 
+   * @param owner
+   *          the owner
    * @return the id of the owner
    */
   @SuppressWarnings("resource")
-  String _getOwnerID() {
+  static final String _getOwnerID(final DocumentElement owner) {
     HierarchicalFSM h;
 
-    h = this.getOwner();
+    h = owner;
     while (h != null) {
       if (h instanceof DocumentElement) {
         if (h instanceof ComplexObject) {

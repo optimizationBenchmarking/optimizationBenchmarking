@@ -16,16 +16,16 @@ public enum EDefaultStyles implements IStyle, ITextable {
     @Override
     void _append(final ETextCase textCase, final ITextOutput out) {
       if ((textCase == null) || (textCase == ETextCase.IN_SENTENCE)) {
-        out.append("normal");//$NON-NLS-1$
+        out.append("normal"); //$NON-NLS-1$
       } else {
-        out.append("Normal");//$NON-NLS-1$
+        out.append("Normal"); //$NON-NLS-1$
       }
     }
 
     /** {@inheritDoc} */
     @Override
     public final String toString() {
-      return "normal text";//$NON-NLS-1$
+      return "normal text"; //$NON-NLS-1$
     }
 
   },
@@ -36,16 +36,16 @@ public enum EDefaultStyles implements IStyle, ITextable {
     @Override
     void _append(final ETextCase textCase, final ITextOutput out) {
       if ((textCase == null) || (textCase == ETextCase.IN_SENTENCE)) {
-        out.append("italic");//$NON-NLS-1$
+        out.append("italic"); //$NON-NLS-1$
       } else {
-        out.append("Italic");//$NON-NLS-1$
+        out.append("Italic"); //$NON-NLS-1$
       }
     }
 
     /** {@inheritDoc} */
     @Override
     public final String toString() {
-      return "italic text";//$NON-NLS-1$
+      return "italic text"; //$NON-NLS-1$
     }
 
   },
@@ -56,16 +56,16 @@ public enum EDefaultStyles implements IStyle, ITextable {
     @Override
     void _append(final ETextCase textCase, final ITextOutput out) {
       if ((textCase == null) || (textCase == ETextCase.IN_SENTENCE)) {
-        out.append("bold");//$NON-NLS-1$
+        out.append("bold"); //$NON-NLS-1$
       } else {
-        out.append("Bold");//$NON-NLS-1$
+        out.append("Bold"); //$NON-NLS-1$
       }
     }
 
     /** {@inheritDoc} */
     @Override
     public final String toString() {
-      return "bold text";//$NON-NLS-1$
+      return "bold text"; //$NON-NLS-1$
     }
 
   };

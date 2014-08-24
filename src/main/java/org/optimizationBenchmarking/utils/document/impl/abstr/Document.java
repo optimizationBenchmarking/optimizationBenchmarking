@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IStyle;
@@ -69,6 +70,9 @@ public abstract class Document extends DocumentElement implements
   /** the base path, i.e., the folder containing the document */
   final Path m_basePath;
 
+  /** a citations builder */
+  CitationsBuilder m_citations;
+
   /** the path to the document's main file */
   private final Path m_documentPath;
 
@@ -83,9 +87,19 @@ public abstract class Document extends DocumentElement implements
   protected Document(final Appendable out, final Path docPath) {
     super(null, out);
     this.m_styles = new StyleSet(this.createStyles());
-    this.m_manager = new LabelManager();
+    this.m_manager = this.createLabelManager();
     this.m_documentPath = DocumentElement._path(docPath);
     this.m_basePath = DocumentElement._path(docPath.getParent());
+    this.m_citations = new CitationsBuilder();
+  }
+
+  /**
+   * create the label manager
+   * 
+   * @return the label manager
+   */
+  protected LabelManager createLabelManager() {
+    return new LabelManager();
   }
 
   /**
@@ -325,14 +339,14 @@ public abstract class Document extends DocumentElement implements
 
   /** {@inheritDoc} */
   @Override
-  public final IStyle emphasized() {
-    return this.m_styles.emphasized();
+  public final IStyle getEmphasizedStyle() {
+    return this.m_styles.getEmphasizedStyle();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final IStyle plain() {
-    return this.m_styles.plain();
+  public final IStyle getPlainStyle() {
+    return this.m_styles.getPlainStyle();
   }
 
   /** {@inheritDoc} */

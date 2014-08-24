@@ -4,6 +4,7 @@ import java.io.Writer;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.MemoryUtils;
 
 import examples.org.optimizationBenchmarking.utils.io.xml.performance.exampleDoc.ExampleDocument;
@@ -44,7 +45,7 @@ import examples.org.optimizationBenchmarking.utils.io.xml.performance.serializer
  * both in steps of powers of 10.
  * </p>
  */
-public class XMLPerformanceTest {
+public final class XMLPerformanceTest {
 
   /** The serializers which we compare in the performance test */
   public static final SerializationMethod[] SERIALIZERS;
@@ -302,5 +303,10 @@ public class XMLPerformanceTest {
         }
       }
     }
+  }
+
+  /** the forbidden constructor */
+  private XMLPerformanceTest() {
+    ErrorUtils.doNotCall();
   }
 }

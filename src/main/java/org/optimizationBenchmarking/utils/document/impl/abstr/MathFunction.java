@@ -70,7 +70,7 @@ public class MathFunction extends DocumentPart implements IMathFunction {
     if (pi > this.m_op.m_maxParamCount) {
       throw new IllegalStateException(this.m_op
           + " cannot have more than " + //$NON-NLS-1$
-          this.m_op.m_maxParamCount + " parameters.");//$NON-NLS-1$
+          this.m_op.m_maxParamCount + " parameters."); //$NON-NLS-1$
     }
     this.beforeParameter(pi);
     return this.createParameter(pi);
@@ -118,7 +118,7 @@ public class MathFunction extends DocumentPart implements IMathFunction {
     if (this.m_paramIndex < this.m_op.m_minParamCount) {
       throw new IllegalStateException(this.m_op + //
           " needs at least " + this.m_op.m_minParamCount + //$NON-NLS-1$
-          " parameters, but has only " + this.m_paramIndex);//$NON-NLS-1$
+          " parameters, but has only " + this.m_paramIndex); //$NON-NLS-1$
     }
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         DocumentElement.STATE_DEAD);

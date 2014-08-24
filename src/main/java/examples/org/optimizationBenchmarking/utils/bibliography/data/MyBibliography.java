@@ -23,11 +23,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link org.optimizationBenchmarking.utils.bibliography.data bibliography
  * API}.
  */
-public class MyBibliography {
+public final class MyBibliography {
 
   /**
    * create my bibliography
-   * 
+   *
    * @return the bibliography
    */
   public static final Bibliography createMyBibliography() {
@@ -49,7 +49,7 @@ public class MyBibliography {
 
   /**
    * make paper TYW2012SSOECFLSGO
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -86,14 +86,14 @@ public class MyBibliography {
 
   /**
    * make paper WWTWDY2014FFA
-   * 
+   *
    * @param bb
    *          the builder
    */
   private static final void __WWTWDY2014FFA(final BibliographyBuilder bb) {
 
     try (final BibArticleBuilder bab = bb.addArticle()) {
-      bab.setTitle("Frequency Fitness Assignment");//$NON-NLS-1$
+      bab.setTitle("Frequency Fitness Assignment"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = bab.setAuthors()) {
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
@@ -121,12 +121,12 @@ public class MyBibliography {
         }
       }
 
-      bab.setJournal("IEEE Transactions on Evolutionary Computation (IEEE-TEVC)");//$NON-NLS-1$
-      bab.setDOI("10.1109/TEVC.2013.2251885");//$NON-NLS-1$
-      bab.setVolume("18");//$NON-NLS-1$
-      bab.setNumber("2");//$NON-NLS-1$
-      bab.setStartPage("226");//$NON-NLS-1$
-      bab.setEndPage("243");//$NON-NLS-1$
+      bab.setJournal("IEEE Transactions on Evolutionary Computation (IEEE-TEVC)"); //$NON-NLS-1$
+      bab.setDOI("10.1109/TEVC.2013.2251885"); //$NON-NLS-1$
+      bab.setVolume("18"); //$NON-NLS-1$
+      bab.setNumber("2"); //$NON-NLS-1$
+      bab.setStartPage("226"); //$NON-NLS-1$
+      bab.setEndPage("243"); //$NON-NLS-1$
 
       try (final BibDateBuilder db = bab.setDate()) {
         db.setYear(2014);
@@ -137,7 +137,7 @@ public class MyBibliography {
 
   /**
    * make paper DWT2011ASOSRFEOOGS
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -145,7 +145,7 @@ public class MyBibliography {
       final BibliographyBuilder bb) {
 
     try (final BibArticleBuilder bab = bb.addArticle()) {
-      bab.setTitle("A Study on Scalable Representations for Evolutionary Optimization of Ground Structures");//$NON-NLS-1$
+      bab.setTitle("A Study on Scalable Representations for Evolutionary Optimization of Ground Structures"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = bab.setAuthors()) {
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Devert"); //$NON-NLS-1$
@@ -161,34 +161,34 @@ public class MyBibliography {
         }
       }
 
-      bab.setJournal("Evolutionary Computation");//$NON-NLS-1$
-      bab.setDOI("10.1162/EVCO_a_00054");//$NON-NLS-1$
-      bab.setVolume("20");//$NON-NLS-1$
-      bab.setNumber("3");//$NON-NLS-1$
-      bab.setStartPage("453");//$NON-NLS-1$
-      bab.setEndPage("472");//$NON-NLS-1$
+      bab.setJournal("Evolutionary Computation"); //$NON-NLS-1$
+      bab.setDOI("10.1162/EVCO_a_00054"); //$NON-NLS-1$
+      bab.setVolume("20"); //$NON-NLS-1$
+      bab.setNumber("3"); //$NON-NLS-1$
+      bab.setStartPage("453"); //$NON-NLS-1$
+      bab.setEndPage("472"); //$NON-NLS-1$
 
       try (final BibDateBuilder db = bab.setDate()) {
         db.setYear(2012);
         db.setQuarter(EBibQuarter.FALL);
       }
       try (final BibOrganizationBuilder bo = bab.setPublisher()) {
-        bo.setName("MIT Press");//$NON-NLS-1$
-        bo.setAddress("Cambridge, MA, USA");//$NON-NLS-1$
+        bo.setName("MIT Press"); //$NON-NLS-1$
+        bo.setAddress("Cambridge, MA, USA"); //$NON-NLS-1$
       }
     }
   }
 
   /**
    * make paper WZKG2009DGPFz
-   * 
+   *
    * @param bb
    *          the builder
    */
   private static final void __WZKG2009DGPFz(final BibliographyBuilder bb) {
 
     try (final BibArticleBuilder bab = bb.addArticle()) {
-      bab.setTitle("Combining Genetic Programming and Model-Driven Development");//$NON-NLS-1$
+      bab.setTitle("Combining Genetic Programming and Model-Driven Development"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = bab.setAuthors()) {
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
@@ -208,16 +208,16 @@ public class MyBibliography {
         }
       }
 
-      bab.setJournal("International Journal of Computational Intelligence and Applications (IJCIA)");//$NON-NLS-1$
-      bab.setDOI("10.1142/S1469026809002436");//$NON-NLS-1$
-      bab.setURL("http://www.it-weise.de/documents/files/WZKG2009DGPFz.pdf");//$NON-NLS-1$
-      bab.setVolume("8");//$NON-NLS-1$
-      bab.setNumber("1");//$NON-NLS-1$
-      bab.setStartPage("37");//$NON-NLS-1$
-      bab.setEndPage("52");//$NON-NLS-1$
+      bab.setJournal("International Journal of Computational Intelligence and Applications (IJCIA)"); //$NON-NLS-1$
+      bab.setDOI("10.1142/S1469026809002436"); //$NON-NLS-1$
+      bab.setURL("http://www.it-weise.de/documents/files/WZKG2009DGPFz.pdf"); //$NON-NLS-1$
+      bab.setVolume("8"); //$NON-NLS-1$
+      bab.setNumber("1"); //$NON-NLS-1$
+      bab.setStartPage("37"); //$NON-NLS-1$
+      bab.setEndPage("52"); //$NON-NLS-1$
       try (final BibOrganizationBuilder ob = bab.setPublisher()) {
-        ob.setAddress("London, UK");//$NON-NLS-1$
-        ob.setName("Imperial College Press Co");//$NON-NLS-1$
+        ob.setAddress("London, UK"); //$NON-NLS-1$
+        ob.setName("Imperial College Press Co"); //$NON-NLS-1$
       }
 
       try (final BibDateBuilder db = bab.setDate()) {
@@ -229,14 +229,14 @@ public class MyBibliography {
 
   /**
    * make paper WZKG2007DGPFg
-   * 
+   *
    * @param bb
    *          the builder
    */
   private static final void __WZKG2007DGPFg(final BibliographyBuilder bb) {
 
     try (final BibInProceedingsBuilder bab = bb.addInProceedings()) {
-      bab.setTitle("Genetic Programming meets Model-Driven Development");//$NON-NLS-1$
+      bab.setTitle("Genetic Programming meets Model-Driven Development"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = bab.setAuthors()) {
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
@@ -281,12 +281,12 @@ public class MyBibliography {
           }
         }
         try (final BibOrganizationBuilder bo = pb.setPublisher()) {
-          bo.setName("IEEE Computer Society");//$NON-NLS-1$
-          bo.setAddress("Piscataway, NJ, USA");//$NON-NLS-1$
+          bo.setName("IEEE Computer Society"); //$NON-NLS-1$
+          bo.setAddress("Piscataway, NJ, USA"); //$NON-NLS-1$
         }
         try (final BibOrganizationBuilder bo = pb.setLocation()) {
-          bo.setName("Fraunhofer Center FhG ITWM/FhG IESE");//$NON-NLS-1$
-          bo.setAddress("Kaiserslautern, Germany");//$NON-NLS-1$
+          bo.setName("Fraunhofer Center FhG ITWM/FhG IESE"); //$NON-NLS-1$
+          bo.setAddress("Kaiserslautern, Germany"); //$NON-NLS-1$
         }
         try (final BibDateBuilder d = pb.setStartDate()) {
           d.setYear(2007);
@@ -301,23 +301,23 @@ public class MyBibliography {
         }
       }
 
-      bab.setDOI("10.1109/HIS.2007.11");//$NON-NLS-1$
-      bab.setURL("http://www.it-weise.de/documents/files/WZKG2007DGPFg.pdf");//$NON-NLS-1$
-      bab.setStartPage("332");//$NON-NLS-1$
-      bab.setEndPage("335");//$NON-NLS-1$      
+      bab.setDOI("10.1109/HIS.2007.11"); //$NON-NLS-1$
+      bab.setURL("http://www.it-weise.de/documents/files/WZKG2007DGPFg.pdf"); //$NON-NLS-1$
+      bab.setStartPage("332"); //$NON-NLS-1$
+      bab.setEndPage("335"); //$NON-NLS-1$
     }
   }
 
   /**
    * make paper WWTY2014EEIAWGP
-   * 
+   *
    * @param bb
    *          the builder
    */
   private static final void __WWTY2014EEIAWGP(final BibliographyBuilder bb) {
 
     try (final BibInProceedingsBuilder bab = bb.addInProceedings()) {
-      bab.setTitle("Evolving Exact Integer Algorithms with Genetic Programming");//$NON-NLS-1$
+      bab.setTitle("Evolving Exact Integer Algorithms with Genetic Programming"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = bab.setAuthors()) {
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
@@ -340,12 +340,12 @@ public class MyBibliography {
       try (final BibProceedingsBuilder pb = bab.setProceedings()) {
         pb.setTitle("Proceedings of the IEEE Congress on Evolutionary Computation (CEC'14), Proceedings of the 2014 World Congress on Computational Intelligence (WCCI'14)"); //$NON-NLS-1$
         try (final BibOrganizationBuilder bo = pb.setPublisher()) {
-          bo.setName("IEEE Computer Society Press");//$NON-NLS-1$
-          bo.setAddress("Los Alamitos, CA, USA");//$NON-NLS-1$
+          bo.setName("IEEE Computer Society Press"); //$NON-NLS-1$
+          bo.setAddress("Los Alamitos, CA, USA"); //$NON-NLS-1$
         }
         try (final BibOrganizationBuilder bo = pb.setLocation()) {
-          bo.setName("Beijing International Convention Center (BICC)");//$NON-NLS-1$
-          bo.setAddress("Beijing, China");//$NON-NLS-1$
+          bo.setName("Beijing International Convention Center (BICC)"); //$NON-NLS-1$
+          bo.setAddress("Beijing, China"); //$NON-NLS-1$
         }
         try (final BibDateBuilder d = pb.setStartDate()) {
           d.setYear(2014);
@@ -359,14 +359,14 @@ public class MyBibliography {
         }
       }
 
-      bab.setStartPage("1816");//$NON-NLS-1$
-      bab.setEndPage("1823");//$NON-NLS-1$      
+      bab.setStartPage("1816"); //$NON-NLS-1$
+      bab.setEndPage("1823"); //$NON-NLS-1$
     }
   }
 
   /**
    * make paper PROC2013IDEAL
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -408,12 +408,12 @@ public class MyBibliography {
         }
       }
       try (final BibOrganizationBuilder bo = pb.setPublisher()) {
-        bo.setName("Springer-Verlag GmbH");//$NON-NLS-1$
-        bo.setAddress("Berlin, Germany");//$NON-NLS-1$
+        bo.setName("Springer-Verlag GmbH"); //$NON-NLS-1$
+        bo.setAddress("Berlin, Germany"); //$NON-NLS-1$
       }
       try (final BibOrganizationBuilder bo = pb.setLocation()) {
-        bo.setName("Empark Grand Hotel");//$NON-NLS-1$
-        bo.setAddress("Hefei, Anhui, China");//$NON-NLS-1$
+        bo.setName("Empark Grand Hotel"); //$NON-NLS-1$
+        bo.setAddress("Hefei, Anhui, China"); //$NON-NLS-1$
       }
       try (final BibDateBuilder d = pb.setStartDate()) {
         d.setYear(2013);
@@ -425,16 +425,16 @@ public class MyBibliography {
         d.setMonth(EBibMonth.OCTOBER);
         d.setDay(23);
       }
-      pb.setSeries("Lecture Notes in Computer Science (LNCS)");//$NON-NLS-1$
-      pb.setVolume("8206/2013");//$NON-NLS-1$
-      pb.setDOI("10.1007/978-3-642-41278-3");//$NON-NLS-1$
-      pb.setISBN("978-3-642-41277-6");//$NON-NLS-1$
+      pb.setSeries("Lecture Notes in Computer Science (LNCS)"); //$NON-NLS-1$
+      pb.setVolume("8206/2013"); //$NON-NLS-1$
+      pb.setDOI("10.1007/978-3-642-41278-3"); //$NON-NLS-1$
+      pb.setISBN("978-3-642-41277-6"); //$NON-NLS-1$
     }
   }
 
   /**
    * make paper CWM2011VOEAFRWA
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -456,22 +456,22 @@ public class MyBibliography {
         }
       }
       try (final BibOrganizationBuilder bo = pb.setPublisher()) {
-        bo.setName("Springer-Verlag GmbH");//$NON-NLS-1$
-        bo.setAddress("Berlin/Heidelberg");//$NON-NLS-1$
+        bo.setName("Springer-Verlag GmbH"); //$NON-NLS-1$
+        bo.setAddress("Berlin/Heidelberg"); //$NON-NLS-1$
       }
       try (final BibDateBuilder d = pb.setDate()) {
         d.setYear(2011);
         d.setMonth(EBibMonth.SEPTEMBER);
         d.setDay(30);
       }
-      pb.setDOI("10.1007/978-3-642-23424-8");//$NON-NLS-1$
-      pb.setISBN("978-3-642-23424-8");//$NON-NLS-1$
+      pb.setDOI("10.1007/978-3-642-23424-8"); //$NON-NLS-1$
+      pb.setISBN("978-3-642-23424-8"); //$NON-NLS-1$
     }
   }
 
   /**
    * The main routine, printing my bibliography
-   * 
+   *
    * @param args
    *          the command line arguments: ignored
    */

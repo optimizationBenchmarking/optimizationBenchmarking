@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * An internal set of id objects.
- * 
+ *
  * @param <OT>
  *          the owner type
  * @param <DT>
@@ -16,7 +16,7 @@ class _IDObjectSet<OT, DT extends _IDObject<?>> extends _IDSet<OT, DT> {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data of the set
    * @param clone
@@ -83,7 +83,7 @@ class _IDObjectSet<OT, DT extends _IDObject<?>> extends _IDSet<OT, DT> {
       if (element.m_id != index) {
         throw new IllegalStateException("Element '" + element + //$NON-NLS-1$
             "' should be at index " + index + //$NON-NLS-1$
-            ", but is at index " + element.m_id);//$NON-NLS-1$
+            ", but is at index " + element.m_id); //$NON-NLS-1$
       }
     } else {
       if (element.m_owner == this) {
@@ -110,7 +110,7 @@ class _IDObjectSet<OT, DT extends _IDObject<?>> extends _IDSet<OT, DT> {
                 ", an element with lower ID cannot follow an element with higher ID, but '" + //$NON-NLS-1$
             before) + "' with ID ") + //$NON-NLS-1$
             before.m_id) + " follows '") + //$NON-NLS-1$
-            after) + "' with ID ") + after.m_id) + '.');//$NON-NLS-1$
+            after) + "' with ID ") + after.m_id) + '.'); //$NON-NLS-1$
       }
 
       if (before.m_owner == after.m_owner) {
@@ -174,7 +174,7 @@ class _IDObjectSet<OT, DT extends _IDObject<?>> extends _IDSet<OT, DT> {
 
   /**
    * Find the element with the given name
-   * 
+   *
    * @param name
    *          the name
    * @return the element, or {@code null} if it could not be found

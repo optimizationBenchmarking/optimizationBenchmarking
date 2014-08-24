@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 
 /**
  * The property set.
- * 
+ *
  * @param <PVT>
  *          the property value type
  * @param <PT>
@@ -26,7 +26,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the instances
    */
@@ -38,7 +38,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
 
   /**
    * Obtain a property fitting to a given name
-   * 
+   *
    * @param name
    *          the property name
    * @return the property, or {@code null} if none could be found
@@ -78,7 +78,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   * 
+   *
    * @param values
    *          the set of property values
    * @return the property setting
@@ -94,7 +94,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the property setting
@@ -110,7 +110,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the property setting
@@ -127,7 +127,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the property setting
@@ -144,7 +144,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   * 
+   *
    * @param values
    *          the set of property values
    * @return the property setting
@@ -156,7 +156,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
 
   /**
    * create the settings object
-   * 
+   *
    * @param values
    *          the values
    * @param isGeneralized
@@ -171,7 +171,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * All values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   * 
+   *
    * @param values
    *          the set of parameter values
    * @param fillGeneral
@@ -201,7 +201,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
         }
         throw new IllegalArgumentException(//
             "Property value must not be null, but the " + //$NON-NLS-1$
-                count + "th specified value is.");//$NON-NLS-1$
+                count + "th specified value is."); //$NON-NLS-1$
       }
       valueParameter = v.m_owner;
       valueParameterId = valueParameter.m_id;
@@ -210,7 +210,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
         throw new IllegalArgumentException(//
             "Property value '" + v + //$NON-NLS-1$
                 "' is not allowed since its owning property '"//$NON-NLS-1$
-                + valueParameter + "' has an illegal id.");//$NON-NLS-1$
+                + valueParameter + "' has an illegal id."); //$NON-NLS-1$
       }
       if (data[valueParameterId] != valueParameter) {
         throw new IllegalArgumentException(//
@@ -218,14 +218,14 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
                 "' is not allowed since its owning property '"//$NON-NLS-1$
                 + valueParameter
                 + "' has an id which belongs to the different property ('" + //$NON-NLS-1$
-                data[valueParameterId] + "').");//$NON-NLS-1$
+                data[valueParameterId] + "')."); //$NON-NLS-1$
       }
 
       if ((ps[valueParameterId] != null) && (ps[valueParameterId] != v)) {
         throw new IllegalArgumentException(
             (((((("Two values have been provided for property '" + //$NON-NLS-1$
             v.m_owner) + "': '") + ps[valueParameterId]) + //$NON-NLS-1$
-            "' and '") + v) + '\'') + '.');//$NON-NLS-1$
+            "' and '") + v) + '\'') + '.'); //$NON-NLS-1$
       }
 
       valueId = v.m_id;
@@ -233,14 +233,14 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
         case (_PropertyValueUnspecified.ID): {
           if (v != valueParameter.unspecified()) {
             throw new IllegalArgumentException("Value '" + v + //$NON-NLS-1$
-                "' must be unspecified, but is not.");//$NON-NLS-1$
+                "' must be unspecified, but is not."); //$NON-NLS-1$
           }
           break;
         }
         case (_PropertyValueGeneralized.ID): {
           if (v != valueParameter.m_general) {
             throw new IllegalArgumentException("Value '" + v + //$NON-NLS-1$
-                "' must be a generalization value, but is not.");//$NON-NLS-1$
+                "' must be a generalization value, but is not."); //$NON-NLS-1$
           }
           isGeneral = true;
           break;
@@ -270,7 +270,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
 
     if (count <= 0) {
       throw new IllegalArgumentException(//
-          "Property setting cannot be empty.");//$NON-NLS-1$
+          "Property setting cannot be empty."); //$NON-NLS-1$
     }
     if (count < data.length) {
       isGeneral |= (fillGeneral);

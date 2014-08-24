@@ -27,7 +27,7 @@ public class XMLAPIParallelSerialization extends SerializationMethod {
 
   /**
    * create the serialization method
-   * 
+   *
    * @param threads
    *          the number of threads to allocate
    */
@@ -64,7 +64,7 @@ public class XMLAPIParallelSerialization extends SerializationMethod {
 
   /**
    * The main method
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Exception
@@ -83,7 +83,7 @@ public class XMLAPIParallelSerialization extends SerializationMethod {
       api = new XMLAPIParallelSerialization(threads);
       System.out.print("========================= <"); //$NON-NLS-1$
       System.out.print(api.toString());
-      System.out.println("> =========================");//$NON-NLS-1$
+      System.out.println("> ========================="); //$NON-NLS-1$
       try (final StringWriter w = new StringWriter()) {
         api.store(doc, w);
         System.out.println(w.toString());
@@ -91,7 +91,7 @@ public class XMLAPIParallelSerialization extends SerializationMethod {
       System.out.println();
       System.out.print("========================= </"); //$NON-NLS-1$
       System.out.print(api.toString());
-      System.out.println("> =========================");//$NON-NLS-1$
+      System.out.println("> ========================="); //$NON-NLS-1$
       System.out.println();
       System.out.println();
     }

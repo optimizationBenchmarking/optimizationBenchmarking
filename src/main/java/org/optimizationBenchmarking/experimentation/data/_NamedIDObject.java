@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * An internal set of id objects.
- * 
+ *
  * @param <OT>
  *          the owner type
  */
@@ -20,7 +20,7 @@ class _NamedIDObject<OT> extends _IDObject<OT> {
 
   /**
    * instantiate
-   * 
+   *
    * @param name
    *          the name of the object
    * @param desc
@@ -43,9 +43,9 @@ class _NamedIDObject<OT> extends _IDObject<OT> {
   @Override
   public void toText(final ITextOutput textOut) {
     textOut.append(this.getClass().getSimpleName());
-    textOut.append("(name='");//$NON-NLS-1$
+    textOut.append("(name='"); //$NON-NLS-1$
     textOut.append(this.m_name);
-    textOut.append("',id=");//$NON-NLS-1$
+    textOut.append("',id="); //$NON-NLS-1$
     textOut.append(this.m_id);
     textOut.append(')');
   }

@@ -45,7 +45,7 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the dimension set
-   * 
+   *
    * @param dsc
    *          the context
    */
@@ -53,7 +53,7 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimA"); //$NON-NLS-1$
-      dc.setDescription("Description of dimension A.");//$NON-NLS-1$
+      dc.setDescription("Description of dimension A."); //$NON-NLS-1$
       dc.setParser(LongParser.INSTANCE);
       dc.setType(EDimensionType.ITERATION_FE);
       dc.setDirection(EDimensionDirection.INCREASING_STRICTLY);
@@ -61,7 +61,7 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimB"); //$NON-NLS-1$
-      dc.setDescription("Description of dimension B.");//$NON-NLS-1$
+      dc.setDescription("Description of dimension B."); //$NON-NLS-1$
       dc.setParser(new BoundedLongParser(0, 1000l));
       dc.setType(EDimensionType.ITERATION_SUB_FE);
       dc.setDirection(EDimensionDirection.DECREASING);
@@ -69,7 +69,7 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimC"); //$NON-NLS-1$
-      dc.setDescription("Description of dimension C.");//$NON-NLS-1$
+      dc.setDescription("Description of dimension C."); //$NON-NLS-1$
       dc.setParser(StrictLongParser.STRICT_INSTANCE);
       dc.setType(EDimensionType.RUNTIME_CPU);
       dc.setDirection(EDimensionDirection.INCREASING);
@@ -77,7 +77,7 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimD"); //$NON-NLS-1$
-      dc.setDescription("Description of dimension D.");//$NON-NLS-1$
+      dc.setDescription("Description of dimension D."); //$NON-NLS-1$
       dc.setParser(DoubleParser.INSTANCE);
       dc.setType(EDimensionType.RUNTIME_NORMALIZED);
       dc.setDirection(EDimensionDirection.INCREASING);
@@ -85,7 +85,7 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimE"); //$NON-NLS-1$
-      dc.setDescription("Description of dimension E.");//$NON-NLS-1$
+      dc.setDescription("Description of dimension E."); //$NON-NLS-1$
       dc.setParser(new BoundedFloatParser(-100f, 100f));
       dc.setType(EDimensionType.QUALITY_PROBLEM_DEPENDENT);
       dc.setDirection(EDimensionDirection.DECREASING);
@@ -101,60 +101,60 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the instance set
-   * 
+   *
    * @param isc
    *          the context
    */
   private final void __createInstanceSet(final ExperimentSetContext isc) {
 
     isc.declareFeature("scale",//$NON-NLS-1$
-        "The scale of a problem.");//$NON-NLS-1$
+        "The scale of a problem."); //$NON-NLS-1$
 
     try (InstanceContext ic = isc.createInstance()) {
       ic.setName("First Instance"); //$NON-NLS-1$
-      ic.setDescription("Description of instance 1.");//$NON-NLS-1$
-      ic.setFeatureValue("scale", Long.valueOf(10));//$NON-NLS-1$
+      ic.setDescription("Description of instance 1."); //$NON-NLS-1$
+      ic.setFeatureValue("scale", Long.valueOf(10)); //$NON-NLS-1$
       ic.setFeatureValue("symmetric", //$NON-NLS-1$
-          "Is the instance symmetric?",//$NON-NLS-1$ 
+          "Is the instance symmetric?",//$NON-NLS-1$
           "true",//$NON-NLS-1$
-          "Yes, the instance is symmetric.");//$NON-NLS-1$
-      ic.setUpperBound("dimA", "10000.0");//$NON-NLS-1$//$NON-NLS-2$      
+          "Yes, the instance is symmetric."); //$NON-NLS-1$
+      ic.setUpperBound("dimA", "10000.0"); //$NON-NLS-1$//$NON-NLS-2$
     }
 
     try (InstanceContext ic = isc.createInstance()) {
       ic.setName("Second Instance"); //$NON-NLS-1$
-      ic.setFeatureValue("scale", "100");//$NON-NLS-1$//$NON-NLS-2$
-      ic.setFeatureValue("symmetric", "false");//$NON-NLS-1$//$NON-NLS-2$
-      ic.setUpperBound("dimA", "20000");//$NON-NLS-1$//$NON-NLS-2$
-      ic.setLowerBound("dimE", "-2");//$NON-NLS-1$//$NON-NLS-2$
-      ic.setUpperBound("dimE", Long.valueOf(90));//$NON-NLS-1$
+      ic.setFeatureValue("scale", "100"); //$NON-NLS-1$//$NON-NLS-2$
+      ic.setFeatureValue("symmetric", "false"); //$NON-NLS-1$//$NON-NLS-2$
+      ic.setUpperBound("dimA", "20000"); //$NON-NLS-1$//$NON-NLS-2$
+      ic.setLowerBound("dimE", "-2"); //$NON-NLS-1$//$NON-NLS-2$
+      ic.setUpperBound("dimE", Long.valueOf(90)); //$NON-NLS-1$
     }
 
     try (InstanceContext ic = isc.createInstance()) {
       ic.setName("Third Instance"); //$NON-NLS-1$
-      ic.setUpperBound("dimA", "3000");//$NON-NLS-1$//$NON-NLS-2$
-      ic.setDescription("Description of instance 3.");//$NON-NLS-1$
-      ic.setFeatureValue("scale", Byte.valueOf((byte) 120));//$NON-NLS-1$
-      ic.setFeatureValue("symmetric", "true");//$NON-NLS-1$//$NON-NLS-2$
+      ic.setUpperBound("dimA", "3000"); //$NON-NLS-1$//$NON-NLS-2$
+      ic.setDescription("Description of instance 3."); //$NON-NLS-1$
+      ic.setFeatureValue("scale", Byte.valueOf((byte) 120)); //$NON-NLS-1$
+      ic.setFeatureValue("symmetric", "true"); //$NON-NLS-1$//$NON-NLS-2$
     }
 
     try (InstanceContext ic = isc.createInstance()) {
       ic.setName("Fourth Instance"); //$NON-NLS-1$
-      ic.setUpperBound("dimA", "34500");//$NON-NLS-1$//$NON-NLS-2$
-      ic.setFeatureValue("scale", "700");//$NON-NLS-1$//$NON-NLS-2$
-      ic.setFeatureValue("symmetric", "false");//$NON-NLS-1$//$NON-NLS-2$
+      ic.setUpperBound("dimA", "34500"); //$NON-NLS-1$//$NON-NLS-2$
+      ic.setFeatureValue("scale", "700"); //$NON-NLS-1$//$NON-NLS-2$
+      ic.setFeatureValue("symmetric", "false"); //$NON-NLS-1$//$NON-NLS-2$
     }
   }
 
   /**
    * create the experiment set
-   * 
+   *
    * @param isc
    *          the context
    */
   private final void __createExperimentSet(final ExperimentSetContext isc) {
 
-    isc.declareParameter("ParameterX", "An odd parameter.");//$NON-NLS-1$//$NON-NLS-2$
+    isc.declareParameter("ParameterX", "An odd parameter."); //$NON-NLS-1$//$NON-NLS-2$
 
     try (final ExperimentContext ec = isc.createExperiment()) {
       this.__createExperiment_1(ec);
@@ -166,13 +166,13 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the first experiment
-   * 
+   *
    * @param ec
    *          the ExperimentContext
    */
   private final void __createExperiment_1(final ExperimentContext ec) {
-    ec.setParameterValue("ParameterX", Long.valueOf(23));//$NON-NLS-1$
-    ec.setName("First Experiment");//$NON-NLS-1$
+    ec.setParameterValue("ParameterX", Long.valueOf(23)); //$NON-NLS-1$
+    ec.setName("First Experiment"); //$NON-NLS-1$
 
     try (InstanceRunsContext irc = ec.createInstanceRuns()) {
       this.__createInstanceRuns_1_A(irc);
@@ -188,7 +188,7 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -207,61 +207,61 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_1_A_1(final RunContext rc) {
-    rc.setParameterValue("ParameterY", "1234.4");//$NON-NLS-1$//$NON-NLS-2$
-    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1");//$NON-NLS-1$
+    rc.setParameterValue("ParameterY", "1234.4"); //$NON-NLS-1$//$NON-NLS-2$
+    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1"); //$NON-NLS-1$
 
-    rc.addDataPoint("10 20 30 40 50 60");//$NON-NLS-1$
-    rc.addDataPoint("11 19 31 41 49 61");//$NON-NLS-1$
-    rc.addDataPoint("12 18 32 42 48 62");//$NON-NLS-1$
-    rc.addDataPoint("13 17 33 43 47 63");//$NON-NLS-1$
-    rc.addDataPoint("14 16 34 44 46 64");//$NON-NLS-1$
-    rc.addDataPoint("15 15 35 45 45 65");//$NON-NLS-1$
+    rc.addDataPoint("10 20 30 40 50 60"); //$NON-NLS-1$
+    rc.addDataPoint("11 19 31 41 49 61"); //$NON-NLS-1$
+    rc.addDataPoint("12 18 32 42 48 62"); //$NON-NLS-1$
+    rc.addDataPoint("13 17 33 43 47 63"); //$NON-NLS-1$
+    rc.addDataPoint("14 16 34 44 46 64"); //$NON-NLS-1$
+    rc.addDataPoint("15 15 35 45 45 65"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_1_A_2(final RunContext rc) {
-    rc.setParameterValue("ParameterY", "1234.4");//$NON-NLS-1$//$NON-NLS-2$
-    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1");//$NON-NLS-1$
+    rc.setParameterValue("ParameterY", "1234.4"); //$NON-NLS-1$//$NON-NLS-2$
+    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1"); //$NON-NLS-1$
 
-    rc.addDataPoint("9 20 37 40 55 60");//$NON-NLS-1$
-    rc.addDataPoint("10 19 38 41 52 61");//$NON-NLS-1$
-    rc.addDataPoint("11 18 39 42 51 62");//$NON-NLS-1$
-    rc.addDataPoint("12 17 41 43 50 63");//$NON-NLS-1$
-    rc.addDataPoint("13 16 45 44 40 64");//$NON-NLS-1$
-    rc.addDataPoint("14 15 69 45 35 65");//$NON-NLS-1$
+    rc.addDataPoint("9 20 37 40 55 60"); //$NON-NLS-1$
+    rc.addDataPoint("10 19 38 41 52 61"); //$NON-NLS-1$
+    rc.addDataPoint("11 18 39 42 51 62"); //$NON-NLS-1$
+    rc.addDataPoint("12 17 41 43 50 63"); //$NON-NLS-1$
+    rc.addDataPoint("13 16 45 44 40 64"); //$NON-NLS-1$
+    rc.addDataPoint("14 15 69 45 35 65"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_1_A_3(final RunContext rc) {
-    rc.setParameterValue("ParameterY", "1234.4");//$NON-NLS-1$//$NON-NLS-2$
-    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1");//$NON-NLS-1$
+    rc.setParameterValue("ParameterY", "1234.4"); //$NON-NLS-1$//$NON-NLS-2$
+    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1"); //$NON-NLS-1$
 
-    rc.addDataPoint("4 32 37 45 55 60");//$NON-NLS-1$
-    rc.addDataPoint("5 29 38 46 51 63");//$NON-NLS-1$
-    rc.addDataPoint("11 27 40 48 50 67");//$NON-NLS-1$
-    rc.addDataPoint("17 19 41 53 40 69");//$NON-NLS-1$
-    rc.addDataPoint("32 14 55 64 30 71");//$NON-NLS-1$
-    rc.addDataPoint("34 11 69 75 25 77");//$NON-NLS-1$
+    rc.addDataPoint("4 32 37 45 55 60"); //$NON-NLS-1$
+    rc.addDataPoint("5 29 38 46 51 63"); //$NON-NLS-1$
+    rc.addDataPoint("11 27 40 48 50 67"); //$NON-NLS-1$
+    rc.addDataPoint("17 19 41 53 40 69"); //$NON-NLS-1$
+    rc.addDataPoint("32 14 55 64 30 71"); //$NON-NLS-1$
+    rc.addDataPoint("34 11 69 75 25 77"); //$NON-NLS-1$
   }
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -280,50 +280,50 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_1_B_1(final RunContext rc) {
-    rc.setParameterValue("ParameterY", "1234.4");//$NON-NLS-1$//$NON-NLS-2$
-    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1");//$NON-NLS-1$
+    rc.setParameterValue("ParameterY", "1234.4"); //$NON-NLS-1$//$NON-NLS-2$
+    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1"); //$NON-NLS-1$
 
-    rc.addDataPoint("10 20 30 40 50 60");//$NON-NLS-1$
-    rc.addDataPoint("11 19 31 41 49 61");//$NON-NLS-1$    
-    rc.addDataPoint("15 15 35 45 45 65");//$NON-NLS-1$
+    rc.addDataPoint("10 20 30 40 50 60"); //$NON-NLS-1$
+    rc.addDataPoint("11 19 31 41 49 61"); //$NON-NLS-1$
+    rc.addDataPoint("15 15 35 45 45 65"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_1_B_2(final RunContext rc) {
-    rc.setParameterValue("ParameterY", "1234.4");//$NON-NLS-1$//$NON-NLS-2$
-    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1");//$NON-NLS-1$
+    rc.setParameterValue("ParameterY", "1234.4"); //$NON-NLS-1$//$NON-NLS-2$
+    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1"); //$NON-NLS-1$
 
-    rc.addDataPoint("13 16 45 44 40.7 64.3");//$NON-NLS-1$
-    rc.addDataPoint("14 15 69 45 35.556 64.5");//$NON-NLS-1$
+    rc.addDataPoint("13 16 45 44 40.7 64.3"); //$NON-NLS-1$
+    rc.addDataPoint("14 15 69 45 35.556 64.5"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_1_B_3(final RunContext rc) {
-    rc.setParameterValue("ParameterY", "1234.4");//$NON-NLS-1$//$NON-NLS-2$
-    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1");//$NON-NLS-1$
+    rc.setParameterValue("ParameterY", "1234.4"); //$NON-NLS-1$//$NON-NLS-2$
+    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1"); //$NON-NLS-1$
 
-    rc.addDataPoint("4 32 37 45 55 60");//$NON-NLS-1$
-    rc.addDataPoint("34 11 69 75 25.4 77");//$NON-NLS-1$
+    rc.addDataPoint("4 32 37 45 55 60"); //$NON-NLS-1$
+    rc.addDataPoint("34 11 69 75 25.4 77"); //$NON-NLS-1$
   }
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -363,65 +363,65 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_1_C_1(final RunContext rc) {
-    rc.setParameterValue("ParameterY", "1234.4");//$NON-NLS-1$//$NON-NLS-2$
-    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1");//$NON-NLS-1$
+    rc.setParameterValue("ParameterY", "1234.4"); //$NON-NLS-1$//$NON-NLS-2$
+    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1"); //$NON-NLS-1$
 
-    rc.addDataPoint("07 30 30 40.7 50.1 60.7");//$NON-NLS-1$
-    rc.addDataPoint("09 29 33 41.3 49.2 61.6");//$NON-NLS-1$
-    rc.addDataPoint("11 15 37 42.2 48.3 62.5");//$NON-NLS-1$
-    rc.addDataPoint("17 13 39 43.3 47.4 63.4");//$NON-NLS-1$
-    rc.addDataPoint("24 11 44 44.4 46.5 64.3");//$NON-NLS-1$
-    rc.addDataPoint("25 11 45 45.5 45.7 65.2");//$NON-NLS-1$
+    rc.addDataPoint("07 30 30 40.7 50.1 60.7"); //$NON-NLS-1$
+    rc.addDataPoint("09 29 33 41.3 49.2 61.6"); //$NON-NLS-1$
+    rc.addDataPoint("11 15 37 42.2 48.3 62.5"); //$NON-NLS-1$
+    rc.addDataPoint("17 13 39 43.3 47.4 63.4"); //$NON-NLS-1$
+    rc.addDataPoint("24 11 44 44.4 46.5 64.3"); //$NON-NLS-1$
+    rc.addDataPoint("25 11 45 45.5 45.7 65.2"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_1_C_2(final RunContext rc) {
-    rc.setParameterValue("ParameterY", "1234.4");//$NON-NLS-1$//$NON-NLS-2$
-    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1");//$NON-NLS-1$
+    rc.setParameterValue("ParameterY", "1234.4"); //$NON-NLS-1$//$NON-NLS-2$
+    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1"); //$NON-NLS-1$
 
-    rc.addDataPoint("07 30 30 40.7 50.1 60.7");//$NON-NLS-1$
-    rc.addDataPoint("09 29 33 41.3 49.2 61.6");//$NON-NLS-1$
+    rc.addDataPoint("07 30 30 40.7 50.1 60.7"); //$NON-NLS-1$
+    rc.addDataPoint("09 29 33 41.3 49.2 61.6"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_1_C_3(final RunContext rc) {
-    rc.setParameterValue("ParameterY", "1234.4");//$NON-NLS-1$//$NON-NLS-2$
-    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1");//$NON-NLS-1$
+    rc.setParameterValue("ParameterY", "1234.4"); //$NON-NLS-1$//$NON-NLS-2$
+    rc.setParameterValue(Parameter.PARAMETER_ALGORITHM, "Algorithm1"); //$NON-NLS-1$
 
-    rc.addDataPoint("11 15 37 42.2 48.3 62.5");//$NON-NLS-1$
-    rc.addDataPoint("17 13 39 43.3 47.4 63.4");//$NON-NLS-1$
-    rc.addDataPoint("24 11 44 44.4 46.5 64.3");//$NON-NLS-1$
+    rc.addDataPoint("11 15 37 42.2 48.3 62.5"); //$NON-NLS-1$
+    rc.addDataPoint("17 13 39 43.3 47.4 63.4"); //$NON-NLS-1$
+    rc.addDataPoint("24 11 44 44.4 46.5 64.3"); //$NON-NLS-1$
   }
 
   /**
    * create the second experiment
-   * 
+   *
    * @param ec
    *          the ExperimentContext
    */
   private final void __createExperiment_2(final ExperimentContext ec) {
-    ec.setParameterValue("ParameterY", Double.valueOf(77));//$NON-NLS-1$
-    ec.setParameterValue("ParameterZ", "abc");//$NON-NLS-1$//$NON-NLS-2$
-    ec.setName("Second Experiment");//$NON-NLS-1$
+    ec.setParameterValue("ParameterY", Double.valueOf(77)); //$NON-NLS-1$
+    ec.setParameterValue("ParameterZ", "abc"); //$NON-NLS-1$//$NON-NLS-2$
+    ec.setName("Second Experiment"); //$NON-NLS-1$
     ec.setParameterValue(Parameter.PARAMETER_ALGORITHM_NAME,
-        "Other Algorithm");//$NON-NLS-1$
+        "Other Algorithm"); //$NON-NLS-1$
     ec.setParameterValue(Parameter.PARAMETER_ALGORITHM_CLASS,
-        "org.x.MyClass");//$NON-NLS-1$
+        "org.x.MyClass"); //$NON-NLS-1$
 
     try (InstanceRunsContext irc = ec.createInstanceRuns()) {
       this.__createInstanceRuns_2_D(irc);
@@ -437,7 +437,7 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -459,54 +459,54 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_2_D_1(final RunContext rc) {
 
-    rc.addDataPoint("10 20 30 40 50 60");//$NON-NLS-1$
-    rc.addDataPoint("11 19 31 41 49 61");//$NON-NLS-1$
-    rc.addDataPoint("12 18 32 42 48 62");//$NON-NLS-1$
-    rc.addDataPoint("13 17 33 43 47 63");//$NON-NLS-1$
-    rc.addDataPoint("14 16 34 44 46 64");//$NON-NLS-1$
-    rc.addDataPoint("15 15 35 45 45 65");//$NON-NLS-1$
+    rc.addDataPoint("10 20 30 40 50 60"); //$NON-NLS-1$
+    rc.addDataPoint("11 19 31 41 49 61"); //$NON-NLS-1$
+    rc.addDataPoint("12 18 32 42 48 62"); //$NON-NLS-1$
+    rc.addDataPoint("13 17 33 43 47 63"); //$NON-NLS-1$
+    rc.addDataPoint("14 16 34 44 46 64"); //$NON-NLS-1$
+    rc.addDataPoint("15 15 35 45 45 65"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_2_D_2(final RunContext rc) {
 
-    rc.addDataPoint("9 20 37 40 55 60");//$NON-NLS-1$
-    rc.addDataPoint("10 19 38 41 52 61");//$NON-NLS-1$
-    rc.addDataPoint("11 18 39 42 51 62");//$NON-NLS-1$
-    rc.addDataPoint("12 17 41 43 50 63");//$NON-NLS-1$
-    rc.addDataPoint("13 16 45 44 40 64");//$NON-NLS-1$
-    rc.addDataPoint("14 15 69 45 35 65");//$NON-NLS-1$
+    rc.addDataPoint("9 20 37 40 55 60"); //$NON-NLS-1$
+    rc.addDataPoint("10 19 38 41 52 61"); //$NON-NLS-1$
+    rc.addDataPoint("11 18 39 42 51 62"); //$NON-NLS-1$
+    rc.addDataPoint("12 17 41 43 50 63"); //$NON-NLS-1$
+    rc.addDataPoint("13 16 45 44 40 64"); //$NON-NLS-1$
+    rc.addDataPoint("14 15 69 45 35 65"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_2_D_3(final RunContext rc) {
-    rc.addDataPoint("4 32 37 45 55 60");//$NON-NLS-1$
-    rc.addDataPoint("5 29 38 46 51 63");//$NON-NLS-1$
-    rc.addDataPoint("11 27 40 48 50 67");//$NON-NLS-1$
-    rc.addDataPoint("17 19 41 53 40 69");//$NON-NLS-1$
-    rc.addDataPoint("32 14 55 64 30 71");//$NON-NLS-1$
-    rc.addDataPoint("34 11 69 75 25 77");//$NON-NLS-1$
+    rc.addDataPoint("4 32 37 45 55 60"); //$NON-NLS-1$
+    rc.addDataPoint("5 29 38 46 51 63"); //$NON-NLS-1$
+    rc.addDataPoint("11 27 40 48 50 67"); //$NON-NLS-1$
+    rc.addDataPoint("17 19 41 53 40 69"); //$NON-NLS-1$
+    rc.addDataPoint("32 14 55 64 30 71"); //$NON-NLS-1$
+    rc.addDataPoint("34 11 69 75 25 77"); //$NON-NLS-1$
   }
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -528,43 +528,43 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_2_B_1(final RunContext rc) {
-    rc.addDataPoint("10 20 30 40 50 60");//$NON-NLS-1$
-    rc.addDataPoint("11 19 31 41 49 61");//$NON-NLS-1$    
-    rc.addDataPoint("15 15 35 45 45 65");//$NON-NLS-1$
+    rc.addDataPoint("10 20 30 40 50 60"); //$NON-NLS-1$
+    rc.addDataPoint("11 19 31 41 49 61"); //$NON-NLS-1$
+    rc.addDataPoint("15 15 35 45 45 65"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_2_B_2(final RunContext rc) {
 
-    rc.addDataPoint("13 16 45 44 40.7 64.3");//$NON-NLS-1$
-    rc.addDataPoint("14 15 69 45 35.556 64.5");//$NON-NLS-1$
+    rc.addDataPoint("13 16 45 44 40.7 64.3"); //$NON-NLS-1$
+    rc.addDataPoint("14 15 69 45 35.556 64.5"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_2_B_3(final RunContext rc) {
 
-    rc.addDataPoint("4 32 37 45 55 60");//$NON-NLS-1$
-    rc.addDataPoint("34 11 69 75 25.4 77");//$NON-NLS-1$
+    rc.addDataPoint("4 32 37 45 55 60"); //$NON-NLS-1$
+    rc.addDataPoint("34 11 69 75 25.4 77"); //$NON-NLS-1$
   }
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -589,42 +589,42 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_2_C_1(final RunContext rc) {
 
-    rc.addDataPoint("07 30 30 40.7 50.1 60.7");//$NON-NLS-1$
-    rc.addDataPoint("09 29 33 41.3 49.2 61.6");//$NON-NLS-1$
-    rc.addDataPoint("11 15 37 42.2 48.3 62.5");//$NON-NLS-1$
-    rc.addDataPoint("17 13 39 43.3 47.4 63.4");//$NON-NLS-1$
-    rc.addDataPoint("24 11 44 44.4 46.5 64.3");//$NON-NLS-1$
-    rc.addDataPoint("25 11 45 45.5 45.7 65.2");//$NON-NLS-1$
+    rc.addDataPoint("07 30 30 40.7 50.1 60.7"); //$NON-NLS-1$
+    rc.addDataPoint("09 29 33 41.3 49.2 61.6"); //$NON-NLS-1$
+    rc.addDataPoint("11 15 37 42.2 48.3 62.5"); //$NON-NLS-1$
+    rc.addDataPoint("17 13 39 43.3 47.4 63.4"); //$NON-NLS-1$
+    rc.addDataPoint("24 11 44 44.4 46.5 64.3"); //$NON-NLS-1$
+    rc.addDataPoint("25 11 45 45.5 45.7 65.2"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_2_C_2(final RunContext rc) {
 
-    rc.addDataPoint("07 30 30 40.7 50.1 60.7");//$NON-NLS-1$
-    rc.addDataPoint("09 29 33 41.3 49.2 61.6");//$NON-NLS-1$
+    rc.addDataPoint("07 30 30 40.7 50.1 60.7"); //$NON-NLS-1$
+    rc.addDataPoint("09 29 33 41.3 49.2 61.6"); //$NON-NLS-1$
   }
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
   private final void __createRun_2_C_3(final RunContext rc) {
 
-    rc.addDataPoint("11 15 37 42.2 48.3 62.5");//$NON-NLS-1$
-    rc.addDataPoint("17 13 39 43.3 47.4 63.4");//$NON-NLS-1$
-    rc.addDataPoint("24 11 44 44.4 46.5 64.3");//$NON-NLS-1$
+    rc.addDataPoint("11 15 37 42.2 48.3 62.5"); //$NON-NLS-1$
+    rc.addDataPoint("17 13 39 43.3 47.4 63.4"); //$NON-NLS-1$
+    rc.addDataPoint("24 11 44 44.4 46.5 64.3"); //$NON-NLS-1$
   }
 }

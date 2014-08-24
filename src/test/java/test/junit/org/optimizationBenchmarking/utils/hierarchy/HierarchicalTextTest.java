@@ -65,7 +65,7 @@ public class HierarchicalTextTest extends _HierarchicalTest {
 
   /**
    * check if a string is contained in a given string builder
-   * 
+   *
    * @param s
    *          the string
    * @param sb
@@ -96,7 +96,7 @@ public class HierarchicalTextTest extends _HierarchicalTest {
               + j
               + " near '"//$NON-NLS-1$
               + sb.toString().substring(Math.max(0, j - len - 1),
-                  Math.min(sb.length(), j + l + len + 1)) + "'.");//$NON-NLS-1$
+                  Math.min(sb.length(), j + l + len + 1)) + "'."); //$NON-NLS-1$
           return;
         }
       }

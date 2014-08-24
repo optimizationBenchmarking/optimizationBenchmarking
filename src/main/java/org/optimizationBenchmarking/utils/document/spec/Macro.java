@@ -58,7 +58,7 @@ public abstract class Macro<BT extends IMacroBody> implements Serializable {
         .transform(s, null));
     if (s == null) {
       throw new IllegalArgumentException(//
-          "Macro place must have a non-trivial normalized name.");//$NON-NLS-1$
+          "Macro place must have a non-trivial normalized name."); //$NON-NLS-1$
     }
 
     this.m_paramCount = paramCount;

@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
 
 /**
  * the property mapping iterator
- * 
+ *
  * @param <PVT>
  *          the property value type
  * @param <PT>
@@ -27,7 +27,7 @@ final class _PropertyMappingIterator<PVT extends _PropertyValue<?>, PT extends _
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    * @param it
@@ -82,7 +82,7 @@ final class _PropertyMappingIterator<PVT extends _PropertyValue<?>, PT extends _
       }
       throw new IllegalArgumentException(//
           "Mapping value must not be null, but the value of property '" //$NON-NLS-1$
-              + key + "' is.");//$NON-NLS-1$
+              + key + "' is."); //$NON-NLS-1$
     }
 
     prop = this.m_owner.find(key);

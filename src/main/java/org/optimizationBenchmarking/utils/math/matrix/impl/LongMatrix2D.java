@@ -13,7 +13,7 @@ public class LongMatrix2D extends AbstractMatrix {
 
   /**
    * create the matrix
-   * 
+   *
    * @param data
    *          the data
    */
@@ -31,7 +31,7 @@ public class LongMatrix2D extends AbstractMatrix {
     for (final long[] dd : data) {
       if (dd.length != c) {
         throw new IllegalArgumentException(//
-            "All rows must have same number of columns.");//$NON-NLS-1$
+            "All rows must have same number of columns."); //$NON-NLS-1$
       }
     }
 

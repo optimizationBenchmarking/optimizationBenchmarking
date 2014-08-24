@@ -38,7 +38,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
 
   /**
    * Create the hierarchical {@link java.lang.Appendable}
-   * 
+   *
    * @param owner
    *          the owning hierarchical fsm
    * @param out
@@ -55,21 +55,21 @@ public abstract class HierarchicalText extends HierarchicalFSM {
         sb = new MemoryTextOutput();
         sb.append("If the owner is null, this means this object is the root "); //$NON-NLS-1$
         FSM._name(this, sb);
-        sb.append(", so it cannot have a null appendable.");//$NON-NLS-1$
+        sb.append(", so it cannot have a null appendable."); //$NON-NLS-1$
         throw new IllegalArgumentException(sb.toString());
       }
     } else {
       if (owner instanceof HierarchicalText) {
         sb = new MemoryTextOutput();
-        sb.append("If the ");//$NON-NLS-1$
+        sb.append("If the "); //$NON-NLS-1$
         FSM._name(this, sb);
-        sb.append(" receives a non-null appendable (in this case, an instance of ");//$NON-NLS-1$
+        sb.append(" receives a non-null appendable (in this case, an instance of "); //$NON-NLS-1$
         sb.append(TextUtils.className(out.getClass()));
-        sb.append(") in the constructor, its owner cannot be an instance of ");//$NON-NLS-1$
+        sb.append(") in the constructor, its owner cannot be an instance of "); //$NON-NLS-1$
         sb.append(TextUtils.className(HierarchicalText.class));
-        sb.append(" but the provided owner ");//$NON-NLS-1$
+        sb.append(" but the provided owner "); //$NON-NLS-1$
         FSM._name(owner, sb);
-        sb.append(" is.");//$NON-NLS-1$
+        sb.append(" is."); //$NON-NLS-1$
         throw new IllegalArgumentException(sb.toString());
       }
       this.m_out = AbstractTextOutput.wrap(out);
@@ -147,7 +147,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
 
   /**
    * Obtain the encoding of the underlying {@link java.lang.Appendable}
-   * 
+   *
    * @return the encoding
    */
   protected StreamEncoding<?, ?> getStreamEncoding() {
@@ -163,7 +163,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
    * . This method must be called in a synchronized block and the returned
    * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    * must only be used inside that block.
-   * 
+   *
    * @return the
    *         {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    */

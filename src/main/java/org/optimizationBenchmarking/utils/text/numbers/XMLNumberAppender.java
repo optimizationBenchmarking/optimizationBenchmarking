@@ -33,10 +33,10 @@ public final class XMLNumberAppender extends _PlainIntNumberAppender {
       return "NaN"; //$NON-NLS-1$
     }
     if (v <= Double.NEGATIVE_INFINITY) {
-      return "-INF";//$NON-NLS-1$
+      return "-INF"; //$NON-NLS-1$
     }
     if (v >= Double.POSITIVE_INFINITY) {
-      return "+INF";//$NON-NLS-1$
+      return "+INF"; //$NON-NLS-1$
     }
 
     return SimpleNumberAppender.INSTANCE.toString(v, textCase);
@@ -44,7 +44,7 @@ public final class XMLNumberAppender extends _PlainIntNumberAppender {
 
   /**
    * read-resolve this object
-   * 
+   *
    * @return the resolved object
    */
   private final Object readResolve() {
@@ -53,7 +53,7 @@ public final class XMLNumberAppender extends _PlainIntNumberAppender {
 
   /**
    * write-replace this object
-   * 
+   *
    * @return the replace object
    */
   private final Object writeReplace() {

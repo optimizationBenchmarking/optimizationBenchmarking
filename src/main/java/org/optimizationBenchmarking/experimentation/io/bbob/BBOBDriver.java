@@ -34,28 +34,28 @@ public class BBOBDriver extends FileIODriver<Object, ExperimentSetContext> {
   private static final String FEATURE_SYMMETRIC = "sym"; //$NON-NLS-1$
 
   /** is the function separable */
-  private static final String FEATURE_SEPARABLE = "sep";//$NON-NLS-1$
+  private static final String FEATURE_SEPARABLE = "sep"; //$NON-NLS-1$
 
   /** is the function fully separable */
-  private static final String FEATURE_VALUE_SEPARABLE_FULLY = "fully";//$NON-NLS-1$
+  private static final String FEATURE_VALUE_SEPARABLE_FULLY = "fully"; //$NON-NLS-1$
   /** is the function partially separable */
-  private static final String FEATURE_VALUE_SEPARABLE_PARTIALLY = "partially";//$NON-NLS-1$
+  private static final String FEATURE_VALUE_SEPARABLE_PARTIALLY = "partially"; //$NON-NLS-1$
   /** is the function none separable */
-  private static final String FEATURE_VALUE_SEPARABLE_NONE = "none";//$NON-NLS-1$
+  private static final String FEATURE_VALUE_SEPARABLE_NONE = "none"; //$NON-NLS-1$
 
   /** the conditioning */
-  private static final String FEATURE_CONDITIONING = "cond";//$NON-NLS-1$
+  private static final String FEATURE_CONDITIONING = "cond"; //$NON-NLS-1$
 
   /** is the optimum on the boundary */
-  private static final String FEATURE_OPTIMUM_ON_BOUNDARY = "optOnBound";//$NON-NLS-1$
+  private static final String FEATURE_OPTIMUM_ON_BOUNDARY = "optOnBound"; //$NON-NLS-1$
 
   /** does the function have neutral steps */
-  private static final String FEATURE_HAS_STEPS = "steps";//$NON-NLS-1$
+  private static final String FEATURE_HAS_STEPS = "steps"; //$NON-NLS-1$
 
   /** the function id */
-  private static final String FEATURE_FUNCTION_ID = "f";//$NON-NLS-1$
+  private static final String FEATURE_FUNCTION_ID = "f"; //$NON-NLS-1$
   /** is the function rugged */
-  private static final String FEATURE_RUGGED = "rugged";//$NON-NLS-1$
+  private static final String FEATURE_RUGGED = "rugged"; //$NON-NLS-1$
 
   /** the maximum function id */
   static final int MAX_FUNCTION = 24;
@@ -71,7 +71,7 @@ public class BBOBDriver extends FileIODriver<Object, ExperimentSetContext> {
 
   /**
    * fill in the dimension set
-   * 
+   *
    * @param esb
    *          the experiment set builder
    */
@@ -99,7 +99,7 @@ public class BBOBDriver extends FileIODriver<Object, ExperimentSetContext> {
 
   /**
    * Make a function name
-   * 
+   *
    * @param id
    *          the function id
    * @param dim
@@ -112,7 +112,7 @@ public class BBOBDriver extends FileIODriver<Object, ExperimentSetContext> {
 
   /**
    * fill in the instance set
-   * 
+   *
    * @param esb
    *          the experiment set builder
    */
@@ -130,30 +130,30 @@ public class BBOBDriver extends FileIODriver<Object, ExperimentSetContext> {
     Double d10pd, d;
     int fid;
 
-    fidDesc = "the function id";//$NON-NLS-1$
-    dimDesc = "the number of dimensions";//$NON-NLS-1$
-    noptDesc = "the approximate number of local optima";//$NON-NLS-1$
-    noptUniDesc = "unimodal";//$NON-NLS-1$
-    noptMultiDesc = "multi-modal";//$NON-NLS-1$
-    symDesc = "whether the function is symmetric";//$NON-NLS-1$
-    symDescSym = "symmetric";//$NON-NLS-1$
-    symDescAsym = "asymmetric";//$NON-NLS-1$
-    sepDesc = "whether the function is separable, i.e., whether it can be represented as sum of functions of lower dimensionality";//$NON-NLS-1$
-    sepFullyDesc = "the function can be represented as sum of 1-dimensional functions";//$NON-NLS-1$
-    sepPartiallyDesc = "the function can be represented as sum of lower-dimensional functions";//$NON-NLS-1$
-    sepNoneDesc = "the function cannot be represented as sum of lower-dimensional functions";//$NON-NLS-1$
-    condDesc = "the approximate conditioning, i.e., the ratio of the largest and smallest direction of a contour line. Large values represent ill-conditioned problems.";//$NON-NLS-1$
-    condOKDesc = "nicely conditioned";//$NON-NLS-1$
-    condIllDesc = "ill-conditioned";//$NON-NLS-1$"
-    optOnBoundDesc = "whether the optimum is on the search space boundary";//$NON-NLS-1$
-    optOnBoundTrueDesc = "the optimum is on the search space boundary";//$NON-NLS-1$
-    optOnBoundFalseDesc = "the optimum is not on the search space boundary";//$NON-NLS-1$
-    stepsDesc = "whether the function has steps, i.e., neutral planes";//$NON-NLS-1$
-    stepsTrueDesc = "the function has steps, i.e., neutral planes";//$NON-NLS-1$
-    stepsFalseDesc = "whether the function does not have steps, i.e., neutral planes";//$NON-NLS-1$
-    ruggedDesc = "whether the function is rugged, i.e., goes up and down quickly";//$NON-NLS-1$
-    ruggedYesDesc = "the function is rugged, i.e., goes up and down quickly";//$NON-NLS-1$
-    ruggedNoDesc = "the function is not rugged";//$NON-NLS-1$
+    fidDesc = "the function id"; //$NON-NLS-1$
+    dimDesc = "the number of dimensions"; //$NON-NLS-1$
+    noptDesc = "the approximate number of local optima"; //$NON-NLS-1$
+    noptUniDesc = "unimodal"; //$NON-NLS-1$
+    noptMultiDesc = "multi-modal"; //$NON-NLS-1$
+    symDesc = "whether the function is symmetric"; //$NON-NLS-1$
+    symDescSym = "symmetric"; //$NON-NLS-1$
+    symDescAsym = "asymmetric"; //$NON-NLS-1$
+    sepDesc = "whether the function is separable, i.e., whether it can be represented as sum of functions of lower dimensionality"; //$NON-NLS-1$
+    sepFullyDesc = "the function can be represented as sum of 1-dimensional functions"; //$NON-NLS-1$
+    sepPartiallyDesc = "the function can be represented as sum of lower-dimensional functions"; //$NON-NLS-1$
+    sepNoneDesc = "the function cannot be represented as sum of lower-dimensional functions"; //$NON-NLS-1$
+    condDesc = "the approximate conditioning, i.e., the ratio of the largest and smallest direction of a contour line. Large values represent ill-conditioned problems."; //$NON-NLS-1$
+    condOKDesc = "nicely conditioned"; //$NON-NLS-1$
+    condIllDesc = "ill-conditioned"; //$NON-NLS-1$"
+    optOnBoundDesc = "whether the optimum is on the search space boundary"; //$NON-NLS-1$
+    optOnBoundTrueDesc = "the optimum is on the search space boundary"; //$NON-NLS-1$
+    optOnBoundFalseDesc = "the optimum is not on the search space boundary"; //$NON-NLS-1$
+    stepsDesc = "whether the function has steps, i.e., neutral planes"; //$NON-NLS-1$
+    stepsTrueDesc = "the function has steps, i.e., neutral planes"; //$NON-NLS-1$
+    stepsFalseDesc = "whether the function does not have steps, i.e., neutral planes"; //$NON-NLS-1$
+    ruggedDesc = "whether the function is rugged, i.e., goes up and down quickly"; //$NON-NLS-1$
+    ruggedYesDesc = "the function is rugged, i.e., goes up and down quickly"; //$NON-NLS-1$
+    ruggedNoDesc = "the function is not rugged"; //$NON-NLS-1$
 
     ints = new Integer[BBOBDriver.MAX_FUNCTION + 1];
     for (fid = ints.length; (--fid) > 0;) {

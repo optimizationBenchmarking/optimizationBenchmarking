@@ -711,7 +711,7 @@ public enum EComparison {
 
   /**
    * create
-   * 
+   *
    * @param cmp
    *          the comparison result to be returned by
    *          {@link org.optimizationBenchmarking.utils.comparison.PreciseComparator#preciseCompare(Object, Object)}
@@ -722,7 +722,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -733,7 +733,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -744,7 +744,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -755,7 +755,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -766,7 +766,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -777,7 +777,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -788,7 +788,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first object
    * @param b
@@ -799,7 +799,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first boolean
    * @param b
@@ -810,7 +810,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first character
    * @param b
@@ -822,7 +822,7 @@ public enum EComparison {
   /**
    * Get the equivalent result of a {@link java.util.Comparator}, i.e.,
    * either {@code -1}, {@code 0}, or {@code 1}.
-   * 
+   *
    * @return the equivalent result of a {@link java.util.Comparator}.
    */
   public final int getComparisonResult() {
@@ -837,7 +837,7 @@ public enum EComparison {
    * <code>{@link java.lang.Double#doubleToLongBits(double) Double.doubleToLongBits(-0d)==-9223372036854775808}</code>
    * . <code>equals(0d, -0d) == true</code>. {@link java.lang.Double#NaN}
    * values are treated as equal to each other.
-   * 
+   *
    * @param a
    *          the first {@code double}
    * @param b
@@ -874,7 +874,7 @@ public enum EComparison {
         ("Impossible error occured: compare " //$NON-NLS-1$
         + (a + " (" + (Double.doubleToRawLongBits(a) + //$NON-NLS-1$
         (") with " + (b + //$NON-NLS-1$
-        (" (" + Double.doubleToRawLongBits(b))))))) + ')');//$NON-NLS-1$
+        (" (" + Double.doubleToRawLongBits(b))))))) + ')'); //$NON-NLS-1$
   }
 
   /**
@@ -885,7 +885,7 @@ public enum EComparison {
    * <code>{@link java.lang.Float#floatToIntBits(float) Float.floatToLongBits(-0d)==-9223372036854775808}</code>
    * . <code>equals(0d, -0d) == true</code>. {@link java.lang.Float#NaN}
    * values are treated as equal to each other.
-   * 
+   *
    * @param a
    *          the first {@code float}
    * @param b
@@ -922,12 +922,12 @@ public enum EComparison {
         ("Impossible error occured: compare " //$NON-NLS-1$
         + (a + " (" + (Float.floatToRawIntBits(a) + //$NON-NLS-1$
         (") with " + (b + //$NON-NLS-1$
-        (" (" + Float.floatToRawIntBits(b))))))) + ')');//$NON-NLS-1$
+        (" (" + Float.floatToRawIntBits(b))))))) + ')'); //$NON-NLS-1$
   }
 
   /**
    * Does one object equal another one.
-   * 
+   *
    * @param a
    *          the first object
    * @param b
@@ -949,7 +949,7 @@ public enum EComparison {
 
   /**
    * Compare whether one comparable object is equal another one.
-   * 
+   *
    * @param a
    *          the first object
    * @param b
