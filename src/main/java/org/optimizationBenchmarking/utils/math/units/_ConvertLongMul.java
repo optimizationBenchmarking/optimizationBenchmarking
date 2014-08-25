@@ -16,18 +16,18 @@ final class _ConvertLongMul extends _ConversionFunction {
 
   /**
    * create
-   * 
+   *
    * @param multiplier
    *          the multiplier
    */
   _ConvertLongMul(final long multiplier) {
     super();
     this.m_multiplier = multiplier;
-    if (multiplier > 0l) {
+    if (multiplier > 0L) {
       this.m_max = (Long.MAX_VALUE / multiplier);
       this.m_min = (Long.MIN_VALUE / multiplier);
     } else {
-      if (multiplier == 0l) {
+      if (multiplier == 0L) {
         this.m_max = Long.MIN_VALUE;
         this.m_min = Long.MAX_VALUE;
       } else {
@@ -41,13 +41,13 @@ final class _ConvertLongMul extends _ConversionFunction {
   @Override
   public final long compute(final long x0) {
     if (x0 > this.m_max) {
-      if (this.m_multiplier > 0l) {
+      if (this.m_multiplier > 0L) {
         return Long.MAX_VALUE;
       }
       return Long.MIN_VALUE;
     }
     if (x0 < this.m_min) {
-      if (this.m_multiplier > 0l) {
+      if (this.m_multiplier > 0L) {
         return Long.MIN_VALUE;
       }
       return Long.MAX_VALUE;

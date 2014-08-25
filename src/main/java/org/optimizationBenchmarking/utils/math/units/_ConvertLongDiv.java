@@ -10,7 +10,7 @@ final class _ConvertLongDiv extends _ConversionFunction {
 
   /**
    * create
-   * 
+   *
    * @param divisor
    *          the divisor
    */
@@ -32,7 +32,7 @@ final class _ConvertLongDiv extends _ConversionFunction {
     if ((x0 > Long.MIN_VALUE) && (x0 < Long.MAX_VALUE)) {
       l = ((long) x0);
       if (l == x0) {
-        if ((l % this.m_divisor) == 0l) {
+        if ((l % this.m_divisor) == 0L) {
           return (l / this.m_divisor);
         }
       }

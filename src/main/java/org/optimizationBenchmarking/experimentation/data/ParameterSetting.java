@@ -5,11 +5,11 @@ public final class ParameterSetting extends
     _PropertySetting<ParameterValue, Parameter> {
 
   /** the serial version uid */
-  private static final long serialVersionUID = 1l;
+  private static final long serialVersionUID = 1L;
 
   /**
    * create
-   * 
+   *
    * @param params
    *          the parameter values
    * @param isGeneral

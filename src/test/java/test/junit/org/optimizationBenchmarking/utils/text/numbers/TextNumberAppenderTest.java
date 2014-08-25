@@ -12,34 +12,34 @@ import org.optimizationBenchmarking.utils.text.numbers.NumberAppender;
 public class TextNumberAppenderTest extends NumberAppenderTest {
 
   /** the long text cases */
-  private static final long[] LONG_TEST_CASES = new long[] { 0l, //
-      1l, //
-      2l, //
-      3l, //
-      4l, //
-      10l, //
-      12l, //
-      19l, //
-      20l, //
-      21l, //
-      100l, //
-      108l, //
-      299l, //
-      1000l, //
-      1003l, //
-      2040l, //
-      45213l, //
-      100000l, //
-      100005l, //
-      100010l, //
-      202020l, //
-      202022l, //
-      999999l, //
-      1000000l, //
-      1000001l, //
-      10000000l, //
-      10000007l, //
-      99999999l, //
+  private static final long[] LONG_TEST_CASES = new long[] { 0L, //
+      1L, //
+      2L, //
+      3L, //
+      4L, //
+      10L, //
+      12L, //
+      19L, //
+      20L, //
+      21L, //
+      100L, //
+      108L, //
+      299L, //
+      1000L, //
+      1003L, //
+      2040L, //
+      45213L, //
+      100000L, //
+      100005L, //
+      100010L, //
+      202020L, //
+      202022L, //
+      999999L, //
+      1000000L, //
+      1000001L, //
+      10000000L, //
+      10000007L, //
+      99999999L, //
       Long.MAX_VALUE, //
       (Long.MAX_VALUE - 1), //
       Long.MIN_VALUE, //

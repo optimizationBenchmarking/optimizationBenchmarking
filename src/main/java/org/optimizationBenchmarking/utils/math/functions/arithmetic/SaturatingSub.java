@@ -41,7 +41,7 @@ public final class SaturatingSub extends BinaryFunction {
   @Override
   public final long compute(final long x0, final long x1) {
     if (x1 <= Long.MIN_VALUE) {
-      if (x0 < 0l) {
+      if (x0 < 0L) {
         return (x0 - x1);
       }
       return Long.MAX_VALUE;
@@ -69,7 +69,7 @@ public final class SaturatingSub extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -81,7 +81,7 @@ public final class SaturatingSub extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

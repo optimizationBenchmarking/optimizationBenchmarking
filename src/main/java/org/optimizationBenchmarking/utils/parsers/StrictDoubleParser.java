@@ -29,7 +29,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
   /**
    * Parse the string
-   * 
+   *
    * @param string
    *          the string
    * @return the return type
@@ -42,7 +42,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
     d = Double.parseDouble(string);
 
     hasLong = false;
-    l = 0l;
+    l = 0L;
     try {
       l = Long.parseLong(string);
       hasLong = true;
@@ -97,7 +97,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -106,7 +106,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {
@@ -127,7 +127,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
     d = this.getLowerBoundDouble();
     l = ((long) (Math.max(Long.MIN_VALUE, d)));
-    return ((l < d) ? (l + 1l) : l);
+    return ((l < d) ? (l + 1L) : l);
   }
 
   /** {@inheritDoc} */
@@ -138,7 +138,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
     d = this.getUpperBoundDouble();
     l = ((long) (Math.min(Long.MAX_VALUE, d)));
-    return ((l > d) ? (l - 1l) : l);
+    return ((l > d) ? (l - 1L) : l);
   }
 
   /** {@inheritDoc} */

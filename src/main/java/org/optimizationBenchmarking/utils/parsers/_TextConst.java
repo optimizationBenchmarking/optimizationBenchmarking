@@ -182,29 +182,29 @@ final class _TextConst implements Comparable<_TextConst> {
       new _TextConst(Character.toString((char) 0x215e),//
           0.875d),//
       new _TextConst(Character.toString((char) 0x2160),//
-          1d, 1l, 1, true),//
+          1d, 1L, 1, true),//
       new _TextConst(Character.toString((char) 0x2161),//
-          2d, 2l, 2, true),//
+          2d, 2L, 2, true),//
       new _TextConst(Character.toString((char) 0x2162),//
-          3d, 3l, 3, true),//
+          3d, 3L, 3, true),//
       new _TextConst(Character.toString((char) 0x2163),//
-          4d, 4l, 4, true),//
+          4d, 4L, 4, true),//
       new _TextConst(Character.toString((char) 0x2164),//
-          5d, 5l, 5, true),//
+          5d, 5L, 5, true),//
       new _TextConst(Character.toString((char) 0x2165),//
-          6d, 6l, 6, true),//
+          6d, 6L, 6, true),//
       new _TextConst(Character.toString((char) 0x2166),//
-          7d, 7l, 7, true),//
+          7d, 7L, 7, true),//
       new _TextConst(Character.toString((char) 0x2167),//
-          8d, 8l, 8, true),//
+          8d, 8L, 8, true),//
       new _TextConst(Character.toString((char) 0x2168),//
-          9d, 9l, 9, true),//
+          9d, 9L, 9, true),//
       new _TextConst(Character.toString((char) 0x2169),//
-          10d, 10l, 10, true),//
+          10d, 10L, 10, true),//
       new _TextConst(Character.toString((char) 0x216A),//
-          11d, 11l, 11, true),//
+          11d, 11L, 11, true),//
       new _TextConst(Character.toString((char) 0x216B),//
-          12d, 12l, 12, true),//
+          12d, 12L, 12, true),//
 
       new _TextConst(Character.toString((char) 0x3c0), Math.PI),//
       new _TextConst(Character.toString('e'), Math.E),//
@@ -235,7 +235,7 @@ final class _TextConst implements Comparable<_TextConst> {
 
   /**
    * create a text constant
-   * 
+   *
    * @param n
    *          the name
    * @param d
@@ -262,7 +262,7 @@ final class _TextConst implements Comparable<_TextConst> {
 
   /**
    * create a text constant
-   * 
+   *
    * @param n
    *          the name
    * @param d
@@ -283,7 +283,7 @@ final class _TextConst implements Comparable<_TextConst> {
 
   /**
    * create a text constant
-   * 
+   *
    * @param n
    *          the name
    * @param d
@@ -300,31 +300,31 @@ final class _TextConst implements Comparable<_TextConst> {
 
   /**
    * create a text constant
-   * 
+   *
    * @param n
    *          the name
    * @param d
    *          the double value
    */
   _TextConst(final String n, final double d) {
-    this(n, d, 0l, 0, false, (_TextConst.STATE_DOUBLE));
+    this(n, d, 0L, 0, false, (_TextConst.STATE_DOUBLE));
   }
 
   /**
    * create a text constant
-   * 
+   *
    * @param n
    *          the name
    * @param b
    *          the boolean value
    */
   _TextConst(final String n, final boolean b) {
-    this(n, Double.NaN, 0l, 0, b, (_TextConst.STATE_BOOLEAN));
+    this(n, Double.NaN, 0L, 0, b, (_TextConst.STATE_BOOLEAN));
   }
 
   /**
    * create a text constant
-   * 
+   *
    * @param n
    *          the name
    * @param d
@@ -333,13 +333,13 @@ final class _TextConst implements Comparable<_TextConst> {
    *          the boolean value
    */
   _TextConst(final String n, final double d, final boolean b) {
-    this(n, d, 0l, 0, b,
+    this(n, d, 0L, 0, b,
         (_TextConst.STATE_DOUBLE | _TextConst.STATE_BOOLEAN));
   }
 
   /**
    * do we have an integer
-   * 
+   *
    * @return {@code true} if yes, {@code false} if no
    */
   final boolean hasInt() {
@@ -348,7 +348,7 @@ final class _TextConst implements Comparable<_TextConst> {
 
   /**
    * do we have a double
-   * 
+   *
    * @return {@code true} if yes, {@code false} if no
    */
   final boolean hasDouble() {
@@ -357,7 +357,7 @@ final class _TextConst implements Comparable<_TextConst> {
 
   /**
    * do we have a boolean
-   * 
+   *
    * @return {@code true} if yes, {@code false} if no
    */
   final boolean hasBoolean() {
@@ -402,7 +402,7 @@ final class _TextConst implements Comparable<_TextConst> {
 
   /**
    * find a numerical constant with the given name
-   * 
+   *
    * @param constName
    *          the name
    * @return the constant, or {@code null} if not found

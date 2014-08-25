@@ -23,7 +23,7 @@ public final class FactorialLog extends UnaryFunction {
     FACTORIAL_LOGS = new double[i];
     for (; (--i) >= 0;) {
       d = Factorial.FACTORIALS[i];
-      if (d > 1l) {
+      if (d > 1L) {
         FactorialLog.FACTORIAL_LOGS[i] = Math.log(d);
       } else {
         FactorialLog.FACTORIAL_LOGS[i] = 0d;
@@ -39,7 +39,7 @@ public final class FactorialLog extends UnaryFunction {
 
   /**
    * precisely compute the factorial log
-   * 
+   *
    * @param start
    *          the start
    * @param end
@@ -60,7 +60,7 @@ public final class FactorialLog extends UnaryFunction {
 
   /**
    * precisely compute the factorial log
-   * 
+   *
    * @param start
    *          the start
    * @param end
@@ -82,7 +82,7 @@ public final class FactorialLog extends UnaryFunction {
 
   /**
    * compute the factorial of a number i
-   * 
+   *
    * @param i
    *          the number
    * @return the factorial of <code>i</Coe
@@ -91,7 +91,7 @@ public final class FactorialLog extends UnaryFunction {
     double d;
     int v;
 
-    if (i <= 1l) {
+    if (i <= 1L) {
       return 0d;
     }
     if (i < FactorialLog.FACTORIAL_LOGS.length) {
@@ -99,7 +99,7 @@ public final class FactorialLog extends UnaryFunction {
     }
 
     if (i > Integer.MAX_VALUE) {
-      d = FactorialLog.factorialLogL((Integer.MAX_VALUE + 1l), i);
+      d = FactorialLog.factorialLogL((Integer.MAX_VALUE + 1L), i);
       v = Integer.MAX_VALUE;
     } else {
       d = 0d;
@@ -123,7 +123,7 @@ public final class FactorialLog extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -135,7 +135,7 @@ public final class FactorialLog extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

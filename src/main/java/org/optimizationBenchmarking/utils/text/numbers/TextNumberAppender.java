@@ -287,7 +287,7 @@ public final class TextNumberAppender extends NumberAppender {
 
   /**
    * append tokens
-   * 
+   *
    * @param chars
    *          the chars
    * @param textOut
@@ -307,7 +307,7 @@ public final class TextNumberAppender extends NumberAppender {
 
   /**
    * append the thousand chars
-   * 
+   *
    * @param thousand
    *          the thousand to append
    * @param dest
@@ -365,7 +365,7 @@ public final class TextNumberAppender extends NumberAppender {
 
   /**
    * Append a long to a string builder
-   * 
+   *
    * @param number
    *          the number
    * @param dest
@@ -383,7 +383,7 @@ public final class TextNumberAppender extends NumberAppender {
     long n;
 
     findNumbers: {
-      if (number < 0l) {
+      if (number < 0L) {
         TextNumberAppender.__appendToken(TextNumberAppender.MINUS, dest,
             status);
         if (number <= Long.MIN_VALUE) {
@@ -393,7 +393,7 @@ public final class TextNumberAppender extends NumberAppender {
         }
         n = (-number);
       } else {
-        if (number == 0l) {
+        if (number == 0L) {
           TextNumberAppender.__appendToken(TextNumberAppender.C_0, dest,
               status);
           return;
@@ -403,9 +403,9 @@ public final class TextNumberAppender extends NumberAppender {
 
       start = 0;
       thousands = new int[8];// maximum number thousands
-      while (n > 0l) {
-        thousands[start++] = ((int) (n % 1000l));
-        n /= 1000l;
+      while (n > 0L) {
+        thousands[start++] = ((int) (n % 1000L));
+        n /= 1000L;
       }
     }
 
@@ -494,7 +494,7 @@ public final class TextNumberAppender extends NumberAppender {
       // of the things after the comma
 
       num = ((long) value);
-      if (num > 0l) {// stuff before the comma
+      if (num > 0L) {// stuff before the comma
         TextNumberAppender.__appendLongAsText(num, textOut, 0, status);
       }
 
@@ -620,7 +620,7 @@ public final class TextNumberAppender extends NumberAppender {
 
       textOut.append('t');
       textOut.append('h');
-      if (num > 1l) {
+      if (num > 1L) {
         textOut.append('s');
       }
 
@@ -660,7 +660,7 @@ public final class TextNumberAppender extends NumberAppender {
 
   /**
    * read-resolve this object
-   * 
+   *
    * @return the resolved object
    */
   private final Object readResolve() {
@@ -669,7 +669,7 @@ public final class TextNumberAppender extends NumberAppender {
 
   /**
    * write-replace this object
-   * 
+   *
    * @return the replace object
    */
   private final Object writeReplace() {

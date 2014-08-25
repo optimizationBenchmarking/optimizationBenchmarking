@@ -65,7 +65,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
   /**
    * create
-   * 
+   *
    * @param size
    *          the size
    */
@@ -89,7 +89,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
    * Ensure that the internal buffer is big enough to hold a given number
    * of characters, update the internal length variable, and return its old
    * length.
-   * 
+   *
    * @param len
    *          the number of characters to store
    * @return the old length
@@ -184,7 +184,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
    * a copy of the method {@code java.lang.Integer#toString()} which uses
    * some package-private stuff. For performance reasons, we copy it here,
    * slightly modified.
-   * 
+   *
    * @param v
    *          the integer to add
    */
@@ -258,7 +258,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
    * a copy of the method {@code java.lang.Long#toString()} which uses some
    * package-private stuff. For performance reasons, we copy it here,
    * slightly modified.
-   * 
+   *
    * @param v
    *          the long to add
    */
@@ -284,13 +284,13 @@ public class MemoryTextOutput extends AbstractTextOutput implements
       end = 0;
     }
 
-    p = 10l;
+    p = 10L;
     outer: {
       for (i = 1; i < 19; i++) {
         if (abs < p) {
           break outer;
         }
-        p *= 10l;
+        p *= 10L;
       }
       i = 19;
     }
@@ -301,7 +301,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
     // Get 2 digits/iteration using longs until quotient fits into an int
     while (abs > Integer.MAX_VALUE) {
-      q = (abs / 100l);
+      q = (abs / 100L);
       // really: r = i - (q * 100);
       r = (int) (abs - ((q << 6) + (q << 5) + (q << 2)));
       abs = q;
@@ -367,7 +367,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
   /**
    * Shrink the length of this memory text output to {@code len}
-   * 
+   *
    * @param len
    *          the length to shrink to
    * @throws IllegalArgumentException
@@ -379,7 +379,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
       this.m_size = len;
     } else {
       throw new IllegalArgumentException("Cannot shrink to length " + len + //$NON-NLS-1$
-          " when being " + this.m_size + //$NON-NLS-1$ 
+          " when being " + this.m_size + //$NON-NLS-1$
           " long."); //$NON-NLS-1$
     }
   }

@@ -7,7 +7,7 @@ public final class NumericalLogic {
 
   /**
    * Transform a {@code boolean} value to a {@code type.type}.
-   * 
+   *
    * @param b
    *          the {@code boolean}
    * @return the corresponding {@code type.type}
@@ -18,7 +18,7 @@ public final class NumericalLogic {
 
   /**
    * Transform a {@code boolean} value to a {@code type.type}.
-   * 
+   *
    * @param b
    *          the {@code boolean}
    * @return the corresponding {@code type.type}
@@ -29,7 +29,7 @@ public final class NumericalLogic {
 
   /**
    * Transform a {@code boolean} value to a {@code type.type}.
-   * 
+   *
    * @param b
    *          the {@code boolean}
    * @return the corresponding {@code type.type}
@@ -40,18 +40,18 @@ public final class NumericalLogic {
 
   /**
    * Transform a {@code boolean} value to a {@code type.type}.
-   * 
+   *
    * @param b
    *          the {@code boolean}
    * @return the corresponding {@code type.type}
    */
   public static final long boolean2long(final boolean b) {
-    return (b ? (-1l) : (0l));
+    return (b ? (-1L) : (0L));
   }
 
   /**
    * Transform a {@code boolean} value to a {@code type.type}.
-   * 
+   *
    * @param b
    *          the {@code boolean}
    * @return the corresponding {@code type.type}
@@ -62,7 +62,7 @@ public final class NumericalLogic {
 
   /**
    * Transform a {@code boolean} value to a {@code type.type}.
-   * 
+   *
    * @param b
    *          the {@code boolean}
    * @return the corresponding {@code type.type}
@@ -73,7 +73,7 @@ public final class NumericalLogic {
 
   /**
    * Transform a {@code type.type} value to a {@code boolean}.
-   * 
+   *
    * @param v
    *          the {@code type.type}
    * @return the corresponding {@code boolean}
@@ -84,7 +84,7 @@ public final class NumericalLogic {
 
   /**
    * Transform a {@code type.type} value to a {@code boolean}.
-   * 
+   *
    * @param v
    *          the {@code type.type}
    * @return the corresponding {@code boolean}
@@ -95,7 +95,7 @@ public final class NumericalLogic {
 
   /**
    * Transform a {@code type.type} value to a {@code boolean}.
-   * 
+   *
    * @param v
    *          the {@code type.type}
    * @return the corresponding {@code boolean}
@@ -106,18 +106,18 @@ public final class NumericalLogic {
 
   /**
    * Transform a {@code type.type} value to a {@code boolean}.
-   * 
+   *
    * @param v
    *          the {@code type.type}
    * @return the corresponding {@code boolean}
    */
   public static final boolean long2boolean(final long v) {
-    return (v != (0l));
+    return (v != (0L));
   }
 
   /**
    * Transform a {@code type.type} value to a {@code boolean}.
-   * 
+   *
    * @param v
    *          the {@code type.type}
    * @return the corresponding {@code boolean}
@@ -128,7 +128,7 @@ public final class NumericalLogic {
 
   /**
    * Transform a {@code type.type} value to a {@code boolean}.
-   * 
+   *
    * @param v
    *          the {@code type.type}
    * @return the corresponding {@code boolean}

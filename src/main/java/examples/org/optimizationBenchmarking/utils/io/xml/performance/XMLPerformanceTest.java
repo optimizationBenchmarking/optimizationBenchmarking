@@ -100,7 +100,7 @@ public final class XMLPerformanceTest {
 
   /**
    * the main method to conduct the test
-   * 
+   *
    * @param args
    *          the command line arguments: ignored
    * @throws Throwable
@@ -113,7 +113,7 @@ public final class XMLPerformanceTest {
     System.out.println();
 
     rand = new Random();
-    rand.setSeed(0l);
+    rand.setSeed(0L);
 
     System.out.println(//
         "Starting dry runs in order to finalize potential JIT actions."); //$NON-NLS-1$
@@ -124,7 +124,7 @@ public final class XMLPerformanceTest {
     for (final int delay : XMLPerformanceTest.DOCUMENT_DELAYS) {
 
       // use same documents, just with different delays
-      rand.setSeed(0l);
+      rand.setSeed(0L);
 
       System.out.println();
       System.out.print("=================== <delay "); //$NON-NLS-1$
@@ -149,7 +149,7 @@ public final class XMLPerformanceTest {
 
   /**
    * do a given document size
-   * 
+   *
    * @param delay
    *          the document delay
    * @param size
@@ -211,7 +211,7 @@ public final class XMLPerformanceTest {
    * {@link #RUNS_PER_DOCUMENT} times. The minimum runtime required for a
    * given document is stored in the array {@code minTimes}. Reason: This
    * minimum time is the purest time, without influence of other issues.
-   * 
+   *
    * @param size
    *          the document size
    * @param delay
@@ -255,7 +255,7 @@ public final class XMLPerformanceTest {
 
   /**
    * serialize a document
-   * 
+   *
    * @param method
    *          the output method
    * @param serializer
@@ -282,7 +282,7 @@ public final class XMLPerformanceTest {
   /**
    * Do the small dry runs. The goal is to make sure that any JIT action
    * has happened before the actual measurements are taken.
-   * 
+   *
    * @param rand
    *          the randomizer
    * @throws Throwable

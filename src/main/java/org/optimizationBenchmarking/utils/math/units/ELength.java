@@ -178,138 +178,138 @@ public enum ELength implements IUnit {
     length = (RED_SHIFT.ordinal() + 1);
     comp = new ConversionMatrixBuilder<>(length);
 
-    comp.setFactor(ELength.NANOMETER, ELength.ANGSTROM, 10l);
-    comp.setFactor(ELength.KILOMETER, ELength.METER, 1000l);
-    comp.setFactor(ELength.METER, ELength.DECIMETER, 10l);
-    comp.setFactor(ELength.DECIMETER, ELength.CENTIMETER, 10l);
-    comp.setFactor(ELength.CENTIMETER, ELength.MILLIMETER, 10l);
-    comp.setFactor(ELength.MILLIMETER, ELength.MICROMETER, 1000l);
-    comp.setFactor(ELength.MICROMETER, ELength.NANOMETER, 1000l);
+    comp.setFactor(ELength.NANOMETER, ELength.ANGSTROM, 10L);
+    comp.setFactor(ELength.KILOMETER, ELength.METER, 1000L);
+    comp.setFactor(ELength.METER, ELength.DECIMETER, 10L);
+    comp.setFactor(ELength.DECIMETER, ELength.CENTIMETER, 10L);
+    comp.setFactor(ELength.CENTIMETER, ELength.MILLIMETER, 10L);
+    comp.setFactor(ELength.MILLIMETER, ELength.MICROMETER, 1000L);
+    comp.setFactor(ELength.MICROMETER, ELength.NANOMETER, 1000L);
 
-    comp.setFactor(ELength.INCH, ELength.MIL, 1000l);
-    comp.setFactor(ELength.LEAGUE, ELength.FURLONG, 24l);
-    comp.setFactor(ELength.FATHOM, ELength.YARD, 2l);
-    comp.setFactor(ELength.FURLONG, ELength.CHAIN, 10l);
-    comp.setFactor(ELength.CHAIN, ELength.PERCH, 4l);
-    comp.setFactor(ELength.PERCH, ELength.CUBIT, 11l);
-    comp.setFactor(ELength.CUBIT, ELength.FOOT, Rational.valueOf(15l, 10l));
-    comp.setFactor(ELength.ELL, ELength.FOOT, Rational.valueOf(375l, 100l));
-    comp.setFactor(ELength.FOOT, ELength.INCH, 12l);
-    comp.setFactor(ELength.FOOT, ELength.LINE, 144l);
+    comp.setFactor(ELength.INCH, ELength.MIL, 1000L);
+    comp.setFactor(ELength.LEAGUE, ELength.FURLONG, 24L);
+    comp.setFactor(ELength.FATHOM, ELength.YARD, 2L);
+    comp.setFactor(ELength.FURLONG, ELength.CHAIN, 10L);
+    comp.setFactor(ELength.CHAIN, ELength.PERCH, 4L);
+    comp.setFactor(ELength.PERCH, ELength.CUBIT, 11L);
+    comp.setFactor(ELength.CUBIT, ELength.FOOT, Rational.valueOf(15L, 10L));
+    comp.setFactor(ELength.ELL, ELength.FOOT, Rational.valueOf(375L, 100L));
+    comp.setFactor(ELength.FOOT, ELength.INCH, 12L);
+    comp.setFactor(ELength.FOOT, ELength.LINE, 144L);
     comp.setFactor(ELength.FOOT, ELength.BARLEYCORN, 36l);
-    comp.setFactor(ELength.SPAN, ELength.NAIL, 4l);
-    comp.setFactor(ELength.YARD, ELength.SPAN, 4l);
-    comp.setFactor(ELength.FOOT, ELength.PALM, 4l);
-    comp.setFactor(ELength.FOOT, ELength.HAND, 3l);
-    comp.setFactor(ELength.YARD, ELength.FOOT, 3l);
-    comp.setFactor(ELength.MIL, ELength.MICROINCH, 1000l);
-    comp.setFactor(ELength.MILE_INTERNATIONAL, ELength.FURLONG, 8l);
+    comp.setFactor(ELength.SPAN, ELength.NAIL, 4L);
+    comp.setFactor(ELength.YARD, ELength.SPAN, 4L);
+    comp.setFactor(ELength.FOOT, ELength.PALM, 4L);
+    comp.setFactor(ELength.FOOT, ELength.HAND, 3L);
+    comp.setFactor(ELength.YARD, ELength.FOOT, 3L);
+    comp.setFactor(ELength.MIL, ELength.MICROINCH, 1000L);
+    comp.setFactor(ELength.MILE_INTERNATIONAL, ELength.FURLONG, 8L);
 
-    comp.setFactor(ELength.PICA, ELength.POINT, 12l);
+    comp.setFactor(ELength.PICA, ELength.POINT, 12L);
     comp.setFactor(ELength.PICA, ELength.PIXEL, 16l);
-    comp.setFactor(ELength.PICA, ELength.TWIP, 240l);
+    comp.setFactor(ELength.PICA, ELength.TWIP, 240L);
     comp.setFactor(ELength.CICERO_EUROPEAN_DIDOT,
-        ELength.POINT_EUROPEAN_DIDOT, 12l);
-    comp.setFactor(ELength.PICA_POSTSCRIPT, ELength.POINT_POSTSCRIPT, 12l);
+        ELength.POINT_EUROPEAN_DIDOT, 12L);
+    comp.setFactor(ELength.PICA_POSTSCRIPT, ELength.POINT_POSTSCRIPT, 12L);
 
     comp.setFactor(ELength.LIGHT_YEAR, ELength.PARSEC,
-        Rational.valueOf(306601394l, 1000000000l));
-    comp.setFactor(ELength.RED_SHIFT, ELength.PARSEC, 4222000000l);
-    comp.setFactor(ELength.RED_SHIFT, ELength.LIGHT_YEAR, 13770000000l);
+        Rational.valueOf(306601394L, 1000000000L));
+    comp.setFactor(ELength.RED_SHIFT, ELength.PARSEC, 4222000000L);
+    comp.setFactor(ELength.RED_SHIFT, ELength.LIGHT_YEAR, 13770000000L);
 
-    comp.setFactor(ELength.LI_CHINESE, ELength.YIN_CHINESE, 15l);
-    comp.setFactor(ELength.LI_CHINESE, ELength.ZHANG_CHINESE, 150l);
-    comp.setFactor(ELength.LI_CHINESE, ELength.BU_CHINESE, 300l);
-    comp.setFactor(ELength.LI_CHINESE, ELength.CHI_CHINESE, 1500l);
-    comp.setFactor(ELength.LI_CHINESE, ELength.CUN_CHINESE, 15000l);
-    comp.setFactor(ELength.LI_CHINESE, ELength.FEN_CHINESE, 150000l);
-    comp.setFactor(ELength.LI_CHINESE, ELength.LI_CHINESE_SMALL, 1500000l);
-    comp.setFactor(ELength.LI_CHINESE, ELength.HAO_CHINESE, 15000000l);
-    comp.setFactor(ELength.LI_CHINESE, ELength.SI_CHINESE, 150000000l);
-    comp.setFactor(ELength.LI_CHINESE, ELength.HU_CHINESE, 1500000000l);
+    comp.setFactor(ELength.LI_CHINESE, ELength.YIN_CHINESE, 15L);
+    comp.setFactor(ELength.LI_CHINESE, ELength.ZHANG_CHINESE, 150L);
+    comp.setFactor(ELength.LI_CHINESE, ELength.BU_CHINESE, 300L);
+    comp.setFactor(ELength.LI_CHINESE, ELength.CHI_CHINESE, 1500L);
+    comp.setFactor(ELength.LI_CHINESE, ELength.CUN_CHINESE, 15000L);
+    comp.setFactor(ELength.LI_CHINESE, ELength.FEN_CHINESE, 150000L);
+    comp.setFactor(ELength.LI_CHINESE, ELength.LI_CHINESE_SMALL, 1500000L);
+    comp.setFactor(ELength.LI_CHINESE, ELength.HAO_CHINESE, 15000000L);
+    comp.setFactor(ELength.LI_CHINESE, ELength.SI_CHINESE, 150000000L);
+    comp.setFactor(ELength.LI_CHINESE, ELength.HU_CHINESE, 1500000000L);
 
     comp.setFactor(ELength.POINT, ELength.MILLIMETER,
-        Rational.valueOf(35146l, 100000l));
+        Rational.valueOf(35146L, 100000L));
     comp.setFactor(ELength.FOOT, ELength.METER,
-        Rational.valueOf(3048l, 10000l));
+        Rational.valueOf(3048L, 10000L));
     comp.setFactor(ELength.FOOT_US_SURVEY, ELength.METER,
-        Rational.valueOf(3048006l, 10000000l));
+        Rational.valueOf(3048006L, 10000000L));
     comp.setFactor(ELength.INCH, ELength.CENTIMETER,
-        Rational.valueOf(254l, 100l));
+        Rational.valueOf(254L, 100L));
     comp.setFactor(ELength.YARD, ELength.METER,
-        Rational.valueOf(9144l, 10000l));
+        Rational.valueOf(9144L, 10000L));
     //
     comp.setFactor(ELength.POINT_EUROPEAN_DIDOT, ELength.MILLIMETER,
-        Rational.valueOf(376l, 1000l));
+        Rational.valueOf(376L, 1000L));
     comp.setFactor(ELength.PICA, ELength.MILLIMETER,
-        Rational.valueOf(4233l, 1000l));
+        Rational.valueOf(4233L, 1000L));
     comp.setFactor(ELength.PICA_POSTSCRIPT, ELength.MILLIMETER,
-        Rational.valueOf(4233l, 1000l));
+        Rational.valueOf(4233L, 1000L));
     //
     comp.setFactor(ELength.MILE_INTERNATIONAL, ELength.KILOMETER,
-        Rational.valueOf(1609344l, 1000000l));
+        Rational.valueOf(1609344L, 1000000L));
     comp.setFactor(ELength.MILE_NAUTICAL, ELength.KILOMETER,
-        Rational.valueOf(1852l, 1000l));
+        Rational.valueOf(1852L, 1000L));
     comp.setFactor(ELength.MILE_GEOGRAPHICAL, ELength.KILOMETER,
-        Rational.valueOf(742l, 100l));
+        Rational.valueOf(742L, 100L));
     comp.setFactor(ELength.FATHOM, ELength.METER,
-        Rational.valueOf(1828804l, 1000000l));
+        Rational.valueOf(1828804L, 1000000L));
     //
     comp.setFactor(ELength.LIGHT_SECOND, ELength.ANGSTROM,
-        2997924580000000000l);
+        2997924580000000000L);
     comp.setFactor(ELength.LIGHT_SECOND, ELength.NANOMETER,
-        299792458000000000l);
+        299792458000000000L);
     comp.setFactor(ELength.LIGHT_SECOND, ELength.MICROMETER,
-        299792458000000l);
-    comp.setFactor(ELength.LIGHT_SECOND, ELength.MILLIMETER, 299792458000l);
-    comp.setFactor(ELength.LIGHT_SECOND, ELength.CENTIMETER, 29979245800l);
-    comp.setFactor(ELength.LIGHT_SECOND, ELength.DECIMETER, 2997924580l);
-    comp.setFactor(ELength.LIGHT_SECOND, ELength.METER, 299792458l);
+        299792458000000L);
+    comp.setFactor(ELength.LIGHT_SECOND, ELength.MILLIMETER, 299792458000L);
+    comp.setFactor(ELength.LIGHT_SECOND, ELength.CENTIMETER, 29979245800L);
+    comp.setFactor(ELength.LIGHT_SECOND, ELength.DECIMETER, 2997924580L);
+    comp.setFactor(ELength.LIGHT_SECOND, ELength.METER, 299792458L);
     comp.setFactor(ELength.LIGHT_SECOND, ELength.KILOMETER,
-        Rational.valueOf(299792458l, 1000l));
-    comp.setFactor(ELength.LIGHT_MINUTE, ELength.LIGHT_SECOND, 60l);
+        Rational.valueOf(299792458L, 1000L));
+    comp.setFactor(ELength.LIGHT_MINUTE, ELength.LIGHT_SECOND, 60L);
     comp.setFactor(ELength.LIGHT_MINUTE, ELength.MICROMETER,
-        17987547480000000l);
+        17987547480000000L);
     comp.setFactor(ELength.LIGHT_MINUTE, ELength.MILLIMETER,
-        17987547480000l);
+        17987547480000L);
     comp.setFactor(ELength.LIGHT_MINUTE, ELength.CENTIMETER,
-        1798754748000l);
-    comp.setFactor(ELength.LIGHT_MINUTE, ELength.DECIMETER, 179875474800l);
-    comp.setFactor(ELength.LIGHT_MINUTE, ELength.METER, 17987547480l);
+        1798754748000L);
+    comp.setFactor(ELength.LIGHT_MINUTE, ELength.DECIMETER, 179875474800L);
+    comp.setFactor(ELength.LIGHT_MINUTE, ELength.METER, 17987547480L);
     comp.setFactor(ELength.LIGHT_MINUTE, ELength.KILOMETER,
-        Rational.valueOf(17987547480l, 1000l));
+        Rational.valueOf(17987547480L, 1000L));
     comp.setFactor(ELength.LIGHT_YEAR, ELength.CENTIMETER,
-        946073047258080000l);
+        946073047258080000L);
     comp.setFactor(ELength.LIGHT_YEAR, ELength.DECIMETER,
-        94607304725808000l);
-    comp.setFactor(ELength.LIGHT_YEAR, ELength.METER, 9460730472580800l);
+        94607304725808000L);
+    comp.setFactor(ELength.LIGHT_YEAR, ELength.METER, 9460730472580800L);
     comp.setFactor(ELength.LIGHT_YEAR, ELength.KILOMETER,
-        Rational.valueOf(94607304725808l, 10l));
+        Rational.valueOf(94607304725808L, 10L));
     comp.setFactor(ELength.ASTRONOMICAL_UNIT, ELength.MICROMETER,
-        149597870700000000l);
+        149597870700000000L);
     comp.setFactor(ELength.ASTRONOMICAL_UNIT, ELength.MILLIMETER,
-        149597870700000l);
+        149597870700000L);
     comp.setFactor(ELength.ASTRONOMICAL_UNIT, ELength.CENTIMETER,
-        14959787070000l);
+        14959787070000L);
     comp.setFactor(ELength.ASTRONOMICAL_UNIT, ELength.DECIMETER,
-        1495978707000l);
-    comp.setFactor(ELength.ASTRONOMICAL_UNIT, ELength.METER, 149597870700l);
+        1495978707000L);
+    comp.setFactor(ELength.ASTRONOMICAL_UNIT, ELength.METER, 149597870700L);
     comp.setFactor(ELength.ASTRONOMICAL_UNIT, ELength.KILOMETER,
-        Rational.valueOf(149597870700l, 1000l));
+        Rational.valueOf(149597870700L, 1000L));
     //
     comp.setFactor(ELength.METER, ELength.YIN_CHINESE,
-        Rational.valueOf(3l, 100l));
+        Rational.valueOf(3L, 100L));
     comp.setFactor(ELength.METER, ELength.ZHANG_CHINESE,
-        Rational.valueOf(3l, 10l));
+        Rational.valueOf(3L, 10L));
     comp.setFactor(ELength.METER, ELength.BU_CHINESE,
-        Rational.valueOf(6l, 10l));
-    comp.setFactor(ELength.METER, ELength.CHI_CHINESE, 3l);
-    comp.setFactor(ELength.METER, ELength.CUN_CHINESE, 30l);
-    comp.setFactor(ELength.METER, ELength.FEN_CHINESE, 300l);
-    comp.setFactor(ELength.METER, ELength.LI_CHINESE_SMALL, 3000l);
-    comp.setFactor(ELength.METER, ELength.HAO_CHINESE, 30000l);
-    comp.setFactor(ELength.METER, ELength.SI_CHINESE, 300000l);
-    comp.setFactor(ELength.METER, ELength.HU_CHINESE, 3000000l);
+        Rational.valueOf(6L, 10L));
+    comp.setFactor(ELength.METER, ELength.CHI_CHINESE, 3L);
+    comp.setFactor(ELength.METER, ELength.CUN_CHINESE, 30L);
+    comp.setFactor(ELength.METER, ELength.FEN_CHINESE, 300L);
+    comp.setFactor(ELength.METER, ELength.LI_CHINESE_SMALL, 3000L);
+    comp.setFactor(ELength.METER, ELength.HAO_CHINESE, 30000L);
+    comp.setFactor(ELength.METER, ELength.SI_CHINESE, 300000L);
+    comp.setFactor(ELength.METER, ELength.HU_CHINESE, 3000000L);
 
     CONVERT = comp.compile();
   }
@@ -327,7 +327,7 @@ public enum ELength implements IUnit {
 
   /**
    * Create
-   * 
+   *
    * @param name
    *          the name
    * @param shortcut
@@ -344,7 +344,7 @@ public enum ELength implements IUnit {
 
   /**
    * Create
-   * 
+   *
    * @param name
    *          the name
    * @param shortcut
@@ -356,7 +356,7 @@ public enum ELength implements IUnit {
 
   /**
    * Create the name
-   * 
+   *
    * @param name
    *          the name
    */
@@ -366,7 +366,7 @@ public enum ELength implements IUnit {
 
   /**
    * Get the conversion function
-   * 
+   *
    * @param other
    *          the other unit
    * @return the function
@@ -389,7 +389,7 @@ public enum ELength implements IUnit {
 
   /**
    * Convert a value
-   * 
+   *
    * @param value
    *          the value
    * @param other
@@ -419,7 +419,7 @@ public enum ELength implements IUnit {
 
   /**
    * Convert a value
-   * 
+   *
    * @param value
    *          the value
    * @param other

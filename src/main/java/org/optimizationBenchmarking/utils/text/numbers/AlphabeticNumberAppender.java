@@ -30,7 +30,7 @@ public final class AlphabeticNumberAppender extends NumberAppender {
 
   /**
    * create
-   * 
+   *
    * @param lower
    *          should we use lower case or upper case numbers?
    */
@@ -62,9 +62,9 @@ public final class AlphabeticNumberAppender extends NumberAppender {
     do {
       addend = ((int) (x % 26l));
       buf[--len] = ((char) (addend + plus));
-      x /= 26l;
+      x /= 26L;
       its--;
-    } while ((x != 0l) || (its >= 0));
+    } while ((x != 0L) || (its >= 0));
 
     buf[len] = textCase.adjustCaseOfFirstCharInWord(buf[len]);
 
@@ -109,7 +109,7 @@ public final class AlphabeticNumberAppender extends NumberAppender {
 
   /**
    * read-resolve this object
-   * 
+   *
    * @return the resolved object
    */
   private final Object readResolve() {
@@ -119,7 +119,7 @@ public final class AlphabeticNumberAppender extends NumberAppender {
 
   /**
    * write-replace this object
-   * 
+   *
    * @return the replace object
    */
   private final Object writeReplace() {

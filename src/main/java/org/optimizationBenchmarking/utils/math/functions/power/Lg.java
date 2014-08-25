@@ -40,7 +40,7 @@ public final class Lg extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final long compute(final long x1) {
-    return Log.INSTANCE.compute((10l), x1);
+    return Log.INSTANCE.compute((10L), x1);
   }
 
   /** {@inheritDoc} */
@@ -69,7 +69,7 @@ public final class Lg extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -81,7 +81,7 @@ public final class Lg extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

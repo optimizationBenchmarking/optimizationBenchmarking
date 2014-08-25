@@ -5,11 +5,11 @@ public final class FeatureSetting extends
     _PropertySetting<FeatureValue, Feature> {
 
   /** the serial version uid */
-  private static final long serialVersionUID = 1l;
+  private static final long serialVersionUID = 1L;
 
   /**
    * create
-   * 
+   *
    * @param params
    *          the feature values
    * @param isGeneral

@@ -62,7 +62,7 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimB"); //$NON-NLS-1$
       dc.setDescription("Description of dimension B."); //$NON-NLS-1$
-      dc.setParser(new BoundedLongParser(0, 1000l));
+      dc.setParser(new BoundedLongParser(0, 1000L));
       dc.setType(EDimensionType.ITERATION_SUB_FE);
       dc.setDirection(EDimensionDirection.DECREASING);
     }

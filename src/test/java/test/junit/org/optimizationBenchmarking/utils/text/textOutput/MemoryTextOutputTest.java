@@ -124,7 +124,7 @@ public class MemoryTextOutputTest extends TextOutputTest<MemoryTextOutput> {
     Assert.assertTrue(set.add(mto.toString()));
     mto.clear();
 
-    for (i = (-10000000l); i <= 10000000l; i++) {
+    for (i = (-10000000L); i <= 10000000L; i++) {
       AlphabeticNumberAppender.LOWER_CASE_INSTANCE.appendTo(i,
           ETextCase.IN_SENTENCE, mto);
       Assert.assertTrue(set.add(mto.toString()));

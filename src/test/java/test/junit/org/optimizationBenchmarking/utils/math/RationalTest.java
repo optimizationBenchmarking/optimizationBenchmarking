@@ -160,7 +160,7 @@ public class RationalTest {
     double x, y;
     int i;
 
-    max = ((1l << 56l) - 1l);
+    max = ((1L << 56l) - 1L);
 
     r = new Random();
     for (i = 10000000; (--i) >= 0;) {
@@ -182,7 +182,7 @@ public class RationalTest {
       } while (y != b);
 
       Assert.assertEquals(//
-          (x / y), Rational.valueOf(a, b).doubleValue(), 1e-9);
+          (x / y), Rational.valueOf(a, b).doubleValue(), 1e-9d);
 
     }
   }

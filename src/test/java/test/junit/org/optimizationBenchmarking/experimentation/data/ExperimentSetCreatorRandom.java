@@ -538,7 +538,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
           maxL = tl;
         }
         rangeL = (maxL - minL);
-        if (rangeL <= 0l) {
+        if (rangeL <= 0L) {
           return null;
         }
 

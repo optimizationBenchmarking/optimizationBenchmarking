@@ -65,7 +65,7 @@ public class StrictFloatParser extends NumberParser<Float> {
     }
 
     hasLong = false;
-    l = 0l;
+    l = 0L;
     try {
       l = Long.parseLong(string);
       hasLong = true;
@@ -149,7 +149,7 @@ public class StrictFloatParser extends NumberParser<Float> {
 
     d = this.getLowerBoundDouble();
     l = ((long) (Math.max(Long.MIN_VALUE, d)));
-    return ((l < d) ? (l + 1l) : l);
+    return ((l < d) ? (l + 1L) : l);
   }
 
   /** {@inheritDoc} */
@@ -160,7 +160,7 @@ public class StrictFloatParser extends NumberParser<Float> {
 
     d = this.getUpperBoundDouble();
     l = ((long) (Math.min(Long.MAX_VALUE, d)));
-    return ((l > d) ? (l - 1l) : l);
+    return ((l > d) ? (l - 1L) : l);
   }
 
   /** {@inheritDoc} */

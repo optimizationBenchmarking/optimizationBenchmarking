@@ -25,16 +25,16 @@ public class Rational extends Number implements ITextable {
 
   /** positive infinity */
   private static final Rational POSITIVE_INFINITY = new Rational(
-      Long.MAX_VALUE, 0l);
+      Long.MAX_VALUE, 0L);
   /** negative infinity */
   private static final Rational NEGATIVE_INFINITY = new Rational(
-      Long.MIN_VALUE, 0l);
+      Long.MIN_VALUE, 0L);
   /** NAN */
-  private static final Rational NaN = new Rational(0l, 0l);
+  private static final Rational NaN = new Rational(0L, 0L);
   /** zero */
-  private static final Rational ZERO = new Rational(0l, 1l);
+  private static final Rational ZERO = new Rational(0L, 1L);
   /** one */
-  private static final Rational ONE = new Rational(1l, 1l);
+  private static final Rational ONE = new Rational(1L, 1L);
 
   /** the up */
   private final long m_up;
@@ -44,7 +44,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * create
-   * 
+   *
    * @param up
    *          the up
    * @param down
@@ -58,7 +58,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Create a long fraction
-   * 
+   *
    * @param up
    *          the up
    * @param down
@@ -71,7 +71,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Create a long fraction
-   * 
+   *
    * @param number
    *          the number
    * @return the fraction, or {@link #NaN} if the number cannot be
@@ -102,21 +102,21 @@ public class Rational extends Number implements ITextable {
     inv = (1d / frac);
     if ((integer == number) || (frac == 0d) || (inv < Long.MIN_VALUE)
         || (inv > Long.MAX_VALUE)) {
-      return Rational.valueOf(integer, 1l);
+      return Rational.valueOf(integer, 1L);
     }
 
     // let's try binary search
 
     if (frac > 0d) {
-      a_up = 0l;
-      a_down = 1l;
-      b_up = 1l;
-      b_down = 1l;
+      a_up = 0L;
+      a_down = 1L;
+      b_up = 1L;
+      b_down = 1L;
     } else {
-      a_up = 0l;
-      a_down = 0l;
-      b_up = (-1l);
-      b_down = 1l;
+      a_up = 0L;
+      a_down = 0L;
+      b_up = (-1L);
+      b_down = 1L;
     }
     a_dbl = (a_up / ((double) a_down));
     b_dbl = (b_up / ((double) b_down));
@@ -131,13 +131,13 @@ public class Rational extends Number implements ITextable {
             temp1++;
           }
 
-          if (temp1 > 1l) {
+          if (temp1 > 1L) {
             temp2 = Rational.__mulNonZero(a_up, temp1);
-            if ((temp2 > 0l) || (a_up == 0l)) {
+            if ((temp2 > 0L) || (a_up == 0L)) {
               temp2 += a_down;
-              if (temp2 > 0l) {
+              if (temp2 > 0L) {
                 temp1 = Rational.__mulNonZero(a_down, temp1);
-                if (temp1 > 0l) {
+                if (temp1 > 0L) {
                   gcd = GCD.INSTANCE.compute(temp2, temp1);
                   if (gcd > 0) {
                     a_up = (temp2 / gcd);
@@ -165,13 +165,13 @@ public class Rational extends Number implements ITextable {
             temp1++;
           }
 
-          if (temp1 > 1l) {
+          if (temp1 > 1L) {
             temp2 = Rational.__mulNonZero(b_up, temp1);
-            if ((temp2 > 0l) || (b_up == 0l)) {
+            if ((temp2 > 0L) || (b_up == 0L)) {
               temp2 -= b_down;
-              if (temp2 > 0l) {
+              if (temp2 > 0L) {
                 temp1 = Rational.__mulNonZero(b_down, temp1);
-                if (temp1 > 0l) {
+                if (temp1 > 0L) {
                   gcd = GCD.INSTANCE.compute(temp2, temp1);
                   if (gcd > 0) {
                     b_up = (temp2 / gcd);
@@ -191,25 +191,25 @@ public class Rational extends Number implements ITextable {
       }
 
       temp2 = Rational.__mulNonZero(a_up, b_down);
-      if (temp2 <= 0l) {
+      if (temp2 <= 0L) {
         break outer;
       }
       mid_up = Rational.__mulNonZero(b_up, a_down);
-      if (mid_up <= 0l) {
+      if (mid_up <= 0L) {
         break outer;
       }
       mid_down = Rational.__mulNonZero(b_down, a_down);
-      if (mid_down <= 0l) {
+      if (mid_down <= 0L) {
         break outer;
       }
-      if (((temp2 & 1l) == 0l) && ((mid_up & 1l) == 0l)) {
-        mid_up = ((temp2 >>> 1l) + (mid_up >> 1l));
+      if (((temp2 & 1L) == 0L) && ((mid_up & 1L) == 0L)) {
+        mid_up = ((temp2 >>> 1L) + (mid_up >> 1L));
       } else {
         mid_up += temp2;
-        mid_down <<= 1l;
+        mid_down <<= 1L;
       }
       gcd = GCD.INSTANCE.compute(mid_up, mid_down);
-      if (gcd <= 0l) {
+      if (gcd <= 0L) {
         break outer;
       }
       mid_up /= gcd;
@@ -242,7 +242,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * make the result
-   * 
+   *
    * @param up
    *          the up
    * @param down
@@ -256,11 +256,11 @@ public class Rational extends Number implements ITextable {
     long temp2;
 
     temp2 = Rational.__mulNonZero(integer, down);
-    if ((temp2 == 0l) && (integer != 0l)) {
+    if ((temp2 == 0L) && (integer != 0L)) {
       return Rational.NaN;
     }
     temp2 += up;
-    if ((integer < 0l) ^ (temp2 < 0l)) {
+    if ((integer < 0L) ^ (temp2 < 0L)) {
       return Rational.NaN;
     }
     return Rational.valueOf(temp2, down);
@@ -268,7 +268,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Create a long fraction
-   * 
+   *
    * @param up
    *          the up
    * @param down
@@ -285,26 +285,26 @@ public class Rational extends Number implements ITextable {
     u = up;
     d = down;
 
-    if (d == 0l) {
-      if (u > 0l) {
+    if (d == 0L) {
+      if (u > 0L) {
         return Rational.POSITIVE_INFINITY;
       }
-      if (u < 0l) {
+      if (u < 0L) {
         return Rational.NEGATIVE_INFINITY;
       }
       return Rational.NaN;
     }
-    if (u == 0l) {
+    if (u == 0L) {
       return Rational.ZERO;
     }
-    if (d < 0l) {
+    if (d < 0L) {
       u = (-u);
       d = (-d);
     }
 
     if (doGcd) {
       gcd = GCD.INSTANCE.compute(u, d);
-      if (gcd > 1l) {// > 0: if min_value its min_value
+      if (gcd > 1L) {// > 0: if min_value its min_value
         u /= gcd;
         d /= gcd;
       }
@@ -318,39 +318,39 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Does this fraction represent a true number?
-   * 
+   *
    * @return {@code true} if the fraction stands for a number,
    *         {@code false} otherwise
    */
   public final boolean isReal() {
-    return (this.m_down != 0l);
+    return (this.m_down != 0L);
   }
 
   /**
    * Get the sign of this fraction
-   * 
+   *
    * @return the sign of this fraction
    */
   public final int sign() {
-    return (((this.m_up > 0l) ? 1 : ((this.m_up < 0l) ? (-1) : 0)));
+    return (((this.m_up > 0L) ? 1 : ((this.m_up < 0L) ? (-1) : 0)));
   }
 
   /**
    * Is the fraction infinite or overflowing?
-   * 
+   *
    * @return {@code true} if the fraction is infinite or overflowing
    */
   public final boolean isInfinite() {
-    return ((this.m_down == 0l) && (this.m_up != 0l));
+    return ((this.m_down == 0L) && (this.m_up != 0L));
   }
 
   /**
    * Is the fraction neither infinite nor an actual number?
-   * 
+   *
    * @return {@code true} if the fraction is not real
    */
   public final boolean isNaN() {
-    return ((this.m_down == 0l) && (this.m_up == 0l));
+    return ((this.m_down == 0L) && (this.m_up == 0L));
   }
 
   /** {@inheritDoc} */
@@ -358,11 +358,11 @@ public class Rational extends Number implements ITextable {
   public final double doubleValue() {
     long full, frac;
 
-    if (this.m_down == 0l) {
-      if (this.m_up < 0l) {
+    if (this.m_down == 0L) {
+      if (this.m_up < 0L) {
         return Double.NEGATIVE_INFINITY;
       }
-      if (this.m_up > 0l) {
+      if (this.m_up > 0L) {
         return Double.POSITIVE_INFINITY;
       }
       return Double.NaN;
@@ -376,29 +376,29 @@ public class Rational extends Number implements ITextable {
 
   /**
    * l + 1
-   * 
+   *
    * @param l
    *          the number
    * @return the bounded increment
    */
   private static final long __up(final long l) {
-    return ((l < Long.MAX_VALUE) ? (l + 1l) : l);
+    return ((l < Long.MAX_VALUE) ? (l + 1L) : l);
   }
 
   /**
    * l - 1
-   * 
+   *
    * @param l
    *          the number
    * @return the bounded decrement
    */
   private static final long __down(final long l) {
-    return ((l > Long.MIN_VALUE) ? (l - 1l) : l);
+    return ((l > Long.MIN_VALUE) ? (l - 1L) : l);
   }
 
   /**
    * Obtain a long value representing this number
-   * 
+   *
    * @param round
    *          the rounding mode
    * @return the long value
@@ -408,11 +408,11 @@ public class Rational extends Number implements ITextable {
     long fraction;
 
     down = this.m_down;
-    if (down == 0l) {
-      if (this.m_up < 0l) {
+    if (down == 0L) {
+      if (this.m_up < 0L) {
         return Long.MIN_VALUE;
       }
-      if (this.m_up > 0l) {
+      if (this.m_up > 0L) {
         return Long.MAX_VALUE;
       }
       throw new IllegalStateException();
@@ -425,26 +425,26 @@ public class Rational extends Number implements ITextable {
     }
 
     fraction = (this.m_up % this.m_down);
-    if (fraction == 0l) {
+    if (fraction == 0L) {
       return integer;
     }
-    if (fraction < 0l) {
+    if (fraction < 0L) {
       fraction = (-fraction);
     }
 
     switch (round) {
       case CEILING: {
-        return ((integer > 0l) ? Rational.__up(integer) : integer);
+        return ((integer > 0L) ? Rational.__up(integer) : integer);
       }
       case FLOOR: {
-        return ((integer < 0l) ? Rational.__down(integer) : integer);
+        return ((integer < 0L) ? Rational.__down(integer) : integer);
       }
       case HALF_DOWN: {
         return (((fraction << 1) > down) ? ((integer >= 0) ? (Rational
             .__up(integer)) : (Rational.__down(integer))) : integer);
       }
       case HALF_EVEN: {
-        if ((integer & 1l) != 0l) {
+        if ((integer & 1L) != 0L) {
           return (((fraction << 1) >= down) ? ((integer >= 0) ? (Rational
               .__up(integer)) : (Rational.__down(integer))) : integer);
         }
@@ -458,7 +458,7 @@ public class Rational extends Number implements ITextable {
 
       // case UNNECESSARY:
       default: {
-        if (fraction != 0l) {
+        if (fraction != 0L) {
           throw new ArithmeticException();
         }
         return integer;
@@ -474,16 +474,16 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Does this fraction actually represent an integer number?
-   * 
+   *
    * @return {@code true} if it is an integer, {@code false} otherwise
    */
   public final boolean isInteger() {
-    return (this.m_down == 1l);
+    return (this.m_down == 1L);
   }
 
   /**
    * multiply with a double
-   * 
+   *
    * @param d
    *          the double value
    * @return the return value
@@ -492,7 +492,7 @@ public class Rational extends Number implements ITextable {
     Rational r;
 
     r = this.multiply(Rational.valueOf(d));
-    if (r.m_down == 0l) {
+    if (r.m_down == 0L) {
       return (this.doubleValue() * d);
     }
 
@@ -501,18 +501,18 @@ public class Rational extends Number implements ITextable {
 
   /**
    * multiply with a long
-   * 
+   *
    * @param in
    *          the input value
    * @return the return value
    */
   public final Rational multiply(final long in) {
-    return this.multiply(new Rational(in, 1l));
+    return this.multiply(new Rational(in, 1L));
   }
 
   /**
    * invert a fraction
-   * 
+   *
    * @return the inverse
    */
   public final Rational inverse() {
@@ -521,7 +521,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Multiply two long integers, checking for overflow.
-   * 
+   *
    * @param a
    *          first value
    * @param b
@@ -538,24 +538,24 @@ public class Rational extends Number implements ITextable {
         if (a >= (Long.MAX_VALUE / b)) {
           return (a * b);
         }
-        return 0l;
+        return 0L;
       }
 
       if ((Long.MIN_VALUE / b) <= a) {
         return a * b;
       }
-      return 0l;
+      return 0L;
 
     }
     if (a <= (Long.MAX_VALUE / b)) {
       return (a * b);
     }
-    return 0l;
+    return 0L;
   }
 
   /**
    * multiply
-   * 
+   *
    * @param b
    *          the other fraction
    * @return the result
@@ -568,22 +568,22 @@ public class Rational extends Number implements ITextable {
     b_down = b.m_down;
     b_up = b.m_up;
 
-    if (a_down <= 0l) {
-      if ((a_up == 0l) || (b_up == 0l)) {
+    if (a_down <= 0L) {
+      if ((a_up == 0L) || (b_up == 0L)) {
         return Rational.NaN;
       }
-      return (((a_up < 0l) ^ (b_up < 0l)) ? Rational.NEGATIVE_INFINITY
+      return (((a_up < 0L) ^ (b_up < 0L)) ? Rational.NEGATIVE_INFINITY
           : Rational.POSITIVE_INFINITY);
     }
-    if (b_down <= 0l) {
-      if ((b_up == 0l) || (a_up == 0l)) {
+    if (b_down <= 0L) {
+      if ((b_up == 0L) || (a_up == 0L)) {
         return Rational.NaN;
       }
-      return (((a_up < 0l) ^ (b_up < 0l)) ? Rational.NEGATIVE_INFINITY
+      return (((a_up < 0L) ^ (b_up < 0L)) ? Rational.NEGATIVE_INFINITY
           : Rational.POSITIVE_INFINITY);
     }
 
-    if ((a_up == 0l) || (b_up == 0l)) {
+    if ((a_up == 0L) || (b_up == 0L)) {
       return Rational.ZERO;
     }
 
@@ -592,7 +592,7 @@ public class Rational extends Number implements ITextable {
     }
 
     gcd_a_up_b_down = GCD.INSTANCE.compute(a_up, b_down);
-    if (gcd_a_up_b_down < 0l) {
+    if (gcd_a_up_b_down < 0L) {
       up1 = a_up;
       down1 = b_down;
     } else {
@@ -601,7 +601,7 @@ public class Rational extends Number implements ITextable {
     }
 
     gcd_a_down_b_up = GCD.INSTANCE.compute(a_down, b_up);
-    if (gcd_a_down_b_up < 0l) {
+    if (gcd_a_down_b_up < 0L) {
       up2 = b_up;
       down2 = a_down;
     } else {
@@ -612,19 +612,19 @@ public class Rational extends Number implements ITextable {
     new_up = Rational.__mulNonZero(up1, up2);
     new_down = Rational.__mulNonZero(down1, down2);
 
-    if (new_up == 0l) {
-      if (new_down == 0l) {
+    if (new_up == 0L) {
+      if (new_down == 0L) {
         return Rational.NaN;
       }
-      return (((a_up < 0l) ^ (b_up < 0l)) ? Rational.NEGATIVE_INFINITY
+      return (((a_up < 0L) ^ (b_up < 0L)) ? Rational.NEGATIVE_INFINITY
           : Rational.POSITIVE_INFINITY);
     }
-    if (new_down == 0l) {
+    if (new_down == 0L) {
       return Rational.NaN;
     }
 
     gcd = GCD.INSTANCE.compute(new_up, new_down);
-    if (gcd > 1l) {
+    if (gcd > 1L) {
       return new Rational((new_up / gcd), (new_down / gcd));
     }
     return new Rational(new_up, new_down);
@@ -632,7 +632,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * divide two fractions
-   * 
+   *
    * @param b
    *          the second fraction
    * @return the division result
@@ -669,12 +669,12 @@ public class Rational extends Number implements ITextable {
     final long down;
 
     down = this.m_down;
-    if (down == 0l) {
-      textOut.append((this.m_up < 0l) ? Rational.NI
-          : ((this.m_up > 0l) ? Rational.PI : Rational.NN));
+    if (down == 0L) {
+      textOut.append((this.m_up < 0L) ? Rational.NI
+          : ((this.m_up > 0L) ? Rational.PI : Rational.NN));
     } else {
       textOut.append(this.m_up);
-      if (down != 1l) {
+      if (down != 1L) {
         textOut.append('/');
         textOut.append(this.m_down);
       }
@@ -683,7 +683,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Try to multiply with a big decimal value
-   * 
+   *
    * @param b
    *          the value
    * @return the result
@@ -715,12 +715,12 @@ public class Rational extends Number implements ITextable {
         if (r.m_up == this.m_up) {
           return true;
         }
-        if (this.m_down == 0l) {
-          if (this.m_up < 0l) {
-            return (r.m_up < 0l);
+        if (this.m_down == 0L) {
+          if (this.m_up < 0L) {
+            return (r.m_up < 0L);
           }
-          if (this.m_up > 0l) {
-            return (r.m_up > 0l);
+          if (this.m_up > 0L) {
+            return (r.m_up > 0L);
           }
         }
       }

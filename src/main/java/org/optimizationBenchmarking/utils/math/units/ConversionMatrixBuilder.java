@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
 
 /**
  * A factory class for building conversion matrixes.
- * 
+ *
  * @param <E>
  *          the enum type
  */
@@ -27,7 +27,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Create the conversion matrix builder
-   * 
+   *
    * @param count
    *          the number of elements
    */
@@ -38,7 +38,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Set a conversion factor between two elements.
-   * 
+   *
    * @param from
    *          the source unit
    * @param to
@@ -187,12 +187,12 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
     if (use instanceof Long) {
 
       l = use.longValue();
-      if (l == 0l) {
+      if (l == 0L) {
         return 0;
       }
 
       if (checkOther) {
-        if (this.__setFactor(to, from, Rational.valueOf(1l, l), false) != 0) {
+        if (this.__setFactor(to, from, Rational.valueOf(1L, l), false) != 0) {
           ret = 2;
         }
       }
@@ -210,7 +210,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Set a conversion factor between two elements.
-   * 
+   *
    * @param from
    *          the source unit
    * @param to
@@ -226,7 +226,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Set a conversion factor between two elements.
-   * 
+   *
    * @param from
    *          the source unit
    * @param to
@@ -242,7 +242,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Set a conversion factor between two elements.
-   * 
+   *
    * @param from
    *          the source unit
    * @param to
@@ -258,7 +258,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Set a conversion factor between two elements.
-   * 
+   *
    * @param from
    *          the source unit
    * @param to
@@ -274,7 +274,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Multiply two numbers
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -358,7 +358,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Multiply two longs
-   * 
+   *
    * @param a
    *          the first long
    * @param b
@@ -369,8 +369,8 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
     if (a > b) {
       return ConversionMatrixBuilder.__mul(b, a);
     }
-    if (a < 0l) {
-      if (b < 0l) {
+    if (a < 0L) {
+      if (b < 0L) {
         if (a >= (Long.MAX_VALUE / b)) {
           return Long.valueOf(a * b);
         }
@@ -397,7 +397,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Compile this conversion matrix
-   * 
+   *
    * @return the compiled matrix
    */
   public final UnaryFunction[][] compile() {

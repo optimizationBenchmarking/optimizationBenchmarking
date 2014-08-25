@@ -57,7 +57,7 @@ class _ConversionFunction extends UnaryFunction {
 
   /**
    * Get a conversion function with the given factor.
-   * 
+   *
    * @param n
    *          the number
    * @return the function
@@ -69,10 +69,10 @@ class _ConversionFunction extends UnaryFunction {
 
     if (n instanceof Long) {
       l = n.longValue();
-      if (l == 1l) {
+      if (l == 1L) {
         return Identity.INSTANCE;
       }
-      if (l == (-1l)) {
+      if (l == (-1L)) {
         return Negate.INSTANCE;
       }
       return new _ConvertLongMul(l);
@@ -83,10 +83,10 @@ class _ConversionFunction extends UnaryFunction {
       inv = r.inverse();
       if (inv.isInteger()) {
         l = inv.longValue();
-        if (l == 1l) {
+        if (l == 1L) {
           return Identity.INSTANCE;
         }
-        if (l == (-1l)) {
+        if (l == (-1L)) {
           return Negate.INSTANCE;
         }
         return new _ConvertLongDiv(l);

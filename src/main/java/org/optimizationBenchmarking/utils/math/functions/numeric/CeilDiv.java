@@ -96,11 +96,11 @@ public final class CeilDiv extends BinaryFunction {
   public final long compute(final long x1, final long x2) {
     long res1, res2;
 
-    if (x2 == (0l)) {
-      if (x1 == (0l)) {
-        return (0l);
+    if (x2 == (0L)) {
+      if (x1 == (0L)) {
+        return (0L);
       }
-      if (x1 >= (0l)) {
+      if (x1 >= (0L)) {
         return (java.lang.Long.MAX_VALUE);
       }
       return (java.lang.Long.MIN_VALUE);
@@ -129,7 +129,7 @@ public final class CeilDiv extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -141,7 +141,7 @@ public final class CeilDiv extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

@@ -16,27 +16,27 @@ public final class Factorial extends UnaryFunction {
    * the factorials
    */
   static final long[] FACTORIALS = new long[] {//
-  1l,// 0
-      1l,// 1
-      2l,// 2
-      6l,// 3
-      24l,// 4
-      120l,// 5
-      720l,// 6
-      5040l,// 7
-      40320l,// 8
-      362880l,// 9
-      3628800l,// 10
-      39916800l,// 11
-      479001600l,// 12
-      6227020800l,// 13
-      87178291200l,// 14
-      1307674368000l,// 15
-      20922789888000l,// 16
-      355687428096000l,// 17
-      6402373705728000l,// 18
-      121645100408832000l,// 19
-      2432902008176640000l,// 20
+  1L,// 0
+      1L,// 1
+      2L,// 2
+      6L,// 3
+      24L,// 4
+      120L,// 5
+      720L,// 6
+      5040L,// 7
+      40320L,// 8
+      362880L,// 9
+      3628800L,// 10
+      39916800L,// 11
+      479001600L,// 12
+      6227020800L,// 13
+      87178291200L,// 14
+      1307674368000L,// 15
+      20922789888000L,// 16
+      355687428096000L,// 17
+      6402373705728000L,// 18
+      121645100408832000L,// 19
+      2432902008176640000L,// 20
   };
 
   /**
@@ -238,10 +238,10 @@ public final class Factorial extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final long compute(final long x1) {
-    if (x1 <= 1l) {
-      return 1l;
+    if (x1 <= 1L) {
+      return 1L;
     }
-    if (x1 <= 20l) {
+    if (x1 <= 20L) {
       return Factorial.FACTORIALS[(int) x1];
     }
     return Long.MAX_VALUE;
@@ -267,7 +267,7 @@ public final class Factorial extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -279,7 +279,7 @@ public final class Factorial extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

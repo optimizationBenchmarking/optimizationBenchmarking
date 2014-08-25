@@ -17,7 +17,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
 
   /**
    * create the number appender test
-   * 
+   *
    * @param instance
    *          the instance
    */
@@ -44,7 +44,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
       n.appendTo(Long.MAX_VALUE, c, m);
       Assert.assertEquals(n.toString(Long.MAX_VALUE, c), m.toString());
 
-      for (long l = -1000l; l <= 100l; l++) {
+      for (long l = -1000L; l <= 100L; l++) {
         m.clear();
         n.appendTo(l, c, m);
         Assert.assertEquals(n.toString(l, c), m.toString());
@@ -71,7 +71,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
       n.appendTo(Integer.MAX_VALUE, c, m);
       Assert.assertEquals(n.toString(Integer.MAX_VALUE, c), m.toString());
 
-      for (int l = -1000; l <= 100l; l++) {
+      for (int l = -1000; l <= 100L; l++) {
         m.clear();
         n.appendTo(l, c, m);
         Assert.assertEquals(n.toString(l, c), m.toString());

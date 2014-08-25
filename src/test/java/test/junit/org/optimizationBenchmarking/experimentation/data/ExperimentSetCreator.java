@@ -63,7 +63,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * Build an experiment set
-   * 
+   *
    * @return the constructed experiment set
    */
   protected ExperimentSet buildExperimentSet() {
@@ -134,7 +134,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * make more
-   * 
+   *
    * @param d
    *          the double
    * @return more
@@ -152,7 +152,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
     }
 
     if ((a >= Long.MIN_VALUE) && (a < Long.MAX_VALUE)) {
-      b = (((long) a) + 1l);
+      b = (((long) a) + 1L);
     }
     if (b > a) {
       a = b;
@@ -163,7 +163,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * make less
-   * 
+   *
    * @param d
    *          the double
    * @return less
@@ -180,7 +180,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
       a = b;
     }
     if ((a > Long.MIN_VALUE) && (a <= Long.MAX_VALUE)) {
-      b = (((long) a) - 1l);
+      b = (((long) a) - 1L);
     }
     if (b < a) {
       a = b;
@@ -300,7 +300,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
               if (a == b) {
                 continue;
               }
-              c = ((a + b) / 2l);
+              c = ((a + b) / 2L);
               if ((c <= a) || (c >= b)) {
                 continue;
               }
@@ -384,7 +384,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that two experiment sets are equal
-   * 
+   *
    * @param a
    *          set a
    * @param b
@@ -439,7 +439,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that parameter values are equal
-   * 
+   *
    * @param a
    *          the parameter value
    * @param b
@@ -455,7 +455,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
       if ((a instanceof Float) || (a instanceof Double)) {
         d1 = ((Number) a).doubleValue();
-        l1 = 0l;
+        l1 = 0L;
         id1 = true;
       } else {
         d1 = Double.NaN;
@@ -465,7 +465,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
       if ((b instanceof Float) || (b instanceof Double)) {
         d2 = ((Number) b).doubleValue();
-        l2 = 0l;
+        l2 = 0L;
         id2 = true;
       } else {
         d2 = Double.NaN;
@@ -514,7 +514,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that two experiment sets are equal
-   * 
+   *
    * @param a
    *          set a
    * @param b
@@ -580,7 +580,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that two experiment sets are equal
-   * 
+   *
    * @param a
    *          set a
    * @param b
@@ -609,7 +609,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that two experiment sets are equal
-   * 
+   *
    * @param a
    *          set a
    * @param b
@@ -638,7 +638,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that two experiment sets are equal
-   * 
+   *
    * @param a
    *          set a
    * @param b

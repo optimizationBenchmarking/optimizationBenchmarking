@@ -167,74 +167,74 @@ public enum ETime implements IUnit {
     comp = new ConversionMatrixBuilder<>(length);
 
     comp.setFactor(ETime.PLANCK_TIME_UNIT, ETime.SECOND, 5.39e-44d);
-    comp.setFactor(ETime.YOCTOSECOND, ETime.JIFFY_PHYSICS, 3l);
-    comp.setFactor(ETime.ZEPTOSECOND, ETime.YOCTOSECOND, 1000l);
-    comp.setFactor(ETime.ATTOSECOND, ETime.ZEPTOSECOND, 1000l);
-    comp.setFactor(ETime.FEMTOSECOND, ETime.ATTOSECOND, 1000l);
-    comp.setFactor(ETime.PICOSECOND, ETime.FEMTOSECOND, 1000l);
-    comp.setFactor(ETime.NANOSECOND, ETime.PICOSECOND, 1000l);
-    comp.setFactor(ETime.SHAKE, ETime.NANOSECOND, 10l);
-    comp.setFactor(ETime.MICROSECOND, ETime.NANOSECOND, 1000l);
-    comp.setFactor(ETime.SECOND, ETime.FOURTH, 3600l);
-    comp.setFactor(ETime.DEKASECOND, ETime.SECOND, 10l);
-    comp.setFactor(ETime.MILLISECOND, ETime.MICROSECOND, 1000l);
-    comp.setFactor(ETime.SECOND, ETime.CENTISECOND, 100l);
-    comp.setFactor(ETime.SECOND, ETime.DECISECOND, 10l);
-    comp.setFactor(ETime.SECOND, ETime.THIRD, 60l);
-    comp.setFactor(ETime.SECOND, ETime.MILLISECOND, 1000l);
-    comp.setFactor(ETime.MINUTE, ETime.SECOND, 60l);
-    comp.setFactor(ETime.MOMENT, ETime.SECOND, 90l);
-    comp.setFactor(ETime.HECTOSECOND, ETime.SECOND, 100l);
-    comp.setFactor(ETime.KE, ETime.SECOND, ((14l * 60l) + 24l));
-    comp.setFactor(ETime.KILOSECOND, ETime.SECOND, 1000l);
-    comp.setFactor(ETime.KE_CHINESE_MODERN, ETime.MINUTE, 15l);
-    comp.setFactor(ETime.KE_CHINESE_TRADITIONAL, ETime.MINUTE, 30l);
-    comp.setFactor(ETime.HOUR, ETime.MINUTE, 60l);
-    comp.setFactor(ETime.SHICHEN_CHINESE, ETime.HOUR, 2l);
-    comp.setFactor(ETime.DAY, ETime.HOUR, 24l);
+    comp.setFactor(ETime.YOCTOSECOND, ETime.JIFFY_PHYSICS, 3L);
+    comp.setFactor(ETime.ZEPTOSECOND, ETime.YOCTOSECOND, 1000L);
+    comp.setFactor(ETime.ATTOSECOND, ETime.ZEPTOSECOND, 1000L);
+    comp.setFactor(ETime.FEMTOSECOND, ETime.ATTOSECOND, 1000L);
+    comp.setFactor(ETime.PICOSECOND, ETime.FEMTOSECOND, 1000L);
+    comp.setFactor(ETime.NANOSECOND, ETime.PICOSECOND, 1000L);
+    comp.setFactor(ETime.SHAKE, ETime.NANOSECOND, 10L);
+    comp.setFactor(ETime.MICROSECOND, ETime.NANOSECOND, 1000L);
+    comp.setFactor(ETime.SECOND, ETime.FOURTH, 3600L);
+    comp.setFactor(ETime.DEKASECOND, ETime.SECOND, 10L);
+    comp.setFactor(ETime.MILLISECOND, ETime.MICROSECOND, 1000L);
+    comp.setFactor(ETime.SECOND, ETime.CENTISECOND, 100L);
+    comp.setFactor(ETime.SECOND, ETime.DECISECOND, 10L);
+    comp.setFactor(ETime.SECOND, ETime.THIRD, 60L);
+    comp.setFactor(ETime.SECOND, ETime.MILLISECOND, 1000L);
+    comp.setFactor(ETime.MINUTE, ETime.SECOND, 60L);
+    comp.setFactor(ETime.MOMENT, ETime.SECOND, 90L);
+    comp.setFactor(ETime.HECTOSECOND, ETime.SECOND, 100L);
+    comp.setFactor(ETime.KE, ETime.SECOND, ((14L * 60L) + 24L));
+    comp.setFactor(ETime.KILOSECOND, ETime.SECOND, 1000L);
+    comp.setFactor(ETime.KE_CHINESE_MODERN, ETime.MINUTE, 15L);
+    comp.setFactor(ETime.KE_CHINESE_TRADITIONAL, ETime.MINUTE, 30L);
+    comp.setFactor(ETime.HOUR, ETime.MINUTE, 60L);
+    comp.setFactor(ETime.SHICHEN_CHINESE, ETime.HOUR, 2L);
+    comp.setFactor(ETime.DAY, ETime.HOUR, 24L);
     comp.setFactor(ETime.DAY, ETime.MILLISECOND,//
-        (msPerDay = (24l * 60l * 60l * 1000l)));
-    comp.setFactor(ETime.WEEK, ETime.DAY, 7l);
-    comp.setFactor(ETime.FORTNIGHT, ETime.WEEK, 2l);
+        (msPerDay = (24L * 60L * 60L * 1000L)));
+    comp.setFactor(ETime.WEEK, ETime.DAY, 7L);
+    comp.setFactor(ETime.FORTNIGHT, ETime.WEEK, 2L);
 
-    comp.setFactor(ETime.YEAR_JULIAN, ETime.SECOND, 31557600l);
+    comp.setFactor(ETime.YEAR_JULIAN, ETime.SECOND, 31557600L);
 
     comp.setFactor(ETime.YEAR_SIDERAL, ETime.DAY,
-        Rational.valueOf(365256363004l, 1000000000l));
+        Rational.valueOf(365256363004L, 1000000000L));
     comp.setFactor(ETime.YEAR_TROPICAL, ETime.DAY,
-        Rational.valueOf(36524219l, 100000l));
+        Rational.valueOf(36524219L, 100000L));
     comp.setFactor(ETime.YEAR_ANOMALISTIC, ETime.DAY,
-        Rational.valueOf(365259636l, 1000000l));
+        Rational.valueOf(365259636L, 1000000L));
     comp.setFactor(ETime.YEAR_DRACONIC, ETime.DAY,
-        Rational.valueOf(346620075883l, 1000000000l));
+        Rational.valueOf(346620075883L, 1000000000L));
     comp.setFactor(ETime.FULL_MOON_CYCLE, ETime.DAY,
-        Rational.valueOf(41178443029l, 100000000l));
+        Rational.valueOf(41178443029L, 100000000L));
     comp.setFactor(ETime.YEAR_LUNAR, ETime.DAY,
-        Rational.valueOf(35437l, 100l));
+        Rational.valueOf(35437L, 100L));
     comp.setFactor(ETime.YEAR_GAUSSIAN, ETime.DAY,
-        Rational.valueOf(3652568983l, 10000000l));
+        Rational.valueOf(3652568983L, 10000000L));
     comp.setFactor(ETime.YEAR_ANNUS, ETime.DAY,
-        Rational.valueOf(36524219265l, 100000000l));
+        Rational.valueOf(36524219265L, 100000000L));
     comp.setFactor(ETime.YEAR_ANNUS, ETime.SECOND,
-        Rational.valueOf(31556925445l, 1000l));
+        Rational.valueOf(31556925445L, 1000L));
 
-    comp.setFactor(ETime.BIENNIUM, ETime.YEAR_JULIAN, 2l);
-    comp.setFactor(ETime.TRIENNIUM, ETime.YEAR_JULIAN, 3l);
-    comp.setFactor(ETime.OLYMPIADE, ETime.YEAR_JULIAN, 4l);
-    comp.setFactor(ETime.LUSTRUM, ETime.YEAR_JULIAN, 5l);
-    comp.setFactor(ETime.DECADE, ETime.YEAR_JULIAN, 10l);
-    comp.setFactor(ETime.INDICTION, ETime.YEAR_JULIAN, 15l);
-    comp.setFactor(ETime.SCORE, ETime.YEAR_JULIAN, 20l);
-    comp.setFactor(ETime.JUBILEE, ETime.YEAR_JULIAN, 50l);
-    comp.setFactor(ETime.CENTURY, ETime.YEAR_JULIAN, 100l);
-    comp.setFactor(ETime.MILLENIUM, ETime.YEAR_JULIAN, 1000l);
+    comp.setFactor(ETime.BIENNIUM, ETime.YEAR_JULIAN, 2L);
+    comp.setFactor(ETime.TRIENNIUM, ETime.YEAR_JULIAN, 3L);
+    comp.setFactor(ETime.OLYMPIADE, ETime.YEAR_JULIAN, 4L);
+    comp.setFactor(ETime.LUSTRUM, ETime.YEAR_JULIAN, 5L);
+    comp.setFactor(ETime.DECADE, ETime.YEAR_JULIAN, 10L);
+    comp.setFactor(ETime.INDICTION, ETime.YEAR_JULIAN, 15L);
+    comp.setFactor(ETime.SCORE, ETime.YEAR_JULIAN, 20L);
+    comp.setFactor(ETime.JUBILEE, ETime.YEAR_JULIAN, 50L);
+    comp.setFactor(ETime.CENTURY, ETime.YEAR_JULIAN, 100L);
+    comp.setFactor(ETime.MILLENIUM, ETime.YEAR_JULIAN, 1000L);
 
-    comp.setFactor(ETime.KILOANNUS, ETime.YEAR_ANNUS, 1000l);
-    comp.setFactor(ETime.MEGAANNUS, ETime.KILOANNUS, 1000l);
-    comp.setFactor(ETime.GIGAANNUS, ETime.MEGAANNUS, 1000l);
-    comp.setFactor(ETime.TERRAANNUS, ETime.GIGAANNUS, 1000l);
-    comp.setFactor(ETime.PETAANNUS, ETime.TERRAANNUS, 1000l);
-    comp.setFactor(ETime.EXAANNUS, ETime.PETAANNUS, 1000l);
+    comp.setFactor(ETime.KILOANNUS, ETime.YEAR_ANNUS, 1000L);
+    comp.setFactor(ETime.MEGAANNUS, ETime.KILOANNUS, 1000L);
+    comp.setFactor(ETime.GIGAANNUS, ETime.MEGAANNUS, 1000L);
+    comp.setFactor(ETime.TERRAANNUS, ETime.GIGAANNUS, 1000L);
+    comp.setFactor(ETime.PETAANNUS, ETime.TERRAANNUS, 1000L);
+    comp.setFactor(ETime.EXAANNUS, ETime.PETAANNUS, 1000L);
 
     time = System.currentTimeMillis();
     cal = new GregorianCalendar(TimeZone.getTimeZone("UTC")); //$NON-NLS-1$
@@ -261,10 +261,10 @@ public enum ETime implements IUnit {
         ETime.YEAR_JULIAN,//
         cal.get(Calendar.YEAR) + 2540);
 
-    comp.setFactor(ETime.TIME_SINCE_BIG_BANG, ETime.ANNUS, 13820000000l);
+    comp.setFactor(ETime.TIME_SINCE_BIG_BANG, ETime.ANNUS, 13820000000L);
 
     comp.setFactor(ETime.TIME_SINCE_EXTINCTION_OF_DINOSAURS, ETime.ANNUS,
-        66043000l);
+        66043000L);
 
     CONVERT = comp.compile();
   }
@@ -282,7 +282,7 @@ public enum ETime implements IUnit {
 
   /**
    * Create
-   * 
+   *
    * @param name
    *          the name
    * @param shortcut
@@ -299,7 +299,7 @@ public enum ETime implements IUnit {
 
   /**
    * Create
-   * 
+   *
    * @param name
    *          the name
    * @param shortcut
@@ -311,7 +311,7 @@ public enum ETime implements IUnit {
 
   /**
    * Create the name
-   * 
+   *
    * @param name
    *          the name
    */
@@ -321,7 +321,7 @@ public enum ETime implements IUnit {
 
   /**
    * Get the conversion function
-   * 
+   *
    * @param other
    *          the other unit
    * @return the function
@@ -344,7 +344,7 @@ public enum ETime implements IUnit {
 
   /**
    * Convert a value
-   * 
+   *
    * @param value
    *          the value
    * @param other
@@ -374,7 +374,7 @@ public enum ETime implements IUnit {
 
   /**
    * Convert a value
-   * 
+   *
    * @param value
    *          the value
    * @param other
@@ -437,7 +437,7 @@ public enum ETime implements IUnit {
 
   /**
    * Return the java time unit belonging to this time unit, if any
-   * 
+   *
    * @return the corresponding java time unit, or {@code null} if none
    *         found
    */

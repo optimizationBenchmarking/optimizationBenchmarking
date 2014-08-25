@@ -26,7 +26,7 @@ public final class BinomialCoefficient extends BinaryFunction {
 
   /**
    * compute the binomial coefficient
-   * 
+   *
    * @param n
    *          the n
    * @param k
@@ -35,15 +35,15 @@ public final class BinomialCoefficient extends BinaryFunction {
    */
   @Override
   public final long compute(final long n, final long k) {
-    if ((k < 0l) || (k > n) || (n < 0l)) {
-      return 0l;
+    if ((k < 0L) || (k > n) || (n < 0L)) {
+      return 0L;
     }
 
-    if ((k <= 0l) || (k >= n)) {
-      return 1l;
+    if ((k <= 0L) || (k >= n)) {
+      return 1L;
     }
 
-    if ((k <= 1l) || (k >= (n - 1l))) {
+    if ((k <= 1L) || (k >= (n - 1L))) {
       return n;
     }
 
@@ -52,7 +52,7 @@ public final class BinomialCoefficient extends BinaryFunction {
 
   /**
    * compute the binomial coefficient
-   * 
+   *
    * @param n
    *          the n
    * @param k
@@ -78,9 +78,9 @@ public final class BinomialCoefficient extends BinaryFunction {
       kk = k;
     }
 
-    r = 1l;
+    r = 1L;
     v = n;
-    for (d = 1l; d <= kk; d++) {
+    for (d = 1L; d <= kk; d++) {
       rn = ((r * v) / d);
 
       // overflow handling
@@ -91,7 +91,7 @@ public final class BinomialCoefficient extends BinaryFunction {
           g = GCD.INSTANCE.compute(v, d);
           rn = ((r * (v / g)) / (d / g));
           if (rn <= r) {
-            return (-1l);
+            return (-1L);
           }
         }
       }
@@ -124,13 +124,13 @@ public final class BinomialCoefficient extends BinaryFunction {
       lk = Math.round(x2);
       ln = Math.round(x1);
       lr = BinomialCoefficient.internalBinomial(ln, lk);
-      if (lr >= 0l) {
+      if (lr >= 0L) {
         return lr;
       }
 
       nmkl = (ln - lk);
-      a = (x2 * (Beta.INSTANCE.compute(x2, nmkl + 1l)));
-      b = (nmkl * (Beta.INSTANCE.compute(x2 + 1l, nmkl)));
+      a = (x2 * (Beta.INSTANCE.compute(x2, nmkl + 1L)));
+      b = (nmkl * (Beta.INSTANCE.compute(x2 + 1L, nmkl)));
     } else {
       nmk = (x1 - x2);
       a = (x2 * (Beta.INSTANCE.compute(x2, nmk + 1d)));
@@ -171,7 +171,7 @@ public final class BinomialCoefficient extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -183,7 +183,7 @@ public final class BinomialCoefficient extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

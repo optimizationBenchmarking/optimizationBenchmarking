@@ -32,6 +32,7 @@
 	<rule ref="rulesets/java/logging-java.xml" />
 	<rule ref="rulesets/java/naming.xml">
 		<exclude name="PackageCase" />
+		<exclude name="ShortVariable" />
 	</rule>
 	<rule ref="rulesets/java/optimizations.xml" />
 	<rule ref="rulesets/java/strictexception.xml" />

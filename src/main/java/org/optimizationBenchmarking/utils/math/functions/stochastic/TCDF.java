@@ -32,7 +32,7 @@ public final class TCDF extends BinaryFunction {
 
   /**
    * get the T-distribution instance to use
-   * 
+   *
    * @param dof
    *          the degrees of freedom
    * @return the distribution to use
@@ -41,7 +41,7 @@ public final class TCDF extends BinaryFunction {
     final int df;
     TDistribution d;
 
-    if ((dof >= 0l) && (dof < TCDF.TS.length)) {
+    if ((dof >= 0L) && (dof < TCDF.TS.length)) {
       d = TCDF.TS[(df = (int) dof)];
       if (d != null) {
         return d;
@@ -54,7 +54,7 @@ public final class TCDF extends BinaryFunction {
 
   /**
    * Returns the CDF of the t-distribution
-   * 
+   *
    * @param dof
    *          degrees of freedom
    * @param x
@@ -90,7 +90,7 @@ public final class TCDF extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -102,7 +102,7 @@ public final class TCDF extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

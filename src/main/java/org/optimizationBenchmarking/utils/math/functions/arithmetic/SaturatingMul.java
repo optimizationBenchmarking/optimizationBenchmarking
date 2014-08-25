@@ -43,20 +43,20 @@ public final class SaturatingMul extends BinaryFunction {
     if (x0 > x1) {
       return this.compute(x1, x0);
     }
-    if (x0 < 0l) {
-      if (x1 < 0l) {
+    if (x0 < 0L) {
+      if (x1 < 0L) {
         if (x0 >= (Long.MAX_VALUE / x1)) {
           return x0 * x1;
         }
         return Long.MAX_VALUE;
       }
-      if (x1 > 0l) {
+      if (x1 > 0L) {
         if ((Long.MIN_VALUE / x1) <= x0) {
           return (x0 * x1);
         }
         return Long.MIN_VALUE;
       }
-      return 0l;
+      return 0L;
     }
 
     if (x0 > 0) {
@@ -88,7 +88,7 @@ public final class SaturatingMul extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -100,7 +100,7 @@ public final class SaturatingMul extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

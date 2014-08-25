@@ -21,7 +21,7 @@ public final class RandomUtils {
    * sequence of unique strings. See method
    * {@link #longToObject(long, boolean)} to create a sequence of unique
    * objects.
-   * 
+   *
    * @param value
    *          the long value
    * @param charset
@@ -32,10 +32,10 @@ public final class RandomUtils {
       final long value) {
     long val;
 
-    val = (value + 1l);
+    val = (value + 1L);
     do {
-      val *= 8223372036854775893l;
-    } while (val < 0l);
+      val *= 8223372036854775893L;
+    } while (val < 0L);
     return RandomUtils.__longToStringRaw(//
         (((charset != null) && (charset.length() > 0)) ? charset
             : RandomUtils.DEFAULT_CHARSET), val);
@@ -43,7 +43,7 @@ public final class RandomUtils {
 
   /**
    * create a string which exactly corresponds to a given long
-   * 
+   *
    * @param value
    *          the long value
    * @param charset
@@ -63,7 +63,7 @@ public final class RandomUtils {
     do {
       sb.append(charset.charAt((int) (val % len)));
       val /= len;
-    } while (val > 0l);
+    } while (val > 0L);
 
     return sb.toString();
   }
@@ -94,7 +94,7 @@ public final class RandomUtils {
    * All of the objects returned are {@link java.io.Serializable
    * serializable} but not {@link java.lang.Cloneable}.
    * </p>
-   * 
+   *
    * @param value
    *          the value
    * @param maxUnique
@@ -111,19 +111,19 @@ public final class RandomUtils {
     double d;
     char ch;
 
-    use = (value + 1l);
+    use = (value + 1L);
     do {
-      use *= 7777777777777777793l;
-    } while (use < 0l);
+      use *= 7777777777777777793L;
+    } while (use < 0L);
 
     if (maxUnique) {
       type = RandomUtils.UNIQUE[((int) (use % RandomUtils.UNIQUE.length))];
       use /= RandomUtils.UNIQUE.length;
     } else {
-      type = ((int) (use % 9l));
-      use /= 9l;
+      type = ((int) (use % 9L));
+      use /= 9L;
     }
-    use *= 5555555555555555621l;
+    use *= 5555555555555555621L;
 
     switch (type) {
       case 0: {
@@ -148,7 +148,7 @@ public final class RandomUtils {
         }
       }
       case 3: {
-        return Boolean.valueOf((use & 1l) != 0l);
+        return Boolean.valueOf((use & 1L) != 0L);
       }
       case 4: {
         return Byte.valueOf((byte) (use & 0xffl));
@@ -163,8 +163,8 @@ public final class RandomUtils {
         return Long.valueOf(use);
       }
       default: {
-        while (use < 0l) {
-          use *= 5555555555555555621l;
+        while (use < 0L) {
+          use *= 5555555555555555621L;
         }
         return RandomUtils.__longToStringRaw(RandomUtils.DEFAULT_CHARSET,
             use);
