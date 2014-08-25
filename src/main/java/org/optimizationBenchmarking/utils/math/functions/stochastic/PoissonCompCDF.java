@@ -5,9 +5,11 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 import org.optimizationBenchmarking.utils.math.functions.special.GammaRegularizedP;
 
 /**
- * <p>
- * The complementary CDF of the Poisson distribution.
- * </p>
+ * The complementary cumulative distribution function (<a
+ * href="http://en.wikipedia.org/wiki/Cumulative_distribution_function"
+ * >CDF</a>) of the <a
+ * href="http://en.wikipedia.org/wiki/Poisson_distribution">Poisson
+ * distribution</a>.
  */
 public final class PoissonCompCDF extends BinaryFunction {
 

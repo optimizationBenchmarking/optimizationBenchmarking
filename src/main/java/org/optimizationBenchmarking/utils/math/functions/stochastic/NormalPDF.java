@@ -1,12 +1,15 @@
 package org.optimizationBenchmarking.utils.math.functions.stochastic;
 
+import org.apache.commons.math3.distribution.NormalDistribution;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
- * <p>
- * The PDF of the normal distribution.
- * </p>
+ * The probability density function (<a
+ * href="http://en.wikipedia.org/wiki/Probability_density_function"
+ * >PDF</a>) of the <a href=
+ * "http://en.wikipedia.org/wiki/Normal_distribution#Standard_normal_distribution"
+ * >standard normal distribution</a>.
  */
 public final class NormalPDF extends UnaryFunction {
 
@@ -17,7 +20,7 @@ public final class NormalPDF extends UnaryFunction {
   public static final NormalPDF INSTANCE = new NormalPDF();
 
   /** the internal normal distribution */
-  static final org.apache.commons.math3.distribution.NormalDistribution DISTRIBUTION = new org.apache.commons.math3.distribution.NormalDistribution(
+  static final NormalDistribution DISTRIBUTION = new NormalDistribution(
       null, 0d, 1d);
 
   /** instantiate */

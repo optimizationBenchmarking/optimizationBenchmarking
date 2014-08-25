@@ -4,9 +4,11 @@ import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
- * <p>
- * Compute the chi square quantil.
- * </p>
+ * The inverted cumulative distribution function (<a
+ * href="http://en.wikipedia.org/wiki/Cumulative_distribution_function"
+ * >CDF</a>) of the <a
+ * href="http://en.wikipedia.org/wiki/Chi-squared_distribution">Chi-squared
+ * (&chi;&sup2;) distribution</a>.
  */
 public final class ChiSquareInvCDF extends BinaryFunction {
 

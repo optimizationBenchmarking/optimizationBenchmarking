@@ -4,9 +4,11 @@ import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
- * <p>
- * The CDF of the normal distribution.
- * </p>
+ * * The cumulative distribution function (<a
+ * href="http://en.wikipedia.org/wiki/Cumulative_distribution_function"
+ * >CDF</a>) of the <a href=
+ * "http://en.wikipedia.org/wiki/Normal_distribution#Standard_normal_distribution"
+ * >standard normal distribution</a>.
  */
 public final class NormalCDF extends UnaryFunction {
 

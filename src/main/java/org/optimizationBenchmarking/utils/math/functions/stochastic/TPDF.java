@@ -4,9 +4,11 @@ import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
- * <p>
- * The PDF of the t-distribution.
- * </p>
+ * The probability density function (<a
+ * href="http://en.wikipedia.org/wiki/Probability_density_function"
+ * >PDF</a>) of the <a
+ * href="http://en.wikipedia.org/wiki/Student%27s_t-distribution"
+ * >t-distribution</a>.
  */
 public final class TPDF extends BinaryFunction {
 

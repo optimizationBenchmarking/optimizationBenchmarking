@@ -5,3 +5,6 @@
 /classes
 /build
 /temp
+/tmp
+/out
+/.gradle

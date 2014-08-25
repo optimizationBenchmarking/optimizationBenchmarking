@@ -5,8 +5,11 @@ import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
- * <p>
- * The CDF of the t-distribution.
+ * The cumulative distribution function (<a
+ * href="http://en.wikipedia.org/wiki/Cumulative_distribution_function"
+ * >CDF</a>) of the <a
+ * href="http://en.wikipedia.org/wiki/Student%27s_t-distribution"
+ * >t-distribution</a>.
  */
 public final class TCDF extends BinaryFunction {
 
