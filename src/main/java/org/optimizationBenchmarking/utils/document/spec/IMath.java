@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A mathematics output device. The difference the the normal
@@ -9,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * is that you are only allowed to choose one output method: Either you
  * write some text, a number, or perform a mathematical operation.
  */
-public interface IMath extends IDocumentPart, ITextOutput {
+public interface IMath extends IPlainText {
 
   /**
    * Write some mathematical content in braces. The underlying
@@ -20,19 +19,11 @@ public interface IMath extends IDocumentPart, ITextOutput {
    * correct brace characters in the underlying stream.
    * 
    * @return an instance of
-   *         {@link org.optimizationBenchmarking.utils.document.spec.IText}
+   *         {@link org.optimizationBenchmarking.utils.document.spec.IMath}
    *         whose text will appear in braces in the underlying stream
    */
+  @Override
   public IMath inBraces();
-
-  /**
-   * Invoke a math macro
-   * 
-   * @param macro
-   *          the macro to invoke
-   * @return the macro invocation
-   */
-  public abstract IMathMacroInvocation invoke(final MathMacro macro);
 
   /**
    * An

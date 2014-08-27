@@ -17,5 +17,5 @@ public interface ICode extends IDocumentPart {
    * 
    * @return the code body
    */
-  public abstract IText body();
+  public abstract IPlainText body();
 }

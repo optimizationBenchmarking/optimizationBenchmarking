@@ -5,8 +5,6 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDate;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
-import org.optimizationBenchmarking.utils.document.spec.MathMacro;
-import org.optimizationBenchmarking.utils.document.spec.TextMacro;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -17,13 +15,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 public class DocumentHeader extends _StyledElement implements
     IDocumentHeader {
 
-  /** we are in a math macro */
-  private static final int STATE_IN_MATH_MACRO = (DocumentElement.STATE_MAX_ELEMENT + 1);
-  /** we are in a text macro */
-  private static final int STATE_IN_TEXT_MACRO = (DocumentHeader.STATE_IN_MATH_MACRO + 1);
-
   /** an title has been created */
-  private static final int STATE_TITLE_CREATED = (DocumentHeader.STATE_IN_TEXT_MACRO + 1);
+  private static final int STATE_TITLE_CREATED = (DocumentElement.STATE_MAX_ELEMENT + 1);
   /** a title is about to be opened */
   private static final int STATE_TITLE_BEFORE_OPEN = (DocumentHeader.STATE_TITLE_CREATED + 1);
   /** a title has been opened */
@@ -70,8 +63,6 @@ public class DocumentHeader extends _StyledElement implements
 
   static {
     STATE_NAMES = new String[DocumentHeader.STATE_HEADER_FINALIZED + 1];
-    DocumentHeader.STATE_NAMES[DocumentHeader.STATE_IN_MATH_MACRO] = "inMathMacro"; //$NON-NLS-1$
-    DocumentHeader.STATE_NAMES[DocumentHeader.STATE_IN_TEXT_MACRO] = "inTextMacro"; //$NON-NLS-1$
     DocumentHeader.STATE_NAMES[DocumentHeader.STATE_TITLE_CREATED] = "titleCreated"; //$NON-NLS-1$
     DocumentHeader.STATE_NAMES[DocumentHeader.STATE_TITLE_BEFORE_OPEN] = "titleOpened"; //$NON-NLS-1$
     DocumentHeader.STATE_NAMES[DocumentHeader.STATE_TITLE_AFTER_OPEN] = "titleOpened"; //$NON-NLS-1$
@@ -107,52 +98,12 @@ public class DocumentHeader extends _StyledElement implements
   @Override
   protected void fsmStateAppendName(final int state,
       final MemoryTextOutput sb) {
-    if ((state >= DocumentHeader.STATE_IN_MATH_MACRO)
+    if ((state >= DocumentHeader.STATE_TITLE_CREATED)
         && (state < DocumentHeader.STATE_NAMES.length)) {
       sb.append(DocumentHeader.STATE_NAMES[state]);
     } else {
       super.fsmStateAppendName(state, sb);
     }
-  }
-
-  /**
-   * Define a math macro
-   * 
-   * @param macro
-   *          the macro
-   */
-  protected void doDefineMathMacro(final MathMacro macro) {
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * Define a text macro
-   * 
-   * @param macro
-   *          the macro
-   */
-  protected void doDefineTextMacro(final TextMacro macro) {
-    throw new UnsupportedOperationException();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final synchronized void defineMathMacro(final MathMacro macro) {
-    this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
-        DocumentHeader.STATE_IN_MATH_MACRO);
-    this.doDefineMathMacro(macro);
-    this.fsmStateAssertAndSet(DocumentHeader.STATE_IN_MATH_MACRO,
-        DocumentElement.STATE_ALIFE);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final synchronized void defineTextMacro(final TextMacro macro) {
-    this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
-        DocumentHeader.STATE_IN_TEXT_MACRO);
-    this.doDefineTextMacro(macro);
-    this.fsmStateAssertAndSet(DocumentHeader.STATE_IN_TEXT_MACRO,
-        DocumentElement.STATE_ALIFE);
   }
 
   /** {@inheritDoc} */

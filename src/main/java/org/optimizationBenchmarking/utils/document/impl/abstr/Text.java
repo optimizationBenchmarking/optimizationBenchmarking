@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /** A text class */
-public class Text extends BasicText implements IText {
+public class Text extends PlainText implements IText {
 
   /**
    * Create a text.

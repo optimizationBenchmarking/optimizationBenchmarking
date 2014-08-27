@@ -93,13 +93,4 @@ public interface IComplexText extends IText, IStyleContext {
   public abstract void reference(final ETextCase textCase,
       final ESequenceMode sequenceMode, final ILabel... labels);
 
-  /**
-   * Invoke a text macro
-   * 
-   * @param macro
-   *          the macro to invoke
-   * @return the macro invocation
-   */
-  public abstract ITextMacroInvocation invoke(final TextMacro macro);
-
 }

@@ -344,8 +344,8 @@ public abstract class MathematicalFunction implements Serializable {
    */
   @Override
   public boolean equals(final Object o) {
-    return ((o == this) || ((o != null) && (this.getClass() == o
-        .getClass())));
+    return ((o == this) || //
+    ((o != null) && (this.getClass() == o.getClass())));
   }
 
   /**

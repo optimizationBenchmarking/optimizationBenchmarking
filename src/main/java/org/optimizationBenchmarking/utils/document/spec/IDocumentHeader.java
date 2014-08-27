@@ -7,24 +7,6 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 public interface IDocumentHeader extends IDocumentPart, IStyleContext {
 
   /**
-   * Define a mathematical macro into this document header, if it has not
-   * already been defined (and do nothing otherwise)
-   * 
-   * @param macro
-   *          the macro to be defined
-   */
-  public abstract void defineMathMacro(final MathMacro macro);
-
-  /**
-   * Define a text macro into this document header, if it has not already
-   * been defined (and do nothing otherwise)
-   * 
-   * @param macro
-   *          the macro to be defined
-   */
-  public abstract void defineTextMacro(final TextMacro macro);
-
-  /**
    * Write the document's title
    * 
    * @return the document's title

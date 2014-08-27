@@ -10,10 +10,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A test of an internal wrapper class of
- * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
+ * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}.
+ * This test currently is not working, the reason seems to be an encoding
+ * issue. Therefore, it is currently {@link org.junit.Ignore ignored}.
  */
 @Ignore
-// cannot get it working, seems to be an encoding issue?
 public class PrintStreamTextOutputTest extends
     TextOutputTest<ByteArrayOutputStream> {
 

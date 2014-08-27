@@ -8,8 +8,6 @@ import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.IStyle;
-import org.optimizationBenchmarking.utils.document.spec.ITextMacroInvocation;
-import org.optimizationBenchmarking.utils.document.spec.TextMacro;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -332,12 +330,6 @@ public class ComplexText extends Text implements IComplexText {
 
     this.doReference(textCase, sequenceMode,//
         ((count < runs.length) ? (Arrays.copyOf(runs, count)) : runs));
-  }
-
-  @Override
-  public ITextMacroInvocation invoke(final TextMacro macro) {
-    // TODO Auto-generated method stub
-    return null;
   }
 
 }

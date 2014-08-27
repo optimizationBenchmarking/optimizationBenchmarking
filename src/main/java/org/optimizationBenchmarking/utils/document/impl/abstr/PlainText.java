@@ -1,10 +1,11 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** The base class for text */
-public class BasicText extends DocumentPart implements ITextOutput {
+public abstract class PlainText extends DocumentPart implements IPlainText {
 
   /** the encoded text output */
   final ITextOutput m_encoded;
@@ -17,9 +18,38 @@ public class BasicText extends DocumentPart implements ITextOutput {
    * @param out
    *          the output destination
    */
-  public BasicText(final HierarchicalFSM owner, final Appendable out) {
+  @SuppressWarnings("resource")
+  PlainText(final HierarchicalFSM owner, final Appendable out) {
     super(owner, out);
-    this.m_encoded = this.m_doc.encode(this.getTextOutput());
+
+    final ITextOutput to;
+    HierarchicalFSM fsm;
+    PlainText pt;
+
+    to = this.getTextOutput();
+
+    // We try to find if a shared encoded stream can be used. If any owner
+    // is a PlainText and has the same raw text output as this object, then
+    // we can simply use that one as well. Otherwise, we need to invoke
+    // Document.encode.
+    fsm = owner;
+    looper: while (fsm != null) {
+      if (fsm instanceof DocumentElement) {
+        if (fsm instanceof PlainText) {
+          pt = ((PlainText) fsm);
+          if (pt.getTextOutput() == to) {
+            this.m_encoded = pt.m_encoded;
+            return;
+          }
+          break looper;
+        }
+        fsm = ((DocumentElement) fsm)._owner();
+        continue looper;
+      }
+      break looper;
+    }
+
+    this.m_encoded = this.m_doc.encode(to);
   }
 
   /**

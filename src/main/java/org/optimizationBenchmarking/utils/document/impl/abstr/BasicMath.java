@@ -2,12 +2,10 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.document.spec.IMathMacroInvocation;
-import org.optimizationBenchmarking.utils.document.spec.MathMacro;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /** A mathematics output class */
-public class BasicMath extends BasicText implements IMath {
+public class BasicMath extends PlainText implements IMath {
 
   /**
    * Create a mathematics output.
@@ -19,12 +17,6 @@ public class BasicMath extends BasicText implements IMath {
    */
   protected BasicMath(final HierarchicalFSM owner, final Appendable out) {
     super(owner, out);
-  }
-
-  @Override
-  public IMathMacroInvocation invoke(final MathMacro macro) {
-    // TODO Auto-generated method stub
-    return null;
   }
 
   /**

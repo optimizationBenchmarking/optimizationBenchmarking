@@ -1,11 +1,9 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-
 /**
  * A document element for writing text without any formatting capabilities
  */
-public interface IText extends IDocumentPart, ITextOutput {
+public interface IText extends IPlainText {
 
   /**
    * Write some text in quotes. The underlying implementation will select
@@ -34,6 +32,7 @@ public interface IText extends IDocumentPart, ITextOutput {
    *         {@link org.optimizationBenchmarking.utils.document.spec.IText}
    *         whose text will appear in braces in the underlying stream
    */
+  @Override
   public IText inBraces();
 
 }

@@ -57,7 +57,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
   private ExperimentSet m_inst;
 
   /** create */
-  protected ExperimentSetCreator() {
+  public ExperimentSetCreator() {
     super();
   }
 
