@@ -67,9 +67,11 @@ public class SVGGraphicDriver extends AbstractGraphicDriver {
     synchronized (SVGGraphics2D.class) {
       g = new SVGGraphics2D(os, dim);
       g.setProperties(up);
-      g.startExport();
       g.setClip(0, 0, dim.width, dim.height);
+      setDefaultRenderingHints(g);
+      g.startExport();
     }
+    setDefaultRenderingHints(g);
 
     return new _SVGGraphic(g, id, listener, dim.width, dim.height);
   }

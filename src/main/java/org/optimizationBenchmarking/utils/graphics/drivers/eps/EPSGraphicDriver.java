@@ -73,10 +73,11 @@ public class EPSGraphicDriver extends AbstractGraphicDriver {
       g = new PSGraphics2D(os, dim);
       g.setProperties(up);
       g.setMultiPage(false);
-
+      setDefaultRenderingHints(g);
       g.startExport();
       g.setClip(0, 0, dim.width, dim.height);
     }
+    setDefaultRenderingHints(g);
 
     return new _EPSGraphic(g, id, listener, dim.width, dim.height);
   }

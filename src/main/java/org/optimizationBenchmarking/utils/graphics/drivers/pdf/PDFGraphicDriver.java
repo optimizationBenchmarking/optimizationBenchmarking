@@ -103,10 +103,11 @@ public class PDFGraphicDriver extends AbstractGraphicDriver {
           g = new PDFGraphics2D(os, dim);
           g.setProperties(up);
           g.setMultiPage(false);
-
+          setDefaultRenderingHints(g);
           g.startExport();
           g.setClip(0, 0, dim.width, dim.height);
         }
+        setDefaultRenderingHints(g);
       } finally {
         this.m_messWith.setSize(this.m_correctDim);
       }
