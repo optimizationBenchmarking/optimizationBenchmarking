@@ -3,10 +3,11 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
-import org.optimizationBenchmarking.utils.document.spec.Graphic;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
-import org.optimizationBenchmarking.utils.document.spec.IGraphicListener;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
+import org.optimizationBenchmarking.utils.graphics.Graphic;
+import org.optimizationBenchmarking.utils.graphics.GraphicID;
+import org.optimizationBenchmarking.utils.graphics.IGraphicListener;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -190,14 +191,10 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
   /**
    * the graphic of this figure has been closed
    * 
-   * @param graphic
-   *          the graphic
-   * @param path
-   *          the path to the graphic, or {@code null} if no path was
-   *          specified
+   * @param id
+   *          the id of the graphic that has been closed
    */
-  protected synchronized void onGraphicClosed(final Graphic graphic,
-      final Path path) {
+  protected synchronized void onGraphicClosed(final GraphicID id) {
     this.fsmStateAssertAndSet(BasicFigure.STATE_GRAPHIC_CREATED,
         BasicFigure.STATE_GRAPHIC_CLOSED);
   }
@@ -226,7 +223,13 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
   }
 
   /**
-   * The internal dispatcher for graphic listening events
+   * The internal dispatcher for graphic listening events. It is basically
+   * a wrapper for the
+   * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure#onGraphicClosed(GraphicID)}
+   * method, allowing it to remain protected and allowing that
+   * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure}
+   * does not need to implement
+   * {@link org.optimizationBenchmarking.utils.graphics.IGraphicListener}.
    */
   private final class __GraphicListener implements IGraphicListener {
     /** create */
@@ -236,8 +239,8 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
     /** {@inheritDoc} */
     @Override
-    public final void onClosed(final Graphic graphic, final Path path) {
-      BasicFigure.this.onGraphicClosed(graphic, path);
+    public final void onGraphicClosed(final GraphicID id) {
+      BasicFigure.this.onGraphicClosed(id);
     }
   }
 
