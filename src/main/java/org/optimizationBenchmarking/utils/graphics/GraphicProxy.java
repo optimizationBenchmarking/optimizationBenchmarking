@@ -29,10 +29,11 @@ import java.util.Map;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
- * A wrapper for graphics 2d objects. This wrapper allows us to forward all
- * calls to a different graphics object. Additionally, it provides the
- * interface {@link java.lang.AutoCloseable} which can be used to put all
- * work on an output graphics object into a {@code try...with} statement.
+ * An abstract wrapper which maps {@link java.awt.Graphics2D} objects to
+ * instances of {@link org.optimizationBenchmarking.utils.graphics.Graphic}
+ * . This wrapper allows us to forward all calls to a given graphics
+ * object. Its {@link #onClose()} routine must be overridden to dispose
+ * that object when the graphic context is released.
  * 
  * @param <GT>
  *          the proxy graphics type <@javaAuthorVersion/>

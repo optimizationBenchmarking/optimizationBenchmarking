@@ -38,7 +38,8 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
     this.m_props.setProperty(PSGraphics2D.EMBED_FONTS_AS,
         FontConstants.EMBED_FONTS_TYPE3);
     this.m_props.setProperty(PSGraphics2D.PREVIEW, false);
-    this.m_props.setProperty(PSGraphics2D.PAGE_SIZE,PSGraphics2D.CUSTOM_PAGE_SIZE);
+    this.m_props.setProperty(PSGraphics2D.PAGE_SIZE,
+        PSGraphics2D.CUSTOM_PAGE_SIZE);
     this.m_props.setProperty(PSGraphics2D.BACKGROUND_COLOR, Color.WHITE);
     this.m_props.setProperty(PSGraphics2D.PAGE_MARGINS, "0, 0, 0, 0"); //$NON-NLS-1$
   }
@@ -68,7 +69,7 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
       throw new IllegalArgumentException("Invalid size " + size + //$NON-NLS-1$
           " translated to " + dim);//$NON-NLS-1$
     }
-    
+
     up.setProperty(PSGraphics2D.CUSTOM_PAGE_SIZE, dim);
 
     os = AbstractGraphicDriver.createOutputStream(id);

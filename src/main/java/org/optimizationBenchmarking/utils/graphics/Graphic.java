@@ -50,15 +50,14 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
  * used to create such wrappers.
  * </p>
  * <p>
- * As inspired by <a
- * href="http://java.freehep.org/vectorgraphics">FreeHEP</a>, we provide
- * most of the routines of {@link java.awt.Graphics2D} in {@code double}
- * precision versions. If the underlying library which we wrap supports it,
- * graphics can then be drawn in higher precision. (The
- * {@link org.optimizationBenchmarking.utils.graphics.drivers.freeHEP
- * FreeHEP drivers} do). If there is no support for {@code double}
- * -precision output, the graphic tries to provide a reasonable mapping to
- * the existing {@code int}-based routines.
+ * Inspired by the <a
+ * href="http://java.freehep.org/vectorgraphics">FreeHEP</a> library, this
+ * class also provides {@code double}-precision routines which, by default,
+ * try to reasonable map to the {@code int}-precision routines of
+ * {@link java.awt.Graphics2D}. However, if an underlying device supports
+ * high-precision output (like the
+ * {@link org.optimizationBenchmarking.utils.graphics.drivers.freeHEP}
+ * freeHEP drivers} do), these routines may map to something better.
  * </p>
  */
 public abstract class Graphic extends Graphics2D implements Closeable {
@@ -214,47 +213,28 @@ public abstract class Graphic extends Graphics2D implements Closeable {
   // new functionality
 
   /**
-   * translate a {@code double} x-coordinate to an {@code int}
+   * convert a coordinate
    * 
-   * @param x
-   *          the x-coordinate
-   * @return the integer value
+   * @param d
+   *          the coordinate
+   * @return the integer version
    */
-  private static final int __x(final double x) {
-    return ((int) x);
+  static final int _c(final double d) {
+    return ((int) (d + 0.5d));
   }
 
   /**
-   * translate a {@code double} y-coordinate to an {@code int}
+   * convert a length
    * 
-   * @param y
-   *          the y-coordinate
-   * @return the integer value
+   * @param d
+   *          the coordinate
+   * @return the integer version
    */
-  private static final int __y(final double y) {
-    return ((int) y);
-  }
+  static final int _l(final double d) {
+    int r;
 
-  /**
-   * translate a {@code double} width to an {@code int}
-   * 
-   * @param w
-   *          the width
-   * @return the integer value
-   */
-  private static final int __w(final double w) {
-    return ((int) (w + 0.5d));
-  }
-
-  /**
-   * translate a {@code double} height to an {@code int}
-   * 
-   * @param h
-   *          the height
-   * @return the integer value
-   */
-  private static final int __h(final double h) {
-    return ((int) (h + 0.5d));
+    r = _c(d);
+    return ((r != 0) ? r : ((d < 0d) ? (-1) : 1));
   }
 
   /**
@@ -273,7 +253,10 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    */
   public void draw3DRect(final double x, final double y,
       final double width, final double height, final boolean raised) {
-    this.draw3DRect(__x(x), __y(y), __w(width), __h(height), raised);
+    try (final TranslatedAndScaled t = new TranslatedAndScaled(x, y,
+        width, height)) {
+      this.draw3DRect(t.m_x, t.m_y, t.m_w, t.m_h, raised);
+    }
   }
 
   /**
@@ -292,7 +275,10 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    */
   public void fill3DRect(final double x, final double y,
       final double width, final double height, final boolean raised) {
-    this.fill3DRect(__x(x), __y(y), __w(width), __h(height), raised);
+    try (final TranslatedAndScaled t = new TranslatedAndScaled(x, y,
+        width, height)) {
+      this.fill3DRect(t.m_x, t.m_y, t.m_w, t.m_h, raised);
+    }
   }
 
   /**
@@ -309,7 +295,9 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    */
   public void drawImage(final BufferedImage img, final BufferedImageOp op,
       final double x, final double y) {
-    this.drawImage(img, op, __x(x), __y(y));
+    try (final Translated t = new Translated(x, y)) {
+      this.drawImage(img, op, t.m_x, t.m_y);
+    }
   }
 
   /**
@@ -371,7 +359,10 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    */
   public Graphics create(final double x, final double y,
       final double width, final double height) {
-    return this.create(__x(x), __y(y), __w(width), __h(height));
+    try (final TranslatedAndScaled t = new TranslatedAndScaled(x, y,
+        width, height)) {
+      return this.create(t.m_x, t.m_y, t.m_w, t.m_h);
+    }
   }
 
   /**
@@ -426,8 +417,7 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    */
   public void copyArea(final double x, final double y, final double width,
       final double height, final double dx, final double dy) {
-    this.copyArea(__x(x), __y(y), __w(width), __h(height), __w(dx),
-        __h(dy));
+    this.copyArea(_c(x), _c(y), _l(width), _l(height), _c(dx), _c(dy));
   }
 
   /**
@@ -498,9 +488,12 @@ public abstract class Graphic extends Graphics2D implements Closeable {
     final Paint p;
 
     p = this.getPaint();
-    this.setPaint(this.getBackground());
-    this.fillRect(x, y, width, height);
-    this.setPaint(p);
+    try {
+      this.setPaint(this.getBackground());
+      this.fillRect(x, y, width, height);
+    } finally {
+      this.setPaint(p);
+    }
   }
 
   /**
@@ -646,9 +639,9 @@ public abstract class Graphic extends Graphics2D implements Closeable {
 
     path = new GeneralPath(Path2D.WIND_EVEN_ODD);
     if (nPoints > 0) {
-      path.moveTo((float) xPoints[0], (float) yPoints[0]);
+      path.moveTo(((float) (xPoints[0])), ((float) (yPoints[0])));
       for (int i = 1; i < nPoints; i++) {
-        path.lineTo((float) xPoints[i], (float) yPoints[i]);
+        path.lineTo(((float) (xPoints[i])), ((float) (yPoints[i])));
       }
       if (close)
         path.closePath();
@@ -717,7 +710,9 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    */
   public void drawChars(final char data[], final int offset,
       final int length, final double x, final double y) {
-    this.drawChars(data, offset, length, __x(x), __y(y));
+    try (final Translated t = new Translated(x, y)) {
+      this.drawChars(data, offset, length, t.m_x, t.m_y);
+    }
   }
 
   /**
@@ -735,17 +730,9 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    */
   public boolean drawImage(final Image img, final double x,
       final double y, final ImageObserver observer) {
-    final AffineTransform translate;
-    final boolean b;
-
-    translate = this.getTransform();
-    try {
-      this.translate(x, y);
-      b = this.drawImage(img, 0, 0, observer);
-    } finally {
-      this.setTransform(translate);
+    try (final Translated t = new Translated(x, y)) {
+      return this.drawImage(img, t.m_x, t.m_y, observer);
     }
-    return b;
   }
 
   /**
@@ -831,17 +818,9 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    */
   public boolean drawImage(final Image img, final double x,
       final double y, final Color bgcolor, final ImageObserver observer) {
-    final AffineTransform translate;
-    final boolean b;
-
-    translate = this.getTransform();
-    try {
-      this.translate(x, y);
-      b = this.drawImage(img, 0, 0, bgcolor, observer);
-    } finally {
-      this.setTransform(translate);
+    try (final Translated t = new Translated(x, y)) {
+      return this.drawImage(img, t.m_x, t.m_y, bgcolor, observer);
     }
-    return b;
   }
 
   /**
@@ -917,8 +896,8 @@ public abstract class Graphic extends Graphics2D implements Closeable {
       final double dy1, final double dx2, final double dy2,
       final double sx1, final double sy1, final double sx2,
       final double sy2, final ImageObserver observer) {
-    return this.drawImage(img, __x(dx1), __y(dy1), __x(dx2), __y(dy2),
-        __x(sx1), __y(sy1), __x(sx2), __y(sy2), observer);
+    return this.drawImage(img, _c(dx1), _c(dy1), _c(dx2), _c(dy2),
+        _c(sx1), _c(sy1), _c(sx2), _c(sy2), observer);
   }
 
   /**
@@ -961,12 +940,13 @@ public abstract class Graphic extends Graphics2D implements Closeable {
       final double dy1, final double dx2, final double dy2,
       final double sx1, final double sy1, final double sx2,
       final double sy2, final Color bgcolor, final ImageObserver observer) {
-    return this.drawImage(img, __x(dx1), __y(dy1), __x(dx2), __y(dy2),
-        __x(sx1), __y(sy1), __x(sx2), __y(sy2), bgcolor, observer);
+    return this.drawImage(img, _c(dx1), _c(dy1), _c(dx2), _c(dy2),
+        _c(sx1), _c(sy1), _c(sx2), _c(sy2), bgcolor, observer);
   }
 
   /** the test string */
   private static final char[] TEST;
+
   static {
     final char min, max;
     char i;
@@ -994,167 +974,229 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    */
   public Font createFont(final String name, final int style,
       final double standardHeight, final ELength unit) {
+
     final FontRenderContext frc;
-    final float heightInPT;
+    final float heightInPT, realHeight;
     int height;
     final UnaryFunction devToPT;
-    Font minFont, maxFont, bestFont, curFont;
-    float bestHeight, curHeight, minHeight, maxHeight;
+    final Font base;
 
     heightInPT = ((float) (unit.getConversion(ELength.PT)
         .compute(standardHeight)));
     frc = this.getFontRenderContext();
     devToPT = this.deviceToUnitHeight(ELength.PT);
+    height = ((int) (heightInPT + 0.5d));
+    base = new Font(name, style, height).deriveFont(FONT_ATTRIBUTES);
 
-    minFont = maxFont = null;
-    maxHeight = Float.NEGATIVE_INFINITY;
-    minHeight = Float.POSITIVE_INFINITY;
-
-    findMinFont: for (height = (((int) heightInPT)); height > 0; height--) {
-      minFont = new Font(name, style, height).deriveFont(FONT_ATTRIBUTES);
-      minHeight = devToPT.compute(minFont.getLineMetrics(Graphic.TEST, 0,
-          Graphic.TEST.length, frc).getHeight());
-      if (minHeight < heightInPT) {
-        break findMinFont;
-      }
-      if (minHeight > heightInPT) {
-        maxFont = minFont;
-        maxHeight = minHeight;
-      } else {
-        return minFont;
-      }
-    }
-
-    if (maxFont == null) {
-      findMaxFont: for (;;) {
-        maxFont = new Font(name, style, (++height))
-            .deriveFont(FONT_ATTRIBUTES);
-        maxHeight = devToPT.compute(maxFont.getLineMetrics(Graphic.TEST,
-            0, Graphic.TEST.length, frc).getHeight());
-        if (maxHeight > heightInPT) {
-          break findMaxFont;
-        }
-        if (maxHeight < heightInPT) {
-          minFont = maxFont;
-          minHeight = maxHeight;
-        } else {
-          return maxFont;
-        }
-      }
-    }
-
-    if (Math.abs(maxHeight - heightInPT) < Math
-        .abs(minHeight - heightInPT)) {
-      bestFont = maxFont;
-      bestHeight = maxHeight;
-    } else {
-      bestFont = minFont;
-      bestHeight = minHeight;
-    }
-
-    curFont = bestFont.deriveFont(heightInPT);
-    curHeight = devToPT.compute(curFont.getLineMetrics(Graphic.TEST, 0,
+    realHeight = devToPT.compute(base.getLineMetrics(Graphic.TEST, 0,
         Graphic.TEST.length, frc).getHeight());
+    if (realHeight == heightInPT) {
+      return base;
+    }
+    return base.deriveFont( (heightInPT/realHeight)*height);
+        //(height * height) / realHeight);
 
-    if (Math.abs(curHeight - heightInPT) < Math.abs(bestHeight
-        - heightInPT)) {
-      bestFont = curFont;
-      bestHeight = curHeight;
+    /*
+     * final FontRenderContext frc; final float heightInPT; int height;
+     * final UnaryFunction devToPT; Font minFont, maxFont, bestFont,
+     * curFont; float bestHeight, curHeight, minHeight, maxHeight;
+     * heightInPT = ((float) (unit.getConversion(ELength.PT)
+     * .compute(standardHeight))); frc = this.getFontRenderContext();
+     * devToPT = this.deviceToUnitHeight(ELength.PT); minFont = maxFont =
+     * null; maxHeight = Float.NEGATIVE_INFINITY; minHeight =
+     * Float.POSITIVE_INFINITY; findMinFont: for (height = (((int)
+     * heightInPT)); height > 0; height--) { minFont = new Font(name,
+     * style, height).deriveFont(FONT_ATTRIBUTES); minHeight =
+     * devToPT.compute(minFont.getLineMetrics(Graphic.TEST, 0,
+     * Graphic.TEST.length, frc).getHeight()); if (minHeight < heightInPT)
+     * { break findMinFont; } if (minHeight > heightInPT) { maxFont =
+     * minFont; maxHeight = minHeight; } else { return minFont; } } if
+     * (maxFont == null) { findMaxFont: for (;;) { maxFont = new Font(name,
+     * style, (++height)) .deriveFont(FONT_ATTRIBUTES); maxHeight =
+     * devToPT.compute(maxFont.getLineMetrics(Graphic.TEST, 0,
+     * Graphic.TEST.length, frc).getHeight()); if (maxHeight > heightInPT)
+     * { break findMaxFont; } if (maxHeight < heightInPT) { minFont =
+     * maxFont; minHeight = maxHeight; } else { return maxFont; } } } if
+     * (Math.abs(maxHeight - heightInPT) < Math .abs(minHeight -
+     * heightInPT)) { bestFont = maxFont; bestHeight = maxHeight; } else {
+     * bestFont = minFont; bestHeight = minHeight; } curFont =
+     * bestFont.deriveFont(heightInPT); curHeight =
+     * devToPT.compute(curFont.getLineMetrics(Graphic.TEST, 0,
+     * Graphic.TEST.length, frc).getHeight()); if (Math.abs(curHeight -
+     * heightInPT) < Math.abs(bestHeight - heightInPT)) { bestFont =
+     * curFont; bestHeight = curHeight; } return bestFont;
+     */
+  }
+
+  /** a translated and scaled context */
+  private final class Translated implements Closeable {
+    /** the preserved original transform */
+    private final AffineTransform m_orig;
+
+    /** the x-coordinate to use */
+    final int m_x;
+    /** the y-coordinate to use */
+    final int m_y;
+
+    /**
+     * Translate the coordinate system
+     * 
+     * @param x
+     * @param y
+     */
+    Translated(final double x, final double y) {
+      super();
+
+      final int xx, yy;
+
+      if ((x <= Integer.MIN_VALUE) || (x >= Integer.MAX_VALUE) || (x != x)) {
+        throw new IllegalArgumentException("Invalid x-coordinate " + x); //$NON-NLS-1$
+      }
+      if ((y <= Integer.MIN_VALUE) || (y >= Integer.MAX_VALUE) || (y != y)) {
+        throw new IllegalArgumentException("Invalid y-coordinate " + y); //$NON-NLS-1$
+      }
+
+      xx = _c(x);
+      yy = _c(y);
+
+      if ((xx == x) && (yy == y)) {
+        this.m_orig = null;
+        this.m_x = xx;
+        this.m_y = yy;
+      } else {
+        this.m_orig = Graphic.this.getTransform();
+        Graphic.this.translate(x, y);
+        this.m_x = 0;
+        this.m_y = 0;
+      }
     }
 
-    return bestFont;
+    /** {@inheritDoc} */
+    @Override
+    public final void close() {
+      if (this.m_orig != null) {
+        Graphic.this.setTransform(this.m_orig);
+      }
+    }
+  }
 
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    // final Font oldFont;
-    // final FontRenderContext frc;
-    // Font bestFont, bestFontAbove, bestFontBelow, font;
-    // double bestHeight, bestHeightAbove, bestHeightBelow, height, diff;
-    // UnaryFunction toUnit;
-    //
-    // font = bestFont = new Font(name, style, ((int) (0.5d + unit
-    // .getConversion(ELength.PT).compute(standardHeight))));
-    // toUnit = this.deviceToUnitHeight(unit);
-    // bestHeightBelow = Double.POSITIVE_INFINITY;
-    // bestHeightAbove = Double.NEGATIVE_INFINITY;
-    // bestFontBelow = bestFontAbove = null;
-    //
-    // frc = this.getFontRenderContext();
-    // oldFont = this.getFont();
-    //
-    // try {
-    // this.setFont(bestFont);
-    //
-    // findFont: {
-    //
-    // bestHeight = toUnit.compute((double) (m.getHeight()));
-    //
-    // if (bestHeight > standardHeight) {
-    // bestFontAbove = bestFont;
-    // bestHeightAbove = bestHeight;
-    // } else {
-    // if (bestHeight < standardHeight) {
-    // bestFontBelow = bestFont;
-    // bestHeightBelow = bestHeight;
-    // } else {
-    // break findFont;
-    // }
-    // }
-    //
-    // // in a first step, we try to approximate the right font size
-    // approximationLoop: for (;;) {
-    // font = bestFont.deriveFont((float) (bestFont.getSize2D()
-    // * standardHeight / bestHeight));
-    // if (font.equals(bestFont)) {
-    // break;
-    // }
-    // this.setFont(font);
-    // m = this.getFontMetrics();
-    //
-    // height = toUnit.compute((double) (m.getHeight()));
-    // diff = (height - standardHeight);
-    // if (diff < 0d) {
-    // if (height > bestHeightBelow) {
-    // bestHeightBelow = height;
-    // bestFontBelow = font;
-    // }
-    // diff = (-diff);
-    // } else {
-    // if (diff > 0d) {
-    // if (height < bestHeightAbove) {
-    // bestHeightAbove = height;
-    // bestFontAbove = font;
-    // }
-    // } else {
-    // bestFont = font;
-    // break findFont;
-    // }
-    // }
-    //
-    // if (Math.abs(bestHeight - standardHeight) <= diff) {
-    // break approximationLoop;
-    // }
-    // bestHeight = height;
-    // bestFont = font;
-    // }
-    //
-    // // the approximation loop has completed, now we can try to improve
-    // // the result with binary search
-    // System.out.println(bestFontAbove);
-    // System.out.println(bestFontBelow);
-    // }
-    // } finally {
-    // this.setFont(oldFont);
-    // }
-    //
-    // return bestFont;
+  /** a translated and scaled context */
+  private final class TranslatedAndScaled implements Closeable {
+    /** the preserved original transform */
+    private final AffineTransform m_orig;
+
+    /** the x-coordinate */
+    final int m_x;
+    /** the y-coordinate */
+    final int m_y;
+
+    /** the width */
+    final int m_w;
+    /** the height */
+    final int m_h;
+
+    /**
+     * create
+     * 
+     * @param x
+     *          the starting x-coordinate
+     * @param y
+     *          the starting y-coordinate
+     * @param w
+     *          the width
+     * @param h
+     *          the height
+     */
+    TranslatedAndScaled(final double x, final double y, final double w,
+        final double h) {
+      super();
+
+      final int xx, yy;
+      double sw, sh;
+      int ww, hh;
+      final boolean needsTranslate;
+      boolean needsW, needsH, needsScale;
+
+      if ((x <= Integer.MIN_VALUE) || (x >= Integer.MAX_VALUE) || (x != x)) {
+        throw new IllegalArgumentException("Invalid x-coordinate " + x); //$NON-NLS-1$
+      }
+      if ((y <= Integer.MIN_VALUE) || (y >= Integer.MAX_VALUE) || (y != y)) {
+        throw new IllegalArgumentException("Invalid y-coordinate " + y); //$NON-NLS-1$
+      }
+      if ((w <= Integer.MIN_VALUE) || (w >= Integer.MAX_VALUE) || (w != w)) {
+        throw new IllegalArgumentException("Invalid width " + w); //$NON-NLS-1$
+      }
+      if ((h <= Integer.MIN_VALUE) || (h >= Integer.MAX_VALUE) || (h != h)) {
+        throw new IllegalArgumentException("Invalid height " + h); //$NON-NLS-1$
+      }
+
+      xx = _c(x);
+      yy = _c(y);
+
+      needsTranslate = ((xx != x) || (yy != y));
+      if (needsTranslate) {
+        this.m_x = 0;
+        this.m_y = 0;
+      } else {
+        this.m_x = xx;
+        this.m_y = yy;
+      }
+
+      this.m_w = ww = _l(w);
+      needsW = (ww != w);
+      if (needsW) {
+        sw = (w / ww);
+      } else {
+        sw = 1d;
+      }
+
+      this.m_h = hh = _l(h);
+      needsH = (hh != h);
+      if (needsH) {
+        sh = (h / hh);
+      } else {
+        sh = 1d;
+      }
+
+      needsScale = false;
+      if (needsW || needsH) {
+        needsScale = ((Math.abs(sw / sh) - 1d) < 0.02d);
+        if (!needsScale) {
+          if (Math.abs(sw - 1d) < 0.01d) {
+            needsScale = true;
+          } else {
+            sw = 1d;
+          }
+          if (Math.abs(sh - 1d) < 0.01d) {
+            needsScale = true;
+          } else {
+            sh = 1d;
+          }
+        }
+      }
+
+      if (needsTranslate || needsScale) {
+        this.m_orig = Graphic.this.getTransform();
+
+        if (needsTranslate) {
+          Graphic.this.translate(x, y);
+        }
+        if (needsScale) {
+          Graphic.this.scale(sw, sh);
+        }
+
+      } else {
+        this.m_orig = null;
+      }
+
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void close() {
+      if (this.m_orig != null) {
+        Graphic.this.setTransform(this.m_orig);
+      }
+    }
   }
 }

@@ -173,23 +173,35 @@ public final class GraphicsExample implements IGraphicListener {
     g.setFont(g.createFont("Courier New", //$NON-NLS-1$
         Font.PLAIN, (HEIGHT_MM / 10d), ELength.MM));
     g.setColor(Color.YELLOW);
-    g.drawString("X 1/10th of a line hight Y",//$NON-NLS-1$
-        (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10))),//
-        (bounds.getY() + (mmToDevY.compute(3d * HEIGHT_MM / 10d))));
+    g.drawString(
+        "Text with 1/10th of a line hight",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10)))),//
+        (0.5d + (bounds.getY() + (mmToDevY.compute(3d * HEIGHT_MM / 10d)))));
 
     g.setFont(g.createFont("Arial", //$NON-NLS-1$
-        Font.PLAIN, (HEIGHT_MM / 10d), ELength.MM));
+        Font.PLAIN, 18, ELength.PT));
     g.setColor(Color.YELLOW);
-    g.drawString("X 1/10th of a line hight Y",//$NON-NLS-1$
-        (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10))),//
-        (bounds.getY() + (mmToDevY.compute(5d * HEIGHT_MM / 10d))));
+    g.drawString(
+        "Font: 18pt",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10)))),//
+        (0.5d + (bounds.getY() + (mmToDevY.compute(5d * HEIGHT_MM / 10d)))));
 
     g.setFont(g.createFont("Times New Roman", //$NON-NLS-1$
-        Font.PLAIN, (HEIGHT_MM / 10d), ELength.MM));
+        Font.PLAIN, 16, ELength.PT));
     g.setColor(Color.YELLOW);
-    g.drawString("X 1/10th of a line hight Y",//$NON-NLS-1$
-        (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10))),//
-        (bounds.getY() + (mmToDevY.compute(7d * HEIGHT_MM / 10d))));
+    g.drawString(
+        "Font: 16pt",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10)))),//
+        (0.5d + (bounds.getY() + (mmToDevY.compute(7d * HEIGHT_MM / 10d)))));
+    
+
+    g.setFont(g.createFont("Dialog", //$NON-NLS-1$
+        Font.PLAIN, 14, ELength.PT));
+    g.setColor(Color.YELLOW);
+    g.drawString(
+        "Font: 14pt",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10)))),//
+        (0.5d + (bounds.getY() + (mmToDevY.compute(9d * HEIGHT_MM / 10d)))));
   }
 
   /** the forbidden constructor */
