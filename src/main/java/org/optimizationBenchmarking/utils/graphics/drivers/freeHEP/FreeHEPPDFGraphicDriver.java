@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.graphics.drivers.pdf;
+package org.optimizationBenchmarking.utils.graphics.drivers.freeHEP;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,14 +22,16 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
  * {@link org.freehep.graphicsio.PageConstants#INTERNATIONAL} page&hellip;
  * All using FreeHEP should thus synchronize on
  * <code>{@link org.freehep.graphicsio.PageConstants}.class</code> during
- * all code accessing page sizes.
+ * all code accessing page sizes. This driver has some problems, see, e.g.,
+ * {@link examples.org.optimizationBenchmarking.utils.graphics.GraphicsExample}
+ * .
  */
-public class PDFGraphicDriver extends AbstractGraphicDriver {
+public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final org.freehep.util.UserProperties m_props;
 
   /** the globally shared instance of the pdf graphic driver */
-  public static final PDFGraphicDriver INSTANCE = new PDFGraphicDriver();
+  public static final FreeHEPPDFGraphicDriver INSTANCE = new FreeHEPPDFGraphicDriver();
 
   /** the correct dimension to use */
   final Dimension m_correctDim;
@@ -38,7 +40,7 @@ public class PDFGraphicDriver extends AbstractGraphicDriver {
   final Dimension m_messWith;
 
   /** the hidden constructor */
-  private PDFGraphicDriver() {
+  private FreeHEPPDFGraphicDriver() {
     super(".pdf"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
@@ -82,8 +84,8 @@ public class PDFGraphicDriver extends AbstractGraphicDriver {
     up = new UserProperties();
     up.putAll(this.m_props);
 
-    wd = sizeUnit.convertTo(size.getWidth(), ELength.POINT_POSTSCRIPT);
-    hd = sizeUnit.convertTo(size.getHeight(), ELength.POINT_POSTSCRIPT);
+    wd = sizeUnit.convertTo(size.getWidth(), ELength.POINT);
+    hd = sizeUnit.convertTo(size.getHeight(), ELength.POINT);
     dim = new Dimension();
     if ((wd <= 0d) || (wd >= Integer.MAX_VALUE) || (hd <= 0d)
         || (hd >= Integer.MAX_VALUE)
@@ -113,7 +115,7 @@ public class PDFGraphicDriver extends AbstractGraphicDriver {
       }
     }
 
-    return new _PDFGraphic(g, id, listener, dim.width, dim.height);
+    return new _FreeHEPPDFGraphic(g, id, listener, dim.width, dim.height);
   }
 
 }

@@ -12,39 +12,44 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  */
 public enum ELength implements IUnit {
 
-  /** angstrom */
+  /**
+   * <a
+   * href="http://en.wikipedia.org/wiki/Angstrom">&aring;ngstr&ouml;m</a>
+   */
   ANGSTROM("\u00e5ngstr\u00f6m", "\u00c5"), //$NON-NLS-1$//$NON-NLS-2$
-  /** micrometer */
+  /** <a href="http://en.wikipedia.org/wiki/Nanometre">nanometer</a> */
   NANOMETER("nanometer", "nm"), //$NON-NLS-1$//$NON-NLS-2$
-  /** micrometer */
+  /** <a href="http://en.wikipedia.org/wiki/Micrometer">micrometer</a> */
   MICROMETER("micrometer", "\u00b5m"), //$NON-NLS-1$//$NON-NLS-2$
-  /** millimeters */
-  MILLIMETER("milliemter", "mm"), //$NON-NLS-1$//$NON-NLS-2$
-  /** centimeters */
+  /** <a href="http://en.wikipedia.org/wiki/Millimetre">millimeter</a> */
+  MILLIMETER("millimeter", "mm"), //$NON-NLS-1$//$NON-NLS-2$
+  /** <a href="http://en.wikipedia.org/wiki/Centimetre">centimeter</a> */
   CENTIMETER("centimeter", "cm"), //$NON-NLS-1$//$NON-NLS-2$
-  /** decimeters */
+  /** <a href="http://en.wikipedia.org/wiki/Decimetre">decimeter</a> */
   DECIMETER("decimeter", "dm"), //$NON-NLS-1$//$NON-NLS-2$
-  /** meters */
+  /** <a href="http://en.wikipedia.org/wiki/Metre">meter</a> */
   METER("meter", "m"), //$NON-NLS-1$//$NON-NLS-2$
-  /** kilo meters */
+  /** <a href="http://en.wikipedia.org/wiki/Kilometre">kilometer</a> */
   KILOMETER("kilometer", "km"), //$NON-NLS-1$//$NON-NLS-2$
 
-  /** point */
-  POINT("point", "pt"), //$NON-NLS-1$//$NON-NLS-2$
-  /** postscript-pica */
-  POINT_POSTSCRIPT("point (ps)", null, "point (postscript)"), //$NON-NLS-1$//$NON-NLS-2$
+  /**
+   * <a href=
+   * "http://en.wikipedia.org/wiki/Point_%28typography%29">point</a> according to <a href="
+   * http://en.wikipedia.org/wiki/PostScript">PostScript</a> definition
+   */
+  POINT("point", "pt", "point (postscript)"), //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
   /** European/didot point */
   POINT_EUROPEAN_DIDOT("point (Didot)", null, "point (European/Didot)"), //$NON-NLS-1$//$NON-NLS-2$
   /** European/didot cicero */
   CICERO_EUROPEAN_DIDOT("cicero", null, "cicero (Europan/Didot)"), //$NON-NLS-1$//$NON-NLS-2$
-  /** pica */
-  PICA("pica"), //$NON-NLS-1$
+  // /** pica */
+  //  PICA("pica"), //$NON-NLS-1$
   /** postscript-pica */
-  PICA_POSTSCRIPT("pica (ps)", null, "pica (postscript)"), //$NON-NLS-1$//$NON-NLS-2$
+  PICA("pica", "P\u0338", "pica (postscript)"), //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
   /** pixel */
-  PIXEL("pixel", "px"), //$NON-NLS-1$//$NON-NLS-2$
+  PIXEL("pixel", "px", "pixel (postscript)"), //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
   /** twip */
-  TWIP("twip"), //$NON-NLS-1$
+  TWIP("twip", null, "twip (postscript)"), //$NON-NLS-1$//$NON-NLS-2$
 
   /** micro inch */
   MICROINCH("microinch", "\u00b5in"), //$NON-NLS-1$//$NON-NLS-2$
@@ -205,12 +210,11 @@ public enum ELength implements IUnit {
     comp.setFactor(ELength.MIL, ELength.MICROINCH, 1000L);
     comp.setFactor(ELength.MILE_INTERNATIONAL, ELength.FURLONG, 8L);
 
-    comp.setFactor(ELength.PICA, ELength.POINT, 12L);
     comp.setFactor(ELength.PICA, ELength.PIXEL, 16l);
     comp.setFactor(ELength.PICA, ELength.TWIP, 240L);
     comp.setFactor(ELength.CICERO_EUROPEAN_DIDOT,
         ELength.POINT_EUROPEAN_DIDOT, 12L);
-    comp.setFactor(ELength.PICA_POSTSCRIPT, ELength.POINT_POSTSCRIPT, 12L);
+    comp.setFactor(ELength.PICA, ELength.POINT, 12L);
 
     comp.setFactor(ELength.LIGHT_YEAR, ELength.PARSEC,
         Rational.valueOf(306601394L, 1000000000L));
@@ -228,8 +232,10 @@ public enum ELength implements IUnit {
     comp.setFactor(ELength.LI_CHINESE, ELength.SI_CHINESE, 150000000L);
     comp.setFactor(ELength.LI_CHINESE, ELength.HU_CHINESE, 1500000000L);
 
-    comp.setFactor(ELength.POINT, ELength.MILLIMETER,
-        Rational.valueOf(35146L, 100000L));
+    // comp.setFactor(ELength.POINT, ELength.MILLIMETER,
+    // Rational.valueOf(35146L, 100000L));
+    // comp.setFactor(ELength.INCH, ELength.POINT, 72);
+
     comp.setFactor(ELength.FOOT, ELength.METER,
         Rational.valueOf(3048L, 10000L));
     comp.setFactor(ELength.FOOT_US_SURVEY, ELength.METER,
@@ -241,10 +247,7 @@ public enum ELength implements IUnit {
     //
     comp.setFactor(ELength.POINT_EUROPEAN_DIDOT, ELength.MILLIMETER,
         Rational.valueOf(376L, 1000L));
-    comp.setFactor(ELength.PICA, ELength.MILLIMETER,
-        Rational.valueOf(4233L, 1000L));
-    comp.setFactor(ELength.PICA_POSTSCRIPT, ELength.MILLIMETER,
-        Rational.valueOf(4233L, 1000L));
+    comp.setFactor(ELength.INCH, ELength.POINT, 72);
     //
     comp.setFactor(ELength.MILE_INTERNATIONAL, ELength.KILOMETER,
         Rational.valueOf(1609344L, 1000000L));
@@ -327,7 +330,7 @@ public enum ELength implements IUnit {
 
   /**
    * Create
-   *
+   * 
    * @param name
    *          the name
    * @param shortcut
@@ -344,7 +347,7 @@ public enum ELength implements IUnit {
 
   /**
    * Create
-   *
+   * 
    * @param name
    *          the name
    * @param shortcut
@@ -356,7 +359,7 @@ public enum ELength implements IUnit {
 
   /**
    * Create the name
-   *
+   * 
    * @param name
    *          the name
    */
@@ -366,7 +369,7 @@ public enum ELength implements IUnit {
 
   /**
    * Get the conversion function
-   *
+   * 
    * @param other
    *          the other unit
    * @return the function
@@ -389,7 +392,7 @@ public enum ELength implements IUnit {
 
   /**
    * Convert a value
-   *
+   * 
    * @param value
    *          the value
    * @param other
@@ -419,7 +422,7 @@ public enum ELength implements IUnit {
 
   /**
    * Convert a value
-   *
+   * 
    * @param value
    *          the value
    * @param other

@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.graphics.drivers.svg;
+package org.optimizationBenchmarking.utils.graphics.drivers.freeHEP;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,15 +14,15 @@ import org.optimizationBenchmarking.utils.graphics.IGraphicListener;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /** A driver which creates SVG (graphics). */
-public class SVGGraphicDriver extends AbstractGraphicDriver {
+public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final org.freehep.util.UserProperties m_props;
 
   /** the globally shared instance of the svg graphic driver */
-  public static final SVGGraphicDriver INSTANCE = new SVGGraphicDriver();
+  public static final FreeHEPSVGGraphicDriver INSTANCE = new FreeHEPSVGGraphicDriver();
 
   /** the hidden constructor */
-  private SVGGraphicDriver() {
+  private FreeHEPSVGGraphicDriver() {
     super(".svgz"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
@@ -52,8 +52,8 @@ public class SVGGraphicDriver extends AbstractGraphicDriver {
     up = new UserProperties();
     up.putAll(this.m_props);
 
-    wd = sizeUnit.convertTo(size.getWidth(), ELength.POINT_POSTSCRIPT);
-    hd = sizeUnit.convertTo(size.getHeight(), ELength.POINT_POSTSCRIPT);
+    wd = sizeUnit.convertTo(size.getWidth(), ELength.POINT);
+    hd = sizeUnit.convertTo(size.getHeight(), ELength.POINT);
     dim = new Dimension();
     if ((wd <= 0d) || (wd >= Integer.MAX_VALUE) || (hd <= 0d)
         || (hd >= Integer.MAX_VALUE)
@@ -73,7 +73,7 @@ public class SVGGraphicDriver extends AbstractGraphicDriver {
     }
     setDefaultRenderingHints(g);
 
-    return new _SVGGraphic(g, id, listener, dim.width, dim.height);
+    return new _FreeHEPSVGGraphic(g, id, listener, dim.width, dim.height);
   }
 
 }

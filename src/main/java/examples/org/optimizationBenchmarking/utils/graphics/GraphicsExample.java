@@ -1,7 +1,9 @@
 package examples.org.optimizationBenchmarking.utils.graphics;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,9 +18,9 @@ import org.optimizationBenchmarking.utils.graphics.Graphic;
 import org.optimizationBenchmarking.utils.graphics.GraphicID;
 import org.optimizationBenchmarking.utils.graphics.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.IGraphicListener;
-import org.optimizationBenchmarking.utils.graphics.drivers.eps.EPSGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.drivers.pdf.PDFGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.drivers.svg.SVGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.drivers.freeHEP.FreeHEPEPSGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.drivers.freeHEP.FreeHEPPDFGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.drivers.freeHEP.FreeHEPSVGGraphicDriver;
 import org.optimizationBenchmarking.utils.math.MathConstants;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.units.ELength;
@@ -28,8 +30,8 @@ public final class GraphicsExample implements IGraphicListener {
 
   /** the list of graphics drivers */
   private static final IGraphicDriver[] DRIVERS = {
-      EPSGraphicDriver.INSTANCE, PDFGraphicDriver.INSTANCE,
-      SVGGraphicDriver.INSTANCE };
+      FreeHEPEPSGraphicDriver.INSTANCE, FreeHEPPDFGraphicDriver.INSTANCE,
+      FreeHEPSVGGraphicDriver.INSTANCE };
 
   /** the width in mm */
   private static final double WIDTH_MM = 100d;
@@ -37,7 +39,7 @@ public final class GraphicsExample implements IGraphicListener {
   private static final double HEIGHT_MM = (MathConstants.GOLDEN_RATIO * WIDTH_MM);
 
   /**
-   * run the example
+   * run the example: there are problems with the pdf output
    * 
    * @param args
    *          the arguments
@@ -111,6 +113,7 @@ public final class GraphicsExample implements IGraphicListener {
     final UnaryFunction mmToDevX, mmToDevY;
     int i;
     Rectangle2D r;
+    Stroke s;
 
     bounds = g.getDeviceBounds();
     g.setColor(Color.red);
@@ -154,39 +157,39 @@ public final class GraphicsExample implements IGraphicListener {
     }
 
     g.setColor(Color.white);
-    g.drawLine(
-        ((int) (0.5d + bounds.getX())),
-        ((int) (0.5d + bounds.getY())),//
-        ((int) (0.5d + bounds.getMaxX())),
-        ((int) (0.5d + bounds.getMaxY())));
+    g.drawLine(bounds.getX(), bounds.getY(),//
+        bounds.getMaxX(), bounds.getMaxY());
 
     g.setColor(Color.black);
-    g.drawLine(
-        ((int) (0.5d + bounds.getX())),
-        ((int) (0.5d + bounds.getY())),//
-        ((int) (0.5d + bounds.getX() + mmToDevX.compute(WIDTH_MM))),
-        ((int) (0.5d + bounds.getY() + mmToDevY.compute(HEIGHT_MM))));
+    s = g.getStroke();
+    if (s instanceof BasicStroke) {
+      g.setStroke(new BasicStroke(((BasicStroke) s).getLineWidth() * 0.5f));
+    }
+    g.drawLine(bounds.getX(), bounds.getY(),//
+        bounds.getX() + mmToDevX.compute(WIDTH_MM),//
+        bounds.getY() + mmToDevY.compute(HEIGHT_MM));
+    g.setStroke(s);
 
     g.setFont(g.createFont("Courier New", //$NON-NLS-1$
         Font.PLAIN, (HEIGHT_MM / 10d), ELength.MM));
     g.setColor(Color.YELLOW);
     g.drawString("X 1/10th of a line hight Y",//$NON-NLS-1$
-        (float) (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10))),//
-        (float) (bounds.getY() + (mmToDevY.compute(3d * HEIGHT_MM / 10d))));
+        (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10))),//
+        (bounds.getY() + (mmToDevY.compute(3d * HEIGHT_MM / 10d))));
 
     g.setFont(g.createFont("Arial", //$NON-NLS-1$
         Font.PLAIN, (HEIGHT_MM / 10d), ELength.MM));
     g.setColor(Color.YELLOW);
     g.drawString("X 1/10th of a line hight Y",//$NON-NLS-1$
-        (float) (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10))),//
-        (float) (bounds.getY() + (mmToDevY.compute(5d * HEIGHT_MM / 10d))));
+        (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10))),//
+        (bounds.getY() + (mmToDevY.compute(5d * HEIGHT_MM / 10d))));
 
     g.setFont(g.createFont("Times New Roman", //$NON-NLS-1$
         Font.PLAIN, (HEIGHT_MM / 10d), ELength.MM));
     g.setColor(Color.YELLOW);
     g.drawString("X 1/10th of a line hight Y",//$NON-NLS-1$
-        (float) (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10))),//
-        (float) (bounds.getY() + (mmToDevY.compute(7d * HEIGHT_MM / 10d))));
+        (bounds.getX() + (mmToDevX.compute(HEIGHT_MM / 10))),//
+        (bounds.getY() + (mmToDevY.compute(7d * HEIGHT_MM / 10d))));
   }
 
   /** the forbidden constructor */

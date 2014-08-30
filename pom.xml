@@ -62,6 +62,12 @@
 			<artifactId>commons-math3</artifactId>
 			<version>${commonsMathVersion}</version>
 		</dependency>
+		
+    <dependency>
+      <groupId>org.freehep</groupId>
+      <artifactId>freehep-graphics2d</artifactId>
+      <version>2.1.1</version>
+    </dependency>
 
 		<dependency>
 			<groupId>org.freehep</groupId>
