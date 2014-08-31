@@ -6,7 +6,6 @@ import java.awt.geom.Dimension2D;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
@@ -155,12 +154,6 @@ public abstract class AbstractGraphicDriver implements IGraphicDriver {
               + " with driver " + this);//$NON-NLS-1$
     }
 
-    try {
-      Files.createDirectories(id.m_path.getParent());
-    } catch (final Throwable t) {
-      ErrorUtils.throwAsRuntimeException(t);
-    }
-
     return this.doCreateGraphic(id, size, sizeUnit, listener);
   }
 
@@ -172,20 +165,7 @@ public abstract class AbstractGraphicDriver implements IGraphicDriver {
    * @return the output stream
    */
   protected static final OutputStream createOutputStream(final GraphicID id) {
-    final Path path;
-
-    path = id.m_path;
-    try {
-      return path
-          .getFileSystem()
-          .provider()
-          .newOutputStream(path, StandardOpenOption.WRITE,
-              StandardOpenOption.CREATE,
-              StandardOpenOption.TRUNCATE_EXISTING);
-    } catch (final Throwable t) {
-      ErrorUtils.throwAsRuntimeException(t);
-      return null;// will never be reached
-    }
+    return id._createOutputStream();
   }
 
   /**

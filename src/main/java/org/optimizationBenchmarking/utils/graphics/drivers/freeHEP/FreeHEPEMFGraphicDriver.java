@@ -5,9 +5,7 @@ import java.awt.Dimension;
 import java.awt.geom.Dimension2D;
 import java.io.OutputStream;
 
-import org.freehep.graphicsio.FontConstants;
-import org.freehep.graphicsio.PageConstants;
-import org.freehep.graphicsio.ps.PSGraphics2D;
+import org.freehep.graphicsio.emf.EMFGraphics2D;
 import org.freehep.util.UserProperties;
 import org.optimizationBenchmarking.utils.graphics.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.Graphic;
@@ -17,39 +15,23 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
  * A driver which creates <a
- * href="http://en.wikipedia.org/wiki/Encapsulated_PostScript">EPS</a>
- * graphics.
+ * href="http://en.wikipedia.org/wiki/Windows_Metafile">EMF</a> graphics.
  */
-public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
+public class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final org.freehep.util.UserProperties m_props;
 
-  /**
-   * the globally shared instance of the <a
-   * href="http://en.wikipedia.org/wiki/Encapsulated_PostScript">EPS</a>
-   * graphic driver
-   */
-  public static final FreeHEPEPSGraphicDriver INSTANCE = new FreeHEPEPSGraphicDriver();
+  /** the globally shared instance of the emf graphic driver */
+  public static final FreeHEPEMFGraphicDriver INSTANCE = new FreeHEPEMFGraphicDriver();
 
   /** the hidden constructor */
-  private FreeHEPEPSGraphicDriver() {
-    super(".eps"); //$NON-NLS-1$
+  private FreeHEPEMFGraphicDriver() {
+    super(".emf"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
 
-    PSGraphics2D.setClipEnabled(true);
-
-    this.m_props.putAll(PSGraphics2D.getDefaultProperties());
-    this.m_props.setProperty(PSGraphics2D.PAGE_SIZE,
-        PageConstants.BEST_FIT);
-    this.m_props.setProperty(PSGraphics2D.EMBED_FONTS, true);
-    this.m_props.setProperty(PSGraphics2D.EMBED_FONTS_AS,
-        FontConstants.EMBED_FONTS_TYPE3);
-    this.m_props.setProperty(PSGraphics2D.PREVIEW, false);
-    this.m_props.setProperty(PSGraphics2D.PAGE_SIZE,
-        PSGraphics2D.CUSTOM_PAGE_SIZE);
-    this.m_props.setProperty(PSGraphics2D.BACKGROUND_COLOR, Color.WHITE);
-    this.m_props.setProperty(PSGraphics2D.PAGE_MARGINS, "0, 0, 0, 0"); //$NON-NLS-1$
+    this.m_props.putAll(EMFGraphics2D.getDefaultProperties());
+    this.m_props.setProperty(EMFGraphics2D.BACKGROUND_COLOR, Color.WHITE);
   }
 
   /** {@inheritDoc} */
@@ -59,7 +41,7 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
       final Dimension2D size, final ELength sizeUnit,
       final IGraphicListener listener) {
     final UserProperties up;
-    final PSGraphics2D g;
+    final EMFGraphics2D g;
     final double wd, hd;
     final Dimension dim;
     final OutputStream os;
@@ -78,21 +60,17 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
           " translated to " + dim);//$NON-NLS-1$
     }
 
-    up.setProperty(PSGraphics2D.CUSTOM_PAGE_SIZE, dim);
-
     os = AbstractGraphicDriver.createOutputStream(id);
-    synchronized (PSGraphics2D.class) {
-      PSGraphics2D.setClipEnabled(true);
-      g = new PSGraphics2D(os, dim);
+    synchronized (EMFGraphics2D.class) {
+      g = new EMFGraphics2D(os, dim);
       g.setProperties(up);
-      g.setMultiPage(false);
       AbstractGraphicDriver.setDefaultRenderingHints(g);
       g.startExport();
       g.setClip(0, 0, dim.width, dim.height);
     }
     AbstractGraphicDriver.setDefaultRenderingHints(g);
 
-    return new _FreeHEPEPSGraphic(g, id, listener, dim.width, dim.height);
+    return new _FreeHEPEMFGraphic(g, id, listener, dim.width, dim.height);
   }
 
 }

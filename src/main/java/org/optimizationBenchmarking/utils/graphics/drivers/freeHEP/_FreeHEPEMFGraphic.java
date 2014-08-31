@@ -1,16 +1,17 @@
 package org.optimizationBenchmarking.utils.graphics.drivers.freeHEP;
 
-import org.freehep.graphicsio.svg.SVGGraphics2D;
+import org.freehep.graphicsio.emf.EMFGraphics2D;
 import org.optimizationBenchmarking.utils.graphics.GraphicID;
 import org.optimizationBenchmarking.utils.graphics.IGraphicListener;
 
 /**
  * the internal <a
- * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
- * (graphics)
+ * href="http://en.wikipedia.org/wiki/Windows_Metafile">EMF</a> graphic
+ * based on the <a
+ * href="http://java.freehep.org/vectorgraphics">FreeHEP</a> library
  */
-final class _FreeHEPSVGGraphic extends
-    _FreeHEPAbstractVectorGraphicsProxy<SVGGraphics2D> {
+final class _FreeHEPEMFGraphic extends
+    _FreeHEPAbstractVectorGraphicsProxy<EMFGraphics2D> {
 
   /**
    * instantiate
@@ -28,7 +29,7 @@ final class _FreeHEPSVGGraphic extends
    * @param h
    *          the height
    */
-  _FreeHEPSVGGraphic(final SVGGraphics2D graphic, final GraphicID id,
+  _FreeHEPEMFGraphic(final EMFGraphics2D graphic, final GraphicID id,
       final IGraphicListener listener, final int w, final int h) {
     super(graphic, id, listener, w, h);
   }

@@ -5,7 +5,9 @@ import org.optimizationBenchmarking.utils.graphics.GraphicID;
 import org.optimizationBenchmarking.utils.graphics.IGraphicListener;
 
 /**
- * the internal eps graphic based on the <a
+ * the internal <a
+ * href="http://en.wikipedia.org/wiki/Encapsulated_PostScript">EPS</a>
+ * graphic based on the <a
  * href="http://java.freehep.org/vectorgraphics">FreeHEP</a> library
  */
 final class _FreeHEPEPSGraphic extends

@@ -8,8 +8,6 @@ import org.freehep.graphics2d.AbstractVectorGraphics;
 import org.optimizationBenchmarking.utils.graphics.GraphicID;
 import org.optimizationBenchmarking.utils.graphics.GraphicProxy;
 import org.optimizationBenchmarking.utils.graphics.IGraphicListener;
-import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
  * an internal base class for <a
@@ -54,32 +52,8 @@ class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
 
   /** {@inheritDoc} */
   @Override
-  public final Rectangle2D getDeviceBounds() {
+  public final Rectangle2D getBounds() {
     return new Rectangle(0, 0, this.m_w, this.m_h);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final UnaryFunction deviceToUnitWidth(final ELength unit) {
-    return ELength.POINT.getConversion(unit);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final UnaryFunction unitToDeviceWidth(final ELength unit) {
-    return unit.getConversion(ELength.POINT);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final UnaryFunction deviceToUnitHeight(final ELength unit) {
-    return ELength.POINT.getConversion(unit);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final UnaryFunction unitToDeviceHeight(final ELength unit) {
-    return unit.getConversion(ELength.POINT);
   }
 
   // new functionality

@@ -7,7 +7,11 @@ import org.freehep.graphicsio.pdf.PDFGraphics2D;
 import org.optimizationBenchmarking.utils.graphics.GraphicID;
 import org.optimizationBenchmarking.utils.graphics.IGraphicListener;
 
-/** the internal pdf graphic */
+/**
+ * the internal <a
+ * href="http://en.wikipedia.org/wiki/Portable_Document_Format">PDF</a>
+ * graphic
+ */
 final class _FreeHEPPDFGraphic extends
     _FreeHEPAbstractVectorGraphicsProxy<PDFGraphics2D> {
 

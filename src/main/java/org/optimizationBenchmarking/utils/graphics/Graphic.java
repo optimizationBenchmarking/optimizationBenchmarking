@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Paint;
 import java.awt.Shape;
-import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
@@ -16,30 +15,28 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ImageObserver;
 import java.io.Closeable;
+import java.io.OutputStream;
 import java.text.AttributedCharacterIterator;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
  * <p>
  * An abstract {@link java.awt.Graphics2D} implementation designed as
- * output context for graphics.
- * </p>
- * <p>
- * The size of this graphic in device coordinates can be obtained via
- * {@link #getDeviceBounds()}, whereas its width and height in
- * device-independent units can be obtained via the
- * {@link #deviceToUnitWidth(ELength)} and
- * {@link #deviceToUnitHeight(ELength)} conversion functions.
+ * output context for graphics. Each graphic is set up so that 1 logical
+ * unit equals
+ * <code>1{@link org.optimizationBenchmarking.utils.math.units.ELength#POINT}</code>
+ * .
  * </p>
  * <p>
  * A graphic can be implemented in form of a
@@ -67,8 +64,9 @@ public abstract class Graphic extends Graphics2D implements Closeable {
 
   static {
     FONT_ATTRIBUTES = new HashMap<>();
-    FONT_ATTRIBUTES.put(TextAttribute.KERNING, TextAttribute.KERNING_ON);
-    FONT_ATTRIBUTES.put(TextAttribute.LIGATURES,
+    Graphic.FONT_ATTRIBUTES.put(TextAttribute.KERNING,
+        TextAttribute.KERNING_ON);
+    Graphic.FONT_ATTRIBUTES.put(TextAttribute.LIGATURES,
         TextAttribute.LIGATURES_ON);
   }
 
@@ -117,65 +115,41 @@ public abstract class Graphic extends Graphics2D implements Closeable {
   }
 
   /**
-   * Obtain the bounds of this graphic in device coordinates.
+   * Obtain the bounds of this graphic in
+   * {@link org.optimizationBenchmarking.utils.math.units.ELength#PT pt}
    * 
    * @return the bounds of this graphic
    */
-  public abstract Rectangle2D getDeviceBounds();
+  public Rectangle2D getBounds() {
+    Rectangle2D r;
+    Point2D.Double a, b;
+    AffineTransform at;
 
-  /**
-   * A function which transforms widths ({@code x}-coordinates) from device
-   * units to the provided unit
-   * 
-   * @param unit
-   *          the unit to convert device widths to
-   * @return a
-   *         {@link org.optimizationBenchmarking.utils.math.functions.UnaryFunction}
-   *         which can convert device with values to the specified unit
-   * @see #unitToDeviceWidth(ELength)
-   */
-  public abstract UnaryFunction deviceToUnitWidth(final ELength unit);
+    r = this.getClipBounds();
+    if (r != null) {
+      return r;
+    }
 
-  /**
-   * A function which transforms widths ({@code x}-coordinates) from the
-   * specified unit to device units.
-   * 
-   * @param unit
-   *          the unit to convert to device widths
-   * @return a
-   *         {@link org.optimizationBenchmarking.utils.math.functions.UnaryFunction}
-   *         which can convert widths specified in the given unit to device
-   *         widths
-   * @see #deviceToUnitWidth(ELength)
-   */
-  public abstract UnaryFunction unitToDeviceWidth(final ELength unit);
+    at = this.getTransform();
+    try {
+      at.invert();
+    } catch (final Throwable t) {
+      ErrorUtils.throwAsRuntimeException(t);
+    }
 
-  /**
-   * A function which transforms heights ({@code y}-coordinates) from
-   * device units to the provided unit
-   * 
-   * @param unit
-   *          the unit to convert device heights to
-   * @return a
-   *         {@link org.optimizationBenchmarking.utils.math.functions.UnaryFunction}
-   *         which can convert device heights values to the specified unit
-   * @see #unitToDeviceHeight(ELength)
-   */
-  public abstract UnaryFunction deviceToUnitHeight(final ELength unit);
+    r = this.getDeviceConfiguration().getBounds();
+    a = new Point2D.Double(r.getMinX(), r.getMinY());
 
-  /**
-   * A function which transforms heights ({@code y}-coordinates) from the
-   * specified unit to device units.
-   * 
-   * @param unit
-   *          the unit to convert to device heights
-   * @return a
-   *         {@link org.optimizationBenchmarking.utils.math.functions.UnaryFunction}
-   *         which can convert heights specified in the given unit to
-   *         device heights
-   * @see #deviceToUnitHeight(ELength)
-   */
-  public abstract UnaryFunction unitToDeviceHeight(final ELength unit);
+    b = new Point2D.Double();
+    at.transform(a, b);
+
+    a.x += r.getWidth();
+    a.y += r.getHeight();
+    at.transform(a, b);
+    r.setFrameFromDiagonal(b, a);
+
+    return this.getClipBounds();
+  }
 
   /**
    * The {@link #dispose()} method forwards the call to the idempotent
@@ -233,7 +207,7 @@ public abstract class Graphic extends Graphics2D implements Closeable {
   static final int _l(final double d) {
     int r;
 
-    r = _c(d);
+    r = Graphic._c(d);
     return ((r != 0) ? r : ((d < 0d) ? (-1) : 1));
   }
 
@@ -417,7 +391,8 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    */
   public void copyArea(final double x, final double y, final double width,
       final double height, final double dx, final double dy) {
-    this.copyArea(_c(x), _c(y), _l(width), _l(height), _c(dx), _c(dy));
+    this.copyArea(Graphic._c(x), Graphic._c(y), Graphic._l(width),
+        Graphic._l(height), Graphic._c(dx), Graphic._c(dy));
   }
 
   /**
@@ -633,8 +608,8 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    *          should we close the shape?
    * @return the shape
    */
-  protected Shape createShape(double[] xPoints, double[] yPoints,
-      int nPoints, boolean close) {
+  protected Shape createShape(final double[] xPoints,
+      final double[] yPoints, final int nPoints, final boolean close) {
     final GeneralPath path;
 
     path = new GeneralPath(Path2D.WIND_EVEN_ODD);
@@ -643,8 +618,9 @@ public abstract class Graphic extends Graphics2D implements Closeable {
       for (int i = 1; i < nPoints; i++) {
         path.lineTo(((float) (xPoints[i])), ((float) (yPoints[i])));
       }
-      if (close)
+      if (close) {
         path.closePath();
+      }
     }
     return path;
   }
@@ -793,7 +769,7 @@ public abstract class Graphic extends Graphics2D implements Closeable {
     translate = this.getTransform();
     try {
       this.translate(x, y);
-      b = this.drawImage(img, __scale(img, width, height, observer),
+      b = this.drawImage(img, this.__scale(img, width, height, observer),
           observer);
     } finally {
       this.setTransform(translate);
@@ -896,8 +872,9 @@ public abstract class Graphic extends Graphics2D implements Closeable {
       final double dy1, final double dx2, final double dy2,
       final double sx1, final double sy1, final double sx2,
       final double sy2, final ImageObserver observer) {
-    return this.drawImage(img, _c(dx1), _c(dy1), _c(dx2), _c(dy2),
-        _c(sx1), _c(sy1), _c(sx2), _c(sy2), observer);
+    return this.drawImage(img, Graphic._c(dx1), Graphic._c(dy1),
+        Graphic._c(dx2), Graphic._c(dy2), Graphic._c(sx1),
+        Graphic._c(sy1), Graphic._c(sx2), Graphic._c(sy2), observer);
   }
 
   /**
@@ -940,92 +917,41 @@ public abstract class Graphic extends Graphics2D implements Closeable {
       final double dy1, final double dx2, final double dy2,
       final double sx1, final double sy1, final double sx2,
       final double sy2, final Color bgcolor, final ImageObserver observer) {
-    return this.drawImage(img, _c(dx1), _c(dy1), _c(dx2), _c(dy2),
-        _c(sx1), _c(sy1), _c(sx2), _c(sy2), bgcolor, observer);
-  }
-
-  /** the test string */
-  private static final char[] TEST;
-
-  static {
-    final char min, max;
-    char i;
-
-    min = 0x21;
-    max = 0x7e;
-    TEST = new char[(max - min) + 1];
-    for (i = max; i >= min; i--) {
-      Graphic.TEST[i - min] = i;
-    }
+    return this.drawImage(img, Graphic._c(dx1), Graphic._c(dy1),
+        Graphic._c(dx2), Graphic._c(dy2), Graphic._c(sx1),
+        Graphic._c(sy1), Graphic._c(sx2), Graphic._c(sy2), bgcolor,
+        observer);
   }
 
   /**
-   * Create a font which approximately has a given standard height
+   * Create a font which approximately has a given height
    * 
    * @param name
    *          the name of the font
    * @param style
    *          the style
-   * @param standardHeight
-   *          the standard height to approximate
+   * @param height
+   *          the height to approximate
    * @param unit
    *          the length unit of the standard height
    * @return the font
    */
   public Font createFont(final String name, final int style,
-      final double standardHeight, final ELength unit) {
+      final double height, final ELength unit) {
 
-    final FontRenderContext frc;
-    final float heightInPT, realHeight;
-    int height;
-    final UnaryFunction devToPT;
+    final double heightD;
+    final int heightI;
     final Font base;
 
-    heightInPT = ((float) (unit.getConversion(ELength.PT)
-        .compute(standardHeight)));
-    frc = this.getFontRenderContext();
-    devToPT = this.deviceToUnitHeight(ELength.PT);
-    height = ((int) (heightInPT + 0.5d));
-    base = new Font(name, style, height).deriveFont(FONT_ATTRIBUTES);
+    heightD = unit.convertTo(height, ELength.POINT);
+    heightI = Math.max(1, ((int) (heightD + 0.5d)));
+    base = new Font(name, style, heightI)
+        .deriveFont(Graphic.FONT_ATTRIBUTES);
 
-    realHeight = devToPT.compute(base.getLineMetrics(Graphic.TEST, 0,
-        Graphic.TEST.length, frc).getHeight());
-    if (realHeight == heightInPT) {
+    if (heightI == heightD) {
       return base;
     }
-    return base.deriveFont( (heightInPT/realHeight)*height);
-        //(height * height) / realHeight);
-
-    /*
-     * final FontRenderContext frc; final float heightInPT; int height;
-     * final UnaryFunction devToPT; Font minFont, maxFont, bestFont,
-     * curFont; float bestHeight, curHeight, minHeight, maxHeight;
-     * heightInPT = ((float) (unit.getConversion(ELength.PT)
-     * .compute(standardHeight))); frc = this.getFontRenderContext();
-     * devToPT = this.deviceToUnitHeight(ELength.PT); minFont = maxFont =
-     * null; maxHeight = Float.NEGATIVE_INFINITY; minHeight =
-     * Float.POSITIVE_INFINITY; findMinFont: for (height = (((int)
-     * heightInPT)); height > 0; height--) { minFont = new Font(name,
-     * style, height).deriveFont(FONT_ATTRIBUTES); minHeight =
-     * devToPT.compute(minFont.getLineMetrics(Graphic.TEST, 0,
-     * Graphic.TEST.length, frc).getHeight()); if (minHeight < heightInPT)
-     * { break findMinFont; } if (minHeight > heightInPT) { maxFont =
-     * minFont; maxHeight = minHeight; } else { return minFont; } } if
-     * (maxFont == null) { findMaxFont: for (;;) { maxFont = new Font(name,
-     * style, (++height)) .deriveFont(FONT_ATTRIBUTES); maxHeight =
-     * devToPT.compute(maxFont.getLineMetrics(Graphic.TEST, 0,
-     * Graphic.TEST.length, frc).getHeight()); if (maxHeight > heightInPT)
-     * { break findMaxFont; } if (maxHeight < heightInPT) { minFont =
-     * maxFont; minHeight = maxHeight; } else { return maxFont; } } } if
-     * (Math.abs(maxHeight - heightInPT) < Math .abs(minHeight -
-     * heightInPT)) { bestFont = maxFont; bestHeight = maxHeight; } else {
-     * bestFont = minFont; bestHeight = minHeight; } curFont =
-     * bestFont.deriveFont(heightInPT); curHeight =
-     * devToPT.compute(curFont.getLineMetrics(Graphic.TEST, 0,
-     * Graphic.TEST.length, frc).getHeight()); if (Math.abs(curHeight -
-     * heightInPT) < Math.abs(bestHeight - heightInPT)) { bestFont =
-     * curFont; bestHeight = curHeight; } return bestFont;
-     */
+    return base.deriveFont((float) heightD);
   }
 
   /** a translated and scaled context */
@@ -1056,8 +982,8 @@ public abstract class Graphic extends Graphics2D implements Closeable {
         throw new IllegalArgumentException("Invalid y-coordinate " + y); //$NON-NLS-1$
       }
 
-      xx = _c(x);
-      yy = _c(y);
+      xx = Graphic._c(x);
+      yy = Graphic._c(y);
 
       if ((xx == x) && (yy == y)) {
         this.m_orig = null;
@@ -1130,8 +1056,8 @@ public abstract class Graphic extends Graphics2D implements Closeable {
         throw new IllegalArgumentException("Invalid height " + h); //$NON-NLS-1$
       }
 
-      xx = _c(x);
-      yy = _c(y);
+      xx = Graphic._c(x);
+      yy = Graphic._c(y);
 
       needsTranslate = ((xx != x) || (yy != y));
       if (needsTranslate) {
@@ -1142,7 +1068,7 @@ public abstract class Graphic extends Graphics2D implements Closeable {
         this.m_y = yy;
       }
 
-      this.m_w = ww = _l(w);
+      this.m_w = ww = Graphic._l(w);
       needsW = (ww != w);
       if (needsW) {
         sw = (w / ww);
@@ -1150,7 +1076,7 @@ public abstract class Graphic extends Graphics2D implements Closeable {
         sw = 1d;
       }
 
-      this.m_h = hh = _l(h);
+      this.m_h = hh = Graphic._l(h);
       needsH = (hh != h);
       if (needsH) {
         sh = (h / hh);
@@ -1199,4 +1125,15 @@ public abstract class Graphic extends Graphics2D implements Closeable {
       }
     }
   }
+
+  /**
+   * Get the output stream representing the path identified by this
+   * graphic's id
+   * 
+   * @return the output stream
+   */
+  protected final OutputStream createOutputStream() {
+    return this.m_id._createOutputStream();
+  }
+
 }

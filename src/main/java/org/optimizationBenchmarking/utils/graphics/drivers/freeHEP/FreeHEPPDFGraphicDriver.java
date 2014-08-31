@@ -16,9 +16,10 @@ import org.optimizationBenchmarking.utils.graphics.IGraphicListener;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
- * A driver which creates PDF graphics. This driver uses a very dirty hack
- * to enforce custom page sizes in the pdf output: It temporarily changes
- * the size of the
+ * A driver which creates <a
+ * href="http://en.wikipedia.org/wiki/Portable_Document_Format">PDF</a>
+ * graphics. This driver uses a very dirty hack to enforce custom page
+ * sizes in the pdf output: It temporarily changes the size of the
  * {@link org.freehep.graphicsio.PageConstants#INTERNATIONAL} page&hellip;
  * All using FreeHEP should thus synchronize on
  * <code>{@link org.freehep.graphicsio.PageConstants}.class</code> during
@@ -30,7 +31,11 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final org.freehep.util.UserProperties m_props;
 
-  /** the globally shared instance of the pdf graphic driver */
+  /**
+   * the globally shared instance of the <a
+   * href="http://en.wikipedia.org/wiki/Portable_Document_Format">PDF</a>
+   * graphic driver
+   */
   public static final FreeHEPPDFGraphicDriver INSTANCE = new FreeHEPPDFGraphicDriver();
 
   /** the correct dimension to use */
@@ -105,11 +110,11 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
           g = new PDFGraphics2D(os, dim);
           g.setProperties(up);
           g.setMultiPage(false);
-          setDefaultRenderingHints(g);
+          AbstractGraphicDriver.setDefaultRenderingHints(g);
           g.startExport();
           g.setClip(0, 0, dim.width, dim.height);
         }
-        setDefaultRenderingHints(g);
+        AbstractGraphicDriver.setDefaultRenderingHints(g);
       } finally {
         this.m_messWith.setSize(this.m_correctDim);
       }

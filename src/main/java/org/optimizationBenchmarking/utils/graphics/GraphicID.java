@@ -1,6 +1,11 @@
 package org.optimizationBenchmarking.utils.graphics;
 
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+
+import org.optimizationBenchmarking.utils.ErrorUtils;
 
 /** A unique identifier for a graphic. */
 public class GraphicID {
@@ -9,7 +14,7 @@ public class GraphicID {
   final IGraphicDriver m_driver;
 
   /** the path of the graphic */
-  final Path m_path;
+  private final Path m_path;
 
   /** the id has been used */
   private volatile boolean m_used;
@@ -72,5 +77,30 @@ public class GraphicID {
   @Override
   public final boolean equals(final Object o) {
     return (this == o);
+  }
+
+  /**
+   * Get an output stream representing the path identified by graphic id
+   * 
+   * @return the output stream
+   */
+  final OutputStream _createOutputStream() {
+    final Path path;
+
+    path = this.m_path;
+
+    try {
+      Files.createDirectories(path.getParent());
+
+      return path
+          .getFileSystem()
+          .provider()
+          .newOutputStream(path, StandardOpenOption.WRITE,
+              StandardOpenOption.CREATE,
+              StandardOpenOption.TRUNCATE_EXISTING);
+    } catch (final Throwable t) {
+      ErrorUtils.throwAsRuntimeException(t);
+      return null;// will never be reached
+    }
   }
 }

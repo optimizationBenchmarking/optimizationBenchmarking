@@ -18,6 +18,7 @@ import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ImageObserver;
@@ -63,6 +64,16 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
           "Delegate graphic must not be null for a proxy graphic."); //$NON-NLS-1$
     }
     this.m_out = graphic;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Rectangle2D getBounds() {
+    this.checkClosed();
+    if (this.m_out instanceof Graphic) {
+      return ((Graphic) (this.m_out)).getBounds();
+    }
+    return super.getBounds();
   }
 
   /** {@inheritDoc} */
@@ -925,8 +936,8 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  protected Shape createShape(double[] xPoints, double[] yPoints,
-      int nPoints, boolean close) {
+  protected Shape createShape(final double[] xPoints,
+      final double[] yPoints, final int nPoints, final boolean close) {
     this.checkClosed();
     if (this.m_out instanceof Graphic) {
       return ((Graphic) (this.m_out)).createShape(xPoints, yPoints,
@@ -1065,13 +1076,13 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
   /** {@inheritDoc} */
   @Override
   public Font createFont(final String name, final int style,
-      final double standardHeight, final ELength unit) {
+      final double height, final ELength unit) {
     this.checkClosed();
     if (this.m_out instanceof Graphic) {
-      return ((Graphic) (this.m_out)).createFont(name, style,
-          standardHeight, unit);
+      return ((Graphic) (this.m_out))
+          .createFont(name, style, height, unit);
     }
-    return super.createFont(name, style, standardHeight, unit);
+    return super.createFont(name, style, height, unit);
   }
 
 }

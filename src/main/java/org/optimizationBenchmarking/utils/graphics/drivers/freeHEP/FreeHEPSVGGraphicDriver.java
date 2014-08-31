@@ -13,12 +13,20 @@ import org.optimizationBenchmarking.utils.graphics.GraphicID;
 import org.optimizationBenchmarking.utils.graphics.IGraphicListener;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
-/** A driver which creates SVG (graphics). */
+/**
+ * A driver which creates <a
+ * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
+ * (graphics).
+ */
 public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final org.freehep.util.UserProperties m_props;
 
-  /** the globally shared instance of the svg graphic driver */
+  /**
+   * the globally shared instance of the <a
+   * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
+   * graphic driver
+   */
   public static final FreeHEPSVGGraphicDriver INSTANCE = new FreeHEPSVGGraphicDriver();
 
   /** the hidden constructor */
@@ -68,10 +76,10 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
       g = new SVGGraphics2D(os, dim);
       g.setProperties(up);
       g.setClip(0, 0, dim.width, dim.height);
-      setDefaultRenderingHints(g);
+      AbstractGraphicDriver.setDefaultRenderingHints(g);
       g.startExport();
     }
-    setDefaultRenderingHints(g);
+    AbstractGraphicDriver.setDefaultRenderingHints(g);
 
     return new _FreeHEPSVGGraphic(g, id, listener, dim.width, dim.height);
   }
