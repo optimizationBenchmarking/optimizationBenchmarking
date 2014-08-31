@@ -83,7 +83,7 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    * the graphic id identifying this graphic and the path under which the
    * contents of the graphic are stored
    */
-  private final GraphicID m_id;
+  final GraphicID m_id;
 
   /**
    * instantiate

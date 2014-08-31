@@ -14,7 +14,7 @@ public class GraphicID {
   final IGraphicDriver m_driver;
 
   /** the path of the graphic */
-  private final Path m_path;
+  final Path m_path;
 
   /** the id has been used */
   private volatile boolean m_used;

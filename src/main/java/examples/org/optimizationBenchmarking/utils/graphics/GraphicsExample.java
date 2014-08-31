@@ -15,6 +15,7 @@ import javax.swing.border.BevelBorder;
 
 import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
 import org.optimizationBenchmarking.utils.graphics.EColorModel;
+import org.optimizationBenchmarking.utils.graphics.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.Graphic;
 import org.optimizationBenchmarking.utils.graphics.GraphicID;
 import org.optimizationBenchmarking.utils.graphics.IGraphicDriver;
@@ -37,10 +38,10 @@ public final class GraphicsExample implements IGraphicListener {
   private static final IGraphicDriver[] DRIVERS = {
       FreeHEPEPSGraphicDriver.INSTANCE, FreeHEPPDFGraphicDriver.INSTANCE,
       FreeHEPSVGGraphicDriver.INSTANCE, FreeHEPEMFGraphicDriver.INSTANCE,
-      new ImageIOPNGGraphicDriver(EColorModel.RBGA_32_BIT, 256) ,
-      new ImageIOJPEGGraphicDriver(EColorModel.RBGA_32_BIT, 333,0.0f),
-      new ImageIOGIFGraphicDriver(EColorModel.RBGA_32_BIT, 256) ,
-      };
+      new ImageIOPNGGraphicDriver(EColorModel.RBGA_32_BIT, 256),
+      new ImageIOJPEGGraphicDriver(EColorModel.RBGA_32_BIT, 333, 0.0f),
+      new ImageIOGIFGraphicDriver(EColorModel.RBGA_32_BIT, 256),
+      EGraphicFormat.NULL.getDefaultDriver() };
 
   /** the width in mm */
   private static final double WIDTH_MM = 100d;

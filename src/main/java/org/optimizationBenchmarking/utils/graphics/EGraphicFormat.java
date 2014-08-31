@@ -119,6 +119,15 @@ public enum EGraphicFormat {
         final int dotsPerInch, final double quality) {
       return new ImageIOGIFGraphicDriver(color, dotsPerInch);
     }
+  },
+
+  /** A graphics driver which discards all output */
+  NULL {
+    /** {@inheritDoc} */
+    @Override
+    public final IGraphicDriver getDefaultDriver() {
+      return _NullGraphicDriver.INSTANCE;
+    }
   };
 
   /** the default color model */
