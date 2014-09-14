@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /** A mathematics output class */
 public class BasicMath extends PlainText implements IMath {
@@ -12,184 +11,122 @@ public class BasicMath extends PlainText implements IMath {
    * 
    * @param owner
    *          the owning FSM
-   * @param out
-   *          the output destination
    */
-  protected BasicMath(final HierarchicalFSM owner, final Appendable out) {
-    super(owner, out);
-  }
-
-  /**
-   * Create a mathematical function
-   * 
-   * @param operator
-   *          the operator
-   * @return the function
-   */
-  protected MathFunction createFunction(final EMathOperators operator) {
-    return new MathFunction(this, operator);
+  protected BasicMath(final DocumentElement owner) {
+    super(owner);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction add() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.ADD);
+    return this.m_driver.createMathFunction(this, EMathOperators.ADD);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction sub() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.SUB);
+    return this.m_driver.createMathFunction(this, EMathOperators.SUB);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction mul() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.MUL);
+    return this.m_driver.createMathFunction(this, EMathOperators.MUL);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction div() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.DIV);
+    return this.m_driver.createMathFunction(this, EMathOperators.DIV);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction mod() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.MOD);
+    return this.m_driver.createMathFunction(this, EMathOperators.MOD);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction log() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.LOG);
+    return this.m_driver.createMathFunction(this, EMathOperators.LOG);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction ln() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.LN);
+    return this.m_driver.createMathFunction(this, EMathOperators.LN);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction ld() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.LD);
+    return this.m_driver.createMathFunction(this, EMathOperators.LD);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction lg() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.LG);
+    return this.m_driver.createMathFunction(this, EMathOperators.LG);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction pow() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.POW);
+    return this.m_driver.createMathFunction(this, EMathOperators.POW);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction root() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.ROOT);
+    return this.m_driver.createMathFunction(this, EMathOperators.ROOT);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction sqrt() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators.SQRT);
+    return this.m_driver.createMathFunction(this, EMathOperators.SQRT);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathFunction compare(final EComparison cmp) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFunction(EMathOperators._comp2MathOp(cmp));
-  }
-
-  /**
-   * Create a mathematical sub-script
-   * 
-   * @return the mathematical sub-script
-   */
-  protected MathSubscript createSubscript() {
-    return new MathSubscript(this);
+    return this.m_driver.createMathFunction(this,
+        EMathOperators._comp2MathOp(cmp));
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathSubscript subscript() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createSubscript();
-  }
-
-  /**
-   * Create a mathematical super-script
-   * 
-   * @return the mathematical super-script
-   */
-  protected MathSuperscript createSuperscript() {
-    return new MathSuperscript(this);
+    return this.m_driver.createMathSubscript(this);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final MathSuperscript superscript() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createSuperscript();
-  }
-
-  /**
-   * Create an in-braces object
-   * 
-   * @param braces
-   *          the braces counter
-   * @return the in-braces object
-   */
-  protected MathInBraces createInBraces(final int braces) {
-    return new MathInBraces(this, braces);
+    return this.m_driver.createMathSuperscript(this);
   }
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings("resource")
   public final synchronized MathInBraces inBraces() {
-    HierarchicalFSM o;
-    int c;
-
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-
-    c = 0;
-    o = this;
-    for (;;) {
-
-      if (o instanceof DocumentElement) {
-        if (o instanceof MathInBraces) {
-          c = (((MathInBraces) o).m_braces + 1);
-          break;
-        }
-
-        o = ((DocumentElement) o)._owner();
-        continue;
-      }
-      break;
-    }
-
-    return this.createInBraces(c);
+    return this.m_driver.createMathInBraces(this);
   }
 
 }

@@ -5,10 +5,9 @@ import java.nio.file.Path;
 import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
-import org.optimizationBenchmarking.utils.document.spec.IStyle;
+import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -79,27 +78,32 @@ public abstract class Document extends DocumentElement implements
   /**
    * Create a document.
    * 
+   * @param driver
+   *          the document driver
    * @param out
    *          the output destination
    * @param docPath
    *          the path to the document
    */
-  protected Document(final Appendable out, final Path docPath) {
-    super(null, out);
-    this.m_styles = new StyleSet(this.createStyles());
-    this.m_manager = this.createLabelManager();
+  protected Document(final DocumentDriver driver, final Appendable out,
+      final Path docPath) {
+    super(driver, out);
+
+    this.m_styles = driver.createStyleSet();
+    if (this.m_styles == null) {
+      throw new IllegalArgumentException(//
+          "Style set must not be null."); //$NON-NLS-1$
+    }
+
+    this.m_manager = driver.createLabelManager();
+    if (this.m_manager == null) {
+      throw new IllegalArgumentException(//
+          "Label manager must not be null."); //$NON-NLS-1$
+    }
+
     this.m_documentPath = DocumentElement._path(docPath);
     this.m_basePath = DocumentElement._path(docPath.getParent());
     this.m_citations = new CitationsBuilder();
-  }
-
-  /**
-   * create the label manager
-   * 
-   * @return the label manager
-   */
-  protected LabelManager createLabelManager() {
-    return new LabelManager();
   }
 
   /**
@@ -132,56 +136,6 @@ public abstract class Document extends DocumentElement implements
     }
   }
 
-  /**
-   * create the styles to be used by the document
-   * 
-   * @return the styles to be used by the document
-   */
-  protected abstract Styles createStyles();
-
-  /**
-   * obtain the style set for a given fsm
-   * 
-   * @param owner
-   *          the owner
-   * @return the style set
-   */
-  @SuppressWarnings("resource")
-  static final StyleSet _getStyleSet(final HierarchicalFSM owner) {
-    HierarchicalFSM f;
-
-    f = owner;
-    for (;;) {
-      if (f instanceof DocumentElement) {
-        if (f instanceof Document) {
-          return ((Document) f).m_styles;
-        }
-        if (f instanceof ComplexText) {
-          return ((ComplexText) f).m_styles;
-        }
-        if (f instanceof _StyledElement) {
-          return ((_StyledElement) f).m_styles;
-        }
-
-        f = ((DocumentElement) f)._owner();
-      } else {
-        throw new IllegalStateException(//
-            "Cannot find styles."); //$NON-NLS-1$
-      }
-    }
-  }
-
-  /**
-   * Encode a text output
-   * 
-   * @param raw
-   *          the raw text output
-   * @return the encoded version
-   */
-  protected ITextOutput encode(final ITextOutput raw) {
-    return raw;
-  }
-
   /** {@inheritDoc} */
   @Override
   protected synchronized void onOpen() {
@@ -195,16 +149,7 @@ public abstract class Document extends DocumentElement implements
   public synchronized final DocumentHeader header() {
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         Document.STATE_HEADER_CREATED);
-    return this.createHeader();
-  }
-
-  /**
-   * Create the document header
-   * 
-   * @return the document header
-   */
-  protected DocumentHeader createHeader() {
-    return new DocumentHeader(this);
+    return this.m_driver.createDocumentHeader(this);
   }
 
   /** {@inheritDoc} */
@@ -212,16 +157,7 @@ public abstract class Document extends DocumentElement implements
   public synchronized final DocumentBody body() {
     this.fsmStateAssertAndSet(Document.STATE_HEADER_CLOSED,
         Document.STATE_BODY_CREATED);
-    return this.createBody();
-  }
-
-  /**
-   * Create the document body
-   * 
-   * @return the document body
-   */
-  protected DocumentBody createBody() {
-    return new DocumentBody(this);
+    return this.m_driver.createDocumentBody(this);
   }
 
   /** {@inheritDoc} */
@@ -229,16 +165,7 @@ public abstract class Document extends DocumentElement implements
   public synchronized final DocumentFooter footer() {
     this.fsmStateAssertAndSet(Document.STATE_BODY_CLOSED,
         Document.STATE_FOOTER_CREATED);
-    return this.createFooter();
-  }
-
-  /**
-   * Create the document footer
-   * 
-   * @return the document footer
-   */
-  protected DocumentFooter createFooter() {
-    return new DocumentFooter(this);
+    return this.m_driver.createDocumentFooter(this);
   }
 
   /** {@inheritDoc} */
@@ -327,31 +254,13 @@ public abstract class Document extends DocumentElement implements
 
   /** {@inheritDoc} */
   @Override
-  public final IStyle createTextStyle() {
-    return this.m_styles.createTextStyle();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final IStyle createGraphicalStyle() {
-    return this.m_styles.createGraphicalStyle();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final IStyle getEmphasizedStyle() {
-    return this.m_styles.getEmphasizedStyle();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final IStyle getPlainStyle() {
-    return this.m_styles.getPlainStyle();
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public final Label createLabel(final ELabelType type) {
     return this.m_manager.createLabel(type);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final StyleSet getStyles() {
+    return this.m_styles;
   }
 }

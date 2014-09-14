@@ -35,7 +35,7 @@ public class Equation extends BasicMath {
    *          the label to use
    */
   Equation(final SectionBody owner, final ILabel useLabel, final int index) {
-    super(owner, null);
+    super(owner);
 
     final String oid;
 

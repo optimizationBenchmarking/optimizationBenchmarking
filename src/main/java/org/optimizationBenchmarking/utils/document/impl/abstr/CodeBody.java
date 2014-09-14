@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.document.spec.IPlainText;
-
 /** A text class for a code block */
 public class CodeBody extends PlainText {
 
@@ -12,12 +10,13 @@ public class CodeBody extends PlainText {
    *          the owning FSM
    */
   public CodeBody(final Code owner) {
-    super(owner, null);
+    super(owner);
   }
 
+  /** {@inheritDoc} */
   @Override
-  public IPlainText inBraces() {
-    // TODO Auto-generated method stub
-    return null;
+  public final synchronized CodeInBraces inBraces() {
+    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
+    return this.m_driver.createCodeInBraces(this);
   }
 }

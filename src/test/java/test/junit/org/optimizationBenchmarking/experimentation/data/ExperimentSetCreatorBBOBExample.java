@@ -18,9 +18,11 @@ public class ExperimentSetCreatorBBOBExample extends ExperimentSetCreator {
 
     try (final ExperimentSetContext ec = new ExperimentSetContext()) {
 
-      BBOBDriver.INSTANCE.loadZIPArchive(ec,
-          ExperimentSetCreatorBBOBExample.class
-              .getResourceAsStream("bbobExampleData.zip")); //$NON-NLS-1$
+      // BBOBDriver.INSTANCE.loadZIPArchive(ec,
+      // ExperimentSetCreatorBBOBExample.class
+      //              .getResourceAsStream("bbobExampleData.zip")); //$NON-NLS-1$
+      BBOBDriver.INSTANCE.loadResourceZIP(ec,
+          ExperimentSetCreatorBBOBExample.class, "bbobExampleData.zip"); //$NON-NLS-1$
       return ec.getResult();
     } catch (final Throwable t) {
       if (t instanceof RuntimeException) {

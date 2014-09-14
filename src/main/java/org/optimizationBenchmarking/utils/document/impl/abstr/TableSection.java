@@ -6,7 +6,8 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 /**
  * A section of a table, such as a table body, header, or footer
  */
-public class TableSection extends DocumentPart implements ITableSection {
+public abstract class TableSection extends DocumentPart implements
+    ITableSection {
 
   /** the total number of rows */
   int m_rowCount;
@@ -23,8 +24,8 @@ public class TableSection extends DocumentPart implements ITableSection {
    * @param owner
    *          the owning FSM
    */
-  protected TableSection(final Table owner) {
-    super(owner, null);
+  TableSection(final Table owner) {
+    super(owner);
     this.m_blocked = owner.m_blocked;
     this.m_cellToDef = owner.m_cellToDef;
   }
@@ -47,15 +48,9 @@ public class TableSection extends DocumentPart implements ITableSection {
   /**
    * Create a table row
    * 
-   * @param index
-   *          the row index
-   * @param totalIndex
-   *          the total index
    * @return the new row
    */
-  protected TableRow createRow(final int index, final int totalIndex) {
-    return new TableRow(this, index, totalIndex);
-  }
+  abstract TableRow createRow();
 
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
@@ -68,7 +63,9 @@ public class TableSection extends DocumentPart implements ITableSection {
       synchronized (this) {
         this.fsmStateAssert(DocumentElement.STATE_ALIFE);
         this.assertNoChildren();
-        return this.createRow((this.m_rowCount++), (t.m_rowCount++));
+        t.m_rowCount++;
+        this.m_rowCount++;
+        return this.createRow();
       }
     }
   }

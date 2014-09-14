@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.text;
 
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterator;
 
 /**
  * A set of text case modes.
@@ -121,28 +122,59 @@ public enum ETextCase {
   }
 
   /**
-   * Append a single word to the given text output
+   * Append a single word to the given text output. Use this method only if
+   * it is clear that there is at most one word in the string {@code word},
+   * use {@link #appendWords(String, ITextOutput)} otherwise.
    * 
    * @param word
    *          the word to append
    * @param textOut
    *          the text output
+   * @return the next text case to use
    */
-  public final void appendWord(final String word, final ITextOutput textOut) {
+  public final ETextCase appendWord(final String word,
+      final ITextOutput textOut) {
     final char c, u;
     final int l;
 
     l = word.length();
-    if (l > 0) {
-      c = word.charAt(0);
-      u = this.adjustCaseOfFirstCharInWord(c);
-      if (c != u) {
-        textOut.append(u);
-        textOut.append(word, 1, l);
-      } else {
-        textOut.append(word);
-      }
+    if (l <= 0) {
+      return this;
     }
+    c = word.charAt(0);
+    u = this.adjustCaseOfFirstCharInWord(c);
+    if (c != u) {
+      textOut.append(u);
+      textOut.append(word, 1, l);
+    } else {
+      textOut.append(word);
+    }
+    return this.nextCase();
+  }
+
+  /**
+   * Append a string potentially containing more than one word to the given
+   * text output
+   * 
+   * @param words
+   *          the words to append
+   * @param textOut
+   *          the text output
+   * @return the next text case to use
+   */
+  public final ETextCase appendWords(final String words,
+      final ITextOutput textOut) {
+    final WordBasedStringIterator it;
+    ETextCase t;
+
+    it = new WordBasedStringIterator(words);
+    t = this;
+
+    while (it.hasNext()) {
+      t = t.appendWord(it.next(), textOut);
+    }
+
+    return t;
   }
 
   /**
@@ -152,21 +184,25 @@ public enum ETextCase {
    *          the word to append
    * @param textOut
    *          the text output
+   * @return the next text case to use
    */
-  public final void appendWord(final char[] word, final ITextOutput textOut) {
+  public final ETextCase appendWord(final char[] word,
+      final ITextOutput textOut) {
     final char c, u;
     final int l;
 
     l = word.length;
-    if (l > 0) {
-      c = word[0];
-      u = this.adjustCaseOfFirstCharInWord(c);
-      if (c != u) {
-        textOut.append(u);
-        textOut.append(word, 1, l);
-      } else {
-        textOut.append(word);
-      }
+    if (l <= 0) {
+      return this;
     }
+    c = word[0];
+    u = this.adjustCaseOfFirstCharInWord(c);
+    if (c != u) {
+      textOut.append(u);
+      textOut.append(word, 1, l);
+    } else {
+      textOut.append(word);
+    }
+    return this.nextCase();
   }
 }

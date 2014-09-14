@@ -1,0 +1,10 @@
+SANS_SERIF,false,false,false,12,Arial,Comic,Helvetica
+SANS_SERIF,false,true,false,13,Comic,Comic Sans,Helvetica,Arial
+MONOSPACED,true,false,false,12,Courier,Terminal
+SANS_SERIF,true,false,true,11,Helvetica,Comic,Arial
+SERIF,true,true,true,11,Times New Roman,Computer Modern,cmr,cmr11
+SERIF,true,false,true,13,cmr,Computer Modern,Modern,cmr13
+SANS_SERIF,true,false,true,8,Calibri
+Dialog,true,false,true,8,Cambria
+SERIF,false,true,true,12,Wide Latin
+SANS_SERIF,false,true,true,12,Vivaldi

@@ -55,7 +55,7 @@ public class Enumeration extends List<EnumerationItem> {
 
   /** {@inheritDoc} */
   @Override
-  protected EnumerationItem createItem(final int index) {
-    return new EnumerationItem(this, index);
+  protected EnumerationItem createItem() {
+    return this.m_driver.createEnumerationItem(this);
   }
 }

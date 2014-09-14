@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
  * data structures}.
  */
 public class TSPSuiteDriver extends
-    FileIODriver<Object, ExperimentSetContext> {
+    FileIODriver<Void, ExperimentSetContext> {
 
   /** the tour length dimension */
   private static final String LENGTH = "L"; //$NON-NLS-1$
@@ -374,7 +374,7 @@ public class TSPSuiteDriver extends
 
   /**
    * get the instance name
-   *
+   * 
    * @param n
    *          the string
    * @return the instance name, or {@code null} if none found
@@ -395,7 +395,7 @@ public class TSPSuiteDriver extends
 
   /**
    * fill in the dimension set
-   *
+   * 
    * @param esb
    *          the experiment set builder
    */
@@ -462,7 +462,7 @@ public class TSPSuiteDriver extends
 
   /**
    * fill in the instance set
-   *
+   * 
    * @param esb
    *          the experiment set builder
    */

@@ -65,7 +65,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
   /**
    * create
-   *
+   * 
    * @param size
    *          the size
    */
@@ -89,7 +89,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
    * Ensure that the internal buffer is big enough to hold a given number
    * of characters, update the internal length variable, and return its old
    * length.
-   *
+   * 
    * @param len
    *          the number of characters to store
    * @return the old length
@@ -184,7 +184,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
    * a copy of the method {@code java.lang.Integer#toString()} which uses
    * some package-private stuff. For performance reasons, we copy it here,
    * slightly modified.
-   *
+   * 
    * @param v
    *          the integer to add
    */
@@ -258,7 +258,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
    * a copy of the method {@code java.lang.Long#toString()} which uses some
    * package-private stuff. For performance reasons, we copy it here,
    * slightly modified.
-   *
+   * 
    * @param v
    *          the long to add
    */
@@ -367,7 +367,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
   /**
    * Shrink the length of this memory text output to {@code len}
-   *
+   * 
    * @param len
    *          the length to shrink to
    * @throws IllegalArgumentException

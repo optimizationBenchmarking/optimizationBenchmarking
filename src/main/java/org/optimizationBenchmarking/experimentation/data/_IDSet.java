@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * <p>
  * A set with a unique ID.
  * </p>
- *
+ * 
  * @param <OT>
  *          the owner type
  * @param <DT>
@@ -24,7 +24,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
 
   /**
    * instantiate
-   *
+   * 
    * @param data
    *          the data of the set
    * @param clone
@@ -74,7 +74,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
 
   /**
    * Obtain the data
-   *
+   * 
    * @return the data array
    */
   public final ArraySetView<DT> getData() {
@@ -84,7 +84,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
   /**
    * Mark {@code element} as owned by this element and located at
    * {@code index}
-   *
+   * 
    * @param element
    *          the owned element
    * @param index
@@ -103,7 +103,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
    * as possible when it comes to creating our experiment evaluation data
    * structures, since any mistake may have severe impact on the evaluation
    * results we can get...
-   *
+   * 
    * @param element
    *          the single element to validate
    * @param index
@@ -135,7 +135,7 @@ class _IDSet<OT, DT extends Comparable<?>> extends _IDObject<OT> {
    * Validate two supposedly different elements to be included in this set.
    * Element {@code before} is located before element {@code after} in this
    * set.
-   *
+   * 
    * @param before
    *          the first element to validate
    * @param after

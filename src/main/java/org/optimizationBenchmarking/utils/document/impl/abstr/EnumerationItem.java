@@ -9,11 +9,9 @@ public class EnumerationItem extends ListItem {
    * 
    * @param owner
    *          the owning FSM
-   * @param index
-   *          the item index
    */
-  public EnumerationItem(final Enumeration owner, final int index) {
-    super(owner, index);
+  public EnumerationItem(final Enumeration owner) {
+    super(owner);
   }
 
   /**

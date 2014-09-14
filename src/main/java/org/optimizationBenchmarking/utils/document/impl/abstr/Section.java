@@ -146,30 +146,12 @@ public class Section extends ComplexObject implements ISection {
     return s;
   }
 
-  /**
-   * Create the section title
-   * 
-   * @return the section title
-   */
-  protected SectionTitle createSectionTitle() {
-    return new SectionTitle(this);
-  }
-
   /** {@inheritDoc} */
   @Override
   public synchronized final SectionTitle title() {
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         Section.STATE_TITLE_CREATED);
-    return this.createSectionTitle();
-  }
-
-  /**
-   * Create the section body
-   * 
-   * @return the section body
-   */
-  protected SectionBody createSectionBody() {
-    return new SectionBody(this);
+    return this.m_driver.createSectionTitle(this);
   }
 
   /** {@inheritDoc} */
@@ -177,7 +159,7 @@ public class Section extends ComplexObject implements ISection {
   public synchronized final SectionBody body() {
     this.fsmStateAssertAndSet(Section.STATE_TITLE_CLOSED,
         Section.STATE_BODY_CREATED);
-    return this.createSectionBody();
+    return this.m_driver.createSectionBody(this);
   }
 
   /** {@inheritDoc} */

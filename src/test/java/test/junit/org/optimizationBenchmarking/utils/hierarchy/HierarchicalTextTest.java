@@ -65,7 +65,7 @@ public class HierarchicalTextTest extends _HierarchicalTest {
 
   /**
    * check if a string is contained in a given string builder
-   *
+   * 
    * @param s
    *          the string
    * @param sb

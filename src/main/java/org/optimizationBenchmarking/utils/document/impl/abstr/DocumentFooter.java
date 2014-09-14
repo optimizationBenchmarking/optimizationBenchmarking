@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
-import org.optimizationBenchmarking.utils.document.spec.IDocumentFooter;
+import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 
@@ -9,8 +9,8 @@ import org.optimizationBenchmarking.utils.hierarchy.FSM;
  * The output object for the document footer. The document footer contains
  * stuff such as appendices.
  */
-public class DocumentFooter extends _StyledElement implements
-    IDocumentFooter {
+public class DocumentFooter extends _StyleProviderPart implements
+    IDocumentBody {
 
   /** a flag indicating that the citations have been taken */
   private static final int FLAG_CITATIONS_TAKEN = (FSM.FLAG_NOTHING + 1);
@@ -28,25 +28,13 @@ public class DocumentFooter extends _StyledElement implements
     super(owner);
   }
 
-  /**
-   * Create the section
-   * 
-   * @param useLabel
-   *          the label to use
-   * @param index
-   *          the index
-   * @return the section
-   */
-  protected Section createSection(final ILabel useLabel, final int index) {
-    return new Section(this, useLabel, index);
-  }
-
   /** {@inheritDoc} */
   @Override
-  public synchronized final Section appendix(final ILabel useLabel) {
+  public synchronized final Section section(final ILabel useLabel) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     this.fsmFlagsAssertFalse(DocumentFooter.FLAG_CITATIONS_TAKEN);
-    return this.createSection(useLabel, (++this.m_subsectionCount));
+    return this.m_driver.createSection(this, useLabel,
+        (++this.m_subsectionCount));
   }
 
   /**

@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * a concrete parameter setting
- *
+ * 
  * @param <PT>
  *          the property type
  * @param <PVT>
@@ -35,7 +35,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
 
   /**
    * create
-   *
+   * 
    * @param values
    *          the property values
    * @param isGeneral
@@ -50,7 +50,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
 
   /**
    * Does this setting contain at least one generalized value?
-   *
+   * 
    * @return {@code true} if and only if this setting contains at least one
    *         generalized value, {@code false} otherwise
    */
@@ -73,7 +73,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
   /**
    * Get the value of a given property, or {@code null} if this property is
    * not specified.
-   *
+   * 
    * @param property
    *          the property
    * @return the property value
@@ -93,7 +93,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
   /**
    * Check whether a given property value is contained in the property
    * value set.
-   *
+   * 
    * @param value
    *          the property value
    * @return {@code true} if the property value is contained, {@code false}
@@ -113,7 +113,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
   /**
    * Check whether a given property value is contained in this property
    * setting
-   *
+   * 
    * @param object
    *          the object
    * @return {@code true} if the property value is contained, {@code false}
@@ -134,7 +134,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
   /**
    * Check whether a given property has a value in the configuration of
    * this experiment
-   *
+   * 
    * @param property
    *          the property
    * @return {@code true} if the property has a value, {@code false}
@@ -157,7 +157,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
 
   /**
    * Get an iterator iterating over all property values
-   *
+   * 
    * @return the iterator iterating over the property values
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -222,7 +222,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
   /**
    * Check if this parameter set is the same or a super-set of another
    * setting.
-   *
+   * 
    * @param setting
    *          the other setting
    * @return {@code true} if this set here either specifies the same
@@ -307,7 +307,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
 
   /**
    * convert this property setting to a name
-   *
+   * 
    * @return the name
    */
   public final String toName() {

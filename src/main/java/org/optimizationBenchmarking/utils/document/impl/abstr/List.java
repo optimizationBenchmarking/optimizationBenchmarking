@@ -12,8 +12,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * @param <IT>
  *          the item type
  */
-public class List<IT extends ListItem> extends _StyledElement implements
-    IList {
+public abstract class List<IT extends ListItem> extends DocumentPart
+    implements IList {
 
   /** does this list have an item? */
   private static final int FLAG_HAS_ITEM = (FSM.FLAG_NOTHING + 1);
@@ -22,7 +22,7 @@ public class List<IT extends ListItem> extends _StyledElement implements
   private final int m_listDepth;
 
   /** the item index */
-  private int m_index;
+  int m_index;
 
   /**
    * Create a new enumeration
@@ -89,20 +89,16 @@ public class List<IT extends ListItem> extends _StyledElement implements
   /**
    * Create an item
    * 
-   * @param index
-   *          the item index
    * @return the item
    */
-  @SuppressWarnings("unchecked")
-  protected IT createItem(final int index) {
-    return ((IT) (new ListItem(this, index)));
-  }
+  abstract IT createItem();
 
   /** {@inheritDoc} */
   @Override
   public synchronized final IStructuredText item() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createItem(this.m_index++);
+    this.m_index++;
+    return this.createItem();
   }
 
   /** {@inheritDoc} */

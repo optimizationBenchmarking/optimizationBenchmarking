@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * The base class for encodings.
- *
+ * 
  * @param <IST>
  *          the input stream type
  * @param <OST>
@@ -134,7 +134,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * create the encoding
-   *
+   * 
    * @param standardName
    *          the standard name
    * @param autoRegister
@@ -151,7 +151,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * register this encoding under a set of names
-   *
+   * 
    * @param names
    *          the names
    */
@@ -173,7 +173,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap an input stream into a stream representing this encoding
-   *
+   * 
    * @param input
    *          the input stream to wrap
    * @return the wrapped stream
@@ -186,7 +186,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap an output stream into a stream representing this encoding
-   *
+   * 
    * @param output
    *          the output stream to wrap
    * @return the wrapped stream
@@ -200,7 +200,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap a reader into a stream representing this encoding
-   *
+   * 
    * @param input
    *          the reader to wrap
    * @return the wrapped stream
@@ -211,7 +211,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap a writer into a stream representing this encoding
-   *
+   * 
    * @param output
    *          the writer to wrap
    * @return the wrapped stream
@@ -222,21 +222,21 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Get the class of the output wrappers
-   *
+   * 
    * @return the class of the output wrappers
    */
   public abstract Class<OST> getOutputClass();
 
   /**
    * Get the class of the input wrappers
-   *
+   * 
    * @return the class of the input wrappers
    */
   public abstract Class<IST> getInputClass();
 
   /**
    * write replace
-   *
+   * 
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -252,7 +252,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * read resolve
-   *
+   * 
    * @return the replacement
    */
   private final Object readResolve() {
@@ -284,7 +284,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Try to get the encoding of a given object
-   *
+   * 
    * @param o
    *          the object
    * @return the encoding, or {@link #UNKNOWN} if none could be found
@@ -346,7 +346,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Obtain a text encoding identified by a given string
-   *
+   * 
    * @param s
    *          the string
    * @return the corresponding encoding
@@ -393,7 +393,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Extract an encoding from a print stream
-   *
+   * 
    * @param wr
    *          The print stream to get the encoding of.
    * @return The historical name of this encoding, or possibly
@@ -433,7 +433,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Extract an encoding from a writer
-   *
+   * 
    * @param wr
    *          The writer to get the encoding of.
    * @return The historical name of this encoding, or possibly
@@ -492,7 +492,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Extract an encoding from a reader
-   *
+   * 
    * @param r
    *          The reader to get the encoding of.
    * @return The historical name of this encoding, or possibly

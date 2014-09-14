@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * The internal, abstract base class for sets of bibliographic elements.
- *
+ * 
  * @param <DT>
  *          the element type
  * @param <CT>
@@ -19,7 +19,7 @@ class _BibSet<DT extends _BibElement<? super DT>, CT extends _BibSet<DT, CT>>
 
   /**
    * instantiate
-   *
+   * 
    * @param data
    *          the data of the set
    * @param cannotBeEmpty
@@ -59,7 +59,7 @@ class _BibSet<DT extends _BibElement<? super DT>, CT extends _BibSet<DT, CT>>
 
   /**
    * check if the data is the same
-   *
+   * 
    * @param data
    *          the data
    * @param len

@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  * the base class for tests of instance objects
- *
+ * 
  * @param <T>
  *          the instance type
  */
@@ -42,7 +42,7 @@ public class InstanceTest<T> extends TestBase {
 
   /**
    * Create the instance test
-   *
+   * 
    * @param owner
    *          the owner
    * @param isSingleton
@@ -63,7 +63,7 @@ public class InstanceTest<T> extends TestBase {
 
   /**
    * get the instance to test
-   *
+   * 
    * @return the instance to test
    */
   protected T getInstance() {
@@ -73,7 +73,7 @@ public class InstanceTest<T> extends TestBase {
   /**
    * Is the returned instance a singleton? If so, this has strong
    * implication on its serialization behavior, amongst others.
-   *
+   * 
    * @return {@code true} if and only if the instance is a singleton
    */
   protected boolean isSingleton() {
@@ -83,7 +83,7 @@ public class InstanceTest<T> extends TestBase {
   /**
    * Top-level tests may apply recursive testing behaviors. Tests which are
    * not top-level should not do so to avoid infinite recursion.
-   *
+   * 
    * @return {@code true} if and only if this is a top-level test,
    *         {@code false} otherwise.
    */
@@ -93,7 +93,7 @@ public class InstanceTest<T> extends TestBase {
 
   /**
    * Are the instances we deal with modifiable?
-   *
+   * 
    * @return {@code true} if {@link #getInstance()} returns an object that
    *         can, in some way, be modified. {@code false} if the objects
    *         are constants
@@ -104,7 +104,7 @@ public class InstanceTest<T> extends TestBase {
 
   /**
    * Get the owning test instance
-   *
+   * 
    * @return the owning test instance, or {@code null} if this is a
    *         top-level test.
    */
@@ -187,7 +187,7 @@ public class InstanceTest<T> extends TestBase {
 
   /**
    * check whether a given object can be serialized
-   *
+   * 
    * @param o
    *          the object
    * @return {@code true} if the object can be serialized, {@code false}
@@ -199,7 +199,7 @@ public class InstanceTest<T> extends TestBase {
 
   /**
    * check whether a given object can be serialized
-   *
+   * 
    * @param o
    *          the object
    * @param visited
@@ -307,7 +307,7 @@ public class InstanceTest<T> extends TestBase {
 
   /**
    * check whether a given object can be cloned
-   *
+   * 
    * @param o
    *          the object
    * @return {@code true} if the object can be cloned, {@code false}
@@ -329,7 +329,7 @@ public class InstanceTest<T> extends TestBase {
 
   /**
    * clone an instance via reflection
-   *
+   * 
    * @param instance
    *          the instance
    * @return the cloned copy
@@ -403,7 +403,7 @@ public class InstanceTest<T> extends TestBase {
 
   /**
    * compare two copies of an object
-   *
+   * 
    * @param a
    *          the first object
    * @param b
@@ -423,7 +423,7 @@ public class InstanceTest<T> extends TestBase {
    * the same state after it has been put into this method than before.
    * This method can perform any additional tests to check whether the
    * instance is ok.
-   *
+   * 
    * @param instance
    *          the instance to test
    * @param isSingleton
@@ -450,7 +450,7 @@ public class InstanceTest<T> extends TestBase {
    * the same state after it has been put into this method than before.
    * This method can perform any additional tests to check whether the
    * instance is ok.
-   *
+   * 
    * @param instance
    *          the instance to test
    */
@@ -468,7 +468,7 @@ public class InstanceTest<T> extends TestBase {
 
   /**
    * Create a test for the given instance
-   *
+   * 
    * @param instance
    *          the instance to test
    * @param isSingleton

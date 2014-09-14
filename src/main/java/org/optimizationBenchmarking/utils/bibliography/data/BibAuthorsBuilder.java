@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /** A builder for author objects. */
@@ -64,7 +65,7 @@ public final class BibAuthorsBuilder extends
    * @return the new author builder
    */
   public final BibAuthorBuilder addAuthor() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibAuthorBuilder(this);
   }
 

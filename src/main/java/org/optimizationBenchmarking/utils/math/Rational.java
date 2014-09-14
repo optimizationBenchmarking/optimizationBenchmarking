@@ -44,7 +44,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * create
-   *
+   * 
    * @param up
    *          the up
    * @param down
@@ -58,7 +58,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Create a long fraction
-   *
+   * 
    * @param up
    *          the up
    * @param down
@@ -71,7 +71,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Create a long fraction
-   *
+   * 
    * @param number
    *          the number
    * @return the fraction, or {@link #NaN} if the number cannot be
@@ -242,7 +242,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * make the result
-   *
+   * 
    * @param up
    *          the up
    * @param down
@@ -268,7 +268,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Create a long fraction
-   *
+   * 
    * @param up
    *          the up
    * @param down
@@ -318,7 +318,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Does this fraction represent a true number?
-   *
+   * 
    * @return {@code true} if the fraction stands for a number,
    *         {@code false} otherwise
    */
@@ -328,7 +328,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Get the sign of this fraction
-   *
+   * 
    * @return the sign of this fraction
    */
   public final int sign() {
@@ -337,7 +337,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Is the fraction infinite or overflowing?
-   *
+   * 
    * @return {@code true} if the fraction is infinite or overflowing
    */
   public final boolean isInfinite() {
@@ -346,7 +346,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Is the fraction neither infinite nor an actual number?
-   *
+   * 
    * @return {@code true} if the fraction is not real
    */
   public final boolean isNaN() {
@@ -376,7 +376,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * l + 1
-   *
+   * 
    * @param l
    *          the number
    * @return the bounded increment
@@ -387,7 +387,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * l - 1
-   *
+   * 
    * @param l
    *          the number
    * @return the bounded decrement
@@ -398,7 +398,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Obtain a long value representing this number
-   *
+   * 
    * @param round
    *          the rounding mode
    * @return the long value
@@ -474,7 +474,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Does this fraction actually represent an integer number?
-   *
+   * 
    * @return {@code true} if it is an integer, {@code false} otherwise
    */
   public final boolean isInteger() {
@@ -483,7 +483,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * multiply with a double
-   *
+   * 
    * @param d
    *          the double value
    * @return the return value
@@ -501,7 +501,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * multiply with a long
-   *
+   * 
    * @param in
    *          the input value
    * @return the return value
@@ -512,7 +512,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * invert a fraction
-   *
+   * 
    * @return the inverse
    */
   public final Rational inverse() {
@@ -521,7 +521,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Multiply two long integers, checking for overflow.
-   *
+   * 
    * @param a
    *          first value
    * @param b
@@ -555,7 +555,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * multiply
-   *
+   * 
    * @param b
    *          the other fraction
    * @return the result
@@ -632,7 +632,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * divide two fractions
-   *
+   * 
    * @param b
    *          the second fraction
    * @return the division result
@@ -683,7 +683,7 @@ public class Rational extends Number implements ITextable {
 
   /**
    * Try to multiply with a big decimal value
-   *
+   * 
    * @param b
    *          the value
    * @return the result

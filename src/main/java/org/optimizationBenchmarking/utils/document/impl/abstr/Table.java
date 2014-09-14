@@ -229,30 +229,12 @@ public class Table extends ComplexObject implements ITable,
     return ((SectionBody) (super.getOwner()));
   }
 
-  /**
-   * Create the table caption
-   * 
-   * @return the table caption
-   */
-  protected TableCaption createCaption() {
-    return new TableCaption(this);
-  }
-
   /** {@inheritDoc} */
   @Override
   public synchronized final TableCaption caption() {
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         Table.STATE_CAPTION_CREATED);
-    return this.createCaption();
-  }
-
-  /**
-   * Create the table header
-   * 
-   * @return the table header
-   */
-  protected TableHeader createHeader() {
-    return new TableHeader(this);
+    return this.m_driver.createTableCaption(this);
   }
 
   /** {@inheritDoc} */
@@ -260,16 +242,7 @@ public class Table extends ComplexObject implements ITable,
   public synchronized final TableHeader header() {
     this.fsmStateAssertAndSet(Table.STATE_CAPTION_CLOSED,
         Table.STATE_HEADER_CREATED);
-    return this.createHeader();
-  }
-
-  /**
-   * Create the table body
-   * 
-   * @return the table body
-   */
-  protected TableBody createBody() {
-    return new TableBody(this);
+    return this.m_driver.createTableHeader(this);
   }
 
   /** {@inheritDoc} */
@@ -277,16 +250,7 @@ public class Table extends ComplexObject implements ITable,
   public synchronized final TableBody body() {
     this.fsmStateAssertAndSet(Table.STATE_HEADER_CLOSED,
         Table.STATE_BODY_CREATED);
-    return this.createBody();
-  }
-
-  /**
-   * Create the table footer
-   * 
-   * @return the table footer
-   */
-  protected TableFooter createFooter() {
-    return new TableFooter(this);
+    return this.m_driver.createTableBody(this);
   }
 
   /** {@inheritDoc} */
@@ -294,7 +258,7 @@ public class Table extends ComplexObject implements ITable,
   public synchronized final TableFooter footer() {
     this.fsmStateAssertAndSet(Table.STATE_BODY_CLOSED,
         Table.STATE_FOOTER_CREATED);
-    return this.createFooter();
+    return this.m_driver.createTableFooter(this);
   }
 
   /** {@inheritDoc} */

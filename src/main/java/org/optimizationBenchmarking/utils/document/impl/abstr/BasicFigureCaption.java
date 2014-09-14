@@ -11,6 +11,6 @@ public class BasicFigureCaption extends ComplexText {
    *          the owner
    */
   BasicFigureCaption(final BasicFigure owner) {
-    super(owner, null, DocumentPart._plain(owner));
+    super(owner);
   }
 }

@@ -100,7 +100,7 @@ public class NormalizingFSM extends HierarchicalFSM {
         }
         if (input instanceof Long) {
           l = ((Long) input).longValue();
-          result = ((T) (((l >= (-128)) && (l <= 127)) ? Long.valueOf(l)
+          result = ((T) (((l >= (-128L)) && (l <= 127L)) ? Long.valueOf(l)
               : input));
           break inner;
         }

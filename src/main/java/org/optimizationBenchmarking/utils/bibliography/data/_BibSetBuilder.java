@@ -1,19 +1,20 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /**
  * The internal, abstract base class for builders of sets of bibliographic
  * elements.
- *
+ * 
  * @param <DT>
  *          the element type
  * @param <BST>
  *          the bib set type
  */
 abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _BibSet<DT, ?>>
-    extends _BibBuilder<BST> {
+    extends BuilderFSM<BST> {
 
   /** the personal name */
   private DT[] m_list;
@@ -23,7 +24,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /**
    * create the author builder
-   *
+   * 
    * @param owner
    *          the owner
    */
@@ -34,7 +35,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /**
    * create the array
-   *
+   * 
    * @param len
    *          the length
    * @return the array
@@ -43,14 +44,14 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /**
    * return the empty bib set
-   *
+   * 
    * @return the empty bib set
    */
   abstract BST _empty();
 
   /**
    * instantiate the type
-   *
+   * 
    * @param data
    *          the data
    * @return the type
@@ -59,7 +60,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /**
    * search for a given element
-   *
+   * 
    * @param element
    *          the element to find
    * @return the index where it is, or {@code -1} if it could not be found
@@ -81,7 +82,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /**
    * add an element
-   *
+   * 
    * @param element
    *          the element to add
    * @param throwOnExists
@@ -98,7 +99,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
       throw new IllegalArgumentException("Element cannot be null."); //$NON-NLS-1$
     }
 
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
 
     data = this.m_list;
     oldSize = this.m_size;
@@ -128,7 +129,7 @@ abstract class _BibSetBuilder<DT extends _BibElement<? super DT>, BST extends _B
 
   /** {@inheritDoc} */
   @Override
-  final BST _compile() {
+  protected final BST compile() {
     final int len;
     DT[] data, d2;
 

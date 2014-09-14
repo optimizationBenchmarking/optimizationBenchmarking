@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 /**
  * A table row
  */
-public class TableRow extends DocumentPart implements ITableRow {
+public abstract class TableRow extends DocumentPart implements ITableRow {
 
   /** the index of the table row in its section */
   final int m_index;
@@ -23,27 +23,23 @@ public class TableRow extends DocumentPart implements ITableRow {
    * 
    * @param owner
    *          the owning table section
-   * @param index
-   *          the index of the table row in its section
-   * @param totalIndex
-   *          the overall row index
    */
-  protected TableRow(final TableSection owner, final int index,
-      final int totalIndex) {
-    super(owner, null);
+  TableRow(final TableSection owner) {
+    super(owner);
 
-    if (index < 0) {
+    this.m_index = owner.m_rowCount;
+    this.m_totalIndex = owner.getOwner().m_rowCount;
+
+    if (this.m_index < 0) {
       throw new IllegalArgumentException(//
-          "Table row index cannot be less than zero, but is " + index); //$NON-NLS-1$
+          "Table row index cannot be less than zero, but is " + this.m_index); //$NON-NLS-1$
     }
-    if (totalIndex < index) {
+    if (this.m_totalIndex < this.m_index) {
       throw new IllegalArgumentException(//
           "Table row total index cannot be less than row index, but " + //$NON-NLS-1$ 
-              totalIndex + " is less than " + index); //$NON-NLS-1$
+              this.m_totalIndex + " is less than " + this.m_index); //$NON-NLS-1$
     }
 
-    this.m_index = index;
-    this.m_totalIndex = totalIndex;
   }
 
   /**
@@ -81,11 +77,8 @@ public class TableRow extends DocumentPart implements ITableRow {
    *          the table cell definition array
    * @return the cell
    */
-  protected TableCell createCell(final int rowSpan, final int colSpan,
-      final TableCellDef[] def) {
-    return new TableCell(this, rowSpan, colSpan, def,
-        DocumentPart._plain(this));
-  }
+  abstract TableCell createCell(final int rowSpan, final int colSpan,
+      final TableCellDef[] def);
 
   /** {@inheritDoc} */
   @Override

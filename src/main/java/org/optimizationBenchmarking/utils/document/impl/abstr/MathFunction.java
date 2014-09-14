@@ -9,8 +9,8 @@ public class MathFunction extends DocumentPart implements IMathFunction {
   /** the operators */
   private final EMathOperators m_op;
 
-  /** the parameter index */
-  private int m_paramIndex;
+  /** the argument index */
+  int m_argIndex;
 
   /**
    * Create a document part.
@@ -21,7 +21,7 @@ public class MathFunction extends DocumentPart implements IMathFunction {
    *          the mathematic operator
    */
   protected MathFunction(final BasicMath owner, final EMathOperators op) {
-    super(owner, null);
+    super(owner);
     if (op == null) {
       throw new IllegalArgumentException(//
           "Math operator must not be null."); //$NON-NLS-1$
@@ -39,41 +39,30 @@ public class MathFunction extends DocumentPart implements IMathFunction {
   }
 
   /**
-   * Create a parameter
+   * this method is called before the {@code index}<sup>th</sup> argument
    * 
    * @param index
-   *          the index of the parameter
-   * @return the parameter
+   *          the index of the argument
    */
-  protected MathParameter createParameter(final int index) {
-    return new MathParameter(this, index);
-  }
-
-  /**
-   * this method is called before the {@code index}<sup>th</sup> parameter
-   * 
-   * @param index
-   *          the index of the parameter
-   */
-  protected void beforeParameter(final int index) {
+  protected void beforeArgument(final int index) {
     //
   }
 
   /** {@inheritDoc} */
   @Override
-  public synchronized final MathParameter nextArgument() {
+  public synchronized final MathArgument nextArgument() {
     final int pi;
 
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     this.assertNoChildren();
-    pi = (++this.m_paramIndex);
-    if (pi > this.m_op.m_maxParamCount) {
+    pi = (++this.m_argIndex);
+    if (pi > this.m_op.m_maxArgumentCount) {
       throw new IllegalStateException(this.m_op
           + " cannot have more than " + //$NON-NLS-1$
-          this.m_op.m_maxParamCount + " parameters."); //$NON-NLS-1$
+          this.m_op.m_maxArgumentCount + " arguments."); //$NON-NLS-1$
     }
-    this.beforeParameter(pi);
-    return this.createParameter(pi);
+    this.beforeArgument(pi);
+    return this.m_driver.createMathArgument(this);
   }
 
   /** {@inheritDoc} */
@@ -83,7 +72,7 @@ public class MathFunction extends DocumentPart implements IMathFunction {
 
     super.beforeChildOpens(child, hasOtherChildren);
 
-    if (!(child instanceof MathParameter)) {
+    if (!(child instanceof MathArgument)) {
       this.throwChildNotAllowed(child);
     }
   }
@@ -95,7 +84,7 @@ public class MathFunction extends DocumentPart implements IMathFunction {
 
     super.afterChildOpened(child, hasOtherChildren);
 
-    if (!(child instanceof MathParameter)) {
+    if (!(child instanceof MathArgument)) {
       this.throwChildNotAllowed(child);
     }
   }
@@ -107,7 +96,7 @@ public class MathFunction extends DocumentPart implements IMathFunction {
 
     super.afterChildClosed(child);
 
-    if (!(child instanceof MathParameter)) {
+    if (!(child instanceof MathArgument)) {
       this.throwChildNotAllowed(child);
     }
   }
@@ -115,10 +104,10 @@ public class MathFunction extends DocumentPart implements IMathFunction {
   /** {@inheritDoc} */
   @Override
   protected synchronized void onClose() {
-    if (this.m_paramIndex < this.m_op.m_minParamCount) {
+    if (this.m_argIndex < this.m_op.m_minArgumentCount) {
       throw new IllegalStateException(this.m_op + //
-          " needs at least " + this.m_op.m_minParamCount + //$NON-NLS-1$
-          " parameters, but has only " + this.m_paramIndex); //$NON-NLS-1$
+          " needs at least " + this.m_op.m_minArgumentCount + //$NON-NLS-1$
+          " arguments, but has only " + this.m_argIndex); //$NON-NLS-1$
     }
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         DocumentElement.STATE_DEAD);

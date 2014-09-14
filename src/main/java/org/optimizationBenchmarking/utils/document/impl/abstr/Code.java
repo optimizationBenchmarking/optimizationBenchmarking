@@ -92,21 +92,12 @@ public class Code extends ComplexObject implements ICode {
     return ((SectionBody) (super.getOwner()));
   }
 
-  /**
-   * Create the table caption
-   * 
-   * @return the table caption
-   */
-  protected CodeCaption createCaption() {
-    return new CodeCaption(this);
-  }
-
   /** {@inheritDoc} */
   @Override
   public synchronized final CodeCaption caption() {
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         Code.STATE_CAPTION_CREATED);
-    return this.createCaption();
+    return this.m_driver.createCaption(this);
   }
 
   /**

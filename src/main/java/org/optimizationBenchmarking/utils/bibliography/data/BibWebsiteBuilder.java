@@ -35,7 +35,7 @@ public final class BibWebsiteBuilder extends BibRecordWithPublisherBuilder {
 
   /** {@inheritDoc} */
   @Override
-  final BibWebsite _compile() {
+  protected final BibWebsite compile() {
     this.fsmFlagsAssertTrue(BibRecordBuilder.FLAG_URL_SET
         | BibRecordBuilder.FLAG_TITLE_SET | BibRecordBuilder.FLAG_DATE_SET);
 

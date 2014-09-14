@@ -18,7 +18,7 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
 
   /**
    * Create the instance
-   *
+   * 
    * @param name
    *          the instance name
    * @param desc
@@ -85,7 +85,7 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
 
   /**
    * Get the features of this instance
-   *
+   * 
    * @return the features of this instance
    */
   public final FeatureSetting features() {
@@ -95,7 +95,7 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
   /**
    * Get the upper boundary of a given dimension for this benchmark
    * instance
-   *
+   * 
    * @param dim
    *          the dimension
    * @return the upper boundary for dimension {@code dim} for this
@@ -108,7 +108,7 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
   /**
    * Get the lower boundary of a given dimension for this benchmark
    * instance
-   *
+   * 
    * @param dim
    *          the dimension
    * @return the lower boundary for dimension {@code dim} for this
@@ -120,7 +120,7 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
 
   /**
    * Validate a given data point
-   *
+   * 
    * @param p
    *          the data point to be validated
    * @throws IllegalArgumentException

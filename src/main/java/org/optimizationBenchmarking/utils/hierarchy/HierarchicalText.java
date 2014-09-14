@@ -38,7 +38,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
 
   /**
    * Create the hierarchical {@link java.lang.Appendable}
-   *
+   * 
    * @param owner
    *          the owning hierarchical fsm
    * @param out
@@ -147,7 +147,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
 
   /**
    * Obtain the encoding of the underlying {@link java.lang.Appendable}
-   *
+   * 
    * @return the encoding
    */
   protected StreamEncoding<?, ?> getStreamEncoding() {
@@ -163,7 +163,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
    * . This method must be called in a synchronized block and the returned
    * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    * must only be used inside that block.
-   *
+   * 
    * @return the
    *         {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    */

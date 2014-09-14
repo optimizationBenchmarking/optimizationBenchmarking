@@ -10,7 +10,7 @@ public class MathSubscript extends BasicMath {
    *          the owning FSM
    */
   public MathSubscript(final BasicMath owner) {
-    super(owner, null);
+    super(owner);
   }
 
   /** {@inheritDoc} */

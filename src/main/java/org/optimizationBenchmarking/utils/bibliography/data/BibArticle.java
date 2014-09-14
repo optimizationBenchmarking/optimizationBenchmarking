@@ -28,7 +28,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * create a record for articles
-   *
+   * 
    * @param authors
    *          the authors
    * @param title
@@ -65,7 +65,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * create a record for technical records
-   *
+   * 
    * @param authors
    *          the authors
    * @param title
@@ -179,7 +179,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the date
-   *
+   * 
    * @return the date
    */
   public final BibDate getDate() {
@@ -188,7 +188,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the journal
-   *
+   * 
    * @return the journal
    */
   public final String getJournal() {
@@ -197,7 +197,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the volume
-   *
+   * 
    * @return the volume
    */
   public final String getVolume() {
@@ -206,7 +206,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the number
-   *
+   * 
    * @return the number
    */
   public final String getNumber() {
@@ -215,7 +215,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the start page
-   *
+   * 
    * @return the start page
    */
   public final String getStartPage() {
@@ -224,7 +224,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the end page
-   *
+   * 
    * @return the end page
    */
   public final String getEndPage() {
@@ -233,7 +233,7 @@ public class BibArticle extends BibRecordWithPublisher {
 
   /**
    * Get the issn
-   *
+   * 
    * @return the issn
    */
   public final String getISSN() {

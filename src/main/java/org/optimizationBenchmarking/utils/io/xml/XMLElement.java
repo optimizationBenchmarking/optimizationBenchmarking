@@ -72,7 +72,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * create a new xml element
-   *
+   * 
    * @param owner
    *          the owner the name
    */
@@ -102,7 +102,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Set the name of this element
-   *
+   * 
    * @param namespaceURI
    *          the namespace uri
    * @param name
@@ -150,7 +150,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Move to the given state
-   *
+   * 
    * @param maximumAllowedState
    *          the maximum allowed state
    * @param targetState
@@ -270,7 +270,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Obtain the prefix for a given namespace.
-   *
+   * 
    * @param uri
    *          the namespace URI
    * @param isDefaultNamespaceAllowed
@@ -361,7 +361,7 @@ public final class XMLElement extends XMLBase {
    * without any prior encoding. Only characters must be written that
    * cannot lead to problems with the XML specification. In particular, do
    * not write stuff such as <code>&amp;</code> or <code>&lt;</code>.
-   *
+   * 
    * @return the raw text output destination
    * @see #textEncoded()
    */
@@ -374,7 +374,7 @@ public final class XMLElement extends XMLBase {
    * Get a
    * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    * for writing arbitrary text output to this element.
-   *
+   * 
    * @return the encoded text output destination
    * @see #textRaw()
    */
@@ -386,7 +386,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Write an attribute value, encode if necessary.
-   *
+   * 
    * @param namespaceURI
    *          the namespace of the attribute
    * @param name
@@ -425,7 +425,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Write an attribute value
-   *
+   * 
    * @param namespaceURI
    *          the namespace of the attribute
    * @param name
@@ -445,7 +445,7 @@ public final class XMLElement extends XMLBase {
    * applied if it is absolutely clear that the contents of {@code value}
    * will not violate the XML specification, in particular, do not contain
    * stuff such as {@code "}.
-   *
+   * 
    * @param namespaceURI
    *          the namespace of the attribute
    * @param name
@@ -460,7 +460,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Assign a prefix to a namespace uri
-   *
+   * 
    * @param namespaceURI
    *          the namespace uri
    * @param prefix
@@ -543,7 +543,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Set the namespace uri as default namespace
-   *
+   * 
    * @param namespaceURI
    *          the namespace uri
    */

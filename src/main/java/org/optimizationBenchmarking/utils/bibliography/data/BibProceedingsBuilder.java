@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -13,14 +14,14 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * the location
-   *
+   * 
    * @serial serial field
    */
   private BibOrganization m_location;
 
   /**
    * the end date
-   *
+   * 
    * @serial serial field
    */
   private BibDate m_endDate;
@@ -32,7 +33,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * create the book builder
-   *
+   * 
    * @param owner
    *          the owner
    */
@@ -62,7 +63,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * Build the start date
-   *
+   * 
    * @return the builder for the start date
    */
   public final BibDateBuilder setStartDate() {
@@ -71,7 +72,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * Set the start date
-   *
+   * 
    * @param date
    *          the start date
    */
@@ -91,27 +92,26 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * Create the end date builder
-   *
+   * 
    * @return the end date builder
    */
   public synchronized final BibDateBuilder setEndDate() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED
-        | BibProceedingsBuilder.FLAG_END_DATE_SET);
+    this.fsmFlagsAssertFalse(BibProceedingsBuilder.FLAG_END_DATE_SET);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibDateBuilder(this, 1);
   }
 
   /**
    * Set the end date
-   *
+   * 
    * @param endDate
    *          the date
    */
   public synchronized final void setEndDate(final BibDate endDate) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (_BibBuilder.FLAG_FINALIZED | BibProceedingsBuilder.FLAG_END_DATE_SET),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibProceedingsBuilder.FLAG_END_DATE_SET),
         BibProceedingsBuilder.FLAG_END_DATE_SET, FSM.FLAG_NOTHING);
-
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_endDate = this.normalize(endDate)) == null) {
       throw new IllegalArgumentException("Cannot set null end date."); //$NON-NLS-1$
     }
@@ -119,15 +119,15 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * Set the location
-   *
+   * 
    * @param location
    *          the location
    */
   public synchronized final void setLocation(final BibOrganization location) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibProceedingsBuilder.FLAG_LOCATION_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibProceedingsBuilder.FLAG_LOCATION_SET),
         BibProceedingsBuilder.FLAG_LOCATION_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_location = this.normalize(location)) == null) {
       throw new IllegalArgumentException(//
           "Location cannot be empty or null, but '" //$NON-NLS-1$
@@ -137,12 +137,12 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /**
    * Set the location
-   *
+   * 
    * @return the location builder
    */
   public synchronized final BibOrganizationBuilder setLocation() {
-    this.fsmFlagsAssertFalse(BibProceedingsBuilder.FLAG_LOCATION_SET
-        | _BibBuilder.FLAG_FINALIZED);
+    this.fsmFlagsAssertFalse(BibProceedingsBuilder.FLAG_LOCATION_SET);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibOrganizationBuilder(this, 1, false);
   }
 
@@ -158,7 +158,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /** {@inheritDoc} */
   @Override
-  final BibProceedings _compile() {
+  protected final BibProceedings compile() {
 
     this.fsmFlagsAssertTrue(BibRecordBuilder.FLAG_TITLE_SET
         | BibRecordBuilder.FLAG_DATE_SET

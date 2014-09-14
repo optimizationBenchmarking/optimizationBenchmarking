@@ -36,7 +36,7 @@ public class BibBookBuilder extends BibBookRecordBuilder {
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override
-  BibBook _compile() {
+  protected BibBook compile() {
     final HierarchicalFSM o;
 
     this.fsmFlagsAssertTrue(BibRecordBuilder.FLAG_TITLE_SET

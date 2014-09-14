@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 
 import java.util.HashMap;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /** A builder for bibliographies. */
@@ -46,7 +47,7 @@ public class BibliographyBuilder extends CitationsBuilder {
    * @return the website record builder
    */
   public synchronized final BibWebsiteBuilder addWebsite() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibWebsiteBuilder(this);
   }
 
@@ -56,7 +57,7 @@ public class BibliographyBuilder extends CitationsBuilder {
    * @return the article record builder
    */
   public synchronized final BibArticleBuilder addArticle() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibArticleBuilder(this);
   }
 
@@ -66,7 +67,7 @@ public class BibliographyBuilder extends CitationsBuilder {
    * @return the thesis record builder
    */
   public synchronized final BibThesisBuilder addThesis() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibThesisBuilder(this);
   }
 
@@ -76,7 +77,7 @@ public class BibliographyBuilder extends CitationsBuilder {
    * @return the technical report record builder
    */
   public synchronized final BibTechReportBuilder addTechReport() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibTechReportBuilder(this);
   }
 
@@ -86,7 +87,7 @@ public class BibliographyBuilder extends CitationsBuilder {
    * @return the book record builder
    */
   public synchronized final BibBookBuilder addBook() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibBookBuilder(this);
   }
 
@@ -96,7 +97,7 @@ public class BibliographyBuilder extends CitationsBuilder {
    * @return the proceedings record builder
    */
   public synchronized final BibProceedingsBuilder addProceedings() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibProceedingsBuilder(this);
   }
 
@@ -106,7 +107,7 @@ public class BibliographyBuilder extends CitationsBuilder {
    * @return the in-proceedings record builder
    */
   public synchronized final BibInProceedingsBuilder addInProceedings() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibInProceedingsBuilder(this);
   }
 
@@ -116,7 +117,7 @@ public class BibliographyBuilder extends CitationsBuilder {
    * @return the in-collection record builder
    */
   public synchronized final BibInCollectionBuilder addInCollection() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibInCollectionBuilder(this);
   }
 

@@ -9,7 +9,7 @@ public final class FeatureSetting extends
 
   /**
    * create
-   *
+   * 
    * @param params
    *          the feature values
    * @param isGeneral

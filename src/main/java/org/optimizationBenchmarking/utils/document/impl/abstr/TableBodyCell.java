@@ -18,7 +18,7 @@ public class TableBodyCell extends TableCell {
    */
   public TableBodyCell(final TableBodyRow owner, final int cols,
       final int rows, final TableCellDef[] def) {
-    super(owner, cols, rows, def, DocumentPart._plain(owner));
+    super(owner, cols, rows, def);
   }
 
   /** {@inheritDoc} */

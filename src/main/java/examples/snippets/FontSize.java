@@ -69,8 +69,8 @@ public class FontSize {
     String s;
     Rectangle2D b;
 
-    for (int scale : new int[] { 1, 2 }) {
-      for (String fontName : new String[] { "Courier New", //$NON-NLS-1$
+    for (final int scale : new int[] { 1, 2 }) {
+      for (final String fontName : new String[] { "Courier New", //$NON-NLS-1$
           "Arial", //$NON-NLS-1$
           "Times New Roman" }) {//$NON-NLS-1$
         System.out.println("============ " + fontName + //$NON-NLS-1$

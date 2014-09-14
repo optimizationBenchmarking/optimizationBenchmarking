@@ -73,7 +73,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create a new class builder
-   *
+   * 
    * @param dimensions
    *          the dimensions
    */
@@ -114,7 +114,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the data point class body
-   *
+   * 
    * @return the data point class body
    */
   private final CharSequence __createDataPoint() {
@@ -147,7 +147,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the data point head
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -178,7 +178,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the constructor of the data point
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -211,7 +211,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the getters
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -288,7 +288,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the to-Appendable method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -341,7 +341,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the hashCode method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -375,7 +375,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the hash equals method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -474,7 +474,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the size method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -487,7 +487,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the compareTo method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -586,7 +586,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the validateAfter method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -713,7 +713,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the matrix access methods
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -764,7 +764,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the to-array method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -800,7 +800,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the to-array method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -906,7 +906,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the visit method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -945,7 +945,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the has any method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -975,7 +975,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the select method
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1053,7 +1053,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the data point parser
-   *
+   * 
    * @return the data point parser
    */
   private final CharSequence __createFactory() {
@@ -1078,7 +1078,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the data point parser head
-   *
+   * 
    * @param sb
    *          the string parser builder
    */
@@ -1109,7 +1109,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the constructor of the parser
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1144,7 +1144,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the data point parser string
-   *
+   * 
    * @param sb
    *          the string parser builder
    */
@@ -1221,7 +1221,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the data point parser numbers
-   *
+   * 
    * @param sb
    *          the string parser builder
    */
@@ -1277,7 +1277,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the data point parser object
-   *
+   * 
    * @param sb
    *          the string parser builder
    */
@@ -1303,7 +1303,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the data point parser string
-   *
+   * 
    * @param sb
    *          the string parser builder
    */
@@ -1317,7 +1317,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the run
-   *
+   * 
    * @param sb
    *          the string parser builder
    */
@@ -1345,7 +1345,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the run class
-   *
+   * 
    * @return the run class
    */
   private final CharSequence __createRun() {
@@ -1368,7 +1368,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the run head
-   *
+   * 
    * @param sb
    *          the string parser builder
    */
@@ -1391,7 +1391,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the constructor of the run
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1404,7 +1404,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the matrix access methods for runs
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1487,7 +1487,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the appendable method for runs
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1514,7 +1514,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the matrix access methods for runs
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1645,7 +1645,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the run columns class body
-   *
+   * 
    * @return the run columns class body
    */
   private final CharSequence __createRunColumnsClass() {
@@ -1667,7 +1667,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the matrix access methods for runs
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1725,7 +1725,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the matrix access methods for runs iterating rows
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1751,7 +1751,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the run columns head
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1779,7 +1779,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the constructor of the data point
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1817,7 +1817,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the run columns row iterator class body
-   *
+   * 
    * @return the run columns row iterator class body
    */
   private final CharSequence __createRunColumnsRowIterator() {
@@ -1838,7 +1838,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the run columns head
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1870,7 +1870,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the constructor of the data point
-   *
+   * 
    * @param sb
    *          the string builder
    */
@@ -1909,7 +1909,7 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
   /**
    * create the matrix access methods for runs columns row iterators
-   *
+   * 
    * @param sb
    *          the string builder
    */

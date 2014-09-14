@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.parsers.StringParser;
@@ -26,7 +27,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * create the thesis builder
-   *
+   * 
    * @param owner
    *          the owner
    */
@@ -55,14 +56,15 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * Set the school
-   *
+   * 
    * @param school
    *          the school
    */
   public synchronized final void setSchool(final BibOrganization school) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibThesisBuilder.FLAG_SCHOOL_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibThesisBuilder.FLAG_SCHOOL_SET),
         BibThesisBuilder.FLAG_SCHOOL_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_school = this.normalize(school)) == null) {
       throw new IllegalArgumentException(//
           "School  cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -72,12 +74,12 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * Set the school
-   *
+   * 
    * @return the schoolbuilder
    */
   public synchronized final BibOrganizationBuilder setSchool() {
-    this.fsmFlagsAssertFalse(BibThesisBuilder.FLAG_SCHOOL_SET
-        | _BibBuilder.FLAG_FINALIZED);
+    this.fsmFlagsAssertFalse(BibThesisBuilder.FLAG_SCHOOL_SET);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibOrganizationBuilder(this, 1, true);
   }
 
@@ -93,14 +95,15 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * Set the thesis type
-   *
+   * 
    * @param type
    *          the type
    */
   public synchronized final void setType(final EThesisType type) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibThesisBuilder.FLAG_TYPE_SET | _BibBuilder.FLAG_FINALIZED),
-        BibThesisBuilder.FLAG_TYPE_SET, FSM.FLAG_NOTHING);
+        (BibThesisBuilder.FLAG_TYPE_SET), BibThesisBuilder.FLAG_TYPE_SET,
+        FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_type = type) == null) {
       throw new IllegalArgumentException(//
           "Thesis type cannot be set to null."); //$NON-NLS-1$
@@ -109,7 +112,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * Set the type
-   *
+   * 
    * @param type
    *          the type
    */
@@ -141,7 +144,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /** {@inheritDoc} */
   @Override
-  final BibThesis _compile() {
+  protected final BibThesis compile() {
 
     this.fsmFlagsAssertTrue(BibRecordBuilder.FLAG_TITLE_SET
         | BibRecordBuilder.FLAG_DATE_SET

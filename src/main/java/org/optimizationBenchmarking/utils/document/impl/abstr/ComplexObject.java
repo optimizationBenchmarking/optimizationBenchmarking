@@ -33,7 +33,7 @@ public abstract class ComplexObject extends DocumentPart {
    */
   ComplexObject(final DocumentPart owner, final ILabel useLabel,
       final int index) {
-    super(owner, null);
+    super(owner);
 
     final String oid;
 

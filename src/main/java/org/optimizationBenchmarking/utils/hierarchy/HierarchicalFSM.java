@@ -133,7 +133,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * the element has been opened
-   *
+   * 
    * @see #open()
    */
   private static final int STATE_OPENED = (HierarchicalFSM.STATE_AFTER_AFTER_CHILD_OPENED_CHILD + 1);
@@ -262,7 +262,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * create
-   *
+   * 
    * @param owner
    *          the owning element
    */
@@ -288,7 +288,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Get the owner
-   *
+   * 
    * @return the owner
    */
   protected HierarchicalFSM getOwner() {
@@ -316,7 +316,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * assert that we are in a given state
-   *
+   * 
    * @param shouldState
    *          the state we should be in
    */
@@ -380,7 +380,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
   /**
    * This method is called at most once for any child hierarchy element
    * that is opened.
-   *
+   * 
    * @param child
    *          the child that is about to be opened
    * @param hasOtherChildren
@@ -413,7 +413,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Called before a child can execute its onOpen method
-   *
+   * 
    * @param element
    *          the child element
    * @return {@code true} if and only if there are other open children,
@@ -494,7 +494,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
   /**
    * This method is called at most once for any child hierarchy element
    * that is opened.
-   *
+   * 
    * @param child
    *          the child that is about to be opened
    * @param hasOtherChildren
@@ -526,7 +526,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Called after a child can execute its onOpen method
-   *
+   * 
    * @param element
    *          the child element
    * @param hasOtherChildren
@@ -553,7 +553,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
   /**
    * This method is invoked after a child has been closed, and in the same
    * sequence in which children are opened.
-   *
+   * 
    * @param child
    *          the child element
    */
@@ -679,7 +679,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Throw an error indicating that the given child is not allowed.
-   *
+   * 
    * @param child
    *          the child
    */

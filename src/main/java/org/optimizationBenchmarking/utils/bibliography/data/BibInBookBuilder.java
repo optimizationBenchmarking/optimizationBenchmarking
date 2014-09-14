@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -33,7 +34,7 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
 
   /**
    * create the website builder
-   *
+   * 
    * @param owner
    *          the owner
    */
@@ -70,15 +71,15 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
 
   /**
    * Set the start page
-   *
+   * 
    * @param startPage
    *          the start page
    */
   public synchronized final void setStartPage(final String startPage) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibInBookBuilder.FLAG_START_PAGE_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibInBookBuilder.FLAG_START_PAGE_SET),
         BibInBookBuilder.FLAG_START_PAGE_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_startPage = this.normalize(startPage)) == null) {
       throw new IllegalArgumentException(//
           "Start page cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -88,14 +89,15 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
 
   /**
    * Set the end page
-   *
+   * 
    * @param endPage
    *          the end page
    */
   public synchronized final void setEndPage(final String endPage) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibInBookBuilder.FLAG_END_PAGE_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibInBookBuilder.FLAG_END_PAGE_SET),
         BibInBookBuilder.FLAG_END_PAGE_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_endPage = this.normalize(endPage)) == null) {
       throw new IllegalArgumentException(//
           "End page cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -105,14 +107,15 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
 
   /**
    * Set the chapter
-   *
+   * 
    * @param chapter
    *          the chapter
    */
   public synchronized final void setChapter(final String chapter) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibInBookBuilder.FLAG_CHAPTER_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibInBookBuilder.FLAG_CHAPTER_SET),
         BibInBookBuilder.FLAG_CHAPTER_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_chapter = this.normalize(chapter)) == null) {
       throw new IllegalArgumentException(//
           "Chapter name cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -122,14 +125,15 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
 
   /**
    * Set the book
-   *
+   * 
    * @param book
    *          the book
    */
   synchronized final void _bookSet(final BibBookRecord book) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibInBookBuilder.FLAG_BOOK_SET | _BibBuilder.FLAG_FINALIZED),
-        BibInBookBuilder.FLAG_BOOK_SET, FSM.FLAG_NOTHING);
+        (BibInBookBuilder.FLAG_BOOK_SET), BibInBookBuilder.FLAG_BOOK_SET,
+        FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if (book == null) {
       throw new IllegalArgumentException(//
           "Book cannot be set to empty or null."); //$NON-NLS-1$

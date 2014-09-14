@@ -19,7 +19,6 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibTechReport;
 import org.optimizationBenchmarking.utils.bibliography.data.BibThesis;
 import org.optimizationBenchmarking.utils.bibliography.data.BibWebsite;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
-import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
@@ -33,8 +32,7 @@ import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransfor
  * of bibliographic data. Currently, this API only supports output and
  * cannot yet read BibTeX data.
  */
-public final class BibTeXDriver extends
-    TextIODriver<Object, BibliographyBuilder> {
+public final class BibTeXDriver extends TextIODriver<Object, Void> {
 
   /** the BibTeX driver */
   public static final BibTeXDriver INSTANCE = new BibTeXDriver();
@@ -146,7 +144,7 @@ public final class BibTeXDriver extends
 
   /**
    * store an in-collection record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -192,7 +190,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a bibliographic record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -249,7 +247,7 @@ public final class BibTeXDriver extends
 
   /**
    * put a string into a buffer
-   *
+   * 
    * @param name
    *          the string
    * @param buf
@@ -266,7 +264,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a field value start
-   *
+   * 
    * @param name
    *          the field name
    * @param buf
@@ -282,7 +280,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a record start
-   *
+   * 
    * @param name
    *          the field name
    * @param rec
@@ -301,7 +299,7 @@ public final class BibTeXDriver extends
 
   /**
    * end a field
-   *
+   * 
    * @param raw
    *          the output
    */
@@ -313,7 +311,7 @@ public final class BibTeXDriver extends
 
   /**
    * end a record
-   *
+   * 
    * @param raw
    *          the output
    */
@@ -323,7 +321,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a simple field
-   *
+   * 
    * @param name
    *          the field name
    * @param value
@@ -346,7 +344,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a pages field
-   *
+   * 
    * @param start
    *          the start page
    * @param end
@@ -378,7 +376,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a organization field
-   *
+   * 
    * @param name
    *          the field name
    * @param org
@@ -416,7 +414,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a date field
-   *
+   * 
    * @param start
    *          the start date
    * @param end
@@ -576,7 +574,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a full date
-   *
+   * 
    * @param date
    *          the date
    * @param raw
@@ -613,7 +611,7 @@ public final class BibTeXDriver extends
 
   /**
    * write a date field
-   *
+   * 
    * @param value
    *          the field value
    * @param raw
@@ -663,7 +661,7 @@ public final class BibTeXDriver extends
 
   /**
    * write an author field
-   *
+   * 
    * @param name
    *          the field name
    * @param value
@@ -720,7 +718,7 @@ public final class BibTeXDriver extends
 
   /**
    * store an article record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -763,7 +761,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a book record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -796,7 +794,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a thesis record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -840,7 +838,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a book inner record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -870,7 +868,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a proceedings inner record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -893,7 +891,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a proceedings record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -925,7 +923,7 @@ public final class BibTeXDriver extends
 
   /**
    * store an in-proceedings record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -970,7 +968,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a website record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -1004,7 +1002,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a technical report record
-   *
+   * 
    * @param data
    *          the data
    * @param raw
@@ -1043,7 +1041,7 @@ public final class BibTeXDriver extends
 
   /**
    * store a bibliography
-   *
+   * 
    * @param data
    *          the data
    * @param raw

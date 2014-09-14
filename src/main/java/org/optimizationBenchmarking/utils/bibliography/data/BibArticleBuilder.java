@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -40,7 +41,7 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /**
    * create the article builder
-   *
+   * 
    * @param owner
    *          the owner
    */
@@ -86,14 +87,15 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /**
    * Set the volume
-   *
+   * 
    * @param volume
    *          the volume
    */
   public synchronized final void setVolume(final String volume) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibArticleBuilder.FLAG_VOLUME_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibArticleBuilder.FLAG_VOLUME_SET),
         BibArticleBuilder.FLAG_VOLUME_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_volume = this.normalize(volume)) == null) {
       throw new IllegalArgumentException(//
           "Volume cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -103,14 +105,15 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /**
    * Set the number
-   *
+   * 
    * @param number
    *          the number
    */
   public synchronized final void setNumber(final String number) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibArticleBuilder.FLAG_NUMBER_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibArticleBuilder.FLAG_NUMBER_SET),
         BibArticleBuilder.FLAG_NUMBER_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_number = this.normalize(number)) == null) {
       throw new IllegalArgumentException(//
           "Number cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -120,14 +123,15 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /**
    * Set the journal
-   *
+   * 
    * @param journal
    *          the journal
    */
   public synchronized final void setJournal(final String journal) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibArticleBuilder.FLAG_JOURNAL_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibArticleBuilder.FLAG_JOURNAL_SET),
         BibArticleBuilder.FLAG_JOURNAL_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_journal = this.normalize(journal)) == null) {
       throw new IllegalArgumentException(//
           "Journal cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -137,14 +141,15 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /**
    * Set the issn
-   *
+   * 
    * @param issn
    *          the issn
    */
   public synchronized final void setISSN(final String issn) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibArticleBuilder.FLAG_ISSN_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibArticleBuilder.FLAG_ISSN_SET),
         BibArticleBuilder.FLAG_ISSN_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_issn = this.normalize(issn)) == null) {
       throw new IllegalArgumentException(//
           "ISSN cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -154,15 +159,15 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /**
    * Set the start page
-   *
+   * 
    * @param startPage
    *          the start page
    */
   public synchronized final void setStartPage(final String startPage) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibArticleBuilder.FLAG_START_PAGE_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibArticleBuilder.FLAG_START_PAGE_SET),
         BibArticleBuilder.FLAG_START_PAGE_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_startPage = this.normalize(startPage)) == null) {
       throw new IllegalArgumentException(//
           "Start page cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -172,15 +177,15 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /**
    * Set the end page
-   *
+   * 
    * @param endPage
    *          the end page
    */
   public synchronized final void setEndPage(final String endPage) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibArticleBuilder.FLAG_END_PAGE_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibArticleBuilder.FLAG_END_PAGE_SET),
         BibArticleBuilder.FLAG_END_PAGE_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_endPage = this.normalize(endPage)) == null) {
       throw new IllegalArgumentException(//
           "End page cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -196,7 +201,7 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /** {@inheritDoc} */
   @Override
-  final BibArticle _compile() {
+  protected final BibArticle compile() {
     return new BibArticle(true, this.m_authors, this.m_title, this.m_date,
         this.m_journal, this.m_issn, this.m_volume, this.m_number,
         this.m_startPage, this.m_endPage, this.m_publisher, this.m_url,

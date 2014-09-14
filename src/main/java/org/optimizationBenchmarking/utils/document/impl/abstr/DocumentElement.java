@@ -4,7 +4,6 @@ import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.document.spec.IDocumentElement;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -21,17 +20,36 @@ public abstract class DocumentElement extends HierarchicalText implements
   /** the highest state occupied by the element */
   static final int STATE_MAX_ELEMENT = DocumentElement.STATE_DEAD;
 
+  /** the document driver */
+  final DocumentDriver m_driver;
+
+  /**
+   * Create a document element.
+   * 
+   * @param driver
+   *          the driver
+   * @param out
+   *          the output destination
+   */
+  DocumentElement(final DocumentDriver driver, final Appendable out) {
+    super(null, out);
+
+    if (driver == null) {
+      throw new IllegalArgumentException(//
+          "Document driver must not be null."); //$NON-NLS-1$
+    }
+    this.m_driver = driver;
+  }
+
   /**
    * Create a document element.
    * 
    * @param owner
-   *          the owning FSM
-   * @param out
-   *          the output destination
+   *          the owning element
    */
-  protected DocumentElement(final HierarchicalFSM owner,
-      final Appendable out) {
-    super(owner, out);
+  DocumentElement(final DocumentElement owner) {
+    super(owner, null);
+    this.m_driver = owner.m_driver;
   }
 
   /**
@@ -39,8 +57,17 @@ public abstract class DocumentElement extends HierarchicalText implements
    * 
    * @return the owner
    */
-  final HierarchicalFSM _owner() {
-    return this.getOwner();
+  final DocumentElement _owner() {
+    return ((DocumentElement) (this.getOwner()));
+  }
+
+  /**
+   * Obtain the document driver
+   * 
+   * @return the document driver
+   */
+  protected final DocumentDriver getDriver() {
+    return this.m_driver;
   }
 
   /** {@inheritDoc} */

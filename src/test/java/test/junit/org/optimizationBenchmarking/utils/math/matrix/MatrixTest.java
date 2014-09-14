@@ -12,7 +12,7 @@ import test.junit.InstanceTest;
 
 /**
  * A test for matrix data structures.
- *
+ * 
  * @param <MT>
  *          the matrix type
  */
@@ -26,7 +26,7 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
 
   /**
    * Create the matrix test
-   *
+   * 
    * @param owner
    *          the owner
    * @param isSingleton
@@ -172,7 +172,7 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
 
   /**
    * check if two matrices have the same integer property
-   *
+   * 
    * @param a
    *          the first matrix
    * @param b
@@ -297,7 +297,7 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
 
   /**
    * test a selection in the matrix
-   *
+   * 
    * @param orig
    *          the original matrix
    * @param sel

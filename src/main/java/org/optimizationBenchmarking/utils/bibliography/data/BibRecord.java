@@ -29,35 +29,35 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * the authors
-   *
+   * 
    * @serial serial field
    */
   final BibAuthors m_authors;
 
   /**
    * the title
-   *
+   * 
    * @serial serial field
    */
   final String m_title;
 
   /**
    * the start date
-   *
+   * 
    * @serial serial field
    */
   final BibDate m_date;
 
   /**
    * the url
-   *
+   * 
    * @serial serial field
    */
   final URI m_url;
 
   /**
    * the doi
-   *
+   * 
    * @serial serial field
    */
   final String m_doi;
@@ -67,7 +67,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * Create a new bibliography record
-   *
+   * 
    * @param authors
    *          the authors
    * @param title
@@ -113,7 +113,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * Get the unique key of this record
-   *
+   * 
    * @return the key
    */
   public final String getKey() {
@@ -135,7 +135,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * make a doi
-   *
+   * 
    * @param doi
    *          the doi
    * @return the doi string
@@ -159,7 +159,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * make an url
-   *
+   * 
    * @param u
    *          the url
    * @return the improved url
@@ -178,7 +178,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * Get the bibliography authors
-   *
+   * 
    * @return the bibliography authors
    */
   public final BibAuthors getAuthors() {
@@ -187,7 +187,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * Get the title
-   *
+   * 
    * @return the title
    */
   public final String getTitle() {
@@ -196,7 +196,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * Get the doi
-   *
+   * 
    * @return the doi
    */
   public final String getDOI() {
@@ -205,7 +205,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * Get the url
-   *
+   * 
    * @return the url
    */
   public final URI getURL() {
@@ -230,7 +230,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * compare to another bib record
-   *
+   * 
    * @param r
    *          the bib record
    * @return {@code true} if this object is the
@@ -295,7 +295,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
   /**
    * compare the rest of the bib record
-   *
+   * 
    * @param o
    *          the other bib record
    * @return the result

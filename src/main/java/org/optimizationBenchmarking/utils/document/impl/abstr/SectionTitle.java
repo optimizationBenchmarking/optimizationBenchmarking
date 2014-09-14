@@ -11,7 +11,7 @@ public class SectionTitle extends ComplexText {
    *          the owner
    */
   public SectionTitle(final Section owner) {
-    super(owner, null, DocumentPart._plain(owner));
+    super(owner);
   }
 
   /**

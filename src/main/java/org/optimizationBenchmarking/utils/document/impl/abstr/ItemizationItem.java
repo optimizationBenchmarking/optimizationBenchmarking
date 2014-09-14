@@ -9,11 +9,9 @@ public class ItemizationItem extends ListItem {
    * 
    * @param owner
    *          the owning FSM
-   * @param index
-   *          the item index
    */
-  protected ItemizationItem(final Itemization owner, final int index) {
-    super(owner, index);
+  protected ItemizationItem(final Itemization owner) {
+    super(owner);
   }
 
   /**

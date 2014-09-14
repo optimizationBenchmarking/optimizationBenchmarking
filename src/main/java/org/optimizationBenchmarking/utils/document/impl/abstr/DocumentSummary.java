@@ -11,7 +11,7 @@ public class DocumentSummary extends Text {
    *          the owner
    */
   protected DocumentSummary(final DocumentHeader owner) {
-    super(owner, null);
+    super(owner);
   }
 
   /**

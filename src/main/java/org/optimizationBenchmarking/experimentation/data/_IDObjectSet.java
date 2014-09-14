@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * An internal set of id objects.
- *
+ * 
  * @param <OT>
  *          the owner type
  * @param <DT>
@@ -16,7 +16,7 @@ class _IDObjectSet<OT, DT extends _IDObject<?>> extends _IDSet<OT, DT> {
 
   /**
    * instantiate
-   *
+   * 
    * @param data
    *          the data of the set
    * @param clone
@@ -174,7 +174,7 @@ class _IDObjectSet<OT, DT extends _IDObject<?>> extends _IDSet<OT, DT> {
 
   /**
    * Find the element with the given name
-   *
+   * 
    * @param name
    *          the name
    * @return the element, or {@code null} if it could not be found

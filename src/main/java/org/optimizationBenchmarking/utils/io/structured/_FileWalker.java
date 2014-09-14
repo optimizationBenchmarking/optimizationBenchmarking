@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 
 /**
  * the internal file walker
- *
+ * 
  * @param <S>
  *          the storer type
  * @param <L>
@@ -31,7 +31,7 @@ final class _FileWalker<S, L> implements FileVisitor<Object> {
 
   /**
    * create
-   *
+   * 
    * @param loadContext
    *          the load context
    * @param logger

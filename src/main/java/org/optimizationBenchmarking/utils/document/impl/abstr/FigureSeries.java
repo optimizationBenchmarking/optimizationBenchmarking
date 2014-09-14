@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
- * The base class for figure series
+ * The base class for figure series TODO: deal with child figures?
  */
 public class FigureSeries extends ComplexObject implements IFigureSeries {
 
@@ -36,10 +36,10 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
   }
 
   /** the current sub-figure index */
-  private int m_curFig;
+  int m_curFig;
 
   /** the size template of this figure */
-  private final EFigureSize m_size;
+  final EFigureSize m_size;
 
   /** a path */
   final Path m_path;
@@ -104,21 +104,12 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
     return ((SectionBody) (super.getOwner()));
   }
 
-  /**
-   * Create the figure caption
-   * 
-   * @return the figure caption
-   */
-  protected FigureSeriesCaption createCaption() {
-    return new FigureSeriesCaption(this);
-  }
-
   /** {@inheritDoc} */
   @Override
   public synchronized final FigureSeriesCaption caption() {
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         FigureSeries.STATE_CAPTION_CREATED);
-    return this.createCaption();
+    return this.m_driver.createFigureSeriesCaption(this);
   }
 
   /** {@inheritDoc} */
@@ -131,6 +122,10 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
     if (child instanceof FigureSeriesCaption) {
       this.fsmStateAssertAndSet(FigureSeries.STATE_CAPTION_CREATED,
           FigureSeries.STATE_CAPTION_BEFORE_OPEN);
+      return;
+    }
+
+    if (child instanceof SubFigure) {
       return;
     }
 
@@ -149,6 +144,11 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
           FigureSeries.STATE_CAPTION_OPENED);
       return;
     }
+
+    if (child instanceof SubFigure) {
+      return;
+    }
+
     this.throwChildNotAllowed(child);
   }
 
@@ -164,6 +164,11 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
           FigureSeries.STATE_CAPTION_CLOSED);
       return;
     }
+
+    if (child instanceof SubFigure) {
+      return;
+    }
+
     this.throwChildNotAllowed(child);
   }
 
@@ -179,28 +184,13 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
     super.onClose();
   }
 
-  /**
-   * Create a sub-figure
-   * 
-   * @param useLabel
-   *          the label to use, or {@code null} if none is needed
-   * @param path
-   *          relative path
-   * @param index
-   *          the index of the sub-figure
-   * @return the new sub-figure
-   */
-  protected SubFigure createFigure(final ILabel useLabel,
-      final String path, final int index) {
-    return new SubFigure(this, useLabel, this.m_size, path, index);
-  }
-
   /** {@inheritDoc} */
   @Override
   public synchronized final SubFigure figure(final ILabel useLabel,
       final String path) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFigure(useLabel, path, (++this.m_curFig));
+    this.m_curFig++;
+    return this.m_driver.createFigure(this, useLabel, path);
   }
 
   /** {@inheritDoc} */

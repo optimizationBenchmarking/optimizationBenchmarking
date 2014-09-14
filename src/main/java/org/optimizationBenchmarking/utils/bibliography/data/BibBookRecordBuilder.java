@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -46,7 +47,7 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * create the website builder
-   *
+   * 
    * @param owner
    *          the owner
    */
@@ -92,15 +93,15 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the series
-   *
+   * 
    * @param series
    *          the series
    */
   public synchronized final void setSeries(final String series) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibBookRecordBuilder.FLAG_SERIES_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibBookRecordBuilder.FLAG_SERIES_SET),
         BibBookRecordBuilder.FLAG_SERIES_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_series = this.normalize(series)) == null) {
       throw new IllegalArgumentException(//
           "Series name cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -110,15 +111,15 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the volume
-   *
+   * 
    * @param volume
    *          the volume
    */
   public synchronized final void setVolume(final String volume) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibBookRecordBuilder.FLAG_VOLUME_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibBookRecordBuilder.FLAG_VOLUME_SET),
         BibBookRecordBuilder.FLAG_VOLUME_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_volume = this.normalize(volume)) == null) {
       throw new IllegalArgumentException(//
           "Volume name cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -128,15 +129,15 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the edition
-   *
+   * 
    * @param edition
    *          the edition
    */
   public synchronized final void setEdition(final String edition) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibBookRecordBuilder.FLAG_EDITION_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibBookRecordBuilder.FLAG_EDITION_SET),
         BibBookRecordBuilder.FLAG_EDITION_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_edition = this.normalize(edition)) == null) {
       throw new IllegalArgumentException(//
           "Edition name cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -146,14 +147,15 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the issn
-   *
+   * 
    * @param issn
    *          the issn
    */
   public synchronized final void setISSN(final String issn) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibBookRecordBuilder.FLAG_ISSN_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibBookRecordBuilder.FLAG_ISSN_SET),
         BibBookRecordBuilder.FLAG_ISSN_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_issn = this.normalize(issn)) == null) {
       throw new IllegalArgumentException(//
           "ISSN name cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -163,27 +165,26 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Create the editors setter
-   *
+   * 
    * @return the editors setter
    */
   public synchronized final BibAuthorsBuilder setEditors() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED
-        | BibBookRecordBuilder.FLAG_EDITORS_SET);
+    this.fsmFlagsAssertFalse(BibBookRecordBuilder.FLAG_EDITORS_SET);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibAuthorsBuilder(this, 1);
   }
 
   /**
    * Set the editors
-   *
+   * 
    * @param editors
    *          the editors list
    */
   public synchronized final void setEditors(final BibAuthors editors) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (_BibBuilder.FLAG_FINALIZED | BibBookRecordBuilder.FLAG_EDITORS_SET),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        BibBookRecordBuilder.FLAG_EDITORS_SET,
         BibBookRecordBuilder.FLAG_EDITORS_SET, FSM.FLAG_NOTHING);
-
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_editors = this.normalize(editors)) == null) {
       throw new IllegalArgumentException(//
           "Cannot set null editors."); //$NON-NLS-1$
@@ -202,14 +203,15 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the isbn
-   *
+   * 
    * @param isbn
    *          the isbn
    */
   public synchronized final void setISBN(final String isbn) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibBookRecordBuilder.FLAG_ISBN_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibBookRecordBuilder.FLAG_ISBN_SET),
         BibBookRecordBuilder.FLAG_ISBN_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_isbn = this.normalize(isbn)) == null) {
       throw new IllegalArgumentException(//
           "ISBN name cannot be set to empty or null, but '" //$NON-NLS-1$

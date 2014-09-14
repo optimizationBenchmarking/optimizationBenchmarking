@@ -287,7 +287,7 @@ public final class TextNumberAppender extends NumberAppender {
 
   /**
    * append tokens
-   *
+   * 
    * @param chars
    *          the chars
    * @param textOut
@@ -301,13 +301,12 @@ public final class TextNumberAppender extends NumberAppender {
 
     status.m_needsSpace = true;
     c = ((status.m_case != null) ? status.m_case : ETextCase.IN_SENTENCE);
-    c.appendWord(chars, textOut);
-    status.m_case = c.nextCase();
+    status.m_case = c.appendWord(chars, textOut);
   }
 
   /**
    * append the thousand chars
-   *
+   * 
    * @param thousand
    *          the thousand to append
    * @param dest
@@ -365,7 +364,7 @@ public final class TextNumberAppender extends NumberAppender {
 
   /**
    * Append a long to a string builder
-   *
+   * 
    * @param number
    *          the number
    * @param dest
@@ -660,7 +659,7 @@ public final class TextNumberAppender extends NumberAppender {
 
   /**
    * read-resolve this object
-   *
+   * 
    * @return the resolved object
    */
   private final Object readResolve() {
@@ -669,7 +668,7 @@ public final class TextNumberAppender extends NumberAppender {
 
   /**
    * write-replace this object
-   *
+   * 
    * @return the replace object
    */
   private final Object writeReplace() {

@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
-import org.optimizationBenchmarking.utils.graphics.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 
 /**
  * The interface to create and draw on figures.

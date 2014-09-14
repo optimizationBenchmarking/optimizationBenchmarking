@@ -185,7 +185,7 @@ public class ELengthTest {
       res = Long.MIN_VALUE;
     }
     if (res != toValue) {
-      if (strict || __isDifferent(toValue, res)) {
+      if (strict || ELengthTest.__isDifferent(toValue, res)) {
         throw new AssertionFailedError("Failed to convert '" + //$NON-NLS-1$
             fromValue + " " + from + //$NON-NLS-1$
             "' to '" + toValue + //$NON-NLS-1$
@@ -203,7 +203,7 @@ public class ELengthTest {
     } catch (final Throwable xxx) {
       re = Double.NaN;
     }
-    if (__isDifferent(toValue, re)) {
+    if (ELengthTest.__isDifferent(toValue, re)) {
       throw new AssertionFailedError("Failed to convert '" + //$NON-NLS-1$
           ((double) fromValue) + " " + from + //$NON-NLS-1$
           "' to '" + ((double) toValue) + //$NON-NLS-1$

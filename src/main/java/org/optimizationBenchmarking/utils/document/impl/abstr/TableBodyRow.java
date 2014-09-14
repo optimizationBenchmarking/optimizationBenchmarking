@@ -12,14 +12,9 @@ public class TableBodyRow extends TableRow {
    * 
    * @param owner
    *          the owning table body
-   * @param index
-   *          the index of the table row in its section
-   * @param totalIndex
-   *          the overall row index
    */
-  protected TableBodyRow(final TableBody owner, final int index,
-      final int totalIndex) {
-    super(owner, index, totalIndex);
+  protected TableBodyRow(final TableBody owner) {
+    super(owner);
   }
 
   /** {@inheritDoc} */
@@ -30,9 +25,9 @@ public class TableBodyRow extends TableRow {
 
   /** {@inheritDoc} */
   @Override
-  protected TableBodyCell createCell(final int rowSpan, final int colSpan,
+  final TableBodyCell createCell(final int rowSpan, final int colSpan,
       final TableCellDef[] def) {
-    return new TableBodyCell(this, rowSpan, colSpan, def);
+    return this.m_driver.createTableBodyCell(this, rowSpan, colSpan, def);
   }
 
   /** {@inheritDoc} */

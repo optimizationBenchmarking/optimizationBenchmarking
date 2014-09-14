@@ -8,7 +8,8 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
  * The output object for the document body. The document body contains the
  * actual document text, sections, graphics, etc.
  */
-public class DocumentBody extends _StyledElement implements IDocumentBody {
+public class DocumentBody extends _StyleProviderPart implements
+    IDocumentBody {
 
   /** the sub-section counter */
   private int m_subsectionCount;
@@ -34,24 +35,12 @@ public class DocumentBody extends _StyledElement implements IDocumentBody {
     return ((Document) (super.getOwner()));
   }
 
-  /**
-   * Create the section
-   * 
-   * @param useLabel
-   *          the label to use
-   * @param index
-   *          the index
-   * @return the section
-   */
-  protected Section createSection(final ILabel useLabel, final int index) {
-    return new Section(this, useLabel, index);
-  }
-
   /** {@inheritDoc} */
   @Override
   public synchronized final Section section(final ILabel useLabel) {
     this.fsmFlagsAssertTrue(DocumentElement.STATE_ALIFE);
-    return this.createSection(useLabel, ++this.m_subsectionCount);
+    return this.m_driver.createSection(this, useLabel,
+        (++this.m_subsectionCount));
   }
 
   /** {@inheritDoc} */

@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * An internal set of id objects.
- *
+ * 
  * @param <OT>
  *          the owner type
  * @param <DT>
@@ -23,7 +23,7 @@ class _NamedIDObjectSet<OT, DT extends _IDObject<?>> extends
 
   /**
    * instantiate
-   *
+   * 
    * @param name
    *          the name of the object
    * @param desc

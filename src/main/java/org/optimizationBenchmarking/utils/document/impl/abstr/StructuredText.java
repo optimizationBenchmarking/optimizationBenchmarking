@@ -1,8 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.document.spec.IStructuredText;
-import org.optimizationBenchmarking.utils.document.spec.IStyle;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /**
  * A structured text
@@ -13,42 +11,22 @@ public class StructuredText extends ComplexText implements IStructuredText {
    * 
    * @param owner
    *          the owning FSM
-   * @param style
-   *          the style
    */
-  protected StructuredText(final HierarchicalFSM owner, final IStyle style) {
-    super(owner, null, style);
-  }
-
-  /**
-   * Create an enumeration
-   * 
-   * @return an enumeration
-   */
-  protected Enumeration createEnumeration() {
-    return new Enumeration(this);
+  protected StructuredText(final DocumentElement owner) {
+    super(owner);
   }
 
   /** {@inheritDoc} */
   @Override
   public final synchronized Enumeration enumeration() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createEnumeration();
-  }
-
-  /**
-   * Create an itemization
-   * 
-   * @return an itemization
-   */
-  protected Itemization createItemization() {
-    return new Itemization(this);
+    return this.m_driver.createEnumeration(this);
   }
 
   /** {@inheritDoc} */
   @Override
   public final synchronized Itemization itemization() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createItemization();
+    return this.m_driver.createItemization(this);
   }
 }

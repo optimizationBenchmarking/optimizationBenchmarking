@@ -5,9 +5,9 @@ import java.nio.file.Path;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.graphics.Graphic;
-import org.optimizationBenchmarking.utils.graphics.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.IGraphicListener;
+import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
+import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -123,9 +123,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
    * 
    * @return the figure caption
    */
-  protected BasicFigureCaption createCaption() {
-    return new BasicFigureCaption(this);
-  }
+  abstract BasicFigureCaption createCaption();
 
   /** {@inheritDoc} */
   @Override
@@ -199,27 +197,13 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
         BasicFigure.STATE_GRAPHIC_CLOSED);
   }
 
-  /**
-   * Create the graphic object to paint on
-   * 
-   * @param listener
-   *          the listener that needs to be passed to that object in order
-   *          for the figure to be notified when it is closed
-   * @param path
-   *          the suggested path
-   * @return the graphic
-   */
-  protected Graphic createGraphic(final IGraphicListener listener,
-      final Path path) {
-    throw new UnsupportedOperationException();
-  }
-
   /** {@inheritDoc} */
   @Override
   public synchronized final Graphic body() {
     this.fsmStateAssertAndSet(BasicFigure.STATE_CAPTION_CLOSED,
         BasicFigure.STATE_GRAPHIC_CREATED);
-    return this.createGraphic(new __GraphicListener(), this.m_path);
+    return this.m_driver.createGraphic(this.m_size,
+        new __GraphicListener(), this.m_path);
   }
 
   /**
@@ -229,7 +213,8 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
    * method, allowing it to remain protected and allowing that
    * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure}
    * does not need to implement
-   * {@link org.optimizationBenchmarking.utils.graphics.IGraphicListener}.
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener}
+   * .
    */
   private final class __GraphicListener implements IGraphicListener {
     /** create */

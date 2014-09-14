@@ -866,4 +866,205 @@ public abstract class FileIODriver<S, L> {
       throws IOException {
     this.loadPath(loadContext, Paths.get(uri), logger, defaultEncoding);
   }
+
+  /**
+   * Load a resource from a package identified by a given class.
+   * 
+   * @param loadContext
+   *          the object to store the load data into
+   * @param clazz
+   *          the class to use to resolve the resource
+   * @param resource
+   *          the resource name
+   * @throws IOException
+   *           if I/O fails
+   */
+  public final void loadResource(final L loadContext,
+      final Class<?> clazz, final String resource) throws IOException {
+    this.loadResource(loadContext, clazz, resource, null,
+        StreamEncoding.UNKNOWN);
+  }
+
+  /**
+   * Load a resource from a package identified by a given class, while
+   * writing logging information to the given logger. The specified
+   * encoding {@code defaultEncoding} is assumed if no encoding can
+   * automatically detected.
+   * 
+   * @param loadContext
+   *          the object to store the load data into
+   * @param clazz
+   *          the class to use to resolve the resource
+   * @param resource
+   *          the resource name
+   * @param logger
+   *          the logger for log output
+   * @param defaultEncoding
+   *          the expected default encoding
+   * @throws IOException
+   *           if I/O fails
+   */
+  public final void loadResource(final L loadContext,
+      final Class<?> clazz, final String resource, final Logger logger,
+      final StreamEncoding<?, ?> defaultEncoding) throws IOException {
+    String cn;
+
+    cn = null;
+    if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+      logger.fine((("Now loading resource '" + resource) + //$NON-NLS-1$
+          "' from class " + (cn = TextUtils.className(clazz))) + '.'); //$NON-NLS-1$
+    }
+
+    try {
+      this.doLoadResource(loadContext, clazz, resource, logger,
+          defaultEncoding);
+    } catch (final Throwable t) {
+      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
+        if (cn == null) {
+          cn = TextUtils.className(clazz);
+        }
+        logger.log(Level.SEVERE,
+            ("Unrecoverable error during loading resource '" + //$NON-NLS-1$ 
+                resource + "' from class "//$NON-NLS-1$
+                + cn + '.'), t);
+      }
+      ErrorUtils.throwAsIOException(t);
+    }
+
+    if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+      if (cn == null) {
+        cn = TextUtils.className(clazz);
+      }
+      logger.fine((("Finished loading resource '" + resource) + //$NON-NLS-1$
+          "' from class " + cn) + '.'); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * Load a resource from a package identified by a given class, while
+   * writing logging information to the given logger. The specified
+   * encoding {@code defaultEncoding} is assumed if no encoding can
+   * automatically detected.
+   * 
+   * @param loadContext
+   *          the object to store the load data into the object to store
+   *          the load data into
+   * @param clazz
+   *          the class to use to resolve the resource
+   * @param resource
+   *          the resource name
+   * @param logger
+   *          the logger for log output
+   * @param defaultEncoding
+   *          the expected default encoding
+   * @throws IOException
+   *           if I/O fails
+   */
+  protected void doLoadResource(final L loadContext, final Class<?> clazz,
+      final String resource, final Logger logger,
+      final StreamEncoding<?, ?> defaultEncoding) throws IOException {
+    this.loadURL(loadContext, clazz.getResource(resource), logger,
+        defaultEncoding);
+  }
+
+  /**
+   * Load a zipped resource from a package identified by a given class.
+   * 
+   * @param loadContext
+   *          the object to store the load data into
+   * @param clazz
+   *          the class to use to resolve the resource
+   * @param resource
+   *          the resource name
+   * @throws IOException
+   *           if I/O fails
+   */
+  public final void loadResourceZIP(final L loadContext,
+      final Class<?> clazz, final String resource) throws IOException {
+    this.loadResourceZIP(loadContext, clazz, resource, null,
+        StreamEncoding.UNKNOWN);
+  }
+
+  /**
+   * Load a zipped resource from a package identified by a given class,
+   * while writing logging information to the given logger. The specified
+   * encoding {@code defaultEncoding} is assumed if no encoding can
+   * automatically detected.
+   * 
+   * @param loadContext
+   *          the object to store the load data into
+   * @param clazz
+   *          the class to use to resolve the resource
+   * @param resource
+   *          the resource name
+   * @param logger
+   *          the logger for log output
+   * @param defaultEncoding
+   *          the expected default encoding
+   * @throws IOException
+   *           if I/O fails
+   */
+  public final void loadResourceZIP(final L loadContext,
+      final Class<?> clazz, final String resource, final Logger logger,
+      final StreamEncoding<?, ?> defaultEncoding) throws IOException {
+    String cn;
+
+    cn = null;
+    if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+      logger.fine((("Now loading zipped resource '" + resource) + //$NON-NLS-1$
+          "' from class " + (cn = TextUtils.className(clazz))) + '.'); //$NON-NLS-1$
+    }
+
+    try {
+      this.doLoadResourceZIP(loadContext, clazz, resource, logger,
+          defaultEncoding);
+    } catch (final Throwable t) {
+      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
+        if (cn == null) {
+          cn = TextUtils.className(clazz);
+        }
+        logger.log(Level.SEVERE,
+            ("Unrecoverable error during loading zipped  resource '" + //$NON-NLS-1$ 
+                resource + "' from class "//$NON-NLS-1$
+                + cn + '.'), t);
+      }
+      ErrorUtils.throwAsIOException(t);
+    }
+
+    if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+      if (cn == null) {
+        cn = TextUtils.className(clazz);
+      }
+      logger.fine((("Finished loading zipped resource '" + resource) + //$NON-NLS-1$
+          "' from class " + cn) + '.'); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * Load a zipped resource from a package identified by a given class,
+   * while writing logging information to the given logger. The specified
+   * encoding {@code defaultEncoding} is assumed if no encoding can
+   * automatically detected.
+   * 
+   * @param loadContext
+   *          the object to store the load data into the object to store
+   *          the load data into
+   * @param clazz
+   *          the class to use to resolve the resource
+   * @param resource
+   *          the resource name
+   * @param logger
+   *          the logger for log output
+   * @param defaultEncoding
+   *          the expected default encoding
+   * @throws IOException
+   *           if I/O fails
+   */
+  protected void doLoadResourceZIP(final L loadContext,
+      final Class<?> clazz, final String resource, final Logger logger,
+      final StreamEncoding<?, ?> defaultEncoding) throws IOException {
+    try (final InputStream is = clazz.getResourceAsStream(resource)) {
+      this.loadZIPArchive(loadContext, is, logger, defaultEncoding);
+    }
+  }
 }

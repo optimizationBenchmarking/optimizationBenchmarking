@@ -1,10 +1,9 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
-/** The base class for text */
+/** The base class for text and mathe content */
 public abstract class PlainText extends DocumentPart implements IPlainText {
 
   /** the encoded text output */
@@ -15,15 +14,13 @@ public abstract class PlainText extends DocumentPart implements IPlainText {
    * 
    * @param owner
    *          the owning FSM
-   * @param out
-   *          the output destination
    */
   @SuppressWarnings("resource")
-  PlainText(final HierarchicalFSM owner, final Appendable out) {
-    super(owner, out);
+  PlainText(final DocumentElement owner) {
+    super(owner);
 
     final ITextOutput to;
-    HierarchicalFSM fsm;
+    DocumentElement fsm;
     PlainText pt;
 
     to = this.getTextOutput();
@@ -32,24 +29,18 @@ public abstract class PlainText extends DocumentPart implements IPlainText {
     // is a PlainText and has the same raw text output as this object, then
     // we can simply use that one as well. Otherwise, we need to invoke
     // Document.encode.
-    fsm = owner;
-    looper: while (fsm != null) {
-      if (fsm instanceof DocumentElement) {
-        if (fsm instanceof PlainText) {
-          pt = ((PlainText) fsm);
-          if (pt.getTextOutput() == to) {
-            this.m_encoded = pt.m_encoded;
-            return;
-          }
-          break looper;
+    looper: for (fsm = owner; fsm != null; fsm = fsm._owner()) {
+      if (fsm instanceof PlainText) {
+        pt = ((PlainText) fsm);
+        if (pt.getTextOutput() == to) {
+          this.m_encoded = pt.m_encoded;
+          return;
         }
-        fsm = ((DocumentElement) fsm)._owner();
-        continue looper;
+        break looper;
       }
-      break looper;
     }
 
-    this.m_encoded = this.m_doc.encode(to);
+    this.m_encoded = this.m_driver.encode(to);
   }
 
   /**
@@ -198,5 +189,11 @@ public abstract class PlainText extends DocumentPart implements IPlainText {
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         DocumentElement.STATE_DEAD);
     super.onClose();
+  }
+
+  @Override
+  public IPlainText inBraces() {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

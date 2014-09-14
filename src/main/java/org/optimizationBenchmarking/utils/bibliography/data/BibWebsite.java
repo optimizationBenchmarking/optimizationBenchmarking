@@ -10,7 +10,7 @@ public final class BibWebsite extends BibRecordWithPublisher {
 
   /**
    * Create a new bibliography record
-   *
+   * 
    * @param authors
    *          the authors
    * @param title
@@ -29,7 +29,7 @@ public final class BibWebsite extends BibRecordWithPublisher {
 
   /**
    * Create the website record
-   *
+   * 
    * @param direct
    *          direct?
    * @param authors
@@ -58,7 +58,7 @@ public final class BibWebsite extends BibRecordWithPublisher {
 
   /**
    * Get the date
-   *
+   * 
    * @return the date
    */
   public final BibDate getDate() {

@@ -18,8 +18,8 @@ public class TableFooter extends TableSection {
 
   /** {@inheritDoc} */
   @Override
-  protected TableFooterRow createRow(final int index, final int totalIndex) {
-    return new TableFooterRow(this, index, totalIndex);
+  final TableFooterRow createRow() {
+    return this.m_driver.createTableFooterRow(this);
   }
 
   /** {@inheritDoc} */

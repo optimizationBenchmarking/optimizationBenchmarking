@@ -54,7 +54,7 @@ final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
 
   /**
    * create
-   *
+   * 
    * @param esb
    *          the experiment set builder to use
    */
@@ -65,7 +65,7 @@ final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
 
   /**
    * Load the path.
-   *
+   * 
    * @param path
    *          the path
    * @param logger
@@ -129,7 +129,7 @@ final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
 
   /**
    * prepare a string for processing
-   *
+   * 
    * @param s
    *          the string
    * @return the result
@@ -154,7 +154,7 @@ final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
 
   /**
    * begin a run
-   *
+   * 
    * @param f
    *          the file
    * @return the run context to use

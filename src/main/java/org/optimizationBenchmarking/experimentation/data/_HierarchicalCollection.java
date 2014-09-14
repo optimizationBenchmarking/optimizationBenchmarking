@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /**
  * the hierarchical experiment set element
- *
+ * 
  * @param <CET>
  *          the collection element type
  * @param <CCT>
@@ -22,7 +22,7 @@ abstract class _HierarchicalCollection<CCT, CET extends _Context<CCT>, RT>
 
   /**
    * create
-   *
+   * 
    * @param owner
    *          the owner
    */
@@ -33,14 +33,14 @@ abstract class _HierarchicalCollection<CCT, CET extends _Context<CCT>, RT>
 
   /**
    * get the allowed child type
-   *
+   * 
    * @return the allowed child type
    */
   abstract Class<CET> _getChildType();
 
   /**
    * process the collection
-   *
+   * 
    * @param data
    *          the data
    * @return the result of processing the collection

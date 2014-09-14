@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -9,10 +10,10 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * {@link org.optimizationBenchmarking.utils.bibliography.data.BibAuthor}
  * objects.
  */
-public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
+public final class BibAuthorBuilder extends BuilderFSM<BibAuthor> {
 
   /** the personal name has been set */
-  private static final int FLAG_PERSONAL_NAME_SET = (_BibBuilder.FLAG_FINALIZED << 1);
+  private static final int FLAG_PERSONAL_NAME_SET = (FSM.FLAG_NOTHING + 1);
   /** the family name has been set */
   private static final int FLAG_FAMILY_NAME_SET = (BibAuthorBuilder.FLAG_PERSONAL_NAME_SET << 1);
   /** the original spelling has been set */
@@ -35,7 +36,7 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
 
   /**
    * create the author builder
-   *
+   * 
    * @param owner
    *          the owner
    */
@@ -70,16 +71,16 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
   /**
    * Set the personal (given, first) name of this author (or editor,
    * supervisor, &hellip;)
-   *
+   * 
    * @param personalName
    *          the personal (given, first) name of this author (or editor,
    *          supervisor, &hellip;)
    */
   public synchronized final void setPersonalName(final String personalName) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibAuthorBuilder.FLAG_PERSONAL_NAME_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibAuthorBuilder.FLAG_PERSONAL_NAME_SET),
         BibAuthorBuilder.FLAG_PERSONAL_NAME_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_personalName = this.normalize(personalName)) == null) {
       throw new IllegalArgumentException(//
           "Personal name cannot be empty or null, but '" //$NON-NLS-1$
@@ -89,16 +90,16 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
 
   /**
    * set the family name of this author (or editor, supervisor, &hellip;)
-   *
+   * 
    * @param familyName
    *          the family name of this author (or editor, supervisor,
    *          &hellip;)
    */
   public synchronized final void setFamilyName(final String familyName) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibAuthorBuilder.FLAG_FAMILY_NAME_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibAuthorBuilder.FLAG_FAMILY_NAME_SET),
         BibAuthorBuilder.FLAG_FAMILY_NAME_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_familyName = this.normalize(familyName)) == null) {
       throw new IllegalArgumentException(//
           "Family name cannot be empty or null, but '" //$NON-NLS-1$
@@ -109,17 +110,17 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
   /**
    * Set the full name of the author, written in an obscure language with
    * no 1:1 transcription to English.
-   *
+   * 
    * @param originalSpelling
    *          the full name of the author, written in an obscure language
    *          with no 1:1 transcription to English
    */
   public synchronized final void setOriginalSpelling(
       final String originalSpelling) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibAuthorBuilder.FLAG_ORIGINAL_SPELLING_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibAuthorBuilder.FLAG_ORIGINAL_SPELLING_SET),
         BibAuthorBuilder.FLAG_ORIGINAL_SPELLING_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_originalSpelling = this.normalize(originalSpelling)) == null) {
       throw new IllegalArgumentException(//
           "If you set the original name spelling, it cannot be empty or null, but '" //$NON-NLS-1$
@@ -130,7 +131,7 @@ public final class BibAuthorBuilder extends _BibBuilder<BibAuthor> {
 
   /** {@inheritDoc} */
   @Override
-  final BibAuthor _compile() {
+  protected final BibAuthor compile() {
     this.fsmFlagsAssertTrue(BibAuthorBuilder.FLAG_PERSONAL_NAME_SET
         | BibAuthorBuilder.FLAG_FAMILY_NAME_SET);
 

@@ -10,7 +10,7 @@ public class Superscript extends Text {
    *          the owning FSM
    */
   public Superscript(final ComplexText owner) {
-    super(owner, null);
+    super(owner);
   }
 
   /** {@inheritDoc} */

@@ -21,7 +21,7 @@ import org.optimizationBenchmarking.utils.parsers.BoundedIntParser;
  * the {@link org.optimizationBenchmarking.experimentation.data experiment
  * data structures}.
  */
-public class BBOBDriver extends FileIODriver<Object, ExperimentSetContext> {
+public class BBOBDriver extends FileIODriver<Void, ExperimentSetContext> {
 
   /** the globally shared instance */
   public static final BBOBDriver INSTANCE = new BBOBDriver();
@@ -71,7 +71,7 @@ public class BBOBDriver extends FileIODriver<Object, ExperimentSetContext> {
 
   /**
    * fill in the dimension set
-   *
+   * 
    * @param esb
    *          the experiment set builder
    */
@@ -99,7 +99,7 @@ public class BBOBDriver extends FileIODriver<Object, ExperimentSetContext> {
 
   /**
    * Make a function name
-   *
+   * 
    * @param id
    *          the function id
    * @param dim
@@ -112,7 +112,7 @@ public class BBOBDriver extends FileIODriver<Object, ExperimentSetContext> {
 
   /**
    * fill in the instance set
-   *
+   * 
    * @param esb
    *          the experiment set builder
    */

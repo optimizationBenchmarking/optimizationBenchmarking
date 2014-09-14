@@ -11,7 +11,7 @@ public class DocumentTitle extends Text {
    *          the owner
    */
   protected DocumentTitle(final DocumentHeader owner) {
-    super(owner, null);
+    super(owner);
   }
 
   /**

@@ -11,7 +11,7 @@ public class FigureSeriesCaption extends ComplexText {
    *          the owner
    */
   public FigureSeriesCaption(final FigureSeries owner) {
-    super(owner, null, DocumentPart._plain(owner));
+    super(owner);
   }
 
   /**

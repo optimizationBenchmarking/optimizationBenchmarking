@@ -4,15 +4,16 @@ import java.net.URI;
 import java.net.URL;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for bibliography records objects. */
-public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
+public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /** the authors have been set */
-  private static final int FLAG_AUTHORS_SET = (_BibBuilder.FLAG_FINALIZED << 1);
+  private static final int FLAG_AUTHORS_SET = (FSM.FLAG_NOTHING + 1);
   /** the title has been set */
   static final int FLAG_TITLE_SET = (BibRecordBuilder.FLAG_AUTHORS_SET << 1);
   /** the date has been set */
@@ -41,13 +42,13 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * create the author builder
-   *
+   * 
    * @param owner
    *          the owner
    */
   BibRecordBuilder(final HierarchicalFSM owner) {
     super(owner);
-    if ((owner == null) || (owner instanceof _BibBuilder)
+    if ((owner == null) || (owner instanceof BuilderFSM)
         || (owner instanceof _BibSetBuilder)) {
       this.m_authors = BibAuthors.EMPTY_AUTHORS;
     } else {
@@ -89,25 +90,26 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Create the authors setter
-   *
+   * 
    * @return the authors setter
    */
   public synchronized final BibAuthorsBuilder setAuthors() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED
-        | BibRecordBuilder.FLAG_AUTHORS_SET);
+    this.fsmFlagsAssertFalse(BibRecordBuilder.FLAG_AUTHORS_SET);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibAuthorsBuilder(this, 0);
   }
 
   /**
    * Set the authors
-   *
+   * 
    * @param authors
    *          the authors list
    */
   public synchronized final void setAuthors(final BibAuthors authors) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (_BibBuilder.FLAG_FINALIZED | BibRecordBuilder.FLAG_AUTHORS_SET),
+        BibRecordBuilder.FLAG_AUTHORS_SET,
         BibRecordBuilder.FLAG_AUTHORS_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
 
     if ((this.m_authors = this.normalize(authors)) == null) {
       throw new IllegalArgumentException(//
@@ -117,25 +119,26 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Create the date setter
-   *
+   * 
    * @return the date setter
    */
   synchronized BibDateBuilder setDate() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED
-        | BibRecordBuilder.FLAG_DATE_SET);
+    this.fsmFlagsAssertFalse(BibRecordBuilder.FLAG_DATE_SET);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibDateBuilder(this, 0);
   }
 
   /**
    * Set the date
-   *
+   * 
    * @param date
    *          the date
    */
   synchronized void setDate(final BibDate date) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (_BibBuilder.FLAG_FINALIZED | BibRecordBuilder.FLAG_DATE_SET),
-        BibRecordBuilder.FLAG_DATE_SET, FSM.FLAG_NOTHING);
+        (BibRecordBuilder.FLAG_DATE_SET), BibRecordBuilder.FLAG_DATE_SET,
+        FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
 
     if ((this.m_date = this.normalize(date)) == null) {
       throw new IllegalArgumentException("Cannot set null date."); //$NON-NLS-1$
@@ -144,14 +147,15 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Set the title
-   *
+   * 
    * @param title
    *          the title
    */
   public synchronized final void setTitle(final String title) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibRecordBuilder.FLAG_TITLE_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibRecordBuilder.FLAG_TITLE_SET),
         BibRecordBuilder.FLAG_TITLE_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_title = this.normalize(title)) == null) {
       throw new IllegalArgumentException(//
           "DocumentTitle cannot be empty or null, but '" //$NON-NLS-1$
@@ -161,14 +165,15 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Set the url
-   *
+   * 
    * @param url
    *          the url
    */
   public synchronized final void setURL(final URI url) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibRecordBuilder.FLAG_URL_SET | _BibBuilder.FLAG_FINALIZED),
-        BibRecordBuilder.FLAG_URL_SET, FSM.FLAG_NOTHING);
+        (BibRecordBuilder.FLAG_URL_SET), BibRecordBuilder.FLAG_URL_SET,
+        FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_url = this.normalize(BibRecord._makeURL(url))) == null) {
       throw new IllegalArgumentException(//
           "URL cannot be set to null"); //$NON-NLS-1$
@@ -177,7 +182,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Set the url
-   *
+   * 
    * @param url
    *          the url
    */
@@ -196,7 +201,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Set the url
-   *
+   * 
    * @param url
    *          the url
    */
@@ -215,14 +220,15 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * Set the doi
-   *
+   * 
    * @param doi
    *          the title
    */
   public synchronized final void setDOI(final String doi) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibRecordBuilder.FLAG_DOI_SET | _BibBuilder.FLAG_FINALIZED),
-        BibRecordBuilder.FLAG_DOI_SET, FSM.FLAG_NOTHING);
+        (BibRecordBuilder.FLAG_DOI_SET), BibRecordBuilder.FLAG_DOI_SET,
+        FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_doi = this.normalize(BibRecord._makeDOI(doi))) == null) {
       throw new IllegalArgumentException(//
           "DOI cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -246,7 +252,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * handle before child opens
-   *
+   * 
    * @param child
    *          the child
    */
@@ -256,7 +262,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * handle a date with a given tag
-   *
+   * 
    * @param date
    *          the date
    * @param tag
@@ -273,7 +279,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * handle a author set with a given tag
-   *
+   * 
    * @param authors
    *          the authors
    * @param tag
@@ -312,7 +318,7 @@ public abstract class BibRecordBuilder extends _BibBuilder<BibRecord> {
 
   /**
    * handle after child closed
-   *
+   * 
    * @param child
    *          the child
    */

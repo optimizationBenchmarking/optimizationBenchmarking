@@ -1,0 +1,6 @@
+normal,1
+thin,0
+thick,2.5
+dashed,1,10,10
+dotted,1,1,5
+dash-dotted,1,10,6,1,6

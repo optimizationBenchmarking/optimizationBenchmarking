@@ -10,7 +10,7 @@ public class InlineMath extends BasicMath {
    *          the owning complex text
    */
   public InlineMath(final ComplexText owner) {
-    super(owner, null);
+    super(owner);
   }
 
   /** {@inheritDoc} */

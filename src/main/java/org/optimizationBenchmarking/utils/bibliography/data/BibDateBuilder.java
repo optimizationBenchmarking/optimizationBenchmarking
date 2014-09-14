@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.parsers.IntParser;
@@ -11,10 +12,10 @@ import org.optimizationBenchmarking.utils.parsers.StringParser;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for date objects. */
-public final class BibDateBuilder extends _BibBuilder<BibDate> {
+public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /** the year has been set */
-  private static final int FLAG_YEAR_SET = (_BibBuilder.FLAG_FINALIZED << 1);
+  private static final int FLAG_YEAR_SET = (FSM.FLAG_NOTHING + 1);
   /** the month has been set */
   private static final int FLAG_MONTH_SET = (BibDateBuilder.FLAG_YEAR_SET << 1);
   /** the quarter has been set */
@@ -44,7 +45,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * create the author builder
-   *
+   * 
    * @param owner
    *          the owner
    */
@@ -54,7 +55,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * create the author builder
-   *
+   * 
    * @param owner
    *          the owner
    * @param tag
@@ -97,14 +98,15 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the year
-   *
+   * 
    * @param year
    *          the year
    */
   public synchronized final void setYear(final int year) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibDateBuilder.FLAG_YEAR_SET | _BibBuilder.FLAG_FINALIZED),
-        BibDateBuilder.FLAG_YEAR_SET, FSM.FLAG_NOTHING);
+        (BibDateBuilder.FLAG_YEAR_SET), BibDateBuilder.FLAG_YEAR_SET,
+        FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if (year <= 0) {
       throw new IllegalArgumentException("Year value " + year + //$NON-NLS-1$
           " is invalid, since years must be positive."); //$NON-NLS-1$
@@ -114,7 +116,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the year
-   *
+   * 
    * @param year
    *          the year
    */
@@ -124,15 +126,15 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the month
-   *
+   * 
    * @param month
    *          the month
    */
   public synchronized final void setMonth(final EBibMonth month) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibDateBuilder.FLAG_MONTH_SET | BibDateBuilder.FLAG_QUARTER_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibDateBuilder.FLAG_MONTH_SET | BibDateBuilder.FLAG_QUARTER_SET),
         BibDateBuilder.FLAG_MONTH_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if (month == null) {
       throw new IllegalArgumentException(
           "Months must not be set to null. Maybe don't set it at all?"); //$NON-NLS-1$
@@ -142,7 +144,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the month
-   *
+   * 
    * @param month
    *          the month
    */
@@ -185,15 +187,16 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the quarter
-   *
+   * 
    * @param quarter
    *          the quarter
    */
   public synchronized final void setQuarter(final EBibQuarter quarter) {
-    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibDateBuilder.FLAG_MONTH_SET | BibDateBuilder.FLAG_QUARTER_SET
-            | BibDateBuilder.FLAG_DAY_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(
+        FSM.FLAG_NOTHING,
+        (BibDateBuilder.FLAG_MONTH_SET | BibDateBuilder.FLAG_QUARTER_SET | BibDateBuilder.FLAG_DAY_SET),
         BibDateBuilder.FLAG_QUARTER_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if (quarter == null) {
       throw new IllegalArgumentException(
           "Quarters must not be set to null. Maybe don't set it at all?"); //$NON-NLS-1$
@@ -203,7 +206,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the quarter
-   *
+   * 
    * @param quarter
    *          the quarter
    */
@@ -246,15 +249,15 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the day
-   *
+   * 
    * @param day
    *          the day
    */
   public synchronized final void setDay(final int day) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibDateBuilder.FLAG_DAY_SET | BibDateBuilder.FLAG_QUARTER_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibDateBuilder.FLAG_DAY_SET | BibDateBuilder.FLAG_QUARTER_SET),
         BibDateBuilder.FLAG_DAY_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if (day <= 0) {
       throw new IllegalArgumentException("Day value " + day + //$NON-NLS-1$
           " is invalid, since days must be positive."); //$NON-NLS-1$
@@ -264,7 +267,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the day
-   *
+   * 
    * @param day
    *          the day
    */
@@ -274,7 +277,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the whole data from a given date object
-   *
+   * 
    * @param date
    *          the date object
    */
@@ -284,7 +287,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the fields from a time stamp
-   *
+   * 
    * @param time
    *          a time stamp
    */
@@ -305,7 +308,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /**
    * Set the whole data from a given calendar
-   *
+   * 
    * @param cal
    *          the calendar
    */
@@ -323,7 +326,7 @@ public final class BibDateBuilder extends _BibBuilder<BibDate> {
 
   /** {@inheritDoc} */
   @Override
-  final BibDate _compile() {
+  protected final BibDate compile() {
     this.fsmFlagsAssertTrue(BibDateBuilder.FLAG_YEAR_SET);
     if (this.m_day > 0) {
       this.fsmFlagsAssertTrue(BibDateBuilder.FLAG_MONTH_SET);

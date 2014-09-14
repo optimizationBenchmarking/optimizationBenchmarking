@@ -55,7 +55,7 @@ public class Itemization extends List<ItemizationItem> {
 
   /** {@inheritDoc} */
   @Override
-  protected ItemizationItem createItem(final int index) {
-    return new ItemizationItem(this, index);
+  final ItemizationItem createItem() {
+    return this.m_driver.createItemizationItem(this);
   }
 }

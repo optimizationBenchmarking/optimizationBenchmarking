@@ -10,7 +10,7 @@ public class Subscript extends Text {
    *          the owning FSM
    */
   public Subscript(final ComplexText owner) {
-    super(owner, null);
+    super(owner);
   }
 
   /** {@inheritDoc} */

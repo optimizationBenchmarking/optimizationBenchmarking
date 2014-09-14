@@ -30,7 +30,7 @@ public final class AlphabeticNumberAppender extends NumberAppender {
 
   /**
    * create
-   *
+   * 
    * @param lower
    *          should we use lower case or upper case numbers?
    */
@@ -109,7 +109,7 @@ public final class AlphabeticNumberAppender extends NumberAppender {
 
   /**
    * read-resolve this object
-   *
+   * 
    * @return the resolved object
    */
   private final Object readResolve() {
@@ -119,7 +119,7 @@ public final class AlphabeticNumberAppender extends NumberAppender {
 
   /**
    * write-replace this object
-   *
+   * 
    * @return the replace object
    */
   private final Object writeReplace() {

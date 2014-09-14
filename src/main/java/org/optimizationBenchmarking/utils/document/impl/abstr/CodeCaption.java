@@ -11,7 +11,7 @@ public class CodeCaption extends ComplexText {
    *          the owner
    */
   public CodeCaption(final Code owner) {
-    super(owner, null, DocumentPart._plain(owner));
+    super(owner);
   }
 
   /**

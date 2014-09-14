@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /** A builder for book chapters */
@@ -37,7 +38,7 @@ public final class BibInCollectionBuilder extends BibInBookBuilder {
    * @return the book builder
    */
   public synchronized final BibBookBuilder setBook() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibBookBuilder(this);
   }
 
@@ -61,7 +62,7 @@ public final class BibInCollectionBuilder extends BibInBookBuilder {
 
   /** {@inheritDoc} */
   @Override
-  final BibInCollection _compile() {
+  protected final BibInCollection compile() {
     this.fsmFlagsAssertTrue(BibInBookBuilder.FLAG_BOOK_SET);
     return new BibInCollection(true, this.m_authors, this.m_title,
         ((BibBook) (this.m_book)), this.m_startPage, this.m_endPage,

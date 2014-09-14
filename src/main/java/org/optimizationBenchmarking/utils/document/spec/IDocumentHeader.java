@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 
 /** The header of a document. */
-public interface IDocumentHeader extends IDocumentPart, IStyleContext {
+public interface IDocumentHeader extends IDocumentPart {
 
   /**
    * Write the document's title

@@ -1,9 +1,11 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
+import org.optimizationBenchmarking.utils.graphics.style.IStyleProvider;
+
 /**
  * The root interface for the document output API.
  */
-public interface IDocument extends IStyleContext {
+public interface IDocument extends IDocumentElement, IStyleProvider {
 
   /**
    * create the document header
@@ -24,7 +26,7 @@ public interface IDocument extends IStyleContext {
    * 
    * @return the document footer
    */
-  public abstract IDocumentFooter footer();
+  public abstract IDocumentBody footer();
 
   /**
    * Create a new label to mark a table or figure or section with that is

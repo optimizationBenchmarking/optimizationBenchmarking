@@ -55,9 +55,9 @@ public enum EMathOperators {
   SQRT(1, 1);
 
   /** the minimum number of parameters */
-  final int m_minParamCount;
+  final int m_minArgumentCount;
   /** the maximum number of parameters */
-  final int m_maxParamCount;
+  final int m_maxArgumentCount;
 
   /**
    * create the math operator
@@ -78,8 +78,8 @@ public enum EMathOperators {
           "The maximum parameter count must be greater or equal to the minimum parameter counter, but is " //$NON-NLS-1$
               + maxParamCount + " vs. " + minParamCount); //$NON-NLS-1$
     }
-    this.m_minParamCount = minParamCount;
-    this.m_maxParamCount = maxParamCount;
+    this.m_minArgumentCount = minParamCount;
+    this.m_maxArgumentCount = maxParamCount;
   }
 
   /**
@@ -87,8 +87,8 @@ public enum EMathOperators {
    * 
    * @return the minimum parameter count
    */
-  public final int getMinimumParamCount() {
-    return this.m_minParamCount;
+  public final int getMinimumArgumentCount() {
+    return this.m_minArgumentCount;
   }
 
   /**
@@ -96,8 +96,8 @@ public enum EMathOperators {
    * 
    * @return the minimum parameter count
    */
-  public final int getMaximumParameterCount() {
-    return this.m_maxParamCount;
+  public final int getMaximumArgumentCount() {
+    return this.m_maxArgumentCount;
   }
 
   /**

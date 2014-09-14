@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * The output object for document header information. The header contains
  * information such as the title or authors of the document.
  */
-public class DocumentHeader extends _StyledElement implements
+public class DocumentHeader extends DocumentPart implements
     IDocumentHeader {
 
   /** an title has been created */
@@ -111,16 +111,7 @@ public class DocumentHeader extends _StyledElement implements
   public final synchronized DocumentTitle title() {
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         DocumentHeader.STATE_TITLE_CREATED);
-    return this.createTitle();
-  }
-
-  /**
-   * Create the title writer
-   * 
-   * @return the title writer
-   */
-  protected DocumentTitle createTitle() {
-    return new DocumentTitle(this);
+    return this.m_driver.createDocumentTitle(this);
   }
 
   /**
@@ -202,16 +193,7 @@ public class DocumentHeader extends _StyledElement implements
   public final synchronized DocumentSummary summary() {
     this.fsmStateAssertAndSet(DocumentHeader.STATE_DATE_AFTER,
         DocumentHeader.STATE_SUMMARY_CREATED);
-    return this.createSummary();
-  }
-
-  /**
-   * Create the summary writer
-   * 
-   * @return the summary writer
-   */
-  protected DocumentSummary createSummary() {
-    return new DocumentSummary(this);
+    return this.m_driver.createDocumentSummary(this);
   }
 
   /** {@inheritDoc} */

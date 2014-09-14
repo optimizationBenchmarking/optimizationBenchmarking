@@ -68,7 +68,7 @@ public class LookupCharTransformer extends CharTransformer {
 
   /**
    * instantiate
-   *
+   * 
    * @param resource
    *          the name of the resource file
    */

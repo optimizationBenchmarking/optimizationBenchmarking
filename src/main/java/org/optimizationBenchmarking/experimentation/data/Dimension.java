@@ -33,7 +33,7 @@ public class Dimension extends _NamedIDObject<DimensionSet> {
 
   /**
    * Create a new dimension
-   *
+   * 
    * @param name
    *          the name of the dimension
    * @param desc
@@ -216,7 +216,7 @@ public class Dimension extends _NamedIDObject<DimensionSet> {
 
   /**
    * Get the parser able to read this type
-   *
+   * 
    * @return the parser able to read this type
    */
   public final NumberParser<Number> getParser() {
@@ -225,7 +225,7 @@ public class Dimension extends _NamedIDObject<DimensionSet> {
 
   /**
    * Get the data class
-   *
+   * 
    * @return the data class
    */
   public final EPrimitiveType getDataType() {
@@ -234,7 +234,7 @@ public class Dimension extends _NamedIDObject<DimensionSet> {
 
   /**
    * Get the dimension type
-   *
+   * 
    * @return the dimension type
    */
   public final EDimensionType getDimensionType() {
@@ -243,7 +243,7 @@ public class Dimension extends _NamedIDObject<DimensionSet> {
 
   /**
    * The direction in which the values of this dimension change over time.
-   *
+   * 
    * @return the direction in which the values of this dimension change
    *         over time
    */
@@ -253,7 +253,7 @@ public class Dimension extends _NamedIDObject<DimensionSet> {
 
   /**
    * Obtain the index of this dimension.
-   *
+   * 
    * @return the index of this dimension.
    */
   public final int getIndex() {

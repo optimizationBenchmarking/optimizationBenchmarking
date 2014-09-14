@@ -29,7 +29,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Create a new bibliography record for things that are parts of book
-   *
+   * 
    * @param authors
    *          the authors
    * @param title
@@ -105,7 +105,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the book containing this chapter or paper
-   *
+   * 
    * @return the bibliography editors
    */
   public BibBookRecord getBook() {
@@ -114,7 +114,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the start page
-   *
+   * 
    * @return the start page
    */
   public final String getStartPage() {
@@ -123,7 +123,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the end page
-   *
+   * 
    * @return the end page
    */
   public final String getEndPage() {
@@ -132,7 +132,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the chapter
-   *
+   * 
    * @return the chapter
    */
   public final String getChapter() {

@@ -13,12 +13,10 @@ public class ListItem extends StructuredText {
    * 
    * @param owner
    *          the owning FSM
-   * @param index
-   *          the item's index
    */
-  protected ListItem(final List<?> owner, final int index) {
-    super(owner, DocumentPart._plain(owner));
-    this.m_index = index;
+  protected ListItem(final List<?> owner) {
+    super(owner);
+    this.m_index = owner.m_index;
   }
 
   /**

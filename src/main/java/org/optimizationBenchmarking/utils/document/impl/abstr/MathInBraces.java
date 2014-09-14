@@ -22,12 +22,22 @@ public final class MathInBraces extends BasicMath {
    * 
    * @param owner
    *          the owning FSM
-   * @param marks
-   *          the marks
    */
-  protected MathInBraces(final BasicMath owner, final int marks) {
-    super(owner, null);
-    this.m_braces = marks;
+  @SuppressWarnings("resource")
+  protected MathInBraces(final BasicMath owner) {
+    super(owner);
+
+    DocumentElement o;
+
+    for (o = owner; o != null; o = o._owner()) {
+
+      if (o instanceof MathInBraces) {
+        this.m_braces = (((MathInBraces) o).m_braces + 1);
+        return;
+      }
+    }
+
+    this.m_braces = 0;
   }
 
   /** {@inheritDoc} */
@@ -37,25 +47,48 @@ public final class MathInBraces extends BasicMath {
   }
 
   /**
+   * Get the brace index
+   * 
+   * @return the brace index
+   */
+  protected final int getBraceIndex() {
+    return this.m_braces;
+  }
+
+  /**
    * Get the brace marks
    * 
    * @return the brace marks
    */
-  public final Braces getBraces() {
+  public Braces getBraces() {
     return MathInBraces.BRACES[this.m_braces];
+  }
+
+  /**
+   * Write the starting brace
+   */
+  protected void writeBegin() {
+    this.m_encoded.append(this.getBraces().getBeginChar());
   }
 
   /** {@inheritDoc} */
   @Override
   protected final synchronized void onOpen() {
     super.onOpen();
-    this.m_encoded.append(this.getBraces().getBeginChar());
+    this.writeBegin();
+  }
+
+  /**
+   * Write the ending brace
+   */
+  protected void writeEnd() {
+    this.m_encoded.append(this.getBraces().getEndChar());
   }
 
   /** {@inheritDoc} */
   @Override
   protected final synchronized void onClose() {
-    this.m_encoded.append(this.getBraces().getEndChar());
+    this.writeEnd();
     super.onClose();
   }
 }

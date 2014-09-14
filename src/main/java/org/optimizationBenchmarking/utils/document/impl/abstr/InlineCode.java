@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
-
 /** A text class for in-line code */
 public class InlineCode extends Text {
 
@@ -11,7 +9,7 @@ public class InlineCode extends Text {
    * @param owner
    *          the owning FSM
    */
-  public InlineCode(final HierarchicalFSM owner) {
-    super(owner, null);
+  public InlineCode(final Text owner) {
+    super(owner);
   }
 }

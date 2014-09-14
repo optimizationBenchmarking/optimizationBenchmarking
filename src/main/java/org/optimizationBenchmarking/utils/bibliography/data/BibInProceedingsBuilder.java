@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /** A builder for conference papers */
@@ -37,7 +38,7 @@ public final class BibInProceedingsBuilder extends BibInBookBuilder {
    * @return the proceedings builder
    */
   public synchronized final BibProceedingsBuilder setProceedings() {
-    this.fsmFlagsAssertFalse(_BibBuilder.FLAG_FINALIZED);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibProceedingsBuilder(this);
   }
 
@@ -61,7 +62,7 @@ public final class BibInProceedingsBuilder extends BibInBookBuilder {
 
   /** {@inheritDoc} */
   @Override
-  final BibInProceedings _compile() {
+  protected final BibInProceedings compile() {
     this.fsmFlagsAssertTrue(BibInBookBuilder.FLAG_BOOK_SET);
     return new BibInProceedings(true, this.m_authors, this.m_title,
         ((BibProceedings) (this.m_book)), this.m_startPage,

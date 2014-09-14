@@ -15,35 +15,35 @@ public class BibDate extends _BibElement<BibDate> {
 
   /**
    * the year
-   *
+   * 
    * @serial positive integer
    */
   final int m_year;
 
   /**
    * the bibliography month
-   *
+   * 
    * @serial serial field
    */
   final EBibMonth m_month;
 
   /**
    * the quarter
-   *
+   * 
    * @serial serial field
    */
   final EBibQuarter m_quarter;
 
   /**
    * the day
-   *
+   * 
    * @serial integer &ge; 0
    */
   final int m_day;
 
   /**
    * Create a new bib date
-   *
+   * 
    * @param year
    *          the year, -1 if undefined
    * @param month
@@ -111,7 +111,7 @@ public class BibDate extends _BibElement<BibDate> {
 
   /**
    * Create a bib date
-   *
+   * 
    * @param year
    *          the year, -1 if undefined
    * @param month
@@ -125,7 +125,7 @@ public class BibDate extends _BibElement<BibDate> {
 
   /**
    * Create a bib date
-   *
+   * 
    * @param year
    *          the year, -1 if undefined
    * @param month
@@ -137,7 +137,7 @@ public class BibDate extends _BibElement<BibDate> {
 
   /**
    * Create a bib date
-   *
+   * 
    * @param year
    *          the year, -1 if undefined
    * @param quarter
@@ -149,7 +149,7 @@ public class BibDate extends _BibElement<BibDate> {
 
   /**
    * Create a bib date
-   *
+   * 
    * @param year
    *          the year, -1 if undefined
    */
@@ -159,7 +159,7 @@ public class BibDate extends _BibElement<BibDate> {
 
   /**
    * Store this date's info into a calendar object
-   *
+   * 
    * @param cal
    *          the calendar object to fill with this date's info
    */
@@ -183,7 +183,7 @@ public class BibDate extends _BibElement<BibDate> {
 
   /**
    * Get the year
-   *
+   * 
    * @return the year
    */
   public final int getYear() {
@@ -192,7 +192,7 @@ public class BibDate extends _BibElement<BibDate> {
 
   /**
    * Get the month
-   *
+   * 
    * @return the month, {@code null} if undefined
    */
   public final EBibMonth getMonth() {
@@ -201,7 +201,7 @@ public class BibDate extends _BibElement<BibDate> {
 
   /**
    * Get the quarter
-   *
+   * 
    * @return the quarter, {@code null} if undefined
    */
   public final EBibQuarter getQuarter() {
@@ -210,7 +210,7 @@ public class BibDate extends _BibElement<BibDate> {
 
   /**
    * Get the day
-   *
+   * 
    * @return the day, {@code -1} if undefined
    */
   public final int getDay() {

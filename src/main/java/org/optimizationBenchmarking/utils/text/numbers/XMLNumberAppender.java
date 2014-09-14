@@ -44,7 +44,7 @@ public final class XMLNumberAppender extends _PlainIntNumberAppender {
 
   /**
    * read-resolve this object
-   *
+   * 
    * @return the resolved object
    */
   private final Object readResolve() {
@@ -53,7 +53,7 @@ public final class XMLNumberAppender extends _PlainIntNumberAppender {
 
   /**
    * write-replace this object
-   *
+   * 
    * @return the replace object
    */
   private final Object writeReplace() {

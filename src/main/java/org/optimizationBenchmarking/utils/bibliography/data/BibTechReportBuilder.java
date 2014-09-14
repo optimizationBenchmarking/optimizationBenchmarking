@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -29,7 +30,7 @@ public final class BibTechReportBuilder extends
 
   /**
    * create the article builder
-   *
+   * 
    * @param owner
    *          the owner
    */
@@ -75,15 +76,15 @@ public final class BibTechReportBuilder extends
 
   /**
    * Set the series
-   *
+   * 
    * @param series
    *          the volume
    */
   public synchronized final void setSeries(final String series) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibTechReportBuilder.FLAG_SERIES_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibTechReportBuilder.FLAG_SERIES_SET),
         BibTechReportBuilder.FLAG_SERIES_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_series = this.normalize(series)) == null) {
       throw new IllegalArgumentException(//
           "Series cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -93,15 +94,15 @@ public final class BibTechReportBuilder extends
 
   /**
    * Set the number
-   *
+   * 
    * @param number
    *          the number
    */
   public synchronized final void setNumber(final String number) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibTechReportBuilder.FLAG_NUMBER_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibTechReportBuilder.FLAG_NUMBER_SET),
         BibTechReportBuilder.FLAG_NUMBER_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_number = this.normalize(number)) == null) {
       throw new IllegalArgumentException(//
           "Number cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -111,14 +112,15 @@ public final class BibTechReportBuilder extends
 
   /**
    * Set the issn
-   *
+   * 
    * @param issn
    *          the issn
    */
   public synchronized final void setISSN(final String issn) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        (BibTechReportBuilder.FLAG_ISSN_SET | _BibBuilder.FLAG_FINALIZED),
+        (BibTechReportBuilder.FLAG_ISSN_SET),
         BibTechReportBuilder.FLAG_ISSN_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_issn = this.normalize(issn)) == null) {
       throw new IllegalArgumentException(//
           "ISSN cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -134,7 +136,7 @@ public final class BibTechReportBuilder extends
 
   /** {@inheritDoc} */
   @Override
-  final BibTechReport _compile() {
+  protected final BibTechReport compile() {
     return new BibTechReport(true, this.m_authors, this.m_title,
         this.m_date, this.m_series, this.m_number, this.m_issn,
         this.m_publisher, this.m_url, this.m_doi);

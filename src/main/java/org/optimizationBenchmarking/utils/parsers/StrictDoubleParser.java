@@ -29,7 +29,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
   /**
    * Parse the string
-   *
+   * 
    * @param string
    *          the string
    * @return the return type
@@ -97,7 +97,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
   /**
    * write replace
-   *
+   * 
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -106,7 +106,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
   /**
    * read resolve
-   *
+   * 
    * @return the replacement
    */
   private final Object readResolve() {

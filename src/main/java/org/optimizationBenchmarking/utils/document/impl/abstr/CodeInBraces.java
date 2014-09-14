@@ -12,7 +12,7 @@ public final class CodeInBraces extends Text {
    *          the owning FSM
    */
   protected CodeInBraces(final CodeBody owner) {
-    super(owner, null);
+    super(owner);
   }
 
   /** {@inheritDoc} */
@@ -26,21 +26,35 @@ public final class CodeInBraces extends Text {
    * 
    * @return the brace marks
    */
-  public final Braces getBraces() {
+  public Braces getBraces() {
     return Braces.PARENTHESES;
+  }
+
+  /**
+   * Write the starting brace
+   */
+  protected void writeBegin() {
+    this.m_encoded.append(this.getBraces().getBeginChar());
   }
 
   /** {@inheritDoc} */
   @Override
   protected final synchronized void onOpen() {
     super.onOpen();
-    this.m_encoded.append(this.getBraces().getBeginChar());
+    this.writeBegin();
+  }
+
+  /**
+   * Write the ending brace
+   */
+  protected void writeEnd() {
+    this.m_encoded.append(this.getBraces().getEndChar());
   }
 
   /** {@inheritDoc} */
   @Override
   protected final synchronized void onClose() {
-    this.m_encoded.append(this.getBraces().getEndChar());
+    this.writeEnd();
     super.onClose();
   }
 }

@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 
 /**
  * The property set.
- *
+ * 
  * @param <PVT>
  *          the property value type
  * @param <PT>
@@ -26,7 +26,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
 
   /**
    * create
-   *
+   * 
    * @param data
    *          the instances
    */
@@ -38,7 +38,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
 
   /**
    * Obtain a property fitting to a given name
-   *
+   * 
    * @param name
    *          the property name
    * @return the property, or {@code null} if none could be found
@@ -78,7 +78,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   *
+   * 
    * @param values
    *          the set of property values
    * @return the property setting
@@ -94,7 +94,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   *
+   * 
    * @param values
    *          the mapping of names to values
    * @return the property setting
@@ -110,7 +110,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   *
+   * 
    * @param values
    *          the mapping of names to values
    * @return the property setting
@@ -127,7 +127,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   *
+   * 
    * @param values
    *          the mapping of names to values
    * @return the property setting
@@ -144,7 +144,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   *
+   * 
    * @param values
    *          the set of property values
    * @return the property setting
@@ -156,7 +156,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
 
   /**
    * create the settings object
-   *
+   * 
    * @param values
    *          the values
    * @param isGeneralized
@@ -171,7 +171,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * All values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.Parameter#generalized()
    * generalized}
-   *
+   * 
    * @param values
    *          the set of parameter values
    * @param fillGeneral

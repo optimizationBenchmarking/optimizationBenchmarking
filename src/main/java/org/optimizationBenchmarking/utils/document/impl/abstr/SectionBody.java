@@ -32,7 +32,7 @@ public class SectionBody extends StructuredText implements ISectionBody {
    *          the owning FSM
    */
   protected SectionBody(final Section owner) {
-    super(owner, DocumentPart._plain(owner));
+    super(owner);
   }
 
   /**
@@ -65,50 +65,13 @@ public class SectionBody extends StructuredText implements ISectionBody {
     return this.createSection(useLabel, (++this.m_subsectionCount));
   }
 
-  /**
-   * Create a table
-   * 
-   * @param useLabel
-   *          the label to use
-   * @param spansAllColumns
-   *          does the table span all columns?
-   * @param index
-   *          the table's index
-   * @param cells
-   *          the cell definition
-   * @return the table
-   */
-  protected Table createTable(final ILabel useLabel,
-      final boolean spansAllColumns, final int index,
-      final TableCellDef... cells) {
-    return new Table(this, useLabel, spansAllColumns, index, cells);
-  }
-
   /** {@inheritDoc} */
   @Override
   public synchronized final Table table(final ILabel useLabel,
       final boolean spansAllColumns, final TableCellDef... cells) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createTable(useLabel, spansAllColumns,
+    return this.m_driver.createTable(this, useLabel, spansAllColumns,
         (++this.m_tableCount), cells);
-  }
-
-  /**
-   * create a new figure
-   * 
-   * @param useLabel
-   *          the label to use
-   * @param size
-   *          the figure size
-   * @param path
-   *          a path where the figure should be stored
-   * @param index
-   *          the figure's index within the section
-   * @return the figure
-   */
-  protected Figure createFigure(final ILabel useLabel,
-      final EFigureSize size, final String path, final int index) {
-    return new Figure(this, useLabel, size, path, index);
   }
 
   /** {@inheritDoc} */
@@ -116,26 +79,8 @@ public class SectionBody extends StructuredText implements ISectionBody {
   public synchronized final Figure figure(final ILabel useLabel,
       final EFigureSize size, final String path) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFigure(useLabel, size, path, (++this.m_figureCount));
-  }
-
-  /**
-   * Create a figure series
-   * 
-   * @param useLabel
-   *          the label to use, or {@code null} if none is needed
-   * @param size
-   *          the size for the figures
-   * @param path
-   *          the relative path, or {@code null} to use an automatically
-   *          chosen path
-   * @param index
-   *          the figure series' index
-   * @return the figure series
-   */
-  protected FigureSeries createFigureSeries(final ILabel useLabel,
-      final EFigureSize size, final String path, final int index) {
-    return new FigureSeries(this, useLabel, size, path, index);
+    return this.m_driver.createFigure(this, useLabel, size, path,
+        (++this.m_figureCount));
   }
 
   /** {@inheritDoc} */
@@ -143,24 +88,8 @@ public class SectionBody extends StructuredText implements ISectionBody {
   public synchronized final FigureSeries figureSeries(
       final ILabel useLabel, final EFigureSize size, final String path) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createFigureSeries(useLabel, size, path,
+    return this.m_driver.createFigureSeries(this, useLabel, size, path,
         (++this.m_figureCount));
-  }
-
-  /**
-   * Create a code block
-   * 
-   * @param useLabel
-   *          the label to use, or {@code null} if none is needed
-   * @param spansAllColumns
-   *          does the table span all columns?
-   * @param index
-   *          the index of the code block
-   * @return the code block
-   */
-  protected Code createCode(final ILabel useLabel,
-      final boolean spansAllColumns, final int index) {
-    return new Code(this, useLabel, spansAllColumns, index);
   }
 
   /** {@inheritDoc} */
@@ -168,28 +97,15 @@ public class SectionBody extends StructuredText implements ISectionBody {
   public synchronized final Code code(final ILabel useLabel,
       final boolean spansAllColumns) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createCode(useLabel, spansAllColumns,//
+    return this.m_driver.createCode(this, useLabel, spansAllColumns,//
         (++this.m_codeCount));
-  }
-
-  /**
-   * Create a equation
-   * 
-   * @param useLabel
-   *          the label to use, or {@code null} if none is needed
-   * @param index
-   *          the index of the equation
-   * @return the equation
-   */
-  protected Equation createEquation(final ILabel useLabel, final int index) {
-    return new Equation(this, useLabel, index);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final Equation equation(final ILabel useLabel) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createEquation(useLabel, (++this.m_equationCount));
+    return this.m_driver.createEquation(this, useLabel,
+        (++this.m_equationCount));
   }
-
 }

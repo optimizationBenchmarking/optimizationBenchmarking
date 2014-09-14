@@ -324,7 +324,7 @@ public final class EDIDriver extends
 
   /**
    * Write an experiment set
-   *
+   * 
    * @param es
    *          the experiment set
    * @param dest
@@ -350,7 +350,7 @@ public final class EDIDriver extends
 
   /**
    * Write an dimension set
-   *
+   * 
    * @param ds
    *          the dimension set
    * @param dest
@@ -480,7 +480,7 @@ public final class EDIDriver extends
 
   /**
    * Write an instance set
-   *
+   * 
    * @param ds
    *          the instance set
    * @param dest
@@ -618,7 +618,7 @@ public final class EDIDriver extends
 
   /**
    * Write the experiments
-   *
+   * 
    * @param e
    *          the experiment
    * @param dest
@@ -740,7 +740,7 @@ public final class EDIDriver extends
 
   /**
    * Write the experiments
-   *
+   * 
    * @param es
    *          the experiments
    * @param dest

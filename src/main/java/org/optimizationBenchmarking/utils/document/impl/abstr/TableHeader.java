@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.document.spec.IStyle;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /**
@@ -17,21 +16,10 @@ public class TableHeader extends TableSection {
     super(owner);
   }
 
-  /**
-   * Get the header cell style
-   * 
-   * @param styles
-   *          the styles
-   * @return the style to use for header cells
-   */
-  protected IStyle headerCellStyle(final StyleSet styles) {
-    return styles.getEmphasizedStyle();
-  }
-
   /** {@inheritDoc} */
   @Override
-  protected TableHeaderRow createRow(final int index, final int totalIndex) {
-    return new TableHeaderRow(this, index, totalIndex);
+  final TableHeaderRow createRow() {
+    return this.m_driver.createTableHeaderRow(this);
   }
 
   /** {@inheritDoc} */

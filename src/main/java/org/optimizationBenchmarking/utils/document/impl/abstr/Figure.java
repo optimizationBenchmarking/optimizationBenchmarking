@@ -47,8 +47,8 @@ public class Figure extends BasicFigure {
 
   /** {@inheritDoc} */
   @Override
-  protected FigureCaption createCaption() {
-    return new FigureCaption(this);
+  final FigureCaption createCaption() {
+    return this.m_driver.createFigureCaption(this);
   }
 
   /** {@inheritDoc} */

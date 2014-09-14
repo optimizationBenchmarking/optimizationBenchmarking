@@ -12,14 +12,9 @@ public class TableFooterRow extends TableRow {
    * 
    * @param owner
    *          the owning table footer
-   * @param index
-   *          the index of the table row in its section
-   * @param totalIndex
-   *          the overall row index
    */
-  protected TableFooterRow(final TableFooter owner, final int index,
-      final int totalIndex) {
-    super(owner, index, totalIndex);
+  protected TableFooterRow(final TableFooter owner) {
+    super(owner);
   }
 
   /** {@inheritDoc} */
@@ -30,9 +25,10 @@ public class TableFooterRow extends TableRow {
 
   /** {@inheritDoc} */
   @Override
-  protected TableFooterCell createCell(final int rowSpan,
-      final int colSpan, final TableCellDef[] def) {
-    return new TableFooterCell(this, rowSpan, colSpan, def);
+  final TableFooterCell createCell(final int rowSpan, final int colSpan,
+      final TableCellDef[] def) {
+    return this.m_driver
+        .createTableFooterCell(this, rowSpan, colSpan, def);
   }
 
   /** {@inheritDoc} */

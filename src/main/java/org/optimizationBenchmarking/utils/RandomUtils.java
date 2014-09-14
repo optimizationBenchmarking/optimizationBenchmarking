@@ -21,7 +21,7 @@ public final class RandomUtils {
    * sequence of unique strings. See method
    * {@link #longToObject(long, boolean)} to create a sequence of unique
    * objects.
-   *
+   * 
    * @param value
    *          the long value
    * @param charset
@@ -43,7 +43,7 @@ public final class RandomUtils {
 
   /**
    * create a string which exactly corresponds to a given long
-   *
+   * 
    * @param value
    *          the long value
    * @param charset
@@ -94,7 +94,7 @@ public final class RandomUtils {
    * All of the objects returned are {@link java.io.Serializable
    * serializable} but not {@link java.lang.Cloneable}.
    * </p>
-   *
+   * 
    * @param value
    *          the value
    * @param maxUnique

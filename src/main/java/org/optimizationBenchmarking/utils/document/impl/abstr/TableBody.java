@@ -18,8 +18,8 @@ public class TableBody extends TableSection {
 
   /** {@inheritDoc} */
   @Override
-  protected TableBodyRow createRow(final int index, final int totalIndex) {
-    return new TableBodyRow(this, index, totalIndex);
+  final TableBodyRow createRow() {
+    return this.m_driver.createTableBodyRow(this);
   }
 
   /** {@inheritDoc} */

@@ -40,7 +40,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * create
-   *
+   * 
    * @param logger
    *          the logger
    * @param esb
@@ -54,7 +54,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * load a stream
-   *
+   * 
    * @param f
    *          the file
    * @param list
@@ -194,7 +194,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * handle a data folder
-   *
+   * 
    * @param dat
    *          the dat file
    * @param tdat
@@ -274,7 +274,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * handle a data folder
-   *
+   * 
    * @param fid
    *          the function index
    * @param dir
@@ -415,7 +415,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * Handle a directory
-   *
+   * 
    * @param dir
    *          the directory
    * @throws Throwable
@@ -524,7 +524,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
   /**
    * Load a given file into the experiment set context
-   *
+   * 
    * @param f
    *          the file
    * @throws Throwable

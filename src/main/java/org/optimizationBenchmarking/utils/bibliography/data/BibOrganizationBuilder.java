@@ -1,15 +1,16 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for organization objects. */
 public final class BibOrganizationBuilder extends
-    _BibBuilder<BibOrganization> {
+    BuilderFSM<BibOrganization> {
 
   /** the organization name has been set */
-  private static final int FLAG_NAME_SET = (_BibBuilder.FLAG_FINALIZED << 1);
+  private static final int FLAG_NAME_SET = (FSM.FLAG_NOTHING + 1);
   /** the organization address has been set */
   private static final int FLAG_ADDRESS_SET = (BibOrganizationBuilder.FLAG_NAME_SET << 1);
   /** the original spelling has been set */
@@ -33,7 +34,7 @@ public final class BibOrganizationBuilder extends
 
   /**
    * create the organization builder
-   *
+   * 
    * @param owner
    *          the owner
    * @param tag
@@ -74,15 +75,15 @@ public final class BibOrganizationBuilder extends
 
   /**
    * Set the name
-   *
+   * 
    * @param name
    *          the name
    */
   public synchronized final void setName(final String name) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibOrganizationBuilder.FLAG_NAME_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibOrganizationBuilder.FLAG_NAME_SET),
         BibOrganizationBuilder.FLAG_NAME_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_name = this.normalize(name)) == null) {
       throw new IllegalArgumentException(//
           "Organization name cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -92,15 +93,15 @@ public final class BibOrganizationBuilder extends
 
   /**
    * Set the original spelling
-   *
+   * 
    * @param orig
    *          the original spelling
    */
   public synchronized final void setOriginalSpelling(final String orig) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibOrganizationBuilder.FLAG_ORIGINAL_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibOrganizationBuilder.FLAG_ORIGINAL_SET),
         BibOrganizationBuilder.FLAG_ORIGINAL_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_originalSpelling = this.normalize(orig)) == null) {
       throw new IllegalArgumentException(//
           "The original spelling of an organization name and address cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -110,15 +111,15 @@ public final class BibOrganizationBuilder extends
 
   /**
    * Set the address
-   *
+   * 
    * @param address
    *          the address
    */
   public synchronized final void setAddress(final String address) {
-    this.fsmFlagsAssertAndUpdate(
-        FSM.FLAG_NOTHING,
-        (BibOrganizationBuilder.FLAG_ADDRESS_SET | _BibBuilder.FLAG_FINALIZED),
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
+        (BibOrganizationBuilder.FLAG_ADDRESS_SET),
         BibOrganizationBuilder.FLAG_ADDRESS_SET, FSM.FLAG_NOTHING);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if ((this.m_address = this.normalize(address)) == null) {
       throw new IllegalArgumentException(//
           "Organization address cannot be set to empty or null, but '" //$NON-NLS-1$
@@ -128,7 +129,7 @@ public final class BibOrganizationBuilder extends
 
   /** {@inheritDoc} */
   @Override
-  final BibOrganization _compile() {
+  protected final BibOrganization compile() {
     return new BibOrganization(true, this.m_name, this.m_address,
         this.m_originalSpelling, this.m_needsName);
   }

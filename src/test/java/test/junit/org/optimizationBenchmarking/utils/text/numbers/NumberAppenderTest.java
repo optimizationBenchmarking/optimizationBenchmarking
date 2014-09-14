@@ -17,7 +17,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
 
   /**
    * create the number appender test
-   *
+   * 
    * @param instance
    *          the instance
    */

@@ -12,14 +12,9 @@ public class TableHeaderRow extends TableRow {
    * 
    * @param owner
    *          the owning table header
-   * @param index
-   *          the index of the table row in its section
-   * @param totalIndex
-   *          the overall row index
    */
-  protected TableHeaderRow(final TableHeader owner, final int index,
-      final int totalIndex) {
-    super(owner, index, totalIndex);
+  protected TableHeaderRow(final TableHeader owner) {
+    super(owner);
   }
 
   /** {@inheritDoc} */

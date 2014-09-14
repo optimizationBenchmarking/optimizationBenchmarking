@@ -17,49 +17,49 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * the editors
-   *
+   * 
    * @serial serial field
    */
   private final BibAuthors m_editors;
 
   /**
    * the series
-   *
+   * 
    * @serial serial field
    */
   private final String m_series;
 
   /**
    * the volume
-   *
+   * 
    * @serial serial field
    */
   private final String m_volume;
 
   /**
    * the edition
-   *
+   * 
    * @serial serial field
    */
   private final String m_edition;
 
   /**
    * the isbn
-   *
+   * 
    * @serial a string
    */
   private final String m_isbn;
 
   /**
    * the issn of the series
-   *
+   * 
    * @serial an issn
    */
   private final String m_issn;
 
   /**
    * Create a new bibliography record
-   *
+   * 
    * @param authors
    *          the authors
    * @param title
@@ -154,7 +154,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the bibliography editors
-   *
+   * 
    * @return the bibliography editors
    */
   public final BibAuthors getEditors() {
@@ -163,7 +163,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the series
-   *
+   * 
    * @return the series
    */
   public final String getSeries() {
@@ -172,7 +172,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the isbn
-   *
+   * 
    * @return the isbn
    */
   public final String getISBN() {
@@ -181,7 +181,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the issn
-   *
+   * 
    * @return the issn
    */
   public final String getISSN() {
@@ -190,7 +190,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the volume
-   *
+   * 
    * @return the volume
    */
   public final String getVolume() {
@@ -199,7 +199,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the edition
-   *
+   * 
    * @return the edition
    */
   public final String getEdition() {

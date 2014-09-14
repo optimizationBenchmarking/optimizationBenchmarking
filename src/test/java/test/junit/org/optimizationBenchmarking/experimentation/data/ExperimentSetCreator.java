@@ -63,7 +63,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * Build an experiment set
-   *
+   * 
    * @return the constructed experiment set
    */
   protected ExperimentSet buildExperimentSet() {
@@ -134,7 +134,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * make more
-   *
+   * 
    * @param d
    *          the double
    * @return more
@@ -163,7 +163,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * make less
-   *
+   * 
    * @param d
    *          the double
    * @return less
@@ -384,7 +384,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that two experiment sets are equal
-   *
+   * 
    * @param a
    *          set a
    * @param b
@@ -439,7 +439,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that parameter values are equal
-   *
+   * 
    * @param a
    *          the parameter value
    * @param b
@@ -514,7 +514,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that two experiment sets are equal
-   *
+   * 
    * @param a
    *          set a
    * @param b
@@ -580,7 +580,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that two experiment sets are equal
-   *
+   * 
    * @param a
    *          set a
    * @param b
@@ -609,7 +609,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that two experiment sets are equal
-   *
+   * 
    * @param a
    *          set a
    * @param b
@@ -638,7 +638,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
   /**
    * assert that two experiment sets are equal
-   *
+   * 
    * @param a
    *          set a
    * @param b

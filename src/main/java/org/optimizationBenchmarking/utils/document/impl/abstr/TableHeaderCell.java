@@ -20,8 +20,7 @@ public class TableHeaderCell extends TableCell {
    */
   public TableHeaderCell(final TableHeaderRow owner, final int cols,
       final int rows, final TableCellDef[] def) {
-    super(owner, cols, rows, def, owner.getOwner().headerCellStyle(//
-        owner.getOwner().getOwner().getOwner().m_styles));
+    super(owner, cols, rows, def);
   }
 
   /** {@inheritDoc} */
