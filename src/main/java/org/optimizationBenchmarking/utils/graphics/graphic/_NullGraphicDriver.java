@@ -1,9 +1,9 @@
 package org.optimizationBenchmarking.utils.graphics.graphic;
 
-import java.awt.geom.Dimension2D;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /** the null driver */
@@ -20,8 +20,9 @@ final class _NullGraphicDriver extends AbstractGraphicDriver {
   /** {@inheritDoc} */
   @Override
   protected final Graphic doCreateGraphic(final GraphicID id,
-      final Dimension2D size, final ELength sizeUnit,
-      final IGraphicListener listener) {
+      final PhysicalDimension size, final IGraphicListener listener) {
+    final ELength sizeUnit;
+    sizeUnit = size.getUnit();
     return new _NullGraphic(listener, id,
         ((sizeUnit == ELength.POINT) ? size : new DoubleDimension(//
             sizeUnit.convertTo(size.getWidth(), ELength.POINT),//

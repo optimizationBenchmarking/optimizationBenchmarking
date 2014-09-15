@@ -16,7 +16,7 @@ final class _ConvertLongMul extends _ConversionFunction {
 
   /**
    * create
-   *
+   * 
    * @param multiplier
    *          the multiplier
    */

@@ -12,7 +12,7 @@ public interface IGraphicListener {
    * this method is the
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.GraphicID
    * id} passed in to the
-   * {@link org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver#createGraphic(GraphicID, java.awt.geom.Dimension2D, org.optimizationBenchmarking.utils.math.units.ELength, IGraphicListener)}
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver#createGraphic(GraphicID, org.optimizationBenchmarking.utils.graphics.PhysicalDimension, IGraphicListener)}
    * method of the graphic driver (and which has been created by the
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver#createGraphicID(java.nio.file.Path)}
    * method of the driver).

@@ -1,6 +1,8 @@
 /**
- * The implementations of the
- * {@link org.optimizationBenchmarking.utils.document.spec hierarchical
- * document output API specification}.
+ * The hierarchical document output
+ * {@link org.optimizationBenchmarking.utils.document.spec API
+ * specification} and its
+ * {@link org.optimizationBenchmarking.utils.document.impl implementations}
+ * .
  */
 package org.optimizationBenchmarking.utils.document.impl;

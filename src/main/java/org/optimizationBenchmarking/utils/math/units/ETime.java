@@ -282,7 +282,7 @@ public enum ETime implements IUnit {
 
   /**
    * Create
-   *
+   * 
    * @param name
    *          the name
    * @param shortcut
@@ -299,7 +299,7 @@ public enum ETime implements IUnit {
 
   /**
    * Create
-   *
+   * 
    * @param name
    *          the name
    * @param shortcut
@@ -311,7 +311,7 @@ public enum ETime implements IUnit {
 
   /**
    * Create the name
-   *
+   * 
    * @param name
    *          the name
    */
@@ -321,7 +321,7 @@ public enum ETime implements IUnit {
 
   /**
    * Get the conversion function
-   *
+   * 
    * @param other
    *          the other unit
    * @return the function
@@ -344,7 +344,7 @@ public enum ETime implements IUnit {
 
   /**
    * Convert a value
-   *
+   * 
    * @param value
    *          the value
    * @param other
@@ -374,7 +374,7 @@ public enum ETime implements IUnit {
 
   /**
    * Convert a value
-   *
+   * 
    * @param value
    *          the value
    * @param other
@@ -437,7 +437,7 @@ public enum ETime implements IUnit {
 
   /**
    * Return the java time unit belonging to this time unit, if any
-   *
+   * 
    * @return the corresponding java time unit, or {@code null} if none
    *         found
    */

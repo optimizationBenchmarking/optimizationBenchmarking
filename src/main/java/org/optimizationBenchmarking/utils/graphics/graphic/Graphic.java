@@ -146,7 +146,7 @@ public abstract class Graphic extends Graphics2D implements Closeable {
     at.transform(a, b);
     r.setFrameFromDiagonal(b, a);
 
-    return this.getClipBounds();
+    return r;
   }
 
   /**

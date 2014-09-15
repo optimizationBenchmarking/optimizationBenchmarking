@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
 
 /**
  * A basic list.
- *
+ * 
  * @param <ET>
  *          the element type
  */
@@ -29,7 +29,7 @@ public class BasicList<ET> extends BasicCollection<ET> implements
 
   /**
    * check an index for accessing the list
-   *
+   * 
    * @param index
    *          the index
    * @param size
@@ -45,7 +45,7 @@ public class BasicList<ET> extends BasicCollection<ET> implements
 
   /**
    * check an index range for accessing the list
-   *
+   * 
    * @param start
    *          the inclusive start index
    * @param end
@@ -70,7 +70,7 @@ public class BasicList<ET> extends BasicCollection<ET> implements
 
   /**
    * check an index for adding to the list
-   *
+   * 
    * @param index
    *          the index
    * @param size
@@ -247,7 +247,7 @@ public class BasicList<ET> extends BasicCollection<ET> implements
    * any succeeding elements to the left (reduces their index). This call
    * shortens the list by {@code (toIndex - fromIndex)} elements. (If
    * {@code toIndex==fromIndex}, this operation has no effect.)
-   *
+   * 
    * @param fromIndex
    *          index of first element to be removed
    * @param toIndex

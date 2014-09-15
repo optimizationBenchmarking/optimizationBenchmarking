@@ -10,7 +10,7 @@ final class _ConvertLongDiv extends _ConversionFunction {
 
   /**
    * create
-   *
+   * 
    * @param divisor
    *          the divisor
    */

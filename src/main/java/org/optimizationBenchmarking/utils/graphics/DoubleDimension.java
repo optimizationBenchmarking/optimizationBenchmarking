@@ -2,17 +2,17 @@ package org.optimizationBenchmarking.utils.graphics;
 
 import java.awt.geom.Dimension2D;
 
-/** A immutable dimension based on {@code double}s <@javaAuthorVersion/> */
+/** A immutable dimension based on {@code double}s */
 public class DoubleDimension extends Dimension2D {
 
   /** the empty dimension */
   public static final DoubleDimension EMPTY = new DoubleDimension(0d, 0d);
 
   /** the width */
-  private final double m_width;
+  final double m_width;
 
   /** the height */
-  private final double m_height;
+  final double m_height;
 
   /**
    * create a new double dimension
@@ -84,14 +84,14 @@ public class DoubleDimension extends Dimension2D {
    *         could entirely contain a rectangle of the size defined by
    *         {@code dim}
    */
-  public final boolean contains(final Dimension2D dim) {
+  public boolean contains(final Dimension2D dim) {
     return ((dim.getWidth() <= this.m_width) && (dim.getHeight() <= this.m_height));
   }
 
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return '(' + String.valueOf(this.m_width) + ','
-        + String.valueOf(this.m_height) + ')';
+    return Double.toString(this.m_width) + 'x'
+        + Double.toString(this.m_height);
   }
 }

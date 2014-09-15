@@ -314,7 +314,7 @@ public class AbstractMatrix implements IMatrix, ITextable {
   /**
    * Copy a given matrix and by using as little permanent memory as
    * possible.
-   *
+   * 
    * @param matrix
    *          the matrix to copy
    * @return the copy of the matrix

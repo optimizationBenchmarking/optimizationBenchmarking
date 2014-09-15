@@ -4,10 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 /**
- * A stream buffer is an output stream which can be turned into an input
- * stream.
- * 
- * @since 0.9.8
+ * This is an output stream which can be turned into an input stream.
  */
 public class ByteArrayIOStream extends ByteArrayOutputStream {
 

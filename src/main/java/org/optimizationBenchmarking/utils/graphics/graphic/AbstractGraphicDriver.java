@@ -2,12 +2,12 @@ package org.optimizationBenchmarking.utils.graphics.graphic;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.geom.Dimension2D;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
@@ -88,32 +88,30 @@ public abstract class AbstractGraphicDriver implements IGraphicDriver {
   /**
    * This method does the actual work of creating a graphic. It is called
    * by
-   * {@link #createGraphic(GraphicID, Dimension2D, ELength, IGraphicListener)}
+   * {@link #createGraphic(GraphicID, PhysicalDimension, IGraphicListener)}
    * which checks all arguments.
    * 
    * @param id
    *          the destination id, <em>must</em> be the result of a call to
    *          {@link #createGraphicID(Path)}
    * @param size
-   *          the size of the graphic, in unit {@code sizeUnit}
-   * @param sizeUnit
-   *          the unit in which the values in {@code size} are specified
+   *          the size of the graphic
    * @param listener
    *          the listener interface to be notified when the graphic is
    *          closed
    * @return the graphic object
    * @see #createGraphicID(Path)
-   * @see #createGraphic(GraphicID, Dimension2D, ELength, IGraphicListener)
+   * @see #createGraphic(GraphicID, PhysicalDimension, IGraphicListener)
    */
   protected abstract Graphic doCreateGraphic(GraphicID id,
-      Dimension2D size, ELength sizeUnit, IGraphicListener listener);
+      PhysicalDimension size, IGraphicListener listener);
 
   /** {@inheritDoc} */
   @Override
   public final Graphic createGraphic(final GraphicID id,
-      final Dimension2D size, final ELength sizeUnit,
-      final IGraphicListener listener) {
+      final PhysicalDimension size, final IGraphicListener listener) {
     final double w, h;
+    final ELength sizeUnit;
     double r;
 
     if (id == null) {
@@ -125,11 +123,8 @@ public abstract class AbstractGraphicDriver implements IGraphicDriver {
       throw new IllegalArgumentException(//
           "Invalid graphic size: " + size);//$NON-NLS-1$
     }
-    if (sizeUnit == null) {
-      throw new IllegalArgumentException(//
-          "Size unit must not be null."); //$NON-NLS-1$
-    }
 
+    sizeUnit = size.getUnit();
     r = sizeUnit.convertTo(w, ELength.M);
     if ((r <= 1e-4) || (r >= 10d)) {
       throw new IllegalArgumentException(//
@@ -154,7 +149,7 @@ public abstract class AbstractGraphicDriver implements IGraphicDriver {
               + " with driver " + this);//$NON-NLS-1$
     }
 
-    return this.doCreateGraphic(id, size, sizeUnit, listener);
+    return this.doCreateGraphic(id, size, listener);
   }
 
   /**

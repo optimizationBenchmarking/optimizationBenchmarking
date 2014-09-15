@@ -13,7 +13,7 @@ public class LongMatrix2D extends AbstractMatrix {
 
   /**
    * create the matrix
-   *
+   * 
    * @param data
    *          the data
    */

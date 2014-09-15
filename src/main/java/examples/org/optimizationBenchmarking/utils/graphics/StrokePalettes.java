@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
@@ -84,8 +84,8 @@ public class StrokePalettes {
     s = styles.size();
 
     try (final Graphic g = driver.createGraphic(driver
-        .createGraphicID(fileBlueprint), new DoubleDimension(160, 160),
-        ELength.MM, null)) {
+        .createGraphicID(fileBlueprint), new PhysicalDimension(160, 160,
+        ELength.MM), null)) {
 
       b = g.getBounds();
       g.setColor(Color.white);

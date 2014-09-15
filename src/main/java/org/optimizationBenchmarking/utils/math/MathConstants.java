@@ -75,7 +75,7 @@ public final class MathConstants {
   public static final double LN_MIN_DOUBLE = Math.log(Double.MIN_VALUE);
 
   /**
-   * multiplying a number {@code s} by {@link #GOLDEN_RATIO} will give you
+   * multiplying a number {@code s} by {@value #GOLDEN_RATIO} will give you
    * the longer part of it if it is cut in the golden ratio
    */
   public static final double GOLDEN_RATIO = (0.5d * (Math.sqrt(5d) - 1d));

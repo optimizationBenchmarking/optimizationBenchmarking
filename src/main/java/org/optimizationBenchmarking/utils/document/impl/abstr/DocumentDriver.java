@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
-import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
@@ -15,7 +15,6 @@ import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
-import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -30,6 +29,15 @@ public abstract class DocumentDriver {
   }
 
   /**
+   * Create a document at the given destination
+   * 
+   * @param destination
+   *          the destination path
+   * @return the document
+   */
+  public abstract Document createDocument(final Path destination);
+
+  /**
    * Obtain the graphics driver
    * 
    * @return the graphics driver
@@ -41,12 +49,9 @@ public abstract class DocumentDriver {
    * 
    * @param size
    *          the size
-   * @param unit
-   *          the length unit
    * @return the translated size
    */
-  protected abstract DoubleDimension translateSize(final EFigureSize size,
-      final ELength unit);
+  protected abstract PhysicalDimension getSize(final EFigureSize size);
 
   /**
    * Create a style set to be used in a
@@ -524,7 +529,7 @@ public abstract class DocumentDriver {
     driver = this.getGraphicDriver();
 
     return driver.createGraphic(driver.createGraphicID(path),
-        this.translateSize(size, ELength.MM), ELength.MM, listener);
+        this.getSize(size), listener);
   }
 
   /**

@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
@@ -80,8 +80,8 @@ public class ColorPalettes {
     Color use;
 
     try (final Graphic g = driver.createGraphic(driver
-        .createGraphicID(fileBlueprint), new DoubleDimension(160, 160),
-        ELength.MM, null)) {
+        .createGraphicID(fileBlueprint), new PhysicalDimension(160, 160,
+        ELength.MM), null)) {
 
       b = g.getBounds();
       g.setFont(new Font("Arial", Font.PLAIN, //$NON-NLS-1$

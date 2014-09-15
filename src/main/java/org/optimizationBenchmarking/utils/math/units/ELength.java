@@ -34,7 +34,8 @@ public enum ELength implements IUnit {
 
   /**
    * <a href=
-   * "http://en.wikipedia.org/wiki/Point_%28typography%29">point</a> according to <a href="
+   * "http://en.wikipedia.org/wiki/Point_%28typography%29">point</a>
+   * according to <a href="
    * http://en.wikipedia.org/wiki/PostScript">PostScript</a> definition
    */
   POINT("point", "pt", "point (postscript)"), //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$

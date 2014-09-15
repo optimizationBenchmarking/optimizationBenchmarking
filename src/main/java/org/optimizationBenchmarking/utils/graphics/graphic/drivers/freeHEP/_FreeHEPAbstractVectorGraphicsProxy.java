@@ -21,9 +21,9 @@ import java.awt.image.ImageObserver;
 import java.text.AttributedCharacterIterator;
 
 import org.freehep.graphics2d.AbstractVectorGraphics;
+import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
 import org.optimizationBenchmarking.utils.graphics.graphic.GraphicProxy;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 
 /**

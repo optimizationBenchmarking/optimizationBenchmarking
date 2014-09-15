@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
 
 /**
  * A factory class for building conversion matrixes.
- *
+ * 
  * @param <E>
  *          the enum type
  */
@@ -27,7 +27,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Create the conversion matrix builder
-   *
+   * 
    * @param count
    *          the number of elements
    */
@@ -38,7 +38,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Set a conversion factor between two elements.
-   *
+   * 
    * @param from
    *          the source unit
    * @param to
@@ -210,7 +210,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Set a conversion factor between two elements.
-   *
+   * 
    * @param from
    *          the source unit
    * @param to
@@ -226,7 +226,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Set a conversion factor between two elements.
-   *
+   * 
    * @param from
    *          the source unit
    * @param to
@@ -242,7 +242,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Set a conversion factor between two elements.
-   *
+   * 
    * @param from
    *          the source unit
    * @param to
@@ -258,7 +258,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Set a conversion factor between two elements.
-   *
+   * 
    * @param from
    *          the source unit
    * @param to
@@ -274,7 +274,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Multiply two numbers
-   *
+   * 
    * @param a
    *          the first number
    * @param b
@@ -358,7 +358,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Multiply two longs
-   *
+   * 
    * @param a
    *          the first long
    * @param b
@@ -397,7 +397,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
 
   /**
    * Compile this conversion matrix
-   *
+   * 
    * @return the compiled matrix
    */
   public final UnaryFunction[][] compile() {

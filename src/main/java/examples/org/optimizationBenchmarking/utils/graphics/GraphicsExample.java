@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import javax.swing.JList;
 import javax.swing.border.BevelBorder;
 
-import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
@@ -43,10 +43,9 @@ public final class GraphicsExample implements IGraphicListener {
       new ImageIOGIFGraphicDriver(EColorModel.RBGA_32_BIT, 600),
       EGraphicFormat.NULL.getDefaultDriver() };
 
-  /** the width in mm */
-  private static final double WIDTH_MM = 100d;
-  /** the height in mm */
-  private static final double HEIGHT_MM = (MathConstants.GOLDEN_RATIO * GraphicsExample.WIDTH_MM);
+  /** the size */
+  private static final PhysicalDimension SIZE = new PhysicalDimension(
+      100d, (MathConstants.GOLDEN_RATIO * 100d), ELength.MM);
 
   /**
    * run the example: there are problems with the pdf output
@@ -58,7 +57,6 @@ public final class GraphicsExample implements IGraphicListener {
    */
   public static final void main(final String[] args) throws IOException {
     final Path dir, fileBlueprint;
-    final DoubleDimension dim;
     final IGraphicListener listener;
 
     if ((args != null) && (args.length > 0)) {
@@ -69,13 +67,11 @@ public final class GraphicsExample implements IGraphicListener {
 
     fileBlueprint = dir.resolve("example"); //$NON-NLS-1$    
     listener = new GraphicsExample();
-    dim = new DoubleDimension(GraphicsExample.WIDTH_MM,
-        GraphicsExample.HEIGHT_MM);
 
     for (final IGraphicDriver driver : GraphicsExample.DRIVERS) {
-      try (final Graphic g = driver
-          .createGraphic(driver.createGraphicID(fileBlueprint), dim,
-              ELength.MM, listener)) {
+      try (final Graphic g = driver.createGraphic(
+          driver.createGraphicID(fileBlueprint), GraphicsExample.SIZE,
+          listener)) {
         for (int i = 1; i < 50; i++) {
           GraphicsExample.__paint(g);
           GraphicsExample.__paintComponent(g);
@@ -144,19 +140,21 @@ public final class GraphicsExample implements IGraphicListener {
     for (i = 0; i < 10; i++) {
       r.setRect(
           bounds.getX()
-              + mmToDev.compute((GraphicsExample.WIDTH_MM / 10d) * i),//
+              + mmToDev.compute((GraphicsExample.SIZE.getWidth() / 10d)
+                  * i),//
           bounds.getY(), //
-          mmToDev.compute(GraphicsExample.WIDTH_MM / 10d),//
-          mmToDev.compute((GraphicsExample.WIDTH_MM / 10d)));
+          mmToDev.compute(GraphicsExample.SIZE.getWidth() / 10d),//
+          mmToDev.compute((GraphicsExample.SIZE.getWidth() / 10d)));
       g.setColor(new Color(0f, ((i + 1) / 12f), 0f));
       g.fill(r);
 
       r.setRect(
           bounds.getX(),//
           bounds.getY()
-              + mmToDev.compute((GraphicsExample.HEIGHT_MM / 10d) * i), //
-          mmToDev.compute(GraphicsExample.HEIGHT_MM / 10d),//
-          mmToDev.compute((GraphicsExample.HEIGHT_MM / 10d)));
+              + mmToDev.compute((GraphicsExample.SIZE.getHeight() / 10d)
+                  * i), //
+          mmToDev.compute(GraphicsExample.SIZE.getHeight() / 10d),//
+          mmToDev.compute((GraphicsExample.SIZE.getHeight() / 10d)));
       g.setColor(new Color(0f, 0f, (((9 - i) + 1) / 12f)));
       g.fill(r);
     }
@@ -164,19 +162,21 @@ public final class GraphicsExample implements IGraphicListener {
     for (i = 0; i < 10; i++) {
       r.setRect(
           bounds.getX()
-              + mmToDev.compute((GraphicsExample.WIDTH_MM / 10d) * i),//
+              + mmToDev.compute((GraphicsExample.SIZE.getWidth() / 10d)
+                  * i),//
           bounds.getY(), //
-          mmToDev.compute(GraphicsExample.WIDTH_MM / 10d),//
-          mmToDev.compute((GraphicsExample.WIDTH_MM / 10d)));
+          mmToDev.compute(GraphicsExample.SIZE.getWidth() / 10d),//
+          mmToDev.compute((GraphicsExample.SIZE.getWidth() / 10d)));
       g.setColor(new Color(((i + 1) / 12f), (((9 - i) + 1) / 12f), 0f));
       g.draw(r);
 
       r.setRect(
           bounds.getX(),//
           bounds.getY()
-              + mmToDev.compute((GraphicsExample.HEIGHT_MM / 10d) * i), //
-          mmToDev.compute(GraphicsExample.HEIGHT_MM / 10d),//
-          mmToDev.compute((GraphicsExample.HEIGHT_MM / 10d)));
+              + mmToDev.compute((GraphicsExample.SIZE.getHeight() / 10d)
+                  * i), //
+          mmToDev.compute(GraphicsExample.SIZE.getHeight() / 10d),//
+          mmToDev.compute((GraphicsExample.SIZE.getHeight() / 10d)));
       g.setColor(new Color((((9 - i) + 1) / 12f), 0f, ((i + 1) / 12f)));
       g.draw(r);
     }
@@ -191,46 +191,46 @@ public final class GraphicsExample implements IGraphicListener {
       g.setStroke(new BasicStroke(((BasicStroke) s).getLineWidth() * 0.5f));
     }
     g.drawLine(bounds.getX(), bounds.getY(),//
-        bounds.getX() + mmToDev.compute(GraphicsExample.WIDTH_MM),//
-        bounds.getY() + mmToDev.compute(GraphicsExample.HEIGHT_MM));
+        bounds.getX() + mmToDev.compute(GraphicsExample.SIZE.getWidth()),//
+        bounds.getY() + mmToDev.compute(GraphicsExample.SIZE.getHeight()));
     g.setStroke(s);
 
     g.setFont(new Font("Courier New", //$NON-NLS-1$
         Font.PLAIN, ((int) (0.5d + ELength.MM.convertTo(
-            (GraphicsExample.HEIGHT_MM / 10d), ELength.MM)))));
+            (GraphicsExample.SIZE.getHeight() / 10d), ELength.MM)))));
     g.setColor(Color.YELLOW);
     g.drawString("Text with 1/10th of a line hight",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev
-            .compute(GraphicsExample.HEIGHT_MM / 10)))),//
+        (0.5d + (bounds.getX() + (mmToDev.compute(GraphicsExample.SIZE
+            .getHeight() / 10)))),//
         (0.5d + (bounds.getY() + (mmToDev
-            .compute((3d * GraphicsExample.HEIGHT_MM) / 10d)))));
+            .compute((3d * GraphicsExample.SIZE.getHeight()) / 10d)))));
 
     g.setFont(new Font("Arial", //$NON-NLS-1$
         Font.PLAIN, 18));
     g.setColor(Color.YELLOW);
     g.drawString("Font: 18pt",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev
-            .compute(GraphicsExample.HEIGHT_MM / 10)))),//
+        (0.5d + (bounds.getX() + (mmToDev.compute(GraphicsExample.SIZE
+            .getHeight() / 10)))),//
         (0.5d + (bounds.getY() + (mmToDev
-            .compute((5d * GraphicsExample.HEIGHT_MM) / 10d)))));
+            .compute((5d * GraphicsExample.SIZE.getHeight()) / 10d)))));
 
     g.setFont(new Font("Times New Roman", //$NON-NLS-1$
         Font.PLAIN, 16));
     g.setColor(Color.YELLOW);
     g.drawString("Font: 16pt",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev
-            .compute(GraphicsExample.HEIGHT_MM / 10)))),//
+        (0.5d + (bounds.getX() + (mmToDev.compute(GraphicsExample.SIZE
+            .getHeight() / 10)))),//
         (0.5d + (bounds.getY() + (mmToDev
-            .compute((7d * GraphicsExample.HEIGHT_MM) / 10d)))));
+            .compute((7d * GraphicsExample.SIZE.getHeight()) / 10d)))));
 
     g.setFont(new Font("Dialog", //$NON-NLS-1$
         Font.PLAIN, 14));
     g.setColor(Color.YELLOW);
     g.drawString("Font: 14pt",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev
-            .compute(GraphicsExample.HEIGHT_MM / 10)))),//
+        (0.5d + (bounds.getX() + (mmToDev.compute(GraphicsExample.SIZE
+            .getHeight() / 10)))),//
         (0.5d + (bounds.getY() + (mmToDev
-            .compute((9d * GraphicsExample.HEIGHT_MM) / 10d)))));
+            .compute((9d * GraphicsExample.SIZE.getHeight()) / 10d)))));
   }
 
   /** the forbidden constructor */

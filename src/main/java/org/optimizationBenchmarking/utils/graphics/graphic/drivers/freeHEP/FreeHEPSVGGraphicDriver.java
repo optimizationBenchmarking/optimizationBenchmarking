@@ -2,11 +2,11 @@ package org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.geom.Dimension2D;
 import java.io.OutputStream;
 
 import org.freehep.graphicsio.svg.SVGGraphics2D;
 import org.freehep.util.UserProperties;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
@@ -49,17 +49,18 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
   @SuppressWarnings("resource")
   @Override
   protected final Graphic doCreateGraphic(final GraphicID id,
-      final Dimension2D size, final ELength sizeUnit,
-      final IGraphicListener listener) {
+      final PhysicalDimension size, final IGraphicListener listener) {
     final UserProperties up;
     final SVGGraphics2D g;
     final double wd, hd;
     final Dimension dim;
     final OutputStream os;
+    final ELength sizeUnit;
 
     up = new UserProperties();
     up.putAll(this.m_props);
 
+    sizeUnit = size.getUnit();
     wd = sizeUnit.convertTo(size.getWidth(), ELength.POINT);
     hd = sizeUnit.convertTo(size.getHeight(), ELength.POINT);
     dim = new Dimension();

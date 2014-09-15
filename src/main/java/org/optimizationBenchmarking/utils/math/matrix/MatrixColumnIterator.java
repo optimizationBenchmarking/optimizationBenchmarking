@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 /**
  * An iterator iterating over matrix columns.
- *
+ * 
  * @param <OT>
  *          the matrix type
  */
@@ -14,7 +14,7 @@ public class MatrixColumnIterator<OT extends IMatrix> extends
 
   /**
    * create
-   *
+   * 
    * @param owner
    *          the owning matrix
    */

@@ -27,7 +27,7 @@ public final class MyBibliography {
 
   /**
    * create my bibliography
-   *
+   * 
    * @return the bibliography
    */
   public static final Bibliography createMyBibliography() {
@@ -49,7 +49,7 @@ public final class MyBibliography {
 
   /**
    * make paper TYW2012SSOECFLSGO
-   *
+   * 
    * @param bb
    *          the builder
    */
@@ -86,7 +86,7 @@ public final class MyBibliography {
 
   /**
    * make paper WWTWDY2014FFA
-   *
+   * 
    * @param bb
    *          the builder
    */
@@ -137,7 +137,7 @@ public final class MyBibliography {
 
   /**
    * make paper DWT2011ASOSRFEOOGS
-   *
+   * 
    * @param bb
    *          the builder
    */
@@ -181,7 +181,7 @@ public final class MyBibliography {
 
   /**
    * make paper WZKG2009DGPFz
-   *
+   * 
    * @param bb
    *          the builder
    */
@@ -229,7 +229,7 @@ public final class MyBibliography {
 
   /**
    * make paper WZKG2007DGPFg
-   *
+   * 
    * @param bb
    *          the builder
    */
@@ -310,7 +310,7 @@ public final class MyBibliography {
 
   /**
    * make paper WWTY2014EEIAWGP
-   *
+   * 
    * @param bb
    *          the builder
    */
@@ -366,7 +366,7 @@ public final class MyBibliography {
 
   /**
    * make paper PROC2013IDEAL
-   *
+   * 
    * @param bb
    *          the builder
    */
@@ -434,7 +434,7 @@ public final class MyBibliography {
 
   /**
    * make paper CWM2011VOEAFRWA
-   *
+   * 
    * @param bb
    *          the builder
    */
@@ -471,7 +471,7 @@ public final class MyBibliography {
 
   /**
    * The main routine, printing my bibliography
-   *
+   * 
    * @param args
    *          the command line arguments: ignored
    */

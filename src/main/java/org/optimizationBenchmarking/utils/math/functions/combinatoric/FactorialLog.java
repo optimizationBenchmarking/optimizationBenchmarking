@@ -39,7 +39,7 @@ public final class FactorialLog extends UnaryFunction {
 
   /**
    * precisely compute the factorial log
-   *
+   * 
    * @param start
    *          the start
    * @param end
@@ -60,7 +60,7 @@ public final class FactorialLog extends UnaryFunction {
 
   /**
    * precisely compute the factorial log
-   *
+   * 
    * @param start
    *          the start
    * @param end
@@ -82,7 +82,7 @@ public final class FactorialLog extends UnaryFunction {
 
   /**
    * compute the factorial of a number i
-   *
+   * 
    * @param i
    *          the number
    * @return the factorial of <code>i</Coe
@@ -123,7 +123,7 @@ public final class FactorialLog extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   *
+   * 
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -135,7 +135,7 @@ public final class FactorialLog extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   *
+   * 
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

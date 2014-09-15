@@ -1,9 +1,9 @@
 package org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaster;
 
 import java.awt.Graphics2D;
-import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
@@ -53,19 +53,20 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
   /** {@inheritDoc} */
   @Override
   protected final Graphic doCreateGraphic(final GraphicID id,
-      final Dimension2D size, final ELength sizeUnit,
-      final IGraphicListener listener) {
+      final PhysicalDimension size, final IGraphicListener listener) {
     final BufferedImage img;
     final Graphics2D g;
     final double w, h, wIn, hIn, hDPI, wDPI;
     final int wPt, hPt, wPx, hPx;
+    final ELength sizeUnit;
 
     w = size.getWidth();
     h = size.getHeight();
-    wPt = Math
-        .max(1, ((int) ((0.5d + sizeUnit.convertTo(w, ELength.PT)))));
-    hPt = Math
-        .max(1, ((int) ((0.5d + sizeUnit.convertTo(h, ELength.PT)))));
+    sizeUnit = size.getUnit();
+    wPt = Math.max(1, ((int) ((0.5d + //
+        sizeUnit.convertTo(w, ELength.PT)))));
+    hPt = Math.max(1, ((int) ((0.5d + //
+        sizeUnit.convertTo(h, ELength.PT)))));
 
     wIn = ELength.PT.convertTo(((double) wPt), ELength.INCH);
     hIn = ELength.PT.convertTo(((double) hPt), ELength.INCH);
