@@ -3,16 +3,16 @@ package org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.OutputStream;
+import java.nio.file.Path;
 
 import org.freehep.graphicsio.FontConstants;
 import org.freehep.graphicsio.PageConstants;
 import org.freehep.graphicsio.pdf.PDFGraphics2D;
 import org.freehep.util.UserProperties;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
@@ -46,7 +46,7 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
 
   /** the hidden constructor */
   private FreeHEPPDFGraphicDriver() {
-    super(".pdf"); //$NON-NLS-1$
+    super("pdf"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
 
@@ -75,15 +75,14 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("resource")
   @Override
-  protected final Graphic doCreateGraphic(final GraphicID id,
-      final PhysicalDimension size, final IGraphicListener listener) {
+  protected final Graphic doCreateGraphic(final Path path,
+      final OutputStream os, final PhysicalDimension size,
+      final IObjectListener listener) {
     final UserProperties up;
     final PDFGraphics2D g;
     final double wd, hd;
     final Dimension dim;
-    final OutputStream os;
     final ELength sizeUnit;
 
     up = new UserProperties();
@@ -101,7 +100,6 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
           " translated to " + dim);//$NON-NLS-1$
     }
 
-    os = AbstractGraphicDriver.createOutputStream(id);
     synchronized (PageConstants.class) {
       this.m_messWith.setSize(dim);
       try {
@@ -121,7 +119,7 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
       }
     }
 
-    return new _FreeHEPPDFGraphic(g, id, listener, dim.width, dim.height);
+    return new _FreeHEPPDFGraphic(g, path, listener, dim.width, dim.height);
   }
 
 }

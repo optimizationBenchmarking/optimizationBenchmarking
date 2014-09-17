@@ -1,8 +1,12 @@
 package org.optimizationBenchmarking.utils.graphics.graphic;
 
+import java.io.OutputStream;
 import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
+import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
 
 /**
  * An interface for graphics drivers, i.e., objects that can create
@@ -11,53 +15,65 @@ import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 public interface IGraphicDriver {
 
   /**
-   * <p>
-   * Create a graphic ID based on the given path {@code suggestion}. The
-   * graphic driver may use the path {@code suggestion} directly as graphic
-   * path, it may append a file extension, or it may perform any other
-   * modification. This method has two main purposes:
-   * <ol>
-   * <li>It keeps the file base-name generation independent from the type
-   * of file which the
-   * {@link org.optimizationBenchmarking.utils.graphics.graphic.Graphic}
-   * produces.</li>
-   * <li>It provides a unique identifier for each graphic that can be
-   * passed to the
-   * {@link org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener#onGraphicClosed(GraphicID)}
-   * method of the
-   * {@link org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener
-   * graphic listener interface}.</li>
-   * </ol>
-   * <p>
-   * Each graphic id can only be used at most once.
-   * </p>
+   * Create a graphics object with the size {@code size} in the length unit
+   * {@code size.getUnit()}. If the resulting object is an object which
+   * writes contents to a file, then it will write its contents to a file
+   * in the specified by {@code folder}. The file name will be generated
+   * based on a {@code nameSuggestion}. It may be slightly different,
+   * though, maybe with a different suffix. Once the graphic is
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.Graphic#close()
+   * closed}, it will notify the provided {@code listener} interface
+   * (unless {@code listener==null}).
    * 
-   * @param suggestion
-   *          the suggested path
-   * @return an id that can be passed to
-   *         {@link #createGraphic(GraphicID, PhysicalDimension, IGraphicListener)}
-   * @see #createGraphic(GraphicID, PhysicalDimension, IGraphicListener)
-   */
-  public abstract GraphicID createGraphicID(final Path suggestion);
-
-  /**
-   * Create a graphics object which writes its contents to the destination
-   * identified by {@code id}, has the size {@code size} in the length unit
-   * {@code size.getUnit()} and which will notify the provided
-   * {@code listener} interface when it is closed.
-   * 
-   * @param id
-   *          the destination id, <em>must</em> be the result of a call to
-   *          {@link #createGraphicID(Path)}
+   * @param folder
+   *          the folder to create the graphic in
+   * @param nameSuggestion
+   *          the name suggestion
    * @param size
    *          the size of the graphic
    * @param listener
    *          the listener interface to be notified when the graphic is
    *          closed
    * @return the graphic object
-   * @see #createGraphicID(Path)
    */
-  public abstract Graphic createGraphic(final GraphicID id,
-      final PhysicalDimension size, final IGraphicListener listener);
+  public abstract Graphic createGraphic(final Path folder,
+      final String nameSuggestion, final PhysicalDimension size,
+      final IObjectListener listener);
 
+  /**
+   * Create a graphics object with the size {@code size} in the length unit
+   * {@code size.getUnit()}. If the resulting object is an object which
+   * writes contents to a stream, then it will write its contents to the
+   * stream in the specified in {@code os}. The file name will be generated
+   * based on a {@code nameSuggestion}. It may be slightly different,
+   * though, maybe with a different suffix. Once the graphic is
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.Graphic#close()
+   * closed}, it will notify the provided {@code listener} interface
+   * (unless {@code listener==null}).
+   * 
+   * @param os
+   *          the output stream to write to
+   * @param size
+   *          the size of the graphic
+   * @param listener
+   *          the listener interface to be notified when the graphic is
+   *          closed
+   * @return the graphic object
+   */
+  public abstract Graphic createGraphic(final OutputStream os,
+      final PhysicalDimension size, final IObjectListener listener);
+
+  /**
+   * Get the default color palette associated with this graphic driver
+   * 
+   * @return the default color palette associated with this graphic driver
+   */
+  public abstract ColorPalette getColorPalette();
+
+  /**
+   * Get the default stroke palette associated with this graphic driver
+   * 
+   * @return the default stroke palette associated with this graphic driver
+   */
+  public abstract StrokePalette getStrokePalette();
 }

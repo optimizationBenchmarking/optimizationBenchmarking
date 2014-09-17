@@ -2,10 +2,11 @@ package org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaste
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.OutputStream;
+import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 
 /**
@@ -68,11 +69,11 @@ public final class ImageIOJPEGGraphicDriver extends
 
   /** {@inheritDoc} */
   @Override
-  final _ImageIORasterGraphic _create(final GraphicID id,
-      final IGraphicListener listener, final BufferedImage img,
-      final Graphics2D g, final int w, final int h, final double xDPI,
-      final double yDPI, final String type) {
-    return new _ImageIOJPEGGraphic(id, listener, img, g, w, h, xDPI, yDPI,
-        this.m_quality, type);
+  final _ImageIORasterGraphic _create(final Path path,
+      final OutputStream os, final IObjectListener listener,
+      final BufferedImage img, final Graphics2D g, final int w,
+      final int h, final double xDPI, final double yDPI, final String type) {
+    return new _ImageIOJPEGGraphic(path, os, listener, img, g, w, h, xDPI,
+        yDPI, this.m_quality, type);
   }
 }

@@ -12,10 +12,10 @@ public abstract class ComplexObject extends DocumentPart {
   /** the index in the owning context */
   final int m_index;
 
-  /** the full id of the object, only identifying it in the owning context */
+  /** the full id of the object, globally identifying it */
   final String m_globalID;
 
-  /** the short id of the object, globally identifying it */
+  /** the short id of the object, only identifying it in the owning context */
   final String m_localID;
 
   /** the label of the object */

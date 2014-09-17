@@ -1,20 +1,26 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
 import java.nio.file.Path;
+import java.util.LinkedHashSet;
 
 import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * The root object for the document API.
  */
-public abstract class Document extends DocumentElement implements
-    IDocument {
+public class Document extends DocumentElement implements IDocument {
 
   /** the state when the header has been created */
   private static final int STATE_HEADER_CREATED = (DocumentElement.STATE_MAX_ELEMENT + 1);
@@ -69,25 +75,32 @@ public abstract class Document extends DocumentElement implements
   /** the base path, i.e., the folder containing the document */
   final Path m_basePath;
 
+  /** the paths */
+  private final LinkedHashSet<Path> m_paths;
+
   /** a citations builder */
   CitationsBuilder m_citations;
 
   /** the path to the document's main file */
   private final Path m_documentPath;
 
+  /** the object listener */
+  private final IObjectListener m_listener;
+
   /**
    * Create a document.
    * 
    * @param driver
    *          the document driver
-   * @param out
-   *          the output destination
    * @param docPath
    *          the path to the document
+   * @param listener
+   *          the object listener the object listener
    */
-  protected Document(final DocumentDriver driver, final Appendable out,
-      final Path docPath) {
-    super(driver, out);
+  protected Document(final DocumentDriver driver, final Path docPath,
+      final IObjectListener listener) {
+    super(driver, new BufferedWriter(new OutputStreamWriter(
+        PathUtils.openOutputStream(docPath))));
 
     this.m_styles = driver.createStyleSet();
     if (this.m_styles == null) {
@@ -101,16 +114,39 @@ public abstract class Document extends DocumentElement implements
           "Label manager must not be null."); //$NON-NLS-1$
     }
 
-    this.m_documentPath = DocumentElement._path(docPath);
-    this.m_basePath = DocumentElement._path(docPath.getParent());
+    this.m_documentPath = PathUtils.normalize(docPath);
+    this.m_basePath = PathUtils.normalize(docPath.getParent());
+    this.m_paths = new LinkedHashSet<>();
+    this.m_paths.add(this.m_documentPath);
+
     this.m_citations = new CitationsBuilder();
+    this.m_listener = listener;
   }
 
   /**
-   * Get the path to the document's main file
+   * Add a path into the internal path list
    * 
-   * @return the path to the document's main file
+   * @param p
+   *          the path to add
    */
+  protected synchronized final void addPath(final Path p) {
+    this.m_paths.add(PathUtils.normalize(p));
+  }
+
+  /**
+   * Add a set of paths into the internal path list
+   * 
+   * @param ps
+   *          the paths to add
+   */
+  protected synchronized final void addPath(final Iterable<Path> ps) {
+    for (final Path p : ps) {
+      this.m_paths.add(PathUtils.normalize(p));
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final Path getDocumentPath() {
     return this.m_documentPath;
   }
@@ -244,12 +280,33 @@ public abstract class Document extends DocumentElement implements
     this.throwChildNotAllowed(child);
   }
 
+  /**
+   * Perform any post-processing and stream-closing
+   */
+  protected void postProcessDocument() {
+    //
+  }
+
   /** {@inheritDoc} */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
-  protected synchronized void onClose() {
+  protected final synchronized void onClose() {
+    final int s;
+
     this.fsmStateAssertAndSet(Document.STATE_FOOTER_CLOSED,
         DocumentElement.STATE_DEAD);
+
+    this.postProcessDocument();
+
     super.onClose();
+
+    if (this.m_listener != null) {
+
+      s = this.m_paths.size();
+      this.m_listener.onObjectFinalized(((s > 0) ? (new ArrayListView(
+          this.m_paths.toArray(new Path[s])))
+          : ArraySetView.EMPTY_SET_VIEW));
+    }
   }
 
   /** {@inheritDoc} */

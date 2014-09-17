@@ -2,9 +2,10 @@ package org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaste
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.OutputStream;
+import java.nio.file.Path;
 
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 
 /**
  * An internal class for <a
@@ -16,9 +17,10 @@ final class _ImageIOGIFGraphic extends _ImageIORasterGraphic {
   /**
    * instantiate
    * 
-   * @param id
-   *          the graphic id identifying this graphic and the path under
-   *          which the contents of the graphic are stored
+   * @param path
+   *          the path
+   * @param os
+   *          the output stream
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -37,10 +39,11 @@ final class _ImageIOGIFGraphic extends _ImageIORasterGraphic {
    * @param img
    *          the buffered image
    */
-  _ImageIOGIFGraphic(final GraphicID id, final IGraphicListener listener,
-      final BufferedImage img, final Graphics2D g, final int w,
-      final int h, final double xDPI, final double yDPI, final String type) {
-    super(id, listener, img, g, w, h, xDPI, yDPI, type);
+  _ImageIOGIFGraphic(final Path path, final OutputStream os,
+      final IObjectListener listener, final BufferedImage img,
+      final Graphics2D g, final int w, final int h, final double xDPI,
+      final double yDPI, final String type) {
+    super(path, os, listener, img, g, w, h, xDPI, yDPI, type);
   }
 
   // /** {@inheritDoc} */

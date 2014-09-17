@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
+import java.nio.file.Path;
+
 import org.optimizationBenchmarking.utils.graphics.style.IStyleProvider;
 
 /**
@@ -37,4 +39,11 @@ public interface IDocument extends IDocumentElement, IStyleProvider {
    * @return the label to be used in forward references
    */
   public abstract ILabel createLabel(final ELabelType type);
+
+  /**
+   * Get the path to the document's main file
+   * 
+   * @return the path to the document's main file
+   */
+  public abstract Path getDocumentPath();
 }

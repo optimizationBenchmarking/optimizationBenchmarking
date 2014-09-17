@@ -3,14 +3,14 @@ package org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.OutputStream;
+import java.nio.file.Path;
 
 import org.freehep.graphicsio.svg.SVGGraphics2D;
 import org.freehep.util.UserProperties;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
@@ -31,7 +31,7 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
 
   /** the hidden constructor */
   private FreeHEPSVGGraphicDriver() {
-    super(".svgz"); //$NON-NLS-1$
+    super("svgz"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
 
@@ -46,15 +46,14 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("resource")
   @Override
-  protected final Graphic doCreateGraphic(final GraphicID id,
-      final PhysicalDimension size, final IGraphicListener listener) {
+  protected final Graphic doCreateGraphic(final Path path,
+      final OutputStream os, final PhysicalDimension size,
+      final IObjectListener listener) {
     final UserProperties up;
     final SVGGraphics2D g;
     final double wd, hd;
     final Dimension dim;
-    final OutputStream os;
     final ELength sizeUnit;
 
     up = new UserProperties();
@@ -72,7 +71,6 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
           " translated to " + dim);//$NON-NLS-1$
     }
 
-    os = AbstractGraphicDriver.createOutputStream(id);
     synchronized (SVGGraphics2D.class) {
       g = new SVGGraphics2D(os, dim);
       g.setProperties(up);
@@ -82,7 +80,7 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
     }
     AbstractGraphicDriver.setDefaultRenderingHints(g);
 
-    return new _FreeHEPSVGGraphic(g, id, listener, dim.width, dim.height);
+    return new _FreeHEPSVGGraphic(g, path, listener, dim.width, dim.height);
   }
 
 }

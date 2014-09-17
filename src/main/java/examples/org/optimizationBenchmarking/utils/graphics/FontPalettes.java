@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTMLDriver;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
@@ -33,11 +34,19 @@ public class FontPalettes {
   private static final FontPalette[] PALETTES;
 
   static {
-    PALETTES = new FontPalette[1];
+    PALETTES = new FontPalette[2];
+
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
       PaletteIODriver.INSTANCE.loadResource(tb, FontPalettes.class,
           "examples.font.palette"); //$NON-NLS-1$
       FontPalettes.PALETTES[0] = tb.getResult();
+    } catch (final Throwable tt) {
+      tt.printStackTrace();
+    }
+    try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
+      PaletteIODriver.INSTANCE.loadResource(tb, XHTMLDriver.class,
+          "xhtml10.font.palette"); //$NON-NLS-1$
+      FontPalettes.PALETTES[1] = tb.getResult();
     } catch (final Throwable tt) {
       tt.printStackTrace();
     }
@@ -53,6 +62,7 @@ public class FontPalettes {
    */
   public static final void main(final String[] args) throws IOException {
     final Path dir;
+    int i;
 
     if ((args != null) && (args.length > 0)) {
       dir = Paths.get(args[0]);
@@ -60,11 +70,12 @@ public class FontPalettes {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
 
-    for (final IGraphicDriver d : FontPalettes.DRIVERS) {
-      for (final FontPalette p : FontPalettes.PALETTES) {//
-        FontPalettes.__paint(
-            dir.resolve(d.getClass().getSimpleName() + '_'
-                + p.getClass().getSimpleName()), d, p);
+    i = 0;
+    for (final FontPalette p : FontPalettes.PALETTES) {//
+      i++;
+      for (final IGraphicDriver d : FontPalettes.DRIVERS) {
+        FontPalettes.__paint(dir,
+            ((d.getClass().getSimpleName() + '_') + i), d, p);
       }
     }
   }
@@ -72,14 +83,16 @@ public class FontPalettes {
   /**
    * paint the palette
    * 
-   * @param fileBlueprint
-   *          the file name blueprint
+   * @param dir
+   *          the directory
+   * @param name
+   *          the name
    * @param palette
    *          the palette
    * @param driver
    *          the graphic driver to use
    */
-  private static final void __paint(final Path fileBlueprint,
+  private static final void __paint(final Path dir, final String name,
       final IGraphicDriver driver, final FontPalette palette) {
     final Rectangle2D b;
     final int s;
@@ -103,9 +116,8 @@ public class FontPalettes {
 
     s = styles.size();
 
-    try (final Graphic g = driver.createGraphic(driver
-        .createGraphicID(fileBlueprint), new PhysicalDimension(160, 160,
-        ELength.MM), null)) {
+    try (final Graphic g = driver.createGraphic(dir, name,
+        new PhysicalDimension(320, 160, ELength.MM), null)) {
 
       b = g.getBounds();
       g.setColor(Color.white);
@@ -127,6 +139,12 @@ public class FontPalettes {
         if (q) {
           mo.append(']');
         }
+
+        mo.append(' ');
+        mo.append('-');
+        mo.append(' ');
+        st.getFaceChoices().toText(mo);
+
         x = mo.toString();
         mo.clear();
         hh = f.getLineMetrics(x, g.getFontRenderContext()).getHeight();

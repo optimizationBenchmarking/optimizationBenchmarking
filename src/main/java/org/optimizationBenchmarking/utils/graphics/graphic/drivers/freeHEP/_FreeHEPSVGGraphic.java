@@ -1,8 +1,9 @@
 package org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP;
 
+import java.nio.file.Path;
+
 import org.freehep.graphicsio.svg.SVGGraphics2D;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 
 /**
  * the internal <a
@@ -17,9 +18,8 @@ final class _FreeHEPSVGGraphic extends
    * 
    * @param graphic
    *          the graphic to use
-   * @param id
-   *          the graphic id identifying this graphic and the path under
-   *          which the contents of the graphic are stored
+   * @param path
+   *          the path under which the contents of the graphic are stored
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -28,9 +28,9 @@ final class _FreeHEPSVGGraphic extends
    * @param h
    *          the height
    */
-  _FreeHEPSVGGraphic(final SVGGraphics2D graphic, final GraphicID id,
-      final IGraphicListener listener, final int w, final int h) {
-    super(graphic, id, listener, w, h);
+  _FreeHEPSVGGraphic(final SVGGraphics2D graphic, final Path path,
+      final IObjectListener listener, final int w, final int h) {
+    super(graphic, path, listener, w, h);
   }
 
   /** {@inheritDoc} */

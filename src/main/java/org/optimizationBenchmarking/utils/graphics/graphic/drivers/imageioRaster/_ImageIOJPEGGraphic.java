@@ -2,13 +2,14 @@ package org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaste
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.OutputStream;
+import java.nio.file.Path;
 
 import javax.imageio.ImageWriteParam;
 import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.w3c.dom.Element;
 
 /**
@@ -23,9 +24,10 @@ final class _ImageIOJPEGGraphic extends _ImageIORasterGraphic {
   /**
    * instantiate
    * 
-   * @param id
-   *          the graphic id identifying this graphic and the path under
-   *          which the contents of the graphic are stored
+   * @param path
+   *          the path
+   * @param os
+   *          the output stream
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -46,11 +48,11 @@ final class _ImageIOJPEGGraphic extends _ImageIORasterGraphic {
    * @param quality
    *          the image quality
    */
-  _ImageIOJPEGGraphic(final GraphicID id, final IGraphicListener listener,
-      final BufferedImage img, final Graphics2D g, final int w,
-      final int h, final double xDPI, final double yDPI,
-      final float quality, final String type) {
-    super(id, listener, img, g, w, h, xDPI, yDPI, type);
+  _ImageIOJPEGGraphic(final Path path, final OutputStream os,
+      final IObjectListener listener, final BufferedImage img,
+      final Graphics2D g, final int w, final int h, final double xDPI,
+      final double yDPI, final float quality, final String type) {
+    super(path, os, listener, img, g, w, h, xDPI, yDPI, type);
 
     this.m_quality = quality;
   }

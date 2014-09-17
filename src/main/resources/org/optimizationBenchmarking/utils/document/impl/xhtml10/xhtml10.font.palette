@@ -1,0 +1,10 @@
+SERIF,false,false,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
+SERIF,false,true,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
+MONOSPACED,false,false,false,11,Consolas,Courier New,Courier,Terminal,Liberation Mono,Nimbus Mono
+
+SERIF,true,false,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
+SERIF,false,false,true,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
+SANS_SERIF,false,false,false,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
+SANS_SERIF,false,true,false,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
+SANS_SERIF,true,false,false,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
+SANS_SERIF,false,false,true,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS

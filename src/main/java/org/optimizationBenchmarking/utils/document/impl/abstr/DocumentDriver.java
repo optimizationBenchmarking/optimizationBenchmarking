@@ -3,46 +3,72 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
+import org.optimizationBenchmarking.utils.document.spec.PageDimension;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
+import org.optimizationBenchmarking.utils.io.path.FileTypeDriver;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A document driver. */
-public abstract class DocumentDriver {
+public abstract class DocumentDriver extends FileTypeDriver implements
+    IDocumentDriver {
 
-  /** create the document driver */
-  protected DocumentDriver() {
-    super();
+  /**
+   * create the document driver
+   * 
+   * @param suffix
+   *          the suffix
+   */
+  protected DocumentDriver(final String suffix) {
+    super(suffix);
   }
 
   /**
-   * Create a document at the given destination
+   * create a document
    * 
-   * @param destination
-   *          the destination path
+   * @param file
+   *          the file
+   * @param listener
+   *          the listener
    * @return the document
    */
-  public abstract Document createDocument(final Path destination);
+  protected Document doCreateDocument(final Path file,
+      final IObjectListener listener) {
+    return new Document(this, file, listener);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Document createDocument(final Path folder,
+      final String nameSuggestion, final IObjectListener listener) {
+    return this.doCreateDocument(this.makePath(folder, nameSuggestion),
+        listener);
+  }
 
   /**
    * Obtain the graphics driver
    * 
    * @return the graphics driver
    */
-  protected abstract IGraphicDriver getGraphicDriver();
+  protected IGraphicDriver getGraphicDriver() {
+    return EGraphicFormat.NULL.getDefaultDriver();
+  }
 
   /**
    * Translate a figure size to a physical dimension
@@ -51,7 +77,10 @@ public abstract class DocumentDriver {
    *          the size
    * @return the translated size
    */
-  protected abstract PhysicalDimension getSize(final EFigureSize size);
+  protected PhysicalDimension getSize(final EFigureSize size) {
+    return size.approximateSize(new PageDimension(EScreenSize.DEFAULT
+        .getPhysicalSize(EScreenSize.DEFAULT_SCREEN_DPI)));
+  }
 
   /**
    * Create a style set to be used in a
@@ -511,24 +540,35 @@ public abstract class DocumentDriver {
   }
 
   /**
-   * Create a graphic object to paint on
+   * Create a graphics object with the size {@code size} in the length unit
+   * {@code size.getUnit()}. If the resulting object is an object which
+   * writes contents to a file, then it will write its contents to a file
+   * in the specified by {@code folder}. The file name will be generated
+   * based on a {@code nameSuggestion}. It may be slightly different,
+   * though, maybe with a different suffix. Once the graphic is
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.Graphic#close()
+   * closed}, it will notify the provided {@code listener} interface
+   * (unless {@code listener==null}).
    * 
+   * @param folder
+   *          the folder to create the graphic in
+   * @param nameSuggestion
+   *          the name suggestion
    * @param size
-   *          the size
+   *          the size of the graphic
    * @param listener
-   *          the listener that needs to be passed to that object in order
-   *          for the figure to be notified when it is closed
-   * @param path
-   *          the suggested path
-   * @return the graphic
+   *          the listener interface to be notified when the graphic is
+   *          closed
+   * @return the graphic object
    */
-  protected Graphic createGraphic(final EFigureSize size,
-      final IGraphicListener listener, final Path path) {
+  protected Graphic createGraphic(final Path folder,
+      final String nameSuggestion, final EFigureSize size,
+      final IObjectListener listener) {
     final IGraphicDriver driver;
 
     driver = this.getGraphicDriver();
 
-    return driver.createGraphic(driver.createGraphicID(path),
+    return driver.createGraphic(folder, nameSuggestion,
         this.getSize(size), listener);
   }
 

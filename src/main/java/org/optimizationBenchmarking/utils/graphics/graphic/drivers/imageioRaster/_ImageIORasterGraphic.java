@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
+import java.nio.file.Path;
 import java.util.Iterator;
 
 import javax.imageio.IIOImage;
@@ -16,9 +17,8 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.stream.ImageOutputStream;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.GraphicProxy;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 
 /**
  * An internal class for Java raster graphics and uses
@@ -44,12 +44,16 @@ class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
   /** the image */
   private final BufferedImage m_img;
 
+  /** the output stream */
+  private final OutputStream m_os;
+
   /**
    * instantiate
    * 
-   * @param id
-   *          the graphic id identifying this graphic and the path under
-   *          which the contents of the graphic are stored
+   * @param path
+   *          the path
+   * @param os
+   *          the output stream
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -68,11 +72,11 @@ class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
    * @param img
    *          the buffered image
    */
-  _ImageIORasterGraphic(final GraphicID id,
-      final IGraphicListener listener, final BufferedImage img,
+  _ImageIORasterGraphic(final Path path, final OutputStream os,
+      final IObjectListener listener, final BufferedImage img,
       final Graphics2D g, final int w, final int h, final double xDPI,
       final double yDPI, final String type) {
-    super(g, id, listener);
+    super(g, path, listener);
 
     this.m_w = w;
     this.m_h = h;
@@ -80,6 +84,7 @@ class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
     this.m_yDPI = yDPI;
     this.m_img = img;
     this.m_type = type;
+    this.m_os = os;
   }
 
   /** {@inheritDoc} */
@@ -172,7 +177,7 @@ class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
           }
         }
 
-        try (final OutputStream os = this.createOutputStream()) {
+        try (final OutputStream os = this.m_os) {
           try (final ImageOutputStream ios = ImageIO
               .createImageOutputStream(os)) {
 

@@ -18,13 +18,13 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ImageObserver;
+import java.nio.file.Path;
 import java.text.AttributedCharacterIterator;
 
 import org.freehep.graphics2d.AbstractVectorGraphics;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
 import org.optimizationBenchmarking.utils.graphics.graphic.GraphicProxy;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 
 /**
  * <p>
@@ -69,9 +69,8 @@ class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
    * 
    * @param graphic
    *          the graphic to use
-   * @param id
-   *          the graphic id identifying this graphic and the path under
-   *          which the contents of the graphic are stored
+   * @param path
+   *          the path under which the contents of the graphic are stored
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -80,10 +79,9 @@ class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
    * @param h
    *          the height
    */
-  protected _FreeHEPAbstractVectorGraphicsProxy(final T graphic,
-      final GraphicID id, final IGraphicListener listener, final int w,
-      final int h) {
-    super(graphic, id, listener);
+  _FreeHEPAbstractVectorGraphicsProxy(final T graphic, final Path path,
+      final IObjectListener listener, final int w, final int h) {
+    super(graphic, path, listener);
     this.m_w = w;
     this.m_h = h;
   }

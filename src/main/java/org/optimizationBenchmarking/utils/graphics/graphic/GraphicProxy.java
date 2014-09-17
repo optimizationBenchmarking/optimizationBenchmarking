@@ -24,8 +24,11 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ImageObserver;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
+import java.nio.file.Path;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
+
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 
 /**
  * An abstract wrapper which maps {@link java.awt.Graphics2D} objects to
@@ -48,16 +51,14 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
    * 
    * @param graphic
    *          the graphic to use
-   * @param id
-   *          the graphic id identifying this graphic and the path under
-   *          which the contents of the graphic are stored
+   * @param path
+   *          the path to be managed
    * @param listener
-   *          the object to notify when we are closed, or {@code null} if
-   *          none needs to be notified
+   *          the listener to notify
    */
-  protected GraphicProxy(final GT graphic, final GraphicID id,
-      final IGraphicListener listener) {
-    super(listener, id);
+  protected GraphicProxy(final GT graphic, final Path path,
+      final IObjectListener listener) {
+    super(listener, path);
     if (graphic == null) {
       throw new IllegalArgumentException(//
           "Delegate graphic must not be null for a proxy graphic."); //$NON-NLS-1$

@@ -53,9 +53,8 @@ public class ColorPalettes {
     }
     for (final IGraphicDriver d : ColorPalettes.DRIVERS) {
       for (final Palette<ColorStyle> p : ColorPalettes.PALETTES) {//
-        ColorPalettes.__paint(
-            dir.resolve(d.getClass().getSimpleName() + '_'
-                + p.getClass().getSimpleName()), d, p);
+        ColorPalettes.__paint(dir, (d.getClass().getSimpleName() + '_' + p
+            .getClass().getSimpleName()), d, p);
       }
     }
   }
@@ -63,14 +62,16 @@ public class ColorPalettes {
   /**
    * paint the palette
    * 
-   * @param fileBlueprint
-   *          the file name blueprint
+   * @param dir
+   *          the directory
+   * @param name
+   *          the name
    * @param palette
    *          the palette
    * @param driver
    *          the graphic driver to use
    */
-  private static final void __paint(final Path fileBlueprint,
+  private static final void __paint(final Path dir, final String name,
       final IGraphicDriver driver, final Palette<ColorStyle> palette) {
     final int s, w;
     final Rectangle2D b;
@@ -79,9 +80,8 @@ public class ColorPalettes {
     ColorStyle st;
     Color use;
 
-    try (final Graphic g = driver.createGraphic(driver
-        .createGraphicID(fileBlueprint), new PhysicalDimension(160, 160,
-        ELength.MM), null)) {
+    try (final Graphic g = driver.createGraphic(dir, name,
+        new PhysicalDimension(160, 160, ELength.MM), null)) {
 
       b = g.getBounds();
       g.setFont(new Font("Arial", Font.PLAIN, //$NON-NLS-1$

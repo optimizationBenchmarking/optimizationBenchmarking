@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IFigureSeries;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -41,8 +42,8 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
   /** the size template of this figure */
   final EFigureSize m_size;
 
-  /** a path */
-  final Path m_path;
+  /** the folder to contain the sub-figures */
+  final Path m_folder;
 
   /**
    * Create a figure series
@@ -68,9 +69,9 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
     }
 
     this.m_size = size;
-    this.m_path = DocumentElement._resolve(this.m_doc.m_basePath,//
-        (BasicFigure.GRAPHICS_OFFSET + ((path == null) ? this.m_globalID
-            : path.toString())));
+    this.m_folder = PathUtils.normalize(this.m_doc.m_basePath.resolve(
+        BasicFigure.GRAPHICS_OFFSET).resolve(
+        (path == null) ? this.m_globalID : path));
   }
 
   /** {@inheritDoc} */

@@ -3,14 +3,14 @@ package org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.OutputStream;
+import java.nio.file.Path;
 
 import org.freehep.graphicsio.emf.EMFGraphics2D;
 import org.freehep.util.UserProperties;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
@@ -26,7 +26,7 @@ public class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
 
   /** the hidden constructor */
   private FreeHEPEMFGraphicDriver() {
-    super(".emf"); //$NON-NLS-1$
+    super("emf"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
 
@@ -35,15 +35,14 @@ public class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("resource")
   @Override
-  protected final Graphic doCreateGraphic(final GraphicID id,
-      final PhysicalDimension size, final IGraphicListener listener) {
+  protected final Graphic doCreateGraphic(final Path path,
+      final OutputStream os, final PhysicalDimension size,
+      final IObjectListener listener) {
     final UserProperties up;
     final EMFGraphics2D g;
     final double wd, hd;
     final Dimension dim;
-    final OutputStream os;
     final ELength sizeUnit;
 
     up = new UserProperties();
@@ -61,7 +60,6 @@ public class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
           " translated to " + dim);//$NON-NLS-1$
     }
 
-    os = AbstractGraphicDriver.createOutputStream(id);
     synchronized (EMFGraphics2D.class) {
       g = new EMFGraphics2D(os, dim);
       g.setProperties(up);
@@ -71,7 +69,7 @@ public class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
     }
     AbstractGraphicDriver.setDefaultRenderingHints(g);
 
-    return new _FreeHEPEMFGraphic(g, id, listener, dim.width, dim.height);
+    return new _FreeHEPEMFGraphic(g, path, listener, dim.width, dim.height);
   }
 
 }

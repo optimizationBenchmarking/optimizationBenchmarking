@@ -2,13 +2,14 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -45,13 +46,16 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
   }
 
   /** the default figure path offset for graphics */
-  static final String GRAPHICS_OFFSET = "graphics/"; //$NON-NLS-1$
+  static final String GRAPHICS_OFFSET = "graphics"; //$NON-NLS-1$
 
   /** the size template of this figure */
   private final EFigureSize m_size;
 
   /** a path */
-  private final Path m_path;
+  private final Path m_folder;
+
+  /** the name suggestion */
+  private final String m_suggestion;
 
   /**
    * Create a figure
@@ -76,16 +80,17 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
           "Figure size must not be null."); //$NON-NLS-1$
     }
 
-    final Path ownerPath;
     String rpath;
 
     rpath = ((path == null) ? this.m_globalID : path);
     if (owner instanceof SectionBody) {
-      ownerPath = this.m_doc.m_basePath;
-      rpath = (BasicFigure.GRAPHICS_OFFSET + rpath);
+      this.m_folder = PathUtils.normalize(this.m_doc.m_basePath
+          .resolve(BasicFigure.GRAPHICS_OFFSET));
+      this.m_suggestion = rpath;
     } else {
       if (owner instanceof FigureSeries) {
-        ownerPath = ((FigureSeries) owner).m_path;
+        this.m_folder = ((FigureSeries) owner).m_folder;
+        this.m_suggestion = rpath;
       } else {
         throw new IllegalArgumentException(//
             "The owner of a figure must be either a section body or a figure series, but you specified a "//$NON-NLS-1$ 
@@ -94,7 +99,6 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
     }
 
     this.m_size = size;
-    this.m_path = DocumentElement._resolve(ownerPath, rpath);
   }
 
   /** {@inheritDoc} */
@@ -189,10 +193,11 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
   /**
    * the graphic of this figure has been closed
    * 
-   * @param id
-   *          the id of the graphic that has been closed
+   * @param result
+   *          the result files
    */
-  protected synchronized void onGraphicClosed(final GraphicID id) {
+  protected synchronized void onGraphicClosed(
+      final ArrayListView<Path> result) {
     this.fsmStateAssertAndSet(BasicFigure.STATE_GRAPHIC_CREATED,
         BasicFigure.STATE_GRAPHIC_CLOSED);
   }
@@ -200,23 +205,25 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
   /** {@inheritDoc} */
   @Override
   public synchronized final Graphic body() {
+    final Graphic g;
     this.fsmStateAssertAndSet(BasicFigure.STATE_CAPTION_CLOSED,
         BasicFigure.STATE_GRAPHIC_CREATED);
-    return this.m_driver.createGraphic(this.m_size,
-        new __GraphicListener(), this.m_path);
+    g = this.m_driver.createGraphic(this.m_folder, this.m_suggestion,
+        this.m_size, new __GraphicListener());
+    this.m_doc.m_styles.initialize(g);
+    return g;
   }
 
   /**
    * The internal dispatcher for graphic listening events. It is basically
    * a wrapper for the
-   * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure#onGraphicClosed(GraphicID)}
+   * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure#onGraphicClosed(ArrayListView)}
    * method, allowing it to remain protected and allowing that
    * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure}
    * does not need to implement
-   * {@link org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener}
-   * .
+   * {@link org.optimizationBenchmarking.utils.document.IObjectListener} .
    */
-  private final class __GraphicListener implements IGraphicListener {
+  private final class __GraphicListener implements IObjectListener {
     /** create */
     __GraphicListener() {
       super();
@@ -224,8 +231,8 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
     /** {@inheritDoc} */
     @Override
-    public final void onGraphicClosed(final GraphicID id) {
-      BasicFigure.this.onGraphicClosed(id);
+    public final void onObjectFinalized(final ArrayListView<Path> result) {
+      BasicFigure.this.onGraphicClosed(result);
     }
   }
 

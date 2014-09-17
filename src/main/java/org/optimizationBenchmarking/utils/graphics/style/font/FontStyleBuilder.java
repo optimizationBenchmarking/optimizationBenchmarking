@@ -533,8 +533,13 @@ public final class FontStyleBuilder extends
           return EFontFamily.SANS_SERIF;
         }
 
+        case "consolas": //$NON-NLS-1$
         case "courier": { //$NON-NLS-1$
           return EFontFamily.MONOSPACED;
+        }
+
+        case "georgia": { //$NON-NLS-1$
+          return EFontFamily.SERIF;
         }
 
         case "gothic": { //$NON-NLS-1$
@@ -545,10 +550,32 @@ public final class FontStyleBuilder extends
           return EFontFamily.SANS_SERIF;
         }
 
+        case "liberation mono": { //$NON-NLS-1$
+          return EFontFamily.MONOSPACED;
+        }
+        case "liberation sans": { //$NON-NLS-1$
+          return EFontFamily.SANS_SERIF;
+        }
+        case "liberation serif": { //$NON-NLS-1$
+          return EFontFamily.SERIF;
+        }
+
         case "lucida console": { //$NON-NLS-1$
           return EFontFamily.MONOSPACED;
         }
         case "lucida sans": { //$NON-NLS-1$
+          return EFontFamily.SANS_SERIF;
+        }
+
+        case "nimbus mono": { //$NON-NLS-1$
+          return EFontFamily.MONOSPACED;
+        }
+
+        case "nimbus roman": { //$NON-NLS-1$
+          return EFontFamily.SERIF;
+        }
+
+        case "nimbus sans": { //$NON-NLS-1$
           return EFontFamily.SANS_SERIF;
         }
 

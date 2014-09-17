@@ -3,16 +3,16 @@ package org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.OutputStream;
+import java.nio.file.Path;
 
 import org.freehep.graphicsio.FontConstants;
 import org.freehep.graphicsio.PageConstants;
 import org.freehep.graphicsio.ps.PSGraphics2D;
 import org.freehep.util.UserProperties;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
@@ -33,7 +33,7 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
 
   /** the hidden constructor */
   private FreeHEPEPSGraphicDriver() {
-    super(".eps"); //$NON-NLS-1$
+    super("eps"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
 
@@ -53,15 +53,14 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("resource")
   @Override
-  protected final Graphic doCreateGraphic(final GraphicID id,
-      final PhysicalDimension size, final IGraphicListener listener) {
+  protected final Graphic doCreateGraphic(final Path path,
+      final OutputStream os, final PhysicalDimension size,
+      final IObjectListener listener) {
     final UserProperties up;
     final PSGraphics2D g;
     final double wd, hd;
     final Dimension dim;
-    final OutputStream os;
 
     final ELength sizeUnit;
 
@@ -82,7 +81,6 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
 
     up.setProperty(PSGraphics2D.CUSTOM_PAGE_SIZE, dim);
 
-    os = AbstractGraphicDriver.createOutputStream(id);
     synchronized (PSGraphics2D.class) {
       PSGraphics2D.setClipEnabled(true);
       g = new PSGraphics2D(os, dim);
@@ -94,7 +92,7 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
     }
     AbstractGraphicDriver.setDefaultRenderingHints(g);
 
-    return new _FreeHEPEPSGraphic(g, id, listener, dim.width, dim.height);
+    return new _FreeHEPEPSGraphic(g, path, listener, dim.width, dim.height);
   }
 
 }

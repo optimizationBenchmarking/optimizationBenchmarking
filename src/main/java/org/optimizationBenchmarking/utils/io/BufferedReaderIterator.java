@@ -48,7 +48,7 @@ public class BufferedReaderIterator extends BasicIterator<String> {
       for (;;) {
         try {
           s = this.m_reader.readLine();
-        } catch (IOException ioe) {
+        } catch (final IOException ioe) {
           ErrorUtils.throwAsRuntimeException(ioe);
           return false;
         }

@@ -30,6 +30,8 @@ import java.awt.image.renderable.RenderableImage;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
+import org.optimizationBenchmarking.utils.document.IObjectListener;
+
 /**
  * A graphic which simply discards all of its output. This object is
  * designed for high-throughput and low memory footprint.
@@ -73,14 +75,12 @@ final class _NullGraphic extends Graphic {
    * 
    * @param listener
    *          the listener
-   * @param id
-   *          the id
    * @param size
    *          the size
    */
-  _NullGraphic(final IGraphicListener listener, final GraphicID id,
-      final Dimension2D size) {
-    super(listener, id);
+  _NullGraphic(final IObjectListener listener, final Dimension2D size) {
+    super(listener, null);
+
     this.m_bounds = new Rectangle(0, 0,//
         Math.max(1, ((int) (0.5d + size.getWidth()))),//
         Math.max(1, ((int) (0.5d + size.getHeight()))));
@@ -407,8 +407,7 @@ final class _NullGraphic extends Graphic {
   /** {@inheritDoc} */
   @Override
   public final Graphics create() {
-    return new _NullGraphic(null, new GraphicID(this.m_id.m_driver,
-        this.m_id.m_path), new Dimension(this.m_bounds.width,
+    return new _NullGraphic(null, new Dimension(this.m_bounds.width,
         this.m_bounds.height));
   }
 

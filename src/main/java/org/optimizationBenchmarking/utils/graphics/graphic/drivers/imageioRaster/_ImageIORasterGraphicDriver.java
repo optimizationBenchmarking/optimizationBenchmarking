@@ -2,12 +2,14 @@ package org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaste
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.OutputStream;
+import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.GraphicID;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicListener;
+import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
@@ -24,7 +26,7 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
   private final String m_type;
 
   /** the color model */
-  private final int m_colors;
+  private final EColorModel m_colors;
 
   /**
    * the hidden constructor
@@ -38,22 +40,27 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
    */
   _ImageIORasterGraphicDriver(final String type, final EColorModel colors,
       final int dotsPerInch) {
-    super('.' + type);
+    super(type);
 
     if ((dotsPerInch <= 1) || (dotsPerInch >= 1000000)) {
       throw new IllegalArgumentException("Illegal DPI: " + dotsPerInch); //$NON-NLS-1$
     }
 
+    if (colors == null) {
+      throw new IllegalArgumentException("Color model must not be null."); //$NON-NLS-1$
+    }
+
     this.m_dpi = dotsPerInch;
 
-    this.m_colors = colors.getBufferedImageType();
+    this.m_colors = colors;
     this.m_type = type;
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final Graphic doCreateGraphic(final GraphicID id,
-      final PhysicalDimension size, final IGraphicListener listener) {
+  protected final Graphic doCreateGraphic(final Path path,
+      final OutputStream os, final PhysicalDimension size,
+      final IObjectListener listener) {
     final BufferedImage img;
     final Graphics2D g;
     final double w, h, wIn, hIn, hDPI, wDPI;
@@ -76,23 +83,24 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
     wDPI = (wPx / wIn);
     hDPI = (hPx / hIn);
 
-    img = new BufferedImage(wPx, hPx, this.m_colors);
+    img = new BufferedImage(wPx, hPx, this.m_colors.getBufferedImageType());
     g = ((Graphics2D) (img.getGraphics()));
 
     if ((wPx != wPt) || (hPx != hPt)) {
       g.scale((((double) wPx) / wPt), (((double) hPx) / hPt));
     }
 
-    return this._create(id, listener, img, g, wPt, hPt, wDPI, hDPI,
+    return this._create(path, os, listener, img, g, wPt, hPt, wDPI, hDPI,
         this.m_type);
   }
 
   /**
    * create the graphic
    * 
-   * @param id
-   *          the graphic id identifying this graphic and the path under
-   *          which the contents of the graphic are stored
+   * @param path
+   *          the path
+   * @param os
+   *          the output stream
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -112,8 +120,14 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
    *          the buffered image
    * @return the graphic
    */
-  abstract _ImageIORasterGraphic _create(final GraphicID id,
-      final IGraphicListener listener, final BufferedImage img,
-      final Graphics2D g, final int w, final int h, final double xDPI,
-      final double yDPI, final String type);
+  abstract _ImageIORasterGraphic _create(final Path path,
+      final OutputStream os, final IObjectListener listener,
+      final BufferedImage img, final Graphics2D g, final int w,
+      final int h, final double xDPI, final double yDPI, final String type);
+
+  /** {@inheritDoc} */
+  @Override
+  public final ColorPalette getColorPalette() {
+    return this.m_colors.getDefaultPalette();
+  }
 }

@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import java.nio.file.Path;
-
 import org.optimizationBenchmarking.utils.document.spec.IDocumentElement;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
@@ -97,27 +95,4 @@ public abstract class DocumentElement extends HierarchicalText implements
         DocumentElement.STATE_ALIFE);
   }
 
-  /**
-   * get an absolute path
-   * 
-   * @param p
-   *          the path
-   * @return the path
-   */
-  static final Path _path(final Path p) {
-    return p.normalize().toAbsolutePath();
-  }
-
-  /**
-   * resolve a path
-   * 
-   * @param p
-   *          the path
-   * @param s
-   *          a relative string
-   * @return a resolved path
-   */
-  static final Path _resolve(final Path p, final String s) {
-    return DocumentElement._path(p.resolve(s));
-  }
 }

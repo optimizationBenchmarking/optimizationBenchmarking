@@ -21,12 +21,15 @@ import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ImageObserver;
 import java.io.Closeable;
-import java.io.OutputStream;
+import java.nio.file.Path;
 import java.text.AttributedCharacterIterator;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.document.IObjectListener;
 
 /**
  * <p>
@@ -72,16 +75,13 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    * the object to notify when we are closed, or {@code null} if none needs
    * to be notified
    */
-  private final IGraphicListener m_listener;
+  private final IObjectListener m_listener;
 
   /** has we been closed ? */
   volatile boolean m_closed;
 
-  /**
-   * the graphic id identifying this graphic and the path under which the
-   * contents of the graphic are stored
-   */
-  final GraphicID m_id;
+  /** the graphic path to which the graphic is written */
+  private final Path m_path;
 
   /**
    * instantiate
@@ -89,19 +89,13 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
-   * @param id
-   *          the graphic id identifying this graphic and the path under
-   *          which the contents of the graphic are stored
+   * @param path
+   *          the path associated with this object, or {@code null} if no
+   *          file needs to be explicitly created
    */
-  protected Graphic(final IGraphicListener listener, final GraphicID id) {
+  protected Graphic(final IObjectListener listener, final Path path) {
     super();
-
-    if (id == null) {
-      throw new IllegalArgumentException("Graphic id must not be null."); //$NON-NLS-1$
-    }
-    id._use();
-
-    this.m_id = id;
+    this.m_path = path;
     this.m_listener = listener;
   }
 
@@ -167,6 +161,7 @@ public abstract class Graphic extends Graphics2D implements Closeable {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public synchronized final void close() {
     if (this.m_closed) {
@@ -177,7 +172,9 @@ public abstract class Graphic extends Graphics2D implements Closeable {
       this.onClose();
     } finally {
       if (this.m_listener != null) {
-        this.m_listener.onGraphicClosed(this.m_id);
+        this.m_listener
+            .onObjectFinalized((this.m_path == null) ? ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW))
+                : new ArrayListView<>(new Path[] { this.m_path }));
       }
     }
   }
@@ -1091,16 +1088,6 @@ public abstract class Graphic extends Graphics2D implements Closeable {
         Graphic.this.setTransform(this.m_orig);
       }
     }
-  }
-
-  /**
-   * Get the output stream representing the path identified by this
-   * graphic's id
-   * 
-   * @return the output stream
-   */
-  protected final OutputStream createOutputStream() {
-    return this.m_id._createOutputStream();
   }
 
 }
