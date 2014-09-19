@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.util.LinkedHashSet;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
@@ -86,20 +87,25 @@ public class Document extends DocumentElement implements IDocument {
   /** the object listener */
   private final IObjectListener m_listener;
 
+  /** the underlying writer */
+  private final BufferedWriter m_writer;
+
   /**
    * Create a document.
    * 
    * @param driver
    *          the document driver
+   * @param writer
+   *          the writer
    * @param docPath
    *          the path to the document
    * @param listener
    *          the object listener the object listener
    */
-  protected Document(final DocumentDriver driver, final Path docPath,
+  private Document(final DocumentDriver driver,
+      final BufferedWriter writer, final Path docPath,
       final IObjectListener listener) {
-    super(driver, new BufferedWriter(new OutputStreamWriter(
-        PathUtils.openOutputStream(docPath))));
+    super(driver, writer);
 
     this.m_styles = driver.createStyleSet();
     if (this.m_styles == null) {
@@ -120,6 +126,23 @@ public class Document extends DocumentElement implements IDocument {
 
     this.m_citations = new CitationsBuilder();
     this.m_listener = listener;
+    this.m_writer = writer;
+  }
+
+  /**
+   * Create a document.
+   * 
+   * @param driver
+   *          the document driver
+   * @param docPath
+   *          the path to the document
+   * @param listener
+   *          the object listener the object listener
+   */
+  protected Document(final DocumentDriver driver, final Path docPath,
+      final IObjectListener listener) {
+    this(driver, new BufferedWriter(new OutputStreamWriter(
+        PathUtils.openOutputStream(docPath))), docPath, listener);
   }
 
   /**
@@ -272,9 +295,11 @@ public class Document extends DocumentElement implements IDocument {
   }
 
   /**
-   * Perform any post-processing and stream-closing
+   * Perform any post-processing, such as writing a footer to the main
+   * {@link #getTextOutput() document stream}, or generating additional
+   * files (such as style sheets or whatever).
    */
-  protected void postProcessDocument() {
+  protected void postProcess() {
     //
   }
 
@@ -283,20 +308,47 @@ public class Document extends DocumentElement implements IDocument {
   @Override
   protected final synchronized void onClose() {
     final int s;
+    Throwable error;
 
     this.fsmStateAssertAndSet(Document.STATE_FOOTER_CLOSED,
         DocumentElement.STATE_DEAD);
 
-    this.postProcessDocument();
+    error = null;
 
-    super.onClose();
+    try {
+      this.postProcess();
+    } catch (final Throwable t) {
+      error = t;
+    } finally {
 
-    if (this.m_listener != null) {
+      try {
+        this.m_writer.close();
+      } catch (final Throwable tt) {
+        error = ErrorUtils.aggregateError(error, tt);
+      } finally {
+        try {
+          super.onClose();
+        } catch (final Throwable ttt) {
+          error = ErrorUtils.aggregateError(error, ttt);
+        } finally {
+          try {
 
-      s = this.m_paths.size();
-      this.m_listener.onObjectFinalized(((s > 0) ? (new ArrayListView(
-          this.m_paths.toArray(new Path[s])))
-          : ArraySetView.EMPTY_SET_VIEW));
+            if (this.m_listener != null) {
+              s = this.m_paths.size();
+              this.m_listener
+                  .onObjectFinalized(((s > 0) ? (new ArrayListView(
+                      this.m_paths.toArray(new Path[s])))
+                      : ArraySetView.EMPTY_SET_VIEW));
+            }
+          } catch (final Throwable tttt) {
+            error = ErrorUtils.aggregateError(error, tttt);
+          }
+        }
+      }
+    }
+
+    if (error != null) {
+      ErrorUtils.throwAsRuntimeException(error);
     }
   }
 
