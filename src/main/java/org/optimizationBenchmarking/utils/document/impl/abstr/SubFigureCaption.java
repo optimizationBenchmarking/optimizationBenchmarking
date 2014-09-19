@@ -10,7 +10,7 @@ public class SubFigureCaption extends BasicFigureCaption {
    * @param owner
    *          the owner
    */
-  public SubFigureCaption(final SubFigure owner) {
+  protected SubFigureCaption(final SubFigure owner) {
     super(owner);
   }
 

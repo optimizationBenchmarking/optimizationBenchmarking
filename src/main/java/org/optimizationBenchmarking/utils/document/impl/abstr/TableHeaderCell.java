@@ -18,7 +18,7 @@ public class TableHeaderCell extends TableCell {
    * @param def
    *          the cell definition
    */
-  public TableHeaderCell(final TableHeaderRow owner, final int cols,
+  protected TableHeaderCell(final TableHeaderRow owner, final int cols,
       final int rows, final TableCellDef[] def) {
     super(owner, cols, rows, def);
   }

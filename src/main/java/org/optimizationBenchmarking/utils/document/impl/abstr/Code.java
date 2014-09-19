@@ -48,7 +48,7 @@ public class Code extends ComplexObject implements ICode {
   private final boolean m_spansAllColumns;
 
   /**
-   * Create a table
+   * Create a code
    * 
    * @param owner
    *          the owning section body
@@ -59,7 +59,7 @@ public class Code extends ComplexObject implements ICode {
    * @param spansAllColumns
    *          does the table span all columns
    */
-  public Code(final SectionBody owner, final ILabel useLabel,
+  protected Code(final SectionBody owner, final ILabel useLabel,
       final boolean spansAllColumns, final int index) {
     super(owner, useLabel, index);
 

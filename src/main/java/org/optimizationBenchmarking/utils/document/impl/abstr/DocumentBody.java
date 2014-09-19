@@ -20,7 +20,7 @@ public class DocumentBody extends _StyleProviderPart implements
    * @param owner
    *          the owning document
    */
-  public DocumentBody(final Document owner) {
+  protected DocumentBody(final Document owner) {
     super(owner);
     this.m_subsectionCount = 0;
   }
@@ -38,7 +38,7 @@ public class DocumentBody extends _StyleProviderPart implements
   /** {@inheritDoc} */
   @Override
   public synchronized final Section section(final ILabel useLabel) {
-    this.fsmFlagsAssertTrue(DocumentElement.STATE_ALIFE);
+    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     return this.m_driver.createSection(this, useLabel,
         (++this.m_subsectionCount));
   }

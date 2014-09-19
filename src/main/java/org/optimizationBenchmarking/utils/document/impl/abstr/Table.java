@@ -101,7 +101,7 @@ public class Table extends ComplexObject implements ITable,
    * @param definition
    *          the table cell definition
    */
-  public Table(final SectionBody owner, final ILabel useLabel,
+  protected Table(final SectionBody owner, final ILabel useLabel,
       final boolean spansAllColumns, final int index,
       final TableCellDef[] definition) {
     super(owner, useLabel, index);

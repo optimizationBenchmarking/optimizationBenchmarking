@@ -11,7 +11,7 @@ public class Text extends PlainText implements IText {
    * @param owner
    *          the owning FSM
    */
-  public Text(final DocumentElement owner) {
+  protected Text(final DocumentElement owner) {
     super(owner);
   }
 

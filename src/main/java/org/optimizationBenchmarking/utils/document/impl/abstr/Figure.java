@@ -24,7 +24,7 @@ public class Figure extends BasicFigure {
    * @param path
    *          the path suggestion
    */
-  public Figure(final SectionBody owner, final ILabel useLabel,
+  protected Figure(final SectionBody owner, final ILabel useLabel,
       final EFigureSize size, final String path, final int index) {
     super(owner, useLabel, size, path, index);
   }

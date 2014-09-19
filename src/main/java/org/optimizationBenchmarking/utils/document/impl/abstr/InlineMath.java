@@ -9,7 +9,7 @@ public class InlineMath extends BasicMath {
    * @param owner
    *          the owning complex text
    */
-  public InlineMath(final ComplexText owner) {
+  protected InlineMath(final ComplexText owner) {
     super(owner);
   }
 

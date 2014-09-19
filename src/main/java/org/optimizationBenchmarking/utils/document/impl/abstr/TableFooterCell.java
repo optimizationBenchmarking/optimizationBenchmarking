@@ -19,7 +19,7 @@ public class TableFooterCell extends TableCell {
    * @param def
    *          the cell definition
    */
-  public TableFooterCell(final TableFooterRow owner, final int cols,
+  protected TableFooterCell(final TableFooterRow owner, final int cols,
       final int rows, final TableCellDef[] def) {
     super(owner, cols, rows, def);
   }

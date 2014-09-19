@@ -12,7 +12,7 @@ public class MathArgument extends BasicMath {
    * @param owner
    *          the owning FSM
    */
-  public MathArgument(final MathFunction owner) {
+  protected MathArgument(final MathFunction owner) {
     super(owner);
 
     this.m_index = owner.m_argIndex;

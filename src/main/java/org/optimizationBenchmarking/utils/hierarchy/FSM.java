@@ -93,10 +93,12 @@ public class FSM {
     FSM._name(this, sb);
     sb.append(" should be "); //$NON-NLS-1$
     sb.append(comp.toString());
-    sb.append(" than "); //$NON-NLS-1$
+    sb.append(' ');
+    sb.append('\'');
     this.fsmStateAppendName(state, sb);
-    sb.append(", but it is in state "); //$NON-NLS-1$
+    sb.append("', but it is in state '"); //$NON-NLS-1$
     this.fsmStateAppendName(is, sb);
+    sb.append('\'');
     sb.append('.');
     throw new IllegalStateException(sb.toString());
   }

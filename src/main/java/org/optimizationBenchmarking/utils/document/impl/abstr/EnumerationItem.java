@@ -10,7 +10,7 @@ public class EnumerationItem extends ListItem {
    * @param owner
    *          the owning FSM
    */
-  public EnumerationItem(final Enumeration owner) {
+  protected EnumerationItem(final Enumeration owner) {
     super(owner);
   }
 

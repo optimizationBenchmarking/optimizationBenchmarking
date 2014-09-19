@@ -12,7 +12,7 @@ public class TableFooter extends TableSection {
    * @param owner
    *          the owning FSM
    */
-  public TableFooter(final Table owner) {
+  protected TableFooter(final Table owner) {
     super(owner);
   }
 

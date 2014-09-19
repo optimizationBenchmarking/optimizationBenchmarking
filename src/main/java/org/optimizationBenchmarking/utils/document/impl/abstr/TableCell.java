@@ -46,7 +46,7 @@ public class TableCell extends ComplexText implements
    *          the cell definition
    */
   @SuppressWarnings("resource")
-  public TableCell(final TableRow owner, final int cols, final int rows,
+  TableCell(final TableRow owner, final int cols, final int rows,
       final TableCellDef[] def) {
     super(owner);
 

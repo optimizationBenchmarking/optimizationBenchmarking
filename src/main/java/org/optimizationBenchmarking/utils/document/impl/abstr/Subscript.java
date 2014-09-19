@@ -9,7 +9,7 @@ public class Subscript extends Text {
    * @param owner
    *          the owning FSM
    */
-  public Subscript(final ComplexText owner) {
+  protected Subscript(final ComplexText owner) {
     super(owner);
   }
 

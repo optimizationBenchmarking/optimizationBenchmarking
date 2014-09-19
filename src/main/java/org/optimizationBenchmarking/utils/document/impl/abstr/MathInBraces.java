@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.charset.Braces;
  * text braces}, this class does not print the braces &nbsp; you need to
  * implement that by yourself.
  */
-public final class MathInBraces extends BasicMath {
+public class MathInBraces extends BasicMath {
 
   /** the marks */
   private static final Braces[] BRACES = { Braces.PARENTHESES,

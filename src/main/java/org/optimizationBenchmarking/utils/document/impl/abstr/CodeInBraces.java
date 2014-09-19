@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import org.optimizationBenchmarking.utils.text.charset.Braces;
 
 /** A text class for braces text in codes */
-public final class CodeInBraces extends Text {
+public class CodeInBraces extends Text {
 
   /**
    * Create a text.

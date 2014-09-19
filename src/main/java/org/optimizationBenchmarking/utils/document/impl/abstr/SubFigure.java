@@ -19,7 +19,7 @@ public class SubFigure extends BasicFigure {
    * @param path
    *          the path suggestion
    */
-  public SubFigure(final FigureSeries owner, final ILabel useLabel,
+  protected SubFigure(final FigureSeries owner, final ILabel useLabel,
       final String path) {
     super(owner, useLabel, owner.m_size, path, owner.m_curFig);
   }

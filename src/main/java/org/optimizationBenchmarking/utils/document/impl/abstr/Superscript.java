@@ -9,7 +9,7 @@ public class Superscript extends Text {
    * @param owner
    *          the owning FSM
    */
-  public Superscript(final ComplexText owner) {
+  protected Superscript(final ComplexText owner) {
     super(owner);
   }
 

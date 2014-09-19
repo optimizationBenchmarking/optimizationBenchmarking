@@ -18,7 +18,7 @@ public class MathFunction extends DocumentPart implements IMathFunction {
    * @param owner
    *          the owning FSM
    * @param op
-   *          the mathematic operator
+   *          the mathematical operator
    */
   protected MathFunction(final BasicMath owner, final EMathOperators op) {
     super(owner);
@@ -30,9 +30,9 @@ public class MathFunction extends DocumentPart implements IMathFunction {
   }
 
   /**
-   * Get the mathematic operator
+   * Get the mathematical operator
    * 
-   * @return the mathematic operator
+   * @return the mathematical operator
    */
   public final EMathOperators getOperator() {
     return this.m_op;

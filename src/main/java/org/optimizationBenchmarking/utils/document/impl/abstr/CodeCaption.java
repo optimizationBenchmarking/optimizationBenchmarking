@@ -10,7 +10,7 @@ public class CodeCaption extends ComplexText {
    * @param owner
    *          the owner
    */
-  public CodeCaption(final Code owner) {
+  protected CodeCaption(final Code owner) {
     super(owner);
   }
 

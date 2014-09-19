@@ -10,7 +10,7 @@ public class TableCaption extends ComplexText {
    * @param owner
    *          the owner
    */
-  public TableCaption(final Table owner) {
+  protected TableCaption(final Table owner) {
     super(owner);
   }
 

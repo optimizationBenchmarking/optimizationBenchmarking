@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTMLDriver;
+import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
@@ -44,7 +44,7 @@ public class FontPalettes {
       tt.printStackTrace();
     }
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-      PaletteIODriver.INSTANCE.loadResource(tb, XHTMLDriver.class,
+      PaletteIODriver.INSTANCE.loadResource(tb, XHTML10Driver.class,
           "xhtml10.font.palette"); //$NON-NLS-1$
       FontPalettes.PALETTES[1] = tb.getResult();
     } catch (final Throwable tt) {

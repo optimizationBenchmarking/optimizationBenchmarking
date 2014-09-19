@@ -45,24 +45,12 @@ public class SectionBody extends StructuredText implements ISectionBody {
     return ((Section) (super.getOwner()));
   }
 
-  /**
-   * Create the section
-   * 
-   * @param useLabel
-   *          the label to use
-   * @param index
-   *          the index
-   * @return the section
-   */
-  protected Section createSection(final ILabel useLabel, final int index) {
-    return new Section(this, useLabel, index);
-  }
-
   /** {@inheritDoc} */
   @Override
   public synchronized final Section section(final ILabel useLabel) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    return this.createSection(useLabel, (++this.m_subsectionCount));
+    return this.m_driver.createSection(this, useLabel,
+        (++this.m_subsectionCount));
   }
 
   /** {@inheritDoc} */

@@ -25,7 +25,7 @@ public class Equation extends BasicMath {
   final Label m_label;
 
   /**
-   * Create a complex object
+   * Create an equation
    * 
    * @param owner
    *          the owning section body
@@ -34,7 +34,8 @@ public class Equation extends BasicMath {
    * @param useLabel
    *          the label to use
    */
-  Equation(final SectionBody owner, final ILabel useLabel, final int index) {
+  protected Equation(final SectionBody owner, final ILabel useLabel,
+      final int index) {
     super(owner);
 
     final String oid;

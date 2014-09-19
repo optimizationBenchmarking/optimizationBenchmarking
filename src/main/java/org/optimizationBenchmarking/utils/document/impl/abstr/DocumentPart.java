@@ -17,7 +17,7 @@ public abstract class DocumentPart extends DocumentElement implements
    * @param owner
    *          the owning FSM
    */
-  protected DocumentPart(final DocumentElement owner) {
+  DocumentPart(final DocumentElement owner) {
     super(owner);
     this.m_doc = ((owner instanceof Document) ? ((Document) owner)
         : (((DocumentPart) owner).m_doc));

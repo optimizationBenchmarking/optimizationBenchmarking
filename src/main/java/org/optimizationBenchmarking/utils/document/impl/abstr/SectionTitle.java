@@ -10,7 +10,7 @@ public class SectionTitle extends ComplexText {
    * @param owner
    *          the owner
    */
-  public SectionTitle(final Section owner) {
+  protected SectionTitle(final Section owner) {
     super(owner);
   }
 

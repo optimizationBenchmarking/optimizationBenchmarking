@@ -12,7 +12,7 @@ public class BasicMath extends PlainText implements IMath {
    * @param owner
    *          the owning FSM
    */
-  protected BasicMath(final DocumentElement owner) {
+  BasicMath(final DocumentElement owner) {
     super(owner);
   }
 

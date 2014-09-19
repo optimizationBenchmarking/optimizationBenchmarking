@@ -11,7 +11,7 @@ package org.optimizationBenchmarking.utils.comparison;
 public enum EComparison {
 
   /** less */
-  LESS(-1) {
+  LESS(-1, "less than") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -87,7 +87,7 @@ public enum EComparison {
   },
 
   /** less or same */
-  LESS_OR_SAME(-1) {
+  LESS_OR_SAME(-1, "less than or the same as") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -163,7 +163,7 @@ public enum EComparison {
   },
 
   /** less or equal */
-  LESS_OR_EQUAL(-1) {
+  LESS_OR_EQUAL(-1, "less than or equal to") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -239,7 +239,7 @@ public enum EComparison {
   },
 
   /** are the values identical? */
-  SAME(0) {
+  SAME(0, "the same as") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -297,7 +297,7 @@ public enum EComparison {
   },
 
   /** equal */
-  EQUAL(0) {
+  EQUAL(0, "equal to") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -355,7 +355,7 @@ public enum EComparison {
   },
 
   /** greater or equal */
-  GREATER_OR_EQUAL(1) {
+  GREATER_OR_EQUAL(1, "greater than or equal to") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -431,7 +431,7 @@ public enum EComparison {
   },
 
   /** greater or same */
-  GREATER_OR_SAME(1) {
+  GREATER_OR_SAME(1, "greater than or the same as") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -506,7 +506,7 @@ public enum EComparison {
   },
 
   /** greater */
-  GREATER(1) {
+  GREATER(1, "greater than") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -581,7 +581,7 @@ public enum EComparison {
   },
 
   /** not same */
-  NOT_SAME(0) {
+  NOT_SAME(0, "not the same as") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -639,7 +639,7 @@ public enum EComparison {
   },
 
   /** not equal */
-  NOT_EQUAL(0) {
+  NOT_EQUAL(0, "not equal to") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -709,15 +709,34 @@ public enum EComparison {
   /** a comparison constant */
   final int m_cmp;
 
+  /** the name */
+  private final String m_name;
+
   /**
    * create
    * 
    * @param cmp
    *          the comparison result to be returned by
    *          {@link org.optimizationBenchmarking.utils.comparison.PreciseComparator#preciseCompare(Object, Object)}
+   * @param name
+   *          the name
    */
-  private EComparison(final int cmp) {
+  private EComparison(final int cmp, final String name) {
     this.m_cmp = cmp;
+    this.m_name = name;
+  }
+
+  /**
+   * The {@link #toString()} method returns a string which can replace
+   * {@code [relation]} in the following sentence {@code "x [relation] y}
+   * in the case that {@link #compare(Object, Object)
+   * <code>compare(X, Y)</code>} returns {@code true}.
+   * 
+   * @return a string properly representing the comparison relationship
+   */
+  @Override
+  public final String toString() {
+    return this.m_name;
   }
 
   /**
@@ -956,7 +975,7 @@ public enum EComparison {
    *          the second object
    * @return the comparison result
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings("unchecked")
   public static final int compare(final Comparable a, final Comparable b) {
     if (a == b) {
       return 0;

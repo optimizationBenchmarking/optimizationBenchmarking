@@ -9,7 +9,7 @@ public class MathSubscript extends BasicMath {
    * @param owner
    *          the owning FSM
    */
-  public MathSubscript(final BasicMath owner) {
+  protected MathSubscript(final BasicMath owner) {
     super(owner);
   }
 

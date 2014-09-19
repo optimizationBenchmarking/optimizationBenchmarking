@@ -9,7 +9,7 @@ public class InlineCode extends Text {
    * @param owner
    *          the owning FSM
    */
-  public InlineCode(final Text owner) {
+  protected InlineCode(final Text owner) {
     super(owner);
   }
 }

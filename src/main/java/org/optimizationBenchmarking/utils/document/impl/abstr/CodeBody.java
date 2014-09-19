@@ -9,7 +9,7 @@ public class CodeBody extends PlainText {
    * @param owner
    *          the owning FSM
    */
-  public CodeBody(final Code owner) {
+  protected CodeBody(final Code owner) {
     super(owner);
   }
 

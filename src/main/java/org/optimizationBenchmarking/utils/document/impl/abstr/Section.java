@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
+import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -47,8 +48,11 @@ public class Section extends ComplexObject implements ISection {
   /** the depth of this section */
   private int m_depth;
 
+  /** the styles */
+  final StyleSet m_styles;
+
   /**
-   * Create a new enumeration
+   * Create a new section
    * 
    * @param owner
    *          the owning text
@@ -60,6 +64,7 @@ public class Section extends ComplexObject implements ISection {
   protected Section(final DocumentPart owner, final ILabel useLabel,
       final int index) {
     super(owner, useLabel, index);
+    this.m_styles = _StyleProviderPart._createStyleSet(owner);
   }
 
   /** {@inheritDoc} */
@@ -214,7 +219,7 @@ public class Section extends ComplexObject implements ISection {
           Section.STATE_TITLE_CLOSED);
       return;
     }
-    if (child instanceof DocumentBody) {
+    if (child instanceof SectionBody) {
       this.fsmStateAssertAndSet(Section.STATE_BODY_OPENED,
           Section.STATE_BODY_CLOSED);
       return;
@@ -230,4 +235,9 @@ public class Section extends ComplexObject implements ISection {
     super.onClose();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final StyleSet getStyles() {
+    return this.m_styles;
+  }
 }

@@ -9,7 +9,7 @@ public class MathSuperscript extends BasicMath {
    * @param owner
    *          the owning FSM
    */
-  public MathSuperscript(final BasicMath owner) {
+  protected MathSuperscript(final BasicMath owner) {
     super(owner);
   }
 

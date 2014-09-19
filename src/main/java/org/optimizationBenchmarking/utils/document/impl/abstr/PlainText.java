@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 public abstract class PlainText extends DocumentPart implements IPlainText {
 
   /** the encoded text output */
-  final ITextOutput m_encoded;
+  ITextOutput m_encoded;
 
   /**
    * Create a text.
@@ -15,13 +15,19 @@ public abstract class PlainText extends DocumentPart implements IPlainText {
    * @param owner
    *          the owning FSM
    */
-  @SuppressWarnings("resource")
   PlainText(final DocumentElement owner) {
     super(owner);
+  }
 
+  /** {@inheritDoc} */
+  @Override
+  @SuppressWarnings("resource")
+  protected synchronized void onOpen() {
     final ITextOutput to;
     DocumentElement fsm;
     PlainText pt;
+
+    super.onOpen();
 
     to = this.getTextOutput();
 
@@ -29,7 +35,7 @@ public abstract class PlainText extends DocumentPart implements IPlainText {
     // is a PlainText and has the same raw text output as this object, then
     // we can simply use that one as well. Otherwise, we need to invoke
     // Document.encode.
-    looper: for (fsm = owner; fsm != null; fsm = fsm._owner()) {
+    looper: for (fsm = this._owner(); fsm != null; fsm = fsm._owner()) {
       if (fsm instanceof PlainText) {
         pt = ((PlainText) fsm);
         if (pt.getTextOutput() == to) {

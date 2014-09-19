@@ -296,7 +296,7 @@ public class DocumentHeader extends DocumentPart implements
       return;
     }
 
-    if (child instanceof BibDateBuilder) {
+    if (child instanceof DocumentSummary) {
       this.fsmStateAssertAndSet(DocumentHeader.STATE_SUMMARY_AFTER_OPEN,
           DocumentHeader.STATE_SUMMARY_CLOSED);
       return;

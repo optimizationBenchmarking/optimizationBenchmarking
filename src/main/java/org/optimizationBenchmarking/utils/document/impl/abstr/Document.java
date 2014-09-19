@@ -12,7 +12,6 @@ import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
-import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -174,14 +173,6 @@ public class Document extends DocumentElement implements IDocument {
 
   /** {@inheritDoc} */
   @Override
-  protected synchronized void onOpen() {
-    super.onOpen();
-    this.fsmStateAssertAndSet(FSM.STATE_NOTHING,
-        DocumentElement.STATE_ALIFE);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public synchronized final DocumentHeader header() {
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         Document.STATE_HEADER_CREATED);
@@ -217,7 +208,7 @@ public class Document extends DocumentElement implements IDocument {
       return;
     }
     if (child instanceof DocumentBody) {
-      this.fsmStateAssertAndSet(Document.STATE_HEADER_CREATED,
+      this.fsmStateAssertAndSet(Document.STATE_BODY_CREATED,
           Document.STATE_BODY_BEFORE_OPEN);
       return;
     }

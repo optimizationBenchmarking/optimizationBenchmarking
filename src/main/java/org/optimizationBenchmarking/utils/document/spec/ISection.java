@@ -1,7 +1,9 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
+import org.optimizationBenchmarking.utils.graphics.style.IStyleProvider;
+
 /** A section. */
-public interface ISection extends IDocumentPart {
+public interface ISection extends IDocumentPart, IStyleProvider {
 
   /**
    * Write the section title

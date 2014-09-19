@@ -59,7 +59,7 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
    * @param path
    *          the path suggestion
    */
-  public FigureSeries(final SectionBody owner, final ILabel useLabel,
+  protected FigureSeries(final SectionBody owner, final ILabel useLabel,
       final EFigureSize size, final String path, final int index) {
     super(owner, useLabel, index);
 

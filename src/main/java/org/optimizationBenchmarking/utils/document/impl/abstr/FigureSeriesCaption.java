@@ -10,7 +10,7 @@ public class FigureSeriesCaption extends ComplexText {
    * @param owner
    *          the owner
    */
-  public FigureSeriesCaption(final FigureSeries owner) {
+  protected FigureSeriesCaption(final FigureSeries owner) {
     super(owner);
   }
 

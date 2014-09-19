@@ -16,7 +16,7 @@ public class TableBodyCell extends TableCell {
    * @param def
    *          the cell definition
    */
-  public TableBodyCell(final TableBodyRow owner, final int cols,
+  protected TableBodyCell(final TableBodyRow owner, final int cols,
       final int rows, final TableCellDef[] def) {
     super(owner, cols, rows, def);
   }
