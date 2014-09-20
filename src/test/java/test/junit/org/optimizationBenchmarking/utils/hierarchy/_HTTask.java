@@ -79,6 +79,7 @@ final class _HTTask extends RecursiveAction {
 
     } while ((sb.length() < 20) || (r.nextInt(6) > 0));
 
+    h.flush();
     this.m_owner._add(sb.toString());
   }
 
@@ -97,6 +98,7 @@ final class _HTTask extends RecursiveAction {
 
       try (final HierarchicalTextOutput d = new HierarchicalTextOutput(
           ((HierarchicalText) (this.m_root)))) {
+
         this.__writeString(d, r);
 
         mainLoop: for (;;) {

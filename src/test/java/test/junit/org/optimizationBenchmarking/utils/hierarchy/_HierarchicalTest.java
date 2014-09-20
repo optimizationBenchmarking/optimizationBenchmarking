@@ -18,24 +18,6 @@ public abstract class _HierarchicalTest extends TestBase {
     super();
   }
 
-  /** test the API single-threaded without delay */
-  @Test(timeout = 3600000)
-  public void testSingleThreadDelay() {
-    this._testMultiThreaded(1, 0);
-  }
-
-  /** test the API single-threaded without delay */
-  @Test(timeout = 3600000)
-  public void testSingleThreadRandomDelay() {
-    this._testMultiThreaded(1, 1);
-  }
-
-  /** test the API single-threaded without delay */
-  @Test(timeout = 3600000)
-  public void testSingleThreadNoDelay() {
-    this._testMultiThreaded(1, 2);
-  }
-
   /**
    * test the API multi-threaded
    * 
@@ -43,145 +25,321 @@ public abstract class _HierarchicalTest extends TestBase {
    *          the number of threads
    * @param delayMode
    *          the delay
+   * @param fifo
+   *          are the tests fifo?
    */
-  abstract void _testMultiThreaded(final int n, final int delayMode);
+  abstract void _testMultiThreaded(final int n, final int delayMode,
+      final boolean fifo);
 
-  /** test the API multi-threaded */
+  /** test the API single-threaded without delay fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_2_Delay() {
-    this._testMultiThreaded(2, 0);
+  public void testSingleThreadDelay_FIFO() {
+    this._testMultiThreaded(1, 0, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API single-threaded without delay fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_2_NoDelay() {
-    this._testMultiThreaded(2, 2);
+  public void testSingleThreadRandomDelay_FIFO() {
+    this._testMultiThreaded(1, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API single-threaded without delay fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_2_RandomDelay() {
-    this._testMultiThreaded(2, 1);
+  public void testSingleThreadNoDelay_FIFO() {
+    this._testMultiThreaded(1, 2, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_3_NoDelay() {
-    this._testMultiThreaded(3, 2);
+  public void testMultiThread_2_Delay_FIFO() {
+    this._testMultiThreaded(2, 0, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_3_Delay() {
-    this._testMultiThreaded(3, 0);
+  public void testMultiThread_2_NoDelay_FIFO() {
+    this._testMultiThreaded(2, 2, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_3_RandomDelay() {
-    this._testMultiThreaded(3, 1);
+  public void testMultiThread_2_RandomDelay_FIFO() {
+    this._testMultiThreaded(2, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_4_RandomDelay() {
-    this._testMultiThreaded(4, 1);
+  public void testMultiThread_3_NoDelay_FIFO() {
+    this._testMultiThreaded(3, 2, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_5_RandomDelay() {
-    this._testMultiThreaded(5, 1);
+  public void testMultiThread_3_Delay_FIFO() {
+    this._testMultiThreaded(3, 0, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_6_RandomDelay() {
-    this._testMultiThreaded(6, 1);
+  public void testMultiThread_3_RandomDelay_FIFO() {
+    this._testMultiThreaded(3, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_7_RandomDelay() {
-    this._testMultiThreaded(7, 1);
+  public void testMultiThread_4_RandomDelay_FIFO() {
+    this._testMultiThreaded(4, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_8_RandomDelay() {
-    this._testMultiThreaded(8, 1);
+  public void testMultiThread_5_RandomDelay_FIFO() {
+    this._testMultiThreaded(5, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_9_RandomDelay() {
-    this._testMultiThreaded(9, 1);
+  public void testMultiThread_6_RandomDelay_FIFO() {
+    this._testMultiThreaded(6, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_10_RandomDelay() {
-    this._testMultiThreaded(10, 1);
+  public void testMultiThread_7_RandomDelay_FIFO() {
+    this._testMultiThreaded(7, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_20_RandomDelay() {
-    this._testMultiThreaded(20, 1);
+  public void testMultiThread_8_RandomDelay_FIFO() {
+    this._testMultiThreaded(8, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_30_RandomDelay() {
-    this._testMultiThreaded(30, 1);
+  public void testMultiThread_9_RandomDelay_FIFO() {
+    this._testMultiThreaded(9, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThread_40_RandomDelay() {
-    this._testMultiThreaded(40, 1);
+  public void testMultiThread_10_RandomDelay_FIFO() {
+    this._testMultiThreaded(10, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThreadRandom_1_100_RandomDelay() {
-    this._testMultiThreaded((new Random().nextInt(100) + 1), 1);
+  public void testMultiThread_20_RandomDelay_FIFO() {
+    this._testMultiThreaded(20, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThreadRandom_100_200_RandomDelay() {
-    this._testMultiThreaded((new Random().nextInt(100) + 100), 1);
+  public void testMultiThread_30_RandomDelay_FIFO() {
+    this._testMultiThreaded(30, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThreadRandom_1_20_RandomDelay() {
-    this._testMultiThreaded((new Random().nextInt(20) + 1), 1);
+  public void testMultiThread_40_RandomDelay_FIFO() {
+    this._testMultiThreaded(40, 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThreadRandom_1_50_RandomDelay() {
-    this._testMultiThreaded((new Random().nextInt(50) + 1), 1);
+  public void testMultiThreadRandom_1_100_RandomDelay_FIFO() {
+    this._testMultiThreaded((new Random().nextInt(100) + 1), 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThreadRandom_20_40_RandomDelay() {
-    this._testMultiThreaded((new Random().nextInt(20) + 20), 1);
+  public void testMultiThreadRandom_100_200_RandomDelay_FIFO() {
+    this._testMultiThreaded((new Random().nextInt(100) + 100), 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThreadRandom_50_100_RandomDelay() {
-    this._testMultiThreaded((new Random().nextInt(50) + 50), 1);
+  public void testMultiThreadRandom_1_20_RandomDelay_FIFO() {
+    this._testMultiThreaded((new Random().nextInt(20) + 1), 1, true);
   }
 
-  /** test the API multi-threaded */
+  /** test the API multi-threaded fifo-style */
   @Test(timeout = 3600000)
-  public void testMultiThreadRandom_200_400_RandomDelay() {
-    this._testMultiThreaded((new Random().nextInt(200) + 200), 1);
+  public void testMultiThreadRandom_1_50_RandomDelay_FIFO() {
+    this._testMultiThreaded((new Random().nextInt(50) + 1), 1, true);
   }
 
+  /** test the API multi-threaded fifo-style */
+  @Test(timeout = 3600000)
+  public void testMultiThreadRandom_20_40_RandomDelay_FIFO() {
+    this._testMultiThreaded((new Random().nextInt(20) + 20), 1, true);
+  }
+
+  /** test the API multi-threaded fifo-style */
+  @Test(timeout = 3600000)
+  public void testMultiThreadRandom_50_100_RandomDelay_FIFO() {
+    this._testMultiThreaded((new Random().nextInt(50) + 50), 1, true);
+  }
+
+  /** test the API multi-threaded fifo-style */
+  @Test(timeout = 3600000)
+  public void testMultiThreadRandom_200_400_RandomDelay_FIFO() {
+    this._testMultiThreaded((new Random().nextInt(200) + 200), 1, true);
+  }
+
+  /** test the API single-threaded without delay default-style */
+  @Test(timeout = 3600000)
+  public void testSingleThreadDelay_Default() {
+    this._testMultiThreaded(1, 0, false);
+  }
+
+  /** test the API single-threaded without delay default-style */
+  @Test(timeout = 3600000)
+  public void testSingleThreadRandomDelay_Default() {
+    this._testMultiThreaded(1, 1, false);
+  }
+
+  /** test the API single-threaded without delay default-style */
+  @Test(timeout = 3600000)
+  public void testSingleThreadNoDelay_Default() {
+    this._testMultiThreaded(1, 2, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_2_Delay_Default() {
+    this._testMultiThreaded(2, 0, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_2_NoDelay_Default() {
+    this._testMultiThreaded(2, 2, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_2_RandomDelay_Default() {
+    this._testMultiThreaded(2, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_3_NoDelay_Default() {
+    this._testMultiThreaded(3, 2, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_3_Delay_Default() {
+    this._testMultiThreaded(3, 0, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_3_RandomDelay_Default() {
+    this._testMultiThreaded(3, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_4_RandomDelay_Default() {
+    this._testMultiThreaded(4, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_5_RandomDelay_Default() {
+    this._testMultiThreaded(5, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_6_RandomDelay_Default() {
+    this._testMultiThreaded(6, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_7_RandomDelay_Default() {
+    this._testMultiThreaded(7, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_8_RandomDelay_Default() {
+    this._testMultiThreaded(8, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_9_RandomDelay_Default() {
+    this._testMultiThreaded(9, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_10_RandomDelay_Default() {
+    this._testMultiThreaded(10, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_20_RandomDelay_Default() {
+    this._testMultiThreaded(20, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_30_RandomDelay_Default() {
+    this._testMultiThreaded(30, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThread_40_RandomDelay_Default() {
+    this._testMultiThreaded(40, 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThreadRandom_1_100_RandomDelay_Default() {
+    this._testMultiThreaded((new Random().nextInt(100) + 1), 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThreadRandom_100_200_RandomDelay_Default() {
+    this._testMultiThreaded((new Random().nextInt(100) + 100), 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThreadRandom_1_20_RandomDelay_Default() {
+    this._testMultiThreaded((new Random().nextInt(20) + 1), 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThreadRandom_1_50_RandomDelay_Default() {
+    this._testMultiThreaded((new Random().nextInt(50) + 1), 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThreadRandom_20_40_RandomDelay_Default() {
+    this._testMultiThreaded((new Random().nextInt(20) + 20), 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThreadRandom_50_100_RandomDelay_Default() {
+    this._testMultiThreaded((new Random().nextInt(50) + 50), 1, false);
+  }
+
+  /** test the API multi-threaded default-style */
+  @Test(timeout = 3600000)
+  public void testMultiThreadRandom_200_400_RandomDelay_Default() {
+    this._testMultiThreaded((new Random().nextInt(200) + 200), 1, false);
+  }
 }

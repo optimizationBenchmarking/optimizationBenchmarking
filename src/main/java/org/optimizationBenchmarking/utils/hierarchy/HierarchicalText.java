@@ -34,7 +34,10 @@ public abstract class HierarchicalText extends HierarchicalFSM {
    * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    * to be re-used for the next child
    */
-  private transient MemoryTextOutput m_cache;
+  private volatile transient MemoryTextOutput m_cache;
+
+  /** the output buffer has been taken */
+  private volatile transient boolean m_outTaken;
 
   /**
    * Create the hierarchical {@link java.lang.Appendable}
@@ -87,7 +90,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
 
     if (child instanceof HierarchicalText) {
       ct = ((HierarchicalText) child);
-      if (hasOtherChildren) {
+      if (this.m_outTaken || this.mustChildBeBuffered(ct)) {
         m = this.m_cache;
         if (m != null) {
           this.m_cache = null;
@@ -96,9 +99,33 @@ public abstract class HierarchicalText extends HierarchicalFSM {
           ct.m_out = new MemoryTextOutput();
         }
       } else {
+        this.m_outTaken = true;
         ct.m_out = this.m_out;
       }
     }
+  }
+
+  /**
+   * Check whether a given child text can write directly to the same output
+   * destination as this object, {@code false} otherwise. If this method
+   * returns {@code true}, {@code child} will definitely write its contents
+   * to an instance of
+   * {@link org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput}
+   * which will then be copied to this text's output stream once the child
+   * gets closed. If this method returns {@code false}, the child
+   * <em>may</em> either be buffered as described above, or use this text's
+   * output stream directly as well. There can only be at most one child
+   * text sharing its text output stream with this text.
+   * 
+   * @param child
+   *          the child element
+   * @return {@code true} if the child must be buffered, {@code false}
+   *         otherwise.
+   * @see #processBufferedOutputFromChild(HierarchicalText,
+   *      MemoryTextOutput)
+   */
+  protected boolean mustChildBeBuffered(final HierarchicalText child) {
+    return false;
   }
 
   /** {@inheritDoc} */
@@ -114,6 +141,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
       ha = ((HierarchicalText) (child));
       childAppendable = ha.m_out;
       ha.m_out = null;
+
       if (childAppendable == null) {
         sb = new MemoryTextOutput();
         sb.append("When closing an instance of "); //$NON-NLS-1$
@@ -129,13 +157,46 @@ public abstract class HierarchicalText extends HierarchicalFSM {
       ownAppendable = this.m_out;
       if (ownAppendable != childAppendable) {
         sb = ((MemoryTextOutput) childAppendable);
-        sb.toText(this.m_out);
+        this.processBufferedOutputFromChild(ha, sb);
         if (this.m_cache == null) {
           sb.clear();
           this.m_cache = sb;
         }
+      } else {
+        this.m_outTaken = false;
       }
     }
+  }
+
+  /**
+   * <p>
+   * Process the buffered output from a child text. The default
+   * implementation of this method copies the output to the own text.
+   * </p>
+   * <p>
+   * An overridden version of this method may cache the output. In any
+   * case, it is not allowed to make any assumption about the content of
+   * {@code out} after this method has returned, i.e., the contents of
+   * {@code out} may change, may be overridden, or otherwise invalidated
+   * directly after
+   * {@link #processBufferedOutputFromChild(HierarchicalText, MemoryTextOutput)}
+   * returns.
+   * </p>
+   * <p>
+   * This method is designed to work together with
+   * {@code #mustChildBeBuffered(HierarchicalText)} in order to provide a
+   * way to always cache the output of certain objects for later use.
+   * </p>
+   * 
+   * @param child
+   *          the child text
+   * @param out
+   *          the output
+   * @see #mustChildBeBuffered(HierarchicalText)
+   */
+  protected void processBufferedOutputFromChild(
+      final HierarchicalText child, final MemoryTextOutput out) {
+    out.toText(this.m_out);
   }
 
   /** {@inheritDoc} */

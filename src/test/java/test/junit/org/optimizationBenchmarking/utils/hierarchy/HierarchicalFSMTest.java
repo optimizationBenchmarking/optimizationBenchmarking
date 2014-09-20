@@ -19,7 +19,8 @@ public class HierarchicalFSMTest extends _HierarchicalTest {
 
   /** {@inheritDoc} */
   @Override
-  final void _testMultiThreaded(final int n, final int delayMode) {
+  final void _testMultiThreaded(final int n, final int delayMode,
+      final boolean fifo) {
     _HFTTask t;
     _HFTWaitThread wt;
     final long et;
@@ -38,7 +39,9 @@ public class HierarchicalFSMTest extends _HierarchicalTest {
 
       wt = new _HFTWaitThread(r.nextInt(Math.max(1, ((int) (et - ct)))));
       wt.start();
-      fjp = new ForkJoinPool(n);
+      fjp = (fifo ? new ForkJoinPool(n,
+          ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, true)
+          : new ForkJoinPool(n));
 
       try (_HFTDummyHierarchicalFSM d = new _HFTDummyHierarchicalFSM(null)) {
         t = new _HFTTask(wt, d, 0, delayMode);

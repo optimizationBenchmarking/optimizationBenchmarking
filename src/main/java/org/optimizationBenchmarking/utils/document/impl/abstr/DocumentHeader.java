@@ -307,7 +307,7 @@ public class DocumentHeader extends DocumentPart implements
 
   /** {@inheritDoc} */
   @Override
-  protected synchronized final void onClose() {
+  protected synchronized void onClose() {
     super.onClose();
     this.fsmStateAssertAndSet(DocumentHeader.STATE_SUMMARY_CLOSED,
         DocumentHeader.STATE_HEADER_FINALIZED);

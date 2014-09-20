@@ -42,11 +42,56 @@ import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
+import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.transformations.XMLCharTransformer;
 
 /**
  * The driver for xhtml output
  */
 public final class XHTML10Driver extends DocumentDriver {
+
+  /** the attributed tag end */
+  static final char[] ATTRIB_TAG_BEGIN_END = { '"', '>' };
+
+  /** the label end */
+  static final char[] EMPTY_ATTRIB_TAG_END = { '"', ' ', '/', '>' };
+
+  /** the start of the section div */
+  static final char[] SECTION_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ', 'c',
+      'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i', 'o', 'n',
+      '"', '>' };
+  /** the start of the section head div */
+  static final char[] SECTION_HEAD_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ',
+      'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i', 'o',
+      'n', 'H', 'e', 'a', 'd', '"', '>' };
+  /** the start of the section body div */
+  static final char[] SECTION_BODY_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ',
+      'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i', 'o',
+      'n', 'B', 'o', 'd', 'y', '"', '>' };
+
+  /** the head line start */
+  static final char[][] HEADLINE_BEGIN = {
+      { '<', 'h', '1', '>' },
+      { '<', 'h', '2', '>' },
+      { '<', 'h', '3', '>' },
+      { '<', 'h', '4', '>' },
+      { '<', 'h', '5', '>' },
+      { '<', 'h', '6', '>' },
+      { '<', 's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"',
+          'h', '7', '"', '>' } };
+
+  /** the span end */
+  static final char[] SPAN_END = { '<', '/', 's', 'p', 'a', 'n', '>', };
+
+  /** the head line end */
+  static final char[][] HEADLINE_END = { { '<', '/', 'h', '1', '>' },
+      { '<', '/', 'h', '2', '>' }, { '<', '/', 'h', '3', '>' },
+      { '<', '/', 'h', '4', '>' }, { '<', '/', 'h', '5', '>' },
+      { '<', '/', 'h', '6', '>' }, XHTML10Driver.SPAN_END };
+
+  /** the div end */
+  static final char[] DIV_END = { '<', '/', 'd', 'i', 'v', '>' };
 
   /** the synchronizer */
   private static final Object SYNCH = new Object();
@@ -105,6 +150,13 @@ public final class XHTML10Driver extends DocumentDriver {
 
     this.m_fonts = ((fonts == null) ? XHTML10Driver.__defaultFonts()
         : fonts);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final ITextOutput encode(final ITextOutput raw) {
+    return XMLCharTransformer.INSTANCE.transform(raw,
+        TextUtils.DEFAULT_NORMALIZER_FORM);
   }
 
   /**

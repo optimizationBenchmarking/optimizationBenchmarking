@@ -360,6 +360,21 @@ public class MemoryTextOutput extends AbstractTextOutput implements
     return String.copyValueOf(this.m_data, 0, this.m_size);
   }
 
+  /**
+   * Obtain the characters stored in this buffer
+   * 
+   * @return the characters
+   */
+  public final char[] toChars() {
+    char[] ch;
+    int s;
+
+    s = this.m_size;
+    ch = new char[s];
+    System.arraycopy(this.m_data, 0, ch, 0, s);
+    return ch;
+  }
+
   /** clear the contents of this text output */
   public final void clear() {
     this.m_size = 0;

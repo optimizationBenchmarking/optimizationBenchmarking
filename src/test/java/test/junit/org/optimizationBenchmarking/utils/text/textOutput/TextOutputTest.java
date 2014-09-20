@@ -347,4 +347,73 @@ public abstract class TextOutputTest<R> extends TestBase {
       }
     }
   }
+
+  /** test if strings are written correctly */
+  @SuppressWarnings("incomplete-switch")
+  @Test(timeout = 10000000)
+  public void testGrow() {
+    final Random rand;
+    R root;
+    ITextOutput textOut;
+    StringBuilder sb;
+    int size, i, j, len;
+    char[] add;
+    String s;
+
+    rand = new Random();
+
+    for (boolean useFullLength : new boolean[] { true, false }) {
+      for (int appendType = 4; appendType >= 0; appendType--) {
+
+        for (size = 1; size < 384; size++) {
+
+          root = this.createRootObject();
+          textOut = this.wrap(root);
+          sb = new StringBuilder();
+
+          add = new char[size];
+          for (i = 1; i < 2048; i++) {
+
+            len = (useFullLength ? size : (1 + rand.nextInt(size)));
+
+            for (j = len; (--j) >= 0;) {
+              add[j] = ((char) (rand.nextInt(26) + 'a'));
+            }
+
+            switch ((appendType == 4) ? (rand.nextInt(appendType))
+                : appendType) {
+              case 0: {
+                if (len >= size) {
+                  textOut.append(add);
+                  sb.append(add);
+                  break;
+                }
+              }
+              case 1: {
+                textOut.append(add, 0, len);
+                sb.append(add, 0, len);
+                break;
+              }
+              case 2: {
+                if (len >= size) {
+                  s = String.valueOf(add);
+                  textOut.append(s);
+                  sb.append(s);
+                  break;
+                }
+              }
+              case 3: {
+                s = String.valueOf(add);
+                textOut.append(s, 0, len);
+                sb.append(s, 0, len);
+                break;
+              }
+            }
+            Assert.assertEquals(sb.toString(), this.getString(root));
+          }
+
+        }
+      }
+    }
+  }
 }

@@ -19,7 +19,8 @@ public class HierarchicalTextTest extends _HierarchicalTest {
 
   /** {@inheritDoc} */
   @Override
-  final void _testMultiThreaded(final int n, final int delayMode) {
+  final void _testMultiThreaded(final int n, final int delayMode,
+      final boolean fifo) {
     _HTTask t;
     _HTWaitThread wt;
     final StringBuilder sb;
@@ -43,7 +44,9 @@ public class HierarchicalTextTest extends _HierarchicalTest {
 
       wt = new _HTWaitThread(r.nextInt(Math.max(1, ((int) (et - ct)))));
       wt.start();
-      fjp = new ForkJoinPool(n);
+      fjp = (fifo ? new ForkJoinPool(n,
+          ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, true)
+          : new ForkJoinPool(n));
 
       try (HierarchicalTextOutput d = new HierarchicalTextOutput(sb)) {
         t = new _HTTask(wt, d, 0, delayMode);
