@@ -9,7 +9,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.junit.Ignore;
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.RandomUtils;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput;
 
 /** a thread for testing the hierarchy */
@@ -96,8 +95,7 @@ final class _HTTask extends RecursiveAction {
       r = ThreadLocalRandom.current();
       delay = this.m_delay;
 
-      try (final HierarchicalTextOutput d = new HierarchicalTextOutput(
-          ((HierarchicalText) (this.m_root)))) {
+      try (final HierarchicalTextOutput d = this.m_root.newText()) {
 
         this.__writeString(d, r);
 

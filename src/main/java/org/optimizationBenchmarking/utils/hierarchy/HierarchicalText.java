@@ -36,9 +36,6 @@ public abstract class HierarchicalText extends HierarchicalFSM {
    */
   private volatile transient MemoryTextOutput m_cache;
 
-  /** the output buffer has been taken */
-  private volatile transient boolean m_outTaken;
-
   /**
    * Create the hierarchical {@link java.lang.Appendable}
    * 
@@ -90,7 +87,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
 
     if (child instanceof HierarchicalText) {
       ct = ((HierarchicalText) child);
-      if (this.m_outTaken || this.mustChildBeBuffered(ct)) {
+      if (hasOtherChildren || this.mustChildBeBuffered(ct)) {
         m = this.m_cache;
         if (m != null) {
           this.m_cache = null;
@@ -99,7 +96,6 @@ public abstract class HierarchicalText extends HierarchicalFSM {
           ct.m_out = new MemoryTextOutput();
         }
       } else {
-        this.m_outTaken = true;
         ct.m_out = this.m_out;
       }
     }
@@ -162,8 +158,6 @@ public abstract class HierarchicalText extends HierarchicalFSM {
           sb.clear();
           this.m_cache = sb;
         }
-      } else {
-        this.m_outTaken = false;
       }
     }
   }

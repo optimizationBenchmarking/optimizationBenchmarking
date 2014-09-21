@@ -362,7 +362,7 @@ public abstract class TextOutputTest<R> extends TestBase {
 
     rand = new Random();
 
-    for (boolean useFullLength : new boolean[] { true, false }) {
+    for (final boolean useFullLength : new boolean[] { true, false }) {
       for (int appendType = 4; appendType >= 0; appendType--) {
 
         for (size = 1; size < 384; size++) {
