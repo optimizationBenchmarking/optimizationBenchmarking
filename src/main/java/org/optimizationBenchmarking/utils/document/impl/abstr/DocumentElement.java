@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.document.spec.IDocumentElement;
+import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -93,6 +94,16 @@ public abstract class DocumentElement extends HierarchicalText implements
     super.onOpen();
     this.fsmStateAssertAndSet(FSM.STATE_NOTHING,
         DocumentElement.STATE_ALIFE);
+  }
+
+  /**
+   * Notify the document that a given style has been used.
+   * 
+   * @param style
+   *          the style which has been used
+   */
+  protected void styleUsed(final IStyle style) {
+    //
   }
 
 }

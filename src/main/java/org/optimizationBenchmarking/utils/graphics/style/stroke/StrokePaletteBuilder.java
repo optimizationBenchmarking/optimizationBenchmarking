@@ -31,6 +31,9 @@ public class StrokePaletteBuilder extends
   /** the thick stroke */
   private StrokeStyle m_thick;
 
+  /** the counter */
+  private int m_count;
+
   /** create */
   public StrokePaletteBuilder() {
     super(null);
@@ -84,7 +87,7 @@ public class StrokePaletteBuilder extends
   public synchronized final StrokeStyleBuilder setDefaultStroke() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-    return new StrokeStyleBuilder(this, 0);
+    return new StrokeStyleBuilder(this, 0, "strokeDefault"); //$NON-NLS-1$
   }
 
   /**
@@ -110,7 +113,7 @@ public class StrokePaletteBuilder extends
   public synchronized final StrokeStyleBuilder setThinStroke() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-    return new StrokeStyleBuilder(this, 1);
+    return new StrokeStyleBuilder(this, 1, "strokeThin"); //$NON-NLS-1$
   }
 
   /**
@@ -136,7 +139,7 @@ public class StrokePaletteBuilder extends
   public synchronized final StrokeStyleBuilder setThickStroke() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-    return new StrokeStyleBuilder(this, 2);
+    return new StrokeStyleBuilder(this, 2, "strokeThick"); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
@@ -145,7 +148,8 @@ public class StrokePaletteBuilder extends
     this.fsmFlagsAssertTrue(StrokePaletteBuilder.FLAG_HAS_DEFAULT
         | StrokePaletteBuilder.FLAG_HAS_FAT
         | StrokePaletteBuilder.FLAG_HAS_THIN);
-    return new StrokeStyleBuilder(this, 3);
+    return new StrokeStyleBuilder(this, 3,
+        "stroke" + Integer.toHexString(this.m_count++));//$NON-NLS-1$
   }
 
   /**

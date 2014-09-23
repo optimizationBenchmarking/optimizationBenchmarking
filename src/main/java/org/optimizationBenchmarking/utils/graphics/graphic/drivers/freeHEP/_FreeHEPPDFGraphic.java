@@ -5,7 +5,8 @@ import java.nio.file.Path;
 
 import org.freehep.graphicsio.PageConstants;
 import org.freehep.graphicsio.pdf.PDFGraphics2D;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 
 /**
  * the internal <a
@@ -53,5 +54,10 @@ final class _FreeHEPPDFGraphic extends
         mess.setSize(FreeHEPPDFGraphicDriver.INSTANCE.m_correctDim);
       }
     }
+  }
+  /** {@inheritDoc} */
+  @Override
+  protected final Object getPathEntryObjectID() {
+    return EGraphicFormat.PDF;
   }
 }

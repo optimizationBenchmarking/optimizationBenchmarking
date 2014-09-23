@@ -171,5 +171,4 @@ public enum EGraphicFormat {
       final int dotsPerInch, final double quality) {
     return this.getDefaultDriver();
   }
-
 }

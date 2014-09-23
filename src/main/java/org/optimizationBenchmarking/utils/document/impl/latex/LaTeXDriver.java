@@ -3,7 +3,6 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
 import org.optimizationBenchmarking.utils.document.impl.abstr.CodeBody;
@@ -29,6 +28,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooterRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.PageDimension;

@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.graphics.graphic;
 import java.io.OutputStream;
 import java.nio.file.Path;
 
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;

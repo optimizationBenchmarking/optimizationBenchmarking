@@ -9,7 +9,8 @@ import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
@@ -73,6 +74,12 @@ final class _ImageIOPNGGraphic extends _ImageIORasterGraphic {
     root.appendChild(dim);
 
     metaData.mergeTree("javax_imageio_1.0", root); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final Object getPathEntryObjectID() {
+    return EGraphicFormat.PNG;
   }
 
 }

@@ -5,7 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.OutputStream;
 import java.nio.file.Path;
 
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 
 /**
  * An internal class for <a
@@ -74,5 +75,11 @@ final class _ImageIOGIFGraphic extends _ImageIORasterGraphic {
   @Override
   final boolean _tryMetaData() {
     return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final Object getPathEntryObjectID() {
+    return EGraphicFormat.GIF;
   }
 }

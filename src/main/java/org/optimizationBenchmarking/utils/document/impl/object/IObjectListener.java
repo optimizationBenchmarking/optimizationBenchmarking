@@ -1,6 +1,4 @@
-package org.optimizationBenchmarking.utils.document;
-
-import java.nio.file.Path;
+package org.optimizationBenchmarking.utils.document.impl.object;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
@@ -17,5 +15,6 @@ public interface IObjectListener {
    * @param result
    *          the list of files created during the object construction
    */
-  public abstract void onObjectFinalized(final ArrayListView<Path> result);
+  public abstract void onObjectFinalized(
+      final ArrayListView<PathEntry> result);
 }

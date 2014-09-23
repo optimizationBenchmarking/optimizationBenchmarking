@@ -7,7 +7,7 @@ import java.nio.file.Path;
 
 import org.freehep.graphicsio.svg.SVGGraphics2D;
 import org.freehep.util.UserProperties;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;

@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentBody;
 
 /** the XHTML document body */
 final class _XHTML10DocumentBody extends DocumentBody {
+
   /**
    * Create a document body
    * 

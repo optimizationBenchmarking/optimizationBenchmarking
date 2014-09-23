@@ -28,7 +28,7 @@ import java.nio.file.Path;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 
 /**
  * An abstract wrapper which maps {@link java.awt.Graphics2D} objects to

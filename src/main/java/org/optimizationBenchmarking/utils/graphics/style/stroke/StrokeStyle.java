@@ -20,6 +20,9 @@ public final class StrokeStyle extends BasicStroke implements IStyle {
   /** the palette */
   StrokePalette m_palette;
 
+  /** the id */
+  private final String m_id;
+
   /**
    * Constructs a new {@code StrokeStyle} with the specified attributes.
    * 
@@ -32,10 +35,13 @@ public final class StrokeStyle extends BasicStroke implements IStyle {
    *          the array representing the dashing pattern
    * @param name
    *          the name of the style
+   * @param id
+   *          the id
    */
-  StrokeStyle(final float width, final float dash[], final String name) {
+  StrokeStyle(final float width, final float dash[], final String name,
+      final String id) {
     this(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, Math.max(
-        1f, (3 * width)), dash, 0f, name);
+        1f, (3 * width)), dash, 0f, name, id);
   }
 
   /**
@@ -59,10 +65,12 @@ public final class StrokeStyle extends BasicStroke implements IStyle {
    *          the offset to start the dashing pattern
    * @param name
    *          the name of the style
+   * @param id
+   *          the unique id
    */
   public StrokeStyle(final float width, final int cap, final int join,
       final float miterLimit, final float dash[], final float dashPhase,
-      final String name) {
+      final String name, final String id) {
     super(width, cap, join, miterLimit, dash, dashPhase);
 
     this.m_name = TextUtils.normalize(name);
@@ -70,6 +78,13 @@ public final class StrokeStyle extends BasicStroke implements IStyle {
       throw new IllegalArgumentException(//
           "Stroke name must not be empty or null, but is '" + //$NON-NLS-1$
               name + "'.");//$NON-NLS-1$
+    }
+
+    this.m_id = TextUtils.prepare(id);
+    if (this.m_id == null) {
+      throw new IllegalArgumentException(//
+          "Stroke id must not be empty or null, but is '" + //$NON-NLS-1$
+              id + "'.");//$NON-NLS-1$
     }
   }
 
@@ -104,5 +119,11 @@ public final class StrokeStyle extends BasicStroke implements IStyle {
     t = ((textCase == null) ? ETextCase.IN_SENTENCE : textCase);
     t.appendWords(this.m_name, dest);
     return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getID() {
+    return this.m_id;
   }
 }

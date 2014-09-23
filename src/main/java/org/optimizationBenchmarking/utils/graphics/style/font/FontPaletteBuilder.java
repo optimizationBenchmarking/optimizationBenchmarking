@@ -29,6 +29,8 @@ public class FontPaletteBuilder extends
   private FontStyle m_emph;
   /** the code font style */
   private FontStyle m_code;
+  /** the font counter */
+  private int m_count;
 
   /** create */
   public FontPaletteBuilder() {
@@ -106,11 +108,13 @@ public class FontPaletteBuilder extends
    * 
    * @param id
    *          the id
+   * @param idStr
+   *          the id
    * @return the builder
    */
-  private final FontStyleBuilder __build(final int id) {
+  private final FontStyleBuilder __build(final int id, final String idStr) {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    return new FontStyleBuilder(this, id);
+    return new FontStyleBuilder(this, id, idStr);
   }
 
   /**
@@ -120,7 +124,7 @@ public class FontPaletteBuilder extends
    */
   public synchronized final FontStyleBuilder setDefaultFont() {
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-    return this.__build(0);
+    return this.__build(0, "fontDefault"); //$NON-NLS-1$
   }
 
   /**
@@ -130,7 +134,7 @@ public class FontPaletteBuilder extends
    */
   public synchronized final FontStyleBuilder setEmphFont() {
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-    return this.__build(1);
+    return this.__build(1, "fontEmph"); //$NON-NLS-1$
   }
 
   /**
@@ -140,7 +144,7 @@ public class FontPaletteBuilder extends
    */
   public synchronized final FontStyleBuilder setCodeFont() {
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-    return this.__build(2);
+    return this.__build(2, "fontCode"); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
@@ -149,7 +153,7 @@ public class FontPaletteBuilder extends
     this.fsmFlagsAssertTrue(FontPaletteBuilder.FLAG_HAS_DEFAULT
         | FontPaletteBuilder.FLAG_HAS_EMPH
         | FontPaletteBuilder.FLAG_HAS_CODE);
-    return this.__build(3);
+    return this.__build(3, ("font" + Integer.toHexString(this.m_count++))); //$NON-NLS-1$
   }
 
   /**
@@ -216,7 +220,6 @@ public class FontPaletteBuilder extends
   protected synchronized final void processHeader(
       final BufferedReader reader) throws IOException {
     String s;
-    int i;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
@@ -226,15 +229,33 @@ public class FontPaletteBuilder extends
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
 
-    outer: for (i = 0; i < 3; i++) {
-      while ((s = reader.readLine()) != null) {
-        s = TextUtils.prepare(s);
-        if (s != null) {
-          try (final FontStyleBuilder ssb = this.__build(i)) {
-            ssb.fromStrings(this.iterate(s));
-          }
-          continue outer;
+    while ((s = reader.readLine()) != null) {
+      s = TextUtils.prepare(s);
+      if (s != null) {
+        try (final FontStyleBuilder ssb = this.setDefaultFont()) {
+          ssb.fromStrings(this.iterate(s));
         }
+        break;
+      }
+    }
+
+    while ((s = reader.readLine()) != null) {
+      s = TextUtils.prepare(s);
+      if (s != null) {
+        try (final FontStyleBuilder ssb = this.setEmphFont()) {
+          ssb.fromStrings(this.iterate(s));
+        }
+        break;
+      }
+    }
+
+    while ((s = reader.readLine()) != null) {
+      s = TextUtils.prepare(s);
+      if (s != null) {
+        try (final FontStyleBuilder ssb = this.setCodeFont()) {
+          ssb.fromStrings(this.iterate(s));
+        }
+        break;
       }
     }
   }

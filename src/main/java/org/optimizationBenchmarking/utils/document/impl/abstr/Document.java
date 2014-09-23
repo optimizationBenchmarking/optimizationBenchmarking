@@ -3,15 +3,19 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.PathEntry;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
+import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
@@ -76,7 +80,7 @@ public class Document extends DocumentElement implements IDocument {
   final Path m_basePath;
 
   /** the paths */
-  private final LinkedHashSet<Path> m_paths;
+  private LinkedHashSet<PathEntry> m_paths;
 
   /** a citations builder */
   CitationsBuilder m_citations;
@@ -89,6 +93,9 @@ public class Document extends DocumentElement implements IDocument {
 
   /** the underlying writer */
   private final BufferedWriter m_writer;
+
+  /** the used styles */
+  private HashSet<IStyle> m_usedStyles;
 
   /**
    * Create a document.
@@ -122,11 +129,26 @@ public class Document extends DocumentElement implements IDocument {
     this.m_documentPath = PathUtils.normalize(docPath);
     this.m_basePath = PathUtils.normalize(docPath.getParent());
     this.m_paths = new LinkedHashSet<>();
-    this.m_paths.add(this.m_documentPath);
 
     this.m_citations = new CitationsBuilder();
     this.m_listener = listener;
     this.m_writer = writer;
+
+    this.m_usedStyles = new HashSet<>();
+    this.m_usedStyles.add(this.m_styles.getDefaultFont());
+  }
+
+  /**
+   * Remember that a given style has been used
+   * 
+   * @param style
+   *          the style
+   */
+  @Override
+  protected void styleUsed(final IStyle style) {
+    synchronized (this.m_usedStyles) {
+      this.m_usedStyles.add(style);
+    }
   }
 
   /**
@@ -151,8 +173,12 @@ public class Document extends DocumentElement implements IDocument {
    * @param p
    *          the path to add
    */
-  protected synchronized final void addPath(final Path p) {
-    this.m_paths.add(PathUtils.normalize(p));
+  protected synchronized final void addPath(final PathEntry p) {
+    if (p == null) {
+      throw new IllegalArgumentException(//
+          "Cannot add null path entry."); //$NON-NLS-1$
+    }
+    this.m_paths.add(p);
   }
 
   /**
@@ -161,9 +187,9 @@ public class Document extends DocumentElement implements IDocument {
    * @param ps
    *          the paths to add
    */
-  protected synchronized final void addPath(final Iterable<Path> ps) {
-    for (final Path p : ps) {
-      this.m_paths.add(PathUtils.normalize(p));
+  protected synchronized final void addPaths(final Iterable<PathEntry> ps) {
+    for (final PathEntry p : ps) {
+      this.addPath(p);
     }
   }
 
@@ -295,20 +321,45 @@ public class Document extends DocumentElement implements IDocument {
   }
 
   /**
-   * Perform any post-processing, such as writing a footer to the main
-   * {@link #getTextOutput() document stream}, or generating additional
-   * files (such as style sheets or whatever).
+   * Perform any post-processing to the output stream, such as writing a
+   * termination sequence to the main {@link #getTextOutput() document
+   * stream}. The stream is still open, but will be closed directly after
+   * this method returns.
+   * 
+   * @see #onClose()
    */
-  protected void postProcess() {
+  protected void doOnClose() {
     //
   }
 
-  /** {@inheritDoc} */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  /**
+   * Post-process the generated files. Here, e.g., a LaTeX document could
+   * be compiled to postscript or pdf. During this process, new files may
+   * be generated and added to the overall outcome via
+   * {@link #addPaths(Iterable)} or {@link #addPath(PathEntry)} (this will
+   * not change the value of {@code paths} passed into this method).
+   * 
+   * @param usedStyles
+   *          the set of used styles
+   * @param paths
+   *          the path entries
+   */
+  protected void postProcess(final Set<IStyle> usedStyles,
+      final ArrayListView<PathEntry> paths) {
+    //
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see #doOnClose()
+   * @see #postProcess(Set, ArrayListView)
+   */
   @Override
   protected final synchronized void onClose() {
-    final int s;
     Throwable error;
+    ArrayListView<PathEntry> paths;
+    Set<IStyle> styles;
 
     this.fsmStateAssertAndSet(Document.STATE_FOOTER_CLOSED,
         DocumentElement.STATE_DEAD);
@@ -316,37 +367,46 @@ public class Document extends DocumentElement implements IDocument {
     error = null;
 
     try {
-      this.postProcess();
+      this.doOnClose();
     } catch (final Throwable t) {
       error = t;
     } finally {
-
       try {
         this.m_writer.close();
       } catch (final Throwable tt) {
         error = ErrorUtils.aggregateError(error, tt);
       } finally {
+        paths = ArrayListView.collectionToView(this.m_paths, false);
+        styles = this.m_usedStyles;
+        this.m_usedStyles = null;
         try {
-          super.onClose();
-        } catch (final Throwable ttt) {
+          this.postProcess(Collections.unmodifiableSet(styles), paths);
+        } catch (Throwable ttt) {
           error = ErrorUtils.aggregateError(error, ttt);
         } finally {
+          styles.clear();
+          styles = null;
           try {
-
-            if (this.m_listener != null) {
-              s = this.m_paths.size();
-              this.m_listener
-                  .onObjectFinalized(((s > 0) ? (new ArrayListView(
-                      this.m_paths.toArray(new Path[s])))
-                      : ArraySetView.EMPTY_SET_VIEW));
-            }
+            super.onClose();
           } catch (final Throwable tttt) {
             error = ErrorUtils.aggregateError(error, tttt);
+          } finally {
+            try {
+              if (this.m_listener != null) {
+                if (this.m_paths.size() > paths.size()) {
+                  paths = ArrayListView.collectionToView(this.m_paths,
+                      true);
+                }
+                this.m_paths = null;
+                this.m_listener.onObjectFinalized(paths);
+              }
+            } catch (final Throwable ttttt) {
+              error = ErrorUtils.aggregateError(error, ttttt);
+            }
           }
         }
       }
     }
-
     if (error != null) {
       ErrorUtils.throwAsRuntimeException(error);
     }

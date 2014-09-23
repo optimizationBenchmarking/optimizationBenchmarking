@@ -9,7 +9,8 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.w3c.dom.Element;
 
 /**
@@ -79,4 +80,9 @@ final class _ImageIOJPEGGraphic extends _ImageIORasterGraphic {
     params.setCompressionQuality(this.m_quality);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  protected final Object getPathEntryObjectID() {
+    return EGraphicFormat.JPEG;
+  }
 }

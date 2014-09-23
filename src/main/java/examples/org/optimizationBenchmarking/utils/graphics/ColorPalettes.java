@@ -81,7 +81,8 @@ public class ColorPalettes {
     Color use;
 
     try (final Graphic g = driver.createGraphic(dir, name,
-        new PhysicalDimension(160, 160, ELength.MM), null)) {
+        new PhysicalDimension(160, 160, ELength.MM),
+        new FinishedPrinter())) {
 
       b = g.getBounds();
       g.setFont(new Font("Arial", Font.PLAIN, //$NON-NLS-1$

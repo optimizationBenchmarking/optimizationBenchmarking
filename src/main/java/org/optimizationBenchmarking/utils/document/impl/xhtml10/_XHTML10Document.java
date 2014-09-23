@@ -1,10 +1,25 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.file.Path;
+import java.util.Set;
 
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.PathEntry;
+import org.optimizationBenchmarking.utils.graphics.style.IStyle;
+import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** the XHTML document */
@@ -72,10 +87,6 @@ final class _XHTML10Document extends Document {
       'e', 'e', 't', '"', ' ', 'm', 'e', 'd', 'i', 'a', '=', '"', 'p',
       'r', 'i', 'n', 't', '"', ' ', 'h', 'r', 'e', 'f', '=', '"', };
 
-  /** the html end */
-  private static final char[] BODY_HTML_END = { '<', '/', 'b', 'o', 'd',
-      'y', '>', '<', '/', 'h', 't', 'm', 'l', '>' };
-
   /**
    * Create a document.
    * 
@@ -100,6 +111,9 @@ final class _XHTML10Document extends Document {
     String s;
 
     super.onOpen();
+
+    this.addPath(new PathEntry(XHTML10Driver.XHTML_MAIN_FILE, this
+        .getDocumentPath()));
 
     out = this.getTextOutput();
     out.append(_XHTML10Document.XML_HEADER_BEGIN);
@@ -136,14 +150,150 @@ final class _XHTML10Document extends Document {
 
   /** {@inheritDoc} */
   @Override
-  protected final void postProcess() {
-    final ITextOutput out;
+  protected void postProcess(final Set<IStyle> usedStyles,
+      final ArrayListView<PathEntry> paths) {
+    Path path;
+    String s;
 
-    out = this.getTextOutput();
+    try {
+      for (String name : new String[] { CSS_DEFAULT, CSS_PRINT }) {
+        path = PathUtils.normalize(this.getDocumentFolder().resolve(name));
+        try (final OutputStream os = PathUtils.openOutputStream(path)) {
+          try (final OutputStreamWriter osw = new OutputStreamWriter(os)) {
+            try (final BufferedWriter bw = new BufferedWriter(osw)) {
+              this.__createStyles(bw, usedStyles);
 
-    out.append(XHTML10Driver.DIV_END);
-    out.append(XHTML10Driver.DIV_END);
-    out.append(_XHTML10Document.BODY_HTML_END);
-    super.postProcess();
+              try (final InputStream is = _XHTML10Document.class
+                  .getResourceAsStream(name)) {
+                try (final InputStreamReader isr = new InputStreamReader(
+                    is)) {
+                  try (final BufferedReader br = new BufferedReader(isr)) {
+                    while ((s = br.readLine()) != null) {
+                      s = TextUtils.prepare(s);
+                      if (s != null) {
+                        bw.newLine();
+                        bw.write(s);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        } catch (Throwable t) {
+          ErrorUtils.throwAsRuntimeException(t);
+        }
+
+        this.addPath(new PathEntry(XHTML10Driver.CSS_STYLE_FILE, path));
+      }
+    } finally {
+      super.postProcess(usedStyles, paths);
+    }
+  }
+
+  /**
+   * write a given style
+   * 
+   * @param fs
+   *          the style
+   * @param name
+   *          the css name
+   * @param bw
+   *          the writer to write to
+   * @param isDefault
+   *          {@code true} if the style is default unset attributes are
+   *          normal, not inherit
+   * @param useSize
+   *          should we use the size?
+   * @throws IOException
+   *           if i/o fails
+   */
+  private static final void __writeFont(final FontStyle fs,
+      final String name, final BufferedWriter bw, final boolean isDefault,
+      final boolean useSize) throws IOException {
+    boolean first;
+
+    bw.newLine();
+    bw.write(name);
+    bw.write(' ');
+    bw.write('{');
+
+    if (isDefault && useSize) {
+      bw.newLine();
+      bw.write("font-size:"); //$NON-NLS-1$
+      bw.write(Integer.toString(fs.getSize()));
+      bw.write(';');
+    }
+
+    bw.newLine();
+    bw.write("font-family:"); //$NON-NLS-1$
+    first = true;
+    for (String s : fs.getFaceChoices()) {
+      if (first) {
+        first = false;
+      }
+      {
+        bw.write(',');
+      }
+      bw.write('\'');
+      bw.write(s);
+      bw.write('\'');
+    }
+    bw.write(';');
+
+    bw.newLine();
+    bw.write("font-variant:normal;");//$NON-NLS-1$
+
+    bw.newLine();
+    bw.write("text-transform:none;");//$NON-NLS-1$
+
+    bw.newLine();
+    bw.write(fs.isBold() ? "font-weight:bold;" : //$NON-NLS-1$
+        (isDefault ? "font-weight:normal;" : //$NON-NLS-1$
+            "font-weight:inherit;"));//$NON-NLS-1$
+
+    bw.newLine();
+    bw.write(fs.isItalic() ? "font-style:italic;" : //$NON-NLS-1$
+        (isDefault ? "font-style:italic:normal;" : //$NON-NLS-1$
+            "font-style:italic:inherit;"));//$NON-NLS-1$
+
+    bw.newLine();
+    bw.write(fs.isUnderlined() ? "text-decoration:underlined;" : //$NON-NLS-1$
+        (isDefault ? "text-decoration:normal;" : //$NON-NLS-1$
+            "text-decoration:inherit;"));//$NON-NLS-1$
+
+    bw.newLine();
+    bw.write('}');
+  }
+
+  /**
+   * create the styles
+   * 
+   * @param bw
+   *          the writer
+   * @param usedStyles
+   *          the styles
+   * @throws IOException
+   *           if i/o fails
+   */
+  private final void __createStyles(final BufferedWriter bw,
+      final Set<IStyle> usedStyles) throws IOException {
+    final FontStyle def;
+    FontStyle fs;
+
+    def = this.getStyles().getDefaultFont();
+    for (IStyle s : usedStyles) {
+      if (s instanceof FontStyle) {
+        fs = ((FontStyle) s);
+
+        if (fs == def) {
+          __writeFont(fs, "body", bw, true, true);//$NON-NLS-1$
+          __writeFont(fs, fs.getID(), bw, true, false);
+        } else {
+          __writeFont(fs, fs.getID(), bw, false, false);
+        }
+
+      }
+    }
   }
 }

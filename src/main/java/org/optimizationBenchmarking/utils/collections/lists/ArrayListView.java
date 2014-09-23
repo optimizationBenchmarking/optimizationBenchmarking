@@ -401,4 +401,36 @@ public class ArrayListView<DT> extends BasicList<DT> {
     return hashCode;
   }
 
+  /**
+   * Take the data from a given collection to fill an array list view. If
+   * the collection is null or empty,
+   * {@link org.optimizationBenchmarking.utils.collections.lists.ArraySetView#EMPTY_SET_VIEW}
+   * will be returned.
+   * 
+   * @param collection
+   *          the collection
+   * @param clearCollection
+   *          should the collection be emptied afterwards?
+   * @return the list view
+   * @param <T>
+   *          the data type
+   */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  public static final <T> ArrayListView<T> collectionToView(
+      final Collection<? extends T> collection,
+      final boolean clearCollection) {
+    final int s;
+    final ArrayListView<T> l;
+
+    if ((collection == null) || ((s = collection.size()) <= 0)) {
+      return ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
+    }
+
+    l = new ArrayListView(collection.toArray(new Object[s]));
+    if (clearCollection) {
+      collection.clear();
+    }
+    return l;
+  }
+
 }

@@ -22,7 +22,7 @@ import java.nio.file.Path;
 import java.text.AttributedCharacterIterator;
 
 import org.freehep.graphics2d.AbstractVectorGraphics;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.graphic.GraphicProxy;
 

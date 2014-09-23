@@ -3,7 +3,8 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.PathEntry;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
@@ -197,7 +198,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
    *          the result files
    */
   protected synchronized void onGraphicClosed(
-      final ArrayListView<Path> result) {
+      final ArrayListView<PathEntry> result) {
     this.fsmStateAssertAndSet(BasicFigure.STATE_GRAPHIC_CREATED,
         BasicFigure.STATE_GRAPHIC_CLOSED);
   }
@@ -221,7 +222,8 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
    * method, allowing it to remain protected and allowing that
    * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure}
    * does not need to implement
-   * {@link org.optimizationBenchmarking.utils.document.IObjectListener} .
+   * {@link org.optimizationBenchmarking.utils.document.impl.object.IObjectListener}
+   * .
    */
   private final class __GraphicListener implements IObjectListener {
     /** create */
@@ -231,7 +233,8 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
     /** {@inheritDoc} */
     @Override
-    public final void onObjectFinalized(final ArrayListView<Path> result) {
+    public final void onObjectFinalized(
+        final ArrayListView<PathEntry> result) {
       BasicFigure.this.onGraphicClosed(result);
     }
   }

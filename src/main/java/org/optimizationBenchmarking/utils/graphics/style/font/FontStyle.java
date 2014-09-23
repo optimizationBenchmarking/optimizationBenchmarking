@@ -10,6 +10,7 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
 import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -67,6 +68,9 @@ public final class FontStyle extends HashObject implements IStyle {
   /** the font name choices */
   private final ArrayListView<String> m_faceChoices;
 
+  /** the font id */
+  private final String m_id;
+
   /** the palette */
   FontPalette m_palette;
 
@@ -87,11 +91,13 @@ public final class FontStyle extends HashObject implements IStyle {
    *          the font
    * @param faceChoices
    *          the face choices
+   * @param id
+   *          the font id
    */
   FontStyle(final EFontFamily family, final int size,
       final boolean isItalic, final boolean isBold,
       final boolean isUnderlined, final Font font,
-      final ArrayListView<String> faceChoices) {
+      final ArrayListView<String> faceChoices, final String id) {
     super();
 
     FontStyleBuilder._checkFontFamily(family);
@@ -105,6 +111,13 @@ public final class FontStyle extends HashObject implements IStyle {
     if ((faceChoices == null) || (faceChoices.isEmpty())) {
       throw new IllegalArgumentException(//
           "Font face choices must not be null or empty."); //$NON-NLS-1$
+    }
+
+    this.m_id = TextUtils.prepare(id);
+    if (id == null) {
+      throw new IllegalArgumentException(//
+          "ID must not be null or empty, but is '" //$NON-NLS-1$
+              + id + '\'');
     }
 
     this.m_family = family;
@@ -352,5 +365,11 @@ public final class FontStyle extends HashObject implements IStyle {
     mo = new MemoryTextOutput();
     this.appendDescription(ETextCase.AT_SENTENCE_START, mo, false);
     return mo.toString();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getID() {
+    return this.m_id;
   }
 }

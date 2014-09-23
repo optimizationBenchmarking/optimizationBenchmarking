@@ -29,7 +29,8 @@ import java.util.Map;
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.PathEntry;
 
 /**
  * <p>
@@ -160,21 +161,40 @@ public abstract class Graphic extends Graphics2D implements Closeable {
     //
   }
 
+  /**
+   * The object id to be used when invoking the objects listener's
+   * {@code onObjectFinalized} method. This method should return an
+   * instance of {@link EGraphicFormat}.
+   * 
+   * @return the path entry id
+   */
+  protected Object getPathEntryObjectID() {
+    return this.getClass();
+  }
+
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public synchronized final void close() {
+    final ArrayListView v;
+
     if (this.m_closed) {
       return;
     }
     this.m_closed = true;
+
     try {
       this.onClose();
     } finally {
       if (this.m_listener != null) {
-        this.m_listener
-            .onObjectFinalized((this.m_path == null) ? ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW))
-                : new ArrayListView<>(new Path[] { this.m_path }));
+        if (this.m_path != null) {
+          v = new ArrayListView<>(new PathEntry[] { new PathEntry(
+              this.getPathEntryObjectID(), this.m_path) });
+        } else {
+          v = ArraySetView.EMPTY_SET_VIEW;
+        }
+
+        this.m_listener.onObjectFinalized(v);
       }
     }
   }

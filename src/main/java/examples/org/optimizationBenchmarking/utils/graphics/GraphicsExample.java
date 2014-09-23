@@ -13,8 +13,8 @@ import java.nio.file.Paths;
 import javax.swing.JList;
 import javax.swing.border.BevelBorder;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
@@ -32,7 +32,7 @@ import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /** An example for using the graphic output subsystem. */
-public final class GraphicsExample implements IObjectListener {
+public final class GraphicsExample {
 
   /** the list of graphics drivers */
   static final IGraphicDriver[] DRIVERS = {
@@ -65,7 +65,7 @@ public final class GraphicsExample implements IObjectListener {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
 
-    listener = new GraphicsExample();
+    listener = new FinishedPrinter();
 
     for (final IGraphicDriver driver : GraphicsExample.DRIVERS) {
       try (final Graphic g = driver.createGraphic(dir,
@@ -234,14 +234,7 @@ public final class GraphicsExample implements IObjectListener {
 
   /** the forbidden constructor */
   private GraphicsExample() {
-    super();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void onObjectFinalized(final ArrayListView<Path> id) {
-    System.out.print("Finished painting "); //$NON-NLS-1$
-    System.out.println(id);
+    ErrorUtils.doNotCall();
   }
 
 }

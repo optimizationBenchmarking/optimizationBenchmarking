@@ -53,7 +53,7 @@ public class DocumentFooter extends _StyleProviderPart implements
    * @param bib
    *          the bibliography
    */
-  protected void processBibliography(final Bibliography bib) {
+  protected void processCitations(final Bibliography bib) {
     //
   }
 
@@ -71,7 +71,7 @@ public class DocumentFooter extends _StyleProviderPart implements
     this.m_doc.m_citations = null;
 
     if ((bib != null) && (!(bib.isEmpty()))) {
-      this.processBibliography(bib);
+      this.processCitations(bib);
     }
     bib = null;
 

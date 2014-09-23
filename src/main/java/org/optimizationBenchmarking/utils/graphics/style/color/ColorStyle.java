@@ -8,6 +8,8 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.text.transformations.NormalCharTransformer;
 
 /** A color style is, well, a color with a name. */
 public class ColorStyle extends Color implements IStyle {
@@ -17,6 +19,9 @@ public class ColorStyle extends Color implements IStyle {
 
   /** the color name */
   private final String m_name;
+
+  /** the color id */
+  private final String m_id;
 
   /**
    * create the color style
@@ -40,12 +45,30 @@ public class ColorStyle extends Color implements IStyle {
    */
   ColorStyle(final String name, final int rgb) {
     super(rgb);
+
+    final int s;
+    final MemoryTextOutput nb;
+    int i;
+    char c;
+
     if (name == null) {
       throw new IllegalArgumentException(//
           "Name must not be empty or null, but is '" //$NON-NLS-1$
               + name + '\'');
     }
     this.m_name = name;
+
+    s = name.length();
+    nb = new MemoryTextOutput(s);
+    for (i = 0; i < s; i++) {
+      c = name.charAt(i);
+      if (c > ' ') {
+        nb.append(c);
+      }
+    }
+
+    this.m_id = NormalCharTransformer.INSTANCE.transform(nb.toString(),
+        TextUtils.DEFAULT_NORMALIZER_FORM);
   }
 
   /**
@@ -76,5 +99,11 @@ public class ColorStyle extends Color implements IStyle {
     t = ((textCase == null) ? ETextCase.IN_SENTENCE : textCase);
     t.appendWords(this.m_name, dest);
     return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getID() {
+    return this.m_id;
   }
 }

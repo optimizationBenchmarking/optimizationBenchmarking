@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.document.spec;
 
 import java.nio.file.Path;
 
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 
 /**
  * The entry interface to the document API: a document driver can create

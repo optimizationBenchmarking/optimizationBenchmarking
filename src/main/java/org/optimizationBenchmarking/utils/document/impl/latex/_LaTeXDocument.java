@@ -2,8 +2,8 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import java.nio.file.Path;
 
-import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 
 /** the LaTeX document */
 final class _LaTeXDocument extends Document {

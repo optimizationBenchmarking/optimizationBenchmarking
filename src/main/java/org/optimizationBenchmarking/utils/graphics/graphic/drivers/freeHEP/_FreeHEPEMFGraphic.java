@@ -3,7 +3,8 @@ package org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP;
 import java.nio.file.Path;
 
 import org.freehep.graphicsio.emf.EMFGraphics2D;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 
 /**
  * the internal <a
@@ -42,5 +43,11 @@ final class _FreeHEPEMFGraphic extends
     } finally {
       super.onClose();
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final Object getPathEntryObjectID() {
+    return EGraphicFormat.EMF;
   }
 }

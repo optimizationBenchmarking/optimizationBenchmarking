@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;

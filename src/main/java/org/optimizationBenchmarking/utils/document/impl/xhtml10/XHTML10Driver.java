@@ -3,7 +3,6 @@ package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.document.IObjectListener;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
 import org.optimizationBenchmarking.utils.document.impl.abstr.CodeBody;
@@ -29,6 +28,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooterRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
+import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.PageDimension;
@@ -50,6 +50,10 @@ import org.optimizationBenchmarking.utils.text.transformations.XMLCharTransforme
  * The driver for xhtml output
  */
 public final class XHTML10Driver extends DocumentDriver {
+  /** the main file */
+  public static final String XHTML_MAIN_FILE = "xhtml 1.0 main file"; //$NON-NLS-1$
+  /** a css style file */
+  public static final String CSS_STYLE_FILE = "css style file"; //$NON-NLS-1$
 
   /** the attributed tag end */
   static final char[] ATTRIB_TAG_BEGIN_END = { '"', '>' };

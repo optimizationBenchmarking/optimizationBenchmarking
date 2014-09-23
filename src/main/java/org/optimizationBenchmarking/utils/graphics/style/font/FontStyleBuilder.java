@@ -15,6 +15,9 @@ import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.parsers.BooleanParser;
 import org.optimizationBenchmarking.utils.parsers.IntParser;
+import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.text.transformations.NormalCharTransformer;
 
 /** A builder for font styles */
 public final class FontStyleBuilder extends
@@ -55,9 +58,12 @@ public final class FontStyleBuilder extends
   /** the choice state */
   final int m_choice;
 
+  /** the id */
+  private String m_id;
+
   /** create the font style builder */
   public FontStyleBuilder() {
-    this(null, 5);
+    this(null, 5, null);
   }
 
   /**
@@ -67,13 +73,17 @@ public final class FontStyleBuilder extends
    *          the owning style builder
    * @param choice
    *          the choice of the style builder
+   * @param id
+   *          the id
    */
   protected FontStyleBuilder(
-      final PaletteBuilder<FontStyle, FontPalette> owner, final int choice) {
+      final PaletteBuilder<FontStyle, FontPalette> owner,
+      final int choice, final String id) {
     super(owner);
     this.m_family = EFontFamily.SERIF;
     this.m_faceChoices = new LinkedHashSet<>();
     this.m_choice = choice;
+    this.m_id = TextUtils.prepare(id);
     this.open();
   }
 
@@ -341,6 +351,7 @@ public final class FontStyleBuilder extends
     EFontFamily fam1, fam2;
     HashMap<TextAttribute, Object> map;
     final LinkedHashSet<String> faceChoices, choices;
+    MemoryTextOutput idb;
 
     style = 0;
     if (this.m_bold) {
@@ -473,10 +484,33 @@ public final class FontStyleBuilder extends
       choices.add(fam2.getFontFamilyName());
     }
 
+    // generate id
+    if (this.m_id == null) {
+      idb = new MemoryTextOutput();
+      idb.append(choices.iterator().next());
+      if (this.m_bold) {
+        idb.append('_');
+        idb.append('b');
+      }
+      if (this.m_italic) {
+        idb.append('_');
+        idb.append('i');
+      }
+      if (this.m_underlined) {
+        idb.append('_');
+        idb.append('u');
+      }
+      idb.append('_');
+      idb.append(this.m_size);
+      this.m_id = NormalCharTransformer.INSTANCE.transform(idb.toString(),
+          TextUtils.DEFAULT_NORMALIZER_FORM);
+    }
+
     // ok, now we have everything
     return new FontStyle(((fam2 != null) ? fam2 : fam1), this.m_size,
         this.m_italic, this.m_bold, this.m_underlined, f,
-        new ArrayListView<>(choices.toArray(new String[choices.size()])));
+        new ArrayListView<>(choices.toArray(new String[choices.size()])),
+        this.m_id);
   }
 
   /**

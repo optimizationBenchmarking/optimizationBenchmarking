@@ -21,6 +21,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.math.random.Randomizer;
 
 import examples.org.optimizationBenchmarking.LoremIpsum;
+import examples.org.optimizationBenchmarking.utils.graphics.FinishedPrinter;
 
 /**
  * An example used to illustrate how documents can be created with the
@@ -67,7 +68,8 @@ public class DocumentExample {
       i++;
 
       try (final IDocument doc = driver.createDocument(
-          dir.resolve((cur + '_') + i), "report", null)) {//$NON-NLS-1$
+          dir.resolve((cur + '_') + i), "report",//$NON-NLS-1$ 
+          new FinishedPrinter())) {
         DocumentExample.__createDocument(doc, rand);
       } catch (final Throwable t) {
         t.printStackTrace();

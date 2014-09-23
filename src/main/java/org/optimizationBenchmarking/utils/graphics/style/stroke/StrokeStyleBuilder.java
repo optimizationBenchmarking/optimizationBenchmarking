@@ -6,6 +6,8 @@ import org.optimizationBenchmarking.utils.EmptyUtils;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.parsers.FloatParser;
+import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.transformations.NormalCharTransformer;
 
 /**
  * A builder for a stroke style
@@ -27,6 +29,9 @@ public class StrokeStyleBuilder extends PaletteElementBuilder<StrokeStyle> {
   /** the type */
   int m_type;
 
+  /** the id */
+  private String m_id;
+
   /**
    * create
    * 
@@ -34,18 +39,21 @@ public class StrokeStyleBuilder extends PaletteElementBuilder<StrokeStyle> {
    *          the owning palette builder
    * @param type
    *          the type
+   * @param id
+   *          the id of the style builder
    */
   protected StrokeStyleBuilder(final StrokePaletteBuilder owner,
-      final int type) {
+      final int type, final String id) {
     super(owner);
     this.m_dash = EmptyUtils.EMPTY_FLOATS;
     this.m_type = type;
+    this.m_id = TextUtils.prepare(id);
     this.open();
   }
 
   /** create! */
   public StrokeStyleBuilder() {
-    this(null, 4);
+    this(null, 4, null);
   }
 
   /**
@@ -66,6 +74,11 @@ public class StrokeStyleBuilder extends PaletteElementBuilder<StrokeStyle> {
               + name + '\'');
     }
     this.m_name = name;
+
+    if (this.m_id == null) {
+      this.m_id = NormalCharTransformer.INSTANCE.transform(this.m_name,
+          TextUtils.DEFAULT_NORMALIZER_FORM);
+    }
   }
 
   /**
@@ -146,6 +159,6 @@ public class StrokeStyleBuilder extends PaletteElementBuilder<StrokeStyle> {
       z = null;
     }
 
-    return new StrokeStyle(this.m_width, z, this.m_name);
+    return new StrokeStyle(this.m_width, z, this.m_name, this.m_id);
   }
 }
