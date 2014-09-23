@@ -231,8 +231,7 @@ final class _XHTML10Document extends Document {
     for (String s : fs.getFaceChoices()) {
       if (first) {
         first = false;
-      }
-      {
+      } else {
         bw.write(',');
       }
       bw.write('\'');
@@ -254,8 +253,8 @@ final class _XHTML10Document extends Document {
 
     bw.newLine();
     bw.write(fs.isItalic() ? "font-style:italic;" : //$NON-NLS-1$
-        (isDefault ? "font-style:italic:normal;" : //$NON-NLS-1$
-            "font-style:italic:inherit;"));//$NON-NLS-1$
+        (isDefault ? "font-style:normal;" : //$NON-NLS-1$
+            "font-style:inherit;"));//$NON-NLS-1$
 
     bw.newLine();
     bw.write(fs.isUnderlined() ? "text-decoration:underlined;" : //$NON-NLS-1$
@@ -288,9 +287,9 @@ final class _XHTML10Document extends Document {
 
         if (fs == def) {
           __writeFont(fs, "body", bw, true, true);//$NON-NLS-1$
-          __writeFont(fs, fs.getID(), bw, true, false);
+          __writeFont(fs, ('.' + fs.getID()), bw, true, false);
         } else {
-          __writeFont(fs, fs.getID(), bw, false, false);
+          __writeFont(fs, ('.' + fs.getID()), bw, false, false);
         }
 
       }

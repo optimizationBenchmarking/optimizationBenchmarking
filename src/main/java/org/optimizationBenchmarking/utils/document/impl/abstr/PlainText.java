@@ -38,7 +38,7 @@ public abstract class PlainText extends DocumentPart implements IPlainText {
     looper: for (fsm = this._owner(); fsm != null; fsm = fsm._owner()) {
       if (fsm instanceof PlainText) {
         pt = ((PlainText) fsm);
-        if (pt.getTextOutput() == to) {
+        if (pt.isTextOutputSame(to)) {
           this.m_encoded = pt.m_encoded;
           return;
         }

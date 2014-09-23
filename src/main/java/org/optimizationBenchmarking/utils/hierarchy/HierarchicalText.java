@@ -226,4 +226,17 @@ public abstract class HierarchicalText extends HierarchicalFSM {
     this.assertNoChildren();
     return this.m_out;
   }
+
+  /**
+   * Check if the given text output {@code to} is the same as the
+   * {@link #m_out text output} used by this object.
+   * 
+   * @param to
+   *          the text output
+   * @return {@code true} if this object writes to the same destination as
+   *         {@code to}.
+   */
+  protected final boolean isTextOutputSame(final ITextOutput to) {
+    return (to == this.m_out);
+  }
 }

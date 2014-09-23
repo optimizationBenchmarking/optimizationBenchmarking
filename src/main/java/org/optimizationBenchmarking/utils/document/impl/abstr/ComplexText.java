@@ -44,6 +44,13 @@ public class ComplexText extends Text implements IComplexText {
 
   /** {@inheritDoc} */
   @Override
+  public synchronized final Emphasize emphasize() {
+    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
+    return this.m_driver.createEmphasize(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public synchronized final Subscript subscript() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     return this.m_driver.createSubscript(this);

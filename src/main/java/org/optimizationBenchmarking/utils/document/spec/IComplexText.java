@@ -56,6 +56,13 @@ public interface IComplexText extends IText {
   public abstract IText inlineCode();
 
   /**
+   * Obtain an in-line emphasize text destination
+   * 
+   * @return the in-line emphasize text destination
+   */
+  public abstract IText emphasize();
+
+  /**
    * Cite a set of bibliographic elements.
    * 
    * @param citationMode

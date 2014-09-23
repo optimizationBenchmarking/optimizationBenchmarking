@@ -85,6 +85,9 @@ public final class XHTML10Driver extends DocumentDriver {
       { '<', 's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"',
           'h', '7', '"', '>' } };
 
+  /** the span class begin */
+  static final char[] SPAN_CLASS_BEGIN = { '<', 's', 'p', 'a', 'n', ' ',
+      'c', 'l', 'a', 's', 's', '=', '"', };
   /** the span end */
   static final char[] SPAN_END = { '<', '/', 's', 'p', 'a', 'n', '>', };
 
@@ -256,6 +259,12 @@ public final class XHTML10Driver extends DocumentDriver {
   protected final _XHTML10InlineCode createInlineCode(
       final ComplexText owner) {
     return new _XHTML10InlineCode(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10Emphasize createEmphasize(final ComplexText owner) {
+    return new _XHTML10Emphasize(owner);
   }
 
   /** {@inheritDoc} */

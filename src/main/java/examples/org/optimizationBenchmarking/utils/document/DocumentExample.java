@@ -156,6 +156,28 @@ public class DocumentExample {
           b.appendLineBreak();
           LoremIpsum.appendLoremIpsum(b, rand, null);
         }
+
+        b.appendLineBreak();
+        try (final IText c = b.inlineCode()) {
+          c.append("This is an example for "); //$NON-NLS-1$
+          try(final IText ob=c.inBraces()){
+            ob.append("inline"); //$NON-NLS-1$
+          }
+          c.append(" code!"); //$NON-NLS-1$
+        }
+        b.appendLineBreak();
+        try(final IText e = b.emphasize()){
+          e.append("This text, on the other hand, is emphasized. "); //$NON-NLS-1$
+          try(final IText iq = e.inQuotes()){
+            iq.append("This text is in quotes. And this one: "); //$NON-NLS-1$
+            try(final IText iq2 =iq.inQuotes()){
+              iq2.append("even in nested quotes."); //$NON-NLS-1$
+            }
+          }
+          e.append(" End of emphasized."); //$NON-NLS-1$
+        }
+        b.appendLineBreak();
+        LoremIpsum.appendLoremIpsum(b, rand, null);
       }
     }
 

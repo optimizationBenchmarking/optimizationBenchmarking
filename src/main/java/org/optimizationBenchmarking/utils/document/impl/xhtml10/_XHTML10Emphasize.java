@@ -1,12 +1,12 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.ComplexText;
-import org.optimizationBenchmarking.utils.document.impl.abstr.InlineCode;
+import org.optimizationBenchmarking.utils.document.impl.abstr.Emphasize;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
-/** an inline code element of a section in a XHTML document */
-final class _XHTML10InlineCode extends InlineCode {
+/** an emphasize element of a section in a XHTML document */
+final class _XHTML10Emphasize extends Emphasize {
 
   /** was a tag used */
   private boolean m_tagUsed;
@@ -17,7 +17,7 @@ final class _XHTML10InlineCode extends InlineCode {
    * @param owner
    *          the owner
    */
-  _XHTML10InlineCode(final ComplexText owner) {
+  _XHTML10Emphasize(final ComplexText owner) {
     super(owner);
     this.open();
   }
@@ -30,7 +30,7 @@ final class _XHTML10InlineCode extends InlineCode {
 
     super.onOpen();
 
-    fs = this.getDocument().getStyles().getCodeFont();
+    fs = this.getDocument().getStyles().getEmphFont();
     if (fs != null) {
       this.styleUsed(fs);
       this.m_tagUsed = true;

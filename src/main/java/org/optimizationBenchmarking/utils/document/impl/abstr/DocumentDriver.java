@@ -216,6 +216,17 @@ public abstract class DocumentDriver extends FileTypeDriver implements
   }
 
   /**
+   * Create the emphasize
+   * 
+   * @param owner
+   *          the owner
+   * @return the emphasize
+   */
+  protected Emphasize createEmphasize(final ComplexText owner) {
+    return new Emphasize(owner);
+  }
+
+  /**
    * Create the sub-script text
    * 
    * @param owner
