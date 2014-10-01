@@ -121,7 +121,6 @@ public final class GraphicsExample {
    */
   public static final void paint(final Graphic g) {
     final Rectangle2D bounds;
-    final UnaryFunction mmToDev;
     int i;
     Rectangle2D r;
     Stroke s;
@@ -132,40 +131,36 @@ public final class GraphicsExample {
     g.setColor(Color.CYAN);
     g.draw(bounds);
 
-    mmToDev = ELength.MM.getConversion(ELength.PT);
-
     r = new Rectangle2D.Double();
 
     for (i = 0; i < 10; i++) {
-      r.setRect(
-          bounds.getX() + mmToDev.compute((bounds.getWidth() / 10d) * i),//
+      r.setRect(bounds.getX() + ((bounds.getWidth() / 10d) * i),//
           bounds.getY(), //
-          mmToDev.compute(bounds.getWidth() / 10d),//
-          mmToDev.compute((bounds.getWidth() / 10d)));
+          (bounds.getWidth() / 10d),//
+          ((bounds.getWidth() / 10d)));
       g.setColor(new Color(0f, ((i + 1) / 12f), 0f));
       g.fill(r);
 
       r.setRect(bounds.getX(),//
-          bounds.getY() + mmToDev.compute((bounds.getHeight() / 10d) * i), //
-          mmToDev.compute(bounds.getHeight() / 10d),//
-          mmToDev.compute((bounds.getHeight() / 10d)));
+          bounds.getY() + ((bounds.getHeight() / 10d) * i), //
+          (bounds.getHeight() / 10d),//
+          ((bounds.getHeight() / 10d)));
       g.setColor(new Color(0f, 0f, (((9 - i) + 1) / 12f)));
       g.fill(r);
     }
 
     for (i = 0; i < 10; i++) {
-      r.setRect(
-          bounds.getX() + mmToDev.compute((bounds.getWidth() / 10d) * i),//
+      r.setRect(bounds.getX() + ((bounds.getWidth() / 10d) * i),//
           bounds.getY(), //
-          mmToDev.compute(bounds.getWidth() / 10d),//
-          mmToDev.compute((bounds.getWidth() / 10d)));
+          (bounds.getWidth() / 10d),//
+          ((bounds.getWidth() / 10d)));
       g.setColor(new Color(((i + 1) / 12f), (((9 - i) + 1) / 12f), 0f));
       g.draw(r);
 
       r.setRect(bounds.getX(),//
-          bounds.getY() + mmToDev.compute((bounds.getHeight() / 10d) * i), //
-          mmToDev.compute(bounds.getHeight() / 10d),//
-          mmToDev.compute((bounds.getHeight() / 10d)));
+          bounds.getY() + ((bounds.getHeight() / 10d) * i), //
+          (bounds.getHeight() / 10d),//
+          ((bounds.getHeight() / 10d)));
       g.setColor(new Color((((9 - i) + 1) / 12f), 0f, ((i + 1) / 12f)));
       g.draw(r);
     }
@@ -180,46 +175,38 @@ public final class GraphicsExample {
       g.setStroke(new BasicStroke(((BasicStroke) s).getLineWidth() * 0.5f));
     }
     g.drawLine(bounds.getX(), bounds.getY(),//
-        bounds.getX() + mmToDev.compute(bounds.getWidth()),//
-        bounds.getY() + mmToDev.compute(bounds.getHeight()));
+        bounds.getX() + (bounds.getWidth()),//
+        bounds.getY() + (bounds.getHeight()));
     g.setStroke(s);
 
     g.setFont(new Font("Courier New", //$NON-NLS-1$
         Font.PLAIN, ((int) (0.5d + ELength.MM.convertTo(
             (bounds.getHeight() / 10d), ELength.MM)))));
     g.setColor(Color.YELLOW);
-    g.drawString(
-        "Text with 1/10th of a line hight",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev.compute(bounds.getHeight() / 10)))),//
-        (0.5d + (bounds.getY() + (mmToDev
-            .compute((3d * bounds.getHeight()) / 10d)))));
+    g.drawString("Text with 1/10th of a line hight",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + ((bounds.getHeight() / 10)))),//
+        (0.5d + (bounds.getY() + (((3d * bounds.getHeight()) / 10d)))));
 
     g.setFont(new Font("Arial", //$NON-NLS-1$
         Font.PLAIN, 18));
     g.setColor(Color.YELLOW);
-    g.drawString(
-        "Font: 18pt",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev.compute(bounds.getHeight() / 10)))),//
-        (0.5d + (bounds.getY() + (mmToDev
-            .compute((5d * bounds.getHeight()) / 10d)))));
+    g.drawString("Font: 18pt",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + ((bounds.getHeight() / 10)))),//
+        (0.5d + (bounds.getY() + (((5d * bounds.getHeight()) / 10d)))));
 
     g.setFont(new Font("Times New Roman", //$NON-NLS-1$
         Font.PLAIN, 16));
     g.setColor(Color.YELLOW);
-    g.drawString(
-        "Font: 16pt",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev.compute(bounds.getHeight() / 10)))),//
-        (0.5d + (bounds.getY() + (mmToDev
-            .compute((7d * bounds.getHeight()) / 10d)))));
+    g.drawString("Font: 16pt",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + ((bounds.getHeight() / 10)))),//
+        (0.5d + (bounds.getY() + (((7d * bounds.getHeight()) / 10d)))));
 
     g.setFont(new Font("Dialog", //$NON-NLS-1$
         Font.PLAIN, 14));
     g.setColor(Color.YELLOW);
-    g.drawString(
-        "Font: 14pt",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev.compute(bounds.getHeight() / 10)))),//
-        (0.5d + (bounds.getY() + (mmToDev
-            .compute((9d * bounds.getHeight()) / 10d)))));
+    g.drawString("Font: 14pt",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + ((bounds.getHeight() / 10)))),//
+        (0.5d + (bounds.getY() + (((9d * bounds.getHeight()) / 10d)))));
   }
 
   /** the forbidden constructor */
