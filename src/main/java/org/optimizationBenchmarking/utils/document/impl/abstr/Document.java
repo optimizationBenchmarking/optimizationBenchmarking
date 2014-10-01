@@ -381,7 +381,7 @@ public class Document extends DocumentElement implements IDocument {
         this.m_usedStyles = null;
         try {
           this.postProcess(Collections.unmodifiableSet(styles), paths);
-        } catch (Throwable ttt) {
+        } catch (final Throwable ttt) {
           error = ErrorUtils.aggregateError(error, ttt);
         } finally {
           styles.clear();

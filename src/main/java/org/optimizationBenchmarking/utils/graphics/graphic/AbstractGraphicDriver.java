@@ -75,7 +75,7 @@ public abstract class AbstractGraphicDriver extends FileTypeDriver
 
     sizeUnit = size.getUnit();
     r = sizeUnit.convertTo(w, ELength.M);
-    if ((r <= 1e-4) || (r >= 10d)) {
+    if ((r <= 1e-4d) || (r >= 10d)) {
       throw new IllegalArgumentException(//
           "A graphic width cannot be smaller than 0.1mm or larger than 10m, but "//$NON-NLS-1$
               + w + " specified in " + sizeUnit + //$NON-NLS-1$ 

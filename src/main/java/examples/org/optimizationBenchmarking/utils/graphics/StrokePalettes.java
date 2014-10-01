@@ -85,9 +85,9 @@ public class StrokePalettes {
 
     s = styles.size();
 
-    try (final Graphic g = driver.createGraphic(dir, name,
-        new PhysicalDimension(160, 160, ELength.MM),
-        new FinishedPrinter())) {
+    try (final Graphic g = driver
+        .createGraphic(dir, name, new PhysicalDimension(160, 160,
+            ELength.MM), new FinishedPrinter())) {
 
       b = g.getBounds();
       g.setColor(Color.white);

@@ -44,6 +44,7 @@ final class _FreeHEPEPSGraphic extends
       super.onClose();
     }
   }
+
   /** {@inheritDoc} */
   @Override
   protected final Object getPathEntryObjectID() {

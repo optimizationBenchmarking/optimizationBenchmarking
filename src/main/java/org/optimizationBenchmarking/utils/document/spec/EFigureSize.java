@@ -152,19 +152,20 @@ public enum EFigureSize {
    * @return an approximated size of the figure
    */
   public final PhysicalDimension approximateSize(final PageDimension page) {
-    final ELength unit;
+    final ELength pageUnit;
     final double availableWidth, availableHeight, minExtend, minWidth, minHeight;
     double width, height;
     boolean hasAvailableWidth, hasAvailableHeight, hasWidth, hasHeight;
 
-    unit = page.getUnit();
+    pageUnit = page.getUnit();
 
     // an image should be at least 5mm in each direction
-    minExtend = Math.ceil(ELength.MM.convertTo(5d, unit));
+    minExtend = Math.ceil(ELength.MM.convertTo(5d, ELength.POINT));
 
     // get the maximum permissible width
-    availableWidth = (this.m_spansAllColumns ? page.getWidth()//
-        : page.getColumnWidth());
+    availableWidth = pageUnit.convertTo(
+        (this.m_spansAllColumns ? page.getWidth()//
+            : page.getColumnWidth()), ELength.POINT);
     hasAvailableWidth = ((availableWidth > 0d) && (availableWidth < Double.MAX_VALUE));
 
     // now let's compute an approximation of the image width
@@ -184,15 +185,16 @@ public enum EFigureSize {
       if (this.m_nx > 1) {
         // if more than one image per row, insert some reasonable spacing
         width -= ((this.m_nx - 1) * //
-        (Math.max(Math.ceil(ELength.MM.convertTo(3d, unit)),
+        (Math.max(Math.ceil(ELength.MM.convertTo(3d, ELength.POINT)),
             EFigureSize.__round(0.01d * width))));
+        width /= this.m_nx;
       }
     } else {
       width = Double.NaN;
     }
 
     // now let's compute an approximation of the image height
-    availableHeight = page.getHeight();
+    availableHeight = pageUnit.convertTo(page.getHeight(), ELength.POINT);
     hasAvailableHeight = ((availableHeight > 0d) && (availableHeight < Double.MAX_VALUE));
 
     if (hasAvailableHeight) {
@@ -211,8 +213,9 @@ public enum EFigureSize {
       // -- this is the sketchy part --
       height = (availableHeight - (//
       ((this.m_ny <= 1) ? 1 : (this.m_ny + 1)) * //
-      (Math.max(Math.ceil(ELength.MM.convertTo(15d, unit)),
+      (Math.max(Math.ceil(ELength.MM.convertTo(15d, ELength.POINT)),
           EFigureSize.__round(0.03d * availableHeight)))));
+      height /= this.m_ny;
     } else {
       height = Double.NaN;
     }
@@ -251,6 +254,6 @@ public enum EFigureSize {
     height = Math.max(height, minHeight);// or too small
 
     // create dimension
-    return new PhysicalDimension(width, height, unit);
+    return new PhysicalDimension(width, height, ELength.POINT);
   }
 }

@@ -116,9 +116,9 @@ public class FontPalettes {
 
     s = styles.size();
 
-    try (final Graphic g = driver.createGraphic(dir, name,
-        new PhysicalDimension(320, 160, ELength.MM),
-        new FinishedPrinter())) {
+    try (final Graphic g = driver
+        .createGraphic(dir, name, new PhysicalDimension(320, 160,
+            ELength.MM), new FinishedPrinter())) {
 
       b = g.getBounds();
       g.setColor(Color.white);

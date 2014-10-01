@@ -2,7 +2,9 @@ package org.optimizationBenchmarking.utils.graphics.style.color;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 
+import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
 
 /**
@@ -52,12 +54,25 @@ public class ColorPalette extends Palette<ColorStyle> {
   /** {@inheritDoc} */
   @Override
   public final void initialize(final Graphics2D graphics) {
-    final Color b;
+    final Rectangle2D r;
+    final Color w, b;
+
+    w = this.getWhite();
+
+    graphics.setBackground(w);
+    graphics.setColor(w);
+    graphics.setPaint(w);
+
+    if (graphics instanceof Graphic) {
+      r = ((Graphic) graphics).getBounds();
+    } else {
+      r = new Rectangle2D.Double(-Integer.MAX_VALUE, -Integer.MAX_VALUE,
+          (2d * Integer.MAX_VALUE), (2d * Integer.MAX_VALUE));
+    }
+    graphics.fill(r);
 
     b = this.getBlack();
     graphics.setColor(b);
     graphics.setPaint(b);
-
-    graphics.setBackground(this.getWhite());
   }
 }

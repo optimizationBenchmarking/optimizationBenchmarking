@@ -156,7 +156,8 @@ final class _XHTML10Document extends Document {
     String s;
 
     try {
-      for (String name : new String[] { CSS_DEFAULT, CSS_PRINT }) {
+      for (final String name : new String[] {
+          _XHTML10Document.CSS_DEFAULT, _XHTML10Document.CSS_PRINT }) {
         path = PathUtils.normalize(this.getDocumentFolder().resolve(name));
         try (final OutputStream os = PathUtils.openOutputStream(path)) {
           try (final OutputStreamWriter osw = new OutputStreamWriter(os)) {
@@ -180,7 +181,7 @@ final class _XHTML10Document extends Document {
               }
             }
           }
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
           ErrorUtils.throwAsRuntimeException(t);
         }
 
@@ -228,7 +229,7 @@ final class _XHTML10Document extends Document {
     bw.newLine();
     bw.write("font-family:"); //$NON-NLS-1$
     first = true;
-    for (String s : fs.getFaceChoices()) {
+    for (final String s : fs.getFaceChoices()) {
       if (first) {
         first = false;
       } else {
@@ -281,15 +282,17 @@ final class _XHTML10Document extends Document {
     FontStyle fs;
 
     def = this.getStyles().getDefaultFont();
-    for (IStyle s : usedStyles) {
+    for (final IStyle s : usedStyles) {
       if (s instanceof FontStyle) {
         fs = ((FontStyle) s);
 
         if (fs == def) {
-          __writeFont(fs, "body", bw, true, true);//$NON-NLS-1$
-          __writeFont(fs, ('.' + fs.getID()), bw, true, false);
+          _XHTML10Document.__writeFont(fs, "body", bw, true, true);//$NON-NLS-1$
+          _XHTML10Document.__writeFont(fs, ('.' + fs.getID()), bw, true,
+              false);
         } else {
-          __writeFont(fs, ('.' + fs.getID()), bw, false, false);
+          _XHTML10Document.__writeFont(fs, ('.' + fs.getID()), bw, false,
+              false);
         }
 
       }

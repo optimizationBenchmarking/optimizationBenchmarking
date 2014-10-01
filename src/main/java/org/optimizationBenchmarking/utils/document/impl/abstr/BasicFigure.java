@@ -1,16 +1,21 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import java.awt.geom.Rectangle2D;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.impl.object.PathEntry;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
+import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
+import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -57,6 +62,12 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
   /** the name suggestion */
   private final String m_suggestion;
+
+  /** the figure size in points */
+  private PhysicalDimension m_figureSize;
+
+  /** the figure files */
+  private ArrayListView<PathEntry> m_figureFiles;
 
   /**
    * Create a figure
@@ -183,12 +194,35 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
     this.throwChildNotAllowed(child);
   }
 
+  /**
+   * This method is called when the figure is closed, one single time
+   * 
+   * @param size
+   *          the figure size
+   * @param files
+   *          a list of the generated files
+   */
+  protected void onFigureClose(final PhysicalDimension size,
+      final ArrayListView<PathEntry> files) {
+    //
+  }
+
   /** {@inheritDoc} */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
-  protected synchronized void onClose() {
+  protected synchronized final void onClose() {
     this.fsmStateAssertAndSet(BasicFigure.STATE_GRAPHIC_CLOSED,
         DocumentElement.STATE_DEAD);
-    super.onClose();
+    try {
+      this.onFigureClose(((this.m_figureSize != null) ? this.m_figureSize
+          : DoubleDimension.EMPTY),
+          ((this.m_figureFiles != null) ? this.m_figureFiles
+              : ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW))));
+    } finally {
+      this.m_figureFiles = null;
+      this.m_figureSize = null;
+      super.onClose();
+    }
   }
 
   /**
@@ -197,28 +231,38 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
    * @param result
    *          the result files
    */
-  protected synchronized void onGraphicClosed(
+  @SuppressWarnings("rawtypes")
+  synchronized final void _onGraphicClosed(
       final ArrayListView<PathEntry> result) {
     this.fsmStateAssertAndSet(BasicFigure.STATE_GRAPHIC_CREATED,
         BasicFigure.STATE_GRAPHIC_CLOSED);
+    this.m_figureFiles = ((result != null) ? result
+        .select(_FigureFileSelector.INSTANCE)
+        : ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW)));
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final Graphic body() {
     final Graphic g;
+    final Rectangle2D r;
+
     this.fsmStateAssertAndSet(BasicFigure.STATE_CAPTION_CLOSED,
         BasicFigure.STATE_GRAPHIC_CREATED);
     g = this.m_driver.createGraphic(this.m_folder, this.m_suggestion,
         this.m_size, new __GraphicListener());
     this.m_doc.m_styles.initialize(g);
+
+    r = g.getBounds();
+    this.m_figureSize = new PhysicalDimension(r.getWidth(), r.getHeight(),
+        ELength.POINT);
     return g;
   }
 
   /**
    * The internal dispatcher for graphic listening events. It is basically
    * a wrapper for the
-   * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure#onGraphicClosed(ArrayListView)}
+   * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure#_onGraphicClosed(ArrayListView)}
    * method, allowing it to remain protected and allowing that
    * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure}
    * does not need to implement
@@ -235,7 +279,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
     @Override
     public final void onObjectFinalized(
         final ArrayListView<PathEntry> result) {
-      BasicFigure.this.onGraphicClosed(result);
+      BasicFigure.this._onGraphicClosed(result);
     }
   }
 

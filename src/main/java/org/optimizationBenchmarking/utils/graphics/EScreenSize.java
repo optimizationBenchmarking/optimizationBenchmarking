@@ -84,6 +84,6 @@ public enum EScreenSize {
    */
   public final PhysicalDimension getPhysicalSize(final double dpi) {
     return new PhysicalDimension(//
-        (dpi * this.m_width), (dpi * this.m_height), ELength.POINT);
+        (this.m_width / dpi), (this.m_height / dpi), ELength.INCH);
   }
 }

@@ -30,7 +30,7 @@ final class _XHTML10DocumentFooter extends DocumentFooter {
 
     out.append(XHTML10Driver.DIV_END);
     out.append(XHTML10Driver.DIV_END);
-    out.append(BODY_HTML_END);
+    out.append(_XHTML10DocumentFooter.BODY_HTML_END);
     super.onClose();
   }
 }

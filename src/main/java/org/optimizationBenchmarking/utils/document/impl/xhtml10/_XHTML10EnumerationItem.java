@@ -14,4 +14,18 @@ final class _XHTML10EnumerationItem extends EnumerationItem {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onOpen() {
+    super.onOpen();
+    this.getTextOutput().append(_XHTML10ItemizationItem.IL_BEGIN);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onClose() {
+    this.getTextOutput().append(_XHTML10ItemizationItem.IL_END);
+    super.onClose();
+  }
 }

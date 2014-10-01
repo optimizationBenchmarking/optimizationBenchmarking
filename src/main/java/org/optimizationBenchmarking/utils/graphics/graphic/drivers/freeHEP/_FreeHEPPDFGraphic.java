@@ -55,6 +55,7 @@ final class _FreeHEPPDFGraphic extends
       }
     }
   }
+
   /** {@inheritDoc} */
   @Override
   protected final Object getPathEntryObjectID() {

@@ -2,11 +2,14 @@ package org.optimizationBenchmarking.utils.graphics;
 
 import java.awt.geom.Dimension2D;
 
+import org.optimizationBenchmarking.utils.math.units.ELength;
+
 /** A immutable dimension based on {@code double}s */
 public class DoubleDimension extends Dimension2D {
 
   /** the empty dimension */
-  public static final DoubleDimension EMPTY = new DoubleDimension(0d, 0d);
+  public static final PhysicalDimension EMPTY = new PhysicalDimension(0d,
+      0d, ELength.POINT);
 
   /** the width */
   final double m_width;

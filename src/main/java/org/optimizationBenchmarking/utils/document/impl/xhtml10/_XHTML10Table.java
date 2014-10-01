@@ -6,6 +6,13 @@ import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 
 /** a table in a XHTML document */
 final class _XHTML10Table extends Table {
+  /** the end of the table */
+  static final char[] TABLE_END = { '<', '/', 't', 'a', 'b', 'l', 'e', '>' };
+  /** the end of a tr */
+  static final char[] TR_END = { '<', '/', 't', 'r', '>' };
+  /** the end of a td */
+  static final char[] TD_END = { '<', '/', 't', 'd', '>' };
+
   /**
    * Create a table
    * 

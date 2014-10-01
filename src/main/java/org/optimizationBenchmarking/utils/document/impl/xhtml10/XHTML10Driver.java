@@ -16,6 +16,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.Enumeration;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Figure;
 import org.optimizationBenchmarking.utils.document.impl.abstr.FigureSeries;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Itemization;
+import org.optimizationBenchmarking.utils.document.impl.abstr.Label;
 import org.optimizationBenchmarking.utils.document.impl.abstr.MathFunction;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Section;
 import org.optimizationBenchmarking.utils.document.impl.abstr.SectionBody;
@@ -100,6 +101,17 @@ public final class XHTML10Driver extends DocumentDriver {
   /** the div end */
   static final char[] DIV_END = { '<', '/', 'd', 'i', 'v', '>' };
 
+  /** the span end followed by a non-breakable space */
+  static final char[] SPAN_END_NBSP = { '<', '/', 's', 'p', 'a', 'n', '>',
+      '&', 'n', 'b', 's', 'p', ';' };
+
+  /** the label start */
+  private static final char[] LABEL_BEGIN = { '<', 'a', ' ', 'i', 'd',
+      '=', '"', };
+  /** the label end */
+  private static final char[] LABEL_END = {// avoid empty tags
+  '"', '>', '<', '/', 'a', '>' };
+
   /** the synchronizer */
   private static final Object SYNCH = new Object();
 
@@ -144,16 +156,17 @@ public final class XHTML10Driver extends DocumentDriver {
   public XHTML10Driver(final IGraphicDriver gd,
       final PhysicalDimension size, final FontPalette fonts) {
     super("xhtml"); //$NON-NLS-1$
-    final PhysicalDimension d;
+    PhysicalDimension d;
 
     this.m_graphicDriver = ((gd != null) ? gd : EGraphicFormat.PNG
         .getDefaultDriver());
 
     d = ((size != null) ? size : EScreenSize.DEFAULT
         .getPhysicalSize(EScreenSize.DEFAULT_SCREEN_DPI));
+    d = new PhysicalDimension((0.93d * d.getWidth()),//
+        (0.93d * d.getHeight()), d.getUnit());
 
-    this.m_size = ((d instanceof PageDimension) ? ((PageDimension) d)
-        : new PageDimension(d));
+    this.m_size = new PageDimension(d);
 
     this.m_fonts = ((fonts == null) ? XHTML10Driver.__defaultFonts()
         : fonts);
@@ -540,4 +553,19 @@ public final class XHTML10Driver extends DocumentDriver {
         rowSpan, colSpan, def);
   }
 
+  /**
+   * write a label
+   * 
+   * @param label
+   *          the label
+   * @param out
+   *          the output
+   */
+  static final void _label(final Label label, final ITextOutput out) {
+    if (label != null) {
+      out.append(XHTML10Driver.LABEL_BEGIN);
+      out.append(label.getLabelMark());
+      out.append(XHTML10Driver.LABEL_END);
+    }
+  }
 }
