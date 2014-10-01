@@ -83,8 +83,8 @@ public final class XHTML10Driver extends DocumentDriver {
       { '<', 'h', '4', '>' },
       { '<', 'h', '5', '>' },
       { '<', 'h', '6', '>' },
-      { '<', 's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"',
-          'h', '7', '"', '>' } };
+      { '<', 'd', 'i', 'v', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'h',
+          '7', '"', '>' } };
 
   /** the span class begin */
   static final char[] SPAN_CLASS_BEGIN = { '<', 's', 'p', 'a', 'n', ' ',
@@ -92,14 +92,14 @@ public final class XHTML10Driver extends DocumentDriver {
   /** the span end */
   static final char[] SPAN_END = { '<', '/', 's', 'p', 'a', 'n', '>', };
 
+  /** the div end */
+  static final char[] DIV_END = { '<', '/', 'd', 'i', 'v', '>' };
+
   /** the head line end */
   static final char[][] HEADLINE_END = { { '<', '/', 'h', '1', '>' },
       { '<', '/', 'h', '2', '>' }, { '<', '/', 'h', '3', '>' },
       { '<', '/', 'h', '4', '>' }, { '<', '/', 'h', '5', '>' },
-      { '<', '/', 'h', '6', '>' }, XHTML10Driver.SPAN_END };
-
-  /** the div end */
-  static final char[] DIV_END = { '<', '/', 'd', 'i', 'v', '>' };
+      { '<', '/', 'h', '6', '>' }, XHTML10Driver.DIV_END };
 
   /** the span end followed by a non-breakable space */
   static final char[] SPAN_END_NBSP = { '<', '/', 's', 'p', 'a', 'n', '>',
@@ -111,6 +111,8 @@ public final class XHTML10Driver extends DocumentDriver {
   /** the label end */
   private static final char[] LABEL_END = {// avoid empty tags
   '"', '>', '<', '/', 'a', '>' };
+  /** non-breaking space */
+  static final char[] NBSP = { '&', 'n', 'b', 's', 'p', ';' };
 
   /** the synchronizer */
   private static final Object SYNCH = new Object();
@@ -163,8 +165,8 @@ public final class XHTML10Driver extends DocumentDriver {
 
     d = ((size != null) ? size : EScreenSize.DEFAULT
         .getPhysicalSize(EScreenSize.DEFAULT_SCREEN_DPI));
-    d = new PhysicalDimension((0.93d * d.getWidth()),//
-        (0.93d * d.getHeight()), d.getUnit());
+    d = new PhysicalDimension((0.91d * d.getWidth()),//
+        (0.91d * d.getHeight()), d.getUnit());
 
     this.m_size = new PageDimension(d);
 

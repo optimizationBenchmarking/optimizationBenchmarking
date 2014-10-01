@@ -36,6 +36,7 @@ import org.optimizationBenchmarking.utils.math.random.Randomizer;
 
 import examples.org.optimizationBenchmarking.LoremIpsum;
 import examples.org.optimizationBenchmarking.utils.graphics.FinishedPrinter;
+import examples.org.optimizationBenchmarking.utils.graphics.GraphicsExample;
 
 /**
  * An example used to illustrate how documents can be created with the
@@ -165,10 +166,12 @@ public class DocumentExample {
         title.append("The ");//$NON-NLS-1$
 
         do {
-          title.append((char) (rand.nextInt(26) + 'A'));
+          title.append(RandomUtils.longToString(null, rand.nextLong())
+              .toUpperCase());
+          title.append(' ');
         } while (rand.nextBoolean());
 
-        title.append(" Section");//$NON-NLS-1$
+        title.append("Section");//$NON-NLS-1$
       }
 
       try (final ISectionBody b = section.body()) {
@@ -272,7 +275,7 @@ public class DocumentExample {
     final ColorPalette p;
     final ArrayList<AffineTransform> at;
     final ArrayList<Stroke> ss;
-    int k;
+    int k, e;
 
     s = EFigureSize.values();
     try (final IFigure fig = sb.figure(null,
@@ -288,16 +291,27 @@ public class DocumentExample {
       at = new ArrayList<>();
       ss = new ArrayList<>();
       try (final Graphic g = fig.body()) {
-        r = g.getBounds();
-        p = DefaultColorPalette.INSTANCE;
+
         at.add(g.getTransform());
         ss.add(g.getStroke());
+
+        if (rand.nextBoolean()) {
+          GraphicsExample.paint(g);
+          g.setTransform(at.get(0));
+          g.setStroke(ss.get(0));
+          e = 10;
+        } else {
+          e = 500;
+        }
+
+        r = g.getBounds();
+        p = DefaultColorPalette.INSTANCE;
         k = 0;
 
         do {
           g.setColor(p.get(rand.nextInt(p.size())));
 
-          switch (rand.nextInt(9)) {
+          switch (rand.nextInt(12)) {
             case 0: {
               g.drawLine((r.getX() + (rand.nextDouble() * r.getWidth())),//
                   (r.getY() + (rand.nextDouble() * r.getHeight())),//
@@ -306,6 +320,7 @@ public class DocumentExample {
               k++;
               break;
             }
+
             case 1: {
               g.drawRect((r.getX() + (rand.nextDouble() * r.getWidth())),//
                   (r.getY() + (rand.nextDouble() * r.getHeight())),//
@@ -314,6 +329,7 @@ public class DocumentExample {
               k++;
               break;
             }
+
             case 2: {
               g.fillRect((r.getX() + (rand.nextDouble() * r.getWidth())),//
                   (r.getY() + (rand.nextDouble() * r.getHeight())),//
@@ -322,6 +338,7 @@ public class DocumentExample {
               k++;
               break;
             }
+
             case 3: {
               trans: for (;;) {
                 try {
@@ -339,6 +356,7 @@ public class DocumentExample {
               }
               break;
             }
+
             case 4: {
               if (at.size() > 1) {
                 at.remove(at.size() - 1);
@@ -346,12 +364,14 @@ public class DocumentExample {
               }
               break;
             }
+
             case 5: {
               g.setStroke(new BasicStroke(rand.nextInt(30) + 1, rand
                   .nextInt(3), rand.nextInt(3)));
               ss.add(g.getStroke());
               break;
             }
+
             case 6: {
               if (ss.size() > 1) {
                 ss.remove(ss.size() - 1);
@@ -359,6 +379,7 @@ public class DocumentExample {
               }
               break;
             }
+
             case 7: {
               double[] x, y;
 
@@ -384,6 +405,35 @@ public class DocumentExample {
               }
               k++;
             }
+
+            case 8: {
+              g.drawArc(
+                  (r.getX() + (rand.nextDouble() * r.getWidth())),//
+                  (r.getY() + (rand.nextDouble() * r.getHeight())),//
+                  ((rand.nextDouble() * r.getWidth())),//
+                  ((rand.nextDouble() * r.getHeight())),
+                  (rand.nextDouble() * Math.sqrt(r.getWidth()
+                      * r.getHeight())),
+                  (rand.nextDouble() * Math.sqrt(r.getWidth()
+                      * r.getHeight())));
+              k++;
+              break;
+            }
+
+            case 9: {
+              g.fillArc(
+                  (r.getX() + (rand.nextDouble() * r.getWidth())),//
+                  (r.getY() + (rand.nextDouble() * r.getHeight())),//
+                  ((rand.nextDouble() * r.getWidth())),//
+                  ((rand.nextDouble() * r.getHeight())),
+                  (rand.nextDouble() * Math.sqrt(r.getWidth()
+                      * r.getHeight())),
+                  (rand.nextDouble() * Math.sqrt(r.getWidth()
+                      * r.getHeight())));
+              k++;
+              break;
+            }
+
             default: {
               g.drawString(
                   RandomUtils.longToString(null, rand.nextLong()),
@@ -393,7 +443,7 @@ public class DocumentExample {
             }
           }
 
-        } while ((k < 100) || (rand.nextInt(10) > 0));
+        } while ((k < e) || (rand.nextInt(10) > 0));
 
       }
     }

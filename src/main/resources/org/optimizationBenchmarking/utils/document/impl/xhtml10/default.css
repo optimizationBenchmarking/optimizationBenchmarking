@@ -43,6 +43,10 @@ div.sectionHead {
 div.sectionBody {
 }
 
+div.h7 {
+  margin-top    : 0.5em;  
+}
+
 span.captionTitle {
   font-weight   : bold;
 }

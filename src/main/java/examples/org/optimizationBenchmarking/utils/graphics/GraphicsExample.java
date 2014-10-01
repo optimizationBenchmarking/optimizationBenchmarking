@@ -72,7 +72,7 @@ public final class GraphicsExample {
           GraphicsExample.class.getSimpleName(), GraphicsExample.SIZE,
           listener)) {
         for (int i = 1; i < 50; i++) {
-          GraphicsExample.__paint(g);
+          GraphicsExample.paint(g);
           GraphicsExample.__paintComponent(g);
           g.translate(-75, -25);
           g.scale(0.55d, 0.5d);
@@ -119,7 +119,7 @@ public final class GraphicsExample {
    * @param g
    *          the graphic
    */
-  private static final void __paint(final Graphic g) {
+  public static final void paint(final Graphic g) {
     final Rectangle2D bounds;
     final UnaryFunction mmToDev;
     int i;
@@ -138,44 +138,34 @@ public final class GraphicsExample {
 
     for (i = 0; i < 10; i++) {
       r.setRect(
-          bounds.getX()
-              + mmToDev.compute((GraphicsExample.SIZE.getWidth() / 10d)
-                  * i),//
+          bounds.getX() + mmToDev.compute((bounds.getWidth() / 10d) * i),//
           bounds.getY(), //
-          mmToDev.compute(GraphicsExample.SIZE.getWidth() / 10d),//
-          mmToDev.compute((GraphicsExample.SIZE.getWidth() / 10d)));
+          mmToDev.compute(bounds.getWidth() / 10d),//
+          mmToDev.compute((bounds.getWidth() / 10d)));
       g.setColor(new Color(0f, ((i + 1) / 12f), 0f));
       g.fill(r);
 
-      r.setRect(
-          bounds.getX(),//
-          bounds.getY()
-              + mmToDev.compute((GraphicsExample.SIZE.getHeight() / 10d)
-                  * i), //
-          mmToDev.compute(GraphicsExample.SIZE.getHeight() / 10d),//
-          mmToDev.compute((GraphicsExample.SIZE.getHeight() / 10d)));
+      r.setRect(bounds.getX(),//
+          bounds.getY() + mmToDev.compute((bounds.getHeight() / 10d) * i), //
+          mmToDev.compute(bounds.getHeight() / 10d),//
+          mmToDev.compute((bounds.getHeight() / 10d)));
       g.setColor(new Color(0f, 0f, (((9 - i) + 1) / 12f)));
       g.fill(r);
     }
 
     for (i = 0; i < 10; i++) {
       r.setRect(
-          bounds.getX()
-              + mmToDev.compute((GraphicsExample.SIZE.getWidth() / 10d)
-                  * i),//
+          bounds.getX() + mmToDev.compute((bounds.getWidth() / 10d) * i),//
           bounds.getY(), //
-          mmToDev.compute(GraphicsExample.SIZE.getWidth() / 10d),//
-          mmToDev.compute((GraphicsExample.SIZE.getWidth() / 10d)));
+          mmToDev.compute(bounds.getWidth() / 10d),//
+          mmToDev.compute((bounds.getWidth() / 10d)));
       g.setColor(new Color(((i + 1) / 12f), (((9 - i) + 1) / 12f), 0f));
       g.draw(r);
 
-      r.setRect(
-          bounds.getX(),//
-          bounds.getY()
-              + mmToDev.compute((GraphicsExample.SIZE.getHeight() / 10d)
-                  * i), //
-          mmToDev.compute(GraphicsExample.SIZE.getHeight() / 10d),//
-          mmToDev.compute((GraphicsExample.SIZE.getHeight() / 10d)));
+      r.setRect(bounds.getX(),//
+          bounds.getY() + mmToDev.compute((bounds.getHeight() / 10d) * i), //
+          mmToDev.compute(bounds.getHeight() / 10d),//
+          mmToDev.compute((bounds.getHeight() / 10d)));
       g.setColor(new Color((((9 - i) + 1) / 12f), 0f, ((i + 1) / 12f)));
       g.draw(r);
     }
@@ -190,46 +180,46 @@ public final class GraphicsExample {
       g.setStroke(new BasicStroke(((BasicStroke) s).getLineWidth() * 0.5f));
     }
     g.drawLine(bounds.getX(), bounds.getY(),//
-        bounds.getX() + mmToDev.compute(GraphicsExample.SIZE.getWidth()),//
-        bounds.getY() + mmToDev.compute(GraphicsExample.SIZE.getHeight()));
+        bounds.getX() + mmToDev.compute(bounds.getWidth()),//
+        bounds.getY() + mmToDev.compute(bounds.getHeight()));
     g.setStroke(s);
 
     g.setFont(new Font("Courier New", //$NON-NLS-1$
         Font.PLAIN, ((int) (0.5d + ELength.MM.convertTo(
-            (GraphicsExample.SIZE.getHeight() / 10d), ELength.MM)))));
+            (bounds.getHeight() / 10d), ELength.MM)))));
     g.setColor(Color.YELLOW);
-    g.drawString("Text with 1/10th of a line hight",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev.compute(GraphicsExample.SIZE
-            .getHeight() / 10)))),//
+    g.drawString(
+        "Text with 1/10th of a line hight",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + (mmToDev.compute(bounds.getHeight() / 10)))),//
         (0.5d + (bounds.getY() + (mmToDev
-            .compute((3d * GraphicsExample.SIZE.getHeight()) / 10d)))));
+            .compute((3d * bounds.getHeight()) / 10d)))));
 
     g.setFont(new Font("Arial", //$NON-NLS-1$
         Font.PLAIN, 18));
     g.setColor(Color.YELLOW);
-    g.drawString("Font: 18pt",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev.compute(GraphicsExample.SIZE
-            .getHeight() / 10)))),//
+    g.drawString(
+        "Font: 18pt",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + (mmToDev.compute(bounds.getHeight() / 10)))),//
         (0.5d + (bounds.getY() + (mmToDev
-            .compute((5d * GraphicsExample.SIZE.getHeight()) / 10d)))));
+            .compute((5d * bounds.getHeight()) / 10d)))));
 
     g.setFont(new Font("Times New Roman", //$NON-NLS-1$
         Font.PLAIN, 16));
     g.setColor(Color.YELLOW);
-    g.drawString("Font: 16pt",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev.compute(GraphicsExample.SIZE
-            .getHeight() / 10)))),//
+    g.drawString(
+        "Font: 16pt",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + (mmToDev.compute(bounds.getHeight() / 10)))),//
         (0.5d + (bounds.getY() + (mmToDev
-            .compute((7d * GraphicsExample.SIZE.getHeight()) / 10d)))));
+            .compute((7d * bounds.getHeight()) / 10d)))));
 
     g.setFont(new Font("Dialog", //$NON-NLS-1$
         Font.PLAIN, 14));
     g.setColor(Color.YELLOW);
-    g.drawString("Font: 14pt",//$NON-NLS-1$
-        (0.5d + (bounds.getX() + (mmToDev.compute(GraphicsExample.SIZE
-            .getHeight() / 10)))),//
+    g.drawString(
+        "Font: 14pt",//$NON-NLS-1$
+        (0.5d + (bounds.getX() + (mmToDev.compute(bounds.getHeight() / 10)))),//
         (0.5d + (bounds.getY() + (mmToDev
-            .compute((9d * GraphicsExample.SIZE.getHeight()) / 10d)))));
+            .compute((9d * bounds.getHeight()) / 10d)))));
   }
 
   /** the forbidden constructor */
