@@ -231,14 +231,17 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
    * @param result
    *          the result files
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   synchronized final void _onGraphicClosed(
       final ArrayListView<PathEntry> result) {
     this.fsmStateAssertAndSet(BasicFigure.STATE_GRAPHIC_CREATED,
         BasicFigure.STATE_GRAPHIC_CLOSED);
-    this.m_figureFiles = ((result != null) ? result
-        .select(_FigureFileSelector.INSTANCE)
-        : ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW)));
+    if (result != null) {
+      this.m_figureFiles = result.select(_FigureFileSelector.INSTANCE);
+      this.m_doc.addPaths(this.m_figureFiles);
+    } else {
+      this.m_figureFiles = ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
+    }
   }
 
   /** {@inheritDoc} */
