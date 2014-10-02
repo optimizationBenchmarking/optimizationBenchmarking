@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.OutputStream;
 import java.nio.file.Path;
 
-import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 

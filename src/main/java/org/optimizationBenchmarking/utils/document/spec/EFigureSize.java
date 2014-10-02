@@ -160,7 +160,7 @@ public enum EFigureSize {
     pageUnit = page.getUnit();
 
     // an image should be at least 5mm in each direction
-    minExtend = Math.ceil(ELength.MM.convertTo(5d, ELength.POINT));
+    minExtend = 16d;
 
     // get the maximum permissible width
     availableWidth = pageUnit.convertTo(
@@ -185,8 +185,7 @@ public enum EFigureSize {
       if (this.m_nx > 1) {
         // if more than one image per row, insert some reasonable spacing
         width -= ((this.m_nx - 1) * //
-        (Math.max(Math.ceil(ELength.MM.convertTo(3d, ELength.POINT)),
-            EFigureSize.__round(0.01d * width))));
+        (Math.max(10d, EFigureSize.__round(0.01d * width))));
         width /= this.m_nx;
       }
     } else {
@@ -213,8 +212,7 @@ public enum EFigureSize {
       // -- this is the sketchy part --
       height = (availableHeight - (//
       ((this.m_ny <= 1) ? 1 : (this.m_ny + 1)) * //
-      (Math.max(Math.ceil(ELength.MM.convertTo(15d, ELength.POINT)),
-          EFigureSize.__round(0.03d * availableHeight)))));
+      (Math.max(43d, EFigureSize.__round(0.03d * availableHeight)))));
       height /= this.m_ny;
     } else {
       height = Double.NaN;

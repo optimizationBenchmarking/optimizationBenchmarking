@@ -21,6 +21,7 @@ import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
+import org.optimizationBenchmarking.utils.document.spec.IFigureSeries;
 import org.optimizationBenchmarking.utils.document.spec.IList;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
@@ -213,6 +214,18 @@ public class DocumentExample {
             }
 
             if (rand.nextBoolean()) {
+              DocumentExample.__createFigureSeries(b, rand);
+              nb = false;
+            }
+
+            if (rand.nextBoolean()) {
+              if (nb) {
+                b.appendLineBreak();
+              }
+              LoremIpsum.appendLoremIpsum(b, rand, null);
+            }
+
+            if (rand.nextBoolean()) {
               DocumentExample.__createList(b, rand);
               nb = false;
             }
@@ -271,181 +284,241 @@ public class DocumentExample {
       final Randomizer rand) {
     final EFigureSize[] s;
     final EFigureSize v;
+    s = EFigureSize.values();
+    try (final IFigure fig = sb.figure(null,
+        (v = s[rand.nextInt(s.length)]),
+        RandomUtils.longToString(null, DocumentExample.figureCount++))) {
+      DocumentExample.__fillFigure(fig, rand, v);
+    }
+  }
+
+  /**
+   * create a figure series
+   * 
+   * @param sb
+   *          the section body
+   * @param rand
+   *          the randomizer
+   */
+  private static final void __createFigureSeries(final ISectionBody sb,
+      final Randomizer rand) {
+
+    final EFigureSize[] s;
+    final EFigureSize v;
+    final int c;
+    int i;
+    String p;
+
+    s = EFigureSize.values();
+    v = s[rand.nextInt(s.length)];
+    c = v.getNX();
+
+    try (final IFigureSeries fs = sb
+        .figureSeries(
+            null,
+            v,
+            (p = RandomUtils.longToString(null,
+                DocumentExample.figureCount++)))) {
+
+      try (final IText caption = fs.caption()) {
+        caption.append(v.toString());
+        caption.append(' ');
+        caption.append(p);
+      }
+
+      for (i = (1 + rand.nextInt(10 * c)); (--i) >= 0;) {
+        try (final IFigure fig = fs.figure(null,
+            RandomUtils.longToString(null, DocumentExample.figureCount++))) {
+          DocumentExample.__fillFigure(fig, rand, null);
+        }
+      }
+
+    }
+  }
+
+  /**
+   * fill a figure
+   * 
+   * @param fig
+   *          the figure
+   * @param rand
+   *          the randomizer
+   * @param v
+   *          the figure size
+   */
+  private static final void __fillFigure(final IFigure fig,
+      final Randomizer rand, final EFigureSize v) {
     final Rectangle2D r;
     final ColorPalette p;
     final ArrayList<AffineTransform> at;
     final ArrayList<Stroke> ss;
     int k, e;
 
-    s = EFigureSize.values();
-    try (final IFigure fig = sb.figure(null,
-        (v = s[rand.nextInt(s.length)]),
-        RandomUtils.longToString(null, DocumentExample.figureCount++))) {
-
-      try (final IText cap = fig.caption()) {
+    try (final IText cap = fig.caption()) {
+      if (v != null) {
         cap.append(v.toString());
         cap.append(' ');
-        LoremIpsum.appendLoremIpsum(cap, rand, v.toString());
+      }
+      LoremIpsum.appendLoremIpsum(cap, rand, ((v != null) ? v.toString()
+          : null));
+    }
+
+    at = new ArrayList<>();
+    ss = new ArrayList<>();
+    try (final Graphic g = fig.body()) {
+
+      at.add(g.getTransform());
+      ss.add(g.getStroke());
+
+      if (rand.nextBoolean()) {
+        GraphicsExample.paint(g);
+        g.setTransform(at.get(0));
+        g.setStroke(ss.get(0));
+        e = 10;
+      } else {
+        e = 500;
       }
 
-      at = new ArrayList<>();
-      ss = new ArrayList<>();
-      try (final Graphic g = fig.body()) {
+      r = g.getBounds();
+      p = DefaultColorPalette.INSTANCE;
+      k = 0;
 
-        at.add(g.getTransform());
-        ss.add(g.getStroke());
+      do {
+        g.setColor(p.get(rand.nextInt(p.size())));
 
-        if (rand.nextBoolean()) {
-          GraphicsExample.paint(g);
-          g.setTransform(at.get(0));
-          g.setStroke(ss.get(0));
-          e = 10;
-        } else {
-          e = 500;
-        }
-
-        r = g.getBounds();
-        p = DefaultColorPalette.INSTANCE;
-        k = 0;
-
-        do {
-          g.setColor(p.get(rand.nextInt(p.size())));
-
-          switch (rand.nextInt(12)) {
-            case 0: {
-              g.drawLine((r.getX() + (rand.nextDouble() * r.getWidth())),//
-                  (r.getY() + (rand.nextDouble() * r.getHeight())),//
-                  (r.getX() + (rand.nextDouble() * r.getWidth())),//
-                  (r.getY() + (rand.nextDouble() * r.getHeight())));
-              k++;
-              break;
-            }
-
-            case 1: {
-              g.drawRect((r.getX() + (rand.nextDouble() * r.getWidth())),//
-                  (r.getY() + (rand.nextDouble() * r.getHeight())),//
-                  ((rand.nextDouble() * r.getWidth())),//
-                  ((rand.nextDouble() * r.getHeight())));
-              k++;
-              break;
-            }
-
-            case 2: {
-              g.fillRect((r.getX() + (rand.nextDouble() * r.getWidth())),//
-                  (r.getY() + (rand.nextDouble() * r.getHeight())),//
-                  ((rand.nextDouble() * r.getWidth())),//
-                  ((rand.nextDouble() * r.getHeight())));
-              k++;
-              break;
-            }
-
-            case 3: {
-              trans: for (;;) {
-                try {
-                  if (rand.nextBoolean()) {
-                    g.shear((-1d + (2d * rand.nextDouble())),
-                        (-1d + (2d * rand.nextDouble())));
-                  } else {
-                    g.rotate(Math.PI * (-1d + (2d * rand.nextDouble())));
-                  }
-                  at.add(g.getTransform());
-                  break trans;
-                } catch (final Throwable tt) {
-                  //
-                }
-              }
-              break;
-            }
-
-            case 4: {
-              if (at.size() > 1) {
-                at.remove(at.size() - 1);
-                g.setTransform(at.get(at.size() - 1));
-              }
-              break;
-            }
-
-            case 5: {
-              g.setStroke(new BasicStroke(rand.nextInt(30) + 1, rand
-                  .nextInt(3), rand.nextInt(3)));
-              ss.add(g.getStroke());
-              break;
-            }
-
-            case 6: {
-              if (ss.size() > 1) {
-                ss.remove(ss.size() - 1);
-                g.setStroke(ss.get(ss.size() - 1));
-              }
-              break;
-            }
-
-            case 7: {
-              double[] x, y;
-
-              x = new double[(rand.nextInt(100) + 1)];
-              y = new double[x.length];
-              for (int i = x.length; ((--i) >= 0);) {
-                x[i] = (r.getX() + (rand.nextDouble() * r.getWidth()));
-                y[i] = (r.getY() + (rand.nextDouble() * r.getHeight()));
-              }
-              switch (rand.nextInt(3)) {
-                case 0: {
-                  g.drawPolygon(x, y, x.length);
-                  break;
-                }
-                case 1: {
-                  g.drawPolyline(x, y, x.length);
-                  break;
-                }
-                default: {
-                  g.fillPolygon(x, y, x.length);
-                  break;
-                }
-              }
-              k++;
-            }
-
-            case 8: {
-              g.drawArc(
-                  (r.getX() + (rand.nextDouble() * r.getWidth())),//
-                  (r.getY() + (rand.nextDouble() * r.getHeight())),//
-                  ((rand.nextDouble() * r.getWidth())),//
-                  ((rand.nextDouble() * r.getHeight())),
-                  (rand.nextDouble() * Math.sqrt(r.getWidth()
-                      * r.getHeight())),
-                  (rand.nextDouble() * Math.sqrt(r.getWidth()
-                      * r.getHeight())));
-              k++;
-              break;
-            }
-
-            case 9: {
-              g.fillArc(
-                  (r.getX() + (rand.nextDouble() * r.getWidth())),//
-                  (r.getY() + (rand.nextDouble() * r.getHeight())),//
-                  ((rand.nextDouble() * r.getWidth())),//
-                  ((rand.nextDouble() * r.getHeight())),
-                  (rand.nextDouble() * Math.sqrt(r.getWidth()
-                      * r.getHeight())),
-                  (rand.nextDouble() * Math.sqrt(r.getWidth()
-                      * r.getHeight())));
-              k++;
-              break;
-            }
-
-            default: {
-              g.drawString(
-                  RandomUtils.longToString(null, rand.nextLong()),
-                  (r.getX() + (rand.nextDouble() * r.getWidth())),//
-                  (r.getY() + (rand.nextDouble() * r.getHeight())));
-              k++;
-            }
+        switch (rand.nextInt(12)) {
+          case 0: {
+            g.drawLine((r.getX() + (rand.nextDouble() * r.getWidth())),//
+                (r.getY() + (rand.nextDouble() * r.getHeight())),//
+                (r.getX() + (rand.nextDouble() * r.getWidth())),//
+                (r.getY() + (rand.nextDouble() * r.getHeight())));
+            k++;
+            break;
           }
 
-        } while ((k < e) || (rand.nextInt(10) > 0));
+          case 1: {
+            g.drawRect((r.getX() + (rand.nextDouble() * r.getWidth())),//
+                (r.getY() + (rand.nextDouble() * r.getHeight())),//
+                ((rand.nextDouble() * r.getWidth())),//
+                ((rand.nextDouble() * r.getHeight())));
+            k++;
+            break;
+          }
 
-      }
+          case 2: {
+            g.fillRect((r.getX() + (rand.nextDouble() * r.getWidth())),//
+                (r.getY() + (rand.nextDouble() * r.getHeight())),//
+                ((rand.nextDouble() * r.getWidth())),//
+                ((rand.nextDouble() * r.getHeight())));
+            k++;
+            break;
+          }
+
+          case 3: {
+            trans: for (;;) {
+              try {
+                if (rand.nextBoolean()) {
+                  g.shear((-1d + (2d * rand.nextDouble())),
+                      (-1d + (2d * rand.nextDouble())));
+                } else {
+                  g.rotate(Math.PI * (-1d + (2d * rand.nextDouble())));
+                }
+                at.add(g.getTransform());
+                break trans;
+              } catch (final Throwable tt) {
+                //
+              }
+            }
+            break;
+          }
+
+          case 4: {
+            if (at.size() > 1) {
+              at.remove(at.size() - 1);
+              g.setTransform(at.get(at.size() - 1));
+            }
+            break;
+          }
+
+          case 5: {
+            g.setStroke(new BasicStroke(rand.nextInt(30) + 1, rand
+                .nextInt(3), rand.nextInt(3)));
+            ss.add(g.getStroke());
+            break;
+          }
+
+          case 6: {
+            if (ss.size() > 1) {
+              ss.remove(ss.size() - 1);
+              g.setStroke(ss.get(ss.size() - 1));
+            }
+            break;
+          }
+
+          case 7: {
+            double[] x, y;
+
+            x = new double[(rand.nextInt(100) + 1)];
+            y = new double[x.length];
+            for (int i = x.length; ((--i) >= 0);) {
+              x[i] = (r.getX() + (rand.nextDouble() * r.getWidth()));
+              y[i] = (r.getY() + (rand.nextDouble() * r.getHeight()));
+            }
+            switch (rand.nextInt(3)) {
+              case 0: {
+                g.drawPolygon(x, y, x.length);
+                break;
+              }
+              case 1: {
+                g.drawPolyline(x, y, x.length);
+                break;
+              }
+              default: {
+                g.fillPolygon(x, y, x.length);
+                break;
+              }
+            }
+            k++;
+          }
+
+          case 8: {
+            g.drawArc(
+                (r.getX() + (rand.nextDouble() * r.getWidth())),//
+                (r.getY() + (rand.nextDouble() * r.getHeight())),//
+                ((rand.nextDouble() * r.getWidth())),//
+                ((rand.nextDouble() * r.getHeight())),
+                (rand.nextDouble() * Math.sqrt(r.getWidth()
+                    * r.getHeight())),
+                (rand.nextDouble() * Math.sqrt(r.getWidth()
+                    * r.getHeight())));
+            k++;
+            break;
+          }
+
+          case 9: {
+            g.fillArc(
+                (r.getX() + (rand.nextDouble() * r.getWidth())),//
+                (r.getY() + (rand.nextDouble() * r.getHeight())),//
+                ((rand.nextDouble() * r.getWidth())),//
+                ((rand.nextDouble() * r.getHeight())),
+                (rand.nextDouble() * Math.sqrt(r.getWidth()
+                    * r.getHeight())),
+                (rand.nextDouble() * Math.sqrt(r.getWidth()
+                    * r.getHeight())));
+            k++;
+            break;
+          }
+
+          default: {
+            g.drawString(RandomUtils.longToString(null, rand.nextLong()),
+                (r.getX() + (rand.nextDouble() * r.getWidth())),//
+                (r.getY() + (rand.nextDouble() * r.getHeight())));
+            k++;
+          }
+        }
+
+      } while ((k < e) || (rand.nextInt(10) > 0));
+
     }
   }
 

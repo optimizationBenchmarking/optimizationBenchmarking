@@ -21,6 +21,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.MathFunction;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Section;
 import org.optimizationBenchmarking.utils.document.impl.abstr.SectionBody;
 import org.optimizationBenchmarking.utils.document.impl.abstr.StructuredText;
+import org.optimizationBenchmarking.utils.document.impl.abstr.SubFigure;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Table;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableBody;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableBodyRow;
@@ -29,7 +30,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooterRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
-import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.PageDimension;
@@ -470,10 +471,17 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10SubFigure createFigure(final FigureSeries owner,
-      final ILabel useLabel, final String path) {
+  protected final _XHTML10SubFigure createSubFigure(
+      final FigureSeries owner, final ILabel useLabel, final String path) {
     return new _XHTML10SubFigure(((_XHTML10FigureSeries) owner), useLabel,
         path);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10SubFigureCaption createSubFigureCaption(
+      final SubFigure owner) {
+    return new _XHTML10SubFigureCaption((_XHTML10SubFigure) owner);
   }
 
   /** {@inheritDoc} */

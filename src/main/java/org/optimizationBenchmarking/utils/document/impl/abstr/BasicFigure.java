@@ -5,8 +5,8 @@ import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
-import org.optimizationBenchmarking.utils.document.impl.object.PathEntry;
+import org.optimizationBenchmarking.utils.document.object.IObjectListener;
+import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
@@ -269,7 +269,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
    * method, allowing it to remain protected and allowing that
    * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure}
    * does not need to implement
-   * {@link org.optimizationBenchmarking.utils.document.impl.object.IObjectListener}
+   * {@link org.optimizationBenchmarking.utils.document.object.IObjectListener}
    * .
    */
   private final class __GraphicListener implements IObjectListener {

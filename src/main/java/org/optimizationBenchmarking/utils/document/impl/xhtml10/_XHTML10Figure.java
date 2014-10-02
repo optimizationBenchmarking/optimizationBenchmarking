@@ -1,11 +1,12 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import java.io.File;
+import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Figure;
 import org.optimizationBenchmarking.utils.document.impl.abstr.FigureCaption;
-import org.optimizationBenchmarking.utils.document.impl.object.PathEntry;
+import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
@@ -17,34 +18,34 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 final class _XHTML10Figure extends Figure {
 
   /** the start of the float */
-  private static final char[] FIGURE_DIV_BEGIN = { '<', 'd', 'i', 'v',
-      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r',
-      'e', '"', '>', };
+  static final char[] FIGURE_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ', 'c',
+      'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', '"',
+      '>', };
 
   /** the start of the float */
-  private static final char[] FIGURE_TABLE_BEGIN = { '<', 't', 'a', 'b',
-      'l', 'e', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g',
-      'u', 'r', 'e', '"', '>' };
+  static final char[] FIGURE_TABLE_BEGIN = { '<', 't', 'a', 'b', 'l', 'e',
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r',
+      'e', '"', '>' };
 
   /** the start of the float tr caption */
-  private static final char[] FIGURE_TR_CAPTION_BEGIN = { '<', 't', 'r',
-      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r',
-      'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>' };
+  static final char[] FIGURE_TR_CAPTION_BEGIN = { '<', 't', 'r', ' ', 'c',
+      'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', 'C',
+      'a', 'p', 't', 'i', 'o', 'n', '"', '>' };
   /** the start of the float tr body */
-  private static final char[] FIGURE_TR_BODY_BEGIN = { '<', 't', 'r', ' ',
-      'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e',
-      'B', 'o', 'd', 'y', '"', '>' };
+  static final char[] FIGURE_TR_BODY_BEGIN = { '<', 't', 'r', ' ', 'c',
+      'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', 'B',
+      'o', 'd', 'y', '"', '>' };
   /** the start of the float td */
-  private static final char[] FIGURE_TD_CAPTION_SPAN_BEGIN = { '<', 't',
-      'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u',
-      'r', 'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>', '<', 's',
-      'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'a',
-      'p', 't', 'i', 'o', 'n', 'T', 'i', 't', 'l', 'e', '"', '>', 'F',
-      'i', 'g', '.', '&', 'n', 'b', 's', 'p', ';' };
-  /** the start of the float body td */
-  private static final char[] FIGURE_TD_BODY_BEGIN = { '<', 't', 'd', ' ',
+  static final char[] FIGURE_TD_CAPTION_SPAN_BEGIN = { '<', 't', 'd', ' ',
       'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e',
-      'B', 'o', 'd', 'y', '"', '>' };
+      'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>', '<', 's', 'p', 'a',
+      'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'a', 'p', 't',
+      'i', 'o', 'n', 'T', 'i', 't', 'l', 'e', '"', '>', 'F', 'i', 'g',
+      '.', '&', 'n', 'b', 's', 'p', ';' };
+  /** the start of the float body td */
+  static final char[] FIGURE_TD_BODY_BEGIN = { '<', 't', 'd', ' ', 'c',
+      'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', 'B',
+      'o', 'd', 'y', '"', '>' };
 
   /** the start figure image: uri follows */
   private static final char[] FIGURE_IMG_URI = { '<', 'i', 'm', 'g', ' ',
@@ -113,25 +114,28 @@ final class _XHTML10Figure extends Figure {
     }
   }
 
-  /** {@inheritDoc} */
-  @Override
-  protected void onFigureClose(final PhysicalDimension size,
-      final ArrayListView<PathEntry> files) {
-    final ITextOutput out;
+  /**
+   * Create the {@code img}-tag
+   * 
+   * @param out
+   *          the output
+   * @param path
+   *          the path
+   * @param docFolder
+   *          the document base folder
+   * @param size
+   *          the image size
+   * @param caption
+   *          the image caption
+   */
+  static final void _img(final ITextOutput out, final Path path,
+      final Path docFolder, final PhysicalDimension size,
+      final char[] caption) {
     String s;
 
-    out = this.getTextOutput();
-
-    out.append(_XHTML10Figure.FIGURE_TR_BODY_BEGIN);
-    out.append(_XHTML10Figure.FIGURE_TD_BODY_BEGIN);
-
     out.append(_XHTML10Figure.FIGURE_IMG_URI);
-    if (files.isEmpty()) {
-      throw new IllegalStateException("No figure file."); //$NON-NLS-1$
-    }
 
-    s = this.getDocument().getDocumentFolder()
-        .relativize(files.get(0).getValue()).toString();
+    s = docFolder.relativize(path).toString();
     if (File.separatorChar == '\\') {// just in case...
       s = s.replace('\\', '/');
     }
@@ -141,9 +145,32 @@ final class _XHTML10Figure extends Figure {
     out.append(size.getWidth());
     out.append(_XHTML10Figure.FIGURE_IMG_HEIGHT);
     out.append(size.getHeight());
-    out.append(_XHTML10Figure.FIGURE_IMG_ALT);
-    out.append(this.m_caption);
+    if ((caption != null) && (caption.length > 0)) {
+      out.append(_XHTML10Figure.FIGURE_IMG_ALT);
+      out.append(caption);
+    } else {
+      out.append(_XHTML10Figure.FIGURE_IMG_ALT, 0, 3);
+    }
     out.append(XHTML10Driver.EMPTY_ATTRIB_TAG_END);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void onFigureClose(final PhysicalDimension size,
+      final ArrayListView<PathEntry> files) {
+    final ITextOutput out;
+
+    out = this.getTextOutput();
+
+    out.append(_XHTML10Figure.FIGURE_TR_BODY_BEGIN);
+    out.append(_XHTML10Figure.FIGURE_TD_BODY_BEGIN);
+
+    if (files.isEmpty()) {
+      throw new IllegalStateException("No figure file."); //$NON-NLS-1$
+    }
+
+    _XHTML10Figure._img(out, files.get(0).getValue(), this.getDocument()
+        .getDocumentFolder(), size, this.m_caption);
 
     out.append(_XHTML10Table.TD_END);
     out.append(_XHTML10Table.TR_END);

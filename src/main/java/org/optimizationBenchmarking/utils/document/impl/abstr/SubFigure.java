@@ -42,8 +42,8 @@ public class SubFigure extends BasicFigure {
 
   /** {@inheritDoc} */
   @Override
-  protected SubFigureCaption createCaption() {
-    return new SubFigureCaption(this);
+  final SubFigureCaption createCaption() {
+    return this.m_driver.createSubFigureCaption(this);
   }
 
   /** {@inheritDoc} */

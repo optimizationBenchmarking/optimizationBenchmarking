@@ -29,8 +29,8 @@ import java.util.Map;
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
-import org.optimizationBenchmarking.utils.document.impl.object.PathEntry;
+import org.optimizationBenchmarking.utils.document.object.IObjectListener;
+import org.optimizationBenchmarking.utils.document.object.PathEntry;
 
 /**
  * <p>

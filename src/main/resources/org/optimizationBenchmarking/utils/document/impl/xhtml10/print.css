@@ -99,6 +99,7 @@ tr.subfigureBody {
 tr.subfigureCaption {
   margin-top      : 0.2cm;
   margin-bottom   : 0.4cm;
+  vertical-align  : top;
 }
 
 td.subfigureCaption {

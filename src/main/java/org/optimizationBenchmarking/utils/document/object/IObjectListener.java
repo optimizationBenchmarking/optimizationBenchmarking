@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.document.impl.object;
+package org.optimizationBenchmarking.utils.document.object;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 

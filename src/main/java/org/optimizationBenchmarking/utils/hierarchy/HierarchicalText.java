@@ -223,7 +223,6 @@ public abstract class HierarchicalText extends HierarchicalFSM {
    *         {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    */
   protected final ITextOutput getTextOutput() {
-    this.assertNoChildren();
     return this.m_out;
   }
 

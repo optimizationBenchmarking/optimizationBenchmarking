@@ -189,9 +189,9 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
   @Override
   public synchronized final SubFigure figure(final ILabel useLabel,
       final String path) {
-    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
+    this.fsmStateAssert(FigureSeries.STATE_CAPTION_CLOSED);
     this.m_curFig++;
-    return this.m_driver.createFigure(this, useLabel, path);
+    return this.m_driver.createSubFigure(this, useLabel, path);
   }
 
   /** {@inheritDoc} */

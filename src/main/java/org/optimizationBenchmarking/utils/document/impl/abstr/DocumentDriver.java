@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
-import org.optimizationBenchmarking.utils.document.impl.object.IObjectListener;
+import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
@@ -639,9 +639,20 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    *          relative path
    * @return the new sub-figure
    */
-  protected SubFigure createFigure(final FigureSeries owner,
+  protected SubFigure createSubFigure(final FigureSeries owner,
       final ILabel useLabel, final String path) {
     return new SubFigure(owner, useLabel, path);
+  }
+
+  /**
+   * Create a sub-figure caption
+   * 
+   * @param owner
+   *          the owner
+   * @return the new sub-figure caption
+   */
+  protected SubFigureCaption createSubFigureCaption(final SubFigure owner) {
+    return new SubFigureCaption(owner);
   }
 
   /**
