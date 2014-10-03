@@ -15,4 +15,10 @@ final class _XHTML10MathSubscript extends MathSubscript {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    // nothing
+  }
 }

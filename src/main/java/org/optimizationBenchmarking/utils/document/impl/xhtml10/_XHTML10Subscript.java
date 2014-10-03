@@ -15,4 +15,11 @@ final class _XHTML10Subscript extends Subscript {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(' ');
+  }
 }

@@ -14,4 +14,10 @@ final class _XHTML10CodeBody extends CodeBody {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.getTextOutput().append(XHTML10Driver.BR, 0, 5);
+  }
 }

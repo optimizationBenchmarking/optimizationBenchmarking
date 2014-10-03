@@ -14,4 +14,11 @@ final class _XHTML10SubFigureCaption extends SubFigureCaption {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(' ');
+  }
 }

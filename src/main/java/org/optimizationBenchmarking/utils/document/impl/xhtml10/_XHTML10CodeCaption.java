@@ -14,4 +14,10 @@ final class _XHTML10CodeCaption extends CodeCaption {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.getTextOutput().append(' ');
+  }
 }

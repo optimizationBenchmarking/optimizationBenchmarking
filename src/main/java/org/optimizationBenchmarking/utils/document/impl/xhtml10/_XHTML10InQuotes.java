@@ -15,4 +15,11 @@ final class _XHTML10InQuotes extends InQuotes {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(XHTML10Driver.BR);
+  }
 }

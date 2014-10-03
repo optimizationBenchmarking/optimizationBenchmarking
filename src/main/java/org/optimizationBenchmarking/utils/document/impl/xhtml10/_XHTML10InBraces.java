@@ -15,4 +15,11 @@ final class _XHTML10InBraces extends InBraces {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(XHTML10Driver.BR);
+  }
 }

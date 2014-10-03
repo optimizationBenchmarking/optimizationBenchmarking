@@ -15,4 +15,10 @@ final class _XHTML10ComplexText extends ComplexText {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.getTextOutput().append(XHTML10Driver.BR);
+  }
 }

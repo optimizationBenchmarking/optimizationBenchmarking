@@ -115,6 +115,11 @@ public final class XHTML10Driver extends DocumentDriver {
   /** non-breaking space */
   static final char[] NBSP = { '&', 'n', 'b', 's', 'p', ';' };
 
+  /** the br */
+  static final char[] BR = { '<', 'b', 'r', '/', '>', '&', 'n', 'b', 's',
+      'p', ';', '&', 'n', 'b', 's', 'p', ';', '&', 'n', 'b', 's', 'p',
+      ';', '&', 'n', 'b', 's', 'p', ';' };
+
   /** the synchronizer */
   private static final Object SYNCH = new Object();
 

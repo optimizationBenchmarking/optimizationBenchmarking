@@ -50,4 +50,11 @@ final class _XHTML10InlineCode extends InlineCode {
 
     super.onClose();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(' ');
+  }
 }

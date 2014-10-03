@@ -33,4 +33,11 @@ final class _XHTML10ItemizationItem extends ItemizationItem {
     this.getTextOutput().append(_XHTML10ItemizationItem.IL_END);
     super.onClose();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(XHTML10Driver.BR);
+  }
 }

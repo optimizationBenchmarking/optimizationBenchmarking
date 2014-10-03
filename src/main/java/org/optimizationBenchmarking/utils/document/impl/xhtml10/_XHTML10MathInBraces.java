@@ -15,4 +15,10 @@ final class _XHTML10MathInBraces extends MathInBraces {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    // nothing
+  }
 }

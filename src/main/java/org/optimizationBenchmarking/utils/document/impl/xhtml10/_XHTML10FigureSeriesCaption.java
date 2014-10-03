@@ -14,4 +14,11 @@ final class _XHTML10FigureSeriesCaption extends FigureSeriesCaption {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(' ');
+  }
 }

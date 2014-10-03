@@ -20,4 +20,10 @@ final class _XHTML10Equation extends Equation {
     super(owner, useLabel, index);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    // nothing
+  }
 }

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
@@ -16,6 +17,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
@@ -31,9 +33,14 @@ import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
+import org.optimizationBenchmarking.utils.graphics.style.IStyle;
+import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
+import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.color.DefaultColorPalette;
+import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.math.random.Randomizer;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 
 import examples.org.optimizationBenchmarking.LoremIpsum;
 import examples.org.optimizationBenchmarking.utils.graphics.FinishedPrinter;
@@ -157,12 +164,38 @@ public class DocumentExample {
    *          the section container
    * @param rand
    *          the randomizer
+   * @param fonts
+   *          the fonts
+   * @param colors
+   *          the colors
    */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   private static final void __createSection(final ISectionContainer sc,
-      final Randomizer rand) {
+      final Randomizer rand, final ArrayList<FontStyle> fonts,
+      final ArrayList<ColorStyle> colors) {
     boolean nb, hs;
+    StyleSet ss;
+    IStyle sx;
+    ArrayList<IStyle> list;
 
     try (final ISection section = sc.section(null)) {
+
+      ss = section.getStyles();
+      findFonts: for (;;) {
+        final List<FontStyle> s = ss.allocateFonts(1);
+        if (s == null) {
+          break findFonts;
+        }
+        fonts.addAll(s);
+      }
+      findColors: for (;;) {
+        final List<ColorStyle> s = ss.allocateColors(1);
+        if (s == null) {
+          break findColors;
+        }
+        colors.addAll(s);
+      }
+
       try (final IText title = section.title()) {
         title.append("The ");//$NON-NLS-1$
 
@@ -193,7 +226,7 @@ public class DocumentExample {
           }
 
           if (rand.nextBoolean()) {
-            DocumentExample.__createSection(b, rand);
+            DocumentExample.__createSection(b, rand, fonts, colors);
             nb = false;
             hs = true;
           }
@@ -223,6 +256,7 @@ public class DocumentExample {
                 b.appendLineBreak();
               }
               LoremIpsum.appendLoremIpsum(b, rand, null);
+              nb = true;
             }
 
             if (rand.nextBoolean()) {
@@ -235,6 +269,22 @@ public class DocumentExample {
                 b.appendLineBreak();
               }
               LoremIpsum.appendLoremIpsum(b, rand, null);
+              nb = true;
+            }
+
+            if (rand.nextBoolean()) {
+              if (nb) {
+                b.appendLineBreak();
+              }
+              list = (ArrayList) (rand.nextBoolean() ? fonts : colors);
+              try (final IComplexText ct = b.style(sx = list.get(rand
+                  .nextInt(list.size())))) {
+                sx.appendDescription(ETextCase.AT_SENTENCE_START, ct,
+                    false);
+                ct.append(' ');
+                LoremIpsum.appendLoremIpsum(ct, rand, null);
+              }
+              nb = true;
             }
 
             if (rand.nextBoolean()) {
@@ -263,6 +313,7 @@ public class DocumentExample {
               b.appendLineBreak();
             }
             LoremIpsum.appendLoremIpsum(b, rand, null);
+            nb = true;
           }
         } while (rand.nextBoolean());
       }
@@ -560,7 +611,8 @@ public class DocumentExample {
    */
   private static final void __createBody(final IDocumentBody body,
       final Randomizer rand) {
-    DocumentExample.__createSection(body, rand);
+    DocumentExample.__createSection(body, rand,
+        new ArrayList<FontStyle>(), new ArrayList<ColorStyle>());
   }
 
   /**

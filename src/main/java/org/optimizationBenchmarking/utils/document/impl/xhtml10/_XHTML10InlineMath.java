@@ -15,4 +15,10 @@ final class _XHTML10InlineMath extends InlineMath {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    // nothing
+  }
 }

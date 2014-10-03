@@ -50,4 +50,11 @@ final class _XHTML10Emphasize extends Emphasize {
 
     super.onClose();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(XHTML10Driver.BR);
+  }
 }

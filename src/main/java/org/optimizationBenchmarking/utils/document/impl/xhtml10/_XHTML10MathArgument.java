@@ -14,4 +14,10 @@ final class _XHTML10MathArgument extends MathArgument {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    // nothing
+  }
 }

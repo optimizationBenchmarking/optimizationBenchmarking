@@ -22,4 +22,11 @@ final class _XHTML10TableBodyCell extends TableBodyCell {
     super(owner, cols, rows, def);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(XHTML10Driver.BR);
+  }
 }
