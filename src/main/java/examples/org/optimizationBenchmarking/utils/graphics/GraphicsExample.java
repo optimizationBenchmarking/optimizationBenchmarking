@@ -72,7 +72,7 @@ public final class GraphicsExample {
           GraphicsExample.class.getSimpleName(), GraphicsExample.SIZE,
           listener)) {
         for (int i = 1; i < 50; i++) {
-          GraphicsExample.paint(g);
+          GraphicsExample.__paint(g);
           GraphicsExample.__paintComponent(g);
           g.translate(-75, -25);
           g.scale(0.55d, 0.5d);
@@ -119,7 +119,7 @@ public final class GraphicsExample {
    * @param g
    *          the graphic
    */
-  public static final void paint(final Graphic g) {
+  private static final void __paint(final Graphic g) {
     final Rectangle2D bounds;
     int i;
     Rectangle2D r;

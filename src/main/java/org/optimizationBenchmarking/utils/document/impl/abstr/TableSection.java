@@ -18,6 +18,9 @@ public abstract class TableSection extends DocumentPart implements
   /** the links between cell index and definitions */
   final int[] m_cellToDef;
 
+  /** should we print a separator */
+  private boolean m_separator;
+
   /**
    * Create a table section
    * 
@@ -121,4 +124,22 @@ public abstract class TableSection extends DocumentPart implements
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public synchronized void separator() {
+    this.m_separator = true;
+  }
+
+  /**
+   * Get (and clear) the separator flag
+   * 
+   * @return {@code true} if a separator should be printed, {@code false}
+   *         otherwise
+   */
+  protected synchronized final boolean shouldPrintSeparator() {
+    final boolean ret;
+    ret = this.m_separator;
+    this.m_separator = false;
+    return ret;
+  }
 }

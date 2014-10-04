@@ -277,7 +277,7 @@ public class ExampleDocument {
 
     if (canLorem && (rand.nextInt(4) <= 0)) {
       sb.clear();
-      LoremIpsum.appendLoremIpsum(sb, rand, null);
+      LoremIpsum.appendLoremIpsum(sb, rand);
       s = sb.toString();
       sb.clear();
     } else {

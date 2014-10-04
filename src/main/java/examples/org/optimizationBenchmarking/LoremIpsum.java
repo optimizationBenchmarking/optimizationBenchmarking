@@ -3,7 +3,6 @@ package examples.org.optimizationBenchmarking;
 import java.util.Random;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -230,54 +229,54 @@ public final class LoremIpsum {
    *          the output
    * @param rand
    *          the randomizer
-   * @param includeMark
-   *          a string to sometimes to be weaved in randomly
    */
   public static final void appendLoremIpsum(final ITextOutput out,
-      final Random rand, final String includeMark) {
-    final String im;
-    boolean first, cannotQuit;
-    String s;
-    int i;
+      final Random rand) {
+    LoremIpsum.appendLoremIpsum(out, rand, Integer.MAX_VALUE);
+  }
 
-    if (includeMark != null) {
-      im = includeMark;
-    } else {
-      im = LoremIpsum.TEXT[rand.nextInt(LoremIpsum.TEXT.length)];
+  /**
+   * Append some random lorem ipsum
+   * 
+   * @param out
+   *          the output
+   * @param rand
+   *          the randomizer
+   * @param maxLength
+   *          the maximum length of the lorem ipsum
+   */
+  public static final void appendLoremIpsum(final ITextOutput out,
+      final Random rand, final int maxLength) {
+    boolean firstText, newSentence;
+    int count;
+    String s;
+
+    if (maxLength <= 0) {
+      return;
     }
 
+    firstText = newSentence = true;
+    count = 0;
     do {
-      first = true;
-      out.append(TextUtils.LINE_SEPARATOR);
+      newSentence = true;
+      if (firstText) {
+        firstText = false;
+      } else {
+        out.append(' ');
+      }
 
       do {
-        cannotQuit = false;
-
-        i = rand.nextInt(LoremIpsum.TEXT.length + (first ? 1 : 2));
-
-        if (i < LoremIpsum.TEXT.length) {
-          s = LoremIpsum.TEXT[rand.nextInt(LoremIpsum.TEXT.length)];
-          if (first) {
-            out.append(Character.toUpperCase(s.charAt(0)));
-            s = s.substring(1);
-          } else {
-            out.append(' ');
-          }
-          out.append(s);
+        s = LoremIpsum.TEXT[rand.nextInt(LoremIpsum.TEXT.length)];
+        if (newSentence) {
+          out.append(Character.toUpperCase(s.charAt(0)));
+          s = s.substring(1);
+          newSentence = false;
         } else {
-          if (i == LoremIpsum.TEXT.length) {
-            if (!first) {
-              out.append(' ');
-            }
-            out.append(im);
-          } else {
-            out.append(',');
-            cannotQuit = true;
-          }
+          out.append(' ');
         }
+        out.append(s);
 
-        first = false;
-      } while (cannotQuit || (rand.nextInt(10) > 0));
+      } while (((++count) < maxLength) && (rand.nextInt(10) > 0));
       out.append('.');
     } while (rand.nextBoolean());
   }

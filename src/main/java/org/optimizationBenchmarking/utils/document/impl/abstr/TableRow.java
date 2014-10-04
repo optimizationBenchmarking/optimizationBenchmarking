@@ -43,6 +43,16 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
   }
 
   /**
+   * Get (and clear) the separator flag
+   * 
+   * @return {@code true} if a separator should be printed, {@code false}
+   *         otherwise
+   */
+  protected final boolean shouldPrintSeparator() {
+    return this.getOwner().shouldPrintSeparator();
+  }
+
+  /**
    * Get the index of this row within its section (1-based)
    * 
    * @return the index of this row within its section

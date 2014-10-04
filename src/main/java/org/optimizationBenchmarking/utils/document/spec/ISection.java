@@ -3,7 +3,8 @@ package org.optimizationBenchmarking.utils.document.spec;
 import org.optimizationBenchmarking.utils.graphics.style.IStyleProvider;
 
 /** A section. */
-public interface ISection extends IDocumentPart, IStyleProvider {
+public interface ISection extends IDocumentPart, IStyleProvider,
+    ILabeledObject {
 
   /**
    * Write the section title

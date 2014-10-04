@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.spec;
 /**
  * A table.
  */
-public interface ITable extends IDocumentPart {
+public interface ITable extends IDocumentPart, ILabeledObject {
 
   /**
    * Write the table caption

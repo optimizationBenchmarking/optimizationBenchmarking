@@ -56,7 +56,8 @@ public class ParallelSectionTask extends RecursiveAction {
     this.m_root.append(this.m_sectionIndex);
     this.m_root.append(" ==="); //$NON-NLS-1$
 
-    LoremIpsum.appendLoremIpsum(this.m_root, r, this.m_sectionIndex);
+    this.m_root.appendLineBreak();
+    LoremIpsum.appendLoremIpsum(this.m_root, r);
 
     childCount = 0;
     while (r.nextBoolean() && (childCount < 5)) {
@@ -78,7 +79,8 @@ public class ParallelSectionTask extends RecursiveAction {
         ErrorUtils.throwAsRuntimeException(tx);
       }
 
-      LoremIpsum.appendLoremIpsum(this.m_root, r, this.m_sectionIndex);
+      this.m_root.appendLineBreak();
+      LoremIpsum.appendLoremIpsum(this.m_root, r);
     }
 
     this.m_root.append(TextUtils.LINE_SEPARATOR);

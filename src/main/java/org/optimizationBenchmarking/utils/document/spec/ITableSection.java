@@ -12,4 +12,7 @@ public interface ITableSection extends IDocumentPart {
    */
   public abstract ITableRow row();
 
+  /** Print a row separator. */
+  public abstract void separator();
+
 }

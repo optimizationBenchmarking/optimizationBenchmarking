@@ -90,6 +90,6 @@ public interface ISectionBody extends IStructuredText, ISectionContainer {
    *          component should not be labeled
    * @return the maths context to write the equation to
    */
-  public abstract IMath equation(final ILabel useLabel);
+  public abstract IEquation equation(final ILabel useLabel);
 
 }

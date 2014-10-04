@@ -86,6 +86,53 @@ final class _XHTML10Document extends Document {
       ' ', 'r', 'e', 'l', '=', '"', 's', 't', 'y', 'l', 'e', 's', 'h',
       'e', 'e', 't', '"', ' ', 'm', 'e', 'd', 'i', 'a', '=', '"', 'p',
       'r', 'i', 'n', 't', '"', ' ', 'h', 'r', 'e', 'f', '=', '"', };
+  /** the font size */
+  private static final char[] FONT_SIZE = { 'f', 'o', 'n', 't', '-', 's',
+      'i', 'z', 'e', ':' };
+  /** the font family */
+  private static final char[] FONT_FAMILY = { 'f', 'o', 'n', 't', '-',
+      'f', 'a', 'm', 'i', 'l', 'y', ':' };
+  /** the font variant */
+  private static final char[] FONT_VARIANT = { 'f', 'o', 'n', 't', '-',
+      'v', 'a', 'r', 'i', 'a', 'n', 't', ':', 'n', 'o', 'r', 'm', 'a',
+      'l', ';' };
+  /** the font transform */
+  private static final char[] FONT_TRANSFORM = { 't', 'e', 'x', 't', '-',
+      't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', ':', 'n', 'o', 'n',
+      'e', ';' };
+  /** the weight bold */
+  private static final char[] FONT_WEIGHT_BOLD = { 'f', 'o', 'n', 't',
+      '-', 'w', 'e', 'i', 'g', 'h', 't', ':', 'b', 'o', 'l', 'd', ';' };
+  /** the weight normal */
+  private static final char[] FONT_WEIGHT_NORMAL = { 'f', 'o', 'n', 't',
+      '-', 'w', 'e', 'i', 'g', 'h', 't', ':', 'n', 'o', 'r', 'm', 'a',
+      'l', ';' };
+  /** the weight inherit */
+  private static final char[] FONT_WEIGHT_INHERIT = { 'f', 'o', 'n', 't',
+      '-', 'w', 'e', 'i', 'g', 'h', 't', ':', 'i', 'n', 'h', 'e', 'r',
+      'i', 't', ';' };
+  /** the italic style */
+  private static final char[] FONT_STYLE_ITALIC = { 'f', 'o', 'n', 't',
+      '-', 's', 't', 'y', 'l', 'e', ':', 'i', 't', 'a', 'l', 'i', 'c', ';' };
+  /** the normal style */
+  private static final char[] FONT_STYLE_NORMAL = { 'f', 'o', 'n', 't',
+      '-', 's', 't', 'y', 'l', 'e', ':', 'n', 'o', 'r', 'm', 'a', 'l', ';' };
+  /** the inherit style */
+  private static final char[] FONT_STYLE_INHERIT = { 'f', 'o', 'n', 't',
+      '-', 's', 't', 'y', 'l', 'e', ':', 'i', 'n', 'h', 'e', 'r', 'i',
+      't', ';' };
+  /** the underline decoration */
+  private static final char[] FONT_DEC_UNDERLINE = { 't', 'e', 'x', 't',
+      '-', 'd', 'e', 'c', 'o', 'r', 'a', 't', 'i', 'o', 'n', ':', 'u',
+      'n', 'd', 'e', 'r', 'l', 'i', 'n', 'e', ';' };
+  /** the normal decoration */
+  private static final char[] FONT_DEC_NORMAL = { 't', 'e', 'x', 't', '-',
+      'd', 'e', 'c', 'o', 'r', 'a', 't', 'i', 'o', 'n', ':', 'n', 'o',
+      'r', 'm', 'a', 'l', ';' };
+  /** the inherited decoration */
+  private static final char[] FONT_DEC_INHERIT = { 't', 'e', 'x', 't',
+      '-', 'd', 'e', 'c', 'o', 'r', 'a', 't', 'i', 'o', 'n', ':', 'i',
+      'n', 'h', 'e', 'r', 'i', 't', ';' };
 
   /**
    * Create a document.
@@ -221,13 +268,13 @@ final class _XHTML10Document extends Document {
 
     if (isDefault && useSize) {
       bw.newLine();
-      bw.write("font-size:"); //$NON-NLS-1$
+      bw.write(_XHTML10Document.FONT_SIZE);
       bw.write(Integer.toString(fs.getSize()));
       bw.write(';');
     }
 
     bw.newLine();
-    bw.write("font-family:"); //$NON-NLS-1$
+    bw.write(_XHTML10Document.FONT_FAMILY);
     first = true;
     for (final String s : fs.getFaceChoices()) {
       if (first) {
@@ -242,25 +289,25 @@ final class _XHTML10Document extends Document {
     bw.write(';');
 
     bw.newLine();
-    bw.write("font-variant:normal;");//$NON-NLS-1$
+    bw.write(_XHTML10Document.FONT_VARIANT);
 
     bw.newLine();
-    bw.write("text-transform:none;");//$NON-NLS-1$
+    bw.write(_XHTML10Document.FONT_TRANSFORM);
 
     bw.newLine();
-    bw.write(fs.isBold() ? "font-weight:bold;" : //$NON-NLS-1$
-        (isDefault ? "font-weight:normal;" : //$NON-NLS-1$
-            "font-weight:inherit;"));//$NON-NLS-1$
+    bw.write(fs.isBold() ? _XHTML10Document.FONT_WEIGHT_BOLD
+        : (isDefault ? _XHTML10Document.FONT_WEIGHT_NORMAL
+            : _XHTML10Document.FONT_WEIGHT_INHERIT));
 
     bw.newLine();
-    bw.write(fs.isItalic() ? "font-style:italic;" : //$NON-NLS-1$
-        (isDefault ? "font-style:normal;" : //$NON-NLS-1$
-            "font-style:inherit;"));//$NON-NLS-1$
+    bw.write(fs.isItalic() ? _XHTML10Document.FONT_STYLE_ITALIC
+        : (isDefault ? _XHTML10Document.FONT_STYLE_NORMAL
+            : _XHTML10Document.FONT_STYLE_INHERIT));
 
     bw.newLine();
-    bw.write(fs.isUnderlined() ? "text-decoration:underlined;" : //$NON-NLS-1$
-        (isDefault ? "text-decoration:normal;" : //$NON-NLS-1$
-            "text-decoration:inherit;"));//$NON-NLS-1$
+    bw.write(fs.isUnderlined() ? _XHTML10Document.FONT_DEC_UNDERLINE
+        : (isDefault ? _XHTML10Document.FONT_DEC_NORMAL
+            : _XHTML10Document.FONT_DEC_INHERIT));
 
     bw.newLine();
     bw.write('}');

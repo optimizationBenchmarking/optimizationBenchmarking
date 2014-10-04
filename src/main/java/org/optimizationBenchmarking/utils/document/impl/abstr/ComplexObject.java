@@ -2,12 +2,14 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
+import org.optimizationBenchmarking.utils.document.spec.ILabeledObject;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /**
  * The base class for sections, tables, and figures
  */
-public abstract class ComplexObject extends DocumentPart {
+public abstract class ComplexObject extends DocumentPart implements
+    ILabeledObject {
 
   /** the index in the owning context */
   final int m_index;
@@ -123,6 +125,7 @@ public abstract class ComplexObject extends DocumentPart {
    * 
    * @return the label of this object, or {@code null} if it has none
    */
+  @Override
   public final Label getLabel() {
     return this.m_label;
   }

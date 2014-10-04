@@ -332,7 +332,7 @@ public abstract class TextOutputTest<R> extends TestBase {
 
       case 1: {
         msb = new MemoryTextOutput();
-        LoremIpsum.appendLoremIpsum(msb, r, null);
+        LoremIpsum.appendLoremIpsum(msb, r);
         return msb.toString();
       }
 

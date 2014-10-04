@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
+import org.optimizationBenchmarking.utils.document.spec.IEquation;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 
 /**
@@ -10,7 +11,7 @@ import org.optimizationBenchmarking.utils.document.spec.ILabel;
  * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath}
  * in order to facilitate its functionality.
  */
-public class Equation extends BasicMath {
+public class Equation extends BasicMath implements IEquation {
 
   /** the index in the owning context */
   final int m_index;
@@ -80,6 +81,7 @@ public class Equation extends BasicMath {
    * 
    * @return the label of this equation, or {@code null} if it has none
    */
+  @Override
   public final Label getLabel() {
     return this.m_label;
   }
