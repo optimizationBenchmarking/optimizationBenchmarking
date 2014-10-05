@@ -32,7 +32,11 @@ import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 import org.optimizationBenchmarking.utils.document.spec.IStructuredText;
+import org.optimizationBenchmarking.utils.document.spec.ITable;
+import org.optimizationBenchmarking.utils.document.spec.ITableRow;
+import org.optimizationBenchmarking.utils.document.spec.ITableSection;
 import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
@@ -80,9 +84,16 @@ public class DocumentExample implements Runnable {
   private static final int FIGURE = (DocumentExample.ITEMIZE + 1);
   /** figure series */
   private static final int FIGURE_SERIES = (DocumentExample.FIGURE + 1);
+  /** table */
+  private static final int TABLE = (DocumentExample.FIGURE_SERIES + 1);
 
   /** all elements */
-  private static final int ALL_LENGTH = (DocumentExample.FIGURE_SERIES + 1);
+  private static final int ALL_LENGTH = (DocumentExample.TABLE + 1);
+
+  /** the table cell defs */
+  private static final TableCellDef[] CELLS = { TableCellDef.CENTER,
+      TableCellDef.RIGHT, TableCellDef.LEFT,
+      TableCellDef.VERTICAL_SEPARATOR };
 
   /** the randomizer */
   private final Random m_rand;
@@ -260,7 +271,7 @@ public class DocumentExample implements Runnable {
             cur = 0;
           } else {
             do {
-              cur = this.m_rand.nextInt(6);
+              cur = this.m_rand.nextInt(7);
             } while ((cur == last) || ((cur == 2) && (last == 3))
                 || ((cur == 3) && (last == 2)));
             last = cur;
@@ -281,6 +292,10 @@ public class DocumentExample implements Runnable {
             }
             case 3: {
               this.__createFigureSeries(body);
+              break;
+            }
+            case 4: {
+              this.__createTable(body);
               break;
             }
             default: {
@@ -557,6 +572,128 @@ public class DocumentExample implements Runnable {
     list.add(ss.getThickStroke());
     list.add(ss.getThinStroke());
     this.m_strokes = list.toArray(new StrokeStyle[list.size()]);
+  }
+
+  /**
+   * create a table
+   * 
+   * @param sb
+   *          the section body
+   */
+  private final void __createTable(final ISectionBody sb) {
+    final ArrayList<TableCellDef> def, pureDef;
+    final TableCellDef[] pureDefs;
+    TableCellDef d;
+    int min;
+
+    this.m_done[DocumentExample.TABLE] = true;
+
+    def = new ArrayList<>();
+    pureDef = new ArrayList<>();
+    min = (this.m_rand.nextInt(3) + 1);
+    do {
+      d = DocumentExample.CELLS[this.m_rand
+          .nextInt(DocumentExample.CELLS.length)];
+      def.add(d);
+      if (d != TableCellDef.VERTICAL_SEPARATOR) {
+        pureDef.add(d);
+      }
+    } while ((pureDef.size() < min) || this.m_rand.nextBoolean());
+    pureDefs = pureDef.toArray(new TableCellDef[pureDef.size()]);
+
+    try (final ITable tab = sb.table(ELabelType.AUTO,
+        this.m_rand.nextBoolean(),
+        def.toArray(new TableCellDef[def.size()]))) {
+      try (final IText cap = tab.caption()) {
+        LoremIpsum.appendLoremIpsum(cap, this.m_rand,
+            this.m_rand.nextInt(10) + 10);
+      }
+      try (final ITableSection s = tab.header()) {
+        this.__makeTableSection(s, pureDefs, 1, 3);
+      }
+      try (final ITableSection s = tab.body()) {
+        this.__makeTableSection(s, pureDefs, 2, 1000);
+      }
+      try (final ITableSection s = tab.footer()) {
+        this.__makeTableSection(s, pureDefs, 0, 3);
+      }
+    }
+  }
+
+  /**
+   * make a table section
+   * 
+   * @param sec
+   *          the section
+   * @param cells
+   *          the cells
+   * @param minRows
+   *          the minimum number of rows
+   * @param maxRows
+   *          the maximum number of rows
+   */
+  private final void __makeTableSection(final ITableSection sec,
+      final TableCellDef[] cells, final int minRows, final int maxRows) {
+    int rows, neededRows, i, maxX, maxY;
+    int[] blocked;
+    TableCellDef d;
+
+    neededRows = minRows;
+    rows = 0;
+    blocked = new int[cells.length];
+    while ((rows < maxRows)
+        && ((rows < neededRows) || (this.m_rand.nextInt(4) > 0))) {
+      try (final ITableRow row = sec.row()) {
+        rows++;
+        for (i = 0; i < cells.length; i++) {
+
+          if (blocked[i] < rows) {
+            if (this.m_rand.nextInt(7) <= 0) {
+              findMaxX: for (maxX = i; (++maxX) < cells.length;) {
+                if (blocked[maxX] >= rows) {
+                  break findMaxX;
+                }
+              }
+
+              maxX = ((i + this.m_rand.nextInt(maxX - i)) + 1);
+            } else {
+              maxX = (i + 1);
+            }
+
+            if (this.m_rand.nextInt(7) <= 0) {
+              maxY = (rows + 1 + this.m_rand.nextInt(Math.min(5,
+                  ((maxRows - rows) + 1))));
+            } else {
+              maxY = (rows + 1);
+            }
+
+            Arrays.fill(blocked, i, maxX, (maxY - 1));
+            neededRows = Math.max(neededRows, (maxY - 1));
+
+            if ((maxX <= (i + 1)) && (maxY <= (rows + 1))) {
+              try (final IText cell = row.cell()) {
+                cell.append(RandomUtils.longToObject(
+                    this.m_rand.nextLong(), true));
+              }
+            } else {
+              do {
+                d = DocumentExample.CELLS[this.m_rand
+                    .nextInt(DocumentExample.CELLS.length)];
+              } while (d == TableCellDef.VERTICAL_SEPARATOR);
+              try (final IText cell = row.cell((maxX - i), (maxY - rows),
+                  d)) {
+                if (this.m_rand.nextBoolean()) {
+                  cell.append(d);
+                } else {
+                  cell.append(RandomUtils.longToObject(
+                      this.m_rand.nextLong(), true));
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   /**

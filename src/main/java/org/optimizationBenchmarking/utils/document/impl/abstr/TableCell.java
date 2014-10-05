@@ -69,12 +69,17 @@ public class TableCell extends ComplexText implements
     r = owner.m_index;
     blocked = ts.m_blocked;
 
-    while (blocked[sc] >= r) {
-      sc++;
-      if (sc >= blocked.length) {
-        throw new IllegalArgumentException(//
-            "Start column of cell is outside table definition."); //$NON-NLS-1$
+    checkStart: {
+      while (sc < blocked.length) {
+        if (blocked[sc] < r) {
+          break checkStart;
+        }
+        sc++;
       }
+      throw new IllegalArgumentException(//
+          "Start column " + sc + //$NON-NLS-1$
+              " of cell is outside table definition which specifies only " //$NON-NLS-1$
+              + blocked.length + " columns.");//$NON-NLS-1$
     }
 
     ec = end = (sc + cols);
@@ -91,8 +96,9 @@ public class TableCell extends ComplexText implements
     }
 
     this.m_startRow = r;
-    r = ((r + rows) - 1);
+    r = (r + rows);
     this.m_endRow = r;
+    r--;
     Arrays.fill(blocked, sc, end, r);
     owner.m_nextCol = end;
 
@@ -118,7 +124,7 @@ public class TableCell extends ComplexText implements
           : this.m_def.length) - this.m_ofs);
       this.m_hasIrregularDefinition = false;
     }
-    this.m_startCol = (sc + 1);
+    this.m_startCol = sc;// (sc + 1);
     this.m_endCol = end;
 
   }
@@ -176,7 +182,7 @@ public class TableCell extends ComplexText implements
   }
 
   /**
-   * Get the start row index (inclusive, 1-based)
+   * Get the start row index (inclusive, 0-based)
    * 
    * @return the start row index
    * @see #getRowSpan()
@@ -187,7 +193,7 @@ public class TableCell extends ComplexText implements
   }
 
   /**
-   * Get the end row index (exclusive, 1-based)
+   * Get the end row index (exclusive, 0-based)
    * 
    * @return the end row index
    * @see #getRowSpan()
@@ -204,7 +210,8 @@ public class TableCell extends ComplexText implements
    */
   @Override
   public final ArrayIterator<TableCellDef> iterator() {
-    return new ArrayIterator<>(this.m_def, this.m_size, this.m_ofs);
+    return new ArrayIterator<>(this.m_def, (this.m_ofs + this.m_size),
+        this.m_ofs);
   }
 
   /**

@@ -112,9 +112,14 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
     final int[] b;
 
     b = this.getOwner().m_blocked;
+    while ((this.m_nextCol < b.length)
+        && (b[this.m_nextCol] >= this.m_index)) {
+      this.m_nextCol++;
+    }
     if (this.m_nextCol < b.length) {
-      throw new IllegalStateException("Row should have " + b.length + //$NON-NLS-1$
-          " cells, but has only " + this.m_nextCol); //$NON-NLS-1$
+      throw new IllegalStateException(//
+          "Row should have " + b.length + //$NON-NLS-1$
+              " cells, but has only " + this.m_nextCol); //$NON-NLS-1$
     }
     super.onClose();
   }

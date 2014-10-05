@@ -25,9 +25,10 @@ public class TableHeaderRow extends TableRow {
 
   /** {@inheritDoc} */
   @Override
-  protected TableHeaderCell createCell(final int rowSpan,
-      final int colSpan, final TableCellDef[] def) {
-    return new TableHeaderCell(this, rowSpan, colSpan, def);
+  final TableHeaderCell createCell(final int rowSpan, final int colSpan,
+      final TableCellDef[] def) {
+    return this.m_driver
+        .createTableHeaderCell(this, rowSpan, colSpan, def);
   }
 
   /** {@inheritDoc} */

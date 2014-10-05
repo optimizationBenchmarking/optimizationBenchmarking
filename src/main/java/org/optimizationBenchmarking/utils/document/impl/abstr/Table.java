@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import java.util.Arrays;
+
 import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
@@ -162,7 +164,7 @@ public class Table extends ComplexObject implements ITable,
     if (cells <= 0) {
       throw new IllegalArgumentException(//
           "Table definition cannot be empty, i.e., must contain at least one regular cell - but " //$NON-NLS-1$
-              + def + " does not."); //$NON-NLS-1$
+              + Arrays.toString(def) + " does not."); //$NON-NLS-1$
     }
 
     return cells;
@@ -250,6 +252,7 @@ public class Table extends ComplexObject implements ITable,
   public synchronized final TableBody body() {
     this.fsmStateAssertAndSet(Table.STATE_HEADER_CLOSED,
         Table.STATE_BODY_CREATED);
+    Arrays.fill(this.m_blocked, 0);
     return this.m_driver.createTableBody(this);
   }
 
@@ -258,6 +261,7 @@ public class Table extends ComplexObject implements ITable,
   public synchronized final TableFooter footer() {
     this.fsmStateAssertAndSet(Table.STATE_BODY_CLOSED,
         Table.STATE_FOOTER_CREATED);
+    Arrays.fill(this.m_blocked, 0);
     return this.m_driver.createTableFooter(this);
   }
 
@@ -279,7 +283,7 @@ public class Table extends ComplexObject implements ITable,
       return;
     }
     if (child instanceof TableBody) {
-      this.fsmStateAssertAndSet(Table.STATE_HEADER_CREATED,
+      this.fsmStateAssertAndSet(Table.STATE_BODY_CREATED,
           Table.STATE_BODY_BEFORE_OPEN);
       return;
     }
