@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
  * A text class which allows creating text with more sophisticated styles
  * in it
  */
-public class ComplexText extends Text implements IComplexText {
+public class ComplexText extends PlainText implements IComplexText {
 
   /**
    * Create a text.

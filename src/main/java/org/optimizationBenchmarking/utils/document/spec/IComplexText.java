@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
 /**
  * A document element for writing text with formatting capabilities.
  */
-public interface IComplexText extends IText {
+public interface IComplexText extends IPlainText {
 
   /**
    * Write some text in a given style. A common use case is to emphasize
@@ -18,7 +18,7 @@ public interface IComplexText extends IText {
    *          the style to be used, must have been obtained from the owning
    *          section
    * @return an instance of
-   *         {@link org.optimizationBenchmarking.utils.document.spec.IText}
+   *         {@link org.optimizationBenchmarking.utils.document.spec.IPlainText}
    *         whose text will be style.
    */
   public abstract IComplexText style(final IStyle style);
@@ -27,19 +27,19 @@ public interface IComplexText extends IText {
    * Write some subscript text.
    * 
    * @return an instance of
-   *         {@link org.optimizationBenchmarking.utils.document.spec.IText}
+   *         {@link org.optimizationBenchmarking.utils.document.spec.IPlainText}
    *         whose text will be subscript.
    */
-  public abstract IText subscript();
+  public abstract IPlainText subscript();
 
   /**
    * Write some subscript text.
    * 
    * @return an instance of
-   *         {@link org.optimizationBenchmarking.utils.document.spec.IText}
+   *         {@link org.optimizationBenchmarking.utils.document.spec.IPlainText}
    *         whose text will be subscript.
    */
-  public abstract IText superscript();
+  public abstract IPlainText superscript();
 
   /**
    * Obtain an in-line math context
@@ -53,14 +53,14 @@ public interface IComplexText extends IText {
    * 
    * @return the in-line code context
    */
-  public abstract IText inlineCode();
+  public abstract IPlainText inlineCode();
 
   /**
    * Obtain an in-line emphasize text destination
    * 
    * @return the in-line emphasize text destination
    */
-  public abstract IText emphasize();
+  public abstract IPlainText emphasize();
 
   /**
    * Cite a set of bibliographic elements.

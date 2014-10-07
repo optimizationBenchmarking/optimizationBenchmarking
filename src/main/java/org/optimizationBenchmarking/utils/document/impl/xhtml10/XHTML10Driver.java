@@ -3,21 +3,20 @@ package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
-import org.optimizationBenchmarking.utils.document.impl.abstr.CodeBody;
 import org.optimizationBenchmarking.utils.document.impl.abstr.ComplexText;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentDriver;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentPart;
-import org.optimizationBenchmarking.utils.document.impl.abstr.EMathOperators;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Enumeration;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Figure;
 import org.optimizationBenchmarking.utils.document.impl.abstr.FigureSeries;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Itemization;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Label;
-import org.optimizationBenchmarking.utils.document.impl.abstr.MathFunction;
+import org.optimizationBenchmarking.utils.document.impl.abstr.PlainText;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Section;
 import org.optimizationBenchmarking.utils.document.impl.abstr.SectionBody;
 import org.optimizationBenchmarking.utils.document.impl.abstr.StructuredText;
@@ -258,13 +257,13 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10InBraces createInBraces(final Text owner) {
+  protected final _XHTML10InBraces createInBraces(final PlainText owner) {
     return new _XHTML10InBraces(owner);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10InQuotes createInQuotes(final Text owner) {
+  protected final _XHTML10InQuotes createInQuotes(final PlainText owner) {
     return new _XHTML10InQuotes(owner);
   }
 
@@ -290,14 +289,13 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10Subscript createSubscript(final ComplexText owner) {
+  protected final _XHTML10Subscript createSubscript(final Text owner) {
     return new _XHTML10Subscript(owner);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10Superscript createSuperscript(
-      final ComplexText owner) {
+  protected final _XHTML10Superscript createSuperscript(final Text owner) {
     return new _XHTML10Superscript(owner);
   }
 
@@ -415,23 +413,143 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10MathFunction createMathFunction(
-      final BasicMath owner, final EMathOperators operator) {
-    return new _XHTML10MathFunction(owner, operator);
+  protected final _XHTML10MathAdd createMathAdd(final BasicMath owner) {
+    return new _XHTML10MathAdd(owner);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10MathSubscript createMathSubscript(
-      final BasicMath owner) {
-    return new _XHTML10MathSubscript(owner);
+  protected final _XHTML10MathSub createMathSub(final BasicMath owner) {
+    return new _XHTML10MathSub(owner);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10MathSuperscript createMathSuperscript(
+  protected final _XHTML10MathMul createMathMul(final BasicMath owner) {
+    return new _XHTML10MathMul(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathDiv createMathDiv(final BasicMath owner) {
+    return new _XHTML10MathDiv(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathDivInline createMathDivInline(
       final BasicMath owner) {
-    return new _XHTML10MathSuperscript(owner);
+    return new _XHTML10MathDivInline(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathLn createMathLn(final BasicMath owner) {
+    return new _XHTML10MathLn(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathLg createMathLg(final BasicMath owner) {
+    return new _XHTML10MathLg(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathLd createMathLd(final BasicMath owner) {
+    return new _XHTML10MathLd(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathLog createMathLog(final BasicMath owner) {
+    return new _XHTML10MathLog(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathMod createMathMod(final BasicMath owner) {
+    return new _XHTML10MathMod(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathPow createMathPow(final BasicMath owner) {
+    return new _XHTML10MathPow(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathRoot createMathRoot(final BasicMath owner) {
+    return new _XHTML10MathRoot(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathSqrt createMathSqrt(final BasicMath owner) {
+    return new _XHTML10MathSqrt(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathCompare createMathCompare(
+      final BasicMath owner, final EComparison comp) {
+    return new _XHTML10MathCompare(owner, comp);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathNegate createMathNegate(final BasicMath owner) {
+    return new _XHTML10MathNegate(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathAbs createMathAbsolute(final BasicMath owner) {
+    return new _XHTML10MathAbs(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathFactorial createMathFactorial(
+      final BasicMath owner) {
+    return new _XHTML10MathFactorial(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathSin createMathSin(final BasicMath owner) {
+    return new _XHTML10MathSin(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathCos createMathCos(final BasicMath owner) {
+    return new _XHTML10MathCos(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathTan createMathTan(final BasicMath owner) {
+    return new _XHTML10MathTan(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathNumber createMathNumber(final BasicMath owner) {
+    return new _XHTML10MathNumber(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathName createMathName(final BasicMath owner) {
+    return new _XHTML10MathName(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathText createMathText(final BasicMath owner) {
+    return new _XHTML10MathText(owner);
   }
 
   /** {@inheritDoc} */
@@ -462,13 +580,6 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10CodeInBraces createCodeInBraces(
-      final CodeBody owner) {
-    return new _XHTML10CodeInBraces((_XHTML10CodeBody) owner);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   protected final _XHTML10FigureSeriesCaption createFigureSeriesCaption(
       final FigureSeries owner) {
     return new _XHTML10FigureSeriesCaption((_XHTML10FigureSeries) owner);
@@ -487,13 +598,6 @@ public final class XHTML10Driver extends DocumentDriver {
   protected final _XHTML10SubFigureCaption createSubFigureCaption(
       final SubFigure owner) {
     return new _XHTML10SubFigureCaption((_XHTML10SubFigure) owner);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final _XHTML10MathArgument createMathArgument(
-      final MathFunction owner) {
-    return new _XHTML10MathArgument((_XHTML10MathFunction) owner);
   }
 
   /** {@inheritDoc} */

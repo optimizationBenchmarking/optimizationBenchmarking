@@ -183,7 +183,7 @@ public final class GraphicsExample {
         Font.PLAIN, ((int) (0.5d + ELength.MM.convertTo(
             (bounds.getHeight() / 10d), ELength.MM)))));
     g.setColor(Color.YELLOW);
-    g.drawString("Text with 1/10th of a line hight",//$NON-NLS-1$
+    g.drawString("PlainText with 1/10th of a line hight",//$NON-NLS-1$
         (0.5d + (bounds.getX() + ((bounds.getHeight() / 10)))),//
         (0.5d + (bounds.getY() + (((3d * bounds.getHeight()) / 10d)))));
 

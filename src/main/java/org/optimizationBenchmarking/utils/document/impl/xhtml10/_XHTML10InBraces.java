@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.InBraces;
-import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
+import org.optimizationBenchmarking.utils.document.impl.abstr.PlainText;
 
 /** an in-braces element of a section in a XHTML document */
 final class _XHTML10InBraces extends InBraces {
@@ -11,7 +11,7 @@ final class _XHTML10InBraces extends InBraces {
    * @param owner
    *          the owner
    */
-  _XHTML10InBraces(final Text owner) {
+  _XHTML10InBraces(final PlainText owner) {
     super(owner);
     this.open();
   }

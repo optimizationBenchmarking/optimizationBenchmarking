@@ -3,7 +3,6 @@ package examples.org.optimizationBenchmarking.utils.document;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,11 +10,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
@@ -24,10 +27,14 @@ import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
+import org.optimizationBenchmarking.utils.document.spec.IEquation;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.IFigureSeries;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
+import org.optimizationBenchmarking.utils.document.spec.ILabeledElement;
 import org.optimizationBenchmarking.utils.document.spec.IList;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
@@ -54,7 +61,12 @@ import examples.org.optimizationBenchmarking.utils.graphics.FinishedPrinter;
 
 /**
  * An example used to illustrate how documents can be created with the
- * document output API.
+ * document output API in parallel. The creation of each of the (nested)
+ * sections is launched as a separate
+ * {@link java.util.concurrent.RecursiveAction ForkJoinTask}. Several
+ * different document drivers are used in parallel to generate documents.
+ * Each document is entirely random and contains examples for all of the
+ * available primitives of the API.
  */
 public class DocumentExample implements Runnable {
 
@@ -86,14 +98,21 @@ public class DocumentExample implements Runnable {
   private static final int FIGURE_SERIES = (DocumentExample.FIGURE + 1);
   /** table */
   private static final int TABLE = (DocumentExample.FIGURE_SERIES + 1);
+  /** equation */
+  private static final int EQUATION = (DocumentExample.TABLE + 1);
+  /** inline math */
+  private static final int INLINE_MATH = (DocumentExample.EQUATION + 1);
 
   /** all elements */
-  private static final int ALL_LENGTH = (DocumentExample.TABLE + 1);
+  private static final int ALL_LENGTH = (DocumentExample.INLINE_MATH + 1);
 
   /** the table cell defs */
   private static final TableCellDef[] CELLS = { TableCellDef.CENTER,
       TableCellDef.RIGHT, TableCellDef.LEFT,
       TableCellDef.VERTICAL_SEPARATOR };
+
+  /** the comparison */
+  private static final EComparison[] COMP = EComparison.values();
 
   /** the randomizer */
   private final Random m_rand;
@@ -108,19 +127,10 @@ public class DocumentExample implements Runnable {
   private ColorStyle[] m_colors;
 
   /** the strokes */
-  StrokeStyle[] m_strokes;
-
-  /** the section depth */
-  private int m_sectionDepth;
+  private StrokeStyle[] m_strokes;
 
   /** the maximum achieved section depth */
-  private int m_maxSectionDepth;
-
-  /** are we inside the footer? */
-  boolean m_inFooter;
-
-  /** do we need a line break? */
-  private boolean m_needsNewLine;
+  private volatile int m_maxSectionDepth;
 
   /** the elements which have been done */
   private final boolean[] m_done;
@@ -128,22 +138,20 @@ public class DocumentExample implements Runnable {
   /** the labels */
   private final ArrayList<ILabel> m_labels;
 
-  /** the list depth */
-  private int m_listDepth;
-
   /** the figure counter */
-  private long m_figureCounter;
+  private volatile long m_figureCounter;
 
   /**
    * run the example: there are problems with the pdf output
    * 
    * @param args
    *          the arguments
-   * @throws IOException
-   *           if i/o fails
+   * @throws Throwable
+   *           if isomething fails
    */
-  public static final void main(final String[] args) throws IOException {
+  public static final void main(final String[] args) throws Throwable {
     final Path dir;
+    final ForkJoinPool pool;
     String last, cur;
     int i;
 
@@ -155,6 +163,8 @@ public class DocumentExample implements Runnable {
 
     i = 0;
     cur = null;
+    pool = new ForkJoinPool();
+
     for (final IDocumentDriver driver : DocumentExample.DRIVERS) {//
       last = cur;
       cur = driver.getClass().getSimpleName();
@@ -164,14 +174,62 @@ public class DocumentExample implements Runnable {
       }
       i++;
 
-      try (final IDocument doc = driver.createDocument(
+      pool.execute(new DocumentExample(driver.createDocument(
           dir.resolve((cur + '_') + i), "report",//$NON-NLS-1$ 
-          new FinishedPrinter())) {
-        new DocumentExample(doc).run();
-      } catch (final Throwable t) {
-        t.printStackTrace();
+          new FinishedPrinter())));
+    }
+
+    pool.shutdown();
+    pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+  }
+
+  /**
+   * mark a thing as done
+   * 
+   * @param index
+   *          the index
+   */
+  private final void __do(final int index) {
+    this.m_done[index] = true;
+  }
+
+  /**
+   * note a label
+   * 
+   * @param e
+   *          the labeled element
+   */
+  private final void __label(final ILabeledElement e) {
+    final ILabel l;
+    if (e != null) {
+      l = e.getLabel();
+      if (l != null) {
+        synchronized (this.m_labels) {
+          this.m_labels.add(l);
+        }
       }
     }
+  }
+
+  /**
+   * note the maximum section depth
+   * 
+   * @param i
+   *          the value
+   */
+  private synchronized final void __maxSecDepth(final int i) {
+    if (i > this.m_maxSectionDepth) {
+      this.m_maxSectionDepth = i;
+    }
+  }
+
+  /**
+   * get the next figure
+   * 
+   * @return the next figure
+   */
+  private synchronized final long __nextFigure() {
+    return (this.m_figureCounter++);
   }
 
   /**
@@ -183,7 +241,7 @@ public class DocumentExample implements Runnable {
   private final void __createHeader(final IDocumentHeader header) {
     boolean first;
 
-    try (final IText t = header.title()) {
+    try (final IPlainText t = header.title()) {
       t.append("Report Created by Driver "); //$NON-NLS-1$
       t.append(this.m_doc.getClass().getSimpleName());
     }
@@ -204,7 +262,7 @@ public class DocumentExample implements Runnable {
     }
 
     first = true;
-    try (final IText t = header.summary()) {
+    try (final IPlainText t = header.summary()) {
       do {
         if (first) {
           first = false;
@@ -235,43 +293,38 @@ public class DocumentExample implements Runnable {
    * 
    * @param sc
    *          the section container
-   * @return {@code true} if a section was created, {@code false} otherwise
+   * @param sectionDepth
+   *          the section depth
    */
-  private final boolean __createSection(final ISectionContainer sc) {
-    ILabel l;
-    boolean hasSection, hasText;
+  final void _createSection(final ISectionContainer sc,
+      final int sectionDepth) {
+    boolean hasSection, hasText, needsNewLine;
     int cur, last;
-
-    if (this.m_sectionDepth > 5) {
-      return false;
-    }
+    ArrayList<Future<Void>> ra;
 
     hasText = hasSection = false;
 
-    this.m_done[DocumentExample.SECTION] = true;
-    this.m_needsNewLine = false;
-    this.m_maxSectionDepth = Math.max(this.m_maxSectionDepth,
-        (++this.m_sectionDepth));
+    this.__do(DocumentExample.SECTION);
+    needsNewLine = false;
+    this.__maxSecDepth(sectionDepth + 1);
     cur = last = (-1);
+    ra = null;
 
     try (final ISection section = sc.section(ELabelType.AUTO)) {
-      l = section.getLabel();
-      if (l != null) {
-        this.m_labels.add(l);
-      }
+      this.__label(section);
 
-      try (final IText title = section.title()) {
+      try (final IPlainText title = section.title()) {
         LoremIpsum.appendLoremIpsum(title, this.m_rand, 8);
       }
 
       try (final ISectionBody body = section.body()) {
-        this.m_needsNewLine = false;
+        needsNewLine = false;
         do {
           if (hasSection) {
             cur = 0;
           } else {
             do {
-              cur = this.m_rand.nextInt(7);
+              cur = this.m_rand.nextInt(8);
             } while ((cur == last) || ((cur == 2) && (last == 3))
                 || ((cur == 3) && (last == 2)));
             last = cur;
@@ -279,38 +332,62 @@ public class DocumentExample implements Runnable {
 
           switch (cur) {
             case 0: {
-              hasSection = this.__createSection(body);
+              if (sectionDepth > 4) {
+                break;
+              }
+              hasSection = true;
+              if (ra == null) {
+                ra = new ArrayList<>();
+              }
+              ra.add(new _SectionTask(this, body, (sectionDepth + 1))
+                  .fork());
+              needsNewLine = true;
               break;
             }
             case 1: {
-              this.__createList(body);
+              this.__createList(body, 0);
+              needsNewLine = false;
               break;
             }
             case 2: {
               this.__createFigure(body);
+              needsNewLine = true;
               break;
             }
             case 3: {
               this.__createFigureSeries(body);
+              needsNewLine = true;
               break;
             }
             case 4: {
               this.__createTable(body);
+              needsNewLine = true;
+              break;
+            }
+            case 5: {
+              this.__createEquation(body);
+              needsNewLine = false;
               break;
             }
             default: {
-              this.__text(body, 0);
-              hasText = true;
+              this.__text(body, 0, needsNewLine);
+              needsNewLine = hasText = true;
               break;
             }
           }
         } while ((!(hasText || hasSection)) || this.m_rand.nextBoolean());
-      }
-    } finally {
-      this.m_sectionDepth--;
-    }
 
-    return true;
+        if (ra != null) {
+          for (final Future<Void> f : ra) {
+            try {
+              f.get();
+            } catch (final Throwable tt) {
+              tt.printStackTrace();
+            }
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -320,101 +397,104 @@ public class DocumentExample implements Runnable {
    *          the text output
    * @param depth
    *          the depth
+   * @param needsNewLine
+   *          needs a new line?
    */
-  private final void __text(final ITextOutput out, final int depth) {
+  private final void __text(final ITextOutput out, final int depth,
+      final boolean needsNewLine) {
     boolean first, must, needs;
     IStyle s;
 
     first = true;
-    must = this.m_needsNewLine;
-    this.m_needsNewLine = true;
+    must = needsNewLine;
     needs = false;
 
-    try {
-      do {
-        spacer: {
-          if (first) {
-            if ((depth <= 0) && must) {
-              out.appendLineBreak();
-            }
-            break spacer;
-          }
-          if (this.m_rand.nextBoolean()) {
-            out.append(' ');
-          } else {
+    do {
+      spacer: {
+        if (first) {
+          if ((depth <= 0) && must) {
             out.appendLineBreak();
           }
+          break spacer;
         }
-        first = false;
-
-        LoremIpsum.appendLoremIpsum(out, this.m_rand);
-        this.m_done[DocumentExample.NORMAL_TEXT] = true;
-
-        if ((out instanceof IText) && (depth < 10)) {
-
-          switch (this.m_rand.nextInt((out instanceof IComplexText) ? 5
-              : 3)) {
-            case 1: {
-              out.append(' ');
-              try (final IText t = ((IText) out).inBraces()) {
-                this.__text(t, (depth + 1));
-                this.m_done[DocumentExample.IN_BRACES] = true;
-              }
-              break;
-            }
-            case 2: {
-              out.append(' ');
-              try (final IText t = ((IText) out).inQuotes()) {
-                this.__text(t, (depth + 1));
-                this.m_done[DocumentExample.IN_QUOTES] = true;
-              }
-              break;
-            }
-            case 3: {
-              out.append(' ');
-              try (final IText t = ((IComplexText) out)
-                  .style((s = this.m_fonts[this.m_rand
-                      .nextInt(this.m_fonts.length)]))) {
-                t.append("In ");//$NON-NLS-1$
-                s.appendDescription(ETextCase.IN_SENTENCE, t, false);
-                t.append(" font: "); //$NON-NLS-1$
-                this.m_done[DocumentExample.WITH_FONT] = true;
-                this.__text(t, (depth + 1));
-              }
-              break;
-            }
-            case 4: {
-              out.append(' ');
-              try (final IText t = ((IComplexText) out)
-                  .style((s = this.m_colors[this.m_rand
-                      .nextInt(this.m_colors.length)]))) {
-                t.append("In ");//$NON-NLS-1$
-                s.appendDescription(ETextCase.IN_SENTENCE, t, false);
-                t.append(" color: "); //$NON-NLS-1$
-                this.m_done[DocumentExample.WITH_COLOR] = true;
-                this.__text(t, (depth + 1));
-              }
-              break;
-            }
-            default: {
-              // nothing
-            }
-          }
-
-          needs = true;
-        }
-
-        if (needs && (this.m_rand.nextBoolean())) {
+        if (this.m_rand.nextBoolean()) {
           out.append(' ');
-          LoremIpsum.appendLoremIpsum(out, this.m_rand);
-          this.m_done[DocumentExample.NORMAL_TEXT] = true;
+        } else {
+          out.appendLineBreak();
+        }
+      }
+      first = false;
+
+      LoremIpsum.appendLoremIpsum(out, this.m_rand);
+      this.__do(DocumentExample.NORMAL_TEXT);
+
+      if ((out instanceof IPlainText) && (depth < 10)) {
+
+        switch (this.m_rand.nextInt((out instanceof IComplexText) ? 6 : 3)) {
+          case 1: {
+            out.append(' ');
+            try (final IPlainText t = ((IPlainText) out).inBraces()) {
+              this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+              this.__do(DocumentExample.IN_BRACES);
+            }
+            break;
+          }
+          case 2: {
+            out.append(' ');
+            try (final IPlainText t = ((IPlainText) out).inQuotes()) {
+              this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+              this.__do(DocumentExample.IN_QUOTES);
+            }
+            break;
+          }
+          case 3: {
+            out.append(' ');
+            try (final IPlainText t = ((IComplexText) out)
+                .style((s = this.m_fonts[this.m_rand
+                    .nextInt(this.m_fonts.length)]))) {
+              t.append("In ");//$NON-NLS-1$
+              s.appendDescription(ETextCase.IN_SENTENCE, t, false);
+              t.append(" font: "); //$NON-NLS-1$
+              this.__do(DocumentExample.WITH_FONT);
+              this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+            }
+            break;
+          }
+          case 4: {
+            out.append(' ');
+            try (final IPlainText t = ((IComplexText) out)
+                .style((s = this.m_colors[this.m_rand
+                    .nextInt(this.m_colors.length)]))) {
+              t.append("In ");//$NON-NLS-1$
+              s.appendDescription(ETextCase.IN_SENTENCE, t, false);
+              t.append(" color: "); //$NON-NLS-1$
+              this.__do(DocumentExample.WITH_COLOR);
+              this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+            }
+            break;
+          }
+          case 5: {
+            out.append(" Equation: ");//$NON-NLS-1$
+            this.__createInlineMath(((IComplexText) out));
+            break;
+          }
+          default: {
+            // nothing
+          }
         }
 
-        first = false;
-      } while (this.m_rand.nextInt(depth + 2) <= 0);
-    } finally {
-      this.m_needsNewLine = true;
-    }
+        needs = true;
+      }
+
+      if (needs && (this.m_rand.nextBoolean())) {
+        out.append(' ');
+        LoremIpsum.appendLoremIpsum(out, this.m_rand);
+        this.__do(DocumentExample.NORMAL_TEXT);
+      }
+
+      first = false;
+    } while (this.m_rand.nextInt(depth + 2) <= 0);
+
   }
 
   /**
@@ -422,41 +502,39 @@ public class DocumentExample implements Runnable {
    * 
    * @param sb
    *          the section body
+   * @param listDepth
+   *          the list depth
    */
-  private final void __createList(final IStructuredText sb) {
+  private final void __createList(final IStructuredText sb,
+      final int listDepth) {
     final boolean b;
     int ic;
 
     b = this.m_rand.nextBoolean();
-    if (this.m_listDepth <= 0) {
+    if (listDepth <= 0) {
       if (b) {
-        this.m_done[DocumentExample.ENUM] |= true;
+        this.__do(DocumentExample.ENUM);
       } else {
-        this.m_done[DocumentExample.ITEMIZE] |= true;
+        this.__do(DocumentExample.ITEMIZE);
       }
     }
-    this.m_listDepth++;
 
     try (final IList list = (b ? sb.enumeration() : sb.itemization())) {
       ic = 0;
       do {
         try (final IStructuredText item = list.item()) {
-          this.m_needsNewLine = false;
           if (this.m_rand.nextInt(10) <= 0) {
-            this.__text(item, 0);
+            this.__text(item, 0, false);
           } else {
             LoremIpsum.appendLoremIpsum(item, this.m_rand);
           }
-          if ((this.m_listDepth <= 5)
-              && (this.m_rand.nextInt(this.m_listDepth + 4) <= 0)) {
-            this.__createList(item);
+          if ((listDepth <= 4)
+              && (this.m_rand.nextInt(listDepth + 5) <= 0)) {
+            this.__createList(item, (listDepth + 1));
           }
         }
       } while (((++ic) <= 2) || (this.m_rand.nextBoolean()));
 
-    } finally {
-      this.m_listDepth--;
-      this.m_needsNewLine = false;
     }
   }
 
@@ -468,10 +546,9 @@ public class DocumentExample implements Runnable {
    */
   private final void __createBody(final IDocumentBody body) {
     this.m_maxSectionDepth = 0;
-    this.m_needsNewLine = false;
     Arrays.fill(this.m_done, false);
     do {
-      this.__createSection(body);
+      this._createSection(body, 0);
     } while ((!this.__hasAll()) || (this.m_maxSectionDepth < 3)
         || (this.m_rand.nextInt(3) > 0));
   }
@@ -484,10 +561,9 @@ public class DocumentExample implements Runnable {
    */
   private final void __createFooter(final IDocumentBody footer) {
     this.m_maxSectionDepth = 0;
-    this.m_needsNewLine = false;
     Arrays.fill(this.m_done, false);
     do {
-      this.__createSection(footer);
+      this._createSection(footer, 0);
     } while (this.m_rand.nextBoolean());
   }
 
@@ -508,24 +584,25 @@ public class DocumentExample implements Runnable {
   /** {@inheritDoc} */
   @Override
   public final void run() {
-    this.m_needsNewLine = false;
-    this.m_maxSectionDepth = 0;
-    this.m_inFooter = false;
-    this.m_labels.clear();
-    this.m_listDepth = 0;
-    this.m_figureCounter = 0L;
+    try {
+      this.m_maxSectionDepth = 0;
+      this.m_labels.clear();
+      this.m_figureCounter = 0L;
 
-    Arrays.fill(this.m_done, false);
+      Arrays.fill(this.m_done, false);
 
-    this.__loadStyles();
-    try (final IDocumentHeader header = this.m_doc.header()) {
-      this.__createHeader(header);
-    }
-    try (final IDocumentBody body = this.m_doc.body()) {
-      this.__createBody(body);
-    }
-    try (final IDocumentBody footer = this.m_doc.footer()) {
-      this.__createFooter(footer);
+      this.__loadStyles();
+      try (final IDocumentHeader header = this.m_doc.header()) {
+        this.__createHeader(header);
+      }
+      try (final IDocumentBody body = this.m_doc.body()) {
+        this.__createBody(body);
+      }
+      try (final IDocumentBody footer = this.m_doc.footer()) {
+        this.__createFooter(footer);
+      }
+    } finally {
+      this.m_doc.close();
     }
   }
 
@@ -586,7 +663,7 @@ public class DocumentExample implements Runnable {
     TableCellDef d;
     int min;
 
-    this.m_done[DocumentExample.TABLE] = true;
+    this.__do(DocumentExample.TABLE);
 
     def = new ArrayList<>();
     pureDef = new ArrayList<>();
@@ -604,7 +681,7 @@ public class DocumentExample implements Runnable {
     try (final ITable tab = sb.table(ELabelType.AUTO,
         this.m_rand.nextBoolean(),
         def.toArray(new TableCellDef[def.size()]))) {
-      try (final IText cap = tab.caption()) {
+      try (final IPlainText cap = tab.caption()) {
         LoremIpsum.appendLoremIpsum(cap, this.m_rand,
             this.m_rand.nextInt(10) + 10);
       }
@@ -671,7 +748,7 @@ public class DocumentExample implements Runnable {
             neededRows = Math.max(neededRows, (maxY - 1));
 
             if ((maxX <= (i + 1)) && (maxY <= (rows + 1))) {
-              try (final IText cell = row.cell()) {
+              try (final IPlainText cell = row.cell()) {
                 cell.append(RandomUtils.longToObject(
                     this.m_rand.nextLong(), true));
               }
@@ -680,8 +757,8 @@ public class DocumentExample implements Runnable {
                 d = DocumentExample.CELLS[this.m_rand
                     .nextInt(DocumentExample.CELLS.length)];
               } while (d == TableCellDef.VERTICAL_SEPARATOR);
-              try (final IText cell = row.cell((maxX - i), (maxY - rows),
-                  d)) {
+              try (final IPlainText cell = row.cell((maxX - i),
+                  (maxY - rows), d)) {
                 if (this.m_rand.nextBoolean()) {
                   cell.append(d);
                 } else {
@@ -707,11 +784,10 @@ public class DocumentExample implements Runnable {
     final EFigureSize v;
 
     s = EFigureSize.values();
-    this.m_done[DocumentExample.FIGURE] = true;
+    this.__do(DocumentExample.FIGURE);
     try (final IFigure fig = sb.figure(ELabelType.AUTO,
         (v = s[this.m_rand.nextInt(s.length)]),
-        RandomUtils.longToString(null, this.m_figureCounter++))) {
-      this.m_labels.add(fig.getLabel());
+        RandomUtils.longToString(null, this.__nextFigure()))) {
       this.__fillFigure(fig, v);
     }
   }
@@ -731,11 +807,11 @@ public class DocumentExample implements Runnable {
     s = EFigureSize.values();
     v = s[this.m_rand.nextInt(s.length)];
     c = v.getNX();
-    this.m_done[DocumentExample.FIGURE_SERIES] = true;
+    this.__do(DocumentExample.FIGURE_SERIES);
     try (final IFigureSeries fs = sb.figureSeries(ELabelType.AUTO, v,
-        RandomUtils.longToString(null, this.m_figureCounter++))) {
-      this.m_labels.add(fs.getLabel());
-      try (final IText caption = fs.caption()) {
+        RandomUtils.longToString(null, this.__nextFigure()))) {
+      this.__label(fs);
+      try (final IPlainText caption = fs.caption()) {
         caption.append("A figure series with figures of size "); //$NON-NLS-1$
         caption.append(v.toString());
         caption.append(':');
@@ -744,7 +820,7 @@ public class DocumentExample implements Runnable {
       }
       for (i = (1 + this.m_rand.nextInt(10 * c)); (--i) >= 0;) {
         try (final IFigure fig = fs.figure(ELabelType.AUTO,
-            RandomUtils.longToString(null, this.m_figureCounter++))) {
+            RandomUtils.longToString(null, this.__nextFigure()))) {
           this.__fillFigure(fig, null);
         }
       }
@@ -841,7 +917,9 @@ public class DocumentExample implements Runnable {
     MemoryTextOutput mo;
     FontStyle fs;
 
-    try (final IText cap = fig.caption()) {
+    this.__label(fig);
+
+    try (final IPlainText cap = fig.caption()) {
       if (v != null) {
         cap.append("A figure of size "); //$NON-NLS-1$
         cap.append(v.toString());
@@ -998,5 +1076,228 @@ public class DocumentExample implements Runnable {
         }
       } while ((k < e) || (this.m_rand.nextInt(10) > 0));
     }
+  }
+
+  /**
+   * create an equation
+   * 
+   * @param sb
+   *          the section body
+   */
+  private final void __createEquation(final ISectionBody sb) {
+    try (final IEquation equ = sb.equation(ELabelType.AUTO)) {
+      this.__do(DocumentExample.EQUATION);
+      this.__label(equ);
+      this.__fillMath(equ, 1, 1, 5);
+    }
+  }
+
+  /**
+   * create an inline math
+   * 
+   * @param sb
+   *          the text
+   */
+  private final void __createInlineMath(final IComplexText sb) {
+    try (final IMath equ = sb.inlineMath()) {
+      this.__do(DocumentExample.INLINE_MATH);
+      this.__fillMath(equ, 1, 1, 4);
+    }
+  }
+
+  /**
+   * fill a mathematics context
+   * 
+   * @param math
+   *          the maths context
+   * @param minArgs
+   *          the minimum arguments
+   * @param maxArgs
+   *          the maximum arguments
+   * @param depth
+   *          the depth
+   */
+  private final void __fillMath(final IMath math, final int minArgs,
+      final int maxArgs, final int depth) {
+    int args;
+
+    args = 0;
+    do {
+      switch (this.m_rand.nextInt((depth <= 0) ? 3 : 23)) {
+
+        case 0: {
+          try (final IText text = math.name()) {
+            text.append("id"); //$NON-NLS-1$
+            text.append(this.m_rand.nextInt(10));
+          }
+          break;
+        }
+
+        case 1: {
+          try (final IText text = math.number()) {
+            text.append(this.m_rand.nextInt(201) - 100);
+          }
+          break;
+        }
+
+        case 2: {
+          try (final IText text = math.text()) {
+            text.append("text_"); //$NON-NLS-1$
+            text.append(this.m_rand.nextInt(10));
+          }
+          break;
+        }
+
+        case 3: {
+          try (final IMath nm = math.add()) {
+            this.__fillMath(nm, 2, 20, (depth - 1));
+          }
+          break;
+        }
+
+        case 4: {
+          try (final IMath nm = math.sub()) {
+            this.__fillMath(nm, 2, 20, (depth - 1));
+          }
+          break;
+        }
+
+        case 5: {
+          try (final IMath nm = math.mul()) {
+            this.__fillMath(nm, 2, 20, (depth - 1));
+          }
+          break;
+        }
+
+        case 6: {
+          try (final IMath nm = math.div()) {
+            this.__fillMath(nm, 2, 2, (depth - 1));
+          }
+          break;
+        }
+
+        case 7: {
+          try (final IMath nm = math.divInline()) {
+            this.__fillMath(nm, 2, 2, (depth - 1));
+          }
+          break;
+        }
+
+        case 8: {
+          try (final IMath nm = math.mod()) {
+            this.__fillMath(nm, 2, 2, (depth - 1));
+          }
+          break;
+        }
+
+        case 9: {
+          try (final IMath nm = math.log()) {
+            this.__fillMath(nm, 2, 2, (depth - 1));
+          }
+          break;
+        }
+
+        case 10: {
+          try (final IMath nm = math.ln()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 11: {
+          try (final IMath nm = math.ld()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 12: {
+          try (final IMath nm = math.lg()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 13: {
+          try (final IMath nm = math.sqrt()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 14: {
+          try (final IMath nm = math.root()) {
+            this.__fillMath(nm, 2, 2, (depth - 1));
+          }
+          break;
+        }
+
+        case 15: {
+          try (final IMath nm = math
+              .compare(DocumentExample.COMP[this.m_rand
+                  .nextInt(DocumentExample.COMP.length)])) {
+            this.__fillMath(nm, 2, 2, (depth - 1));
+          }
+          break;
+        }
+
+        case 16: {
+          try (final IMath nm = math.inBraces()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 17: {
+          try (final IMath nm = math.negate()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 18: {
+          try (final IMath nm = math.abs()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 19: {
+          try (final IMath nm = math.factorial()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 20: {
+          try (final IMath nm = math.sin()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 21: {
+          try (final IMath nm = math.cos()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 22: {
+          try (final IMath nm = math.tan()) {
+            this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        default: {
+          throw new IllegalStateException();
+        }
+      }
+
+      args++;
+    } while ((args < minArgs)
+        || ((args < maxArgs) && this.m_rand.nextBoolean()));
+
   }
 }

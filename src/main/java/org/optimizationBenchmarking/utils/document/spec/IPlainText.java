@@ -1,15 +1,24 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-
 /**
- * The basic class for text output, a shared ancestor of the
- * {@link org.optimizationBenchmarking.utils.document.spec.IMath
- * mathematical} and
- * {@link org.optimizationBenchmarking.utils.document.spec.IText textual}
- * text outputs.
+ * A document element for writing text without any formatting capabilities
  */
-public interface IPlainText extends IDocumentPart, ITextOutput {
+public interface IPlainText extends IText {
+
+  /**
+   * Write some text in quotes. The underlying implementation will select
+   * the right quotation marks and may deal with nested quotations. It will
+   * return an instance of
+   * {@link org.optimizationBenchmarking.utils.document.spec.IPlainText} to
+   * which output can be written. This output will appear surrounded by the
+   * correct quotation characters in the underlying stream.
+   * 
+   * @return an instance of
+   *         {@link org.optimizationBenchmarking.utils.document.spec.IPlainText}
+   *         whose text will appear in quotation marks in the underlying
+   *         stream
+   */
+  public IPlainText inQuotes();
 
   /**
    * Write some text in braces. The underlying implementation will select

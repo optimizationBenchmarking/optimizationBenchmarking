@@ -3,20 +3,19 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
-import org.optimizationBenchmarking.utils.document.impl.abstr.CodeBody;
 import org.optimizationBenchmarking.utils.document.impl.abstr.ComplexText;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentDriver;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentPart;
-import org.optimizationBenchmarking.utils.document.impl.abstr.EMathOperators;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Enumeration;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Figure;
 import org.optimizationBenchmarking.utils.document.impl.abstr.FigureSeries;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Itemization;
-import org.optimizationBenchmarking.utils.document.impl.abstr.MathFunction;
+import org.optimizationBenchmarking.utils.document.impl.abstr.PlainText;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Section;
 import org.optimizationBenchmarking.utils.document.impl.abstr.SectionBody;
 import org.optimizationBenchmarking.utils.document.impl.abstr.StructuredText;
@@ -28,7 +27,6 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooter;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooterRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
-import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
@@ -178,13 +176,13 @@ public final class LaTeXDriver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _LaTeXInBraces createInBraces(final Text owner) {
+  protected final _LaTeXInBraces createInBraces(final PlainText owner) {
     return new _LaTeXInBraces(owner);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final _LaTeXInQuotes createInQuotes(final Text owner) {
+  protected final _LaTeXInQuotes createInQuotes(final PlainText owner) {
     return new _LaTeXInQuotes(owner);
   }
 
@@ -199,19 +197,6 @@ public final class LaTeXDriver extends DocumentDriver {
   @Override
   protected final _LaTeXInlineCode createInlineCode(final ComplexText owner) {
     return new _LaTeXInlineCode(owner);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final _LaTeXSubscript createSubscript(final ComplexText owner) {
-    return new _LaTeXSubscript(owner);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final _LaTeXSuperscript createSuperscript(
-      final ComplexText owner) {
-    return new _LaTeXSuperscript(owner);
   }
 
   /** {@inheritDoc} */
@@ -325,23 +310,125 @@ public final class LaTeXDriver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _LaTeXMathFunction createMathFunction(
-      final BasicMath owner, final EMathOperators operator) {
-    return new _LaTeXMathFunction(owner, operator);
+  protected final _LaTeXMathAdd createMathAdd(final BasicMath owner) {
+    return new _LaTeXMathAdd(owner);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final _LaTeXMathSubscript createMathSubscript(
-      final BasicMath owner) {
-    return new _LaTeXMathSubscript(owner);
+  protected final _LaTeXMathSub createMathSub(final BasicMath owner) {
+    return new _LaTeXMathSub(owner);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final _LaTeXMathSuperscript createMathSuperscript(
+  protected final _LaTeXMathMul createMathMul(final BasicMath owner) {
+    return new _LaTeXMathMul(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathDiv createMathDiv(final BasicMath owner) {
+    return new _LaTeXMathDiv(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathDivInline createMathDivInline(
       final BasicMath owner) {
-    return new _LaTeXMathSuperscript(owner);
+    return new _LaTeXMathDivInline(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathLn createMathLn(final BasicMath owner) {
+    return new _LaTeXMathLn(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathLg createMathLg(final BasicMath owner) {
+    return new _LaTeXMathLg(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathLd createMathLd(final BasicMath owner) {
+    return new _LaTeXMathLd(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathLog createMathLog(final BasicMath owner) {
+    return new _LaTeXMathLog(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathMod createMathMod(final BasicMath owner) {
+    return new _LaTeXMathMod(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathPow createMathPow(final BasicMath owner) {
+    return new _LaTeXMathPow(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathRoot createMathRoot(final BasicMath owner) {
+    return new _LaTeXMathRoot(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathSqrt createMathSqrt(final BasicMath owner) {
+    return new _LaTeXMathSqrt(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathCompare createMathCompare(
+      final BasicMath owner, final EComparison comp) {
+    return new _LaTeXMathCompare(owner, comp);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathNegate createMathNegate(final BasicMath owner) {
+    return new _LaTeXMathNegate(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathAbs createMathAbsolute(final BasicMath owner) {
+    return new _LaTeXMathAbs(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathFactorial createMathFactorial(
+      final BasicMath owner) {
+    return new _LaTeXMathFactorial(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathSin createMathSin(final BasicMath owner) {
+    return new _LaTeXMathSin(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathCos createMathCos(final BasicMath owner) {
+    return new _LaTeXMathCos(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathTan createMathTan(final BasicMath owner) {
+    return new _LaTeXMathTan(owner);
   }
 
   /** {@inheritDoc} */
@@ -372,13 +459,6 @@ public final class LaTeXDriver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _LaTeXCodeInBraces createCodeInBraces(
-      final CodeBody owner) {
-    return new _LaTeXCodeInBraces((_LaTeXCodeBody) owner);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   protected final _LaTeXFigureSeriesCaption createFigureSeriesCaption(
       final FigureSeries owner) {
     return new _LaTeXFigureSeriesCaption((_LaTeXFigureSeries) owner);
@@ -401,9 +481,20 @@ public final class LaTeXDriver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _LaTeXMathArgument createMathArgument(
-      final MathFunction owner) {
-    return new _LaTeXMathArgument((_LaTeXMathFunction) owner);
+  protected final _LaTeXMathNumber createMathNumber(final BasicMath owner) {
+    return new _LaTeXMathNumber(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathName createMathName(final BasicMath owner) {
+    return new _LaTeXMathName(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathText createMathText(final BasicMath owner) {
+    return new _LaTeXMathText(owner);
   }
 
   /** {@inheritDoc} */

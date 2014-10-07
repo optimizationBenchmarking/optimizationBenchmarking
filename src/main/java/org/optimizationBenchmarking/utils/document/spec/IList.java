@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.spec;
 /**
  * A list
  */
-public interface IList extends IDocumentPart {
+public interface IList extends IDocumentElement {
 
   /**
    * Create a new list item to write to

@@ -24,7 +24,7 @@ import org.optimizationBenchmarking.utils.text.transformations.XMLCharTransforme
  * {@link #attributeRaw(URI, String, String)}.</li>
  * <li>Write the elements content, such as
  * <ol>
- * <li>Text output via {@link #textRaw()} and {@link #textEncoded()}.</li>
+ * <li>PlainText output via {@link #textRaw()} and {@link #textEncoded()}.</li>
  * <li>Contained elements via {@link #element()}.</li>
  * </ol>
  * </li>

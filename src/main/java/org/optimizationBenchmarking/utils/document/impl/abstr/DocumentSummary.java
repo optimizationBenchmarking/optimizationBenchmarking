@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 /**
  * A summary of a document
  */
-public class DocumentSummary extends Text {
+public class DocumentSummary extends PlainText {
   /**
    * create the summary
    * 

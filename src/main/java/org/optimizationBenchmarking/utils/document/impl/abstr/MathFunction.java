@@ -1,116 +1,94 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.document.spec.IMathFunction;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** a mathematics operator */
-public class MathFunction extends DocumentPart implements IMathFunction {
+public abstract class MathFunction extends BasicMath {
 
-  /** the operators */
-  private final EMathOperators m_op;
+  /** the done index */
+  private int m_done;
 
-  /** the argument index */
-  int m_argIndex;
+  /** the data */
+  private final char[][] m_data;
+
+  /** the minimum number of arguments */
+  private final int m_minArgs;
 
   /**
    * Create a document part.
    * 
    * @param owner
    *          the owning FSM
-   * @param op
-   *          the mathematical operator
+   * @param minArgs
+   *          the minimum number of arguments
+   * @param maxArgs
+   *          the maximum number of arguments
    */
-  protected MathFunction(final BasicMath owner, final EMathOperators op) {
+  MathFunction(final BasicMath owner, final int minArgs, final int maxArgs) {
     super(owner);
-    if (op == null) {
-      throw new IllegalArgumentException(//
-          "Math operator must not be null."); //$NON-NLS-1$
-    }
-    this.m_op = op;
-  }
-
-  /**
-   * Get the mathematical operator
-   * 
-   * @return the mathematical operator
-   */
-  public final EMathOperators getOperator() {
-    return this.m_op;
-  }
-
-  /**
-   * this method is called before the {@code index}<sup>th</sup> argument
-   * 
-   * @param index
-   *          the index of the argument
-   */
-  protected void beforeArgument(final int index) {
-    //
+    this.m_data = new char[maxArgs][];
+    this.m_minArgs = minArgs;
   }
 
   /** {@inheritDoc} */
   @Override
-  public synchronized final MathArgument nextArgument() {
-    final int pi;
-
-    this.fsmStateAssert(DocumentElement.STATE_ALIFE);
-    this.assertNoChildren();
-    pi = (++this.m_argIndex);
-    if (pi > this.m_op.m_maxArgumentCount) {
-      throw new IllegalStateException(this.m_op
-          + " cannot have more than " + //$NON-NLS-1$
-          this.m_op.m_maxArgumentCount + " arguments."); //$NON-NLS-1$
-    }
-    this.beforeArgument(pi);
-    return this.m_driver.createMathArgument(this);
+  protected final boolean mustChildBeBuffered(final HierarchicalText child) {
+    return true;
   }
 
   /** {@inheritDoc} */
   @Override
-  protected synchronized final void beforeChildOpens(
-      final HierarchicalFSM child, final boolean hasOtherChildren) {
-
-    super.beforeChildOpens(child, hasOtherChildren);
-
-    if (!(child instanceof MathArgument)) {
-      this.throwChildNotAllowed(child);
-    }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected synchronized final void afterChildOpened(
-      final HierarchicalFSM child, final boolean hasOtherChildren) {
-
-    super.afterChildOpened(child, hasOtherChildren);
-
-    if (!(child instanceof MathArgument)) {
-      this.throwChildNotAllowed(child);
-    }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected synchronized final void afterChildClosed(
-      final HierarchicalFSM child) {
-
-    super.afterChildClosed(child);
-
-    if (!(child instanceof MathArgument)) {
-      this.throwChildNotAllowed(child);
+  protected final void processBufferedOutputFromChild(
+      final HierarchicalText child, final MemoryTextOutput out) {
+    this.m_data[this.m_done++] = out.toChars();
+    if (this.m_data[this.m_done - 1].length <= 0) {
+      throw new IllegalArgumentException(child.toString());
     }
   }
 
   /** {@inheritDoc} */
   @Override
   protected synchronized void onClose() {
-    if (this.m_argIndex < this.m_op.m_minArgumentCount) {
-      throw new IllegalStateException(this.m_op + //
-          " needs at least " + this.m_op.m_minArgumentCount + //$NON-NLS-1$
-          " arguments, but has only " + this.m_argIndex); //$NON-NLS-1$
+    final int done;
+
+    if (this.getCurrentSize() != (done = this.m_done)) {
+      throw new IllegalStateException(this.getClass().getSimpleName() + //
+          " has least " + this.getCurrentSize() + //$NON-NLS-1$
+          " arguments, but only " + done + //$NON-NLS-1$
+          " have completed their work."); //$NON-NLS-1$
     }
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         DocumentElement.STATE_DEAD);
+    this.render(this.getTextOutput(), this.m_data, done);
     super.onClose();
+  }
+
+  /**
+   * Render the output
+   * 
+   * @param data
+   *          the data
+   * @param size
+   *          the size
+   * @param out
+   *          the text output
+   */
+  protected void render(final ITextOutput out, final char[][] data,
+      final int size) {
+    //
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final int minArgs() {
+    return this.m_minArgs;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final int maxArgs() {
+    return this.m_data.length;
   }
 }

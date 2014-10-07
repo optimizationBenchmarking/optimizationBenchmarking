@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import org.optimizationBenchmarking.utils.text.charset.Braces;
 
 /** A text class for braces text */
-public class InBraces extends Text {
+public class InBraces extends PlainText {
 
   /** the marks */
   private static final Braces[] BRACES = { Braces.PARENTHESES,
@@ -19,7 +19,7 @@ public class InBraces extends Text {
    *          the owning FSM
    */
   @SuppressWarnings("resource")
-  protected InBraces(final Text owner) {
+  protected InBraces(final PlainText owner) {
     super(owner);
 
     DocumentElement d;
@@ -36,8 +36,8 @@ public class InBraces extends Text {
 
   /** {@inheritDoc} */
   @Override
-  protected Text getOwner() {
-    return ((Text) (super.getOwner()));
+  protected PlainText getOwner() {
+    return ((PlainText) (super.getOwner()));
   }
 
   /**

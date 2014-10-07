@@ -4,14 +4,14 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 
 /** The header of a document. */
-public interface IDocumentHeader extends IDocumentPart {
+public interface IDocumentHeader extends IDocumentElement {
 
   /**
    * Write the document's title
    * 
    * @return the document's title
    */
-  public abstract IText title();
+  public abstract IPlainText title();
 
   /**
    * Build the authors of this document
@@ -32,5 +32,5 @@ public interface IDocumentHeader extends IDocumentPart {
    * 
    * @return the document's summary
    */
-  public abstract IText summary();
+  public abstract IPlainText summary();
 }

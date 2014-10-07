@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.spec;
 /**
  * The interface to create and draw a series of figures.
  */
-public interface IFigureSeries extends IDocumentPart, ILabeledObject {
+public interface IFigureSeries extends IDocumentElement, ILabeledElement {
 
   /**
    * write the figure series caption

@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 /**
  * The interface to create and draw on figures.
  */
-public interface IFigure extends IDocumentPart, ILabeledObject {
+public interface IFigure extends IDocumentElement, ILabeledElement {
 
   /**
    * write the figure caption

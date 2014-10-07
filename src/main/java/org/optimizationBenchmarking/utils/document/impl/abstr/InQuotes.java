@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import org.optimizationBenchmarking.utils.text.charset.QuotationMarks;
 
 /** A text class for quoted text */
-public class InQuotes extends Text {
+public class InQuotes extends PlainText {
 
   /** the marks */
   private static final QuotationMarks[] MARKS = {
@@ -20,7 +20,7 @@ public class InQuotes extends Text {
    *          the owning FSM
    */
   @SuppressWarnings("resource")
-  protected InQuotes(final Text owner) {
+  protected InQuotes(final PlainText owner) {
     super(owner);
 
     DocumentElement d;
@@ -37,8 +37,8 @@ public class InQuotes extends Text {
 
   /** {@inheritDoc} */
   @Override
-  protected Text getOwner() {
-    return ((Text) (super.getOwner()));
+  protected PlainText getOwner() {
+    return ((PlainText) (super.getOwner()));
   }
 
   /**

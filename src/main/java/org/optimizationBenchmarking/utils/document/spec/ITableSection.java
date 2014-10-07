@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.spec;
 /**
  * A section of a table, such as the table header, body, or footer.
  */
-public interface ITableSection extends IDocumentPart {
+public interface ITableSection extends IDocumentElement {
 
   /**
    * create a new table row

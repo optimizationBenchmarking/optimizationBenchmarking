@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.text.charset.Braces;
-
 /**
  * A math class for braces text. Different from the
  * {@link org.optimizationBenchmarking.utils.document.impl.abstr.InBraces
@@ -9,10 +7,6 @@ import org.optimizationBenchmarking.utils.text.charset.Braces;
  * implement that by yourself.
  */
 public class MathInBraces extends BasicMath {
-
-  /** the marks */
-  private static final Braces[] BRACES = { Braces.PARENTHESES,
-      Braces.BRACKETS };
 
   /** the marks */
   final int m_braces;
@@ -55,40 +49,16 @@ public class MathInBraces extends BasicMath {
     return this.m_braces;
   }
 
-  /**
-   * Get the brace marks
-   * 
-   * @return the brace marks
-   */
-  public Braces getBraces() {
-    return MathInBraces.BRACES[this.m_braces];
-  }
-
-  /**
-   * Write the starting brace
-   */
-  protected void writeBegin() {
-    this.m_encoded.append(this.getBraces().getBeginChar());
+  /** {@inheritDoc} */
+  @Override
+  final int minArgs() {
+    return 1;
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final synchronized void onOpen() {
-    super.onOpen();
-    this.writeBegin();
+  final int maxArgs() {
+    return 1;
   }
 
-  /**
-   * Write the ending brace
-   */
-  protected void writeEnd() {
-    this.m_encoded.append(this.getBraces().getEndChar());
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final synchronized void onClose() {
-    this.writeEnd();
-    super.onClose();
-  }
 }

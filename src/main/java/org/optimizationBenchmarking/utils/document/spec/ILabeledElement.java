@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.spec;
 /**
  * A labeled element.
  */
-public interface ILabeledElement extends IDocumentPart {
+public interface ILabeledElement {
 
   /**
    * Obtain the label of this element, or {@code null} if the element is

@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 /**
  * A title of a document
  */
-public class DocumentTitle extends Text {
+public class DocumentTitle extends PlainText {
   /**
    * create the title
    * 

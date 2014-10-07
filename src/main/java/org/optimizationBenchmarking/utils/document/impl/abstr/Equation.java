@@ -118,4 +118,16 @@ public class Equation extends BasicMath implements IEquation {
   public final String getLocalID() {
     return this.m_localID;
   }
+
+  /** {@inheritDoc} */
+  @Override
+  final int minArgs() {
+    return 1;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final int maxArgs() {
+    return 1;
+  }
 }

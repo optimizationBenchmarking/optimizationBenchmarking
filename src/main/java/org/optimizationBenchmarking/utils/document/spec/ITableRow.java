@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
 /** A table row */
-public interface ITableRow extends IDocumentPart {
+public interface ITableRow extends IDocumentElement {
 
   /**
    * Create a cell which may span multiple rows or columns

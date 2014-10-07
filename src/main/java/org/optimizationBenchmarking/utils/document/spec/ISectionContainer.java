@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
 /** a section container */
-public interface ISectionContainer extends IDocumentPart {
+public interface ISectionContainer extends IDocumentElement {
   /**
    * Create a new section.
    * 

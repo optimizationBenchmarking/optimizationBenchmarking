@@ -1,13 +1,11 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.document.spec.IDocumentPart;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 
 /**
  * The base object for the document API.
  */
-public abstract class DocumentPart extends DocumentElement implements
-    IDocumentPart {
+public abstract class DocumentPart extends DocumentElement {
 
   /** the document */
   final Document m_doc;
@@ -24,9 +22,12 @@ public abstract class DocumentPart extends DocumentElement implements
         : (((DocumentPart) owner).m_doc));
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final Document getDocument() {
+  /**
+   * Get the document
+   * 
+   * @return the document
+   */
+  protected final Document getDocument() {
     return this.m_doc;
   }
 

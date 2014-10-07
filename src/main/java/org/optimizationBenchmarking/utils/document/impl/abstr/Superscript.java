@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 /** A text class for super-script text */
-public class Superscript extends Text {
+public class Superscript extends PlainText {
 
   /**
    * Create a super-script text.
@@ -9,13 +9,13 @@ public class Superscript extends Text {
    * @param owner
    *          the owning FSM
    */
-  protected Superscript(final ComplexText owner) {
+  protected Superscript(final Text owner) {
     super(owner);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected ComplexText getOwner() {
-    return ((ComplexText) (super.getOwner()));
+  protected Text getOwner() {
+    return ((Text) (super.getOwner()));
   }
 }

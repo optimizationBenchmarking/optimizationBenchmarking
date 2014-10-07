@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -150,7 +151,7 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    *          the owning text
    * @return the in-braces object
    */
-  protected InBraces createInBraces(final Text owner) {
+  protected InBraces createInBraces(final PlainText owner) {
     return new InBraces(owner);
   }
 
@@ -161,7 +162,7 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    *          the owning text
    * @return the in-quotes object
    */
-  protected InQuotes createInQuotes(final Text owner) {
+  protected InQuotes createInQuotes(final PlainText owner) {
     return new InQuotes(owner);
   }
 
@@ -233,7 +234,7 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    *          the owner
    * @return the sub-script text
    */
-  protected Subscript createSubscript(final ComplexText owner) {
+  protected Subscript createSubscript(final Text owner) {
     return new Subscript(owner);
   }
 
@@ -244,7 +245,7 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    *          the owner
    * @return the super-script text
    */
-  protected Superscript createSuperscript(final ComplexText owner) {
+  protected Superscript createSuperscript(final Text owner) {
     return new Superscript(owner);
   }
 
@@ -493,43 +494,230 @@ public abstract class DocumentDriver extends FileTypeDriver implements
   }
 
   /**
-   * Create a mathematical function
+   * Create a mathematical add
    * 
    * @param owner
    *          the owner
-   * @param operator
-   *          the operator
    * @return the function
    */
-  protected MathFunction createMathFunction(final BasicMath owner,
-      final EMathOperators operator) {
-    return new MathFunction(owner, operator);
+  protected MathAdd createMathAdd(final BasicMath owner) {
+    return new MathAdd(owner);
   }
 
   /**
-   * Create a mathematical sub-script
+   * Create a mathematical sub
    * 
    * @param owner
    *          the owner
-   * @return the mathematical sub-script
+   * @return the function
    */
-  protected MathSubscript createMathSubscript(final BasicMath owner) {
-    return new MathSubscript(owner);
+  protected MathSub createMathSub(final BasicMath owner) {
+    return new MathSub(owner);
   }
 
   /**
-   * Create a mathematical super-script
+   * Create a mathematical mul
    * 
    * @param owner
    *          the owner
-   * @return the mathematical super-script
+   * @return the function
    */
-  protected MathSuperscript createMathSuperscript(final BasicMath owner) {
-    return new MathSuperscript(owner);
+  protected MathMul createMathMul(final BasicMath owner) {
+    return new MathMul(owner);
   }
 
   /**
-   * Create an in-braces object
+   * Create a mathematical division
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathDiv createMathDiv(final BasicMath owner) {
+    return new MathDiv(owner);
+  }
+
+  /**
+   * Create an inline mathematical division
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathDivInline createMathDivInline(final BasicMath owner) {
+    return new MathDivInline(owner);
+  }
+
+  /**
+   * Create a mathematical ln
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathLn createMathLn(final BasicMath owner) {
+    return new MathLn(owner);
+  }
+
+  /**
+   * Create a mathematical lg
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathLg createMathLg(final BasicMath owner) {
+    return new MathLg(owner);
+  }
+
+  /**
+   * Create a mathematical ld
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathLd createMathLd(final BasicMath owner) {
+    return new MathLd(owner);
+  }
+
+  /**
+   * Create a mathematical log
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathLog createMathLog(final BasicMath owner) {
+    return new MathLog(owner);
+  }
+
+  /**
+   * Create a mathematical mod
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathMod createMathMod(final BasicMath owner) {
+    return new MathMod(owner);
+  }
+
+  /**
+   * Create a mathematical pow
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathPow createMathPow(final BasicMath owner) {
+    return new MathPow(owner);
+  }
+
+  /**
+   * Create a mathematical root
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathRoot createMathRoot(final BasicMath owner) {
+    return new MathRoot(owner);
+  }
+
+  /**
+   * Create a mathematical square root
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathSqrt createMathSqrt(final BasicMath owner) {
+    return new MathSqrt(owner);
+  }
+
+  /**
+   * Create a mathematical comparison
+   * 
+   * @param owner
+   *          the owner
+   * @param comp
+   *          the comparison
+   * @return the function
+   */
+  protected MathCompare createMathCompare(final BasicMath owner,
+      final EComparison comp) {
+    return new MathCompare(owner, comp);
+  }
+
+  /**
+   * Create a mathematical negate
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathNegate createMathNegate(final BasicMath owner) {
+    return new MathNegate(owner);
+  }
+
+  /**
+   * Create a mathematical absolute
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathAbs createMathAbsolute(final BasicMath owner) {
+    return new MathAbs(owner);
+  }
+
+  /**
+   * Create a mathematical factorial
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathFactorial createMathFactorial(final BasicMath owner) {
+    return new MathFactorial(owner);
+  }
+
+  /**
+   * Create a mathematical sine
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathSin createMathSin(final BasicMath owner) {
+    return new MathSin(owner);
+  }
+
+  /**
+   * Create a mathematical cos
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathCos createMathCos(final BasicMath owner) {
+    return new MathCos(owner);
+  }
+
+  /**
+   * Create a mathematical tan
+   * 
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathTan createMathTan(final BasicMath owner) {
+    return new MathTan(owner);
+  }
+
+  /**
+   * Create an in-braces object for mathematics
    * 
    * @param owner
    *          the owner
@@ -537,6 +725,39 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    */
   protected MathInBraces createMathInBraces(final BasicMath owner) {
     return new MathInBraces(owner);
+  }
+
+  /**
+   * Create a mathematics number
+   * 
+   * @param owner
+   *          the owner
+   * @return the number object
+   */
+  protected MathNumber createMathNumber(final BasicMath owner) {
+    return new MathNumber(owner);
+  }
+
+  /**
+   * Create a mathematics name
+   * 
+   * @param owner
+   *          the owner
+   * @return the name object
+   */
+  protected MathName createMathName(final BasicMath owner) {
+    return new MathName(owner);
+  }
+
+  /**
+   * Create a mathematics text
+   * 
+   * @param owner
+   *          the owner
+   * @return the text object
+   */
+  protected MathText createMathText(final BasicMath owner) {
+    return new MathText(owner);
   }
 
   /**
@@ -606,17 +827,6 @@ public abstract class DocumentDriver extends FileTypeDriver implements
   }
 
   /**
-   * Create an in-braces object
-   * 
-   * @param owner
-   *          the owning text
-   * @return the in-braces object
-   */
-  protected CodeInBraces createCodeInBraces(final CodeBody owner) {
-    return new CodeInBraces(owner);
-  }
-
-  /**
    * Create the figure caption
    * 
    * @param owner
@@ -653,17 +863,6 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    */
   protected SubFigureCaption createSubFigureCaption(final SubFigure owner) {
     return new SubFigureCaption(owner);
-  }
-
-  /**
-   * Create a parameter
-   * 
-   * @param owner
-   *          the owner
-   * @return the parameter
-   */
-  protected MathArgument createMathArgument(final MathFunction owner) {
-    return new MathArgument(owner);
   }
 
   /**

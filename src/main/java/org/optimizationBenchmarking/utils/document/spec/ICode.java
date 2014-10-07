@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.document.spec;
 /**
  * The interface to create code sections
  */
-public interface ICode extends IDocumentPart, ILabeledObject {
+public interface ICode extends IDocumentElement, ILabeledElement {
 
   /**
    * write the code caption
@@ -17,5 +17,5 @@ public interface ICode extends IDocumentPart, ILabeledObject {
    * 
    * @return the code body
    */
-  public abstract IPlainText body();
+  public abstract IText body();
 }

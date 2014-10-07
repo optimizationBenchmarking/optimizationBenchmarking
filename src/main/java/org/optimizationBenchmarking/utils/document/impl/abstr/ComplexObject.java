@@ -2,14 +2,14 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.ILabeledObject;
+import org.optimizationBenchmarking.utils.document.spec.ILabeledElement;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /**
  * The base class for sections, tables, and figures
  */
 public abstract class ComplexObject extends DocumentPart implements
-    ILabeledObject {
+    ILabeledElement {
 
   /** the index in the owning context */
   final int m_index;

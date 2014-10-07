@@ -18,4 +18,16 @@ public class InlineMath extends BasicMath {
   protected ComplexText getOwner() {
     return ((ComplexText) (super.getOwner()));
   }
+
+  /** {@inheritDoc} */
+  @Override
+  final int minArgs() {
+    return 1;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final int maxArgs() {
+    return 1;
+  }
 }
