@@ -222,6 +222,10 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
           buf);
       return;
     }
+    if (data instanceof BibThesis) {
+      BibTeXDriver.__storeThesis(((BibThesis) data), raw, enc, buf);
+      return;
+    }
     if (data instanceof BibBook) {
       BibTeXDriver.__storeBook(((BibBook) data), raw, enc, buf);
       return;
@@ -233,10 +237,6 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     if (data instanceof BibTechReport) {
       BibTeXDriver
           .__storeTechReport(((BibTechReport) data), raw, enc, buf);
-      return;
-    }
-    if (data instanceof BibThesis) {
-      BibTeXDriver.__storeThesis(((BibThesis) data), raw, enc, buf);
       return;
     }
 
@@ -438,7 +438,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       BibTeXDriver.__date(end, raw, enc, buf);
       return;
     }
-    if ((end == null) || (start.equals(end))) {
+    if ((end == null) || (start == end) || (start.equals(end))) {
       BibTeXDriver.__date(start, raw, enc, buf);
       return;
     }
@@ -488,7 +488,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
           } else {
             raw.append(" # {--}"); //$NON-NLS-1$
           }
-          raw.append('#');
+          raw.append(" # "); //$NON-NLS-1$
 
           // second month/day
           raw.append(m2.getShortName());
@@ -862,7 +862,6 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     BibTeXDriver.__field(BibTeXDriver.ISSN, data.getISSN(), raw, enc, buf);
     BibTeXDriver.__organization(BibTeXDriver.PUBLISHER,
         data.getPublisher(), raw, enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.ISSN, data.getISSN(), raw, enc, buf);
     BibTeXDriver.__field(BibTeXDriver.ISBN, data.getISBN(), raw, enc, buf);
   }
 

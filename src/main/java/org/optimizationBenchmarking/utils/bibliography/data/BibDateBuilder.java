@@ -320,7 +320,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
       this.setMonth(EBibMonth.MONTHS[cal.get(Calendar.MONTH)]);
     }
     if (cal.isSet(Calendar.DAY_OF_MONTH)) {
-      this.setDay(Calendar.DAY_OF_MONTH);
+      this.setDay(cal.get(Calendar.DAY_OF_MONTH));
     }
   }
 

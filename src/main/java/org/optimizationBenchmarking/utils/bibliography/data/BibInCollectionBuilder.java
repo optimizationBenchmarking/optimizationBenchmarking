@@ -53,7 +53,7 @@ public final class BibInCollectionBuilder extends BibInBookBuilder {
   /** {@inheritDoc} */
   @Override
   final void _handleAfterChildClosed(final HierarchicalFSM child) {
-    if (child instanceof BibProceedingsBuilder) {
+    if (child instanceof BibBookBuilder) {
       this.setBook(((BibBookBuilder) child).getResult());
     } else {
       super._handleAfterChildClosed(child);

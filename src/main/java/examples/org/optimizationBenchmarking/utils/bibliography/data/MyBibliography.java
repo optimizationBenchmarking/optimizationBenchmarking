@@ -1,6 +1,7 @@
 package examples.org.optimizationBenchmarking.utils.bibliography.data;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import java.util.Random;
+
 import org.optimizationBenchmarking.utils.bibliography.data.BibArticleBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
@@ -14,23 +15,21 @@ import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
-import org.optimizationBenchmarking.utils.bibliography.io.BibTeXDriver;
-import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A class to test generating some of my own papers with the
  * {@link org.optimizationBenchmarking.utils.bibliography.data bibliography
  * API}.
  */
-public final class MyBibliography {
+public final class MyBibliography extends BibliographyExample {
 
   /**
    * create my bibliography
    * 
    * @return the bibliography
    */
-  public static final Bibliography createMyBibliography() {
+  @Override
+  public final Bibliography createBibliography() {
 
     try (final BibliographyBuilder bb = new BibliographyBuilder()) {
 
@@ -44,6 +43,52 @@ public final class MyBibliography {
       MyBibliography.__WZKG2007DGPFg(bb);
 
       return bb.getResult();
+    }
+  }
+
+  /**
+   * add a random own publications
+   * 
+   * @param bb
+   *          the builder
+   * @param r
+   *          the randomizer
+   */
+  static final void __addRandomOfMine(final BibliographyBuilder bb,
+      final Random r) {
+    switch (r.nextInt(8)) {
+      case 0: {
+        MyBibliography.__WWTWDY2014FFA(bb);
+        return;
+      }
+      case 1: {
+        MyBibliography.__WWTY2014EEIAWGP(bb);
+        return;
+      }
+      case 2: {
+        MyBibliography.__PROC2013IDEAL(bb);
+        return;
+      }
+      case 3: {
+        MyBibliography.__DWT2011ASOSRFEOOGS(bb);
+        return;
+      }
+      case 4: {
+        MyBibliography.__TYW2012SSOECFLSGO(bb);
+        return;
+      }
+      case 5: {
+        MyBibliography.__CWM2011VOEAFRWA(bb);
+        return;
+      }
+      case 6: {
+        MyBibliography.__WZKG2009DGPFz(bb);
+        return;
+      }
+      default: {
+        MyBibliography.__WZKG2007DGPFg(bb);
+        return;
+      }
     }
   }
 
@@ -469,6 +514,11 @@ public final class MyBibliography {
     }
   }
 
+  /** the constructor */
+  public MyBibliography() {
+    super();
+  }
+
   /**
    * The main routine, printing my bibliography
    * 
@@ -476,16 +526,6 @@ public final class MyBibliography {
    *          the command line arguments: ignored
    */
   public static final void main(final String[] args) {
-    ITextOutput t;
-
-    t = AbstractTextOutput.wrap(System.out);
-    BibTeXDriver.INSTANCE.storeText(MyBibliography.createMyBibliography(),
-        t);
-    t.flush();
-  }
-
-  /** the forbidden constructor */
-  private MyBibliography() {
-    ErrorUtils.doNotCall();
+    new MyBibliography().run();
   }
 }
