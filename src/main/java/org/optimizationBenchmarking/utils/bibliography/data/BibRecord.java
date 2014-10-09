@@ -332,4 +332,13 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
       textOut.append(this.m_doi);
     }
   }
+
+  /**
+   * Get the year of this publication
+   * 
+   * @return the year associated with this publication
+   */
+  public final int getYear() {
+    return this.m_date.m_year;
+  }
 }

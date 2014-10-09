@@ -144,7 +144,7 @@ public final class RandomBibliography extends BibliographyExample {
             case 4: {
               sb.append("Raymond");break;} //$NON-NLS-1$
             case 5: {
-              sb.append("Joerg");break;} //$NON-NLS-1$
+              sb.append("J\u00f6rg");break;} //$NON-NLS-1$
             case 6: {
               sb.append("Xin");break;} //$NON-NLS-1$
             case 7: {
@@ -181,7 +181,7 @@ public final class RandomBibliography extends BibliographyExample {
               sb.append("Wei");break;} //$NON-NLS-1$
           }
         } else {
-          switch (r.nextInt(23)) {
+          switch (r.nextInt(25)) {
             case 0: {
               sb.append("Weise");break;} //$NON-NLS-1$
             case 1: {
@@ -193,7 +193,7 @@ public final class RandomBibliography extends BibliographyExample {
             case 4: {
               sb.append("Chiong");break;} //$NON-NLS-1$
             case 5: {
-              sb.append("Laessig");break;} //$NON-NLS-1$
+              sb.append("L\u00e4ssig");break;} //$NON-NLS-1$
             case 6: {
               sb.append("Yao");break;} //$NON-NLS-1$
             case 7: {
@@ -213,7 +213,7 @@ public final class RandomBibliography extends BibliographyExample {
             case 14: {
               sb.append("Beyer");break;} //$NON-NLS-1$
             case 15: {
-              sb.append("Mueller");break;} //$NON-NLS-1$
+              sb.append("M\u00fcller");break;} //$NON-NLS-1$
             case 16: {
               sb.append("Fischer");break;} //$NON-NLS-1$
             case 17: {
@@ -221,11 +221,15 @@ public final class RandomBibliography extends BibliographyExample {
             case 18: {
               sb.append("Schmidt");break;} //$NON-NLS-1$
             case 19: {
-              sb.append("Schueppel");break;} //$NON-NLS-1$
+              sb.append("Sch\u00fcppel");break;} //$NON-NLS-1$
             case 20: {
               sb.append("Schneider");break;} //$NON-NLS-1$
             case 21: {
               sb.append("Sachse");break;} //$NON-NLS-1$
+            case 22: {
+              sb.append("Schulze");break;} //$NON-NLS-1$
+            case 23: {
+              sb.append("Wei\u00df");break;} //$NON-NLS-1$
             default: {
               sb.append("Wu");break;} //$NON-NLS-1$
           }
@@ -236,7 +240,8 @@ public final class RandomBibliography extends BibliographyExample {
         sb.append((char) ('A' + r.nextInt(26)));
         do {
           sb.append((char) ('a' + r.nextInt(26)));
-        } while ((r.nextInt(6) > 0) || (sb.length() < 3));
+        } while (((r.nextInt(6) > 0) && (sb.length() < 10))
+            || (sb.length() < 3));
 
         for (i = (sb.length() >> 2); (--i) >= 0;) {
           switch (r.nextInt(4)) {
@@ -475,7 +480,7 @@ public final class RandomBibliography extends BibliographyExample {
 
     if (r.nextBoolean()) {
 
-      switch (r.nextInt(27)) {
+      switch (r.nextInt(31)) {
         case 0: {
           return ("Hefei, Anui, China");} //$NON-NLS-1$
         case 1: {
@@ -497,7 +502,7 @@ public final class RandomBibliography extends BibliographyExample {
         case 9: {
           return ("Portland, Oregon, USA");} //$NON-NLS-1$
         case 10: {
-          return ("London, Englan, UK");} //$NON-NLS-1$
+          return ("London, England, UK");} //$NON-NLS-1$
         case 11: {
           return ("Birmingham, England, UK");} //$NON-NLS-1$
         case 12: {
@@ -515,7 +520,7 @@ public final class RandomBibliography extends BibliographyExample {
         case 18: {
           return ("Amsterdam, The Netherlands");} //$NON-NLS-1$
         case 19: {
-          return ("Kopenhagen, Denmark");} //$NON-NLS-1$
+          return ("K\u00f8benhavn, Denmark");} //$NON-NLS-1$
         case 20: {
           return ("Warsaw, Poland");} //$NON-NLS-1$
         case 21: {
@@ -528,6 +533,14 @@ public final class RandomBibliography extends BibliographyExample {
           return ("Melburne, Australia");} //$NON-NLS-1$
         case 25: {
           return ("Sydney, Australia");} //$NON-NLS-1$
+        case 26: {
+          return ("Beijing, China");} //$NON-NLS-1$
+        case 27: {
+          return ("San Sebasti\u00e1n, Spain");} //$NON-NLS-1$
+        case 28: {
+          return ("Vienna, Austria");} //$NON-NLS-1$
+        case 29: {
+          return ("Krak\u00f3w, Poland");} //$NON-NLS-1$
         default: {
           return ("Prague, Czech Republic");} //$NON-NLS-1$
       }
@@ -540,7 +553,8 @@ public final class RandomBibliography extends BibliographyExample {
       sb.append((char) ('A' + r.nextInt(26)));
       do {
         sb.append((char) ('a' + r.nextInt(26)));
-      } while ((r.nextInt(6) > 0) || (sb.length() < 3));
+      } while (((r.nextInt(6) > 0) && (sb.length() < 10))
+          || (sb.length() < 3));
 
       for (i = (sb.length() >> 2); (--i) >= 0;) {
         switch (r.nextInt(4)) {
@@ -653,7 +667,8 @@ public final class RandomBibliography extends BibliographyExample {
           sb.append((char) ('A' + r.nextInt(26)));
           do {
             sb.append((char) ('a' + r.nextInt(26)));
-          } while ((r.nextInt(6) > 0) || (sb.length() < 3));
+          } while (((r.nextInt(6) > 0) && (sb.length() < 10))
+              || (sb.length() < 3));
 
           for (i = (sb.length() >> 2); (--i) >= 0;) {
             switch (r.nextInt(4)) {
@@ -686,7 +701,7 @@ public final class RandomBibliography extends BibliographyExample {
       }
     }
 
-    switch (r.nextInt(8)) {
+    switch (r.nextInt(11)) {
       case 0: {
         sb.append(" Publishers");break;} //$NON-NLS-1$
       case 1: {
@@ -703,6 +718,10 @@ public final class RandomBibliography extends BibliographyExample {
         sb.append(" Co.");break;} //$NON-NLS-1$
       case 7: {
         sb.append(" Ltd.");break;} //$NON-NLS-1$
+      case 8: {
+        sb.append(" Verlag");break;} //$NON-NLS-1$
+      case 9: {
+        sb.insert(0, "Technische Universit\u00e4t ");break;} //$NON-NLS-1$
       default: {
         sb.append(" Institute");break;} //$NON-NLS-1$
     }
@@ -868,7 +887,7 @@ public final class RandomBibliography extends BibliographyExample {
   private final String __randomDoi() {
     final Random r;
     final StringBuilder sb;
-    int i;
+    int i, j;
 
     sb = new StringBuilder();
     r = this.m_rand;
@@ -892,9 +911,10 @@ public final class RandomBibliography extends BibliographyExample {
             break;
           }
         }
+        j = 0;
         do {
           sb.append((char) ('0' + r.nextInt(10)));
-        } while (r.nextInt(5) > 0);
+        } while (((++j) < 7) && (r.nextInt(5) > 0));
       } while (r.nextBoolean());
       if (r.nextBoolean()) {
         sb.append(this.__randomISBN());
@@ -912,6 +932,7 @@ public final class RandomBibliography extends BibliographyExample {
   private final String __randomProceedingsName() {
     final Random r;
     final StringBuilder sb;
+    int x;
 
     sb = new StringBuilder();
     r = this.m_rand;
@@ -937,11 +958,23 @@ public final class RandomBibliography extends BibliographyExample {
       case 4: {
         sb.append("Fifth ");break;} //$NON-NLS-1$
       default: {
-        sb.append(6 + r.nextInt(20));
-        sb.append("th");break;} //$NON-NLS-1$
+        x = 6 + r.nextInt(20);
+        sb.append(x);
+        switch (x % 10) {
+          case 1: {
+            sb.append("st ");break;}//$NON-NLS-1$
+          case 2: {
+            sb.append("nd ");break;}//$NON-NLS-1$
+          case 3: {
+            sb.append("rd ");break;}//$NON-NLS-1$
+          default: {
+            sb.append("th ");break;}//$NON-NLS-1$
+        }
+        break;
+      }
     }
 
-    switch (r.nextInt(8)) {
+    switch (r.nextInt(9)) {
       case 0: {
         sb.append("International ");break;} //$NON-NLS-1$
       case 1: {
@@ -955,7 +988,9 @@ public final class RandomBibliography extends BibliographyExample {
       case 5: {
         sb.append("Australian ");break;} //$NON-NLS-1$
       case 6: {
-        sb.append("Japanese ");break;} //$NON-NLS-1$      
+        sb.append("Japanese ");break;} //$NON-NLS-1$    
+      case 7: {
+        sb.append("Joint ");break;} //$NON-NLS-1$   
       default: {
         sb.append("European ");break;} //$NON-NLS-1$      
     }
@@ -1573,8 +1608,18 @@ public final class RandomBibliography extends BibliographyExample {
 
   /** the constructor */
   public RandomBibliography() {
+    this(null);
+  }
+
+  /**
+   * the constructor
+   * 
+   * @param rand
+   *          the randomizer
+   */
+  public RandomBibliography(final Random rand) {
     super();
-    this.m_rand = new Random();
+    this.m_rand = ((rand != null) ? rand : new Random());
   }
 
   /**

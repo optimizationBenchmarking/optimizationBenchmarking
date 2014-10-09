@@ -141,15 +141,15 @@ public class BibBookRecord extends BibRecordWithPublisher {
   /** {@inheritDoc} */
   @Override
   protected int calcHashCode() {
-    return HashUtils.combineHashes(HashUtils.combineHashes(HashUtils
-        .combineHashes(
+    return HashUtils.combineHashes(HashUtils.combineHashes(//
+        HashUtils.combineHashes(
             HashUtils.combineHashes(super.calcHashCode(),
                 HashUtils.hashCode(this.m_edition)),
-            HashUtils.hashCode(this.m_editors)), HashUtils.combineHashes(
-        HashUtils.hashCode(this.m_series),
-        HashUtils.combineHashes(HashUtils.hashCode(this.m_issn),
-            HashUtils.hashCode(this.m_volume)))), HashUtils
-        .hashCode(this.m_isbn));
+            HashUtils.hashCode(this.m_editors)),//
+        HashUtils.combineHashes(HashUtils.hashCode(this.m_series),
+            HashUtils.combineHashes(HashUtils.hashCode(this.m_issn),
+                HashUtils.hashCode(this.m_volume)))),//
+        HashUtils.hashCode(this.m_isbn));
   }
 
   /**

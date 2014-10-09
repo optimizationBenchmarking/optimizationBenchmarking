@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
+import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
@@ -57,23 +58,34 @@ public class DocumentFooter extends _StyleProviderPart implements
     //
   }
 
+  /**
+   * This method is invoked before the footer is closed
+   */
+  protected void doClose() {
+    Bibliography bib;
+    CitationsBuilder cb;
+
+    if ((cb = this.m_doc.m_citations) != null) {
+      bib = cb.getResult();
+      cb.close();
+      this.m_doc.m_citations = cb = null;
+
+      if ((bib != null) && (!(bib.isEmpty()))) {
+        this.processCitations(bib);
+      }
+      bib = null;
+    }
+  }
+
   /** {@inheritDoc} */
   @Override
-  protected synchronized void onClose() {
-    Bibliography bib;
+  protected final synchronized void onClose() {
 
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
         DocumentFooter.FLAG_CITATIONS_TAKEN,
         DocumentFooter.FLAG_CITATIONS_TAKEN, FSM.FLAG_NOTHING);
 
-    bib = this.m_doc.m_citations.getResult();
-    this.m_doc.m_citations.close();
-    this.m_doc.m_citations = null;
-
-    if ((bib != null) && (!(bib.isEmpty()))) {
-      this.processCitations(bib);
-    }
-    bib = null;
+    this.doClose();
 
     super.onClose();
   }

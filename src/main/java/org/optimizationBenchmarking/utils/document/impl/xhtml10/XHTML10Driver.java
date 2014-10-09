@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
@@ -30,6 +31,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
+import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.PageDimension;
@@ -119,6 +121,13 @@ public final class XHTML10Driver extends DocumentDriver {
       'p', ';', '&', 'n', 'b', 's', 'p', ';', '&', 'n', 'b', 's', 'p',
       ';', '&', 'n', 'b', 's', 'p', ';' };
 
+  /** the reference href id */
+  static final char[] A_REF = { '<', 'a', ' ', 'c', 'l', 'a', 's', 's',
+      '=', '"', 'r', 'e', 'f', '"', ' ', 'h', 'r', 'e', 'f', '=', '"', '#' };
+
+  /** the 3rd part of a reference */
+  static final char[] A_REF_END = { '<', '/', 'a', '>' };
+
   /** the synchronizer */
   private static final Object SYNCH = new Object();
 
@@ -182,6 +191,17 @@ public final class XHTML10Driver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   protected final ITextOutput encode(final ITextOutput raw) {
+    return XHTML10Driver._encode(raw);
+  }
+
+  /**
+   * Encode a text output
+   * 
+   * @param raw
+   *          the raw output
+   * @return the encoded output
+   */
+  static final ITextOutput _encode(final ITextOutput raw) {
     return XMLCharTransformer.INSTANCE.transform(raw,
         TextUtils.DEFAULT_NORMALIZER_FORM);
   }
@@ -672,6 +692,13 @@ public final class XHTML10Driver extends DocumentDriver {
         rowSpan, colSpan, def);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10CitationItem createCitationItem(
+      final BibRecord item, final int index, final ECitationMode mode) {
+    return new _XHTML10CitationItem(item, index, mode);
+  }
+
   /**
    * write a label
    * 
@@ -682,8 +709,22 @@ public final class XHTML10Driver extends DocumentDriver {
    */
   static final void _label(final Label label, final ITextOutput out) {
     if (label != null) {
+      XHTML10Driver._label(label.getLabelMark(), out);
+    }
+  }
+
+  /**
+   * write a label
+   * 
+   * @param label
+   *          the label
+   * @param out
+   *          the output
+   */
+  static final void _label(final String label, final ITextOutput out) {
+    if (label != null) {
       out.append(XHTML10Driver.LABEL_BEGIN);
-      out.append(label.getLabelMark());
+      out.append(label);
       out.append(XHTML10Driver.LABEL_END);
     }
   }

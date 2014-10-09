@@ -4,12 +4,14 @@ import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A text class which allows creating text with more sophisticated styles
@@ -87,11 +89,17 @@ public class ComplexText extends PlainText implements IComplexText {
    *          the sequence mode
    * @param references
    *          the references
+   * @param raw
+   *          the raw text output
+   * @param encoded
+   *          the encoded text output
    */
   protected void doCite(final ECitationMode citationMode,
       final ETextCase textCase, final ESequenceMode sequenceMode,
-      final CitationItem[] references) {
-    throw new UnsupportedOperationException();
+      final CitationItem[] references, final ITextOutput raw,
+      final ITextOutput encoded) {
+    sequenceMode.appendSequence(textCase, new ArrayListView<>(references),
+        true, this);
   }
 
   /** {@inheritDoc} */
@@ -118,7 +126,7 @@ public class ComplexText extends PlainText implements IComplexText {
         throw new IllegalArgumentException(//
             "Reference must not be null."); //$NON-NLS-1$
       }
-      for (j = len; (--j) >= i;) {
+      for (j = len; (--j) > i;) {
         if (a.equals(references[j])) {
           throw new IllegalArgumentException(//
               "The same reference must not appear twice in a citation, but '" //$NON-NLS-1$
@@ -143,7 +151,8 @@ public class ComplexText extends PlainText implements IComplexText {
       }
     }
 
-    this.doCite(citationMode, textCase, sequenceMode, ci);
+    this.doCite(citationMode, textCase, sequenceMode, ci,
+        this.getTextOutput(), this.m_encoded);
   }
 
   /**

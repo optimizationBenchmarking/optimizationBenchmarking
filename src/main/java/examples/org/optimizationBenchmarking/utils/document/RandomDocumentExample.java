@@ -8,9 +8,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -18,8 +20,11 @@ import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
+import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
+import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
@@ -52,23 +57,30 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokeStyle;
+import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 import examples.org.optimizationBenchmarking.LoremIpsum;
+import examples.org.optimizationBenchmarking.utils.bibliography.data.RandomBibliography;
 import examples.org.optimizationBenchmarking.utils.graphics.FinishedPrinter;
 
 /**
  * An example used to illustrate how documents can be created with the
- * document output API in parallel. The creation of each of the (nested)
- * sections is launched as a separate
- * {@link java.util.concurrent.RecursiveAction ForkJoinTask}. Several
- * different document drivers are used in parallel to generate documents.
- * Each document is entirely random and contains examples for all of the
- * available primitives of the API.
+ * document output API both serial and in parallel. The program takes two
+ * parameters: the destination folder and the number of processors to use.
+ * Several different document are used in parallel to generate documents.
+ * The documents are entirely random, but based on the same seed, and
+ * contains examples for all of the available primitives of the API. If
+ * more than one processor is specified, then the creation of each of the
+ * (nested) sections in a document is launched as a separate
+ * {@link java.util.concurrent.RecursiveAction ForkJoinTask}. If only one
+ * processor is specified, no parallelization will be performed and all
+ * produced documents should look approximately the same, except for
+ * necessary adaptation to the underlying output format.
  */
-public class DocumentExample implements Runnable {
+public class RandomDocumentExample implements Runnable {
 
   /** the graphic driver to use */
   private static final IDocumentDriver[] DRIVERS = {
@@ -79,32 +91,34 @@ public class DocumentExample implements Runnable {
   /** the normal text */
   private static final int NORMAL_TEXT = 0;
   /** in braces */
-  private static final int IN_BRACES = (DocumentExample.NORMAL_TEXT + 1);
+  private static final int IN_BRACES = (RandomDocumentExample.NORMAL_TEXT + 1);
   /** in quotes */
-  private static final int IN_QUOTES = (DocumentExample.IN_BRACES + 1);
+  private static final int IN_QUOTES = (RandomDocumentExample.IN_BRACES + 1);
   /** with font */
-  private static final int WITH_FONT = (DocumentExample.IN_QUOTES + 1);
+  private static final int WITH_FONT = (RandomDocumentExample.IN_QUOTES + 1);
   /** with color */
-  private static final int WITH_COLOR = (DocumentExample.WITH_FONT + 1);
+  private static final int WITH_COLOR = (RandomDocumentExample.WITH_FONT + 1);
   /** section */
-  private static final int SECTION = (DocumentExample.WITH_COLOR + 1);
+  private static final int SECTION = (RandomDocumentExample.WITH_COLOR + 1);
   /** enum */
-  private static final int ENUM = (DocumentExample.SECTION + 1);
+  private static final int ENUM = (RandomDocumentExample.SECTION + 1);
   /** itemize */
-  private static final int ITEMIZE = (DocumentExample.ENUM + 1);
+  private static final int ITEMIZE = (RandomDocumentExample.ENUM + 1);
   /** figure */
-  private static final int FIGURE = (DocumentExample.ITEMIZE + 1);
+  private static final int FIGURE = (RandomDocumentExample.ITEMIZE + 1);
   /** figure series */
-  private static final int FIGURE_SERIES = (DocumentExample.FIGURE + 1);
+  private static final int FIGURE_SERIES = (RandomDocumentExample.FIGURE + 1);
   /** table */
-  private static final int TABLE = (DocumentExample.FIGURE_SERIES + 1);
+  private static final int TABLE = (RandomDocumentExample.FIGURE_SERIES + 1);
   /** equation */
-  private static final int EQUATION = (DocumentExample.TABLE + 1);
+  private static final int EQUATION = (RandomDocumentExample.TABLE + 1);
   /** inline math */
-  private static final int INLINE_MATH = (DocumentExample.EQUATION + 1);
+  private static final int INLINE_MATH = (RandomDocumentExample.EQUATION + 1);
+  /** citation */
+  private static final int CITATION = (RandomDocumentExample.INLINE_MATH + 1);
 
   /** all elements */
-  private static final int ALL_LENGTH = (DocumentExample.INLINE_MATH + 1);
+  private static final int ALL_LENGTH = (RandomDocumentExample.CITATION + 1);
 
   /** the table cell defs */
   private static final TableCellDef[] CELLS = { TableCellDef.CENTER,
@@ -113,6 +127,14 @@ public class DocumentExample implements Runnable {
 
   /** the comparison */
   private static final EComparison[] COMP = EComparison.values();
+
+  /** the modes */
+  private static final ECitationMode[] CITES = ECitationMode.values();
+  /** the sequence modes */
+  private static final ESequenceMode[] SEQUENCE = ESequenceMode.values();
+
+  /** the seed to use */
+  private static final long SEED = new Random().nextLong();
 
   /** the randomizer */
   private final Random m_rand;
@@ -141,31 +163,56 @@ public class DocumentExample implements Runnable {
   /** the figure counter */
   private volatile long m_figureCounter;
 
+  /** the bibliography */
+  private Bibliography m_bib;
+
   /**
    * run the example: there are problems with the pdf output
    * 
    * @param args
    *          the arguments
    * @throws Throwable
-   *           if isomething fails
+   *           if something fails
    */
   public static final void main(final String[] args) throws Throwable {
     final Path dir;
     final ForkJoinPool pool;
+    final int proc;
+    RandomDocumentExample de;
     String last, cur;
     int i;
 
-    if ((args != null) && (args.length > 0)) {
-      dir = Paths.get(args[0]);
-    } else {
-      dir = Files.createTempDirectory("document"); //$NON-NLS-1$
+    findProcs: {
+      if ((args != null) && (args.length > 0)) {
+        dir = Paths.get(args[0]);
+        if (args.length > 1) {
+          proc = Math.max(1, Math.min(Integer.parseInt(args[1]), Runtime
+              .getRuntime().availableProcessors()));
+          break findProcs;
+        }
+      } else {
+        dir = Files.createTempDirectory("document"); //$NON-NLS-1$
+      }
+      proc = 1;
+    }
+    synchronized (System.out) {
+      System.out.print("Begin creating documents to folder ");//$NON-NLS-1$
+      System.out.print(dir);
+      System.out.print(" using ");//$NON-NLS-1$
+      System.out.print(proc);
+      System.out.println(" processor(s).");//$NON-NLS-1$
     }
 
     i = 0;
     cur = null;
-    pool = new ForkJoinPool();
+    if (proc > 1) {
+      pool = new ForkJoinPool(proc,
+          ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, true);
+    } else {
+      pool = null;
+    }
 
-    for (final IDocumentDriver driver : DocumentExample.DRIVERS) {//
+    for (final IDocumentDriver driver : RandomDocumentExample.DRIVERS) {//
       last = cur;
       cur = driver.getClass().getSimpleName();
 
@@ -174,13 +221,28 @@ public class DocumentExample implements Runnable {
       }
       i++;
 
-      pool.execute(new DocumentExample(driver.createDocument(
+      de = new RandomDocumentExample(driver.createDocument(
           dir.resolve((cur + '_') + i), "report",//$NON-NLS-1$ 
-          new FinishedPrinter())));
+          new FinishedPrinter()));
+
+      if (pool != null) {
+        pool.execute(de);
+      } else {
+        de.run();
+      }
     }
 
-    pool.shutdown();
-    pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+    if (pool != null) {
+      pool.shutdown();
+      pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+    }
+    synchronized (System.out) {
+      System.out.print("Finished creating documents to folder ");//$NON-NLS-1$
+      System.out.print(dir);
+      System.out.print(" using ");//$NON-NLS-1$
+      System.out.print(proc);
+      System.out.println(" processor(s).");//$NON-NLS-1$
+    }
   }
 
   /**
@@ -301,10 +363,11 @@ public class DocumentExample implements Runnable {
     boolean hasSection, hasText, needsNewLine;
     int cur, last;
     ArrayList<Future<Void>> ra;
+    _SectionTask st;
 
     hasText = hasSection = false;
 
-    this.__do(DocumentExample.SECTION);
+    this.__do(RandomDocumentExample.SECTION);
     needsNewLine = false;
     this.__maxSecDepth(sectionDepth + 1);
     cur = last = (-1);
@@ -336,11 +399,17 @@ public class DocumentExample implements Runnable {
                 break;
               }
               hasSection = true;
-              if (ra == null) {
-                ra = new ArrayList<>();
+
+              st = new _SectionTask(this, body, (sectionDepth + 1));
+
+              if (ForkJoinTask.inForkJoinPool()) {
+                if (ra == null) {
+                  ra = new ArrayList<>();
+                }
+                ra.add(st.fork());
+              } else {
+                st.compute();
               }
-              ra.add(new _SectionTask(this, body, (sectionDepth + 1))
-                  .fork());
               needsNewLine = true;
               break;
             }
@@ -404,10 +473,12 @@ public class DocumentExample implements Runnable {
       final boolean needsNewLine) {
     boolean first, must, needs;
     IStyle s;
+    HashSet<BibRecord> refs;
 
     first = true;
     must = needsNewLine;
     needs = false;
+    refs = null;
 
     do {
       spacer: {
@@ -426,16 +497,16 @@ public class DocumentExample implements Runnable {
       first = false;
 
       LoremIpsum.appendLoremIpsum(out, this.m_rand);
-      this.__do(DocumentExample.NORMAL_TEXT);
+      this.__do(RandomDocumentExample.NORMAL_TEXT);
 
       if ((out instanceof IPlainText) && (depth < 10)) {
 
-        switch (this.m_rand.nextInt((out instanceof IComplexText) ? 6 : 3)) {
+        switch (this.m_rand.nextInt((out instanceof IComplexText) ? 7 : 3)) {
           case 1: {
             out.append(' ');
             try (final IPlainText t = ((IPlainText) out).inBraces()) {
               this.__text(t, (depth + 1), this.m_rand.nextBoolean());
-              this.__do(DocumentExample.IN_BRACES);
+              this.__do(RandomDocumentExample.IN_BRACES);
             }
             break;
           }
@@ -443,7 +514,7 @@ public class DocumentExample implements Runnable {
             out.append(' ');
             try (final IPlainText t = ((IPlainText) out).inQuotes()) {
               this.__text(t, (depth + 1), this.m_rand.nextBoolean());
-              this.__do(DocumentExample.IN_QUOTES);
+              this.__do(RandomDocumentExample.IN_QUOTES);
             }
             break;
           }
@@ -455,7 +526,7 @@ public class DocumentExample implements Runnable {
               t.append("In ");//$NON-NLS-1$
               s.appendDescription(ETextCase.IN_SENTENCE, t, false);
               t.append(" font: "); //$NON-NLS-1$
-              this.__do(DocumentExample.WITH_FONT);
+              this.__do(RandomDocumentExample.WITH_FONT);
               this.__text(t, (depth + 1), this.m_rand.nextBoolean());
             }
             break;
@@ -468,7 +539,7 @@ public class DocumentExample implements Runnable {
               t.append("In ");//$NON-NLS-1$
               s.appendDescription(ETextCase.IN_SENTENCE, t, false);
               t.append(" color: "); //$NON-NLS-1$
-              this.__do(DocumentExample.WITH_COLOR);
+              this.__do(RandomDocumentExample.WITH_COLOR);
               this.__text(t, (depth + 1), this.m_rand.nextBoolean());
             }
             break;
@@ -476,6 +547,29 @@ public class DocumentExample implements Runnable {
           case 5: {
             out.append(" Equation: ");//$NON-NLS-1$
             this.__createInlineMath(((IComplexText) out));
+            break;
+          }
+          case 6: {
+            out.append(" And here we cite ");//$NON-NLS-1$
+            if (refs == null) {
+              refs = new HashSet<>();
+            }
+
+            do {
+              refs.add(this.m_bib.get(this.m_rand.nextInt(this.m_bib
+                  .size())));
+            } while (this.m_rand.nextBoolean());
+
+            ((IComplexText) out).cite(
+                RandomDocumentExample.CITES[this.m_rand
+                    .nextInt(RandomDocumentExample.CITES.length)],
+                ETextCase.IN_SENTENCE,
+                RandomDocumentExample.SEQUENCE[this.m_rand
+                    .nextInt(RandomDocumentExample.SEQUENCE.length)], refs
+                    .toArray(new BibRecord[refs.size()]));
+            refs.clear();
+            out.append('.');
+            this.__do(RandomDocumentExample.CITATION);
             break;
           }
           default: {
@@ -489,7 +583,7 @@ public class DocumentExample implements Runnable {
       if (needs && (this.m_rand.nextBoolean())) {
         out.append(' ');
         LoremIpsum.appendLoremIpsum(out, this.m_rand);
-        this.__do(DocumentExample.NORMAL_TEXT);
+        this.__do(RandomDocumentExample.NORMAL_TEXT);
       }
 
       first = false;
@@ -513,9 +607,9 @@ public class DocumentExample implements Runnable {
     b = this.m_rand.nextBoolean();
     if (listDepth <= 0) {
       if (b) {
-        this.__do(DocumentExample.ENUM);
+        this.__do(RandomDocumentExample.ENUM);
       } else {
-        this.__do(DocumentExample.ITEMIZE);
+        this.__do(RandomDocumentExample.ITEMIZE);
       }
     }
 
@@ -573,25 +667,38 @@ public class DocumentExample implements Runnable {
    * @param doc
    *          the document
    */
-  private DocumentExample(final IDocument doc) {
+  private RandomDocumentExample(final IDocument doc) {
     super();
     this.m_rand = new Random();
     this.m_doc = doc;
-    this.m_done = new boolean[DocumentExample.ALL_LENGTH];
+    this.m_done = new boolean[RandomDocumentExample.ALL_LENGTH];
     this.m_labels = new ArrayList<>();
+  }
+
+  /** create the bibliography */
+  private final void __createBib() {
+    this.m_bib = new RandomBibliography(this.m_rand).createBibliography();
   }
 
   /** {@inheritDoc} */
   @Override
   public final void run() {
     try {
+      synchronized (System.out) {
+        System.out.print("Begin creating document "); //$NON-NLS-1$
+        System.out.println(this.m_doc);
+      }
+
       this.m_maxSectionDepth = 0;
       this.m_labels.clear();
       this.m_figureCounter = 0L;
 
+      this.m_rand.setSeed(RandomDocumentExample.SEED);
       Arrays.fill(this.m_done, false);
 
       this.__loadStyles();
+      this.__createBib();
+
       try (final IDocumentHeader header = this.m_doc.header()) {
         this.__createHeader(header);
       }
@@ -602,7 +709,14 @@ public class DocumentExample implements Runnable {
         this.__createFooter(footer);
       }
     } finally {
-      this.m_doc.close();
+      try {
+        this.m_doc.close();
+      } finally {
+        synchronized (System.out) {
+          System.out.print("Finished creating document "); //$NON-NLS-1$
+          System.out.println(this.m_doc);
+        }
+      }
     }
   }
 
@@ -663,14 +777,14 @@ public class DocumentExample implements Runnable {
     TableCellDef d;
     int min;
 
-    this.__do(DocumentExample.TABLE);
+    this.__do(RandomDocumentExample.TABLE);
 
     def = new ArrayList<>();
     pureDef = new ArrayList<>();
     min = (this.m_rand.nextInt(3) + 1);
     do {
-      d = DocumentExample.CELLS[this.m_rand
-          .nextInt(DocumentExample.CELLS.length)];
+      d = RandomDocumentExample.CELLS[this.m_rand
+          .nextInt(RandomDocumentExample.CELLS.length)];
       def.add(d);
       if (d != TableCellDef.VERTICAL_SEPARATOR) {
         pureDef.add(d);
@@ -754,8 +868,8 @@ public class DocumentExample implements Runnable {
               }
             } else {
               do {
-                d = DocumentExample.CELLS[this.m_rand
-                    .nextInt(DocumentExample.CELLS.length)];
+                d = RandomDocumentExample.CELLS[this.m_rand
+                    .nextInt(RandomDocumentExample.CELLS.length)];
               } while (d == TableCellDef.VERTICAL_SEPARATOR);
               try (final IPlainText cell = row.cell((maxX - i),
                   (maxY - rows), d)) {
@@ -784,7 +898,7 @@ public class DocumentExample implements Runnable {
     final EFigureSize v;
 
     s = EFigureSize.values();
-    this.__do(DocumentExample.FIGURE);
+    this.__do(RandomDocumentExample.FIGURE);
     try (final IFigure fig = sb.figure(ELabelType.AUTO,
         (v = s[this.m_rand.nextInt(s.length)]),
         RandomUtils.longToString(null, this.__nextFigure()))) {
@@ -807,7 +921,7 @@ public class DocumentExample implements Runnable {
     s = EFigureSize.values();
     v = s[this.m_rand.nextInt(s.length)];
     c = v.getNX();
-    this.__do(DocumentExample.FIGURE_SERIES);
+    this.__do(RandomDocumentExample.FIGURE_SERIES);
     try (final IFigureSeries fs = sb.figureSeries(ELabelType.AUTO, v,
         RandomUtils.longToString(null, this.__nextFigure()))) {
       this.__label(fs);
@@ -1086,7 +1200,7 @@ public class DocumentExample implements Runnable {
    */
   private final void __createEquation(final ISectionBody sb) {
     try (final IEquation equ = sb.equation(ELabelType.AUTO)) {
-      this.__do(DocumentExample.EQUATION);
+      this.__do(RandomDocumentExample.EQUATION);
       this.__label(equ);
       this.__fillMath(equ, 1, 1, 5);
     }
@@ -1100,7 +1214,7 @@ public class DocumentExample implements Runnable {
    */
   private final void __createInlineMath(final IComplexText sb) {
     try (final IMath equ = sb.inlineMath()) {
-      this.__do(DocumentExample.INLINE_MATH);
+      this.__do(RandomDocumentExample.INLINE_MATH);
       this.__fillMath(equ, 1, 1, 4);
     }
   }
@@ -1234,8 +1348,8 @@ public class DocumentExample implements Runnable {
 
         case 15: {
           try (final IMath nm = math
-              .compare(DocumentExample.COMP[this.m_rand
-                  .nextInt(DocumentExample.COMP.length)])) {
+              .compare(RandomDocumentExample.COMP[this.m_rand
+                  .nextInt(RandomDocumentExample.COMP.length)])) {
             this.__fillMath(nm, 2, 2, (depth - 1));
           }
           break;

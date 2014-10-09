@@ -15,8 +15,10 @@ public final class FinishedPrinter implements IObjectListener {
   /** {@inheritDoc} */
   @Override
   public final void onObjectFinalized(final ArrayListView<PathEntry> id) {
-    System.out.print("Finished creating "); //$NON-NLS-1$
-    System.out.println(id);
+    synchronized (System.out) {
+      System.out.print("Finished creating "); //$NON-NLS-1$
+      System.out.println(id);
+    }
   }
 
 }

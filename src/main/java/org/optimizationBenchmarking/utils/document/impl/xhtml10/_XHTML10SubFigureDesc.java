@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.Label;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 
 /** a description of a sub-figure */
-final class _SubFigureDesc {
+final class _XHTML10SubFigureDesc {
 
   /** the caption */
   final char[] m_caption;
@@ -37,8 +37,9 @@ final class _SubFigureDesc {
    * @param id
    *          the figure id
    */
-  _SubFigureDesc(final char[] caption, final PhysicalDimension size,
-      final Path path, final Label label, final String id) {
+  _XHTML10SubFigureDesc(final char[] caption,
+      final PhysicalDimension size, final Path path, final Label label,
+      final String id) {
     super();
     this.m_caption = caption;
     this.m_size = size;

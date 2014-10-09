@@ -11,19 +11,20 @@ public enum ESequenceMode {
   COMMA(null, null),
 
   /** A sequence of the type {@code "a, b, and c"}. */
-  AND(null, "and"), //$NON-NLS-1$
+  AND(null, new char[] { 'a', 'n', 'd' }),
 
   /** A sequence of the type {@code "a, b, or c"}. */
-  OR(null, "or"), //$NON-NLS-1$
+  OR(null, new char[] { 'o', 'r' }),
 
   /** A sequence of the type {@code "either a, b, or c"}. */
-  EITHER_OR("either", OR.m_end), //$NON-NLS-1$
+  EITHER_OR(new char[] { 'e', 'i', 't', 'h', 'e', 'r' }, OR.m_end),
 
   /** A sequence of the type {@code "neither a, b, nor c"}. */
-  NEITHER_NOR("neither", "nor"), //$NON-NLS-1$//$NON-NLS-2$
+  NEITHER_NOR(new char[] { 'n', 'e', 'i', 't', 'h', 'e', 'r' },
+      new char[] { 'n', 'o', 'r' }),
 
   /** A sequence of the type {@code "from a to c"}. */
-  FROM_TO("from", "to"), //$NON-NLS-1$//$NON-NLS-2$
+  FROM_TO(new char[] { 'f', 'r', 'o', 'm' }, new char[] { 't', 'o' }),
 
   /**
    * A sequence which consists of at most three elements concatenated in
@@ -43,7 +44,7 @@ public enum ESequenceMode {
       s = data.size();
       if (s > 3) {
         ESequenceMode.__append(data.get(0), true, true, textCase, dest);
-        dest.append(" et al."); //$NON-NLS-1$
+        dest.append(ESequenceMode.ET_AL_);
       } else {
         super.appendSequence(textCase, data,
             connectLastElementWithNonBreakableSpace, dest);
@@ -51,11 +52,14 @@ public enum ESequenceMode {
     }
   };
 
+  /** the et al */
+  static final char[] ET_AL_ = { 'e', 't', ' ', 'a', 'l', '.' };
+
   /** the start string, or {@code null} if none is needed */
-  private final String m_start;
+  private final char[] m_start;
 
   /** the end string, or {@code null} if none is needed */
-  private final String m_end;
+  private final char[] m_end;
 
   /**
    * create the sequence type
@@ -65,7 +69,7 @@ public enum ESequenceMode {
    * @param end
    *          the end string, or {@code null} if none is needed
    */
-  ESequenceMode(final String start, final String end) {
+  ESequenceMode(final char[] start, final char[] end) {
     this.m_start = start;
     this.m_end = end;
   }
@@ -153,7 +157,7 @@ public enum ESequenceMode {
       final ITextOutput dest) {
     final int s, s2;
     int i;
-    String t;
+    char[] t;
     ETextCase useCase;
     char l, u;
 
@@ -173,11 +177,11 @@ public enum ESequenceMode {
       app: {
         if ((useCase == ETextCase.AT_SENTENCE_START)
             || (useCase == ETextCase.AT_TITLE_START)) {
-          l = t.charAt(0);
+          l = t[0];
           u = useCase.adjustCaseOfFirstCharInWord(l);
           if (l != u) {
             dest.append(u);
-            dest.append(t, 1, t.length());
+            dest.append(t, 1, t.length);
             break app;
           }
         }

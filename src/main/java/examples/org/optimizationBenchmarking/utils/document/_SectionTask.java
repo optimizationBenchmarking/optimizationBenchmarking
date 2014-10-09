@@ -11,7 +11,7 @@ final class _SectionTask extends RecursiveAction {
   private static final long serialVersionUID = 1L;
 
   /** the document example */
-  private final DocumentExample m_de;
+  private final RandomDocumentExample m_de;
 
   /** the section container */
   private final ISectionContainer m_sc;
@@ -29,7 +29,7 @@ final class _SectionTask extends RecursiveAction {
    * @param sectionDepth
    *          the depth
    */
-  _SectionTask(final DocumentExample de, final ISectionContainer sc,
+  _SectionTask(final RandomDocumentExample de, final ISectionContainer sc,
       final int sectionDepth) {
     super();
     this.m_de = de;

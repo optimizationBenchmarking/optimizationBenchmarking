@@ -496,18 +496,6 @@ td.refTxt {
   text-align          : left;  
 }
 
-a.refId {
-  font-weight         : bold;
-}
-
-span.ref {
-  font-size           : 90%;
-}
-
-a.ref {
-}
-
-
 span.article {
 }
 
@@ -589,9 +577,6 @@ span.rseries {
 span.publisher {
 }
 
-span.publisherAddress {
-}
-
 span.location {
 }
 
@@ -608,11 +593,5 @@ span.ttype {
 span.institute {
 }
 
-span.instituteAddress {
-}
-
 span.school {
-}
-
-span.schoolAddress {
 }

@@ -47,7 +47,7 @@ final class _XHTML10FigureSeries extends FigureSeries {
       'g', 'u', 'r', 'e', 'B', 'o', 'd', 'y', '"', '/', '>' };
 
   /** the sub-figures */
-  private final _SubFigureDesc[] m_subFigs;
+  private final _XHTML10SubFigureDesc[] m_subFigs;
 
   /** the sub-figure count */
   private int m_count;
@@ -77,7 +77,7 @@ final class _XHTML10FigureSeries extends FigureSeries {
     final int nx;
 
     nx = size.getNX();
-    this.m_subFigs = new _SubFigureDesc[nx];
+    this.m_subFigs = new _XHTML10SubFigureDesc[nx];
     this.open();
   }
 
@@ -87,7 +87,7 @@ final class _XHTML10FigureSeries extends FigureSeries {
    * @param desc
    *          the sub-figure description
    */
-  synchronized final void _subFigure(final _SubFigureDesc desc) {
+  synchronized final void _subFigure(final _XHTML10SubFigureDesc desc) {
     final int i;
 
     i = this.m_count;
@@ -101,7 +101,7 @@ final class _XHTML10FigureSeries extends FigureSeries {
   private final void __flushSubFigs() {
     final int c, e;
     final Path df;
-    _SubFigureDesc d;
+    _XHTML10SubFigureDesc d;
     int i;
     char[] cap;
 

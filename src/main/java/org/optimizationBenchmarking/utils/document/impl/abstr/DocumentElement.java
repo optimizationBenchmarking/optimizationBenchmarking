@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.utils.document.spec.IDocumentElement;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -58,6 +59,15 @@ public abstract class DocumentElement extends HierarchicalText implements
    */
   final DocumentElement _owner() {
     return ((DocumentElement) (this.getOwner()));
+  }
+
+  /**
+   * get the raw, unencoded text output
+   * 
+   * @return the text output
+   */
+  final ITextOutput _raw() {
+    return this.getTextOutput();
   }
 
   /**
