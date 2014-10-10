@@ -35,7 +35,7 @@ public enum ESequenceMode {
 
     /** {@inheritDoc} */
     @Override
-    public void appendSequence(final ETextCase textCase,
+    final void _appendSequence(final char sep, final ETextCase textCase,
         final List<?> data,
         final boolean connectLastElementWithNonBreakableSpace,
         final ITextOutput dest) {
@@ -46,7 +46,7 @@ public enum ESequenceMode {
         ESequenceMode.__append(data.get(0), true, true, textCase, dest);
         dest.append(ESequenceMode.ET_AL_);
       } else {
-        super.appendSequence(textCase, data,
+        super._appendSequence(sep, textCase, data,
             connectLastElementWithNonBreakableSpace, dest);
       }
     }
@@ -152,7 +152,75 @@ public enum ESequenceMode {
    * @param dest
    *          the destination text output
    */
-  public void appendSequence(final ETextCase textCase, final List<?> data,
+  public final void appendSequence(final ETextCase textCase,
+      final List<?> data,
+      final boolean connectLastElementWithNonBreakableSpace,
+      final ITextOutput dest) {
+    this._appendSequence(',', textCase, data,
+        connectLastElementWithNonBreakableSpace, dest);
+  }
+
+  /**
+   * Append a sequence to this text output.
+   * 
+   * @param textCase
+   *          the text case of the first sequence element
+   * @param data
+   *          the collection providing the sequence elements
+   * @param connectLastElementWithNonBreakableSpace
+   *          {@code true} if the last element should be connected with a
+   *          non-breakable space, {@code false} if normal spaces can be
+   *          used
+   * @param hierarchyLevel
+   *          the hierarchy level: 0 for a normal sequence, 1 for a
+   *          sequence containing a normal sequence, 2 for a sequence
+   *          containing a sequence containing a sequence, etc.
+   * @param dest
+   *          the destination text output
+   */
+  public final void appendNestedSequence(final ETextCase textCase,
+      final List<?> data,
+      final boolean connectLastElementWithNonBreakableSpace,
+      final int hierarchyLevel, final ITextOutput dest) {
+    final char ch;
+
+    switch (hierarchyLevel % 3) {
+      case 0: {
+        ch = ',';
+        break;
+      }
+      case 1: {
+        ch = ';';
+        break;
+      }
+      default: {
+        ch = '.';
+        break;
+      }
+    }
+
+    this._appendSequence(ch, textCase, data,
+        connectLastElementWithNonBreakableSpace, dest);
+  }
+
+  /**
+   * Append a sequence to this text output with a given separator.
+   * 
+   * @param sep
+   *          the separator
+   * @param textCase
+   *          the text case of the first sequence element
+   * @param data
+   *          the collection providing the sequence elements
+   * @param connectLastElementWithNonBreakableSpace
+   *          {@code true} if the last element should be connected with a
+   *          non-breakable space, {@code false} if normal spaces can be
+   *          used
+   * @param dest
+   *          the destination text output
+   */
+  void _appendSequence(final char sep, final ETextCase textCase,
+      final List<?> data,
       final boolean connectLastElementWithNonBreakableSpace,
       final ITextOutput dest) {
     final int s, s2;
@@ -195,7 +263,7 @@ public enum ESequenceMode {
 
     s2 = (s - 1);
     for (i = 1; i < s2; i++) {
-      dest.append(',');
+      dest.append(sep);
       dest.append(' ');
       useCase = useCase.nextCase();
       ESequenceMode.__append(data.get(i), false, false, useCase, dest);

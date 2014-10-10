@@ -15,10 +15,14 @@ import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
+import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.numbers.AlphabeticNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -73,9 +77,6 @@ public class Document extends DocumentElement implements IDocument {
   /** the style set */
   final StyleSet m_styles;
 
-  /** the label manager */
-  final LabelManager m_manager;
-
   /** the base path, i.e., the folder containing the document */
   final Path m_basePath;
 
@@ -96,6 +97,10 @@ public class Document extends DocumentElement implements IDocument {
 
   /** the used styles */
   private HashSet<IStyle> m_usedStyles;
+  /** the label counters */
+  private final int[] m_counters;
+  /** the internal memory text output */
+  private final MemoryTextOutput m_mto;
 
   /**
    * Create a document.
@@ -120,12 +125,6 @@ public class Document extends DocumentElement implements IDocument {
           "Style set must not be null."); //$NON-NLS-1$
     }
 
-    this.m_manager = driver.createLabelManager();
-    if (this.m_manager == null) {
-      throw new IllegalArgumentException(//
-          "Label manager must not be null."); //$NON-NLS-1$
-    }
-
     this.m_documentPath = PathUtils.normalize(docPath);
     this.m_basePath = PathUtils.normalize(docPath.getParent());
     this.m_paths = new LinkedHashSet<>();
@@ -136,6 +135,100 @@ public class Document extends DocumentElement implements IDocument {
 
     this.m_usedStyles = new HashSet<>();
     this.m_usedStyles.add(this.m_styles.getDefaultFont());
+
+    this.m_counters = new int[ELabelType.INSTANCES.size()];
+    this.m_mto = new MemoryTextOutput(16);
+  }
+
+  /**
+   * Get the label for a given object.
+   * 
+   * @param type
+   *          the label type
+   * @param label
+   *          the label placeholder, must not be {@code null}
+   * @param text
+   *          the label text
+   * @return the label to use
+   */
+  final Label _getLabel(final ELabelType type, final ILabel label,
+      final String text) {
+    final Label r;
+
+    if (text == null) {
+      throw new IllegalArgumentException(//
+          "The reference text must not be null."); //$NON-NLS-1$
+    }
+
+    if (label == ELabelType.AUTO) {
+      return this.createLabel(type, text);
+    }
+    if (label instanceof Label) {
+      r = ((Label) (label));
+      if (r.m_type != type) {
+        throw new IllegalArgumentException(//
+            "A label of type '" + r.m_type + //$NON-NLS-1$
+                "' cannot be used to label an '" + //$NON-NLS-1$
+                type + "'."); //$NON-NLS-1$
+      }
+      this.__setReferenceText(r, text);
+      return r;
+    }
+
+    throw new IllegalArgumentException(//
+        "Invalid label: '" + label + //$NON-NLS-1$
+            "', only " + TextUtils.className(ELabelType.class) + //$NON-NLS-1$
+            ".AUTO and instances of " + TextUtils.className(Label.class) + //$NON-NLS-1$
+            " permitted."); //$NON-NLS-1$
+  }
+
+  /**
+   * Create a new label to mark a table or figure or section with that is
+   * going to be written in the future.
+   * 
+   * @param type
+   *          the label type
+   * @param refText
+   *          the reference text
+   * @return the label to be used in forward references
+   */
+  public final Label createLabel(final ELabelType type,
+      final String refText) {
+    final MemoryTextOutput mto;
+    final String s;
+
+    mto = this.m_mto;
+    synchronized (mto) {
+      mto.append(type.getLabelPrefixChar());
+      mto.append(ELabelType.LABEL_PREFIX_SEPARATOR);
+      AlphabeticNumberAppender.LOWER_CASE_INSTANCE.appendTo(
+          (this.m_counters[type.ordinal()]++), ETextCase.IN_SENTENCE, mto);
+      s = mto.toString();
+      mto.clear();
+    }
+
+    return this.m_driver.createLabel(this, type, s, refText);
+  }
+
+  /**
+   * set the reference text of a label
+   * 
+   * @param label
+   *          the label
+   * @param refText
+   *          the reference text
+   */
+  private final void __setReferenceText(final Label label,
+      final String refText) {
+    if (refText == null) {
+      throw new IllegalArgumentException(//
+          "Reference text must not be null."); //$NON-NLS-1$
+    }
+    if (label.m_owner != this) {
+      throw new IllegalArgumentException(//
+          "Reference text can only be set to owned labels."); //$NON-NLS-1$
+    }
+    label.m_refText = refText;
   }
 
   /**
@@ -415,7 +508,7 @@ public class Document extends DocumentElement implements IDocument {
   /** {@inheritDoc} */
   @Override
   public final Label createLabel(final ELabelType type) {
-    return this.m_manager.createLabel(type);
+    return this.createLabel(type, null);
   }
 
   /** {@inheritDoc} */

@@ -58,8 +58,8 @@ public class Equation extends BasicMath implements IEquation {
     }
 
     if (useLabel != null) {
-      this.m_label = this.m_doc.m_manager._getLabel(ELabelType.EQUATION,
-          useLabel, this.m_globalID);
+      this.m_label = this.m_doc._getLabel(ELabelType.EQUATION, useLabel,
+          this.m_globalID);
     } else {
       this.m_label = null;
     }

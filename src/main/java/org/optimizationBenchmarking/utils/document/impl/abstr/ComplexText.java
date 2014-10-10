@@ -167,7 +167,12 @@ public class ComplexText extends PlainText implements IComplexText {
    */
   protected void doReference(final ETextCase textCase,
       final ESequenceMode sequenceMode, final ReferenceRun[] runs) {
-    throw new UnsupportedOperationException();
+    if (runs.length > 0) {
+      ESequenceMode.AND.appendNestedSequence(textCase,
+          new ArrayListView<>(runs), true, 1, this);
+    } else {
+      runs[0].toSequence(true, true, textCase, this);
+    }
   }
 
   /** {@inheritDoc} */
@@ -215,7 +220,8 @@ public class ComplexText extends PlainText implements IComplexText {
       if (i > 0) {
         cpy = new Label[i - start];
         System.arraycopy(labels, start, cpy, 0, cpy.length);
-        runs[count++] = this.m_driver.createReferenceRun(curType, cpy);
+        runs[count++] = this.m_driver.createReferenceRun(curType,
+            sequenceMode, cpy);
         start = i;
       }
       curType = newType;
@@ -223,7 +229,8 @@ public class ComplexText extends PlainText implements IComplexText {
 
     cpy = new Label[i - start];
     System.arraycopy(labels, start, cpy, 0, cpy.length);
-    runs[count++] = this.m_driver.createReferenceRun(curType, cpy);
+    runs[count++] = this.m_driver.createReferenceRun(curType,
+        sequenceMode, cpy);
 
     this.doReference(textCase, sequenceMode,//
         ((count < runs.length) ? (Arrays.copyOf(runs, count)) : runs));

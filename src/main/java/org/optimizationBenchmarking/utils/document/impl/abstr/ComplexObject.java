@@ -57,8 +57,8 @@ public abstract class ComplexObject extends DocumentPart implements
     }
 
     if (useLabel != null) {
-      this.m_label = this.m_doc.m_manager._getLabel(this._labelType(),
-          useLabel, this.m_globalID);
+      this.m_label = this.m_doc._getLabel(this._labelType(), useLabel,
+          this.m_globalID);
     } else {
       this.m_label = null;
     }

@@ -1038,7 +1038,6 @@ public class RandomDocumentExample implements Runnable {
               break;
             }
 
-            // case 7:
             default: {
               RandomDocumentExample.__indentLine(body, depth);
               needsContent = true;

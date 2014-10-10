@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.PageDimension;
@@ -21,6 +22,7 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.io.path.FileTypeDriver;
+import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -90,15 +92,6 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    * @return the style set
    */
   protected abstract StyleSet createStyleSet();
-
-  /**
-   * create the label manager
-   * 
-   * @return the label manager
-   */
-  protected LabelManager createLabelManager() {
-    return new LabelManager();
-  }
 
   /**
    * Encode a text output
@@ -281,13 +274,34 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    * 
    * @param type
    *          the type
+   * @param seq
+   *          the sequence mode
    * @param data
    *          the labels
    * @return the reference run
    */
   protected ReferenceRun createReferenceRun(final String type,
-      final Label[] data) {
-    return new ReferenceRun(type, data);
+      final ESequenceMode seq, final Label[] data) {
+    return new ReferenceRun(type, seq, data);
+  }
+
+  /**
+   * create a label
+   * 
+   * @param owner
+   *          the label owner
+   * @param type
+   *          the label type
+   * @param mark
+   *          the label mark
+   * @param refText
+   *          the reference text
+   * @return the label
+   */
+  protected Label createLabel(final Document owner, final ELabelType type,
+      final String mark, final String refText) {
+    return new Label(owner, type, mark, refText);
+
   }
 
   /**
