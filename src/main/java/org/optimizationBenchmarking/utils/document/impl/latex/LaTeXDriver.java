@@ -447,13 +447,13 @@ public final class LaTeXDriver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _LaTeXCodeCaption createCaption(final Code owner) {
+  protected final _LaTeXCodeCaption createCodeCaption(final Code owner) {
     return new _LaTeXCodeCaption((_LaTeXCode) owner);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final _LaTeXCodeBody createBody(final Code owner) {
+  protected final _LaTeXCodeBody createCodeBody(final Code owner) {
     return new _LaTeXCodeBody((_LaTeXCode) owner);
   }
 

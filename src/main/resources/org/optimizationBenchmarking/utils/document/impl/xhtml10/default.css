@@ -84,6 +84,36 @@ td.figureBody {
 img.figure {  
 }
 
+div.code {
+  text-align      : center;
+  margin-bottom   : 0.5cm;
+  margin-top      : 0.2cm;
+}
+
+table.code {
+  margin-left     : auto;
+  margin-right    : auto;
+  padding         : 0px;
+  border-width    : 0px;
+  border-style    : none;
+}
+
+tr.codeBody {
+}
+
+tr.codeCaption {
+  margin-top      : 0.3cm;
+}
+
+td.codeCaption {
+  text-align      : left;
+}
+
+td.codeBody {
+  vertical-align  : middle;
+  text-align      : left;
+}
+
 table.subfigure {  
   margin          : 0px;
   margin-left     : auto;
@@ -329,7 +359,7 @@ div.math {
 }
 
 span.scalar {
-  vertical-alin   : middle;
+  vertical-align   : middle;
 }
 
 span.vector {

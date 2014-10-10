@@ -805,24 +805,24 @@ public abstract class DocumentDriver extends FileTypeDriver implements
   }
 
   /**
-   * Create the table caption
+   * Create the code caption
    * 
    * @param owner
    *          the owner
    * @return the table caption
    */
-  protected CodeCaption createCaption(final Code owner) {
+  protected CodeCaption createCodeCaption(final Code owner) {
     return new CodeCaption(owner);
   }
 
   /**
-   * Create the table body
+   * Create the code body
    * 
    * @param owner
    *          the owner
-   * @return the table body
+   * @return the code body
    */
-  protected CodeBody createBody(final Code owner) {
+  protected CodeBody createCodeBody(final Code owner) {
     return new CodeBody(owner);
   }
 

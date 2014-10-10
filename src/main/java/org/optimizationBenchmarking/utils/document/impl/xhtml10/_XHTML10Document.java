@@ -16,6 +16,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
+import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
@@ -219,7 +220,7 @@ final class _XHTML10Document extends Document {
                     while ((s = br.readLine()) != null) {
                       s = TextUtils.prepare(s);
                       if (s != null) {
-                        bw.newLine();
+                        // bw.newLine();
                         bw.write(s);
                       }
                     }
@@ -261,19 +262,19 @@ final class _XHTML10Document extends Document {
       final boolean useSize) throws IOException {
     boolean first;
 
-    bw.newLine();
+    // bw.newLine();
     bw.write(name);
     bw.write(' ');
     bw.write('{');
 
     if (isDefault && useSize) {
-      bw.newLine();
+      // bw.newLine();
       bw.write(_XHTML10Document.FONT_SIZE);
       bw.write(Integer.toString(fs.getSize()));
       bw.write(';');
     }
 
-    bw.newLine();
+    // bw.newLine();
     bw.write(_XHTML10Document.FONT_FAMILY);
     first = true;
     for (final String s : fs.getFaceChoices()) {
@@ -288,28 +289,28 @@ final class _XHTML10Document extends Document {
     }
     bw.write(';');
 
-    bw.newLine();
+    // bw.newLine();
     bw.write(_XHTML10Document.FONT_VARIANT);
 
-    bw.newLine();
+    // bw.newLine();
     bw.write(_XHTML10Document.FONT_TRANSFORM);
 
-    bw.newLine();
+    // bw.newLine();
     bw.write(fs.isBold() ? _XHTML10Document.FONT_WEIGHT_BOLD
         : (isDefault ? _XHTML10Document.FONT_WEIGHT_NORMAL
             : _XHTML10Document.FONT_WEIGHT_INHERIT));
 
-    bw.newLine();
+    // bw.newLine();
     bw.write(fs.isItalic() ? _XHTML10Document.FONT_STYLE_ITALIC
         : (isDefault ? _XHTML10Document.FONT_STYLE_NORMAL
             : _XHTML10Document.FONT_STYLE_INHERIT));
 
-    bw.newLine();
+    // bw.newLine();
     bw.write(fs.isUnderlined() ? _XHTML10Document.FONT_DEC_UNDERLINE
         : (isDefault ? _XHTML10Document.FONT_DEC_NORMAL
             : _XHTML10Document.FONT_DEC_INHERIT));
 
-    bw.newLine();
+    // bw.newLine();
     bw.write('}');
   }
 
@@ -326,9 +327,13 @@ final class _XHTML10Document extends Document {
   private final void __createStyles(final BufferedWriter bw,
       final Set<IStyle> usedStyles) throws IOException {
     final FontStyle def;
-    FontStyle fs;
+    final StyleSet ss;
+    FontStyle fs, code;
 
-    def = this.getStyles().getDefaultFont();
+    ss = this.getStyles();
+    def = ss.getDefaultFont();
+    code = ss.getCodeFont();
+
     for (final IStyle s : usedStyles) {
       if (s instanceof FontStyle) {
         fs = ((FontStyle) s);
@@ -338,6 +343,10 @@ final class _XHTML10Document extends Document {
           _XHTML10Document.__writeFont(fs, ('.' + fs.getID()), bw, true,
               false);
         } else {
+          if (fs == code) {
+            _XHTML10Document.__writeFont(fs, "pre", bw, true, true);//$NON-NLS-1$
+            _XHTML10Document.__writeFont(fs, "code", bw, true, false);//$NON-NLS-1$
+          }
           _XHTML10Document.__writeFont(fs, ('.' + fs.getID()), bw, false,
               false);
         }

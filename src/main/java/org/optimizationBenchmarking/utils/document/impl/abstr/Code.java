@@ -97,16 +97,7 @@ public class Code extends ComplexObject implements ICode {
   public synchronized final CodeCaption caption() {
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         Code.STATE_CAPTION_CREATED);
-    return this.m_driver.createCaption(this);
-  }
-
-  /**
-   * Create the table body
-   * 
-   * @return the table body
-   */
-  protected CodeBody createBody() {
-    return new CodeBody(this);
+    return this.m_driver.createCodeCaption(this);
   }
 
   /** {@inheritDoc} */
@@ -114,7 +105,7 @@ public class Code extends ComplexObject implements ICode {
   public synchronized final CodeBody body() {
     this.fsmStateAssertAndSet(Code.STATE_CAPTION_CLOSED,
         Code.STATE_BODY_CREATED);
-    return this.createBody();
+    return this.m_driver.createCodeBody(this);
   }
 
   /** {@inheritDoc} */

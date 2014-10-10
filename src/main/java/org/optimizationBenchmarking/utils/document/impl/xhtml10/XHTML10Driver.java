@@ -588,13 +588,13 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10CodeCaption createCaption(final Code owner) {
+  protected final _XHTML10CodeCaption createCodeCaption(final Code owner) {
     return new _XHTML10CodeCaption((_XHTML10Code) owner);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final _XHTML10CodeBody createBody(final Code owner) {
+  protected final _XHTML10CodeBody createCodeBody(final Code owner) {
     return new _XHTML10CodeBody((_XHTML10Code) owner);
   }
 
