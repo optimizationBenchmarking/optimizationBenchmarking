@@ -4,10 +4,10 @@ import org.optimizationBenchmarking.utils.graphics.style.IStyleProvider;
 
 /** A section. */
 public interface ISection extends IDocumentElement, IStyleProvider,
-    ILabeledElement {
+    ILabeledObject {
 
   /**
-   * Write the section title
+   * Create and write the section title
    * 
    * @return the section title
    */

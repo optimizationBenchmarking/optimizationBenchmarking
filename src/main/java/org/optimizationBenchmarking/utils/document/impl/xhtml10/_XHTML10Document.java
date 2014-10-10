@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +19,6 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** the XHTML document */
@@ -200,9 +198,12 @@ final class _XHTML10Document extends Document {
   @Override
   protected void postProcess(final Set<IStyle> usedStyles,
       final ArrayListView<PathEntry> paths) {
+    final char[] data;
+    int i, j, e;
     Path path;
-    String s;
+    // String s;
 
+    data = new char[8192];
     try {
       for (final String name : new String[] {
           _XHTML10Document.CSS_DEFAULT, _XHTML10Document.CSS_PRINT }) {
@@ -216,15 +217,40 @@ final class _XHTML10Document extends Document {
                   .getResourceAsStream(name)) {
                 try (final InputStreamReader isr = new InputStreamReader(
                     is)) {
-                  try (final BufferedReader br = new BufferedReader(isr)) {
-                    while ((s = br.readLine()) != null) {
-                      s = TextUtils.prepare(s);
-                      if (s != null) {
-                        // bw.newLine();
-                        bw.write(s);
+
+                  next: while ((e = isr.read(data)) >= 0) {
+                    i = 0;
+
+                    for (;;) {
+                      findS: {
+                        for (; i < e; i++) {
+                          if (data[i] > ' ') {
+                            break findS;
+                          }
+                        }
+                        continue next;
                       }
+                      findE: for (j = i; j < e; j++) {
+                        if (data[j] <= ' ') {
+                          break findE;
+                        }
+                      }
+                      bw.write(data, i, (j - i));
+                      i = (j + 1);
                     }
                   }
+
+                  // try (final BufferedReader br = new
+                  // BufferedReader(isr)) {
+                  // while ((s = br.readLine()) != null) {
+                  // s = TextUtils.prepare(s);
+                  // if (s != null) {
+                  // // bw.newLine();
+                  // bw.write(s);
+                  // }
+                  // }
+                  // }
+
                 }
               }
             }

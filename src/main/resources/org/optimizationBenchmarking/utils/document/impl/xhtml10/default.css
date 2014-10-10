@@ -112,6 +112,9 @@ td.codeCaption {
 td.codeBody {
   vertical-align  : middle;
   text-align      : left;
+  background-color: #DCDCFF;
+  padding-left    : 1em;
+  padding-right   : 1em;
 }
 
 table.subfigure {  

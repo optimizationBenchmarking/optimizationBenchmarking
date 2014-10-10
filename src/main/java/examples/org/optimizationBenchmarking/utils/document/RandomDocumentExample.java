@@ -37,7 +37,7 @@ import org.optimizationBenchmarking.utils.document.spec.IEquation;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.IFigureSeries;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.ILabeledElement;
+import org.optimizationBenchmarking.utils.document.spec.ILabeledObject;
 import org.optimizationBenchmarking.utils.document.spec.IList;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
@@ -280,7 +280,7 @@ public class RandomDocumentExample implements Runnable {
    * @param e
    *          the labeled element
    */
-  private final void __useLabel(final ILabeledElement e) {
+  private final void __useLabel(final ILabeledObject e) {
     final ILabel l;
     if (e != null) {
       l = e.getLabel();
@@ -750,11 +750,11 @@ public class RandomDocumentExample implements Runnable {
         if (l.isEmpty()) {
           continue;
         }
-        return false;
+        return true;
       }
     }
 
-    return true;
+    return false;
   }
 
   /**
@@ -882,22 +882,13 @@ public class RandomDocumentExample implements Runnable {
       final Random r) {
     int i;
     for (i = 0; i < vars; i++) {
-      if ((i % 8) == 0) {
+      if ((i == 0) || (r.nextInt(8) == 0)) {
         if (i != 0) {
           body.append(r.nextInt(5) - 2);
           body.append(';');
           body.appendLineBreak();
         }
-        switch (i / 8) {
-          case 0: {
-            body.append("double ");break;} //$NON-NLS-1$
-          case 1: {
-            body.append("float ");break;}//$NON-NLS-1$
-          case 2: {
-            body.append("long ");break;}//$NON-NLS-1$
-          default: {
-            body.append("int ");break;}//$NON-NLS-1$
-        }
+        body.append("int ");//$NON-NLS-1$
       }
       body.append((char) ('a' + i));
       body.append(' ');
@@ -930,7 +921,7 @@ public class RandomDocumentExample implements Runnable {
   private final void __createCode(final ISectionBody sb) {
     final Random r;
     int i, depth, vars, a, b, c, lc;
-    boolean lastWasClose;
+    boolean needsContent;
 
     r = this.m_rand;
     this.__done(RandomDocumentExample.CODE);
@@ -943,38 +934,44 @@ public class RandomDocumentExample implements Runnable {
 
       try (final IText body = code.body()) {
         depth = lc = 0;
-        vars = (r.nextInt(23) + 3);
+        vars = (r.nextInt(23) + 4);
         RandomDocumentExample.__makeVars(body, vars, r);
-        lastWasClose = true;
+        needsContent = false;
 
         do {
-          RandomDocumentExample.__indentLine(body, depth);
+          lc++;
           switch (r.nextInt(//
-              ((lc++) >= 50) ? 1 : //
-                  (depth < RandomDocumentExample.CODE_MAX_DEPTH) ? 9 : 6)) {
+              (lc >= 50) ? 1 : //
+                  (depth < RandomDocumentExample.CODE_MAX_DEPTH) ? 10 : 7)) {
 
             case 0:
             case 1:
             case 2:
             case 3: {
-              if ((!lastWasClose) && (depth > 0)) {
-                body.append('}');
-                lastWasClose = true;
+              if ((!needsContent) && (depth > 0)) {
                 depth--;
+                RandomDocumentExample.__indentLine(body, depth);
+                body.append('}');
                 break;
               }
             }
 
             case 4: {
-              lastWasClose = false;
-              a = r.nextInt(vars - 2);
-              b = (a + r.nextInt(vars - a));
-              c = (b + r.nextInt(vars - b));
+              RandomDocumentExample.__indentLine(body, depth);
+              needsContent = false;
+              a = r.nextInt(vars);
+              do {
+                b = r.nextInt(vars);
+              } while (a == b);
+              do {
+                c = r.nextInt(vars);
+              } while ((a == c) || (b == c));
               body.append((char) ('a' + a));
               body.append(' ');
               body.append('=');
               body.append(' ');
               body.append((char) ('a' + b));
+              body.append(' ');
               switch (r.nextInt(4)) {
                 case 0: {
                   body.append('+');
@@ -993,13 +990,15 @@ public class RandomDocumentExample implements Runnable {
                   break;
                 }
               }
+              body.append(' ');
               body.append((char) ('a' + c));
               body.append(';');
               break;
             }
 
             case 5: {
-              lastWasClose = false;
+              RandomDocumentExample.__indentLine(body, depth);
+              needsContent = false;
               body.append("System.out.println("); //$NON-NLS-1$
               body.append((char) ('a' + r.nextInt(vars)));
               body.append(')');
@@ -1008,25 +1007,48 @@ public class RandomDocumentExample implements Runnable {
             }
 
             case 6: {
-              lastWasClose = false;
-              a = r.nextInt(vars - 1);
-              b = (a + r.nextInt(vars - a));
+              body.appendLineBreak();
+              body.append('/');
+              body.append('*');
+              body.append(' ');
+              LoremIpsum.appendLoremIpsum(body, r, 10);
+              body.append(' ');
+              body.append('*');
+              body.append('/');
+              break;
+            }
+
+            case 7: {
+              RandomDocumentExample.__indentLine(body, depth);
+              needsContent = true;
+              a = r.nextInt(vars);
+              do {
+                b = r.nextInt(vars);
+              } while (a == b);
               body.append("if("); //$NON-NLS-1$
               body.append((char) ('a' + a));
               body.append(' ');
               body.append(r.nextBoolean() ? '<' : '>');
+              body.append(' ');
+              body.append((char) ('a' + b));
               body.append(')');
               body.append(' ');
               body.append('{');
+              depth++;
               break;
             }
 
             // case 7:
             default: {
-              lastWasClose = false;
-              a = r.nextInt(vars - 2);
-              b = (a + r.nextInt(vars - a));
-              c = (b + r.nextInt(vars - b));
+              RandomDocumentExample.__indentLine(body, depth);
+              needsContent = true;
+              a = r.nextInt(vars);
+              do {
+                b = r.nextInt(vars);
+              } while (a == b);
+              do {
+                c = r.nextInt(vars);
+              } while ((a == c) || (b == c));
               body.append("for("); //$NON-NLS-1$
               body.append((char) ('a' + a));
               body.append(' ');
@@ -1060,12 +1082,11 @@ public class RandomDocumentExample implements Runnable {
                   break;
                 }
                 default: {
-                  body.append('=');
+                  body.append('>');
                   break;
                 }
               }
 
-              body.append('<');
               body.append(' ');
               body.append((char) ('a' + c));
               body.append(';');
@@ -1086,7 +1107,8 @@ public class RandomDocumentExample implements Runnable {
             }
 
           }
-        } while ((depth > 0) || ((lc < 50) && (r.nextInt(4) > 0)));
+        } while ((lc < 100)
+            && ((depth > 0) || ((lc < 50) && (r.nextInt(4) > 0))));
       }
     }
   }
