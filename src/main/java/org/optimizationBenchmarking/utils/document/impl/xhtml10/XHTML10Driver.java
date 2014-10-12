@@ -33,6 +33,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.PageDimension;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
@@ -429,6 +430,14 @@ public final class XHTML10Driver extends DocumentDriver {
   protected final _XHTML10ItemizationItem createItemizationItem(
       final Itemization owner) {
     return new _XHTML10ItemizationItem((_XHTML10Itemization) owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10Label createLabel(final Document owner,
+      final ELabelType type, final String mark, final String refText) {
+    return new _XHTML10Label(((_XHTML10Document) owner), type, mark,
+        refText);
   }
 
   /** {@inheritDoc} */

@@ -1,12 +1,14 @@
 package org.optimizationBenchmarking.utils.io.files;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.tasks.Task;
 
 /** UnzipToFolder a zip file to a folder.<@javaAutorVersion/> */
@@ -16,7 +18,7 @@ public final class UnzipToFolder extends Task<Void> {
   private final InputStream m_input;
 
   /** the destination directory */
-  private final File m_destDir;
+  private final Path m_destDir;
 
   /**
    * Create the find file unzip action
@@ -26,7 +28,7 @@ public final class UnzipToFolder extends Task<Void> {
    * @param destDir
    *          the destination dir
    */
-  public UnzipToFolder(final InputStream input, final File destDir) {
+  public UnzipToFolder(final InputStream input, final Path destDir) {
     super();
     this.m_input = input;
     this.m_destDir = destDir;
@@ -35,30 +37,29 @@ public final class UnzipToFolder extends Task<Void> {
   /** {@inheritDoc} */
   @Override
   public final Void call() throws IOException {
-    final File res;
-    File out;
+    final Path res;
+    Path out;
     ZipEntry entry;
     byte[] buffer;
     int bytesRead;
 
     try (final InputStream input = this.m_input) {
       try (final ZipInputStream zis = new ZipInputStream(input)) {
-        res = new CanonicalizeFile(this.m_destDir).call();
+        res = PathUtils.normalize(this.m_destDir);
         buffer = null;
 
         while ((entry = zis.getNextEntry()) != null) {
           try {
 
-            out = new CanonicalizeFile(new File(res, entry.getName()))
-                .call();
+            out = PathUtils.createPathInside(res, entry.getName());
 
             if (entry.isDirectory()) {
-              out.mkdirs();
+              Files.createDirectories(out);
               continue;
             }
-            out.getParentFile().mkdirs();
+            Files.createDirectories(out.getParent());
 
-            try (final FileOutputStream fos = new FileOutputStream(out)) {
+            try (final OutputStream fos = PathUtils.openOutputStream(out)) {
               if (buffer == null) {
                 buffer = new byte[4096];
               }

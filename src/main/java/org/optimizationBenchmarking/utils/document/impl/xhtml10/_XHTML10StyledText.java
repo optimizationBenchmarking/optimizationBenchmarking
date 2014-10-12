@@ -13,6 +13,18 @@ final class _XHTML10StyledText extends StyledText {
   private static final char[] SPAN_COLOR_BEGIN = { '<', 's', 'p', 'a',
       'n', ' ', 's', 't', 'y', 'l', 'e', '=', '"', 'c', 'o', 'l', 'o',
       'r', ':', '#' };
+  /** black color span begin */
+  private static final char[] SPAN_BLACK = { '<', 's', 'p', 'a', 'n', ' ',
+      's', 't', 'y', 'l', 'e', '=', '"', 'c', 'o', 'l', 'o', 'r', ':',
+      'b', 'l', 'a', 'c', 'k', '"', '>' };
+  /** the code begin */
+  static final char[] CODE_BEGIN = { '<', 'c', 'o', 'd', 'e', '>' };
+  /** the code end */
+  static final char[] CODE_END = { '<', '/', 'c', 'o', 'd', 'e', '>' };
+  /** the em begin */
+  static final char[] EM_BEGIN = { '<', 'e', 'm', '>' };
+  /** the em end */
+  static final char[] EM_END = { '<', '/', 'e', 'm', '>' };
 
   /**
    * create the styled text
@@ -34,43 +46,90 @@ final class _XHTML10StyledText extends StyledText {
     this.getTextOutput().append(XHTML10Driver.BR);
   }
 
-  /** {@inheritDoc} */
+  /** {inheritDoc} */
   @Override
-  protected synchronized final void onOpen() {
-    final ITextOutput out;
-    final IStyle style;
-
-    super.onOpen();
-
-    style = this.getStyle();
-    out = this.getTextOutput();
-
-    if (style instanceof FontStyle) {
-      out.append(XHTML10Driver.SPAN_CLASS_BEGIN);
-      out.append(((FontStyle) style).getID());
-    } else {
-      if (style instanceof ColorStyle) {
-        out.append(_XHTML10StyledText.SPAN_COLOR_BEGIN);
-        out.append(Integer.toHexString(((ColorStyle) style).getRGB() & 0xffffff));
-      } else {
-        return;
-      }
-    }
-
+  protected final void beginColor(final ColorStyle color,
+      final ITextOutput out) {
+    out.append(_XHTML10StyledText.SPAN_COLOR_BEGIN);
+    out.append(Integer.toHexString(color.getRGB() & 0xffffff));
     out.append(XHTML10Driver.ATTRIB_TAG_BEGIN_END);
-    this.styleUsed(style);
   }
 
-  /** {@inheritDoc} */
+  /** {inheritDoc} */
   @Override
-  protected synchronized final void onClose() {
-    final IStyle style;
-
-    style = this.getStyle();
-
-    if ((style instanceof FontStyle) || (style instanceof ColorStyle)) {
-      this.getTextOutput().append(XHTML10Driver.SPAN_END);
-    }
-    super.onClose();
+  protected final void endColor(final ColorStyle color,
+      final ITextOutput out) {
+    out.append(XHTML10Driver.SPAN_END);
   }
+
+  /** {inheritDoc} */
+  @Override
+  protected final void beginBlack(final ColorStyle color,
+      final ITextOutput out) {
+    out.append(_XHTML10StyledText.SPAN_BLACK);
+    out.append(XHTML10Driver.ATTRIB_TAG_BEGIN_END);
+  }
+
+  /** {inheritDoc} */
+  @Override
+  protected final void endBlack(final ColorStyle color,
+      final ITextOutput out) {
+    out.append(XHTML10Driver.SPAN_END);
+  }
+
+  /** {inheritDoc} */
+  @Override
+  protected final void beginFont(final FontStyle font,
+      final ITextOutput out) {
+    out.append(XHTML10Driver.SPAN_CLASS_BEGIN);
+    out.append(font.getID());
+    out.append(XHTML10Driver.ATTRIB_TAG_BEGIN_END);
+  }
+
+  /** {inheritDoc} */
+  @Override
+  protected final void endFont(final FontStyle font, final ITextOutput out) {
+    out.append(XHTML10Driver.SPAN_END);
+  }
+
+  /** {inheritDoc} */
+  @Override
+  protected final void beginCode(final FontStyle font,
+      final ITextOutput out) {
+    out.append(_XHTML10StyledText.CODE_BEGIN);
+  }
+
+  /** {inheritDoc} */
+  @Override
+  protected final void endCode(final FontStyle font, final ITextOutput out) {
+    out.append(_XHTML10StyledText.CODE_END);
+  }
+
+  /** {inheritDoc} */
+  @Override
+  protected final void beginEmph(final FontStyle font,
+      final ITextOutput out) {
+    out.append(_XHTML10StyledText.EM_BEGIN);
+  }
+
+  /** {inheritDoc} */
+  @Override
+  protected final void endEmph(final FontStyle font, final ITextOutput out) {
+    out.append(_XHTML10StyledText.EM_END);
+  }
+
+  /** {inheritDoc} */
+  @Override
+  protected final void beginNormalText(final FontStyle font,
+      final ITextOutput out) {
+    this.beginFont(font, out);
+  }
+
+  /** {inheritDoc} */
+  @Override
+  protected final void endNormalText(final FontStyle font,
+      final ITextOutput out) {
+    this.endFont(font, out);
+  }
+
 }

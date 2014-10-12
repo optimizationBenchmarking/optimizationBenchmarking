@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.ISequenceable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a label implementation */
-public final class Label implements ILabel, ISequenceable {
+public class Label implements ILabel, ISequenceable {
 
   /** the label type */
   final ELabelType m_type;
@@ -97,7 +97,7 @@ public final class Label implements ILabel, ISequenceable {
    */
   protected void doToSequence(final boolean isFirstInSequence,
       final boolean isLastInSequence, final ETextCase textCase,
-      final ComplexText text, final ITextOutput raw) {
+      final ITextOutput text, final ITextOutput raw) {
     //
   }
 
@@ -106,12 +106,12 @@ public final class Label implements ILabel, ISequenceable {
   public void toSequence(final boolean isFirstInSequence,
       final boolean isLastInSequence, final ETextCase textCase,
       final ITextOutput textOut) {
-    final ComplexText c;
-
     if (textOut instanceof ComplexText) {
-      c = ((ComplexText) textOut);
-      this.doToSequence(isFirstInSequence, isLastInSequence, textCase, c,
-          c._raw());
+      this.doToSequence(isFirstInSequence, isLastInSequence, textCase,
+          textOut, ((ComplexText) textOut)._raw());
+    } else {
+      this.doToSequence(isFirstInSequence, isLastInSequence, textCase,
+          textOut, textOut);
     }
   }
 

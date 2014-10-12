@@ -14,7 +14,7 @@ final class _XHTML10CodeCaption extends CodeCaption {
       'o', 'd', 'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>', '<',
       's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c',
       'a', 'p', 't', 'i', 'o', 'n', 'T', 'i', 't', 'l', 'e', '"', '>',
-      'L', 'i', 's', 't', 'i', 'n', 'g', '.', '&', 'n', 'b', 's', 'p', ';' };
+      'L', 'i', 's', 't', 'i', 'n', 'g', '&', 'n', 'b', 's', 'p', ';' };
 
   /**
    * create the code caption

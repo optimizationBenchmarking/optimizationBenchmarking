@@ -105,10 +105,12 @@ public final class MyBibliography extends BibliographyExample {
       try (final BibAuthorsBuilder abs = trb.setAuthors()) {
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
+          ab.setOriginalSpelling("\u5510\u8F72"); //$NON-NLS-1$
           ab.setPersonalName("Ke"); //$NON-NLS-1$
         }
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Yang"); //$NON-NLS-1$
+          ab.setOriginalSpelling("\u6768\u632F\u5B87"); //$NON-NLS-1$          
           ab.setPersonalName("Zhenyu"); //$NON-NLS-1$
         }
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
@@ -147,9 +149,11 @@ public final class MyBibliography extends BibliographyExample {
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Wan"); //$NON-NLS-1$
           ab.setPersonalName("Mingxu"); //$NON-NLS-1$
+          ab.setOriginalSpelling("\u4E07\u660E\u7EEA"); //$NON-NLS-1$
         }
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
+          ab.setOriginalSpelling("\u5510\u8F72"); //$NON-NLS-1$
           ab.setPersonalName("Ke"); //$NON-NLS-1$
         }
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
@@ -161,6 +165,7 @@ public final class MyBibliography extends BibliographyExample {
           ab.setPersonalName("Alexandre"); //$NON-NLS-1$
         }
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
+          ab.setOriginalSpelling("\u59DA\u65B0"); //$NON-NLS-1$
           ab.setFamilyName("Yao"); //$NON-NLS-1$
           ab.setPersonalName("Xin"); //$NON-NLS-1$
         }
@@ -203,6 +208,7 @@ public final class MyBibliography extends BibliographyExample {
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
           ab.setPersonalName("Ke"); //$NON-NLS-1$
+          ab.setOriginalSpelling("\u5510\u8F72"); //$NON-NLS-1$
         }
       }
 
@@ -371,13 +377,16 @@ public final class MyBibliography extends BibliographyExample {
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Wan"); //$NON-NLS-1$
           ab.setPersonalName("Mingxu"); //$NON-NLS-1$
+          ab.setOriginalSpelling("\u4E07\u660E\u7EEA"); //$NON-NLS-1$          
         }
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
           ab.setPersonalName("Ke"); //$NON-NLS-1$
+          ab.setOriginalSpelling("\u5510\u8F72"); //$NON-NLS-1$
         }
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Yao"); //$NON-NLS-1$
+          ab.setOriginalSpelling("\u59DA\u65B0"); //$NON-NLS-1$
           ab.setPersonalName("Xin"); //$NON-NLS-1$
         }
       }
@@ -425,6 +434,7 @@ public final class MyBibliography extends BibliographyExample {
         }
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
+          ab.setOriginalSpelling("\u5510\u8F72"); //$NON-NLS-1$
           ab.setPersonalName("Ke"); //$NON-NLS-1$
         }
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
@@ -449,6 +459,7 @@ public final class MyBibliography extends BibliographyExample {
         }
         try (final BibAuthorBuilder ab = abs.addAuthor()) {
           ab.setFamilyName("Yao"); //$NON-NLS-1$
+          ab.setOriginalSpelling("\u59DA\u65B0"); //$NON-NLS-1$
           ab.setPersonalName("Xin"); //$NON-NLS-1$
         }
       }

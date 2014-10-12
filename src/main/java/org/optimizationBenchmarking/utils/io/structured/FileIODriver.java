@@ -676,7 +676,7 @@ public abstract class FileIODriver<S, L> {
   public final void loadZIPArchive(final L loadContext,
       final InputStream stream, final Logger logger,
       final StreamEncoding<?, ?> defaultEncoding) throws IOException {
-    final File dir;
+    final Path dir;
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
       logger.finer(//
@@ -701,7 +701,7 @@ public abstract class FileIODriver<S, L> {
             + "', now loading the folder."); //$NON-NLS-1$
       }
 
-      this.loadFile(loadContext, dir, logger, defaultEncoding);
+      this.loadPath(loadContext, dir, logger, defaultEncoding);
 
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine((//

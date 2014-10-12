@@ -8,6 +8,10 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /** the author holder */
 final class _XHTML10BibAuthorHolder implements ISequenceable {
 
+  /** the original spelling connector */
+  static final char[] ORIGINAL_CONNECTOR = { '&', 'n', 'b', 's', 'p', ';',
+      '[' };
+
   /** the start chars */
   private final char[] m_start;
 
@@ -40,10 +44,24 @@ final class _XHTML10BibAuthorHolder implements ISequenceable {
   public final void toSequence(final boolean isFirstInSequence,
       final boolean isLastInSequence, final ETextCase textCase,
       final ITextOutput textOut) {
-    this.m_raw.append(this.m_start);
-    textOut.append(this.m_author.getPersonalName());
+    final String s;
+    final ITextOutput raw;
+    final BibAuthor a;
+
+    raw = this.m_raw;
+    a = this.m_author;
+
+    raw.append(this.m_start);
+    textOut.append(a.getPersonalName());
     textOut.append(' ');
-    textOut.append(this.m_author.getFamilyName());
-    this.m_raw.append(XHTML10Driver.SPAN_END);
+    textOut.append(a.getFamilyName());
+
+    s = a.getOriginalSpelling();
+    if ((s != null) && (s.length() > 0)) {
+      raw.append(_XHTML10BibAuthorHolder.ORIGINAL_CONNECTOR);
+      textOut.append(s);
+      raw.append(']');
+    }
+    raw.append(XHTML10Driver.SPAN_END);
   }
 }

@@ -62,6 +62,11 @@ public class ReferenceRun extends ArrayListView<Label> implements
   public void toSequence(final boolean isFirstInSequence,
       final boolean isLastInSequence, final ETextCase textCase,
       final ITextOutput textOut) {
-    this.m_seq.appendSequence(textCase, this, true, textOut);
+    // textCase.appendWord(this.m_type, textOut);
+    // if (this.size() > 1) {
+    // textOut.append('s');
+    // }
+    // textOut.append(' ');
+    this.m_seq.appendSequence(textCase.nextCase(), this, true, textOut);
   }
 }

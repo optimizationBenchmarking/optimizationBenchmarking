@@ -3,6 +3,7 @@ package examples.org.optimizationBenchmarking.utils.document;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +17,7 @@ import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
@@ -85,9 +87,12 @@ public class RandomDocumentExample implements Runnable {
 
   /** the graphic driver to use */
   private static final IDocumentDriver[] DRIVERS = {
-      XHTML10Driver.getDefaultDriver(),
+      XHTML10Driver.getDefaultDriver(),//
       new XHTML10Driver(EGraphicFormat.JPEG.getDefaultDriver(),
-          EScreenSize.WQXGA.getPhysicalSize(120), null) };
+          EScreenSize.WQXGA.getPhysicalSize(120), null),//
+      new XHTML10Driver(EGraphicFormat.GIF.getDefaultDriver(),
+          EScreenSize.SVGA.getPhysicalSize(90), null),//
+  };
 
   /** the normal text */
   private static final int NORMAL_TEXT = 0;
@@ -119,9 +124,19 @@ public class RandomDocumentExample implements Runnable {
   private static final int CITATION = (RandomDocumentExample.INLINE_MATH + 1);
   /** code */
   private static final int CODE = (RandomDocumentExample.CITATION + 1);
+  /** inline code */
+  private static final int INLINE_CODE = (RandomDocumentExample.CODE + 1);
+  /** emph */
+  private static final int EMPH = (RandomDocumentExample.INLINE_CODE + 1);
+  /** sub-script */
+  private static final int SUBSCRIPT = (RandomDocumentExample.EMPH + 1);
+  /** super-script */
+  private static final int SUPERSCRIPT = (RandomDocumentExample.SUBSCRIPT + 1);
+  /** ref */
+  private static final int REFERENCE = (RandomDocumentExample.SUPERSCRIPT + 1);
 
   /** all elements */
-  private static final int ALL_LENGTH = (RandomDocumentExample.CODE + 1);
+  private static final int ALL_LENGTH = (RandomDocumentExample.REFERENCE + 1);
 
   /** the table cell defs */
   private static final TableCellDef[] CELLS = { TableCellDef.CENTER,
@@ -150,6 +165,9 @@ public class RandomDocumentExample implements Runnable {
     Arrays.fill(RandomDocumentExample.SPACES, ' ');
   }
 
+  /** the log */
+  private final PrintStream m_log;
+
   /** the randomizer */
   private final Random m_rand;
 
@@ -169,7 +187,7 @@ public class RandomDocumentExample implements Runnable {
   private volatile int m_maxSectionDepth;
 
   /** the elements which have been done */
-  private final int[] m_done;
+  private final boolean[] m_done;
 
   /** the labels */
   private final ArrayList<ILabel> m_labels;
@@ -240,7 +258,7 @@ public class RandomDocumentExample implements Runnable {
 
       de = new RandomDocumentExample(driver.createDocument(
           dir.resolve((cur + '_') + i), "report",//$NON-NLS-1$ 
-          new FinishedPrinter()));
+          new FinishedPrinter()), null, System.out);
 
       if (pool != null) {
         pool.execute(de);
@@ -269,13 +287,11 @@ public class RandomDocumentExample implements Runnable {
    *          the index
    */
   private final void __done(final int index) {
-    synchronized (this.m_done) {
-      this.m_done[index]++;
-    }
+    this.m_done[index] = true;
   }
 
   /**
-   * note a label
+   * note a used label
    * 
    * @param e
    *          the labeled element
@@ -286,11 +302,29 @@ public class RandomDocumentExample implements Runnable {
       l = e.getLabel();
       if (l != null) {
         synchronized (this.m_labels) {
-          if (!(this.m_labels.contains(l))) {
-            this.m_labels.add(l);
-          }
+          this.m_labels.add(l);
         }
       }
+    }
+  }
+
+  /**
+   * pop a label
+   * 
+   * @return the label, or {@code null} if the label list is empty
+   */
+  private final ILabel __getLabel() {
+    final int s, i;
+    synchronized (this.m_labels) {
+      s = this.m_labels.size();
+      if (s <= 0) {
+        return null;
+      }
+      i = this.m_rand.nextInt(s);
+      if (s > 10) {
+        return this.m_labels.remove(i);
+      }
+      return this.m_labels.get(i);
     }
   }
 
@@ -363,11 +397,9 @@ public class RandomDocumentExample implements Runnable {
    * @return the things
    */
   private final boolean __hasAll() {
-    synchronized (this.m_done) {
-      for (final int b : this.m_done) {
-        if (b <= 0) {
-          return false;
-        }
+    for (final boolean b : this.m_done) {
+      if (!b) {
+        return false;
       }
     }
     return true;
@@ -383,108 +415,170 @@ public class RandomDocumentExample implements Runnable {
    */
   final void _createSection(final ISectionContainer sc,
       final int sectionDepth) {
-    boolean hasSection, hasText, needsNewLine;
+    Throwable error;
+    boolean hasSection, hasText, needsText, needsNewLine;
     int cur, last;
     ArrayList<Future<Void>> ra;
     _SectionTask st;
 
     hasText = hasSection = false;
 
+    needsText = true;
+    needsNewLine = hasText = hasSection = false;
+
+    error = null;
     this.__done(RandomDocumentExample.SECTION);
-    needsNewLine = false;
-    this.__maxSecDepth(sectionDepth + 1);
-    cur = last = (-1);
-    ra = null;
+    try {
 
-    try (final ISection section = sc.section(this
-        .__getLabel(ELabelType.SECTION))) {
-      this.__useLabel(section);
+      this.__maxSecDepth(sectionDepth + 1);
+      cur = last = (-1);
+      ra = null;
 
-      try (final IPlainText title = section.title()) {
-        LoremIpsum.appendLoremIpsum(title, this.m_rand, 8);
-      }
+      try (final ISection section = sc.section(this
+          .__getLabel(ELabelType.SECTION))) {
+        this.__useLabel(section);
 
-      try (final ISectionBody body = section.body()) {
-        needsNewLine = false;
-        do {
-          if (hasSection) {
-            cur = 0;
-          } else {
-            do {
-              cur = this.m_rand.nextInt(9);
-            } while ((cur == last) || // never have two same
-                ((cur == 2) && (last == 3)) || ((cur == 3) && (last == 2)));
+        try (final IPlainText title = section.title()) {
+          LoremIpsum.appendLoremIpsum(title, this.m_rand, 8);
+        }
+
+        try (final ISectionBody body = section.body()) {
+
+          main: do {
+
+            if (hasSection) {
+              cur = 0;
+            } else {
+              if (needsText) {
+                cur = ((this.m_rand.nextInt(3) > 0) ? 8 : 0);
+              } else {
+                do {
+                  cur = this.m_rand.nextInt(8);
+                } while ((cur == last)// never have two same
+                    || ((cur == 2) && (last == 3))
+                    || ((cur == 3) && (last == 2)));
+              }
+            }
             last = cur;
-          }
 
-          switch (cur) {
-            case 0: {
-              if (sectionDepth > 4) {
+            switch (cur) {
+              case 0: {
+                if (sectionDepth > 4) {
+                  continue main;
+                }
+                hasSection = true;
+
+                st = new _SectionTask(this, body, (sectionDepth + 1));
+
+                if (ForkJoinTask.inForkJoinPool()) {
+                  if (ra == null) {
+                    ra = new ArrayList<>();
+                  }
+                  ra.add(st.fork());
+                } else {
+                  try {
+                    st.compute();
+                  } catch (final Throwable tt) {
+                    error = ErrorUtils.aggregateError(error, tt);
+                    break main;
+                  }
+                }
+                needsNewLine = true;
+                needsText = false;
                 break;
               }
-              hasSection = true;
-
-              st = new _SectionTask(this, body, (sectionDepth + 1));
-
-              if (ForkJoinTask.inForkJoinPool()) {
-                if (ra == null) {
-                  ra = new ArrayList<>();
+              case 1: {
+                try {
+                  this.__createList(body, 0);
+                  needsNewLine = false;
+                  needsText = true;
+                  break;
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
                 }
-                ra.add(st.fork());
-              } else {
-                st.compute();
               }
-              needsNewLine = true;
-              break;
+              case 2: {
+                try {
+                  this.__createFigure(body);
+                  needsText = needsNewLine = true;
+                  break;
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              case 3: {
+                try {
+                  this.__createFigureSeries(body);
+                  needsText = needsNewLine = true;
+                  break;
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              case 4: {
+                try {
+                  this.__createTable(body);
+                  needsText = needsNewLine = true;
+                  break;
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              case 5: {
+                try {
+                  this.__createEquation(body);
+                  needsText = needsNewLine = false;
+                  break;
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              case 6: {
+                try {
+                  this.__createCode(body);
+                  needsText = needsNewLine = true;
+                  break;
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              default: {
+                try {
+                  this.__text(body, 0, needsNewLine);
+                  needsText = false;
+                  needsNewLine = hasText = true;
+                  break;
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
             }
-            case 1: {
-              this.__createList(body, 0);
-              needsNewLine = false;
-              break;
-            }
-            case 2: {
-              this.__createFigure(body);
-              needsNewLine = true;
-              break;
-            }
-            case 3: {
-              this.__createFigureSeries(body);
-              needsNewLine = true;
-              break;
-            }
-            case 4: {
-              this.__createTable(body);
-              needsNewLine = true;
-              break;
-            }
-            case 5: {
-              this.__createEquation(body);
-              needsNewLine = false;
-              break;
-            }
-            case 6: {
-              this.__createCode(body);
-              needsNewLine = true;
-              break;
-            }
-            default: {
-              this.__text(body, 0, needsNewLine);
-              needsNewLine = hasText = true;
-              break;
-            }
-          }
-        } while ((!(hasText || hasSection)) || this.m_rand.nextBoolean());
+          } while ((!(hasText || hasSection)) || this.m_rand.nextBoolean());
 
-        if (ra != null) {
-          for (final Future<Void> f : ra) {
-            try {
-              f.get();
-            } catch (final Throwable tt) {
-              tt.printStackTrace();
+          if (ra != null) {
+            looper: for (final Future<Void> f : ra) {
+              try {
+                f.get();
+              } catch (final Throwable tt) {
+                error = ErrorUtils.aggregateError(error, tt);
+                break looper;
+              }
             }
           }
         }
       }
+    } catch (final Throwable t) {
+      error = ErrorUtils.aggregateError(error, t);
+    }
+    if (error != null) {
+      ErrorUtils.throwAsRuntimeException(error);
     }
   }
 
@@ -503,121 +597,262 @@ public class RandomDocumentExample implements Runnable {
     boolean first, must, needs;
     IStyle s;
     HashSet<BibRecord> refs;
+    ArrayList<ILabel> labels;
+    ILabel l;
+    Throwable error;
 
     first = true;
     must = needsNewLine;
     needs = false;
     refs = null;
+    labels = null;
+    error = null;
 
-    do {
-      spacer: {
-        if (first) {
-          if ((depth <= 0) && must) {
+    this.__done(RandomDocumentExample.NORMAL_TEXT);
+    try {
+      main: do {
+        spacer: {
+          if (first) {
+            if ((depth <= 0) && must) {
+              out.appendLineBreak();
+            }
+            break spacer;
+          }
+          if (this.m_rand.nextBoolean()) {
+            out.append(' ');
+          } else {
             out.appendLineBreak();
           }
-          break spacer;
         }
-        if (this.m_rand.nextBoolean()) {
-          out.append(' ');
-        } else {
-          out.appendLineBreak();
-        }
-      }
-      first = false;
+        first = false;
 
-      LoremIpsum.appendLoremIpsum(out, this.m_rand);
-      this.__done(RandomDocumentExample.NORMAL_TEXT);
-
-      if ((out instanceof IPlainText) && (depth < 10)) {
-
-        switch (this.m_rand.nextInt((out instanceof IComplexText) ? 7 : 3)) {
-          case 1: {
-            out.append(' ');
-            try (final IPlainText t = ((IPlainText) out).inBraces()) {
-              this.__text(t, (depth + 1), this.m_rand.nextBoolean());
-              this.__done(RandomDocumentExample.IN_BRACES);
-            }
-            break;
-          }
-          case 2: {
-            out.append(' ');
-            try (final IPlainText t = ((IPlainText) out).inQuotes()) {
-              this.__text(t, (depth + 1), this.m_rand.nextBoolean());
-              this.__done(RandomDocumentExample.IN_QUOTES);
-            }
-            break;
-          }
-          case 3: {
-            out.append(' ');
-            try (final IPlainText t = ((IComplexText) out)
-                .style((s = this.m_fonts[this.m_rand
-                    .nextInt(this.m_fonts.length)]))) {
-              t.append("In ");//$NON-NLS-1$
-              s.appendDescription(ETextCase.IN_SENTENCE, t, false);
-              t.append(" font: "); //$NON-NLS-1$
-              this.__done(RandomDocumentExample.WITH_FONT);
-              this.__text(t, (depth + 1), this.m_rand.nextBoolean());
-            }
-            break;
-          }
-          case 4: {
-            out.append(' ');
-            try (final IPlainText t = ((IComplexText) out)
-                .style((s = this.m_colors[this.m_rand
-                    .nextInt(this.m_colors.length)]))) {
-              t.append("In ");//$NON-NLS-1$
-              s.appendDescription(ETextCase.IN_SENTENCE, t, false);
-              t.append(" color: "); //$NON-NLS-1$
-              this.__done(RandomDocumentExample.WITH_COLOR);
-              this.__text(t, (depth + 1), this.m_rand.nextBoolean());
-            }
-            break;
-          }
-          case 5: {
-            out.append(" Equation: ");//$NON-NLS-1$
-            this.__createInlineMath(((IComplexText) out));
-            break;
-          }
-          case 6: {
-            out.append(" And here we cite ");//$NON-NLS-1$
-            if (refs == null) {
-              refs = new HashSet<>();
-            }
-
-            do {
-              refs.add(this.m_bib.get(this.m_rand.nextInt(this.m_bib
-                  .size())));
-            } while (this.m_rand.nextBoolean());
-
-            ((IComplexText) out).cite(
-                RandomDocumentExample.CITES[this.m_rand
-                    .nextInt(RandomDocumentExample.CITES.length)],
-                ETextCase.IN_SENTENCE,
-                RandomDocumentExample.SEQUENCE[this.m_rand
-                    .nextInt(RandomDocumentExample.SEQUENCE.length)], refs
-                    .toArray(new BibRecord[refs.size()]));
-            refs.clear();
-            out.append('.');
-            this.__done(RandomDocumentExample.CITATION);
-            break;
-          }
-          default: {
-            // nothing
-          }
-        }
-
-        needs = true;
-      }
-
-      if (needs && (this.m_rand.nextBoolean())) {
-        out.append(' ');
         LoremIpsum.appendLoremIpsum(out, this.m_rand);
-        this.__done(RandomDocumentExample.NORMAL_TEXT);
-      }
 
-      first = false;
-    } while (this.m_rand.nextInt(depth + 2) <= 0);
+        if ((out instanceof IPlainText) && (depth < 10)) {
 
+          switch (this.m_rand.nextInt(//
+              (out instanceof IComplexText) ? 11 : 2)) {
+            case 0: {
+              out.append(' ');
+              this.__done(RandomDocumentExample.IN_BRACES);
+              try (final IPlainText t = ((IPlainText) out).inBraces()) {
+                try {
+                  this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              break;
+            }
+            case 1: {
+              out.append(' ');
+              this.__done(RandomDocumentExample.IN_QUOTES);
+              try (final IPlainText t = ((IPlainText) out).inQuotes()) {
+                try {
+                  this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              break;
+            }
+            case 2: {
+              out.append(' ');
+              this.__done(RandomDocumentExample.WITH_FONT);
+              try (final IPlainText t = ((IComplexText) out)
+                  .style((s = this.m_fonts[this.m_rand
+                      .nextInt(this.m_fonts.length)]))) {
+                try {
+                  t.append("In ");//$NON-NLS-1$
+                  s.appendDescription(ETextCase.IN_SENTENCE, t, false);
+                  t.append(" font: "); //$NON-NLS-1$
+                  this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              break;
+            }
+            case 3: {
+              out.append(' ');
+              this.__done(RandomDocumentExample.WITH_COLOR);
+              try (final IPlainText t = ((IComplexText) out)
+                  .style((s = this.m_colors[this.m_rand
+                      .nextInt(this.m_colors.length)]))) {
+                try {
+                  t.append("In ");//$NON-NLS-1$
+                  s.appendDescription(ETextCase.IN_SENTENCE, t, false);
+                  t.append(" color: "); //$NON-NLS-1$
+                  this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              break;
+            }
+            case 4: {
+              out.append(' ');
+              this.__done(RandomDocumentExample.EMPH);
+              try (final IPlainText t = ((IComplexText) out).emphasize()) {
+                try {
+                  t.append("Something Emphasized: "); //$NON-NLS-1$
+                  LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              break;
+            }
+            case 5: {
+              out.append(' ');
+              this.__done(RandomDocumentExample.INLINE_CODE);
+              try (final IPlainText t = ((IComplexText) out).inlineCode()) {
+                try {
+                  t.append("Inline Code: "); //$NON-NLS-1$
+                  LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              break;
+            }
+            case 6: {
+              this.__done(RandomDocumentExample.SUBSCRIPT);
+              out.append(" Sub: "); //$NON-NLS-1$
+              try (final IPlainText t = ((IComplexText) out).subscript()) {
+                try {
+                  LoremIpsum.appendLoremIpsum(t, this.m_rand, 2);
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              break;
+            }
+            case 7: {
+              this.__done(RandomDocumentExample.SUPERSCRIPT);
+              out.append(" Super: "); //$NON-NLS-1$
+              try (final IPlainText t = ((IComplexText) out).superscript()) {
+                try {
+
+                  LoremIpsum.appendLoremIpsum(t, this.m_rand, 2);
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              break;
+            }
+
+            case 8: {
+              this.__done(RandomDocumentExample.INLINE_MATH);
+              out.append(" Inline equation: ");//$NON-NLS-1$
+              try {
+                this.__createInlineMath(((IComplexText) out));
+              } catch (final Throwable tt) {
+                error = ErrorUtils.aggregateError(error, tt);
+                break main;
+              }
+              break;
+            }
+
+            case 9: {
+              this.__done(RandomDocumentExample.REFERENCE);
+              try {
+                if (labels == null) {
+                  labels = new ArrayList<>();
+                }
+                do {
+                  l = this.__getLabel();
+                  if (l == null) {
+                    break;
+                  }
+                  if (labels.contains(l)) {
+                    continue;
+                  }
+                  labels.add(l);
+                } while (this.m_rand.nextBoolean());
+
+                if (labels.size() > 0) {
+                  out.append(" And here we reference ");//$NON-NLS-1$
+
+                  ((IComplexText) out)
+                      .reference(
+                          ETextCase.IN_SENTENCE,
+                          RandomDocumentExample.SEQUENCE[this.m_rand
+                              .nextInt(RandomDocumentExample.SEQUENCE.length)],
+                          labels.toArray(new ILabel[labels.size()]));
+                  labels.clear();
+                  out.append('.');
+                }
+              } catch (final Throwable tt) {
+                error = ErrorUtils.aggregateError(error, tt);
+                break main;
+              }
+              break;
+            }
+
+            case 10: {
+              this.__done(RandomDocumentExample.CITATION);
+              try {
+                out.append(" And here we cite ");//$NON-NLS-1$
+                if (refs == null) {
+                  refs = new HashSet<>();
+                }
+
+                do {
+                  refs.add(this.m_bib.get(this.m_rand.nextInt(this.m_bib
+                      .size())));
+                } while (this.m_rand.nextBoolean());
+
+                ((IComplexText) out).cite(
+                    RandomDocumentExample.CITES[this.m_rand
+                        .nextInt(RandomDocumentExample.CITES.length)],
+                    ETextCase.IN_SENTENCE,
+                    RandomDocumentExample.SEQUENCE[this.m_rand
+                        .nextInt(RandomDocumentExample.SEQUENCE.length)],
+                    refs.toArray(new BibRecord[refs.size()]));
+                refs.clear();
+                out.append('.');
+              } catch (final Throwable tt) {
+                error = ErrorUtils.aggregateError(error, tt);
+                break main;
+              }
+              break;
+            }
+            default: {
+              throw new IllegalStateException();
+            }
+          }
+
+          needs = true;
+        }
+
+        if (needs && (this.m_rand.nextBoolean())) {
+          try {
+            out.append(' ');
+            LoremIpsum.appendLoremIpsum(out, this.m_rand);
+            this.__done(RandomDocumentExample.NORMAL_TEXT);
+          } catch (final Throwable tt) {
+            error = ErrorUtils.aggregateError(error, tt);
+            break main;
+          }
+        }
+
+        first = false;
+      } while (this.m_rand.nextInt(depth + 2) <= 0);
+    } catch (final Throwable a) {
+      error = ErrorUtils.aggregateError(error, a);
+    }
+    if (error != null) {
+      ErrorUtils.throwAsRuntimeException(error);
+    }
   }
 
   /**
@@ -669,7 +904,7 @@ public class RandomDocumentExample implements Runnable {
    */
   private final void __createBody(final IDocumentBody body) {
     this.m_maxSectionDepth = 0;
-    Arrays.fill(this.m_done, 0);
+    Arrays.fill(this.m_done, false);
     do {
       this._createSection(body, 0);
     } while ((!(this.__hasAll())) || this.__hasUnusedAllocateLabels()
@@ -684,7 +919,7 @@ public class RandomDocumentExample implements Runnable {
    */
   private final void __createFooter(final IDocumentBody footer) {
     this.m_maxSectionDepth = 0;
-    Arrays.fill(this.m_done, 0);
+    Arrays.fill(this.m_done, false);
     do {
       this._createSection(footer, 0);
     } while (this.m_rand.nextBoolean());
@@ -695,21 +930,32 @@ public class RandomDocumentExample implements Runnable {
    * 
    * @param doc
    *          the document
+   * @param r
+   *          the randomizer
+   * @param log
+   *          the log stream
    */
   @SuppressWarnings("unchecked")
-  private RandomDocumentExample(final IDocument doc) {
+  public RandomDocumentExample(final IDocument doc, final Random r,
+      final PrintStream log) {
     super();
     int i;
 
-    this.m_rand = new Random();
+    if (r == null) {
+      this.m_rand = new Random();
+      this.m_rand.setSeed(RandomDocumentExample.SEED);
+    } else {
+      this.m_rand = r;
+    }
     this.m_doc = doc;
-    this.m_done = new int[RandomDocumentExample.ALL_LENGTH];
+    this.m_done = new boolean[RandomDocumentExample.ALL_LENGTH];
     this.m_labels = new ArrayList<>();
 
     this.m_allocatedLabels = new ArrayList[i = RandomDocumentExample.LABEL_TYPES.length];
     for (; (--i) >= 0;) {
       this.m_allocatedLabels[i] = new ArrayList<>();
     }
+    this.m_log = log;
   }
 
   /** create the bibliography */
@@ -782,44 +1028,97 @@ public class RandomDocumentExample implements Runnable {
   /** {@inheritDoc} */
   @Override
   public final void run() {
-    try {
-      synchronized (System.out) {
-        System.out.print("Begin creating document "); //$NON-NLS-1$
-        System.out.println(this.m_doc);
-      }
+    Throwable error;
 
-      this.m_maxSectionDepth = 0;
-      this.m_labels.clear();
-      for (final ArrayList<ILabel> l : this.m_allocatedLabels) {
-        l.clear();
-      }
-      this.m_figureCounter = 0L;
-
-      this.m_rand.setSeed(RandomDocumentExample.SEED);
-      Arrays.fill(this.m_done, 0);
-
-      this.__loadStyles();
-      this.__createBib();
-      this.__preAllocateLabels();
-
-      try (final IDocumentHeader header = this.m_doc.header()) {
-        this.__createHeader(header);
-      }
-      try (final IDocumentBody body = this.m_doc.body()) {
-        this.__createBody(body);
-      }
-      try (final IDocumentBody footer = this.m_doc.footer()) {
-        this.__createFooter(footer);
-      }
-    } finally {
+    error = null;
+    main: {
       try {
-        this.m_doc.close();
-      } finally {
-        synchronized (System.out) {
-          System.out.print("Finished creating document "); //$NON-NLS-1$
-          System.out.println(this.m_doc);
+        try {
+          if (this.m_log != null) {
+            synchronized (this.m_log) {
+              this.m_log.print("Begin creating document "); //$NON-NLS-1$
+              this.m_log.println(this.m_doc);
+            }
+          }
+
+          this.m_maxSectionDepth = 0;
+          this.m_labels.clear();
+          for (final ArrayList<ILabel> l : this.m_allocatedLabels) {
+            l.clear();
+          }
+          this.m_figureCounter = 0L;
+
+          Arrays.fill(this.m_done, false);
+
+          try {
+            this.__loadStyles();
+          } catch (final Throwable tt) {
+            error = ErrorUtils.aggregateError(error, tt);
+            break main;
+          }
+          try {
+            this.__createBib();
+          } catch (final Throwable tt) {
+            error = ErrorUtils.aggregateError(error, tt);
+            break main;
+          }
+          try {
+            this.__preAllocateLabels();
+          } catch (final Throwable tt) {
+            error = ErrorUtils.aggregateError(error, tt);
+            break main;
+          }
+
+          try (final IDocumentHeader header = this.m_doc.header()) {
+            try {
+              this.__createHeader(header);
+            } catch (final Throwable tt) {
+              error = ErrorUtils.aggregateError(error, tt);
+              break main;
+            }
+          } finally {
+            try (final IDocumentBody body = this.m_doc.body()) {
+              try {
+                this.__createBody(body);
+              } catch (final Throwable tt) {
+                error = ErrorUtils.aggregateError(error, tt);
+                break main;
+              }
+            } finally {
+              try (final IDocumentBody footer = this.m_doc.footer()) {
+                try {
+                  this.__createFooter(footer);
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+            }
+          }
+        } finally {
+          try {
+            try {
+              this.m_doc.close();
+            } catch (final Throwable tt) {
+              error = ErrorUtils.aggregateError(error, tt);
+              break main;
+            }
+          } finally {
+            if (this.m_log != null) {
+              synchronized (this.m_log) {
+                this.m_log.print("Finished creating document "); //$NON-NLS-1$
+                this.m_log.println(this.m_doc);
+              }
+            }
+          }
         }
+      } catch (final Throwable ttt) {
+        error = ErrorUtils.aggregateError(error, ttt);
       }
+    }
+
+    if (error != null) {
+      ErrorUtils.throwAsRuntimeException(error);
     }
   }
 
@@ -880,11 +1179,19 @@ public class RandomDocumentExample implements Runnable {
    */
   private static final void __makeVars(final IText body, final int vars,
       final Random r) {
-    int i;
+    int i, last, cur;
+
+    last = Integer.MIN_VALUE;
+
     for (i = 0; i < vars; i++) {
-      if ((i == 0) || (r.nextInt(8) == 0)) {
+      if ((i == 0) || (r.nextInt(6) == 0)) {
         if (i != 0) {
-          body.append(r.nextInt(5) - 2);
+          do {
+            cur = r.nextInt(10) - 5;
+          } while (cur == last);
+          body.append(cur);
+          last = cur;
+
           body.append(';');
           body.appendLineBreak();
         }
@@ -895,7 +1202,10 @@ public class RandomDocumentExample implements Runnable {
       body.append('=');
       body.append(' ');
     }
-    body.append(r.nextInt(5) - 2);
+    do {
+      cur = r.nextInt(10) - 5;
+    } while (cur == last);
+    body.append(cur);
     body.append(';');
   }
 
@@ -920,7 +1230,7 @@ public class RandomDocumentExample implements Runnable {
    */
   private final void __createCode(final ISectionBody sb) {
     final Random r;
-    int i, depth, vars, a, b, c, lc;
+    int i, depth, vars, a, b, c, d, lc;
     boolean needsContent;
 
     r = this.m_rand;
@@ -934,7 +1244,7 @@ public class RandomDocumentExample implements Runnable {
 
       try (final IText body = code.body()) {
         depth = lc = 0;
-        vars = (r.nextInt(23) + 4);
+        vars = (r.nextInt(22) + 5);
         RandomDocumentExample.__makeVars(body, vars, r);
         needsContent = false;
 
@@ -942,7 +1252,7 @@ public class RandomDocumentExample implements Runnable {
           lc++;
           switch (r.nextInt(//
               (lc >= 50) ? 1 : //
-                  (depth < RandomDocumentExample.CODE_MAX_DEPTH) ? 10 : 7)) {
+                  (depth < RandomDocumentExample.CODE_MAX_DEPTH) ? 11 : 8)) {
 
             case 0:
             case 1:
@@ -972,7 +1282,7 @@ public class RandomDocumentExample implements Runnable {
               body.append(' ');
               body.append((char) ('a' + b));
               body.append(' ');
-              switch (r.nextInt(4)) {
+              switch (r.nextInt(10)) {
                 case 0: {
                   body.append('+');
                   break;
@@ -983,6 +1293,32 @@ public class RandomDocumentExample implements Runnable {
                 }
                 case 2: {
                   body.append('*');
+                  break;
+                }
+                case 3: {
+                  body.append("mod"); //$NON-NLS-1$
+                  break;
+                }
+                case 4: {
+                  body.append('<');
+                  body.append('<');
+                  break;
+                }
+                case 5: {
+                  body.append('>');
+                  body.append('>');
+                  break;
+                }
+                case 6: {
+                  body.append('|');
+                  break;
+                }
+                case 7: {
+                  body.append('&');
+                  break;
+                }
+                case 8: {
+                  body.append('^');
                   break;
                 }
                 default: {
@@ -999,6 +1335,63 @@ public class RandomDocumentExample implements Runnable {
             case 5: {
               RandomDocumentExample.__indentLine(body, depth);
               needsContent = false;
+              a = r.nextInt(vars);
+              do {
+                b = r.nextInt(vars);
+              } while (a == b);
+              do {
+                c = r.nextInt(vars);
+              } while ((a == c) || (b == c));
+              do {
+                d = r.nextInt(vars);
+              } while ((a == d) || (b == d) || (c == d));
+
+              body.append((char) ('a' + a));
+              body.append(' ');
+              body.append('=');
+              body.append(' ');
+              body.append('(');
+              body.append('(');
+              body.append((char) ('a' + b));
+              body.append(' ');
+              switch (r.nextInt(4)) {
+                case 0: {
+                  body.append('=');
+                  break;
+                }
+                case 1: {
+                  body.append('<');
+                  break;
+                }
+                case 2: {
+                  body.append('>');
+                  break;
+                }
+                default: {
+                  body.append('!');
+                  break;
+                }
+              }
+              body.append('=');
+              body.append(' ');
+              body.append((char) ('a' + c));
+              body.append(')');
+              body.append(' ');
+              body.append('?');
+              body.append(' ');
+              body.append((char) ('a' + d));
+              body.append(' ');
+              body.append(':');
+              body.append(' ');
+              body.append((char) ('a' + (r.nextBoolean() ? b : c)));
+              body.append(')');
+              body.append(';');
+              break;
+            }
+
+            case 6: {
+              RandomDocumentExample.__indentLine(body, depth);
+              needsContent = false;
               body.append("System.out.println("); //$NON-NLS-1$
               body.append((char) ('a' + r.nextInt(vars)));
               body.append(')');
@@ -1006,7 +1399,7 @@ public class RandomDocumentExample implements Runnable {
               break;
             }
 
-            case 6: {
+            case 7: {
               body.appendLineBreak();
               body.append('/');
               body.append('*');
@@ -1018,7 +1411,7 @@ public class RandomDocumentExample implements Runnable {
               break;
             }
 
-            case 7: {
+            case 8: {
               RandomDocumentExample.__indentLine(body, depth);
               needsContent = true;
               a = r.nextInt(vars);

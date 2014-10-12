@@ -270,7 +270,7 @@ public enum ESequenceMode {
     }
 
     if (i > 1) {
-      dest.append(',');
+      dest.append(sep);
     }
     dest.append(' ');
     if (this.m_end != null) {

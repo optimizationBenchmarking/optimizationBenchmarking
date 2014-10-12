@@ -3,7 +3,6 @@ package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 import org.optimizationBenchmarking.utils.document.impl.abstr.ComplexText;
 import org.optimizationBenchmarking.utils.document.impl.abstr.InlineCode;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** an inline code element of a section in a XHTML document */
 final class _XHTML10InlineCode extends InlineCode {
@@ -26,7 +25,6 @@ final class _XHTML10InlineCode extends InlineCode {
   @Override
   protected synchronized final void onOpen() {
     final FontStyle fs;
-    final ITextOutput dest;
 
     super.onOpen();
 
@@ -34,10 +32,7 @@ final class _XHTML10InlineCode extends InlineCode {
     if (fs != null) {
       this.styleUsed(fs);
       this.m_tagUsed = true;
-      dest = this.getTextOutput();
-      dest.append(XHTML10Driver.SPAN_CLASS_BEGIN);
-      dest.append(fs.getID());
-      dest.append(XHTML10Driver.ATTRIB_TAG_BEGIN_END);
+      this.getTextOutput().append(_XHTML10StyledText.CODE_BEGIN);
     }
   }
 
@@ -45,7 +40,7 @@ final class _XHTML10InlineCode extends InlineCode {
   @Override
   protected synchronized final void onClose() {
     if (this.m_tagUsed) {
-      this.getTextOutput().append(XHTML10Driver.SPAN_END);
+      this.getTextOutput().append(_XHTML10StyledText.CODE_END);
     }
 
     super.onClose();

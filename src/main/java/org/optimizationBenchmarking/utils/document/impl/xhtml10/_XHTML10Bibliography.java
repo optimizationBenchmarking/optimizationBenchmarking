@@ -641,6 +641,18 @@ final class _XHTML10Bibliography {
         raw.append(_XHTML10Bibliography.BEFORE_TITLE);
         wco.append(s);
       }
+      h = true;
+    }
+
+    s = org.getOriginalSpelling();
+    if ((s != null) && (s.length() > 0)) {
+      if (h) {
+        raw.append(_XHTML10BibAuthorHolder.ORIGINAL_CONNECTOR);
+      }
+      wco.append(s);
+      if (h) {
+        raw.append(']');
+      }
     }
 
     raw.append(XHTML10Driver.SPAN_END);

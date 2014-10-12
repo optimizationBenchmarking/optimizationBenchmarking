@@ -1,5 +1,7 @@
 package examples.org.optimizationBenchmarking.utils.bibliography.data;
 
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +29,31 @@ public final class RandomBibliography extends BibliographyExample {
 
   /** the randomizer */
   private final Random m_rand;
+
+  /** the character ranges */
+  private static final char[][] RANGES = { { '\u03a0', '\u03f3' },//
+      { '\u0400', '\u04f9' },//
+      // { '\u0531', '\u0588' },//
+      { '\u05d0', '\u05f2' },//
+      { '\u0621', '\u06e6' },//
+      { '\u0901', '\u0970' },//
+      { '\u0981', '\u09fa' },//
+      { '\u0a02', '\u0a74' },//
+      { '\u0a81', '\u0aff' },//
+      { '\u0b01', '\u0b70' },//
+      { '\u0b82', '\u0bf2' },//
+      // { '\u0c01', '\u0c6f' },//
+      { '\u0c82', '\u0cef' },//
+      { '\u0d02', '\u0d6f' },//
+      { '\u0e01', '\u0e58' },//
+      // { '\u0e81', '\u0edd' },//
+      // { '\u0f00', '\u0fb9' },//
+      { '\u10a0', '\u10fb' },//
+      { '\u10a0', '\u10fb' },//
+      { '\uac00', '\ud768' },//
+      { '\u3041', '\u3357' },//
+      { '\u4e00', '\u9fa5' },//
+  };
 
   /**
    * create my bibliography
@@ -119,17 +146,18 @@ public final class RandomBibliography extends BibliographyExample {
     final Random r;
     final StringBuilder sb;
     String s;
-    int i;
+    int i, done;
     char ch;
 
     r = this.m_rand;
     sb = new StringBuilder();
     s = null;
+    done = 0;
 
     do {
       sb.setLength(0);
 
-      if (r.nextBoolean()) {
+      if (r.nextInt(3) > 0) {
 
         if (first) {
           switch (r.nextInt(23)) {
@@ -271,9 +299,154 @@ public final class RandomBibliography extends BibliographyExample {
         sb.insert(0, s);
       }
       s = sb.toString();
-    } while (r.nextInt(4) <= 0);
+    } while (((++done) < 3) && (r.nextInt(4) <= 0));
 
-    return s;
+    if (first || (r.nextInt(5) > 0)) {
+      return s;
+    }
+    switch (r.nextInt(9)) {
+      case 0: {
+        sb.insert(0, "d'");break;} //$NON-NLS-1$
+      case 1: {
+        sb.insert(0, "Von ");break;} //$NON-NLS-1$
+      case 2: {
+        sb.insert(0, "Von und Zu ");break;} //$NON-NLS-1$
+      case 3: {
+        sb.insert(0, "Graf von ");break;} //$NON-NLS-1$
+      case 4: {
+        sb.insert(0, "Van ");break;} //$NON-NLS-1$
+      case 5: {
+        sb.insert(0, "Van der ");break;} //$NON-NLS-1$
+      case 6: {
+        sb.insert(0, "De La ");break;} //$NON-NLS-1$
+      case 7: {
+        sb.insert(0, "Lord of ");break;} //$NON-NLS-1$
+      default: {
+        sb.insert(0, "Earl of ");break;} //$NON-NLS-1$
+    }
+
+    return sb.toString();
+  }
+
+  /**
+   * can we use the given character?
+   * 
+   * @param ch
+   *          the character
+   * @return the normalized character if yes, 0 if no
+   */
+  private static final char __canUseChar(final char ch) {
+    String s;
+    char t;
+
+    if ((!(Character.isDefined(ch))) || Character.isDigit(ch)
+        || Character.isISOControl(ch) || Character.isSpaceChar(ch)
+        || Character.isWhitespace(ch) || Character.isWhitespace(ch)
+        || (!(Character.isValidCodePoint(ch)))
+        || Character.isSurrogate(ch) || (!(Character.isBmpCodePoint(ch)))
+        || Character.isHighSurrogate(ch) || Character.isLowSurrogate(ch)
+        || Character.isTitleCase(ch)
+        || Character.isIdentifierIgnorable(ch)
+        || Character.isSupplementaryCodePoint(ch)) {
+      return 0;
+    }
+
+    s = Normalizer.normalize(String.valueOf(ch), Form.NFC);
+    if (s.length() != 1) {
+      return 0;
+    }
+    try {
+      Integer.parseInt(s);
+      return 0;
+    } catch (final Throwable tt) {
+      //
+    }
+
+    t = s.charAt(0);
+    if ((t > ' ') && ((t < '0') || (t > '9')) && ((t < 'a') || (t > 'z'))
+        && ((t < 'A') || (t > 'Z'))) {
+      switch (t) {
+        case '.':
+        case ',':
+        case ';':
+        case '!':
+        case '?':
+        case ':':
+        case '_':
+        case '#':
+        case '\'':
+        case '"':
+        case '+':
+        case '*':
+        case '~':
+        case '-':
+        case '\\':
+        case '/':
+        case '´':
+        case '`':
+        case '^':
+        case '§':
+        case '$':
+        case '%':
+        case '&':
+        case '{':
+        case '}':
+        case '(':
+        case ')':
+        case '[':
+        case ']':
+        case '=':
+        case '|':
+        case '°': {
+          return 0;
+        }
+        default: {
+          return t;
+        }
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Generate a random original spelling
+   * 
+   * @return the random spelling
+   */
+  private final String __randomOriginalSpelling() {
+    final char[] range;
+    final Random r;
+    final StringBuilder sb;
+    char ch, prev;
+
+    r = this.m_rand;
+    range = RandomBibliography.RANGES[r
+        .nextInt(RandomBibliography.RANGES.length)];
+    sb = new StringBuilder();
+
+    prev = 0;
+    main: do {
+      do {
+        ch = RandomBibliography.__canUseChar((char) (range[0] + (r
+            .nextInt((range[1] - range[0]) + 1))));
+      } while ((ch <= ' ') || (ch == prev));
+      prev = ch;
+      if (sb.length() <= 0) {
+        ch = Character.toUpperCase(ch);
+        if (Character.isLowerCase(ch)) {
+          continue main;
+        }
+      } else {
+        ch = Character.toLowerCase(ch);
+        if (Character.isUpperCase(ch) || Character.isTitleCase(ch)) {
+          continue main;
+        }
+      }
+      sb.append(ch);
+    } while (((sb.length() <= 1) || (r.nextInt(6) > 0))
+        && (sb.length() < 8));
+
+    return sb.toString();
   }
 
   /**
@@ -397,7 +570,7 @@ public final class RandomBibliography extends BibliographyExample {
     }
 
     if (r.nextBoolean()) {
-      switch (r.nextInt(7)) {
+      switch (r.nextInt(6)) {
         case 0: {
           sb.append("applied to ");break;} //$NON-NLS-1$
         case 1: {
@@ -625,6 +798,25 @@ public final class RandomBibliography extends BibliographyExample {
   }
 
   /**
+   * make a random organization
+   * 
+   * @param needsInstitute
+   *          do we need an institute
+   * @param o
+   *          the builder
+   */
+  private final void __randomOrganization(final BibOrganizationBuilder o,
+      final boolean needsInstitute) {
+    o.setAddress(this.__randomAddress());
+    if (needsInstitute || this.m_rand.nextBoolean()) {
+      o.setName(this.__randomInstituteName());
+    }
+    if (this.m_rand.nextInt(4) <= 0) {
+      o.setOriginalSpelling(this.__randomOriginalSpelling());
+    }
+  }
+
+  /**
    * Generate a random institute name
    * 
    * @return the random institute name
@@ -661,9 +853,8 @@ public final class RandomBibliography extends BibliographyExample {
 
       default: {
 
-        sb.setLength(0);
-
         do {
+          sb.setLength(0);
           sb.append((char) ('A' + r.nextInt(26)));
           do {
             sb.append((char) ('a' + r.nextInt(26)));
@@ -1281,6 +1472,9 @@ public final class RandomBibliography extends BibliographyExample {
       try (final BibAuthorBuilder ab = abs.addAuthor()) {
         ab.setFamilyName(this.__randomName(false));
         ab.setPersonalName(this.__randomName(true));
+        if (this.m_rand.nextInt(4) <= 0) {
+          ab.setOriginalSpelling(this.__randomOriginalSpelling());
+        }
       } catch (final Throwable tt) {
         // ignore
       }
@@ -1325,8 +1519,7 @@ public final class RandomBibliography extends BibliographyExample {
       this.__randomAuthors(abs, Integer.MAX_VALUE);
     }
     try (final BibOrganizationBuilder ob = trb.setPublisher()) {
-      ob.setAddress(this.__randomAddress());
-      ob.setName(this.__randomInstituteName());
+      this.__randomOrganization(ob, true);
     }
     try (final BibDateBuilder db = trb.setDate()) {
       db.fromTime(this.__randomDate());
@@ -1353,8 +1546,7 @@ public final class RandomBibliography extends BibliographyExample {
       this.__randomAuthors(abs, Integer.MAX_VALUE);
     }
     try (final BibOrganizationBuilder ob = trb.setPublisher()) {
-      ob.setAddress(this.__randomAddress());
-      ob.setName(this.__randomInstituteName());
+      this.__randomOrganization(ob, true);
     }
     try (final BibDateBuilder db = trb.setDate()) {
       db.fromTime(this.__randomDate());
@@ -1437,8 +1629,7 @@ public final class RandomBibliography extends BibliographyExample {
     }
 
     try (final BibOrganizationBuilder ob = ip.setPublisher()) {
-      ob.setAddress(this.__randomAddress());
-      ob.setName(this.__randomInstituteName());
+      this.__randomOrganization(ob, true);
     }
   }
 
@@ -1491,8 +1682,7 @@ public final class RandomBibliography extends BibliographyExample {
       this.__randomAuthors(abs, Integer.MAX_VALUE);
     }
     try (final BibOrganizationBuilder ob = proc.setPublisher()) {
-      ob.setAddress(this.__randomAddress());
-      ob.setName(this.__randomInstituteName());
+      this.__randomOrganization(ob, true);
     }
 
     start = this.__randomDate();
@@ -1510,10 +1700,7 @@ public final class RandomBibliography extends BibliographyExample {
     }
 
     try (final BibOrganizationBuilder bo = proc.setLocation()) {
-      bo.setAddress(this.__randomAddress());
-      if (this.m_rand.nextBoolean()) {
-        bo.setName(this.__randomInstituteName());
-      }
+      this.__randomOrganization(bo, false);
     }
 
     if (this.m_rand.nextBoolean()) {
@@ -1544,8 +1731,7 @@ public final class RandomBibliography extends BibliographyExample {
     this.__randomBook(thesis, true, 1);
 
     try (final BibOrganizationBuilder ob = thesis.setSchool()) {
-      ob.setAddress(this.__randomAddress());
-      ob.setName(this.__randomInstituteName());
+      this.__randomOrganization(ob, true);
     }
 
     e = EThesisType.values();
@@ -1578,8 +1764,7 @@ public final class RandomBibliography extends BibliographyExample {
     }
 
     try (final BibOrganizationBuilder ob = book.setPublisher()) {
-      ob.setAddress(this.__randomAddress());
-      ob.setName(this.__randomInstituteName());
+      this.__randomOrganization(ob, true);
     }
 
     try (final BibDateBuilder db = book.setDate()) {

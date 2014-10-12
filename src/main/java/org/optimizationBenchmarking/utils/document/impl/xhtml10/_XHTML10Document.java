@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +20,7 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** the XHTML document */
@@ -198,12 +200,11 @@ final class _XHTML10Document extends Document {
   @Override
   protected void postProcess(final Set<IStyle> usedStyles,
       final ArrayListView<PathEntry> paths) {
-    final char[] data;
-    int i, j, e;
     Path path;
-    // String s;
+    String s;
+    char ch;
+    int i;
 
-    data = new char[8192];
     try {
       for (final String name : new String[] {
           _XHTML10Document.CSS_DEFAULT, _XHTML10Document.CSS_PRINT }) {
@@ -218,38 +219,36 @@ final class _XHTML10Document extends Document {
                 try (final InputStreamReader isr = new InputStreamReader(
                     is)) {
 
-                  next: while ((e = isr.read(data)) >= 0) {
-                    i = 0;
-
-                    for (;;) {
-                      findS: {
-                        for (; i < e; i++) {
-                          if (data[i] > ' ') {
-                            break findS;
+                  try (final BufferedReader br = new BufferedReader(isr)) {
+                    while ((s = br.readLine()) != null) {
+                      s = TextUtils.prepare(s);
+                      if (s != null) {
+                        i = s.indexOf(':');
+                        if (i > 0) {
+                          ch = ':';
+                        } else {
+                          i = s.indexOf('{');
+                          if (i > 0) {
+                            ch = '{';
+                          } else {
+                            i = s.indexOf('}');
+                            if (i > 0) {
+                              ch = '}';
+                            } else {
+                              ch = 0;
+                            }
                           }
                         }
-                        continue next;
-                      }
-                      findE: for (j = i; j < e; j++) {
-                        if (data[j] <= ' ') {
-                          break findE;
+                        if (i > 0) {
+                          bw.write(s.substring(0, i).trim());
+                          bw.write(ch);
+                          bw.write(s.substring(i + 1).trim());
+                        } else {
+                          bw.write(s);
                         }
                       }
-                      bw.write(data, i, (j - i));
-                      i = (j + 1);
                     }
                   }
-
-                  // try (final BufferedReader br = new
-                  // BufferedReader(isr)) {
-                  // while ((s = br.readLine()) != null) {
-                  // s = TextUtils.prepare(s);
-                  // if (s != null) {
-                  // // bw.newLine();
-                  // bw.write(s);
-                  // }
-                  // }
-                  // }
 
                 }
               }
@@ -354,11 +353,12 @@ final class _XHTML10Document extends Document {
       final Set<IStyle> usedStyles) throws IOException {
     final FontStyle def;
     final StyleSet ss;
-    FontStyle fs, code;
+    FontStyle fs, code, em;
 
     ss = this.getStyles();
     def = ss.getDefaultFont();
     code = ss.getCodeFont();
+    em = ss.getEmphFont();
 
     for (final IStyle s : usedStyles) {
       if (s instanceof FontStyle) {
@@ -372,11 +372,15 @@ final class _XHTML10Document extends Document {
           if (fs == code) {
             _XHTML10Document.__writeFont(fs, "pre", bw, true, true);//$NON-NLS-1$
             _XHTML10Document.__writeFont(fs, "code", bw, true, false);//$NON-NLS-1$
+          } else {
+            if (fs == em) {
+              _XHTML10Document.__writeFont(fs, "em", bw, true, false);//$NON-NLS-1$
+            } else {
+              _XHTML10Document.__writeFont(fs, ('.' + fs.getID()), bw,
+                  false, false);
+            }
           }
-          _XHTML10Document.__writeFont(fs, ('.' + fs.getID()), bw, false,
-              false);
         }
-
       }
     }
   }

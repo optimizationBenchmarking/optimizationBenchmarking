@@ -23,10 +23,7 @@ import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.io.path.FileTypeDriver;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
-import org.optimizationBenchmarking.utils.text.ETextCase;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A document driver. */
 public abstract class DocumentDriver extends FileTypeDriver implements
@@ -166,22 +163,19 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    *          the style to be checked
    */
   protected void checkStyleForText(final IStyle style) {
-    final MemoryTextOutput o;
-
     if (style == null) {
       throw new IllegalArgumentException("Style most not be null."); //$NON-NLS-1$
     }
-    if ((style instanceof FontStyle) || (style instanceof ColorStyle)) {
+    if (style instanceof FontStyle) {
       return;
     }
+    if (style instanceof ColorStyle) {
+      if ((((ColorStyle) style).getRGB() & 0xffffff) != 0xffffff) {
+        return;
+      }
+    }
 
-    o = new MemoryTextOutput();
-    o.append("Cannot apply style '"); //$NON-NLS-1$
-    style.appendDescription(ETextCase.IN_SENTENCE, o, false);
-    o.append("' since it is a "); //$NON-NLS-1$
-    o.append(TextUtils.className(style.getClass()));
-    o.append(" but only font and color styles are allowed."); //$NON-NLS-1$
-    throw new IllegalArgumentException(o.toString());
+    StyledText._forbid(style, true);
   }
 
   /**

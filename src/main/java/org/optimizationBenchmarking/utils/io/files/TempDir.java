@@ -4,12 +4,18 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
-/** A temporary directory */
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
+
+/**
+ * A temporary directory <strong>This works currently with files under the
+ * hood, but should be modified to work with path.
+ */
 public class TempDir implements Closeable {
 
   /** the directory */
-  private volatile File m_dir;
+  private volatile Path m_dir;
 
   /**
    * create the temporary directory
@@ -20,10 +26,7 @@ public class TempDir implements Closeable {
   public TempDir() throws IOException {
     super();
 
-    this.m_dir = new CanonicalizeFile(Files.createTempDirectory(null)
-        .toFile()).call();
-    this.m_dir.mkdirs();
-    this.m_dir.deleteOnExit();
+    this.m_dir = PathUtils.normalize(Files.createTempDirectory(null));
   }
 
   /**
@@ -31,7 +34,7 @@ public class TempDir implements Closeable {
    * 
    * @return the directory
    */
-  public final File getDir() {
+  public final Path getDir() {
     return this.m_dir;
   }
 
@@ -40,7 +43,7 @@ public class TempDir implements Closeable {
   public final void close() throws IOException {
     final File f;
     synchronized (this) {
-      f = this.m_dir;
+      f = this.m_dir.toFile();// TODO: this must be changed!
       this.m_dir = null;
     }
     if (f != null) {

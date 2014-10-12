@@ -60,9 +60,9 @@ final class _XHTML10DocumentFooter extends DocumentFooter {
     out.append(XHTML10Driver.SECTION_DIV_BEGIN);
     out.append(XHTML10Driver.SECTION_HEAD_DIV_BEGIN);
 
-    out.append(XHTML10Driver.HEADLINE_BEGIN[1]);
+    out.append(XHTML10Driver.HEADLINE_BEGIN[0]);
     out.append("References"); //$NON-NLS-1$
-    out.append(XHTML10Driver.HEADLINE_END[1]);
+    out.append(XHTML10Driver.HEADLINE_END[0]);
 
     out.append(XHTML10Driver.DIV_END);
 

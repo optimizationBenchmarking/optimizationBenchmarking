@@ -39,14 +39,14 @@ public class ComplexText extends PlainText implements IComplexText {
 
   /** {@inheritDoc} */
   @Override
-  public synchronized final InlineCode inlineCode() {
+  public synchronized final PlainText inlineCode() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     return this.m_driver.createInlineCode(this);
   }
 
   /** {@inheritDoc} */
   @Override
-  public synchronized final Emphasize emphasize() {
+  public synchronized final PlainText emphasize() {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     return this.m_driver.createEmphasize(this);
   }
