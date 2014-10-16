@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.optimizationBenchmarking.utils.math.BasicNumber;
 import org.optimizationBenchmarking.utils.math.Rational;
 
 /**
@@ -71,7 +72,7 @@ public class RationalTest {
       }
 
       rat = Rational.valueOf(d);
-      if (rat.isNaN()) {
+      if (rat.getState() == BasicNumber.STATE_NAN) {
         continue;
       }
       Assert.assertEquals(rat.doubleValue(), d, (Math.abs(d) * 1e-15));
@@ -88,7 +89,7 @@ public class RationalTest {
       for (b = (-100); b <= 100; b++) {
         c = (a / b);
         r = Rational.valueOf(c);
-        if (r.isNaN()) {
+        if (r.getState() == BasicNumber.STATE_NAN) {
           continue;
         }
         Assert.assertEquals(r.doubleValue(), c, (Math.abs(c) * 1e-15));
@@ -157,7 +158,7 @@ public class RationalTest {
     final Random r;
     final long max;
     long a, b;
-    double x, y;
+    double x, y, v;
     int i;
 
     max = ((1L << 56l) - 1L);
@@ -181,8 +182,13 @@ public class RationalTest {
         y = b;
       } while (y != b);
 
-      Assert.assertEquals(//
-          (x / y), Rational.valueOf(a, b).doubleValue(), 1e-9d);
+      v = (x / y);
+      if ((v <= Double.NEGATIVE_INFINITY)
+          || (v >= Double.POSITIVE_INFINITY) || (v != v)) {
+        continue;
+      }
+      Assert.assertEquals(v, Rational.valueOf(a, b).doubleValue(),
+          (1e-10d + (3 * Math.ulp(v))));
 
     }
   }

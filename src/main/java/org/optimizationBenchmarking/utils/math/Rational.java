@@ -5,23 +5,13 @@ import java.math.RoundingMode;
 
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.functions.combinatoric.GCD;
-import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** a fractional number */
-public class Rational extends Number implements ITextable {
+public class Rational extends BasicNumber {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
-
-  /** +inf */
-  private static final String PI = Double
-      .toString(Double.POSITIVE_INFINITY);
-  /** -inf */
-  private static final String NI = Double
-      .toString(Double.NEGATIVE_INFINITY);
-  /** nan */
-  private static final String NN = Double.toString(Double.NaN);
 
   /** positive infinity */
   private static final Rational POSITIVE_INFINITY = new Rational(
@@ -316,14 +306,20 @@ public class Rational extends Number implements ITextable {
     return new Rational(u, d);
   }
 
-  /**
-   * Does this fraction represent a true number?
-   * 
-   * @return {@code true} if the fraction stands for a number,
-   *         {@code false} otherwise
-   */
-  public final boolean isReal() {
-    return (this.m_down != 0L);
+  /** {@inheritDoc} */
+  @Override
+  public int getState() {
+    if (this.m_down == 1L) {
+      return BasicNumber.STATE_INTEGER;
+    }
+    if (this.m_down != 0L) {
+      return BasicNumber.STATE_DOUBLE;
+    }
+    if (this.m_up == 0L) {
+      return BasicNumber.STATE_NAN;
+    }
+    return ((this.m_up < 0L) ? BasicNumber.STATE_NEGATIVE_INFINITY
+        : BasicNumber.STATE_POSITIVE_INFINITY);
   }
 
   /**
@@ -331,26 +327,9 @@ public class Rational extends Number implements ITextable {
    * 
    * @return the sign of this fraction
    */
+  @Override
   public final int sign() {
     return (((this.m_up > 0L) ? 1 : ((this.m_up < 0L) ? (-1) : 0)));
-  }
-
-  /**
-   * Is the fraction infinite or overflowing?
-   * 
-   * @return {@code true} if the fraction is infinite or overflowing
-   */
-  public final boolean isInfinite() {
-    return ((this.m_down == 0L) && (this.m_up != 0L));
-  }
-
-  /**
-   * Is the fraction neither infinite nor an actual number?
-   * 
-   * @return {@code true} if the fraction is not real
-   */
-  public final boolean isNaN() {
-    return ((this.m_down == 0L) && (this.m_up == 0L));
   }
 
   /** {@inheritDoc} */
@@ -470,15 +449,6 @@ public class Rational extends Number implements ITextable {
   @Override
   public final long longValue() {
     return this.longValue(RoundingMode.DOWN);
-  }
-
-  /**
-   * Does this fraction actually represent an integer number?
-   * 
-   * @return {@code true} if it is an integer, {@code false} otherwise
-   */
-  public final boolean isInteger() {
-    return (this.m_down == 1L);
   }
 
   /**
@@ -658,6 +628,11 @@ public class Rational extends Number implements ITextable {
   @Override
   public final String toString() {
     final MemoryTextOutput sb;
+    if (this.m_down == 0L) {
+      return BasicNumber.STATE_NAMES[(this.m_up < 0L) ? BasicNumber.STATE_NEGATIVE_INFINITY
+          : ((this.m_up > 0L) ? BasicNumber.STATE_POSITIVE_INFINITY
+              : BasicNumber.STATE_NAN)];
+    }
     sb = new MemoryTextOutput(32);
     this.toText(sb);
     return sb.toString();
@@ -670,8 +645,10 @@ public class Rational extends Number implements ITextable {
 
     down = this.m_down;
     if (down == 0L) {
-      textOut.append((this.m_up < 0L) ? Rational.NI
-          : ((this.m_up > 0L) ? Rational.PI : Rational.NN));
+      textOut.append(BasicNumber.STATE_NAMES[//
+          (this.m_up < 0L) ? BasicNumber.STATE_NEGATIVE_INFINITY
+              : ((this.m_up > 0L) ? BasicNumber.STATE_POSITIVE_INFINITY
+                  : BasicNumber.STATE_NAN)]);
     } else {
       textOut.append(this.m_up);
       if (down != 1L) {
@@ -691,24 +668,29 @@ public class Rational extends Number implements ITextable {
    *           if the procedure fails
    */
   public final BigDecimal multiply(final BigDecimal b) {
-    if (this.isReal()) {
+    if (this.m_down != 0L) {
       return b.multiply(BigDecimal.valueOf(this.m_up)).divide(
           BigDecimal.valueOf(this.m_down));
     }
-    throw new ArithmeticException();
+    throw new ArithmeticException("Cannot multiply BigDecimal with " //$NON-NLS-1$
+        + this);
   }
 
   /** {@inheritDoc} */
   @Override
   public final int hashCode() {
-    return HashUtils.combineHashes(HashUtils.hashCode(this.m_up),
-        HashUtils.hashCode(this.m_down));
+    if (this.m_down != 0L) {
+      return HashUtils.combineHashes(HashUtils.hashCode(this.m_up),
+          HashUtils.hashCode(this.m_down));
+    }
+    return super.hashCode();
   }
 
   /** {@inheritDoc} */
   @Override
   public final boolean equals(final Object o) {
     final Rational r;
+
     if (o instanceof Rational) {
       r = ((Rational) o);
       if (r.m_down == this.m_down) {
@@ -726,6 +708,44 @@ public class Rational extends Number implements ITextable {
       }
     }
 
-    return false;
+    return super.equals(o);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int compareTo(final Number number) {
+    final Rational r;
+
+    if (number instanceof Rational) {
+      r = ((Rational) number);
+      if (this.m_down == r.m_down) {
+        return Long.compare(this.m_up, r.m_up);
+      }
+      if (this.m_down == 0L) {
+        if (this.m_up < 0L) {
+          return (-1);
+        }
+        return 1;
+      }
+      if (r.m_down == 0L) {
+        if (r.m_up < 0L) {
+          return 1;
+        }
+        return (-1);
+      }
+    }
+    return super.compareTo(number);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isReal() {
+    return (this.m_down != 0L);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isInteger() {
+    return (this.m_down == 1L);
   }
 }

@@ -51,8 +51,8 @@ public final class SaturatingAdd extends BinaryFunction {
       return this.compute(x1, x0);
     }
 
-    if (x0 < 0) {
-      if ((x1 < 0) && ((Long.MIN_VALUE - x1) > x0)) {
+    if (x0 < 0L) {
+      if ((x1 < 0L) && ((Long.MIN_VALUE - x1) > x0)) {
         return Long.MIN_VALUE;
       }
       return (x0 + x1);

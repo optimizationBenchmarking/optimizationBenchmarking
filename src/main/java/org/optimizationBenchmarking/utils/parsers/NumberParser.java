@@ -12,7 +12,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
   /** value */
-  protected static final String MIN_MAX = "Minimum allowed value must be less or equal to maximum allowed value, but value range is ("; //$NON-NLS-1$
+  protected static final String MIN_MAX = "MinimumAggregate allowed value must be less or equal to maximum allowed value, but value range is ("; //$NON-NLS-1$
   /** value too small */
   protected static final String MBLOET = "Value must be larger or equal to "; //$NON-NLS-1$
   /** value is */

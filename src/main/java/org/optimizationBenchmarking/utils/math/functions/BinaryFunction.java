@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions;
 
+import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+
 /**
  * <p>
  * The base class for binary functions, i.e., mathematical functions that
@@ -18,7 +20,13 @@ public class BinaryFunction extends MathematicalFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final int arity() {
+  public final int getMinArity() {
+    return 2;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getMaxArity() {
     return 2;
   }
 
@@ -32,9 +40,7 @@ public class BinaryFunction extends MathematicalFunction {
    */
   @Override
   public final byte compute(final byte... x) {
-    if (x.length != 2) {
-      this._throwArity(x.length);
-    }
+    this._checkArity(x.length);
     return this.compute(x[0], x[1]);
   }
 
@@ -48,9 +54,7 @@ public class BinaryFunction extends MathematicalFunction {
    */
   @Override
   public final short compute(final short... x) {
-    if (x.length != 2) {
-      this._throwArity(x.length);
-    }
+    this._checkArity(x.length);
     return this.compute(x[0], x[1]);
   }
 
@@ -64,9 +68,7 @@ public class BinaryFunction extends MathematicalFunction {
    */
   @Override
   public final int compute(final int... x) {
-    if (x.length != 2) {
-      this._throwArity(x.length);
-    }
+    this._checkArity(x.length);
     return this.compute(x[0], x[1]);
   }
 
@@ -80,9 +82,7 @@ public class BinaryFunction extends MathematicalFunction {
    */
   @Override
   public final long compute(final long... x) {
-    if (x.length != 2) {
-      this._throwArity(x.length);
-    }
+    this._checkArity(x.length);
     return this.compute(x[0], x[1]);
   }
 
@@ -96,9 +96,7 @@ public class BinaryFunction extends MathematicalFunction {
    */
   @Override
   public final float compute(final float... x) {
-    if (x.length != 2) {
-      this._throwArity(x.length);
-    }
+    this._checkArity(x.length);
     return this.compute(x[0], x[1]);
   }
 
@@ -112,9 +110,7 @@ public class BinaryFunction extends MathematicalFunction {
    */
   @Override
   public final double compute(final double... x) {
-    if (x.length != 2) {
-      this._throwArity(x.length);
-    }
+    this._checkArity(x.length);
     return this.compute(x[0], x[1]);
   }
 
@@ -259,5 +255,22 @@ public class BinaryFunction extends MathematicalFunction {
   @Override
   public BinaryFunction integrateFor(final int index) {
     return null;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double computeOverColumn(final IMatrix matrix,
+      final int column) {
+    this._checkArity(matrix.m());
+    return this.compute(matrix.getDouble(0, column),
+        matrix.getDouble(1, column));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double computeOverRow(final IMatrix matrix, final int row) {
+    this._checkArity(matrix.n());
+    return this
+        .compute(matrix.getDouble(row, 0), matrix.getDouble(row, 1));
   }
 }

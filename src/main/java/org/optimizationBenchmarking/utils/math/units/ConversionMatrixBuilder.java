@@ -154,7 +154,7 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
     checkR: if (use instanceof Rational) {
       r = ((Rational) use);
 
-      if (r.isInfinite() || r.isNaN()) {
+      if (!(r.isReal())) {
         return 0;
       }
 

@@ -2,6 +2,8 @@ package org.optimizationBenchmarking.utils.math.functions;
 
 import java.io.Serializable;
 
+import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+
 /**
  * <p>
  * The base class for mathematical functions. It is our goal to implement
@@ -28,26 +30,23 @@ public abstract class MathematicalFunction implements Serializable {
   }
 
   /**
-   * Get the arity of this function, i.e., the number of arguments it
-   * accepts.
+   * Get the minimum arity of this function, i.e., the number of arguments
+   * it requires at least.
    * 
-   * @return the number of arguments that this function accepts
+   * @return the number of arguments that this function needs at least
+   * @see #getMaxArity()
    */
-  public abstract int arity();
+  public abstract int getMinArity();
 
   /**
-   * Compute the result of this function when all parameters are
-   * {@code double} valued.
+   * Get the maximum arity of this function, i.e., the number of arguments
+   * it permits at most.
    * 
-   * @param x
-   *          the vector of parameters, which must contain (at least)
-   *          {@link #arity()} {@code double} values
-   * @return the result of this function, computed in {@code double}
-   *         precision
+   * @return the number of arguments that this function needs accepts at
+   *         most
+   * @see #getMinArity()
    */
-  public double compute(final double... x) {
-    throw new UnsupportedOperationException();
-  }
+  public abstract int getMaxArity();
 
   /**
    * throws the illegal argument exception caused by a NaN return value for
@@ -71,12 +70,40 @@ public abstract class MathematicalFunction implements Serializable {
    * @throws IllegalArgumentException
    *           always
    */
-  final void _throwArity(final int length) {
-    throw new IllegalArgumentException(//
-        "The function '" + this.toString() + //$NON-NLS-1$
-            "' has arity " + this.arity() + //$NON-NLS-1$
-            " but was invoked with " + length + //$NON-NLS-1$
-            " arguments."); //$NON-NLS-1$
+  final void _checkArity(final int length) {
+    int x;
+
+    x = this.getMinArity();
+    if (length < x) {
+      throw new IllegalArgumentException(//
+          "The function '" + this.toString() + //$NON-NLS-1$
+              "' requires at least " + x + //$NON-NLS-1$
+              " parameters, but was invoked with " + length + //$NON-NLS-1$
+              " arguments."); //$NON-NLS-1$
+    }
+    x = this.getMaxArity();
+    if (length < x) {
+      throw new IllegalArgumentException(//
+          "The function '" + this.toString() + //$NON-NLS-1$
+              "' allows at most " + x + //$NON-NLS-1$
+              " parameters, but was invoked with " + length + //$NON-NLS-1$
+              " arguments."); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * Compute the result of this function when all parameters are
+   * {@code double} valued.
+   * 
+   * @param x
+   *          the vector of parameters, which must contain (at least)
+   *          {@link #getMinArity()} and at most {@link #getMaxArity()}
+   *          {@code double} values
+   * @return the result of this function, computed in {@code double}
+   *         precision
+   */
+  public double compute(final double... x) {
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -86,8 +113,9 @@ public abstract class MathematicalFunction implements Serializable {
    * casted to {@code byte}.
    * 
    * @param x
-   *          the vector of parameters, which must contain (at least)
-   *          {@link #arity()} {@code byte} values
+   *          the vector of parameters, which must contain at least
+   *          {@link #getMinArity()} and at most {@link #getMaxArity()}
+   *          {@code byte} values
    * @return the return value of this function, a byte
    * @throws IllegalArgumentException
    *           if a floating point delegate in the delegation chain returns
@@ -99,9 +127,7 @@ public abstract class MathematicalFunction implements Serializable {
     final int r;
 
     i = x.length;
-    if (i != this.arity()) {
-      this._throwArity(i);
-    }
+    this._checkArity(i);
 
     a = new int[i];
     for (; (--i) >= 0;) {
@@ -120,8 +146,9 @@ public abstract class MathematicalFunction implements Serializable {
    * casted to {@code short}.
    * 
    * @param x
-   *          the vector of parameters, which must contain (at least)
-   *          {@link #arity()} {@code short} values
+   *          the vector of parameters, which must contain at least
+   *          {@link #getMinArity()} and at most {@link #getMaxArity()}
+   *          {@code short} values
    * @return the return value of this function, a short
    * @throws IllegalArgumentException
    *           if a floating point delegate in the delegation chain returns
@@ -133,9 +160,7 @@ public abstract class MathematicalFunction implements Serializable {
     final int r;
 
     i = x.length;
-    if (i != this.arity()) {
-      this._throwArity(i);
-    }
+    this._checkArity(i);
 
     a = new int[i];
     for (; (--i) >= 0;) {
@@ -154,8 +179,9 @@ public abstract class MathematicalFunction implements Serializable {
    * then casted to {@code int}.
    * 
    * @param x
-   *          the vector of parameters, which must contain (at least)
-   *          {@link #arity()} {@code int} values
+   *          the vector of parameters, which must contain at least
+   *          {@link #getMinArity()} and at most {@link #getMaxArity()}
+   *          {@code int} values
    * @return the return value of this function, a int
    * @throws IllegalArgumentException
    *           if a floating point delegate in the delegation chain returns
@@ -167,9 +193,7 @@ public abstract class MathematicalFunction implements Serializable {
     final long r;
 
     i = x.length;
-    if (i != this.arity()) {
-      this._throwArity(i);
-    }
+    this._checkArity(i);
 
     a = new long[i];
     for (; (--i) >= 0;) {
@@ -188,8 +212,9 @@ public abstract class MathematicalFunction implements Serializable {
    * is then casted to {@code long}.
    * 
    * @param x
-   *          the vector of parameters, which must contain (at least)
-   *          {@link #arity()} {@code long} values
+   *          the vector of parameters, which must contain at least
+   *          {@link #getMinArity()} and at most {@link #getMaxArity()}
+   *          {@code long} values
    * @return the return value of this function, a long
    * @throws IllegalArgumentException
    *           if a floating point delegate in the delegation chain returns
@@ -201,9 +226,7 @@ public abstract class MathematicalFunction implements Serializable {
     final double r;
 
     i = x.length;
-    if (i != this.arity()) {
-      this._throwArity(i);
-    }
+    this._checkArity(i);
 
     a = new double[i];
     for (; (--i) >= 0;) {
@@ -230,8 +253,9 @@ public abstract class MathematicalFunction implements Serializable {
    * is then casted to {@code float}.
    * 
    * @param x
-   *          the vector of parameters, which must contain (at least)
-   *          {@link #arity()} {@code float} values
+   *          the vector of parameters, which must contain at least
+   *          {@link #getMinArity()} and at most {@link #getMaxArity()}
+   *          {@code float} values
    * @return the return value of this function, a float
    */
   public float compute(final float... x) {
@@ -240,9 +264,7 @@ public abstract class MathematicalFunction implements Serializable {
     final double r;
 
     i = x.length;
-    if (i != this.arity()) {
-      this._throwArity(i);
-    }
+    this._checkArity(i);
 
     a = new double[i];
     for (; (--i) >= 0;) {
@@ -277,7 +299,7 @@ public abstract class MathematicalFunction implements Serializable {
    * 
    * @param index
    *          the index of the parameter with
-   *          <code>0&leq;index<{@link #arity()}</code>
+   *          <code>0&leq;index&lt;{@link #getMaxArity()}</code>
    * @return the inverse function, if it exists, {@code null} otherwise
    */
   public MathematicalFunction invertFor(final int index) {
@@ -301,7 +323,7 @@ public abstract class MathematicalFunction implements Serializable {
    * 
    * @param index
    *          the index of the parameter with
-   *          <code>0&leq;index<{@link #arity()}</code>
+   *          <code>0&leq;index&lt;{@link #getMaxArity()}</code>
    * @return the derivative function, if it exists, {@code null} otherwise
    */
   public MathematicalFunction derivativeFor(final int index) {
@@ -320,7 +342,7 @@ public abstract class MathematicalFunction implements Serializable {
    * 
    * @param index
    *          the index of the parameter with
-   *          <code>0&leq;index<{@link #arity()}</code>
+   *          <code>0&leq;index&lt;{@link #getMaxArity()}</code>
    * @return the integral function, if it exists, {@code null} otherwise
    */
   public MathematicalFunction integrateFor(final int index) {
@@ -357,5 +379,51 @@ public abstract class MathematicalFunction implements Serializable {
   @Override
   public int hashCode() {
     return this.getClass().hashCode();
+  }
+
+  /**
+   * Compute the values over the specified column of the given matrix
+   * 
+   * @param matrix
+   *          the matrix
+   * @param column
+   *          the column
+   * @return the aggregate
+   */
+  public double computeOverColumn(final IMatrix matrix, final int column) {
+    final int m;
+    final double[] d;
+    int i;
+
+    m = matrix.m();
+    this._checkArity(m);
+    d = new double[m];
+    for (i = 0; i < m; i++) {
+      d[i] = matrix.getDouble(i, column);
+    }
+    return this.compute(d);
+  }
+
+  /**
+   * Compute the values over the specified row of the given matrix
+   * 
+   * @param matrix
+   *          the matrix
+   * @param row
+   *          the row
+   * @return the aggregate
+   */
+  public double computeOverRow(final IMatrix matrix, final int row) {
+    final int n;
+    final double[] d;
+    int i;
+
+    n = matrix.m();
+    this._checkArity(n);
+    d = new double[n];
+    for (i = 0; i < n; i++) {
+      d[i] = matrix.getDouble(row, i);
+    }
+    return this.compute(d);
   }
 }

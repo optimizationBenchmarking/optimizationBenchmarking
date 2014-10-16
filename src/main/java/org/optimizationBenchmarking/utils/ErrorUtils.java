@@ -117,7 +117,7 @@ public final class ErrorUtils {
   }
 
   /**
-   * Aggregate two {@link java.lang.Throwable throwables}
+   * ScalarAggregate two {@link java.lang.Throwable throwables}
    * 
    * @param oldError
    *          the error which was caught first, or {@code null}

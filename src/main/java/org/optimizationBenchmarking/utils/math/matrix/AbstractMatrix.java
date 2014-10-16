@@ -11,6 +11,7 @@ import org.optimizationBenchmarking.utils.math.matrix.impl.FloatMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.IntMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.LongMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.ShortMatrix1D;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -424,4 +425,59 @@ public class AbstractMatrix implements IMatrix, ITextable {
     }
     return new DoubleMatrix1D(ddata, m, n);
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public void aggregateColumn(final int column, final IAggregate aggregate) {
+    final int n, m;
+    int i;
+
+    m = this.m();
+    if (m > 0) {
+      n = this.n();
+      if ((column < 0) || (column > n)) {
+        throw new IllegalArgumentException("Column " //$NON-NLS-1$
+            + column + " outside valid range 0.." + (n - 1));//$NON-NLS-1$
+      }
+
+      if (this.isIntegerMatrix()
+          || (((n > 1) && (this.selectColumns(column).isIntegerMatrix())))) {
+        for (i = m; (--i) >= 0;) {
+          aggregate.append(this.getLong(i, column));
+        }
+      } else {
+        for (i = m; (--i) >= 0;) {
+          aggregate.append(this.getDouble(i, column));
+        }
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void aggregateRow(final int row, final IAggregate aggregate) {
+    final int n, m;
+    int i;
+
+    n = this.n();
+    if (n > 0) {
+      m = this.m();
+      if ((row < 0) || (row > m)) {
+        throw new IllegalArgumentException("Row " //$NON-NLS-1$
+            + row + " outside valid range 0.." + (n - 1));//$NON-NLS-1$
+      }
+
+      if (this.isIntegerMatrix()
+          || ((m > 1) && (this.selectRows(row).isIntegerMatrix()))) {
+        for (i = n; (--i) >= 0;) {
+          aggregate.append(this.getLong(row, i));
+        }
+      } else {
+        for (i = n; (--i) >= 0;) {
+          aggregate.append(this.getDouble(row, i));
+        }
+      }
+    }
+  }
+
 }

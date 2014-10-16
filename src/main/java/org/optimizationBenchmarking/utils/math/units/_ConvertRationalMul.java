@@ -32,7 +32,8 @@ final class _ConvertRationalMul extends _ConversionFunction {
   /** {@inheritDoc} */
   @Override
   public final long compute(final long x0) {
-    Rational r;
+    final Rational r;
+
     r = this.m_multiplier.multiply(x0);
     if (r.isReal()) {
       return r.longValue();

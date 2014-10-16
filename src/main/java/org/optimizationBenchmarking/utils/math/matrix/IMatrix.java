@@ -2,6 +2,8 @@ package org.optimizationBenchmarking.utils.math.matrix;
 
 import java.util.Iterator;
 
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
+
 /**
  * A two-dimensional {@link #m() m}&times;{@link #n() n}-matrix of
  * {@code double} values.
@@ -126,4 +128,26 @@ public interface IMatrix {
    * @return the matrix copy
    */
   public abstract IMatrix copy();
+
+  /**
+   * Aggregate the values in a given column
+   * 
+   * @param column
+   *          the column index
+   * @param aggregate
+   *          the aggregate to append to
+   */
+  public abstract void aggregateColumn(final int column,
+      final IAggregate aggregate);
+
+  /**
+   * Aggregate the values in a given row
+   * 
+   * @param row
+   *          the row index
+   * @param aggregate
+   *          the aggregate to append to
+   */
+  public abstract void aggregateRow(final int row,
+      final IAggregate aggregate);
 }
