@@ -53,7 +53,7 @@ public enum ESequenceMode {
   };
 
   /** the et al */
-  static final char[] ET_AL_ = { 'e', 't', ' ', 'a', 'l', '.' };
+  static final char[] ET_AL_ = { ' ', 'e', 't', ' ', 'a', 'l', '.' };
 
   /** the start string, or {@code null} if none is needed */
   private final char[] m_start;

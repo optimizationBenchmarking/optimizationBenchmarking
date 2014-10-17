@@ -17,4 +17,7 @@ public enum ELineType {
   /** stairs, keeping the right-most value */
   STAIRS_PREVIEW_RIGHT;
 
+  /** the default connection */
+  public static final ELineType DEFAULT = DIRECT_CONNECT;
+
 }

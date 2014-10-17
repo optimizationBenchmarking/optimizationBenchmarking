@@ -1,43 +1,80 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 
-/** the chart driver class */
+/** the chart driver base class */
 public class ChartDriver implements IChartDriver {
 
-  /** the chart driver */
+  /**
+   * the chart driver
+   */
   protected ChartDriver() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
-  public LineChart lineChart(final Graphic graphic) {
-    return new LineChart(graphic, this);
+  public final ILineChart lineChart(final Graphic graphic) {
+    return new _LineChartBuilder(graphic, this);
   }
 
   /**
-   * Create a new 2-dimensional line
+   * Draw the {@link #lineChart(Graphic) line chart} after the chart has
+   * been closed and all data is set.
    * 
-   * @param owner
-   *          the owning line chart
-   * @return the series
+   * @param graphic
+   *          the graphic
+   * @param title
+   *          the title
+   * @param showLegend
+   *          show the legend?
+   * @param xAxis
+   *          the x-axis
+   * @param yAxis
+   *          the y-axis
+   * @param lines
+   *          the lines
    */
-  protected Line2D createLine2D(final LineChart owner) {
-    return new Line2D(owner);
+  protected void renderLineChart(final Graphic graphic,
+      final String title, final boolean showLegend, final Axis xAxis,
+      final Axis yAxis, final Line2D[] lines) {
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * Create an axis
+   * Draw the diagram after the chart has been closed
    * 
-   * @param owner
-   *          the owning line chart
-   * @param id
-   *          the id of the axis
-   * @return the axis
+   * @param graphic
+   *          the graphic
+   * @param title
+   *          the title
+   * @param showLegend
+   *          show the legend?
+   * @param xAxis
+   *          the x-axis
+   * @param yAxis
+   *          the y-axis
+   * @param lines
+   *          the lines
    */
-  protected Axis createAxis(final LineChart owner, final int id) {
-    return new Axis(owner, id);
+  final void _renderLineChart(final Graphic graphic, final String title,
+      final boolean showLegend, final Axis xAxis, final Axis yAxis,
+      final Line2D[] lines) {
+    if (graphic == null) {
+      throw new IllegalArgumentException("Graphic must not be null."); //$NON-NLS-1$
+    }
+    if (xAxis == null) {
+      throw new IllegalArgumentException("X-axis must not be null."); //$NON-NLS-1$
+    }
+    if (yAxis == null) {
+      throw new IllegalArgumentException("Y-axis must not be null."); //$NON-NLS-1$
+    }
+    if ((lines == null) || (lines.length <= 0)) {
+      throw new IllegalArgumentException(
+          "Lines must not be null or empty."); //$NON-NLS-1$
+    }
+    this.renderLineChart(graphic, title, showLegend, xAxis, yAxis, lines);
   }
 }

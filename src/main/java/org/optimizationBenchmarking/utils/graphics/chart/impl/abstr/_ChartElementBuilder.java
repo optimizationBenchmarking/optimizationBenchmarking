@@ -7,12 +7,13 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * The base class for all chart items.
  */
-public class ChartElement extends HierarchicalFSM implements IChartElement {
+public class _ChartElementBuilder extends HierarchicalFSM implements
+    IChartElement {
 
   /** the state that the element is alive */
   static final int STATE_ALIVE = 0;
   /** the state that the element is dead */
-  static final int STATE_DEAD = (ChartElement.STATE_ALIVE + 1);
+  static final int STATE_DEAD = (_ChartElementBuilder.STATE_ALIVE + 1);
 
   /**
    * create the chart item
@@ -20,7 +21,7 @@ public class ChartElement extends HierarchicalFSM implements IChartElement {
    * @param owner
    *          the owner
    */
-  protected ChartElement(final ChartElement owner) {
+  protected _ChartElementBuilder(final _ChartElementBuilder owner) {
     super(owner);
   }
 
@@ -28,7 +29,7 @@ public class ChartElement extends HierarchicalFSM implements IChartElement {
   @Override
   protected synchronized void onOpen() {
     super.onOpen();
-    this.fsmStateSet(ChartElement.STATE_ALIVE);
+    this.fsmStateSet(_ChartElementBuilder.STATE_ALIVE);
   }
 
   /** {@inheritDoc} */
@@ -49,7 +50,7 @@ public class ChartElement extends HierarchicalFSM implements IChartElement {
   /** {@inheritDoc} */
   @Override
   protected synchronized void onClose() {
-    this.fsmStateSet(ChartElement.STATE_DEAD);
+    this.fsmStateSet(_ChartElementBuilder.STATE_DEAD);
     super.onClose();
   }
 }

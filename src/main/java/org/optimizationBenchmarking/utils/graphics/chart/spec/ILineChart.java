@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.graphics.chart.spec;
 
 /** The interface for line charts */
-public interface ILineChart extends ITitleElement {
+public interface ILineChart extends ITitledElement {
   /**
    * set the title of the chart
    * 

@@ -6,7 +6,7 @@ import java.awt.Stroke;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** The interface for building data series */
-public interface IDataSeries extends ITitleElement {
+public interface IDataSeries extends ITitledElement {
 
   /**
    * set the title of the series

@@ -1,32 +1,72 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
-import org.optimizationBenchmarking.utils.graphics.chart.spec.ELineType;
-import org.optimizationBenchmarking.utils.graphics.chart.spec.ILine2D;
+import java.awt.Color;
+import java.awt.Stroke;
 
-/**
- * The base class for all 2-dimensional lines
- */
-public class Line2D extends DataSeries2D implements ILine2D {
+import org.optimizationBenchmarking.utils.graphics.chart.spec.ELineType;
+import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+
+/** The base class for lines */
+public final class Line2D extends _DataSeries2D {
 
   /** the line type */
-  ELineType m_type;
+  private final ELineType m_type;
 
   /**
-   * create the chart item
+   * Create a data series
    * 
-   * @param owner
-   *          the owner
+   * @param title
+   *          the title
+   * @param color
+   *          the color
+   * @param stroke
+   *          the stroke
+   * @param data
+   *          the matrix
+   * @param hasStart
+   *          do we have a starting point?
+   * @param startX
+   *          the start x
+   * @param startY
+   *          the start y
+   * @param hasEnd
+   *          do we have a ending point?
+   * @param endX
+   *          the end x
+   * @param endY
+   *          the end y
+   * @param type
+   *          the line type
    */
-  protected Line2D(final ChartElement owner) {
-    super(owner);
-
-    this.m_type = ELineType.DIRECT_CONNECT;
+  Line2D(final String title, final Color color, final Stroke stroke,
+      final IMatrix data, final boolean hasStart, final double startX,
+      final double startY, final boolean hasEnd, final double endX,
+      final double endY, final ELineType type) {
+    super(title, color, stroke, data, hasStart, startX, startY, hasEnd,
+        endX, endY);
+    Line2D._assertType(type);
+    this.m_type = type;
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public synchronized void setType(final ELineType type) {
-    this.fsmStateAssert(ChartElement.STATE_ALIVE);
-    this.m_type = ((type == null) ? ELineType.DIRECT_CONNECT : type);
+  /**
+   * Assert the line type
+   * 
+   * @param type
+   *          the line type
+   */
+  static final void _assertType(final ELineType type) {
+    if (type == null) {
+      throw new IllegalArgumentException("Line type must not be null."); //$NON-NLS-1$
+    }
   }
+
+  /**
+   * Get the line type
+   * 
+   * @return the line type
+   */
+  public final ELineType getType() {
+    return this.m_type;
+  }
+
 }

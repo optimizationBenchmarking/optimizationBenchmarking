@@ -1,46 +1,55 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
-import org.optimizationBenchmarking.utils.graphics.chart.spec.IAxis;
-import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
-
 /**
- * The base class for all axes
+ * The class for all axes
  */
-public class Axis extends TitleElement implements IAxis {
+public final class Axis extends _TitledElement {
 
-  /** the id */
-  final int m_id;
-
-  /** the minimum aggregate */
-  ScalarAggregate m_min;
-  /** the maximum aggregate */
-  ScalarAggregate m_max;
+  /** the minimum */
+  private final double m_min;
+  /** the maximum */
+  private final double m_max;
 
   /**
-   * create the chart item
+   * create the axis
    * 
-   * @param id
-   *          the id
-   * @param owner
-   *          the owner
+   * @param title
+   *          the title
+   * @param min
+   *          the minimum value
+   * @param max
+   *          the maximum value
    */
-  protected Axis(final ChartElement owner, final int id) {
-    super(owner);
-    this.m_id = id;
-  }
+  Axis(final String title, final double min, final double max) {
+    super(title);
 
-  /** {@inheritDoc} */
-  @Override
-  public synchronized void setMinimumAggregate(final ScalarAggregate min) {
-    this.fsmStateAssert(ChartElement.STATE_ALIVE);
+    _AxisBuilder._assertMin(min);
+    _AxisBuilder._assertMax(max);
+    if (max <= min) {
+      throw new IllegalArgumentException(//
+          ((("Axis range [" + min) //$NON-NLS-1$
+              + ',') + max)
+              + "] is invalid."); //$NON-NLS-1$
+    }
     this.m_min = min;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public synchronized void setMaximumAggregate(final ScalarAggregate max) {
-    this.fsmStateAssert(ChartElement.STATE_ALIVE);
     this.m_max = max;
   }
 
+  /**
+   * Get the minimum value of this axis
+   * 
+   * @return the minimum value of this axis
+   */
+  public final double getMinimum() {
+    return this.m_min;
+  }
+
+  /**
+   * Get the maximum value of this axis
+   * 
+   * @return the maximum value of this axis
+   */
+  public final double getMaximum() {
+    return this.m_max;
+  }
 }

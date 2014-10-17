@@ -7,8 +7,9 @@ public interface IChartDriver {
 
   /**
    * Create a line chart to be painted on the given graphic object. The
-   * chart will close the graphic object once its paining has completed.
-   * The chart will fill the complete graphic, i.e., set its extent to
+   * chart will <em>not</em> close the graphic object once its paining has
+   * completed. The chart will fill the complete graphic, i.e., set its
+   * extent to
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.Graphic#getBounds()}
    * .
    * 
