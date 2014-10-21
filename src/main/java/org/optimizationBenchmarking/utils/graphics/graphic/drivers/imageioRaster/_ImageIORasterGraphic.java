@@ -89,6 +89,12 @@ class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
 
   /** {@inheritDoc} */
   @Override
+  public final boolean isVectorGraphic() {
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final Rectangle getBounds() {
     return new Rectangle(0, 0, this.m_w, this.m_h);
   }

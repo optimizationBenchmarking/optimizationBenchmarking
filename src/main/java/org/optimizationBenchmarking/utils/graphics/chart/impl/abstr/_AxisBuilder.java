@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
+import java.awt.Font;
+
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IAxis;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
@@ -13,10 +15,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  */
 final class _AxisBuilder extends _TitledElementBuilder implements IAxis {
 
+  /** the tick font has been set */
+  private static final int FLAG_HAS_TICK_FONT = (_TitledElementBuilder.FLAG_TITLED_ELEMENT_BUILDER_MAX << 1);
   /** the minimum has been set */
-  static final int FLAG_HAS_MIN = (_TitledElementBuilder.FLAG_HAS_TITLE << 1);
+  private static final int FLAG_HAS_MIN = (FLAG_HAS_TICK_FONT << 1);
   /** the maximum has been set */
-  static final int FLAG_HAS_MAX = (_AxisBuilder.FLAG_HAS_MIN << 1);
+  private static final int FLAG_HAS_MAX = (_AxisBuilder.FLAG_HAS_MIN << 1);
 
   /** the minimum aggregate */
   private ScalarAggregate m_minAg;
@@ -32,6 +36,9 @@ final class _AxisBuilder extends _TitledElementBuilder implements IAxis {
 
   /** the aggregate */
   private IAggregate m_agg;
+
+  /** the tick font */
+  private Font m_tickFont;
 
   /** the column this axis is responsible for */
   private final int m_col;
@@ -55,6 +62,8 @@ final class _AxisBuilder extends _TitledElementBuilder implements IAxis {
   protected final void fsmFlagsAppendName(final int flagValue,
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
+      case FLAG_HAS_TICK_FONT: {
+        append.append("tickFontSet");break;} //$NON-NLS-1$
       case FLAG_HAS_MIN: {
         append.append("minimumSet");break;} //$NON-NLS-1$
       case FLAG_HAS_MAX: {
@@ -63,6 +72,19 @@ final class _AxisBuilder extends _TitledElementBuilder implements IAxis {
         super.fsmFlagsAppendName(flagValue, flagIndex, append);
       }
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized void setTickFont(final Font tickFont) {
+    this.fsmStateAssert(_ChartElementBuilder.STATE_ALIVE);
+    this.fsmFlagsAssertAndUpdate(FLAG_NOTHING, FLAG_HAS_TICK_FONT,
+        FLAG_HAS_TICK_FONT, FSM.FLAG_NOTHING);
+    if (tickFont == null) {
+      throw new IllegalArgumentException(//
+          "Tick font cannot be set to null. If you don't want to specify a title font, don't set it."); //$NON-NLS-1$
+    }
+    this.m_tickFont = tickFont;
   }
 
   /** {@inheritDoc} */
@@ -180,7 +202,9 @@ final class _AxisBuilder extends _TitledElementBuilder implements IAxis {
   final Axis _getAxis() {
     return new Axis(
         this.m_title,
+        this.m_titleFont,
         ((this.m_minAg != null) ? this.m_minAg.doubleValue() : this.m_min),
-        ((this.m_maxAg != null) ? this.m_maxAg.doubleValue() : this.m_max));
+        ((this.m_maxAg != null) ? this.m_maxAg.doubleValue() : this.m_max),
+        this.m_tickFont);
   }
 }

@@ -65,9 +65,9 @@ final class _Line2DBuilder extends _DataSeries2DBuilder implements ILine2D {
     owner = this.getOwner();
     if (owner instanceof _LineChartBuilder) {
       ((_LineChartBuilder) owner)._addLine(new Line2D(this.m_title,
-          this.m_color, this.m_stroke, this.m_data, this.m_hasStart,
-          this.m_startX, this.m_startY, this.m_hasEnd, this.m_endX,
-          this.m_endY, this.m_type));
+          this.m_titleFont, this.m_color, this.m_stroke, this.m_data,
+          this.m_hasStart, this.m_startX, this.m_startY, this.m_hasEnd,
+          this.m_endX, this.m_endY, this.m_type));
     }
   }
 }

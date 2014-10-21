@@ -15,7 +15,7 @@ class _DataSeriesBuilder extends _TitledElementBuilder implements
     IDataSeries {
 
   /** the color has been set */
-  static final int FLAG_HAS_COLOR = (_TitledElementBuilder.FLAG_HAS_TITLE << 1);
+  static final int FLAG_HAS_COLOR = (_TitledElementBuilder.FLAG_TITLED_ELEMENT_BUILDER_MAX << 1);
   /** the stroke has been set */
   static final int FLAG_HAS_STROKE = (_DataSeriesBuilder.FLAG_HAS_COLOR << 1);
   /** the data has been set */
@@ -65,6 +65,10 @@ class _DataSeriesBuilder extends _TitledElementBuilder implements
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
         _DataSeriesBuilder.FLAG_HAS_COLOR,
         _DataSeriesBuilder.FLAG_HAS_COLOR, FSM.FLAG_NOTHING);
+    if (color == null) {
+      throw new IllegalArgumentException(//
+          "Cannot set color to null, if you dont want to set it, don't set it at all."); //$NON-NLS-1$
+    }
     this.m_color = color;
   }
 
@@ -75,6 +79,10 @@ class _DataSeriesBuilder extends _TitledElementBuilder implements
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
         _DataSeriesBuilder.FLAG_HAS_STROKE,
         _DataSeriesBuilder.FLAG_HAS_STROKE, FSM.FLAG_NOTHING);
+    if (stroke == null) {
+      throw new IllegalArgumentException(//
+          "Cannot set stroke to null, if you dont want to set it, don't set it at all."); //$NON-NLS-1$
+    }
     this.m_stroke = stroke;
   }
 

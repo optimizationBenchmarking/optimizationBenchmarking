@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Stroke;
 
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
@@ -22,6 +23,8 @@ class _DataSeries extends _TitledElement {
    * 
    * @param title
    *          the title
+   * @param titleFont
+   *          the title font
    * @param color
    *          the color
    * @param stroke
@@ -29,9 +32,9 @@ class _DataSeries extends _TitledElement {
    * @param data
    *          the matrix
    */
-  _DataSeries(final String title, final Color color, final Stroke stroke,
-      final IMatrix data) {
-    super(title);
+  _DataSeries(final String title, final Font titleFont, final Color color,
+      final Stroke stroke, final IMatrix data) {
+    super(title, titleFont);
 
     _DataSeries._checkMatrix(data);
     this.m_color = color;

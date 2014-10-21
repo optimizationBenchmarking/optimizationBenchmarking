@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Stroke;
 
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
@@ -13,6 +14,8 @@ class _DataSeries2D extends _DataSeries {
    * 
    * @param title
    *          the title
+   * @param titleFont
+   *          the title font
    * @param color
    *          the color
    * @param stroke
@@ -32,14 +35,15 @@ class _DataSeries2D extends _DataSeries {
    * @param endY
    *          the end y
    */
-  _DataSeries2D(final String title, final Color color,
-      final Stroke stroke, final IMatrix data, final boolean hasStart,
-      final double startX, final double startY, final boolean hasEnd,
-      final double endX, final double endY) {
-    super(title, color, stroke, (((hasStart || hasEnd) ? _DataSeries2D
-        ._checkMatrix2D(new _WrappedMatrix2D(_DataSeries2D
-            ._checkMatrix2D(data), hasStart, startX, startY, hasEnd, endX,
-            endY)) : _DataSeries2D._checkMatrix2D(data))));
+  _DataSeries2D(final String title, final Font titleFont,
+      final Color color, final Stroke stroke, final IMatrix data,
+      final boolean hasStart, final double startX, final double startY,
+      final boolean hasEnd, final double endX, final double endY) {
+    super(title, titleFont, color, stroke,
+        (((hasStart || hasEnd) ? _DataSeries2D
+            ._checkMatrix2D(new _WrappedMatrix2D(_DataSeries2D
+                ._checkMatrix2D(data), hasStart, startX, startY, hasEnd,
+                endX, endY)) : _DataSeries2D._checkMatrix2D(data))));
   }
 
   /**

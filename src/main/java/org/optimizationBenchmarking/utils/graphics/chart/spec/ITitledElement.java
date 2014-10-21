@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.graphics.chart.spec;
 
+import java.awt.Font;
+
 /** The interface for chart components which have titles */
 public interface ITitledElement extends IChartElement {
   /**
@@ -9,5 +11,14 @@ public interface ITitledElement extends IChartElement {
    *          the title
    */
   public abstract void setTitle(final String title);
+
+  /**
+   * set the title font of the element (can only be used after
+   * {@link #setTitle(String)})
+   * 
+   * @param titleFont
+   *          the title font
+   */
+  public abstract void setTitleFont(final Font titleFont);
 
 }

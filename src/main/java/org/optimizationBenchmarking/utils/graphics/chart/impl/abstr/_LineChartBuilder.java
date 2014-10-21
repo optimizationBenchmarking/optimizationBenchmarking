@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
 import java.util.ArrayList;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IAxis;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
@@ -14,7 +15,7 @@ final class _LineChartBuilder extends _TitledElementBuilder implements
     ILineChart {
 
   /** the x-axis type has been set */
-  static final int FLAG_HAS_X_AXIS = (_TitledElementBuilder.FLAG_HAS_TITLE << 1);
+  static final int FLAG_HAS_X_AXIS = (_TitledElementBuilder.FLAG_TITLED_ELEMENT_BUILDER_MAX << 1);
   /** the y-axis type has been set */
   static final int FLAG_HAS_Y_AXIS = (_LineChartBuilder.FLAG_HAS_X_AXIS << 1);
   /** the show legend has been set */
@@ -108,8 +109,7 @@ final class _LineChartBuilder extends _TitledElementBuilder implements
   @Override
   protected synchronized void onClose() {
     Graphic g;
-    Axis x, y;
-    Line2D[] data;
+    LineChart chart;
 
     this.fsmStateAssertAndSet(_ChartElementBuilder.STATE_ALIVE,
         _ChartElementBuilder.STATE_DEAD);
@@ -120,20 +120,19 @@ final class _LineChartBuilder extends _TitledElementBuilder implements
     g = this.m_graphic;
     this.m_graphic = null;
     try {
-      x = this.m_xAxis._getAxis();
+      chart = new LineChart(this.m_title, this.m_titleFont,
+          this.m_showLegend, this.m_xAxis._getAxis(),
+          this.m_yAxis._getAxis(), new ArrayListView<>(
+              new Line2D[this.m_lines.size()]));
       this.m_xAxis = null;
-      y = this.m_yAxis._getAxis();
       this.m_yAxis = null;
-      data = this.m_lines.toArray(new Line2D[this.m_lines.size()]);
       this.m_lines = null;
-      this.m_driver._renderLineChart(g, this.m_title, this.m_showLegend,
-          x, y, data);
+      this.m_driver.renderLineChart(g, chart);
     } finally {
       this.m_lines = null;
       this.m_xAxis = null;
       this.m_yAxis = null;
-      data = null;
-      x = y = null;
+      chart = null;
       g = null;
     }
 

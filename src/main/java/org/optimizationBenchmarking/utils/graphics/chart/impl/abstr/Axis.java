@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
+import java.awt.Font;
+
 /**
  * The class for all axes
  */
@@ -9,19 +11,26 @@ public final class Axis extends _TitledElement {
   private final double m_min;
   /** the maximum */
   private final double m_max;
+  /** the tick font */
+  private final Font m_tickFont;
 
   /**
    * create the axis
    * 
    * @param title
    *          the title
+   * @param titleFont
+   *          the title font
    * @param min
    *          the minimum value
    * @param max
    *          the maximum value
+   * @param tickFont
+   *          the tick font
    */
-  Axis(final String title, final double min, final double max) {
-    super(title);
+  Axis(final String title, final Font titleFont, final double min,
+      final double max, final Font tickFont) {
+    super(title, titleFont);
 
     _AxisBuilder._assertMin(min);
     _AxisBuilder._assertMax(max);
@@ -29,10 +38,11 @@ public final class Axis extends _TitledElement {
       throw new IllegalArgumentException(//
           ((("Axis range [" + min) //$NON-NLS-1$
               + ',') + max)
-              + "] is invalid."); //$NON-NLS-1$
+              + "] is invalid, the minimum must be less than the maximum."); //$NON-NLS-1$
     }
     this.m_min = min;
     this.m_max = max;
+    this.m_tickFont = tickFont;
   }
 
   /**
@@ -51,5 +61,15 @@ public final class Axis extends _TitledElement {
    */
   public final double getMaximum() {
     return this.m_max;
+  }
+
+  /**
+   * Get the tick font of this axis, or {@code null} if none is specified
+   * 
+   * @return the tick font of this axis, or {@code null} if none is
+   *         specified
+   */
+  public final Font getTickFont() {
+    return this.m_tickFont;
   }
 }

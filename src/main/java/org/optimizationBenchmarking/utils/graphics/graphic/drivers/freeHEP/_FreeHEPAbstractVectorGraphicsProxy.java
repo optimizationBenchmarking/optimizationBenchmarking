@@ -86,6 +86,12 @@ class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
     this.m_h = h;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isVectorGraphic() {
+    return true;
+  }
+
   /**
    * format an {@code int}eger for output
    * 

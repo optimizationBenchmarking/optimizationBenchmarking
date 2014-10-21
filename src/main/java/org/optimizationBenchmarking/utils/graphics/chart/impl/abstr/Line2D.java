@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Stroke;
 
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ELineType;
@@ -17,6 +18,8 @@ public final class Line2D extends _DataSeries2D {
    * 
    * @param title
    *          the title
+   * @param titleFont
+   *          the title font
    * @param color
    *          the color
    * @param stroke
@@ -38,12 +41,12 @@ public final class Line2D extends _DataSeries2D {
    * @param type
    *          the line type
    */
-  Line2D(final String title, final Color color, final Stroke stroke,
-      final IMatrix data, final boolean hasStart, final double startX,
-      final double startY, final boolean hasEnd, final double endX,
-      final double endY, final ELineType type) {
-    super(title, color, stroke, data, hasStart, startX, startY, hasEnd,
-        endX, endY);
+  Line2D(final String title, final Font titleFont, final Color color,
+      final Stroke stroke, final IMatrix data, final boolean hasStart,
+      final double startX, final double startY, final boolean hasEnd,
+      final double endX, final double endY, final ELineType type) {
+    super(title, titleFont, color, stroke, data, hasStart, startX, startY,
+        hasEnd, endX, endY);
     Line2D._assertType(type);
     this.m_type = type;
   }

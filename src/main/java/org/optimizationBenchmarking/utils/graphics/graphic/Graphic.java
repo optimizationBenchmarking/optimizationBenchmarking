@@ -145,6 +145,25 @@ public abstract class Graphic extends Graphics2D implements Closeable {
   }
 
   /**
+   * Is this graphic a vector graphic ({@code true}) or a raster graphic (
+   * {@code false})? A vector graphic can draw objects with perceived
+   * infinite precision. For instance, a horizontal line that consists of
+   * 1'000'000 points will be presented as, well, line with 1'000'000
+   * points in a vector graphic. A pixel (raster) graphic, may, for
+   * example, map to 1024*640 pixel. A horizontal line will then only
+   * consist of 1024 points, regardless of its logical point count. This
+   * may play a role when rendering graphics to a file. A vector graphic
+   * can become really huge if complex objects are rendered into it. A
+   * pixel graphic cannot exceed a given maximum size regardless.
+   * 
+   * @return {@code true} if this graphic is a vector graphic,
+   *         {@code false} otherwise.
+   */
+  public boolean isVectorGraphic() {
+    return true;
+  }
+
+  /**
    * The {@link #dispose()} method forwards the call to the idempotent
    * {@link #close()} and has the same semantics.
    */
