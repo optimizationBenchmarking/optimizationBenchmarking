@@ -53,6 +53,7 @@ import org.optimizationBenchmarking.utils.document.spec.ITableSection;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
+import org.optimizationBenchmarking.utils.graphics.chart.impl.EChartFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
@@ -68,6 +69,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import examples.org.optimizationBenchmarking.LoremIpsum;
 import examples.org.optimizationBenchmarking.utils.bibliography.data.RandomBibliography;
 import examples.org.optimizationBenchmarking.utils.graphics.FinishedPrinter;
+import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExample;
 
 /**
  * An example used to illustrate how documents can be created with the
@@ -1766,14 +1768,6 @@ public class RandomDocumentExample implements Runnable {
    *          the figure size
    */
   private final void __fillFigure(final IFigure fig, final EFigureSize v) {
-    final Rectangle2D r;
-    final ArrayList<AffineTransform> at;
-    int k, e, i;
-    Point2D a, b;
-    double[][] d;
-    MemoryTextOutput mo;
-    FontStyle fs;
-
     this.__useLabel(fig);
 
     try (final IPlainText cap = fig.caption()) {
@@ -1786,153 +1780,181 @@ public class RandomDocumentExample implements Runnable {
       LoremIpsum.appendLoremIpsum(cap, this.m_rand, 20);
     }
 
+    try (final Graphic g = fig.body()) {
+      switch (this.m_rand.nextInt(2)) {
+        case 0: {
+          LineChartExample.randomLineChart(this.m_rand, g,
+              this.m_doc.getStyles(), EChartFormat.DEFAULT.getDriver());
+          break;
+        }
+        default: {
+          this.__randomGraphic(g);
+          break;
+        }
+      }
+    }
+  }
+
+  /**
+   * Fill a graphic with random contents
+   * 
+   * @param g
+   *          the graphic
+   */
+  private final void __randomGraphic(final Graphic g) {
+    final Rectangle2D r;
+    final ArrayList<AffineTransform> at;
+    int k, e, i;
+    Point2D a, b;
+    double[][] d;
+    MemoryTextOutput mo;
+    FontStyle fs;
+
     at = new ArrayList<>();
     e = 500;
     mo = new MemoryTextOutput();
     fs = null;
-    try (final Graphic g = fig.body()) {
-      at.add(g.getTransform());
+    at.add(g.getTransform());
 
-      r = g.getBounds();
-      k = 0;
-      do {
-        switch (this.m_rand.nextInt(15)) {
-          case 0: {
-            i = this.m_fonts.length;
-            if (i > 0) {
-              g.setFont((fs = this.m_fonts[this.m_rand.nextInt(i)])
-                  .getFont());
-              break;
-            }
-          }
-          case 1: {
-            i = this.m_colors.length;
-            if (i > 0) {
-              g.setColor(this.m_colors[this.m_rand.nextInt(i)]);
-              break;
-            }
-          }
-          case 2: {
-            i = this.m_strokes.length;
-            if (i > 0) {
-              g.setStroke(this.m_strokes[this.m_rand.nextInt(i)]);
-              break;
-            }
-          }
-          case 3: {
-            trans: for (;;) {
-              try {
-                switch (this.m_rand.nextInt(3)) {
-                  case 0: {
-                    g.shear((-1d + (2d * this.m_rand.nextDouble())),
-                        (-1d + (2d * this.m_rand.nextDouble())));
-                    break;
-                  }
-                  case 1: {
-                    g.rotate(Math.PI
-                        * (-1d + (2d * this.m_rand.nextDouble())));
-                    break;
-                  }
-                  default: {
-                    g.scale(//
-                        (1d + ((this.m_rand.nextDouble() * 0.1d) - 0.05d)),//
-                        (1d + ((this.m_rand.nextDouble() * 0.1d) - 0.05d)));
-                  }
-                }
-                at.add(g.getTransform());
-                break trans;
-              } catch (final Throwable tt) {
-                //
-              }
-            }
+    r = g.getBounds();
+    k = 0;
+    do {
+      switch (this.m_rand.nextInt(15)) {
+        case 0: {
+          i = this.m_fonts.length;
+          if (i > 0) {
+            g.setFont((fs = this.m_fonts[this.m_rand.nextInt(i)])
+                .getFont());
             break;
-          }
-          case 4: {
-            if (at.size() > 1) {
-              at.remove(at.size() - 1);
-              g.setTransform(at.get(at.size() - 1));
-            }
-            break;
-          }
-
-          case 5: {
-            a = this.__randomPoint(r);
-            b = this.__randomPoint(r);
-            g.drawLine(a.getX(), a.getY(), b.getX(), b.getY());
-            k++;
-            break;
-          }
-          case 6: {
-            a = this.__randomPoint(r);
-            b = this.__randomPoint(r);
-            g.drawRect(a.getX(), a.getY(), (b.getX() - a.getX()),
-                (b.getY() - a.getY()));
-            k++;
-            break;
-          }
-          case 7: {
-            a = this.__randomPoint(r);
-            b = this.__randomPoint(r);
-            g.fillRect(a.getX(), a.getY(), (b.getX() - a.getX()),
-                (b.getY() - a.getY()));
-            k++;
-            break;
-          }
-          case 8: {
-            a = this.__randomPoint(r);
-            b = this.__randomPoint(r);
-            g.drawArc(a.getX(), a.getY(), (b.getX() - a.getX()),
-                (b.getY() - a.getY()),
-                (Math.PI * 2d * this.m_rand.nextDouble()),
-                (Math.PI * 2d * this.m_rand.nextDouble()));
-            k++;
-            break;
-          }
-          case 9: {
-            a = this.__randomPoint(r);
-            b = this.__randomPoint(r);
-            g.fillArc(a.getX(), a.getY(), (b.getX() - a.getX()),
-                (b.getY() - a.getY()),
-                (Math.PI * 2d * this.m_rand.nextDouble()),
-                (Math.PI * 2d * this.m_rand.nextDouble()));
-            k++;
-            break;
-          }
-          case 10: {
-            d = this.__randomPolygon(r);
-            g.drawPolygon(d[0], d[1], d[0].length);
-            k++;
-            break;
-          }
-          case 11: {
-            d = this.__randomPolygon(r);
-            g.fillPolygon(d[0], d[1], d[0].length);
-            k++;
-            break;
-          }
-          case 12: {
-            d = this.__randomPolygon(r);
-            g.drawPolyline(d[0], d[1], d[0].length);
-            k++;
-            break;
-          }
-
-          default: {
-            a = this.__randomPoint(r);
-            mo.clear();
-            if ((fs != null) && (this.m_rand.nextBoolean())) {
-              fs.appendDescription(ETextCase.AT_SENTENCE_START, mo, false);
-              mo.append(' ');
-            }
-            LoremIpsum.appendLoremIpsum(mo, this.m_rand,
-                this.m_rand.nextInt(10) + 1);
-            g.drawString(mo.toString(), a.getX(), a.getY());
-            mo.clear();
-            k++;
           }
         }
-      } while ((k < e) || (this.m_rand.nextInt(10) > 0));
-    }
+        case 1: {
+          i = this.m_colors.length;
+          if (i > 0) {
+            g.setColor(this.m_colors[this.m_rand.nextInt(i)]);
+            break;
+          }
+        }
+        case 2: {
+          i = this.m_strokes.length;
+          if (i > 0) {
+            g.setStroke(this.m_strokes[this.m_rand.nextInt(i)]);
+            break;
+          }
+        }
+        case 3: {
+          trans: for (;;) {
+            try {
+              switch (this.m_rand.nextInt(3)) {
+                case 0: {
+                  g.shear((-1d + (2d * this.m_rand.nextDouble())),
+                      (-1d + (2d * this.m_rand.nextDouble())));
+                  break;
+                }
+                case 1: {
+                  g.rotate(Math.PI
+                      * (-1d + (2d * this.m_rand.nextDouble())));
+                  break;
+                }
+                default: {
+                  g.scale(//
+                      (1d + ((this.m_rand.nextDouble() * 0.1d) - 0.05d)),//
+                      (1d + ((this.m_rand.nextDouble() * 0.1d) - 0.05d)));
+                }
+              }
+              at.add(g.getTransform());
+              break trans;
+            } catch (final Throwable tt) {
+              //
+            }
+          }
+          break;
+        }
+        case 4: {
+          if (at.size() > 1) {
+            at.remove(at.size() - 1);
+            g.setTransform(at.get(at.size() - 1));
+          }
+          break;
+        }
+
+        case 5: {
+          a = this.__randomPoint(r);
+          b = this.__randomPoint(r);
+          g.drawLine(a.getX(), a.getY(), b.getX(), b.getY());
+          k++;
+          break;
+        }
+        case 6: {
+          a = this.__randomPoint(r);
+          b = this.__randomPoint(r);
+          g.drawRect(a.getX(), a.getY(), (b.getX() - a.getX()),
+              (b.getY() - a.getY()));
+          k++;
+          break;
+        }
+        case 7: {
+          a = this.__randomPoint(r);
+          b = this.__randomPoint(r);
+          g.fillRect(a.getX(), a.getY(), (b.getX() - a.getX()),
+              (b.getY() - a.getY()));
+          k++;
+          break;
+        }
+        case 8: {
+          a = this.__randomPoint(r);
+          b = this.__randomPoint(r);
+          g.drawArc(a.getX(), a.getY(), (b.getX() - a.getX()),
+              (b.getY() - a.getY()),
+              (Math.PI * 2d * this.m_rand.nextDouble()),
+              (Math.PI * 2d * this.m_rand.nextDouble()));
+          k++;
+          break;
+        }
+        case 9: {
+          a = this.__randomPoint(r);
+          b = this.__randomPoint(r);
+          g.fillArc(a.getX(), a.getY(), (b.getX() - a.getX()),
+              (b.getY() - a.getY()),
+              (Math.PI * 2d * this.m_rand.nextDouble()),
+              (Math.PI * 2d * this.m_rand.nextDouble()));
+          k++;
+          break;
+        }
+        case 10: {
+          d = this.__randomPolygon(r);
+          g.drawPolygon(d[0], d[1], d[0].length);
+          k++;
+          break;
+        }
+        case 11: {
+          d = this.__randomPolygon(r);
+          g.fillPolygon(d[0], d[1], d[0].length);
+          k++;
+          break;
+        }
+        case 12: {
+          d = this.__randomPolygon(r);
+          g.drawPolyline(d[0], d[1], d[0].length);
+          k++;
+          break;
+        }
+
+        default: {
+          a = this.__randomPoint(r);
+          mo.clear();
+          if ((fs != null) && (this.m_rand.nextBoolean())) {
+            fs.appendDescription(ETextCase.AT_SENTENCE_START, mo, false);
+            mo.append(' ');
+          }
+          LoremIpsum.appendLoremIpsum(mo, this.m_rand,
+              this.m_rand.nextInt(10) + 1);
+          g.drawString(mo.toString(), a.getX(), a.getY());
+          mo.clear();
+          k++;
+        }
+      }
+    } while ((k < e) || (this.m_rand.nextInt(10) > 0));
   }
 
   /**

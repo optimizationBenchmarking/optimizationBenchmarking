@@ -220,23 +220,8 @@ public class LineChartExample {
     Color c;
 
     c = null;
-
-    switch (rand.nextInt(30)) {
-      case 0: {
-        axis.setAxisColor(c = styles.getMostSimilarColor(Color.green));
-        break;
-      }
-      case 1: {
-        axis.setAxisColor(c = styles.getMostSimilarColor(Color.blue));
-        break;
-      }
-      case 2: {
-        axis.setAxisColor(c = styles.getMostSimilarColor(Color.red));
-        break;
-      }
-      default: {
-        //
-      }
+    if (rand.nextInt(20) <= 0) {
+      c = LineChartExample.__randomColor(styles, rand);
     }
     LineChartExample.__title(axis, rand, styles,
         ((c != null) ? c.toString() : null), 3);
@@ -259,22 +244,8 @@ public class LineChartExample {
       }
     }
 
-    switch (rand.nextInt(30)) {
-      case 0: {
-        axis.setGridLineColor(styles.getMostSimilarColor(Color.green));
-        break;
-      }
-      case 1: {
-        axis.setGridLineColor(styles.getMostSimilarColor(Color.blue));
-        break;
-      }
-      case 2: {
-        axis.setGridLineColor(styles.getMostSimilarColor(Color.red));
-        break;
-      }
-      default: {
-        //
-      }
+    if (rand.nextInt(20) <= 0) {
+      axis.setGridLineColor(LineChartExample.__randomColor(styles, rand));
     }
 
     switch (rand.nextInt(30)) {
@@ -328,6 +299,21 @@ public class LineChartExample {
   }
 
   /**
+   * create a random color
+   * 
+   * @param styles
+   *          the styles
+   * @param rand
+   *          the random number generator
+   * @return the color
+   */
+  private static final Color __randomColor(final StyleSet styles,
+      final Random rand) {
+    return styles.getMostSimilarColor(new Color(
+        (rand.nextInt() & 0x7f7f7f) | 0x070707));
+  }
+
+  /**
    * Setup the line
    * 
    * @param line
@@ -353,7 +339,7 @@ public class LineChartExample {
     final double[][] data;
     int i;
 
-    c = styles.getMostSimilarColor(new Color(rand.nextInt() & 0xffffff));
+    c = LineChartExample.__randomColor(styles, rand);
     LineChartExample.__title(line, rand, styles, c.toString(), 3);
     line.setColor(c);
 
