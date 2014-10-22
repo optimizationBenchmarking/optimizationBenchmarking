@@ -964,5 +964,17 @@ final class _NullGraphic extends Graphic {
       return _NullGraphic._frc();
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public final int stringWidth(final String str) {
+      return (str.length() << 3);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final int charsWidth(final char data[], final int off,
+        final int len) {
+      return (len << 3);
+    }
   }
 }

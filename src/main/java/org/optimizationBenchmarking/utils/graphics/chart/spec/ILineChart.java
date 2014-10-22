@@ -33,12 +33,11 @@ public interface ILineChart extends ITitledElement {
   public abstract ILine2D line();
 
   /**
-   * Should the diagram contain a legend?
+   * Set the legend mode of the diagram
    * 
-   * @param showLegend
-   *          {@code true} if the legend should be shown, {@code false}
-   *          otherwise
+   * @param legendMode
+   *          the legend mode
    */
-  public abstract void setLegendVisible(final boolean showLegend);
+  public abstract void setLegendMode(final ELegendMode legendMode);
 
 }

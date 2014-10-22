@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import org.freehep.graphicsio.emf.EMFGraphics2D;
 import org.freehep.util.UserProperties;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
+import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
@@ -63,11 +64,11 @@ public class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
     synchronized (EMFGraphics2D.class) {
       g = new EMFGraphics2D(os, dim);
       g.setProperties(up);
-      AbstractGraphicDriver.setDefaultRenderingHints(g);
+      GraphicUtils.setDefaultRenderingHints(g);
       g.startExport();
       g.setClip(0, 0, dim.width, dim.height);
     }
-    AbstractGraphicDriver.setDefaultRenderingHints(g);
+    GraphicUtils.setDefaultRenderingHints(g);
 
     return new _FreeHEPEMFGraphic(g, path, listener, dim.width, dim.height);
   }

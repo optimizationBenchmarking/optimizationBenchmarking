@@ -21,6 +21,9 @@ class _DataSeriesBuilder extends _TitledElementBuilder implements
   /** the data has been set */
   static final int FLAG_HAS_DATA = (_DataSeriesBuilder.FLAG_HAS_STROKE << 1);
 
+  /** the unique identifier of the series */
+  final int m_id;
+
   /** the color of this element */
   Color m_color;
 
@@ -35,10 +38,12 @@ class _DataSeriesBuilder extends _TitledElementBuilder implements
    * 
    * @param owner
    *          the owner
+   * @param id
+   *          the id
    */
-  _DataSeriesBuilder(final _ChartElementBuilder owner) {
+  _DataSeriesBuilder(final _ChartElementBuilder owner, final int id) {
     super(owner);
-
+    this.m_id = id;
   }
 
   /** {@inheritDoc} */

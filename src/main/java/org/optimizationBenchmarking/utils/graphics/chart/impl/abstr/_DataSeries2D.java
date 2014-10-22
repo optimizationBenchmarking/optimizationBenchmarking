@@ -12,6 +12,8 @@ class _DataSeries2D extends _DataSeries {
   /**
    * Create a data series
    * 
+   * @param id
+   *          the id
    * @param title
    *          the title
    * @param titleFont
@@ -35,11 +37,11 @@ class _DataSeries2D extends _DataSeries {
    * @param endY
    *          the end y
    */
-  _DataSeries2D(final String title, final Font titleFont,
+  _DataSeries2D(final int id, final String title, final Font titleFont,
       final Color color, final Stroke stroke, final IMatrix data,
       final boolean hasStart, final double startX, final double startY,
       final boolean hasEnd, final double endX, final double endY) {
-    super(title, titleFont, color, stroke,
+    super(id, title, titleFont, color, stroke,
         (((hasStart || hasEnd) ? _DataSeries2D
             ._checkMatrix2D(new _WrappedMatrix2D(_DataSeries2D
                 ._checkMatrix2D(data), hasStart, startX, startY, hasEnd,

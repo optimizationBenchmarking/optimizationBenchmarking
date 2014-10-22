@@ -3,12 +3,13 @@ package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 import java.awt.Font;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.ELegendMode;
 
 /** A line chart. */
 public class LineChart extends _TitledElement {
 
-  /** should we show the legend */
-  private final boolean m_showLegend;
+  /** the legend mode */
+  private final ELegendMode m_legendMode;
 
   /** the x-axis */
   private final Axis m_xAxis;
@@ -24,8 +25,8 @@ public class LineChart extends _TitledElement {
    *          the title, or {@code null} if no title is specified
    * @param titleFont
    *          the title font, or {@code null} if no specific font is set
-   * @param showLegend
-   *          should the legend be printed?
+   * @param legendMode
+   *          the legend mode
    * @param x
    *          the x-axis
    * @param y
@@ -34,7 +35,7 @@ public class LineChart extends _TitledElement {
    *          the lines
    */
   LineChart(final String title, final Font titleFont,
-      final boolean showLegend, final Axis x, final Axis y,
+      final ELegendMode legendMode, final Axis x, final Axis y,
       final ArrayListView<Line2D> lines) {
     super(title, titleFont);
 
@@ -48,21 +49,24 @@ public class LineChart extends _TitledElement {
       throw new IllegalArgumentException(
           "Line set must not be null or empty."); //$NON-NLS-1$
     }
+    if (legendMode == null) {
+      throw new IllegalArgumentException("Legend mode must not be null.");//$NON-NLS-1$
+    }
 
-    this.m_showLegend = showLegend;
+    this.m_legendMode = legendMode;
     this.m_xAxis = x;
     this.m_yAxis = y;
     this.m_lines = lines;
   }
 
   /**
-   * Should we show the legend
+   * Get the legend mode
    * 
-   * @return {@code true} if a legend should be printed, {@code false}
-   *         otherwise
+   * @return the legend mode defining whether and how the legend data
+   *         should be printed
    */
-  public final boolean shouldLegendBeShown() {
-    return this.m_showLegend;
+  public final ELegendMode getLegendMode() {
+    return this.m_legendMode;
   }
 
   /**

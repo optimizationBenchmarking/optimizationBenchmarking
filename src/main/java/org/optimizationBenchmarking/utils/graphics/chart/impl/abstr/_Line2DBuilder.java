@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
+import java.awt.Font;
+import java.awt.Stroke;
+
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ELineType;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
@@ -22,9 +25,11 @@ final class _Line2DBuilder extends _DataSeries2DBuilder implements ILine2D {
    * 
    * @param owner
    *          the owner
+   * @param id
+   *          the id
    */
-  _Line2DBuilder(final _LineChartBuilder owner) {
-    super(owner);
+  _Line2DBuilder(final _LineChartBuilder owner, final int id) {
+    super(owner, id);
 
     this.m_type = ELineType.DEFAULT;
     this.open();
@@ -59,15 +64,34 @@ final class _Line2DBuilder extends _DataSeries2DBuilder implements ILine2D {
   @Override
   protected synchronized final void onClose() {
     final HierarchicalFSM owner;
+    final _ChartBuilder cb;
+    final Font titleFont;
+    Stroke stroke;
+
+    this.fsmFlagsAssertTrue(_DataSeriesBuilder.FLAG_HAS_COLOR);
 
     super.onClose();
 
     owner = this.getOwner();
-    if (owner instanceof _LineChartBuilder) {
-      ((_LineChartBuilder) owner)._addLine(new Line2D(this.m_title,
-          this.m_titleFont, this.m_color, this.m_stroke, this.m_data,
-          this.m_hasStart, this.m_startX, this.m_startY, this.m_hasEnd,
-          this.m_endX, this.m_endY, this.m_type));
+    if (owner instanceof _ChartBuilder) {
+      cb = ((_ChartBuilder) owner);
+      if (this.m_title != null) {
+        titleFont = ((this.m_titleFont != null) ? this.m_titleFont : //
+            cb._getLineTitleFont());
+      } else {
+        titleFont = null;
+      }
+      stroke = this.m_stroke;
+      if (stroke == null) {
+        stroke = cb._getLineStroke();
+      }
+
+      if (owner instanceof _LineChartBuilder) {
+        ((_LineChartBuilder) owner)._addLine(new Line2D(this.m_id,
+            this.m_title, titleFont, this.m_color, stroke, this.m_data,
+            this.m_hasStart, this.m_startX, this.m_startY, this.m_hasEnd,
+            this.m_endX, this.m_endY, this.m_type));
+      }
     }
   }
 }

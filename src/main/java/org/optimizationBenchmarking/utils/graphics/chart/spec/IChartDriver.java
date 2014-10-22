@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.graphics.chart.spec;
 
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
+import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 
 /** The basic interface for chart drivers */
 public interface IChartDriver {
@@ -15,8 +16,11 @@ public interface IChartDriver {
    * 
    * @param graphic
    *          the graphic to paint on
+   * @param styles
+   *          the style set to use
    * @return the line chart
    */
-  public abstract ILineChart lineChart(final Graphic graphic);
+  public abstract ILineChart lineChart(final Graphic graphic,
+      final StyleSet styles);
 
 }

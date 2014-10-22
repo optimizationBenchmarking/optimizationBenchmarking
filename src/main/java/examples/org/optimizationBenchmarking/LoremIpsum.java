@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * A class which can generate random text in the style of <a
@@ -279,6 +280,24 @@ public final class LoremIpsum {
       } while (((++count) < maxLength) && (rand.nextInt(10) > 0));
       out.append('.');
     } while (rand.nextBoolean());
+  }
+
+  /**
+   * Get some random lorem ipsum
+   * 
+   * @param rand
+   *          the randomizer
+   * @param maxLength
+   *          the maximum length of the lorem ipsum
+   * @return the lorem ipsum
+   */
+  public static final String loremIpsum(final Random rand,
+      final int maxLength) {
+    final MemoryTextOutput out;
+    out = ((maxLength > 0) && (maxLength < 1000000) ? new MemoryTextOutput(
+        maxLength * 16) : new MemoryTextOutput());
+    LoremIpsum.appendLoremIpsum(out, rand, maxLength);
+    return out.toString();
   }
 
   /** the forbidden constructor */

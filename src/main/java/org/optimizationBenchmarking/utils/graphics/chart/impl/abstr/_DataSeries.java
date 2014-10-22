@@ -9,6 +9,9 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 /** The base class for data series elements */
 class _DataSeries extends _TitledElement {
 
+  /** the id of this data series */
+  private final int m_id;
+
   /** the color of this element */
   private final Color m_color;
 
@@ -21,6 +24,8 @@ class _DataSeries extends _TitledElement {
   /**
    * Create a data series
    * 
+   * @param id
+   *          the id
    * @param title
    *          the title
    * @param titleFont
@@ -32,11 +37,18 @@ class _DataSeries extends _TitledElement {
    * @param data
    *          the matrix
    */
-  _DataSeries(final String title, final Font titleFont, final Color color,
-      final Stroke stroke, final IMatrix data) {
+  _DataSeries(final int id, final String title, final Font titleFont,
+      final Color color, final Stroke stroke, final IMatrix data) {
     super(title, titleFont);
 
     _DataSeries._checkMatrix(data);
+    if (stroke == null) {
+      throw new IllegalArgumentException("Stroke must not be null."); //$NON-NLS-1$
+    }
+    if (color == null) {
+      throw new IllegalArgumentException("Color must not be null."); //$NON-NLS-1$
+    }
+    this.m_id = id;
     this.m_color = color;
     this.m_stroke = stroke;
     this.m_data = data;
@@ -80,5 +92,14 @@ class _DataSeries extends _TitledElement {
    */
   public final IMatrix getData() {
     return this.m_data;
+  }
+
+  /**
+   * Get the id of this data series
+   * 
+   * @return the unique identifier of this data series
+   */
+  public final int getID() {
+    return this.m_id;
   }
 }

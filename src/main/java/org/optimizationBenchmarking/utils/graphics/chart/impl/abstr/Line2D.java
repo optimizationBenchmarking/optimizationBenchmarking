@@ -16,6 +16,8 @@ public final class Line2D extends _DataSeries2D {
   /**
    * Create a data series
    * 
+   * @param id
+   *          the id
    * @param title
    *          the title
    * @param titleFont
@@ -41,12 +43,13 @@ public final class Line2D extends _DataSeries2D {
    * @param type
    *          the line type
    */
-  Line2D(final String title, final Font titleFont, final Color color,
-      final Stroke stroke, final IMatrix data, final boolean hasStart,
-      final double startX, final double startY, final boolean hasEnd,
-      final double endX, final double endY, final ELineType type) {
-    super(title, titleFont, color, stroke, data, hasStart, startX, startY,
-        hasEnd, endX, endY);
+  Line2D(final int id, final String title, final Font titleFont,
+      final Color color, final Stroke stroke, final IMatrix data,
+      final boolean hasStart, final double startX, final double startY,
+      final boolean hasEnd, final double endX, final double endY,
+      final ELineType type) {
+    super(id, title, titleFont, color, stroke, data, hasStart, startX,
+        startY, hasEnd, endX, endY);
     Line2D._assertType(type);
     this.m_type = type;
   }

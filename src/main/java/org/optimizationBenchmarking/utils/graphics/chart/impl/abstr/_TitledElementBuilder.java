@@ -15,9 +15,9 @@ class _TitledElementBuilder extends _ChartElementBuilder implements
   /** the title has been set */
   private static final int FLAG_HAS_TITLE = 1;
   /** the title font has been set */
-  private static final int FLAG_HAS_TITLE_FONT = (FLAG_HAS_TITLE << 1);
+  private static final int FLAG_HAS_TITLE_FONT = (_TitledElementBuilder.FLAG_HAS_TITLE << 1);
   /** the maximum allocated flags */
-  static final int FLAG_TITLED_ELEMENT_BUILDER_MAX = FLAG_HAS_TITLE_FONT;
+  static final int FLAG_TITLED_ELEMENT_BUILDER_MAX = _TitledElementBuilder.FLAG_HAS_TITLE_FONT;
 
   /** the title of this element */
   String m_title;

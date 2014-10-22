@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.utils.graphics.chart.spec;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.Stroke;
 
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
 
@@ -34,6 +36,38 @@ public interface IAxis extends ITitledElement {
   public abstract void setTickFont(final Font tickFont);
 
   /**
+   * Set the stroke to be used for the axis
+   * 
+   * @param axisStroke
+   *          the stroke to be used for the axis
+   */
+  public abstract void setAxisStroke(final Stroke axisStroke);
+
+  /**
+   * Set the color to be used for the axis
+   * 
+   * @param axisColor
+   *          the color to be used for the axis
+   */
+  public abstract void setAxisColor(final Color axisColor);
+
+  /**
+   * Set the stroke to be used for the grid lines
+   * 
+   * @param gridLineStroke
+   *          the stroke to be used for the grid lines
+   */
+  public abstract void setGridLineStroke(final Stroke gridLineStroke);
+
+  /**
+   * Set the color to be used for the grid lines
+   * 
+   * @param gridLineColor
+   *          the color to be used for the grid lines
+   */
+  public abstract void setGridLineColor(final Color gridLineColor);
+
+  /**
    * Set the aggregate used to compute the minimum axis value
    * 
    * @param min
@@ -64,4 +98,5 @@ public interface IAxis extends ITitledElement {
    *          the maximum value for the axis
    */
   public abstract void setMaximum(final double max);
+
 }

@@ -75,4 +75,76 @@ public class ColorPalette extends Palette<ColorStyle> {
     graphics.setColor(b);
     graphics.setPaint(b);
   }
+
+  /**
+   * get the rgb difference
+   * 
+   * @param a
+   *          the first rgb value
+   * @param b
+   *          the second rgb value
+   * @return the difference
+   */
+  private static final int __rgbDiff(final int a, final int b) {
+    int s, x;
+
+    x = ((a & 0xff) - (b & 0xff));
+    s = (x * x);
+
+    x = (((a >>> 8) & 0xff) - ((b >>> 8) & 0xff));
+    s += (x * x);
+
+    x = (((a >>> 16) & 0xff) - ((b >>> 16) & 0xff));
+    s += (x * x);
+
+    x = (((a >>> 24) & 0xff) - ((b >>> 24) & 0xff));
+
+    return (s + (x * x));
+  }
+
+  /**
+   * Get the color most similar to another color
+   * 
+   * @param color
+   *          the other color
+   * @return the color most similar to a given color
+   */
+  public final ColorStyle getMostSimilarColor(final Color color) {
+    ColorStyle best, cur;
+    int rgbGoal, bestDiff, curDiff;
+
+    best = this.getBlack();
+    finder: {
+      if (color != null) {
+        rgbGoal = color.getRGB();
+        bestDiff = ColorPalette.__rgbDiff(rgbGoal, best.getRGB());
+
+        if (bestDiff > 0) {
+          cur = this.getWhite();
+          curDiff = ColorPalette.__rgbDiff(rgbGoal, cur.getRGB());
+          if (curDiff < bestDiff) {
+            best = cur;
+            if (curDiff <= 0) {
+              break finder;
+            }
+            bestDiff = curDiff;
+          }
+
+          for (final ColorStyle cs : this.m_data) {
+            curDiff = ColorPalette.__rgbDiff(rgbGoal, cs.getRGB());
+            if (curDiff < bestDiff) {
+              best = cs;
+              if (curDiff <= 0) {
+                break finder;
+              }
+              bestDiff = curDiff;
+            }
+          }
+
+        }
+      }
+    }
+
+    return best;
+  }
 }

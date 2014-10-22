@@ -21,13 +21,13 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
 /**
  * An example used to illustrate the available color palettes.
  */
-public class StrokePalettes {
+public class StrokePaletteExample {
 
   /** the graphic driver to use */
   private static final IGraphicDriver[] DRIVERS = GraphicsExample.DRIVERS;
 
   /** the palettes to print */
-  private static final StrokePalette[] PALETTES = {//
+  public static final StrokePalette[] PALETTES = {//
   DefaultStrokePalette.INSTANCE };
 
   /**
@@ -47,9 +47,9 @@ public class StrokePalettes {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
 
-    for (final IGraphicDriver d : StrokePalettes.DRIVERS) {
-      for (final StrokePalette p : StrokePalettes.PALETTES) {//
-        StrokePalettes.__paint(dir,
+    for (final IGraphicDriver d : StrokePaletteExample.DRIVERS) {
+      for (final StrokePalette p : StrokePaletteExample.PALETTES) {//
+        StrokePaletteExample.__paint(dir,
             (d.getClass().getSimpleName() + '_' + p.getClass()
                 .getSimpleName()), d, p);
       }

@@ -34,9 +34,12 @@ class _DataSeries2DBuilder extends _DataSeriesBuilder implements
    * 
    * @param owner
    *          the owner
+   * @param id
+   *          the id
    */
-  protected _DataSeries2DBuilder(final _ChartElementBuilder owner) {
-    super(owner);
+  protected _DataSeries2DBuilder(final _ChartElementBuilder owner,
+      final int id) {
+    super(owner, id);
   }
 
   /** {@inheritDoc} */

@@ -3,38 +3,36 @@ package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IAxis;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
+import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
+import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** the line chart */
-final class _LineChartBuilder extends _TitledElementBuilder implements
-    ILineChart {
+final class _LineChartBuilder extends _ChartBuilder implements ILineChart {
 
   /** the x-axis type has been set */
   static final int FLAG_HAS_X_AXIS = (_TitledElementBuilder.FLAG_TITLED_ELEMENT_BUILDER_MAX << 1);
   /** the y-axis type has been set */
   static final int FLAG_HAS_Y_AXIS = (_LineChartBuilder.FLAG_HAS_X_AXIS << 1);
   /** the show legend has been set */
-  static final int FLAG_HAS_SHOW_LEGEND = (_LineChartBuilder.FLAG_HAS_Y_AXIS << 1);
+  static final int FLAG_HAS_LEGEND_MODE = (_LineChartBuilder.FLAG_HAS_Y_AXIS << 1);
   /** at least one line has been added */
-  static final int FLAG_HAS_LINE = (_LineChartBuilder.FLAG_HAS_SHOW_LEGEND << 1);
+  static final int FLAG_HAS_LINE = (_LineChartBuilder.FLAG_HAS_LEGEND_MODE << 1);
 
-  /** the graphic */
-  private Graphic m_graphic;
-
-  /** the chart driver */
-  private final ChartDriver m_driver;
+  /** the id counter */
+  private volatile int m_idCounter;
 
   /** the lines */
   private ArrayList<Line2D> m_lines;
 
-  /** show the legend */
-  private boolean m_showLegend;
-
+  /** the legend mode */
+  private ELegendMode m_legendMode;
   /** the internal x-axis builder */
   private _AxisBuilder m_xAxis;
   /** the internal y-axis builder */
@@ -45,23 +43,17 @@ final class _LineChartBuilder extends _TitledElementBuilder implements
    * 
    * @param graphic
    *          the graphic
+   * @param styles
+   *          the style set to use
    * @param driver
    *          the chart driver
    */
-  _LineChartBuilder(final Graphic graphic, final ChartDriver driver) {
-    super(null);
-
-    if (graphic == null) {
-      throw new IllegalArgumentException("Graphic must not be null."); //$NON-NLS-1$
-    }
-    if (driver == null) {
-      throw new IllegalArgumentException("Driver must not be null."); //$NON-NLS-1$
-    }
-    this.m_graphic = graphic;
-    this.m_driver = driver;
+  _LineChartBuilder(final Graphic graphic, final StyleSet styles,
+      final ChartDriver driver) {
+    super(graphic, styles, driver);
 
     this.m_lines = new ArrayList<>();
-    this.m_showLegend = false;
+    this.m_legendMode = ELegendMode.SHOW_COMPLETE_LEGEND;
 
     this.open();
   }
@@ -75,8 +67,8 @@ final class _LineChartBuilder extends _TitledElementBuilder implements
         append.append("xAxisSet");break;} //$NON-NLS-1$      
       case FLAG_HAS_Y_AXIS: {
         append.append("yAxisSet");break;} //$NON-NLS-1$
-      case FLAG_HAS_SHOW_LEGEND: {
-        append.append("showLegendSet");break;} //$NON-NLS-1$
+      case FLAG_HAS_LEGEND_MODE: {
+        append.append("legendModeSet");break;} //$NON-NLS-1$
       case FLAG_HAS_LINE: {
         append.append("hasLine");break;} //$NON-NLS-1$
       default: {
@@ -107,6 +99,29 @@ final class _LineChartBuilder extends _TitledElementBuilder implements
 
   /** {@inheritDoc} */
   @Override
+  protected synchronized void afterChildClosed(final HierarchicalFSM child) {
+    super.afterChildClosed(child);
+
+    if (child == this.m_xAxis) {
+      this.fsmFlagsAssertAndUpdate(FSM.STATE_NOTHING,
+          _LineChartBuilder.FLAG_HAS_X_AXIS,
+          _LineChartBuilder.FLAG_HAS_X_AXIS, FSM.FLAG_NOTHING);
+      return;
+    }
+    if (child == this.m_yAxis) {
+      this.fsmFlagsAssertAndUpdate(FSM.STATE_NOTHING,
+          _LineChartBuilder.FLAG_HAS_Y_AXIS,
+          _LineChartBuilder.FLAG_HAS_Y_AXIS, FSM.FLAG_NOTHING);
+      return;
+    }
+    if (child instanceof _Line2DBuilder) {
+      return;
+    }
+    this.throwChildNotAllowed(child);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected synchronized void onClose() {
     Graphic g;
     LineChart chart;
@@ -118,12 +133,14 @@ final class _LineChartBuilder extends _TitledElementBuilder implements
         | _LineChartBuilder.FLAG_HAS_LINE);
 
     g = this.m_graphic;
-    this.m_graphic = null;
     try {
-      chart = new LineChart(this.m_title, this.m_titleFont,
-          this.m_showLegend, this.m_xAxis._getAxis(),
-          this.m_yAxis._getAxis(), new ArrayListView<>(
-              new Line2D[this.m_lines.size()]));
+      chart = new LineChart(
+          this.m_title,
+          (((this.m_titleFont != null) || (this.m_title == null)) ? this.m_titleFont
+              : this._getChartTitleFont()), this.m_legendMode,
+          this.m_xAxis._getAxis(), this.m_yAxis._getAxis(),
+          new ArrayListView<>(this.m_lines.toArray(new Line2D[this.m_lines
+              .size()])));
       this.m_xAxis = null;
       this.m_yAxis = null;
       this.m_lines = null;
@@ -171,16 +188,20 @@ final class _LineChartBuilder extends _TitledElementBuilder implements
     this.fsmStateAssert(_ChartElementBuilder.STATE_ALIVE);
     this.fsmFlagsAssertTrue(_LineChartBuilder.FLAG_HAS_X_AXIS
         | _LineChartBuilder.FLAG_HAS_Y_AXIS);
-    return new _Line2DBuilder(this);
+    return new _Line2DBuilder(this, (++this.m_idCounter));
   }
 
   /** {@inheritDoc} */
   @Override
-  public synchronized final void setLegendVisible(final boolean showLegend) {
+  public final void setLegendMode(final ELegendMode legendMode) {
     this.fsmStateAssert(_ChartElementBuilder.STATE_ALIVE);
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        _LineChartBuilder.FLAG_HAS_SHOW_LEGEND,
-        _LineChartBuilder.FLAG_HAS_SHOW_LEGEND, FSM.FLAG_NOTHING);
-    this.m_showLegend = showLegend;
+        _LineChartBuilder.FLAG_HAS_LEGEND_MODE,
+        _LineChartBuilder.FLAG_HAS_LEGEND_MODE, FSM.FLAG_NOTHING);
+    if (legendMode == null) {
+      throw new IllegalArgumentException(//
+          "Cannot set legend mode to null, if you don't want to specify it, don't set it in the first place."); //$NON-NLS-1$
+    }
+    this.m_legendMode = legendMode;
   }
 }

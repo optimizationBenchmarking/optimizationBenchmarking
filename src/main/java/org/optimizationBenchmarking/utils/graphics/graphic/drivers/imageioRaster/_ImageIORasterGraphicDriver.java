@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
+import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
@@ -85,6 +86,7 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
 
     img = new BufferedImage(wPx, hPx, this.m_colors.getBufferedImageType());
     g = ((Graphics2D) (img.getGraphics()));
+    GraphicUtils.setDefaultRenderingHints(g);
 
     if ((wPx != wPt) || (hPx != hPt)) {
       g.scale((((double) wPx) / wPt), (((double) hPx) / hPt));

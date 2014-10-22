@@ -35,7 +35,7 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
 public final class GraphicsExample {
 
   /** the list of graphics drivers */
-  static final IGraphicDriver[] DRIVERS = {
+  public static final IGraphicDriver[] DRIVERS = {
       FreeHEPEPSGraphicDriver.INSTANCE, FreeHEPPDFGraphicDriver.INSTANCE,
       FreeHEPSVGGraphicDriver.INSTANCE, FreeHEPEMFGraphicDriver.INSTANCE,
       new ImageIOPNGGraphicDriver(EColorModel.RBGA_32_BIT, 256),

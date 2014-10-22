@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import org.freehep.graphicsio.svg.SVGGraphics2D;
 import org.freehep.util.UserProperties;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
+import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
@@ -75,10 +76,10 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
       g = new SVGGraphics2D(os, dim);
       g.setProperties(up);
       g.setClip(0, 0, dim.width, dim.height);
-      AbstractGraphicDriver.setDefaultRenderingHints(g);
+      GraphicUtils.setDefaultRenderingHints(g);
       g.startExport();
     }
-    AbstractGraphicDriver.setDefaultRenderingHints(g);
+    GraphicUtils.setDefaultRenderingHints(g);
 
     return new _FreeHEPSVGGraphic(g, path, listener, dim.width, dim.height);
   }

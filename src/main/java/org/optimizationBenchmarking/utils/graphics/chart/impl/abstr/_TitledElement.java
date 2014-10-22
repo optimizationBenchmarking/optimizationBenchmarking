@@ -23,10 +23,23 @@ class _TitledElement {
    */
   _TitledElement(final String title, final Font titleFont) {
     super();
+
+    final boolean a, b;
+
     this.m_title = TextUtils.normalize(title);
-    if ((titleFont != null) && (this.m_title == null)) {
-      throw new IllegalArgumentException(//
-          "If title is not specified, a title font cannot be specified either."); //$NON-NLS-1$
+
+    a = (this.m_title == null);
+    b = (titleFont == null);
+
+    if (a ^ b) {
+      if (a) {
+        throw new IllegalArgumentException(//
+            "If title is not specified, a title font cannot be specified either."); //$NON-NLS-1$
+      }
+      if (b) {
+        throw new IllegalArgumentException(//
+            "If title is specified, a title font must be specified too."); //$NON-NLS-1$
+      }
     }
     this.m_titleFont = titleFont;
   }
@@ -46,7 +59,7 @@ class _TitledElement {
    * Get the title font, i.e., the font used to render the title
    * 
    * @return the title font, or {@code null} if no font is specified for
-   *         the title
+   *         the title and no title should be printed
    */
   public final Font getTitleFont() {
     return this.m_titleFont;

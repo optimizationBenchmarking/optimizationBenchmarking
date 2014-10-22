@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.graphics.style;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
@@ -249,5 +250,16 @@ public final class StyleSet {
     this.m_fonts.initialize(graphics);
     this.m_colors.initialize(graphics);
     this.m_strokes.initialize(graphics);
+  }
+
+  /**
+   * Get the color most similar to another color
+   * 
+   * @param color
+   *          the other color
+   * @return the color most similar to a given color
+   */
+  public final ColorStyle getMostSimilarColor(final Color color) {
+    return this.m_colors.getMostSimilarColor(color);
   }
 }

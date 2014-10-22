@@ -12,8 +12,8 @@ import java.nio.file.Paths;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.style.Palette;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
+import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.color.DefaultColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.DefaultGrayPalette;
@@ -24,14 +24,13 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
 /**
  * An example used to illustrate the available color palettes.
  */
-public class ColorPalettes {
+public class ColorPaletteExample {
 
   /** the graphic drivers to use */
   private static final IGraphicDriver[] DRIVERS = GraphicsExample.DRIVERS;
 
   /** the palettes to print */
-  @SuppressWarnings("unchecked")
-  private static final Palette<ColorStyle>[] PALETTES = new Palette[] {//
+  public static final ColorPalette[] PALETTES = {//
   DefaultColorPalette.INSTANCE, JavaDefaultPalette.INSTANCE,
       DefaultGrayPalette.INSTANCE, HTML401Palette.INSTANCE };
 
@@ -51,10 +50,11 @@ public class ColorPalettes {
     } else {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
-    for (final IGraphicDriver d : ColorPalettes.DRIVERS) {
-      for (final Palette<ColorStyle> p : ColorPalettes.PALETTES) {//
-        ColorPalettes.__paint(dir, (d.getClass().getSimpleName() + '_' + p
-            .getClass().getSimpleName()), d, p);
+    for (final IGraphicDriver d : ColorPaletteExample.DRIVERS) {
+      for (final ColorPalette p : ColorPaletteExample.PALETTES) {//
+        ColorPaletteExample.__paint(dir,
+            (d.getClass().getSimpleName() + '_' + p.getClass()
+                .getSimpleName()), d, p);
       }
     }
   }
@@ -72,7 +72,7 @@ public class ColorPalettes {
    *          the graphic driver to use
    */
   private static final void __paint(final Path dir, final String name,
-      final IGraphicDriver driver, final Palette<ColorStyle> palette) {
+      final IGraphicDriver driver, final ColorPalette palette) {
     final int s, w;
     final Rectangle2D b;
     int c, i, j, k;

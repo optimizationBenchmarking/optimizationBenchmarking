@@ -25,28 +25,28 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * An example used to illustrate the available color palettes.
  */
-public class FontPalettes {
+public class FontPaletteExample {
 
   /** the graphic driver to use */
   private static final IGraphicDriver[] DRIVERS = GraphicsExample.DRIVERS;
 
   /** the palettes to print */
-  private static final FontPalette[] PALETTES;
+  public static final FontPalette[] PALETTES;
 
   static {
     PALETTES = new FontPalette[2];
 
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-      PaletteIODriver.INSTANCE.loadResource(tb, FontPalettes.class,
+      PaletteIODriver.INSTANCE.loadResource(tb, FontPaletteExample.class,
           "examples.font.palette"); //$NON-NLS-1$
-      FontPalettes.PALETTES[0] = tb.getResult();
+      FontPaletteExample.PALETTES[0] = tb.getResult();
     } catch (final Throwable tt) {
       tt.printStackTrace();
     }
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
       PaletteIODriver.INSTANCE.loadResource(tb, XHTML10Driver.class,
           "xhtml10.font.palette"); //$NON-NLS-1$
-      FontPalettes.PALETTES[1] = tb.getResult();
+      FontPaletteExample.PALETTES[1] = tb.getResult();
     } catch (final Throwable tt) {
       tt.printStackTrace();
     }
@@ -71,10 +71,10 @@ public class FontPalettes {
     }
 
     i = 0;
-    for (final FontPalette p : FontPalettes.PALETTES) {//
+    for (final FontPalette p : FontPaletteExample.PALETTES) {//
       i++;
-      for (final IGraphicDriver d : FontPalettes.DRIVERS) {
-        FontPalettes.__paint(dir,
+      for (final IGraphicDriver d : FontPaletteExample.DRIVERS) {
+        FontPaletteExample.__paint(dir,
             ((d.getClass().getSimpleName() + '_') + i), d, p);
       }
     }
