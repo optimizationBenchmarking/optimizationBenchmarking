@@ -89,4 +89,10 @@ public final class ImageIOGIFGraphicDriver extends
     return new _ImageIOGIFGraphic(path, os, listener, img, g, w, h, xDPI,
         yDPI, type);
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final EGraphicFormat getGraphicFormat() {
+    return EGraphicFormat.GIF;
+  }
 }

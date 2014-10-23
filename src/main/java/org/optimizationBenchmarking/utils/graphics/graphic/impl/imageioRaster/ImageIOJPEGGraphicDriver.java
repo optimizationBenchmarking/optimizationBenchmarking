@@ -117,4 +117,10 @@ public final class ImageIOJPEGGraphicDriver extends
     return new _ImageIOJPEGGraphic(path, os, listener, img, g, w, h, xDPI,
         yDPI, this.m_quality, type);
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final EGraphicFormat getGraphicFormat() {
+    return EGraphicFormat.JPEG;
+  }
 }

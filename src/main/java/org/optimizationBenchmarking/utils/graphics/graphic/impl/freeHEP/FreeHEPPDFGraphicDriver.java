@@ -12,6 +12,7 @@ import org.freehep.util.UserProperties;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.math.units.ELength;
@@ -129,4 +130,9 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
     return new _FreeHEPPDFGraphic(g, path, listener, dim.width, dim.height);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final EGraphicFormat getGraphicFormat() {
+    return EGraphicFormat.PDF;
+  }
 }

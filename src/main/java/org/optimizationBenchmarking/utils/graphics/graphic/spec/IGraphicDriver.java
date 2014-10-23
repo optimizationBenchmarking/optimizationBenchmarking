@@ -5,6 +5,7 @@ import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
 
@@ -76,4 +77,11 @@ public interface IGraphicDriver {
    * @return the default stroke palette associated with this graphic driver
    */
   public abstract StrokePalette getStrokePalette();
+
+  /**
+   * Get the graphic format managed by this driver
+   * 
+   * @return the graphic format managed by this driver
+   */
+  public abstract EGraphicFormat getGraphicFormat();
 }

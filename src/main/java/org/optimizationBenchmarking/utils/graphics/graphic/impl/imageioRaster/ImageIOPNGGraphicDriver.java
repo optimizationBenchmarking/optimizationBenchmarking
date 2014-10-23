@@ -74,4 +74,10 @@ public final class ImageIOPNGGraphicDriver extends
     return new _ImageIOPNGGraphic(path, os, listener, img, g, w, h, xDPI,
         yDPI, type);
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final EGraphicFormat getGraphicFormat() {
+    return EGraphicFormat.PNG;
+  }
 }
