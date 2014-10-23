@@ -1,10 +1,11 @@
-SERIF,false,false,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
-SERIF,false,true,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
-MONOSPACED,false,false,false,11,Consolas,Courier New,Courier,Terminal,Liberation Mono,Nimbus Mono
+#font family, bold?, italic?, underlined?, size in pt, face choices
+SERIF,false,false,false,10,cmr10,cmr11,cmr9,cmr12,Times New Roman,Times Roman,Times,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
+SERIF,false,true,false,10,cmti10,cmti11,cmti9,cmti12,Times New Roman,Times Roman,Times,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
+MONOSPACED,false,false,false,10,cmtt10,cmtt11,cmtt9,cmtt12,Courier New,Courier,Consolas,Terminal,Liberation Mono,Nimbus Mono
 
-SERIF,true,false,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
-SERIF,false,false,true,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
-SANS_SERIF,false,false,false,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
-SANS_SERIF,false,true,false,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
-SANS_SERIF,true,false,false,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
-SANS_SERIF,false,false,true,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
+SERIF,true,false,false,10,cmbx10,cmbx11,cmbx9,cmbx12,Times New Roman,Times Roman,Times,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
+SANS_SERIF,false,false,false,10,cmss10,cmss11,cmss9,cmss12,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
+SERIF,true,true,false,10,cmbxti10,cmbxti11,cmbxti9,cmbxti12,Times New Roman,Times Roman,Times,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
+SANS_SERIF,true,false,false,10,cmssbx10,cmssbx11,cmssbx9,cmssbx12,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
+MONOSPACED,false,true,false,10,cmitt10,cmitt11,cmitt9,cmitt12,Courier New,Courier,Consolas,Terminal,Liberation Mono,Nimbus Mono
+SANS_SERIF,false,true,false,10,cmssi10,cmssi11,cmssi9,cmssi12,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS

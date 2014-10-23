@@ -1,11 +1,13 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
+import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 
 /** the chart builder */
 class _ChartBuilder extends _TitledElementBuilder {
@@ -19,6 +21,8 @@ class _ChartBuilder extends _TitledElementBuilder {
   /** the style set */
   final StyleSet m_styles;
 
+  /** the title font */
+  private transient volatile Font m_chartTitleFont;
   /** the line title font */
   private transient volatile Font m_lineTitleFont;
   /** the axis title font */
@@ -27,6 +31,8 @@ class _ChartBuilder extends _TitledElementBuilder {
   private transient volatile Font m_axisTickFont;
   /** the grid line color */
   private transient volatile Color m_gridLineColor;
+  /** the axis stroke */
+  private transient volatile Stroke m_axisStroke;
 
   /**
    * create the line chart
@@ -62,14 +68,24 @@ class _ChartBuilder extends _TitledElementBuilder {
    * @return the line title font
    */
   synchronized final Font _getLineTitleFont() {
-    Font f, g;
+    final FontStyle f, g;
+    final float goalSize;
+    Font x, y;
+
     if (this.m_lineTitleFont == null) {
-      f = this.m_styles.getDefaultFont().getFont();
-      g = f.deriveFont(f.getSize2D() * 0.9f);
-      if (g != null) {
-        f = g;
+      f = this.m_styles.getDefaultFont();
+      goalSize = (f.getSize() * 0.9f);
+      g = this.m_styles.getMostSimilarFont(f.getFamily(), f.isBold(),
+          f.isItalic(), f.isUnderlined(), goalSize);
+      x = g.getFont();
+      if (x.getSize2D() != goalSize) {
+        y = x.deriveFont(goalSize);
+        if (y != null) {
+          x = y;
+        }
       }
-      this.m_lineTitleFont = f;
+
+      this.m_lineTitleFont = x;
     }
     return this.m_lineTitleFont;
   }
@@ -80,14 +96,31 @@ class _ChartBuilder extends _TitledElementBuilder {
    * @return the axis title font
    */
   synchronized final Font _getAxisTitleFont() {
-    Font f, g;
+    final FontStyle f, g;
+    final float goalSize;
+    Font x, y;
+
     if (this.m_axisTitleFont == null) {
-      f = this.m_styles.getDefaultFont().getFont();
-      g = f.deriveFont(Font.BOLD).deriveFont(f.getSize2D() * 0.95f);
-      if (g != null) {
-        f = g;
+      f = this.m_styles.getDefaultFont();
+      goalSize = (f.getSize() * 0.95f);
+      g = this.m_styles.getMostSimilarFont(f.getFamily(), true,
+          f.isItalic(), f.isUnderlined(), goalSize);
+      x = g.getFont();
+      if (x.getSize2D() != goalSize) {
+        y = x.deriveFont(goalSize);
+        if (y != null) {
+          x = y;
+        }
       }
-      this.m_axisTitleFont = f;
+      if (!(g.isBold())) {
+        if (!(x.isBold())) {
+          y = x.deriveFont(Font.BOLD);
+          if (y != null) {
+            x = y;
+          }
+        }
+      }
+      this.m_axisTitleFont = x;
     }
     return this.m_axisTitleFont;
   }
@@ -98,14 +131,25 @@ class _ChartBuilder extends _TitledElementBuilder {
    * @return the chart title font
    */
   final Font _getChartTitleFont() {
-    Font f, g;
+    final FontStyle f, g;
+    Font x, y;
 
-    f = this.m_styles.getEmphFont().getFont();
-    g = f.deriveFont(Font.BOLD);
-    if (g != null) {
-      return g;
+    if (this.m_chartTitleFont == null) {
+      f = this.m_styles.getEmphFont();
+      g = this.m_styles.getMostSimilarFont(f.getFamily(), true,
+          f.isItalic(), f.isUnderlined(), f.getSize());
+      x = g.getFont();
+      if (!(g.isBold())) {
+        if (!(x.isBold())) {
+          y = x.deriveFont(Font.BOLD);
+          if (y != null) {
+            x = y;
+          }
+        }
+      }
+      this.m_chartTitleFont = x;
     }
-    return f;
+    return this.m_chartTitleFont;
   }
 
   /**
@@ -114,14 +158,24 @@ class _ChartBuilder extends _TitledElementBuilder {
    * @return the axis ticks font
    */
   synchronized final Font _getAxisTickFont() {
-    Font f, g;
+    final FontStyle f, g;
+    final float goalSize;
+    Font x, y;
+
     if (this.m_axisTickFont == null) {
-      f = this.m_styles.getDefaultFont().getFont();
-      g = f.deriveFont(f.getSize2D() * 0.8f);
-      if (g != null) {
-        f = g;
+      f = this.m_styles.getDefaultFont();
+      goalSize = (f.getSize() * 0.8f);
+      g = this.m_styles.getMostSimilarFont(f.getFamily(), f.isBold(),
+          f.isItalic(), f.isUnderlined(), goalSize);
+      x = g.getFont();
+      if (x.getSize2D() != goalSize) {
+        y = x.deriveFont(goalSize);
+        if (y != null) {
+          x = y;
+        }
       }
-      this.m_axisTickFont = f;
+
+      this.m_axisTickFont = x;
     }
     return this.m_axisTickFont;
   }
@@ -140,8 +194,17 @@ class _ChartBuilder extends _TitledElementBuilder {
    * 
    * @return the axes stroke
    */
-  final Stroke _getAxisStroke() {
-    return this.m_styles.getThickStroke();
+  synchronized final Stroke _getAxisStroke() {
+    BasicStroke a;
+
+    if (this.m_axisStroke == null) {
+      a = this.m_styles.getDefaultStroke();
+      this.m_axisStroke = new BasicStroke(//
+          ((this.m_styles.getThickStroke().getLineWidth() + //
+          a.getLineWidth()) * 0.5f),//
+          a.getEndCap(), a.getLineJoin(), a.getMiterLimit());
+    }
+    return this.m_axisStroke;
   }
 
   /**

@@ -28,7 +28,7 @@ public final class PaletteIODriver extends
     loadContext.processHeader(reader);
     while ((s = reader.readLine()) != null) {
       s = TextUtils.prepare(s);
-      if (s != null) {
+      if ((s != null) && (s.charAt(0) != '#')) {
         try (final PaletteElementBuilder<?> peb = loadContext.add()) {
           peb.fromStrings(loadContext.iterate(s));
         }

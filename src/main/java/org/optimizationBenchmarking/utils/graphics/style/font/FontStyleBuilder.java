@@ -334,6 +334,38 @@ public final class FontStyleBuilder extends
   }
 
   /**
+   * Some fonts have particular name parts which already enforce certain
+   * style features. Examples for this are the LaTeX fonts such as cmbx,
+   * cmti, etc. Although the documentation of {@link java.awt.Font} states
+   * that <quote>The style argument is merged with the specified face's
+   * style, not added or subtracted.</quote>, this may not work: The fonts
+   * may not be annotated as bold while being bold, for instance, resulting
+   * in super-bold fonts if loaded in the "bold" way.
+   * 
+   * @param name
+   *          the font name to analyze
+   * @return a bit mask that can be x-ored with the base style
+   */
+  private static final int __styleFromName(final String name) {
+    final String lc;
+
+    lc = name.toLowerCase();
+    if (lc.startsWith("cmbxti")) { //$NON-NLS-1$
+      return (Font.ITALIC | Font.BOLD);
+    }
+    if (lc.startsWith("cmti") || //$NON-NLS-1$
+        lc.startsWith("cmssi") || //$NON-NLS-1$
+        lc.startsWith("cmitt")) {//$NON-NLS-1$
+      return Font.ITALIC;
+    }
+    if (lc.startsWith("cmbx") || //$NON-NLS-1$
+        lc.startsWith("cmssbx")) { //$NON-NLS-1$
+      return Font.BOLD;
+    }
+    return Font.PLAIN;
+  }
+
+  /**
    * Build an obtain the font style. During this process, we try to resolve
    * the logical aspects of the font style to a physical one, i.e., a font
    * family to a font. The list of face choices is subsequently updated to
@@ -345,7 +377,7 @@ public final class FontStyleBuilder extends
   @Override
   protected final FontStyle compile() {
     final ArrayList<Font> lst;
-    int style, i;
+    int style, i, mask;
     String used;
     Font f, g;
     EFontFamily fam1, fam2;
@@ -373,7 +405,8 @@ public final class FontStyleBuilder extends
     finder: {
       for (final String s : faceChoices) {
         try {
-          f = new Font(s, style, this.m_size);
+          mask = FontStyleBuilder.__styleFromName(s);
+          f = new Font(s, (style ^ mask), this.m_size);
           if (FontStyleBuilder.__matches(f, s)) {
             break finder;
           }
@@ -382,6 +415,7 @@ public final class FontStyleBuilder extends
         }
       }
 
+      mask = Font.PLAIN;
       f = new Font(this.m_family.getFontFamilyName(), style, this.m_size);
     }
 
@@ -399,8 +433,8 @@ public final class FontStyleBuilder extends
     }
 
     // adapt style
-    if (style != f.getStyle()) {
-      g = f.deriveFont(style);
+    if ((style ^ mask) != f.getStyle()) {
+      g = f.deriveFont(style ^ mask);
       if (g != f) {
         f = g;
         lst.add(f);
@@ -420,7 +454,7 @@ public final class FontStyleBuilder extends
       map.put(TextAttribute.UNDERLINE, Integer.valueOf(-1));
     }
 
-    if (this.m_bold != f.isBold()) {
+    if ((this.m_bold != f.isBold()) && ((mask & Font.BOLD) == 0)) {
       if (this.m_bold) {
         map.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
       } else {
@@ -428,7 +462,7 @@ public final class FontStyleBuilder extends
       }
     }
 
-    if (this.m_italic != f.isItalic()) {
+    if ((this.m_italic != f.isItalic()) && ((mask & Font.ITALIC) == 0)) {
       if (this.m_italic) {
         map.put(TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE);
       } else {

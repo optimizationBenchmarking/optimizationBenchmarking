@@ -372,4 +372,51 @@ public final class FontStyle extends HashObject implements IStyle {
   public final String getID() {
     return this.m_id;
   }
+
+  /**
+   * get the distance between a font style and a given setup
+   * 
+   * @param family
+   *          the font family
+   * @param bold
+   *          is the font bold?
+   * @param italic
+   *          is the font italic?
+   * @param underlined
+   *          is the font underlined?
+   * @param size
+   *          the size of the font
+   * @return the distance
+   */
+  final float _dist(final EFontFamily family, final boolean bold,
+      final boolean italic, final boolean underlined, final float size) {
+    float dist;
+    final EFontFamily f;
+
+    f = this.m_family;
+    if (family == f) {
+      if (((f == EFontFamily.SANS_SERIF) || (f == EFontFamily.SERIF)) && //
+          ((family == EFontFamily.SANS_SERIF) || (family == EFontFamily.SERIF))) {
+        dist = 500;
+      } else {
+        dist = 1000;
+      }
+    } else {
+      dist = 0;
+    }
+
+    if (bold ^ this.m_bold) {
+      dist += 100;
+    }
+
+    if (italic ^ this.m_italic) {
+      dist += 100;
+    }
+
+    if (underlined ^ this.m_underlined) {
+      dist += 100;
+    }
+
+    return (dist + Math.abs(this.m_size - size));
+  }
 }

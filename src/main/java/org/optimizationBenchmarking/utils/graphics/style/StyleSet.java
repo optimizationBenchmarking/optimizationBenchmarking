@@ -253,6 +253,17 @@ public final class StyleSet {
   }
 
   /**
+   * Get the color most similar to a given RGB value
+   * 
+   * @param rgb
+   *          the rgb value of the color
+   * @return the color most similar to the RGB value
+   */
+  public final ColorStyle getMostSimilarColor(final int rgb) {
+    return this.m_colors.getMostSimilarColor(rgb);
+  }
+
+  /**
    * Get the color most similar to another color
    * 
    * @param color
@@ -261,5 +272,27 @@ public final class StyleSet {
    */
   public final ColorStyle getMostSimilarColor(final Color color) {
     return this.m_colors.getMostSimilarColor(color);
+  }
+
+  /**
+   * Find the font style most similar to a given setup
+   * 
+   * @param family
+   *          the font family
+   * @param bold
+   *          is the font bold?
+   * @param italic
+   *          is the font italic?
+   * @param underlined
+   *          is the font underlined?
+   * @param size
+   *          the size of the font
+   * @return the font style
+   */
+  public final FontStyle getMostSimilarFont(final EFontFamily family,
+      final boolean bold, final boolean italic, final boolean underlined,
+      final float size) {
+    return this.m_fonts.getMostSimilarFont(family, bold, italic,
+        underlined, size);
   }
 }

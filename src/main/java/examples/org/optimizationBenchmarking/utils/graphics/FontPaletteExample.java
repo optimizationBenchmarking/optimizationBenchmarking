@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
@@ -30,28 +32,33 @@ import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 public class FontPaletteExample {
 
   /** the graphic driver to use */
-  private static final IGraphicDriver[] DRIVERS = GraphicsExample.DRIVERS;
+  private static final ArrayListView<IGraphicDriver> DRIVERS = GraphicsExample.DRIVERS;
 
   /** the palettes to print */
-  public static final FontPalette[] PALETTES;
+  public static final ArrayListView<FontPalette> PALETTES;
 
   static {
-    PALETTES = new FontPalette[2];
+    final FontPalette[] list = new FontPalette[4];
 
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
       PaletteIODriver.INSTANCE.loadResource(tb, FontPaletteExample.class,
           "examples.font.palette"); //$NON-NLS-1$
-      FontPaletteExample.PALETTES[0] = tb.getResult();
+      list[0] = tb.getResult();
     } catch (final Throwable tt) {
       tt.printStackTrace();
     }
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
       PaletteIODriver.INSTANCE.loadResource(tb, XHTML10Driver.class,
           "xhtml10.font.palette"); //$NON-NLS-1$
-      FontPaletteExample.PALETTES[1] = tb.getResult();
+      list[1] = tb.getResult();
     } catch (final Throwable tt) {
       tt.printStackTrace();
     }
+
+    list[2] = XHTML10Driver.getDefaultFontPalette();
+    list[3] = LaTeXDriver.getDefaultFontPalette();
+
+    PALETTES = new ArrayListView<>(list);
   }
 
   /**
@@ -74,10 +81,10 @@ public class FontPaletteExample {
 
     i = 0;
     for (final FontPalette p : FontPaletteExample.PALETTES) {//
-      i++;
       for (final IGraphicDriver d : FontPaletteExample.DRIVERS) {
         FontPaletteExample.__paint(dir,
-            ((d.getClass().getSimpleName() + '_') + i), d, p);
+            ((FontPaletteExample.class.getSimpleName() + '_')
+                + (d.getClass().getSimpleName() + '_') + (++i)), d, p);
       }
     }
   }
@@ -118,9 +125,9 @@ public class FontPaletteExample {
 
     s = styles.size();
 
-    try (final Graphic g = driver
-        .createGraphic(dir, name, new PhysicalDimension(320, 160,
-            ELength.MM), new FinishedPrinter())) {
+    try (final Graphic g = driver.createGraphic(dir, name,
+        new PhysicalDimension(320, 160, ELength.MM), new FinishedPrinter(
+            driver))) {
 
       b = g.getBounds();
       g.setColor(Color.white);

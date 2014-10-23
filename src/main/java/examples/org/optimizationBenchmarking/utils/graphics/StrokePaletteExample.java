@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
@@ -26,11 +27,12 @@ import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 public class StrokePaletteExample {
 
   /** the graphic driver to use */
-  private static final IGraphicDriver[] DRIVERS = GraphicsExample.DRIVERS;
+  private static final ArrayListView<IGraphicDriver> DRIVERS = GraphicsExample.DRIVERS;
 
   /** the palettes to print */
-  public static final StrokePalette[] PALETTES = {//
-  DefaultStrokePalette.INSTANCE };
+  public static final ArrayListView<StrokePalette> PALETTES = new ArrayListView<>(
+      new StrokePalette[] {//
+      DefaultStrokePalette.INSTANCE });
 
   /**
    * run the example: there are problems with the pdf output
@@ -42,6 +44,7 @@ public class StrokePaletteExample {
    */
   public static final void main(final String[] args) throws IOException {
     final Path dir;
+    int z;
 
     if ((args != null) && (args.length > 0)) {
       dir = Paths.get(args[0]);
@@ -49,11 +52,13 @@ public class StrokePaletteExample {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
 
+    z = 0;
     for (final IGraphicDriver d : StrokePaletteExample.DRIVERS) {
       for (final StrokePalette p : StrokePaletteExample.PALETTES) {//
         StrokePaletteExample.__paint(dir,
-            (d.getClass().getSimpleName() + '_' + p.getClass()
-                .getSimpleName()), d, p);
+            ((((StrokePaletteExample.class.getSimpleName() + '_')
+                + d.getClass().getSimpleName() + '_' + p.getClass()
+                .getSimpleName()) + '_') + (++z)), d, p);
       }
     }
   }
@@ -87,9 +92,9 @@ public class StrokePaletteExample {
 
     s = styles.size();
 
-    try (final Graphic g = driver
-        .createGraphic(dir, name, new PhysicalDimension(160, 160,
-            ELength.MM), new FinishedPrinter())) {
+    try (final Graphic g = driver.createGraphic(dir, name,
+        new PhysicalDimension(160, 160, ELength.MM), new FinishedPrinter(
+            driver))) {
 
       b = g.getBounds();
       g.setColor(Color.white);

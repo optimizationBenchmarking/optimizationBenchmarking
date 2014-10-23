@@ -9,11 +9,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedHashSet;
 
 import javax.swing.JList;
 import javax.swing.border.BevelBorder;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEMFGraphicDriver;
@@ -36,13 +38,29 @@ import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 public final class GraphicsExample {
 
   /** the list of graphics drivers */
-  public static final IGraphicDriver[] DRIVERS = {
-      FreeHEPEPSGraphicDriver.INSTANCE, FreeHEPPDFGraphicDriver.INSTANCE,
-      FreeHEPSVGGraphicDriver.INSTANCE, FreeHEPEMFGraphicDriver.INSTANCE,
-      new ImageIOPNGGraphicDriver(EColorModel.RBGA_32_BIT, 256),
-      new ImageIOJPEGGraphicDriver(EColorModel.RBGA_32_BIT, 333, 0.0f),
-      new ImageIOGIFGraphicDriver(EColorModel.RBGA_32_BIT, 600),
-      EGraphicFormat.NULL.getDefaultDriver() };
+  public static final ArrayListView<IGraphicDriver> DRIVERS;
+
+  static {
+    final LinkedHashSet<IGraphicDriver> list;
+
+    list = new LinkedHashSet<>();
+    list.add(FreeHEPEPSGraphicDriver.INSTANCE);
+    list.add(FreeHEPPDFGraphicDriver.INSTANCE);
+    list.add(FreeHEPSVGGraphicDriver.INSTANCE);
+    list.add(FreeHEPEMFGraphicDriver.INSTANCE);
+    list.add(new ImageIOPNGGraphicDriver(EColorModel.RBGA_32_BIT, 256));
+    list.add(new ImageIOJPEGGraphicDriver(EColorModel.RBGA_32_BIT, 333,
+        0.0f));
+    list.add(new ImageIOGIFGraphicDriver(EColorModel.RBGA_32_BIT, 600));
+    list.add(EGraphicFormat.NULL.getDefaultDriver());
+
+    for (final EGraphicFormat format : EGraphicFormat.values()) {
+      list.add(format.getDefaultDriver());
+    }
+
+    DRIVERS = new ArrayListView<>(list.toArray(new IGraphicDriver[list
+        .size()]));
+  }
 
   /** the size */
   private static final PhysicalDimension SIZE = new PhysicalDimension(
@@ -58,17 +76,19 @@ public final class GraphicsExample {
    */
   public static final void main(final String[] args) throws IOException {
     final Path dir;
-
+    int z;
     if ((args != null) && (args.length > 0)) {
       dir = Paths.get(args[0]);
     } else {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
 
+    z = 0;
     for (final IGraphicDriver driver : GraphicsExample.DRIVERS) {
       try (final Graphic g = driver.createGraphic(dir,
-          GraphicsExample.class.getSimpleName(), GraphicsExample.SIZE,
-          new FinishedPrinter(driver))) {
+          ((((GraphicsExample.class.getSimpleName() + '_') + driver
+              .getClass().getSimpleName()) + '_') + (++z)),
+          GraphicsExample.SIZE, new FinishedPrinter(driver))) {
         for (int i = 1; i < 50; i++) {
           GraphicsExample.__paint(g);
           GraphicsExample.__paintComponent(g);

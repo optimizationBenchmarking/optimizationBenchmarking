@@ -10,7 +10,7 @@ public enum EChartFormat {
   JFreeChart() {
     /** {@inheritDoc} */
     @Override
-    public final IChartDriver getDriver() {
+    public final IChartDriver getDefaultDriver() {
       return JFreeChartDriver.INSTANCE;
     }
   };
@@ -23,5 +23,5 @@ public enum EChartFormat {
    * 
    * @return the chart driver
    */
-  public abstract IChartDriver getDriver();
+  public abstract IChartDriver getDefaultDriver();
 }

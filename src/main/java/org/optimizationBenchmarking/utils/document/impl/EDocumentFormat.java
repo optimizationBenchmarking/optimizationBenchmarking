@@ -10,7 +10,7 @@ public enum EDocumentFormat {
   XHTML_1_0() {
     /** {@inheritDoc} */
     @Override
-    public final IDocumentDriver getDriver() {
+    public final IDocumentDriver getDefaultDriver() {
       return XHTML10Driver.getDefaultDriver();
     }
   };
@@ -23,6 +23,6 @@ public enum EDocumentFormat {
    * 
    * @return the document driver
    */
-  public abstract IDocumentDriver getDriver();
+  public abstract IDocumentDriver getDefaultDriver();
 
 }

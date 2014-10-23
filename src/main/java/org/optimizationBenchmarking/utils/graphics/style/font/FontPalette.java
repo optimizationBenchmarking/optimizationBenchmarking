@@ -96,7 +96,6 @@ public class FontPalette extends Palette<FontStyle> {
    *          the code emphasize style
    */
   static final void _checkEmphFont(final FontStyle s) {
-
     if (s == null) {
       throw new IllegalArgumentException(//
           "The emphasize font style cannot be null."); //$NON-NLS-1$
@@ -108,6 +107,64 @@ public class FontPalette extends Palette<FontStyle> {
               EFontFamily.MONOSPACED + " but is.");//$NON-NLS-1$
 
     }
+  }
+
+  /**
+   * Find the font style most similar to a given setup
+   * 
+   * @param family
+   *          the font family
+   * @param bold
+   *          is the font bold?
+   * @param italic
+   *          is the font italic?
+   * @param underlined
+   *          is the font underlined?
+   * @param size
+   *          the size of the font
+   * @return the font style
+   */
+  public final FontStyle getMostSimilarFont(final EFontFamily family,
+      final boolean bold, final boolean italic, final boolean underlined,
+      final float size) {
+    float bestDiff, curDiff;
+    FontStyle best;
+
+    best = this.m_default;
+    bestDiff = best._dist(family, bold, italic, underlined, size);
+    if (bestDiff == 0) {
+      return best;
+    }
+
+    curDiff = this.m_emph._dist(family, bold, italic, underlined, size);
+    if (curDiff < bestDiff) {
+      best = this.m_emph;
+      if (curDiff <= 0) {
+        return best;
+      }
+      bestDiff = curDiff;
+    }
+
+    curDiff = this.m_code._dist(family, bold, italic, underlined, size);
+    if (curDiff < bestDiff) {
+      best = this.m_code;
+      if (curDiff <= 0) {
+        return best;
+      }
+      bestDiff = curDiff;
+    }
+
+    for (final FontStyle fs : this.m_data) {
+      curDiff = fs._dist(family, bold, italic, underlined, size);
+      if (curDiff < bestDiff) {
+        best = fs;
+        if (curDiff <= 0) {
+          return best;
+        }
+      }
+    }
+
+    return best;
   }
 
   /**
@@ -142,97 +199,5 @@ public class FontPalette extends Palette<FontStyle> {
   public final void initialize(final Graphics2D graphics) {
     graphics.setFont(this.m_default.getFont());
   }
-  //
-  // /**
-  // * Find a font style which combines the features of the given styles.
-  // *
-  // * @param styles
-  // * a collection of styles
-  // * @return the joined font, or {@code null} it no such font is found in
-  // * this palette
-  // */
-  // public final FontStyle join(final Iterable<FontStyle> styles) {
-  // Iterator<FontStyle> it;
-  // EFontFamily family, newFamily, defaultFamily;
-  // boolean italic, bold, underlined;
-  // int size, newSize, defaultSize;
-  // FontStyle style;
-  //
-  // style = this.getDefaultFontStyle();
-  // defaultFamily = style.getFamily();
-  // defaultSize = style.getSize();
-  //
-  // it = styles.iterator();
-  // italic = bold = underlined = false;
-  // if (it.hasNext()) {
-  // style = it.next();
-  // family = style.getFamily();
-  //
-  // italic = style.isItalic();
-  // bold = style.isBold();
-  // underlined = style.isUnderlined();
-  //
-  // size = style.getSize();
-  // } else {
-  // return null;
-  // }
-  //
-  // while (it.hasNext()) {
-  // style = it.next();
-  //
-  // italic |= style.isItalic();
-  // bold |= style.isBold();
-  // underlined |= style.isUnderlined();
-  //
-  // checkSize: {
-  // newSize = style.getSize();
-  // if (newSize != size) {
-  // if (newSize == defaultSize) {
-  // break checkSize;
-  // }
-  // if (size == defaultSize) {
-  // size = newSize;
-  // break checkSize;
-  // }
-  // return null;
-  // }
-  // }
-  //
-  // checkFont: {
-  // newFamily = style.getFamily();
-  // if (newFamily != family) {
-  // if (newFamily == defaultFamily) {
-  // break checkFont;
-  // }
-  // if (family == defaultFamily) {
-  // family = newFamily;
-  // break checkFont;
-  // }
-  // return null;
-  // }
-  // }
-  //
-  // }
-  //
-  // for (FontStyle font : this) {
-  // if (font.getFamily() != family) {
-  // continue;
-  // }
-  // if (font.getSize() != size) {
-  // continue;
-  // }
-  // if (font.isBold() != bold) {
-  // continue;
-  // }
-  // if (font.isItalic() != italic) {
-  // continue;
-  // }
-  // if (font.isUnderlined() != underlined) {
-  // continue;
-  // }
-  // return font;
-  // }
-  //
-  // return null;
-  // }
+
 }

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
@@ -29,12 +30,13 @@ import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 public class ColorPaletteExample {
 
   /** the graphic drivers to use */
-  private static final IGraphicDriver[] DRIVERS = GraphicsExample.DRIVERS;
+  private static final ArrayListView<IGraphicDriver> DRIVERS = GraphicsExample.DRIVERS;
 
   /** the palettes to print */
-  public static final ColorPalette[] PALETTES = {//
-  DefaultColorPalette.INSTANCE, JavaDefaultPalette.INSTANCE,
-      DefaultGrayPalette.INSTANCE, HTML401Palette.INSTANCE };
+  public static final ArrayListView<ColorPalette> PALETTES = new ArrayListView<>(
+      new ColorPalette[] {//
+      DefaultColorPalette.INSTANCE, JavaDefaultPalette.INSTANCE,
+          DefaultGrayPalette.INSTANCE, HTML401Palette.INSTANCE });
 
   /**
    * run the example: there are problems with the pdf output
@@ -46,17 +48,21 @@ public class ColorPaletteExample {
    */
   public static final void main(final String[] args) throws IOException {
     final Path dir;
+    int i;
 
     if ((args != null) && (args.length > 0)) {
       dir = Paths.get(args[0]);
     } else {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
+
+    i = 0;
     for (final IGraphicDriver d : ColorPaletteExample.DRIVERS) {
       for (final ColorPalette p : ColorPaletteExample.PALETTES) {//
         ColorPaletteExample.__paint(dir,
-            (d.getClass().getSimpleName() + '_' + p.getClass()
-                .getSimpleName()), d, p);
+            ((((ColorPaletteExample.class.getSimpleName() + '_')
+                + d.getClass().getSimpleName() + '_' + p.getClass()
+                .getSimpleName()) + '_') + (++i)), d, p);
       }
     }
   }
@@ -82,9 +88,9 @@ public class ColorPaletteExample {
     ColorStyle st;
     Color use;
 
-    try (final Graphic g = driver
-        .createGraphic(dir, name, new PhysicalDimension(160, 160,
-            ELength.MM), new FinishedPrinter())) {
+    try (final Graphic g = driver.createGraphic(dir, name,
+        new PhysicalDimension(160, 160, ELength.MM), new FinishedPrinter(
+            driver))) {
 
       b = g.getBounds();
       g.setFont(new Font("Arial", Font.PLAIN, //$NON-NLS-1$

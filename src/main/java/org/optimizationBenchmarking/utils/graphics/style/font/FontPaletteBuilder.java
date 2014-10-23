@@ -231,7 +231,7 @@ public class FontPaletteBuilder extends
 
     while ((s = reader.readLine()) != null) {
       s = TextUtils.prepare(s);
-      if (s != null) {
+      if ((s != null) && (s.charAt(0) != '#')) {
         try (final FontStyleBuilder ssb = this.setDefaultFont()) {
           ssb.fromStrings(this.iterate(s));
         }
@@ -241,7 +241,7 @@ public class FontPaletteBuilder extends
 
     while ((s = reader.readLine()) != null) {
       s = TextUtils.prepare(s);
-      if (s != null) {
+      if ((s != null) && (s.charAt(0) != '#')) {
         try (final FontStyleBuilder ssb = this.setEmphFont()) {
           ssb.fromStrings(this.iterate(s));
         }
@@ -251,7 +251,7 @@ public class FontPaletteBuilder extends
 
     while ((s = reader.readLine()) != null) {
       s = TextUtils.prepare(s);
-      if (s != null) {
+      if ((s != null) && (s.charAt(0) != '#')) {
         try (final FontStyleBuilder ssb = this.setCodeFont()) {
           ssb.fromStrings(this.iterate(s));
         }

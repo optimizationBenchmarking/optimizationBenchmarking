@@ -186,8 +186,8 @@ public final class XHTML10Driver extends DocumentDriver {
 
     this.m_size = new PageDimension(d);
 
-    this.m_fonts = ((fonts == null) ? XHTML10Driver.__defaultFonts()
-        : fonts);
+    this.m_fonts = ((fonts == null) ? XHTML10Driver
+        .getDefaultFontPalette() : fonts);
   }
 
   /** {@inheritDoc} */
@@ -253,7 +253,7 @@ public final class XHTML10Driver extends DocumentDriver {
    * 
    * @return the default font palette
    */
-  private static final FontPalette __defaultFonts() {
+  public static final FontPalette getDefaultFontPalette() {
     synchronized (XHTML10Driver.SYNCH) {
       if (XHTML10Driver.s_fonts == null) {
         try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {

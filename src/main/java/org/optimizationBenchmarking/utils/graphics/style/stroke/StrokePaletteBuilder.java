@@ -225,7 +225,7 @@ public class StrokePaletteBuilder extends
 
     def: while ((s = reader.readLine()) != null) {
       s = TextUtils.prepare(s);
-      if (s != null) {
+      if ((s != null) && (s.charAt(0) != '#')) {
         try (final StrokeStyleBuilder ssb = this.setDefaultStroke()) {
           ssb.fromStrings(this.iterate(s));
         }
@@ -235,7 +235,7 @@ public class StrokePaletteBuilder extends
 
     thin: while ((s = reader.readLine()) != null) {
       s = TextUtils.prepare(s);
-      if (s != null) {
+      if ((s != null) && (s.charAt(0) != '#')) {
         try (final StrokeStyleBuilder ssb = this.setThinStroke()) {
           ssb.fromStrings(this.iterate(s));
         }
@@ -245,7 +245,7 @@ public class StrokePaletteBuilder extends
 
     thick: while ((s = reader.readLine()) != null) {
       s = TextUtils.prepare(s);
-      if (s != null) {
+      if ((s != null) && (s.charAt(0) != '#')) {
         try (final StrokeStyleBuilder ssb = this.setThickStroke()) {
           ssb.fromStrings(this.iterate(s));
         }

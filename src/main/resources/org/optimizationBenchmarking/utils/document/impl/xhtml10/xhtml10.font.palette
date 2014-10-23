@@ -1,3 +1,4 @@
+#font family, bold?, italic?, underlined?, size in pt, face choices
 SERIF,false,false,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
 SERIF,false,true,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
 MONOSPACED,false,false,false,11,Consolas,Courier New,Courier,Terminal,Liberation Mono,Nimbus Mono

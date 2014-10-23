@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
@@ -24,7 +25,9 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -53,7 +56,7 @@ import org.optimizationBenchmarking.utils.document.spec.ITableSection;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
-import org.optimizationBenchmarking.utils.graphics.chart.impl.EChartFormat;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
@@ -86,14 +89,26 @@ import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExamp
  */
 public class RandomDocumentExample implements Runnable {
 
-  /** the graphic driver to use */
-  private static final IDocumentDriver[] DRIVERS = {
-      XHTML10Driver.getDefaultDriver(),//
-      new XHTML10Driver(EGraphicFormat.JPEG.getDefaultDriver(),
-          EScreenSize.WQXGA.getPhysicalSize(120), null),//
-      new XHTML10Driver(EGraphicFormat.GIF.getDefaultDriver(),
-          EScreenSize.SVGA.getPhysicalSize(90), null),//
-  };
+  /** the document driver to use */
+  private static final ArrayListView<IDocumentDriver> DRIVERS;
+
+  static {
+    final LinkedHashSet<IDocumentDriver> list;
+
+    list = new LinkedHashSet<>();
+    list.add(XHTML10Driver.getDefaultDriver());
+    list.add(new XHTML10Driver(EGraphicFormat.JPEG.getDefaultDriver(),
+        EScreenSize.WQXGA.getPhysicalSize(120), null));
+    list.add(new XHTML10Driver(EGraphicFormat.GIF.getDefaultDriver(),
+        EScreenSize.SVGA.getPhysicalSize(90), null));
+
+    for (final EDocumentFormat format : EDocumentFormat.values()) {
+      list.add(format.getDefaultDriver());
+    }
+
+    DRIVERS = new ArrayListView<>(list.toArray(new IDocumentDriver[list
+        .size()]));
+  }
 
   /** the normal text */
   private static final int NORMAL_TEXT = 0;
@@ -1783,7 +1798,7 @@ public class RandomDocumentExample implements Runnable {
       switch (this.m_rand.nextInt(2)) {
         case 0: {
           LineChartExample.randomLineChart(this.m_rand, g,
-              this.m_doc.getStyles(), EChartFormat.DEFAULT.getDriver());
+              this.m_doc.getStyles(), this.__randomChartDriver());
           break;
         }
         default: {
@@ -1792,6 +1807,16 @@ public class RandomDocumentExample implements Runnable {
         }
       }
     }
+  }
+
+  /**
+   * select a random chart driver
+   * 
+   * @return the chart driver
+   */
+  private final IChartDriver __randomChartDriver() {
+    return LineChartExample.DRIVERS.get(this.m_rand
+        .nextInt(LineChartExample.DRIVERS.size()));
   }
 
   /**

@@ -6,9 +6,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Random;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.chart.impl.EChartFormat;
 import org.optimizationBenchmarking.utils.graphics.chart.impl.jfree.JFreeChartDriver;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ELineType;
@@ -38,10 +41,24 @@ import examples.org.optimizationBenchmarking.utils.graphics.StrokePaletteExample
 public class LineChartExample {
 
   /** the graphic driver to use */
-  private static final IGraphicDriver[] GRAPHIC_DRIVERS = GraphicsExample.DRIVERS;
+  private static final ArrayListView<IGraphicDriver> GRAPHIC_DRIVERS = GraphicsExample.DRIVERS;
 
   /** the chart drivers */
-  private static final IChartDriver[] CHART_DRIVERS = { JFreeChartDriver.INSTANCE };
+  public static final ArrayListView<IChartDriver> DRIVERS;
+
+  static {
+    final LinkedHashSet<IChartDriver> list;
+
+    list = new LinkedHashSet<>();
+    list.add(JFreeChartDriver.INSTANCE);
+
+    for (final EChartFormat format : EChartFormat.values()) {
+      list.add(format.getDefaultDriver());
+    }
+
+    DRIVERS = new ArrayListView<>(list.toArray(new IChartDriver[list
+        .size()]));
+  }
 
   /** get the legend modes */
   private static final ELegendMode[] LEGEND_MODES = ELegendMode.values();
@@ -61,6 +78,7 @@ public class LineChartExample {
     final Random rand;
     final long seed;
     final PhysicalDimension size;
+    int z;
 
     if ((args != null) && (args.length > 0)) {
       dir = Paths.get(args[0]);
@@ -74,11 +92,13 @@ public class LineChartExample {
         (6 + rand.nextInt(8)), ELength.CM);
 
     seed = rand.nextLong();
-
+    z = 0;
     for (final IGraphicDriver d : LineChartExample.GRAPHIC_DRIVERS) {
-      for (final IChartDriver c : LineChartExample.CHART_DRIVERS) {
-        try (final Graphic g = d.createGraphic(dir, (d.getClass()
-            .getSimpleName() + '_' + c.getClass().getSimpleName()), size,
+      for (final IChartDriver c : LineChartExample.DRIVERS) {
+        try (final Graphic g = d.createGraphic(dir,
+            ((((((LineChartExample.class.getSimpleName() + '_') + d
+                .getClass().getSimpleName()) + '_') + c.getClass()
+                .getSimpleName()) + '_') + (++z)), size,
             new FinishedPrinter(c, d))) {
           rand.setSeed(seed);
           LineChartExample.randomLineChart(rand, g,
@@ -96,12 +116,12 @@ public class LineChartExample {
    * @return the style set
    */
   public static final StyleSet randomStyleSet(final Random rand) {
-    return new StyleSet(
-        FontPaletteExample.PALETTES[rand.nextInt(FontPaletteExample.PALETTES.length)],//
-        ColorPaletteExample.PALETTES[rand
-            .nextInt(ColorPaletteExample.PALETTES.length)],//
-        StrokePaletteExample.PALETTES[rand
-            .nextInt(StrokePaletteExample.PALETTES.length)]);//
+    return new StyleSet(FontPaletteExample.PALETTES.get(rand
+        .nextInt(FontPaletteExample.PALETTES.size())),//
+        ColorPaletteExample.PALETTES.get(rand
+            .nextInt(ColorPaletteExample.PALETTES.size())),//
+        StrokePaletteExample.PALETTES.get(rand
+            .nextInt(StrokePaletteExample.PALETTES.size())));//
   }
 
   /**
@@ -309,8 +329,8 @@ public class LineChartExample {
    */
   private static final Color __randomColor(final StyleSet styles,
       final Random rand) {
-    return styles.getMostSimilarColor(new Color(
-        (rand.nextInt() & 0x7f7f7f) | 0x070707));
+    return styles.getMostSimilarColor(//
+        (rand.nextInt() & 0x7f7f7f) | 0x070707);
   }
 
   /**

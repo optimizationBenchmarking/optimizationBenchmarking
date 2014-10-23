@@ -104,7 +104,8 @@ public final class LaTeXDriver extends DocumentDriver {
     this.m_size = ((d instanceof PageDimension) ? ((PageDimension) d)
         : new PageDimension(d));
 
-    this.m_fonts = ((fonts == null) ? LaTeXDriver.__defaultFonts() : fonts);
+    this.m_fonts = ((fonts == null) ? LaTeXDriver.getDefaultFontPalette()
+        : fonts);
   }
 
   /** {@inheritDoc} */
@@ -152,12 +153,12 @@ public final class LaTeXDriver extends DocumentDriver {
    * 
    * @return the default font palette
    */
-  private static final FontPalette __defaultFonts() {
+  public static final FontPalette getDefaultFontPalette() {
     synchronized (LaTeXDriver.SYNCH) {
       if (LaTeXDriver.s_fonts == null) {
         try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
           PaletteIODriver.INSTANCE.loadResource(tb, LaTeXDriver.class,
-              "LaTeX.font.palette"); //$NON-NLS-1$
+              "latex.font.palette"); //$NON-NLS-1$
           LaTeXDriver.s_fonts = tb.getResult();
         } catch (final Throwable tt) {
           ErrorUtils.throwAsRuntimeException(tt);

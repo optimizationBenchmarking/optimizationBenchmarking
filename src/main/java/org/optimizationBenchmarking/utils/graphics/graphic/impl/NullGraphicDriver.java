@@ -25,6 +25,12 @@ public final class NullGraphicDriver implements IGraphicDriver {
     super();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "NULL Graphics Driver"; //$NON-NLS-1$
+  }
+
   /**
    * Create the {@code NullGraphic}
    * 
