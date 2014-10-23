@@ -17,8 +17,8 @@ import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ITitledElement;
-import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.MaximumAggregate;
@@ -26,8 +26,8 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.MinimumAggre
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 import examples.org.optimizationBenchmarking.LoremIpsum;
+import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 import examples.org.optimizationBenchmarking.utils.graphics.ColorPaletteExample;
-import examples.org.optimizationBenchmarking.utils.graphics.FinishedPrinter;
 import examples.org.optimizationBenchmarking.utils.graphics.FontPaletteExample;
 import examples.org.optimizationBenchmarking.utils.graphics.GraphicsExample;
 import examples.org.optimizationBenchmarking.utils.graphics.StrokePaletteExample;
@@ -79,7 +79,7 @@ public class LineChartExample {
       for (final IChartDriver c : LineChartExample.CHART_DRIVERS) {
         try (final Graphic g = d.createGraphic(dir, (d.getClass()
             .getSimpleName() + '_' + c.getClass().getSimpleName()), size,
-            new FinishedPrinter())) {
+            new FinishedPrinter(c, d))) {
           rand.setSeed(seed);
           LineChartExample.randomLineChart(rand, g,
               LineChartExample.randomStyleSet(rand), c);

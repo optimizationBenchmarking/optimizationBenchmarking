@@ -1,12 +1,14 @@
 package org.optimizationBenchmarking.utils.graphics.graphic;
 
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP.FreeHEPEMFGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP.FreeHEPEPSGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP.FreeHEPPDFGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP.FreeHEPSVGGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaster.ImageIOGIFGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaster.ImageIOJPEGGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaster.ImageIOPNGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.NullGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEMFGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEPSGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPPDFGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPSVGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOGIFGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOJPEGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOPNGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 
 /**
@@ -127,7 +129,7 @@ public enum EGraphicFormat {
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return _NullGraphicDriver.INSTANCE;
+      return NullGraphicDriver.INSTANCE;
     }
   };
 

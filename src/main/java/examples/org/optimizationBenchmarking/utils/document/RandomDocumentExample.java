@@ -55,7 +55,7 @@ import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.chart.impl.EChartFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
@@ -68,7 +68,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 import examples.org.optimizationBenchmarking.LoremIpsum;
 import examples.org.optimizationBenchmarking.utils.bibliography.data.RandomBibliography;
-import examples.org.optimizationBenchmarking.utils.graphics.FinishedPrinter;
 import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExample;
 
 /**
@@ -260,7 +259,7 @@ public class RandomDocumentExample implements Runnable {
 
       de = new RandomDocumentExample(driver.createDocument(
           dir.resolve((cur + '_') + i), "report",//$NON-NLS-1$ 
-          new FinishedPrinter()), null, System.out);
+          new FinishedPrinter(driver)), null, System.out);
 
       if (pool != null) {
         pool.execute(de);

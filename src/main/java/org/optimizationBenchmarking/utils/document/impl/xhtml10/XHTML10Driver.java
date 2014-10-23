@@ -35,17 +35,18 @@ import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.PageDimension;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
+import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.XMLCharTransformer;
@@ -187,6 +188,46 @@ public final class XHTML10Driver extends DocumentDriver {
 
     this.m_fonts = ((fonts == null) ? XHTML10Driver.__defaultFonts()
         : fonts);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    final XHTML10Driver d;
+    if (o == null) {
+      return false;
+    }
+    if (o == this) {
+      return true;
+    }
+    if (o instanceof XHTML10Driver) {
+      d = ((XHTML10Driver) o);
+      return (EComparison.equals(this.m_graphicDriver, d.m_graphicDriver)
+          && EComparison.equals(this.m_size, d.m_size)//
+          && EComparison.equals(this.m_fonts, d.m_fonts)//
+      && EComparison.equals(this.getSuffix(), d.getSuffix()));
+    }
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final int calcHashCode() {
+    return HashUtils.combineHashes(//
+        HashUtils.hashCode(this.m_graphicDriver),//
+        HashUtils.combineHashes(HashUtils.hashCode(this.m_size),//
+            HashUtils.combineHashes(HashUtils.hashCode(this.m_fonts),
+                HashUtils.hashCode(this.getSuffix()))));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append("XHTML 1.0 Document Driver with "); //$NON-NLS-1$
+    textOut.append(this.m_graphicDriver);
+    textOut.append(" Graphics and "); //$NON-NLS-1$
+    textOut.append(this.m_size);
+    textOut.append(" Pages"); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

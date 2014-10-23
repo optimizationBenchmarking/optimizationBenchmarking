@@ -2,10 +2,15 @@ package org.optimizationBenchmarking.utils.graphics;
 
 import java.awt.geom.Dimension2D;
 
+import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
+import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A immutable dimension based on {@code double}s */
-public class DoubleDimension extends Dimension2D {
+public class DoubleDimension extends Dimension2D implements ITextable {
 
   /** the empty dimension */
   public static final PhysicalDimension EMPTY = new PhysicalDimension(0d,
@@ -93,8 +98,49 @@ public class DoubleDimension extends Dimension2D {
 
   /** {@inheritDoc} */
   @Override
-  public String toString() {
-    return Double.toString(this.m_width) + 'x'
-        + Double.toString(this.m_height);
+  public final String toString() {
+    final MemoryTextOutput mo;
+
+    mo = new MemoryTextOutput(256);
+    this.toText(mo);
+    return mo.toString();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean equals(final Object o) {
+    final Dimension2D dim;
+
+    if (o == this) {
+      return true;
+    }
+
+    if (o == null) {
+      return false;
+    }
+
+    if (o instanceof Dimension2D) {
+      dim = ((Dimension2D) o);
+
+      return ((EComparison.compareDoubles(this.m_height, dim.getHeight()) == 0) && //
+      (EComparison.compareDoubles(this.m_width, dim.getWidth()) == 0));
+    }
+
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(HashUtils.hashCode(this.m_height),//
+        HashUtils.hashCode(this.m_width));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void toText(final ITextOutput textOut) {
+    textOut.append(this.m_width);
+    textOut.append('x');
+    textOut.append(this.m_height);
   }
 }

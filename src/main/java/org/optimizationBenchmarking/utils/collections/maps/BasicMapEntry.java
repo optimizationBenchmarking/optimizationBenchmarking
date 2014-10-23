@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * A basic implementation of the {@link java.util.Map.Entry} interface
@@ -16,7 +19,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  *          the value type
  */
 public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
-    Serializable, Cloneable {
+    Serializable, Cloneable, ITextable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -92,9 +95,19 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
 
   /** {@inheritDoc} */
   @Override
+  public void toText(final ITextOutput textOut) {
+    textOut.append(this.getKey());
+    textOut.append('=');
+    textOut.append(this.getValue());
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public String toString() {
-    return String.valueOf(this.getKey()) + '='
-        + String.valueOf(this.getValue());
+    final MemoryTextOutput mo;
+    mo = new MemoryTextOutput(64);
+    this.toText(mo);
+    return mo.toString();
   }
 
   /** {@inheritDoc} */

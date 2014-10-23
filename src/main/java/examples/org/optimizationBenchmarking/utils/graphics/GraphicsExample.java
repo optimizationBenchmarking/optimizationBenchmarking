@@ -14,22 +14,23 @@ import javax.swing.JList;
 import javax.swing.border.BevelBorder;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP.FreeHEPEMFGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP.FreeHEPEPSGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP.FreeHEPPDFGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.freeHEP.FreeHEPSVGGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaster.ImageIOGIFGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaster.ImageIOJPEGGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.drivers.imageioRaster.ImageIOPNGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEMFGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEPSGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPPDFGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPSVGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOGIFGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOJPEGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOPNGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.math.MathConstants;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.units.ELength;
+
+import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 
 /** An example for using the graphic output subsystem. */
 public final class GraphicsExample {
@@ -57,7 +58,6 @@ public final class GraphicsExample {
    */
   public static final void main(final String[] args) throws IOException {
     final Path dir;
-    final IObjectListener listener;
 
     if ((args != null) && (args.length > 0)) {
       dir = Paths.get(args[0]);
@@ -65,12 +65,10 @@ public final class GraphicsExample {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
 
-    listener = new FinishedPrinter();
-
     for (final IGraphicDriver driver : GraphicsExample.DRIVERS) {
       try (final Graphic g = driver.createGraphic(dir,
           GraphicsExample.class.getSimpleName(), GraphicsExample.SIZE,
-          listener)) {
+          new FinishedPrinter(driver))) {
         for (int i = 1; i < 50; i++) {
           GraphicsExample.__paint(g);
           GraphicsExample.__paintComponent(g);

@@ -13,6 +13,13 @@ public enum EColorModel {
     public final ColorPalette getDefaultPalette() {
       return DefaultGrayPalette.INSTANCE;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String toString() {
+      return "8bit Grayscale"; //$NON-NLS-1$
+    }
+
   },
 
   /** 15 bit rgb */
@@ -22,6 +29,12 @@ public enum EColorModel {
     @Override
     public final ColorPalette getDefaultPalette() {
       return DefaultColorPalette.INSTANCE;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String toString() {
+      return "15bit RGB"; //$NON-NLS-1$
     }
   },
 
@@ -33,6 +46,12 @@ public enum EColorModel {
     public final ColorPalette getDefaultPalette() {
       return DefaultGrayPalette.INSTANCE;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String toString() {
+      return "16bit Grayscale"; //$NON-NLS-1$
+    }
   },
 
   /** 16 bit rgb */
@@ -42,6 +61,12 @@ public enum EColorModel {
     @Override
     public final ColorPalette getDefaultPalette() {
       return DefaultColorPalette.INSTANCE;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String toString() {
+      return "16bit RGB"; //$NON-NLS-1$
     }
   },
 
@@ -53,6 +78,12 @@ public enum EColorModel {
     public final ColorPalette getDefaultPalette() {
       return DefaultColorPalette.INSTANCE;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String toString() {
+      return "24bit RGB"; //$NON-NLS-1$
+    }
   },
 
   /** 32 bits for rbg and alpha */
@@ -62,6 +93,12 @@ public enum EColorModel {
     @Override
     public final ColorPalette getDefaultPalette() {
       return DefaultColorPalette.INSTANCE;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String toString() {
+      return "32bit RGBA"; //$NON-NLS-1$
     }
   };
 

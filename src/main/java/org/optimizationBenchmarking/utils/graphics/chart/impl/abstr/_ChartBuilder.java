@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
-import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 
 /** the chart builder */

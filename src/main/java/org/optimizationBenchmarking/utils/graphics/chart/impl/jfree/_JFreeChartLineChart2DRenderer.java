@@ -34,7 +34,7 @@ import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.Axis;
 import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.Line2D;
 import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.LineChart;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ELegendMode;
-import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 
 /**
  * <p>

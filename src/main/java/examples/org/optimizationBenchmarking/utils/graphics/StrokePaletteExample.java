@@ -10,13 +10,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
-import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.DefaultStrokePalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokeStyle;
 import org.optimizationBenchmarking.utils.math.units.ELength;
+
+import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 
 /**
  * An example used to illustrate the available color palettes.

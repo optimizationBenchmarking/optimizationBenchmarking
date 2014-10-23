@@ -2,12 +2,17 @@ package org.optimizationBenchmarking.utils.io.path;
 
 import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.hash.HashObject;
+import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * A base class for objects which can create files of a specific type.
  */
-public abstract class FileTypeDriver {
+public abstract class FileTypeDriver extends HashObject implements
+    ITextable {
 
   /** the file extension */
   private final String m_suffix;
@@ -61,5 +66,21 @@ public abstract class FileTypeDriver {
       final String nameSuggestion) {
     return PathUtils.normalize(folder.resolve(PathUtils.makeFileName(
         nameSuggestion, this.m_suffix)));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    final MemoryTextOutput mo;
+
+    mo = new MemoryTextOutput(256);
+    this.toText(mo);
+    return mo.toString();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void toText(final ITextOutput textOut) {
+    textOut.append(this.toString());
   }
 }

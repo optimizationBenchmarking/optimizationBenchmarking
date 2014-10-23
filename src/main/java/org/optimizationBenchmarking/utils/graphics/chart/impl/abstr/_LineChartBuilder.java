@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.graphics.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IAxis;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
-import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;

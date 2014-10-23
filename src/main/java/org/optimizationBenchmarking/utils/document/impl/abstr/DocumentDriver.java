@@ -10,13 +10,13 @@ import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.PageDimension;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
+import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
@@ -786,7 +786,7 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    * in the specified by {@code folder}. The file name will be generated
    * based on a {@code nameSuggestion}. It may be slightly different,
    * though, maybe with a different suffix. Once the graphic is
-   * {@link org.optimizationBenchmarking.utils.graphics.graphic.Graphic#close()
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic#close()
    * closed}, it will notify the provided {@code listener} interface
    * (unless {@code listener==null}).
    * 

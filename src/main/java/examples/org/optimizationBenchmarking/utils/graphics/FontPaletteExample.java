@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
-import org.optimizationBenchmarking.utils.graphics.graphic.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
@@ -21,6 +21,8 @@ import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+
+import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 
 /**
  * An example used to illustrate the available color palettes.

@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
+import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.math.MathConstants;
 import org.optimizationBenchmarking.utils.math.units.ELength;

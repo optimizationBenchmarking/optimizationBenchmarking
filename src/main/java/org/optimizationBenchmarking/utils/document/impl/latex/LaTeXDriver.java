@@ -30,17 +30,19 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.PageDimension;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
+import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.graphics.graphic.IGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The driver for LaTeX output
@@ -93,7 +95,7 @@ public final class LaTeXDriver extends DocumentDriver {
     super("LaTeX"); //$NON-NLS-1$
     final PhysicalDimension d;
 
-    this.m_graphicDriver = ((gd != null) ? gd : EGraphicFormat.PNG
+    this.m_graphicDriver = ((gd != null) ? gd : EGraphicFormat.EPS
         .getDefaultDriver());
 
     d = ((size != null) ? size : EScreenSize.DEFAULT
@@ -103,6 +105,46 @@ public final class LaTeXDriver extends DocumentDriver {
         : new PageDimension(d));
 
     this.m_fonts = ((fonts == null) ? LaTeXDriver.__defaultFonts() : fonts);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    final LaTeXDriver d;
+    if (o == null) {
+      return false;
+    }
+    if (o == this) {
+      return true;
+    }
+    if (o instanceof LaTeXDriver) {
+      d = ((LaTeXDriver) o);
+      return (EComparison.equals(this.m_graphicDriver, d.m_graphicDriver)
+          && EComparison.equals(this.m_size, d.m_size)//
+          && EComparison.equals(this.m_fonts, d.m_fonts)//
+      && EComparison.equals(this.getSuffix(), d.getSuffix()));
+    }
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final int calcHashCode() {
+    return HashUtils.combineHashes(//
+        HashUtils.hashCode(this.m_graphicDriver),//
+        HashUtils.combineHashes(HashUtils.hashCode(this.m_size),//
+            HashUtils.combineHashes(HashUtils.hashCode(this.m_fonts),
+                HashUtils.hashCode(this.getSuffix()))));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append("LaTeX 2\u03b5 Document Driver with "); //$NON-NLS-1$
+    textOut.append(this.m_graphicDriver);
+    textOut.append(" Graphics and "); //$NON-NLS-1$
+    textOut.append(this.m_size);
+    textOut.append(" Pages"); //$NON-NLS-1$
   }
 
   /**
@@ -115,7 +157,7 @@ public final class LaTeXDriver extends DocumentDriver {
       if (LaTeXDriver.s_fonts == null) {
         try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
           PaletteIODriver.INSTANCE.loadResource(tb, LaTeXDriver.class,
-              "LaTeX10.font.palette"); //$NON-NLS-1$
+              "LaTeX.font.palette"); //$NON-NLS-1$
           LaTeXDriver.s_fonts = tb.getResult();
         } catch (final Throwable tt) {
           ErrorUtils.throwAsRuntimeException(tt);
