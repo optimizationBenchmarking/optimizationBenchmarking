@@ -403,7 +403,11 @@ public class FontProperties extends HashObject {
   }
 
   /**
-   * Check whether a font is underlined or not
+   * Check whether a font is underlined or not. This method bases its
+   * result solely on the properties of the font, it does not perform a
+   * resource-based lookup. If you want this, use
+   * <code>{@link #getFontProperties(Font, boolean) getFontProperties(Font, false)}.{@link #isUnderlined()}</code>
+   * instead.
    * 
    * @param font
    *          the font
