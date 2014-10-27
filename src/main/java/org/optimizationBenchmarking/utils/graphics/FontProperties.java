@@ -495,7 +495,8 @@ public class FontProperties extends HashObject {
      */
     private __FontFlags(final String data, final int idx) {
       super(FontProperties._flags(data, idx));
-      this.m_name = TextUtils.prepare(data.substring(idx + 1));
+      this.m_name = TextUtils.prepare(data.substring(idx + 1))
+          .toLowerCase();
     }
 
     /**
