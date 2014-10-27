@@ -391,7 +391,7 @@ public class FontProperties extends HashObject {
       fam2 = (style & FontProperties.FONT_FLAG_FAMILY);
       style |= (fp.m_flags & (~FontProperties.FONT_FLAG_FAMILY));
       if (((fam1 == 0) || (fam1 == FontProperties.FONT_FLAG_DIALOG) || (fam1 == FontProperties.FONT_FLAG_DIALOG_INPUT))
-          && (((fam2 != 0) && (fam2 != FontProperties.FONT_FLAG_DIALOG)) || (fam2 != FontProperties.FONT_FLAG_DIALOG_INPUT))) {
+          && (((fam2 != 0) && (fam2 != FontProperties.FONT_FLAG_DIALOG) && (fam2 != FontProperties.FONT_FLAG_DIALOG_INPUT)))) {
         style = ((style & (~FontProperties.FONT_FLAG_FAMILY)) | fam2);
       }
       if (style == fp.m_flags) {
