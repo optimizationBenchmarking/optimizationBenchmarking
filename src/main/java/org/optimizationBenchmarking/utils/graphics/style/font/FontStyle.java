@@ -4,10 +4,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
-import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -42,19 +42,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * main font.
  * </p>
  */
-public final class FontStyle extends HashObject implements IStyle {
-
-  /** the font family */
-  private final EFontFamily m_family;
-
-  /** is the font italic ? */
-  private final boolean m_italic;
-
-  /** is the font bold? */
-  private final boolean m_bold;
-
-  /** is the fond underlined? */
-  private final boolean m_underlined;
+public final class FontStyle extends FontProperties implements IStyle {
 
   /**
    * the font size in
@@ -98,7 +86,17 @@ public final class FontStyle extends HashObject implements IStyle {
       final boolean isItalic, final boolean isBold,
       final boolean isUnderlined, final Font font,
       final ArrayListView<String> faceChoices, final String id) {
-    super();
+    super(
+        //
+        (isItalic ? FontProperties.FONT_FLAG_ITALIC : 0)
+            | (isBold ? FontProperties.FONT_FLAG_BOLD : 0)
+            | (isUnderlined ? FontProperties.FONT_FLAG_UNDERLINED : 0)
+            | ((family == EFontFamily.MONOSPACED) ? FontProperties.FONT_FLAG_MONOSPACE
+                : ((family == EFontFamily.SANS_SERIF) ? FontProperties.FONT_FLAG_SANS_SERIF
+                    : ((family == EFontFamily.SERIF) ? FontProperties.FONT_FLAG_SERIF
+                        : ((family == EFontFamily.DIALOG) ? FontProperties.FONT_FLAG_DIALOG
+                            : ((family == EFontFamily.DIALOG_INPUT) ? FontProperties.FONT_FLAG_DIALOG_INPUT
+                                : 0))))));
 
     FontStyleBuilder._checkFontFamily(family);
     FontStyleBuilder._checkSize(size);
@@ -120,10 +118,6 @@ public final class FontStyle extends HashObject implements IStyle {
               + id + '\'');
     }
 
-    this.m_family = family;
-    this.m_italic = isItalic;// font.isItalic();
-    this.m_bold = isBold;// font.isBold();
-    this.m_underlined = isUnderlined;// GraphicUtils.isUnderlined(font);
     this.m_size = size;
     this.m_font = font;
     this.m_faceChoices = faceChoices;
@@ -132,12 +126,7 @@ public final class FontStyle extends HashObject implements IStyle {
   /** {@inheritDoc} */
   @Override
   protected final int calcHashCode() {
-    return HashUtils.combineHashes(HashUtils.combineHashes(//
-        HashUtils.combineHashes(HashUtils.hashCode(this.m_family),
-            HashUtils.hashCode(this.m_italic)),//
-        HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_bold),//
-            HashUtils.hashCode(this.m_underlined))),//
+    return HashUtils.combineHashes(HashUtils.hashCode(this.m_flags),//
         HashUtils.hashCode(this.m_size));
   }
 
@@ -154,50 +143,10 @@ public final class FontStyle extends HashObject implements IStyle {
     }
     if (o instanceof FontStyle) {
       t = ((FontStyle) o);
-      return ((this.m_family == t.m_family) && //
-          (this.m_italic == t.m_italic) && //
-          (this.m_bold == t.m_bold) && //
-          (this.m_underlined == t.m_underlined) && //
+      return ((this.m_flags == t.m_flags) && //
       (this.m_size == t.m_size));
     }
     return false;
-  }
-
-  /**
-   * Get the font family
-   * 
-   * @return the font family
-   */
-  public final EFontFamily getFamily() {
-    return this.m_family;
-  }
-
-  /**
-   * Is this font italic?
-   * 
-   * @return {@code true} for italic fonts, {@code false} for normal ones
-   */
-  public final boolean isItalic() {
-    return this.m_italic;
-  }
-
-  /**
-   * Is this font bold?
-   * 
-   * @return {@code true} for bold fonts, {@code false} for normal ones
-   */
-  public final boolean isBold() {
-    return this.m_bold;
-  }
-
-  /**
-   * Is this font underlined?
-   * 
-   * @return {@code true} for underlined fonts, {@code false} for normal
-   *         ones
-   */
-  public final boolean isUnderlined() {
-    return this.m_underlined;
   }
 
   /**
@@ -280,8 +229,8 @@ public final class FontStyle extends HashObject implements IStyle {
       have = true;
     }
 
-    x = this.m_bold;
-    if (x && ((def == null) || (x != def.m_bold) || (!omitDefaults))) {
+    x = this.isBold();
+    if (x && ((def == null) || (x != def.isBold()) || (!omitDefaults))) {
       haveSpecial = true;
       if (have) {
         dest.append(' ');
@@ -291,8 +240,8 @@ public final class FontStyle extends HashObject implements IStyle {
       have = true;
     }
 
-    x = this.m_italic;
-    if (x && ((def == null) || (x != def.m_italic) || (!omitDefaults))) {
+    x = this.isItalic();
+    if (x && ((def == null) || (x != def.isItalic()) || (!omitDefaults))) {
       if (have) {
         dest.append(haveSpecial ? '-' : ' ');
       }
@@ -302,8 +251,9 @@ public final class FontStyle extends HashObject implements IStyle {
       have = true;
     }
 
-    x = this.m_underlined;
-    if (x && ((def == null) || (x != def.m_underlined) || (!omitDefaults))) {
+    x = this.isUnderlined();
+    if (x
+        && ((def == null) || (x != def.isUnderlined()) || (!omitDefaults))) {
       if (have) {
         if (haveSpecial) {
           t.appendWord(" and ", dest);//$NON-NLS-1$
@@ -317,9 +267,9 @@ public final class FontStyle extends HashObject implements IStyle {
       have = true;
     }
 
-    fam = this.m_family;
+    fam = this.getFamily();
     family: {
-      if ((def == null) || (fam != def.m_family) || (!omitDefaults)) {
+      if ((def == null) || (fam != def.getFamily()) || (!omitDefaults)) {
         if (have) {
           dest.append(' ');
         }
@@ -393,7 +343,7 @@ public final class FontStyle extends HashObject implements IStyle {
     float dist;
     final EFontFamily f;
 
-    f = this.m_family;
+    f = this.getFamily();
     if (family == f) {
       if (((f == EFontFamily.SANS_SERIF) || (f == EFontFamily.SERIF)) && //
           ((family == EFontFamily.SANS_SERIF) || (family == EFontFamily.SERIF))) {
@@ -405,15 +355,15 @@ public final class FontStyle extends HashObject implements IStyle {
       dist = 0;
     }
 
-    if (bold ^ this.m_bold) {
+    if (bold ^ this.isBold()) {
       dist += 100;
     }
 
-    if (italic ^ this.m_italic) {
+    if (italic ^ this.isItalic()) {
       dist += 100;
     }
 
-    if (underlined ^ this.m_underlined) {
+    if (underlined ^ this.isUnderlined()) {
       dist += 100;
     }
 

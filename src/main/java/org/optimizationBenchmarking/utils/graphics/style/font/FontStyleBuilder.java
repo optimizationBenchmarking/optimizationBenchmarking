@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.Locale;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
+import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
@@ -353,6 +353,7 @@ public final class FontStyleBuilder extends
     HashMap<TextAttribute, Object> map;
     final LinkedHashSet<String> faceChoices, choices;
     MemoryTextOutput idb;
+    FontProperties prop;
     boolean set;
 
     style = 0;
@@ -376,7 +377,8 @@ public final class FontStyleBuilder extends
       for (final String s : faceChoices) {
         try {
           // some fonts are already bold or italic by default
-          mask = GraphicUtils.getFontStyleFromFontName(s);
+          prop = FontProperties.getFontProperties(s);
+          mask = ((prop != null) ? prop.getStyle() : Font.PLAIN);
           // so we do not need to set those features
           goalStyle = (style & (~mask));
           f = new Font(s, goalStyle, this.m_size);
@@ -473,20 +475,9 @@ public final class FontStyleBuilder extends
     fam2 = null;
     if ((fam1 == null) || (fam1 == EFontFamily.DIALOG)
         || (fam1 == EFontFamily.DIALOG_INPUT)) {
-      fam2 = GraphicUtils
-          .getFontFamilyFromFontName(f.getFamily(Locale.US));
-      if (fam2 == null) {
-        fam2 = GraphicUtils.getFontFamilyFromFontName(f.getFamily());
-        if (fam2 == null) {
-          fam2 = GraphicUtils.getFontFamilyFromFontName(f
-              .getFontName(Locale.US));
-          if (fam2 == null) {
-            fam2 = GraphicUtils.getFontFamilyFromFontName(f.getFontName());
-            if (fam2 == null) {
-              fam2 = GraphicUtils.getFontFamilyFromFontName(f.getPSName());
-            }
-          }
-        }
+      prop = FontProperties.getFontProperties(f, true);
+      if (prop != null) {
+        fam2 = prop.getFamily();
       }
     }
 

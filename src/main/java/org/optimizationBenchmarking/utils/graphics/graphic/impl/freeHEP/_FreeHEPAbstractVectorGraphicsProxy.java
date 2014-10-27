@@ -23,7 +23,7 @@ import java.text.AttributedCharacterIterator;
 
 import org.freehep.graphics2d.AbstractVectorGraphics;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
-import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
+import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicProxy;
 
 /**
@@ -437,7 +437,8 @@ class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
     font = graph.getFont();
 
     if (this.m_underlineState == 0) {
-      this.m_underlineState = (GraphicUtils.isFontUnderlined(font) ? 1 : 2);
+      this.m_underlineState = (FontProperties.isFontUnderlined(font) ? 1
+          : 2);
     }
 
     if (this.m_underlineState == 1) {
@@ -484,7 +485,8 @@ class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
     font = graph.getFont();
 
     if (this.m_underlineState == 0) {
-      this.m_underlineState = (GraphicUtils.isFontUnderlined(font) ? 1 : 2);
+      this.m_underlineState = (FontProperties.isFontUnderlined(font) ? 1
+          : 2);
     }
 
     if (this.m_underlineState == 1) {
