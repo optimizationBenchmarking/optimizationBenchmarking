@@ -9,6 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.Locale;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
@@ -334,38 +335,6 @@ public final class FontStyleBuilder extends
   }
 
   /**
-   * Some fonts have particular name parts which already enforce certain
-   * style features. Examples for this are the LaTeX fonts such as cmbx,
-   * cmti, etc. Although the documentation of {@link java.awt.Font} states
-   * that <quote>The style argument is merged with the specified face's
-   * style, not added or subtracted.</quote>, this may not work: The fonts
-   * may not be annotated as bold while being bold, for instance, resulting
-   * in super-bold fonts if loaded in the "bold" way.
-   * 
-   * @param name
-   *          the font name to analyze
-   * @return a bit mask that can be x-ored with the base style
-   */
-  private static final int __styleFromName(final String name) {
-    final String lc;
-
-    lc = name.toLowerCase();
-    if (lc.startsWith("cmbxti")) { //$NON-NLS-1$
-      return (Font.ITALIC | Font.BOLD);
-    }
-    if (lc.startsWith("cmti") || //$NON-NLS-1$
-        lc.startsWith("cmssi") || //$NON-NLS-1$
-        lc.startsWith("cmitt")) {//$NON-NLS-1$
-      return Font.ITALIC;
-    }
-    if (lc.startsWith("cmbx") || //$NON-NLS-1$
-        lc.startsWith("cmssbx")) { //$NON-NLS-1$
-      return Font.BOLD;
-    }
-    return Font.PLAIN;
-  }
-
-  /**
    * Build an obtain the font style. During this process, we try to resolve
    * the logical aspects of the font style to a physical one, i.e., a font
    * family to a font. The list of face choices is subsequently updated to
@@ -377,13 +346,14 @@ public final class FontStyleBuilder extends
   @Override
   protected final FontStyle compile() {
     final ArrayList<Font> lst;
-    int style, i, mask;
+    int style, goalStyle, i, mask;
     String used;
     Font f, g;
     EFontFamily fam1, fam2;
     HashMap<TextAttribute, Object> map;
     final LinkedHashSet<String> faceChoices, choices;
     MemoryTextOutput idb;
+    boolean set;
 
     style = 0;
     if (this.m_bold) {
@@ -405,8 +375,11 @@ public final class FontStyleBuilder extends
     finder: {
       for (final String s : faceChoices) {
         try {
-          mask = FontStyleBuilder.__styleFromName(s);
-          f = new Font(s, (style ^ mask), this.m_size);
+          // some fonts are already bold or italic by default
+          mask = GraphicUtils.getFontStyleFromFontName(s);
+          // so we do not need to set those features
+          goalStyle = (style & (~mask));
+          f = new Font(s, goalStyle, this.m_size);
           if (FontStyleBuilder.__matches(f, s)) {
             break finder;
           }
@@ -416,6 +389,7 @@ public final class FontStyleBuilder extends
       }
 
       mask = Font.PLAIN;
+      goalStyle = style;
       f = new Font(this.m_family.getFontFamilyName(), style, this.m_size);
     }
 
@@ -433,8 +407,8 @@ public final class FontStyleBuilder extends
     }
 
     // adapt style
-    if ((style ^ mask) != f.getStyle()) {
-      g = f.deriveFont(style ^ mask);
+    if (goalStyle != f.getStyle()) {
+      g = f.deriveFont(goalStyle);
       if (g != f) {
         f = g;
         lst.add(f);
@@ -454,16 +428,18 @@ public final class FontStyleBuilder extends
       map.put(TextAttribute.UNDERLINE, Integer.valueOf(-1));
     }
 
-    if ((this.m_bold != f.isBold()) && ((mask & Font.BOLD) == 0)) {
-      if (this.m_bold) {
+    set = ((goalStyle & Font.BOLD) != 0);
+    if (set != f.isBold()) {
+      if (set) {
         map.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
       } else {
         map.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_REGULAR);
       }
     }
 
-    if ((this.m_italic != f.isItalic()) && ((mask & Font.ITALIC) == 0)) {
-      if (this.m_italic) {
+    set = ((goalStyle & Font.ITALIC) != 0);
+    if (set != f.isItalic()) {
+      if (set) {
         map.put(TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE);
       } else {
         map.put(TextAttribute.POSTURE, TextAttribute.POSTURE_REGULAR);
@@ -494,27 +470,28 @@ public final class FontStyleBuilder extends
     choices.addAll(faceChoices);
 
     fam1 = this.m_family;
+    fam2 = null;
     if ((fam1 == null) || (fam1 == EFontFamily.DIALOG)
         || (fam1 == EFontFamily.DIALOG_INPUT)) {
-      fam2 = FontStyleBuilder.__getFamily(f.getFamily(Locale.US));
+      fam2 = GraphicUtils
+          .getFontFamilyFromFontName(f.getFamily(Locale.US));
       if (fam2 == null) {
-        fam2 = FontStyleBuilder.__getFamily(f.getFamily());
+        fam2 = GraphicUtils.getFontFamilyFromFontName(f.getFamily());
         if (fam2 == null) {
-          fam2 = FontStyleBuilder.__getFamily(f.getFontName(Locale.US));
+          fam2 = GraphicUtils.getFontFamilyFromFontName(f
+              .getFontName(Locale.US));
           if (fam2 == null) {
-            fam2 = FontStyleBuilder.__getFamily(f.getFontName());
+            fam2 = GraphicUtils.getFontFamilyFromFontName(f.getFontName());
             if (fam2 == null) {
-              fam2 = FontStyleBuilder.__getFamily(f.getPSName());
+              fam2 = GraphicUtils.getFontFamilyFromFontName(f.getPSName());
             }
           }
         }
       }
-    } else {
-      fam2 = fam1;
     }
 
     choices.add(fam1.getFontFamilyName());
-    if (fam2 != fam1) {
+    if ((fam2 != fam1) && (fam2 != null)) {
       choices.add(fam2.getFontFamilyName());
     }
 
@@ -545,162 +522,6 @@ public final class FontStyleBuilder extends
         this.m_italic, this.m_bold, this.m_underlined, f,
         new ArrayListView<>(choices.toArray(new String[choices.size()])),
         this.m_id);
-  }
-
-  /**
-   * Try to obtain the font family from a font name heuristically
-   * 
-   * @param name
-   *          the font name
-   * @return the font family
-   */
-  @SuppressWarnings("incomplete-switch")
-  private static final EFontFamily __getFamily(final String name) {
-    String sub;
-    int i;
-
-    if (name == null) {
-      return null;
-    }
-
-    sub = name.toLowerCase();
-
-    for (;;) {
-
-      switch (sub) {
-        case "arial": { //$NON-NLS-1$
-          return EFontFamily.SANS_SERIF;
-        }
-
-        case "cambria": {//$NON-NLS-1$
-          return EFontFamily.SERIF;
-        }
-
-        case "cmr"://$NON-NLS-1$
-        case "cmb"://$NON-NLS-1$
-        case "cmbx"://$NON-NLS-1$
-        case "computer modern": {//$NON-NLS-1$
-          return EFontFamily.SERIF;
-        }
-
-        case "cms": {//$NON-NLS-1$
-          return EFontFamily.SANS_SERIF;
-        }
-
-        case "cmt": //$NON-NLS-1$
-        case "cmtx": {//$NON-NLS-1$
-          return EFontFamily.MONOSPACED;
-        }
-
-        case "calibri": {//$NON-NLS-1$
-          return EFontFamily.SANS_SERIF;
-        }
-
-        case "comic"://$NON-NLS-1$
-        case "comic sans": {//$NON-NLS-1$
-          return EFontFamily.SANS_SERIF;
-        }
-
-        case "consolas": //$NON-NLS-1$
-        case "courier": { //$NON-NLS-1$
-          return EFontFamily.MONOSPACED;
-        }
-
-        case "georgia": { //$NON-NLS-1$
-          return EFontFamily.SERIF;
-        }
-
-        case "gothic": { //$NON-NLS-1$
-          return EFontFamily.SANS_SERIF;
-        }
-
-        case "helvetica": { //$NON-NLS-1$
-          return EFontFamily.SANS_SERIF;
-        }
-
-        case "liberation mono": { //$NON-NLS-1$
-          return EFontFamily.MONOSPACED;
-        }
-        case "liberation sans": { //$NON-NLS-1$
-          return EFontFamily.SANS_SERIF;
-        }
-        case "liberation serif": { //$NON-NLS-1$
-          return EFontFamily.SERIF;
-        }
-
-        case "lucida console": { //$NON-NLS-1$
-          return EFontFamily.MONOSPACED;
-        }
-        case "lucida sans": { //$NON-NLS-1$
-          return EFontFamily.SANS_SERIF;
-        }
-
-        case "nimbus mono": { //$NON-NLS-1$
-          return EFontFamily.MONOSPACED;
-        }
-
-        case "nimbus roman": { //$NON-NLS-1$
-          return EFontFamily.SERIF;
-        }
-
-        case "nimbus sans": { //$NON-NLS-1$
-          return EFontFamily.SANS_SERIF;
-        }
-
-        case "terminal": { //$NON-NLS-1$
-          return EFontFamily.MONOSPACED;
-        }
-
-        case "times": //$NON-NLS-1$          
-        case "times new": //$NON-NLS-1$   
-        case "times new roman": { //$NON-NLS-1$
-          return EFontFamily.SERIF;
-        }
-
-        case "verdana": { //$NON-NLS-1$
-          return EFontFamily.SANS_SERIF;
-        }
-      }
-
-      if (sub.endsWith("sans serif")) { //$NON-NLS-1$
-        return EFontFamily.SANS_SERIF;
-      }
-      if (sub.endsWith("serif")) { //$NON-NLS-1$
-        return EFontFamily.SERIF;
-      }
-      if (sub.endsWith("monospaced")) { //$NON-NLS-1$
-        return EFontFamily.MONOSPACED;
-      }
-
-      i = name.lastIndexOf(' ');
-      if (i <= 0) {
-        break;
-      }
-
-      sub = sub.substring(0, i);
-    }
-
-    if (sub.contains("sans serif") || //$NON-NLS-1$
-        sub.contains("gothic")) { //$NON-NLS-1$
-      return EFontFamily.SANS_SERIF;
-    }
-    if (sub.contains("serif") || //$NON-NLS-1$
-        sub.contains("roman")) { //$NON-NLS-1$
-      return EFontFamily.SERIF;
-    }
-
-    if (sub.startsWith("cmr") || //$NON-NLS-1$
-        sub.startsWith("cmb")) { //$NON-NLS-1$
-      return EFontFamily.SERIF;
-    }
-    if (sub.startsWith("cms")) { //$NON-NLS-1$
-      return EFontFamily.SANS_SERIF;
-    }
-    if (sub.startsWith("cmt")) { //$NON-NLS-1$
-      return EFontFamily.SANS_SERIF;
-    }
-
-    return null;
   }
 
   /** {@inheritDoc} */

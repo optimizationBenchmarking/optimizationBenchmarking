@@ -857,6 +857,12 @@ final class _NullGraphic extends Graphic {
     return false; // do nothing
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isVectorGraphic() {
+    return false;
+  }
+
   /** the internal configuration */
   private final class _Config extends GraphicsConfiguration {
 

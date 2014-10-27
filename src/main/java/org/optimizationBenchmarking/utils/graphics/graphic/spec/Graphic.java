@@ -159,9 +159,10 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    * 
    * @return {@code true} if this graphic is a vector graphic,
    *         {@code false} otherwise.
+   * @see org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#isVectorFormat()
    */
   public boolean isVectorGraphic() {
-    return true;
+    return false;
   }
 
   /**

@@ -437,7 +437,7 @@ class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
     font = graph.getFont();
 
     if (this.m_underlineState == 0) {
-      this.m_underlineState = (GraphicUtils.isUnderlined(font) ? 1 : 2);
+      this.m_underlineState = (GraphicUtils.isFontUnderlined(font) ? 1 : 2);
     }
 
     if (this.m_underlineState == 1) {
@@ -484,7 +484,7 @@ class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
     font = graph.getFont();
 
     if (this.m_underlineState == 0) {
-      this.m_underlineState = (GraphicUtils.isUnderlined(font) ? 1 : 2);
+      this.m_underlineState = (GraphicUtils.isFontUnderlined(font) ? 1 : 2);
     }
 
     if (this.m_underlineState == 1) {

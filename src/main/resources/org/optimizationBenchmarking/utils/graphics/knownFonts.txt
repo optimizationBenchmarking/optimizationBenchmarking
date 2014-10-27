@@ -1,0 +1,88 @@
+# flags for the known fonts:
+#   s -> sans-serif
+#   r -> serif (roman)
+#   m -> mono-spaced
+#   b -> bold
+#   i -> italic
+s arial
+sb arial black
+s arial unicode
+s arial unicode ms
+sb bauhaus
+r bitstream charter
+r book antiqua
+r bookman old style
+r cambria
+s calibri
+r century
+s century gothic
+rb cmb
+rib cmbsy
+rb cmbx
+rbi cmbxsl
+s cmcsc
+si cmff
+mib cmitt
+si cmfi
+ri cmmi
+rib cmmib
+r cmr
+ri cmsl
+mi cmsltt
+s cmss
+sb cmssbx
+si cmssi
+sib cmssibx
+sib cmssidc
+s cmssq
+ri cmsy
+m cmtcsc
+m cmtex
+ri cmti
+m cmtt
+r cmu
+m cmvtt
+s comic
+s comic sans
+s comic sans ms
+r computer modern
+m consolas
+sb cooper black
+m courier
+m courier new
+s dejavue sans
+r dejavue serif
+s droid sans
+r droid serif
+r georgia
+s franklin gothic
+s gothic
+s helvetica
+sbi helvetica-boldoblique
+sb helvetica-bold
+si helvetica-oblique
+sb impact
+m liberation mono
+s liberation sans
+r liberation serif
+m lm mono
+r lm roman
+s lm sans
+m lucida console
+s lucida sans
+m monospaced
+m monospace
+m nimbus mono
+r nimbus roman
+s nimbus sans
+s sans serif
+r serif
+m terminal
+r times
+r times new
+r times new roman
+s trebuchet ms
+s trebuchet
+s ubuntu
+m ubuntu mono
+s verdana
