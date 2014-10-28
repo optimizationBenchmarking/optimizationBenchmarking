@@ -292,7 +292,68 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
 
       this.applyTestsToInstance(copy);
     }
+  }
 
+  /** test the row-based aggregation */
+  @Test(timeout = 3600000)
+  public void testMatrixAggregateRow() {
+    final _TestAggregateA a;
+    final _TestAggregateB b;
+    final IMatrix mat;
+    int i, j, z;
+
+    mat = this.getInstance();
+    Assert.assertNotNull(mat);
+
+    a = new _TestAggregateA();
+    b = new _TestAggregateB();
+
+    for (i = mat.m(); (--i) >= 0;) {
+      a._clear();
+      b._clear();
+
+      mat.aggregateRow(i, a);
+      z = mat.n();
+      for (j = 0; j < z; j++) {
+        b.append1(mat, i, j);
+      }
+      for (j = z; (--j) >= 0;) {
+        b.append2(mat, i, j);
+      }
+
+      a._assert(b);
+    }
+  }
+
+  /** test the column-based aggregation */
+  @Test(timeout = 3600000)
+  public void testMatrixAggregateColumn() {
+    final _TestAggregateA a;
+    final _TestAggregateB b;
+    final IMatrix mat;
+    int z, i, j;
+
+    mat = this.getInstance();
+    Assert.assertNotNull(mat);
+
+    a = new _TestAggregateA();
+    b = new _TestAggregateB();
+
+    for (i = mat.n(); (--i) >= 0;) {
+      a._clear();
+      b._clear();
+
+      mat.aggregateColumn(i, a);
+      z = mat.m();
+      for (j = 0; j < z; j++) {
+        b.append1(mat, j, i);
+      }
+      for (j = z; (--j) >= 0;) {
+        b.append2(mat, j, i);
+      }
+
+      a._assert(b);
+    }
   }
 
   /**
@@ -492,6 +553,8 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
   public void validateInstance() {
     super.validateInstance();
     this.testMatrixDimensionsAndGetters();
+    this.testMatrixAggregateColumn();
+    this.testMatrixAggregateRow();
     this.testMatrixTransposed();
     this.testMatrixSelectionAndTranspose();
     this.testMatrixIterate();
