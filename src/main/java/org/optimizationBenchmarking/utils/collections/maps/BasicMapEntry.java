@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.collections.maps;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -63,9 +64,6 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
   public int hashCode() {
     return (HashUtils.hashCode(this.getKey()) ^ //
     HashUtils.hashCode(this.getValue()));
-
-    // ((((o = this.getKey()) == null) ? 0 : o.hashCode()) ^ //
-    // (((o = this.getValue()) == null) ? 0 : o.hashCode()));
   }
 
   /** {@inheritDoc} */
@@ -115,8 +113,9 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
   protected Object clone() {
     try {
       return super.clone();
-    } catch (final Throwable t) {
-      throw new RuntimeException(t);
+    } catch (final CloneNotSupportedException t) {
+      ErrorUtils.throwAsRuntimeException(t);
+      return null;// we will never get here
     }
   }
 }

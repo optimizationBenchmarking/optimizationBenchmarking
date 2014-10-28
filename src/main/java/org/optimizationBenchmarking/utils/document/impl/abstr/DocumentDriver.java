@@ -79,7 +79,7 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    */
   protected PhysicalDimension getSize(final EFigureSize size) {
     return size.approximateSize(new PageDimension(EScreenSize.DEFAULT
-        .getPhysicalSize(EScreenSize.DEFAULT_SCREEN_DPI)));
+        .getPageSize(EScreenSize.DEFAULT_SCREEN_DPI)));
   }
 
   /**

@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import java.nio.file.Path;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
@@ -31,16 +30,11 @@ import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
-import org.optimizationBenchmarking.utils.graphics.EScreenSize;
-import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -52,19 +46,14 @@ public final class LaTeXDriver extends DocumentDriver {
   /** the synchronizer */
   private static final Object SYNCH = new Object();
 
-  /** the internal font palette */
-  private static FontPalette s_fonts;
   /** The default LaTeX driver */
   private static LaTeXDriver s_default;
 
   /** the graphic driver */
   private final IGraphicDriver m_graphicDriver;
 
-  /** the screen size */
-  private final PageDimension m_size;
-
-  /** the font palette */
-  private final FontPalette m_fonts;
+  /** the document class */
+  private final DocumentClass m_class;
 
   /**
    * Get the default LaTeX driver
@@ -74,7 +63,7 @@ public final class LaTeXDriver extends DocumentDriver {
   public static final LaTeXDriver getDefaultDriver() {
     synchronized (LaTeXDriver.SYNCH) {
       if (LaTeXDriver.s_default == null) {
-        LaTeXDriver.s_default = new LaTeXDriver(null, null, null);
+        LaTeXDriver.s_default = new LaTeXDriver(null, null);
       }
       return LaTeXDriver.s_default;
     }
@@ -85,27 +74,21 @@ public final class LaTeXDriver extends DocumentDriver {
    * 
    * @param gd
    *          the graphic driver to use
-   * @param size
-   *          the physical screen size to render for
-   * @param fonts
-   *          the font palette
+   * @param clazz
+   *          the document class
    */
-  public LaTeXDriver(final IGraphicDriver gd,
-      final PhysicalDimension size, final FontPalette fonts) {
+  public LaTeXDriver(final IGraphicDriver gd, final DocumentClass clazz) {
     super("LaTeX"); //$NON-NLS-1$
-    final PhysicalDimension d;
+
+    if (clazz == null) {
+      throw new IllegalArgumentException(
+          "Document class must not be null."); //$NON-NLS-1$
+    }
 
     this.m_graphicDriver = ((gd != null) ? gd : EGraphicFormat.EPS
         .getDefaultDriver());
 
-    d = ((size != null) ? size : EScreenSize.DEFAULT
-        .getPhysicalSize(EScreenSize.DEFAULT_SCREEN_DPI));
-
-    this.m_size = ((d instanceof PageDimension) ? ((PageDimension) d)
-        : new PageDimension(d));
-
-    this.m_fonts = ((fonts == null) ? LaTeXDriver.getDefaultFontPalette()
-        : fonts);
+    this.m_class = clazz;
   }
 
   /** {@inheritDoc} */
@@ -121,8 +104,7 @@ public final class LaTeXDriver extends DocumentDriver {
     if (o instanceof LaTeXDriver) {
       d = ((LaTeXDriver) o);
       return (EComparison.equals(this.m_graphicDriver, d.m_graphicDriver)
-          && EComparison.equals(this.m_size, d.m_size)//
-          && EComparison.equals(this.m_fonts, d.m_fonts)//
+          && EComparison.equals(this.m_class, d.m_class)//
       && EComparison.equals(this.getSuffix(), d.getSuffix()));
     }
     return false;
@@ -133,9 +115,8 @@ public final class LaTeXDriver extends DocumentDriver {
   protected final int calcHashCode() {
     return HashUtils.combineHashes(//
         HashUtils.hashCode(this.m_graphicDriver),//
-        HashUtils.combineHashes(HashUtils.hashCode(this.m_size),//
-            HashUtils.combineHashes(HashUtils.hashCode(this.m_fonts),
-                HashUtils.hashCode(this.getSuffix()))));
+        HashUtils.combineHashes(HashUtils.hashCode(this.m_class),//
+            HashUtils.hashCode(this.getSuffix())));
   }
 
   /** {@inheritDoc} */
@@ -144,28 +125,8 @@ public final class LaTeXDriver extends DocumentDriver {
     textOut.append("LaTeX 2\u03b5 Document Driver with "); //$NON-NLS-1$
     textOut.append(this.m_graphicDriver);
     textOut.append(" Graphics and "); //$NON-NLS-1$
-    textOut.append(this.m_size);
+    this.m_class.toText(textOut);
     textOut.append(" Pages"); //$NON-NLS-1$
-  }
-
-  /**
-   * obtain the default font palette
-   * 
-   * @return the default font palette
-   */
-  public static final FontPalette getDefaultFontPalette() {
-    synchronized (LaTeXDriver.SYNCH) {
-      if (LaTeXDriver.s_fonts == null) {
-        try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-          PaletteIODriver.INSTANCE.loadResource(tb, LaTeXDriver.class,
-              "latex.font.palette"); //$NON-NLS-1$
-          LaTeXDriver.s_fonts = tb.getResult();
-        } catch (final Throwable tt) {
-          ErrorUtils.throwAsRuntimeException(tt);
-        }
-      }
-      return LaTeXDriver.s_fonts;
-    }
   }
 
   /** {@inheritDoc} */
@@ -177,7 +138,7 @@ public final class LaTeXDriver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   protected final PhysicalDimension getSize(final EFigureSize size) {
-    return size.approximateSize(this.m_size);
+    return size.approximateSize(this.m_class);
   }
 
   /** {@inheritDoc} */
@@ -185,7 +146,7 @@ public final class LaTeXDriver extends DocumentDriver {
   protected final StyleSet createStyleSet() {
     final IGraphicDriver driver;
     driver = this.getGraphicDriver();
-    return new StyleSet(this.m_fonts, driver.getColorPalette(),
+    return new StyleSet(this.m_class.m_fonts, driver.getColorPalette(),
         driver.getStrokePalette());
   }
 

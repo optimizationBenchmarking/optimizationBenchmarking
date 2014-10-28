@@ -180,7 +180,7 @@ public final class XHTML10Driver extends DocumentDriver {
         .getDefaultDriver());
 
     d = ((size != null) ? size : EScreenSize.DEFAULT
-        .getPhysicalSize(EScreenSize.DEFAULT_SCREEN_DPI));
+        .getPageSize(EScreenSize.DEFAULT_SCREEN_DPI));
     d = new PhysicalDimension((0.91d * d.getWidth()),//
         (0.91d * d.getHeight()), d.getUnit());
 

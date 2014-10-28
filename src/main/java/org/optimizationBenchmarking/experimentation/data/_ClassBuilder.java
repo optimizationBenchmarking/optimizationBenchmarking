@@ -21,6 +21,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.MatrixColumns;
 import org.optimizationBenchmarking.utils.math.matrix.MatrixRowIterator;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.predicates.IPredicate;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
@@ -34,6 +35,9 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  */
 final class _ClassBuilder extends Task<Parser<DataPoint>> implements
     Comparator<Dimension> {
+
+  /** the counter */
+  private static volatile long s_counter = 0L;
 
   /** the primitive types */
   private final EPrimitiveType[] m_primitiveTypes;
@@ -83,25 +87,26 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
     final String hc;
     final int l;
     final ArraySetView<Dimension> dims;
-    Parser<?> parser;
-    int i, hash;
+    int i;
+    long id;
 
     this.m_dims = (dims = dimensions.getData());
     l = dims.size();
     this.m_primitiveTypes = new EPrimitiveType[l];
     this.m_primitiveClasses = new Class<?>[l];
     this.m_parsers = new Parser<?>[l];
-    hash = i = 0;
+    i = 0;
     for (final Dimension d : dims) {
       this.m_primitiveClasses[i] = (this.m_primitiveTypes[i] = d
           .getDataType()).getPrimitiveType();
-      parser = d.getParser();
-      hash = HashUtils.combineHashes(0, HashUtils.hashCode(parser));
-      this.m_parsers[i] = parser;
+      this.m_parsers[i] = d.getParser();
       i++;
     }
 
-    hc = Integer.toHexString(hash);
+    synchronized (_ClassBuilder.class) {
+      id = (_ClassBuilder.s_counter++);
+    }
+    hc = Long.toHexString(id);
 
     this.m_package = ("_DynaDataPointPackage" + hc); //$NON-NLS-1$
     this.m_dataPointClass = ("_DynaDataPoint" + hc); //$NON-NLS-1$
@@ -109,7 +114,6 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
     this.m_runClass = ("_DynaRun" + hc); //$NON-NLS-1$
     this.m_runColumnsClass = ("_DynaRunColumns" + hc); //$NON-NLS-1$
     this.m_runColumnsRowIteratorClass = ("_DynaRunColumnsRowIterator" + hc); //$NON-NLS-1$
-
   }
 
   /**
@@ -136,7 +140,9 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
     this.__dataPointEquals(sb);
     this.__dataPointCompareTo(sb);
     this.__dataPointValidateAfter(sb);
-    this.__dataPointIMatrix(sb);
+    sb.append(this.m_matrixTxt);
+    this.__dataPointIMatrixGet(sb);
+    this.__dataPointIMatrixAggregate(sb);
     this.__dataPointVisit(sb);
     this.__dataPointHasAny(sb);
     this.__dataPointSelect(sb);
@@ -712,16 +718,14 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
   }
 
   /**
-   * create the matrix access methods
+   * create the matrix access get methods
    * 
    * @param sb
    *          the string builder
    */
-  private final void __dataPointIMatrix(final MemoryTextOutput sb) {
+  private final void __dataPointIMatrixGet(final MemoryTextOutput sb) {
     int i;
     String s;
-
-    sb.append(this.m_matrixTxt);
 
     for (final EPrimitiveType pt : new EPrimitiveType[] {
         EPrimitiveType.DOUBLE, EPrimitiveType.LONG }) {
@@ -760,6 +764,44 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
       sb.append(this.m_primitiveTypes.length - 1);
       sb.append(").\"); }"); //$NON-NLS-1$
     }
+  }
+
+  /**
+   * create the matrix access aggregate method
+   * 
+   * @param sb
+   *          the string builder
+   */
+  private final void __dataPointIMatrixAggregate(final MemoryTextOutput sb) {
+    int i;
+
+    sb.append(//
+    "@Override public final void aggregateColumn(final int column, final ");//$NON-NLS-1$
+    sb.append(IAggregate.class.getCanonicalName());
+    sb.append("  aggregate) {  switch(column) {"); //$NON-NLS-1$
+    for (i = 0; i < this.m_primitiveTypes.length; i++) {
+      sb.append("case "); //$NON-NLS-1$
+      sb.append(i);
+      sb.append(": { aggregate.append(this.m"); //$NON-NLS-1$
+      sb.append(i);
+      sb.append("); return; }"); //$NON-NLS-1$
+    }
+    sb.append(//
+    "} throw new IndexOutOfBoundsException((\"Matrix access aggregateColumn(\" + column) + \") is invalid, the valid index range is 0.."); //$NON-NLS-1$
+    sb.append(this.m_primitiveTypes.length - 1);
+    sb.append(".\"); }"); //$NON-NLS-1$
+
+    sb.append(//
+    "@Override public final void aggregateRow(final int row, final ");//$NON-NLS-1$
+    sb.append(IAggregate.class.getCanonicalName());
+    sb.append("  aggregate) {  if(row == 0) {"); //$NON-NLS-1$
+    for (i = 0; i < this.m_primitiveTypes.length; i++) {
+      sb.append("aggregate.append(this.m"); //$NON-NLS-1$
+      sb.append(i);
+      sb.append(");"); //$NON-NLS-1$
+    }
+    sb.append(//
+    " } else { throw new IndexOutOfBoundsException((\"Matrix access aggregateRow(\" + row) + \") is invalid, only 0 is a valid index.\");} }"); //$NON-NLS-1$   
   }
 
   /**
@@ -1358,7 +1400,11 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
 
     this.__runClassHead(sb);
     this.__runConstructor(sb);
-    this.__runIMatrix(sb);
+
+    sb.append(this.m_matrixTxt);
+    this.__runIMatrixGet(sb);
+    this.__runIMatrixSelect(sb);
+    this.__runIMatrixAggregate(sb);
     this.__runToText(sb);
     this.__runFind(sb);
     sb.append('}');
@@ -1403,19 +1449,17 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
   }
 
   /**
-   * create the matrix access methods for runs
+   * create the matrix get methods for runs
    * 
    * @param sb
    *          the string builder
    */
-  private final void __runIMatrix(final MemoryTextOutput sb) {
+  private final void __runIMatrixGet(final MemoryTextOutput sb) {
     int i;
     String s;
 
     sb.append(//
     "@Override public final int m() { return this.points.length; }"); //$NON-NLS-1$
-
-    sb.append(this.m_matrixTxt);
 
     for (final EPrimitiveType pt : new EPrimitiveType[] {
         EPrimitiveType.DOUBLE, EPrimitiveType.LONG }) {
@@ -1456,6 +1500,15 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
       sb.append(this.m_primitiveTypes.length - 1);
       sb.append(").\"); }"); //$NON-NLS-1$
     }
+  }
+
+  /**
+   * create the matrix select methods for runs
+   * 
+   * @param sb
+   *          the string builder
+   */
+  private final void __runIMatrixSelect(final MemoryTextOutput sb) {
 
     sb.append(//
     "@Override public final "); //$NON-NLS-1$
@@ -1483,6 +1536,48 @@ final class _ClassBuilder extends Task<Parser<DataPoint>> implements
     sb.append(IMatrix.class.getCanonicalName());
     sb.append(//
     " selectRows(final int... rows) { if(rows.length<=0) { return this.points[rows[0]]; } return super.selectRows(rows); }"); //$NON-NLS-1$
+  }
+
+  /**
+   * create the matrix access aggregate method
+   * 
+   * @param sb
+   *          the string builder
+   */
+  private final void __runIMatrixAggregate(final MemoryTextOutput sb) {
+    int i;
+
+    sb.append(//
+    "@Override public final void aggregateColumn(final int column, final ");//$NON-NLS-1$
+    sb.append(IAggregate.class.getCanonicalName());
+    sb.append("  aggregate) {  switch(column) {"); //$NON-NLS-1$
+    for (i = 0; i < this.m_primitiveTypes.length; i++) {
+      sb.append("case "); //$NON-NLS-1$
+      sb.append(i);
+      sb.append(": { for(final "); //$NON-NLS-1$
+      sb.append(this.m_dataPointClass);
+      sb.append(" p : this.points) {"); //$NON-NLS-1$
+      sb.append("aggregate.append(p.m"); //$NON-NLS-1$
+      sb.append(i);
+      sb.append("); } return; }"); //$NON-NLS-1$
+    }
+    sb.append(//
+    "} throw new IndexOutOfBoundsException((\"Matrix access aggregateColumn(\" + column) + \") is invalid, the valid index range is 0.."); //$NON-NLS-1$
+    sb.append(this.m_primitiveTypes.length - 1);
+    sb.append(".\"); }"); //$NON-NLS-1$
+
+    sb.append(//
+    "@Override public final void aggregateRow(final int row, final ");//$NON-NLS-1$
+    sb.append(IAggregate.class.getCanonicalName());
+    sb.append("  aggregate) {  final "); //$NON-NLS-1$
+    sb.append(this.m_dataPointClass);
+    sb.append(" p = this.points[row]; "); //$NON-NLS-1$
+    for (i = 0; i < this.m_primitiveTypes.length; i++) {
+      sb.append("aggregate.append(p.m"); //$NON-NLS-1$
+      sb.append(i);
+      sb.append(");"); //$NON-NLS-1$
+    }
+    sb.append('}');
   }
 
   /**

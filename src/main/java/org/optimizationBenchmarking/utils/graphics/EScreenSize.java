@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.graphics;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /** An enumeration of screen sizes */
-public enum EScreenSize {
+public enum EScreenSize implements IMedium {
 
   /** the VGA display size */
   VGA(640, 480),
@@ -82,8 +82,14 @@ public enum EScreenSize {
    *          the dots (pixels) per inch
    * @return the dimension
    */
-  public final PhysicalDimension getPhysicalSize(final double dpi) {
+  public final PhysicalDimension getPageSize(final double dpi) {
     return new PhysicalDimension(//
         (this.m_width / dpi), (this.m_height / dpi), ELength.INCH);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final PhysicalDimension getPageSize() {
+    return this.getPageSize(EScreenSize.DEFAULT_SCREEN_DPI);
   }
 }

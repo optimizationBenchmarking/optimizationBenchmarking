@@ -98,9 +98,9 @@ public class RandomDocumentExample implements Runnable {
     list = new LinkedHashSet<>();
     list.add(XHTML10Driver.getDefaultDriver());
     list.add(new XHTML10Driver(EGraphicFormat.JPEG.getDefaultDriver(),
-        EScreenSize.WQXGA.getPhysicalSize(120), null));
+        EScreenSize.WQXGA.getPageSize(120), null));
     list.add(new XHTML10Driver(EGraphicFormat.GIF.getDefaultDriver(),
-        EScreenSize.SVGA.getPhysicalSize(90), null));
+        EScreenSize.SVGA.getPageSize(90), null));
 
     for (final EDocumentFormat format : EDocumentFormat.values()) {
       list.add(format.getDefaultDriver());

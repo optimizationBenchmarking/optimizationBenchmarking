@@ -10,6 +10,6 @@ public class XHTML10HQJPEGDriverTest extends DocumentDriverTest {
   /** create the test */
   public XHTML10HQJPEGDriverTest() {
     super(new XHTML10Driver(EGraphicFormat.JPEG.getDefaultDriver(),
-        EScreenSize.WQXGA.getPhysicalSize(120), null));
+        EScreenSize.WQXGA.getPageSize(120), null));
   }
 }

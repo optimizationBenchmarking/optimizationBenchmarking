@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver;
+import org.optimizationBenchmarking.utils.document.impl.latex.DocumentClass;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
@@ -56,7 +56,7 @@ public class FontPaletteExample {
     }
 
     list[2] = XHTML10Driver.getDefaultFontPalette();
-    list[3] = LaTeXDriver.getDefaultFontPalette();
+    list[3] = DocumentClass.getDefaultFontPalette();
 
     PALETTES = new ArrayListView<>(list);
   }
