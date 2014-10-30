@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.nio.CharBuffer;
@@ -17,8 +18,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
 
-import org.optimizationBenchmarking.utils.NamedObject;
 import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
+import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
@@ -30,7 +31,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  *          the output stream type
  */
 public abstract class StreamEncoding<IST extends Closeable, OST extends Closeable>
-    extends NamedObject {
+    extends HashObject implements Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -132,6 +133,9 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
     }
   }
 
+  /** the name */
+  private final String m_name;
+
   /**
    * create the encoding
    * 
@@ -143,9 +147,14 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    */
   protected StreamEncoding(final String standardName,
       final boolean autoRegister) {
-    super(standardName);
+    super();
+    if ((this.m_name = TextUtils.prepare(standardName)) == null) {
+      throw new IllegalArgumentException(//
+          "Standard name must not be null or empty, but is '" //$NON-NLS-1$
+              + standardName + '\'');
+    }
     if (autoRegister) {
-      this.register(this.name());
+      this.register(this.m_name);
     }
   }
 
@@ -235,6 +244,15 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   public abstract Class<IST> getInputClass();
 
   /**
+   * Get the name
+   * 
+   * @return the name of the stream encoding
+   */
+  public final String name() {
+    return this.m_name;
+  }
+
+  /**
    * write replace
    * 
    * @return the replacement
@@ -242,7 +260,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   private final Object writeReplace() {
     final StreamEncoding<?, ?> e;
     synchronized (StreamEncoding.ENCODINGS) {
-      e = StreamEncoding.ENCODINGS.get(this.name());
+      e = StreamEncoding.ENCODINGS.get(this.m_name);
     }
     if (e != null) {
       return e;
@@ -258,9 +276,9 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   private final Object readResolve() {
     final StreamEncoding<?, ?> e;
     synchronized (StreamEncoding.ENCODINGS) {
-      e = StreamEncoding.ENCODINGS.get(this.name());
+      e = StreamEncoding.ENCODINGS.get(this.m_name);
       if (e == null) {
-        StreamEncoding.ENCODINGS.put(this.name(), this);
+        StreamEncoding.ENCODINGS.put(this.m_name, this);
       }
     }
     if (e != null) {
@@ -276,8 +294,8 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
       return true;
     }
     if (o instanceof StreamEncoding) {
-      return this.name().equalsIgnoreCase(
-          ((StreamEncoding<?, ?>) o).name());
+      return this.m_name.equalsIgnoreCase(//
+          ((StreamEncoding<?, ?>) o).m_name);
     }
     return false;
   }
@@ -380,7 +398,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
       synchronized (StreamEncoding.ENCODINGS) {
         e = StreamEncoding.ENCODINGS.get(t);
         if (e == null) {
-          e = new TextEncoding(c.name(), true);
+          e = new TextEncoding(t, true);
         }
       }
     }

@@ -2,14 +2,16 @@ package org.optimizationBenchmarking.utils.config;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.nio.file.Path;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.parsers.BooleanParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedByteParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
@@ -18,19 +20,61 @@ import org.optimizationBenchmarking.utils.parsers.BoundedIntParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedShortParser;
 import org.optimizationBenchmarking.utils.parsers.ClassParser;
-import org.optimizationBenchmarking.utils.parsers.FileParser;
 import org.optimizationBenchmarking.utils.parsers.ListParser;
 import org.optimizationBenchmarking.utils.parsers.LoggerParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
+import org.optimizationBenchmarking.utils.parsers.PathParser;
 import org.optimizationBenchmarking.utils.parsers.SetParser;
 import org.optimizationBenchmarking.utils.parsers.StringParser;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * <p>
- * A class representing command line parameters and configurations. This
- * class provides high-level access to command line parameters and allows
- * you to read different values from them.
+ * A class for representing parameters settings for an application or
+ * application module. This class can, for instance, provide high-level
+ * access to command line parameters and allow you to read different typed
+ * values from them. There are three basic concepts in the design of
+ * {@link #Configuration}: Typed parameters, default values, and
+ * hierarchical setups.
+ * </p>
+ * <p>
+ * Parameters may be loaded into a configuration as strings from the
+ * command line. This means that parameter are, essentially, strings.
+ * However, when you request the value of a parameter for the first time
+ * with one of the various getter methods (such as
+ * {@link #getBoolean(String, boolean)}, {@link #getPath(String, Path)}, or
+ * {@link #getDouble(String, double, double, double)}, for instance), the
+ * value and type of the parameter will be fixed. A parameter value once
+ * accessed via {@link #getDouble(String, double, double, double)} will
+ * forever remain only accessible as {@code double} value.
+ * </p>
+ * <p>
+ * This introduces some concept of static, strict typing into the original
+ * {@link java.lang.String}-based parameter world. This is achieved by
+ * making use of the extensive
+ * {@link org.optimizationBenchmarking.utils.parsers Parser API}. Since
+ * this API allows for the creation of parsers with limited ranges, such as
+ * {@link org.optimizationBenchmarking.utils.parsers.BoundedLongParser},
+ * which throws an exception if the parsed {@code long} is outside of a
+ * specific range, you can even make sure that certain parameters are
+ * within certain ranges.
+ * </p>
+ * <p>
+ * Whenever you request a parameter value, you need to provide a default
+ * result in case that the parameter is undefined. If that happens (and no
+ * hierarchically superior configuration exists), the default value will be
+ * returned and stored as the parameter's value in the configuration (to
+ * ensure that future accesses to the parameter will always yield the same
+ * result).
+ * </p>
+ * <p>
+ * Configurations can be nested hierarchically. If you request a parameter
+ * value for a parameter which is not defined in a configuration, we check
+ * if this configuration is subject of an &quot;owning&quot; configuration.
+ * If so, this configuration is checked for the parameter recursively. If
+ * the parameter's value is defined somewhere in the hierarchy, it will
+ * then be accessed (which pins down its type if that did not happen yet)
+ * and returned. If its value cannot be found, then the default value will
+ * be stored in the configuration you called the getter method of.
  * </p>
  */
 public final class Configuration extends _ConfigRoot {
@@ -40,33 +84,29 @@ public final class Configuration extends _ConfigRoot {
   /** the parameter identifying a configuration file: {@value} */
   public static final String PARAM_PROPERTY_FILE = "configFile"; //$NON-NLS-1$
 
+  /** the owner */
+  private final Configuration m_owner;
+
   /** the configuration data */
   final _ConfigMap m_data;
 
-  /** create */
+  /**
+   * create a configuration without an owner
+   */
   public Configuration() {
     this(null);
   }
 
   /**
-   * Create a configuration containing the same entries as another map.
-   * These entries are linked, i.e., any change to one of the entries in
-   * this map will propagate to the copied map, any other copies of that
-   * map, and any map that map was copied from (if they contain the same
-   * entries).
+   * create a configuration within an owning scope
    * 
-   * @param copy
-   *          the configuration to copy
+   * @param owner
+   *          the owning scope
    */
-  public Configuration(final Configuration copy) {
-    super("configuration"); //$NON-NLS-1$
-    if (copy != null) {
-      synchronized (copy.m_data) {
-        this.m_data = ((_ConfigMap) (copy.m_data.clone()));
-      }
-    } else {
-      this.m_data = new _ConfigMap();
-    }
+  public Configuration(final Configuration owner) {
+    super();
+    this.m_owner = owner;
+    this.m_data = new _ConfigMap();
   }
 
   /**
@@ -145,87 +185,71 @@ public final class Configuration extends _ConfigRoot {
    */
   private final <T> T __get(final String key, final Parser<T> parser,
       final T _default, final boolean createIfNotExists) {
-    final _ConfigMapEntry entry;
-    final Class<T> clazz;
-    final int state;
+    _ConfigMapEntry entry;
+    Class<T> clazz;
+    boolean isLocked, needsCheck;
     T retVal;
     Object value;
 
-    synchronized (this.m_data) {
-      entry = ((_ConfigMapEntry) (this.m_data.getEntry(key,
-          createIfNotExists)));
-      if (entry == null) {
-        return null;
-      }
-      state = entry.m_state;
-      if (state <= 0) {
-        entry.m_state = 1;
-      }
-    }
-
-    clazz = parser.getOutputClass();
-    retVal = null;
-
     try {
+      breakToCheckRetVal: {
+        needsCheck = true;
+        synchronized (this.m_data) {
+          for (Configuration cfg = this; cfg != null; cfg = cfg.m_owner) {
+            synchronized (cfg.m_data) {
+              entry = ((_ConfigMapEntry) (this.m_data.getEntry(key, false)));
+              if (entry != null) {
+                isLocked = entry.m_isLocked;
+                entry.m_isLocked = true;
 
-      if (state <= 0) {
-        try {
-          value = entry.getValue();
-          if (value == null) {
-            retVal = _default;
-            parser.validate(retVal);
-          } else {
-            if (clazz.isInstance(value) && (!(value instanceof String))) {
-              retVal = clazz.cast(value);
-              parser.validate(retVal);
-            } else {
-              retVal = parser.parseObject(value);
+                value = entry.getValue();
+                clazz = parser.getOutputClass();
+                if (isLocked) {
+                  retVal = clazz.cast(value);
+                } else {
+                  retVal = null;
+                  try {
+                    if (value == null) {
+                      retVal = _default;
+                    } else {
+                      if ((!(value instanceof String))
+                          && clazz.isInstance(value)) {
+                        retVal = clazz.cast(value);
+                      } else {
+                        retVal = parser.parseObject(value);
+                        needsCheck = false;
+                      }
+                    }
+                  } finally {
+                    entry.setValue(retVal);
+                  }
+                }
+
+                break breakToCheckRetVal;
+              }
             }
           }
 
-          if (retVal instanceof Configurable) {
-            ((Configurable) retVal).configure(this);
+          if (createIfNotExists) {
+            entry = ((_ConfigMapEntry) (this.m_data.getEntry(key, true)));
+            entry.m_isLocked = true;
+            entry.setValue(_default);
+            retVal = _default;
+            break breakToCheckRetVal;
           }
-        } finally {
-          synchronized (entry) {
-            entry.setValue(retVal);
-            entry.m_state = 2;
-            entry.notifyAll();
-          }
-        }
 
-        return retVal;
-      }
-
-      aquire: for (;;) {
-        synchronized (entry) {
-          if (entry.m_state >= 2) {
-            value = entry.getValue();
-            break aquire;
-          }
-          entry.wait();
+          return null;
         }
       }
 
-      if (clazz.isInstance(value)) {
-        retVal = clazz.cast(entry.getValue());
-        parser.validate(retVal);
-        return retVal;
+      if (needsCheck) {
+        parser.parseObject(retVal);
       }
-    } catch (final RuntimeException re) {
-      throw re;
-    } catch (final Throwable tt) {
-      throw new RuntimeException(tt);
+      return retVal;
+    } catch (final Exception tt) {
+      ErrorUtils.throwAsRuntimeException(tt);
     }
-
-    throw new IllegalStateException(
-        "The configuration value under key '" + key + //$NON-NLS-1$
-            "' has already been accessed as " + //$NON-NLS-1$
-            ((value != null) ? ("an instance of " + //$NON-NLS-1$
-            TextUtils.className(value.getClass()))
-                : "null") //$NON-NLS-1$
-            + " and thus cannot be accessed as instance of " + //$NON-NLS-1$
-            TextUtils.className(clazz));
+    return null;
   }
 
   /**
@@ -309,16 +333,16 @@ public final class Configuration extends _ConfigRoot {
   }
 
   /**
-   * Get a file parameter
+   * Get a path (file or directory) parameter
    * 
    * @param key
    *          the key
    * @param def
-   *          the default file
-   * @return the canonical version thereof
+   *          the default path
+   * @return the canonical path
    */
-  public final File getFile(final String key, final File def) {
-    return this.get(key, FileParser.INSTANCE, def);
+  public final Path getPath(final String key, final Path def) {
+    return this.get(key, PathParser.INSTANCE, def);
   }
 
   /**
@@ -498,7 +522,7 @@ public final class Configuration extends _ConfigRoot {
    *          the key
    * @param def
    *          the default value
-   * @return the string
+   * @return the strings
    */
   public final String getString(final String key, final String def) {
     return this.get(key, StringParser.INSTANCE, def);
@@ -523,19 +547,19 @@ public final class Configuration extends _ConfigRoot {
   }
 
   /**
-   * Get a parameter which is a list of strings.
+   * Get a parameter which is a list of paths (to directories or files)
    * 
    * @param key
    *          the key
    * @param def
    *          the default value, or {@code null} for empty sets
-   * @return the string
+   * @return the paths
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  public final ArrayListView<String> getFileSet(final String key,
-      final ArraySetView<File> def) {
+  public final ArraySetView<Path> getPathSet(final String key,
+      final ArraySetView<Path> def) {
     return this
-        .get(key, SetParser.FILE_SET_PARSER,
+        .get(key, SetParser.PATH_SET_PARSER,
             (ArraySetView) ((def != null) ? def
                 : ArraySetView.EMPTY_SET_VIEW));
   }
@@ -567,17 +591,17 @@ public final class Configuration extends _ConfigRoot {
    */
   public final void put(final String key, final Object value) {
     final _ConfigMapEntry entry;
-    final int state;
+    final boolean isLocked;
 
     synchronized (this.m_data) {
       entry = ((_ConfigMapEntry) (this.m_data.getEntry(key, true)));
-      state = entry.m_state;
-      if (state <= 0) {
+      isLocked = entry.m_isLocked;
+      if (!isLocked) {
         entry.setValue(value);
       }
     }
 
-    if (state > 0) {
+    if (isLocked) {
       throw new IllegalStateException(//
           "There has already been a read access to '" + key + //$NON-NLS-1$
               "', so it cannot be changed anymore."); //$NON-NLS-1$
@@ -670,27 +694,6 @@ public final class Configuration extends _ConfigRoot {
     this.putMap(prop);
   }
 
-  // /**
-  // * Store some information from a properties set
-  // *
-  // * @param file
-  // * the properties file
-  // * @throws IOException
-  // * if loading the file fails
-  // */
-  // public final void putPropertiesFromFile(final File file) throws
-  // IOException {
-  // Properties pr;
-  //
-  // pr = new Properties();
-  // try (FileReader fr = new FileReader(new
-  // CanonicalizeFile(file).call())) {
-  // pr.load(fr);
-  // }
-  //
-  // this.putProperties(pr);
-  // }
-
   /**
    * Configure this configuration from a set of command line parameters
    * 
@@ -700,25 +703,47 @@ public final class Configuration extends _ConfigRoot {
    *           if io fails
    */
   public final void configure(final String[] args) throws IOException {
-    final File f;
+    final Path f;
 
     this.putCommandLine(args);
 
-    f = this.__get(Configuration.PARAM_PROPERTY_FILE, FileParser.INSTANCE,
+    f = this.__get(Configuration.PARAM_PROPERTY_FILE, PathParser.INSTANCE,
         null, false);
     if (f != null) {
-      ConfigurationPropertiesIO.INSTANCE.loadFile(this, f);
+      ConfigurationPropertiesIO.INSTANCE.loadPath(this, f);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void printConfiguration(final PrintStream ps) {
-    synchronized (this.m_data) {
-      for (final Entry<String, Object> e : this.m_data.entries()) {
-        Configurable.printKey(e.getKey(), ps);
-        Configurable.printlnObject(e.getValue(), ps);
-      }
+  public final boolean equals(final Object o) {
+    final Configuration conf;
+    if (o == this) {
+      return true;
     }
+    if (o instanceof Configuration) {
+      conf = ((Configuration) o);
+      synchronized (this.m_data) {
+        synchronized (conf.m_data) {
+          if (!(this.m_data.equals(conf.m_data))) {
+            return false;
+          }
+        }
+      }
+
+      return EComparison.equals(this.m_owner, conf.m_owner);
+    }
+
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    final int h;
+    synchronized (this.m_data) {
+      h = this.m_data.hashCode();
+    }
+    return HashUtils.combineHashes(HashUtils.hashCode(this.m_owner), h);
   }
 }

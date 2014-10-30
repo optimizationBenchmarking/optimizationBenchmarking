@@ -4,7 +4,8 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A base class for objects that cache their hash codes. Such an object is
- * guaranteed to have a non-0 hash code.
+ * guaranteed to have a non-0 hash code. Also, the hash code of such an
+ * object will depend on the hash code of its class.
  */
 public abstract class HashObject {
 

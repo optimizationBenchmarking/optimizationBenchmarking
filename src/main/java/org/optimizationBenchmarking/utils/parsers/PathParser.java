@@ -6,67 +6,62 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import org.optimizationBenchmarking.utils.io.files.CanonicalizeFile;
-import org.optimizationBenchmarking.utils.io.files.Paths;
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
 
-/**
- * A parser for {@link java.io.File}s. Deprecated: Better use the
- * {@link org.optimizationBenchmarking.utils.parsers.PathParser}
- */
-public class FileParser extends Parser<File> {
+/** A parser for paths */
+public class PathParser extends Parser<Path> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
-  /** the globally shared instance of the file parser */
-  public static final FileParser INSTANCE = new FileParser();
+  /** the globally shared instance of the path parser */
+  public static final PathParser INSTANCE = new PathParser();
 
   /** create the parser */
-  private FileParser() {
+  private PathParser() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Class<File> getOutputClass() {
-    return File.class;
+  public final Class<Path> getOutputClass() {
+    return Path.class;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final File parseString(final String string) throws IOException,
+  public final Path parseString(final String string) throws IOException,
       SecurityException {
-    final File f;
+    final Path f;
 
-    f = new CanonicalizeFile(StringParser.INSTANCE.parseString(string))
-        .call();
+    f = PathUtils.normalize(Paths.get(string));
     this.validate(f);
     return f;
   }
 
   /** {@inheritDoc} */
   @Override
-  public void validate(final File instance)
+  public void validate(final Path instance)
       throws IllegalArgumentException {
     if (instance == null) {
-      throw new IllegalArgumentException("File must not be null."); //$NON-NLS-1$
+      throw new IllegalArgumentException("Path must not be null."); //$NON-NLS-1$
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public final File parseObject(final Object o) throws IOException,
+  public final Path parseObject(final Object o) throws IOException,
       SecurityException, URISyntaxException {
-    String name;
-    File ret;
+    Path ret;
     URI uri;
 
-    if (o instanceof File) {
-      ret = ((File) o);
+    if (o instanceof Path) {
+      ret = ((Path) o);
     } else {
-      if (o instanceof Path) {
-        ret = ((Path) o).toFile();
+      if (o instanceof File) {
+        ret = ((File) o).toPath();
       } else {
 
         if (o instanceof URI) {
@@ -81,13 +76,9 @@ public class FileParser extends Parser<File> {
 
         if (uri != null) {
           try {
-            ret = new File(uri);
+            ret = Paths.get(uri);
           } catch (final Throwable t) {
-            name = uri.toString();
-            if (File.separatorChar != '/') {
-              name = name.replace('/', File.separatorChar);
-            }
-            ret = new File(Paths.getCurrentDir(), name);
+            ret = Paths.get(uri.getPath());
           }
         } else {
           return this.parseString(String.valueOf(o));
@@ -95,7 +86,7 @@ public class FileParser extends Parser<File> {
       }
     }
 
-    ret = new CanonicalizeFile(ret).call();
+    ret = PathUtils.normalize(ret);
     this.validate(ret);
     return ret;
   }
@@ -106,7 +97,7 @@ public class FileParser extends Parser<File> {
    * @return the replacement
    */
   private final Object writeReplace() {
-    return FileParser.INSTANCE;
+    return PathParser.INSTANCE;
   }
 
   /**
@@ -115,6 +106,6 @@ public class FileParser extends Parser<File> {
    * @return the replacement
    */
   private final Object readResolve() {
-    return FileParser.INSTANCE;
+    return PathParser.INSTANCE;
   }
 }

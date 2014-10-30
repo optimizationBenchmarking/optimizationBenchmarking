@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -18,7 +18,7 @@ public class SetParser<ET> extends _CollectionParser<ET, ArraySetView<ET>> {
   private static final long serialVersionUID = 1L;
 
   /** the globally shared file set parser */
-  public static final SetParser<File> FILE_SET_PARSER = new _FileSetParser();
+  public static final SetParser<Path> PATH_SET_PARSER = new _PathSetParser();
 
   /**
    * create the parser

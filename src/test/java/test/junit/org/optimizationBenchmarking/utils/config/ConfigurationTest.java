@@ -429,7 +429,7 @@ public class ConfigurationTest extends InstanceTest<Configuration> {
               ((p == ((Object) (LongParser.INSTANCE))) ? IntParser.INSTANCE
                   : LongParser.INSTANCE), null);
           Assert.fail("Changing the type of elements is not permitted."); //$NON-NLS-1$
-        } catch (final IllegalStateException tt) {
+        } catch (final IllegalStateException | ClassCastException tt) {
           //
         }
       }

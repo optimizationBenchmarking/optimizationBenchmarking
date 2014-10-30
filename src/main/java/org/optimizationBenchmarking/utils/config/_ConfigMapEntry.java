@@ -9,11 +9,15 @@ final class _ConfigMapEntry extends ObjectMapEntry<String, Object> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
-  /** @serial the entry's lock state */
-  volatile int m_state;
+  /**
+   * @serial is the entry locked, i.e., is further parsing and type
+   *         conversion forbidden?
+   */
+  volatile boolean m_isLocked;
 
   /** instantiate */
   _ConfigMapEntry() {
     super();
+    this.m_isLocked = false;
   }
 }

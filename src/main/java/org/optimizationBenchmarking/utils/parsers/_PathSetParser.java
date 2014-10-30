@@ -1,16 +1,16 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-import java.io.File;
+import java.nio.file.Path;
 
 /** A parser for file sets */
-final class _FileSetParser extends SetParser<File> {
+final class _PathSetParser extends SetParser<Path> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** create the parser */
-  _FileSetParser() {
-    super(FileParser.INSTANCE);
+  _PathSetParser() {
+    super(PathParser.INSTANCE);
   }
 
   /**
@@ -19,7 +19,7 @@ final class _FileSetParser extends SetParser<File> {
    * @return the replacement
    */
   private final Object writeReplace() {
-    return SetParser.FILE_SET_PARSER;
+    return SetParser.PATH_SET_PARSER;
   }
 
   /**
@@ -28,6 +28,6 @@ final class _FileSetParser extends SetParser<File> {
    * @return the replacement
    */
   private final Object readResolve() {
-    return SetParser.FILE_SET_PARSER;
+    return SetParser.PATH_SET_PARSER;
   }
 }
