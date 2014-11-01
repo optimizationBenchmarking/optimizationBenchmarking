@@ -2,6 +2,8 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import java.awt.geom.Rectangle2D;
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
@@ -234,13 +236,35 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
   @SuppressWarnings({ "rawtypes", "unchecked" })
   synchronized final void _onGraphicClosed(
       final ArrayListView<PathEntry> result) {
+
+    final Logger log;
+    PathEntry entry;
+
     this.fsmStateAssertAndSet(BasicFigure.STATE_GRAPHIC_CREATED,
         BasicFigure.STATE_GRAPHIC_CLOSED);
+
+    entry = null;
+    log = this.m_doc.m_logger;
     if (result != null) {
       this.m_figureFiles = result.select(_FigureFileSelector.INSTANCE);
-      this.m_doc.addPaths(this.m_figureFiles);
+      if (!(this.m_figureFiles.isEmpty())) {
+        entry = this.m_figureFiles.get(0);
+        this.m_doc.addPaths(this.m_figureFiles);
+      }
+
     } else {
       this.m_figureFiles = ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
+    }
+
+    if ((log != null) && (log.isLoggable(Level.FINER))) {
+      if (entry != null) {
+        log.finer("Finished creating graphic '" + //$NON-NLS-1$
+            entry + "' of " + this._getType());//$NON-NLS-1$
+      } else {
+        log.finer("Finished creating graphic of " + //$NON-NLS-1$
+            this._getType()
+            + ", but no file was produced. (Was this intentionally? If not, something may be wrong.)");//$NON-NLS-1$
+      }
     }
   }
 

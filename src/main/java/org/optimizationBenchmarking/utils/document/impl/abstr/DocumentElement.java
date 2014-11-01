@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.utils.document.spec.IDocumentElement;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
@@ -51,6 +53,15 @@ public abstract class DocumentElement extends HierarchicalText implements
     super(owner, null);
     this.m_driver = owner.m_driver;
   }
+
+  /**
+   * Obtain the logger to which logging information can be written, or
+   * {@code null} if no logging information should be produced
+   * 
+   * @return the logger to receive progress information, or {@code null} if
+   *         no progress information should be logged
+   */
+  protected abstract Logger getLogger();
 
   /**
    * get the owner

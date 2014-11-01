@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
@@ -46,19 +48,26 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    *          the file
    * @param listener
    *          the listener
+   * @param logger
+   *          the logger to be notified with logging infos
    * @return the document
    */
   protected Document doCreateDocument(final Path file,
-      final IObjectListener listener) {
-    return new Document(this, file, listener);
+      final IObjectListener listener, final Logger logger) {
+    return new Document(this, file, listener, logger);
   }
 
   /** {@inheritDoc} */
   @Override
   public Document createDocument(final Path folder,
-      final String nameSuggestion, final IObjectListener listener) {
+      final String nameSuggestion, final IObjectListener listener,
+      final Logger logger) {
+    if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+      logger.fine("Begin creation of document '" + nameSuggestion + //$NON-NLS-1$
+          "' in folder '" + folder + '\''); //$NON-NLS-1$
+    }
     return this.doCreateDocument(this.makePath(folder, nameSuggestion),
-        listener);
+        listener, logger);
   }
 
   /**

@@ -8,7 +8,7 @@ import org.xml.sax.SAXException;
 public class ConfigurationXMLHandler extends DelegatingHandler {
 
   /** the destination configuration */
-  private final Configuration m_dest;
+  private final ConfigurationBuilder m_dest;
 
   /**
    * Create
@@ -19,7 +19,7 @@ public class ConfigurationXMLHandler extends DelegatingHandler {
    *          the configuration instance to load the data into
    */
   public ConfigurationXMLHandler(final DelegatingHandler owner,
-      final Configuration dest) {
+      final ConfigurationBuilder dest) {
     super(owner);
     this.m_dest = dest;
   }

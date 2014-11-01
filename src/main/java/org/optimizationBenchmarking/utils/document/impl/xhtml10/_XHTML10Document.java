@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
@@ -144,10 +145,12 @@ final class _XHTML10Document extends Document {
    *          the path to the document
    * @param listener
    *          the object listener the object listener
+   * @param logger
+   *          the logger
    */
   _XHTML10Document(final XHTML10Driver driver, final Path docPath,
-      final IObjectListener listener) {
-    super(driver, docPath, listener);
+      final IObjectListener listener, final Logger logger) {
+    super(driver, docPath, listener, logger);
     this.open();
   }
 

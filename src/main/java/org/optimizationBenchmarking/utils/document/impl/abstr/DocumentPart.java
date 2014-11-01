@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 
 /**
@@ -35,5 +37,11 @@ public abstract class DocumentPart extends DocumentElement {
   @Override
   protected void styleUsed(final IStyle style) {
     this.m_doc.styleUsed(style);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final Logger getLogger() {
+    return this.m_doc.m_logger;
   }
 }

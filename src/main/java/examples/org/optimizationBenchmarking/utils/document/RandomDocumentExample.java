@@ -17,6 +17,11 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Filter;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.RandomUtils;
@@ -229,9 +234,12 @@ public class RandomDocumentExample implements Runnable {
     final Path dir;
     final ForkJoinPool pool;
     final int proc;
+    final Logger log;
     RandomDocumentExample de;
     String last, cur;
     int i;
+
+    log = RandomDocumentExample.__getLogger();
 
     findProcs: {
       if ((args != null) && (args.length > 0)) {
@@ -274,7 +282,7 @@ public class RandomDocumentExample implements Runnable {
 
       de = new RandomDocumentExample(driver.createDocument(
           dir.resolve((cur + '_') + i), "report",//$NON-NLS-1$ 
-          new FinishedPrinter(driver)), null, System.out);
+          new FinishedPrinter(driver), log), null, System.out);
 
       if (pool != null) {
         pool.execute(de);
@@ -294,6 +302,38 @@ public class RandomDocumentExample implements Runnable {
       System.out.print(proc);
       System.out.println(" processor(s).");//$NON-NLS-1$
     }
+  }
+
+  /**
+   * get the logger
+   * 
+   * @return the logger
+   */
+  private static final Logger __getLogger() {
+    final Filter f;
+    Logger ret, c;
+    Handler[] hh;
+
+    f = new Filter() {
+      @Override
+      public final boolean isLoggable(final LogRecord record) {
+        return (!(record.getSourceClassName().startsWith("sun."))); //$NON-NLS-1$
+      }
+    };
+
+    ret = Logger.getGlobal();
+    for (c = ret; c != null; c = c.getParent()) {
+      c.setLevel(Level.ALL);
+      c.setFilter(f);
+      hh = c.getHandlers();
+      if (hh != null) {
+        for (final Handler h : hh) {
+          h.setFilter(f);
+          h.setLevel(Level.ALL);
+        }
+      }
+    }
+    return ret;
   }
 
   /**

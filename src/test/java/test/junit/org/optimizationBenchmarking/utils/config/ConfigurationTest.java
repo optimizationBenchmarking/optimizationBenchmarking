@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
 import org.optimizationBenchmarking.utils.config.ConfigurationPropertiesIO;
 import org.optimizationBenchmarking.utils.config.ConfigurationXMLIO;
 import org.optimizationBenchmarking.utils.parsers.BooleanParser;
@@ -29,13 +30,13 @@ import org.optimizationBenchmarking.utils.parsers.StringParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.charset.QuotationMarks;
 
-import test.junit.InstanceTest;
+import test.junit.TestBase;
 import test.junit.org.optimizationBenchmarking.utils.collections.maps.StringMapTest;
 
 /**
  * A test for configuration objects.
  */
-public class ConfigurationTest extends InstanceTest<Configuration> {
+public class ConfigurationTest extends TestBase {
 
   /** characters allowed in keys */
   private static final String KEY_CHARS = "0123456789abcdefghijklmnopqrstuvwxyz_#+!§$%&?*"; //$NON-NLS-1$
@@ -81,16 +82,6 @@ public class ConfigurationTest extends InstanceTest<Configuration> {
   /** create the test */
   public ConfigurationTest() {
     super();
-  }
-
-  /**
-   * Get a configuration instance to test
-   * 
-   * @return the configuration instance to test
-   */
-  @Override
-  protected Configuration getInstance() {
-    return new Configuration();
   }
 
   /**
@@ -188,18 +179,20 @@ public class ConfigurationTest extends InstanceTest<Configuration> {
 
     r = new Random();
 
-    inst = this.getInstance();
-    data = new StringMapCI<>();
-    do {
+    try (final ConfigurationBuilder cb = new ConfigurationBuilder()) {
+      data = new StringMapCI<>();
       do {
-        x = RandomUtils.longToString(ConfigurationTest.KEY_CHARS,
+        do {
+          x = RandomUtils.longToString(ConfigurationTest.KEY_CHARS,
+              r.nextLong());
+        } while (data.containsKey(x));
+        y = RandomUtils.longToString(ConfigurationTest.VALUE_CHARS,
             r.nextLong());
-      } while (data.containsKey(x));
-      y = RandomUtils.longToString(ConfigurationTest.VALUE_CHARS,
-          r.nextLong());
-      data.put(x, y);
-      inst.put(x, y);
-    } while (r.nextInt(40) > 0);
+        data.put(x, y);
+        cb.put(x, y);
+      } while (r.nextInt(40) > 0);
+      inst = cb.getResult();
+    }
 
     try {
       try (StringWriter sw = new StringWriter()) {
@@ -207,9 +200,11 @@ public class ConfigurationTest extends InstanceTest<Configuration> {
         x = sw.toString();
       }
 
-      b = new Configuration();
-      try (StringReader sr = new StringReader(x)) {
-        ConfigurationXMLIO.INSTANCE.loadReader(b, sr);
+      try (final ConfigurationBuilder fb = new ConfigurationBuilder()) {
+        try (StringReader sr = new StringReader(x)) {
+          ConfigurationXMLIO.INSTANCE.loadReader(fb, sr);
+        }
+        b = fb.getResult();
       }
     } catch (final Throwable t) {
       throw new RuntimeException(t);
@@ -232,18 +227,20 @@ public class ConfigurationTest extends InstanceTest<Configuration> {
 
     r = new Random();
 
-    inst = this.getInstance();
-    data = new StringMapCI<>();
-    do {
+    try (final ConfigurationBuilder cb = new ConfigurationBuilder()) {
+      data = new StringMapCI<>();
       do {
-        x = RandomUtils.longToString(ConfigurationTest.KEY_CHARS,
+        do {
+          x = RandomUtils.longToString(ConfigurationTest.KEY_CHARS,
+              r.nextLong());
+        } while (data.containsKey(x));
+        y = RandomUtils.longToString(ConfigurationTest.VALUE_CHARS,
             r.nextLong());
-      } while (data.containsKey(x));
-      y = RandomUtils.longToString(ConfigurationTest.VALUE_CHARS,
-          r.nextLong());
-      data.put(x, y);
-      inst.put(x, y);
-    } while (r.nextInt(40) > 0);
+        data.put(x, y);
+        cb.put(x, y);
+      } while (r.nextInt(40) > 0);
+      inst = cb.getResult();
+    }
 
     try {
       try (StringWriter sw = new StringWriter()) {
@@ -251,9 +248,11 @@ public class ConfigurationTest extends InstanceTest<Configuration> {
         x = sw.toString();
       }
 
-      b = new Configuration();
-      try (StringReader sr = new StringReader(x)) {
-        ConfigurationPropertiesIO.INSTANCE.loadReader(b, sr);
+      try (final ConfigurationBuilder fb = new ConfigurationBuilder()) {
+        try (StringReader sr = new StringReader(x)) {
+          ConfigurationPropertiesIO.INSTANCE.loadReader(fb, sr);
+        }
+        b = fb.getResult();
       }
     } catch (final Throwable t) {
       throw new RuntimeException(t);
@@ -283,26 +282,28 @@ public class ConfigurationTest extends InstanceTest<Configuration> {
 
     for (i = 0; i < 10; i++) {
 
-      cfg = this.getInstance();
-      values.clear();
-      params.clear();
+      try (final ConfigurationBuilder cb = new ConfigurationBuilder()) {
+        values.clear();
+        params.clear();
 
-      v = 0;
-      do {
-        key = RandomUtils.longToString(ConfigurationTest.KEY_CHARS, v++);
-        if (random.nextBoolean()) {
-          value = RandomUtils.longToString(ConfigurationTest.VALUE_CHARS,
-              v++);
-          params.add(ConfigurationTest.__makeParam(key, value, random));
-        } else {
-          value = null;
-        }
+        v = 0;
+        do {
+          key = RandomUtils.longToString(ConfigurationTest.KEY_CHARS, v++);
+          if (random.nextBoolean()) {
+            value = RandomUtils.longToString(
+                ConfigurationTest.VALUE_CHARS, v++);
+            params.add(ConfigurationTest.__makeParam(key, value, random));
+          } else {
+            value = null;
+          }
 
-        values.put(key, value);
-      } while (random.nextInt(40) > 0);
+          values.put(key, value);
+        } while (random.nextInt(40) > 0);
 
-      cfg.putCommandLine(//
-      params.toArray(new String[params.size()]));
+        cb.putCommandLine(//
+        params.toArray(new String[params.size()]));
+        cfg = cb.getResult();
+      }
 
       for (final Map.Entry<String, String> e : values.entrySet()) {
         key = ConfigurationTest.__makeKey(e.getKey(), random);
@@ -362,29 +363,32 @@ public class ConfigurationTest extends InstanceTest<Configuration> {
 
     for (i = 0; i < 10; i++) {
 
-      cfg = this.getInstance();
-      values.clear();
-      params.clear();
+      try (final ConfigurationBuilder cb = new ConfigurationBuilder()) {
+        values.clear();
+        params.clear();
 
-      v = 0;
-      do {
-        key = RandomUtils.longToString(ConfigurationTest.KEY_CHARS, ++v);
-        if (random.nextBoolean()) {
-          value = RandomUtils.longToObject(++v, false);
-          if (value instanceof Character) {
-            value = Character.valueOf(TextUtils
-                .normalize(value.toString()).charAt(0));
+        v = 0;
+        do {
+          key = RandomUtils.longToString(ConfigurationTest.KEY_CHARS, ++v);
+          if (random.nextBoolean()) {
+            value = RandomUtils.longToObject(++v, false);
+            if (value instanceof Character) {
+              value = Character.valueOf(TextUtils.normalize(
+                  value.toString()).charAt(0));
+            }
+            params.add(ConfigurationTest.__makeParam(key,
+                ConfigurationTest.__toString(value, random), random));
+          } else {
+            value = null;
           }
-          params.add(ConfigurationTest.__makeParam(key,
-              ConfigurationTest.__toString(value, random), random));
-        } else {
-          value = null;
-        }
-        values.put(key, value);
-      } while (random.nextInt(40) > 0);
+          values.put(key, value);
+        } while (random.nextInt(40) > 0);
 
-      cfg.putCommandLine(//
-      params.toArray(new String[params.size()]));
+        cb.putCommandLine(//
+        params.toArray(new String[params.size()]));
+
+        cfg = cb.getResult();
+      }
 
       for (final Map.Entry<String, Object> e : values.entrySet()) {
         key = e.getKey();

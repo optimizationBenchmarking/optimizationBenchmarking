@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
@@ -62,6 +65,7 @@ public class DocumentFooter extends _StyleProviderPart implements
    * This method is invoked before the footer is closed
    */
   protected void doClose() {
+    Logger log;
     Bibliography bib;
     CitationsBuilder cb;
 
@@ -71,7 +75,19 @@ public class DocumentFooter extends _StyleProviderPart implements
       this.m_doc.m_citations = cb = null;
 
       if ((bib != null) && (!(bib.isEmpty()))) {
+
+        log = this.m_doc.m_logger;
+        if ((log != null) && (log.isLoggable(Level.FINER))) {
+          log.finer("Begin processing citations of" + this.m_doc.__name()); //$NON-NLS-1$
+        }
+
         this.processCitations(bib);
+
+        log = this.m_doc.m_logger;
+        if ((log != null) && (log.isLoggable(Level.FINER))) {
+          log.finer("Finished processing citations of" + this.m_doc.__name()); //$NON-NLS-1$
+        }
+
       }
       bib = null;
     }
@@ -80,6 +96,7 @@ public class DocumentFooter extends _StyleProviderPart implements
   /** {@inheritDoc} */
   @Override
   protected final synchronized void onClose() {
+    final Logger log;
 
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
         DocumentFooter.FLAG_CITATIONS_TAKEN,
@@ -88,5 +105,23 @@ public class DocumentFooter extends _StyleProviderPart implements
     this.doClose();
 
     super.onClose();
+
+    log = this.m_doc.m_logger;
+    if ((log != null) && (log.isLoggable(Level.FINER))) {
+      log.finer("Finished writing footer of" + this.m_doc.__name()); //$NON-NLS-1$
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized void onOpen() {
+    final Logger log;
+
+    super.onOpen();
+
+    log = this.m_doc.m_logger;
+    if ((log != null) && (log.isLoggable(Level.FINER))) {
+      log.finer("Begin writing body of" + this.m_doc.__name()); //$NON-NLS-1$
+    }
   }
 }

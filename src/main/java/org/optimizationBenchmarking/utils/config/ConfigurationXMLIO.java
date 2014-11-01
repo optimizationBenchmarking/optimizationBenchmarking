@@ -17,7 +17,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /** the configuration xml i/o */
 public class ConfigurationXMLIO extends
-    XMLIODriver<Configuration, Configuration> {
+    XMLIODriver<Configuration, ConfigurationBuilder> {
 
   /** the namespace */
   public static final URI NAMESPACE_URI = URI
@@ -123,7 +123,7 @@ public class ConfigurationXMLIO extends
   /** {@inheritDoc} */
   @Override
   protected DefaultHandler wrapLoadContext(
-      final Configuration loaderContext, final Logger logger) {
+      final ConfigurationBuilder loaderContext, final Logger logger) {
     return new ConfigurationXMLHandler(null, loaderContext);
   }
 }

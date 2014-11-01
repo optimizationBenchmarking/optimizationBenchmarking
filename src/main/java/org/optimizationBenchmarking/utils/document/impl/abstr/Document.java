@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
@@ -80,6 +82,9 @@ public class Document extends DocumentElement implements IDocument {
   /** the base path, i.e., the folder containing the document */
   final Path m_basePath;
 
+  /** the logger */
+  final Logger m_logger;
+
   /** the paths */
   private LinkedHashSet<PathEntry> m_paths;
 
@@ -102,6 +107,9 @@ public class Document extends DocumentElement implements IDocument {
   /** the internal memory text output */
   private final MemoryTextOutput m_mto;
 
+  /** the document name */
+  private transient volatile String m_docName;
+
   /**
    * Create a document.
    * 
@@ -113,10 +121,12 @@ public class Document extends DocumentElement implements IDocument {
    *          the path to the document
    * @param listener
    *          the object listener the object listener
+   * @param logger
+   *          the logger
    */
   private Document(final DocumentDriver driver,
       final BufferedWriter writer, final Path docPath,
-      final IObjectListener listener) {
+      final IObjectListener listener, final Logger logger) {
     super(driver, writer);
 
     this.m_styles = driver.createStyleSet();
@@ -125,6 +135,7 @@ public class Document extends DocumentElement implements IDocument {
           "Style set must not be null."); //$NON-NLS-1$
     }
 
+    this.m_logger = logger;
     this.m_documentPath = PathUtils.normalize(docPath);
     this.m_basePath = PathUtils.normalize(docPath.getParent());
     this.m_paths = new LinkedHashSet<>();
@@ -138,6 +149,12 @@ public class Document extends DocumentElement implements IDocument {
 
     this.m_counters = new int[ELabelType.INSTANCES.size()];
     this.m_mto = new MemoryTextOutput(16);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final Logger getLogger() {
+    return this.m_logger;
   }
 
   /**
@@ -253,11 +270,13 @@ public class Document extends DocumentElement implements IDocument {
    *          the path to the document
    * @param listener
    *          the object listener the object listener
+   * @param logger
+   *          the logger
    */
   protected Document(final DocumentDriver driver, final Path docPath,
-      final IObjectListener listener) {
+      final IObjectListener listener, final Logger logger) {
     this(driver, new BufferedWriter(new OutputStreamWriter(
-        PathUtils.openOutputStream(docPath))), docPath, listener);
+        PathUtils.openOutputStream(docPath))), docPath, listener, logger);
   }
 
   /**
@@ -443,6 +462,36 @@ public class Document extends DocumentElement implements IDocument {
   }
 
   /**
+   * Get the document id
+   * 
+   * @return the document id
+   */
+  final String __name() {
+    String s;
+
+    s = this.m_docName;
+    if (s == null) {
+      this.m_docName = s = (" document '" + //$NON-NLS-1$
+          this.m_documentPath + "' of type " + //$NON-NLS-1$
+      TextUtils.className(this.m_driver.getClass()));
+    }
+    return s;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized void onOpen() {
+    final Logger log;
+
+    super.onOpen();
+
+    log = this.m_logger;
+    if ((log != null) && (log.isLoggable(Level.FINE))) {
+      log.fine("Begin creating" + this.__name());//$NON-NLS-1$
+    }
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see #doOnClose()
@@ -450,6 +499,7 @@ public class Document extends DocumentElement implements IDocument {
    */
   @Override
   protected final synchronized void onClose() {
+    Logger log;
     Throwable error;
     ArrayListView<PathEntry> paths;
     Set<IStyle> styles;
@@ -469,11 +519,25 @@ public class Document extends DocumentElement implements IDocument {
       } catch (final Throwable tt) {
         error = ErrorUtils.aggregateError(error, tt);
       } finally {
+
+        log = this.m_logger;
+        if ((log != null) && (log.isLoggable(Level.FINE))) {
+          log.fine("Finished creating base files of" + //$NON-NLS-1$
+              this.__name() + ", now beginning to post-process."); //$NON-NLS-1$
+        }
+
         paths = ArrayListView.collectionToView(this.m_paths, false);
         styles = this.m_usedStyles;
         this.m_usedStyles = null;
         try {
           this.postProcess(Collections.unmodifiableSet(styles), paths);
+
+          log = this.m_logger;
+          if ((log != null) && (log.isLoggable(Level.FINE))) {
+            log.fine("Finished post-processing" + //$NON-NLS-1$
+                this.__name());
+          }
+
         } catch (final Throwable ttt) {
           error = ErrorUtils.aggregateError(error, ttt);
         } finally {
@@ -501,6 +565,11 @@ public class Document extends DocumentElement implements IDocument {
       }
     }
     if (error != null) {
+      log = this.m_logger;
+      if ((log != null) && (log.isLoggable(Level.SEVERE))) {
+        log.log(Level.SEVERE, ("Error during finalization of" //$NON-NLS-1$
+            + this.__name()), error);
+      }
       ErrorUtils.throwAsRuntimeException(error);
     }
   }

@@ -1,10 +1,7 @@
 package org.optimizationBenchmarking.utils.config;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
@@ -77,7 +74,7 @@ import org.optimizationBenchmarking.utils.parsers.StringParser;
  * be stored in the configuration you called the getter method of.
  * </p>
  */
-public final class Configuration extends _ConfigRoot {
+public final class Configuration implements Serializable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -91,19 +88,12 @@ public final class Configuration extends _ConfigRoot {
   final _ConfigMap m_data;
 
   /**
-   * create a configuration without an owner
-   */
-  public Configuration() {
-    this(null);
-  }
-
-  /**
    * create a configuration within an owning scope
    * 
    * @param owner
    *          the owning scope
    */
-  public Configuration(final Configuration owner) {
+  Configuration(final Configuration owner) {
     super();
     this.m_owner = owner;
     this.m_data = new _ConfigMap();
@@ -116,8 +106,9 @@ public final class Configuration extends _ConfigRoot {
    * piped through the {@code parser}'s
    * {@link org.optimizationBenchmarking.utils.parsers.Parser#validate(Object)
    * validate} method. <em>Any</em> returned object which is an instance of
-   * {@link org.optimizationBenchmarking.utils.config.Configurable} will be
-   * {@link org.optimizationBenchmarking.utils.config.Configurable#configure(Configuration)
+   * {@link org.optimizationBenchmarking.utils.config.IConfigurable} will
+   * be
+   * {@link org.optimizationBenchmarking.utils.config.IConfigurable#configure(Configuration)
    * configured} with {@code this} configuration before being returned for
    * the <em>first time</em> (and after being
    * {@link org.optimizationBenchmarking.utils.parsers.Parser#validate(Object)
@@ -148,7 +139,7 @@ public final class Configuration extends _ConfigRoot {
    */
   public final <T> T get(final String key, final Parser<T> parser,
       final T _default) {
-    return this.__get(key, parser, _default, true);
+    return this._get(key, parser, _default, true);
   }
 
   /**
@@ -183,7 +174,7 @@ public final class Configuration extends _ConfigRoot {
    *           {@link #get(String, Parser, Object) accessed} but with a
    *           different type
    */
-  private final <T> T __get(final String key, final Parser<T> parser,
+  final <T> T _get(final String key, final Parser<T> parser,
       final T _default, final boolean createIfNotExists) {
     _ConfigMapEntry entry;
     Class<T> clazz;
@@ -280,9 +271,9 @@ public final class Configuration extends _ConfigRoot {
    * <p>
    * If a non-{@code null} value is returned, it will automatically be
    * checked if it is an instance of
-   * {@link org.optimizationBenchmarking.utils.config.Configurable
-   * Configurable} first. If so, its
-   * {@link org.optimizationBenchmarking.utils.config.Configurable#configure(Configuration)
+   * {@link org.optimizationBenchmarking.utils.config.IConfigurable
+   * IConfigurable} first. If so, its
+   * {@link org.optimizationBenchmarking.utils.config.IConfigurable#configure(Configuration)
    * configure} method will be invoked with this
    * {@link org.optimizationBenchmarking.utils.config.Configuration
    * configuration} as parameter. This also holds if it is decided to
@@ -580,139 +571,6 @@ public final class Configuration extends _ConfigRoot {
   // / functions to store configuration values
 
   // / functions to store configuration values
-
-  /**
-   * Put a value
-   * 
-   * @param key
-   *          the key
-   * @param value
-   *          the value
-   */
-  public final void put(final String key, final Object value) {
-    final _ConfigMapEntry entry;
-    final boolean isLocked;
-
-    synchronized (this.m_data) {
-      entry = ((_ConfigMapEntry) (this.m_data.getEntry(key, true)));
-      isLocked = entry.m_isLocked;
-      if (!isLocked) {
-        entry.setValue(value);
-      }
-    }
-
-    if (isLocked) {
-      throw new IllegalStateException(//
-          "There has already been a read access to '" + key + //$NON-NLS-1$
-              "', so it cannot be changed anymore."); //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * Put a string to the map. The string is considered to be in the form
-   * {@code key=value} or {@code key:value} and may be preceded by any
-   * number of {@code -} or {@code /}-es. If the value part is missing
-   * {@code "true"} is used as value.
-   * 
-   * @param s
-   *          the string
-   */
-  public final void putCommandLine(final String s) {
-    String t;
-    int i, j;
-    final int len;
-    char ch;
-    boolean canUseSlash;
-
-    if (s == null) {
-      return;
-    }
-
-    t = s.trim();
-    len = t.length();
-    if (len <= 0) {
-      return;
-    }
-
-    canUseSlash = (File.separatorChar != '/');
-
-    for (i = 0; i < len; i++) {
-      ch = t.charAt(i);
-      if ((ch == '-') || (canUseSlash && (ch == '/')) || (ch <= 32)) {
-        continue;
-      }
-
-      for (j = i + 1; j < len; j++) {
-        ch = t.charAt(j);
-        if ((ch == ':') || (ch == '=')) {
-          this.put(t.substring(i, j), t.substring(j + 1).trim());
-          return;
-        }
-      }
-
-      this.put(t.substring(i), Boolean.TRUE.toString());
-
-      return;
-    }
-  }
-
-  /**
-   * Load command line arguments into a map
-   * 
-   * @param args
-   *          the arguments
-   */
-  public final void putCommandLine(final String... args) {
-    if (args != null) {
-      for (final String s : args) {
-        this.putCommandLine(s);
-      }
-    }
-  }
-
-  /**
-   * Store some information from a map
-   * 
-   * @param map
-   *          the map
-   */
-  public final void putMap(final Map<?, ?> map) {
-    if (map != null) {
-      for (final Map.Entry<?, ?> e : map.entrySet()) {
-        this.put(String.valueOf(e.getKey()), e.getValue());
-      }
-    }
-  }
-
-  /**
-   * Store some information from a properties set
-   * 
-   * @param prop
-   *          the properties
-   */
-  public final void putProperties(final Properties prop) {
-    this.putMap(prop);
-  }
-
-  /**
-   * Configure this configuration from a set of command line parameters
-   * 
-   * @param args
-   *          the command line arguments
-   * @throws IOException
-   *           if io fails
-   */
-  public final void configure(final String[] args) throws IOException {
-    final Path f;
-
-    this.putCommandLine(args);
-
-    f = this.__get(Configuration.PARAM_PROPERTY_FILE, PathParser.INSTANCE,
-        null, false);
-    if (f != null) {
-      ConfigurationPropertiesIO.INSTANCE.loadPath(this, f);
-    }
-  }
 
   /** {@inheritDoc} */
   @Override

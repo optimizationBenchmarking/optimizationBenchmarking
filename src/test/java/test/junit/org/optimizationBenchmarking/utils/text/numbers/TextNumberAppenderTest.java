@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.numbers.NumberAppender;
+import org.optimizationBenchmarking.utils.text.numbers.TextNumberAppender;
 
 /**
  * The test of
@@ -120,8 +121,7 @@ public class TextNumberAppenderTest extends NumberAppenderTest {
 
   /** create the test */
   public TextNumberAppenderTest() {
-    super(
-        org.optimizationBenchmarking.utils.text.numbers.TextNumberAppender.INSTANCE);
+    super(TextNumberAppender.INSTANCE, false);
   }
 
   /**

@@ -4,9 +4,20 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
+ * <p>
  * A number appender which appends the numbers to the directly output, but
- * tries to simplify {@code double} numbers to {@code longs} if this is
- * possible without loss of information.
+ * tries to simplify {@code double} numbers via some heuristic:
+ * </p>
+ * <ol>
+ * <li>First it checks whether a {@code double} can be converted to a
+ * {@code long} without loss of precision. If so, it will append the
+ * {@code long} instead.</li>
+ * <li>Some {@code double}s have an overly long string representation in
+ * Java. &quot;{@code -7.66eE22}&quot;, for instance, will be represented
+ * as &quot;{@code -7.664000000000001E22}&quot; by
+ * {@link java.lang.Double#toString(double)}. This appender tries to remedy
+ * this problem.</li>
+ * </ol>
  */
 public final class SimpleNumberAppender extends _PlainIntNumberAppender {
 
@@ -31,12 +42,9 @@ public final class SimpleNumberAppender extends _PlainIntNumberAppender {
   /** {@inheritDoc} */
   @Override
   public final String toString(final double v, final ETextCase textCase) {
-
     final long l;
     String s, t;
-    boolean b;
-    int len;
-    char cl, clm1, clm2, clm3;
+    _CharFloat inc, dec;
 
     if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
       l = ((long) v);
@@ -48,52 +56,50 @@ public final class SimpleNumberAppender extends _PlainIntNumberAppender {
       }
     }
 
-    s = Double.toString(v);
+    s = t = Double.toString(v);
     if ((v != v) || (v <= Double.NEGATIVE_INFINITY)
         || (v >= Double.POSITIVE_INFINITY)) {
       return s;
     }
 
-    do {
-      b = false;
-      len = s.length();
+    // Now we have the string representation of the double number.
+    // Let us see how and whether we can make it shorter.
 
-      if (len > 2) {
-        cl = s.charAt(--len);
-        clm1 = s.charAt(--len);
-
-        if ((cl == '0')
-            && ((clm1 == '.') || (clm1 == 'E') || (clm1 == 'e'))) {
-          b = true;
-        } else {
-          if (len > 0) {
-            clm2 = s.charAt(--len);
-            if ((cl == '0') && (clm1 == '0')
-                && ((clm2 == '.') || (clm2 == 'E') || (clm2 == 'e'))) {
-              b = true;
-            } else {
-              if (len > 0) {
-                clm3 = s.charAt(--len);
-                if ((cl == '0') && (clm1 == '0')
-                    && ((clm2 == '+') || (clm2 == '-'))
-                    && ((clm3 == 'E') || (clm3 == 'e'))) {
-                  b = true;
-                }
-              }
-            }
-          }
-        }
+    inc = new _CharFloat(s);
+    t = inc.toString();
+    if (Double.parseDouble(t) == v) {
+      if (t.length() < s.length()) {
+        s = t;
       }
+    }
 
-      if (b) {
-        t = s.substring(0, len);
+    dec = inc.clone();
+
+    increment: {
+      while (inc._incOrDec(1)) {
+        t = inc.toString();
         if (Double.parseDouble(t) == v) {
-          s = t;
+          if (t.length() < s.length()) {
+            s = t;
+          }
         } else {
-          b = false;
+          break increment;
         }
       }
-    } while (b);
+    }
+
+    decrement: {
+      while (dec._incOrDec(-1)) {
+        t = dec.toString();
+        if (Double.parseDouble(t) == v) {
+          if (t.length() < s.length()) {
+            s = t;
+          }
+        } else {
+          break decrement;
+        }
+      }
+    }
 
     return s;
   }

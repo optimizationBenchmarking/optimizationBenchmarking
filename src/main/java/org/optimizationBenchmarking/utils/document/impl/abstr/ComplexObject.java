@@ -1,15 +1,24 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.ILabeledObject;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * The base class for sections, tables, and figures
  */
 public abstract class ComplexObject extends DocumentPart implements
     ILabeledObject {
+
+  /** the package */
+  private static final Package LOG_PACKAGE = ComplexObject.class
+      .getPackage();
 
   /** the index in the owning context */
   final int m_index;
@@ -160,5 +169,76 @@ public abstract class ComplexObject extends DocumentPart implements
    */
   public final String getLocalID() {
     return this.m_localID;
+  }
+
+  /**
+   * get the object type
+   * 
+   * @return the type
+   */
+  final String _getType() {
+    Class<?> clazz;
+    String s, n;
+    int i;
+
+    findName: {
+      for (clazz = this.getClass(); clazz != null; clazz = clazz
+          .getSuperclass()) {
+        if (EComparison.equals(clazz.getPackage(),
+            ComplexObject.LOG_PACKAGE)) {
+          s = clazz.getSimpleName();
+          if (s != null) {
+            s = s.toLowerCase();
+            break findName;
+          }
+        }
+      }
+
+      s = TextUtils.className(this.getClass());
+      if (s != null) {
+        i = s.lastIndexOf('.');
+        if (i > 0) {
+          s = s.substring(i + 1).toLowerCase();
+          break findName;
+        }
+      }
+    }
+
+    n = this.m_globalID;
+    i = n.length();
+    if (i <= 0) {
+      return s;
+    }
+    if (n.charAt(--i) == '.') {
+      n = n.substring(0, i);
+    }
+
+    return (s + ' ' + n + " for" + this.m_doc.__name());//$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized void onOpen() {
+    final Logger log;
+
+    super.onOpen();
+
+    log = this.m_doc.m_logger;
+    if ((log != null) && (log.isLoggable(Level.FINEST))) {
+      log.finest("Begin creating " + this._getType());//$NON-NLS-1$
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized void onClose() {
+    final Logger log;
+
+    super.onClose();
+
+    log = this.m_doc.m_logger;
+    if ((log != null) && (log.isLoggable(Level.FINEST))) {
+      log.finest("Finished creating " + this._getType());//$NON-NLS-1$
+    }
   }
 }

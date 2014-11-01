@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
@@ -153,8 +154,8 @@ public final class LaTeXDriver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   protected final Document doCreateDocument(final Path file,
-      final IObjectListener listener) {
-    return new _LaTeXDocument(this, file, listener);
+      final IObjectListener listener, final Logger logger) {
+    return new _LaTeXDocument(this, file, listener, logger);
   }
 
   /** {@inheritDoc} */

@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.TextOutputWriter;
 
 /** the configuration xml i/o */
 public class ConfigurationPropertiesIO extends
-    TextIODriver<Configuration, Configuration> {
+    TextIODriver<Configuration, ConfigurationBuilder> {
 
   /** the configuration properties io driver */
   public static final ConfigurationPropertiesIO INSTANCE = new ConfigurationPropertiesIO();
@@ -25,8 +25,9 @@ public class ConfigurationPropertiesIO extends
 
   /** {@inheritDoc} */
   @Override
-  protected final void doLoadReader(final Configuration loadContext,
-      final BufferedReader reader, final Logger logger) throws IOException {
+  protected final void doLoadReader(
+      final ConfigurationBuilder loadContext, final BufferedReader reader,
+      final Logger logger) throws IOException {
     Properties pr;
 
     pr = new Properties();

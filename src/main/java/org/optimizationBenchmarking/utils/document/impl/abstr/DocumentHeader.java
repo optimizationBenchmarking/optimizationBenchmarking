@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDate;
@@ -307,10 +310,30 @@ public class DocumentHeader extends DocumentPart implements
 
   /** {@inheritDoc} */
   @Override
+  protected synchronized void onOpen() {
+    final Logger log;
+
+    super.onOpen();
+
+    log = this.m_doc.m_logger;
+    if ((log != null) && (log.isLoggable(Level.FINER))) {
+      log.finer("Begin writing header of" + this.m_doc.__name()); //$NON-NLS-1$
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected synchronized void onClose() {
+    final Logger log;
+
     super.onClose();
     this.fsmStateAssertAndSet(DocumentHeader.STATE_SUMMARY_CLOSED,
         DocumentHeader.STATE_HEADER_FINALIZED);
+
+    log = this.m_doc.m_logger;
+    if ((log != null) && (log.isLoggable(Level.FINER))) {
+      log.finer("Finished writing header of" + this.m_doc.__name()); //$NON-NLS-1$
+    }
   }
 
   /**

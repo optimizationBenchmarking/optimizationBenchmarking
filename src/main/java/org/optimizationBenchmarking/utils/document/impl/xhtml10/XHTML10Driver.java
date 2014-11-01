@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
@@ -292,8 +293,8 @@ public final class XHTML10Driver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   protected final Document doCreateDocument(final Path file,
-      final IObjectListener listener) {
-    return new _XHTML10Document(this, file, listener);
+      final IObjectListener listener, final Logger logger) {
+    return new _XHTML10Document(this, file, listener, logger);
   }
 
   /** {@inheritDoc} */

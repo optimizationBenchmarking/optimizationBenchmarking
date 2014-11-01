@@ -1,10 +1,8 @@
 package org.optimizationBenchmarking.experimentation.data;
 
-import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
-import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -14,7 +12,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * @param <OT>
  *          the owner type
  */
-abstract class _IDObject<OT> implements Serializable, ITextable,
+abstract class _IDObject<OT> extends DataElement implements
     Comparable<_IDObject<?>> {
 
   /** the serial version uid */

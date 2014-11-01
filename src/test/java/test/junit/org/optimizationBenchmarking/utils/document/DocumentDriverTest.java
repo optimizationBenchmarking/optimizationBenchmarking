@@ -58,7 +58,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
 
     try (final TempDir td = new TempDir()) {
       try (final IDocument doc = driver.createDocument(td.getDir(),
-          "document", null)) { //$NON-NLS-1$
+          "document", null, null)) { //$NON-NLS-1$
         ex = new RandomDocumentExample(doc, r, null);
         if (service != null) {
           f = service.submit(ex);

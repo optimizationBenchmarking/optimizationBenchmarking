@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
@@ -84,13 +87,34 @@ public class DocumentBody extends _StyleProviderPart implements
 
   /** {@inheritDoc} */
   @Override
+  protected synchronized void onOpen() {
+    final Logger log;
+
+    super.onOpen();
+
+    log = this.m_doc.m_logger;
+    if ((log != null) && (log.isLoggable(Level.FINER))) {
+      log.finer("Begin writing body of" + this.m_doc.__name()); //$NON-NLS-1$
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected synchronized void onClose() {
+    final Logger log;
+
     this.fsmStateAssertAndSet(DocumentElement.STATE_ALIFE,
         DocumentElement.STATE_DEAD);
+
     if (this.m_subsectionCount <= 0) {
       throw new IllegalStateException(//
           "Document body must have at least one section."); //$NON-NLS-1$
     }
     super.onClose();
+
+    log = this.m_doc.m_logger;
+    if ((log != null) && (log.isLoggable(Level.FINER))) {
+      log.finer("Finished writing body of" + this.m_doc.__name()); //$NON-NLS-1$
+    }
   }
 }

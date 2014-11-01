@@ -6,15 +6,7 @@ package org.optimizationBenchmarking.utils.config;
  * {@link org.optimizationBenchmarking.utils.config.Configuration}.
  * </p>
  */
-public class Configurable extends _ConfigRoot {
-
-  /** the serial version uid */
-  private static final long serialVersionUID = 1L;
-
-  /** instantiate */
-  protected Configurable() {
-    super();
-  }
+public interface IConfigurable {
 
   /**
    * Configure this object. This method accesses an instance of
@@ -31,8 +23,6 @@ public class Configurable extends _ConfigRoot {
    * @param config
    *          the configuration to use
    */
-  public void configure(final Configuration config) {
-    //
-  }
+  public abstract void configure(final Configuration config);
 
 }
