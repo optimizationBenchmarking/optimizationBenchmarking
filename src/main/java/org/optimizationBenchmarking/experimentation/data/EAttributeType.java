@@ -69,7 +69,7 @@ public enum EAttributeType {
   /**
    * Unpack an object: the method is internally used to unwrap objects by
    * the cache in a
-   * {@link org.optimizationBenchmarking.experimentation.data._IDSet data
+   * {@link org.optimizationBenchmarking.experimentation.data.DataSet data
    * object}.
    * 
    * @param o
@@ -86,7 +86,7 @@ public enum EAttributeType {
   /**
    * pack an object: the method is internally used to wrap objects by the
    * cache in a
-   * {@link org.optimizationBenchmarking.experimentation.data._IDSet data
+   * {@link org.optimizationBenchmarking.experimentation.data.DataSet data
    * object}.
    * 
    * @param o

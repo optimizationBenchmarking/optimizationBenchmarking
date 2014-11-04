@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
+import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
@@ -41,14 +41,14 @@ public class FontPaletteExample {
     final FontPalette[] list = new FontPalette[4];
 
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-      PaletteIODriver.INSTANCE.loadResource(tb, FontPaletteExample.class,
-          "examples.font.palette"); //$NON-NLS-1$
+      PaletteInputDriver.INSTANCE.loadResource(tb,
+          FontPaletteExample.class, "examples.font.palette"); //$NON-NLS-1$
       list[0] = tb.getResult();
     } catch (final Throwable tt) {
       tt.printStackTrace();
     }
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-      PaletteIODriver.INSTANCE.loadResource(tb, XHTML10Driver.class,
+      PaletteInputDriver.INSTANCE.loadResource(tb, XHTML10Driver.class,
           "xhtml10.font.palette"); //$NON-NLS-1$
       list[1] = tb.getResult();
     } catch (final Throwable tt) {

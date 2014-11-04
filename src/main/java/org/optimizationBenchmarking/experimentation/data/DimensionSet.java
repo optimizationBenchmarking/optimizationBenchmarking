@@ -5,8 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a set of dimensions */
-public final class DimensionSet extends
-    _IDObjectSet<ExperimentSet, Dimension> {
+public final class DimensionSet extends _IDObjectSet<Dimension> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -53,5 +52,11 @@ public final class DimensionSet extends
   @Override
   public final void toText(final ITextOutput textOut) {
     this.m_data.toText(textOut);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ExperimentSet getOwner() {
+    return ((ExperimentSet) (this.m_owner));
   }
 }

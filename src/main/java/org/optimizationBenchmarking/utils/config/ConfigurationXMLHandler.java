@@ -30,20 +30,20 @@ public class ConfigurationXMLHandler extends DelegatingHandler {
       final String qName, final Attributes attributes) throws SAXException {
     String a, b;
     if ((uri == null)
-        || (ConfigurationXMLIO.NAMESPACE.equalsIgnoreCase(uri))) {
-      if (ConfigurationXMLIO.ELEMENT_CONFIGURATION_PARAMETER
+        || (_ConfigXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+      if (_ConfigXMLConstants.ELEMENT_CONFIGURATION_PARAMETER
           .equalsIgnoreCase(localName)) {
-        a = attributes.getValue(ConfigurationXMLIO.NAMESPACE,
-            ConfigurationXMLIO.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME);
+        a = attributes.getValue(_ConfigXMLConstants.NAMESPACE,
+            _ConfigXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME);
         if (a == null) {
           a = attributes
-              .getValue(ConfigurationXMLIO.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME);
+              .getValue(_ConfigXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME);
         }
-        b = attributes.getValue(ConfigurationXMLIO.NAMESPACE,
-            ConfigurationXMLIO.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE);
+        b = attributes.getValue(_ConfigXMLConstants.NAMESPACE,
+            _ConfigXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE);
         if (b == null) {
           b = attributes
-              .getValue(ConfigurationXMLIO.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE);
+              .getValue(_ConfigXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE);
         }
 
         this.m_dest.put(a, b);
@@ -56,8 +56,8 @@ public class ConfigurationXMLHandler extends DelegatingHandler {
   protected void doEndElement(final String uri, final String localName,
       final String qName) throws SAXException {
     if ((uri == null)
-        || (ConfigurationXMLIO.NAMESPACE.equalsIgnoreCase(uri))) {
-      if (ConfigurationXMLIO.ELEMENT_CONFIGURATION_ROOT
+        || (_ConfigXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+      if (_ConfigXMLConstants.ELEMENT_CONFIGURATION_ROOT
           .equalsIgnoreCase(localName)) {
         this.close();
       }

@@ -16,9 +16,16 @@ public abstract class DataElement implements Serializable, ITextable {
   private HashMap<Attribute<?, ?>, Object> m_attributes;
 
   /** create */
-  DataElement() {
+  protected DataElement() {
     super();
   }
+
+  /**
+   * Obtain the set this object is part of
+   * 
+   * @return the set this object is part of
+   */
+  public abstract DataElement getOwner();
 
   /**
    * Get the value of a given attribute.

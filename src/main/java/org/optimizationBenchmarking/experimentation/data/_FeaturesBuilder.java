@@ -47,7 +47,7 @@ final class _FeaturesBuilder extends
 
   /** {@inheritDoc} */
   @Override
-  final FeatureSet _createPropertySet(final _Property<?, ?>[] data) {
+  final FeatureSet _createPropertySet(final _Property<?>[] data) {
     return new FeatureSet(data);
   }
 

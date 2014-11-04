@@ -4,18 +4,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.io.structured.TextIODriver;
+import org.optimizationBenchmarking.utils.io.structured.TextInputDriver;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** An I/O driver which can load stream contents to a style palette */
-public final class PaletteIODriver extends
-    TextIODriver<Void, PaletteBuilder<?, ?>> {
+public final class PaletteInputDriver extends
+    TextInputDriver<PaletteBuilder<?, ?>> {
 
   /** the globally shared instance of the palette I/O driver */
-  public static final PaletteIODriver INSTANCE = new PaletteIODriver();
+  public static final PaletteInputDriver INSTANCE = new PaletteInputDriver();
 
   /** create */
-  private PaletteIODriver() {
+  private PaletteInputDriver() {
     super();
   }
 

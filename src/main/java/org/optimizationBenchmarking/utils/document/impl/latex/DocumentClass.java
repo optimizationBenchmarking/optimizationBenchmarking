@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.graphics.EPaperSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
+import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
@@ -202,8 +202,8 @@ public class DocumentClass extends PageDimension {
     synchronized (DocumentClass.SYNCH) {
       if (DocumentClass.s_fonts == null) {
         try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-          PaletteIODriver.INSTANCE.loadResource(tb, DocumentClass.class,
-              "latex.font.palette"); //$NON-NLS-1$
+          PaletteInputDriver.INSTANCE.loadResource(tb,
+              DocumentClass.class, "latex.font.palette"); //$NON-NLS-1$
           DocumentClass.s_fonts = tb.getResult();
         } catch (final Throwable tt) {
           ErrorUtils.throwAsRuntimeException(tt);

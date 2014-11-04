@@ -17,7 +17,7 @@ public final class FeatureSet extends
    * @param data
    *          the instances
    */
-  FeatureSet(final _Property<?, ?>[] data) {
+  FeatureSet(final _Property<?>[] data) {
     super(data);
     this.m_id = FeatureSet.ID_COUNTER.getAndIncrement();
   }
@@ -28,5 +28,4 @@ public final class FeatureSet extends
       final boolean isGeneralized) {
     return new FeatureSetting(values, isGeneralized);
   }
-
 }

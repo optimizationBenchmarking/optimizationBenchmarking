@@ -12,11 +12,11 @@ import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
 import org.optimizationBenchmarking.experimentation.data.RunContext;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
-import org.optimizationBenchmarking.utils.io.structured.FileIODriver;
+import org.optimizationBenchmarking.utils.io.structured.FileInputDriver;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** the internal content handler */
-final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
+final class _TSPSuiteHandler extends FileInputDriver<Object> {
   /** the string indicating the begin of a comment: {@value} */
   private static final String COMMENT_START = "//"; //$NON-NLS-1$
   /**
@@ -171,7 +171,7 @@ final class _TSPSuiteHandler extends FileIODriver<Object, Object> {
         continue;
       }
       if (in == null) {
-        in = TSPSuiteDriver._instanceName(n);
+        in = TSPSuiteInputDriver._instanceName(n);
         if (in != null) {
           instance = p;
         }

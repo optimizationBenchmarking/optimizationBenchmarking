@@ -9,8 +9,7 @@ import org.optimizationBenchmarking.utils.math.matrix.MatrixColumns;
 import org.optimizationBenchmarking.utils.math.matrix.MatrixRows;
 
 /**  */
-public abstract class Run extends _IDSet<InstanceRuns, DataPoint>
-    implements IMatrix {
+public abstract class Run extends DataSet<DataPoint> implements IMatrix {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -191,5 +190,11 @@ public abstract class Run extends _IDSet<InstanceRuns, DataPoint>
       final DataPoint after) {
     super._validateElementPair(before, after);
     after.validateAfter(before);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final InstanceRuns getOwner() {
+    return ((InstanceRuns) (this.m_owner));
   }
 }

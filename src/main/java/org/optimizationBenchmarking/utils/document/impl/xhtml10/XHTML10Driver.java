@@ -43,7 +43,7 @@ import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
+import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
@@ -258,8 +258,8 @@ public final class XHTML10Driver extends DocumentDriver {
     synchronized (XHTML10Driver.SYNCH) {
       if (XHTML10Driver.s_fonts == null) {
         try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-          PaletteIODriver.INSTANCE.loadResource(tb, XHTML10Driver.class,
-              "xhtml10.font.palette"); //$NON-NLS-1$
+          PaletteInputDriver.INSTANCE.loadResource(tb,
+              XHTML10Driver.class, "xhtml10.font.palette"); //$NON-NLS-1$
           XHTML10Driver.s_fonts = tb.getResult();
         } catch (final Throwable tt) {
           ErrorUtils.throwAsRuntimeException(tt);

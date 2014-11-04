@@ -2,15 +2,12 @@ package org.optimizationBenchmarking.experimentation.data;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.optimizationBenchmarking.experimentation.Experimentation;
-
 /**
  * <p>
  * An experiment set.
  * </p>
  */
-public final class ExperimentSet extends
-    DataSet<Experimentation, Experiment> {
+public final class ExperimentSet extends _IDObjectSet<Experiment> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -195,4 +192,9 @@ public final class ExperimentSet extends
     return this.m_parameters;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public ExperimentSet getOwner() {
+    return null;
+  }
 }

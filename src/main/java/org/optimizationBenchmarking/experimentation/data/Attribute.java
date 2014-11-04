@@ -1,14 +1,23 @@
 package org.optimizationBenchmarking.experimentation.data;
 
+import java.util.Collection;
+
 import org.optimizationBenchmarking.utils.hash.HashObject;
 
 /**
- * A base class for attributes. Attributes are values which we assign and
- * store in elements of the experiment API. They usually are computed based
- * on the values of the elements or other attributes. Depending on their
- * {@link #m_type type}, attributes may be cached internally. In this case,
- * the attribute instance also serves as key to a {@link java.util.HashMap
- * hash map}-based cache.
+ * <p>
+ * This is the base class for attributes, values which can be used to
+ * describe
+ * {@link org.optimizationBenchmarking.experimentation.data.DataElement}s.
+ * Attributes are values which we assign and store in elements of the
+ * experiment API. They usually are computed based on the values of the
+ * elements or other attributes.
+ * </p>
+ * <p>
+ * Depending on their {@link #m_type type}, attributes may be cached
+ * internally. In this case, the attribute instance also serves as key to a
+ * {@link java.util.HashMap hash map}-based cache.
+ * </p>
  * 
  * @param <ST>
  *          the source object type which is attributed
@@ -62,4 +71,57 @@ public abstract class Attribute<ST extends DataElement, RT> extends
     return data._getAttribute(this);
   }
 
+  /**
+   * Create an artificial
+   * {@link org.optimizationBenchmarking.experimentation.data.InstanceRuns
+   * instance run set}.
+   * 
+   * @param inst
+   *          the instance
+   * @param data
+   *          the data of the set
+   * @return the artificial instance run set
+   */
+  protected static final InstanceRuns createInstanceRuns(
+      final Instance inst, final Run... data) {
+    return Attribute.__createInstanceRuns(inst, data, true);
+  }
+
+  /**
+   * Create an artificial
+   * {@link org.optimizationBenchmarking.experimentation.data.InstanceRuns
+   * instance run set}.
+   * 
+   * @param inst
+   *          the instance
+   * @param data
+   *          the data of the set
+   * @return the artificial instance run set
+   */
+  protected static final InstanceRuns createInstanceRuns(
+      final Instance inst, final Collection<Run> data) {
+    return Attribute.__createInstanceRuns(inst,
+        data.toArray(new Run[data.size()]), false);
+  }
+
+  /**
+   * Create an artificial
+   * {@link org.optimizationBenchmarking.experimentation.data.InstanceRuns
+   * instance run set}.
+   * 
+   * @param inst
+   *          the instance
+   * @param data
+   *          the data of the set
+   * @param clone
+   *          should we clone the data?
+   * @return the artificial instance run set
+   */
+  private static final InstanceRuns __createInstanceRuns(
+      final Instance inst, final Run[] data, final boolean clone) {
+    InstanceRuns ir;
+    ir = new InstanceRuns(inst, data, clone, true, false);
+
+    return ir;
+  }
 }

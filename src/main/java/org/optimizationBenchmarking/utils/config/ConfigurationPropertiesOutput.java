@@ -1,38 +1,25 @@
 package org.optimizationBenchmarking.utils.config;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.io.structured.TextIODriver;
+import org.optimizationBenchmarking.utils.io.structured.TextOutputDriver;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.TextOutputWriter;
 
-/** the configuration xml i/o */
-public class ConfigurationPropertiesIO extends
-    TextIODriver<Configuration, ConfigurationBuilder> {
+/** the configuration properties output */
+public class ConfigurationPropertiesOutput extends
+    TextOutputDriver<Configuration> {
 
   /** the configuration properties io driver */
-  public static final ConfigurationPropertiesIO INSTANCE = new ConfigurationPropertiesIO();
+  public static final ConfigurationPropertiesOutput INSTANCE = new ConfigurationPropertiesOutput();
 
   /** create */
-  private ConfigurationPropertiesIO() {
+  private ConfigurationPropertiesOutput() {
     super();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final void doLoadReader(
-      final ConfigurationBuilder loadContext, final BufferedReader reader,
-      final Logger logger) throws IOException {
-    Properties pr;
-
-    pr = new Properties();
-    pr.load(reader);
-    loadContext.putProperties(pr);
   }
 
   /** {@inheritDoc} */

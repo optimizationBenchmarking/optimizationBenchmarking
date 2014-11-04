@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
+import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 
 /** the default gray palette */
 public final class DefaultGrayPalette extends ColorPalette {
@@ -20,7 +20,7 @@ public final class DefaultGrayPalette extends ColorPalette {
 
     pal = null;
     try (final __DefaultGrayPaletteBuilder cspb = new __DefaultGrayPaletteBuilder()) {
-      PaletteIODriver.INSTANCE.loadResource(cspb,
+      PaletteInputDriver.INSTANCE.loadResource(cspb,
           DefaultGrayPalette.class, "default.gray.color.palette"); //$NON-NLS-1$
       pal = cspb.getResult();
     } catch (final Throwable t) {

@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * @param <PST>
  *          the property set type the property builder type
  */
-abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT extends _Property<?, ?>, PST extends _PropertySet<?, ?, ?>>
+abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT extends _Property<?>, PST extends _PropertySet<?, ?, ?>>
     extends _PropertyFSM<_PropertyFSMPropertyRecord, PST, PST, _FSM>
     implements Comparator<_PropertyValue<?>> {
 
@@ -119,7 +119,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT e
    *          the properties
    * @return the property set
    */
-  abstract PST _createPropertySet(final _Property<?, ?>[] data);
+  abstract PST _createPropertySet(final _Property<?>[] data);
 
   /**
    * merge names

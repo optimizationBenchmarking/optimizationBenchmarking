@@ -8,21 +8,16 @@ import java.util.logging.Logger;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.io.xml.XMLBase;
-import org.optimizationBenchmarking.utils.io.xml.XMLDocument;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * A base class for reader-based experiment I/O
+ * A base class for xml-based input
  * 
- * @param <S>
- *          the store context
  * @param <L>
  *          the load context
  */
-public abstract class XMLIODriver<S, L> extends TextIODriver<S, L> {
+public abstract class XMLInputDriver<L> extends TextInputDriver<L> {
 
   /** the xml version */
   protected static final String XML_VERSION = "1.0"; //$NON-NLS-1$
@@ -37,7 +32,7 @@ public abstract class XMLIODriver<S, L> extends TextIODriver<S, L> {
   private volatile Throwable m_spfConfig;
 
   /** create */
-  protected XMLIODriver() {
+  protected XMLInputDriver() {
     super();
     this.m_synch = new Object();
   }
@@ -148,82 +143,6 @@ public abstract class XMLIODriver<S, L> extends TextIODriver<S, L> {
   protected void doLoadReader(final L loaderContext,
       final BufferedReader reader, final Logger logger) throws IOException {
     this.loadInputSource(loaderContext, new InputSource(reader), logger);
-  }
-
-  /**
-   * Store an object into an XML document.
-   * 
-   * @param data
-   *          the data to be stored
-   * @param dest
-   *          the destination writer
-   * @param logger
-   *          the logger to use
-   */
-  protected void doStoreXML(final S data, final XMLBase dest,
-      final Logger logger) {
-    //
-  }
-
-  /**
-   * Store an object into an XML document.
-   * 
-   * @param data
-   *          the data to be stored
-   * @param dest
-   *          the destination writer
-   * @param logger
-   *          the logger to use
-   * @throws IOException
-   *           if I/O fails
-   */
-  public final void storeXML(final S data, final XMLBase dest,
-      final Logger logger) throws IOException {
-    Throwable e;
-
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Beginning XML output."); //$NON-NLS-1$
-    }
-
-    e = null;
-    try {
-      this.doStoreXML(data, dest, logger);
-    } catch (final Throwable t) {
-      e = t;
-    }
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Finished XML output."); //$NON-NLS-1$
-    }
-
-    if (e != null) {
-      ErrorUtils.throwAsIOException(e);
-    }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final void doStoreText(final S data, final ITextOutput dest,
-      final Logger logger) {
-    Throwable e;
-
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Beginning XML output."); //$NON-NLS-1$
-    }
-
-    e = null;
-    try (final XMLDocument doc = new XMLDocument(dest)) {
-      this.doStoreXML(data, doc, logger);
-    } catch (final Throwable ttt) {
-      e = ttt;
-    }
-
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Finished XML output."); //$NON-NLS-1$
-    }
-
-    if (e != null) {
-      ErrorUtils.throwAsRuntimeException(e);
-    }
   }
 
 }

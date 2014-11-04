@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * An experiment.
  * </p>
  */
-public final class Experiment extends DataSet<ExperimentSet, InstanceRuns> {
+public final class Experiment extends _IDObjectSet<InstanceRuns> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -111,12 +111,18 @@ public final class Experiment extends DataSet<ExperimentSet, InstanceRuns> {
 
   /** {@inheritDoc} */
   @Override
-  final int _compareTo(final _IDObject<?> o) {
+  final int _compareTo(final _IDObject o) {
 
     if (o instanceof Experiment) {
       return this.m_parameters.compareTo(((Experiment) o).m_parameters);
     }
 
     return super._compareTo(o);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ExperimentSet getOwner() {
+    return ((ExperimentSet) (this.m_owner));
   }
 }

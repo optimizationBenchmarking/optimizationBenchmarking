@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * @param <PVT>
  *          the property value type
  */
-class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PVT>>
+class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
     extends AbstractMap<PT, Object> implements
     Comparable<_PropertySetting<?, ?>>, Serializable, Iterable<PVT> {
 
@@ -102,10 +102,11 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
   @SuppressWarnings("rawtypes")
   public final boolean contains(final PVT value) {
     final _PropertyValue[] pv;
-    final _IDObject<?> p;
+    final _IDObject p;
     final int id;
 
-    return ((value != null) && ((p = value.m_owner) != null)
+    return ((value != null)
+        && ((p = ((_IDObject) (value.m_owner))) != null)
         && ((id = p.m_id) >= 0) && (id < (pv = this.m_values).length)//
     && (pv[id] == value));
   }
@@ -122,11 +123,11 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<?, PV
   @SuppressWarnings("rawtypes")
   public final boolean contains(final Object object) {
     final _PropertyValue[] pv;
-    final _IDObject<?> p, paramValue;
+    final _IDObject p, paramValue;
     final int id;
 
     return ((object instanceof _PropertyValue)//
-        && ((p = ((_IDObject<?>) ((paramValue = ((_IDObject<?>) object)).m_owner))) != null)//
+        && ((p = ((_IDObject) ((paramValue = ((_IDObject) object)).m_owner))) != null)//
         && ((id = p.m_id) >= 0) && (id < (pv = this.m_values).length) && //
     (pv[id] == paramValue));
   }

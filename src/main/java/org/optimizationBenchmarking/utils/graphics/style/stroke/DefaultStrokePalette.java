@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.graphics.style.stroke;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
+import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 
 /** the default stroke palette */
 public final class DefaultStrokePalette extends StrokePalette {
@@ -18,7 +18,7 @@ public final class DefaultStrokePalette extends StrokePalette {
 
     pal = null;
     try (final __DefaultStrokePaletteBuilder cspb = new __DefaultStrokePaletteBuilder()) {
-      PaletteIODriver.INSTANCE.loadResource(cspb,
+      PaletteInputDriver.INSTANCE.loadResource(cspb,
           DefaultStrokePalette.class, "default.stroke.palette"); //$NON-NLS-1$
       pal = cspb.getResult();
     } catch (final Throwable t) {

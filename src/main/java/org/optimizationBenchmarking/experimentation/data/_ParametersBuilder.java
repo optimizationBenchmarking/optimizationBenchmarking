@@ -50,7 +50,7 @@ final class _ParametersBuilder extends
 
   /** {@inheritDoc} */
   @Override
-  final ParameterSet _createPropertySet(final _Property<?, ?>[] data) {
+  final ParameterSet _createPropertySet(final _Property<?>[] data) {
     return new ParameterSet(data);
   }
 

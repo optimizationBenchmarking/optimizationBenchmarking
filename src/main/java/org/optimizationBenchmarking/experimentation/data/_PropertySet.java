@@ -15,8 +15,8 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
  * @param <PST>
  *          the property setting type
  */
-abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<?, PVT>, PST extends _PropertySetting<?, ?>>
-    extends _IDObjectSet<ExperimentSet, PT> {
+abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<PVT>, PST extends _PropertySetting<?, ?>>
+    extends _IDObjectSet<PT> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    *          the instances
    */
   @SuppressWarnings("unchecked")
-  _PropertySet(final _Property<?, ?>[] data) {
+  _PropertySet(final _Property<?>[] data) {
     super(((PT[]) data), false, true, true);
     this.m_properties = ((PT[]) data);
   }
@@ -180,12 +180,13 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    *          are {@code null} values allowed and ignored?
    * @return the parameter setting
    */
+  @SuppressWarnings("rawtypes")
   final PST createSetting(final Iterator<? extends PVT> values,
       final boolean fillGeneral, final boolean allowNullValues) {
     final _PropertyValue<?>[] ps;
     final PT[] data;
     boolean isGeneral;
-    _Property<?, ?> valueParameter;
+    _Property<?> valueParameter;
     _PropertyValue<?> v;
     int valueId, valueParameterId, count;
 
@@ -203,7 +204,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
             "Property value must not be null, but the " + //$NON-NLS-1$
                 count + "th specified value is."); //$NON-NLS-1$
       }
-      valueParameter = v.m_owner;
+      valueParameter = ((_Property) (v.m_owner));
       valueParameterId = valueParameter.m_id;
 
       if ((valueParameterId < 0) && (valueParameterId >= data.length)) {
@@ -288,5 +289,11 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
     }
 
     return this._createSetting(ps, isGeneral);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ExperimentSet getOwner() {
+    return ((ExperimentSet) (this.m_owner));
   }
 }

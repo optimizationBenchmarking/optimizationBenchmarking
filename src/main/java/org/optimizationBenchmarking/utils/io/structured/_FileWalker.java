@@ -13,12 +13,10 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 /**
  * the internal file walker
  * 
- * @param <S>
- *          the storer type
  * @param <L>
  *          the loader type
  */
-final class _FileWalker<S, L> implements FileVisitor<Object> {
+final class _FileWalker<L> implements FileVisitor<Object> {
 
   /** the context */
   private final L m_loadContext;
@@ -27,7 +25,7 @@ final class _FileWalker<S, L> implements FileVisitor<Object> {
   /** the default encoding */
   private final StreamEncoding<?, ?> m_defaultEncoding;
   /** the driver to delegate to */
-  private final FileIODriver<?, L> m_driver;
+  private final FileInputDriver<L> m_driver;
 
   /**
    * create
@@ -43,7 +41,7 @@ final class _FileWalker<S, L> implements FileVisitor<Object> {
    */
   _FileWalker(final L loadContext, final Logger logger,
       final StreamEncoding<?, ?> defaultEncoding,
-      final FileIODriver<S, L> driver) {
+      final FileInputDriver<L> driver) {
     super();
     this.m_loadContext = loadContext;
     this.m_logger = logger;

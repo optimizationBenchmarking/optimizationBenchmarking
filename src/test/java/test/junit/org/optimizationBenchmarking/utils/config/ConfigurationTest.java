@@ -15,8 +15,10 @@ import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
-import org.optimizationBenchmarking.utils.config.ConfigurationPropertiesIO;
-import org.optimizationBenchmarking.utils.config.ConfigurationXMLIO;
+import org.optimizationBenchmarking.utils.config.ConfigurationPropertiesInput;
+import org.optimizationBenchmarking.utils.config.ConfigurationPropertiesOutput;
+import org.optimizationBenchmarking.utils.config.ConfigurationXMLInput;
+import org.optimizationBenchmarking.utils.config.ConfigurationXMLOutput;
 import org.optimizationBenchmarking.utils.parsers.BooleanParser;
 import org.optimizationBenchmarking.utils.parsers.ByteParser;
 import org.optimizationBenchmarking.utils.parsers.CharParser;
@@ -196,13 +198,13 @@ public class ConfigurationTest extends TestBase {
 
     try {
       try (StringWriter sw = new StringWriter()) {
-        ConfigurationXMLIO.INSTANCE.storeWriter(inst, sw);
+        ConfigurationXMLOutput.INSTANCE.storeWriter(inst, sw);
         x = sw.toString();
       }
 
       try (final ConfigurationBuilder fb = new ConfigurationBuilder()) {
         try (StringReader sr = new StringReader(x)) {
-          ConfigurationXMLIO.INSTANCE.loadReader(fb, sr);
+          ConfigurationXMLInput.INSTANCE.loadReader(fb, sr);
         }
         b = fb.getResult();
       }
@@ -244,13 +246,13 @@ public class ConfigurationTest extends TestBase {
 
     try {
       try (StringWriter sw = new StringWriter()) {
-        ConfigurationPropertiesIO.INSTANCE.storeWriter(inst, sw);
+        ConfigurationPropertiesOutput.INSTANCE.storeWriter(inst, sw);
         x = sw.toString();
       }
 
       try (final ConfigurationBuilder fb = new ConfigurationBuilder()) {
         try (StringReader sr = new StringReader(x)) {
-          ConfigurationPropertiesIO.INSTANCE.loadReader(fb, sr);
+          ConfigurationPropertiesInput.INSTANCE.loadReader(fb, sr);
         }
         b = fb.getResult();
       }
@@ -298,7 +300,7 @@ public class ConfigurationTest extends TestBase {
           }
 
           values.put(key, value);
-        } while (random.nextInt(40) > 0);
+        } while ((random.nextInt(40) > 0) || (params.size() <= 0));
 
         cb.putCommandLine(//
         params.toArray(new String[params.size()]));
@@ -382,11 +384,10 @@ public class ConfigurationTest extends TestBase {
             value = null;
           }
           values.put(key, value);
-        } while (random.nextInt(40) > 0);
+        } while ((random.nextInt(40) > 0) || (params.size() <= 0));
 
         cb.putCommandLine(//
         params.toArray(new String[params.size()]));
-
         cfg = cb.getResult();
       }
 

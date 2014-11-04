@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
+import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 
 /**
  * a palette based on the <a
@@ -28,7 +28,7 @@ public final class HTML401Palette extends ColorPalette {
 
     pal = null;
     try (final __DefaultHTML401PaletteBuilder cspb = new __DefaultHTML401PaletteBuilder()) {
-      PaletteIODriver.INSTANCE.loadResource(cspb, HTML401Palette.class,
+      PaletteInputDriver.INSTANCE.loadResource(cspb, HTML401Palette.class,
           "html401.color.palette"); //$NON-NLS-1$
       pal = cspb.getResult();
     } catch (final Throwable t) {

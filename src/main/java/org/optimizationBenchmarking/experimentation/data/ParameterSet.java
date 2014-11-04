@@ -18,7 +18,7 @@ public final class ParameterSet extends
    * @param data
    *          the instances
    */
-  ParameterSet(final _Property<?, ?>[] data) {
+  ParameterSet(final _Property<?>[] data) {
     super(data);
     this.m_id = ParameterSet.ID_COUNTER.getAndIncrement();
   }
@@ -29,5 +29,4 @@ public final class ParameterSet extends
       final boolean isGeneralized) {
     return new ParameterSetting(values, isGeneralized);
   }
-
 }

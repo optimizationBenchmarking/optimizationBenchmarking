@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.experimentation.data;
  * configuration for the same benchmarking instance.
  * </p>
  */
-public final class InstanceRuns extends DataSet<Experiment, Run> {
+public final class InstanceRuns extends _IDObjectSet<Run> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -48,7 +48,7 @@ public final class InstanceRuns extends DataSet<Experiment, Run> {
 
   /** {@inheritDoc} */
   @Override
-  final int _compareTo(final _IDObject<?> o) {
+  final int _compareTo(final _IDObject o) {
     final Instance ins;
     final int i;
 
@@ -69,5 +69,11 @@ public final class InstanceRuns extends DataSet<Experiment, Run> {
       }
     }
     return super._compareTo(o);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final Experiment getOwner() {
+    return ((Experiment) (this.m_owner));
   }
 }

@@ -3,8 +3,7 @@ package org.optimizationBenchmarking.experimentation.data;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** A parameter. */
-public final class Parameter extends
-    _Property<ParameterSet, ParameterValue> {
+public final class Parameter extends _Property<ParameterValue> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -79,4 +78,9 @@ public final class Parameter extends
     return this.m_unspec;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final ParameterSet getOwner() {
+    return ((ParameterSet) (this.m_owner));
+  }
 }

@@ -10,8 +10,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * @param <OT>
  *          the owner type
  */
-class _PropertyValue<OT extends _Property<?, ?>> extends
-    _NamedIDObject<OT> implements Map.Entry<OT, Object> {
+abstract class _PropertyValue<OT extends _Property<?>> extends
+    _NamedIDObject implements Map.Entry<OT, Object> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -45,10 +45,10 @@ class _PropertyValue<OT extends _Property<?, ?>> extends
     if (this.m_owner != null) {
       switch (this.m_id) {
         case _PropertyValueUnspecified.ID: {
-          return this.m_owner.unspecified();
+          return ((OT) (this.m_owner)).unspecified();
         }
         case _PropertyValueGeneralized.ID: {
-          return this.m_owner.m_general;
+          return ((OT) (this.m_owner)).m_general;
         }
       }
     }
@@ -58,7 +58,13 @@ class _PropertyValue<OT extends _Property<?, ?>> extends
   /** {@inheritDoc} */
   @Override
   public final OT getKey() {
-    return this.m_owner;
+    return ((OT) (this.m_owner));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final OT getOwner() {
+    return ((OT) (this.m_owner));
   }
 
   /** {@inheritDoc} */
@@ -83,7 +89,7 @@ class _PropertyValue<OT extends _Property<?, ?>> extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return (this.m_owner.getName() + '=' + this.m_value);
+    return (((OT) (this.m_owner)).getName() + '=' + this.m_value);
   }
 
   /**
@@ -100,7 +106,7 @@ class _PropertyValue<OT extends _Property<?, ?>> extends
   /** {@inheritDoc} */
   @Override
   public void toText(final ITextOutput textOut) {
-    textOut.append(this.m_owner.getName());
+    textOut.append(((OT) (this.m_owner)).getName());
     textOut.append('=');
     textOut.append(this.m_value);
   }

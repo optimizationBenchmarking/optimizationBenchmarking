@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.data;
 /**
  * A problem instance.
  */
-public final class Instance extends _NamedIDObject<InstanceSet> {
+public final class Instance extends _NamedIDObject {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -161,12 +161,18 @@ public final class Instance extends _NamedIDObject<InstanceSet> {
 
   /** {@inheritDoc} */
   @Override
-  final int _compareTo(final _IDObject<?> o) {
+  final int _compareTo(final _IDObject o) {
 
     if (o instanceof Instance) {
       return this.m_features.compareTo(((Instance) o).m_features);
     }
 
     return super._compareTo(o);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final InstanceSet getOwner() {
+    return ((InstanceSet) (this.m_owner));
   }
 }

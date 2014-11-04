@@ -10,6 +10,7 @@ import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.parsers.PathParser;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** An API to build configuration objects. */
 public class ConfigurationBuilder extends BuilderFSM<Configuration> {
@@ -38,6 +39,26 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
   public ConfigurationBuilder(final HierarchicalFSM owner) {
     super(owner);
     this.open();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void fsmFlagsAppendName(final int flagValue,
+      final int flagIndex, final MemoryTextOutput append) {
+    switch (flagValue) {
+      case FLAG_OWNER_HAS_BEEN_SET: {
+        append.append("ownerHasBeenSet");return; //$NON-NLS-1$
+      }
+      case FLAG_DATA_HAS_BEEN_SET: {
+        append.append("dataHasBeenSet");return; //$NON-NLS-1$
+      }
+      case FLAG_HAS_BEEN_CONFIGURED: {
+        append.append("hasBeenConfigured");return; //$NON-NLS-1$
+      }
+      default: {
+        super.fsmFlagsAppendName(flagValue, flagIndex, append);
+      }
+    }
   }
 
   /**
@@ -214,7 +235,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
     f = this.__get()._get(Configuration.PARAM_PROPERTY_FILE,
         PathParser.INSTANCE, null, false);
     if (f != null) {
-      ConfigurationPropertiesIO.INSTANCE.loadPath(this, f);
+      ConfigurationPropertiesInput.INSTANCE.loadPath(this, f);
     }
   }
 

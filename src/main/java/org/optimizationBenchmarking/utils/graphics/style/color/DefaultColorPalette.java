@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteIODriver;
+import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 
 /** the default color palette */
 public final class DefaultColorPalette extends ColorPalette {
@@ -20,7 +20,7 @@ public final class DefaultColorPalette extends ColorPalette {
 
     pal = null;
     try (final __DefaultColorPaletteBuilder cspb = new __DefaultColorPaletteBuilder()) {
-      PaletteIODriver.INSTANCE.loadResource(cspb,
+      PaletteInputDriver.INSTANCE.loadResource(cspb,
           DefaultColorPalette.class, "default.color.color.palette"); //$NON-NLS-1$
       pal = cspb.getResult();
     } catch (final Throwable t) {

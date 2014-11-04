@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
-import org.optimizationBenchmarking.utils.io.structured.FileIODriver;
+import org.optimizationBenchmarking.utils.io.structured.FileInputDriver;
 
 /**
  * Build a data source.
@@ -20,7 +20,7 @@ public interface IDriverBasedDataBuilder extends IEvaluationElement {
    *          the driver of this data source
    */
   public abstract void setDriver(
-      final FileIODriver<?, ? super ExperimentSetContext> driver);
+      final FileInputDriver<? super ExperimentSetContext> driver);
 
   /**
    * Set the stream encoding to be used to load this data source

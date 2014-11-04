@@ -111,7 +111,7 @@ final class _EDIContentHandler extends DelegatingHandler {
   private static final String __att(final Attributes atts, final String at) {
     String r;
 
-    r = TextUtils.normalize(atts.getValue(EDIDriver.NAMESPACE, at));
+    r = TextUtils.normalize(atts.getValue(_EDIConstants.NAMESPACE, at));
     if (r != null) {
       return r;
     }
@@ -134,19 +134,21 @@ final class _EDIContentHandler extends DelegatingHandler {
     stack = this.m_stack;
     c = ((InstanceContext) (stack.get(stack.size() - 1)));
 
-    dim = _EDIContentHandler.__att(atts, EDIDriver.A_DIMENSION);
+    dim = _EDIContentHandler.__att(atts, _EDIConstants.A_DIMENSION);
     if (dim != null) {
 
-      lb = _EDIContentHandler.__att(atts, EDIDriver.A_FLOAT_LOWER_BOUND);
+      lb = _EDIContentHandler.__att(atts,
+          _EDIConstants.A_FLOAT_LOWER_BOUND);
       if (lb == null) {
         lb = _EDIContentHandler.__att(atts,
-            EDIDriver.A_INTEGER_LOWER_BOUND);
+            _EDIConstants.A_INTEGER_LOWER_BOUND);
       }
 
-      ub = _EDIContentHandler.__att(atts, EDIDriver.A_FLOAT_UPPER_BOUND);
+      ub = _EDIContentHandler.__att(atts,
+          _EDIConstants.A_FLOAT_UPPER_BOUND);
       if (ub == null) {
         ub = _EDIContentHandler.__att(atts,
-            EDIDriver.A_INTEGER_UPPER_BOUND);
+            _EDIConstants.A_INTEGER_UPPER_BOUND);
       }
 
       if ((lb != null) || (ub != null)) {
@@ -185,32 +187,33 @@ final class _EDIContentHandler extends DelegatingHandler {
       stack.add(d);
     }
 
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_NAME);
+    s = _EDIContentHandler.__att(atts, _EDIConstants.A_NAME);
     d.setName(s);
 
     if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
       this.m_logger.fine("Begin of dimension '" + s + '\''); //$NON-NLS-1$
     }
 
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_DESCRIPTION);
+    s = _EDIContentHandler.__att(atts, _EDIConstants.A_DESCRIPTION);
     if (s != null) {
       d.setDescription(s);
     }
 
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_DIMENSION_TYPE);
+    s = _EDIContentHandler.__att(atts, _EDIConstants.A_DIMENSION_TYPE);
     findDT: {
-      for (i = EDIDriver.AV_DIMENSION_TYPE.length; (--i) >= 0;) {
-        if (EDIDriver.AV_DIMENSION_TYPE[i].equalsIgnoreCase(s)) {
+      for (i = _EDIConstants.AV_DIMENSION_TYPE.length; (--i) >= 0;) {
+        if (_EDIConstants.AV_DIMENSION_TYPE[i].equalsIgnoreCase(s)) {
           d.setType(EDimensionType.INSTANCES.get(i));
           break findDT;
         }
       }
     }
 
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_DIMENSION_DIRECTION);
+    s = _EDIContentHandler
+        .__att(atts, _EDIConstants.A_DIMENSION_DIRECTION);
     findDD: {
-      for (i = EDIDriver.AV_DIMENSION_DIRECTION.length; (--i) >= 0;) {
-        if (EDIDriver.AV_DIMENSION_DIRECTION[i].equalsIgnoreCase(s)) {
+      for (i = _EDIConstants.AV_DIMENSION_DIRECTION.length; (--i) >= 0;) {
+        if (_EDIConstants.AV_DIMENSION_DIRECTION[i].equalsIgnoreCase(s)) {
           d.setDirection(EDimensionDirection.INSTANCES.get(i));
           break findDD;
         }
@@ -218,21 +221,24 @@ final class _EDIContentHandler extends DelegatingHandler {
     }
 
     pt = null;
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_DIMENSION_DATA_TYPE);
+    s = _EDIContentHandler
+        .__att(atts, _EDIConstants.A_DIMENSION_DATA_TYPE);
     findPT: {
-      for (i = EDIDriver.AV_DIMENSION_DATA_TYPE.length; (--i) >= 0;) {
-        if (EDIDriver.AV_DIMENSION_DATA_TYPE[i].equalsIgnoreCase(s)) {
+      for (i = _EDIConstants.AV_DIMENSION_DATA_TYPE.length; (--i) >= 0;) {
+        if (_EDIConstants.AV_DIMENSION_DATA_TYPE[i].equalsIgnoreCase(s)) {
           pt = EPrimitiveType.TYPES.get(i);
           break findPT;
         }
       }
     }
 
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_INTEGER_LOWER_BOUND);
+    s = _EDIContentHandler
+        .__att(atts, _EDIConstants.A_INTEGER_LOWER_BOUND);
     if (s != null) {
       lb = LongParser.INSTANCE.parseString(s);
     } else {
-      s = _EDIContentHandler.__att(atts, EDIDriver.A_FLOAT_LOWER_BOUND);
+      s = _EDIContentHandler
+          .__att(atts, _EDIConstants.A_FLOAT_LOWER_BOUND);
       if (s != null) {
         lb = DoubleParser.INSTANCE.parseString(s);
       } else {
@@ -240,11 +246,13 @@ final class _EDIContentHandler extends DelegatingHandler {
       }
     }
 
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_INTEGER_UPPER_BOUND);
+    s = _EDIContentHandler
+        .__att(atts, _EDIConstants.A_INTEGER_UPPER_BOUND);
     if (s != null) {
       ub = LongParser.INSTANCE.parseString(s);
     } else {
-      s = _EDIContentHandler.__att(atts, EDIDriver.A_FLOAT_UPPER_BOUND);
+      s = _EDIContentHandler
+          .__att(atts, _EDIConstants.A_FLOAT_UPPER_BOUND);
       if (s != null) {
         ub = DoubleParser.INSTANCE.parseString(s);
       } else {
@@ -339,14 +347,14 @@ final class _EDIContentHandler extends DelegatingHandler {
       stack.add(d);
     }
 
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_NAME);
+    s = _EDIContentHandler.__att(atts, _EDIConstants.A_NAME);
     d.setName(s);
 
     if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
       this.m_logger.fine("Begin of experiment '" + s + '\''); //$NON-NLS-1$
     }
 
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_DESCRIPTION);
+    s = _EDIContentHandler.__att(atts, _EDIConstants.A_DESCRIPTION);
     if (s != null) {
       d.setDescription(s);
     }
@@ -383,11 +391,12 @@ final class _EDIContentHandler extends DelegatingHandler {
     }
 
     d.setFeatureValue(//
-        _EDIContentHandler.__att(atts, EDIDriver.A_NAME),//
-        _EDIContentHandler.__att(atts, EDIDriver.A_FEATURE_DESCRIPTION),//
-        _EDIContentHandler.__att(atts, EDIDriver.A_FEATURE_VALUE),//
+        _EDIContentHandler.__att(atts, _EDIConstants.A_NAME),//
+        _EDIContentHandler
+            .__att(atts, _EDIConstants.A_FEATURE_DESCRIPTION),//
+        _EDIContentHandler.__att(atts, _EDIConstants.A_FEATURE_VALUE),//
         _EDIContentHandler.__att(atts,
-            EDIDriver.A_FEATURE_VALUE_DESCRIPTION));
+            _EDIConstants.A_FEATURE_VALUE_DESCRIPTION));
   }
 
   /**
@@ -413,14 +422,14 @@ final class _EDIContentHandler extends DelegatingHandler {
       stack.add(d);
     }
 
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_NAME);
+    s = _EDIContentHandler.__att(atts, _EDIConstants.A_NAME);
     d.setName(s);
 
     if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
       this.m_logger.fine("Begin of instance '" + s + '\''); //$NON-NLS-1$
     }
 
-    s = _EDIContentHandler.__att(atts, EDIDriver.A_DESCRIPTION);
+    s = _EDIContentHandler.__att(atts, _EDIConstants.A_DESCRIPTION);
     if (s != null) {
       d.setDescription(s);
     }
@@ -456,7 +465,7 @@ final class _EDIContentHandler extends DelegatingHandler {
     }
     d = c.createInstanceRuns();
     stack.add(d);
-    d.setInstance(_EDIContentHandler.__att(atts, EDIDriver.A_INSTANCE));
+    d.setInstance(_EDIContentHandler.__att(atts, _EDIConstants.A_INSTANCE));
   }
 
   /** end the instance runs */
@@ -543,11 +552,12 @@ final class _EDIContentHandler extends DelegatingHandler {
     }
 
     d.setParameterValue(//
-        _EDIContentHandler.__att(atts, EDIDriver.A_NAME),//
-        _EDIContentHandler.__att(atts, EDIDriver.A_PARAMETER_DESCRIPTION),//
-        _EDIContentHandler.__att(atts, EDIDriver.A_PARAMETER_VALUE),//
+        _EDIContentHandler.__att(atts, _EDIConstants.A_NAME),//
         _EDIContentHandler.__att(atts,
-            EDIDriver.A_PARAMETER_VALUE_DESCRIPTION));
+            _EDIConstants.A_PARAMETER_DESCRIPTION),//
+        _EDIContentHandler.__att(atts, _EDIConstants.A_PARAMETER_VALUE),//
+        _EDIContentHandler.__att(atts,
+            _EDIConstants.A_PARAMETER_VALUE_DESCRIPTION));
   }
 
   /** {@inheritDoc} */
@@ -562,51 +572,51 @@ final class _EDIContentHandler extends DelegatingHandler {
           uri + ':' + localName + '>');
     }
 
-    if ((uri == null) || EDIDriver.NAMESPACE.equalsIgnoreCase(uri)) {
+    if ((uri == null) || _EDIConstants.NAMESPACE.equalsIgnoreCase(uri)) {
 
-      if (EDIDriver.E_BOUNDS.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_BOUNDS.equalsIgnoreCase(localName)) {
         this.__startBounds(attributes);
         return;
       }
-      if (EDIDriver.E_DIMENSION.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_DIMENSION.equalsIgnoreCase(localName)) {
         this.__startDimension(attributes);
         return;
       }
 
-      if (EDIDriver.E_EXPERIMENT.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_EXPERIMENT.equalsIgnoreCase(localName)) {
         this.__startExperiment(attributes);
         return;
       }
 
-      if (EDIDriver.E_FEATURE.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_FEATURE.equalsIgnoreCase(localName)) {
         this.__startFeature(attributes);
         return;
       }
-      if (EDIDriver.E_FLOAT.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_FLOAT.equalsIgnoreCase(localName)) {
         this.__startVal();
         return;
       }
-      if (EDIDriver.E_INSTANCE.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_INSTANCE.equalsIgnoreCase(localName)) {
         this.__startInstance(attributes);
         return;
       }
-      if (EDIDriver.E_INSTANCE_RUNS.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_INSTANCE_RUNS.equalsIgnoreCase(localName)) {
         this.__startInstanceRuns(attributes);
         return;
       }
-      if (EDIDriver.E_INT.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_INT.equalsIgnoreCase(localName)) {
         this.__startVal();
         return;
       }
-      if (EDIDriver.E_PARAMETER.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_PARAMETER.equalsIgnoreCase(localName)) {
         this.__startParameter(attributes);
         return;
       }
-      if (EDIDriver.E_POINT.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_POINT.equalsIgnoreCase(localName)) {
         this.__startPoint();
         return;
       }
-      if (EDIDriver.E_RUN.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_RUN.equalsIgnoreCase(localName)) {
         this.__startRun();
         return;
       }
@@ -624,38 +634,38 @@ final class _EDIContentHandler extends DelegatingHandler {
           uri + ':' + localName + '>');
     }
 
-    if ((uri == null) || EDIDriver.NAMESPACE.equalsIgnoreCase(uri)) {
+    if ((uri == null) || _EDIConstants.NAMESPACE.equalsIgnoreCase(uri)) {
 
-      if (EDIDriver.E_DIMENSION.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_DIMENSION.equalsIgnoreCase(localName)) {
         this.__endDimension();
       }
 
-      if (EDIDriver.E_EXPERIMENT.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_EXPERIMENT.equalsIgnoreCase(localName)) {
         this.__endExperiment();
         return;
       }
 
-      if (EDIDriver.E_INSTANCE.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_INSTANCE.equalsIgnoreCase(localName)) {
         this.__endInstance();
         return;
       }
 
-      if (EDIDriver.E_INSTANCE_RUNS.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_INSTANCE_RUNS.equalsIgnoreCase(localName)) {
         this.__endInstanceRuns();
         return;
       }
 
-      if (EDIDriver.E_POINT.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_POINT.equalsIgnoreCase(localName)) {
         this.__endPoint();
         return;
       }
 
-      if (EDIDriver.E_RUN.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_RUN.equalsIgnoreCase(localName)) {
         this.__endRun();
         return;
       }
 
-      if (EDIDriver.E_EXPERIMENT_DATA.equalsIgnoreCase(localName)) {
+      if (_EDIConstants.E_EXPERIMENT_DATA.equalsIgnoreCase(localName)) {
         this.close();
         return;
       }

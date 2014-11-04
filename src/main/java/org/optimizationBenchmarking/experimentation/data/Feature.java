@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.data;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** A feature. */
-public final class Feature extends _Property<FeatureSet, FeatureValue> {
+public final class Feature extends _Property<FeatureValue> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -29,4 +29,9 @@ public final class Feature extends _Property<FeatureSet, FeatureValue> {
     super(name, desc, primitiveType, values, general);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final FeatureSet getOwner() {
+    return ((FeatureSet) (this.m_owner));
+  }
 }

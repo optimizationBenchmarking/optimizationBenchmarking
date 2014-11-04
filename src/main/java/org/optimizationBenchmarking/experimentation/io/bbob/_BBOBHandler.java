@@ -305,7 +305,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
     try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
 
-      data = new Path[BBOBDriver.DIMENSIONS.length][2];
+      data = new Path[BBOBInputDriver.DIMENSIONS.length][2];
       count = 0;
 
       outer: for (final Path f : files) {
@@ -350,7 +350,8 @@ final class _BBOBHandler implements Comparator<Number[]> {
                       try {
                         b = Byte.parseByte(name.substring((k + 1), len));
 
-                        i = Arrays.binarySearch(BBOBDriver.DIMENSIONS, b);
+                        i = Arrays.binarySearch(
+                            BBOBInputDriver.DIMENSIONS, b);
                         if (i >= 0) {
                           data[i][td ? 0 : 1] = f;
                           count++;
@@ -384,8 +385,8 @@ final class _BBOBHandler implements Comparator<Number[]> {
           for (count = data.length; (--count) >= 0;) {
             if ((data[count][0] != null) || (data[count][1] != null)) {
               try (final InstanceRunsContext ic = ec.createInstanceRuns()) {
-                ic.setInstance(BBOBDriver._makeFunctionName(fid,
-                    BBOBDriver.DIMENSIONS[count]));
+                ic.setInstance(BBOBInputDriver._makeFunctionName(fid,
+                    BBOBInputDriver.DIMENSIONS[count]));
                 this.__handleInstance(data[count][0], data[count][1], ic);
               }
             }
@@ -440,7 +441,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
     revisit = new ArrayList<>();
     try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
 
-      dataFolders = new Path[BBOBDriver.MAX_FUNCTION + 1];
+      dataFolders = new Path[BBOBInputDriver.MAX_FUNCTION + 1];
       dataFolderCount = 0;
 
       outer: for (final Path f : files) {

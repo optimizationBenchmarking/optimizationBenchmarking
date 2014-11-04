@@ -5,13 +5,11 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 /**
  * A property
  * 
- * @param <OT>
- *          the owner type
  * @param <DT>
  *          the data type .
  */
-class _Property<OT extends _PropertySet<?, ?, ?>, DT extends _PropertyValue<?>>
-    extends _NamedIDObjectSet<OT, DT> {
+abstract class _Property<DT extends _PropertyValue<?>> extends
+    _NamedIDObjectSet<DT> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -65,7 +63,7 @@ class _Property<OT extends _PropertySet<?, ?, ?>, DT extends _PropertyValue<?>>
 
   /** {@inheritDoc} */
   @Override
-  final int _compareTo(final _IDObject<?> o) {
+  final int _compareTo(final _IDObject o) {
     return 0;
   }
 

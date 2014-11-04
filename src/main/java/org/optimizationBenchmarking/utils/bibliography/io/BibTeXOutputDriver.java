@@ -22,7 +22,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
-import org.optimizationBenchmarking.utils.io.structured.TextIODriver;
+import org.optimizationBenchmarking.utils.io.structured.TextOutputDriver;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransformer;
@@ -32,19 +32,19 @@ import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransfor
  * of bibliographic data. Currently, this API only supports output and
  * cannot yet read BibTeX data.
  */
-public final class BibTeXDriver extends TextIODriver<Object, Void> {
+public final class BibTeXOutputDriver extends TextOutputDriver<Object> {
 
   /** the BibTeX driver */
-  public static final BibTeXDriver INSTANCE = new BibTeXDriver();
+  public static final BibTeXOutputDriver INSTANCE = new BibTeXOutputDriver();
 
   /** the spaces */
   private static final char[] FIELD;
 
   static {
     FIELD = new char[18];
-    Arrays.fill(BibTeXDriver.FIELD, ' ');
-    BibTeXDriver.FIELD[BibTeXDriver.FIELD.length - 3] = '=';
-    BibTeXDriver.FIELD[BibTeXDriver.FIELD.length - 1] = '{';
+    Arrays.fill(BibTeXOutputDriver.FIELD, ' ');
+    BibTeXOutputDriver.FIELD[BibTeXOutputDriver.FIELD.length - 3] = '=';
+    BibTeXOutputDriver.FIELD[BibTeXOutputDriver.FIELD.length - 1] = '{';
   }
 
   /** the article */
@@ -113,7 +113,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
   private static final String TYPE = "type"; //$NON-NLS-1$
 
   /** create */
-  private BibTeXDriver() {
+  private BibTeXOutputDriver() {
     super();
   }
 
@@ -126,14 +126,15 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
 
     enc = LaTeXCharTransformer.INSTANCE.transform(textOut,
         TextUtils.DEFAULT_NORMALIZER_FORM);
-    buf = BibTeXDriver.FIELD.clone();
+    buf = BibTeXOutputDriver.FIELD.clone();
     if (data instanceof Bibliography) {
-      BibTeXDriver.__storeBibliography(((Bibliography) data), textOut,
-          enc, buf);
+      BibTeXOutputDriver.__storeBibliography(((Bibliography) data),
+          textOut, enc, buf);
       return;
     }
     if (data instanceof BibRecord) {
-      BibTeXDriver.__storeRecord(((BibRecord) data), textOut, enc, buf);
+      BibTeXOutputDriver.__storeRecord(((BibRecord) data), textOut, enc,
+          buf);
       return;
     }
 
@@ -160,32 +161,34 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     final URI u;
     final BibBook b;
 
-    BibTeXDriver.__recS(BibTeXDriver.INCOLLECTION, data, raw);
+    BibTeXOutputDriver.__recS(BibTeXOutputDriver.INCOLLECTION, data, raw);
 
-    BibTeXDriver.__field(BibTeXDriver.TITLE, data.getTitle(), raw, enc,
-        buf);
-    BibTeXDriver.__authors(BibTeXDriver.AUTHORS, data.getAuthors(), raw,
-        enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.TITLE, data.getTitle(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__authors(BibTeXOutputDriver.AUTHORS,
+        data.getAuthors(), raw, enc, buf);
 
     b = data.getBook();
     if (b != null) {
-      BibTeXDriver.__field(BibTeXDriver.BOOKTITLE, b.getTitle(), raw, enc,
-          buf);
-      BibTeXDriver.__storeBookInner(b, raw, enc, buf);
-      BibTeXDriver.__date(b.getDate(), raw, enc, buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.BOOKTITLE,
+          b.getTitle(), raw, enc, buf);
+      BibTeXOutputDriver.__storeBookInner(b, raw, enc, buf);
+      BibTeXOutputDriver.__date(b.getDate(), raw, enc, buf);
     }
 
-    BibTeXDriver.__pages(data.getStartPage(), data.getEndPage(), raw, enc,
-        buf);
-    BibTeXDriver.__field(BibTeXDriver.CHAPTER, data.getChapter(), raw,
-        enc, buf);
+    BibTeXOutputDriver.__pages(data.getStartPage(), data.getEndPage(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.CHAPTER,
+        data.getChapter(), raw, enc, buf);
 
-    BibTeXDriver.__field(BibTeXDriver.DOI, data.getDOI(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.DOI, data.getDOI(), raw,
+        enc, buf);
     u = data.getURL();
     if (u != null) {
-      BibTeXDriver.__field(BibTeXDriver.URL, u.toString(), raw, enc, buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.URL, u.toString(),
+          raw, enc, buf);
     }
-    BibTeXDriver.__recE(raw);
+    BibTeXOutputDriver.__recE(raw);
   }
 
   /**
@@ -204,39 +207,41 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       final ITextOutput raw, final ITextOutput enc, final char[] buf) {
 
     if (data instanceof BibArticle) {
-      BibTeXDriver.__storeArticle(((BibArticle) data), raw, enc, buf);
+      BibTeXOutputDriver
+          .__storeArticle(((BibArticle) data), raw, enc, buf);
       return;
     }
     if (data instanceof BibInProceedings) {
-      BibTeXDriver.__storeInProceedings(((BibInProceedings) data), raw,
-          enc, buf);
+      BibTeXOutputDriver.__storeInProceedings(((BibInProceedings) data),
+          raw, enc, buf);
       return;
     }
     if (data instanceof BibProceedings) {
-      BibTeXDriver.__storeProceedings(((BibProceedings) data), raw, enc,
-          buf);
+      BibTeXOutputDriver.__storeProceedings(((BibProceedings) data), raw,
+          enc, buf);
       return;
     }
     if (data instanceof BibInCollection) {
-      BibTeXDriver.__storeInCollection(((BibInCollection) data), raw, enc,
-          buf);
+      BibTeXOutputDriver.__storeInCollection(((BibInCollection) data),
+          raw, enc, buf);
       return;
     }
     if (data instanceof BibThesis) {
-      BibTeXDriver.__storeThesis(((BibThesis) data), raw, enc, buf);
+      BibTeXOutputDriver.__storeThesis(((BibThesis) data), raw, enc, buf);
       return;
     }
     if (data instanceof BibBook) {
-      BibTeXDriver.__storeBook(((BibBook) data), raw, enc, buf);
+      BibTeXOutputDriver.__storeBook(((BibBook) data), raw, enc, buf);
       return;
     }
     if (data instanceof BibWebsite) {
-      BibTeXDriver.__storeWebsite(((BibWebsite) data), raw, enc, buf);
+      BibTeXOutputDriver
+          .__storeWebsite(((BibWebsite) data), raw, enc, buf);
       return;
     }
     if (data instanceof BibTechReport) {
-      BibTeXDriver
-          .__storeTechReport(((BibTechReport) data), raw, enc, buf);
+      BibTeXOutputDriver.__storeTechReport(((BibTechReport) data), raw,
+          enc, buf);
       return;
     }
 
@@ -258,8 +263,8 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     l = name.length();
     name.getChars(0, l, buf, 2);
     l += 2;
-    System.arraycopy(BibTeXDriver.FIELD, l, buf, l,
-        (BibTeXDriver.FIELD.length - l));
+    System.arraycopy(BibTeXOutputDriver.FIELD, l, buf, l,
+        (BibTeXOutputDriver.FIELD.length - l));
   }
 
   /**
@@ -274,7 +279,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
    */
   private static final void __fieldS(final String name,
       final ITextOutput raw, final char[] buf) {
-    BibTeXDriver.__put(name, buf);
+    BibTeXOutputDriver.__put(name, buf);
     raw.append(buf);
   }
 
@@ -336,9 +341,9 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
   private static final void __field(final String name, final String value,
       final ITextOutput raw, final ITextOutput enc, final char[] buf) {
     if ((value != null) && (value.length() > 0)) {
-      BibTeXDriver.__fieldS(name, raw, buf);
+      BibTeXOutputDriver.__fieldS(name, raw, buf);
       enc.append(value);
-      BibTeXDriver.__fieldE(raw);
+      BibTeXOutputDriver.__fieldE(raw);
     }
   }
 
@@ -359,7 +364,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
   private static final void __pages(final String start, final String end,
       final ITextOutput raw, final ITextOutput enc, final char[] buf) {
     if ((start != null) || (end != null)) {
-      BibTeXDriver.__fieldS(BibTeXDriver.PAGES, raw, buf);
+      BibTeXOutputDriver.__fieldS(BibTeXOutputDriver.PAGES, raw, buf);
       if (start != null) {
         enc.append(start);
       }
@@ -370,7 +375,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
         }
         enc.append(end);
       }
-      BibTeXDriver.__fieldE(raw);
+      BibTeXOutputDriver.__fieldE(raw);
     }
   }
 
@@ -396,7 +401,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       o = org.getName();
       a = org.getAddress();
       if ((o != null) || (a != null)) {
-        BibTeXDriver.__fieldS(name, raw, buf);
+        BibTeXOutputDriver.__fieldS(name, raw, buf);
         if (a != null) {
           enc.append(a);
         }
@@ -407,7 +412,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
           }
           enc.append(o);
         }
-        BibTeXDriver.__fieldE(raw);
+        BibTeXOutputDriver.__fieldE(raw);
       }
     }
   }
@@ -435,11 +440,11 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     boolean z1, z2;
 
     if (start == null) {
-      BibTeXDriver.__date(end, raw, enc, buf);
+      BibTeXOutputDriver.__date(end, raw, enc, buf);
       return;
     }
     if ((end == null) || (start == end) || (start.equals(end))) {
-      BibTeXDriver.__date(start, raw, enc, buf);
+      BibTeXOutputDriver.__date(start, raw, enc, buf);
       return;
     }
 
@@ -447,9 +452,9 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     y2 = end.getYear();
 
     if (y1 == y2) {
-      BibTeXDriver.__fieldS(BibTeXDriver.YEAR, raw, buf);
+      BibTeXOutputDriver.__fieldS(BibTeXOutputDriver.YEAR, raw, buf);
       raw.append(y1);
-      BibTeXDriver.__fieldE(raw);
+      BibTeXOutputDriver.__fieldE(raw);
 
       m1 = start.getMonth();
       m2 = end.getMonth();
@@ -459,7 +464,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       // do we have two month records?
       if ((m1 != null) && (m2 != null)) {
         //
-        BibTeXDriver.__put(BibTeXDriver.MONTH, buf);
+        BibTeXOutputDriver.__put(BibTeXOutputDriver.MONTH, buf);
         raw.append(buf, 0, buf.length - 1);
 
         if (m1 == m2) {
@@ -563,11 +568,11 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     }
 
     // two full dates
-    BibTeXDriver.__put(BibTeXDriver.YEAR, buf);
+    BibTeXOutputDriver.__put(BibTeXOutputDriver.YEAR, buf);
     raw.append(buf);
-    BibTeXDriver.__fullDate(start, raw);
+    BibTeXOutputDriver.__fullDate(start, raw);
     raw.append(" # {--} # "); //$NON-NLS-1$
-    BibTeXDriver.__fullDate(start, raw);
+    BibTeXOutputDriver.__fullDate(start, raw);
     raw.append(',');
     raw.appendLineBreak();
   }
@@ -630,14 +635,14 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     if (value != null) {
       z = value.getYear();
       if (z > 0) {
-        BibTeXDriver.__fieldS(BibTeXDriver.YEAR, raw, buf);
+        BibTeXOutputDriver.__fieldS(BibTeXOutputDriver.YEAR, raw, buf);
         raw.append(z);
-        BibTeXDriver.__fieldE(raw);
+        BibTeXOutputDriver.__fieldE(raw);
       }
 
       m = value.getMonth();
       if (m != null) {
-        BibTeXDriver.__put(BibTeXDriver.MONTH, buf);
+        BibTeXOutputDriver.__put(BibTeXOutputDriver.MONTH, buf);
         raw.append(buf, 0, buf.length - 1);
         raw.append(m.getShortName());
         z = value.getDay();
@@ -651,9 +656,9 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       } else {
         q = value.getQuarter();
         if (q != null) {
-          BibTeXDriver.__fieldS(BibTeXDriver.MONTH, raw, buf);
+          BibTeXOutputDriver.__fieldS(BibTeXOutputDriver.MONTH, raw, buf);
           raw.append(q.getLongName());
-          BibTeXDriver.__fieldE(raw);
+          BibTeXOutputDriver.__fieldE(raw);
         }
       }
     }
@@ -680,7 +685,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     String p, f;
 
     if ((value != null) && (value.size() > 0)) {
-      BibTeXDriver.__fieldS(name, raw, buf);
+      BibTeXOutputDriver.__fieldS(name, raw, buf);
       b = false;
       for (final BibAuthor a : value) {
         p = a.getPersonalName();
@@ -688,7 +693,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
         if ((p != null) || (f != null)) {
           if (b) {
             raw.append(' ');
-            raw.append(BibTeXDriver.AND);
+            raw.append(BibTeXOutputDriver.AND);
             raw.append(' ');
           } else {
             b = true;
@@ -712,7 +717,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
           }
         }
       }
-      BibTeXDriver.__fieldE(raw);
+      BibTeXOutputDriver.__fieldE(raw);
     }
   }
 
@@ -732,31 +737,34 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       final ITextOutput raw, final ITextOutput enc, final char[] buf) {
     final URI u;
 
-    BibTeXDriver.__recS(BibTeXDriver.ARTICLE, data, raw);
+    BibTeXOutputDriver.__recS(BibTeXOutputDriver.ARTICLE, data, raw);
 
-    BibTeXDriver.__field(BibTeXDriver.TITLE, data.getTitle(), raw, enc,
-        buf);
-    BibTeXDriver.__authors(BibTeXDriver.AUTHORS, data.getAuthors(), raw,
-        enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.JOURNAL, data.getJournal(), raw,
-        enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.VOLUME, data.getVolume(), raw, enc,
-        buf);
-    BibTeXDriver.__field(BibTeXDriver.NUMBER, data.getNumber(), raw, enc,
-        buf);
-    BibTeXDriver.__pages(data.getStartPage(), data.getEndPage(), raw, enc,
-        buf);
-    BibTeXDriver.__date(data.getDate(), raw, enc, buf);
-    BibTeXDriver.__organization(BibTeXDriver.PUBLISHER,
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.TITLE, data.getTitle(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__authors(BibTeXOutputDriver.AUTHORS,
+        data.getAuthors(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.JOURNAL,
+        data.getJournal(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.VOLUME,
+        data.getVolume(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.NUMBER,
+        data.getNumber(), raw, enc, buf);
+    BibTeXOutputDriver.__pages(data.getStartPage(), data.getEndPage(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__date(data.getDate(), raw, enc, buf);
+    BibTeXOutputDriver.__organization(BibTeXOutputDriver.PUBLISHER,
         data.getPublisher(), raw, enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.ISSN, data.getISSN(), raw, enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.DOI, data.getDOI(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.ISSN, data.getISSN(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.DOI, data.getDOI(), raw,
+        enc, buf);
 
     u = data.getURL();
     if (u != null) {
-      BibTeXDriver.__field(BibTeXDriver.URL, u.toString(), raw, enc, buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.URL, u.toString(),
+          raw, enc, buf);
     }
-    BibTeXDriver.__recE(raw);
+    BibTeXOutputDriver.__recE(raw);
   }
 
   /**
@@ -775,21 +783,23 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       final ITextOutput raw, final ITextOutput enc, final char[] buf) {
     final URI u;
 
-    BibTeXDriver.__recS(BibTeXDriver.BOOK, data, raw);
+    BibTeXOutputDriver.__recS(BibTeXOutputDriver.BOOK, data, raw);
 
-    BibTeXDriver.__field(BibTeXDriver.TITLE, data.getTitle(), raw, enc,
-        buf);
-    BibTeXDriver.__authors(BibTeXDriver.AUTHORS, data.getAuthors(), raw,
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.TITLE, data.getTitle(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__authors(BibTeXOutputDriver.AUTHORS,
+        data.getAuthors(), raw, enc, buf);
+
+    BibTeXOutputDriver.__storeBookInner(data, raw, enc, buf);
+    BibTeXOutputDriver.__date(data.getDate(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.DOI, data.getDOI(), raw,
         enc, buf);
-
-    BibTeXDriver.__storeBookInner(data, raw, enc, buf);
-    BibTeXDriver.__date(data.getDate(), raw, enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.DOI, data.getDOI(), raw, enc, buf);
     u = data.getURL();
     if (u != null) {
-      BibTeXDriver.__field(BibTeXDriver.URL, u.toString(), raw, enc, buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.URL, u.toString(),
+          raw, enc, buf);
     }
-    BibTeXDriver.__recE(raw);
+    BibTeXOutputDriver.__recE(raw);
   }
 
   /**
@@ -810,30 +820,32 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     final EThesisType type;
 
     type = data.getType();
-    BibTeXDriver.__recS(
-        (type == EThesisType.PHD_THESIS) ? BibTeXDriver.PHDTHESIS
-            : BibTeXDriver.MASTERSTHESIS, data, raw);
+    BibTeXOutputDriver.__recS(
+        (type == EThesisType.PHD_THESIS) ? BibTeXOutputDriver.PHDTHESIS
+            : BibTeXOutputDriver.MASTERSTHESIS, data, raw);
 
-    BibTeXDriver.__field(BibTeXDriver.TITLE, data.getTitle(), raw, enc,
-        buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.TITLE, data.getTitle(),
+        raw, enc, buf);
 
     if ((type != null) && (type != EThesisType.PHD_THESIS)) {
-      BibTeXDriver.__field(BibTeXDriver.TYPE, type.getName(), raw, enc,
-          buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.TYPE, type.getName(),
+          raw, enc, buf);
     }
 
-    BibTeXDriver.__authors(BibTeXDriver.AUTHORS, data.getAuthors(), raw,
+    BibTeXOutputDriver.__authors(BibTeXOutputDriver.AUTHORS,
+        data.getAuthors(), raw, enc, buf);
+    BibTeXOutputDriver.__organization(BibTeXOutputDriver.SCHOOL,
+        data.getSchool(), raw, enc, buf);
+    BibTeXOutputDriver.__date(data.getDate(), raw, enc, buf);
+    BibTeXOutputDriver.__storeBookInner(data, raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.DOI, data.getDOI(), raw,
         enc, buf);
-    BibTeXDriver.__organization(BibTeXDriver.SCHOOL, data.getSchool(),
-        raw, enc, buf);
-    BibTeXDriver.__date(data.getDate(), raw, enc, buf);
-    BibTeXDriver.__storeBookInner(data, raw, enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.DOI, data.getDOI(), raw, enc, buf);
     u = data.getURL();
     if (u != null) {
-      BibTeXDriver.__field(BibTeXDriver.URL, u.toString(), raw, enc, buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.URL, u.toString(),
+          raw, enc, buf);
     }
-    BibTeXDriver.__recE(raw);
+    BibTeXOutputDriver.__recE(raw);
   }
 
   /**
@@ -851,18 +863,20 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
   private static final void __storeBookInner(final BibBookRecord data,
       final ITextOutput raw, final ITextOutput enc, final char[] buf) {
 
-    BibTeXDriver.__authors(BibTeXDriver.EDITORS, data.getEditors(), raw,
-        enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.EDITION, data.getEdition(), raw,
-        enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.SERIES, data.getSeries(), raw, enc,
-        buf);
-    BibTeXDriver.__field(BibTeXDriver.VOLUME, data.getVolume(), raw, enc,
-        buf);
-    BibTeXDriver.__field(BibTeXDriver.ISSN, data.getISSN(), raw, enc, buf);
-    BibTeXDriver.__organization(BibTeXDriver.PUBLISHER,
+    BibTeXOutputDriver.__authors(BibTeXOutputDriver.EDITORS,
+        data.getEditors(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.EDITION,
+        data.getEdition(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.SERIES,
+        data.getSeries(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.VOLUME,
+        data.getVolume(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.ISSN, data.getISSN(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__organization(BibTeXOutputDriver.PUBLISHER,
         data.getPublisher(), raw, enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.ISBN, data.getISBN(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.ISBN, data.getISBN(),
+        raw, enc, buf);
   }
 
   /**
@@ -881,11 +895,11 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       final BibProceedings data, final ITextOutput raw,
       final ITextOutput enc, final char[] buf) {
 
-    BibTeXDriver.__storeBookInner(data, raw, enc, buf);
-    BibTeXDriver.__dates(data.getStartDate(), data.getEndDate(), raw, enc,
-        buf);
-    BibTeXDriver.__organization(BibTeXDriver.ADDRESS, data.getLocation(),
+    BibTeXOutputDriver.__storeBookInner(data, raw, enc, buf);
+    BibTeXOutputDriver.__dates(data.getStartDate(), data.getEndDate(),
         raw, enc, buf);
+    BibTeXOutputDriver.__organization(BibTeXOutputDriver.ADDRESS,
+        data.getLocation(), raw, enc, buf);
   }
 
   /**
@@ -904,20 +918,22 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       final ITextOutput raw, final ITextOutput enc, final char[] buf) {
     final URI u;
 
-    BibTeXDriver.__recS(BibTeXDriver.PROCEEDINGS, data, raw);
+    BibTeXOutputDriver.__recS(BibTeXOutputDriver.PROCEEDINGS, data, raw);
 
-    BibTeXDriver.__field(BibTeXDriver.TITLE, data.getTitle(), raw, enc,
-        buf);
-    BibTeXDriver.__authors(BibTeXDriver.AUTHORS, data.getAuthors(), raw,
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.TITLE, data.getTitle(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__authors(BibTeXOutputDriver.AUTHORS,
+        data.getAuthors(), raw, enc, buf);
+
+    BibTeXOutputDriver.__storeProceedingsInner(data, raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.DOI, data.getDOI(), raw,
         enc, buf);
-
-    BibTeXDriver.__storeProceedingsInner(data, raw, enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.DOI, data.getDOI(), raw, enc, buf);
     u = data.getURL();
     if (u != null) {
-      BibTeXDriver.__field(BibTeXDriver.URL, u.toString(), raw, enc, buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.URL, u.toString(),
+          raw, enc, buf);
     }
-    BibTeXDriver.__recE(raw);
+    BibTeXOutputDriver.__recE(raw);
   }
 
   /**
@@ -938,31 +954,33 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
     final URI u;
     final BibProceedings b;
 
-    BibTeXDriver.__recS(BibTeXDriver.INPROCEEDINGS, data, raw);
+    BibTeXOutputDriver.__recS(BibTeXOutputDriver.INPROCEEDINGS, data, raw);
 
-    BibTeXDriver.__field(BibTeXDriver.TITLE, data.getTitle(), raw, enc,
-        buf);
-    BibTeXDriver.__authors(BibTeXDriver.AUTHORS, data.getAuthors(), raw,
-        enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.TITLE, data.getTitle(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__authors(BibTeXOutputDriver.AUTHORS,
+        data.getAuthors(), raw, enc, buf);
 
     b = data.getBook();
     if (b != null) {
-      BibTeXDriver.__field(BibTeXDriver.BOOKTITLE, b.getTitle(), raw, enc,
-          buf);
-      BibTeXDriver.__storeProceedingsInner(b, raw, enc, buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.BOOKTITLE,
+          b.getTitle(), raw, enc, buf);
+      BibTeXOutputDriver.__storeProceedingsInner(b, raw, enc, buf);
     }
 
-    BibTeXDriver.__pages(data.getStartPage(), data.getEndPage(), raw, enc,
-        buf);
-    BibTeXDriver.__field(BibTeXDriver.CHAPTER, data.getChapter(), raw,
-        enc, buf);
+    BibTeXOutputDriver.__pages(data.getStartPage(), data.getEndPage(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.CHAPTER,
+        data.getChapter(), raw, enc, buf);
 
-    BibTeXDriver.__field(BibTeXDriver.DOI, data.getDOI(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.DOI, data.getDOI(), raw,
+        enc, buf);
     u = data.getURL();
     if (u != null) {
-      BibTeXDriver.__field(BibTeXDriver.URL, u.toString(), raw, enc, buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.URL, u.toString(),
+          raw, enc, buf);
     }
-    BibTeXDriver.__recE(raw);
+    BibTeXOutputDriver.__recE(raw);
   }
 
   /**
@@ -981,22 +999,24 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       final ITextOutput raw, final ITextOutput enc, final char[] buf) {
     final URI u;
 
-    BibTeXDriver.__recS(BibTeXDriver.MISC, data, raw);
+    BibTeXOutputDriver.__recS(BibTeXOutputDriver.MISC, data, raw);
 
-    BibTeXDriver.__field(BibTeXDriver.TITLE, data.getTitle(), raw, enc,
-        buf);
-    BibTeXDriver.__authors(BibTeXDriver.AUTHORS, data.getAuthors(), raw,
-        enc, buf);
-    BibTeXDriver.__date(data.getDate(), raw, enc, buf);
-    BibTeXDriver.__organization(BibTeXDriver.PUBLISHER,
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.TITLE, data.getTitle(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__authors(BibTeXOutputDriver.AUTHORS,
+        data.getAuthors(), raw, enc, buf);
+    BibTeXOutputDriver.__date(data.getDate(), raw, enc, buf);
+    BibTeXOutputDriver.__organization(BibTeXOutputDriver.PUBLISHER,
         data.getPublisher(), raw, enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.DOI, data.getDOI(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.DOI, data.getDOI(), raw,
+        enc, buf);
 
     u = data.getURL();
     if (u != null) {
-      BibTeXDriver.__field(BibTeXDriver.URL, u.toString(), raw, enc, buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.URL, u.toString(),
+          raw, enc, buf);
     }
-    BibTeXDriver.__recE(raw);
+    BibTeXOutputDriver.__recE(raw);
   }
 
   /**
@@ -1015,27 +1035,30 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       final ITextOutput raw, final ITextOutput enc, final char[] buf) {
     final URI u;
 
-    BibTeXDriver.__recS(BibTeXDriver.TECHREPORT, data, raw);
+    BibTeXOutputDriver.__recS(BibTeXOutputDriver.TECHREPORT, data, raw);
 
-    BibTeXDriver.__field(BibTeXDriver.TITLE, data.getTitle(), raw, enc,
-        buf);
-    BibTeXDriver.__authors(BibTeXDriver.AUTHORS, data.getAuthors(), raw,
-        enc, buf);
-    BibTeXDriver.__date(data.getDate(), raw, enc, buf);
-    BibTeXDriver.__organization(BibTeXDriver.INSTITUTION,
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.TITLE, data.getTitle(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__authors(BibTeXOutputDriver.AUTHORS,
+        data.getAuthors(), raw, enc, buf);
+    BibTeXOutputDriver.__date(data.getDate(), raw, enc, buf);
+    BibTeXOutputDriver.__organization(BibTeXOutputDriver.INSTITUTION,
         data.getPublisher(), raw, enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.TYPE, data.getSeries(), raw, enc,
-        buf);
-    BibTeXDriver.__field(BibTeXDriver.ISSN, data.getISSN(), raw, enc, buf);
-    BibTeXDriver.__field(BibTeXDriver.NUMBER, data.getNumber(), raw, enc,
-        buf);
-    BibTeXDriver.__field(BibTeXDriver.DOI, data.getDOI(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.TYPE, data.getSeries(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.ISSN, data.getISSN(),
+        raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.NUMBER,
+        data.getNumber(), raw, enc, buf);
+    BibTeXOutputDriver.__field(BibTeXOutputDriver.DOI, data.getDOI(), raw,
+        enc, buf);
 
     u = data.getURL();
     if (u != null) {
-      BibTeXDriver.__field(BibTeXDriver.URL, u.toString(), raw, enc, buf);
+      BibTeXOutputDriver.__field(BibTeXOutputDriver.URL, u.toString(),
+          raw, enc, buf);
     }
-    BibTeXDriver.__recE(raw);
+    BibTeXOutputDriver.__recE(raw);
   }
 
   /**
@@ -1062,7 +1085,7 @@ public final class BibTeXDriver extends TextIODriver<Object, Void> {
       } else {
         b = true;
       }
-      BibTeXDriver.__storeRecord(rec, raw, enc, buf);
+      BibTeXOutputDriver.__storeRecord(rec, raw, enc, buf);
     }
   }
 }

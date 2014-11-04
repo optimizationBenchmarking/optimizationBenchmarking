@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.optimizationBenchmarking.experimentation.data.DimensionSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.io.tspSuite.TSPSuiteDriver;
+import org.optimizationBenchmarking.experimentation.io.tspSuite.TSPSuiteInputDriver;
 
 /** A class for creating in parallel sets */
 public class ExperimentSetCreatorRandomTSPSuiteParallel extends
@@ -19,13 +19,13 @@ public class ExperimentSetCreatorRandomTSPSuiteParallel extends
   @Override
   final void _createDimensionSet(final ExperimentSetContext dsc,
       final Random r) {
-    TSPSuiteDriver.makeTSPSuiteDimensionSet(dsc);
+    TSPSuiteInputDriver.makeTSPSuiteDimensionSet(dsc);
   }
 
   /** {@inheritDoc} */
   @Override
   final void _createInstanceSet(final ExperimentSetContext isc,
       final DimensionSet dims, final Random r) {
-    TSPSuiteDriver.makeTSPLibInstanceSet(isc);
+    TSPSuiteInputDriver.makeTSPLibInstanceSet(isc);
   }
 }

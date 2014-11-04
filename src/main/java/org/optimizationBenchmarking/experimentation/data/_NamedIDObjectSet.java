@@ -6,13 +6,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /**
  * An internal set of id objects.
  * 
- * @param <OT>
- *          the owner type
  * @param <DT>
  *          the type
  */
-class _NamedIDObjectSet<OT, DT extends _IDObject<?>> extends
-    _IDObjectSet<OT, DT> {
+abstract class _NamedIDObjectSet<DT extends _IDObject> extends
+    _IDObjectSet<DT> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

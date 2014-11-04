@@ -5,12 +5,10 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 /**
  * An internal set of id objects.
  * 
- * @param <OT>
- *          the owner type
  * @param <DT>
  *          the type
  */
-class _IDObjectSet<OT, DT extends _IDObject<?>> extends _IDSet<OT, DT> {
+abstract class _IDObjectSet<DT extends _IDObject> extends DataSet<DT> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -33,19 +31,18 @@ class _IDObjectSet<OT, DT extends _IDObject<?>> extends _IDSet<OT, DT> {
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings({ "unchecked", "rawtypes" })
   final void _setOwnerOfElement(final DT element, final int index) {
     if (element.m_owner != null) {
       throw new IllegalStateException(((((//
           "Owner of element '" + element) + //$NON-NLS-1$
-          "' should not be set, but is '") + element.m_owner) //$NON-NLS-1$
+          "' should not yet been set, but is '") + element.m_owner) //$NON-NLS-1$
           + '\'') + '.');
     }
 
     if (element.m_id != (-1)) {
       throw new IllegalStateException((((//
           "ID of element '" + element) + //$NON-NLS-1$
-          "' should not be set, but is ") + element.m_id) //$NON-NLS-1$
+          "' should not yet been set, but is ") + element.m_id) //$NON-NLS-1$
           + '.');
     }
 
@@ -68,7 +65,7 @@ class _IDObjectSet<OT, DT extends _IDObject<?>> extends _IDSet<OT, DT> {
     if (element.m_id < 0) {
       throw new IllegalStateException((((//
           "Element '" + element) + //$NON-NLS-1$
-          "' must have a valid ID, but has ID ") //$NON-NLS-1$
+          "' must have a valid ID (>=0), but has ID ") //$NON-NLS-1$
           + element.m_id) + '.');
     }
 

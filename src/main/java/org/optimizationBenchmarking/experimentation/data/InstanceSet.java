@@ -3,8 +3,7 @@ package org.optimizationBenchmarking.experimentation.data;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /** A set of instances. */
-public final class InstanceSet extends
-    _IDObjectSet<ExperimentSet, Instance> {
+public final class InstanceSet extends _IDObjectSet<Instance> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -33,5 +32,11 @@ public final class InstanceSet extends
   @Override
   public final Instance find(final String name) {
     return super.find(name);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ExperimentSet getOwner() {
+    return ((ExperimentSet) (this.m_owner));
   }
 }

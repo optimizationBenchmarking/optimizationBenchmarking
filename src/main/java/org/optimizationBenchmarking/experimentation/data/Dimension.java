@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /**
  * A dimension.
  */
-public class Dimension extends _NamedIDObject<DimensionSet> {
+public class Dimension extends _NamedIDObject {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -258,5 +258,11 @@ public class Dimension extends _NamedIDObject<DimensionSet> {
    */
   public final int getIndex() {
     return this.m_id;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final DimensionSet getOwner() {
+    return ((DimensionSet) (this.m_owner));
   }
 }

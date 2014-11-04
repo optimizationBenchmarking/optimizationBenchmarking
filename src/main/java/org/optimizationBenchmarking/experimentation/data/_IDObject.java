@@ -6,36 +6,22 @@ import java.util.List;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
-/**
- * An internal class for named id objects.
- * 
- * @param <OT>
- *          the owner type
- */
-abstract class _IDObject<OT> extends DataElement implements
-    Comparable<_IDObject<?>> {
+/** An internal class for named id objects. */
+abstract class _IDObject extends DataElement implements
+    Comparable<_IDObject> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** the id */
   int m_id;
-  /** the named id object set */
-  OT m_owner;
+  /** the owning named id object set */
+  DataElement m_owner;
 
   /** Create the instance of the ID object */
   _IDObject() {
     super();
     this.m_id = (-1);
-  }
-
-  /**
-   * Obtain the set this object is part of
-   * 
-   * @return the set this object is part of
-   */
-  public final OT getOwner() {
-    return this.m_owner;
   }
 
   /**
@@ -45,14 +31,14 @@ abstract class _IDObject<OT> extends DataElement implements
    *          the object
    * @return the result
    */
-  int _compareTo(final _IDObject<?> o) {
+  int _compareTo(final _IDObject o) {
     return 0;
   }
 
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public final int compareTo(final _IDObject<?> o) {
+  public final int compareTo(final _IDObject o) {
     final Class<?> c1, c2;
     final Object s1, s2;
     String nameThis, nameO, descThis, descO;
@@ -222,9 +208,9 @@ abstract class _IDObject<OT> extends DataElement implements
     if ((this.m_id >= 0) && (this.m_owner != null)) {
       clazz = this.getClass();
 
-      if (this.m_owner instanceof _IDSet) {
+      if (this.m_owner instanceof DataSet) {
         try {
-          k = ((_IDSet) (this.m_owner)).m_data.get(this.m_id);
+          k = ((DataSet) (this.m_owner)).m_data.get(this.m_id);
           if (clazz.isInstance(k)) {
             return k;
           }
@@ -274,7 +260,6 @@ abstract class _IDObject<OT> extends DataElement implements
    * @param textOut
    *          the text output to append to
    */
-  @SuppressWarnings("rawtypes")
   private final void __makePath(final ITextOutput textOut) {
     if (this.m_owner instanceof _IDObject) {
       ((_IDObject) this.m_owner).__makePath(textOut);

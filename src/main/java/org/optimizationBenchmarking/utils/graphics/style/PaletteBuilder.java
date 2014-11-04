@@ -161,7 +161,7 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
 
   /**
    * Process any potential header information directly. This method is
-   * called by {@link PaletteIODriver}.
+   * called by {@link PaletteInputDriver}.
    * 
    * @param reader
    *          the reader to process
