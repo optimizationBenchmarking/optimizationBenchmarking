@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.io.path;
 
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -112,6 +113,25 @@ public final class PathUtils {
               StandardOpenOption.WRITE);
     } catch (final Throwable t3) {
       ErrorUtils.throwAsRuntimeException(t3, error);
+    }
+    return null;// this will never be reached
+  }
+
+  /**
+   * Open an input stream from a given path
+   * 
+   * @param path
+   *          the path
+   * @return the input stream
+   */
+  public static final InputStream openInputStream(final Path path) {
+    PathUtils.__pathNotNull(path);
+
+    try {
+      return path.getFileSystem().provider()
+          .newInputStream(path, StandardOpenOption.READ);
+    } catch (final Throwable t3) {
+      ErrorUtils.throwAsRuntimeException(t3);
     }
     return null;// this will never be reached
   }

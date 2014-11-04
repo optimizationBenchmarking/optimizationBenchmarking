@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -20,6 +22,7 @@ import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.files.TempDir;
 import org.optimizationBenchmarking.utils.io.files.UnzipToFolder;
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
@@ -63,8 +66,7 @@ public abstract class FileInputDriver<L> {
   protected void doLoadFile(final L loadContext, final Path file,
       final Logger logger, final StreamEncoding<?, ?> defaultEncoding)
       throws IOException {
-    try (final InputStream stream = file.getFileSystem().provider()
-        .newInputStream(file)) {
+    try (final InputStream stream = PathUtils.openInputStream(file)) {
       this.doLoadStream(loadContext, file, stream, logger, defaultEncoding);
     }
   }
@@ -248,7 +250,7 @@ public abstract class FileInputDriver<L> {
   public final void loadPath(final L loadContext, final Path path,
       final Logger logger, final StreamEncoding<?, ?> defaultEncoding)
       throws IOException {
-    Path use, tp;
+    Path use;
     Throwable recoverable;
 
     recoverable = null;
@@ -259,30 +261,13 @@ public abstract class FileInputDriver<L> {
             + '\'') + '.');
       }
 
-      use = path;
-      try {
-        tp = use.normalize();
-        if (tp != null) {
-          use = tp;
+      use = PathUtils.normalize(path);
+      if (!(path.equals(use))) {
+        if ((logger != null) && (logger.isLoggable(Level.FINEST))) {
+          logger.finest(((((("Source path '" + path) //$NON-NLS-1$
+              + "' has been converted to normalized/absolute/real path '")//$NON-NLS-1$
+              + use) + '\'') + '.'));
         }
-        tp = use.toAbsolutePath();
-        if (tp != null) {
-          use = tp;
-        }
-        tp = use.toRealPath();
-        if (tp != null) {
-          use = tp;
-        }
-
-        if (tp != use) {
-          if ((logger != null) && (logger.isLoggable(Level.FINEST))) {
-            logger.finest(((((("Source path '" + path) //$NON-NLS-1$
-                + "' has been converted to normalized/absolute/real path '")//$NON-NLS-1$
-                + use) + '\'') + '.'));
-          }
-        }
-      } catch (final Throwable c) {
-        recoverable = c;
       }
 
       this.doLoadPath(loadContext, use, logger, defaultEncoding);
@@ -474,10 +459,8 @@ public abstract class FileInputDriver<L> {
   protected void doLoadURL(final L loadContext, final URL url,
       final Logger logger, final StreamEncoding<?, ?> defaultEncoding)
       throws IOException {
-    try {
-      this.doLoadURI(loadContext, url.toURI(), logger, defaultEncoding);
-    } catch (final URISyntaxException use) {
-      ErrorUtils.throwAsIOException(use);
+    try (final InputStream is = url.openStream()) {
+      this.doLoadStream(loadContext, null, is, logger, defaultEncoding);
     }
   }
 
@@ -570,7 +553,50 @@ public abstract class FileInputDriver<L> {
   protected void doLoadURI(final L loadContext, final URI uri,
       final Logger logger, final StreamEncoding<?, ?> defaultEncoding)
       throws IOException {
-    this.loadPath(loadContext, Paths.get(uri), logger, defaultEncoding);
+    Throwable minor;
+    Path p;
+    URL u;
+
+    minor = null;
+    p = null;
+    try {
+      p = Paths.get(uri);
+    } catch (FileSystemNotFoundException | IllegalArgumentException
+        | SecurityException t) {
+      minor = t;
+      p = null;
+    }
+
+    if (p != null) {
+      this.loadPath(loadContext, p, logger, defaultEncoding);
+      return;
+    }
+
+    u = null;
+    try {
+      u = uri.toURL();
+    } catch (final MalformedURLException t) {
+      minor = ErrorUtils.aggregateError(minor, t);
+    }
+    if (u != null) {
+      try {
+        this.loadURL(loadContext, u, logger, defaultEncoding);
+      } catch (final IOException ioe) {
+        ErrorUtils.throwAsIOException(ioe, minor);
+      }
+    }
+
+    try {
+      p = Paths.get(uri.getPath());
+    } catch (final InvalidPathException x) {
+      minor = ErrorUtils.aggregateError(minor, x);
+      p = null;
+    }
+    if (p != null) {
+      this.doLoadPath(loadContext, p, logger, defaultEncoding);
+    }
+
+    ErrorUtils.throwAsIOException(minor);
   }
 
   /**
@@ -669,8 +695,10 @@ public abstract class FileInputDriver<L> {
   protected void doLoadResource(final L loadContext, final Class<?> clazz,
       final String resource, final Logger logger,
       final StreamEncoding<?, ?> defaultEncoding) throws IOException {
-    this.loadURL(loadContext, clazz.getResource(resource), logger,
-        defaultEncoding);
+
+    try (final InputStream is = clazz.getResourceAsStream(resource)) {
+      this.doLoadStream(loadContext, null, is, logger, defaultEncoding);
+    }
   }
 
   /**
