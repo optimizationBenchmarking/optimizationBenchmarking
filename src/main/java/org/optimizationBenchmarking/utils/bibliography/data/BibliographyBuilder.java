@@ -293,7 +293,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * @param recs
    *          the set of records to add
    */
-  public synchronized final void addAll(final Iterable<BibRecord> recs) {
+  public final void addAll(final Iterable<BibRecord> recs) {
     if (recs != null) {
       for (final BibRecord rec : recs) {
         this._add(rec, true);
@@ -307,7 +307,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * @param recs
    *          the set of records to add
    */
-  public synchronized final void addAll(final BibRecord... recs) {
+  public final void addAll(final BibRecord... recs) {
     if (recs != null) {
       for (final BibRecord rec : recs) {
         this._add(rec, true);
@@ -321,7 +321,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * @param rec
    *          the record to add
    */
-  public synchronized final void add(final BibRecord rec) {
+  public final void add(final BibRecord rec) {
     this._add(rec, true);
   }
 }
