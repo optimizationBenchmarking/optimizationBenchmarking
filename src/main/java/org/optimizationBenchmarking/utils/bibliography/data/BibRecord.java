@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 
 import java.net.URI;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
@@ -15,18 +16,14 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * A bibliographic record for anything that has been published, such as a
  * paper, chapter, or even a website.
  */
-public abstract class BibRecord extends _BibElement<BibRecord> {
+public abstract class BibRecord extends _BibElement<BibRecord> implements
+    Cloneable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
-
   /** the key prefix */
   private static final char[] KEY_PREFIX = { 'b',
       ELabelType.LABEL_PREFIX_SEPARATOR };
-
-  /** the id counter */
-  private static volatile int IDS = 0;
-
   /**
    * the authors
    * 
@@ -62,8 +59,14 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
    */
   final String m_doi;
 
-  /** the unique key of this bibliographic record */
-  private String m_key;
+  /**
+   * the id of the bibliography record, uniquely identifying it in its
+   * owning bibliography
+   */
+  private volatile int m_id;
+
+  /** the key of this record */
+  private volatile String m_key;
 
   /**
    * Create a new bibliography record
@@ -108,29 +111,92 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
     this.m_url = (direct ? url : BibRecord._makeURL(url));
     this.m_date = date;
 
-    this.m_key = null;
+    this.m_id = (-1);
   }
 
   /**
-   * Get the unique key of this record
+   * Get a key of this record. Every bibliography record which appears as
+   * top-level element in a bibliography has a unique key. An element which
+   * is not a top-level record, say a
+   * {@link org.optimizationBenchmarking.utils.bibliography.data.BibProceedings
+   * proceedings record} owned by a
+   * {@link org.optimizationBenchmarking.utils.bibliography.data.BibInProceedings
+   * in-proceedings} record, does not have a unique key or id, in which
+   * case this method will return {@code null}.
    * 
-   * @return the key
+   * @return the key, or {@code null} if no key is defined for the record
+   * @see #getID()
    */
   public final String getKey() {
-    final MemoryTextOutput mt;
-    if (this.m_key == null) {
-      synchronized (BibRecord.KEY_PREFIX) {
-        if (this.m_key == null) {
-          mt = new MemoryTextOutput();
-          mt.append(BibRecord.KEY_PREFIX);
-          AlphabeticNumberAppender.LOWER_CASE_INSTANCE.appendTo(
-              (BibRecord.IDS++), ETextCase.IN_SENTENCE, mt);
-          this.m_key = mt.toString();
-        }
-      }
+    return this.m_key;
+  }
+
+  /**
+   * Clone this element and reset its id and key.
+   * 
+   * @return the clone
+   * @see #getID()
+   * @see #getKey()
+   */
+  @Override
+  protected final BibRecord clone() {
+    final BibRecord r;
+
+    try {
+      r = ((BibRecord) (super.clone()));
+    } catch (final CloneNotSupportedException cnse) {
+      ErrorUtils.throwAsRuntimeException(cnse);
+      return null; // can never be reached
     }
 
-    return this.m_key;
+    r.m_id = (-1);
+    r.m_key = null;
+    return r;
+  }
+
+  /**
+   * Set the id of this bibliography record
+   * 
+   * @param id
+   *          the id
+   * @see #getID()
+   * @see #getKey()
+   */
+  synchronized final void _setID(final int id) {
+    final MemoryTextOutput mt;
+
+    if (this.m_id != (-1)) {
+      throw new IllegalStateException("Cannot set ID twice."); //$NON-NLS-1$
+    }
+
+    this.m_id = id;
+    mt = new MemoryTextOutput();
+    mt.append(BibRecord.KEY_PREFIX);
+    AlphabeticNumberAppender.LOWER_CASE_INSTANCE.appendTo(id,
+        ETextCase.IN_SENTENCE, mt);
+    this.m_key = mt.toString();
+  }
+
+  /**
+   * <p>
+   * Obtain the unique ID of this element. Every bibliography record which
+   * appears as top-level element in a bibliography has a unique id. This
+   * id is its index in the global bibliography.
+   * </p>
+   * <p>
+   * An element which is not a top-level record, say a
+   * {@link org.optimizationBenchmarking.utils.bibliography.data.BibProceedings
+   * proceedings record} owned by a
+   * {@link org.optimizationBenchmarking.utils.bibliography.data.BibInProceedings
+   * in-proceedings} record, may not have a unique id, in which case this
+   * method will return {@code -1}.
+   * </p>
+   * 
+   * @return the unique ID of this element.
+   * @see #getKey()
+   */
+  public final int getID() {
+    return this.m_id;
   }
 
   /**
@@ -215,6 +281,8 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
   /** {@inheritDoc} */
   @Override
   public final boolean equals(final Object o) {
+    final BibRecord b;
+
     if (o == this) {
       return true;
     }
@@ -223,7 +291,8 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
     }
 
     if (o.getClass() == this.getClass()) {
-      return this._equals((BibRecord) o);
+      b = ((BibRecord) o);
+      return this._equals(b);
     }
     return false;
   }
@@ -252,14 +321,12 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
             HashUtils.hashCode(this.m_authors),//
             HashUtils.hashCode(this.m_date)),//
         HashUtils.combineHashes(
-            //
+        //
             HashUtils.combineHashes(
                 //
                 HashUtils.hashCode(this.m_title),
-                HashUtils.hashCode(this.m_url)),
-            HashUtils.hashCode(this.m_doi))
-
-    );
+                HashUtils.hashCode(this.m_url)),//
+            HashUtils.hashCode(this.m_doi)));
   }
 
   /** {@inheritDoc} */
@@ -273,6 +340,11 @@ public abstract class BibRecord extends _BibElement<BibRecord> {
 
     if (o == null) {
       return (-1);
+    }
+
+    r = Integer.compare(this.m_id, o.m_id);
+    if (r != 0) {
+      return r;
     }
 
     r = EComparison.compare(this.m_date, o.m_date);

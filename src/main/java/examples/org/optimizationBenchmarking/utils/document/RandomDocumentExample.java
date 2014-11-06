@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
@@ -28,8 +27,8 @@ import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
-import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
+import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
@@ -652,7 +651,6 @@ public class RandomDocumentExample implements Runnable {
       final boolean needsNewLine) {
     boolean first, must, needs;
     IStyle s;
-    HashSet<BibRecord> refs;
     ArrayList<ILabel> labels;
     ILabel l;
     Throwable error;
@@ -660,7 +658,6 @@ public class RandomDocumentExample implements Runnable {
     first = true;
     must = needsNewLine;
     needs = false;
-    refs = null;
     labels = null;
     error = null;
 
@@ -858,23 +855,19 @@ public class RandomDocumentExample implements Runnable {
               this.__done(RandomDocumentExample.CITATION);
               try {
                 out.append(" And here we cite ");//$NON-NLS-1$
-                if (refs == null) {
-                  refs = new HashSet<>();
-                }
 
-                do {
-                  refs.add(this.m_bib.get(this.m_rand.nextInt(this.m_bib
-                      .size())));
-                } while (this.m_rand.nextBoolean());
-
-                ((IComplexText) out).cite(
+                try (BibliographyBuilder bb = ((IComplexText) out).cite(
                     RandomDocumentExample.CITES[this.m_rand
                         .nextInt(RandomDocumentExample.CITES.length)],
                     ETextCase.IN_SENTENCE,
                     RandomDocumentExample.SEQUENCE[this.m_rand
-                        .nextInt(RandomDocumentExample.SEQUENCE.length)],
-                    refs.toArray(new BibRecord[refs.size()]));
-                refs.clear();
+                        .nextInt(RandomDocumentExample.SEQUENCE.length)])) {
+
+                  do {
+                    bb.add(this.m_bib.get(this.m_rand.nextInt(this.m_bib
+                        .size())));
+                  } while (this.m_rand.nextBoolean());
+                }
                 out.append('.');
               } catch (final Throwable tt) {
                 error = ErrorUtils.aggregateError(error, tt);

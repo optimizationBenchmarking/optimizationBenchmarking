@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for a bibliographic record for a technical report. */
@@ -34,7 +33,7 @@ public final class BibTechReportBuilder extends
    * @param owner
    *          the owner
    */
-  BibTechReportBuilder(final HierarchicalFSM owner) {
+  BibTechReportBuilder(final BuilderFSM<?> owner) {
     super(owner);
     this.open();
   }
@@ -136,7 +135,7 @@ public final class BibTechReportBuilder extends
 
   /** {@inheritDoc} */
   @Override
-  protected final BibTechReport compile() {
+  final BibTechReport _doCompile() {
     return new BibTechReport(true, this.m_authors, this.m_title,
         this.m_date, this.m_series, this.m_number, this.m_issn,
         this.m_publisher, this.m_url, this.m_doi);

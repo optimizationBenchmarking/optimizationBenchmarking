@@ -6,18 +6,13 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 /** A builder for conference papers */
 public final class BibInProceedingsBuilder extends BibInBookBuilder {
 
-  /** create */
-  public BibInProceedingsBuilder() {
-    this(null);
-  }
-
   /**
    * create the in-proceedings builder
    * 
    * @param owner
    *          the owner
    */
-  BibInProceedingsBuilder(final HierarchicalFSM owner) {
+  BibInProceedingsBuilder(final BuilderFSM<?> owner) {
     super(owner);
     this.open();
   }
@@ -29,7 +24,7 @@ public final class BibInProceedingsBuilder extends BibInBookBuilder {
    *          the proceedings
    */
   public final void setProceedings(final BibProceedings proceedings) {
-    this._bookSet(proceedings);
+    this._bookSet(proceedings, true);
   }
 
   /**
@@ -54,7 +49,7 @@ public final class BibInProceedingsBuilder extends BibInBookBuilder {
   @Override
   final void _handleAfterChildClosed(final HierarchicalFSM child) {
     if (child instanceof BibProceedingsBuilder) {
-      this.setProceedings(((BibProceedingsBuilder) child).getResult());
+      this._bookSet(((BibProceedingsBuilder) child).getResult(), false);
     } else {
       super._handleAfterChildClosed(child);
     }
@@ -62,7 +57,7 @@ public final class BibInProceedingsBuilder extends BibInBookBuilder {
 
   /** {@inheritDoc} */
   @Override
-  protected final BibInProceedings compile() {
+  final BibInProceedings _doCompile() {
     this.fsmFlagsAssertTrue(BibInBookBuilder.FLAG_BOOK_SET);
     return new BibInProceedings(true, this.m_authors, this.m_title,
         ((BibProceedings) (this.m_book)), this.m_startPage,

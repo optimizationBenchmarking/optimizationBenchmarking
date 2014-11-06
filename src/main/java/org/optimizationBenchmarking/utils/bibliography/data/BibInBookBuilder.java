@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -38,7 +37,7 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
    * @param owner
    *          the owner
    */
-  BibInBookBuilder(final HierarchicalFSM owner) {
+  BibInBookBuilder(final BuilderFSM<?> owner) {
     super(owner);
   }
 
@@ -128,17 +127,21 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
    * 
    * @param book
    *          the book
+   * @param mustClone
+   *          do we need to clone?
    */
-  synchronized final void _bookSet(final BibBookRecord book) {
+  synchronized final void _bookSet(final BibBookRecord book,
+      final boolean mustClone) {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
         (BibInBookBuilder.FLAG_BOOK_SET), BibInBookBuilder.FLAG_BOOK_SET,
         FSM.FLAG_NOTHING);
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     if (book == null) {
       throw new IllegalArgumentException(//
-          "Book cannot be set to empty or null."); //$NON-NLS-1$
+          "Book cannot be set to null."); //$NON-NLS-1$
     }
-    this.m_book = book;
+    this.m_book = ((BibBookRecord) (this._addOrRegister(book, false,
+        mustClone)));
   }
 
 }

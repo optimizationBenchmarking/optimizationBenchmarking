@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for article records */
@@ -34,18 +33,13 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
   /** the end page */
   String m_endPage;
 
-  /** create */
-  public BibArticleBuilder() {
-    this(null);
-  }
-
   /**
    * create the article builder
    * 
    * @param owner
    *          the owner
    */
-  BibArticleBuilder(final HierarchicalFSM owner) {
+  BibArticleBuilder(final BuilderFSM<?> owner) {
     super(owner);
     this.open();
   }
@@ -201,7 +195,7 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /** {@inheritDoc} */
   @Override
-  protected final BibArticle compile() {
+  final BibArticle _doCompile() {
     return new BibArticle(true, this.m_authors, this.m_title, this.m_date,
         this.m_journal, this.m_issn, this.m_volume, this.m_number,
         this.m_startPage, this.m_endPage, this.m_publisher, this.m_url,

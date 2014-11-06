@@ -1,14 +1,10 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /** A builder for book record objects. */
 public class BibBookBuilder extends BibBookRecordBuilder {
-
-  /** create the book builder */
-  public BibBookBuilder() {
-    this(null);
-  }
 
   /**
    * create the book builder
@@ -16,7 +12,7 @@ public class BibBookBuilder extends BibBookRecordBuilder {
    * @param owner
    *          the owner
    */
-  BibBookBuilder(final HierarchicalFSM owner) {
+  BibBookBuilder(final BuilderFSM<?> owner) {
     super(owner);
     this.open();
   }
@@ -36,7 +32,7 @@ public class BibBookBuilder extends BibBookRecordBuilder {
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override
-  protected BibBook compile() {
+  BibBook _doCompile() {
     final HierarchicalFSM o;
 
     this.fsmFlagsAssertTrue(BibRecordBuilder.FLAG_TITLE_SET

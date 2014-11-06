@@ -46,10 +46,10 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
    * @param owner
    *          the owner
    */
-  BibRecordBuilder(final HierarchicalFSM owner) {
+  BibRecordBuilder(final BuilderFSM<?> owner) {
     super(owner);
-    if ((owner == null) || (owner instanceof BuilderFSM)
-        || (owner instanceof _BibSetBuilder)) {
+    if ((owner instanceof BibRecordBuilder)
+        || (owner instanceof BibliographyBuilder)) {
       this.m_authors = BibAuthors.EMPTY_AUTHORS;
     } else {
       throw new IllegalArgumentException("Owner " + owner + //$NON-NLS-1$
@@ -324,5 +324,66 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
    */
   void _handleAfterChildClosed(final HierarchicalFSM child) {
     this.throwChildNotAllowed(child);
+  }
+
+  /**
+   * Build the product of this builder
+   * 
+   * @return the product
+   */
+  abstract BibRecord _doCompile();
+
+  /**
+   * Add a bib record
+   * 
+   * @param rec
+   *          the record
+   * @param canAdd
+   *          can the record be added
+   * @param mustClone
+   *          do we need to clone?
+   * @return the registered record
+   */
+  @SuppressWarnings("resource")
+  final BibRecord _addOrRegister(final BibRecord rec,
+      final boolean canAdd, final boolean mustClone) {
+    final BibliographyBuilder b;
+    HierarchicalFSM o;
+    boolean shouldAdd;
+    BibRecord res;
+
+    shouldAdd = canAdd;
+    for (o = this.getOwner(); o != null;) {
+
+      if (o instanceof BibliographyBuilder) {
+        b = ((BibliographyBuilder) o);
+        if (shouldAdd) {
+          res = b._add(rec, mustClone);
+        } else {
+          res = b._register(rec, mustClone);
+        }
+        if (res == null) {
+          throw new IllegalStateException();
+        }
+        return res;
+      }
+
+      if (o instanceof BibRecordBuilder) {
+        o = ((BibRecordBuilder) o).getOwner();
+        shouldAdd = false;
+        continue;
+      }
+
+      break;
+    }
+
+    throw new IllegalStateException(//
+        "A bibliography record builder cannot exist alone, it needs a BibliographyBuilder or another BibRecordBuilder as owner."); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final BibRecord compile() {
+    return this._addOrRegister(this._doCompile(), true, false);
   }
 }

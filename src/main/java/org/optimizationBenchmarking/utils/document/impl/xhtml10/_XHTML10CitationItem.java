@@ -18,14 +18,11 @@ final class _XHTML10CitationItem extends CitationItem {
    * 
    * @param record
    *          the bibliographic record
-   * @param index
-   *          the bibliographic index
    * @param mode
    *          the citation mode
    */
-  _XHTML10CitationItem(final BibRecord record, final int index,
-      final ECitationMode mode) {
-    super(record, index, mode);
+  _XHTML10CitationItem(final BibRecord record, final ECitationMode mode) {
+    super(record, mode);
   }
 
   /** {@inheritDoc} */

@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
-import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
@@ -67,7 +67,7 @@ public class DocumentFooter extends _StyleProviderPart implements
   protected void doClose() {
     Logger log;
     Bibliography bib;
-    CitationsBuilder cb;
+    BibliographyBuilder cb;
 
     if ((cb = this.m_doc.m_citations) != null) {
       bib = cb.getResult();

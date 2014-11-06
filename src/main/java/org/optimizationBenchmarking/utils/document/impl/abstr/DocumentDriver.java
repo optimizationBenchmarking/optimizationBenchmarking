@@ -261,15 +261,13 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    * 
    * @param item
    *          the bibliographic record
-   * @param index
-   *          the bibliographic index
    * @param mode
    *          the citation mode
    * @return the citation item
    */
   protected CitationItem createCitationItem(final BibRecord item,
-      final int index, final ECitationMode mode) {
-    return new CitationItem(item, index, mode);
+      final ECitationMode mode) {
+    return new CitationItem(item, mode);
   }
 
   /**

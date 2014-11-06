@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.parsers.StringParser;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -31,7 +30,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
    * @param owner
    *          the owner
    */
-  BibThesisBuilder(final HierarchicalFSM owner) {
+  BibThesisBuilder(final BuilderFSM<?> owner) {
     super(owner);
   }
 
@@ -144,7 +143,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /** {@inheritDoc} */
   @Override
-  protected final BibThesis compile() {
+  final BibThesis _doCompile() {
 
     this.fsmFlagsAssertTrue(BibRecordBuilder.FLAG_TITLE_SET
         | BibRecordBuilder.FLAG_DATE_SET

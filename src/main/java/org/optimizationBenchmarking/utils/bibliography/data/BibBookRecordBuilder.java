@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -51,7 +50,7 @@ public abstract class BibBookRecordBuilder extends
    * @param owner
    *          the owner
    */
-  BibBookRecordBuilder(final HierarchicalFSM owner) {
+  BibBookRecordBuilder(final BuilderFSM<?> owner) {
     super(owner);
     this.m_editors = BibAuthors.EMPTY_AUTHORS;
   }

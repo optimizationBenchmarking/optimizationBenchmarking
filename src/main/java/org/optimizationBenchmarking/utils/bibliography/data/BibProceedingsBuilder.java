@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for conference proceedings objects. */
@@ -26,18 +25,13 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
    */
   private BibDate m_endDate;
 
-  /** create the conference proceedings builder */
-  public BibProceedingsBuilder() {
-    this(null);
-  }
-
   /**
    * create the book builder
    * 
    * @param owner
    *          the owner
    */
-  BibProceedingsBuilder(final HierarchicalFSM owner) {
+  BibProceedingsBuilder(final BuilderFSM<?> owner) {
     super(owner);
     this.open();
   }
@@ -158,7 +152,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
 
   /** {@inheritDoc} */
   @Override
-  protected final BibProceedings compile() {
+  final BibProceedings _doCompile() {
 
     this.fsmFlagsAssertTrue(BibRecordBuilder.FLAG_TITLE_SET
         | BibRecordBuilder.FLAG_DATE_SET

@@ -1,14 +1,20 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /** A builder for author objects. */
-public final class BibAuthorsBuilder extends
-    _BibSetBuilder<BibAuthor, BibAuthors> {
+public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
 
   /** the tag */
   final int m_tag;
+
+  /** the authors list */
+  private BibAuthor[] m_list;
+
+  /** the size */
+  private int m_size;
 
   /** create the authors builder */
   public BibAuthorsBuilder() {
@@ -36,7 +42,68 @@ public final class BibAuthorsBuilder extends
   BibAuthorsBuilder(final HierarchicalFSM owner, final int tag) {
     super(owner);
     this.m_tag = tag;
+    this.m_list = new BibAuthor[8];
     this.open();
+  }
+
+  /**
+   * Add a given author to this author list
+   * 
+   * @param author
+   *          the author to add
+   */
+  public final void addAuthor(final BibAuthor author) {
+    final int oldSize;
+    BibAuthor[] data;
+    int i;
+
+    if (author == null) {
+      throw new IllegalArgumentException("Element cannot be null."); //$NON-NLS-1$
+    }
+
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
+
+    data = this.m_list;
+    oldSize = this.m_size;
+
+    for (i = 0; i < oldSize; i++) {
+      if (EComparison.equals(data[i], author)) {
+        throw new IllegalArgumentException(//
+            "A set cannot contain two equal elements, so you cannot add element '" //$NON-NLS-1$
+                + author + "', which already exists at index " //$NON-NLS-1$
+                + i);
+      }
+    }
+
+    if (oldSize >= data.length) {
+      data = new BibAuthor[(oldSize + 1) << 1];
+      System.arraycopy(this.m_list, 0, data, 0, oldSize);
+      this.m_list = data;
+    }
+
+    data[oldSize] = author;
+    this.m_size = (oldSize + 1);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final BibAuthors compile() {
+    final int len;
+    BibAuthor[] data, d2;
+
+    data = this.m_list;
+    this.m_list = null;
+    len = this.m_size;
+    this.m_size = (-1);
+    if (len <= 0) {
+      return BibAuthors.EMPTY_AUTHORS;
+    }
+    if (data.length != len) {
+      d2 = new BibAuthor[len];
+      System.arraycopy(data, 0, d2, 0, len);
+      data = d2;
+    }
+    return new BibAuthors(false, data);
   }
 
   /** {@inheritDoc} */
@@ -47,16 +114,6 @@ public final class BibAuthorsBuilder extends
     if (!(child instanceof BibAuthorBuilder)) {
       this.throwChildNotAllowed(child);
     }
-  }
-
-  /**
-   * Add a given author to this author list
-   * 
-   * @param author
-   *          the author to add
-   */
-  public final void addAuthor(final BibAuthor author) {
-    this._add(author, true);
   }
 
   /**
@@ -80,23 +137,5 @@ public final class BibAuthorsBuilder extends
     } else {
       this.throwChildNotAllowed(child);
     }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  final BibAuthor[] _create(final int len) {
-    return new BibAuthor[len];
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  final BibAuthors _empty() {
-    return BibAuthors.EMPTY_AUTHORS;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  final BibAuthors _make(final BibAuthor[] data) {
-    return new BibAuthors(false, data);
   }
 }

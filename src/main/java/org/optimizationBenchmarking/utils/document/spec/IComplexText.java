@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
-import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
+import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -71,12 +71,12 @@ public interface IComplexText extends IPlainText {
    *          the text case
    * @param sequenceMode
    *          the sequence mode
-   * @param references
-   *          the bibliographic records to cite
+   * @return a bibliography builder to which the references to cite can be
+   *         appended
    */
-  public abstract void cite(final ECitationMode citationMode,
-      final ETextCase textCase, final ESequenceMode sequenceMode,
-      final BibRecord... references);
+  public abstract BibliographyBuilder cite(
+      final ECitationMode citationMode, final ETextCase textCase,
+      final ESequenceMode sequenceMode);
 
   /**
    * reference a set of labels

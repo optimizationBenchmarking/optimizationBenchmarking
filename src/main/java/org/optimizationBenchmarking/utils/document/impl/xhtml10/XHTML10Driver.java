@@ -746,8 +746,8 @@ public final class XHTML10Driver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   protected final _XHTML10CitationItem createCitationItem(
-      final BibRecord item, final int index, final ECitationMode mode) {
-    return new _XHTML10CitationItem(item, index, mode);
+      final BibRecord item, final ECitationMode mode) {
+    return new _XHTML10CitationItem(item, mode);
   }
 
   /**

@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.object.PathEntry;
@@ -89,7 +89,7 @@ public class Document extends DocumentElement implements IDocument {
   private LinkedHashSet<PathEntry> m_paths;
 
   /** a citations builder */
-  CitationsBuilder m_citations;
+  BibliographyBuilder m_citations;
 
   /** the path to the document's main file */
   private final Path m_documentPath;
@@ -140,7 +140,7 @@ public class Document extends DocumentElement implements IDocument {
     this.m_basePath = PathUtils.normalize(docPath.getParent());
     this.m_paths = new LinkedHashSet<>();
 
-    this.m_citations = new CitationsBuilder();
+    this.m_citations = new BibliographyBuilder();
     this.m_listener = listener;
     this.m_writer = writer;
 

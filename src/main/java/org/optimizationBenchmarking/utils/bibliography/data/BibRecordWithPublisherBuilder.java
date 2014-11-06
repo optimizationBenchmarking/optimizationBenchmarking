@@ -24,7 +24,7 @@ public abstract class BibRecordWithPublisherBuilder extends
    * @param owner
    *          the owner
    */
-  BibRecordWithPublisherBuilder(final HierarchicalFSM owner) {
+  BibRecordWithPublisherBuilder(final BuilderFSM<?> owner) {
     super(owner);
   }
 

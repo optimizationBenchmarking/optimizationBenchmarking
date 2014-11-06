@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 
 /** A builder for website objects. */
 public final class BibWebsiteBuilder extends BibRecordWithPublisherBuilder {
@@ -16,7 +16,7 @@ public final class BibWebsiteBuilder extends BibRecordWithPublisherBuilder {
    * @param owner
    *          the owner
    */
-  BibWebsiteBuilder(final HierarchicalFSM owner) {
+  BibWebsiteBuilder(final BuilderFSM<?> owner) {
     super(owner);
     this.open();
   }
@@ -35,7 +35,7 @@ public final class BibWebsiteBuilder extends BibRecordWithPublisherBuilder {
 
   /** {@inheritDoc} */
   @Override
-  protected final BibWebsite compile() {
+  final BibWebsite _doCompile() {
     this.fsmFlagsAssertTrue(BibRecordBuilder.FLAG_URL_SET
         | BibRecordBuilder.FLAG_TITLE_SET | BibRecordBuilder.FLAG_DATE_SET);
 

@@ -2,8 +2,9 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import java.util.Arrays;
 
-import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
-import org.optimizationBenchmarking.utils.bibliography.data.CitationsBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
+import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.IBibliographyConsumer;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
@@ -73,13 +74,104 @@ public class ComplexText extends PlainText implements IComplexText {
   }
 
   /**
-   * Do the work of
-   * {@link #cite(ECitationMode, ETextCase, ESequenceMode, BibRecord...)}
-   * in a protected environment. You need to override this method to do the
-   * stuff, maybe by delegating the citation rendering to a new sub-class
-   * of
+   * Check a bibliography
+   * 
+   * @param citationMode
+   *          the citation mode
+   * @param textCase
+   *          the text case
+   * @param sequenceMode
+   *          the sequence mode
+   */
+  private static void __checkBib(final ECitationMode citationMode,
+      final ETextCase textCase, final ESequenceMode sequenceMode) {
+    if (citationMode == null) {
+      throw new IllegalArgumentException("Citation mode must not be null."); //$NON-NLS-1$
+    }
+    if (textCase == null) {
+      throw new IllegalArgumentException("Text case must not be null."); //$NON-NLS-1$
+    }
+    if (sequenceMode == null) {
+      throw new IllegalArgumentException("Sequence mode must not be null."); //$NON-NLS-1$
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final BibliographyBuilder cite(
+      final ECitationMode citationMode, final ETextCase textCase,
+      final ESequenceMode sequenceMode) {
+    final BibliographyBuilder bb;
+
+    this.assertNoChildren();
+
+    ComplexText.__checkBib(citationMode, textCase, sequenceMode);
+
+    bb = this.m_doc.m_citations;
+    if (bb == null) {
+      throw new IllegalStateException(//
+          "Citations have already been flushed, cannot cite anything anymore."); //$NON-NLS-1$
+    }
+
+    return bb.subBibliography(new _BibliographyConsumer(citationMode,
+        textCase, sequenceMode));
+  }
+
+  /**
+   * This method is called whenever a sub-bibliography has been created via
+   * {@link #cite(ECitationMode, ETextCase, ESequenceMode)}. It is called
+   * immediately after corresponding the
+   * {@link org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder}
+   * has been closed. The standard implementation defers control to
+   * {@link #doCite(CitationItem[], ECitationMode, ETextCase, ESequenceMode, ITextOutput, ITextOutput)}
+   * .
+   * 
+   * @param bib
+   *          the bibliography
+   * @param citationMode
+   *          the citation mode
+   * @param textCase
+   *          the text case
+   * @param sequenceMode
+   *          the sequence mode
+   * @see #cite(ECitationMode, ETextCase, ESequenceMode)
+   * @see #doCite(CitationItem[], ECitationMode, ETextCase, ESequenceMode,
+   *      ITextOutput, ITextOutput)
+   */
+  protected synchronized void doCite(final Bibliography bib,
+      final ECitationMode citationMode, final ETextCase textCase,
+      final ESequenceMode sequenceMode) {
+    final int len;
+    final CitationItem[] ci;
+    int i;
+
+    this.assertNoChildren();
+
+    ComplexText.__checkBib(citationMode, textCase, sequenceMode);
+
+    if ((bib == null) || ((len = bib.size()) <= 0)) {
+      throw new IllegalArgumentException(//
+          "References must not be null or empty."); //$NON-NLS-1$
+    }
+
+    ci = new CitationItem[len];
+    for (i = 0; i < len; i++) {
+      ci[i] = this.m_driver.createCitationItem(bib.get(i), citationMode);
+
+    }
+
+    this.doCite(ci, citationMode, textCase, sequenceMode,
+        this.getTextOutput(), this.m_encoded);
+  }
+
+  /**
+   * Do the work of {@link #cite(ECitationMode, ETextCase, ESequenceMode)}
+   * in a protected environment. You need to override either this method or
+   * {@link #doCite(Bibliography, ECitationMode, ETextCase, ESequenceMode)}
+   * to do the stuff, maybe by delegating the citation rendering to a new
+   * sub-class of
    * {@link org.optimizationBenchmarking.utils.document.impl.abstr.CitationItem}
-   * for each item-
+   * for each item.
    * 
    * @param citationMode
    *          the citation mode
@@ -93,66 +185,22 @@ public class ComplexText extends PlainText implements IComplexText {
    *          the raw text output
    * @param encoded
    *          the encoded text output
+   * @see #doCite(Bibliography, ECitationMode, ETextCase, ESequenceMode)
+   * @see #cite(ECitationMode, ETextCase, ESequenceMode)
    */
-  protected void doCite(final ECitationMode citationMode,
-      final ETextCase textCase, final ESequenceMode sequenceMode,
-      final CitationItem[] references, final ITextOutput raw,
+  protected void doCite(final CitationItem[] references,
+      final ECitationMode citationMode, final ETextCase textCase,
+      final ESequenceMode sequenceMode, final ITextOutput raw,
       final ITextOutput encoded) {
-    sequenceMode.appendSequence(textCase, new ArrayListView<>(references),
-        true, this);
-  }
 
-  /** {@inheritDoc} */
-  @Override
-  public synchronized final void cite(final ECitationMode citationMode,
-      final ETextCase textCase, final ESequenceMode sequenceMode,
-      final BibRecord... references) {
-    final CitationsBuilder cb;
-    final int len;
-    final CitationItem[] ci;
-    int i, j;
-    BibRecord a;
-
-    this.assertNoChildren();
-
-    if ((references == null) || ((len = references.length) <= 0)) {
-      throw new IllegalArgumentException(//
+    ComplexText.__checkBib(citationMode, textCase, sequenceMode);
+    if ((references == null) || (references.length <= 0)) {
+      throw new IllegalArgumentException(
           "References must not be null or empty."); //$NON-NLS-1$
     }
 
-    for (i = len; (--i) >= 0;) {
-      a = references[i];
-      if (a == null) {
-        throw new IllegalArgumentException(//
-            "Reference must not be null."); //$NON-NLS-1$
-      }
-      for (j = len; (--j) > i;) {
-        if (a.equals(references[j])) {
-          throw new IllegalArgumentException(//
-              "The same reference must not appear twice in a citation, but '" //$NON-NLS-1$
-                  + a + "' does."); //$NON-NLS-1$
-        }
-      }
-    }
-
-    cb = this.m_doc.m_citations;
-    if (cb == null) {
-      throw new IllegalStateException(//
-          "Citations have already been flushed, cannot cite anything anymore."); //$NON-NLS-1$
-    }
-
-    ci = new CitationItem[len];
-    synchronized (cb) {
-      for (i = 0; i < len; i++) {
-        a = references[i];
-        ci[i] = this.m_driver.createCitationItem(a, cb.add(a),
-            citationMode);
-
-      }
-    }
-
-    this.doCite(citationMode, textCase, sequenceMode, ci,
-        this.getTextOutput(), this.m_encoded);
+    sequenceMode.appendSequence(textCase, new ArrayListView<>(references),
+        true, this);
   }
 
   /**
@@ -234,6 +282,46 @@ public class ComplexText extends PlainText implements IComplexText {
 
     this.doReference(textCase, sequenceMode,//
         ((count < runs.length) ? (Arrays.copyOf(runs, count)) : runs));
+  }
+
+  /** the bibliography consumer */
+  private final class _BibliographyConsumer implements
+      IBibliographyConsumer {
+
+    /** the citation mode */
+    private final ECitationMode m_citationMode;
+
+    /** the text case */
+    private final ETextCase m_textCase;
+
+    /** the sequence mode */
+    private final ESequenceMode m_sequenceMode;
+
+    /**
+     * create
+     * 
+     * @param citationMode
+     *          the citation mode
+     * @param textCase
+     *          the text case
+     * @param sequenceMode
+     *          the sequence mode
+     */
+    _BibliographyConsumer(final ECitationMode citationMode,
+        final ETextCase textCase, final ESequenceMode sequenceMode) {
+      super();
+      this.m_citationMode = citationMode;
+      this.m_textCase = textCase;
+      this.m_sequenceMode = sequenceMode;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void consumeBibliography(final Bibliography bib) {
+      ComplexText.this.doCite(bib, this.m_citationMode, this.m_textCase,
+          this.m_sequenceMode);
+    }
+
   }
 
 }

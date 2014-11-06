@@ -6,18 +6,13 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 /** A builder for book chapters */
 public final class BibInCollectionBuilder extends BibInBookBuilder {
 
-  /** create */
-  public BibInCollectionBuilder() {
-    this(null);
-  }
-
   /**
    * create the in-proceedings builder
    * 
    * @param owner
    *          the owner
    */
-  BibInCollectionBuilder(final HierarchicalFSM owner) {
+  BibInCollectionBuilder(final BuilderFSM<?> owner) {
     super(owner);
     this.open();
   }
@@ -29,7 +24,7 @@ public final class BibInCollectionBuilder extends BibInBookBuilder {
    *          the proceedings
    */
   public final void setBook(final BibBook book) {
-    this._bookSet(book);
+    this._bookSet(book, true);
   }
 
   /**
@@ -54,7 +49,7 @@ public final class BibInCollectionBuilder extends BibInBookBuilder {
   @Override
   final void _handleAfterChildClosed(final HierarchicalFSM child) {
     if (child instanceof BibBookBuilder) {
-      this.setBook(((BibBookBuilder) child).getResult());
+      this._bookSet(((BibBookBuilder) child).getResult(), false);
     } else {
       super._handleAfterChildClosed(child);
     }
@@ -62,7 +57,7 @@ public final class BibInCollectionBuilder extends BibInBookBuilder {
 
   /** {@inheritDoc} */
   @Override
-  protected final BibInCollection compile() {
+  final BibInCollection _doCompile() {
     this.fsmFlagsAssertTrue(BibInBookBuilder.FLAG_BOOK_SET);
     return new BibInCollection(true, this.m_authors, this.m_title,
         ((BibBook) (this.m_book)), this.m_startPage, this.m_endPage,
