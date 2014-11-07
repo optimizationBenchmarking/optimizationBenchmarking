@@ -2,6 +2,7 @@ package examples.org.optimizationBenchmarking.utils.bibliography.data;
 
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.io.BibTeXOutputDriver;
+import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXMLOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -27,10 +28,20 @@ public abstract class BibliographyExample implements Runnable {
   /** {@inheritDoc} */
   @Override
   public final void run() {
+    Bibliography bib;
     ITextOutput t;
 
+    bib = this.createBibliography();
+
     t = AbstractTextOutput.wrap(System.out);
-    BibTeXOutputDriver.INSTANCE.storeText(this.createBibliography(), t);
+    BibTeXOutputDriver.INSTANCE.storeText(bib, t);
+    t.flush();
+
+    t.appendLineBreak();
+    t.appendLineBreak();
+    t.appendLineBreak();
+    t.appendLineBreak();
+    BibliographyXMLOutput.INSTANCE.storeText(bib, t);
     t.flush();
   }
 

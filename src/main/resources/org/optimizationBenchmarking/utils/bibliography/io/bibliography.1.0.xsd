@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.optimizationBenchmarking.org/formats/bibliography/bibliography.1.0.xsd"
+	targetNamespace="http://www.optimizationBenchmarking.org/formats/bibliography/bibliography.1.0.xsd"
+	elementFormDefault="qualified">
+
+	<annotation>
+		<documentation>The XML Schema for the bibliographies, version 1.0.
+		</documentation>
+	</annotation>
+
+	<complexType name="personsType">
+		<sequence>
+			<element name="person" minOccurs="1" maxOccurs="unbounded">
+				<complexType>
+					<attribute name="personalName" type="token" use="required" />
+					<attribute name="familyName" type="token" use="required" />
+					<attribute name="originalSpelling" type="token" use="optional" />
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="placeType">
+		<attribute name="organization" type="token" use="optional" />
+		<attribute name="address" type="token" use="required" />
+		<attribute name="originalSpelling" type="token" use="optional" />
+	</complexType>
+
+	<complexType name="dateType">
+		<attribute name="year" use="required">
+			<simpleType>
+				<restriction base="short">
+					<minInclusive value="-10000" />
+					<maxInclusive value="10000" />
+				</restriction>
+			</simpleType>
+		</attribute>
+
+		<attribute name="month" use="optional">
+			<simpleType>
+				<restriction base="token">
+					<enumeration value="jan" />
+					<enumeration value="feb" />
+					<enumeration value="mar" />
+					<enumeration value="apr" />
+					<enumeration value="jun" />
+					<enumeration value="jul" />
+					<enumeration value="aug" />
+					<enumeration value="sep" />
+					<enumeration value="oct" />
+					<enumeration value="nov" />
+					<enumeration value="dec" />
+				</restriction>
+			</simpleType>
+		</attribute>
+
+		<attribute name="day" use="optional">
+			<simpleType>
+				<restriction base="byte">
+					<minInclusive value="1" />
+					<maxInclusive value="31" />
+				</restriction>
+			</simpleType>
+		</attribute>
+
+
+		<attribute name="quarter" use="optional">
+			<simpleType>
+				<restriction base="token">
+					<enumeration value="spring" />
+					<enumeration value="summer" />
+					<enumeration value="fall" />
+					<enumeration value="winter" />
+				</restriction>
+			</simpleType>
+		</attribute>
+	</complexType>
+
+	<simpleType name="urlType">
+		<restriction base="string" />
+	</simpleType>
+
+	<simpleType name="doiType">
+		<restriction base="string" />
+	</simpleType>
+
+	<simpleType name="issnType">
+		<restriction base="string" />
+	</simpleType>
+
+	<simpleType name="isbnType">
+		<restriction base="string" />
+	</simpleType>
+
+	<element name="article">
+		<complexType>
+			<all>
+				<element name="authors" type="tns:personsType" />
+				<element name="date" type="tns:dateType" />
+			</all>
+			<attribute name="title" type="token" use="required" />
+			<attribute name="url" type="tns:urlType" use="optional" />
+			<attribute name="doi" type="tns:doiType" use="optional" />
+			<attribute name="journal" type="token" use="required" />
+			<attribute name="volume" type="token" use="required" />
+			<attribute name="number" type="token" use="required" />
+			<attribute name="startPage" type="token" use="required" />
+			<attribute name="endPage" type="token" use="required" />
+			<attribute name="issn" type="tns:issnType" use="optional" />
+		</complexType>
+	</element>
+
+
+	<element name="book">
+		<complexType>
+			<all>
+				<element name="authors" type="tns:personsType" />
+				<element name="editors" type="tns:personsType" />
+				<element name="publisher" type="tns:placeType" />
+				<element name="date" type="tns:dateType" />
+			</all>
+			<attribute name="title" type="token" use="required" />
+			<attribute name="url" type="tns:urlType" use="optional" />
+			<attribute name="doi" type="tns:doiType" use="optional" />
+			<attribute name="edition" type="token" use="optional" />
+			<attribute name="series" type="token" use="optional" />
+			<attribute name="volume" type="token" use="optional" />
+			<attribute name="isbn" type="tns:isbnType" use="optional" />
+			<attribute name="issn" type="tns:issnType" use="optional" />
+		</complexType>
+	</element>
+
+	<element name="inCollection">
+		<complexType>
+			<all>
+				<element name="authors" type="tns:personsType" />
+				<element ref="tns:book" />
+			</all>
+			<attribute name="title" type="token" use="required" />
+			<attribute name="url" type="tns:urlType" use="optional" />
+			<attribute name="doi" type="tns:doiType" use="optional" />
+			<attribute name="chapter" type="token" use="optional" />
+			<attribute name="startPage" type="token" use="required" />
+			<attribute name="endPage" type="token" use="required" />
+		</complexType>
+	</element>
+
+	<element name="proceedings">
+		<complexType>
+			<all>
+				<element name="authors" type="tns:personsType" />
+				<element name="editors" type="tns:personsType" />
+				<element name="publisher" type="tns:placeType" />
+				<element name="location" type="tns:placeType" />
+				<element name="startDate" type="tns:dateType" />
+				<element name="endDate" type="tns:dateType" />
+			</all>
+			<attribute name="title" type="token" use="required" />
+			<attribute name="url" type="tns:urlType" use="optional" />
+			<attribute name="doi" type="tns:doiType" use="optional" />
+			<attribute name="series" type="token" use="optional" />
+			<attribute name="volume" type="token" use="optional" />
+			<attribute name="isbn" type="tns:isbnType" use="optional" />
+			<attribute name="issn" type="tns:issnType" use="optional" />
+		</complexType>
+	</element>
+
+	<element name="inProceedings">
+		<complexType>
+			<all>
+				<element name="authors" type="tns:personsType" />
+				<element ref="tns:proceedings" />
+			</all>
+			<attribute name="title" type="token" use="required" />
+			<attribute name="url" type="tns:urlType" use="optional" />
+			<attribute name="doi" type="tns:doiType" use="optional" />
+			<attribute name="chapter" type="token" use="optional" />
+			<attribute name="startPage" type="token" use="required" />
+			<attribute name="endPage" type="token" use="required" />
+		</complexType>
+	</element>
+
+	<element name="techReport">
+		<complexType>
+			<all>
+				<element name="authors" type="tns:personsType" />
+				<element name="institution" type="tns:placeType" />
+				<element name="date" type="tns:dateType" />
+			</all>
+			<attribute name="title" type="token" use="required" />
+			<attribute name="url" type="tns:urlType" use="optional" />
+			<attribute name="doi" type="tns:doiType" use="optional" />
+			<attribute name="issn" type="tns:issnType" use="optional" />
+			<attribute name="series" type="token" use="optional" />
+			<attribute name="number" type="token" use="optional" />
+		</complexType>
+	</element>
+
+	<element name="thesis">
+		<complexType>
+			<all>
+				<element name="authors" type="tns:personsType" minOccurs="0"
+					maxOccurs="1" />
+				<element name="publisher" type="tns:placeType" />
+				<element name="school" type="tns:placeType" />
+				<element name="date" type="tns:dateType" />
+			</all>
+			<attribute name="title" type="token" use="required" />
+			<attribute name="url" type="tns:urlType" use="optional" />
+			<attribute name="doi" type="tns:doiType" use="optional" />
+			<attribute name="edition" type="token" use="optional" />
+			<attribute name="series" type="token" use="optional" />
+			<attribute name="volume" type="token" use="optional" />
+			<attribute name="isbn" type="tns:isbnType" use="optional" />
+			<attribute name="issn" type="tns:issnType" use="optional" />
+			<attribute name="thesisType" use="required">
+				<simpleType>
+					<restriction base="token">
+						<enumeration value="bachelor" />
+						<enumeration value="master" />
+						<enumeration value="phd" />
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+
+	<element name="website">
+		<complexType>
+			<all>
+				<element name="authors" type="tns:personsType" />
+				<element name="publisher" type="tns:placeType" />
+				<element name="date" type="tns:dateType" />
+			</all>
+			<attribute name="title" type="token" use="required" />
+			<attribute name="url" type="tns:urlType" use="required" />
+			<attribute name="doi" type="tns:doiType" use="optional" />
+		</complexType>
+	</element>
+
+	<element name="bibliography">
+		<complexType>
+			<choice>
+				<element ref="tns:article" minOccurs="1" maxOccurs="unbounded" />
+				<element ref="tns:book" minOccurs="1" maxOccurs="unbounded" />
+				<element ref="tns:inCollection" minOccurs="1" maxOccurs="unbounded" />
+				<element ref="tns:proceedings" minOccurs="1" maxOccurs="unbounded" />
+				<element ref="tns:inProceedings" minOccurs="1" maxOccurs="unbounded" />
+				<element ref="tns:techReport" minOccurs="1" maxOccurs="unbounded" />
+				<element ref="tns:thesis" minOccurs="1" maxOccurs="unbounded" />
+				<element ref="tns:website" minOccurs="1" maxOccurs="unbounded" />
+			</choice>
+		</complexType>
+	</element>
+</schema>

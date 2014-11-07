@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+
 /** An enumeration with the supported thesis types. */
 public enum EThesisType {
 
@@ -13,7 +15,8 @@ public enum EThesisType {
   PHD_THESIS("PhD Thesis"); //$NON-NLS-1$
 
   /** get the types */
-  static final EThesisType[] TYPES = EThesisType.values();
+  public static final ArraySetView<EThesisType> TYPES = new ArraySetView<>(
+      EThesisType.values());
 
   /** the name */
   final String m_name;

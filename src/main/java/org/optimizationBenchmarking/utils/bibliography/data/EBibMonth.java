@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+
 /**
  * An enumeration of months.
  */
@@ -45,7 +47,8 @@ public enum EBibMonth {
   private static final long serialVersionUID = 1L;
 
   /** the months */
-  static final EBibMonth[] MONTHS = EBibMonth.values();
+  public static final ArraySetView<EBibMonth> MONTHS = new ArraySetView<>(
+      EBibMonth.values());
 
   /** the maximum days */
   final int m_days;

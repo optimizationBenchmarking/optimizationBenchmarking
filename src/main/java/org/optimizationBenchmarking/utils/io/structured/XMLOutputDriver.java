@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.parsers.SAXParserFactory;
-
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
 import org.optimizationBenchmarking.utils.io.xml.XMLDocument;
@@ -25,19 +23,6 @@ public abstract class XMLOutputDriver<S> extends TextOutputDriver<S> {
   /** create */
   protected XMLOutputDriver() {
     super();
-  }
-
-  /**
-   * Configure the SAX parser factory
-   * 
-   * @param spf
-   *          the sax parser factory to be used by this driver
-   * @throws Throwable
-   *           if something fails
-   */
-  protected void configureSAXParserFactory(final SAXParserFactory spf)
-      throws Throwable {
-    spf.setNamespaceAware(true);
   }
 
   /**

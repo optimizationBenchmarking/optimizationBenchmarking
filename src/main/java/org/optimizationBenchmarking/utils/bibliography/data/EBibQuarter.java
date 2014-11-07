@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.bibliography.data;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+
 /**
  * An enumeration of quarters.
  */
@@ -18,7 +20,8 @@ public enum EBibQuarter {
   private static final long serialVersionUID = 1L;
 
   /** the values */
-  static final EBibQuarter[] QUARTERS = EBibQuarter.values();
+  public static final ArraySetView<EBibQuarter> QUARTERS = new ArraySetView<>(
+      EBibQuarter.values());
 
   /** the shortcut */
   final String m_short;

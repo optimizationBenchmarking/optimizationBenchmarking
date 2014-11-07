@@ -4,11 +4,6 @@ import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.XMLConstants;
-import javax.xml.parsers.SAXParserFactory;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-
 import org.optimizationBenchmarking.experimentation.data.DataPoint;
 import org.optimizationBenchmarking.experimentation.data.Dimension;
 import org.optimizationBenchmarking.experimentation.data.DimensionSet;
@@ -22,7 +17,6 @@ import org.optimizationBenchmarking.experimentation.data.InstanceSet;
 import org.optimizationBenchmarking.experimentation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.data.ParameterValue;
 import org.optimizationBenchmarking.experimentation.data.Run;
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.io.structured.XMLOutputDriver;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
@@ -46,44 +40,6 @@ public final class EDIOutputDriver extends XMLOutputDriver<Object> {
   /** create */
   private EDIOutputDriver() {
     super();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final void configureSAXParserFactory(final SAXParserFactory spf)
-      throws Throwable {
-    Throwable rec;
-    SchemaFactory sf;
-    Schema schema;
-
-    rec = null;
-    schema = null;
-    try {
-      sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-      schema = sf.newSchema(//
-          _EDIConstants.class
-              .getResource("experimentDataInterchange.1.0.xsd")); //$NON-NLS-1$
-    } catch (final Throwable a) {
-      rec = a;
-    } finally {
-      sf = null;
-    }
-
-    try {
-      spf.setNamespaceAware(true);
-      if (schema != null) {
-        spf.setValidating(false);
-        spf.setSchema(schema);
-      } else {
-        spf.setValidating(false);
-      }
-    } catch (final Throwable b) {
-      rec = ErrorUtils.aggregateError(rec, b);
-    }
-
-    if (rec != null) {
-      ErrorUtils.throwAsIOException(rec);
-    }
   }
 
   /** {@inheritDoc} */

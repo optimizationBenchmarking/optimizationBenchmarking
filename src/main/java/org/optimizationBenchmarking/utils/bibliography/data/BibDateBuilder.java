@@ -173,7 +173,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
       }
 
       try {
-        res = EBibMonth.MONTHS[IntParser.INSTANCE.parseInt(month)];
+        res = EBibMonth.MONTHS.get(IntParser.INSTANCE.parseInt(month));
         break finder;
       } catch (final Throwable ignore) {
         // ignore
@@ -235,7 +235,8 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
       }
 
       try {
-        res = EBibQuarter.QUARTERS[IntParser.INSTANCE.parseInt(quarter)];
+        res = EBibQuarter.QUARTERS.get(IntParser.INSTANCE
+            .parseInt(quarter));
         break finder;
       } catch (final Throwable ignore) {
         // ignore
@@ -317,7 +318,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
       this.setYear(cal.get(Calendar.YEAR));
     }
     if (cal.isSet(Calendar.MONTH)) {
-      this.setMonth(EBibMonth.MONTHS[cal.get(Calendar.MONTH)]);
+      this.setMonth(EBibMonth.MONTHS.get(cal.get(Calendar.MONTH)));
     }
     if (cal.isSet(Calendar.DAY_OF_MONTH)) {
       this.setDay(cal.get(Calendar.DAY_OF_MONTH));
