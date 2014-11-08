@@ -171,7 +171,7 @@ final class _TSPSuiteHandler extends FileInputDriver<Object> {
         continue;
       }
       if (in == null) {
-        in = TSPSuiteInputDriver._instanceName(n);
+        in = TSPSuiteInput._instanceName(n);
         if (in != null) {
           instance = p;
         }

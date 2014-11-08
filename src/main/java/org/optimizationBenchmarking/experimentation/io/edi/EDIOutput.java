@@ -32,13 +32,13 @@ import org.optimizationBenchmarking.utils.text.numbers.XMLNumberAppender;
  * {@link org.optimizationBenchmarking.experimentation.data experiment data
  * structures}.
  */
-public final class EDIOutputDriver extends XMLOutputDriver<Object> {
+public final class EDIOutput extends XMLOutputDriver<Object> {
 
   /** create */
-  public static final EDIOutputDriver INSTANCE = new EDIOutputDriver();
+  public static final EDIOutput INSTANCE = new EDIOutput();
 
   /** create */
-  private EDIOutputDriver() {
+  private EDIOutput() {
     super();
   }
 
@@ -56,30 +56,29 @@ public final class EDIOutputDriver extends XMLOutputDriver<Object> {
           _EDIConstants.A_VERSION, _EDIConstants.AV_VERSION_VALUE);
       write: {
         if (data instanceof ExperimentSet) {
-          EDIOutputDriver.__writeExperimentSet(((ExperimentSet) data),
-              root, logger);
+          EDIOutput.__writeExperimentSet(((ExperimentSet) data), root,
+              logger);
           break write;
         }
         if (data instanceof DimensionSet) {
-          EDIOutputDriver.__writeDimensionSet(((DimensionSet) data), root,
+          EDIOutput.__writeDimensionSet(((DimensionSet) data), root,
               logger);
           break write;
         }
         if (data instanceof InstanceSet) {
-          EDIOutputDriver.__writeInstanceSet(((InstanceSet) data), root,
-              logger);
+          EDIOutput.__writeInstanceSet(((InstanceSet) data), root, logger);
           break write;
         }
         if (data instanceof Experiment) {
-          EDIOutputDriver.__writeExperiment(((Experiment) data), root,
-              logger, new HashSet<>());
+          EDIOutput.__writeExperiment(((Experiment) data), root, logger,
+              new HashSet<>());
           break write;
         }
         if (data instanceof ArraySetView) {
           v = ((ArraySetView) data);
           if (v.size() > 0) {
             if (v.get(0) instanceof Experiment) {
-              EDIOutputDriver.__writeExperiments(v, root, logger);
+              EDIOutput.__writeExperiments(v, root, logger);
               break write;
             }
           }
@@ -107,9 +106,9 @@ public final class EDIOutputDriver extends XMLOutputDriver<Object> {
       logger.finer("Beginning to write experiment set " + es); //$NON-NLS-1$
     }
 
-    EDIOutputDriver.__writeDimensionSet(es.getDimensions(), dest, logger);
-    EDIOutputDriver.__writeInstanceSet(es.getInstances(), dest, logger);
-    EDIOutputDriver.__writeExperiments(es.getData(), dest, logger);
+    EDIOutput.__writeDimensionSet(es.getDimensions(), dest, logger);
+    EDIOutput.__writeInstanceSet(es.getInstances(), dest, logger);
+    EDIOutput.__writeExperiments(es.getData(), dest, logger);
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
       logger.finer("Finished writing experiment set " + es); //$NON-NLS-1$
@@ -539,7 +538,7 @@ public final class EDIOutputDriver extends XMLOutputDriver<Object> {
 
       described = new HashSet<>();
       for (final Experiment e : es) {
-        EDIOutputDriver.__writeExperiment(e, root, logger, described);
+        EDIOutput.__writeExperiment(e, root, logger, described);
       }
 
     }

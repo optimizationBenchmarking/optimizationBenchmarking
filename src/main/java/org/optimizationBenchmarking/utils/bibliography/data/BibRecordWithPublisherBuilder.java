@@ -104,7 +104,7 @@ public abstract class BibRecordWithPublisherBuilder extends
    * 
    * @return the publisher builder
    */
-  public synchronized final BibOrganizationBuilder setPublisher() {
+  public synchronized final BibOrganizationBuilder publisher() {
     this.fsmFlagsAssertFalse(BibRecordWithPublisherBuilder.FLAG_PUBLISHER_SET);
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibOrganizationBuilder(this, 0, true);

@@ -31,20 +31,16 @@ public class ConfigurationXMLHandler extends DelegatingHandler {
     String a, b;
     if ((uri == null)
         || (_ConfigXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+
       if (_ConfigXMLConstants.ELEMENT_CONFIGURATION_PARAMETER
           .equalsIgnoreCase(localName)) {
-        a = attributes.getValue(_ConfigXMLConstants.NAMESPACE,
+
+        a = DelegatingHandler.getAttribute(attributes,
+            _ConfigXMLConstants.NAMESPACE,
             _ConfigXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME);
-        if (a == null) {
-          a = attributes
-              .getValue(_ConfigXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME);
-        }
-        b = attributes.getValue(_ConfigXMLConstants.NAMESPACE,
+        b = DelegatingHandler.getAttribute(attributes,
+            _ConfigXMLConstants.NAMESPACE,
             _ConfigXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE);
-        if (b == null) {
-          b = attributes
-              .getValue(_ConfigXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE);
-        }
 
         this.m_dest.put(a, b);
       }

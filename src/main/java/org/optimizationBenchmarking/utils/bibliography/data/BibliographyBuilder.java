@@ -167,7 +167,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * 
    * @return the website record builder
    */
-  public synchronized final BibWebsiteBuilder addWebsite() {
+  public synchronized final BibWebsiteBuilder website() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibWebsiteBuilder(this);
   }
@@ -177,7 +177,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * 
    * @return the article record builder
    */
-  public synchronized final BibArticleBuilder addArticle() {
+  public synchronized final BibArticleBuilder article() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibArticleBuilder(this);
   }
@@ -187,7 +187,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * 
    * @return the thesis record builder
    */
-  public synchronized final BibThesisBuilder addThesis() {
+  public synchronized final BibThesisBuilder thesis() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibThesisBuilder(this);
   }
@@ -197,7 +197,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * 
    * @return the technical report record builder
    */
-  public synchronized final BibTechReportBuilder addTechReport() {
+  public synchronized final BibTechReportBuilder techReport() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibTechReportBuilder(this);
   }
@@ -207,7 +207,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * 
    * @return the book record builder
    */
-  public synchronized final BibBookBuilder addBook() {
+  public synchronized final BibBookBuilder book() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibBookBuilder(this);
   }
@@ -217,7 +217,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * 
    * @return the proceedings record builder
    */
-  public synchronized final BibProceedingsBuilder addProceedings() {
+  public synchronized final BibProceedingsBuilder proceedings() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibProceedingsBuilder(this);
   }
@@ -227,7 +227,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * 
    * @return the in-proceedings record builder
    */
-  public synchronized final BibInProceedingsBuilder addInProceedings() {
+  public synchronized final BibInProceedingsBuilder inProceedings() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibInProceedingsBuilder(this);
   }
@@ -237,7 +237,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
    * 
    * @return the in-collection record builder
    */
-  public synchronized final BibInCollectionBuilder addInCollection() {
+  public synchronized final BibInCollectionBuilder inCollection() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibInCollectionBuilder(this);
   }

@@ -76,7 +76,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
    * 
    * @return the schoolbuilder
    */
-  public synchronized final BibOrganizationBuilder setSchool() {
+  public synchronized final BibOrganizationBuilder school() {
     this.fsmFlagsAssertFalse(BibThesisBuilder.FLAG_SCHOOL_SET);
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibOrganizationBuilder(this, 1, true);

@@ -23,8 +23,8 @@ public final class BibWebsiteBuilder extends BibRecordWithPublisherBuilder {
 
   /** {@inheritDoc} */
   @Override
-  public final synchronized BibDateBuilder setDate() {
-    return super.setDate();
+  public final synchronized BibDateBuilder date() {
+    return super.date();
   }
 
   /** {@inheritDoc} */

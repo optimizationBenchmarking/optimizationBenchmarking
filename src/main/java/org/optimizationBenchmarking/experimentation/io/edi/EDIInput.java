@@ -19,13 +19,12 @@ import org.xml.sax.helpers.DefaultHandler;
  * {@link org.optimizationBenchmarking.experimentation.data experiment data
  * structures}.
  */
-public final class EDIInputDriver extends
-    XMLInputDriver<ExperimentSetContext> {
+public final class EDIInput extends XMLInputDriver<ExperimentSetContext> {
   /** create */
-  public static final EDIInputDriver INSTANCE = new EDIInputDriver();
+  public static final EDIInput INSTANCE = new EDIInput();
 
   /** create */
-  private EDIInputDriver() {
+  private EDIInput() {
     super();
   }
 
@@ -42,7 +41,7 @@ public final class EDIInputDriver extends
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       schema = sf.newSchema(//
-          EDIInputDriver.class
+          _EDIConstants.class
               .getResource("experimentDataInterchange.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
       rec = a;

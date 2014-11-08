@@ -417,14 +417,14 @@ public class BibliographyXMLOutput extends XMLOutputDriver<Object> {
     if (rec != null) {
       try (XMLElement dest = owner.element()) {
         dest.name(_BibliographyXMLConstants.NAMESPACE_URI,
-            _BibliographyXMLConstants.ELEMENT_TECH_REPORT);
+            _BibliographyXMLConstants.ELEMENT_WEBSITE);
 
         BibliographyXMLOutput.__writeRecordAttrs(rec, dest);
 
         BibliographyXMLOutput.__writeAuthors(rec.getAuthors(),
             _BibliographyXMLConstants.ELEMENT_AUTHORS, dest);
         BibliographyXMLOutput.__writePlace(rec.getPublisher(),
-            _BibliographyXMLConstants.ELEMENT_INSTITUTION, dest);
+            _BibliographyXMLConstants.ELEMENT_PUBLISHER, dest);
         BibliographyXMLOutput.__writeDate(rec.getDate(),
             _BibliographyXMLConstants.ELEMENT_DATE, dest);
       }

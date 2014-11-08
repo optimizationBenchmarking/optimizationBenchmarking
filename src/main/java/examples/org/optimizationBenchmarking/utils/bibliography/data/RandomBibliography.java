@@ -72,14 +72,14 @@ public final class RandomBibliography extends BibliographyExample {
         switch (this.m_rand.nextInt(8)) {
 
           case 0: {
-            try (final BibTechReportBuilder trb = bb.addTechReport()) {
+            try (final BibTechReportBuilder trb = bb.techReport()) {
               this.__randomTR(trb);
             }
             break;
           }
 
           case 1: {
-            try (final BibInProceedingsBuilder trb = bb.addInProceedings()) {
+            try (final BibInProceedingsBuilder trb = bb.inProceedings()) {
               this.__randomPaper(trb);
             }
             break;
@@ -91,38 +91,38 @@ public final class RandomBibliography extends BibliographyExample {
           }
 
           case 3: {
-            try (final BibBookBuilder trb = bb.addBook()) {
+            try (final BibBookBuilder trb = bb.book()) {
               this.__randomBook(trb, this.m_rand.nextBoolean(),
                   Integer.MAX_VALUE);
             }
           }
 
           case 4: {
-            try (final BibInCollectionBuilder trb = bb.addInCollection()) {
+            try (final BibInCollectionBuilder trb = bb.inCollection()) {
               this.__randomInBook(trb);
             }
           }
 
           case 5: {
-            try (final BibArticleBuilder trb = bb.addArticle()) {
+            try (final BibArticleBuilder trb = bb.article()) {
               this.__randomArticle(trb);
             }
           }
 
           case 6: {
-            try (final BibThesisBuilder trb = bb.addThesis()) {
+            try (final BibThesisBuilder trb = bb.thesis()) {
               this.__randomThesis(trb);
             }
           }
 
           case 7: {
-            try (final BibWebsiteBuilder trb = bb.addWebsite()) {
+            try (final BibWebsiteBuilder trb = bb.website()) {
               this.__randomWeb(trb);
             }
           }
 
           default: {
-            try (final BibProceedingsBuilder proc = bb.addProceedings()) {
+            try (final BibProceedingsBuilder proc = bb.proceedings()) {
               this.__randomProc(proc);
             }
           }
@@ -1469,7 +1469,7 @@ public final class RandomBibliography extends BibliographyExample {
     int i;
     i = 0;
     do {
-      try (final BibAuthorBuilder ab = abs.addAuthor()) {
+      try (final BibAuthorBuilder ab = abs.author()) {
         ab.setFamilyName(this.__randomName(false));
         ab.setPersonalName(this.__randomName(true));
         if (this.m_rand.nextInt(4) <= 0) {
@@ -1518,10 +1518,10 @@ public final class RandomBibliography extends BibliographyExample {
     try (final BibAuthorsBuilder abs = trb.setAuthors()) {
       this.__randomAuthors(abs, Integer.MAX_VALUE);
     }
-    try (final BibOrganizationBuilder ob = trb.setPublisher()) {
+    try (final BibOrganizationBuilder ob = trb.publisher()) {
       this.__randomOrganization(ob, true);
     }
-    try (final BibDateBuilder db = trb.setDate()) {
+    try (final BibDateBuilder db = trb.date()) {
       db.fromTime(this.__randomDate());
     }
 
@@ -1545,10 +1545,10 @@ public final class RandomBibliography extends BibliographyExample {
     try (final BibAuthorsBuilder abs = trb.setAuthors()) {
       this.__randomAuthors(abs, Integer.MAX_VALUE);
     }
-    try (final BibOrganizationBuilder ob = trb.setPublisher()) {
+    try (final BibOrganizationBuilder ob = trb.publisher()) {
       this.__randomOrganization(ob, true);
     }
-    try (final BibDateBuilder db = trb.setDate()) {
+    try (final BibDateBuilder db = trb.date()) {
       db.fromTime(this.__randomDate());
     }
 
@@ -1569,7 +1569,7 @@ public final class RandomBibliography extends BibliographyExample {
     try (final BibAuthorsBuilder abs = ip.setAuthors()) {
       this.__randomAuthors(abs, Integer.MAX_VALUE);
     }
-    try (final BibProceedingsBuilder bp = ip.setProceedings()) {
+    try (final BibProceedingsBuilder bp = ip.proceedings()) {
       this.__randomProc(bp);
     }
     if (this.m_rand.nextBoolean()) {
@@ -1624,11 +1624,11 @@ public final class RandomBibliography extends BibliographyExample {
       ip.setISSN(this.__randomISSN());
     }
 
-    try (final BibDateBuilder db = ip.setDate()) {
+    try (final BibDateBuilder db = ip.date()) {
       db.fromTime(this.__randomDate());
     }
 
-    try (final BibOrganizationBuilder ob = ip.setPublisher()) {
+    try (final BibOrganizationBuilder ob = ip.publisher()) {
       this.__randomOrganization(ob, true);
     }
   }
@@ -1647,7 +1647,7 @@ public final class RandomBibliography extends BibliographyExample {
     try (final BibAuthorsBuilder abs = col.setAuthors()) {
       this.__randomAuthors(abs, Integer.MAX_VALUE);
     }
-    try (final BibBookBuilder bp = col.setBook()) {
+    try (final BibBookBuilder bp = col.book()) {
       this.__randomBook(bp, false, Integer.MAX_VALUE);
     }
     if (this.m_rand.nextBoolean()) {
@@ -1681,15 +1681,15 @@ public final class RandomBibliography extends BibliographyExample {
     try (final BibAuthorsBuilder abs = proc.setEditors()) {
       this.__randomAuthors(abs, Integer.MAX_VALUE);
     }
-    try (final BibOrganizationBuilder ob = proc.setPublisher()) {
+    try (final BibOrganizationBuilder ob = proc.publisher()) {
       this.__randomOrganization(ob, true);
     }
 
     start = this.__randomDate();
-    try (final BibDateBuilder db = proc.setStartDate()) {
+    try (final BibDateBuilder db = proc.startDate()) {
       db.fromTime(start);
     }
-    try (final BibDateBuilder db = proc.setEndDate()) {
+    try (final BibDateBuilder db = proc.endDate()) {
       end = (start + (TimeUnit.MILLISECONDS.convert(
           this.m_rand.nextInt(14), TimeUnit.DAYS)));
       db.fromTime(end);
@@ -1699,7 +1699,7 @@ public final class RandomBibliography extends BibliographyExample {
       proc.setURL(this.__randomURL());
     }
 
-    try (final BibOrganizationBuilder bo = proc.setLocation()) {
+    try (final BibOrganizationBuilder bo = proc.location()) {
       this.__randomOrganization(bo, false);
     }
 
@@ -1730,7 +1730,7 @@ public final class RandomBibliography extends BibliographyExample {
 
     this.__randomBook(thesis, true, 1);
 
-    try (final BibOrganizationBuilder ob = thesis.setSchool()) {
+    try (final BibOrganizationBuilder ob = thesis.school()) {
       this.__randomOrganization(ob, true);
     }
 
@@ -1763,11 +1763,11 @@ public final class RandomBibliography extends BibliographyExample {
       }
     }
 
-    try (final BibOrganizationBuilder ob = book.setPublisher()) {
+    try (final BibOrganizationBuilder ob = book.publisher()) {
       this.__randomOrganization(ob, true);
     }
 
-    try (final BibDateBuilder db = book.setDate()) {
+    try (final BibDateBuilder db = book.date()) {
       db.fromTime(this.__randomDate());
     }
 

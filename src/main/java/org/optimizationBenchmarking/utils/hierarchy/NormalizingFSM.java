@@ -257,7 +257,7 @@ public class NormalizingFSM extends HierarchicalFSM {
     }
 
     if (this.m_owner instanceof NormalizingFSM) {
-      return ((NormalizingFSM) (this.m_owner)).__normalize(input, 2,
+      return ((NormalizingFSM) (this.m_owner)).__normalize(result, 2,
           useResolved);
     }
 

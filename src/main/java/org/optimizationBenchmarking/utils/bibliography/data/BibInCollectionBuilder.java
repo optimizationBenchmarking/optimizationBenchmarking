@@ -32,7 +32,7 @@ public final class BibInCollectionBuilder extends BibInBookBuilder {
    * 
    * @return the book builder
    */
-  public synchronized final BibBookBuilder setBook() {
+  public synchronized final BibBookBuilder book() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibBookBuilder(this);
   }

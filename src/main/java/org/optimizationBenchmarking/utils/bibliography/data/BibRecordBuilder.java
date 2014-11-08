@@ -122,7 +122,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
    * 
    * @return the date setter
    */
-  synchronized BibDateBuilder setDate() {
+  synchronized BibDateBuilder date() {
     this.fsmFlagsAssertFalse(BibRecordBuilder.FLAG_DATE_SET);
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibDateBuilder(this, 0);

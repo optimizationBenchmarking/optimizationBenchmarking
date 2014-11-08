@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.config;
+package org.optimizationBenchmarking.utils.bibliography.io;
 
 import java.util.logging.Logger;
 
@@ -8,18 +8,20 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.io.structured.XMLInputDriver;
 import org.xml.sax.helpers.DefaultHandler;
 
-/** the configuration xml input */
-public class ConfigurationXMLInput extends
-    XMLInputDriver<ConfigurationBuilder> {
-
-  /** the configuration xml */
-  public static final ConfigurationXMLInput INSTANCE = new ConfigurationXMLInput();
+/**
+ * A driver for reading bibliography xml
+ */
+public final class BibliographyXMLInput extends
+    XMLInputDriver<BibliographyBuilder> {
+  /** create */
+  public static final BibliographyXMLInput INSTANCE = new BibliographyXMLInput();
 
   /** create */
-  private ConfigurationXMLInput() {
+  private BibliographyXMLInput() {
     super();
   }
 
@@ -36,7 +38,8 @@ public class ConfigurationXMLInput extends
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       schema = sf.newSchema(//
-          _ConfigXMLConstants.class.getResource("configuration.1.0.xsd")); //$NON-NLS-1$
+          _BibliographyXMLConstants.class
+              .getResource("bibliography.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
       rec = a;
     } finally {
@@ -63,7 +66,8 @@ public class ConfigurationXMLInput extends
   /** {@inheritDoc} */
   @Override
   protected DefaultHandler wrapLoadContext(
-      final ConfigurationBuilder loaderContext, final Logger logger) {
-    return new ConfigurationXMLHandler(null, loaderContext);
+      final BibliographyBuilder loaderContext, final Logger logger) {
+    return new BibliographyXMLHandler(null, loaderContext);
   }
+
 }

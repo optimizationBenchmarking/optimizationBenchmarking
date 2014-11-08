@@ -19,8 +19,8 @@ public class BibBookBuilder extends BibBookRecordBuilder {
 
   /** {@inheritDoc} */
   @Override
-  public final synchronized BibDateBuilder setDate() {
-    return super.setDate();
+  public final synchronized BibDateBuilder date() {
+    return super.date();
   }
 
   /** {@inheritDoc} */

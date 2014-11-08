@@ -60,8 +60,8 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
    * 
    * @return the builder for the start date
    */
-  public final BibDateBuilder setStartDate() {
-    return super.setDate();
+  public final BibDateBuilder startDate() {
+    return super.date();
   }
 
   /**
@@ -89,7 +89,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
    * 
    * @return the end date builder
    */
-  public synchronized final BibDateBuilder setEndDate() {
+  public synchronized final BibDateBuilder endDate() {
     this.fsmFlagsAssertFalse(BibProceedingsBuilder.FLAG_END_DATE_SET);
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibDateBuilder(this, 1);
@@ -134,7 +134,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
    * 
    * @return the location builder
    */
-  public synchronized final BibOrganizationBuilder setLocation() {
+  public synchronized final BibOrganizationBuilder location() {
     this.fsmFlagsAssertFalse(BibProceedingsBuilder.FLAG_LOCATION_SET);
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibOrganizationBuilder(this, 1, false);

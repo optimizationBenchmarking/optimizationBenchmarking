@@ -100,26 +100,6 @@ final class _EDIContentHandler extends DelegatingHandler {
   }
 
   /**
-   * Get an attribute
-   * 
-   * @param atts
-   *          the attribute
-   * @param at
-   *          the attribute value
-   * @return the string, or {@code null} if none found
-   */
-  private static final String __att(final Attributes atts, final String at) {
-    String r;
-
-    r = TextUtils.normalize(atts.getValue(_EDIConstants.NAMESPACE, at));
-    if (r != null) {
-      return r;
-    }
-
-    return TextUtils.normalize(atts.getValue("", at)); //$NON-NLS-1$
-  }
-
-  /**
    * start the bounds element
    * 
    * @param atts
@@ -134,21 +114,22 @@ final class _EDIContentHandler extends DelegatingHandler {
     stack = this.m_stack;
     c = ((InstanceContext) (stack.get(stack.size() - 1)));
 
-    dim = _EDIContentHandler.__att(atts, _EDIConstants.A_DIMENSION);
+    dim = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_DIMENSION);
     if (dim != null) {
 
-      lb = _EDIContentHandler.__att(atts,
-          _EDIConstants.A_FLOAT_LOWER_BOUND);
+      lb = DelegatingHandler.getAttributeNormalized(atts,
+          _EDIConstants.NAMESPACE, _EDIConstants.A_FLOAT_LOWER_BOUND);
       if (lb == null) {
-        lb = _EDIContentHandler.__att(atts,
-            _EDIConstants.A_INTEGER_LOWER_BOUND);
+        lb = DelegatingHandler.getAttributeNormalized(atts,
+            _EDIConstants.NAMESPACE, _EDIConstants.A_INTEGER_LOWER_BOUND);
       }
 
-      ub = _EDIContentHandler.__att(atts,
-          _EDIConstants.A_FLOAT_UPPER_BOUND);
+      ub = DelegatingHandler.getAttributeNormalized(atts,
+          _EDIConstants.NAMESPACE, _EDIConstants.A_FLOAT_UPPER_BOUND);
       if (ub == null) {
-        ub = _EDIContentHandler.__att(atts,
-            _EDIConstants.A_INTEGER_UPPER_BOUND);
+        ub = DelegatingHandler.getAttributeNormalized(atts,
+            _EDIConstants.NAMESPACE, _EDIConstants.A_INTEGER_UPPER_BOUND);
       }
 
       if ((lb != null) || (ub != null)) {
@@ -187,19 +168,22 @@ final class _EDIContentHandler extends DelegatingHandler {
       stack.add(d);
     }
 
-    s = _EDIContentHandler.__att(atts, _EDIConstants.A_NAME);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_NAME);
     d.setName(s);
 
     if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
       this.m_logger.fine("Begin of dimension '" + s + '\''); //$NON-NLS-1$
     }
 
-    s = _EDIContentHandler.__att(atts, _EDIConstants.A_DESCRIPTION);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_DESCRIPTION);
     if (s != null) {
       d.setDescription(s);
     }
 
-    s = _EDIContentHandler.__att(atts, _EDIConstants.A_DIMENSION_TYPE);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_DIMENSION_TYPE);
     findDT: {
       for (i = _EDIConstants.AV_DIMENSION_TYPE.length; (--i) >= 0;) {
         if (_EDIConstants.AV_DIMENSION_TYPE[i].equalsIgnoreCase(s)) {
@@ -209,8 +193,8 @@ final class _EDIContentHandler extends DelegatingHandler {
       }
     }
 
-    s = _EDIContentHandler
-        .__att(atts, _EDIConstants.A_DIMENSION_DIRECTION);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_DIMENSION_DIRECTION);
     findDD: {
       for (i = _EDIConstants.AV_DIMENSION_DIRECTION.length; (--i) >= 0;) {
         if (_EDIConstants.AV_DIMENSION_DIRECTION[i].equalsIgnoreCase(s)) {
@@ -221,8 +205,8 @@ final class _EDIContentHandler extends DelegatingHandler {
     }
 
     pt = null;
-    s = _EDIContentHandler
-        .__att(atts, _EDIConstants.A_DIMENSION_DATA_TYPE);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_DIMENSION_DATA_TYPE);
     findPT: {
       for (i = _EDIConstants.AV_DIMENSION_DATA_TYPE.length; (--i) >= 0;) {
         if (_EDIConstants.AV_DIMENSION_DATA_TYPE[i].equalsIgnoreCase(s)) {
@@ -232,13 +216,13 @@ final class _EDIContentHandler extends DelegatingHandler {
       }
     }
 
-    s = _EDIContentHandler
-        .__att(atts, _EDIConstants.A_INTEGER_LOWER_BOUND);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_INTEGER_LOWER_BOUND);
     if (s != null) {
       lb = LongParser.INSTANCE.parseString(s);
     } else {
-      s = _EDIContentHandler
-          .__att(atts, _EDIConstants.A_FLOAT_LOWER_BOUND);
+      s = DelegatingHandler.getAttributeNormalized(atts,
+          _EDIConstants.NAMESPACE, _EDIConstants.A_FLOAT_LOWER_BOUND);
       if (s != null) {
         lb = DoubleParser.INSTANCE.parseString(s);
       } else {
@@ -246,13 +230,13 @@ final class _EDIContentHandler extends DelegatingHandler {
       }
     }
 
-    s = _EDIContentHandler
-        .__att(atts, _EDIConstants.A_INTEGER_UPPER_BOUND);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_INTEGER_UPPER_BOUND);
     if (s != null) {
       ub = LongParser.INSTANCE.parseString(s);
     } else {
-      s = _EDIContentHandler
-          .__att(atts, _EDIConstants.A_FLOAT_UPPER_BOUND);
+      s = DelegatingHandler.getAttributeNormalized(atts,
+          _EDIConstants.NAMESPACE, _EDIConstants.A_FLOAT_UPPER_BOUND);
       if (s != null) {
         ub = DoubleParser.INSTANCE.parseString(s);
       } else {
@@ -347,14 +331,16 @@ final class _EDIContentHandler extends DelegatingHandler {
       stack.add(d);
     }
 
-    s = _EDIContentHandler.__att(atts, _EDIConstants.A_NAME);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_NAME);
     d.setName(s);
 
     if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
       this.m_logger.fine("Begin of experiment '" + s + '\''); //$NON-NLS-1$
     }
 
-    s = _EDIContentHandler.__att(atts, _EDIConstants.A_DESCRIPTION);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_DESCRIPTION);
     if (s != null) {
       d.setDescription(s);
     }
@@ -390,12 +376,16 @@ final class _EDIContentHandler extends DelegatingHandler {
       d.setName(String.valueOf(this.m_id++));
     }
 
-    d.setFeatureValue(//
-        _EDIContentHandler.__att(atts, _EDIConstants.A_NAME),//
-        _EDIContentHandler
-            .__att(atts, _EDIConstants.A_FEATURE_DESCRIPTION),//
-        _EDIContentHandler.__att(atts, _EDIConstants.A_FEATURE_VALUE),//
-        _EDIContentHandler.__att(atts,
+    d.setFeatureValue(
+    //
+        DelegatingHandler.getAttributeNormalized(atts,
+            _EDIConstants.NAMESPACE, _EDIConstants.A_NAME),//
+        DelegatingHandler.getAttributeNormalized(atts,
+            _EDIConstants.NAMESPACE, _EDIConstants.A_FEATURE_DESCRIPTION),//
+        DelegatingHandler.getAttributeNormalized(atts,
+            _EDIConstants.NAMESPACE, _EDIConstants.A_FEATURE_VALUE),//
+        DelegatingHandler.getAttributeNormalized(atts,
+            _EDIConstants.NAMESPACE,
             _EDIConstants.A_FEATURE_VALUE_DESCRIPTION));
   }
 
@@ -422,14 +412,16 @@ final class _EDIContentHandler extends DelegatingHandler {
       stack.add(d);
     }
 
-    s = _EDIContentHandler.__att(atts, _EDIConstants.A_NAME);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_NAME);
     d.setName(s);
 
     if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
       this.m_logger.fine("Begin of instance '" + s + '\''); //$NON-NLS-1$
     }
 
-    s = _EDIContentHandler.__att(atts, _EDIConstants.A_DESCRIPTION);
+    s = DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_DESCRIPTION);
     if (s != null) {
       d.setDescription(s);
     }
@@ -465,7 +457,8 @@ final class _EDIContentHandler extends DelegatingHandler {
     }
     d = c.createInstanceRuns();
     stack.add(d);
-    d.setInstance(_EDIContentHandler.__att(atts, _EDIConstants.A_INSTANCE));
+    d.setInstance(DelegatingHandler.getAttributeNormalized(atts,
+        _EDIConstants.NAMESPACE, _EDIConstants.A_INSTANCE));
   }
 
   /** end the instance runs */
@@ -551,12 +544,17 @@ final class _EDIContentHandler extends DelegatingHandler {
       d.setName(String.valueOf(this.m_id++));
     }
 
-    d.setParameterValue(//
-        _EDIContentHandler.__att(atts, _EDIConstants.A_NAME),//
-        _EDIContentHandler.__att(atts,
-            _EDIConstants.A_PARAMETER_DESCRIPTION),//
-        _EDIContentHandler.__att(atts, _EDIConstants.A_PARAMETER_VALUE),//
-        _EDIContentHandler.__att(atts,
+    d.setParameterValue(
+    //
+        DelegatingHandler.getAttributeNormalized(atts,
+            _EDIConstants.NAMESPACE, _EDIConstants.A_NAME),//
+        DelegatingHandler
+            .getAttributeNormalized(atts, _EDIConstants.NAMESPACE,
+                _EDIConstants.A_PARAMETER_DESCRIPTION),//
+        DelegatingHandler.getAttributeNormalized(atts,
+            _EDIConstants.NAMESPACE, _EDIConstants.A_PARAMETER_VALUE),//
+        DelegatingHandler.getAttributeNormalized(atts,
+            _EDIConstants.NAMESPACE,
             _EDIConstants.A_PARAMETER_VALUE_DESCRIPTION));
   }
 

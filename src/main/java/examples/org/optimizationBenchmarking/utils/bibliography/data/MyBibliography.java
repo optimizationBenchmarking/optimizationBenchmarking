@@ -100,29 +100,29 @@ public final class MyBibliography extends BibliographyExample {
    */
   private static final void __TYW2012SSOECFLSGO(
       final BibliographyBuilder bb) {
-    try (final BibTechReportBuilder trb = bb.addTechReport()) {
+    try (final BibTechReportBuilder trb = bb.techReport()) {
       trb.setTitle("Special Session on Evolutionary Computation for Large Scale Global Optimization at 2012 IEEE World Congress on Computational Intelligence (CEC@WCCI-2012)"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = trb.setAuthors()) {
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
           ab.setOriginalSpelling("\u5510\u8F72"); //$NON-NLS-1$
           ab.setPersonalName("Ke"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Yang"); //$NON-NLS-1$
           ab.setOriginalSpelling("\u6768\u632F\u5B87"); //$NON-NLS-1$          
           ab.setPersonalName("Zhenyu"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
           ab.setPersonalName("Thomas"); //$NON-NLS-1$
         }
       }
-      try (final BibOrganizationBuilder ob = trb.setPublisher()) {
+      try (final BibOrganizationBuilder ob = trb.publisher()) {
         ob.setAddress("Hefei, Anhui, China"); //$NON-NLS-1$
         ob.setName("University of Science and Technology of China (USTC), School of Computer Science and Technology (SCST), Nature Inspired Computation and Applications Laboratory (NICAL)"); //$NON-NLS-1$
       }
-      try (final BibDateBuilder db = trb.setDate()) {
+      try (final BibDateBuilder db = trb.date()) {
         db.setYear(2012);
         db.setMonth(EBibMonth.JUNE);
         db.setDay(14);
@@ -139,32 +139,32 @@ public final class MyBibliography extends BibliographyExample {
    */
   private static final void __WWTWDY2014FFA(final BibliographyBuilder bb) {
 
-    try (final BibArticleBuilder bab = bb.addArticle()) {
+    try (final BibArticleBuilder bab = bb.article()) {
       bab.setTitle("Frequency Fitness Assignment"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = bab.setAuthors()) {
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
           ab.setPersonalName("Thomas"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Wan"); //$NON-NLS-1$
           ab.setPersonalName("Mingxu"); //$NON-NLS-1$
           ab.setOriginalSpelling("\u4E07\u660E\u7EEA"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
           ab.setOriginalSpelling("\u5510\u8F72"); //$NON-NLS-1$
           ab.setPersonalName("Ke"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Wang"); //$NON-NLS-1$
           ab.setPersonalName("Pu"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Devert"); //$NON-NLS-1$
           ab.setPersonalName("Alexandre"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setOriginalSpelling("\u59DA\u65B0"); //$NON-NLS-1$
           ab.setFamilyName("Yao"); //$NON-NLS-1$
           ab.setPersonalName("Xin"); //$NON-NLS-1$
@@ -178,7 +178,7 @@ public final class MyBibliography extends BibliographyExample {
       bab.setStartPage("226"); //$NON-NLS-1$
       bab.setEndPage("243"); //$NON-NLS-1$
 
-      try (final BibDateBuilder db = bab.setDate()) {
+      try (final BibDateBuilder db = bab.date()) {
         db.setYear(2014);
         db.setMonth(EBibMonth.APRIL);
       }
@@ -194,18 +194,18 @@ public final class MyBibliography extends BibliographyExample {
   private static final void __DWT2011ASOSRFEOOGS(
       final BibliographyBuilder bb) {
 
-    try (final BibArticleBuilder bab = bb.addArticle()) {
+    try (final BibArticleBuilder bab = bb.article()) {
       bab.setTitle("A Study on Scalable Representations for Evolutionary Optimization of Ground Structures"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = bab.setAuthors()) {
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Devert"); //$NON-NLS-1$
           ab.setPersonalName("Alexandre"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
           ab.setPersonalName("Thomas"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
           ab.setPersonalName("Ke"); //$NON-NLS-1$
           ab.setOriginalSpelling("\u5510\u8F72"); //$NON-NLS-1$
@@ -219,11 +219,11 @@ public final class MyBibliography extends BibliographyExample {
       bab.setStartPage("453"); //$NON-NLS-1$
       bab.setEndPage("472"); //$NON-NLS-1$
 
-      try (final BibDateBuilder db = bab.setDate()) {
+      try (final BibDateBuilder db = bab.date()) {
         db.setYear(2012);
         db.setQuarter(EBibQuarter.FALL);
       }
-      try (final BibOrganizationBuilder bo = bab.setPublisher()) {
+      try (final BibOrganizationBuilder bo = bab.publisher()) {
         bo.setName("MIT Press"); //$NON-NLS-1$
         bo.setAddress("Cambridge, MA, USA"); //$NON-NLS-1$
       }
@@ -238,22 +238,22 @@ public final class MyBibliography extends BibliographyExample {
    */
   private static final void __WZKG2009DGPFz(final BibliographyBuilder bb) {
 
-    try (final BibArticleBuilder bab = bb.addArticle()) {
+    try (final BibArticleBuilder bab = bb.article()) {
       bab.setTitle("Combining Genetic Programming and Model-Driven Development"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = bab.setAuthors()) {
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
           ab.setPersonalName("Thomas"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Zapf"); //$NON-NLS-1$
           ab.setPersonalName("Michael"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Khan"); //$NON-NLS-1$
           ab.setPersonalName("Mohammad Ullah"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Geihs"); //$NON-NLS-1$
           ab.setPersonalName("Kurt"); //$NON-NLS-1$
         }
@@ -266,12 +266,12 @@ public final class MyBibliography extends BibliographyExample {
       bab.setNumber("1"); //$NON-NLS-1$
       bab.setStartPage("37"); //$NON-NLS-1$
       bab.setEndPage("52"); //$NON-NLS-1$
-      try (final BibOrganizationBuilder ob = bab.setPublisher()) {
+      try (final BibOrganizationBuilder ob = bab.publisher()) {
         ob.setAddress("London, UK"); //$NON-NLS-1$
         ob.setName("Imperial College Press Co"); //$NON-NLS-1$
       }
 
-      try (final BibDateBuilder db = bab.setDate()) {
+      try (final BibDateBuilder db = bab.date()) {
         db.setYear(2009);
         db.setMonth(EBibMonth.MARCH);
       }
@@ -286,65 +286,65 @@ public final class MyBibliography extends BibliographyExample {
    */
   private static final void __WZKG2007DGPFg(final BibliographyBuilder bb) {
 
-    try (final BibInProceedingsBuilder bab = bb.addInProceedings()) {
+    try (final BibInProceedingsBuilder bab = bb.inProceedings()) {
       bab.setTitle("Genetic Programming meets Model-Driven Development"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = bab.setAuthors()) {
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
           ab.setPersonalName("Thomas"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Zapf"); //$NON-NLS-1$
           ab.setPersonalName("Michael"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Khan"); //$NON-NLS-1$
           ab.setPersonalName("Mohammad Ullah"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Geihs"); //$NON-NLS-1$
           ab.setPersonalName("Kurt"); //$NON-NLS-1$
         }
       }
 
-      try (final BibProceedingsBuilder pb = bab.setProceedings()) {
+      try (final BibProceedingsBuilder pb = bab.proceedings()) {
         pb.setTitle("Proceedings of the 7th International Conference on Hybrid Intelligent Systems (HIS'07)"); //$NON-NLS-1$
         try (final BibAuthorsBuilder abs = pb.setEditors()) {
-          try (final BibAuthorBuilder ab = abs.addAuthor()) {
+          try (final BibAuthorBuilder ab = abs.author()) {
             ab.setFamilyName("K\u00f6nig"); //$NON-NLS-1$
             ab.setPersonalName("Andreas"); //$NON-NLS-1$
           }
-          try (final BibAuthorBuilder ab = abs.addAuthor()) {
+          try (final BibAuthorBuilder ab = abs.author()) {
             ab.setFamilyName("K\u00f6ppen"); //$NON-NLS-1$
             ab.setPersonalName("Mario"); //$NON-NLS-1$
           }
-          try (final BibAuthorBuilder ab = abs.addAuthor()) {
+          try (final BibAuthorBuilder ab = abs.author()) {
             ab.setFamilyName("Abraham"); //$NON-NLS-1$
             ab.setPersonalName("Ajith"); //$NON-NLS-1$
           }
-          try (final BibAuthorBuilder ab = abs.addAuthor()) {
+          try (final BibAuthorBuilder ab = abs.author()) {
             ab.setFamilyName("Igel"); //$NON-NLS-1$
             ab.setPersonalName("Christian"); //$NON-NLS-1$
           }
-          try (final BibAuthorBuilder ab = abs.addAuthor()) {
+          try (final BibAuthorBuilder ab = abs.author()) {
             ab.setFamilyName("Kasabov"); //$NON-NLS-1$
             ab.setPersonalName("Nikola"); //$NON-NLS-1$
           }
         }
-        try (final BibOrganizationBuilder bo = pb.setPublisher()) {
+        try (final BibOrganizationBuilder bo = pb.publisher()) {
           bo.setName("IEEE Computer Society"); //$NON-NLS-1$
           bo.setAddress("Piscataway, NJ, USA"); //$NON-NLS-1$
         }
-        try (final BibOrganizationBuilder bo = pb.setLocation()) {
+        try (final BibOrganizationBuilder bo = pb.location()) {
           bo.setName("Fraunhofer Center FhG ITWM/FhG IESE"); //$NON-NLS-1$
           bo.setAddress("Kaiserslautern, Germany"); //$NON-NLS-1$
         }
-        try (final BibDateBuilder d = pb.setStartDate()) {
+        try (final BibDateBuilder d = pb.startDate()) {
           d.setYear(2007);
           d.setMonth(EBibMonth.SEPTEMBER);
           d.setDay(17);
         }
-        try (final BibDateBuilder d = pb.setEndDate()) {
+        try (final BibDateBuilder d = pb.endDate()) {
           d.setYear(2007);
           d.setMonth(EBibMonth.SEPTEMBER);
           d.setDay(19);
@@ -367,46 +367,46 @@ public final class MyBibliography extends BibliographyExample {
    */
   private static final void __WWTY2014EEIAWGP(final BibliographyBuilder bb) {
 
-    try (final BibInProceedingsBuilder bab = bb.addInProceedings()) {
+    try (final BibInProceedingsBuilder bab = bb.inProceedings()) {
       bab.setTitle("Evolving Exact Integer Algorithms with Genetic Programming"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = bab.setAuthors()) {
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
           ab.setPersonalName("Thomas"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Wan"); //$NON-NLS-1$
           ab.setPersonalName("Mingxu"); //$NON-NLS-1$
           ab.setOriginalSpelling("\u4E07\u660E\u7EEA"); //$NON-NLS-1$          
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
           ab.setPersonalName("Ke"); //$NON-NLS-1$
           ab.setOriginalSpelling("\u5510\u8F72"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Yao"); //$NON-NLS-1$
           ab.setOriginalSpelling("\u59DA\u65B0"); //$NON-NLS-1$
           ab.setPersonalName("Xin"); //$NON-NLS-1$
         }
       }
 
-      try (final BibProceedingsBuilder pb = bab.setProceedings()) {
+      try (final BibProceedingsBuilder pb = bab.proceedings()) {
         pb.setTitle("Proceedings of the IEEE Congress on Evolutionary Computation (CEC'14), Proceedings of the 2014 World Congress on Computational Intelligence (WCCI'14)"); //$NON-NLS-1$
-        try (final BibOrganizationBuilder bo = pb.setPublisher()) {
+        try (final BibOrganizationBuilder bo = pb.publisher()) {
           bo.setName("IEEE Computer Society Press"); //$NON-NLS-1$
           bo.setAddress("Los Alamitos, CA, USA"); //$NON-NLS-1$
         }
-        try (final BibOrganizationBuilder bo = pb.setLocation()) {
+        try (final BibOrganizationBuilder bo = pb.location()) {
           bo.setName("Beijing International Convention Center (BICC)"); //$NON-NLS-1$
           bo.setAddress("Beijing, China"); //$NON-NLS-1$
         }
-        try (final BibDateBuilder d = pb.setStartDate()) {
+        try (final BibDateBuilder d = pb.startDate()) {
           d.setYear(2014);
           d.setMonth(EBibMonth.JUNE);
           d.setDay(6);
         }
-        try (final BibDateBuilder d = pb.setEndDate()) {
+        try (final BibDateBuilder d = pb.endDate()) {
           d.setYear(2014);
           d.setMonth(EBibMonth.JUNE);
           d.setDay(11);
@@ -425,58 +425,58 @@ public final class MyBibliography extends BibliographyExample {
    *          the builder
    */
   private static final void __PROC2013IDEAL(final BibliographyBuilder bb) {
-    try (final BibProceedingsBuilder pb = bb.addProceedings()) {
+    try (final BibProceedingsBuilder pb = bb.proceedings()) {
       pb.setTitle("Proceedings of the 14th International Conference on Intelligent Data Engineering and Automated Learning (IDEAL'13)"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = pb.setEditors()) {
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Yin"); //$NON-NLS-1$
           ab.setPersonalName("Hujun"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
           ab.setOriginalSpelling("\u5510\u8F72"); //$NON-NLS-1$
           ab.setPersonalName("Ke"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Gao"); //$NON-NLS-1$
           ab.setPersonalName("Yang"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Klawonn"); //$NON-NLS-1$
           ab.setPersonalName("Frank"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Lee"); //$NON-NLS-1$
           ab.setPersonalName("Minho"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
           ab.setPersonalName("Thomas"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Li"); //$NON-NLS-1$
           ab.setPersonalName("Bin"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Yao"); //$NON-NLS-1$
           ab.setOriginalSpelling("\u59DA\u65B0"); //$NON-NLS-1$
           ab.setPersonalName("Xin"); //$NON-NLS-1$
         }
       }
-      try (final BibOrganizationBuilder bo = pb.setPublisher()) {
+      try (final BibOrganizationBuilder bo = pb.publisher()) {
         bo.setName("Springer-Verlag GmbH"); //$NON-NLS-1$
         bo.setAddress("Berlin, Germany"); //$NON-NLS-1$
       }
-      try (final BibOrganizationBuilder bo = pb.setLocation()) {
+      try (final BibOrganizationBuilder bo = pb.location()) {
         bo.setName("Empark Grand Hotel"); //$NON-NLS-1$
         bo.setAddress("Hefei, Anhui, China"); //$NON-NLS-1$
       }
-      try (final BibDateBuilder d = pb.setStartDate()) {
+      try (final BibDateBuilder d = pb.startDate()) {
         d.setYear(2013);
         d.setMonth(EBibMonth.OCTOBER);
         d.setDay(20);
       }
-      try (final BibDateBuilder d = pb.setEndDate()) {
+      try (final BibDateBuilder d = pb.endDate()) {
         d.setYear(2013);
         d.setMonth(EBibMonth.OCTOBER);
         d.setDay(23);
@@ -495,27 +495,27 @@ public final class MyBibliography extends BibliographyExample {
    *          the builder
    */
   private static final void __CWM2011VOEAFRWA(final BibliographyBuilder bb) {
-    try (final BibBookBuilder pb = bb.addBook()) {
+    try (final BibBookBuilder pb = bb.book()) {
       pb.setTitle("Variants of Evolutionary Algorithms for Real-World Applications"); //$NON-NLS-1$
       try (final BibAuthorsBuilder abs = pb.setEditors()) {
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Chiong"); //$NON-NLS-1$
           ab.setPersonalName("Raymond"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Weise"); //$NON-NLS-1$
           ab.setPersonalName("Thomas"); //$NON-NLS-1$
         }
-        try (final BibAuthorBuilder ab = abs.addAuthor()) {
+        try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Michalewicz"); //$NON-NLS-1$
           ab.setPersonalName("Zbigniew"); //$NON-NLS-1$
         }
       }
-      try (final BibOrganizationBuilder bo = pb.setPublisher()) {
+      try (final BibOrganizationBuilder bo = pb.publisher()) {
         bo.setName("Springer-Verlag GmbH"); //$NON-NLS-1$
         bo.setAddress("Berlin/Heidelberg"); //$NON-NLS-1$
       }
-      try (final BibDateBuilder d = pb.setDate()) {
+      try (final BibDateBuilder d = pb.date()) {
         d.setYear(2011);
         d.setMonth(EBibMonth.SEPTEMBER);
         d.setDay(30);

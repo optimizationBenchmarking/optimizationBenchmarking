@@ -22,8 +22,8 @@ import org.optimizationBenchmarking.experimentation.data.InstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.data.ParameterValue;
 import org.optimizationBenchmarking.experimentation.data.Run;
-import org.optimizationBenchmarking.experimentation.io.edi.EDIInputDriver;
-import org.optimizationBenchmarking.experimentation.io.edi.EDIOutputDriver;
+import org.optimizationBenchmarking.experimentation.io.edi.EDIInput;
+import org.optimizationBenchmarking.experimentation.io.edi.EDIOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
@@ -337,7 +337,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
     inst = this.getInstance();
     try {
       try (final StringWriter w = new StringWriter()) {
-        EDIOutputDriver.INSTANCE.storeWriter(inst, w);
+        EDIOutput.INSTANCE.storeWriter(inst, w);
         s1 = w.toString();
       }
     } catch (final IOException e) {
@@ -347,7 +347,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
     try {
       try (final StringReader r = new StringReader(s1)) {
         try (final ExperimentSetContext esc = new ExperimentSetContext()) {
-          EDIInputDriver.INSTANCE.loadReader(esc, r);
+          EDIInput.INSTANCE.loadReader(esc, r);
           es1 = esc.getResult();
         }
       }
@@ -358,7 +358,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
     try {
       try (final StringWriter w = new StringWriter()) {
-        EDIOutputDriver.INSTANCE.storeWriter(es1, w);
+        EDIOutput.INSTANCE.storeWriter(es1, w);
         s2 = w.toString();
       }
     } catch (final IOException e) {
@@ -371,7 +371,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
       try (final StringReader r = new StringReader(s2)) {
         s2 = null;
         try (final ExperimentSetContext esc = new ExperimentSetContext()) {
-          EDIInputDriver.INSTANCE.loadReader(esc, r);
+          EDIInput.INSTANCE.loadReader(esc, r);
           es2 = esc.getResult();
         }
       }

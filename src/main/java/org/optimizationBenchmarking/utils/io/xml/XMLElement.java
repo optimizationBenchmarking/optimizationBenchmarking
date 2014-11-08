@@ -93,11 +93,25 @@ public final class XMLElement extends XMLBase {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   protected synchronized void onOpen() {
+    ITextOutput o;
+    HierarchicalFSM owner;
+    XMLElement xo;
+
     super.onOpen();
-    this.m_encoded = XMLCharTransformer.INSTANCE.transform(
-        this.getTextOutput(), null);
+
+    o = this.getTextOutput();
+    owner = this.getOwner();
+    if (owner instanceof XMLElement) {
+      xo = ((XMLElement) owner);
+      if (xo.getTextOutput() == o) {
+        this.m_encoded = xo.m_encoded;
+        return;
+      }
+    }
+    this.m_encoded = XMLCharTransformer.INSTANCE.transform(o, null);
   }
 
   /**

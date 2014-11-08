@@ -1,7 +1,7 @@
 package examples.org.optimizationBenchmarking.utils.bibliography.data;
 
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
-import org.optimizationBenchmarking.utils.bibliography.io.BibTeXOutputDriver;
+import org.optimizationBenchmarking.utils.bibliography.io.BibTeXOutput;
 import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXMLOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -34,7 +34,7 @@ public abstract class BibliographyExample implements Runnable {
     bib = this.createBibliography();
 
     t = AbstractTextOutput.wrap(System.out);
-    BibTeXOutputDriver.INSTANCE.storeText(bib, t);
+    BibTeXOutput.INSTANCE.storeText(bib, t);
     t.flush();
 
     t.appendLineBreak();

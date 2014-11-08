@@ -419,11 +419,11 @@ public class RandomDocumentExample implements Runnable {
     }
 
     try (final BibAuthorsBuilder babs = header.authors()) {
-      try (final BibAuthorBuilder bab = babs.addAuthor()) {
+      try (final BibAuthorBuilder bab = babs.author()) {
         bab.setFamilyName("Weise");//$NON-NLS-1$
         bab.setPersonalName("Thomas");//$NON-NLS-1$
       }
-      try (final BibAuthorBuilder bab = babs.addAuthor()) {
+      try (final BibAuthorBuilder bab = babs.author()) {
         bab.setFamilyName("Other");//$NON-NLS-1$
         bab.setPersonalName("Someone");//$NON-NLS-1$
       }

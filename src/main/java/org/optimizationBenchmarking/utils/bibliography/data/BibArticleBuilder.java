@@ -204,8 +204,8 @@ public final class BibArticleBuilder extends BibRecordWithPublisherBuilder {
 
   /** {@inheritDoc} */
   @Override
-  public synchronized final BibDateBuilder setDate() {
-    return super.setDate();
+  public synchronized final BibDateBuilder date() {
+    return super.date();
   }
 
   /** {@inheritDoc} */

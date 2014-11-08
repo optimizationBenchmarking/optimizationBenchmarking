@@ -121,7 +121,7 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
    * 
    * @return the new author builder
    */
-  public final BibAuthorBuilder addAuthor() {
+  public final BibAuthorBuilder author() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibAuthorBuilder(this);
   }

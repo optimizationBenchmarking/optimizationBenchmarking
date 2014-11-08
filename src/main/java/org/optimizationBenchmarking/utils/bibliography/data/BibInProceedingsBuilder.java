@@ -32,7 +32,7 @@ public final class BibInProceedingsBuilder extends BibInBookBuilder {
    * 
    * @return the proceedings builder
    */
-  public synchronized final BibProceedingsBuilder setProceedings() {
+  public synchronized final BibProceedingsBuilder proceedings() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return new BibProceedingsBuilder(this);
   }

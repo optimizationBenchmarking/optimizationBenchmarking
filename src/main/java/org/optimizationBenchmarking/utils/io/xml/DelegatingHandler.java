@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.io.xml;
 
 import java.io.IOException;
 
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
@@ -809,4 +810,63 @@ public class DelegatingHandler extends DefaultHandler {
     }
   }
 
+  /**
+   * Get the value of a given attribute. This method first tries to find
+   * the attribute by looking for the corresponding
+   * {@code (namespaceURI, name)} pair. if that fails, it looks for an
+   * attribute with an empty ({@code ""}) namespace and the right
+   * {@code name}. If that fails as well, it looks just for an attribute
+   * where the qualified name is the same as {@code name}.
+   * 
+   * @param attributes
+   *          the attributes
+   * @param namespaceURI
+   *          the namespace uri
+   * @param name
+   *          the attribute name
+   * @return the value, or {@code null} if the value has not been specified
+   * @see #getAttributeNormalized(Attributes, String, String)
+   */
+  protected static final String getAttribute(final Attributes attributes,
+      final String namespaceURI, final String name) {
+    String a;
+
+    a = attributes.getValue(namespaceURI, name);
+    if (a == null) {
+      a = attributes.getValue("", name); //$NON-NLS-1$
+      if (a == null) {
+        a = attributes.getValue(name);
+      }
+    }
+    return a;
+  }
+
+  /**
+   * Get the value of a given attribute via
+   * {@link #getAttribute(Attributes, String, String)} and use
+   * {@link org.optimizationBenchmarking.utils.text.TextUtils#normalize(String)}
+   * to normalize the result. This will convert all empty string attribute
+   * values to {@code null}.
+   * 
+   * @param attributes
+   *          the attributes
+   * @param namespaceURI
+   *          the namespace uri
+   * @param name
+   *          the attribute name
+   * @return the value, or {@code null} if the value has not been specified
+   *         or was empty
+   * @see #getAttribute(Attributes, String, String)
+   */
+  protected static final String getAttributeNormalized(
+      final Attributes attributes, final String namespaceURI,
+      final String name) {
+    final String a;
+
+    a = DelegatingHandler.getAttribute(attributes, namespaceURI, name);
+    if (a != null) {
+      return TextUtils.normalize(a);
+    }
+    return null;
+  }
 }

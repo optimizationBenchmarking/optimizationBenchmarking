@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.optimizationBenchmarking.experimentation.data.DimensionSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.io.bbob.BBOBInputDriver;
+import org.optimizationBenchmarking.experimentation.io.bbob.BBOBInput;
 
 /** A class for creating in parallel sets */
 public class ExperimentSetCreatorRandomBBOBParallel extends
@@ -19,13 +19,13 @@ public class ExperimentSetCreatorRandomBBOBParallel extends
   @Override
   final void _createDimensionSet(final ExperimentSetContext dsc,
       final Random r) {
-    BBOBInputDriver.makeBBOBDimensionSet(dsc);
+    BBOBInput.makeBBOBDimensionSet(dsc);
   }
 
   /** {@inheritDoc} */
   @Override
   final void _createInstanceSet(final ExperimentSetContext isc,
       final DimensionSet dims, final Random r) {
-    BBOBInputDriver.makeBBOBInstanceSet(isc);
+    BBOBInput.makeBBOBInstanceSet(isc);
   }
 }
