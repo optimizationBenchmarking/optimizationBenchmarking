@@ -70,62 +70,64 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
     String s;
 
     if ((uri == null)
-        || (_BibliographyXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+        || (BibliographyXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
 
-      if (_BibliographyXMLConstants.ELEMENT_BIBLIOGRAPHY
+      if (BibliographyXMLConstants.ELEMENT_BIBLIOGRAPHY
           .equalsIgnoreCase(localName)) {
-        this.m_builders.add(this.m_builders.get(0));
+        if (this.m_builders.size() > 1) {
+          this.m_builders.add(this.m_builders.get(0));
+        }
         return;
       }
 
       bfsm = this.m_builders.get(this.m_builders.size() - 1);
 
-      if (_BibliographyXMLConstants.ELEMENT_ARTICLE
+      if (BibliographyXMLConstants.ELEMENT_ARTICLE
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(//
             bab = ((BibliographyBuilder) (bfsm)).article());
         BibliographyXMLHandler.__setRecordAtts(bab, attributes);
 
         if ((s = DelegatingHandler.getAttributeNormalized(attributes,
-            _BibliographyXMLConstants.NAMESPACE,
-            _BibliographyXMLConstants.ATTR_JOURNAL)) != null) {
+            BibliographyXMLConstants.NAMESPACE,
+            BibliographyXMLConstants.ATTR_JOURNAL)) != null) {
           bab.setJournal(s);
         }
 
         if ((s = DelegatingHandler.getAttributeNormalized(attributes,
-            _BibliographyXMLConstants.NAMESPACE,
-            _BibliographyXMLConstants.ATTR_NUMBER)) != null) {
+            BibliographyXMLConstants.NAMESPACE,
+            BibliographyXMLConstants.ATTR_NUMBER)) != null) {
           bab.setNumber(s);
         }
 
         if ((s = DelegatingHandler.getAttributeNormalized(attributes,
-            _BibliographyXMLConstants.NAMESPACE,
-            _BibliographyXMLConstants.ATTR_VOLUME)) != null) {
+            BibliographyXMLConstants.NAMESPACE,
+            BibliographyXMLConstants.ATTR_VOLUME)) != null) {
           bab.setVolume(s);
         }
 
         if ((s = DelegatingHandler.getAttributeNormalized(attributes,
-            _BibliographyXMLConstants.NAMESPACE,
-            _BibliographyXMLConstants.ATTR_START_PAGE)) != null) {
+            BibliographyXMLConstants.NAMESPACE,
+            BibliographyXMLConstants.ATTR_START_PAGE)) != null) {
           bab.setStartPage(s);
         }
 
         if ((s = DelegatingHandler.getAttributeNormalized(attributes,
-            _BibliographyXMLConstants.NAMESPACE,
-            _BibliographyXMLConstants.ATTR_END_PAGE)) != null) {
+            BibliographyXMLConstants.NAMESPACE,
+            BibliographyXMLConstants.ATTR_END_PAGE)) != null) {
           bab.setEndPage(s);
         }
 
         if ((s = DelegatingHandler.getAttributeNormalized(attributes,
-            _BibliographyXMLConstants.NAMESPACE,
-            _BibliographyXMLConstants.ATTR_ISSN)) != null) {
+            BibliographyXMLConstants.NAMESPACE,
+            BibliographyXMLConstants.ATTR_ISSN)) != null) {
           bab.setISSN(s);
         }
 
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_BOOK
+      if (BibliographyXMLConstants.ELEMENT_BOOK
           .equalsIgnoreCase(localName)) {
 
         if (bfsm instanceof BibliographyBuilder) {
@@ -139,7 +141,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_PROCEEDINGS
+      if (BibliographyXMLConstants.ELEMENT_PROCEEDINGS
           .equalsIgnoreCase(localName)) {
         if (bfsm instanceof BibliographyBuilder) {
           bpb = ((BibliographyBuilder) (bfsm)).proceedings();
@@ -152,16 +154,16 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_THESIS
+      if (BibliographyXMLConstants.ELEMENT_THESIS
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(//
             btb = ((BibliographyBuilder) (bfsm)).thesis());
         BibliographyXMLHandler.__setBookAtts(btb, attributes);
         if ((s = DelegatingHandler.getAttributeNormalized(attributes,
-            _BibliographyXMLConstants.NAMESPACE,
-            _BibliographyXMLConstants.ATTR_THESIS_TYPE)) != null) {
-          for (i = _BibliographyXMLConstants.VAL_THESIS_TYPES.length; (--i) >= 0;) {
-            if (_BibliographyXMLConstants.VAL_THESIS_TYPES[i]
+            BibliographyXMLConstants.NAMESPACE,
+            BibliographyXMLConstants.ATTR_THESIS_TYPE)) != null) {
+          for (i = BibliographyXMLConstants.VAL_THESIS_TYPES.length; (--i) >= 0;) {
+            if (BibliographyXMLConstants.VAL_THESIS_TYPES[i]
                 .equalsIgnoreCase(s)) {
               btb.setType(EThesisType.TYPES.get(i));
               return;
@@ -171,7 +173,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_WEBSITE
+      if (BibliographyXMLConstants.ELEMENT_WEBSITE
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(//
             bwb = ((BibliographyBuilder) (bfsm)).website());
@@ -179,30 +181,30 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_TECH_REPORT
+      if (BibliographyXMLConstants.ELEMENT_TECH_REPORT
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(//
             btrb = ((BibliographyBuilder) (bfsm)).techReport());
         BibliographyXMLHandler.__setRecordAtts(btrb, attributes);
 
         if ((s = DelegatingHandler.getAttributeNormalized(attributes,
-            _BibliographyXMLConstants.NAMESPACE,
-            _BibliographyXMLConstants.ATTR_SERIES)) != null) {
+            BibliographyXMLConstants.NAMESPACE,
+            BibliographyXMLConstants.ATTR_SERIES)) != null) {
           btrb.setSeries(s);
         }
         if ((s = DelegatingHandler.getAttributeNormalized(attributes,
-            _BibliographyXMLConstants.NAMESPACE,
-            _BibliographyXMLConstants.ATTR_NUMBER)) != null) {
+            BibliographyXMLConstants.NAMESPACE,
+            BibliographyXMLConstants.ATTR_NUMBER)) != null) {
           btrb.setNumber(s);
         }
         if ((s = DelegatingHandler.getAttributeNormalized(attributes,
-            _BibliographyXMLConstants.NAMESPACE,
-            _BibliographyXMLConstants.ATTR_ISSN)) != null) {
+            BibliographyXMLConstants.NAMESPACE,
+            BibliographyXMLConstants.ATTR_ISSN)) != null) {
           btrb.setISSN(s);
         }
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_IN_COLLECTION
+      if (BibliographyXMLConstants.ELEMENT_IN_COLLECTION
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(//
             bicb = ((BibliographyBuilder) (bfsm)).inCollection());
@@ -210,7 +212,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_IN_PROCEEDINGS
+      if (BibliographyXMLConstants.ELEMENT_IN_PROCEEDINGS
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(//
             bipb = ((BibliographyBuilder) (bfsm)).inProceedings());
@@ -218,7 +220,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_DATE
+      if (BibliographyXMLConstants.ELEMENT_DATE
           .equalsIgnoreCase(localName)) {
 
         if (bfsm instanceof BibArticleBuilder) {
@@ -249,7 +251,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_START_DATE
+      if (BibliographyXMLConstants.ELEMENT_START_DATE
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(bdb = ((BibProceedingsBuilder) bfsm)
             .startDate());
@@ -257,7 +259,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_END_DATE
+      if (BibliographyXMLConstants.ELEMENT_END_DATE
           .equalsIgnoreCase(localName)) {
         this.m_builders
             .add(bdb = ((BibProceedingsBuilder) bfsm).endDate());
@@ -265,26 +267,26 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_AUTHORS
+      if (BibliographyXMLConstants.ELEMENT_AUTHORS
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(((BibRecordBuilder) bfsm).setAuthors());
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_EDITORS
+      if (BibliographyXMLConstants.ELEMENT_EDITORS
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(((BibBookRecordBuilder) bfsm).setEditors());
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_PERSON
+      if (BibliographyXMLConstants.ELEMENT_PERSON
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(bppb = ((BibAuthorsBuilder) bfsm).author());
         BibliographyXMLHandler.__setAuthorAtts(bppb, attributes);
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_PUBLISHER
+      if (BibliographyXMLConstants.ELEMENT_PUBLISHER
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(bob = ((BibRecordWithPublisherBuilder) bfsm)
             .publisher());
@@ -292,7 +294,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_LOCATION
+      if (BibliographyXMLConstants.ELEMENT_LOCATION
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(bob = ((BibProceedingsBuilder) bfsm)
             .location());
@@ -300,14 +302,14 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_SCHOOL
+      if (BibliographyXMLConstants.ELEMENT_SCHOOL
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(bob = ((BibThesisBuilder) bfsm).school());
         BibliographyXMLHandler.__setPlaceAtts(bob, attributes);
         return;
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_INSTITUTION
+      if (BibliographyXMLConstants.ELEMENT_INSTITUTION
           .equalsIgnoreCase(localName)) {
         this.m_builders.add(bob = ((BibTechReportBuilder) bfsm)
             .publisher());
@@ -330,20 +332,20 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
     String s;
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_ADDRESS)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_ADDRESS)) != null) {
       rec.setAddress(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_ORGANIZATION)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_ORGANIZATION)) != null) {
       rec.setName(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_PLACE_ORIGINAL_SPELLING)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_PLACE_ORIGINAL_SPELLING)) != null) {
       rec.setOriginalSpelling(s);
     }
 
@@ -362,20 +364,20 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
     String s;
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_FAMILY_NAME)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_FAMILY_NAME)) != null) {
       rec.setFamilyName(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_PERSONAL_NAME)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_PERSONAL_NAME)) != null) {
       rec.setPersonalName(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_NAME_ORIGINAL_SPELLING)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_NAME_ORIGINAL_SPELLING)) != null) {
       rec.setOriginalSpelling(s);
     }
 
@@ -394,20 +396,20 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
     String s;
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_DOI)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_DOI)) != null) {
       rec.setDOI(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_URL)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_URL)) != null) {
       rec.setURL(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_TITLE)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_TITLE)) != null) {
       rec.setTitle(s);
     }
   }
@@ -427,20 +429,20 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
     BibliographyXMLHandler.__setRecordAtts(rec, atts);
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_START_PAGE)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_START_PAGE)) != null) {
       rec.setStartPage(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_END_PAGE)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_END_PAGE)) != null) {
       rec.setEndPage(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_CHAPTER)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_CHAPTER)) != null) {
       rec.setChapter(s);
     }
   }
@@ -459,35 +461,34 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
     int i;
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_YEAR)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_YEAR)) != null) {
       rec.setYear(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_MONTH)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_MONTH)) != null) {
 
-      for (i = _BibliographyXMLConstants.VAL_MONTHS.length; (--i) >= 0;) {
-        if (_BibliographyXMLConstants.VAL_MONTHS[i].equalsIgnoreCase(s)) {
+      for (i = BibliographyXMLConstants.VAL_MONTHS.length; (--i) >= 0;) {
+        if (BibliographyXMLConstants.VAL_MONTHS[i].equalsIgnoreCase(s)) {
           rec.setMonth(EBibMonth.MONTHS.get(i));
           break;
         }
       }
       if ((s = DelegatingHandler.getAttributeNormalized(atts,
-          _BibliographyXMLConstants.NAMESPACE,
-          _BibliographyXMLConstants.ATTR_DAY)) != null) {
+          BibliographyXMLConstants.NAMESPACE,
+          BibliographyXMLConstants.ATTR_DAY)) != null) {
         rec.setDay(s);
       }
     } else {
 
       if ((s = DelegatingHandler.getAttributeNormalized(atts,
-          _BibliographyXMLConstants.NAMESPACE,
-          _BibliographyXMLConstants.ATTR_QUARTER)) != null) {
+          BibliographyXMLConstants.NAMESPACE,
+          BibliographyXMLConstants.ATTR_QUARTER)) != null) {
 
-        for (i = _BibliographyXMLConstants.VAL_QUARTERS.length; (--i) >= 0;) {
-          if (_BibliographyXMLConstants.VAL_QUARTERS[i]
-              .equalsIgnoreCase(s)) {
+        for (i = BibliographyXMLConstants.VAL_QUARTERS.length; (--i) >= 0;) {
+          if (BibliographyXMLConstants.VAL_QUARTERS[i].equalsIgnoreCase(s)) {
             rec.setQuarter(EBibQuarter.QUARTERS.get(i));
             break;
           }
@@ -513,32 +514,32 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
     BibliographyXMLHandler.__setRecordAtts(rec, atts);
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_EDITION)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_EDITION)) != null) {
       rec.setEdition(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_VOLUME)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_VOLUME)) != null) {
       rec.setVolume(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_SERIES)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_SERIES)) != null) {
       rec.setSeries(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_ISBN)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_ISBN)) != null) {
       rec.setISBN(s);
     }
 
     if ((s = DelegatingHandler.getAttributeNormalized(atts,
-        _BibliographyXMLConstants.NAMESPACE,
-        _BibliographyXMLConstants.ATTR_ISSN)) != null) {
+        BibliographyXMLConstants.NAMESPACE,
+        BibliographyXMLConstants.ATTR_ISSN)) != null) {
       rec.setISSN(s);
     }
 
@@ -552,9 +553,9 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
     BuilderFSM<?> b;
 
     if ((uri == null)
-        || (_BibliographyXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+        || (BibliographyXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
 
-      if (_BibliographyXMLConstants.ELEMENT_BIBLIOGRAPHY
+      if (BibliographyXMLConstants.ELEMENT_BIBLIOGRAPHY
           .equalsIgnoreCase(localName)) {
         b = this.m_builders.remove(this.m_builders.size() - 1);
         if (this.m_builders.isEmpty()) {
@@ -564,41 +565,41 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         }
       }
 
-      if (_BibliographyXMLConstants.ELEMENT_ARTICLE
+      if (BibliographyXMLConstants.ELEMENT_ARTICLE
           .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_BOOK
+          BibliographyXMLConstants.ELEMENT_BOOK
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_PROCEEDINGS
+          BibliographyXMLConstants.ELEMENT_PROCEEDINGS
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_THESIS
+          BibliographyXMLConstants.ELEMENT_THESIS
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_WEBSITE
+          BibliographyXMLConstants.ELEMENT_WEBSITE
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_TECH_REPORT
+          BibliographyXMLConstants.ELEMENT_TECH_REPORT
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_IN_COLLECTION
+          BibliographyXMLConstants.ELEMENT_IN_COLLECTION
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_IN_PROCEEDINGS
+          BibliographyXMLConstants.ELEMENT_IN_PROCEEDINGS
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_DATE
+          BibliographyXMLConstants.ELEMENT_DATE
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_START_DATE
+          BibliographyXMLConstants.ELEMENT_START_DATE
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_END_DATE
+          BibliographyXMLConstants.ELEMENT_END_DATE
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_AUTHORS
+          BibliographyXMLConstants.ELEMENT_AUTHORS
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_EDITORS
+          BibliographyXMLConstants.ELEMENT_EDITORS
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_PERSON
+          BibliographyXMLConstants.ELEMENT_PERSON
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_PUBLISHER
+          BibliographyXMLConstants.ELEMENT_PUBLISHER
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_LOCATION
+          BibliographyXMLConstants.ELEMENT_LOCATION
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_SCHOOL
+          BibliographyXMLConstants.ELEMENT_SCHOOL
               .equalsIgnoreCase(localName) || //
-          _BibliographyXMLConstants.ELEMENT_INSTITUTION
+          BibliographyXMLConstants.ELEMENT_INSTITUTION
               .equalsIgnoreCase(localName)) {
         this.m_builders.remove(this.m_builders.size() - 1).close();
       }

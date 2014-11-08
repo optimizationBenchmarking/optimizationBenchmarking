@@ -1,7 +1,10 @@
 package org.optimizationBenchmarking.utils.text;
 
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+
 /** a character sequence based on a char array */
-public final class CharArrayCharSequence implements CharSequence {
+public final class CharArrayCharSequence implements CharSequence,
+    ITextable {
 
   /** the data */
   private final char[] m_data;
@@ -76,5 +79,15 @@ public final class CharArrayCharSequence implements CharSequence {
   @Override
   public final String toString() {
     return String.valueOf(this.m_data, this.m_start, this.m_length);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    final int len;
+    len = this.m_length;
+    if (len > 0) {
+      textOut.append(this.m_data, this.m_start, (this.m_start + len));
+    }
   }
 }

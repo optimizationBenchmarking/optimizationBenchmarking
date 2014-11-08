@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.bibliography.io;
+package org.optimizationBenchmarking.utils.document.template;
 
 import java.util.logging.Logger;
 
@@ -8,20 +8,19 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.io.structured.XMLInputDriver;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * A driver for reading bibliography xml
+ * A driver for loading a document into a handler
  */
-public final class BibliographyXMLInput extends
-    XMLInputDriver<BibliographyBuilder> {
+public final class DocumentXMLInput extends
+    XMLInputDriver<DocumentXMLHandler> {
   /** create */
-  public static final BibliographyXMLInput INSTANCE = new BibliographyXMLInput();
+  public static final DocumentXMLInput INSTANCE = new DocumentXMLInput();
 
   /** create */
-  private BibliographyXMLInput() {
+  private DocumentXMLInput() {
     super();
   }
 
@@ -37,9 +36,11 @@ public final class BibliographyXMLInput extends
     schema = null;
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+      sf.setResourceResolver(new _LSResourceResolver(sf
+          .getResourceResolver()));
       schema = sf.newSchema(//
-          BibliographyXMLConstants.class
-              .getResource(BibliographyXMLConstants.SCHEMA));
+          _DocumentXMLConstants.class
+              .getResource("documentTemplate.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
       rec = a;
     } finally {
@@ -66,8 +67,8 @@ public final class BibliographyXMLInput extends
   /** {@inheritDoc} */
   @Override
   protected DefaultHandler wrapLoadContext(
-      final BibliographyBuilder loaderContext, final Logger logger) {
-    return new BibliographyXMLHandler(null, loaderContext);
+      final DocumentXMLHandler loaderContext, final Logger logger) {
+    return loaderContext;
   }
 
 }

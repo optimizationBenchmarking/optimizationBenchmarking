@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.bibliography.io;
 
 import java.net.URI;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
@@ -10,15 +11,19 @@ import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
  * the string constants for the bibliography xml format of
  * optimizationBenchmarking
  */
-final class _BibliographyXMLConstants {
+public final class BibliographyXMLConstants {
 
   /** the namespace uri */
-  static final URI NAMESPACE_URI = URI.create(//
+  public static final URI NAMESPACE_URI = URI.create(//
       "http://www.optimizationBenchmarking.org/formats/bibliography/bibliography.1.0.xsd"); //$NON-NLS-1$
 
   /** the namespace uri as string */
-  static final String NAMESPACE = _BibliographyXMLConstants.NAMESPACE_URI
+  public static final String NAMESPACE = BibliographyXMLConstants.NAMESPACE_URI
       .toString();
+
+  /** the schema name */
+  public static final String SCHEMA = BibliographyXMLConstants.NAMESPACE
+      .substring(BibliographyXMLConstants.NAMESPACE.lastIndexOf('/') + 1);
 
   /** the person element */
   static final String ELEMENT_PERSON = "person"; //$NON-NLS-1$
@@ -39,7 +44,7 @@ final class _BibliographyXMLConstants {
   static final String ATTR_ADDRESS = "address"; //$NON-NLS-1$
 
   /** the organization original spelling attribute */
-  static final String ATTR_PLACE_ORIGINAL_SPELLING = _BibliographyXMLConstants.ATTR_NAME_ORIGINAL_SPELLING;
+  static final String ATTR_PLACE_ORIGINAL_SPELLING = BibliographyXMLConstants.ATTR_NAME_ORIGINAL_SPELLING;
 
   /** the year attribute */
   static final String ATTR_YEAR = "year"; //$NON-NLS-1$
@@ -154,18 +159,18 @@ final class _BibliographyXMLConstants {
 
   static {
     VAL_MONTHS = new String[EBibMonth.MONTHS.size()];
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.JANUARY.ordinal()] = "jan";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.FEBRUARY.ordinal()] = "feb";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.MARCH.ordinal()] = "mar";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.APRIL.ordinal()] = "apr";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.MAY.ordinal()] = "may";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.JUNE.ordinal()] = "jun";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.JULY.ordinal()] = "jul";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.AUGUST.ordinal()] = "aug";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.SEPTEMBER.ordinal()] = "sep";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.OCTOBER.ordinal()] = "oct";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.NOVEMBER.ordinal()] = "nov";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_MONTHS[EBibMonth.DECEMBER.ordinal()] = "dec";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.JANUARY.ordinal()] = "jan";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.FEBRUARY.ordinal()] = "feb";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.MARCH.ordinal()] = "mar";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.APRIL.ordinal()] = "apr";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.MAY.ordinal()] = "may";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.JUNE.ordinal()] = "jun";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.JULY.ordinal()] = "jul";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.AUGUST.ordinal()] = "aug";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.SEPTEMBER.ordinal()] = "sep";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.OCTOBER.ordinal()] = "oct";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.NOVEMBER.ordinal()] = "nov";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_MONTHS[EBibMonth.DECEMBER.ordinal()] = "dec";//$NON-NLS-1$
   }
 
   /** the quarter values */
@@ -173,10 +178,10 @@ final class _BibliographyXMLConstants {
 
   static {
     VAL_QUARTERS = new String[EBibQuarter.QUARTERS.size()];
-    _BibliographyXMLConstants.VAL_QUARTERS[EBibQuarter.SPRING.ordinal()] = "spring";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_QUARTERS[EBibQuarter.SUMMER.ordinal()] = "summer";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_QUARTERS[EBibQuarter.FALL.ordinal()] = "fall";//$NON-NLS-1$
-    _BibliographyXMLConstants.VAL_QUARTERS[EBibQuarter.WINTER.ordinal()] = "winter";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_QUARTERS[EBibQuarter.SPRING.ordinal()] = "spring";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_QUARTERS[EBibQuarter.SUMMER.ordinal()] = "summer";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_QUARTERS[EBibQuarter.FALL.ordinal()] = "fall";//$NON-NLS-1$
+    BibliographyXMLConstants.VAL_QUARTERS[EBibQuarter.WINTER.ordinal()] = "winter";//$NON-NLS-1$
   }
 
   /** the thesis type values */
@@ -184,11 +189,16 @@ final class _BibliographyXMLConstants {
 
   static {
     VAL_THESIS_TYPES = new String[EThesisType.TYPES.size()];
-    _BibliographyXMLConstants.VAL_THESIS_TYPES[EThesisType.BACHELOR_THESIS
+    BibliographyXMLConstants.VAL_THESIS_TYPES[EThesisType.BACHELOR_THESIS
         .ordinal()] = "bachelor";//$NON-NLS-1$1$
-    _BibliographyXMLConstants.VAL_THESIS_TYPES[EThesisType.MASTER_THESIS
+    BibliographyXMLConstants.VAL_THESIS_TYPES[EThesisType.MASTER_THESIS
         .ordinal()] = "master";//$NON-NLS-1$1$
-    _BibliographyXMLConstants.VAL_THESIS_TYPES[EThesisType.PHD_THESIS
+    BibliographyXMLConstants.VAL_THESIS_TYPES[EThesisType.PHD_THESIS
         .ordinal()] = "phd";//$NON-NLS-1$1$
+  }
+
+  /** create */
+  private BibliographyXMLConstants() {
+    ErrorUtils.doNotCall();
   }
 }

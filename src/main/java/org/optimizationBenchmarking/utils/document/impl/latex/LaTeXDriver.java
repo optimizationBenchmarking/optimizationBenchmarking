@@ -54,7 +54,7 @@ public final class LaTeXDriver extends DocumentDriver {
   private final IGraphicDriver m_graphicDriver;
 
   /** the document class */
-  private final DocumentClass m_class;
+  private final LaTeXDocumentClass m_class;
 
   /**
    * Get the default LaTeX driver
@@ -78,7 +78,8 @@ public final class LaTeXDriver extends DocumentDriver {
    * @param clazz
    *          the document class
    */
-  public LaTeXDriver(final IGraphicDriver gd, final DocumentClass clazz) {
+  public LaTeXDriver(final IGraphicDriver gd,
+      final LaTeXDocumentClass clazz) {
     super("LaTeX"); //$NON-NLS-1$
 
     if (clazz == null) {

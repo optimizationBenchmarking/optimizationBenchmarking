@@ -408,5 +408,4 @@ public class MemoryTextOutput extends AbstractTextOutput implements
       textOut.append(this.m_data, 0, len);
     }
   }
-
 }

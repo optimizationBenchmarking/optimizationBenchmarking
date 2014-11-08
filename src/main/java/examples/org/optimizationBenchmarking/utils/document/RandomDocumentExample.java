@@ -16,10 +16,6 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Filter;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
@@ -32,6 +28,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
+import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDocumentClass;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -91,10 +88,10 @@ import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExamp
  * produced documents should look approximately the same, except for
  * necessary adaptation to the underlying output format.
  */
-public class RandomDocumentExample implements Runnable {
+public class RandomDocumentExample extends DocumentExample {
 
   /** the document driver to use */
-  private static final ArrayListView<IDocumentDriver> DRIVERS;
+  public static final ArrayListView<IDocumentDriver> DRIVERS;
 
   static {
     final LinkedHashSet<IDocumentDriver> list;
@@ -104,7 +101,8 @@ public class RandomDocumentExample implements Runnable {
     list.add(new XHTML10Driver(EGraphicFormat.JPEG.getDefaultDriver(),
         EScreenSize.WQXGA.getPageSize(120), null));
     list.add(new XHTML10Driver(EGraphicFormat.GIF.getDefaultDriver(),
-        EScreenSize.SVGA.getPageSize(90), null));
+        EScreenSize.SVGA.getPageSize(90), LaTeXDocumentClass
+            .getDefaultFontPalette()));
 
     for (final EDocumentFormat format : EDocumentFormat.values()) {
       list.add(format.getDefaultDriver());
@@ -191,9 +189,6 @@ public class RandomDocumentExample implements Runnable {
   /** the randomizer */
   private final Random m_rand;
 
-  /** the document */
-  private final IDocument m_doc;
-
   /** the fonts */
   private FontStyle[] m_fonts;
 
@@ -238,7 +233,7 @@ public class RandomDocumentExample implements Runnable {
     String last, cur;
     int i;
 
-    log = RandomDocumentExample.__getLogger();
+    log = DocumentExample._getLogger();
 
     findProcs: {
       if ((args != null) && (args.length > 0)) {
@@ -280,7 +275,8 @@ public class RandomDocumentExample implements Runnable {
       i++;
 
       de = new RandomDocumentExample(driver.createDocument(
-          dir.resolve((cur + '_') + i), "report",//$NON-NLS-1$ 
+          dir.resolve((("random/" + cur) + '_') + i),//$NON-NLS-1$
+          "report",//$NON-NLS-1$ 
           new FinishedPrinter(driver), log), null, System.out);
 
       if (pool != null) {
@@ -301,38 +297,6 @@ public class RandomDocumentExample implements Runnable {
       System.out.print(proc);
       System.out.println(" processor(s).");//$NON-NLS-1$
     }
-  }
-
-  /**
-   * get the logger
-   * 
-   * @return the logger
-   */
-  private static final Logger __getLogger() {
-    final Filter f;
-    Logger ret, c;
-    Handler[] hh;
-
-    f = new Filter() {
-      @Override
-      public final boolean isLoggable(final LogRecord record) {
-        return (!(record.getSourceClassName().startsWith("sun."))); //$NON-NLS-1$
-      }
-    };
-
-    ret = Logger.getGlobal();
-    for (c = ret; c != null; c = c.getParent()) {
-      c.setLevel(Level.ALL);
-      c.setFilter(f);
-      hh = c.getHandlers();
-      if (hh != null) {
-        for (final Handler h : hh) {
-          h.setFilter(f);
-          h.setLevel(Level.ALL);
-        }
-      }
-    }
-    return ret;
   }
 
   /**
@@ -411,11 +375,27 @@ public class RandomDocumentExample implements Runnable {
    *          the header
    */
   private final void __createHeader(final IDocumentHeader header) {
+    RandomDocumentExample._createRandomHeader(header, this.m_doc
+        .getClass().getSimpleName(), this.m_rand);
+  }
+
+  /**
+   * create a random header
+   * 
+   * @param header
+   *          the header
+   * @param clazz
+   *          the driver class
+   * @param rand
+   *          the randomizer
+   */
+  static final void _createRandomHeader(final IDocumentHeader header,
+      final String clazz, final Random rand) {
     boolean first;
 
     try (final IPlainText t = header.title()) {
       t.append("Report Created by Driver "); //$NON-NLS-1$
-      t.append(this.m_doc.getClass().getSimpleName());
+      t.append(clazz);
     }
 
     try (final BibAuthorsBuilder babs = header.authors()) {
@@ -441,8 +421,8 @@ public class RandomDocumentExample implements Runnable {
         } else {
           t.append(' ');
         }
-        LoremIpsum.appendLoremIpsum(t, this.m_rand);
-      } while (this.m_rand.nextInt(5) > 0);
+        LoremIpsum.appendLoremIpsum(t, rand);
+      } while (rand.nextInt(5) > 0);
     }
   }
 
@@ -987,7 +967,7 @@ public class RandomDocumentExample implements Runnable {
   @SuppressWarnings("unchecked")
   public RandomDocumentExample(final IDocument doc, final Random r,
       final PrintStream log) {
-    super();
+    super(doc);
     int i;
 
     if (r == null) {
@@ -996,7 +976,6 @@ public class RandomDocumentExample implements Runnable {
     } else {
       this.m_rand = r;
     }
-    this.m_doc = doc;
     this.m_done = new boolean[RandomDocumentExample.ALL_LENGTH];
     this.m_labels = new ArrayList<>();
 

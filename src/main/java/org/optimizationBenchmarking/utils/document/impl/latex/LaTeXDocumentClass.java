@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A document class for LaTeX documents */
-public class DocumentClass extends PageDimension {
+public class LaTeXDocumentClass extends PageDimension {
 
   /** the internal synchronizer */
   private static final Object SYNCH = new Object();
@@ -66,7 +66,7 @@ public class DocumentClass extends PageDimension {
    *          the font palette of this document class
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public DocumentClass(final String clazz,
+  public LaTeXDocumentClass(final String clazz,
       final ArrayListView<String> params, final EPaperSize paperSize,
       final String bibStyle, final double width, final double height,
       final int columnCount, final double columnWidth, final ELength unit,
@@ -93,7 +93,7 @@ public class DocumentClass extends PageDimension {
     } else {
       this.m_classParams = params;
     }
-    this.m_fonts = ((fonts == null) ? DocumentClass
+    this.m_fonts = ((fonts == null) ? LaTeXDocumentClass
         .getDefaultFontPalette() : fonts);
   }
 
@@ -163,14 +163,14 @@ public class DocumentClass extends PageDimension {
   /** {@inheritDoc} */
   @Override
   public boolean equals(final Object o) {
-    final DocumentClass c;
+    final LaTeXDocumentClass c;
 
     if (o == this) {
       return true;
     }
 
-    if (o instanceof DocumentClass) {
-      c = ((DocumentClass) o);
+    if (o instanceof LaTeXDocumentClass) {
+      c = ((LaTeXDocumentClass) o);
 
       return (EComparison.equals(this.m_class, c.m_class) && //
           EComparison.equals(this.m_classParams, c.m_classParams) && //
@@ -199,17 +199,17 @@ public class DocumentClass extends PageDimension {
    * @return the default font palette
    */
   public static final FontPalette getDefaultFontPalette() {
-    synchronized (DocumentClass.SYNCH) {
-      if (DocumentClass.s_fonts == null) {
+    synchronized (LaTeXDocumentClass.SYNCH) {
+      if (LaTeXDocumentClass.s_fonts == null) {
         try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
           PaletteInputDriver.INSTANCE.loadResource(tb,
-              DocumentClass.class, "latex.font.palette"); //$NON-NLS-1$
-          DocumentClass.s_fonts = tb.getResult();
+              LaTeXDocumentClass.class, "latex.font.palette"); //$NON-NLS-1$
+          LaTeXDocumentClass.s_fonts = tb.getResult();
         } catch (final Throwable tt) {
           ErrorUtils.throwAsRuntimeException(tt);
         }
       }
-      return DocumentClass.s_fonts;
+      return LaTeXDocumentClass.s_fonts;
     }
   }
 }

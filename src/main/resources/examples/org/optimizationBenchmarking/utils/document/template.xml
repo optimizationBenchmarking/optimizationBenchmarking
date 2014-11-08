@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<t:template
+	xmlns:t="http://www.optimizationBenchmarking.org/formats/documentTemplate/documentTemplate.1.0.xsd">
+This is a template!<t:br/>
+
+At first, let me present some raw values: The value of <t:code>Integer.MAX_VALUE</t:code> is <t:int>Integer.MAX_VALUE</t:int>,
+&#x3c0; has the value <t:double>&#x3c0;</t:double>,
+0.99999999999999999999999999999999 is <t:double>0.99999999999999999999999999999999</t:double>,
+	and <t:code>Long.MAX_VALUE</t:code> is <t:long>Long.MAX_VALUE</t:long>.<t:br/>
+	
+Now some formatted numbers:
+<t:double formatPattern="000,000.##">e</t:double> is an oddly formatted value of Euler's Number.
+<t:long formatInstance="org.optimizationBenchmarking.utils.text.numbers.TextNumberAppender#INSTANCE" textCase="atSentenceStart">1234567890987654321</t:long> is a <t:code>long</t:code> value converted to text and
+<t:float formatProperty="numberAppender">20%</t:float> is <t:emph>20%</t:emph> formatted with a number appender provided by the properties map under key <t:quote>numberAppender</t:quote>,
+while <t:value of="myNumber" formatProperty="numberFormat"/> is a <t:code>float</t:code> value of a user-defined property formatted with a user-defined format <t:brace>stored in a property <t:quote>numberFormat</t:quote></t:brace>.
+</t:template>

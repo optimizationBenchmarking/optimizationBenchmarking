@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.optimizationBenchmarking.org/formats/documentTemplate/documentTemplate.1.0.xsd"
+	targetNamespace="http://www.optimizationBenchmarking.org/formats/documentTemplate/documentTemplate.1.0.xsd"
+	xmlns:bib="http://www.optimizationBenchmarking.org/formats/bibliography/bibliography.1.0.xsd"
+	elementFormDefault="qualified">
+
+	<annotation>
+		<documentation>The XML Schema for the document templates, version 1.0.
+		</documentation>
+	</annotation>
+
+	<import
+		namespace="http://www.optimizationBenchmarking.org/formats/bibliography/bibliography.1.0.xsd"
+		schemaLocation="http://www.optimizationBenchmarking.org/formats/bibliography/bibliography.1.0.xsd" />
+
+	<attribute name="textCase">
+		<simpleType>
+			<restriction base="token">
+				<enumeration value="atSentenceStart" />
+				<enumeration value="atTitleStart" />
+				<enumeration value="inSentence" />
+				<enumeration value="inTitle" />
+			</restriction>
+		</simpleType>
+	</attribute>
+
+	<attribute name="sequenceMode">
+		<simpleType>
+			<restriction base="token">
+				<enumeration value="comma" />
+				<enumeration value="and" />
+				<enumeration value="or" />
+				<enumeration value="eitherOr" />
+				<enumeration value="neitherNor" />
+				<enumeration value="fromTo" />
+				<enumeration value="etAl" />
+			</restriction>
+		</simpleType>
+	</attribute>
+
+	<attributeGroup name="formatAttrs">
+		<attribute name="formatProperty" type="token" use="optional" />
+		<attribute name="formatInstance" type="token" use="optional" />
+		<attribute name="formatPattern" type="token" use="optional" />
+		<attribute ref="tns:textCase" use="optional" />
+	</attributeGroup>
+
+	<complexType name="plainText" mixed="true">
+		<choice>
+
+			<element name="value" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<attribute name="of" type="token" use="required" />
+					<attributeGroup ref="tns:formatAttrs" />
+				</complexType>
+			</element>
+
+			<element name="nbsp" minOccurs="0" maxOccurs="unbounded">
+				<complexType />
+			</element>
+
+			<element name="br" minOccurs="0" maxOccurs="unbounded">
+				<complexType />
+			</element>
+
+			<element name="byte" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<simpleContent>
+						<extension base="byte">
+							<attributeGroup ref="tns:formatAttrs" />
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+
+			<element name="short" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<simpleContent>
+						<extension base="short">
+							<attributeGroup ref="tns:formatAttrs" />
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+
+			<element name="int" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<simpleContent>
+						<extension base="int">
+							<attributeGroup ref="tns:formatAttrs" />
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+
+			<element name="long" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<simpleContent>
+						<extension base="long">
+							<attributeGroup ref="tns:formatAttrs" />
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+
+			<element name="float" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<simpleContent>
+						<extension base="float">
+							<attributeGroup ref="tns:formatAttrs" />
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+
+			<element name="double" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<simpleContent>
+						<extension base="double">
+							<attributeGroup ref="tns:formatAttrs" />
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
+
+			<element name="quote" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<complexContent>
+						<extension base="tns:plainText">
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+
+			<element name="brace" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<complexContent>
+						<extension base="tns:plainText">
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+		</choice>
+	</complexType>
+
+	<complexType name="complexText" mixed="true">
+		<complexContent>
+			<extension base="tns:plainText">
+				<choice>
+
+					<element name="code" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<complexContent>
+								<extension base="tns:plainText">
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+
+					<element name="emph" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<complexContent>
+								<extension base="tns:plainText">
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+
+					<element name="sub" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<complexContent>
+								<extension base="tns:plainText">
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+
+					<element name="sup" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<complexContent>
+								<extension base="tns:plainText">
+								</extension>
+							</complexContent>
+						</complexType>
+					</element>
+
+					<element name="cite" minOccurs="0" maxOccurs="unbounded">
+						<complexType>
+							<sequence>
+								<element ref="bib:bibliography" minOccurs="1" maxOccurs="1" />
+							</sequence>
+							<attribute ref="tns:textCase" use="optional" />
+							<attribute ref="tns:sequenceMode" use="optional" />
+							<attribute name="mode" use="optional">
+								<simpleType>
+									<restriction base="token">
+										<enumeration value="id" />
+										<enumeration value="authorsAndID" />
+										<enumeration value="authorsAndYear" />
+										<enumeration value="authors" />
+										<enumeration value="title" />
+									</restriction>
+								</simpleType>
+							</attribute>
+						</complexType>
+					</element>
+
+				</choice>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<element name="template">
+		<complexType mixed="true">
+			<complexContent>
+				<extension base="tns:complexText">
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+</schema>

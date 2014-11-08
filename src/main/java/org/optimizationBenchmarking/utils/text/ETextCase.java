@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.text;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterator;
 
@@ -43,6 +44,10 @@ public enum ETextCase {
       return ETextCase._title(ch);
     }
   };
+
+  /** the instances */
+  public static final ArraySetView<ETextCase> INSTANCES = new ArraySetView<>(
+      ETextCase.values());
 
   /** the next text case */
   private final ETextCase m_next;
