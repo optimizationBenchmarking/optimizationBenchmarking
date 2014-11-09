@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+
 /** The set of citation modes. */
 public enum ECitationMode {
   /** cite by id */
@@ -16,6 +18,10 @@ public enum ECitationMode {
 
   /** cite by title */
   TITLE(true, false, false, true), ;
+
+  /** the citation modes */
+  public static final ArraySetView<ECitationMode> INSTANCES = new ArraySetView<>(
+      ECitationMode.values());
 
   /** print the id */
   private transient final boolean m_id;

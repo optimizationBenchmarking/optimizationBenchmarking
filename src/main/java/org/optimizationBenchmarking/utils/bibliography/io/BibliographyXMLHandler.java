@@ -74,9 +74,6 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
 
       if (BibliographyXMLConstants.ELEMENT_BIBLIOGRAPHY
           .equalsIgnoreCase(localName)) {
-        if (this.m_builders.size() > 1) {
-          this.m_builders.add(this.m_builders.get(0));
-        }
         return;
       }
 
@@ -545,65 +542,73 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
 
   }
 
+  /** enforce closing */
+  private final void __close() {
+    int s;
+    for (s = this.m_builders.size(); (--s) >= 0;) {
+      this.m_builders.remove(s).close();
+    }
+    this.close();
+  }
+
   /** {@inheritDoc} */
-  @SuppressWarnings("resource")
   @Override
   protected final void doEndElement(final String uri,
       final String localName, final String qName) throws SAXException {
-    BuilderFSM<?> b;
 
     if ((uri == null)
         || (BibliographyXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
 
       if (BibliographyXMLConstants.ELEMENT_BIBLIOGRAPHY
           .equalsIgnoreCase(localName)) {
-        b = this.m_builders.remove(this.m_builders.size() - 1);
+        this.__close();
+      } else {
+
+        if (BibliographyXMLConstants.ELEMENT_ARTICLE
+            .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_BOOK
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_PROCEEDINGS
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_THESIS
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_WEBSITE
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_TECH_REPORT
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_IN_COLLECTION
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_IN_PROCEEDINGS
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_DATE
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_START_DATE
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_END_DATE
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_AUTHORS
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_EDITORS
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_PERSON
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_PUBLISHER
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_LOCATION
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_SCHOOL
+                .equalsIgnoreCase(localName) || //
+            BibliographyXMLConstants.ELEMENT_INSTITUTION
+                .equalsIgnoreCase(localName)) {
+          this.m_builders.remove(this.m_builders.size() - 1).close();
+        }
+
         if (this.m_builders.isEmpty()) {
-          b.close();
           this.close();
-          return;
         }
       }
-
-      if (BibliographyXMLConstants.ELEMENT_ARTICLE
-          .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_BOOK
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_PROCEEDINGS
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_THESIS
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_WEBSITE
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_TECH_REPORT
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_IN_COLLECTION
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_IN_PROCEEDINGS
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_DATE
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_START_DATE
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_END_DATE
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_AUTHORS
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_EDITORS
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_PERSON
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_PUBLISHER
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_LOCATION
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_SCHOOL
-              .equalsIgnoreCase(localName) || //
-          BibliographyXMLConstants.ELEMENT_INSTITUTION
-              .equalsIgnoreCase(localName)) {
-        this.m_builders.remove(this.m_builders.size() - 1).close();
-      }
-
+    } else {
+      this.__close();
     }
   }
 }

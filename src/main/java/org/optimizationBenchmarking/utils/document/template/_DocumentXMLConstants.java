@@ -2,6 +2,8 @@ package org.optimizationBenchmarking.utils.document.template;
 
 import java.net.URI;
 
+import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
+import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 
 /**
@@ -60,7 +62,10 @@ final class _DocumentXMLConstants {
     _DocumentXMLConstants.VAL_TEXT_CASE[ETextCase.IN_TITLE.ordinal()] = "inTitle";//$NON-NLS-1$
   }
 
-  /** the format property attribute */
+  /**
+   * the format property attribute: If this attribute is specified, the
+   * template will take a format from the provided properties map
+   */
   static final String ATTR_FORMAT_PROPERTY = "formatProperty"; //$NON-NLS-1$
   /** the format instance attribute */
   static final String ATTR_FORMAT_INSTANCE = "formatInstance"; //$NON-NLS-1$
@@ -81,6 +86,45 @@ final class _DocumentXMLConstants {
   /** the superscript element */
   static final String ELEMENT_SUP = "sup"; //$NON-NLS-1$
 
+  /** the citation element */
+  static final String ELEMENT_CITE = "cite"; //$NON-NLS-1$
+
+  /** the sequence mode attribute */
+  static final String ATTR_SEQUENCE_MODE = "sequenceMode"; //$NON-NLS-1$$
+  /** the sequence mode values */
+  static final String[] VAL_SEQUENCE_MODE;
+
+  static {
+    VAL_SEQUENCE_MODE = new String[ESequenceMode.INSTANCES.size()];
+    _DocumentXMLConstants.VAL_SEQUENCE_MODE[ESequenceMode.COMMA.ordinal()] = "comma";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_SEQUENCE_MODE[ESequenceMode.AND.ordinal()] = "and";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_SEQUENCE_MODE[ESequenceMode.OR.ordinal()] = "or";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_SEQUENCE_MODE[ESequenceMode.EITHER_OR
+        .ordinal()] = "eitherOr";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_SEQUENCE_MODE[ESequenceMode.NEITHER_NOR
+        .ordinal()] = "neitherNor";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_SEQUENCE_MODE[ESequenceMode.FROM_TO
+        .ordinal()] = "fromTo";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_SEQUENCE_MODE[ESequenceMode.ET_AL.ordinal()] = "etAl";//$NON-NLS-1$
+  }
+
+  /** the citation mode attribute */
+  static final String ATTR_CITATION_MODE = "mode"; //$NON-NLS-1$$
+  /** the citation mode values */
+  static final String[] VAL_CITATION_MODE;
+
+  static {
+    VAL_CITATION_MODE = new String[ECitationMode.INSTANCES.size()];
+    _DocumentXMLConstants.VAL_CITATION_MODE[ECitationMode.ID.ordinal()] = "id";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_CITATION_MODE[ECitationMode.AUTHORS_AND_ID
+        .ordinal()] = "authorsAndID";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_CITATION_MODE[ECitationMode.AUTHORS_AND_YEAR
+        .ordinal()] = "authorsAndYear";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_CITATION_MODE[ECitationMode.AUTHORS
+        .ordinal()] = "authors";//$NON-NLS-1$         
+    _DocumentXMLConstants.VAL_CITATION_MODE[ECitationMode.TITLE.ordinal()] = "title";//$NON-NLS-1$
+  }
+
   /**
    * Get the text case
    * 
@@ -96,5 +140,22 @@ final class _DocumentXMLConstants {
       }
     }
     return ETextCase.IN_SENTENCE;
+  }
+
+  /**
+   * Get the sequence mode
+   * 
+   * @param s
+   *          the name of the sequence mode
+   * @return the parsed sequence mode
+   */
+  static final ESequenceMode _parseSequenceMode(final String s) {
+    int i;
+    for (i = _DocumentXMLConstants.VAL_SEQUENCE_MODE.length; (--i) >= 0;) {
+      if (_DocumentXMLConstants.VAL_SEQUENCE_MODE[i].equalsIgnoreCase(s)) {
+        return ESequenceMode.INSTANCES.get(i);
+      }
+    }
+    return null;
   }
 }

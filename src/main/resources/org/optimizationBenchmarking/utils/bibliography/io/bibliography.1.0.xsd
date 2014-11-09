@@ -239,18 +239,18 @@
 		</complexType>
 	</element>
 
-	<element name="bibliography">
-		<complexType>
-			<choice>
-				<element ref="tns:article" minOccurs="1" maxOccurs="unbounded" />
-				<element ref="tns:book" minOccurs="1" maxOccurs="unbounded" />
-				<element ref="tns:inCollection" minOccurs="1" maxOccurs="unbounded" />
-				<element ref="tns:proceedings" minOccurs="1" maxOccurs="unbounded" />
-				<element ref="tns:inProceedings" minOccurs="1" maxOccurs="unbounded" />
-				<element ref="tns:techReport" minOccurs="1" maxOccurs="unbounded" />
-				<element ref="tns:thesis" minOccurs="1" maxOccurs="unbounded" />
-				<element ref="tns:website" minOccurs="1" maxOccurs="unbounded" />
-			</choice>
-		</complexType>
-	</element>
+	<complexType name="bibliographyType">
+		<choice>
+			<element ref="tns:article" minOccurs="1" maxOccurs="unbounded" />
+			<element ref="tns:book" minOccurs="1" maxOccurs="unbounded" />
+			<element ref="tns:inCollection" minOccurs="1" maxOccurs="unbounded" />
+			<element ref="tns:proceedings" minOccurs="1" maxOccurs="unbounded" />
+			<element ref="tns:inProceedings" minOccurs="1" maxOccurs="unbounded" />
+			<element ref="tns:techReport" minOccurs="1" maxOccurs="unbounded" />
+			<element ref="tns:thesis" minOccurs="1" maxOccurs="unbounded" />
+			<element ref="tns:website" minOccurs="1" maxOccurs="unbounded" />
+		</choice>
+	</complexType>
+
+	<element name="bibliography" type="tns:bibliographyType" />
 </schema>

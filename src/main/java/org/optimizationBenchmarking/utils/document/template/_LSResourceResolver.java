@@ -1,14 +1,12 @@
 package org.optimizationBenchmarking.utils.document.template;
 
 import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXMLConstants;
+import org.optimizationBenchmarking.utils.io.xml.SimpleLSResourceResolver;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
 
 /** the internal resource resolver */
-final class _LSResourceResolver implements LSResourceResolver {
-
-  /** the original resolver */
-  private final LSResourceResolver m_delegate;
+final class _LSResourceResolver extends SimpleLSResourceResolver {
 
   /**
    * create
@@ -17,8 +15,7 @@ final class _LSResourceResolver implements LSResourceResolver {
    *          the delegate
    */
   _LSResourceResolver(final LSResourceResolver del) {
-    super();
-    this.m_delegate = del;
+    super(del);
   }
 
   /** {@inheritDoc} */
@@ -31,8 +28,8 @@ final class _LSResourceResolver implements LSResourceResolver {
       return new _LSBibInput(publicId, systemId, baseURI);
     }
 
-    return ((this.m_delegate != null) ? this.m_delegate.resolveResource(
-        type, namespaceURI, publicId, systemId, baseURI) : null);
+    return super.resolveResource(type, namespaceURI, publicId, systemId,
+        baseURI);
   }
 
 }

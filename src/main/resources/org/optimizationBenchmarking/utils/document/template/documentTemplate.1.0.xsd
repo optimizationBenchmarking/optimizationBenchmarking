@@ -187,22 +187,23 @@
 
 					<element name="cite" minOccurs="0" maxOccurs="unbounded">
 						<complexType>
-							<sequence>
-								<element ref="bib:bibliography" minOccurs="1" maxOccurs="1" />
-							</sequence>
-							<attribute ref="tns:textCase" use="optional" />
-							<attribute ref="tns:sequenceMode" use="optional" />
-							<attribute name="mode" use="optional">
-								<simpleType>
-									<restriction base="token">
-										<enumeration value="id" />
-										<enumeration value="authorsAndID" />
-										<enumeration value="authorsAndYear" />
-										<enumeration value="authors" />
-										<enumeration value="title" />
-									</restriction>
-								</simpleType>
-							</attribute>
+							<complexContent>
+								<extension base="bib:bibliographyType">
+									<attribute ref="tns:textCase" use="optional" />
+									<attribute ref="tns:sequenceMode" use="optional" />
+									<attribute name="mode" use="optional">
+										<simpleType>
+											<restriction base="token">
+												<enumeration value="id" />
+												<enumeration value="authorsAndID" />
+												<enumeration value="authorsAndYear" />
+												<enumeration value="authors" />
+												<enumeration value="title" />
+											</restriction>
+										</simpleType>
+									</attribute>
+								</extension>
+							</complexContent>
 						</complexType>
 					</element>
 

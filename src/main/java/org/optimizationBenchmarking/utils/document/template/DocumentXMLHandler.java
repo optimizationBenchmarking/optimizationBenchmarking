@@ -8,6 +8,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXMLHandler;
+import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentElement;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
@@ -20,6 +22,7 @@ import org.optimizationBenchmarking.utils.parsers.LongParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.parsers.ShortParser;
 import org.optimizationBenchmarking.utils.reflection.GetStaticConstantByName;
+import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.numbers.NumberAppender;
@@ -186,9 +189,60 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         return;
       }
 
+      if (_DocumentXMLConstants.ELEMENT_CITE.equalsIgnoreCase(localName)) {
+        this.__cite(attributes, ((IComplexText) e));
+        return;
+      }
+
       return;
     }
 
+  }
+
+  /**
+   * begin a citation
+   * 
+   * @param attr
+   *          the attributes
+   * @param dest
+   *          the destination text
+   */
+  @SuppressWarnings("unused")
+  private final void __cite(final Attributes attr, final IComplexText dest) {
+    ESequenceMode seq;
+    ETextCase cas;
+    ECitationMode mod;
+    int i;
+    String s;
+
+    seq = _DocumentXMLConstants._parseSequenceMode(DelegatingHandler
+        .getAttributeNormalized(attr, _DocumentXMLConstants.NAMESPACE,
+            _DocumentXMLConstants.ATTR_SEQUENCE_MODE));
+    if (seq == null) {
+      seq = ESequenceMode.COMMA;
+    }
+
+    cas = _DocumentXMLConstants._parseTextCase(DelegatingHandler
+        .getAttributeNormalized(attr, _DocumentXMLConstants.NAMESPACE,
+            _DocumentXMLConstants.ATTR_TEXT_CASE));
+
+    s = DelegatingHandler.getAttributeNormalized(attr,
+        _DocumentXMLConstants.NAMESPACE,
+        _DocumentXMLConstants.ATTR_CITATION_MODE);
+    mod = null;
+    if (s != null) {
+      for (i = _DocumentXMLConstants.VAL_CITATION_MODE.length; (--i) >= 0;) {
+        if (_DocumentXMLConstants.VAL_CITATION_MODE[i].equalsIgnoreCase(s)) {
+          mod = ECitationMode.INSTANCES.get(i);
+          break;
+        }
+      }
+    }
+    if (mod == null) {
+      mod = ECitationMode.ID;
+    }
+
+    new BibliographyXMLHandler(this, dest.cite(mod, cas, seq));
   }
 
   /** {@inheritDoc} */

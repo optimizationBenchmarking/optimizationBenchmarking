@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.text;
 
 import java.util.List;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** The set of sequence types. */
@@ -54,6 +55,10 @@ public enum ESequenceMode {
 
   /** the et al */
   static final char[] ET_AL_ = { ' ', 'e', 't', ' ', 'a', 'l', '.' };
+
+  /** the sequence modes */
+  public static final ArraySetView<ESequenceMode> INSTANCES = new ArraySetView<>(
+      ESequenceMode.values());
 
   /** the start string, or {@code null} if none is needed */
   private final char[] m_start;
