@@ -17,6 +17,7 @@ import org.optimizationBenchmarking.utils.io.files.TempDir;
 
 import test.junit.InstanceTest;
 import examples.org.optimizationBenchmarking.utils.document.RandomDocumentExample;
+import examples.org.optimizationBenchmarking.utils.document.TemplateDocumentExample;
 
 /** A test of a document driver */
 @Ignore
@@ -33,7 +34,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
   }
 
   /**
-   * test the document driver
+   * test the document driver for creating random documents
    * 
    * @param service
    *          the service
@@ -71,6 +72,41 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
   }
 
   /**
+   * test the document driver for creating template-based documents
+   * 
+   * @param service
+   *          the service
+   * @throws IOException
+   *           if i/o fails
+   * @throws ExecutionException
+   *           if execution fails
+   * @throws InterruptedException
+   *           if execution is interrupted
+   */
+  private final void __doTemplateTest(final ExecutorService service)
+      throws IOException, InterruptedException, ExecutionException {
+    final IDocumentDriver driver;
+    final TemplateDocumentExample ex;
+    final Future<?> f;
+
+    driver = this.getInstance();
+    Assert.assertNotNull(driver);
+
+    try (final TempDir td = new TempDir()) {
+      try (final IDocument doc = driver.createDocument(td.getDir(),
+          "document", null, null)) { //$NON-NLS-1$
+        ex = new TemplateDocumentExample(doc);
+        if (service != null) {
+          f = service.submit(ex);
+          f.get();
+        } else {
+          ex.run();
+        }
+      }
+    }
+  }
+
+  /**
    * Test the serial generation of documents
    * 
    * @throws Throwable
@@ -85,6 +121,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     for (i = 0; i < 10; i++) {
       this.__doRandomTest(null, r);
     }
+    this.__doTemplateTest(null);
   }
 
   /**
@@ -115,6 +152,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     for (i = 0; i < 10; i++) {
       this.__doRandomTest(p, r);
     }
+    this.__doTemplateTest(p);
 
     p.shutdown();
     p.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);

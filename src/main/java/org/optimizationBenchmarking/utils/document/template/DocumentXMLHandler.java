@@ -427,6 +427,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
     final short s;
     final byte b;
     final float f;
+    String v;
 
     this.m_formatParser = null;
     format = this.m_formatFormatter;
@@ -451,7 +452,10 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           ((NumberAppender) (format)).appendTo(i, tc, dest);
         } else {
           if (format instanceof DecimalFormat) {
-            dest.append(((DecimalFormat) (format)).format(i));
+            synchronized (format) {
+              v = ((DecimalFormat) (format)).format(i);
+            }
+            dest.append(v);
           } else {
             dest.append(i);
           }
@@ -465,7 +469,10 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           ((NumberAppender) (format)).appendTo(l, tc, dest);
         } else {
           if (format instanceof DecimalFormat) {
-            dest.append(((DecimalFormat) (format)).format(l));
+            synchronized (format) {
+              v = ((DecimalFormat) (format)).format(l);
+            }
+            dest.append(v);
           } else {
             dest.append(l);
           }
@@ -479,7 +486,10 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           ((NumberAppender) (format)).appendTo(f, tc, dest);
         } else {
           if (format instanceof DecimalFormat) {
-            dest.append(((DecimalFormat) (format)).format(f));
+            synchronized (format) {
+              v = ((DecimalFormat) (format)).format(f);
+            }
+            dest.append(v);
           } else {
             dest.append(f);
           }
@@ -493,7 +503,10 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           ((NumberAppender) (format)).appendTo(s, tc, dest);
         } else {
           if (format instanceof DecimalFormat) {
-            dest.append(((DecimalFormat) (format)).format(s));
+            synchronized (format) {
+              v = ((DecimalFormat) (format)).format(s);
+            }
+            dest.append(v);
           } else {
             dest.append(s);
           }
@@ -507,7 +520,10 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           ((NumberAppender) (format)).appendTo(b, tc, dest);
         } else {
           if (format instanceof DecimalFormat) {
-            dest.append(((DecimalFormat) (format)).format(b));
+            synchronized (format) {
+              v = ((DecimalFormat) (format)).format(b);
+            }
+            dest.append(v);
           } else {
             dest.append(b);
           }
@@ -520,7 +536,10 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         ((NumberAppender) (format)).appendTo(d, tc, dest);
       } else {
         if (format instanceof DecimalFormat) {
-          dest.append(((DecimalFormat) (format)).format(d));
+          synchronized (format) {
+            v = ((DecimalFormat) (format)).format(d);
+          }
+          dest.append(v);
         } else {
           dest.append(d);
         }

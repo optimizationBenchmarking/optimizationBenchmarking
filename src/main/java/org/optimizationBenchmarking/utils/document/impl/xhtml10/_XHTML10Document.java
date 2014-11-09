@@ -16,6 +16,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
 import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.object.PathEntry;
+import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
@@ -288,7 +289,8 @@ final class _XHTML10Document extends Document {
   private static final void __writeFont(final FontStyle fs,
       final String name, final BufferedWriter bw, final boolean isDefault,
       final boolean useSize) throws IOException {
-    boolean first;
+    final FontProperties fp;
+    boolean first, feature;
 
     // bw.newLine();
     bw.write(name);
@@ -323,13 +325,28 @@ final class _XHTML10Document extends Document {
     // bw.newLine();
     bw.write(_XHTML10Document.FONT_TRANSFORM);
 
+    // Some fonts may naturally be italic or bold. For these fonts,
+    // additionally specifying this feature in the CSS may make them look
+    // odd. We can use the FontProperties loaded from a resource to check
+    // this issue.
+    fp = FontProperties.getFontProperties(fs.getFont(), true);
+
     // bw.newLine();
-    bw.write(fs.isBold() ? _XHTML10Document.FONT_WEIGHT_BOLD
+    feature = fs.isBold();
+    if (feature && (fp != null) && fp.isBold()) {
+      feature = false;
+    }
+
+    bw.write(feature ? _XHTML10Document.FONT_WEIGHT_BOLD
         : (isDefault ? _XHTML10Document.FONT_WEIGHT_NORMAL
             : _XHTML10Document.FONT_WEIGHT_INHERIT));
 
     // bw.newLine();
-    bw.write(fs.isItalic() ? _XHTML10Document.FONT_STYLE_ITALIC
+    feature = fs.isItalic();
+    if (feature && (fp != null) && fp.isItalic()) {
+      feature = false;
+    }
+    bw.write(feature ? _XHTML10Document.FONT_STYLE_ITALIC
         : (isDefault ? _XHTML10Document.FONT_STYLE_NORMAL
             : _XHTML10Document.FONT_STYLE_INHERIT));
 
