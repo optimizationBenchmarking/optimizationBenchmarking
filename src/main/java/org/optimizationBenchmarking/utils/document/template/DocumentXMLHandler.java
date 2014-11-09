@@ -91,7 +91,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("resource")
+  @SuppressWarnings({ "resource", "unchecked", "rawtypes" })
   @Override
   protected final void doStartElement(final String uri,
       final String localName, final String qName,
@@ -147,6 +147,16 @@ public final class DocumentXMLHandler extends DelegatingHandler {
 
       if (_DocumentXMLConstants.ELEMENT_NBSP.equalsIgnoreCase(localName)) {
         ((ITextOutput) e).appendNonBreakingSpace();
+        return;
+      }
+
+      if (_DocumentXMLConstants.ELEMENT_CALL.equalsIgnoreCase(localName)) {
+        ((IDocumentCallback) (this.m_properties.get(DelegatingHandler
+            .getAttributeNormalized(attributes,
+                _DocumentXMLConstants.NAMESPACE,
+                _DocumentXMLConstants.ATTR_CALL_F)))).callback(e,
+            this.m_properties);
+
         return;
       }
 

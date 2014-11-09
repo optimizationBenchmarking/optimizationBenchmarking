@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -14,10 +15,12 @@ import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
+import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLHandler;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLInput;
+import org.optimizationBenchmarking.utils.document.template.IDocumentCallback;
 import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 
 /**
@@ -97,6 +100,7 @@ public class TemplateDocumentExample extends DocumentExample {
     properties.put("numberAppender", SimpleNumberAppender.INSTANCE);//$NON-NLS-1$
     properties.put("numberFormat", new DecimalFormat("0.00"));//$NON-NLS-1$//$NON-NLS-2$
     properties.put("myNumber", Float.valueOf(0.1234f));//$NON-NLS-1$
+    properties.put("printMap", new __PrintMapCallback());//$NON-NLS-1$
 
     try (final IDocumentHeader head = this.m_doc.header()) {
       RandomDocumentExample._createRandomHeader(head, this.m_doc
@@ -123,5 +127,23 @@ public class TemplateDocumentExample extends DocumentExample {
     }
 
     this.m_doc.close();
+  }
+
+  /** an internal callback */
+  private static final class __PrintMapCallback implements
+      IDocumentCallback<IPlainText> {
+    /** create */
+    __PrintMapCallback() {
+      super();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void callback(final IPlainText element,
+        final Map<Object, Object> properties) {
+      element.append(//
+          "This is a callback invocation printing the properties map: "); //$NON-NLS-1$
+      element.append(properties);
+    }
   }
 }

@@ -46,6 +46,12 @@
 		<attribute ref="tns:textCase" use="optional" />
 	</attributeGroup>
 
+	<element name="call">
+		<complexType>
+			<attribute name="f" type="token" use="required" />
+		</complexType>
+	</element>
+
 	<complexType name="plainText" mixed="true">
 		<choice>
 
@@ -55,6 +61,8 @@
 					<attributeGroup ref="tns:formatAttrs" />
 				</complexType>
 			</element>
+
+			<element ref="tns:call" />
 
 			<element name="nbsp" minOccurs="0" maxOccurs="unbounded">
 				<complexType />

@@ -113,6 +113,12 @@ final class _DocumentXMLConstants {
   /** the citation mode values */
   static final String[] VAL_CITATION_MODE;
 
+  /** the callback element */
+  static final String ELEMENT_CALL = "call"; //$NON-NLS-1$
+
+  /** the function attribute */
+  static final String ATTR_CALL_F = "f"; //$NON-NLS-1$$
+
   static {
     VAL_CITATION_MODE = new String[ECitationMode.INSTANCES.size()];
     _DocumentXMLConstants.VAL_CITATION_MODE[ECitationMode.ID.ordinal()] = "id";//$NON-NLS-1$
