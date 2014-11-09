@@ -4,10 +4,12 @@ import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.ISequenceable;
+import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** a label implementation */
-public class Label implements ILabel, ISequenceable {
+public class Label implements ILabel, ISequenceable, ITextable {
 
   /** the label type */
   final ELabelType m_type;
@@ -113,6 +115,35 @@ public class Label implements ILabel, ISequenceable {
       this.doToSequence(isFirstInSequence, isLastInSequence, textCase,
           textOut, textOut);
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    if (this.m_refText != null) {
+      textOut.append(this.m_type.getName());
+      textOut.appendNonBreakingSpace();
+      textOut.append(this.m_refText);
+    } else {
+      textOut.append("[forward"); //$NON-NLS-1$
+      textOut.appendNonBreakingSpace();
+      textOut.append(this.m_type.getName());
+      if (this.m_mark != null) {
+        textOut.append('#');
+        textOut.append(this.m_mark);
+      }
+      textOut.append(']');
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    final MemoryTextOutput mto;
+
+    mto = new MemoryTextOutput(128);
+    this.toText(mto);
+    return mto.toString();
   }
 
 }

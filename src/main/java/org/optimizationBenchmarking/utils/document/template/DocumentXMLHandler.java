@@ -10,9 +10,15 @@ import java.util.Map;
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXMLHandler;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
+import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentElement;
+import org.optimizationBenchmarking.utils.document.spec.ILabel;
+import org.optimizationBenchmarking.utils.document.spec.IList;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
+import org.optimizationBenchmarking.utils.document.spec.ISection;
+import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
+import org.optimizationBenchmarking.utils.document.spec.IStructuredText;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
 import org.optimizationBenchmarking.utils.parsers.ByteParser;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
@@ -25,6 +31,7 @@ import org.optimizationBenchmarking.utils.reflection.GetStaticConstantByName;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.numbers.NumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -44,8 +51,13 @@ public final class DocumentXMLHandler extends DelegatingHandler {
   private Parser<?> m_formatParser;
   /** the formatter to format the next special output, such as numbers */
   private Object m_formatFormatter;
-  /** the text case to be passed to the formatter, if one is used */
+  /**
+   * the text case to be passed to a formatter or reference queue, if one
+   * is used
+   */
   private ETextCase m_formatTextCase;
+  /** the sequence mode to be passed to the reference queue, if one is used */
+  private ESequenceMode m_formatSequenceMode;
 
   /** the memory text output buffer */
   private final MemoryTextOutput m_textChars;
@@ -55,6 +67,9 @@ public final class DocumentXMLHandler extends DelegatingHandler {
 
   /** a multi-purpose cache */
   private final HashMap<Object, Object> m_cache;
+
+  /** the labels to reference */
+  private ArrayList<ILabel> m_labels;
 
   /**
    * Create
@@ -204,9 +219,104 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         return;
       }
 
+      if (_DocumentXMLConstants.ELEMENT_SECTION
+          .equalsIgnoreCase(localName)) {
+        this.__section(attributes, ((ISectionContainer) e));
+        return;
+      }
+
+      if (_DocumentXMLConstants.ELEMENT_SECTION_TITLE
+          .equalsIgnoreCase(localName)) {
+        this.m_elements.add(((ISection) e).title());
+        return;
+      }
+
+      if (_DocumentXMLConstants.ELEMENT_SECTION_BODY
+          .equalsIgnoreCase(localName)) {
+        this.m_elements.add(((ISection) e).body());
+        return;
+      }
+
+      if (_DocumentXMLConstants.ELEMENT_REF.equalsIgnoreCase(localName)) {
+        this.__reference(attributes);
+        return;
+      }
+
+      if (_DocumentXMLConstants.ELEMENT_OL.equalsIgnoreCase(localName)) {
+        this.m_elements.add(((IStructuredText) e).enumeration());
+        return;
+      }
+
+      if (_DocumentXMLConstants.ELEMENT_UL.equalsIgnoreCase(localName)) {
+        this.m_elements.add(((IStructuredText) e).itemization());
+        return;
+      }
+
+      if (_DocumentXMLConstants.ELEMENT_LI.equalsIgnoreCase(localName)) {
+        this.m_elements.add(((IList) e).item());
+        return;
+      }
+
       return;
     }
 
+  }
+
+  /**
+   * begin a reference
+   * 
+   * @param attr
+   *          the attributes
+   */
+  private final void __reference(final Attributes attr) {
+    this.m_labels = new ArrayList<>();
+
+    this.m_formatTextCase = _DocumentXMLConstants
+        ._parseTextCase(DelegatingHandler.getAttributeNormalized(attr,
+            _DocumentXMLConstants.NAMESPACE,
+            _DocumentXMLConstants.ATTR_TEXT_CASE));
+    this.m_formatSequenceMode = _DocumentXMLConstants
+        ._parseSequenceMode(DelegatingHandler.getAttributeNormalized(attr,
+            _DocumentXMLConstants.NAMESPACE,
+            _DocumentXMLConstants.ATTR_SEQUENCE_MODE));
+    if (this.m_formatSequenceMode == null) {
+      this.m_formatSequenceMode = ESequenceMode.AND;
+    }
+  }
+
+  /**
+   * begin a section
+   * 
+   * @param attr
+   *          the attributes
+   * @param dest
+   *          the section body
+   */
+  @SuppressWarnings("resource")
+  private final void __section(final Attributes attr,
+      final ISectionContainer dest) {
+    ILabel label;
+    ISection sec;
+    String prop;
+
+    label = null;
+
+    prop = DelegatingHandler.getAttributeNormalized(attr,
+        _DocumentXMLConstants.NAMESPACE, _DocumentXMLConstants.ATTR_LABEL);
+
+    if (prop != null) {
+      label = ((ILabel) (this.m_properties.get(prop)));
+      if (label == null) {
+        label = ELabelType.AUTO;
+      }
+    }
+
+    sec = dest.section(label);
+    this.m_elements.add(sec);
+
+    if (prop != null) {
+      this.m_properties.put(prop, sec.getLabel());
+    }
   }
 
   /**
@@ -301,39 +411,60 @@ public final class DocumentXMLHandler extends DelegatingHandler {
   }
 
   /** flush text */
+  @SuppressWarnings("resource")
   private final void __flushText() {
     final MemoryTextOutput chars;
     final ITextOutput t;
+    final IDocumentElement de;
     Parser<?> p;
     Object o;
     String s;
+    ILabel l;
 
     p = this.m_formatParser;
     this.m_formatParser = null;
 
     chars = this.m_textChars;
     if (chars.length() > 0) {
-      t = ((ITextOutput) (this.m_elements.get(this.m_elements.size() - 1)));
-
-      if (p != null) {
+      if (this.m_labels != null) {
         s = chars.toString();
         chars.clear();
-
-        o = null;
-        try {
-          o = p.parseString(s);
-          s = null;
-          p = null;
-        } catch (final Exception e) {
-          s = null;
-          p = null;
-          ErrorUtils.throwAsRuntimeException(e);
+        s = TextUtils.normalize(s);
+        if (s != null) {
+          l = ((ILabel) (this.m_properties.get(s)));
+          if (l == null) {
+            throw new IllegalArgumentException("Label '" + //$NON-NLS-1$
+                s + "' undefined."); //$NON-NLS-1$
+          }
+          this.m_labels.add(l);
         }
-
-        this.__flushObject(o, t);
       } else {
-        chars.toText(t);
-        chars.clear();
+
+        de = this.m_elements.get(this.m_elements.size() - 1);
+        if (de instanceof ITextOutput) {
+          t = ((ITextOutput) (de));
+
+          if (p != null) {
+            s = chars.toString();
+            chars.clear();
+
+            o = null;
+            try {
+              o = p.parseString(s);
+              s = null;
+              p = null;
+            } catch (final Exception e) {
+              s = null;
+              p = null;
+              ErrorUtils.throwAsRuntimeException(e);
+            }
+
+            this.__flushObject(o, t);
+          } else {
+            chars.toText(t);
+            chars.clear();
+          }
+        }
       }
     } else {
       if (p != null) {
@@ -589,11 +720,33 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           _DocumentXMLConstants.ELEMENT_EMPH.equalsIgnoreCase(localName) || //
           _DocumentXMLConstants.ELEMENT_CODE.equalsIgnoreCase(localName) || //
           _DocumentXMLConstants.ELEMENT_SUB.equalsIgnoreCase(localName) || //
-          _DocumentXMLConstants.ELEMENT_SUP.equalsIgnoreCase(localName)) {
+          _DocumentXMLConstants.ELEMENT_SUP.equalsIgnoreCase(localName)
+          || //
+          _DocumentXMLConstants.ELEMENT_SECTION
+              .equalsIgnoreCase(localName)
+          || //
+          _DocumentXMLConstants.ELEMENT_SECTION_BODY
+              .equalsIgnoreCase(localName) || //
+          _DocumentXMLConstants.ELEMENT_SECTION_TITLE
+              .equalsIgnoreCase(localName) || //
+          _DocumentXMLConstants.ELEMENT_OL.equalsIgnoreCase(localName) || //
+          _DocumentXMLConstants.ELEMENT_UL.equalsIgnoreCase(localName) || //
+          _DocumentXMLConstants.ELEMENT_LI.equalsIgnoreCase(localName)) {
         this.m_elements.remove(this.m_elements.size() - 1).close();
         if (this.m_elements.isEmpty()) {
           this.close();
         }
+        return;
+      }
+
+      if (_DocumentXMLConstants.ELEMENT_REF.equalsIgnoreCase(localName)) {
+        ((IComplexText) (this.m_elements.get(this.m_elements.size() - 1)))
+            .reference(this.m_formatTextCase, this.m_formatSequenceMode,
+                this.m_labels.toArray(new ILabel[this.m_labels.size()]));
+        this.m_labels = null;
+        this.m_formatSequenceMode = null;
+        this.m_formatTextCase = null;
+        return;
       }
 
     }

@@ -131,6 +131,27 @@ final class _DocumentXMLConstants {
     _DocumentXMLConstants.VAL_CITATION_MODE[ECitationMode.TITLE.ordinal()] = "title";//$NON-NLS-1$
   }
 
+  /** the section element */
+  static final String ELEMENT_SECTION = "section"; //$NON-NLS-1$
+  /** the section title element */
+  static final String ELEMENT_SECTION_TITLE = "title"; //$NON-NLS-1$$
+  /** the section body element */
+  static final String ELEMENT_SECTION_BODY = "body"; //$NON-NLS-1$$
+  /** the section label input attribute */
+  static final String ATTR_LABEL = "label"; //$NON-NLS-1$$
+
+  /** the reference element */
+  static final String ELEMENT_REF = "ref"; //$NON-NLS-1$
+  /** the label */
+  static final String ELEMENT_REF_LABEL = _DocumentXMLConstants.ATTR_LABEL;
+
+  /** the element for ordered lists (enumerations) */
+  static final String ELEMENT_OL = "ol"; //$NON-NLS-1$
+  /** the element for unordered lists (itemizations) */
+  static final String ELEMENT_UL = "ul"; //$NON-NLS-1$
+  /** the element for list items */
+  static final String ELEMENT_LI = "li"; //$NON-NLS-1$
+
   /**
    * Get the text case
    * 

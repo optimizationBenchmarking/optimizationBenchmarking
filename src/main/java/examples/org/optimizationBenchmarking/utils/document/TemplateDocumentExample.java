@@ -16,8 +16,6 @@ import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
-import org.optimizationBenchmarking.utils.document.spec.ISection;
-import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLHandler;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLInput;
 import org.optimizationBenchmarking.utils.document.template.IDocumentCallback;
@@ -108,17 +106,13 @@ public class TemplateDocumentExample extends DocumentExample {
     }
 
     try (final IDocumentBody body = this.m_doc.body()) {
-      try (final ISection sec = body.section(null)) {
-        try (final IText txt = sec.title()) {
-          txt.append("This Section's Body comes from a Template"); //$NON-NLS-1$
-        }
-        try (final IText txt = sec.body()) {
-          DocumentXMLInput.INSTANCE.loadResource(new DocumentXMLHandler(
-              txt, properties), TemplateDocumentExample.class,
-              "template.xml"); //$NON-NLS-1$
-        } catch (final IOException ioe) {
-          ErrorUtils.throwAsRuntimeException(ioe);
-        }
+
+      try {
+        DocumentXMLInput.INSTANCE.loadResource(new DocumentXMLHandler(
+            body, properties), TemplateDocumentExample.class,
+            "template.xml"); //$NON-NLS-1$
+      } catch (final IOException ioe) {
+        ErrorUtils.throwAsRuntimeException(ioe);
       }
     }
 

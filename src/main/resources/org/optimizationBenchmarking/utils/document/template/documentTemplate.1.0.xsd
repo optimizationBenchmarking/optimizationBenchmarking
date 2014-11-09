@@ -152,6 +152,16 @@
 		</choice>
 	</complexType>
 
+	<element name="ref">
+		<complexType>
+			<sequence>
+				<element name="label" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+			<attribute ref="tns:textCase" use="optional" />
+			<attribute ref="tns:sequenceMode" use="optional" />
+		</complexType>
+	</element>
+
 	<complexType name="complexText" mixed="true">
 		<complexContent>
 			<extension base="tns:plainText">
@@ -220,11 +230,55 @@
 		</complexContent>
 	</complexType>
 
+	<complexType name="structuredText" mixed="true">
+		<complexContent>
+			<extension base="tns:complexText">
+				<choice>
+
+					<element name="ol">
+						<complexType>
+							<sequence>
+								<element name="li" type="tns:structuredText" minOccurs="1"
+									maxOccurs="unbounded" />
+							</sequence>
+						</complexType>
+					</element>
+
+					<element name="ul">
+						<complexType>
+							<sequence>
+								<element name="li" type="tns:structuredText" minOccurs="1"
+									maxOccurs="unbounded" />
+							</sequence>
+						</complexType>
+					</element>
+
+				</choice>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<element name="section">
+		<complexType>
+			<sequence>
+				<element name="title" type="tns:complexText" minOccurs="1"
+					maxOccurs="1" />
+				<element name="body" type="tns:structuredText" minOccurs="1"
+					maxOccurs="1" />
+			</sequence>
+			<attribute name="label" type="token" use="optional" />
+		</complexType>
+	</element>
+
 
 	<element name="template">
 		<complexType mixed="true">
 			<complexContent>
 				<extension base="tns:complexText">
+					<choice>
+						<element ref="tns:section" minOccurs="0" maxOccurs="unbounded" />
+					</choice>
 				</extension>
 			</complexContent>
 		</complexType>

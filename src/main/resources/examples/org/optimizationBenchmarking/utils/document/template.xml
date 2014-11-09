@@ -2,8 +2,15 @@
 <t:template
 	xmlns:t="http://www.optimizationBenchmarking.org/formats/documentTemplate/documentTemplate.1.0.xsd"
 	 xmlns:bib="http://www.optimizationBenchmarking.org/formats/bibliography/bibliography.1.0.xsd">
-This is a template!<t:br/>
+	 
+<t:section label="section1Label">
+<t:title>This Section Comes from a Template</t:title>
+<t:body>
+This is a template!
 
+<t:section label="section1.1Label">
+<t:title>Some Basic Texts</t:title>
+<t:body>
 At first, let me present some raw values: The value of <t:code>Integer.MAX_VALUE</t:code> is <t:int>Integer.MAX_VALUE</t:int>,
 &#x3c0; has the value <t:double>&#x3c0;</t:double>,
 0.99999999999999999999999999999999 is <t:double>0.99999999999999999999999999999999</t:double>,
@@ -23,4 +30,29 @@ or by author and year <t:cite textCase="inSentence" mode="authorsAndYear" sequen
 I can also quote the title of a publication, such as <t:cite mode="title"><bib:book title="Variants of Evolutionary Algorithms for Real-World Applications" doi="10.1007/978-3-642-23424-8" isbn="978-3-642-23424-8"><bib:editors><bib:person familyName="Chiong" personalName="Raymond"/><bib:person familyName="Weise" personalName="Thomas"/><bib:person familyName="Michalewicz" personalName="Zbigniew"/></bib:editors><bib:publisher organization="Springer-Verlag GmbH" address="Berlin/Heidelberg"/><bib:date year="2011" month="sep" day="30"/></bib:book></t:cite>.
 <t:br/>
 <t:code><t:call f="printMap"/></t:code>
+</t:body>
+</t:section>
+</t:body>
+</t:section>
+
+<t:section label="section2Label">
+<t:title>Some More Texts</t:title>
+<t:body>
+<t:ref textCase="atSentenceStart"><t:label>section2Label</t:label></t:ref> follows <t:ref sequenceMode="and"><t:label>section1Label</t:label><t:label>section1.1Label</t:label></t:ref>. Let's invoke the callback again here, and we get <t:brace><t:call f="printMap"/></t:brace>. Notice how a new label has appeared under key <t:code>section2Label</t:code>.
+<t:ol>
+<t:li>This is the first item of an ordered list.</t:li>
+<t:li>This is the second item.</t:li>
+<t:li>And here we even have a sub-list:
+<t:ul>
+<t:li>The first item of the un-ordered list.</t:li>
+<t:li>The second item of the un-ordered list.</t:li>
+<t:li>Let's reference all sections we have far:<t:nbsp/><t:ref sequenceMode="and"><t:label>section1Label</t:label><t:label>section1.1Label</t:label><t:label>section2Label</t:label></t:ref></t:li>
+<t:li>And have another sub-list:
+<t:ul><t:li>With one,</t:li><t:li>two, and</t:li><t:li>three items.</t:li></t:ul></t:li>
+</t:ul>
+</t:li>
+</t:ol> 
+</t:body>
+</t:section>
+
 </t:template>
