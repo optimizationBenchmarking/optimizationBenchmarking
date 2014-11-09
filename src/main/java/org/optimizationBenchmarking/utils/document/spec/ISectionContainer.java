@@ -1,8 +1,9 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
 /**
- * A section container. This interface is must support parallel invocation
- * of {@link #section(ILabel)} by definition.
+ * A section container. This interface must support parallel invocation of
+ * {@link #section(ILabel)} by definition. Any other interfaces or methods
+ * <em>may</em> or may not be parallel.
  */
 public interface ISectionContainer extends IDocumentElement {
   /**

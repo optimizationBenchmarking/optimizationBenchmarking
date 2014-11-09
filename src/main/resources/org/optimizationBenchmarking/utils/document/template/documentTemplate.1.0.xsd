@@ -166,7 +166,7 @@
 						</complexType>
 					</element>
 
-					<element name="emph" minOccurs="0" maxOccurs="unbounded">
+					<element name="em" minOccurs="0" maxOccurs="unbounded">
 						<complexType>
 							<complexContent>
 								<extension base="tns:plainText">

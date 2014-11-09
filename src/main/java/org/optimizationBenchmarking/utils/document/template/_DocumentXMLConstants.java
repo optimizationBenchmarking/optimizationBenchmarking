@@ -80,7 +80,7 @@ final class _DocumentXMLConstants {
   /** the code element */
   static final String ELEMENT_CODE = "code"; //$NON-NLS-1$
   /** the emph element */
-  static final String ELEMENT_EMPH = "emph"; //$NON-NLS-1$
+  static final String ELEMENT_EMPH = "em"; //$NON-NLS-1$
   /** the subscript element */
   static final String ELEMENT_SUB = "sub"; //$NON-NLS-1$
   /** the superscript element */
