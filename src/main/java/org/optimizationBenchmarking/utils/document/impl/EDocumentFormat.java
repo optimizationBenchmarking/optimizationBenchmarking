@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 /** An enumeration of the available document formats */
 public enum EDocumentFormat {
 
-  /** The XHTML 1.0 driver */
+  /** The XHTML 1.0 format */
   XHTML_1_0() {
     /** {@inheritDoc} */
     @Override

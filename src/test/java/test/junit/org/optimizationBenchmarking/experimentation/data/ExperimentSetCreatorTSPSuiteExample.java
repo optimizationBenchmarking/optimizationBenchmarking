@@ -23,7 +23,7 @@ public class ExperimentSetCreatorTSPSuiteExample extends
         //                .getResourceAsStream("tspSuiteExampleData.zip"),//$NON-NLS-1$
         // null, null);
 
-        TSPSuiteInput.INSTANCE.loadResourceZIP(esc,
+        TSPSuiteInput.getInstance().loadResourceZIP(esc,
             ExperimentSetCreatorTSPSuiteExample.class,
             "tspSuiteExampleData.zip",//$NON-NLS-1$
             null, null);

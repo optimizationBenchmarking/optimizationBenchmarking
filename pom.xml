@@ -34,7 +34,7 @@
 
 	<issueManagement>
 		<url>https://github.com/optimizationBenchmarking/optimizationBenchmarking/issues</url>
-		<system>Github</system>
+		<system>GitHub</system>
 	</issueManagement>
 	<scm>
 		<url>https://github.com/optimizationBenchmarking/optimizationBenchmarking</url>
@@ -213,6 +213,20 @@
 					</rulesets>
 				</configuration>
 			</plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.18</version>
+        <configuration>
+          <reuseForks>false</reuseForks>
+          <forkCount>1</forkCount>
+          <forkedProcessTimeoutInSeconds>1209600</forkedProcessTimeoutInSeconds>
+          <enableAssertions>true</enableAssertions>
+          <failIfNoTests>true</failIfNoTests>
+          <trimStackTrace>false</trimStackTrace>
+        </configuration>
+      </plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -50,7 +50,7 @@ public class LineChartExample {
     final LinkedHashSet<IChartDriver> list;
 
     list = new LinkedHashSet<>();
-    list.add(JFreeChartDriver.INSTANCE);
+    list.add(JFreeChartDriver.getInstance());
 
     for (final EChartFormat format : EChartFormat.values()) {
       list.add(format.getDefaultDriver());

@@ -23,9 +23,6 @@ import org.optimizationBenchmarking.utils.parsers.BoundedIntParser;
  */
 public class BBOBInput extends FileInputDriver<ExperimentSetContext> {
 
-  /** the globally shared instance */
-  public static final BBOBInput INSTANCE = new BBOBInput();
-
   /** the dimensions */
   private static final String FEATURE_DIMENSION = "dim"; //$NON-NLS-1$
   /** the approximate number of local optima */
@@ -65,8 +62,17 @@ public class BBOBInput extends FileInputDriver<ExperimentSetContext> {
       (byte) 5, (byte) 10, (byte) 20, (byte) 40, };
 
   /** create */
-  private BBOBInput() {
+  BBOBInput() {
     super();
+  }
+
+  /**
+   * get the instance of the {@link BBOBInput}
+   * 
+   * @return the instance of the {@link BBOBInput}
+   */
+  public static final BBOBInput getInstance() {
+    return __BBOBInputLoader.INSTANCE;
   }
 
   /**
@@ -1037,4 +1043,9 @@ public class BBOBInput extends FileInputDriver<ExperimentSetContext> {
     }
   }
 
+  /** the loader */
+  private static final class __BBOBInputLoader {
+    /** the globally shared instance */
+    static final BBOBInput INSTANCE = new BBOBInput();
+  }
 }

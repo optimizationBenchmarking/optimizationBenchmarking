@@ -72,11 +72,11 @@ public abstract class BibliographyTest extends ArrayListViewTest {
 
     a = this.getBibliography();
     try (final ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-      BibliographyXMLOutput.INSTANCE.storeStream(a, bos);
+      BibliographyXMLOutput.getInstance().storeStream(a, bos);
       try (final ByteArrayInputStream bis = new ByteArrayInputStream(
           bos.toByteArray())) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
-          BibliographyXMLInput.INSTANCE.loadStream(bb, bis);
+          BibliographyXMLInput.getInstance().loadStream(bb, bis);
           b = bb.getResult();
         }
       }
@@ -86,10 +86,10 @@ public abstract class BibliographyTest extends ArrayListViewTest {
     Assert.assertEquals(b, a);
 
     try (final CharArrayWriter cw = new CharArrayWriter()) {
-      BibliographyXMLOutput.INSTANCE.storeWriter(b, cw);
+      BibliographyXMLOutput.getInstance().storeWriter(b, cw);
       try (final CharArrayReader cr = new CharArrayReader(cw.toCharArray())) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
-          BibliographyXMLInput.INSTANCE.loadReader(bb, cr);
+          BibliographyXMLInput.getInstance().loadReader(bb, cr);
           c = bb.getResult();
         }
       }
@@ -116,11 +116,11 @@ public abstract class BibliographyTest extends ArrayListViewTest {
     a = this.getBibliography();
 
     try (final StringWriter cw = new StringWriter()) {
-      BibliographyXMLOutput.INSTANCE.storeWriter(a, cw);
+      BibliographyXMLOutput.getInstance().storeWriter(a, cw);
       x = cw.toString();
       try (final StringReader cr = new StringReader(x)) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
-          BibliographyXMLInput.INSTANCE.loadReader(bb, cr);
+          BibliographyXMLInput.getInstance().loadReader(bb, cr);
           b = bb.getResult();
         }
       }
@@ -130,11 +130,11 @@ public abstract class BibliographyTest extends ArrayListViewTest {
     Assert.assertEquals(b, a);
 
     try (final StringWriter cw = new StringWriter()) {
-      BibliographyXMLOutput.INSTANCE.storeWriter(b, cw);
+      BibliographyXMLOutput.getInstance().storeWriter(b, cw);
       y = cw.toString();
       try (final StringReader cr = new StringReader(y)) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
-          BibliographyXMLInput.INSTANCE.loadReader(bb, cr);
+          BibliographyXMLInput.getInstance().loadReader(bb, cr);
           c = bb.getResult();
         }
       }
@@ -145,7 +145,7 @@ public abstract class BibliographyTest extends ArrayListViewTest {
     Assert.assertEquals(b, c);
 
     try (final StringWriter cw = new StringWriter()) {
-      BibliographyXMLOutput.INSTANCE.storeWriter(c, cw);
+      BibliographyXMLOutput.getInstance().storeWriter(c, cw);
       z = cw.toString();
     }
 

@@ -16,7 +16,7 @@ public class XMLCharTransformerTest extends CharTransformerTest {
   /** {@inheritDoc} */
   @Override
   protected final CharTransformer getInstance() {
-    return XMLCharTransformer.INSTANCE;
+    return XMLCharTransformer.getInstance();
   }
 
 }

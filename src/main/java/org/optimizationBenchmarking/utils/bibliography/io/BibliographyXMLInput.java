@@ -17,12 +17,19 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public final class BibliographyXMLInput extends
     XMLInputDriver<BibliographyBuilder> {
-  /** create */
-  public static final BibliographyXMLInput INSTANCE = new BibliographyXMLInput();
 
   /** create */
-  private BibliographyXMLInput() {
+  BibliographyXMLInput() {
     super();
+  }
+
+  /**
+   * Get the instance of the {@link BibliographyXMLInput}
+   * 
+   * @return the instance of the {@link BibliographyXMLInput}
+   */
+  public static final BibliographyXMLInput getInstance() {
+    return __BibliographyXMLInputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -70,4 +77,9 @@ public final class BibliographyXMLInput extends
     return new BibliographyXMLHandler(null, loaderContext);
   }
 
+  /** the loader */
+  private static final class __BibliographyXMLInputLoader {
+    /** create */
+    static final BibliographyXMLInput INSTANCE = new BibliographyXMLInput();
+  }
 }

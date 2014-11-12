@@ -131,14 +131,6 @@ public final class XHTML10Driver extends DocumentDriver {
   /** the 3rd part of a reference */
   static final char[] A_REF_END = { '<', '/', 'a', '>' };
 
-  /** the synchronizer */
-  private static final Object SYNCH = new Object();
-
-  /** the internal font palette */
-  private static FontPalette s_fonts;
-  /** The default XHTML driver */
-  private static XHTML10Driver s_default;
-
   /** the graphic driver */
   private final IGraphicDriver m_graphicDriver;
 
@@ -154,12 +146,7 @@ public final class XHTML10Driver extends DocumentDriver {
    * @return the default XHTML driver
    */
   public static final XHTML10Driver getDefaultDriver() {
-    synchronized (XHTML10Driver.SYNCH) {
-      if (XHTML10Driver.s_default == null) {
-        XHTML10Driver.s_default = new XHTML10Driver(null, null, null);
-      }
-      return XHTML10Driver.s_default;
-    }
+    return __DefaultXHTML10DriverLoader.INSTANCE;
   }
 
   /**
@@ -245,7 +232,7 @@ public final class XHTML10Driver extends DocumentDriver {
    * @return the encoded output
    */
   static final ITextOutput _encode(final ITextOutput raw) {
-    return XMLCharTransformer.INSTANCE.transform(raw,
+    return XMLCharTransformer.getInstance().transform(raw,
         TextUtils.DEFAULT_NORMALIZER_FORM);
   }
 
@@ -255,18 +242,7 @@ public final class XHTML10Driver extends DocumentDriver {
    * @return the default font palette
    */
   public static final FontPalette getDefaultFontPalette() {
-    synchronized (XHTML10Driver.SYNCH) {
-      if (XHTML10Driver.s_fonts == null) {
-        try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-          PaletteInputDriver.INSTANCE.loadResource(tb,
-              XHTML10Driver.class, "xhtml10.font.palette"); //$NON-NLS-1$
-          XHTML10Driver.s_fonts = tb.getResult();
-        } catch (final Throwable tt) {
-          ErrorUtils.throwAsRuntimeException(tt);
-        }
-      }
-      return XHTML10Driver.s_fonts;
-    }
+    return __XHTML10DefaultFontPaletteLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -778,5 +754,37 @@ public final class XHTML10Driver extends DocumentDriver {
       out.append(label);
       out.append(XHTML10Driver.LABEL_END);
     }
+  }
+
+  /** the loader class for the default xhtml driver */
+  private static final class __DefaultXHTML10DriverLoader {
+
+    /** the instance */
+    static final XHTML10Driver INSTANCE = new XHTML10Driver(null, null,
+        null);
+
+  }
+
+  /** the default font palette */
+  private static final class __XHTML10DefaultFontPaletteLoader {
+
+    /** the internal font palette */
+    static final FontPalette INSTANCE;
+
+    static {
+      FontPalette p;
+
+      p = null;
+      try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
+        PaletteInputDriver.INSTANCE.loadResource(tb, XHTML10Driver.class,
+            "xhtml10.fontPalette"); //$NON-NLS-1$
+        p = tb.getResult();
+      } catch (final Throwable tt) {
+        ErrorUtils.throwAsRuntimeException(tt);
+      }
+
+      INSTANCE = p;
+    }
+
   }
 }

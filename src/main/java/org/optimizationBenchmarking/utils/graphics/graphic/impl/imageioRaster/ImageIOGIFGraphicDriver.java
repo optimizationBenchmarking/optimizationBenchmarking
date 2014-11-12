@@ -18,10 +18,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 public final class ImageIOGIFGraphicDriver extends
     _ImageIORasterGraphicDriver {
-  /** the default graphic GIF driver instance */
-  public static final ImageIOGIFGraphicDriver DEFAULT_INSTANCE = //
-  new ImageIOGIFGraphicDriver(EGraphicFormat.DEFAULT_COLOR_MODEL,
-      EGraphicFormat.DEFAULT_DPI);
 
   /**
    * Create a new png driver for based on {@link javax.imageio ImageIO}.
@@ -35,6 +31,16 @@ public final class ImageIOGIFGraphicDriver extends
       final int dotsPerInch) {
     super("gif",//$NON-NLS-1$
         ImageIOGIFGraphicDriver.__fixColors(colors), dotsPerInch);
+  }
+
+  /**
+   * Get the default instance of the GIF driver based on Java's imaging API
+   * 
+   * @return the default instance of the GIF driver based on Java's imaging
+   *         API
+   */
+  public static final ImageIOGIFGraphicDriver getDefaultInstance() {
+    return __ImageIOGIFGraphicDriverLoader.DEFAULT_INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -94,5 +100,13 @@ public final class ImageIOGIFGraphicDriver extends
   @Override
   public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.GIF;
+  }
+
+  /** the default loader */
+  private static final class __ImageIOGIFGraphicDriverLoader {
+    /** the default graphic GIF driver instance */
+    static final ImageIOGIFGraphicDriver DEFAULT_INSTANCE = //
+    new ImageIOGIFGraphicDriver(EGraphicFormat.DEFAULT_COLOR_MODEL,
+        EGraphicFormat.DEFAULT_DPI);
   }
 }

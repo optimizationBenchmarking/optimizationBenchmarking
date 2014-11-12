@@ -111,7 +111,7 @@ public final class XMLElement extends XMLBase {
         return;
       }
     }
-    this.m_encoded = XMLCharTransformer.INSTANCE.transform(o, null);
+    this.m_encoded = XMLCharTransformer.getInstance().transform(o, null);
   }
 
   /**

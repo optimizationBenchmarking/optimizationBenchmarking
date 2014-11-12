@@ -44,10 +44,6 @@ final class _EDIConstants {
   static final String A_PARAMETER_VALUE = _EDIConstants.A_FEATURE_VALUE;
   /** the parameter value description attribute */
   static final String A_PARAMETER_VALUE_DESCRIPTION = "valueDescription"; //$NON-NLS-1$
-  /** the experiment data version attribute */
-  static final String A_VERSION = "version"; //$NON-NLS-1$
-  /** the experiment data version attribute value */
-  static final String AV_VERSION_VALUE = "1.0"; //$NON-NLS-1$
   /** the limits element */
   static final String E_BOUNDS = "bounds"; //$NON-NLS-1$
   /** the dimension element */

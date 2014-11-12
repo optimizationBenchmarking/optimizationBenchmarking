@@ -28,8 +28,9 @@ final class _Namespace {
   _Namespace(final URI uri, final String prefixString) {
     super();
     this.m_uri = uri;
-    this.m_uriChars = XMLCharTransformer.INSTANCE.transform(
-        uri.toString(), TextUtils.DEFAULT_NORMALIZER_FORM).toCharArray();
+    this.m_uriChars = XMLCharTransformer.getInstance()
+        .transform(uri.toString(), TextUtils.DEFAULT_NORMALIZER_FORM)
+        .toCharArray();
     this.m_prefixChars = prefixString.toCharArray();
   }
 }

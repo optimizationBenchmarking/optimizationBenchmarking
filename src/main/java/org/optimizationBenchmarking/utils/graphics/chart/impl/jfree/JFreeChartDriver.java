@@ -9,12 +9,18 @@ import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
  */
 public final class JFreeChartDriver extends ChartDriver {
 
-  /** the JFreeChart-based chart driver */
-  public static final JFreeChartDriver INSTANCE = new JFreeChartDriver();
-
   /** create */
-  private JFreeChartDriver() {
+  JFreeChartDriver() {
     super();
+  }
+
+  /**
+   * Get the instance of the {@link JFreeChartDriver}.
+   * 
+   * @return the instance of the {@link JFreeChartDriver}
+   */
+  public static final JFreeChartDriver getInstance() {
+    return __JFreeChartDriverLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -28,5 +34,13 @@ public final class JFreeChartDriver extends ChartDriver {
   @Override
   public final String toString() {
     return "JFreeChart-based Chart Driver"; //$NON-NLS-1$
+  }
+
+  /** the loader */
+  private static final class __JFreeChartDriverLoader {
+
+    /** the JFreeChart-based chart driver */
+    static final JFreeChartDriver INSTANCE = new JFreeChartDriver();
+
   }
 }

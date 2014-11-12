@@ -12,22 +12,13 @@ public final class DefaultColorPalette extends ColorPalette {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
-  /** the globally shared instance of the default color palette */
-  public static final DefaultColorPalette INSTANCE;
-
-  static {
-    Palette<ColorStyle> pal;
-
-    pal = null;
-    try (final __DefaultColorPaletteBuilder cspb = new __DefaultColorPaletteBuilder()) {
-      PaletteInputDriver.INSTANCE.loadResource(cspb,
-          DefaultColorPalette.class, "default.color.color.palette"); //$NON-NLS-1$
-      pal = cspb.getResult();
-    } catch (final Throwable t) {
-      ErrorUtils.throwAsRuntimeException(t);
-    }
-
-    INSTANCE = ((DefaultColorPalette) pal);
+  /**
+   * Get an instance of the default color palette
+   * 
+   * @return the default color palette
+   */
+  public static final DefaultColorPalette getInstance() {
+    return __DefaultColorPaletteLoader.INSTANCE;
   }
 
   /**
@@ -43,23 +34,23 @@ public final class DefaultColorPalette extends ColorPalette {
   /**
    * read resolve
    * 
-   * @return {@link #INSTANCE}
+   * @return {@link #getInstance()}
    */
   private final Object readResolve() {
-    return DefaultColorPalette.INSTANCE;
+    return DefaultColorPalette.getInstance();
   }
 
   /**
    * write replace
    * 
-   * @return {@link #INSTANCE}
+   * @return {@link #getInstance()}
    */
   private final Object writeReplace() {
-    return DefaultColorPalette.INSTANCE;
+    return DefaultColorPalette.getInstance();
   }
 
   /** the default palette builder */
-  static final class __DefaultColorPaletteBuilder extends
+  private static final class __DefaultColorPaletteBuilder extends
       ColorPaletteBuilder {
     /** the default palette builder */
     __DefaultColorPaletteBuilder() {
@@ -72,6 +63,28 @@ public final class DefaultColorPalette extends ColorPalette {
         final ArrayList<ColorStyle> data) {
       return new DefaultColorPalette(data.toArray(new ColorStyle[data
           .size()]));
+    }
+  }
+
+  /** the default color palette loader */
+  private static final class __DefaultColorPaletteLoader {
+
+    /** the globally shared instance of the default color palette */
+    static final DefaultColorPalette INSTANCE;
+
+    static {
+      Palette<ColorStyle> pal;
+
+      pal = null;
+      try (final __DefaultColorPaletteBuilder cspb = new __DefaultColorPaletteBuilder()) {
+        PaletteInputDriver.INSTANCE.loadResource(cspb,
+            DefaultColorPalette.class, "defaultColor.colorPalette"); //$NON-NLS-1$
+        pal = cspb.getResult();
+      } catch (final Throwable t) {
+        ErrorUtils.throwAsRuntimeException(t);
+      }
+
+      INSTANCE = ((DefaultColorPalette) pal);
     }
   }
 }

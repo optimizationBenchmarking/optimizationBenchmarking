@@ -24,15 +24,8 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final org.freehep.util.UserProperties m_props;
 
-  /**
-   * the globally shared instance of the <a
-   * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
-   * graphic driver
-   */
-  public static final FreeHEPSVGGraphicDriver INSTANCE = new FreeHEPSVGGraphicDriver();
-
   /** the hidden constructor */
-  private FreeHEPSVGGraphicDriver() {
+  FreeHEPSVGGraphicDriver() {
     super("svgz"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
@@ -45,6 +38,15 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
     this.m_props.setProperty(SVGGraphics2D.STYLABLE, true);
     this.m_props.setProperty(SVGGraphics2D.VERSION,
         SVGGraphics2D.VERSION_1_1);
+  }
+
+  /**
+   * get the instance of the FreeHEP SVG driver
+   * 
+   * @return the instance of the FreeHEP SVG driver
+   */
+  public static final FreeHEPSVGGraphicDriver getInstance() {
+    return __FreeHEPSVGGraphicDriverLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -95,5 +97,15 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
   @Override
   public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.SVG;
+  }
+
+  /** the loader class */
+  private static final class __FreeHEPSVGGraphicDriverLoader {
+    /**
+     * the globally shared instance of the <a
+     * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
+     * graphic driver
+     */
+    static final FreeHEPSVGGraphicDriver INSTANCE = new FreeHEPSVGGraphicDriver();
   }
 }

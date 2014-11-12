@@ -10,22 +10,13 @@ public final class DefaultStrokePalette extends StrokePalette {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
-  /** the globally shared instance of the default stroke palette */
-  public static final DefaultStrokePalette INSTANCE;
-
-  static {
-    Palette<StrokeStyle> pal;
-
-    pal = null;
-    try (final __DefaultStrokePaletteBuilder cspb = new __DefaultStrokePaletteBuilder()) {
-      PaletteInputDriver.INSTANCE.loadResource(cspb,
-          DefaultStrokePalette.class, "default.stroke.palette"); //$NON-NLS-1$
-      pal = cspb.getResult();
-    } catch (final Throwable t) {
-      ErrorUtils.throwAsRuntimeException(t);
-    }
-
-    INSTANCE = ((DefaultStrokePalette) pal);
+  /**
+   * Get the default stroke palette
+   * 
+   * @return the default stroke palette
+   */
+  public static final DefaultStrokePalette getInstance() {
+    return __DefaultStrokePaletteLoader.INSTANCE;
   }
 
   /**
@@ -48,23 +39,23 @@ public final class DefaultStrokePalette extends StrokePalette {
   /**
    * read resolve
    * 
-   * @return {@link #INSTANCE}
+   * @return {@link #getInstance()}
    */
   private final Object readResolve() {
-    return DefaultStrokePalette.INSTANCE;
+    return DefaultStrokePalette.getInstance();
   }
 
   /**
    * write replace
    * 
-   * @return {@link #INSTANCE}
+   * @return {@link #getInstance()}
    */
   private final Object writeReplace() {
-    return DefaultStrokePalette.INSTANCE;
+    return DefaultStrokePalette.getInstance();
   }
 
   /** the default palette builder */
-  static final class __DefaultStrokePaletteBuilder extends
+  private static final class __DefaultStrokePaletteBuilder extends
       StrokePaletteBuilder {
     /** the default palette builder */
     __DefaultStrokePaletteBuilder() {
@@ -79,4 +70,26 @@ public final class DefaultStrokePalette extends StrokePalette {
       return new DefaultStrokePalette(def, thin, fat, data);
     }
   }
+
+  /** the internal loader class */
+  private static final class __DefaultStrokePaletteLoader {
+
+    /** the globally shared instance of the default stroke palette */
+    static final DefaultStrokePalette INSTANCE;
+
+    static {
+      Palette<StrokeStyle> pal;
+      pal = null;
+      try (final __DefaultStrokePaletteBuilder cspb = new __DefaultStrokePaletteBuilder()) {
+        PaletteInputDriver.INSTANCE.loadResource(cspb,
+            DefaultStrokePalette.class, "default.strokePalette"); //$NON-NLS-1$
+        pal = cspb.getResult();
+      } catch (final Throwable t) {
+        ErrorUtils.throwAsRuntimeException(t);
+      }
+
+      INSTANCE = ((DefaultStrokePalette) pal);
+    }
+  }
+
 }

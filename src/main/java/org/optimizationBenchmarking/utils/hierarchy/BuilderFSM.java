@@ -95,11 +95,11 @@ public abstract class BuilderFSM<T> extends NormalizingFSM {
   protected synchronized void onClose() {
     super.onClose();
 
-    // make sure that the result is actually accessed in one way or another
-    // do not allow this class to be used without actually using its result
-    if (this.getOwner() != null) {
-      this.getResult();
-    }
+    // Make sure that the result is actually compiled and accessed in one
+    // way or another.
+    // Do not allow this class to be used without actually using its
+    // result.
+    this.getResult();
     this.fsmStateAssertAndSet(BuilderFSM.STATE_COMPILED,
         BuilderFSM.STATE_CLOSED);
   }

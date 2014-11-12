@@ -20,12 +20,19 @@ import org.xml.sax.helpers.DefaultHandler;
  * structures}.
  */
 public final class EDIInput extends XMLInputDriver<ExperimentSetContext> {
-  /** create */
-  public static final EDIInput INSTANCE = new EDIInput();
 
   /** create */
-  private EDIInput() {
+  EDIInput() {
     super();
+  }
+
+  /**
+   * get the instance of the {@link EDIInput}
+   * 
+   * @return the instance of the {@link EDIInput}
+   */
+  public static final EDIInput getInstance() {
+    return __EDIInputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -101,4 +108,9 @@ public final class EDIInput extends XMLInputDriver<ExperimentSetContext> {
     return new _EDIContentHandler(null, loaderContext, logger);
   }
 
+  /** the loader */
+  private static final class __EDIInputLoader {
+    /** create */
+    static final EDIInput INSTANCE = new EDIInput();
+  }
 }

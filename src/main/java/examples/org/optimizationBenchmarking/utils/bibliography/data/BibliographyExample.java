@@ -34,14 +34,14 @@ public abstract class BibliographyExample implements Runnable {
     bib = this.createBibliography();
 
     t = AbstractTextOutput.wrap(System.out);
-    BibTeXOutput.INSTANCE.storeText(bib, t);
+    BibTeXOutput.getInstance().storeText(bib, t);
     t.flush();
 
     t.appendLineBreak();
     t.appendLineBreak();
     t.appendLineBreak();
     t.appendLineBreak();
-    BibliographyXMLOutput.INSTANCE.storeText(bib, t);
+    BibliographyXMLOutput.getInstance().storeText(bib, t);
     t.flush();
   }
 

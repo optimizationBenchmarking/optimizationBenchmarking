@@ -13,12 +13,18 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 public final class XMLCharTransformer extends CharTransformer {
 
-  /** instantiate */
-  public static final XMLCharTransformer INSTANCE = new XMLCharTransformer();
-
   /** Create */
-  private XMLCharTransformer() {
+  XMLCharTransformer() {
     super();
+  }
+
+  /**
+   * Get the instance of the XML character transformer
+   * 
+   * @return the instance of the XML character transformer
+   */
+  public static final XMLCharTransformer getInstance() {
+    return __XMLCharTransformerLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -29,5 +35,13 @@ public final class XMLCharTransformer extends CharTransformer {
       return new _XMLTransformedTextOutput(out);
     }
     return new _NormalizingXMLTransformedTextOutput(out, form);
+  }
+
+  /** the internal loader */
+  private static final class __XMLCharTransformerLoader {
+
+    /** instantiate */
+    static final XMLCharTransformer INSTANCE = new XMLCharTransformer();
+
   }
 }

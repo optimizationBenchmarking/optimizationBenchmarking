@@ -504,8 +504,8 @@ public final class FontStyleBuilder extends
       }
       idb.append('_');
       idb.append(this.m_size);
-      this.m_id = NormalCharTransformer.INSTANCE.transform(idb.toString(),
-          TextUtils.DEFAULT_NORMALIZER_FORM);
+      this.m_id = NormalCharTransformer.getInstance().transform(
+          idb.toString(), TextUtils.DEFAULT_NORMALIZER_FORM);
     }
 
     // ok, now we have everything

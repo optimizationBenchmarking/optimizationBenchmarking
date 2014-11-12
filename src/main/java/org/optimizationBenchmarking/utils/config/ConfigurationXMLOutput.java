@@ -8,14 +8,21 @@ import org.optimizationBenchmarking.utils.io.xml.XMLBase;
 import org.optimizationBenchmarking.utils.io.xml.XMLElement;
 
 /** the configuration xml output */
-public class ConfigurationXMLOutput extends XMLOutputDriver<Configuration> {
-
-  /** the configuration xml */
-  public static final ConfigurationXMLOutput INSTANCE = new ConfigurationXMLOutput();
+public final class ConfigurationXMLOutput extends
+    XMLOutputDriver<Configuration> {
 
   /** create */
-  private ConfigurationXMLOutput() {
+  ConfigurationXMLOutput() {
     super();
+  }
+
+  /**
+   * get the instance of the {@link ConfigurationXMLOutput}
+   * 
+   * @return the instance of the {@link ConfigurationXMLOutput}
+   */
+  public static final ConfigurationXMLOutput getInstance() {
+    return __ConfigurationXMLOutputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -52,5 +59,11 @@ public class ConfigurationXMLOutput extends XMLOutputDriver<Configuration> {
         }
       }
     }
+  }
+
+  /** the loader */
+  private static final class __ConfigurationXMLOutputLoader {
+    /** the configuration xml */
+    static final ConfigurationXMLOutput INSTANCE = new ConfigurationXMLOutput();
   }
 }

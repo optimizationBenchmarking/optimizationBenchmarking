@@ -160,7 +160,6 @@
 				<element ref="tns:instances" minOccurs="0" maxOccurs="1" />
 				<element ref="tns:experiments" minOccurs="0" maxOccurs="1" />
 			</sequence>
-			<attribute name="version" type="string" fixed="1.0" />
 		</complexType>
 	</element>
 </schema>

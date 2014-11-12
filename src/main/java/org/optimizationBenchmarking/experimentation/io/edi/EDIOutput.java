@@ -35,11 +35,17 @@ import org.optimizationBenchmarking.utils.text.numbers.XMLNumberAppender;
 public final class EDIOutput extends XMLOutputDriver<Object> {
 
   /** create */
-  public static final EDIOutput INSTANCE = new EDIOutput();
-
-  /** create */
-  private EDIOutput() {
+  EDIOutput() {
     super();
+  }
+
+  /**
+   * Get the instance of the {@link EDIOutput}
+   * 
+   * @return the instance of the {@link EDIOutput}
+   */
+  public static final EDIOutput getInstance() {
+    return __EDIOutputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -52,8 +58,6 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
       root.namespaceSetPrefix(_EDIConstants.NAMESPACE_URI, "e"); //$NON-NLS-1$
       root.name(_EDIConstants.NAMESPACE_URI,
           _EDIConstants.E_EXPERIMENT_DATA);
-      root.attributeRaw(_EDIConstants.NAMESPACE_URI,
-          _EDIConstants.A_VERSION, _EDIConstants.AV_VERSION_VALUE);
       write: {
         if (data instanceof ExperimentSet) {
           EDIOutput.__writeExperimentSet(((ExperimentSet) data), root,
@@ -548,4 +552,9 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
     }
   }
 
+  /** the loader */
+  private static final class __EDIOutputLoader {
+    /** create */
+    static final EDIOutput INSTANCE = new EDIOutput();
+  }
 }

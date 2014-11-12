@@ -399,6 +399,7 @@ public abstract class TextOutputTest<R> extends TestBase {
                   s = String.valueOf(add);
                   textOut.append(s);
                   sb.append(s);
+                  s = null;
                   break;
                 }
               }
@@ -406,6 +407,7 @@ public abstract class TextOutputTest<R> extends TestBase {
                 s = String.valueOf(add);
                 textOut.append(s, 0, len);
                 sb.append(s, 0, len);
+                s = null;
                 break;
               }
             }

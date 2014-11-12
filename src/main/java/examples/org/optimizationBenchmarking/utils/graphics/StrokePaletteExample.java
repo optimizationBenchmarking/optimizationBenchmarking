@@ -32,7 +32,7 @@ public class StrokePaletteExample {
   /** the palettes to print */
   public static final ArrayListView<StrokePalette> PALETTES = new ArrayListView<>(
       new StrokePalette[] {//
-      DefaultStrokePalette.INSTANCE });
+      DefaultStrokePalette.getInstance() });
 
   /**
    * run the example: there are problems with the pdf output

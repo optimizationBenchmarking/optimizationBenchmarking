@@ -44,10 +44,10 @@ public final class GraphicsExample {
     final LinkedHashSet<IGraphicDriver> list;
 
     list = new LinkedHashSet<>();
-    list.add(FreeHEPEPSGraphicDriver.INSTANCE);
-    list.add(FreeHEPPDFGraphicDriver.INSTANCE);
-    list.add(FreeHEPSVGGraphicDriver.INSTANCE);
-    list.add(FreeHEPEMFGraphicDriver.INSTANCE);
+    list.add(FreeHEPEPSGraphicDriver.getInstance());
+    list.add(FreeHEPPDFGraphicDriver.getInstance());
+    list.add(FreeHEPSVGGraphicDriver.getInstance());
+    list.add(FreeHEPEMFGraphicDriver.getInstance());
     list.add(new ImageIOPNGGraphicDriver(EColorModel.RBGA_32_BIT, 256));
     list.add(new ImageIOJPEGGraphicDriver(EColorModel.RBGA_32_BIT, 333,
         0.0f));

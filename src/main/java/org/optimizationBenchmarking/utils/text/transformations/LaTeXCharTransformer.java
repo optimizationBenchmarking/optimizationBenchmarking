@@ -12,12 +12,18 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 public final class LaTeXCharTransformer extends LookupCharTransformer {
 
-  /** the LaTeX character transformer */
-  public static final LaTeXCharTransformer INSTANCE = new LaTeXCharTransformer();
-
   /** instantiate */
-  private LaTeXCharTransformer() {
+  LaTeXCharTransformer() {
     super("LaTeXCharTransformationMap.transform"); //$NON-NLS-1$
+  }
+
+  /**
+   * Get the instance of the LaTeX char transformer
+   * 
+   * @return the instance
+   */
+  public static final LaTeXCharTransformer getInstance() {
+    return __LaTeXCharTransformerLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -31,5 +37,12 @@ public final class LaTeXCharTransformer extends LookupCharTransformer {
     }
     return new _LaTeXNormalizingLookupTransformedTextOutput(out,
         this.m_data, this.m_state, form);
+  }
+
+  /** the internal loader class */
+  private static final class __LaTeXCharTransformerLoader {
+    /** the LaTeX character transformer */
+    static final LaTeXCharTransformer INSTANCE = new LaTeXCharTransformer();
+
   }
 }

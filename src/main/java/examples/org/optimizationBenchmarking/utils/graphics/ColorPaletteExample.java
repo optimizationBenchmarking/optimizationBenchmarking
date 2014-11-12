@@ -35,8 +35,8 @@ public class ColorPaletteExample {
   /** the palettes to print */
   public static final ArrayListView<ColorPalette> PALETTES = new ArrayListView<>(
       new ColorPalette[] {//
-      DefaultColorPalette.INSTANCE, JavaDefaultPalette.INSTANCE,
-          DefaultGrayPalette.INSTANCE, HTML401Palette.INSTANCE });
+      DefaultColorPalette.getInstance(), JavaDefaultPalette.getInstance(),
+          DefaultGrayPalette.getInstance(), HTML401Palette.getInstance() });
 
   /**
    * run the example: there are problems with the pdf output

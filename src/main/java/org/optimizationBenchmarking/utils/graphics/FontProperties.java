@@ -50,35 +50,6 @@ public class FontProperties extends HashObject {
       | FontProperties.FONT_FLAG_SANS_SERIF
       | FontProperties.FONT_FLAG_DIALOG | FontProperties.FONT_FLAG_DIALOG_INPUT);
 
-  /** the array with the font flags */
-  private static final __FontFlags[] FLAGS;
-
-  // load the flags of the known fonts
-  static {
-    ArrayList<__FontFlags> al;
-    String s;
-
-    al = new ArrayList<>();
-    try (final InputStream is = //
-    FontProperties.class.getResourceAsStream("knownFonts.txt")) { //$NON-NLS-1$
-      try (final InputStreamReader isr = new InputStreamReader(is)) {
-        try (final BufferedReader br = new BufferedReader(isr)) {
-          while ((s = br.readLine()) != null) {
-            s = TextUtils.normalize(s);
-            if ((s != null) && (s.charAt(0) != '#')) {
-              al.add(new __FontFlags(s));
-            }
-          }
-        }
-      }
-    } catch (final Throwable ioe) {
-      ErrorUtils.throwAsRuntimeException(ioe);
-    }
-
-    FLAGS = al.toArray(new __FontFlags[al.size()]);
-    Arrays.sort(FontProperties.FLAGS);
-  }
-
   /** the flags */
   protected final int m_flags;
 
@@ -246,7 +217,7 @@ public class FontProperties extends HashObject {
 
       inner: for (;;) {
         // test all flags
-        for (final __FontFlags f : FontProperties.FLAGS) {
+        for (final __FontFlags f : __FontFlags.FLAGS) {
           switch (cmpMode) {
             case 0: {
               if (name.equals(str)) {
@@ -482,6 +453,36 @@ public class FontProperties extends HashObject {
   /** the internal font flag class */
   private static final class __FontFlags extends FontProperties implements
       Comparable<__FontFlags> {
+
+    /** the array with the font flags */
+    static final __FontFlags[] FLAGS;
+
+    // load the flags of the known fonts
+    static {
+      ArrayList<__FontFlags> al;
+      String s;
+
+      al = new ArrayList<>();
+      try (final InputStream is = //
+      FontProperties.class.getResourceAsStream("knownFonts.txt")) { //$NON-NLS-1$
+        try (final InputStreamReader isr = new InputStreamReader(is)) {
+          try (final BufferedReader br = new BufferedReader(isr)) {
+            while ((s = br.readLine()) != null) {
+              s = TextUtils.normalize(s);
+              if ((s != null) && (s.charAt(0) != '#')) {
+                al.add(new __FontFlags(s));
+              }
+            }
+          }
+        }
+      } catch (final Throwable ioe) {
+        ErrorUtils.throwAsRuntimeException(ioe);
+      }
+
+      FLAGS = al.toArray(new __FontFlags[al.size()]);
+      Arrays.sort(__FontFlags.FLAGS);
+    }
+
     /** the font name */
     final String m_name;
 

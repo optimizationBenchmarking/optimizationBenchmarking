@@ -18,14 +18,17 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 public final class ImageIOPNGGraphicDriver extends
     _ImageIORasterGraphicDriver {
+
   /**
-   * the default graphic <a
-   * href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG</a>
-   * driver instance
+   * Get the default instance of the JPEG driver based on Java's imaging
+   * API
+   * 
+   * @return the default instance of the JPEG driver based on Java's
+   *         imaging API
    */
-  public static final ImageIOPNGGraphicDriver DEFAULT_INSTANCE = //
-  new ImageIOPNGGraphicDriver(EGraphicFormat.DEFAULT_COLOR_MODEL,
-      EGraphicFormat.DEFAULT_DPI);
+  public static final ImageIOPNGGraphicDriver getDefaultInstance() {
+    return __ImageIOPNGGraphicDriverLoader.DEFAULT_INSTANCE;
+  }
 
   /**
    * Create a new png driver for based on {@link javax.imageio ImageIO}.
@@ -79,5 +82,17 @@ public final class ImageIOPNGGraphicDriver extends
   @Override
   public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.PNG;
+  }
+
+  /** the default loader */
+  private static final class __ImageIOPNGGraphicDriverLoader {
+    /**
+     * the default graphic <a
+     * href="http://en.wikipedia.org/wiki/Portable_Network_Graphics"
+     * >PNG</a> driver instance
+     */
+    public static final ImageIOPNGGraphicDriver DEFAULT_INSTANCE = //
+    new ImageIOPNGGraphicDriver(EGraphicFormat.DEFAULT_COLOR_MODEL,
+        EGraphicFormat.DEFAULT_DPI);
   }
 }

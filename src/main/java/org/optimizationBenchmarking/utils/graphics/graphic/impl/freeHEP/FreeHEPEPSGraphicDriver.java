@@ -26,15 +26,8 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final org.freehep.util.UserProperties m_props;
 
-  /**
-   * the globally shared instance of the <a
-   * href="http://en.wikipedia.org/wiki/Encapsulated_PostScript">EPS</a>
-   * graphic driver
-   */
-  public static final FreeHEPEPSGraphicDriver INSTANCE = new FreeHEPEPSGraphicDriver();
-
   /** the hidden constructor */
-  private FreeHEPEPSGraphicDriver() {
+  FreeHEPEPSGraphicDriver() {
     super("eps"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
@@ -52,6 +45,15 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
         PSGraphics2D.CUSTOM_PAGE_SIZE);
     this.m_props.setProperty(PSGraphics2D.BACKGROUND_COLOR, Color.WHITE);
     this.m_props.setProperty(PSGraphics2D.PAGE_MARGINS, "0, 0, 0, 0"); //$NON-NLS-1$
+  }
+
+  /**
+   * get the instance of the FreeHEP EPS driver
+   * 
+   * @return the instance of the FreeHEP EPS driver
+   */
+  public static final FreeHEPEPSGraphicDriver getInstance() {
+    return __FreeHEPEPSGraphicDriverLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -107,5 +109,16 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
   @Override
   public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.EPS;
+  }
+
+  /** the loader */
+  private static final class __FreeHEPEPSGraphicDriverLoader {
+    /**
+     * the globally shared instance of the <a
+     * href="http://en.wikipedia.org/wiki/Encapsulated_PostScript">EPS</a>
+     * graphic driver
+     */
+    static final FreeHEPEPSGraphicDriver INSTANCE = new FreeHEPEPSGraphicDriver();
+
   }
 }

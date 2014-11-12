@@ -42,7 +42,7 @@ final class _FreeHEPPDFGraphic extends
     final Dimension mess;
 
     synchronized (PageConstants.class) {
-      mess = FreeHEPPDFGraphicDriver.INSTANCE.m_messWith;
+      mess = FreeHEPPDFGraphicDriver.__FreeHEPPDFGraphicDriverLoader.INSTANCE.m_messWith;
       mess.setSize(this.m_w, this.m_h);
       try {
         try {
@@ -51,7 +51,7 @@ final class _FreeHEPPDFGraphic extends
           super.onClose();
         }
       } finally {
-        mess.setSize(FreeHEPPDFGraphicDriver.INSTANCE.m_correctDim);
+        mess.setSize(FreeHEPPDFGraphicDriver.__FreeHEPPDFGraphicDriverLoader.INSTANCE.m_correctDim);
       }
     }
   }

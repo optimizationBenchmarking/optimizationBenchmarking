@@ -12,22 +12,13 @@ public final class DefaultGrayPalette extends ColorPalette {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
-  /** the globally shared instance of the default gray palette */
-  public static final DefaultGrayPalette INSTANCE;
-
-  static {
-    Palette<ColorStyle> pal;
-
-    pal = null;
-    try (final __DefaultGrayPaletteBuilder cspb = new __DefaultGrayPaletteBuilder()) {
-      PaletteInputDriver.INSTANCE.loadResource(cspb,
-          DefaultGrayPalette.class, "default.gray.color.palette"); //$NON-NLS-1$
-      pal = cspb.getResult();
-    } catch (final Throwable t) {
-      ErrorUtils.throwAsRuntimeException(t);
-    }
-
-    INSTANCE = ((DefaultGrayPalette) pal);
+  /**
+   * Get an instance of the default gray palette
+   * 
+   * @return the default gray palette
+   */
+  public static final DefaultGrayPalette getInstance() {
+    return __DefaultGrayPaletteLoader.INSTANCE;
   }
 
   /**
@@ -43,23 +34,23 @@ public final class DefaultGrayPalette extends ColorPalette {
   /**
    * read resolve
    * 
-   * @return {@link #INSTANCE}
+   * @return {@link #getInstance()}
    */
   private final Object readResolve() {
-    return DefaultGrayPalette.INSTANCE;
+    return DefaultGrayPalette.getInstance();
   }
 
   /**
    * write replace
    * 
-   * @return {@link #INSTANCE}
+   * @return {@link #getInstance()}
    */
   private final Object writeReplace() {
-    return DefaultGrayPalette.INSTANCE;
+    return DefaultGrayPalette.getInstance();
   }
 
   /** the default palette builder */
-  static final class __DefaultGrayPaletteBuilder extends
+  private static final class __DefaultGrayPaletteBuilder extends
       ColorPaletteBuilder {
     /** the default palette builder */
     __DefaultGrayPaletteBuilder() {
@@ -72,6 +63,28 @@ public final class DefaultGrayPalette extends ColorPalette {
         final ArrayList<ColorStyle> data) {
       return new DefaultGrayPalette(data.toArray(new ColorStyle[data
           .size()]));
+    }
+  }
+
+  /** the default gray palette loader */
+  private static final class __DefaultGrayPaletteLoader {
+
+    /** the globally shared instance of the default gray palette */
+    static final DefaultGrayPalette INSTANCE;
+
+    static {
+      Palette<ColorStyle> pal;
+
+      pal = null;
+      try (final __DefaultGrayPaletteBuilder cspb = new __DefaultGrayPaletteBuilder()) {
+        PaletteInputDriver.INSTANCE.loadResource(cspb,
+            DefaultGrayPalette.class, "defaultGray.colorPalette"); //$NON-NLS-1$
+        pal = cspb.getResult();
+      } catch (final Throwable t) {
+        ErrorUtils.throwAsRuntimeException(t);
+      }
+
+      INSTANCE = ((DefaultGrayPalette) pal);
     }
   }
 }

@@ -12,15 +12,21 @@ import org.optimizationBenchmarking.utils.io.structured.XMLInputDriver;
 import org.xml.sax.helpers.DefaultHandler;
 
 /** the configuration xml input */
-public class ConfigurationXMLInput extends
+public final class ConfigurationXMLInput extends
     XMLInputDriver<ConfigurationBuilder> {
 
-  /** the configuration xml */
-  public static final ConfigurationXMLInput INSTANCE = new ConfigurationXMLInput();
-
   /** create */
-  private ConfigurationXMLInput() {
+  ConfigurationXMLInput() {
     super();
+  }
+
+  /**
+   * get the instance of the {@link ConfigurationXMLInput}
+   * 
+   * @return the instance of the {@link ConfigurationXMLInput}
+   */
+  public static final ConfigurationXMLInput getInstance() {
+    return __ConfigurationXMLInputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -65,5 +71,11 @@ public class ConfigurationXMLInput extends
   protected DefaultHandler wrapLoadContext(
       final ConfigurationBuilder loaderContext, final Logger logger) {
     return new ConfigurationXMLHandler(null, loaderContext);
+  }
+
+  /** the loader */
+  private static final class __ConfigurationXMLInputLoader {
+    /** the configuration xml */
+    static final ConfigurationXMLInput INSTANCE = new ConfigurationXMLInput();
   }
 }

@@ -23,17 +23,23 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final org.freehep.util.UserProperties m_props;
 
-  /** the globally shared instance of the emf graphic driver */
-  public static final FreeHEPEMFGraphicDriver INSTANCE = new FreeHEPEMFGraphicDriver();
-
   /** the hidden constructor */
-  private FreeHEPEMFGraphicDriver() {
+  FreeHEPEMFGraphicDriver() {
     super("emf"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
 
     this.m_props.putAll(EMFGraphics2D.getDefaultProperties());
     this.m_props.setProperty(EMFGraphics2D.BACKGROUND_COLOR, Color.WHITE);
+  }
+
+  /**
+   * get the instance of the FreeHEP EMF driver
+   * 
+   * @return the instance of the FreeHEP EMF driver
+   */
+  public static final FreeHEPEMFGraphicDriver getInstance() {
+    return __FreeHEPEMFGraphicDriverLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -84,5 +90,12 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
   @Override
   public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.EMF;
+  }
+
+  /** the internal loader for lazy instantion */
+  private static final class __FreeHEPEMFGraphicDriverLoader {
+
+    /** the globally shared instance of the emf graphic driver */
+    static final FreeHEPEMFGraphicDriver INSTANCE = new FreeHEPEMFGraphicDriver();
   }
 }

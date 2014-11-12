@@ -16,12 +16,19 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public final class DocumentXMLInput extends
     XMLInputDriver<DocumentXMLHandler> {
-  /** create */
-  public static final DocumentXMLInput INSTANCE = new DocumentXMLInput();
 
   /** create */
-  private DocumentXMLInput() {
+  DocumentXMLInput() {
     super();
+  }
+
+  /**
+   * Get the instance of the {@link DocumentXMLInput}
+   * 
+   * @return the instance of the {@link DocumentXMLInput}
+   */
+  public static final DocumentXMLInput getInstance() {
+    return __DocumentXMLInputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -71,4 +78,10 @@ public final class DocumentXMLInput extends
     return loaderContext;
   }
 
+  /** the loader for lazy initialization */
+  private static final class __DocumentXMLInputLoader {
+
+    /** create */
+    static final DocumentXMLInput INSTANCE = new DocumentXMLInput();
+  }
 }

@@ -198,13 +198,13 @@ public class ConfigurationTest extends TestBase {
 
     try {
       try (StringWriter sw = new StringWriter()) {
-        ConfigurationXMLOutput.INSTANCE.storeWriter(inst, sw);
+        ConfigurationXMLOutput.getInstance().storeWriter(inst, sw);
         x = sw.toString();
       }
 
       try (final ConfigurationBuilder fb = new ConfigurationBuilder()) {
         try (StringReader sr = new StringReader(x)) {
-          ConfigurationXMLInput.INSTANCE.loadReader(fb, sr);
+          ConfigurationXMLInput.getInstance().loadReader(fb, sr);
         }
         b = fb.getResult();
       }
@@ -246,13 +246,13 @@ public class ConfigurationTest extends TestBase {
 
     try {
       try (StringWriter sw = new StringWriter()) {
-        ConfigurationPropertiesOutput.INSTANCE.storeWriter(inst, sw);
+        ConfigurationPropertiesOutput.getInstance().storeWriter(inst, sw);
         x = sw.toString();
       }
 
       try (final ConfigurationBuilder fb = new ConfigurationBuilder()) {
         try (StringReader sr = new StringReader(x)) {
-          ConfigurationPropertiesInput.INSTANCE.loadReader(fb, sr);
+          ConfigurationPropertiesInput.getInstance().loadReader(fb, sr);
         }
         b = fb.getResult();
       }

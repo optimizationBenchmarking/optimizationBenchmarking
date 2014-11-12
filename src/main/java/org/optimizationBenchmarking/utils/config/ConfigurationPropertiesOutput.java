@@ -11,15 +11,21 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.TextOutputWriter;
 
 /** the configuration properties output */
-public class ConfigurationPropertiesOutput extends
+public final class ConfigurationPropertiesOutput extends
     TextOutputDriver<Configuration> {
 
-  /** the configuration properties io driver */
-  public static final ConfigurationPropertiesOutput INSTANCE = new ConfigurationPropertiesOutput();
-
   /** create */
-  private ConfigurationPropertiesOutput() {
+  ConfigurationPropertiesOutput() {
     super();
+  }
+
+  /**
+   * get the instance of the {@link ConfigurationPropertiesOutput}
+   * 
+   * @return the instance of the {@link ConfigurationPropertiesOutput}
+   */
+  public static final ConfigurationPropertiesOutput getInstance() {
+    return __ConfigurationPropertiesOutputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -37,5 +43,11 @@ public class ConfigurationPropertiesOutput extends
     } catch (final IOException ioe) {
       ErrorUtils.throwAsRuntimeException(ioe);
     }
+  }
+
+  /** the loader */
+  private static final class __ConfigurationPropertiesOutputLoader {
+    /** the configuration properties io driver */
+    static final ConfigurationPropertiesOutput INSTANCE = new ConfigurationPropertiesOutput();
   }
 }

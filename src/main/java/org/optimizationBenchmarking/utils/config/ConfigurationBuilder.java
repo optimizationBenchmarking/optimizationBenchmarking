@@ -235,7 +235,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
     f = this.__get()._get(Configuration.PARAM_PROPERTY_FILE,
         PathParser.INSTANCE, null, false);
     if (f != null) {
-      ConfigurationPropertiesInput.INSTANCE.loadPath(this, f);
+      ConfigurationPropertiesInput.getInstance().loadPath(this, f);
     }
   }
 

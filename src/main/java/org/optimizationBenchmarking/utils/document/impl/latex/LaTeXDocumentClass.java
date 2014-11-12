@@ -20,12 +20,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /** A document class for LaTeX documents */
 public class LaTeXDocumentClass extends PageDimension {
 
-  /** the internal synchronizer */
-  private static final Object SYNCH = new Object();
-
-  /** the internal font palette */
-  private static FontPalette s_fonts;
-
   /** the class to use */
   private final String m_class;
 
@@ -199,17 +193,29 @@ public class LaTeXDocumentClass extends PageDimension {
    * @return the default font palette
    */
   public static final FontPalette getDefaultFontPalette() {
-    synchronized (LaTeXDocumentClass.SYNCH) {
-      if (LaTeXDocumentClass.s_fonts == null) {
-        try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-          PaletteInputDriver.INSTANCE.loadResource(tb,
-              LaTeXDocumentClass.class, "latex.font.palette"); //$NON-NLS-1$
-          LaTeXDocumentClass.s_fonts = tb.getResult();
-        } catch (final Throwable tt) {
-          ErrorUtils.throwAsRuntimeException(tt);
-        }
+    return __LaTeXDefaultFontPaletteLoader.INSTANCE;
+  }
+
+  /** the default font palette */
+  private static final class __LaTeXDefaultFontPaletteLoader {
+
+    /** the internal font palette */
+    static final FontPalette INSTANCE;
+
+    static {
+      FontPalette p;
+
+      p = null;
+      try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
+        PaletteInputDriver.INSTANCE.loadResource(tb,
+            LaTeXDocumentClass.class, "latex.fontPalette"); //$NON-NLS-1$
+        p = tb.getResult();
+      } catch (final Throwable tt) {
+        ErrorUtils.throwAsRuntimeException(tt);
       }
-      return LaTeXDocumentClass.s_fonts;
+
+      INSTANCE = p;
     }
+
   }
 }

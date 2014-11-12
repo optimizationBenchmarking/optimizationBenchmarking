@@ -34,9 +34,6 @@ import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransfor
  */
 public final class BibTeXOutput extends TextOutputDriver<Object> {
 
-  /** the BibTeX driver */
-  public static final BibTeXOutput INSTANCE = new BibTeXOutput();
-
   /** the spaces */
   private static final char[] FIELD;
 
@@ -113,8 +110,17 @@ public final class BibTeXOutput extends TextOutputDriver<Object> {
   private static final String TYPE = "type"; //$NON-NLS-1$
 
   /** create */
-  private BibTeXOutput() {
+  BibTeXOutput() {
     super();
+  }
+
+  /**
+   * Get the instance of the {@link BibTeXOutput}
+   * 
+   * @return the instance of the {@link BibTeXOutput}
+   */
+  public static final BibTeXOutput getInstance() {
+    return __BibTeXOutputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -124,7 +130,7 @@ public final class BibTeXOutput extends TextOutputDriver<Object> {
     final ITextOutput enc;
     final char[] buf;
 
-    enc = LaTeXCharTransformer.INSTANCE.transform(textOut,
+    enc = LaTeXCharTransformer.getInstance().transform(textOut,
         TextUtils.DEFAULT_NORMALIZER_FORM);
     buf = BibTeXOutput.FIELD.clone();
     if (data instanceof Bibliography) {
@@ -1064,5 +1070,12 @@ public final class BibTeXOutput extends TextOutputDriver<Object> {
       }
       BibTeXOutput.__storeRecord(rec, raw, enc, buf);
     }
+  }
+
+  /** the loader for lazy initialization */
+  private static final class __BibTeXOutputLoader {
+
+    /** the BibTeX driver */
+    static final BibTeXOutput INSTANCE = new BibTeXOutput();
   }
 }

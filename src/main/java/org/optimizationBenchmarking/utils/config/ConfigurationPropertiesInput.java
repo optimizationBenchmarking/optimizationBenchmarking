@@ -8,15 +8,21 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.io.structured.TextInputDriver;
 
 /** the configuration properties input */
-public class ConfigurationPropertiesInput extends
+public final class ConfigurationPropertiesInput extends
     TextInputDriver<ConfigurationBuilder> {
 
-  /** the configuration properties io driver */
-  public static final ConfigurationPropertiesInput INSTANCE = new ConfigurationPropertiesInput();
-
   /** create */
-  private ConfigurationPropertiesInput() {
+  ConfigurationPropertiesInput() {
     super();
+  }
+
+  /**
+   * get the instance of the {@link ConfigurationPropertiesInput}
+   * 
+   * @return the instance of the {@link ConfigurationPropertiesInput}
+   */
+  public static final ConfigurationPropertiesInput getInstance() {
+    return __ConfigurationPropertiesInputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -29,5 +35,13 @@ public class ConfigurationPropertiesInput extends
     pr = new Properties();
     pr.load(reader);
     loadContext.putProperties(pr);
+  }
+
+  /** the loader */
+  private static final class __ConfigurationPropertiesInputLoader {
+
+    /** the configuration properties io driver */
+    static final ConfigurationPropertiesInput INSTANCE = new ConfigurationPropertiesInput();
+
   }
 }

@@ -11,7 +11,7 @@ public enum EColorModel {
     /** {@inheritDoc} */
     @Override
     public final ColorPalette getDefaultPalette() {
-      return DefaultGrayPalette.INSTANCE;
+      return DefaultGrayPalette.getInstance();
     }
 
     /** {@inheritDoc} */
@@ -28,7 +28,7 @@ public enum EColorModel {
     /** {@inheritDoc} */
     @Override
     public final ColorPalette getDefaultPalette() {
-      return DefaultColorPalette.INSTANCE;
+      return DefaultColorPalette.getInstance();
     }
 
     /** {@inheritDoc} */
@@ -44,7 +44,7 @@ public enum EColorModel {
     /** {@inheritDoc} */
     @Override
     public final ColorPalette getDefaultPalette() {
-      return DefaultGrayPalette.INSTANCE;
+      return DefaultGrayPalette.getInstance();
     }
 
     /** {@inheritDoc} */
@@ -60,7 +60,7 @@ public enum EColorModel {
     /** {@inheritDoc} */
     @Override
     public final ColorPalette getDefaultPalette() {
-      return DefaultColorPalette.INSTANCE;
+      return DefaultColorPalette.getInstance();
     }
 
     /** {@inheritDoc} */
@@ -76,7 +76,7 @@ public enum EColorModel {
     /** {@inheritDoc} */
     @Override
     public final ColorPalette getDefaultPalette() {
-      return DefaultColorPalette.INSTANCE;
+      return DefaultColorPalette.getInstance();
     }
 
     /** {@inheritDoc} */
@@ -92,7 +92,7 @@ public enum EColorModel {
     /** {@inheritDoc} */
     @Override
     public final ColorPalette getDefaultPalette() {
-      return DefaultColorPalette.INSTANCE;
+      return DefaultColorPalette.getInstance();
     }
 
     /** {@inheritDoc} */

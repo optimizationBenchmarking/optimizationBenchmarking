@@ -21,7 +21,7 @@ public enum EGraphicFormat {
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return NullGraphicDriver.INSTANCE;
+      return NullGraphicDriver.getInstance();
     }
   },
   /**
@@ -33,7 +33,7 @@ public enum EGraphicFormat {
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return FreeHEPEPSGraphicDriver.INSTANCE;
+      return FreeHEPEPSGraphicDriver.getInstance();
     }
   },
 
@@ -46,7 +46,7 @@ public enum EGraphicFormat {
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return FreeHEPPDFGraphicDriver.INSTANCE;
+      return FreeHEPPDFGraphicDriver.getInstance();
     }
   },
 
@@ -59,7 +59,7 @@ public enum EGraphicFormat {
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return FreeHEPSVGGraphicDriver.INSTANCE;
+      return FreeHEPSVGGraphicDriver.getInstance();
     }
   },
 
@@ -71,7 +71,7 @@ public enum EGraphicFormat {
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return FreeHEPEMFGraphicDriver.INSTANCE;
+      return FreeHEPEMFGraphicDriver.getInstance();
     }
   },
 
@@ -80,7 +80,7 @@ public enum EGraphicFormat {
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return ImageIOJPEGGraphicDriver.DEFAULT_INSTANCE;
+      return ImageIOJPEGGraphicDriver.getDefaultInstance();
     }
 
     /** {@inheritDoc} */
@@ -101,7 +101,7 @@ public enum EGraphicFormat {
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return ImageIOPNGGraphicDriver.DEFAULT_INSTANCE;
+      return ImageIOPNGGraphicDriver.getDefaultInstance();
     }
 
     /** {@inheritDoc} */
@@ -121,7 +121,7 @@ public enum EGraphicFormat {
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return ImageIOGIFGraphicDriver.DEFAULT_INSTANCE;
+      return ImageIOGIFGraphicDriver.getDefaultInstance();
     }
 
     /** {@inheritDoc} */

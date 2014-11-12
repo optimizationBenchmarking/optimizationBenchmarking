@@ -19,12 +19,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 public final class ImageIOJPEGGraphicDriver extends
     _ImageIORasterGraphicDriver {
 
-  /** the default graphic JPEG driver instance */
-  public static final ImageIOJPEGGraphicDriver DEFAULT_INSTANCE = //
-  new ImageIOJPEGGraphicDriver(EGraphicFormat.DEFAULT_COLOR_MODEL,
-      EGraphicFormat.DEFAULT_DPI,
-      ((float) (EGraphicFormat.DEFAULT_QUALITY)));
-
   /** the quality */
   private final float m_quality;
 
@@ -47,6 +41,17 @@ public final class ImageIOJPEGGraphicDriver extends
     }
 
     this.m_quality = quality;
+  }
+
+  /**
+   * Get the default instance of the JPEG driver based on Java's imaging
+   * API
+   * 
+   * @return the default instance of the JPEG driver based on Java's
+   *         imaging API
+   */
+  public static final ImageIOJPEGGraphicDriver getDefaultInstance() {
+    return __ImageIOJPEGGraphicDriverLoader.DEFAULT_INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -122,5 +127,15 @@ public final class ImageIOJPEGGraphicDriver extends
   @Override
   public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.JPEG;
+  }
+
+  /** the default loader */
+  private static final class __ImageIOJPEGGraphicDriverLoader {
+
+    /** the default graphic JPEG driver instance */
+    static final ImageIOJPEGGraphicDriver DEFAULT_INSTANCE = //
+    new ImageIOJPEGGraphicDriver(EGraphicFormat.DEFAULT_COLOR_MODEL,
+        EGraphicFormat.DEFAULT_DPI,
+        ((float) (EGraphicFormat.DEFAULT_QUALITY)));
   }
 }

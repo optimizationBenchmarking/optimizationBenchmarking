@@ -44,31 +44,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 public final class LaTeXDriver extends DocumentDriver {
 
-  /** the synchronizer */
-  private static final Object SYNCH = new Object();
-
-  /** The default LaTeX driver */
-  private static LaTeXDriver s_default;
-
   /** the graphic driver */
   private final IGraphicDriver m_graphicDriver;
 
   /** the document class */
   private final LaTeXDocumentClass m_class;
-
-  /**
-   * Get the default LaTeX driver
-   * 
-   * @return the default LaTeX driver
-   */
-  public static final LaTeXDriver getDefaultDriver() {
-    synchronized (LaTeXDriver.SYNCH) {
-      if (LaTeXDriver.s_default == null) {
-        LaTeXDriver.s_default = new LaTeXDriver(null, null);
-      }
-      return LaTeXDriver.s_default;
-    }
-  }
 
   /**
    * Create a new LaTeX driver
@@ -91,6 +71,15 @@ public final class LaTeXDriver extends DocumentDriver {
         .getDefaultDriver());
 
     this.m_class = clazz;
+  }
+
+  /**
+   * Get the default latex driver
+   * 
+   * @return the default latex driver
+   */
+  public static final LaTeXDriver getDefaultDriver() {
+    return __DefaultLaTeXDriverLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -573,6 +562,12 @@ public final class LaTeXDriver extends DocumentDriver {
       final TableCellDef[] def) {
     return new _LaTeXTableFooterCell(((_LaTeXTableFooterRow) owner),
         rowSpan, colSpan, def);
+  }
+
+  /** the loader for the default LaTeX driver */
+  private static final class __DefaultLaTeXDriverLoader {
+    /** the shared instance */
+    static final LaTeXDriver INSTANCE = new LaTeXDriver(null, null);
   }
 
 }

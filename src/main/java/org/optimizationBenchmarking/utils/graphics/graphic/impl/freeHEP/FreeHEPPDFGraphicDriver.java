@@ -33,13 +33,6 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final org.freehep.util.UserProperties m_props;
 
-  /**
-   * the globally shared instance of the <a
-   * href="http://en.wikipedia.org/wiki/Portable_Document_Format">PDF</a>
-   * graphic driver
-   */
-  public static final FreeHEPPDFGraphicDriver INSTANCE = new FreeHEPPDFGraphicDriver();
-
   /** the correct dimension to use */
   final Dimension m_correctDim;
 
@@ -47,7 +40,7 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   final Dimension m_messWith;
 
   /** the hidden constructor */
-  private FreeHEPPDFGraphicDriver() {
+  FreeHEPPDFGraphicDriver() {
     super("pdf"); //$NON-NLS-1$
 
     this.m_props = new org.freehep.util.UserProperties();
@@ -74,6 +67,15 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
       this.m_correctDim = new Dimension(this.m_messWith.width,
           this.m_messWith.height);
     }
+  }
+
+  /**
+   * get the instance of the FreeHEP PDF driver
+   * 
+   * @return the instance of the FreeHEP PDF driver
+   */
+  public static final FreeHEPPDFGraphicDriver getInstance() {
+    return __FreeHEPPDFGraphicDriverLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -134,5 +136,16 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   @Override
   public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.PDF;
+  }
+
+  /** the loader */
+  static final class __FreeHEPPDFGraphicDriverLoader {
+    /**
+     * the globally shared instance of the <a
+     * href="http://en.wikipedia.org/wiki/Portable_Document_Format">PDF</a>
+     * graphic driver
+     */
+    static final FreeHEPPDFGraphicDriver INSTANCE = new FreeHEPPDFGraphicDriver();
+
   }
 }

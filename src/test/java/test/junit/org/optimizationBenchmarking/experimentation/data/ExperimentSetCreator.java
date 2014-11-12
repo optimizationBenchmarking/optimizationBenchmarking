@@ -337,7 +337,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
     inst = this.getInstance();
     try {
       try (final StringWriter w = new StringWriter()) {
-        EDIOutput.INSTANCE.storeWriter(inst, w);
+        EDIOutput.getInstance().storeWriter(inst, w);
         s1 = w.toString();
       }
     } catch (final IOException e) {
@@ -347,7 +347,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
     try {
       try (final StringReader r = new StringReader(s1)) {
         try (final ExperimentSetContext esc = new ExperimentSetContext()) {
-          EDIInput.INSTANCE.loadReader(esc, r);
+          EDIInput.getInstance().loadReader(esc, r);
           es1 = esc.getResult();
         }
       }
@@ -358,7 +358,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
     try {
       try (final StringWriter w = new StringWriter()) {
-        EDIOutput.INSTANCE.storeWriter(es1, w);
+        EDIOutput.getInstance().storeWriter(es1, w);
         s2 = w.toString();
       }
     } catch (final IOException e) {
@@ -371,7 +371,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
       try (final StringReader r = new StringReader(s2)) {
         s2 = null;
         try (final ExperimentSetContext esc = new ExperimentSetContext()) {
-          EDIInput.INSTANCE.loadReader(esc, r);
+          EDIInput.getInstance().loadReader(esc, r);
           es2 = esc.getResult();
         }
       }

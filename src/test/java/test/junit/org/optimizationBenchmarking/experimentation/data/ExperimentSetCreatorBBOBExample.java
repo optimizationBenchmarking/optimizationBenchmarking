@@ -21,7 +21,7 @@ public class ExperimentSetCreatorBBOBExample extends ExperimentSetCreator {
       // BBOBInput.INSTANCE.loadZIPArchive(ec,
       // ExperimentSetCreatorBBOBExample.class
       //              .getResourceAsStream("bbobExampleData.zip")); //$NON-NLS-1$
-      BBOBInput.INSTANCE.loadResourceZIP(ec,
+      BBOBInput.getInstance().loadResourceZIP(ec,
           ExperimentSetCreatorBBOBExample.class, "bbobExampleData.zip"); //$NON-NLS-1$
       return ec.getResult();
     } catch (final Throwable t) {

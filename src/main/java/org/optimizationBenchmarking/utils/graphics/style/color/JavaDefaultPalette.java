@@ -56,7 +56,7 @@ public final class JavaDefaultPalette extends ColorPalette {
       "blue", Color.BLUE.getRGB()); //$NON-NLS-1$
 
   /** the globally shared instance of the default palette */
-  public static final JavaDefaultPalette INSTANCE = new JavaDefaultPalette();
+  private static final JavaDefaultPalette INSTANCE = new JavaDefaultPalette();
 
   /** instantiate */
   private JavaDefaultPalette() {
@@ -69,21 +69,30 @@ public final class JavaDefaultPalette extends ColorPalette {
   }
 
   /**
+   * Get an instance of the default java color palette
+   * 
+   * @return the default java color palette
+   */
+  public static final JavaDefaultPalette getInstance() {
+    return JavaDefaultPalette.INSTANCE;
+  }
+
+  /**
    * read resolve
    * 
-   * @return {@link #INSTANCE}
+   * @return {@link #getInstance()}
    */
   private final Object readResolve() {
-    return JavaDefaultPalette.INSTANCE;
+    return JavaDefaultPalette.getInstance();
   }
 
   /**
    * write replace
    * 
-   * @return {@link #INSTANCE}
+   * @return {@link #getInstance()}
    */
   private final Object writeReplace() {
-    return JavaDefaultPalette.INSTANCE;
+    return JavaDefaultPalette.getInstance();
   }
 
 }

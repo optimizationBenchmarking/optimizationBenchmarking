@@ -19,7 +19,7 @@ public class LaTeXCharTransformerTest extends CharTransformerTest {
   /** {@inheritDoc} */
   @Override
   protected final CharTransformer getInstance() {
-    return LaTeXCharTransformer.INSTANCE;
+    return LaTeXCharTransformer.getInstance();
   }
 
   /** test special characters */
@@ -27,11 +27,11 @@ public class LaTeXCharTransformerTest extends CharTransformerTest {
   public void testSpecialCharacters() {
 
     Assert.assertEquals("{\\{}", //$NON-NLS-1$
-        LaTeXCharTransformer.INSTANCE.transform(//
+        LaTeXCharTransformer.getInstance().transform(//
             "{", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$
 
     Assert.assertEquals("{\\}}", //$NON-NLS-1$
-        LaTeXCharTransformer.INSTANCE.transform(//
+        LaTeXCharTransformer.getInstance().transform(//
             "}", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$
 
   }

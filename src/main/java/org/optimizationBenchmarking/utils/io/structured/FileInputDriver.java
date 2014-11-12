@@ -692,12 +692,29 @@ public abstract class FileInputDriver<L> {
    * @throws IOException
    *           if I/O fails
    */
+  @SuppressWarnings("resource")
   protected void doLoadResource(final L loadContext, final Class<?> clazz,
       final String resource, final Logger logger,
       final StreamEncoding<?, ?> defaultEncoding) throws IOException {
+    URL url;
+    InputStream is;
 
-    try (final InputStream is = clazz.getResourceAsStream(resource)) {
-      this.doLoadStream(loadContext, null, is, logger, defaultEncoding);
+    is = null;
+    url = null;
+    try {
+      is = clazz.getResourceAsStream(resource);
+    } catch (final Throwable tt) {
+      url = clazz.getResource(resource);
+    }
+
+    if (is != null) {
+      try {
+        this.doLoadStream(loadContext, null, is, logger, defaultEncoding);
+      } finally {
+        is.close();
+      }
+    } else {
+      this.loadURL(loadContext, url, logger, defaultEncoding);
     }
   }
 

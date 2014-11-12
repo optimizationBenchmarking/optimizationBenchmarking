@@ -42,7 +42,7 @@ public class FontPaletteExample {
 
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
       PaletteInputDriver.INSTANCE.loadResource(tb,
-          FontPaletteExample.class, "examples.font.palette"); //$NON-NLS-1$
+          FontPaletteExample.class, "examples.fontPalette"); //$NON-NLS-1$
       list[0] = tb.getResult();
     } catch (final Throwable tt) {
       tt.printStackTrace();

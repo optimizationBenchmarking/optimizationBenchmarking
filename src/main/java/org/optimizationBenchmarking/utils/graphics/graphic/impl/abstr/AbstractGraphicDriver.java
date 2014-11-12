@@ -114,7 +114,7 @@ public abstract class AbstractGraphicDriver extends FileTypeDriver
   /** {@inheritDoc} */
   @Override
   public StrokePalette getStrokePalette() {
-    return DefaultStrokePalette.INSTANCE;
+    return DefaultStrokePalette.getInstance();
   }
 
 }

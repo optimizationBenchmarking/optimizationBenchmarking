@@ -1,16 +1,35 @@
 package org.optimizationBenchmarking.utils.text.transformations;
 
 /**
- * the internal class we use to load the text normalization data
+ * A class we use to load normalize characters, i.e., to translate all
+ * characters to their names. This turns complex unicode character such as
+ * &quot;<code>&#x109</code>&quot; to strings such as
+ * &quot;LatinSmallLetterCWithCircumflex&quot; and &quot;
+ * <code>&#xd7d4;</code>&quot; to &quot;HangulJongseongTikeutThieuth&quot;,
+ * i.e., to something which can safely appear in file names, urls, and
+ * other identifiers.
  */
 public final class NormalCharTransformer extends LookupCharTransformer {
 
-  /** the normalizing character transformer */
-  public static final NormalCharTransformer INSTANCE = new NormalCharTransformer();
-
   /** instantiate */
-  private NormalCharTransformer() {
+  NormalCharTransformer() {
     super("normalCharTransformationMap.transform"); //$NON-NLS-1$
+  }
+
+  /**
+   * Get the instance of the normalizing character transformation
+   * 
+   * @return instance of the normalizing character transformation
+   */
+  public static final NormalCharTransformer getInstance() {
+    return __NormalCharTransformerLoader.INSTANCE;
+  }
+
+  /** the loader */
+  private static final class __NormalCharTransformerLoader {
+
+    /** the normalizing character transformer */
+    static final NormalCharTransformer INSTANCE = new NormalCharTransformer();
   }
 
 }

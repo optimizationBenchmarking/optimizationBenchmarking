@@ -18,12 +18,18 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
 /** the null driver */
 public final class NullGraphicDriver implements IGraphicDriver {
 
-  /** the globally shared instance */
-  public static final NullGraphicDriver INSTANCE = new NullGraphicDriver();
-
   /** the null instance */
-  private NullGraphicDriver() {
+  NullGraphicDriver() {
     super();
+  }
+
+  /**
+   * Get the instance of the null graphics driver
+   * 
+   * @return the instance of the null graphics driver
+   */
+  public static final NullGraphicDriver getInstance() {
+    return __NullGraphicDriverLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -69,18 +75,25 @@ public final class NullGraphicDriver implements IGraphicDriver {
   /** {@inheritDoc} */
   @Override
   public final ColorPalette getColorPalette() {
-    return JavaDefaultPalette.INSTANCE;
+    return JavaDefaultPalette.getInstance();
   }
 
   /** {@inheritDoc} */
   @Override
   public final StrokePalette getStrokePalette() {
-    return DefaultStrokePalette.INSTANCE;
+    return DefaultStrokePalette.getInstance();
   }
 
   /** {@inheritDoc} */
   @Override
   public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.NULL;
+  }
+
+  /** the loader */
+  private static final class __NullGraphicDriverLoader {
+
+    /** the globally shared instance */
+    static final NullGraphicDriver INSTANCE = new NullGraphicDriver();
   }
 }

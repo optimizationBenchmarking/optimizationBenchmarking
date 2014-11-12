@@ -26,14 +26,20 @@ import org.optimizationBenchmarking.utils.io.xml.XMLBase;
 import org.optimizationBenchmarking.utils.io.xml.XMLElement;
 
 /** the configuration xml output */
-public class BibliographyXMLOutput extends XMLOutputDriver<Object> {
-
-  /** the configuration xml */
-  public static final BibliographyXMLOutput INSTANCE = new BibliographyXMLOutput();
+public final class BibliographyXMLOutput extends XMLOutputDriver<Object> {
 
   /** create */
-  private BibliographyXMLOutput() {
+  BibliographyXMLOutput() {
     super();
+  }
+
+  /**
+   * Get the instance of the {@link BibliographyXMLOutput}
+   * 
+   * @return the instance of the {@link BibliographyXMLOutput}
+   */
+  public static final BibliographyXMLOutput getInstance() {
+    return __BibliographyXMLOutputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -698,5 +704,11 @@ public class BibliographyXMLOutput extends XMLOutputDriver<Object> {
         }
       }
     }
+  }
+
+  /** the loader for lazy initialization */
+  private static final class __BibliographyXMLOutputLoader {
+    /** the configuration xml */
+    static final BibliographyXMLOutput INSTANCE = new BibliographyXMLOutput();
   }
 }
