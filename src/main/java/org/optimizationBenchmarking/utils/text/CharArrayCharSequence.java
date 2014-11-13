@@ -90,4 +90,23 @@ public final class CharArrayCharSequence implements CharSequence,
       textOut.append(this.m_data, this.m_start, (this.m_start + len));
     }
   }
+
+  /**
+   * Copy the characters of this sequence to a given array
+   * 
+   * @param srcStart
+   *          the inclusive start index inside in this sequence
+   * @param srcEnd
+   *          the exclusive end index inside this sequence
+   * @param dest
+   *          the destination array
+   * @param destStart
+   *          the start index in the destination array where the copying
+   *          should begin
+   */
+  public final void getChars(final int srcStart, final int srcEnd,
+      final char[] dest, final int destStart) {
+    System.arraycopy(this.m_data, srcStart, dest, destStart,
+        (srcEnd - srcStart));
+  }
 }

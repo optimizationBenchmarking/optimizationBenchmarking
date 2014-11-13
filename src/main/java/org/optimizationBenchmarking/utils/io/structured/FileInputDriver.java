@@ -89,7 +89,6 @@ public abstract class FileInputDriver<L> {
    * @throws IOException
    *           if I/O fails
    */
-  @SuppressWarnings("unused")
   protected void doLoadStream(final L loadContext, final Path file,
       final InputStream stream, final Logger logger,
       final StreamEncoding<?, ?> defaultEncoding) throws IOException {
@@ -116,6 +115,7 @@ public abstract class FileInputDriver<L> {
                 TextUtils.className(this.getClass()) + '.'),//
             t);
       }
+      throw t;
     }
   }
 

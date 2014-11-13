@@ -84,7 +84,11 @@ class _LookupTransformedTextOutput extends _TransformedTextOutput {
             }
           }
         }
+
         replace = this.__resolve(currentChar);
+        if (replace == null) {
+          this._onUnknown(currentChar, csq, start, end); // throw an error
+        }
       }
 
       // write data before the current char
@@ -123,7 +127,7 @@ class _LookupTransformedTextOutput extends _TransformedTextOutput {
 
     transform = this.m_data;
     low = 0;
-    high = transform.length;
+    high = (transform.length - 1);
     if (ch > high) {
       mid = (high >>> 1);
     } else {
@@ -149,7 +153,6 @@ class _LookupTransformedTextOutput extends _TransformedTextOutput {
     }
 
     // no transformation found: delegate
-    this._onUnknown(ch); // this should throw an error
     return null;
   }
 
@@ -174,7 +177,11 @@ class _LookupTransformedTextOutput extends _TransformedTextOutput {
         return this;
       }
     }
+
     replace = this.__resolve(c);
+    if (replace == null) {
+      this._onUnknown(c, null, (-1), (-1));// throw an error
+    }
     this.m_out.append(replace, 1, replace.length);
     return this;
   }
@@ -227,6 +234,9 @@ class _LookupTransformedTextOutput extends _TransformedTextOutput {
           }
         }
         replace = this.__resolve(currentChar);
+        if (replace == null) {
+          this._onUnknown(currentChar, s, start, end);// throw an error
+        }
       }
 
       // write data before the current char
@@ -296,6 +306,9 @@ class _LookupTransformedTextOutput extends _TransformedTextOutput {
           }
         }
         replace = this.__resolve(currentChar);
+        if (replace == null) {
+          this._onUnknown(currentChar, chars, start, end); // throw error
+        }
       }
 
       // write data before the current char

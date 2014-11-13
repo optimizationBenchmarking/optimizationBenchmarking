@@ -151,6 +151,11 @@ public class MemoryTextOutput extends AbstractTextOutput implements
       return this;
     }
 
+    if (csq instanceof CharArrayCharSequence) {
+      ((CharArrayCharSequence) csq).getChars(start, end, data, len);
+      return this;
+    }
+
     for (i = start; i < end; i++, len++) {
       data[len] = csq.charAt(i);
     }

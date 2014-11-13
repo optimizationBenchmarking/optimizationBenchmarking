@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.text.transformations;
 
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * An implementation of the text output which forwards all text to an
@@ -64,14 +65,46 @@ class _TransformedTextOutput extends AbstractTextOutput {
    * 
    * @param ch
    *          the character
+   * @param str
+   *          the string
+   * @param start
+   *          the start index in the string
+   * @param end
+   *          the end index in the string
    * @throws UnsupportedOperationException
    *           by default
    */
-  final void _onUnknown(final char ch) {
-    throw new UnsupportedOperationException(//
-        "No mapping known for character '" + //$NON-NLS-1$
-            String.valueOf(ch) + "' (0x" + //$NON-NLS-1$
-            Integer.toHexString(ch) + ")."); //$NON-NLS-1$
+  final void _onUnknown(final int ch, final Object str, final int start,
+      final int end) {
+    final MemoryTextOutput mo;
 
+    mo = new MemoryTextOutput(128);
+    mo.append("No mapping known for character '"); //$NON-NLS-1$
+    mo.append((char) ch);
+    mo.append("' (0x"); //$NON-NLS-1$
+    mo.append(Integer.toHexString(ch));
+    if (str != null) {
+      mo.append(") in "); //$NON-NLS-1$
+      if (str instanceof String) {
+        mo.append(" string '"); //$NON-NLS-1$
+        mo.append(((String) str), start, end);
+      } else {
+        if (str instanceof CharSequence) {
+          mo.append(" character sequence '"); //$NON-NLS-1$
+          mo.append(((CharSequence) str), start, end);
+        } else {
+          if (str instanceof char[]) {
+            mo.append(" char[] '"); //$NON-NLS-1$
+            mo.append(((char[]) str), start, end);
+          } else {
+            mo.append(" unknown object '"); //$NON-NLS-1$
+            mo.append(str);
+          }
+        }
+      }
+      mo.append('\'');
+    } else {
+      mo.append(')');
+    }
   }
 }
