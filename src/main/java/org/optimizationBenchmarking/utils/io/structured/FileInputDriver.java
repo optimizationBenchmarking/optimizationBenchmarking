@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
+import org.optimizationBenchmarking.utils.io.encoding.TextEncoding;
 import org.optimizationBenchmarking.utils.io.files.TempDir;
 import org.optimizationBenchmarking.utils.io.files.UnzipToFolder;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
@@ -93,11 +94,18 @@ public abstract class FileInputDriver<L> {
       final InputStream stream, final Logger logger,
       final StreamEncoding<?, ?> defaultEncoding) throws IOException {
 
+    final TextEncoding def;
+
+    if ((defaultEncoding != null)
+        && (defaultEncoding instanceof TextEncoding)) {
+      def = ((TextEncoding) defaultEncoding);
+    } else {
+      def = StreamEncoding.getDefaultTextEncoding();
+    }
+
     try {
-      try (final Reader reader = (((defaultEncoding != null) && //
-      (Reader.class.isAssignableFrom(defaultEncoding.getInputClass())))) ? //
-      ((Reader) (defaultEncoding.wrapInputStream(stream)))
-          : new InputStreamReader(stream)) {
+      try (final Reader reader = ((def != null) ? def
+          .wrapInputStream(stream) : new InputStreamReader(stream))) {
         if (reader instanceof BufferedReader) {
           this.doLoadReader(loadContext, file, ((BufferedReader) reader),
               logger);

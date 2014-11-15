@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Optimization Benchmarking Tool Suite</name>
-	<description>The Optimization Benchmarking Tool Suite.</description>
+	<description>The Optimization Benchmarking Tool Suite is a software framework which supports researchers in testing and benchmarking optimization algorithms. It aims for a holistic approach providing deeper insights into what problem features or algorithm settings have which impact on the overall solution quality.</description>
 
 	<url>http://www.optimizationBenchmarking.org/</url>
 	<organization>
@@ -15,7 +15,7 @@
 	</organization>
 
 	<properties>
-		<encoding>ISO-8859-1</encoding>
+		<encoding>UTF-8</encoding>
 		<project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
@@ -171,7 +171,7 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
-					<encoding>ISO-8859-1</encoding>
+					<encoding>${encoding}</encoding>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
 				</configuration>

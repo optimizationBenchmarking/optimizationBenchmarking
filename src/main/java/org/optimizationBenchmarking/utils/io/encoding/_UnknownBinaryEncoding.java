@@ -65,7 +65,8 @@ final class _UnknownBinaryEncoding extends
    * 
    * @return the replacement
    */
-  private final Object writeReplace() {
+  @Override
+  final Object writeReplace() {
     return StreamEncoding.BINARY;
   }
 
@@ -74,7 +75,8 @@ final class _UnknownBinaryEncoding extends
    * 
    * @return the replacement
    */
-  private final Object readResolve() {
+  @Override
+  final Object readResolve() {
     return StreamEncoding.BINARY;
   }
 }

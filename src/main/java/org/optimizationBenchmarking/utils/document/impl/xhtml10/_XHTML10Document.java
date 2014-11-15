@@ -173,7 +173,7 @@ final class _XHTML10Document extends Document {
     e = StreamEncoding.getStreamEncoding(out);
     if ((e == null) || (e == StreamEncoding.TEXT)
         || (e == StreamEncoding.BINARY)) {
-      e = StreamEncoding.UTF_8;
+      e = StreamEncoding.getDefaultTextEncoding();
     }
     s = e.name();
     out.append(s);

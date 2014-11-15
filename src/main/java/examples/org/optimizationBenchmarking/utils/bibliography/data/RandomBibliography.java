@@ -363,47 +363,17 @@ public final class RandomBibliography extends BibliographyExample {
     }
 
     t = s.charAt(0);
-    if ((t > ' ') && ((t < '0') || (t > '9')) && ((t < 'a') || (t > 'z'))
-        && ((t < 'A') || (t > 'Z'))) {
-      switch (t) {
-        case '.':
-        case ',':
-        case ';':
-        case '!':
-        case '?':
-        case ':':
-        case '_':
-        case '#':
-        case '\'':
-        case '"':
-        case '+':
-        case '*':
-        case '~':
-        case '-':
-        case '\\':
-        case '/':
-        case '´':
-        case '`':
-        case '^':
-        case '§':
-        case '$':
-        case '%':
-        case '&':
-        case '{':
-        case '}':
-        case '(':
-        case ')':
-        case '[':
-        case ']':
-        case '=':
-        case '|':
-        case '°': {
-          return 0;
-        }
-        default: {
-          return t;
-        }
+    if ((t > ' ') && //
+        ((t < '0') || (t > '9')) && //
+        ((t < 'a') || (t > 'z')) && //
+        ((t < 'A') || (t > 'Z'))) {
+      if ((t < '0') || //
+          ((t > '9') && (t < 'A')) || //
+          ((t > 'A') && (t < 'a')) || //
+          ((t > 'z') && (t < 0x7e))) {
+        return 0;
       }
+      return t;
     }
     return 0;
   }

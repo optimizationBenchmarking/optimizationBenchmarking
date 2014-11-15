@@ -63,7 +63,8 @@ final class _UnknownEncoding extends StreamEncoding<Closeable, Closeable> {
    * 
    * @return the replacement
    */
-  private final Object writeReplace() {
+  @Override
+  final Object writeReplace() {
     return StreamEncoding.UNKNOWN;
   }
 
@@ -72,7 +73,8 @@ final class _UnknownEncoding extends StreamEncoding<Closeable, Closeable> {
    * 
    * @return the replacement
    */
-  private final Object readResolve() {
+  @Override
+  final Object readResolve() {
     return StreamEncoding.UNKNOWN;
   }
 }

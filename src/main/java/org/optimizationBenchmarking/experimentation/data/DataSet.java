@@ -29,7 +29,7 @@ public class DataSet<DT extends Comparable<?>> extends _IDObject {
    *          the data
    */
   @SuppressWarnings("unchecked")
-  public DataSet(final DataElement owner, final DT... data) {
+  DataSet(final DataElement owner, final DT... data) {
     this(data, true, false, false);
   }
 
