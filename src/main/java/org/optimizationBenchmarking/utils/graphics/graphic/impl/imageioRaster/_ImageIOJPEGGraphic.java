@@ -2,15 +2,16 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageWriteParam;
 import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.spi.ImageWriterSpi;
 
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 import org.w3c.dom.Element;
 
 /**
@@ -27,8 +28,8 @@ final class _ImageIOJPEGGraphic extends _ImageIORasterGraphic {
    * 
    * @param path
    *          the path
-   * @param os
-   *          the output stream
+   * @param logger
+   *          the logger
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -42,25 +43,28 @@ final class _ImageIOJPEGGraphic extends _ImageIORasterGraphic {
    *          the resolution along the x-axis
    * @param yDPI
    *          the resolution along the y-axis
-   * @param type
-   *          the type
    * @param img
    *          the buffered image
    * @param quality
-   *          the image quality
+   *          the quality
    */
-  _ImageIOJPEGGraphic(final Path path, final OutputStream os,
-      final IObjectListener listener, final BufferedImage img,
+  _ImageIOJPEGGraphic(final Path path, final Logger logger,
+      final IFileProducerListener listener, final BufferedImage img,
       final Graphics2D g, final int w, final int h, final double xDPI,
-      final double yDPI, final float quality, final String type) {
-    super(path, os, listener, img, g, w, h, xDPI, yDPI, type);
-
+      final double yDPI, final float quality) {
+    super(path, logger, listener, img, g, w, h, xDPI, yDPI);
     this.m_quality = quality;
   }
 
   /** {@inheritDoc} */
   @Override
-  final void _setDPI(final IIOMetadata metaData)
+  final boolean _canSetupImageMetadata() {
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _setupImageMetadata(final IIOMetadata metaData)
       throws IIOInvalidTreeException {
     final Element tree, jfif;
     tree = ((Element) (metaData.getAsTree("javax_imageio_jpeg_image_1.0"))); //$NON-NLS-1$
@@ -75,14 +79,26 @@ final class _ImageIOJPEGGraphic extends _ImageIORasterGraphic {
 
   /** {@inheritDoc} */
   @Override
-  void _setQuality(final ImageWriteParam params) {
+  final boolean _canSetupImageWriterParameters() {
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _setupImageWriterParameters(final ImageWriteParam params) {
     params.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
     params.setCompressionQuality(this.m_quality);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final Object getPathEntryObjectID() {
+  final ImageWriterSpi _getImageWriterSPI() {
+    return ImageIOJPEGGraphicDriver._ImageIOJPEGSPILoader.SPI;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.JPEG;
   }
 }

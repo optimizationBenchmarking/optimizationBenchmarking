@@ -27,9 +27,10 @@ import java.awt.image.renderable.RenderableImage;
 import java.nio.file.Path;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
+import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * An abstract wrapper which maps {@link java.awt.Graphics2D} objects to
@@ -52,14 +53,16 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
    * 
    * @param graphic
    *          the graphic to use
+   * @param log
+   *          the logger
    * @param path
    *          the path to be managed
    * @param listener
    *          the listener to notify
    */
-  protected GraphicProxy(final GT graphic, final Path path,
-      final IObjectListener listener) {
-    super(listener, path);
+  protected GraphicProxy(final GT graphic, final Logger log,
+      final IFileProducerListener listener, final Path path) {
+    super(log, listener, path);
     if (graphic == null) {
       throw new IllegalArgumentException(//
           "Delegate graphic must not be null for a proxy graphic."); //$NON-NLS-1$

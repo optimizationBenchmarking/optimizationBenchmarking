@@ -20,11 +20,12 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ImageObserver;
 import java.nio.file.Path;
 import java.text.AttributedCharacterIterator;
+import java.util.logging.Logger;
 
 import org.freehep.graphics2d.AbstractVectorGraphics;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicProxy;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * <p>
@@ -39,7 +40,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicPro
  * @param <T>
  *          the proxied type
  */
-class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
+abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
     extends GraphicProxy<T> {
 
   /** the maximum permissible coordinate as integer */
@@ -69,6 +70,8 @@ class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
    * 
    * @param graphic
    *          the graphic to use
+   * @param log
+   *          the logger
    * @param path
    *          the path under which the contents of the graphic are stored
    * @param listener
@@ -79,17 +82,12 @@ class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
    * @param h
    *          the height
    */
-  _FreeHEPAbstractVectorGraphicsProxy(final T graphic, final Path path,
-      final IObjectListener listener, final int w, final int h) {
-    super(graphic, path, listener);
+  _FreeHEPAbstractVectorGraphicsProxy(final T graphic, final Logger log,
+      final IFileProducerListener listener, final Path path, final int w,
+      final int h) {
+    super(graphic, log, listener, path);
     this.m_w = w;
     this.m_h = h;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final boolean isVectorGraphic() {
-    return true;
   }
 
   /**

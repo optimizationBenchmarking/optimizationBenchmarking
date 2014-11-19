@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
 import java.nio.file.Path;
-import java.util.Iterator;
+import java.util.logging.Logger;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -14,17 +14,19 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageOutputStream;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicProxy;
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * An internal class for Java raster graphics and uses
  * {@link javax.imageio ImageIO}.
  */
-class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
+abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
 
   /** the width */
   final int m_w;
@@ -38,22 +40,16 @@ class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
   /** the dpi along the y-axis */
   final double m_yDPI;
 
-  /** the type */
-  private final String m_type;
-
   /** the image */
   private final BufferedImage m_img;
-
-  /** the output stream */
-  private final OutputStream m_os;
 
   /**
    * instantiate
    * 
    * @param path
    *          the path
-   * @param os
-   *          the output stream
+   * @param logger
+   *          the logger
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -67,30 +63,20 @@ class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
    *          the resolution along the x-axis
    * @param yDPI
    *          the resolution along the y-axis
-   * @param type
-   *          the type
    * @param img
    *          the buffered image
    */
-  _ImageIORasterGraphic(final Path path, final OutputStream os,
-      final IObjectListener listener, final BufferedImage img,
+  _ImageIORasterGraphic(final Path path, final Logger logger,
+      final IFileProducerListener listener, final BufferedImage img,
       final Graphics2D g, final int w, final int h, final double xDPI,
-      final double yDPI, final String type) {
-    super(g, path, listener);
+      final double yDPI) {
+    super(g, logger, listener, path);
 
     this.m_w = w;
     this.m_h = h;
     this.m_xDPI = xDPI;
     this.m_yDPI = yDPI;
     this.m_img = img;
-    this.m_type = type;
-    this.m_os = os;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final boolean isVectorGraphic() {
-    return false;
   }
 
   /** {@inheritDoc} */
@@ -100,7 +86,17 @@ class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
   }
 
   /**
-   * set the DPI
+   * Does this image set up image meta data?
+   * 
+   * @return {@code true} if and only if the image can setup image meta
+   *         data
+   */
+  boolean _canSetupImageMetadata() {
+    return false;
+  }
+
+  /**
+   * Setup the image meta data
    * 
    * @param metaData
    *          the metadata
@@ -108,106 +104,107 @@ class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
    *           if something goes wrong
    */
   @SuppressWarnings("unused")
-  void _setDPI(final IIOMetadata metaData) throws IIOInvalidTreeException {
+  void _setupImageMetadata(final IIOMetadata metaData)
+      throws IIOInvalidTreeException {
     //
   }
 
   /**
-   * Set the output quality of the image
+   * Setup the image writer parameters
    * 
    * @param params
    *          the parameters
    */
-  void _setQuality(final ImageWriteParam params) {
+  void _setupImageWriterParameters(final ImageWriteParam params) {
     //
   }
 
   /**
-   * should we try to store meta-data?
+   * Does this image set up image writer parameters?
    * 
-   * @return {@code true} if meta-data storing should be attempted
+   * @return {@code true} if and only if the image can setup image writer
+   *         parameters
    */
-  boolean _tryMetaData() {
-    return true;
+  boolean _canSetupImageWriterParameters() {
+    return false;
   }
+
+  /**
+   * Get the image writer SPI
+   * 
+   * @return the image writer spi
+   */
+  abstract ImageWriterSpi _getImageWriterSPI();
 
   /** {@inheritDoc} */
   @Override
   protected final void onClose() {
+    final ImageWriterSpi imageWriterSPI;
+    final ImageWriter writer;
     final ImageTypeSpecifier typeSpecifier;
-    final boolean shouldMeta;
-    Iterator<ImageWriter> it;
-    ImageWriter useWriter, writer;
-    ImageWriteParam useParam, param;
-    boolean canMeta;
-    IIOMetadata useMetaData, metaData;
+    final ImageWriteParam imageWriterParams;
+    final boolean canUseParams, canUseMeta;
+    final IIOMetadata metaData;
 
-    shouldMeta = this._tryMetaData();
     try {
       try {
-        this.m_out.dispose();
+        imageWriterSPI = this._getImageWriterSPI();
+        if (imageWriterSPI != null) {
 
-        canMeta = false;
-        useWriter = null;
-        useMetaData = null;
-        useParam = null;
-        typeSpecifier = ImageTypeSpecifier
-            .createFromBufferedImageType(this.m_img.getType());
+          writer = imageWriterSPI.createWriterInstance();
+          if (writer != null) {
 
-        it = ImageIO.getImageWritersByFormatName(this.m_type);
-
-        finder: while (it.hasNext()) {
-          writer = it.next();
-          if (writer.getClass().getCanonicalName().contains("freehep")) { //$NON-NLS-1$
-            continue;
-          }
-          param = writer.getDefaultWriteParam();
-
-          metaData = writer.getDefaultImageMetadata(typeSpecifier, param);
-          if (shouldMeta) {
-            if ((!(metaData.isReadOnly()))
-                && metaData.isStandardMetadataFormatSupported()) {
-              canMeta = true;
-              useWriter = writer;
-              useParam = param;
-              useMetaData = metaData;
-              break finder;
-            }
-          }
-          if (useWriter == null) {
-            useWriter = writer;
-            useParam = param;
-            if (!shouldMeta) {
-              break;
-            }
-          }
-        }
-
-        try (final OutputStream os = this.m_os) {
-          try (final ImageOutputStream ios = ImageIO
-              .createImageOutputStream(os)) {
-
-            useWriter.setOutput(ios);
-
-            if (shouldMeta && (useParam != null)) {
-              this._setQuality(useParam);
-            }
-
-            if (canMeta) {
-              this._setDPI(useMetaData);
-              useWriter.write(null, new IIOImage(this.m_img, null,
-                  useMetaData), useParam);
-            } else {
-              if (useParam != null) {
-                useWriter.write(null,
-                    new IIOImage(this.m_img, null, null), useParam);
-              } else {
-                useWriter.write(this.m_img);
+            canUseParams = this._canSetupImageWriterParameters();
+            canUseMeta = this._canSetupImageMetadata();
+            if (canUseParams || canUseMeta) {
+              imageWriterParams = writer.getDefaultWriteParam();
+              if (canUseParams && (imageWriterParams != null)) {
+                this._setupImageWriterParameters(imageWriterParams);
               }
+            } else {
+              imageWriterParams = null;
+            }
+
+            if (canUseMeta
+                && (imageWriterParams != null)
+                && ((typeSpecifier = ImageTypeSpecifier
+                    .createFromBufferedImageType(//
+                    this.m_img.getType())) != null)) {
+              metaData = writer.getDefaultImageMetadata(typeSpecifier,
+                  imageWriterParams);
+              if ((metaData != null) && //
+                  (!(metaData.isReadOnly())) && //
+                  (metaData.isStandardMetadataFormatSupported())) {
+                this._setupImageMetadata(metaData);
+              }
+            } else {
+              metaData = null;
+            }
+
+            try (final OutputStream os = PathUtils
+                .openOutputStream(this.m_path)) {
+              try (final ImageOutputStream ios = ImageIO
+                  .createImageOutputStream(os)) {
+
+                writer.setOutput(ios);
+
+                if (metaData != null) {
+                  writer.write(null, new IIOImage(this.m_img, null,
+                      metaData), imageWriterParams);
+                } else {
+                  if (imageWriterParams != null) {
+                    writer.write(null,
+                        new IIOImage(this.m_img, null, null),
+                        imageWriterParams);
+                  } else {
+                    writer.write(this.m_img);
+                  }
+                }
+              }
+
             }
           }
         }
-
       } finally {
         super.onClose();
       }

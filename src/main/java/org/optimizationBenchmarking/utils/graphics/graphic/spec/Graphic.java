@@ -25,13 +25,17 @@ import java.nio.file.Path;
 import java.text.AttributedCharacterIterator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
-import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
+import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
 
 /**
  * <p>
@@ -60,7 +64,8 @@ import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
  * freeHEP drivers} do), these routines may map to something better.
  * </p>
  */
-public abstract class Graphic extends Graphics2D implements Closeable {
+public abstract class Graphic extends Graphics2D implements Closeable,
+    IToolJob {
 
   /** the font attributes */
   private static final Map<TextAttribute, Object> FONT_ATTRIBUTES;
@@ -73,17 +78,19 @@ public abstract class Graphic extends Graphics2D implements Closeable {
         TextAttribute.LIGATURES_ON);
   }
 
+  /** has we been closed ? */
+  private volatile boolean m_closed;
+
+  /** the logger */
+  private final Logger m_log;
   /**
    * the object to notify when we are closed, or {@code null} if none needs
    * to be notified
    */
-  private final IObjectListener m_listener;
-
-  /** has we been closed ? */
-  volatile boolean m_closed;
+  private final IFileProducerListener m_listener;
 
   /** the graphic path to which the graphic is written */
-  private final Path m_path;
+  protected final Path m_path;
 
   /**
    * instantiate
@@ -94,9 +101,13 @@ public abstract class Graphic extends Graphics2D implements Closeable {
    * @param path
    *          the path associated with this object, or {@code null} if no
    *          file needs to be explicitly created
+   * @param logger
+   *          the logger
    */
-  protected Graphic(final IObjectListener listener, final Path path) {
+  protected Graphic(final Logger logger,
+      final IFileProducerListener listener, final Path path) {
     super();
+    this.m_log = logger;
     this.m_path = path;
     this.m_listener = listener;
   }
@@ -146,24 +157,11 @@ public abstract class Graphic extends Graphics2D implements Closeable {
   }
 
   /**
-   * Is this graphic a vector graphic ({@code true}) or a raster graphic (
-   * {@code false})? A vector graphic can draw objects with perceived
-   * infinite precision. For instance, a horizontal line that consists of
-   * 1'000'000 points will be presented as, well, line with 1'000'000
-   * points in a vector graphic. A pixel (raster) graphic, may, for
-   * example, map to 1024*640 pixel. A horizontal line will then only
-   * consist of 1024 points, regardless of its logical point count. This
-   * may play a role when rendering graphics to a file. A vector graphic
-   * can become really huge if complex objects are rendered into it. A
-   * pixel graphic cannot exceed a given maximum size regardless.
+   * Get the graphics format to which this graphic belongs
    * 
-   * @return {@code true} if this graphic is a vector graphic,
-   *         {@code false} otherwise.
-   * @see org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#isVectorFormat()
+   * @return the graphics format to which this graphic belongs
    */
-  public boolean isVectorGraphic() {
-    return false;
-  }
+  public abstract EGraphicFormat getGraphicFormat();
 
   /**
    * The {@link #dispose()} method forwards the call to the idempotent
@@ -183,14 +181,14 @@ public abstract class Graphic extends Graphics2D implements Closeable {
   }
 
   /**
-   * The object id to be used when invoking the objects listener's
-   * {@code onObjectFinalized} method. This method should return an
-   * instance of {@link EGraphicFormat}.
+   * get this graphic's id to a text output
    * 
-   * @return the path entry id
+   * @return the name
    */
-  protected Object getPathEntryObjectID() {
-    return this.getClass();
+  private final String __name() {
+    return (((((((((TextUtils.className(this.getClass())) + //
+    '#') + System.identityHashCode(this)) + ' ') + '(') + //
+    this.getGraphicFormat()) + '@') + this.m_path) + ')');
   }
 
   /** {@inheritDoc} */
@@ -198,25 +196,49 @@ public abstract class Graphic extends Graphics2D implements Closeable {
   @Override
   public synchronized final void close() {
     final ArrayListView v;
+    String s;
 
     if (this.m_closed) {
       return;
     }
     this.m_closed = true;
 
+    s = null;
+    if ((this.m_log != null) && (this.m_log.isLoggable(Level.FINEST))) {
+      s = this.__name();
+      this.m_log.finest("Now closing " + s); //$NON-NLS-1$
+    }
+
     try {
       this.onClose();
-    } finally {
+
       if (this.m_listener != null) {
         if (this.m_path != null) {
-          v = new ArrayListView<>(new PathEntry[] { new PathEntry(
-              this.getPathEntryObjectID(), this.m_path) });
+          v = new ArrayListView<>(
+              new ImmutableAssociation[] { new ImmutableAssociation(
+                  this.m_path, this.getGraphicFormat()) });
         } else {
           v = ArraySetView.EMPTY_SET_VIEW;
         }
 
-        this.m_listener.onObjectFinalized(v);
+        this.m_listener.onFilesFinalized(v);
       }
+    } catch (final Throwable t) {
+      if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
+        if (s == null) {
+          s = this.__name();
+        }
+        this.m_log.log(Level.SEVERE, ("Error when closing " //$NON-NLS-1$
+            + s), t);
+      }
+      ErrorUtils.throwAsRuntimeException(t);
+    }
+
+    if ((this.m_log != null) && (this.m_log.isLoggable(Level.FINEST))) {
+      if (s == null) {
+        s = this.__name();
+      }
+      this.m_log.finest(s + " closed."); //$NON-NLS-1$
     }
   }
 

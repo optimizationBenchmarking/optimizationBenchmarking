@@ -5,7 +5,8 @@ import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,19 +14,19 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
-import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.numbers.AlphabeticNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * The root object for the document API.
@@ -82,20 +83,20 @@ public class Document extends DocumentElement implements IDocument {
   /** the base path, i.e., the folder containing the document */
   final Path m_basePath;
 
-  /** the logger */
-  final Logger m_logger;
-
-  /** the paths */
-  private LinkedHashSet<PathEntry> m_paths;
-
-  /** a citations builder */
-  BibliographyBuilder m_citations;
-
   /** the path to the document's main file */
   private final Path m_documentPath;
 
+  /** the logger */
+  final Logger m_logger;
+
   /** the object listener */
-  private final IObjectListener m_listener;
+  private final IFileProducerListener m_listener;
+
+  /** the paths */
+  private LinkedHashMap<Path, IFileType> m_paths;
+
+  /** a citations builder */
+  BibliographyBuilder m_citations;
 
   /** the underlying writer */
   private final BufferedWriter m_writer;
@@ -126,7 +127,7 @@ public class Document extends DocumentElement implements IDocument {
    */
   private Document(final DocumentDriver driver,
       final BufferedWriter writer, final Path docPath,
-      final IObjectListener listener, final Logger logger) {
+      final Logger logger, final IFileProducerListener listener) {
     super(driver, writer);
 
     this.m_styles = driver.createStyleSet();
@@ -138,7 +139,7 @@ public class Document extends DocumentElement implements IDocument {
     this.m_logger = logger;
     this.m_documentPath = PathUtils.normalize(docPath);
     this.m_basePath = PathUtils.normalize(docPath.getParent());
-    this.m_paths = new LinkedHashSet<>();
+    this.m_paths = new LinkedHashMap<>();
 
     this.m_citations = new BibliographyBuilder();
     this.m_listener = listener;
@@ -274,9 +275,9 @@ public class Document extends DocumentElement implements IDocument {
    *          the logger
    */
   protected Document(final DocumentDriver driver, final Path docPath,
-      final IObjectListener listener, final Logger logger) {
+      final Logger logger, final IFileProducerListener listener) {
     this(driver, new BufferedWriter(new OutputStreamWriter(
-        PathUtils.openOutputStream(docPath))), docPath, listener, logger);
+        PathUtils.openOutputStream(docPath))), docPath, logger, listener);
   }
 
   /**
@@ -285,12 +286,31 @@ public class Document extends DocumentElement implements IDocument {
    * @param p
    *          the path to add
    */
-  protected synchronized final void addPath(final PathEntry p) {
+  protected synchronized final void addPath(
+      final Map.Entry<Path, IFileType> p) {
+    final IFileType oldType, newType;
+    final Path path;
+
     if (p == null) {
       throw new IllegalArgumentException(//
           "Cannot add null path entry."); //$NON-NLS-1$
     }
-    this.m_paths.add(p);
+
+    path = p.getKey();
+    newType = p.getValue();
+    if (path == null) {
+      throw new IllegalArgumentException("Cannot add null path of type "//$NON-NLS-1$
+          + newType);
+    }
+    oldType = this.m_paths.get(path);
+    if (oldType != null) {
+      throw new IllegalStateException("Path '" + path + //$NON-NLS-1$
+          "' already hosts a file of type '" + oldType + //$NON-NLS-1$
+          "', so it cannot host a new file of type '" + newType + //$NON-NLS-1$
+          "'."); //$NON-NLS-1$
+    }
+
+    this.m_paths.put(path, newType);
   }
 
   /**
@@ -299,8 +319,9 @@ public class Document extends DocumentElement implements IDocument {
    * @param ps
    *          the paths to add
    */
-  protected synchronized final void addPaths(final Iterable<PathEntry> ps) {
-    for (final PathEntry p : ps) {
+  protected synchronized final void addPaths(
+      final Iterable<Map.Entry<Path, IFileType>> ps) {
+    for (final Map.Entry<Path, IFileType> p : ps) {
       this.addPath(p);
     }
   }
@@ -448,8 +469,9 @@ public class Document extends DocumentElement implements IDocument {
    * Post-process the generated files. Here, e.g., a LaTeX document could
    * be compiled to postscript or pdf. During this process, new files may
    * be generated and added to the overall outcome via
-   * {@link #addPaths(Iterable)} or {@link #addPath(PathEntry)} (this will
-   * not change the value of {@code paths} passed into this method).
+   * {@link #addPaths(Iterable)} or {@link #addPath(java.util.Map.Entry)}
+   * (this will not change the value of {@code paths} passed into this
+   * method).
    * 
    * @param usedStyles
    *          the set of used styles
@@ -457,7 +479,7 @@ public class Document extends DocumentElement implements IDocument {
    *          the path entries
    */
   protected void postProcess(final Set<IStyle> usedStyles,
-      final ArrayListView<PathEntry> paths) {
+      final ArrayListView<Map.Entry<Path, IFileType>> paths) {
     //
   }
 
@@ -501,7 +523,7 @@ public class Document extends DocumentElement implements IDocument {
   protected final synchronized void onClose() {
     Logger log;
     Throwable error;
-    ArrayListView<PathEntry> paths;
+    ArrayListView<Map.Entry<Path, IFileType>> paths;
     Set<IStyle> styles;
 
     this.fsmStateAssertAndSet(Document.STATE_FOOTER_CLOSED,
@@ -526,7 +548,8 @@ public class Document extends DocumentElement implements IDocument {
               this.__name() + ", now beginning to post-process."); //$NON-NLS-1$
         }
 
-        paths = ArrayListView.collectionToView(this.m_paths, false);
+        paths = ArrayListView.collectionToView(this.m_paths.entrySet(),
+            false);
         styles = this.m_usedStyles;
         this.m_usedStyles = null;
         try {
@@ -551,11 +574,11 @@ public class Document extends DocumentElement implements IDocument {
             try {
               if (this.m_listener != null) {
                 if (this.m_paths.size() > paths.size()) {
-                  paths = ArrayListView.collectionToView(this.m_paths,
-                      true);
+                  paths = ArrayListView.collectionToView(
+                      this.m_paths.entrySet(), true);
                 }
                 this.m_paths = null;
-                this.m_listener.onObjectFinalized(paths);
+                this.m_listener.onFilesFinalized(paths);
               }
             } catch (final Throwable ttttt) {
               error = ErrorUtils.aggregateError(error, ttttt);

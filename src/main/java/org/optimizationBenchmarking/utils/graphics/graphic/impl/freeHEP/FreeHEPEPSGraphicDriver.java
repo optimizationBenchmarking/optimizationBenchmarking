@@ -2,20 +2,19 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.Map;
+import java.util.logging.Logger;
 
-import org.freehep.graphicsio.FontConstants;
-import org.freehep.graphicsio.PageConstants;
-import org.freehep.graphicsio.ps.PSGraphics2D;
-import org.freehep.util.UserProperties;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A driver which creates <a
@@ -24,27 +23,77 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
  */
 public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
-  private final org.freehep.util.UserProperties m_props;
+  private final Map<Object, Object> m_props;
 
   /** the hidden constructor */
   FreeHEPEPSGraphicDriver() {
-    super("eps"); //$NON-NLS-1$
+    super(EGraphicFormat.EPS);
+    Map<Object, Object> o;
 
-    this.m_props = new org.freehep.util.UserProperties();
+    try {
+      o = FreeHEPEPSGraphicDriver.__initialize();
+    } catch (final Throwable t) {
+      o = null;
+    }
+    this.m_props = o;
+  }
 
-    PSGraphics2D.setClipEnabled(true);
+  /**
+   * try to initialize
+   * 
+   * @return the properties
+   * @throws ClassNotFoundException
+   *           if a necessary class could not be loaded
+   */
+  private static final Map<Object, Object> __initialize()
+      throws ClassNotFoundException {
 
-    this.m_props.putAll(PSGraphics2D.getDefaultProperties());
-    this.m_props.setProperty(PSGraphics2D.PAGE_SIZE,
-        PageConstants.BEST_FIT);
-    this.m_props.setProperty(PSGraphics2D.EMBED_FONTS, true);
-    this.m_props.setProperty(PSGraphics2D.EMBED_FONTS_AS,
-        FontConstants.EMBED_FONTS_TYPE3);
-    this.m_props.setProperty(PSGraphics2D.PREVIEW, false);
-    this.m_props.setProperty(PSGraphics2D.PAGE_SIZE,
-        PSGraphics2D.CUSTOM_PAGE_SIZE);
-    this.m_props.setProperty(PSGraphics2D.BACKGROUND_COLOR, Color.WHITE);
-    this.m_props.setProperty(PSGraphics2D.PAGE_MARGINS, "0, 0, 0, 0"); //$NON-NLS-1$
+    ReflectionUtils.ensureClassesAreLoaded(
+        "org.freehep.graphicsio.ps.PSGraphics2D", //$NON-NLS-1$
+        "org.freehep.graphics2d.TagString", //$NON-NLS-1$
+        "org.freehep.graphics2d.font.FontUtilities", //$NON-NLS-1$
+        "org.freehep.graphicsio.AbstractVectorGraphicsIO", //$NON-NLS-1$
+        "org.freehep.graphicsio.FontConstants", //$NON-NLS-1$
+        "org.freehep.graphicsio.ImageConstants", //$NON-NLS-1$
+        //"org.freehep.graphicsio.ImageGraphics2D", //$NON-NLS-1$
+        "org.freehep.graphicsio.InfoConstants", //$NON-NLS-1$
+        "org.freehep.graphicsio.MultiPageDocument", //$NON-NLS-1$
+        "org.freehep.graphicsio.PageConstants", //$NON-NLS-1$
+        "org.freehep.util.ScientificFormat", //$NON-NLS-1$
+        "org.freehep.util.UserProperties", //$NON-NLS-1$
+        "org.freehep.util.images.ImageUtilities", //$NON-NLS-1$
+        "org.freehep.graphics2d.font.FontEncoder"); //$NON-NLS-1$
+
+    final org.freehep.util.UserProperties props = new org.freehep.util.UserProperties();
+
+    org.freehep.graphicsio.ps.PSGraphics2D.setClipEnabled(true);
+
+    props.putAll(org.freehep.graphicsio.ps.PSGraphics2D
+        .getDefaultProperties());
+    props.setProperty(org.freehep.graphicsio.ps.PSGraphics2D.PAGE_SIZE,
+        org.freehep.graphicsio.PageConstants.BEST_FIT);
+    props.setProperty(org.freehep.graphicsio.ps.PSGraphics2D.EMBED_FONTS,
+        true);
+    props.setProperty(
+        org.freehep.graphicsio.ps.PSGraphics2D.EMBED_FONTS_AS,
+        org.freehep.graphicsio.FontConstants.EMBED_FONTS_TYPE3);
+    props.setProperty(org.freehep.graphicsio.ps.PSGraphics2D.PREVIEW,
+        false);
+    props.setProperty(org.freehep.graphicsio.ps.PSGraphics2D.PAGE_SIZE,
+        org.freehep.graphicsio.ps.PSGraphics2D.CUSTOM_PAGE_SIZE);
+    props.setProperty(
+        org.freehep.graphicsio.ps.PSGraphics2D.BACKGROUND_COLOR,
+        Color.WHITE);
+    props.setProperty(org.freehep.graphicsio.ps.PSGraphics2D.PAGE_MARGINS,
+        "0, 0, 0, 0"); //$NON-NLS-1$
+
+    return props;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean canUse() {
+    return (this.m_props != null);
   }
 
   /**
@@ -64,17 +113,18 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final Graphic doCreateGraphic(final Path path,
-      final OutputStream os, final PhysicalDimension size,
-      final IObjectListener listener) {
-    final UserProperties up;
-    final PSGraphics2D g;
+  protected final Graphic createGraphic(final Logger logger,
+      final IFileProducerListener listener, final Path basePath,
+      final String mainDocumentNameSuggestion, final PhysicalDimension size) {
+
+    final org.freehep.util.UserProperties up;
+    final org.freehep.graphicsio.ps.PSGraphics2D g;
     final double wd, hd;
     final Dimension dim;
-
     final ELength sizeUnit;
+    final Path path;
 
-    up = new UserProperties();
+    up = new org.freehep.util.UserProperties();
     up.putAll(this.m_props);
 
     sizeUnit = size.getUnit();
@@ -89,11 +139,14 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
           " translated to " + dim);//$NON-NLS-1$
     }
 
-    up.setProperty(PSGraphics2D.CUSTOM_PAGE_SIZE, dim);
+    up.setProperty(
+        org.freehep.graphicsio.ps.PSGraphics2D.CUSTOM_PAGE_SIZE, dim);
 
-    synchronized (PSGraphics2D.class) {
-      PSGraphics2D.setClipEnabled(true);
-      g = new PSGraphics2D(os, dim);
+    path = this.makePath(basePath, mainDocumentNameSuggestion);
+    synchronized (org.freehep.graphicsio.ps.PSGraphics2D.class) {
+      org.freehep.graphicsio.ps.PSGraphics2D.setClipEnabled(true);
+      g = new org.freehep.graphicsio.ps.PSGraphics2D(
+          PathUtils.openOutputStream(path), dim);
       g.setProperties(up);
       g.setMultiPage(false);
       GraphicUtils.setDefaultRenderingHints(g);
@@ -102,13 +155,8 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
     }
     GraphicUtils.setDefaultRenderingHints(g);
 
-    return new _FreeHEPEPSGraphic(g, path, listener, dim.width, dim.height);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final EGraphicFormat getGraphicFormat() {
-    return EGraphicFormat.EPS;
+    return new _FreeHEPEPSGraphic(g, logger, listener, path, dim.width,
+        dim.height);
   }
 
   /** the loader */

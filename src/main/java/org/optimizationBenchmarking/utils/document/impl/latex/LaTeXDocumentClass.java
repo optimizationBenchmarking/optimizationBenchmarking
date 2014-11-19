@@ -1,18 +1,19 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import java.nio.file.Path;
+import java.util.Map;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.graphics.EPaperSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -183,7 +184,7 @@ public class LaTeXDocumentClass extends PageDimension {
    * @return a list of path entries describing the elements stored in the
    *         folder, or {@code null} if no additional files were created
    */
-  public PathEntry[] initialize(final Path folder) {
+  public Map.Entry<Path, IFileType>[] initialize(final Path folder) {
     return null;
   }
 

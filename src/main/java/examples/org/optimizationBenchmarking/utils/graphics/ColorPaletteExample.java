@@ -59,10 +59,12 @@ public class ColorPaletteExample {
     i = 0;
     for (final IGraphicDriver d : ColorPaletteExample.DRIVERS) {
       for (final ColorPalette p : ColorPaletteExample.PALETTES) {//
-        ColorPaletteExample.__paint(dir,
-            ((((ColorPaletteExample.class.getSimpleName() + '_')
-                + d.getClass().getSimpleName() + '_' + p.getClass()
-                .getSimpleName()) + '_') + (++i)), d, p);
+        ColorPaletteExample
+            .__paint(
+                dir,
+                ((((ColorPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
+                    + d.getClass().getSimpleName() + '_' + p.getClass()
+                    .getSimpleName()), d, p);
       }
     }
   }
@@ -88,9 +90,10 @@ public class ColorPaletteExample {
     ColorStyle st;
     Color use;
 
-    try (final Graphic g = driver.createGraphic(dir, name,
-        new PhysicalDimension(160, 160, ELength.MM), new FinishedPrinter(
-            driver))) {
+    try (final Graphic g = driver.use().setBasePath(dir)
+        .setMainDocumentNameSuggestion(name)
+        .setSize(new PhysicalDimension(160, 160, ELength.MM))
+        .setFileProducerListener(new FinishedPrinter(driver)).create()) {
 
       b = g.getBounds();
       g.setFont(new Font("Arial", Font.PLAIN, //$NON-NLS-1$

@@ -2,23 +2,26 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import java.awt.geom.Rectangle2D;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
-import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * The base class for figures or sub-figures
@@ -69,7 +72,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
   private PhysicalDimension m_figureSize;
 
   /** the figure files */
-  private ArrayListView<PathEntry> m_figureFiles;
+  private ArrayListView<Map.Entry<Path, IFileType>> m_figureFiles;
 
   /**
    * Create a figure
@@ -205,7 +208,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
    *          a list of the generated files
    */
   protected void onFigureClose(final PhysicalDimension size,
-      final ArrayListView<PathEntry> files) {
+      final ArrayListView<Map.Entry<Path, EGraphicFormat>> files) {
     //
   }
 
@@ -235,36 +238,66 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   synchronized final void _onGraphicClosed(
-      final ArrayListView<PathEntry> result) {
-
+      final Collection<Map.Entry<Path, IFileType>> result) {
     final Logger log;
-    PathEntry entry;
+    final int size;
+    final MemoryTextOutput mto;
+    final Map.Entry<Path, EGraphicFormat>[] list, list2;
+    int i;
+    boolean empty;
 
     this.fsmStateAssertAndSet(BasicFigure.STATE_GRAPHIC_CREATED,
         BasicFigure.STATE_GRAPHIC_CLOSED);
 
-    entry = null;
     log = this.m_doc.m_logger;
-    if (result != null) {
-      this.m_figureFiles = result.select(_FigureFileSelector.INSTANCE);
-      if (!(this.m_figureFiles.isEmpty())) {
-        entry = this.m_figureFiles.get(0);
-        this.m_doc.addPaths(this.m_figureFiles);
-      }
-
-    } else {
+    if ((result == null) || ((size = result.size()) <= 0)) {
+      empty = true;
       this.m_figureFiles = ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
+    } else {
+      this.m_doc.addPaths(result);
+
+      list = new Map.Entry[size];
+      i = 0;
+      for (final Map.Entry<Path, IFileType> entry : result) {
+        if (entry.getValue() instanceof EGraphicFormat) {
+          list[i++] = ((Map.Entry) entry);
+        }
+      }
+      if (i >= size) {
+        empty = false;
+        if (result instanceof ArrayListView) {
+          this.m_figureFiles = ((ArrayListView) result);
+        } else {
+          this.m_figureFiles = ArrayListView.collectionToView(result,
+              false);
+        }
+      } else {
+        empty = (i <= 0);
+        if (empty) {
+          this.m_figureFiles = ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
+        } else {
+          list2 = new Map.Entry[i];
+          System.arraycopy(list, 0, list2, 0, i);
+          this.m_figureFiles = new ArrayListView(list2);
+        }
+      }
     }
 
     if ((log != null) && (log.isLoggable(Level.FINER))) {
-      if (entry != null) {
-        log.finer("Finished creating graphic '" + //$NON-NLS-1$
-            entry + "' of " + this._getType());//$NON-NLS-1$
-      } else {
-        log.finer("Finished creating graphic of " + //$NON-NLS-1$
-            this._getType()
-            + ", but no file was produced. (Was this intentionally? If not, something may be wrong.)");//$NON-NLS-1$
+      mto = new MemoryTextOutput();
+      mto.append("Finished creating graphic ");//$NON-NLS-1$
+      if (!empty) {
+        this.m_figureFiles.toText(mto);
       }
+      mto.append(" of ");//$NON-NLS-1$
+      mto.append(this._getType());
+      if (empty) {
+        mto.append(", but no file was produced. (Was this intentionally? If not, something may be wrong.)");//$NON-NLS-1$
+      } else {
+        mto.append('.');
+      }
+
+      log.finer(mto.toString());
     }
   }
 
@@ -276,8 +309,10 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
     this.fsmStateAssertAndSet(BasicFigure.STATE_CAPTION_CLOSED,
         BasicFigure.STATE_GRAPHIC_CREATED);
-    g = this.m_driver.createGraphic(this.m_folder, this.m_suggestion,
-        this.m_size, new __GraphicListener());
+    g = this.m_driver.createGraphic(this.m_size)
+        .setBasePath(this.m_folder).setLogger(this.m_doc.m_logger)
+        .setMainDocumentNameSuggestion(this.m_suggestion)
+        .setFileProducerListener(new __GraphicListener()).create();
     this.m_doc.m_styles.initialize(g);
 
     r = g.getBounds();
@@ -289,14 +324,14 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
   /**
    * The internal dispatcher for graphic listening events. It is basically
    * a wrapper for the
-   * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure#_onGraphicClosed(ArrayListView)}
+   * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure#_onGraphicClosed(Collection)}
    * method, allowing it to remain protected and allowing that
    * {@link org.optimizationBenchmarking.utils.document.impl.abstr.BasicFigure}
    * does not need to implement
-   * {@link org.optimizationBenchmarking.utils.document.object.IObjectListener}
+   * {@link org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener}
    * .
    */
-  private final class __GraphicListener implements IObjectListener {
+  private final class __GraphicListener implements IFileProducerListener {
     /** create */
     __GraphicListener() {
       super();
@@ -304,8 +339,8 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
     /** {@inheritDoc} */
     @Override
-    public final void onObjectFinalized(
-        final ArrayListView<PathEntry> result) {
+    public final void onFilesFinalized(
+        final Collection<Map.Entry<Path, IFileType>> result) {
       BasicFigure.this._onGraphicClosed(result);
     }
   }

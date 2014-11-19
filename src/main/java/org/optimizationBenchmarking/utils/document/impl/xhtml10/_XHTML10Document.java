@@ -8,22 +8,25 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
-import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
+import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** the XHTML document */
 final class _XHTML10Document extends Document {
@@ -150,8 +153,8 @@ final class _XHTML10Document extends Document {
    *          the logger
    */
   _XHTML10Document(final XHTML10Driver driver, final Path docPath,
-      final IObjectListener listener, final Logger logger) {
-    super(driver, docPath, listener, logger);
+      final Logger logger, final IFileProducerListener listener) {
+    super(driver, docPath, logger, listener);
     this.open();
   }
 
@@ -164,8 +167,8 @@ final class _XHTML10Document extends Document {
 
     super.onOpen();
 
-    this.addPath(new PathEntry(XHTML10Driver.XHTML_MAIN_FILE, this
-        .getDocumentPath()));
+    this.addPath(new ImmutableAssociation<Path, IFileType>(this
+        .getDocumentPath(), EDocumentFormat.XHTML_1_0));
 
     out = this.getTextOutput();
     out.append(_XHTML10Document.XML_HEADER_BEGIN);
@@ -203,7 +206,7 @@ final class _XHTML10Document extends Document {
   /** {@inheritDoc} */
   @Override
   protected void postProcess(final Set<IStyle> usedStyles,
-      final ArrayListView<PathEntry> paths) {
+      final ArrayListView<Map.Entry<Path, IFileType>> paths) {
     Path path;
     String s;
     char ch;
@@ -262,7 +265,8 @@ final class _XHTML10Document extends Document {
           ErrorUtils.throwAsRuntimeException(t);
         }
 
-        this.addPath(new PathEntry(XHTML10Driver.CSS_STYLE_FILE, path));
+        this.addPath(new ImmutableAssociation<Path, IFileType>(path,
+            EWebFileTypes.CSS));
       }
     } finally {
       super.postProcess(usedStyles, paths);

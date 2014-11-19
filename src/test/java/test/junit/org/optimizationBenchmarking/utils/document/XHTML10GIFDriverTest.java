@@ -9,7 +9,7 @@ public class XHTML10GIFDriverTest extends DocumentDriverTest {
 
   /** create the test */
   public XHTML10GIFDriverTest() {
-    super(new XHTML10Driver(EGraphicFormat.GIF.getDefaultDriver(),
+    super(XHTML10Driver.getInstance(EGraphicFormat.GIF.getDefaultDriver(),
         EScreenSize.SVGA.getPageSize(90), null));
   }
 }

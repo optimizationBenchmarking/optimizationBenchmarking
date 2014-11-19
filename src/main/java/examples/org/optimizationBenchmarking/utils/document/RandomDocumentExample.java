@@ -95,21 +95,38 @@ public class RandomDocumentExample extends DocumentExample {
 
   static {
     final LinkedHashSet<IDocumentDriver> list;
+    IDocumentDriver driver;
 
     list = new LinkedHashSet<>();
-    list.add(XHTML10Driver.getDefaultDriver());
-    list.add(new XHTML10Driver(EGraphicFormat.JPEG.getDefaultDriver(),
-        EScreenSize.WQXGA.getPageSize(120), null));
-    list.add(new XHTML10Driver(EGraphicFormat.GIF.getDefaultDriver(),
-        EScreenSize.SVGA.getPageSize(90), LaTeXDocumentClass
-            .getDefaultFontPalette()));
 
-    for (final EDocumentFormat format : EDocumentFormat.values()) {
-      list.add(format.getDefaultDriver());
+    driver = XHTML10Driver.getDefaultDriver();
+    if ((driver != null) && (driver.canUse())) {
+      list.add(driver);
     }
 
-    DRIVERS = new ArrayListView<>(list.toArray(new IDocumentDriver[list
-        .size()]));
+    driver = XHTML10Driver.getInstance(
+        EGraphicFormat.JPEG.getDefaultDriver(),
+        EScreenSize.WQXGA.getPageSize(120), null);
+    if ((driver != null) && (driver.canUse())) {
+      list.add(driver);
+    }
+
+    driver = XHTML10Driver.getInstance(
+        EGraphicFormat.GIF.getDefaultDriver(),
+        EScreenSize.SVGA.getPageSize(90),
+        LaTeXDocumentClass.getDefaultFontPalette());
+    if ((driver != null) && (driver.canUse())) {
+      list.add(driver);
+    }
+
+    for (final EDocumentFormat format : EDocumentFormat.values()) {
+      driver = format.getDefaultDriver();
+      if ((driver != null) && (driver.canUse())) {
+        list.add(driver);
+      }
+    }
+
+    DRIVERS = ArrayListView.collectionToView(list, false);
   }
 
   /** the normal text */
@@ -274,10 +291,11 @@ public class RandomDocumentExample extends DocumentExample {
       }
       i++;
 
-      de = new RandomDocumentExample(driver.createDocument(
-          dir.resolve((("random/" + cur) + '_') + i),//$NON-NLS-1$
-          "report",//$NON-NLS-1$ 
-          new FinishedPrinter(driver), log), null, System.out);
+      de = new RandomDocumentExample(driver.use()
+          .setBasePath(dir.resolve((("random/" + cur) + '_') + i))//$NON-NLS-1$
+          .setMainDocumentNameSuggestion("report")//$NON-NLS-1$
+          .setFileProducerListener(new FinishedPrinter(driver))
+          .setLogger(log).create(), null, System.out);
 
       if (pool != null) {
         pool.execute(de);

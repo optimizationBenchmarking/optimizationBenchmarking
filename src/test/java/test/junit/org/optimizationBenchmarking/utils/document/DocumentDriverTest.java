@@ -58,8 +58,8 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     Assert.assertNotNull(driver);
 
     try (final TempDir td = new TempDir()) {
-      try (final IDocument doc = driver.createDocument(td.getDir(),
-          "document", null, null)) { //$NON-NLS-1$
+      try (final IDocument doc = driver.use().setBasePath(td.getDir())
+          .setMainDocumentNameSuggestion("document").create()) { //$NON-NLS-1$
         ex = new RandomDocumentExample(doc, r, null);
         if (service != null) {
           f = service.submit(ex);
@@ -93,8 +93,8 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     Assert.assertNotNull(driver);
 
     try (final TempDir td = new TempDir()) {
-      try (final IDocument doc = driver.createDocument(td.getDir(),
-          "document", null, null)) { //$NON-NLS-1$
+      try (final IDocument doc = driver.use().setBasePath(td.getDir())
+          .setMainDocumentNameSuggestion("document").create()) { //$NON-NLS-1$
         ex = new TemplateDocumentExample(doc);
         if (service != null) {
           f = service.submit(ex);

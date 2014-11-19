@@ -3,11 +3,13 @@ package org.optimizationBenchmarking.utils.document.spec;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.graphics.style.IStyleProvider;
+import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
 
 /**
  * The root interface for the document output API.
  */
-public interface IDocument extends IDocumentElement, IStyleProvider {
+public interface IDocument extends IDocumentElement, IStyleProvider,
+    IToolJob {
 
   /**
    * create the document header

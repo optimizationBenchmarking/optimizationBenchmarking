@@ -2,12 +2,16 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.Iterator;
+import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
+import javax.imageio.spi.IIORegistry;
+import javax.imageio.spi.ImageWriterSpi;
+
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
@@ -15,6 +19,7 @@ import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A driver which creates Java's raster graphics to use
@@ -24,9 +29,6 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
 
   /** the dots per inch */
   final int m_dpi;
-
-  /** the type */
-  private final String m_type;
 
   /** the color model */
   final EColorModel m_colors;
@@ -41,8 +43,8 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
    * @param colors
    *          the colors
    */
-  _ImageIORasterGraphicDriver(final String type, final EColorModel colors,
-      final int dotsPerInch) {
+  _ImageIORasterGraphicDriver(final EGraphicFormat type,
+      final EColorModel colors, final int dotsPerInch) {
     super(type);
 
     if ((dotsPerInch <= 1) || (dotsPerInch >= 1000000)) {
@@ -54,9 +56,104 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
     }
 
     this.m_dpi = dotsPerInch;
-
     this.m_colors = colors;
-    this.m_type = type;
+  }
+
+  /**
+   * create the writer spi
+   * 
+   * @param type
+   *          the graphic type
+   * @return an image writer service provider for a given graphic type
+   */
+  static final ImageWriterSpi getSPI(final EGraphicFormat type) {
+    try {
+      Iterator<ImageWriterSpi> spiIt;
+      ImageWriterSpi spi, use, emergency;
+      IIORegistry reg;
+      String[] lst;
+      String cmp;
+      boolean canBreak;
+
+      use = emergency = null;
+      try {
+
+        // try to find a writer provider supporting our format
+        reg = IIORegistry.getDefaultInstance();
+        if (reg != null) {
+          spiIt = reg.getServiceProviders(ImageWriterSpi.class, false);
+          if (spiIt != null) {
+            finderLoop: while (spiIt.hasNext()) {
+              spi = spiIt.next();
+              if (spi != null) {
+
+                if (spi.getClass().getCanonicalName().contains("freehep")) { //$NON-NLS-1$
+                  if ((emergency == null)
+                      || (spi.isStandardImageMetadataFormatSupported() && (!(emergency
+                          .isStandardImageMetadataFormatSupported())))) {
+                    emergency = spi;
+                  }
+                  continue finderLoop; // no freeHEP drivers
+                }
+
+                checkFormat: {
+                  // let's see if a mime type can match
+                  cmp = type.getMIMEType();
+                  if (cmp != null) {
+                    lst = spi.getMIMETypes();
+                    if (lst == null) {
+                      continue finderLoop;
+                    }
+                    for (final String ss : lst) {
+                      if (cmp.equalsIgnoreCase(ss)) {
+                        break checkFormat;
+                      }
+                    }
+                    continue;
+                  }
+
+                  // ok, no mime type know, let's compare the file suffix
+                  cmp = type.getDefaultSuffix();
+                  if (cmp != null) {
+                    lst = spi.getFileSuffixes();
+                    if (lst == null) {
+                      continue finderLoop;
+                    }
+                    for (final String ss : lst) {
+                      if (cmp.equalsIgnoreCase(ss)) {
+                        break checkFormat;
+                      }
+                    }
+                    continue finderLoop;
+                  }
+
+                  continue finderLoop;
+                }
+
+                // the format fits!
+                canBreak = spi.isStandardImageMetadataFormatSupported();
+                if (canBreak || (use == null)) {
+                  use = spi;
+                  if (canBreak) {
+                    return use;
+                  }
+                  continue finderLoop;
+                }
+              }
+            }
+          }
+        }
+      } catch (final Throwable t) {
+        //
+      }
+
+      if (use == null) {
+        return emergency;
+      }
+      return use;
+    } catch (final Throwable tt) {
+      return null;
+    }
   }
 
   /** {@inheritDoc} */
@@ -77,9 +174,9 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final Graphic doCreateGraphic(final Path path,
-      final OutputStream os, final PhysicalDimension size,
-      final IObjectListener listener) {
+  protected final Graphic createGraphic(final Logger logger,
+      final IFileProducerListener listener, final Path basePath,
+      final String mainDocumentNameSuggestion, final PhysicalDimension size) {
     final BufferedImage img;
     final Graphics2D g;
     final double w, h, wIn, hIn, hDPI, wDPI;
@@ -110,8 +207,9 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
       g.scale((((double) wPx) / wPt), (((double) hPx) / hPt));
     }
 
-    return this._create(path, os, listener, img, g, wPt, hPt, wDPI, hDPI,
-        this.m_type);
+    return this._create(
+        this.makePath(basePath, mainDocumentNameSuggestion), logger,
+        listener, img, g, wPt, hPt, wDPI, hDPI);
   }
 
   /**
@@ -119,8 +217,8 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
    * 
    * @param path
    *          the path
-   * @param os
-   *          the output stream
+   * @param logger
+   *          the logger
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -134,16 +232,14 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
    *          the resolution along the x-axis
    * @param yDPI
    *          the resolution along the y-axis
-   * @param type
-   *          the type
    * @param img
    *          the buffered image
    * @return the graphic
    */
   abstract _ImageIORasterGraphic _create(final Path path,
-      final OutputStream os, final IObjectListener listener,
+      final Logger logger, final IFileProducerListener listener,
       final BufferedImage img, final Graphics2D g, final int w,
-      final int h, final double xDPI, final double yDPI, final String type);
+      final int h, final double xDPI, final double yDPI);
 
   /** {@inheritDoc} */
   @Override

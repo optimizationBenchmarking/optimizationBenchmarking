@@ -1,23 +1,27 @@
 package org.optimizationBenchmarking.utils.graphics.graphic;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.NullGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEMFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEPSGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPPDFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPSVGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOBMPGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOGIFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOJPEGGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOPNGGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
+import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * An enumeration with graphics formats.
  */
-public enum EGraphicFormat {
+public enum EGraphicFormat implements IFileType {
 
   /** A graphics driver which discards all output */
-  NULL(false) {
+  NULL(TextUtils.NULL_STRING, false, null, null) {
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
@@ -29,7 +33,8 @@ public enum EGraphicFormat {
    * href="http://en.wikipedia.org/wiki/Encapsulated_PostScript">EPS</a>
    * format
    */
-  EPS(true) {
+  EPS("Encapsulated PostScript", true,//$NON-NLS-1$
+      "eps", "image/eps") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
@@ -42,7 +47,8 @@ public enum EGraphicFormat {
    * href="http://en.wikipedia.org/wiki/Portable_Document_Format">PDF</a>
    * format
    */
-  PDF(true) {
+  PDF("Portable Document Format", true,//$NON-NLS-1$
+      "pdf", "application/pdf") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
@@ -55,11 +61,26 @@ public enum EGraphicFormat {
    * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
    * format
    */
-  SVG(true) {
+  SVG("Scalable Vector Graphics", true,//$NON-NLS-1$
+      "svg", "image/svg+xml") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return FreeHEPSVGGraphicDriver.getInstance();
+      return FreeHEPSVGGraphicDriver.getPlainInstance();
+    }
+  },
+
+  /**
+   * the <a
+   * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
+   * format
+   */
+  SVGZ("Compressed Scalable Vector Graphics", SVG.m_isVector,//$NON-NLS-1$
+      "svgz", SVG.m_mime) { //$NON-NLS-1$
+    /** {@inheritDoc} */
+    @Override
+    public final IGraphicDriver getDefaultDriver() {
+      return FreeHEPSVGGraphicDriver.getCompressedInstance();
     }
   },
 
@@ -67,7 +88,8 @@ public enum EGraphicFormat {
    * the <a href="http://en.wikipedia.org/wiki/Windows_Metafile">EMF</a>
    * format
    */
-  EMF(true) {
+  EMF("Enhanced Metafile", true,//$NON-NLS-1$
+      "emf", "image/x-emf") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
@@ -76,7 +98,8 @@ public enum EGraphicFormat {
   },
 
   /** the <a href="http://en.wikipedia.org/wiki/JPEG">JPEG</a> format */
-  JPEG(false) {
+  JPEG("JPEG Image", false,//$NON-NLS-1$
+      "jpg", "image/jpeg") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
@@ -87,7 +110,7 @@ public enum EGraphicFormat {
     @Override
     public IGraphicDriver getDriver(final EColorModel color,
         final int dotsPerInch, final double quality) {
-      return new ImageIOJPEGGraphicDriver(color, dotsPerInch,
+      return ImageIOJPEGGraphicDriver.getInstance(color, dotsPerInch,
           ((float) quality));
     }
   },
@@ -97,7 +120,8 @@ public enum EGraphicFormat {
    * href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG</a>
    * format
    */
-  PNG(false) {
+  PNG("Portable Network Graphics", false,//$NON-NLS-1$
+      "png", "image/png") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
@@ -108,7 +132,7 @@ public enum EGraphicFormat {
     @Override
     public IGraphicDriver getDriver(final EColorModel color,
         final int dotsPerInch, final double quality) {
-      return new ImageIOPNGGraphicDriver(color, dotsPerInch);
+      return ImageIOPNGGraphicDriver.getInstance(color, dotsPerInch);
     }
   },
 
@@ -117,7 +141,8 @@ public enum EGraphicFormat {
    * href="http://en.wikipedia.org/wiki/Graphics_Interchange_Format">
    * GIF</a> format
    */
-  GIF(false) {
+  GIF("Graphics Interchange Format", false,//$NON-NLS-1$
+      "gif", "image/gif") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
@@ -128,7 +153,26 @@ public enum EGraphicFormat {
     @Override
     public IGraphicDriver getDriver(final EColorModel color,
         final int dotsPerInch, final double quality) {
-      return new ImageIOGIFGraphicDriver(color, dotsPerInch);
+      return ImageIOGIFGraphicDriver.getInstance(color, dotsPerInch);
+    }
+  },
+  /**
+   * the <a href="http://en.wikipedia.org/wiki/BMP_file_format">BMP</a>
+   * format
+   */
+  BMP("Bitmap Image Format", false,//$NON-NLS-1$
+      "bmp", "image/bmp") { //$NON-NLS-1$//$NON-NLS-2$
+    /** {@inheritDoc} */
+    @Override
+    public final IGraphicDriver getDefaultDriver() {
+      return ImageIOBMPGraphicDriver.getDefaultInstance();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public IGraphicDriver getDriver(final EColorModel color,
+        final int dotsPerInch, final double quality) {
+      return ImageIOBMPGraphicDriver.getInstance(color, dotsPerInch);
     }
   },
 
@@ -143,17 +187,40 @@ public enum EGraphicFormat {
   /** the default image encoding quality */
   public static final double DEFAULT_QUALITY = 0.8d;
 
+  /** the set of graphic formats */
+  public static final ArraySetView<EGraphicFormat> INSTANCES = //
+  new ArraySetView<>(EGraphicFormat.values());
+
   /** is this a vector graphic format? */
   private final boolean m_isVector;
+
+  /** the file type's name */
+  private final String m_name;
+
+  /** the suffix for files of this type */
+  private final String m_suffix;
+
+  /** the mime type */
+  private final String m_mime;
 
   /**
    * Create the graphics format specifier
    * 
+   * @param name
+   *          the file type's name
    * @param isVector
    *          is this a vector graphic?
+   * @param suffix
+   *          the file suffix
+   * @param mime
+   *          the mime type
    */
-  private EGraphicFormat(final boolean isVector) {
+  private EGraphicFormat(final String name, final boolean isVector,
+      final String suffix, final String mime) {
+    this.m_name = name;
     this.m_isVector = isVector;
+    this.m_suffix = suffix;
+    this.m_mime = mime;
   }
 
   /**
@@ -207,9 +274,26 @@ public enum EGraphicFormat {
    * 
    * @return {@code true} if the format is a vector graphic, {@code false}
    *         if it is a pixel graphic
-   * @see org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic#isVectorGraphic()
    */
   public final boolean isVectorFormat() {
     return this.m_isVector;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getDefaultSuffix() {
+    return this.m_suffix;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getMIMEType() {
+    return this.m_mime;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getName() {
+    return this.m_name;
   }
 }

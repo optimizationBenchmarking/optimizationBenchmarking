@@ -1,10 +1,11 @@
 package org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP;
 
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
 import org.freehep.graphicsio.emf.EMFGraphics2D;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * the internal <a
@@ -20,6 +21,8 @@ final class _FreeHEPEMFGraphic extends
    * 
    * @param graphic
    *          the graphic to use
+   * @param log
+   *          the logger
    * @param path
    *          the path under which the contents of the graphic are stored
    * @param listener
@@ -30,9 +33,10 @@ final class _FreeHEPEMFGraphic extends
    * @param h
    *          the height
    */
-  _FreeHEPEMFGraphic(final EMFGraphics2D graphic, final Path path,
-      final IObjectListener listener, final int w, final int h) {
-    super(graphic, path, listener, w, h);
+  _FreeHEPEMFGraphic(final EMFGraphics2D graphic, final Logger log,
+      final IFileProducerListener listener, final Path path, final int w,
+      final int h) {
+    super(graphic, log, listener, path, w, h);
   }
 
   /** {@inheritDoc} */
@@ -47,7 +51,7 @@ final class _FreeHEPEMFGraphic extends
 
   /** {@inheritDoc} */
   @Override
-  protected final Object getPathEntryObjectID() {
+  public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.EMF;
   }
 }

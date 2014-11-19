@@ -49,7 +49,7 @@ public class FontPaletteExample {
     }
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
       PaletteInputDriver.INSTANCE.loadResource(tb, XHTML10Driver.class,
-          "xhtml10.font.palette"); //$NON-NLS-1$
+          "xhtml10.fontPalette"); //$NON-NLS-1$
       list[1] = tb.getResult();
     } catch (final Throwable tt) {
       tt.printStackTrace();
@@ -82,9 +82,11 @@ public class FontPaletteExample {
     i = 0;
     for (final FontPalette p : FontPaletteExample.PALETTES) {//
       for (final IGraphicDriver d : FontPaletteExample.DRIVERS) {
-        FontPaletteExample.__paint(dir,
-            ((FontPaletteExample.class.getSimpleName() + '_')
-                + (d.getClass().getSimpleName() + '_') + (++i)), d, p);
+        FontPaletteExample
+            .__paint(
+                dir,
+                (((FontPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
+                    + (d.getClass().getSimpleName()), d, p);
       }
     }
   }
@@ -125,9 +127,10 @@ public class FontPaletteExample {
 
     s = styles.size();
 
-    try (final Graphic g = driver.createGraphic(dir, name,
-        new PhysicalDimension(320, 160, ELength.MM), new FinishedPrinter(
-            driver))) {
+    try (final Graphic g = driver.use().setBasePath(dir)
+        .setMainDocumentNameSuggestion(name)
+        .setSize(new PhysicalDimension(320, 160, ELength.MM))
+        .setFileProducerListener(new FinishedPrinter(driver)).create()) {
 
       b = g.getBounds();
       g.setColor(Color.white);

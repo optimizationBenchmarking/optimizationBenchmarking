@@ -55,10 +55,12 @@ public class StrokePaletteExample {
     z = 0;
     for (final IGraphicDriver d : StrokePaletteExample.DRIVERS) {
       for (final StrokePalette p : StrokePaletteExample.PALETTES) {//
-        StrokePaletteExample.__paint(dir,
-            ((((StrokePaletteExample.class.getSimpleName() + '_')
-                + d.getClass().getSimpleName() + '_' + p.getClass()
-                .getSimpleName()) + '_') + (++z)), d, p);
+        StrokePaletteExample
+            .__paint(
+                dir,
+                ((((StrokePaletteExample.class.getSimpleName() + '_') + (++z)) + '_')
+                    + d.getClass().getSimpleName() + '_' + p.getClass()
+                    .getSimpleName()), d, p);
       }
     }
   }
@@ -92,9 +94,10 @@ public class StrokePaletteExample {
 
     s = styles.size();
 
-    try (final Graphic g = driver.createGraphic(dir, name,
-        new PhysicalDimension(160, 160, ELength.MM), new FinishedPrinter(
-            driver))) {
+    try (final Graphic g = driver.use().setBasePath(dir)
+        .setMainDocumentNameSuggestion(name)
+        .setSize(new PhysicalDimension(160, 160, ELength.MM))
+        .setFileProducerListener(new FinishedPrinter(driver)).create()) {
 
       b = g.getBounds();
       g.setColor(Color.white);

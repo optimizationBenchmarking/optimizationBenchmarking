@@ -2,16 +2,17 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
 import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
+import javax.imageio.spi.ImageWriterSpi;
 
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.math.units.ELength;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * An internal class for <a
@@ -25,8 +26,8 @@ final class _ImageIOPNGGraphic extends _ImageIORasterGraphic {
    * 
    * @param path
    *          the path
-   * @param os
-   *          the output stream
+   * @param logger
+   *          the logger
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -40,21 +41,25 @@ final class _ImageIOPNGGraphic extends _ImageIORasterGraphic {
    *          the resolution along the x-axis
    * @param yDPI
    *          the resolution along the y-axis
-   * @param type
-   *          the type
    * @param img
    *          the buffered image
    */
-  _ImageIOPNGGraphic(final Path path, final OutputStream os,
-      final IObjectListener listener, final BufferedImage img,
+  _ImageIOPNGGraphic(final Path path, final Logger logger,
+      final IFileProducerListener listener, final BufferedImage img,
       final Graphics2D g, final int w, final int h, final double xDPI,
-      final double yDPI, final String type) {
-    super(path, os, listener, img, g, w, h, xDPI, yDPI, type);
+      final double yDPI) {
+    super(path, logger, listener, img, g, w, h, xDPI, yDPI);
   }
 
   /** {@inheritDoc} */
   @Override
-  final void _setDPI(final IIOMetadata metaData)
+  final boolean _canSetupImageMetadata() {
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _setupImageMetadata(final IIOMetadata metaData)
       throws IIOInvalidTreeException {
     final IIOMetadataNode h, v, dim;
 
@@ -78,8 +83,13 @@ final class _ImageIOPNGGraphic extends _ImageIORasterGraphic {
 
   /** {@inheritDoc} */
   @Override
-  protected final Object getPathEntryObjectID() {
-    return EGraphicFormat.PNG;
+  final ImageWriterSpi _getImageWriterSPI() {
+    return ImageIOPNGGraphicDriver._ImageIOPNGSPILoader.SPI;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final EGraphicFormat getGraphicFormat() {
+    return EGraphicFormat.PNG;
+  }
 }

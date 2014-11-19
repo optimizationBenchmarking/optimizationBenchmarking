@@ -1,13 +1,17 @@
 package examples.org.optimizationBenchmarking.utils.document;
 
+import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Map.Entry;
+
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
-import org.optimizationBenchmarking.utils.document.object.PathEntry;
+import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** A class which will print the finished files */
-public final class FinishedPrinter implements IObjectListener {
+public final class FinishedPrinter implements IFileProducerListener {
 
   /** the source objects */
   private final ArrayListView<Object> m_src;
@@ -27,7 +31,8 @@ public final class FinishedPrinter implements IObjectListener {
 
   /** {@inheritDoc} */
   @Override
-  public final void onObjectFinalized(final ArrayListView<PathEntry> id) {
+  public void onFilesFinalized(
+      final Collection<Entry<Path, IFileType>> result) {
     final ArrayListView<Object> l;
     final int i;
     MemoryTextOutput mo;
@@ -47,7 +52,7 @@ public final class FinishedPrinter implements IObjectListener {
       mo.append('f');
     }
     mo.append("inished creating "); //$NON-NLS-1$
-    id.toText(mo);
+    mo.append(result);
     s = mo.toString();
     mo = null;
 

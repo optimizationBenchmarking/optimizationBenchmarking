@@ -2,11 +2,12 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP;
 
 import java.awt.Dimension;
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
 import org.freehep.graphicsio.PageConstants;
 import org.freehep.graphicsio.pdf.PDFGraphics2D;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * the internal <a
@@ -21,6 +22,8 @@ final class _FreeHEPPDFGraphic extends
    * 
    * @param graphic
    *          the graphic to use
+   * @param log
+   *          the logger
    * @param path
    *          the path under which the contents of the graphic are stored
    * @param listener
@@ -31,9 +34,10 @@ final class _FreeHEPPDFGraphic extends
    * @param h
    *          the height
    */
-  _FreeHEPPDFGraphic(final PDFGraphics2D graphic, final Path path,
-      final IObjectListener listener, final int w, final int h) {
-    super(graphic, path, listener, w, h);
+  _FreeHEPPDFGraphic(final PDFGraphics2D graphic, final Logger log,
+      final IFileProducerListener listener, final Path path, final int w,
+      final int h) {
+    super(graphic, log, listener, path, w, h);
   }
 
   /** {@inheritDoc} */
@@ -42,7 +46,7 @@ final class _FreeHEPPDFGraphic extends
     final Dimension mess;
 
     synchronized (PageConstants.class) {
-      mess = FreeHEPPDFGraphicDriver.__FreeHEPPDFGraphicDriverLoader.INSTANCE.m_messWith;
+      mess = FreeHEPPDFGraphicDriver.s_messWith;
       mess.setSize(this.m_w, this.m_h);
       try {
         try {
@@ -51,14 +55,14 @@ final class _FreeHEPPDFGraphic extends
           super.onClose();
         }
       } finally {
-        mess.setSize(FreeHEPPDFGraphicDriver.__FreeHEPPDFGraphicDriverLoader.INSTANCE.m_correctDim);
+        mess.setSize(FreeHEPPDFGraphicDriver.s_correctDim);
       }
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final Object getPathEntryObjectID() {
+  public final EGraphicFormat getGraphicFormat() {
     return EGraphicFormat.PDF;
   }
 }

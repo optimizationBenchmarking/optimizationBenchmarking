@@ -4,8 +4,8 @@ import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A builder for an evaluation job
@@ -53,7 +53,8 @@ public interface IEvaluationBuilder extends IEvaluationElement {
    * @param listener
    *          the listener
    */
-  public abstract void setObjectListener(final IObjectListener listener);
+  public abstract void setObjectListener(
+      final IFileProducerListener listener);
 
   /**
    * Set the data

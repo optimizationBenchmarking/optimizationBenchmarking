@@ -2,15 +2,17 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.logging.Logger;
+
+import javax.imageio.spi.ImageWriterSpi;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A driver which creates Java's raster <a
@@ -19,11 +21,18 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 public final class ImageIOJPEGGraphicDriver extends
     _ImageIORasterGraphicDriver {
 
+  /** the default color model */
+  static final EColorModel DEFAULT_COLOR_MODEL = ImageIOJPEGGraphicDriver
+      .__fixColors(EGraphicFormat.DEFAULT_COLOR_MODEL);
+
+  /** the default quality */
+  static final float DEFAULT_QUALITY = ((float) (EGraphicFormat.DEFAULT_QUALITY));
+
   /** the quality */
   private final float m_quality;
 
   /**
-   * Create a new png driver for based on {@link javax.imageio ImageIO}.
+   * Create a new JPEG driver for based on {@link javax.imageio ImageIO}.
    * 
    * @param dotsPerInch
    *          the dots per inch
@@ -32,26 +41,10 @@ public final class ImageIOJPEGGraphicDriver extends
    * @param quality
    *          the quality
    */
-  public ImageIOJPEGGraphicDriver(final EColorModel colors,
+  ImageIOJPEGGraphicDriver(final EColorModel colors,
       final int dotsPerInch, final float quality) {
-    super("jpg", //$NON-NLS-1$
-        ImageIOJPEGGraphicDriver.__fixColors(colors), dotsPerInch);
-    if ((quality < 0f) || (quality > 1f) || (quality != quality)) {
-      throw new IllegalArgumentException("Illegal quality: " + quality);//$NON-NLS-1$
-    }
-
+    super(EGraphicFormat.JPEG, colors, dotsPerInch);
     this.m_quality = quality;
-  }
-
-  /**
-   * Get the default instance of the JPEG driver based on Java's imaging
-   * API
-   * 
-   * @return the default instance of the JPEG driver based on Java's
-   *         imaging API
-   */
-  public static final ImageIOJPEGGraphicDriver getDefaultInstance() {
-    return __ImageIOJPEGGraphicDriverLoader.DEFAULT_INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -92,6 +85,22 @@ public final class ImageIOJPEGGraphicDriver extends
     textOut.append(this.m_quality);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  final _ImageIORasterGraphic _create(final Path path,
+      final Logger logger, final IFileProducerListener listener,
+      final BufferedImage img, final Graphics2D g, final int w,
+      final int h, final double xDPI, final double yDPI) {
+    return new _ImageIOJPEGGraphic(path, logger, listener, img, g, w, h,
+        xDPI, yDPI, this.m_quality);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean canUse() {
+    return (ImageIOJPEGGraphicDriver._ImageIOJPEGSPILoader.SPI != null);
+  }
+
   /**
    * fix the color model
    * 
@@ -113,20 +122,52 @@ public final class ImageIOJPEGGraphicDriver extends
     }
   }
 
-  /** {@inheritDoc} */
-  @Override
-  final _ImageIORasterGraphic _create(final Path path,
-      final OutputStream os, final IObjectListener listener,
-      final BufferedImage img, final Graphics2D g, final int w,
-      final int h, final double xDPI, final double yDPI, final String type) {
-    return new _ImageIOJPEGGraphic(path, os, listener, img, g, w, h, xDPI,
-        yDPI, this.m_quality, type);
+  /**
+   * Get the default instance of the JPEG driver based on Java's imaging
+   * API
+   * 
+   * @return the default instance of the JPEG driver based on Java's
+   *         imaging API
+   */
+  public static final ImageIOJPEGGraphicDriver getDefaultInstance() {
+    return __ImageIOJPEGGraphicDriverLoader.DEFAULT_INSTANCE;
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final EGraphicFormat getGraphicFormat() {
-    return EGraphicFormat.JPEG;
+  /**
+   * Get an instance of the JPEG driver for based on {@link javax.imageio
+   * ImageIO}.
+   * 
+   * @param dotsPerInch
+   *          the dots per inch
+   * @param colors
+   *          the colors
+   * @param quality
+   *          the quality
+   * @return the {@link ImageIOJPEGGraphicDriver} instance
+   */
+  public static final ImageIOJPEGGraphicDriver getInstance(
+      final EColorModel colors, final int dotsPerInch, final float quality) {
+    final EColorModel c;
+
+    if ((quality < 0f) || (quality > 1f) || (quality != quality)) {
+      throw new IllegalArgumentException("Illegal quality: " + quality);//$NON-NLS-1$
+    }
+
+    c = ImageIOJPEGGraphicDriver.__fixColors(colors);
+
+    if ((c == ImageIOJPEGGraphicDriver.DEFAULT_COLOR_MODEL)
+        && (dotsPerInch == EGraphicFormat.DEFAULT_DPI)
+        && (quality == ImageIOJPEGGraphicDriver.DEFAULT_QUALITY)) {
+      return ImageIOJPEGGraphicDriver.getDefaultInstance();
+    }
+    return new ImageIOJPEGGraphicDriver(c, dotsPerInch, quality);
+  }
+
+  /** the loader for the JPEG SPI */
+  static final class _ImageIOJPEGSPILoader {
+    /** the image writer spi */
+    static final ImageWriterSpi SPI = //
+    _ImageIORasterGraphicDriver.getSPI(EGraphicFormat.JPEG);
   }
 
   /** the default loader */
@@ -134,8 +175,9 @@ public final class ImageIOJPEGGraphicDriver extends
 
     /** the default graphic JPEG driver instance */
     static final ImageIOJPEGGraphicDriver DEFAULT_INSTANCE = //
-    new ImageIOJPEGGraphicDriver(EGraphicFormat.DEFAULT_COLOR_MODEL,
+    new ImageIOJPEGGraphicDriver(
+        ImageIOJPEGGraphicDriver.DEFAULT_COLOR_MODEL,
         EGraphicFormat.DEFAULT_DPI,
-        ((float) (EGraphicFormat.DEFAULT_QUALITY)));
+        ImageIOJPEGGraphicDriver.DEFAULT_QUALITY);
   }
 }

@@ -2,14 +2,15 @@ package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Map;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Figure;
 import org.optimizationBenchmarking.utils.document.impl.abstr.FigureCaption;
-import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -157,7 +158,7 @@ final class _XHTML10Figure extends Figure {
   /** {@inheritDoc} */
   @Override
   protected final void onFigureClose(final PhysicalDimension size,
-      final ArrayListView<PathEntry> files) {
+      final ArrayListView<Map.Entry<Path, EGraphicFormat>> files) {
     final ITextOutput out;
 
     out = this.getTextOutput();
@@ -169,7 +170,7 @@ final class _XHTML10Figure extends Figure {
       throw new IllegalStateException("No figure file."); //$NON-NLS-1$
     }
 
-    _XHTML10Figure._img(out, files.get(0).getValue(), this.getDocument()
+    _XHTML10Figure._img(out, files.get(0).getKey(), this.getDocument()
         .getDocumentFolder(), size, this.m_caption);
 
     out.append(_XHTML10Table.TD_END);

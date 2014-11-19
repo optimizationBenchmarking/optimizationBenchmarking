@@ -75,10 +75,11 @@ public class TemplateDocumentExample extends DocumentExample {
       }
       i++;
 
-      de = new TemplateDocumentExample(driver.createDocument(
-          dir.resolve((("template/" + cur) + '_') + i),//$NON-NLS-1$
-          "report",//$NON-NLS-1$ 
-          new FinishedPrinter(driver), log));
+      de = new TemplateDocumentExample(driver.use()
+          .setBasePath(dir.resolve((("template/" + cur) + '_') + i))//$NON-NLS-1$
+          .setMainDocumentNameSuggestion("report")//$NON-NLS-1$
+          .setFileProducerListener(new FinishedPrinter(driver))
+          .setLogger(log).create());
 
       de.run();
     }

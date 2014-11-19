@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** the LaTeX document */
 final class _LaTeXDocument extends Document {
@@ -21,8 +21,8 @@ final class _LaTeXDocument extends Document {
    *          the logger
    */
   _LaTeXDocument(final LaTeXDriver driver, final Path docPath,
-      final IObjectListener listener, final Logger logger) {
-    super(driver, docPath, listener, logger);
+      final Logger logger, final IFileProducerListener listener) {
+    super(driver, docPath, logger, listener);
     this.open();
   }
 }

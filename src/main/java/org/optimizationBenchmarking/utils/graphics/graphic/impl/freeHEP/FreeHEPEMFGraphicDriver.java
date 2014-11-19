@@ -2,18 +2,19 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.Map;
+import java.util.logging.Logger;
 
-import org.freehep.graphicsio.emf.EMFGraphics2D;
-import org.freehep.util.UserProperties;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A driver which creates <a
@@ -21,25 +22,89 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
  */
 public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
-  private final org.freehep.util.UserProperties m_props;
+  final Map<Object, Object> m_props;
 
   /** the hidden constructor */
   FreeHEPEMFGraphicDriver() {
-    super("emf"); //$NON-NLS-1$
+    super(EGraphicFormat.EMF);
 
-    this.m_props = new org.freehep.util.UserProperties();
+    Map<Object, Object> o;
 
-    this.m_props.putAll(EMFGraphics2D.getDefaultProperties());
-    this.m_props.setProperty(EMFGraphics2D.BACKGROUND_COLOR, Color.WHITE);
+    try {
+      o = FreeHEPEMFGraphicDriver.__initialize();
+    } catch (final Throwable t) {
+      o = null;
+    }
+    this.m_props = o;
   }
 
   /**
-   * get the instance of the FreeHEP EMF driver
+   * try to initialize
    * 
-   * @return the instance of the FreeHEP EMF driver
+   * @return the properties
+   * @throws ClassNotFoundException
+   *           if at least one required class could not be loaded
    */
-  public static final FreeHEPEMFGraphicDriver getInstance() {
-    return __FreeHEPEMFGraphicDriverLoader.INSTANCE;
+  private static final Map<Object, Object> __initialize()
+      throws ClassNotFoundException {
+    ReflectionUtils.ensureClassesAreLoaded(//
+        "org.freehep.graphicsio.emf.EMFGraphics2D", //$NON-NLS-1$
+        "org.freehep.graphics2d.PrintColor", //$NON-NLS-1$;
+        "org.freehep.graphics2d.VectorGraphics", //$NON-NLS-1$;
+        "org.freehep.graphics2d.font.FontEncoder", //$NON-NLS-1$;
+        "org.freehep.graphics2d.font.FontUtilities", //$NON-NLS-1$;
+        "org.freehep.graphicsio.AbstractVectorGraphicsIO", //$NON-NLS-1$
+        "org.freehep.graphicsio.PageConstants", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.AlphaBlend", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.BeginPath", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.CreateBrushIndirect", //$NON-NLS-1$
+        "org.freehep.graphicsio.emf.gdi.DeleteObject", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.EOF", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.EndPath", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.ExtCreateFontIndirectW", //$NON-NLS-1$
+        "org.freehep.graphicsio.emf.gdi.ExtCreatePen", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.ExtLogFontW", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.ExtLogPen", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.ExtTextOutW", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.FillPath", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.LogBrush32", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.ModifyWorldTransform", //$NON-NLS-1$
+        "org.freehep.graphicsio.emf.gdi.RestoreDC", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SaveDC", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SelectClipPath", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SelectObject", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SetBkMode", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SetMapMode", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SetMiterLimit", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SetPolyFillMode", //$NON-NLS-1$
+        "org.freehep.graphicsio.emf.gdi.SetTextAlign", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SetTextColor", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SetViewportExtEx", //$NON-NLS-1$
+        "org.freehep.graphicsio.emf.gdi.SetViewportOrgEx", //$NON-NLS-1$
+        "org.freehep.graphicsio.emf.gdi.SetWindowExtEx", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SetWindowOrgEx", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.SetWorldTransform", //$NON-NLS-1$
+        "org.freehep.graphicsio.emf.gdi.StrokeAndFillPath", //$NON-NLS-1$
+        "org.freehep.graphicsio.emf.gdi.StrokePath", //$NON-NLS-1$;
+        "org.freehep.graphicsio.emf.gdi.TextW", //$NON-NLS-1$;
+        "org.freehep.graphicsio.font.FontTable", //$NON-NLS-1$;
+        "org.freehep.util.UserProperties", //$NON-NLS-1$;
+        "org.freehep.util.images.ImageUtilities"); //$NON-NLS-1$
+
+    final org.freehep.util.UserProperties props = new org.freehep.util.UserProperties();
+    props.putAll(org.freehep.graphicsio.emf.EMFGraphics2D
+        .getDefaultProperties());
+    props.setProperty(
+        org.freehep.graphicsio.emf.EMFGraphics2D.BACKGROUND_COLOR,
+        Color.WHITE);
+
+    return props;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean canUse() {
+    return (this.m_props != null);
   }
 
   /** {@inheritDoc} */
@@ -50,16 +115,18 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final Graphic doCreateGraphic(final Path path,
-      final OutputStream os, final PhysicalDimension size,
-      final IObjectListener listener) {
-    final UserProperties up;
-    final EMFGraphics2D g;
+  protected final Graphic createGraphic(final Logger logger,
+      final IFileProducerListener listener, final Path basePath,
+      final String mainDocumentNameSuggestion, final PhysicalDimension size) {
+
+    final org.freehep.util.UserProperties up;
+    final org.freehep.graphicsio.emf.EMFGraphics2D g;
     final double wd, hd;
     final Dimension dim;
     final ELength sizeUnit;
+    final Path path;
 
-    up = new UserProperties();
+    up = new org.freehep.util.UserProperties();
     up.putAll(this.m_props);
 
     sizeUnit = size.getUnit();
@@ -74,8 +141,10 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
           " translated to " + dim);//$NON-NLS-1$
     }
 
-    synchronized (EMFGraphics2D.class) {
-      g = new EMFGraphics2D(os, dim);
+    path = this.makePath(basePath, mainDocumentNameSuggestion);
+    synchronized (org.freehep.graphicsio.emf.EMFGraphics2D.class) {
+      g = new org.freehep.graphicsio.emf.EMFGraphics2D(
+          PathUtils.openOutputStream(path), dim);
       g.setProperties(up);
       GraphicUtils.setDefaultRenderingHints(g);
       g.startExport();
@@ -83,13 +152,17 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
     }
     GraphicUtils.setDefaultRenderingHints(g);
 
-    return new _FreeHEPEMFGraphic(g, path, listener, dim.width, dim.height);
+    return new _FreeHEPEMFGraphic(g, logger, listener, path, dim.width,
+        dim.height);
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final EGraphicFormat getGraphicFormat() {
-    return EGraphicFormat.EMF;
+  /**
+   * get the instance of the FreeHEP EMF driver
+   * 
+   * @return the instance of the FreeHEP EMF driver
+   */
+  public static final FreeHEPEMFGraphicDriver getInstance() {
+    return __FreeHEPEMFGraphicDriverLoader.INSTANCE;
   }
 
   /** the internal loader for lazy instantion */

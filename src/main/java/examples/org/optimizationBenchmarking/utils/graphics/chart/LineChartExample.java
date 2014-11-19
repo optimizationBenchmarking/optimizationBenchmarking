@@ -95,11 +95,14 @@ public class LineChartExample {
     z = 0;
     for (final IGraphicDriver d : LineChartExample.GRAPHIC_DRIVERS) {
       for (final IChartDriver c : LineChartExample.DRIVERS) {
-        try (final Graphic g = d.createGraphic(dir,
-            ((((((LineChartExample.class.getSimpleName() + '_') + d
-                .getClass().getSimpleName()) + '_') + c.getClass()
-                .getSimpleName()) + '_') + (++z)), size,
-            new FinishedPrinter(c, d))) {
+        try (final Graphic g = d
+            .use()
+            .setBasePath(dir)
+            .setMainDocumentNameSuggestion(
+                ((((((LineChartExample.class.getSimpleName() + '_') + (++z)) + '_') + d
+                    .getClass().getSimpleName()) + '_') + c.getClass()
+                    .getSimpleName())).setSize(size)
+            .setFileProducerListener(new FinishedPrinter(c, d)).create()) {
           rand.setSeed(seed);
           LineChartExample.randomLineChart(rand, g,
               LineChartExample.randomStyleSet(rand), c);

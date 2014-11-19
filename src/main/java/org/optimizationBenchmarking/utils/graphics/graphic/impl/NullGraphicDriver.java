@@ -1,26 +1,25 @@
 package org.optimizationBenchmarking.utils.graphics.graphic.impl;
 
-import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
-import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.JavaDefaultPalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.DefaultStrokePalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
-import org.optimizationBenchmarking.utils.math.units.ELength;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** the null driver */
-public final class NullGraphicDriver implements IGraphicDriver {
+public final class NullGraphicDriver extends AbstractGraphicDriver {
 
   /** the null instance */
   NullGraphicDriver() {
-    super();
+    super(EGraphicFormat.NULL);
   }
 
   /**
@@ -38,38 +37,19 @@ public final class NullGraphicDriver implements IGraphicDriver {
     return "NULL Graphics Driver"; //$NON-NLS-1$
   }
 
-  /**
-   * Create the {@code NullGraphic}
-   * 
-   * @param size
-   *          the size
-   * @param listener
-   *          the listener
-   * @return the graphic
-   */
-  private static final Graphic __create(final PhysicalDimension size,
-      final IObjectListener listener) {
-    final ELength sizeUnit;
-    sizeUnit = size.getUnit();
-    return new _NullGraphic(listener, ((sizeUnit == ELength.POINT) ? size
-        : new DoubleDimension(//
-            sizeUnit.convertTo(size.getWidth(), ELength.POINT),//
-            sizeUnit.convertTo(size.getHeight(), ELength.POINT))));
+  /** {@inheritDoc} */
+  @Override
+  protected final Graphic createGraphic(final Logger logger,
+      final IFileProducerListener listener, final Path basePath,
+      final String mainDocumentNameSuggestion, final PhysicalDimension size) {
+    return new _NullGraphic(logger, listener, size);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Graphic createGraphic(final Path folder,
-      final String nameSuggestion, final PhysicalDimension size,
-      final IObjectListener listener) {
-    return NullGraphicDriver.__create(size, listener);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final Graphic createGraphic(final OutputStream os,
-      final PhysicalDimension size, final IObjectListener listener) {
-    return NullGraphicDriver.__create(size, listener);
+  protected final Path makePath(final Path basePath,
+      final String nameSuggestion) {
+    return null;
   }
 
   /** {@inheritDoc} */
@@ -86,8 +66,14 @@ public final class NullGraphicDriver implements IGraphicDriver {
 
   /** {@inheritDoc} */
   @Override
-  public final EGraphicFormat getGraphicFormat() {
-    return EGraphicFormat.NULL;
+  public final boolean canUse() {
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append(this.toString());
   }
 
   /** the loader */

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.URLEncoder;
 import java.text.Normalizer;
 
 /**
@@ -102,11 +103,11 @@ public class CharEncodingComparison {
    */
   private static final String MISSING = "&empty;";//$NON-NLS-1$
 
-  /** The code point at which we start enumerating characters. */
+  /** The first code point to be listed: {@value} . */
   private static final int START = 0;
 
-  /** The last code point to be listed. */
-  private static final int END = 0xfff;
+  /** The last code point to be listed: {@value} . */
+  private static final int END = 0x3ff;
 
   /**
    * Encode a character: Translate the character {@code chr} to a byte
@@ -149,7 +150,7 @@ public class CharEncodingComparison {
 
       i = data.length;
       chx = new char[i << 1];
-      for (j = 0; (--i) >= 0;) {
+      for (j = 0, i = 0; i < data.length; i++) {
         b = data[i];
         chx[j++] = CharEncodingComparison.HEX[(b >>> 4) & 0xf];
         chx[j++] = CharEncodingComparison.HEX[b & 0xf];
@@ -187,112 +188,101 @@ public class CharEncodingComparison {
   }
 
   /**
-   * Write the first head
-   * 
-   * @param bw
-   *          the writer
-   * @throws IOException
-   *           if something fails
-   */
-  private static final void __head1(final Writer bw) throws IOException {
-    int i;
-    String s;
-
-    bw.write("<tr>"); //$NON-NLS-1$
-    bw.write("<th>Char</th>"); //$NON-NLS-1$
-    bw.write("<th><a href=\"http://www.unicode.org/reports/tr15/\">NFKC</a></th>"); //$NON-NLS-1$
-    bw.write("<th><a href=\"http://en.wikipedia.org/wiki/Unicode\">Code Point</a></th>"); //$NON-NLS-1$
-    bw.write("<th>Decimal</th>"); //$NON-NLS-1$
-    for (i = 0; i < CharEncodingComparison.ENCODINGS.length; i++) {
-      bw.write("<th>"); //$NON-NLS-1$
-      s = CharEncodingComparison.ENCODINGS_LINKS[i];
-      if (s != null) {
-        bw.write("<a href=\"");//$NON-NLS-1$
-        bw.write(s);
-        bw.write("\">");//$NON-NLS-1$
-      }
-      bw.write(CharEncodingComparison.ENCODINGS[i]);
-      if (s != null) {
-        bw.write("</a>");//$NON-NLS-1$
-      }
-      bw.write("</th>"); //$NON-NLS-1$
-    }
-    bw.write("</tr>"); //$NON-NLS-1$
-  }
-
-  /**
-   * Write the second head
-   * 
-   * @param bw
-   *          the writer
-   * @throws IOException
-   *           if something fails
-   */
-  private static final void __head2(final Writer bw) throws IOException {
-    bw.write("<tr><th colspan=\"4\">Character Information</th>"); //$NON-NLS-1$
-    bw.write("<th colspan=\""); //$NON-NLS-1$
-    bw.write(Integer.toString(CharEncodingComparison.ENCODINGS.length));
-    bw.write("\">Encoding: hexadecimal, least-significant byte at right-most index, ");//$NON-NLS-1$
-    bw.write(CharEncodingComparison.MISSING);
-    bw.write(" &equiv; cannot be represented</th></tr>");//$NON-NLS-1$);
-  }
-
-  /**
    * Compute the <a
    * href="http://www.unicode.org/reports/tr15/">NFKC</a>-normalization of
-   * the character
+   * the character {@code chr}
    * 
    * @param chr
    *          the character
    * @return its normalized form
    */
   private static final String __normalizeNFKC(final int chr) {
-    String s;
-    char[] chs;
-    int length, i, j, a, b, c;
+    final String s;
+    final StringBuilder sb;
+    int length, i, a, b, c;
     char x;
+    boolean add;
 
     s = Normalizer.normalize(String.valueOf((char) chr),
         Normalizer.Form.NFKC);
-    if ((length = s.length()) == 1) {
-      if (((x = s.charAt(0)) == chr) || (x <= ' ')) {
-        return null;
-      }
-    }
-
-    if (length <= 0) {
+    if (((length = s.length()) <= 0)
+        || ((length == 1) && (s.charAt(0) == chr))) {
       return null;
     }
 
-    j = (length * 8);
-    chs = new char[j];
-    for (i = length; (--i) >= 0;) {
+    sb = new StringBuilder(length << 3);
+    for (i = 0; i < length; i++) {
       x = s.charAt(i);
-      chs[--j] = ';';
-      chs[--j] = CharEncodingComparison.HEX[x & 0xf];
-      a = ((x >>> 4) & 0xf);
-      b = ((x >>> 8) & 0xf);
-      c = ((x >>> 12) & 0xf);
-      if ((a != 0) || (b != 0) || (c != 0)) {
-        chs[--j] = CharEncodingComparison.HEX[a];
-        if ((b != 0) || (c != 0)) {
-          chs[--j] = CharEncodingComparison.HEX[b];
-          if (c != 0) {
-            chs[--j] = CharEncodingComparison.HEX[c];
+      if (x < CharEncodingComparison.FIXED_NAMES.length) {
+        sb.append(CharEncodingComparison.FIXED_NAMES[x]);
+      } else {
+        switch (Character.getType(x)) {
+          case Character.NON_SPACING_MARK: {
+            add = true;
+            break;
+          }
+          default: {
+            add = false;
           }
         }
+
+        if (add) {
+          if (i > 0) {
+            sb.append('+');
+          } else {
+            sb.append("&nbsp;"); //$NON-NLS-1$            
+          }
+        }
+
+        sb.append('&');
+        sb.append('#');
+        sb.append('x');
+
+        a = ((x >>> 4) & 0xf);
+        b = ((x >>> 8) & 0xf);
+        c = ((x >>> 12) & 0xf);
+        if ((a != 0) || (b != 0) || (c != 0)) {
+          if ((b != 0) || (c != 0)) {
+            if (c != 0) {
+              sb.append(CharEncodingComparison.HEX[c]);
+            }
+            sb.append(CharEncodingComparison.HEX[b]);
+          }
+          sb.append(CharEncodingComparison.HEX[a]);
+        }
+        sb.append(CharEncodingComparison.HEX[x & 0xf]);
+        sb.append(';');
+
+        if (add) {
+          sb.append("&nbsp;"); //$NON-NLS-1$
+        }
       }
-      chs[--j] = 'x';
-      chs[--j] = '#';
-      chs[--j] = '&';
     }
-    return String.valueOf(chs, j, (chs.length - j));
+    return sb.toString();
+  }
+
+  /**
+   * Compute the <a
+   * href="http://en.wikipedia.org/wiki/Query_string#URL_encoding"
+   * >URL-encoding</a> of the character {@code chr}, based on UTF-8
+   * 
+   * @param chr
+   *          the character
+   * @return the url-encoding
+   */
+  private static final String __urlEncode(final int chr) {
+    try {
+      return URLEncoder.encode(String.valueOf((char) chr), "UTF-8"); //$NON-NLS-1$
+    } catch (final Throwable t) {
+      return null;
+    }
   }
 
   /**
    * The main routine, which creates a HTML table and stores it under path
-   * &quot;<code>/tmp/encodings.html</code>&quot; &mdash; modify if you
-   * want it under another path.
+   * {@code args[0]} if at least one command line argument is provided,
+   * otherwise it stores it under &quot;<code>/tmp/encodings.html</code>
+   * &quot;.
    * 
    * @param args
    *          ignored
@@ -301,10 +291,18 @@ public class CharEncodingComparison {
     int ch, first, count;
     String part, s;
 
-    try (final FileWriter fw = new FileWriter("/tmp/encodings.html")) { //$NON-NLS-1$
+    try (final FileWriter fw = new FileWriter(
+        ((args != null) && (args.length > 0)) ? args[0]
+            : "/tmp/encodings.html")) { //$NON-NLS-1$
       try (final BufferedWriter bw = new BufferedWriter(fw)) {
+        bw.write("<html><head><title>The Unicode Code Points from ");//$NON-NLS-1$
+        CharEncodingComparison.__codePoint(CharEncodingComparison.START,
+            bw);
+        bw.write(" to ");//$NON-NLS-1$
+        CharEncodingComparison.__codePoint(CharEncodingComparison.END, bw);
+        bw.write(" and their Encodings</title></head><body>");//$NON-NLS-1$
 
-        bw.write("<table border=\"1\" style=\"text-align:right;font-family:monospace\">"); //$NON-NLS-1$
+        bw.write("<table border=\"1\" style=\"border-collapse:collapse;text-align:right;font-family:monospace\">"); //$NON-NLS-1$
 
         for (final boolean toggle : new boolean[] { true, false }) {
 
@@ -364,14 +362,24 @@ public class CharEncodingComparison {
             if (s != null) {
               bw.write(" style=\"text-align:center\">");//$NON-NLS-1$
               bw.write(s);
+              bw.write("</td>"); //$NON-NLS-1$
             } else {
-              bw.write(">&nbsp"); //$NON-NLS-1$
+              bw.write("/>"); //$NON-NLS-1$
             }
-            bw.write("</td><td>"); //$NON-NLS-1$
+            bw.write("<td>"); //$NON-NLS-1$
             CharEncodingComparison.__codePoint(ch, bw);
             bw.write("</td><td>"); //$NON-NLS-1$
             bw.write(Integer.toString(ch));
-            bw.write("</td>"); //$NON-NLS-1$
+            bw.write("</td><td"); //$NON-NLS-1$
+
+            s = CharEncodingComparison.__urlEncode(ch);
+            if (s != null) {
+              bw.write('>');
+              bw.write(s);
+              bw.write("</td>"); //$NON-NLS-1$
+            } else {
+              bw.write("/>"); //$NON-NLS-1$
+            }
 
             for (final String enc : CharEncodingComparison.ENCODINGS) {
               bw.write("<td>"); //$NON-NLS-1$
@@ -382,7 +390,7 @@ public class CharEncodingComparison {
           } else {
             --ch;
             bw.write("<td style=\"text-align:center\" colspan=\""); //$NON-NLS-1$
-            bw.write(Integer.toString(4 + //
+            bw.write(Integer.toString(5 + //
                 CharEncodingComparison.ENCODINGS.length));
             bw.write("\">invalid or undefined code point"); //$NON-NLS-1$
             if (ch != first) {
@@ -398,12 +406,64 @@ public class CharEncodingComparison {
           }
           bw.write("</tr>"); //$NON-NLS-1$  
         }
-        bw.write("</tbody>"); //$NON-NLS-1$
-        bw.write("</table>"); //$NON-NLS-1$
+        bw.write("</tbody></table>"); //$NON-NLS-1$
+        bw.write("</body></html>");//$NON-NLS-1$
       }
     } catch (final Throwable tt) {
       tt.printStackTrace();
     }
   }
 
+  /**
+   * Write the first head
+   * 
+   * @param bw
+   *          the writer
+   * @throws IOException
+   *           if something fails
+   */
+  private static final void __head1(final Writer bw) throws IOException {
+    int i;
+    String s;
+
+    bw.write("<tr>"); //$NON-NLS-1$
+    bw.write("<th>Char</th>"); //$NON-NLS-1$
+    bw.write("<th><a href=\"http://www.unicode.org/reports/tr15/\">NFKC</a></th>"); //$NON-NLS-1$
+    bw.write("<th><a href=\"http://en.wikipedia.org/wiki/Unicode\">Code Point</a></th>"); //$NON-NLS-1$
+    bw.write("<th>Decimal</th>"); //$NON-NLS-1$
+    bw.write("<th><a href=\"http://en.wikipedia.org/wiki/Query_string#URL_encoding\">in URL</a></th>"); //$NON-NLS-1$
+
+    for (i = 0; i < CharEncodingComparison.ENCODINGS.length; i++) {
+      bw.write("<th>"); //$NON-NLS-1$
+      s = CharEncodingComparison.ENCODINGS_LINKS[i];
+      if (s != null) {
+        bw.write("<a href=\"");//$NON-NLS-1$
+        bw.write(s);
+        bw.write("\">");//$NON-NLS-1$
+      }
+      bw.write(CharEncodingComparison.ENCODINGS[i]);
+      if (s != null) {
+        bw.write("</a>");//$NON-NLS-1$
+      }
+      bw.write("</th>"); //$NON-NLS-1$
+    }
+    bw.write("</tr>"); //$NON-NLS-1$
+  }
+
+  /**
+   * Write the second head
+   * 
+   * @param bw
+   *          the writer
+   * @throws IOException
+   *           if something fails
+   */
+  private static final void __head2(final Writer bw) throws IOException {
+    bw.write("<tr><th colspan=\"5\">Character Information</th>"); //$NON-NLS-1$
+    bw.write("<th colspan=\""); //$NON-NLS-1$
+    bw.write(Integer.toString(CharEncodingComparison.ENCODINGS.length));
+    bw.write("\">Encoding: hexadecimal, bytes in same order as they appear in a file, ");//$NON-NLS-1$
+    bw.write(CharEncodingComparison.MISSING);
+    bw.write(" &equiv; cannot be represented</th></tr>");//$NON-NLS-1$);
+  }
 }

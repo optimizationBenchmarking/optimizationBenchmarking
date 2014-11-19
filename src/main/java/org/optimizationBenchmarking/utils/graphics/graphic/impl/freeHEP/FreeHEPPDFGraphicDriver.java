@@ -2,20 +2,19 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.Map;
+import java.util.logging.Logger;
 
-import org.freehep.graphicsio.FontConstants;
-import org.freehep.graphicsio.PageConstants;
-import org.freehep.graphicsio.pdf.PDFGraphics2D;
-import org.freehep.util.UserProperties;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.io.path.PathUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A driver which creates <a
@@ -31,42 +30,98 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
  */
 public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
-  private final org.freehep.util.UserProperties m_props;
+  private final Map<Object, Object> m_props;
 
   /** the correct dimension to use */
-  final Dimension m_correctDim;
+  static Dimension s_correctDim;
 
   /** the dimension to temporarily destroy */
-  final Dimension m_messWith;
+  static Dimension s_messWith;
 
   /** the hidden constructor */
   FreeHEPPDFGraphicDriver() {
-    super("pdf"); //$NON-NLS-1$
+    super(EGraphicFormat.PDF);
+    Map<Object, Object> o;
 
-    this.m_props = new org.freehep.util.UserProperties();
-
-    PDFGraphics2D.setClipEnabled(true);
-
-    this.m_props.putAll(PDFGraphics2D.getDefaultProperties());
-    this.m_props.setProperty(PDFGraphics2D.EMBED_FONTS, true);
-    this.m_props.setProperty(PDFGraphics2D.EMBED_FONTS_AS,
-        FontConstants.EMBED_FONTS_TYPE3);
-    this.m_props.setProperty(PDFGraphics2D.BACKGROUND_COLOR, Color.WHITE);
-    this.m_props.setProperty(PDFGraphics2D.COMPRESS, true);
-    this.m_props.setProperty(PDFGraphics2D.FIT_TO_PAGE, false);
-    this.m_props.setProperty(PDFGraphics2D.VERSION,//
-        PDFGraphics2D.VERSION6);
-    this.m_props.setProperty(PDFGraphics2D.ORIENTATION,
-        PageConstants.PORTRAIT);
-    this.m_props.setProperty(PDFGraphics2D.PAGE_MARGINS, "0, 0, 0, 0"); //$NON-NLS-1$
-    this.m_props.setProperty(PDFGraphics2D.PAGE_SIZE,
-        PageConstants.INTERNATIONAL);
-
-    synchronized (PageConstants.class) {
-      this.m_messWith = PageConstants.getSize(PageConstants.INTERNATIONAL);
-      this.m_correctDim = new Dimension(this.m_messWith.width,
-          this.m_messWith.height);
+    try {
+      o = FreeHEPPDFGraphicDriver.__initialize();
+    } catch (final Throwable t) {
+      o = null;
     }
+    this.m_props = o;
+  }
+
+  /**
+   * try to initialize
+   * 
+   * @return the properties
+   * @throws ClassNotFoundException
+   *           if a necessary class could not be loaded
+   */
+  private static final Map<Object, Object> __initialize()
+      throws ClassNotFoundException {
+
+    ReflectionUtils.ensureClassesAreLoaded(
+        "org.freehep.graphics2d.TagString", //$NON-NLS-1$
+        "org.freehep.graphics2d.font.FontUtilities", //$NON-NLS-1$
+        "org.freehep.graphics2d.font.Lookup", //$NON-NLS-1$
+        "org.freehep.graphicsio.AbstractVectorGraphicsIO", //$NON-NLS-1$
+        "org.freehep.graphicsio.FontConstants", //$NON-NLS-1$
+        "org.freehep.graphicsio.ImageConstants", //$NON-NLS-1$
+        //"org.freehep.graphicsio.ImageGraphics2D", //$NON-NLS-1$
+        "org.freehep.graphicsio.InfoConstants", //$NON-NLS-1$
+        "org.freehep.graphicsio.MultiPageDocument", //$NON-NLS-1$
+        "org.freehep.graphicsio.PageConstants", //$NON-NLS-1$
+        "org.freehep.util.UserProperties", //$NON-NLS-1$
+        "org.freehep.graphics2d.font.FontEncoder", //$NON-NLS-1$
+        "org.freehep.graphics2d.font.FontUtilities", //$NON-NLS-1$
+        "org.freehep.util.images.ImageUtilities" //$NON-NLS-1$
+    );
+
+    final org.freehep.util.UserProperties props = new org.freehep.util.UserProperties();
+
+    org.freehep.graphicsio.pdf.PDFGraphics2D.setClipEnabled(true);
+
+    props.putAll(org.freehep.graphicsio.pdf.PDFGraphics2D
+        .getDefaultProperties());
+    props.setProperty(
+        org.freehep.graphicsio.pdf.PDFGraphics2D.EMBED_FONTS, true);
+    props.setProperty(
+        org.freehep.graphicsio.pdf.PDFGraphics2D.EMBED_FONTS_AS,
+        org.freehep.graphicsio.FontConstants.EMBED_FONTS_TYPE3);
+    props.setProperty(
+        org.freehep.graphicsio.pdf.PDFGraphics2D.BACKGROUND_COLOR,
+        Color.WHITE);
+    props.setProperty(org.freehep.graphicsio.pdf.PDFGraphics2D.COMPRESS,
+        true);
+    props.setProperty(
+        org.freehep.graphicsio.pdf.PDFGraphics2D.FIT_TO_PAGE, false);
+    props.setProperty(org.freehep.graphicsio.pdf.PDFGraphics2D.VERSION,//
+        org.freehep.graphicsio.pdf.PDFGraphics2D.VERSION6);
+    props.setProperty(
+        org.freehep.graphicsio.pdf.PDFGraphics2D.ORIENTATION,
+        org.freehep.graphicsio.PageConstants.PORTRAIT);
+    props.setProperty(
+        org.freehep.graphicsio.pdf.PDFGraphics2D.PAGE_MARGINS,
+        "0, 0, 0, 0"); //$NON-NLS-1$
+    props.setProperty(org.freehep.graphicsio.pdf.PDFGraphics2D.PAGE_SIZE,
+        org.freehep.graphicsio.PageConstants.INTERNATIONAL);
+
+    synchronized (org.freehep.graphicsio.PageConstants.class) {
+      FreeHEPPDFGraphicDriver.s_messWith = org.freehep.graphicsio.PageConstants
+          .getSize(org.freehep.graphicsio.PageConstants.INTERNATIONAL);
+      FreeHEPPDFGraphicDriver.s_correctDim = new Dimension(
+          FreeHEPPDFGraphicDriver.s_messWith.width,
+          FreeHEPPDFGraphicDriver.s_messWith.height);
+    }
+
+    return props;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean canUse() {
+    return (this.m_props != null);
   }
 
   /**
@@ -86,16 +141,17 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final Graphic doCreateGraphic(final Path path,
-      final OutputStream os, final PhysicalDimension size,
-      final IObjectListener listener) {
-    final UserProperties up;
-    final PDFGraphics2D g;
+  protected final Graphic createGraphic(final Logger logger,
+      final IFileProducerListener listener, final Path basePath,
+      final String mainDocumentNameSuggestion, final PhysicalDimension size) {
+    final org.freehep.util.UserProperties up;
+    final org.freehep.graphicsio.pdf.PDFGraphics2D g;
     final double wd, hd;
     final Dimension dim;
     final ELength sizeUnit;
+    final Path path;
 
-    up = new UserProperties();
+    up = new org.freehep.util.UserProperties();
     up.putAll(this.m_props);
 
     sizeUnit = size.getUnit();
@@ -110,13 +166,15 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
           " translated to " + dim);//$NON-NLS-1$
     }
 
-    synchronized (PageConstants.class) {
-      this.m_messWith.setSize(dim);
+    path = this.makePath(basePath, mainDocumentNameSuggestion);
+    synchronized (org.freehep.graphicsio.PageConstants.class) {
+      FreeHEPPDFGraphicDriver.s_messWith.setSize(dim);
       try {
-        synchronized (PDFGraphics2D.class) {
-          PDFGraphics2D.setClipEnabled(true);
+        synchronized (org.freehep.graphicsio.pdf.PDFGraphics2D.class) {
+          org.freehep.graphicsio.pdf.PDFGraphics2D.setClipEnabled(true);
 
-          g = new PDFGraphics2D(os, dim);
+          g = new org.freehep.graphicsio.pdf.PDFGraphics2D(
+              PathUtils.openOutputStream(path), dim);
           g.setProperties(up);
           g.setMultiPage(false);
           GraphicUtils.setDefaultRenderingHints(g);
@@ -125,17 +183,13 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
         }
         GraphicUtils.setDefaultRenderingHints(g);
       } finally {
-        this.m_messWith.setSize(this.m_correctDim);
+        FreeHEPPDFGraphicDriver.s_messWith
+            .setSize(FreeHEPPDFGraphicDriver.s_correctDim);
       }
     }
 
-    return new _FreeHEPPDFGraphic(g, path, listener, dim.width, dim.height);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final EGraphicFormat getGraphicFormat() {
-    return EGraphicFormat.PDF;
+    return new _FreeHEPPDFGraphic(g, logger, listener, path, dim.width,
+        dim.height);
   }
 
   /** the loader */

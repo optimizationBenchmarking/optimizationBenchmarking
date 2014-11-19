@@ -20,6 +20,6 @@ public interface ITextable {
    *          instance to which the textual representation should be
    *          written
    */
-  public void toText(final ITextOutput textOut);
+  public abstract void toText(final ITextOutput textOut);
 
 }

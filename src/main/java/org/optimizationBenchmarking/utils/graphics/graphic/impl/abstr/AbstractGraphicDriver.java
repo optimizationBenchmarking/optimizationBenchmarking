@@ -1,108 +1,71 @@
 package org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr;
 
-import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.DefaultStrokePalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
-import org.optimizationBenchmarking.utils.io.path.FileTypeDriver;
-import org.optimizationBenchmarking.utils.io.path.PathUtils;
-import org.optimizationBenchmarking.utils.math.units.ELength;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.FileProducerTool;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * An abstract implementation of the
  * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver}
  * interface.
  */
-public abstract class AbstractGraphicDriver extends FileTypeDriver
-    implements IGraphicDriver {
+public abstract class AbstractGraphicDriver extends
+    FileProducerTool<IGraphicBuilder> implements IGraphicDriver {
+
+  /** the graphic format managed by this driver */
+  private final EGraphicFormat m_format;
 
   /**
    * instantiate
    * 
-   * @param suffix
-   *          the file suffix
+   * @param format
+   *          the format
    */
-  protected AbstractGraphicDriver(final String suffix) {
-    super(suffix);
+  protected AbstractGraphicDriver(final EGraphicFormat format) {
+    super();
+    this.m_format = format;
   }
 
   /**
-   * Create a graphics object with the size {@code size} in the length unit
-   * {@code size.getUnit()}. If the resulting object is an object which
-   * writes contents to a file, then it will write its contents to a file
-   * specified by {@code path}. Once the graphic is
-   * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic#close()
-   * closed}, it will notify the provided {@code listener} interface
-   * (unless {@code listener==null}).
+   * Create the graphic
    * 
-   * @param path
-   *          the path
-   * @param os
-   *          the output stream to write to
-   * @param size
-   *          the size of the graphic
+   * @param logger
+   *          the logger
    * @param listener
-   *          the listener interface to be notified when the graphic is
-   *          closed
-   * @return the graphic object
+   *          the listener
+   * @param basePath
+   *          the base path where to create the graphics file
+   * @param mainDocumentNameSuggestion
+   *          the name suggestion
+   * @param size
+   *          the size
+   * @return the graphic
    */
-  protected abstract Graphic doCreateGraphic(final Path path,
-      final OutputStream os, final PhysicalDimension size,
-      final IObjectListener listener);
+  protected abstract Graphic createGraphic(final Logger logger,
+      final IFileProducerListener listener, final Path basePath,
+      final String mainDocumentNameSuggestion, final PhysicalDimension size);
 
   /** {@inheritDoc} */
   @Override
-  public Graphic createGraphic(final Path folder,
-      final String nameSuggestion, final PhysicalDimension size,
-      final IObjectListener listener) {
-    final double w, h;
-    final ELength sizeUnit;
-    final Path p;
-    double r;
-
-    if ((size == null) || ((h = size.getHeight()) <= 0d)
-        || ((w = size.getWidth()) <= 0d)) {
-      throw new IllegalArgumentException(//
-          "Invalid graphic size: " + size);//$NON-NLS-1$
-    }
-
-    sizeUnit = size.getUnit();
-    r = sizeUnit.convertTo(w, ELength.M);
-    if ((r <= 1e-4d) || (r >= 10d)) {
-      throw new IllegalArgumentException(//
-          "A graphic width cannot be smaller than 0.1mm or larger than 10m, but "//$NON-NLS-1$
-              + w + " specified in " + sizeUnit + //$NON-NLS-1$ 
-              " equals " + r + //$NON-NLS-1$
-              "m.");//$NON-NLS-1$
-    }
-
-    r = sizeUnit.convertTo(h, ELength.M);
-    if ((r <= 1e-4) || (r >= 10d)) {
-      throw new IllegalArgumentException(//
-          "A graphic height cannot be smaller than 0.1mm or larger than 10m, but "//$NON-NLS-1$
-              + h + " specified in " + sizeUnit + //$NON-NLS-1$ 
-              " equals " + r + //$NON-NLS-1$
-              "m.");//$NON-NLS-1$
-    }
-
-    p = this.makePath(folder, nameSuggestion);
-
-    return this.doCreateGraphic(p, PathUtils.openOutputStream(p), size,
-        listener);
+  protected final GraphicBuilder createBuilder() {
+    return new GraphicBuilder(this);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Graphic createGraphic(final OutputStream os,
-      final PhysicalDimension size, final IObjectListener listener) {
-    return this.doCreateGraphic(null, os, size, listener);
+  public final EGraphicFormat getFileType() {
+    return this.m_format;
   }
 
   /** {@inheritDoc} */

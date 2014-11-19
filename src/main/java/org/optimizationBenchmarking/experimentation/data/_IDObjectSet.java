@@ -177,17 +177,25 @@ abstract class _IDObjectSet<DT extends _IDObject> extends DataSet<DT> {
    * @return the element, or {@code null} if it could not be found
    */
   DT find(final String name) {
-    String n;
+    String n, on;
     int i;
 
     n = name;
     for (i = 3; (--i) >= 0;) {
 
       if (i == 1) {
-        n = TextUtils.prepare(n);
+        on = n;
+        n = TextUtils.prepare(on);
+        if (n == on) {
+          continue;
+        }
       } else {
         if (i == 0) {
-          n = TextUtils.normalize(n);
+          on = n;
+          n = TextUtils.normalize(on);
+          if (n == on) {
+            continue;
+          }
         }
       }
 

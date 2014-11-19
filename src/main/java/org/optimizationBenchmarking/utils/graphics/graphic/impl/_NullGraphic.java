@@ -29,9 +29,11 @@ import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
+import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A graphic which simply discards all of its output. This object is
@@ -74,13 +76,16 @@ final class _NullGraphic extends Graphic {
   /**
    * create the null graphic
    * 
+   * @param logger
+   *          the logger
    * @param listener
    *          the listener
    * @param size
    *          the size
    */
-  _NullGraphic(final IObjectListener listener, final Dimension2D size) {
-    super(listener, null);
+  _NullGraphic(final Logger logger, final IFileProducerListener listener,
+      final Dimension2D size) {
+    super(logger, listener, null);
 
     this.m_bounds = new Rectangle(0, 0,//
         Math.max(1, ((int) (0.5d + size.getWidth()))),//
@@ -408,7 +413,7 @@ final class _NullGraphic extends Graphic {
   /** {@inheritDoc} */
   @Override
   public final Graphics create() {
-    return new _NullGraphic(null, new Dimension(this.m_bounds.width,
+    return new _NullGraphic(null, null, new Dimension(this.m_bounds.width,
         this.m_bounds.height));
   }
 
@@ -859,8 +864,8 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean isVectorGraphic() {
-    return false;
+  public final EGraphicFormat getGraphicFormat() {
+    return EGraphicFormat.NULL;
   }
 
   /** the internal configuration */

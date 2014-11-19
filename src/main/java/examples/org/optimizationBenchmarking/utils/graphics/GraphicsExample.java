@@ -22,6 +22,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPE
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEPSGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPPDFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPSVGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOBMPGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOGIFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOJPEGGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOPNGGraphicDriver;
@@ -44,18 +45,64 @@ public final class GraphicsExample {
     final LinkedHashSet<IGraphicDriver> list;
 
     list = new LinkedHashSet<>();
-    list.add(FreeHEPEPSGraphicDriver.getInstance());
-    list.add(FreeHEPPDFGraphicDriver.getInstance());
-    list.add(FreeHEPSVGGraphicDriver.getInstance());
-    list.add(FreeHEPEMFGraphicDriver.getInstance());
-    list.add(new ImageIOPNGGraphicDriver(EColorModel.RBGA_32_BIT, 256));
-    list.add(new ImageIOJPEGGraphicDriver(EColorModel.RBGA_32_BIT, 333,
-        0.0f));
-    list.add(new ImageIOGIFGraphicDriver(EColorModel.RBGA_32_BIT, 600));
-    list.add(EGraphicFormat.NULL.getDefaultDriver());
 
-    for (final EGraphicFormat format : EGraphicFormat.values()) {
-      list.add(format.getDefaultDriver());
+    IGraphicDriver d;
+    d = FreeHEPEPSGraphicDriver.getInstance();
+    if (d.canUse()) {
+      list.add(d);
+    }
+
+    d = FreeHEPPDFGraphicDriver.getInstance();
+    if (d.canUse()) {
+      list.add(d);
+    }
+
+    d = FreeHEPSVGGraphicDriver.getCompressedInstance();
+    if (d.canUse()) {
+      list.add(d);
+    }
+
+    d = FreeHEPSVGGraphicDriver.getPlainInstance();
+    if (d.canUse()) {
+      list.add(d);
+    }
+
+    d = FreeHEPEMFGraphicDriver.getInstance();
+    if (d.canUse()) {
+      list.add(d);
+    }
+
+    d = ImageIOPNGGraphicDriver.getInstance(EColorModel.RBGA_32_BIT, 256);
+    if (d.canUse()) {
+      list.add(d);
+    }
+
+    d = ImageIOJPEGGraphicDriver.getInstance(EColorModel.RBGA_32_BIT, 333,
+        0.0f);
+    if (d.canUse()) {
+      list.add(d);
+    }
+
+    d = ImageIOGIFGraphicDriver.getInstance(EColorModel.RBGA_32_BIT, 600);
+    if (d.canUse()) {
+      list.add(d);
+    }
+
+    d = EGraphicFormat.NULL.getDefaultDriver();
+    if (d.canUse()) {
+      list.add(d);
+    }
+
+    for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
+      d = format.getDefaultDriver();
+      if (d.canUse()) {
+        list.add(d);
+      }
+    }
+
+    d = ImageIOBMPGraphicDriver.getInstance(EColorModel.RGB_15_BIT, 16);
+    if (d.canUse()) {
+      list.add(d);
     }
 
     DRIVERS = new ArrayListView<>(list.toArray(new IGraphicDriver[list
@@ -85,10 +132,14 @@ public final class GraphicsExample {
 
     z = 0;
     for (final IGraphicDriver driver : GraphicsExample.DRIVERS) {
-      try (final Graphic g = driver.createGraphic(dir,
-          ((((GraphicsExample.class.getSimpleName() + '_') + driver
-              .getClass().getSimpleName()) + '_') + (++z)),
-          GraphicsExample.SIZE, new FinishedPrinter(driver))) {
+      try (final Graphic g = driver
+          .use()
+          .setBasePath(dir)
+          .setMainDocumentNameSuggestion(
+              ((((GraphicsExample.class.getSimpleName() + '_') + (++z)) + '_') + driver
+                  .getClass().getSimpleName()))
+          .setSize(GraphicsExample.SIZE)
+          .setFileProducerListener(new FinishedPrinter(driver)).create()) {
         for (int i = 1; i < 50; i++) {
           GraphicsExample.__paint(g);
           GraphicsExample.__paintComponent(g);

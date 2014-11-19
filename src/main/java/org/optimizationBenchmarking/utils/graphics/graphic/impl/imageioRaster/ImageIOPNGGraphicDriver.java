@@ -2,14 +2,16 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.OutputStream;
 import java.nio.file.Path;
+import java.util.logging.Logger;
+
+import javax.imageio.spi.ImageWriterSpi;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A driver which creates <a
@@ -20,14 +22,31 @@ public final class ImageIOPNGGraphicDriver extends
     _ImageIORasterGraphicDriver {
 
   /**
-   * Get the default instance of the JPEG driver based on Java's imaging
-   * API
+   * Get the default instance of the PNG driver based on Java's imaging API
    * 
-   * @return the default instance of the JPEG driver based on Java's
-   *         imaging API
+   * @return the default instance of the PNG driver based on Java's imaging
+   *         API
    */
   public static final ImageIOPNGGraphicDriver getDefaultInstance() {
-    return __ImageIOPNGGraphicDriverLoader.DEFAULT_INSTANCE;
+    return __ImageIOPNGGraphicDriverLoader.INSTANCE;
+  }
+
+  /**
+   * Get the instance of the PNG driver with the given setup
+   * 
+   * @param dotsPerInch
+   *          the dots per inch
+   * @param colors
+   *          the colors
+   * @return the corresponding instance
+   */
+  public static final ImageIOPNGGraphicDriver getInstance(
+      final EColorModel colors, final int dotsPerInch) {
+    if ((colors == EGraphicFormat.DEFAULT_COLOR_MODEL)
+        && (dotsPerInch == EGraphicFormat.DEFAULT_DPI)) {
+      return ImageIOPNGGraphicDriver.getDefaultInstance();
+    }
+    return new ImageIOPNGGraphicDriver(colors, dotsPerInch);
   }
 
   /**
@@ -38,9 +57,14 @@ public final class ImageIOPNGGraphicDriver extends
    * @param colors
    *          the colors
    */
-  public ImageIOPNGGraphicDriver(final EColorModel colors,
-      final int dotsPerInch) {
-    super("png", colors, dotsPerInch); //$NON-NLS-1$
+  ImageIOPNGGraphicDriver(final EColorModel colors, final int dotsPerInch) {
+    super(EGraphicFormat.PNG, colors, dotsPerInch);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean canUse() {
+    return (ImageIOPNGGraphicDriver._ImageIOPNGSPILoader.SPI != null);
   }
 
   /** {@inheritDoc} */
@@ -71,17 +95,18 @@ public final class ImageIOPNGGraphicDriver extends
   /** {@inheritDoc} */
   @Override
   final _ImageIORasterGraphic _create(final Path path,
-      final OutputStream os, final IObjectListener listener,
+      final Logger logger, final IFileProducerListener listener,
       final BufferedImage img, final Graphics2D g, final int w,
-      final int h, final double xDPI, final double yDPI, final String type) {
-    return new _ImageIOPNGGraphic(path, os, listener, img, g, w, h, xDPI,
-        yDPI, type);
+      final int h, final double xDPI, final double yDPI) {
+    return new _ImageIOPNGGraphic(path, logger, listener, img, g, w, h,
+        xDPI, yDPI);
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final EGraphicFormat getGraphicFormat() {
-    return EGraphicFormat.PNG;
+  /** the loader for the png SPI */
+  static final class _ImageIOPNGSPILoader {
+    /** the image writer spi */
+    static final ImageWriterSpi SPI = //
+    _ImageIORasterGraphicDriver.getSPI(EGraphicFormat.PNG);
   }
 
   /** the default loader */
@@ -91,7 +116,7 @@ public final class ImageIOPNGGraphicDriver extends
      * href="http://en.wikipedia.org/wiki/Portable_Network_Graphics"
      * >PNG</a> driver instance
      */
-    public static final ImageIOPNGGraphicDriver DEFAULT_INSTANCE = //
+    static final ImageIOPNGGraphicDriver INSTANCE = //
     new ImageIOPNGGraphicDriver(EGraphicFormat.DEFAULT_COLOR_MODEL,
         EGraphicFormat.DEFAULT_DPI);
   }

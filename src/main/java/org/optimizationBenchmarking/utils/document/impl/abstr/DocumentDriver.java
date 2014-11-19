@@ -1,15 +1,14 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import java.nio.file.Path;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
+import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
@@ -17,57 +16,47 @@ import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
-import org.optimizationBenchmarking.utils.io.path.FileTypeDriver;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.FileProducerTool;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** A document driver. */
-public abstract class DocumentDriver extends FileTypeDriver implements
-    IDocumentDriver {
+public abstract class DocumentDriver extends
+    FileProducerTool<IDocumentBuilder> implements IDocumentDriver {
 
-  /**
-   * create the document driver
-   * 
-   * @param suffix
-   *          the suffix
-   */
-  protected DocumentDriver(final String suffix) {
-    super(suffix);
+  /** create the document driver */
+  protected DocumentDriver() {
+    super();
   }
 
   /**
    * create a document
    * 
-   * @param file
-   *          the file
    * @param listener
    *          the listener
    * @param logger
    *          the logger to be notified with logging infos
+   * @param basePath
+   *          the base path
+   * @param mainDocumentNameSuggestion
+   *          the main document name suggestion
    * @return the document
    */
-  protected Document doCreateDocument(final Path file,
-      final IObjectListener listener, final Logger logger) {
-    return new Document(this, file, listener, logger);
-  }
+  protected abstract Document doCreateDocument(final Logger logger,
+      final IFileProducerListener listener, final Path basePath,
+      final String mainDocumentNameSuggestion);
 
   /** {@inheritDoc} */
   @Override
-  public Document createDocument(final Path folder,
-      final String nameSuggestion, final IObjectListener listener,
-      final Logger logger) {
-    if ((logger != null) && (logger.isLoggable(Level.FINE))) {
-      logger.fine("Begin creation of document '" + nameSuggestion + //$NON-NLS-1$
-          "' in folder '" + folder + '\''); //$NON-NLS-1$
-    }
-    return this.doCreateDocument(this.makePath(folder, nameSuggestion),
-        listener, logger);
+  protected DocumentBuilder createBuilder() {
+    return new DocumentBuilder(this);
   }
 
   /**
@@ -797,26 +786,12 @@ public abstract class DocumentDriver extends FileTypeDriver implements
    * closed}, it will notify the provided {@code listener} interface
    * (unless {@code listener==null}).
    * 
-   * @param folder
-   *          the folder to create the graphic in
-   * @param nameSuggestion
-   *          the name suggestion
    * @param size
    *          the size of the graphic
-   * @param listener
-   *          the listener interface to be notified when the graphic is
-   *          closed
    * @return the graphic object
    */
-  protected Graphic createGraphic(final Path folder,
-      final String nameSuggestion, final EFigureSize size,
-      final IObjectListener listener) {
-    final IGraphicDriver driver;
-
-    driver = this.getGraphicDriver();
-
-    return driver.createGraphic(folder, nameSuggestion,
-        this.getSize(size), listener);
+  protected IGraphicBuilder createGraphic(final EFigureSize size) {
+    return this.getGraphicDriver().use().setSize(this.getSize(size));
   }
 
   /**

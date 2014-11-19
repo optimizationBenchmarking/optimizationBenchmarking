@@ -1,11 +1,14 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
+import java.nio.file.Path;
+import java.util.Map;
+
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.SubFigure;
 import org.optimizationBenchmarking.utils.document.impl.abstr.SubFigureCaption;
-import org.optimizationBenchmarking.utils.document.object.PathEntry;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -51,7 +54,7 @@ final class _XHTML10SubFigure extends SubFigure {
   /** {@inheritDoc} */
   @Override
   protected final void onFigureClose(final PhysicalDimension size,
-      final ArrayListView<PathEntry> files) {
+      final ArrayListView<Map.Entry<Path, EGraphicFormat>> files) {
 
     super.onFigureClose(size, files);
 
@@ -60,8 +63,8 @@ final class _XHTML10SubFigure extends SubFigure {
     }
 
     ((_XHTML10FigureSeries) (this.getOwner()))
-        ._subFigure(new _XHTML10SubFigureDesc(this.m_caption, size, files
-            .get(0).getValue(), this.getLabel(), this.getGlobalID()));
+        ._subFigure(new _XHTML10SubFigureDesc(this.m_caption, size,//
+            files.get(0).getKey(), this.getLabel(), this.getGlobalID()));
     this.m_caption = null;
   }
 }

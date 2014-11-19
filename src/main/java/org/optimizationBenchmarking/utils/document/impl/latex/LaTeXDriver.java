@@ -27,7 +27,6 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooter;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooterRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
-import org.optimizationBenchmarking.utils.document.object.IObjectListener;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
@@ -37,7 +36,9 @@ import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * The driver for LaTeX output
@@ -60,7 +61,7 @@ public final class LaTeXDriver extends DocumentDriver {
    */
   public LaTeXDriver(final IGraphicDriver gd,
       final LaTeXDocumentClass clazz) {
-    super("LaTeX"); //$NON-NLS-1$
+    super();
 
     if (clazz == null) {
       throw new IllegalArgumentException(
@@ -94,9 +95,8 @@ public final class LaTeXDriver extends DocumentDriver {
     }
     if (o instanceof LaTeXDriver) {
       d = ((LaTeXDriver) o);
-      return (EComparison.equals(this.m_graphicDriver, d.m_graphicDriver)
-          && EComparison.equals(this.m_class, d.m_class)//
-      && EComparison.equals(this.getSuffix(), d.getSuffix()));
+      return (EComparison.equals(this.m_graphicDriver, d.m_graphicDriver) && EComparison
+          .equals(this.m_class, d.m_class));
     }
     return false;
   }
@@ -106,8 +106,7 @@ public final class LaTeXDriver extends DocumentDriver {
   protected final int calcHashCode() {
     return HashUtils.combineHashes(//
         HashUtils.hashCode(this.m_graphicDriver),//
-        HashUtils.combineHashes(HashUtils.hashCode(this.m_class),//
-            HashUtils.hashCode(this.getSuffix())));
+        HashUtils.hashCode(this.m_class));
   }
 
   /** {@inheritDoc} */
@@ -143,9 +142,11 @@ public final class LaTeXDriver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final Document doCreateDocument(final Path file,
-      final IObjectListener listener, final Logger logger) {
-    return new _LaTeXDocument(this, file, listener, logger);
+  protected final Document doCreateDocument(final Logger logger,
+      final IFileProducerListener listener, final Path basePath,
+      final String mainDocumentNameSuggestion) {
+    return new _LaTeXDocument(this, this.makePath(basePath,
+        mainDocumentNameSuggestion), logger, listener);
   }
 
   /** {@inheritDoc} */
@@ -562,6 +563,12 @@ public final class LaTeXDriver extends DocumentDriver {
       final TableCellDef[] def) {
     return new _LaTeXTableFooterCell(((_LaTeXTableFooterRow) owner),
         rowSpan, colSpan, def);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IFileType getFileType() {
+    return ELaTeXFileTypes.LATEX;
   }
 
   /** the loader for the default LaTeX driver */
