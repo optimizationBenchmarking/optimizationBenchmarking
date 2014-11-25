@@ -7,7 +7,7 @@ import java.io.StringWriter;
 /**
  * An example for processing resources with {@code try-finally}.
  */
-public class TryFinallyResource {
+public final class TryFinallyResource {
 
   /**
    * The main routine

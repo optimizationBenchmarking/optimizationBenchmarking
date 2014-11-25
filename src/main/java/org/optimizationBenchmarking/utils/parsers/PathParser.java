@@ -8,7 +8,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.optimizationBenchmarking.utils.io.path.PathUtils;
+import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 
 /** A parser for paths */
 public class PathParser extends Parser<Path> {
@@ -20,7 +20,7 @@ public class PathParser extends Parser<Path> {
   public static final PathParser INSTANCE = new PathParser();
 
   /** create the parser */
-  private PathParser() {
+  protected PathParser() {
     super();
   }
 
@@ -32,7 +32,7 @@ public class PathParser extends Parser<Path> {
 
   /** {@inheritDoc} */
   @Override
-  public final Path parseString(final String string) throws IOException,
+  public Path parseString(final String string) throws IOException,
       SecurityException {
     final Path f;
 

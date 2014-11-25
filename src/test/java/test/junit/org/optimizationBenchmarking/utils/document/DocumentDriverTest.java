@@ -13,7 +13,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
-import org.optimizationBenchmarking.utils.io.files.TempDir;
+import org.optimizationBenchmarking.utils.io.paths.TempDir;
 
 import test.junit.InstanceTest;
 import examples.org.optimizationBenchmarking.utils.document.RandomDocumentExample;
@@ -58,7 +58,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     Assert.assertNotNull(driver);
 
     try (final TempDir td = new TempDir()) {
-      try (final IDocument doc = driver.use().setBasePath(td.getDir())
+      try (final IDocument doc = driver.use().setBasePath(td.getPath())
           .setMainDocumentNameSuggestion("document").create()) { //$NON-NLS-1$
         ex = new RandomDocumentExample(doc, r, null);
         if (service != null) {
@@ -93,7 +93,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     Assert.assertNotNull(driver);
 
     try (final TempDir td = new TempDir()) {
-      try (final IDocument doc = driver.use().setBasePath(td.getDir())
+      try (final IDocument doc = driver.use().setBasePath(td.getPath())
           .setMainDocumentNameSuggestion("document").create()) { //$NON-NLS-1$
         ex = new TemplateDocumentExample(doc);
         if (service != null) {

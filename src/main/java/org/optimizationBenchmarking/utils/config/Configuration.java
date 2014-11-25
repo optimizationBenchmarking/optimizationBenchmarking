@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.config;
 
 import java.io.Serializable;
 import java.nio.file.Path;
+import java.security.AccessController;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
@@ -21,7 +22,6 @@ import org.optimizationBenchmarking.utils.parsers.ListParser;
 import org.optimizationBenchmarking.utils.parsers.LoggerParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.parsers.PathParser;
-import org.optimizationBenchmarking.utils.parsers.SetParser;
 import org.optimizationBenchmarking.utils.parsers.StringParser;
 
 /**
@@ -81,21 +81,26 @@ public final class Configuration implements Serializable {
   /** the parameter identifying a configuration file: {@value} */
   public static final String PARAM_PROPERTY_FILE = "configFile"; //$NON-NLS-1$
 
+  /** the path parameter */
+  public static final String PARAM_PATH = "path"; //$NON-NLS-1$
+
+  /** the logger parameter */
+  public static final String PARAM_LOGGER = "logger"; //$NON-NLS-1$
+
+  /** the synchronizer */
+  private static final Object SYNCH = new Object();
+  /** the root configuration */
+  private static Configuration s_root = null;
+
   /** the owner */
-  private final Configuration m_owner;
+  Configuration m_owner;
 
   /** the configuration data */
   final _ConfigMap m_data;
 
-  /**
-   * create a configuration within an owning scope
-   * 
-   * @param owner
-   *          the owning scope
-   */
-  Configuration(final Configuration owner) {
+  /** create a configuration within an owning scope */
+  Configuration() {
     super();
-    this.m_owner = owner;
     this.m_data = new _ConfigMap();
   }
 
@@ -547,12 +552,11 @@ public final class Configuration implements Serializable {
    * @return the paths
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  public final ArraySetView<Path> getPathSet(final String key,
-      final ArraySetView<Path> def) {
-    return this
-        .get(key, SetParser.PATH_SET_PARSER,
-            (ArraySetView) ((def != null) ? def
-                : ArraySetView.EMPTY_SET_VIEW));
+  public final ArrayListView<Path> getPathList(final String key,
+      final ArrayListView<Path> def) {
+    return this.get(key,//
+        ListParser.PATH_LIST_PARSER, (ArraySetView) ((def != null) ? def
+            : ArraySetView.EMPTY_SET_VIEW));
   }
 
   /**
@@ -567,10 +571,6 @@ public final class Configuration implements Serializable {
   public final Logger getLogger(final String key, final Logger def) {
     return this.get(key, LoggerParser.INSTANCE, def);
   }
-
-  // / functions to store configuration values
-
-  // / functions to store configuration values
 
   /** {@inheritDoc} */
   @Override
@@ -603,5 +603,47 @@ public final class Configuration implements Serializable {
       h = this.m_data.hashCode();
     }
     return HashUtils.combineHashes(HashUtils.hashCode(this.m_owner), h);
+  }
+
+  /**
+   * Get the root configuration
+   * 
+   * @return the root configuration
+   */
+  public static final Configuration getRoot() {
+    synchronized (Configuration.SYNCH) {
+      if (Configuration.s_root == null) {
+        Configuration.setup(null);
+      }
+      return Configuration.s_root;
+    }
+  }
+
+  /**
+   * Setup the root configuration from command line arguments and the
+   * system environment. You must call this method at most once, and if you
+   * call it, it must be the first call in your {@code main} routine.
+   * 
+   * @param args
+   *          the command line arguments, which were passed to the
+   *          {@code main} routine
+   */
+  public static final void setup(final String[] args) {
+    final _ConfigurationLoader cb;
+
+    synchronized (Configuration.SYNCH) {
+      if (Configuration.s_root == null) {
+        cb = new _ConfigurationLoader(args);
+        try {
+          Configuration.s_root = AccessController.doPrivileged(cb);
+        } catch (final Throwable t) {
+          Configuration.s_root = cb.run();
+        }
+
+        return;
+      }
+    }
+    throw new IllegalStateException(//
+        "The root configuration can only be setup at most once."); //$NON-NLS-1$
   }
 }

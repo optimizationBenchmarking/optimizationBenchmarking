@@ -23,7 +23,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
   private static final int FLAG_HAS_BEEN_CONFIGURED = (ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET << 1);
 
   /** the configuration being built */
-  private Configuration m_data;
+  final Configuration m_data;
 
   /** Create the configuration builder */
   public ConfigurationBuilder() {
@@ -37,7 +37,24 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
    *          the owning fsm
    */
   public ConfigurationBuilder(final HierarchicalFSM owner) {
+    this(owner, true);
+  }
+
+  /**
+   * Create the configuration builder
+   * 
+   * @param owner
+   *          the owning fsm
+   * @param setRootOwner
+   *          use the root configuration as owner?
+   */
+  ConfigurationBuilder(final HierarchicalFSM owner,
+      final boolean setRootOwner) {
     super(owner);
+    this.m_data = new Configuration();
+    if (setRootOwner) {
+      this.m_data.m_owner = Configuration.getRoot();
+    }
     this.open();
   }
 
@@ -62,18 +79,6 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
   }
 
   /**
-   * get the configuration
-   * 
-   * @return the configuration
-   */
-  private final Configuration __get() {
-    if (this.m_data == null) {
-      this.m_data = new Configuration(null);
-    }
-    return this.m_data;
-  }
-
-  /**
    * Set the owner of the configuration to be built
    * 
    * @param owner
@@ -90,12 +95,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
         (ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET | ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET),
         ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET, FSM.FLAG_NOTHING);
 
-    if (this.m_data != null) {
-      throw new IllegalStateException(//
-          "Cannot set owner of configuration twice or after a configuration value has been set."); //$NON-NLS-1$
-    }
-
-    this.m_data = new Configuration(owner);
+    this.m_data.m_owner = owner;
   }
 
   /**
@@ -111,7 +111,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
     final boolean isLocked;
     final _ConfigMap map;
 
-    map = this.__get().m_data;
+    map = this.m_data.m_data;
     this.fsmFlagsSet(ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET);
     synchronized (map) {
       entry = ((_ConfigMapEntry) (map.getEntry(key, true)));
@@ -222,7 +222,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
    * @throws IOException
    *           if io fails
    */
-  public synchronized final void configure(final String[] args)
+  synchronized final void _configure(final String[] args)
       throws IOException {
     final Path f;
 
@@ -232,7 +232,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
     this.putCommandLine(args);
 
-    f = this.__get()._get(Configuration.PARAM_PROPERTY_FILE,
+    f = this.m_data._get(Configuration.PARAM_PROPERTY_FILE,
         PathParser.INSTANCE, null, false);
     if (f != null) {
       ConfigurationPropertiesInput.getInstance().loadPath(this, f);
@@ -244,9 +244,6 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
   protected synchronized final Configuration compile() {
     this.fsmFlagsAssert(ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET,
         FSM.FLAG_NOTHING);
-    if (this.m_data == null) {
-      throw new IllegalStateException("No information has been set."); //$NON-NLS-1$
-    }
     return this.m_data;
   }
 }

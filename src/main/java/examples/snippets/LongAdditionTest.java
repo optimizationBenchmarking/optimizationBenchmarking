@@ -4,7 +4,7 @@ package examples.snippets;
  * Just a small program to double-check how and when adding of {@code long}
  * numbers overflows
  */
-public class LongAdditionTest {
+public final class LongAdditionTest {
 
   /**
    * The main routine printing long values which could be critical

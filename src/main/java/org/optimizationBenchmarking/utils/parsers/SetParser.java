@@ -1,45 +1,45 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-import java.nio.file.Path;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
- * A parser for a given type
+ * A parser for sets
  * 
  * @param <ET>
  *          the element type
  */
-public class SetParser<ET> extends _CollectionParser<ET, ArraySetView<ET>> {
+public class SetParser<ET> extends CollectionParser<ET, ArraySetView<ET>> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
-
-  /** the globally shared file set parser */
-  public static final SetParser<Path> PATH_SET_PARSER = new _PathSetParser();
 
   /**
    * create the parser
    * 
    * @param elementParser
    *          the element parser
+   * @param ignoreNull
+   *          should {@code null} elements be ignored ({@code true}) or
+   *          added ({@code false})?
    */
-  public SetParser(final Parser<ET> elementParser) {
-    super(elementParser);
+  protected SetParser(final Parser<ET> elementParser,
+      final boolean ignoreNull) {
+    super(elementParser, ignoreNull, true);
   }
 
   /** {@inheritDoc} */
   @Override
-  final Collection<ET> _createGatheringCollection() {
-    return new HashSet<>();
+  protected final Collection<ET> createGatheringCollection() {
+    return new LinkedHashSet<>();
   }
 
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  final ArraySetView<ET> _convertCollectionToResultCollection(
+  protected final ArraySetView<ET> convertCollectionToResultCollection(
       final Collection<ET> collection) {
     final Object[] lst;
 

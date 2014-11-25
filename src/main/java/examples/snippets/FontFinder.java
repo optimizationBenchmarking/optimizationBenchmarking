@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * With this program, I try to find which fonts I can locate via Java.
  * </p>
  */
-public class FontFinder {
+public final class FontFinder {
 
   /**
    * List all the potential names of fonts available on the linux system

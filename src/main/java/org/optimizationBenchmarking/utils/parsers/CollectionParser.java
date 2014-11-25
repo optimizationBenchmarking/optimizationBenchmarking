@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.parsers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 
 import org.optimizationBenchmarking.utils.text.charset.Char;
 import org.optimizationBenchmarking.utils.text.charset.Characters;
@@ -16,8 +17,8 @@ import org.optimizationBenchmarking.utils.text.charset.EnclosureEnd;
  * @param <CT>
  *          the collection type
  */
-abstract class _CollectionParser<ET, CT extends Collection<ET>> extends
-    Parser<CT> {
+public abstract class CollectionParser<ET, CT extends Collection<ET>>
+    extends Parser<CT> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -37,17 +38,34 @@ abstract class _CollectionParser<ET, CT extends Collection<ET>> extends
   private final Parser<ET> m_elementParser;
 
   /**
+   * should {@code null} elements be ignored ({@code true}) or added (
+   * {@code false})?
+   */
+  private final boolean m_ignoreNull;
+
+  /** keep only unique elements */
+  private final boolean m_unique;
+
+  /**
    * create the parser
    * 
    * @param elementParser
    *          the element parser
+   * @param ignoreNull
+   *          should {@code null} elements be ignored ({@code true}) or
+   *          added ({@code false})?
+   * @param unique
+   *          are all the elements unique?
    */
-  _CollectionParser(final Parser<ET> elementParser) {
+  protected CollectionParser(final Parser<ET> elementParser,
+      final boolean ignoreNull, final boolean unique) {
     super();
     if (elementParser == null) {
       throw new IllegalArgumentException();
     }
     this.m_elementParser = elementParser;
+    this.m_ignoreNull = ignoreNull;
+    this.m_unique = unique;
   }
 
   /**
@@ -55,7 +73,10 @@ abstract class _CollectionParser<ET, CT extends Collection<ET>> extends
    * 
    * @return the collection used for gathering the elements
    */
-  Collection<ET> _createGatheringCollection() {
+  protected Collection<ET> createGatheringCollection() {
+    if (this.m_unique) {
+      return new LinkedHashSet<>();
+    }
     return new ArrayList<>();
   }
 
@@ -67,7 +88,8 @@ abstract class _CollectionParser<ET, CT extends Collection<ET>> extends
    * @return the result collection
    */
   @SuppressWarnings("unchecked")
-  CT _convertCollectionToResultCollection(final Collection<ET> collection) {
+  protected CT convertCollectionToResultCollection(
+      final Collection<ET> collection) {
     return ((CT) (collection));
   }
 
@@ -86,11 +108,12 @@ abstract class _CollectionParser<ET, CT extends Collection<ET>> extends
     String temp;
     int i, j, encsize;
     boolean quit;
+    ET parsed;
 
     s = StringParser.INSTANCE.parseString(string);
     len = s.length();
 
-    list = this._createGatheringCollection();
+    list = this.createGatheringCollection();
     if (len > 0) {
       i = 0;
       parser = this.m_elementParser;
@@ -113,7 +136,7 @@ abstract class _CollectionParser<ET, CT extends Collection<ET>> extends
             }
           } else {
             if (enc.isEmpty()) {
-              if (_CollectionParser.LIST_ITEM_SEPARATORS.indexOf(ch) >= 0) {
+              if (CollectionParser.LIST_ITEM_SEPARATORS.indexOf(ch) >= 0) {
                 break findNextEnd;
               }
             }
@@ -127,7 +150,10 @@ abstract class _CollectionParser<ET, CT extends Collection<ET>> extends
           temp = (s.substring(i, j));
         }
 
-        list.add(parser.parseString(temp));
+        parsed = parser.parseString(temp);
+        if ((parsed != null) || (!(this.m_ignoreNull))) {
+          list.add(parsed);
+        }
 
         if (quit) {
           break looper;
@@ -136,7 +162,7 @@ abstract class _CollectionParser<ET, CT extends Collection<ET>> extends
       }
     }
 
-    res = this._convertCollectionToResultCollection(list);
+    res = this.convertCollectionToResultCollection(list);
     this.validate(res);
     return res;
   }
@@ -153,8 +179,7 @@ abstract class _CollectionParser<ET, CT extends Collection<ET>> extends
       res = clazz.cast(o);
     } else {
       if (o instanceof Collection) {
-        res = this
-            ._convertCollectionToResultCollection((Collection<ET>) o);
+        res = this.convertCollectionToResultCollection((Collection<ET>) o);
       } else {
         return this.parseString(String.valueOf(o));
       }

@@ -17,7 +17,7 @@ import java.text.Normalizer;
  * different characters under different encodings.
  * </p>
  */
-public class CharEncodingComparison {
+public final class CharEncodingComparison {
 
   /** A list of the encodings to test compare. */
   private static final String[] ENCODINGS = { "UTF-8",//$NON-NLS-1$

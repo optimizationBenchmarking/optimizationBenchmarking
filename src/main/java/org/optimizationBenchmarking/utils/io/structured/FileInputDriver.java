@@ -21,9 +21,8 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.encoding.TextEncoding;
-import org.optimizationBenchmarking.utils.io.files.TempDir;
-import org.optimizationBenchmarking.utils.io.files.UnzipToFolder;
-import org.optimizationBenchmarking.utils.io.path.PathUtils;
+import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.io.paths.TempDir;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
@@ -383,7 +382,7 @@ public abstract class FileInputDriver<L> {
     }
 
     try (final TempDir td = new TempDir()) {
-      dir = td.getDir();
+      dir = td.getPath();
 
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(((//
@@ -391,7 +390,7 @@ public abstract class FileInputDriver<L> {
             dir) + '\'') + '.');
       }
 
-      new UnzipToFolder(stream, dir).call();
+      PathUtils.unzipToFolder(stream, dir);
 
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine((//

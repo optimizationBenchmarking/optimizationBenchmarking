@@ -12,7 +12,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.io.files.Paths;
+import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /**
@@ -50,7 +50,7 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
  * Graphics context which really comes out as 144px long in the images.
  * </p>
  */
-public class FontSize {
+public final class FontSize {
 
   /**
    * The main routine
@@ -105,14 +105,15 @@ public class FontSize {
         g.scale(scale, scale);
         g.drawString(s, 0, 0);
 
-        ImageIO.write(im, "png", //$NON-NLS-1$
-            new File(Paths.getTempDir(),
-                (fontName.replace(' ', '_') + '_' + (scale + ".png")))); //$NON-NLS-1$
+        ImageIO.write(im,
+            "png", //$NON-NLS-1$
+            new File(PathUtils.getTempDir().toFile(), (fontName.replace(
+                ' ', '_') + '_' + (scale + ".png")))); //$NON-NLS-1$
       }
     }
   }
 
-  /** the internal font size */
+  /** the forbidden constructor */
   private FontSize() {
     ErrorUtils.doNotCall();
   }
