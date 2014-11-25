@@ -47,7 +47,8 @@ public final class PathUtils {
    * @return the file system provider
    */
   @SuppressWarnings("resource")
-  private static final FileSystemProvider __getProvider(final Path path) {
+  public static final FileSystemProvider getFileSystemProvider(
+      final Path path) {
     final FileSystem fs;
     final FileSystemProvider fsp;
 
@@ -146,7 +147,7 @@ public final class PathUtils {
     }
 
     try {
-      return PathUtils.__getProvider(path).newOutputStream(path,
+      return PathUtils.getFileSystemProvider(path).newOutputStream(path,
           StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,
           StandardOpenOption.WRITE);
     } catch (final Throwable t3) {
@@ -166,7 +167,7 @@ public final class PathUtils {
     PathUtils.__pathNotNull(path);
 
     try {
-      return PathUtils.__getProvider(path).newInputStream(path,
+      return PathUtils.getFileSystemProvider(path).newInputStream(path,
           StandardOpenOption.READ);
     } catch (final Throwable t3) {
       ErrorUtils.throwAsRuntimeException(t3);
@@ -272,6 +273,52 @@ public final class PathUtils {
     }
 
     return ((z ? n : (n + '.')) + e);
+  }
+
+  /**
+   * Get the name of a file or folder
+   * 
+   * @param fileOrFolder
+   *          the file or folder
+   * @return the name of the file or folder, or {@code null}
+   */
+  public static final String getName(final Path fileOrFolder) {
+    Path p;
+
+    if (fileOrFolder == null) {
+      return null;
+    }
+
+    p = PathUtils.normalize(fileOrFolder);
+    p = ((p != null) ? p : fileOrFolder).getFileName();
+    if (p == null) {
+      return null;
+    }
+    return p.toString();
+  }
+
+  /**
+   * Get the extension (file name suffix) of a given file, not including
+   * the dot and cast to lower case.
+   * 
+   * @param file
+   *          the file
+   * @return the extension, or {@code null} if no extension exists
+   */
+  public static final String getFileExtension(final Path file) {
+    final String str;
+    final int last;
+
+    str = PathUtils.getName(file);
+    if (str == null) {
+      return null;
+    }
+
+    last = str.lastIndexOf('.');
+    if ((last < 0) || (last >= (str.length() - 1))) {
+      return null;
+    }
+    return str.substring(last + 1).toLowerCase();
   }
 
   /**
