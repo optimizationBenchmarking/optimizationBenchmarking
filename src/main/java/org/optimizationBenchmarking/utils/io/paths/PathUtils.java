@@ -1,11 +1,11 @@
 package org.optimizationBenchmarking.utils.io.paths;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.FileSystem;
 import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
@@ -13,6 +13,7 @@ import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.spi.FileSystemProvider;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -449,17 +450,38 @@ public final class PathUtils {
   }
 
   /**
+   * <p>
    * Get a list of paths where it would make sense to search for
-   * executables in. This list contains the environment's path variable, as
-   * well as the folders containing each element of the <a
+   * executables or libraries.
+   * </p>
+   * <p>
+   * This list contains the environment's path variable, as well as the
+   * folders containing each element of the <a
    * href="http://en.wikipedia.org/wiki/Classpath_%28Java%29"
    * >classpath</a>, the {@link #getCurrentDir() current directory}, the
    * {@link #getUserHomeDir() user's home directory}, and the
    * {@link #getJavaHomeDir() java home directory}. It also includes some
-   * standard candidate folders, such as &quot;c:\Windows&quot; or
-   * &quot;/usr/bin&quot; if they exist. All folders in the list exist.
+   * standard candidate folders, such as &quot;{@code C:\Windows}&quot; or
+   * &quot;{@code /usr/bin}&quot; and folders where we may look for
+   * libraries (such as &quot;{@code /usr/local/lib}&quot; if they exist.
+   * Again: All folders in the list exist.
+   * </p>
+   * <p>
+   * Since the path components are built in a system-specific order, a path
+   * like {@code C:\Windows\System32} may appear before {@code C:\Windows}.
+   * The reason for this may be priorities defined by the user or OS which
+   * we do not want to ignore. This means that when searching the sub-trees
+   * for a given binary, we would look at the sub-tree
+   * {@code C:\Windows\System32} twice. In order to avoid that, you should
+   * use {@link #visitPath(FileVisitor)} which automatically skips these
+   * folders. (Notice that the list returned by {@link #getPath()} will
+   * never contain something like {@code C:\Windows} followed by
+   * {@code C:\Windows\System32}, though, as we can skip such
+   * constellations without modifying any result of a search process.)
+   * </p>
    * 
    * @return the path
+   * @see #visitPath(FileVisitor)
    */
   public static final ArrayListView<Path> getPath() {
     return __PathLoader.PATH;
@@ -500,6 +522,38 @@ public final class PathUtils {
    */
   public static final Path getTempDir() {
     return __TempDirLoader.DIR;
+  }
+
+  /**
+   * Visit the elements of the {@link #getPath() path}.
+   * 
+   * @param visitor
+   *          the visitor
+   * @return the result
+   * @throws IOException
+   *           if I/O fails
+   * @see #getPath()
+   */
+  public static final FileVisitResult visitPath(
+      final FileVisitor<Path> visitor) throws IOException {
+    final __PathVisitor vis;
+    FileVisitResult r;
+
+    if (visitor == null) {
+      throw new IllegalArgumentException("Path visitor cannot be null."); //$NON-NLS-1$
+    }
+
+    vis = new __PathVisitor(visitor);
+    for (final Path p : __PathLoader.PATH) {
+      Files.walkFileTree(p, vis);
+      if (((r = vis.m_lastResult) == null)
+          || (r == FileVisitResult.TERMINATE)) {
+        break;
+      }
+      vis.m_done.add(p);
+    }
+
+    return vis.m_lastResult;
   }
 
   /** the forbidden constructor */
@@ -568,13 +622,35 @@ public final class PathUtils {
     static final Path DIR;
 
     static {
+      final Configuration config;
       Path p1;
 
-      try {
-        p1 = Configuration.getRoot().get("user.home", //$NON-NLS-1$
-            __DirPathParser.PARSER, null);
-      } catch (final Throwable t) {
-        p1 = null;
+      p1 = null;
+
+      finder: {
+        try {
+          config = Configuration.getRoot();
+          try {
+            p1 = config.get("user.home", //$NON-NLS-1$
+                __DirPathParser.PARSER, null);
+            break finder;
+          } catch (final Throwable t) {
+            p1 = null;
+          }
+
+          for (final String def : new String[] {//
+          "HOME", //$NON-NLS-1$
+              "HOMEPATH", //$NON-NLS-1$
+              "USERPROFILE", //$NON-NLS-1$
+          }) {
+            p1 = config.get(def, __DirPathParser.PARSER, null);
+            if (p1 != null) {
+              break finder;
+            }
+          }
+        } catch (final Throwable tt) {
+          p1 = null;
+        }
       }
 
       if (p1 != null) {
@@ -594,6 +670,7 @@ public final class PathUtils {
     static final ArrayListView<Path> PATH;
 
     static {
+      final Configuration config;
       LinkedHashSet<Path> paths;
       ListParser<Path> lister;
       ArrayListView<Path> path;
@@ -601,58 +678,62 @@ public final class PathUtils {
       Path[] array, array2;
       int i, j, size;
 
+      // get paths from environment
+      config = Configuration.getRoot();
+
+      paths = new LinkedHashSet<>();
       lister = new ListParser<>(__DirPathParser.PARSER, true, true);
 
-      // get paths from environment
-      path = Configuration.getRoot().get(Configuration.PARAM_PATH, lister,
-          null);
-      paths = new LinkedHashSet<>();
-      if (path != null) {
-        paths.addAll(path);
-        path = null;
+      // get path lists from environment variables or java config
+      for (final String key : new String[] {//
+      Configuration.PARAM_PATH,// PATH
+          "java.class.path",// classpath //$NON-NLS-1$
+          "classpath",//environment class path //$NON-NLS-1$
+      }) {
+        path = config.get(key, lister, null);
+        if (path != null) {
+          paths.addAll(path);
+          path = null;
+        }
       }
-
-      // get paths from class path
-      path = Configuration.getRoot().get("java.class.path", //$NON-NLS-1$
-          lister, null);
-      if (path != null) {
-        paths.addAll(path);
-        path = null;
-      }
-
-      // get paths from class path 2
-      path = Configuration.getRoot().get("classpath", //$NON-NLS-1$
-          lister, null);
       lister = null;
-      if (path != null) {
-        paths.addAll(path);
-        path = null;
+
+      // add paths from environment variables or java config
+      for (final String key : new String[] {//
+      "ProgramFiles", //$NON-NLS-1$
+          "ProgramFiles(x86)", //$NON-NLS-1$
+          "ProgramW6432)", //$NON-NLS-1$
+          "CommonProgramFiles", //$NON-NLS-1$
+          "CommonProgramFiles(x86)", //$NON-NLS-1$
+          "CommonProgramW6432", //$NON-NLS-1$
+          "SystemRoot", //$NON-NLS-1$
+          "windir", //$NON-NLS-1$
+          "SHELL", //$NON-NLS-1$
+          "COMPIZ_BIN_PATH", //$NON-NLS-1$
+      }) {
+        p = config.get(key, __DirPathParser.PARSER, null);
+        if (p != null) {
+          paths.add(p);
+        }
       }
 
       // add default paths if they exist
-      for (final String def : new String[] {
-          ("C:" + File.separatorChar + "Program Files"), //$NON-NLS-1$//$NON-NLS-2$
-          ("C:" + File.separatorChar + "Program Paths"), //$NON-NLS-1$//$NON-NLS-2$
-          ("C:" + File.separatorChar + "Program Paths (x86)"), //$NON-NLS-1$//$NON-NLS-2$
-          ("C:" + File.separatorChar + "Windows"), //$NON-NLS-1$//$NON-NLS-2$
-          (File.separatorChar + "etc"), //$NON-NLS-1$
-          (File.separatorChar + "usr" + File.separatorChar + //$NON-NLS-1$
-          "bin"), //$NON-NLS-1$
-          (File.separatorChar + "usr" + File.separatorChar + //$NON-NLS-1$
-          "sbin"), //$NON-NLS-1$
-          (File.separatorChar + "bin"), //$NON-NLS-1$
-          (File.separatorChar + "usr" + File.separatorChar + //$NON-NLS-1$
-              "local" + File.separatorChar + //$NON-NLS-1$
-          "bin"), //$NON-NLS-1$
-          (File.separatorChar + "usr" + File.separatorChar + //$NON-NLS-1$
-              "local" + File.separatorChar + //$NON-NLS-1$
-          "etc"), //$NON-NLS-1$
-          (File.separatorChar + "usr" + File.separatorChar + //$NON-NLS-1$
-              "local" + File.separatorChar + //$NON-NLS-1$
-          "sbin"), //$NON-NLS-1$
+      for (final String key : new String[] {//
+      "C:/Program Files", //$NON-NLS-1$
+          "C:/Program Files (x86)", //$NON-NLS-1$
+          "C:/Windows", //$NON-NLS-1$
+          "/etc", //$NON-NLS-1$
+          "/bin", //$NON-NLS-1$
+          "/usr/bin", //$NON-NLS-1$
+          "/usr/lib", //$NON-NLS-1$
+          "/usr/sbin", //$NON-NLS-1$          
+          "/usr/local/bin", //$NON-NLS-1$
+          "/usr/local/etc", //$NON-NLS-1$
+          "/usr/local/lib", //$NON-NLS-1$
+          "/usr/local/sbin", //$NON-NLS-1$
       }) {
         try {
-          p = __DirPathParser.PARSER.parseString(def);
+          p = __DirPathParser.PARSER.parseString(key);
         } catch (final Throwable t) {
           p = null;
         }
@@ -909,5 +990,72 @@ public final class PathUtils {
       }
       return FileVisitResult.CONTINUE;
     }
+  }
+
+  /**
+   * A visitor for the {@link PathUtils#getPath() path} which tries to skip
+   * unnecessary visits to nested path components.
+   */
+  private static final class __PathVisitor extends SimpleFileVisitor<Path> {
+
+    /** the visitor to carry around */
+    private final FileVisitor<Path> m_visitor;
+
+    /** the paths already done */
+    final HashSet<Path> m_done;
+
+    /** the last file visit result */
+    volatile FileVisitResult m_lastResult;
+
+    /**
+     * create the path visitor
+     * 
+     * @param visitor
+     *          the visitor to carry around
+     */
+    __PathVisitor(final FileVisitor<Path> visitor) {
+      super();
+      this.m_visitor = visitor;
+      this.m_done = new HashSet<>(__PathLoader.PATH.size());
+      this.m_lastResult = FileVisitResult.CONTINUE;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult preVisitDirectory(final Path dir,
+        final BasicFileAttributes attrs) throws IOException {
+      if (this.m_done.contains(dir)) {
+        return FileVisitResult.SKIP_SUBTREE;
+      }
+      return (this.m_lastResult = this.m_visitor.preVisitDirectory(dir,
+          attrs));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult visitFile(final Path file,
+        final BasicFileAttributes attrs) throws IOException {
+      return (this.m_lastResult = this.m_visitor.visitFile(file, attrs));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult visitFileFailed(final Path file,
+        final IOException exc) throws IOException {
+      return (this.m_lastResult = this.m_visitor
+          .visitFileFailed(file, exc));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult postVisitDirectory(final Path dir,
+        final IOException exc) throws IOException {
+      if (this.m_done.contains(dir)) {
+        return FileVisitResult.CONTINUE;
+      }
+      return (this.m_lastResult = this.m_visitor.postVisitDirectory(dir,
+          exc));
+    }
+
   }
 }
