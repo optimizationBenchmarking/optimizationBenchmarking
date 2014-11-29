@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.io.paths;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,11 +8,14 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.spi.FileSystemProvider;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -23,6 +27,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.parsers.ListParser;
 import org.optimizationBenchmarking.utils.parsers.PathParser;
+import org.optimizationBenchmarking.utils.predicates.IPredicate;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** Some helper routines for {@link java.nio.file.Path}-based operations. */
@@ -115,7 +120,100 @@ public final class PathUtils {
       }
       before = p;
     }
+  }
 
+  /**
+   * Canonicalize a file
+   * 
+   * @param f
+   *          the file
+   * @return the canonicalized version
+   */
+  static final File _canonicalize(final File f) {
+    File result;
+
+    try {
+      result = f.getCanonicalFile();
+      if (result != null) {
+        return result;
+      }
+    } catch (final Throwable t) {//
+    }
+
+    try {
+      result = f.getAbsoluteFile();
+      if (result != null) {
+        return result;
+      }
+    } catch (final Throwable t2) {
+      //
+    }
+
+    return f;
+  }
+
+  /**
+   * Get a file representing the physical path. This method will never
+   * return {@code null}. If no physical file can be derived from the path,
+   * an {@link java.lang.IllegalArgumentException} will be thrown.
+   * 
+   * @param path
+   *          the path
+   * @return the file representing the physical path
+   * @throws IllegalArgumentException
+   *           if the path cannot be represented as file
+   */
+  public static final File getPhysicalFile(final Path path)
+      throws IllegalArgumentException {
+    Path normPath;
+    File file;
+    Throwable error;
+    String message;
+
+    normPath = PathUtils.normalize(path);
+    error = null;
+    try {
+      file = normPath.toFile();
+    } catch (final UnsupportedOperationException use) {
+      error = use;
+      file = null;
+    }
+
+    if (file != null) {
+      try {
+        return AccessController.doPrivileged(new __Canonicalizer(file));
+      } catch (final Throwable t) {
+        return PathUtils._canonicalize(file);
+      }
+    }
+
+    message = ("Cannot translate path '" + path + //$NON-NLS-1$
+    "' to a physical file path."); //$NON-NLS-1$;
+    if (error != null) {
+      throw new IllegalArgumentException(message, error);
+    }
+    throw new IllegalArgumentException(message);
+  }
+
+  /**
+   * Get a string representing the physical path. This method will never
+   * return {@code null}. If no physical file can be derived from the path,
+   * an {@link java.lang.IllegalArgumentException} will be thrown.
+   * 
+   * @param path
+   *          the path
+   * @return the string representing the physical path
+   */
+  public static final String getPhysicalPath(final Path path) {
+    final String result;
+
+    result = PathUtils.getPhysicalFile(path).toString();
+    if (result != null) {
+      return result;
+    }
+    throw new IllegalArgumentException(//
+        "Error when obtaining path string from '" + //$NON-NLS-1$
+            path + '\'');
   }
 
   /**
@@ -455,13 +553,13 @@ public final class PathUtils {
    * executables or libraries.
    * </p>
    * <p>
-   * This list contains the environment's path variable, as well as the
-   * folders containing each element of the <a
+   * This list contains the environment's <a
+   * href="http://en.wikipedia.org/wiki/PATH_%28variable%29">PATH</a>
+   * variable, as well as the folders containing each element of the <a
    * href="http://en.wikipedia.org/wiki/Classpath_%28Java%29"
-   * >classpath</a>, the {@link #getCurrentDir() current directory}, the
-   * {@link #getUserHomeDir() user's home directory}, and the
+   * >classpath</a>, the {@link #getCurrentDir() current directory} and the
    * {@link #getJavaHomeDir() java home directory}. It also includes some
-   * standard candidate folders, such as &quot;{@code C:\Windows}&quot; or
+   * standard candidate folders, such as &quot;{@code C:\Windows} &quot; or
    * &quot;{@code /usr/bin}&quot; and folders where we may look for
    * libraries (such as &quot;{@code /usr/local/lib}&quot; if they exist.
    * Again: All folders in the list exist.
@@ -473,15 +571,16 @@ public final class PathUtils {
    * we do not want to ignore. This means that when searching the sub-trees
    * for a given binary, we would look at the sub-tree
    * {@code C:\Windows\System32} twice. In order to avoid that, you should
-   * use {@link #visitPath(FileVisitor)} which automatically skips these
-   * folders. (Notice that the list returned by {@link #getPath()} will
-   * never contain something like {@code C:\Windows} followed by
+   * use {@link #visitPath(FileVisitor, Path...)} which automatically skips
+   * these folders. (Notice that the list returned by {@link #getPath()}
+   * will never contain something like {@code C:\Windows} followed by
    * {@code C:\Windows\System32}, though, as we can skip such
    * constellations without modifying any result of a search process.)
    * </p>
    * 
    * @return the path
-   * @see #visitPath(FileVisitor)
+   * @see #visitPath(FileVisitor, Path...)
+   * @see #findFirstInPath(IPredicate, IPredicate, Path[])
    */
   public static final ArrayListView<Path> getPath() {
     return __PathLoader.PATH;
@@ -525,35 +624,114 @@ public final class PathUtils {
   }
 
   /**
-   * Visit the elements of the {@link #getPath() path}.
+   * First, visit the {@link java.nio.file.Path paths} in the array
+   * {@code visitVist} (if they exist). If the {@code visitor} does not
+   * indicate that it wishes to
+   * {@link java.nio.file.FileVisitResult#TERMINATE} terminate, then visit
+   * the elements of the {@link #getPath() PATH}
+   * <em>that are likely to contain useful libraries or binaries</em>. For
+   * instance, although we will visit the files in &quot;{@code C:\Windows}
+   * &quot;, we will not visit &quot;{@code C:\Windows\Temp}&quot; or any
+   * other known temporary folder. This method provides the basic
+   * infrastructure on which
+   * {@link #findFirstInPath(IPredicate, IPredicate, Path[])} is built.
    * 
    * @param visitor
    *          the visitor
+   * @param visitFirst
+   *          {@code null} or a list of paths to visit <em>before</em>
+   *          walking through the {@link #getPath() PATH}
    * @return the result
    * @throws IOException
    *           if I/O fails
    * @see #getPath()
+   * @see #findFirstInPath(IPredicate, IPredicate, Path[])
    */
   public static final FileVisitResult visitPath(
-      final FileVisitor<Path> visitor) throws IOException {
-    final __PathVisitor vis;
+      final FileVisitor<Path> visitor, final Path[] visitFirst)
+      throws IOException {
+    final __PathVisitor visitorWrapper;
+    Path[] pathSet;
     FileVisitResult r;
 
     if (visitor == null) {
       throw new IllegalArgumentException("Path visitor cannot be null."); //$NON-NLS-1$
     }
 
-    vis = new __PathVisitor(visitor);
-    for (final Path p : __PathLoader.PATH) {
-      Files.walkFileTree(p, vis);
-      if (((r = vis.m_lastResult) == null)
-          || (r == FileVisitResult.TERMINATE)) {
+    visitorWrapper = new __PathVisitor(visitor);
+
+    visitorWrapper.m_inUserDefinedTemplates = true;
+    pathSet = visitFirst;
+    for (;;) {
+      if (pathSet != null) {
+        for (Path p : pathSet) {
+          if (p == null) {
+            continue;
+          }
+
+          if (visitorWrapper.m_inUserDefinedTemplates) {
+            p = PathUtils.normalize(p);
+          }
+
+          Files.walkFileTree(p, visitorWrapper);
+          if (((r = visitorWrapper.m_lastResult) == null)
+              || (r == FileVisitResult.TERMINATE)) {
+            break;
+          }
+        }
+      }
+
+      if (visitorWrapper.m_inUserDefinedTemplates) {
+        pathSet = __PathLoader.PATH_ARRAY;
+        visitorWrapper.m_inUserDefinedTemplates = false;
+      } else {
         break;
       }
-      vis.m_done.add(p);
     }
 
-    return vis.m_lastResult;
+    return visitorWrapper.m_lastResult;
+  }
+
+  /**
+   * Find a {@link java.nio.file.Path path} that matches the given
+   * {@link org.optimizationBenchmarking.utils.predicates.IPredicate
+   * pathPredicate} and whose attributes match the
+   * {@link org.optimizationBenchmarking.utils.predicates.IPredicate
+   * attsPredicate}. Therefore, first, visit the {@link java.nio.file.Path
+   * paths} in the array {@code visitVist}. If no fitting path was found,
+   * then visit the elements of the {@link #getPath() PATH}.
+   * 
+   * @param visitFirst
+   *          {@code null} or a list of paths to visit <em>before</em>
+   *          walking through the {@link #getPath() PATH}. Elements in this
+   *          array may also be {@code null} or non-existing paths.
+   * @param pathPredicate
+   *          the path predicate to match
+   * @param attsPredicate
+   *          the attributes predicate
+   * @return the result
+   * @see #visitPath(FileVisitor, Path[])
+   * @see #getPath()
+   */
+  public static final Path findFirstInPath(
+      final IPredicate<Path> pathPredicate,
+      final IPredicate<BasicFileAttributes> attsPredicate,
+      final Path[] visitFirst) {
+    final __FindFirst ff;
+
+    if ((pathPredicate == null) && (attsPredicate == null)) {
+      return null;
+    }
+
+    ff = new __FindFirst(pathPredicate, attsPredicate);
+
+    try {
+      PathUtils.visitPath(ff, visitFirst);
+    } catch (final Throwable t) {
+      //
+    }
+
+    return ff.m_found;
   }
 
   /** the forbidden constructor */
@@ -661,13 +839,14 @@ public final class PathUtils {
     }
   }
 
-  /**
-   * load the paths the paths
-   */
+  /** load the paths the paths */
   private static final class __PathLoader {
 
     /** the path */
     static final ArrayListView<Path> PATH;
+
+    /** the path */
+    static final Path[] PATH_ARRAY;
 
     static {
       final Configuration config;
@@ -684,11 +863,12 @@ public final class PathUtils {
       paths = new LinkedHashSet<>();
       lister = new ListParser<>(__DirPathParser.PARSER, true, true);
 
-      // get path lists from environment variables or java config
+      // get path lists from environment variables or java configuration
       for (final String key : new String[] {//
       Configuration.PARAM_PATH,// PATH
-          "java.class.path",// classpath //$NON-NLS-1$
+          "java.class.path",// class path //$NON-NLS-1$
           "classpath",//environment class path //$NON-NLS-1$
+          "java.library.path",//path to native libraries//$NON-NLS-1$
       }) {
         path = config.get(key, lister, null);
         if (path != null) {
@@ -718,7 +898,7 @@ public final class PathUtils {
       }
 
       // add default paths if they exist
-      for (final String key : new String[] {//
+      for (final String template : new String[] {//
       "C:/Program Files", //$NON-NLS-1$
           "C:/Program Files (x86)", //$NON-NLS-1$
           "C:/Windows", //$NON-NLS-1$
@@ -726,14 +906,14 @@ public final class PathUtils {
           "/bin", //$NON-NLS-1$
           "/usr/bin", //$NON-NLS-1$
           "/usr/lib", //$NON-NLS-1$
-          "/usr/sbin", //$NON-NLS-1$          
+          "/usr/sbin", //$NON-NLS-1$ 
           "/usr/local/bin", //$NON-NLS-1$
           "/usr/local/etc", //$NON-NLS-1$
           "/usr/local/lib", //$NON-NLS-1$
           "/usr/local/sbin", //$NON-NLS-1$
       }) {
         try {
-          p = __DirPathParser.PARSER.parseString(key);
+          p = __DirPathParser.PARSER.parseString(template);
         } catch (final Throwable t) {
           p = null;
         }
@@ -744,11 +924,6 @@ public final class PathUtils {
 
       // add other paths
       p = __JavaHomeDirLoader.DIR;
-      if (p != null) {
-        paths.add(p);
-      }
-
-      p = __UserHomeDirLoader.DIR;
       if (p != null) {
         paths.add(p);
       }
@@ -777,8 +952,9 @@ public final class PathUtils {
         System.arraycopy(array, 0, array2, 0, size);
         array = array2;
       }
+      PATH_ARRAY = array;
 
-      PATH = new ArrayListView<>(array);
+      PATH = new ArrayListView<>(__PathLoader.PATH_ARRAY);
     }
   }
 
@@ -979,7 +1155,7 @@ public final class PathUtils {
     /** {@iheritDoc} */
     @Override
     public final FileVisitResult postVisitDirectory(final Path dir,
-        final IOException exc) throws IOException {
+        final IOException exc) {
       if (exc != null) {
         this._storeException(exc);
       }
@@ -993,16 +1169,146 @@ public final class PathUtils {
   }
 
   /**
-   * A visitor for the {@link PathUtils#getPath() path} which tries to skip
-   * unnecessary visits to nested path components.
+   * A visitor for the {@link PathUtils#getPath() PATH} which tries to skip
+   * unnecessary visits to nested path components. This visitor should be
+   * immune to some circular hard links and other shenanigans to some
+   * degree at least.
    */
   private static final class __PathVisitor extends SimpleFileVisitor<Path> {
+
+    /** some paths we should always skip when traveling through the path */
+    static final Path[] SKIP;
+
+    static {
+      final HashSet<Path> skip;
+      Path p, win;
+
+      skip = new HashSet<>();
+      p = PathUtils.getTempDir();
+      if (p != null) {
+        skip.add(p);
+      }
+      for (final String template : new String[] {//
+      "/tmp", //$NON-NLS-1$
+          "/etc/cups/ssl", //$NON-NLS-1$
+          "/etc/ssl/private", //$NON-NLS-1$
+          "/etc/polkit-1/localauthority",//$NON-NLS-1$
+      }) {
+        try {
+          p = __DirPathParser.PARSER.parseString(template);
+          if (p != null) {
+            skip.add(p);
+          }
+        } catch (final Throwable t) {//
+        }
+      }
+
+      win = Configuration.getRoot().get(
+          "windir", __DirPathParser.PARSER, null);//$NON-NLS-1$
+      if (win == null) {
+        try {
+          win = __DirPathParser.PARSER.parseString("C:\\Windows"); //$NON-NLS-1$
+        } catch (final Throwable t) {
+          win = null;
+        }
+      }
+
+      if (win != null) {
+
+        // add default paths if they exist
+        for (final String template : new String[] {//
+        "addins", //$NON-NLS-1$
+            "ADFS", //$NON-NLS-1$
+            "AppCompat", //$NON-NLS-1$
+            "apppatch", //$NON-NLS-1$
+            "AppReadiness", //$NON-NLS-1$
+            "assembly", //$NON-NLS-1$
+            "BitLockerDiscoveryVolumeContents", //$NON-NLS-1$
+            "Boot", //$NON-NLS-1$
+            "Branding", //$NON-NLS-1$
+            "Camera", //$NON-NLS-1$
+            "CbsTemp", //$NON-NLS-1$
+            "CSC", //$NON-NLS-1$
+            "Cursors", //$NON-NLS-1$
+            "de-DE", //$NON-NLS-1$
+            "debug", //$NON-NLS-1$
+            "DesktopTileResources", //$NON-NLS-1$
+            "diagnostics", //$NON-NLS-1$
+            "DigitalLocker", //$NON-NLS-1$
+            "Downloaded Program Files", //$NON-NLS-1$
+            "en-US", //$NON-NLS-1$
+            "Fonts", //$NON-NLS-1$
+            "Globalization", //$NON-NLS-1$
+            "Help", //$NON-NLS-1$
+            "History", //$NON-NLS-1$
+            "IME", //$NON-NLS-1$
+            "ImmersiveControlPanel", //$NON-NLS-1$
+            "Inf", //$NON-NLS-1$
+            "InputMethod", //$NON-NLS-1$
+            "Installer", //$NON-NLS-1$
+            "L2Schemas", //$NON-NLS-1$
+            "LiveKernelReports", //$NON-NLS-1$
+            "Logs", //$NON-NLS-1$
+            "Media", //$NON-NLS-1$
+            "MediaViewer", //$NON-NLS-1$
+            "Minidump", //$NON-NLS-1$
+            "ModemLogs", //$NON-NLS-1$
+            "Offline Web Pages", //$NON-NLS-1$
+            "Panther", //$NON-NLS-1$
+            "PCHEALTH", //$NON-NLS-1$
+            "Performance", //$NON-NLS-1$
+            "PLA", //$NON-NLS-1$
+            "PolicyDefinitions", //$NON-NLS-1$
+            "Prefetch", //$NON-NLS-1$
+            "Registration", //$NON-NLS-1$
+            "rescache", //$NON-NLS-1$
+            "Resources", //$NON-NLS-1$
+            "SchCache", //$NON-NLS-1$
+            "schemas", //$NON-NLS-1$
+            "security", //$NON-NLS-1$
+            "ServiceProfiles", //$NON-NLS-1$
+            "servicing", //$NON-NLS-1$
+            "Setup", //$NON-NLS-1$
+            "ShellNew", //$NON-NLS-1$
+            "SKB", //$NON-NLS-1$
+            "SoftwareDistribution", //$NON-NLS-1$
+            "Speech", //$NON-NLS-1$1$
+            "SystemResources", //$NON-NLS-1$
+            "TAPI", //$NON-NLS-1$
+            "Tasks", //$NON-NLS-1$
+            "Temp", //$NON-NLS-1$
+            "ToastData", //$NON-NLS-1$
+            "tracing", //$NON-NLS-1$
+            "twain_32", //$NON-NLS-1$
+            "vpnplugins", //$NON-NLS-1$
+            "Vss", //$NON-NLS-1$
+            "Web", //$NON-NLS-1$
+            "WinStore", //$NON-NLS-1$
+            "WinSxS", //$NON-NLS-1$
+            "zh-CN", //$NON-NLS-1$
+        }) {
+          try {
+            p = PathUtils.createPathInside(win, template);
+            if ((p != null) && (Files.isDirectory(p))) {
+              skip.add(p);
+            }
+          } catch (final Throwable t) {
+            //
+          }
+        }
+      }
+
+      SKIP = skip.toArray(new Path[skip.size()]);
+    }
 
     /** the visitor to carry around */
     private final FileVisitor<Path> m_visitor;
 
     /** the paths already done */
-    final HashSet<Path> m_done;
+    private final HashSet<Path> m_done;
+
+    /** are we in the user-defined template root mode? */
+    boolean m_inUserDefinedTemplates;
 
     /** the last file visit result */
     volatile FileVisitResult m_lastResult;
@@ -1016,17 +1322,43 @@ public final class PathUtils {
     __PathVisitor(final FileVisitor<Path> visitor) {
       super();
       this.m_visitor = visitor;
-      this.m_done = new HashSet<>(__PathLoader.PATH.size());
+
+      this.m_done = new HashSet<>(4096);
+      for (final Path skip : __PathVisitor.SKIP) {
+        this.m_done.add(skip);
+      }
+
       this.m_lastResult = FileVisitResult.CONTINUE;
+    }
+
+    /**
+     * Add an element to a hash set in a synchronized way &ndash;
+     * synchronization here is "just-in-case". Who knows what these new
+     * Java versions will parallelize.
+     * 
+     * @param p
+     *          the path to add
+     * @param s
+     *          the set
+     * @return the return value
+     */
+    private static final boolean __add(final Path p, final HashSet<Path> s) {
+      synchronized (s) {
+        return s.add(p);
+      }
     }
 
     /** {@inheritDoc} */
     @Override
     public final FileVisitResult preVisitDirectory(final Path dir,
         final BasicFileAttributes attrs) throws IOException {
-      if (this.m_done.contains(dir)) {
-        return FileVisitResult.SKIP_SUBTREE;
+
+      if ((dir == null) || (attrs == null)
+          || (!(__PathVisitor.__add(dir, this.m_done)))) {
+        return ((this.m_lastResult == FileVisitResult.TERMINATE) ? FileVisitResult.TERMINATE
+            : FileVisitResult.SKIP_SUBTREE);
       }
+
       return (this.m_lastResult = this.m_visitor.preVisitDirectory(dir,
           attrs));
     }
@@ -1035,27 +1367,179 @@ public final class PathUtils {
     @Override
     public final FileVisitResult visitFile(final Path file,
         final BasicFileAttributes attrs) throws IOException {
-      return (this.m_lastResult = this.m_visitor.visitFile(file, attrs));
+      if ((file != null) && (attrs != null)) {
+        return (this.m_lastResult = this.m_visitor.visitFile(file, attrs));
+      }
+
+      switch (this.m_lastResult) {
+        case TERMINATE: {
+          return FileVisitResult.TERMINATE;
+        }
+        case SKIP_SIBLINGS: {
+          return FileVisitResult.SKIP_SIBLINGS;
+        }
+        default: {
+          return FileVisitResult.CONTINUE;
+        }
+      }
     }
 
     /** {@inheritDoc} */
     @Override
     public final FileVisitResult visitFileFailed(final Path file,
         final IOException exc) throws IOException {
-      return (this.m_lastResult = this.m_visitor
-          .visitFileFailed(file, exc));
+      if ((file != null)
+          && ((!(this.m_inUserDefinedTemplates)) || (!(exc instanceof NoSuchFileException)))) {
+        return (this.m_lastResult = this.m_visitor.visitFileFailed(file,
+            exc));
+      }
+      return ((this.m_lastResult == FileVisitResult.TERMINATE) ? FileVisitResult.TERMINATE
+          : FileVisitResult.CONTINUE);
     }
 
     /** {@inheritDoc} */
     @Override
     public final FileVisitResult postVisitDirectory(final Path dir,
         final IOException exc) throws IOException {
-      if (this.m_done.contains(dir)) {
-        return FileVisitResult.CONTINUE;
+
+      if (dir == null) {
+        return ((this.m_lastResult == FileVisitResult.TERMINATE) ? FileVisitResult.TERMINATE
+            : FileVisitResult.CONTINUE);
       }
       return (this.m_lastResult = this.m_visitor.postVisitDirectory(dir,
           exc));
     }
+  }
+
+  /**
+   * A visitor for the {@link PathUtils#getPath() PATH} which returns the
+   * first file matching to a given criterion.
+   */
+  private static final class __FindFirst extends SimpleFileVisitor<Path> {
+
+    /** the path predicate */
+    private final IPredicate<Path> m_pathPredicate;
+
+    /** the attributes predicate */
+    private final IPredicate<BasicFileAttributes> m_attsPredicate;
+
+    /** the result */
+    volatile Path m_found;
+
+    /**
+     * create the path visitor
+     * 
+     * @param pathPredicate
+     *          the path predicate to match
+     * @param attsPredicate
+     *          the attributes predicate
+     */
+    __FindFirst(final IPredicate<Path> pathPredicate,
+        final IPredicate<BasicFileAttributes> attsPredicate) {
+      super();
+      this.m_pathPredicate = pathPredicate;
+      this.m_attsPredicate = attsPredicate;
+    }
+
+    /**
+     * Check whether the predicates match
+     * 
+     * @param path
+     *          the path
+     * @param attrs
+     *          the attributes
+     * @return {@code true} if and only if the predicates match,
+     *         {@code false} otherwise
+     */
+    private final FileVisitResult __check(final Path path,
+        final BasicFileAttributes attrs) {
+      check: {
+        checkAtts: {
+          if (this.m_attsPredicate != null) {
+            try {
+              if (this.m_attsPredicate.check(attrs)) {
+                break checkAtts;
+              }
+            } catch (final Throwable t) {
+              //
+            }
+            break check;
+          }
+        }
+
+        if (this.m_pathPredicate != null) {
+          try {
+            if (this.m_pathPredicate.check(path)) {
+              this.m_found = path;
+              return FileVisitResult.TERMINATE;
+            }
+
+          } catch (final Throwable t) {
+            //
+          }
+        }
+      }
+      return ((this.m_found == null) ? FileVisitResult.CONTINUE
+          : FileVisitResult.TERMINATE);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult preVisitDirectory(final Path dir,
+        final BasicFileAttributes attrs) {
+      return this.__check(dir, attrs);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult visitFile(final Path file,
+        final BasicFileAttributes attrs) {
+      return this.__check(file, attrs);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult visitFileFailed(final Path file,
+        final IOException exc) {
+      return ((this.m_found == null) ? FileVisitResult.CONTINUE
+          : FileVisitResult.TERMINATE);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult postVisitDirectory(final Path dir,
+        final IOException exc) throws IOException {
+      return ((this.m_found == null) ? FileVisitResult.CONTINUE
+          : FileVisitResult.TERMINATE);
+    }
+  }
+
+  /**
+   * This small private class helps to canonicalize a file by tunneling
+   * this operation through a <code>PrivilegedAction</code>.
+   */
+  private static final class __Canonicalizer implements
+      PrivilegedAction<File> {
+    /** The file to canonicalize. */
+    private final File m_file;
+
+    /**
+     * The constructor of the canonicalizer.
+     * 
+     * @param file
+     *          The file to be canonicalized.
+     */
+    __Canonicalizer(final File file) {
+      super();
+      this.m_file = file;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final File run() {
+      return PathUtils._canonicalize(this.m_file);
+    }
 
   }
+
 }

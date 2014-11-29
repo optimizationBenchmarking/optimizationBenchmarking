@@ -24,7 +24,7 @@ public final class CanExecutePredicate implements IPredicate<Path>,
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
-  /** create */
+  /** the globally shared instance */
   public static final CanExecutePredicate INSTANCE = new CanExecutePredicate();
 
   /** create */
@@ -113,6 +113,7 @@ public final class CanExecutePredicate implements IPredicate<Path>,
       extensions.add("exe"); //$NON-NLS-1$
       extensions.add("bat"); //$NON-NLS-1$
       extensions.add("com"); //$NON-NLS-1$
+      extensions.add("cmd"); //$NON-NLS-1$
       extensions.add("sh"); //$NON-NLS-1$
 
       lst = Configuration.getRoot().getStringList("pathext", null); //$NON-NLS-1$

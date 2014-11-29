@@ -15,8 +15,9 @@ public final class REngineBuilder extends
 
   /** {@inheritDoc} */
   @Override
-  protected final REngine doCreate() {
-    return new REngine();
+  public REngine create() throws Exception {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }

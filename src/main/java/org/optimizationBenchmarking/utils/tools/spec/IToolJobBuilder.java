@@ -42,7 +42,9 @@ public interface IToolJobBuilder {
    * </p>
    * 
    * @return the job
+   * @throws Exception
+   *           if job creation failed
    */
-  public abstract IToolJob create();
+  public abstract IToolJob create() throws Exception;
 
 }

@@ -1,0 +1,72 @@
+package org.optimizationBenchmarking.utils.tools.impl.process;
+
+import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer;
+
+/** a thread shoveling data from a buffer to an output stream */
+final class _BufferToOutputStream extends _WorkerThread {
+
+  /** the source */
+  private final ByteProducerConsumerBuffer m_source;
+  /** the destination */
+  private final OutputStream m_dest;
+
+  /**
+   * create
+   * 
+   * @param dest
+   *          the destination
+   * @param source
+   *          the source
+   * @param log
+   *          the logger
+   */
+  _BufferToOutputStream(final OutputStream dest,
+      final ByteProducerConsumerBuffer source, final Logger log) {
+    super("Buffer-to-OutputStream", log); //$NON-NLS-1$
+    this.m_dest = dest;
+    this.m_source = source;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void run() {
+    final byte[] buffer;
+    int s;
+
+    buffer = new byte[4096];
+    try {
+      try {
+        while (this.m_alive) {
+          if (this.m_source.isClosed()) {
+            break;
+          }
+          s = this.m_source.readFromBuffer(buffer, 0, buffer.length);
+          if (s <= 0) {
+            break;
+          }
+          this.m_dest.write(buffer, 0, s);
+        }
+      } finally {
+        try {
+          this.m_dest.close();
+        } finally {
+          this.m_source.close();
+        }
+      }
+    } catch (final Throwable t) {
+      if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
+        this.m_log
+            .log(
+                Level.SEVERE,
+                "Error during shoveling bytes from byte buffer to input stream of external process.", //$NON-NLS-1$
+                t);
+      }
+      ErrorUtils.throwAsRuntimeException(t);
+    }
+  }
+}

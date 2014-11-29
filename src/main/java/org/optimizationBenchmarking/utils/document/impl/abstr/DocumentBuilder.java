@@ -24,8 +24,10 @@ public class DocumentBuilder extends
     this.m_owner = owner;
   }
 
+  /** {@inheritDoc} */
   @Override
-  protected Document doCreate() {
+  public Document create() {
+    this.validate();
     if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
       this.m_logger.fine(//
           "Begin creation of document '" + this.m_mainDocumentNameSuggestion + //$NON-NLS-1$

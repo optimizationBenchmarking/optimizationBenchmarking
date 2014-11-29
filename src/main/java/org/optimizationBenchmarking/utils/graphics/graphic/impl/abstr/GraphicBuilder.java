@@ -74,8 +74,10 @@ public final class GraphicBuilder extends
     }
   }
 
+  /** {@inheritDoc} */
   @Override
-  protected final Graphic doCreate() {
+  public final Graphic create() {
+    this.validate();
     return this.m_owner.createGraphic(this.m_logger, this.m_listener,
         this.m_basePath, this.m_mainDocumentNameSuggestion, this.m_size);
   }

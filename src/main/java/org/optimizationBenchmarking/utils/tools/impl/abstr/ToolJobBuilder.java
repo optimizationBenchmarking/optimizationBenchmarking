@@ -33,14 +33,8 @@ public abstract class ToolJobBuilder<J extends IToolJob, R extends ToolJobBuilde
   }
 
   /**
-   * Do the work of creating the object
-   * 
-   * @return the object
-   */
-  protected abstract J doCreate();
-
-  /**
-   * Check whether all fields have been set.
+   * Check whether all fields have been set correctly. This method must be
+   * called by {@link #create()}
    * 
    * @throws IllegalArgumentException
    *           otherwise
@@ -49,10 +43,16 @@ public abstract class ToolJobBuilder<J extends IToolJob, R extends ToolJobBuilde
     /** */
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Create the job. Throw an exception if necessary. An implementation of
+   * this method should first call {@link #validate()} before doing
+   * anything else. If {@link #validate()} did not throw an error, it
+   * should create the job.
+   * 
+   * @return the job
+   * @throws Exception
+   *           if something goes wrong
+   */
   @Override
-  public final J create() {
-    this.validate();
-    return this.doCreate();
-  }
+  public abstract J create() throws Exception;
 }

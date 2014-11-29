@@ -1,9 +1,9 @@
 package org.optimizationBenchmarking.utils.tools.impl.R;
 
-import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
 /** The R Engine */
-public final class REngine implements IToolJob {
+public final class REngine extends ToolJob {
 
   /** create */
   REngine() {

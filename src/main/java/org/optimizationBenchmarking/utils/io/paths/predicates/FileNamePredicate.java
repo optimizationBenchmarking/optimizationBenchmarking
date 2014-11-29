@@ -16,31 +16,57 @@ public final class FileNamePredicate extends StringInListIgnoreCase<Path> {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Create the predicate
+   * ignore (remove) the file extension (if any) before the name comparison
+   */
+  private final boolean m_ignoreExtension;
+
+  /**
+   * Create the file name comparison predicate
    * 
+   * @param ignoreExtension
+   *          ignore (remove) the file extension (if any) before the name
+   *          comparison
    * @param list
    *          the string list
    */
-  public FileNamePredicate(final String[] list) {
+  public FileNamePredicate(final boolean ignoreExtension,
+      final String[] list) {
     super(list);
+    this.m_ignoreExtension = ignoreExtension;
   }
 
   /**
-   * Create the predicate
+   * Create the file name comparison predicate
    * 
+   * @param ignoreExtension
+   *          ignore (remove) the file extension (if any) before the name
+   *          comparison
    * @param list
    *          the string list
    */
-  public FileNamePredicate(final Collection<String> list) {
+  public FileNamePredicate(final boolean ignoreExtension,
+      final Collection<String> list) {
     super(list);
+    this.m_ignoreExtension = ignoreExtension;
   }
 
   /** {@inheritDoc} */
   @Override
   protected final String getString(final Path file) {
-    final String s;
+    String s;
+    int idx;
 
     s = PathUtils.getName(file);
-    return ((s != null) ? s.toLowerCase() : null);
+    if (s != null) {
+      if (this.m_ignoreExtension) {
+        idx = s.lastIndexOf('.');
+        if (idx > 0) {
+          s = s.substring(0, idx);
+        }
+      }
+      return s.toLowerCase();
+    }
+
+    return null;
   }
 }
