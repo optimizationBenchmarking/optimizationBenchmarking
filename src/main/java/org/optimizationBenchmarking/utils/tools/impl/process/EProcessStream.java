@@ -11,7 +11,7 @@ public enum EProcessStream {
   /** all data coming from or going to a stream is ignored */
   IGNORE(Redirect.PIPE),
 
-  /** the stream is redirected to a path */
+  /** the stream is redirected to a file/path */
   REDIRECT_TO_PATH(null),
 
   /** inherit the stream from the calling process */

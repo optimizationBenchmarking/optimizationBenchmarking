@@ -6,7 +6,12 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 
-/** a thread shoveling data from an input stream to the nirvana */
+/**
+ * A thread shoveling data from an {@link java.io.InputStream} to the
+ * Nirvana, by {@link java.io.InputStream#skip(long) skipping} over it as
+ * long as <code>{@link #m_mode}&leq;1</code>. As soon as
+ * <code>{@link #m_mode}=2</code>, it will cease all activity.
+ */
 final class _DiscardInputStream extends _WorkerThread {
 
   /** the source */
@@ -28,21 +33,8 @@ final class _DiscardInputStream extends _WorkerThread {
   /** {@inheritDoc} */
   @Override
   public final void run() {
-    long s;
-
     try {
-      try {
-        while (this.m_alive) {
-          s = this.m_source.skip(0x1ffffff0L);
-          if (s <= 0L) {
-            if (this.m_source.read() < 0) {// check for end-of-stream
-              break;
-            }
-          }
-        }
-      } finally {
-        this.m_source.close();
-      }
+      this._discard(this.m_source);
     } catch (final Throwable t) {
       if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
         this.m_log.log(Level.SEVERE,

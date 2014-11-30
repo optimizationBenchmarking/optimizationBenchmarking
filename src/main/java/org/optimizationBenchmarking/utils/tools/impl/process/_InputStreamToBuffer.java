@@ -7,7 +7,14 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer;
 
-/** a thread shoveling data from an input stream to a buffer */
+/**
+ * A thread shoveling data from an {@link java.io.InputStream} to a
+ * {@link org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer
+ * buffer} as long as <code>{@link #m_mode}=0</code>. As soon as
+ * <code>{@link #m_mode}=1</code>, the data from the input stream will be
+ * {@link java.io.InputStream#skip(long) skipped} over. If
+ * <code>{@link #m_mode}=2</code>, all activity is ceased.
+ */
 final class _InputStreamToBuffer extends _WorkerThread {
 
   /** the destination */
@@ -29,35 +36,37 @@ final class _InputStreamToBuffer extends _WorkerThread {
       final InputStream source, final Logger log) {
     super("InputStream-to-Buffer", log); //$NON-NLS-1$
     this.m_dest = dest;
-    this.m_alive = true;
     this.m_source = source;
   }
 
   /** {@inheritDoc} */
   @Override
   public final void run() {
-    final byte[] buffer;
+    byte[] buffer;
     int s;
 
-    buffer = new byte[4096];
     try {
       try {
-        while (this.m_alive) {
-          if (this.m_dest.isClosed()) {
-            break;
-          }
-          s = this.m_source.read(buffer);
-          if (s <= 0) {
-            break;
-          }
-          this.m_dest.writeToBuffer(buffer, 0, s);
-        }
-      } finally {
+        buffer = new byte[4096];
         try {
-          this.m_dest.close();
+          while (this.m_mode < 1) {
+            if (this.m_dest.isClosed()) {
+              break;
+            }
+            s = this.m_source.read(buffer);
+            if (s <= 0) {
+              break;
+            }
+            this.m_dest.writeToBuffer(buffer, 0, s);
+          }
+
+          buffer = null;
         } finally {
-          this.m_source.close();
+          this.m_dest.close();
         }
+        this._discard(this.m_source);
+      } finally {
+        this.m_source.close();
       }
     } catch (final Throwable t) {
       if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {

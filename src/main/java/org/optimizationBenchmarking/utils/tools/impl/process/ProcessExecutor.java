@@ -53,22 +53,31 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
  * </p>
  * <h2>Solution</h2>
  * <p>
- * Our class creates one thread per stream. These threads shovel data to
- * and from internal buffers which can grow indefinitely. These buffers are
- * then accessed via streams, exactly as if you would write to the standard
- * streams of the new process directly. However, reading from and writing
- * to them may not cause a deadlock, since the threads will always continue
- * shoveling in the background.
+ * Our class counts the number of standard streams to the new process from
+ * which you might want to read or to which you might want to write.
+ * Streams which are redirected to files, for instance, are not counted,
+ * since they cannot cause deadlocks. Anyway, if the number of
+ * "interesting" streams is larger than 1, then it creates one
+ * {@link org.optimizationBenchmarking.utils.tools.impl.process._WorkerThread
+ * thread} per stream. These threads shovel data to and from internal
+ * {@link org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer
+ * buffers} which can grow indefinitely. These buffers are then accessed
+ * via streams, exactly as if you would write to the standard streams of
+ * the new process directly. Reading from and writing to them can still
+ * block, since maybe you are waiting for an output the process has not yet
+ * written. However, it may not cause a deadlock, since the threads will
+ * always continue shoveling in the background so no stalling because of
+ * full pipe buffers can occur anymore. On the down side, this system is
+ * potentially much more memory consuming.
  * </p>
  */
-public final class ExternalProcessTool extends
-    Tool<ExternalProcessBuilder> {
+public final class ProcessExecutor extends Tool<ExternalProcessBuilder> {
 
   /** the globally shared instance of the external process tool */
-  public static final ExternalProcessTool INSTANCE = new ExternalProcessTool();
+  public static final ProcessExecutor INSTANCE = new ProcessExecutor();
 
   /** create */
-  private ExternalProcessTool() {
+  private ProcessExecutor() {
     super();
   }
 

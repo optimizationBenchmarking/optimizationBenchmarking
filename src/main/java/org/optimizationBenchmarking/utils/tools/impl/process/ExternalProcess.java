@@ -12,7 +12,10 @@ import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
-/** an external process */
+/**
+ * An external process with which you can communicate via standard streams
+ * that cannot deadlock.
+ */
 public final class ExternalProcess extends ToolJob implements Closeable {
 
   /** the wrapped process instance */
@@ -134,6 +137,16 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
     try {
       waiting = true;
+      if (this.m_stdinWorker != null) {
+        this.m_stdinWorker.m_mode = 1;
+      }
+      if (this.m_stdoutWorker != null) {
+        this.m_stdoutWorker.m_mode = 1;
+      }
+      if (this.m_stderrWorker != null) {
+        this.m_stderrWorker.m_mode = 1;
+      }
+
       while (waiting) {
         waiting = false;
 
@@ -182,7 +195,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
         this.m_stderrBuffer = null;
       }
       if (this.m_stderrWorker != null) {
-        this.m_stderrWorker.m_alive = false;
+        this.m_stderrWorker.m_mode = 2;
         this.m_stderrWorker = null;
       }
 
@@ -192,7 +205,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
         this.m_stdoutBuffer = null;
       }
       if (this.m_stdoutWorker != null) {
-        this.m_stdoutWorker.m_alive = false;
+        this.m_stdoutWorker.m_mode = 2;
         this.m_stdoutWorker = null;
       }
 
@@ -202,7 +215,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
         this.m_stdinBuffer = null;
       }
       if (this.m_stdinWorker != null) {
-        this.m_stdinWorker.m_alive = false;
+        this.m_stdinWorker.m_mode = 2;
         this.m_stdinWorker = null;
       }
     }
@@ -254,7 +267,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
     try {
       if (this.m_stdoutWorker != null) {
-        this.m_stdoutWorker.m_alive = false;
+        this.m_stdoutWorker.m_mode = 2;
       }
     } catch (final Throwable t) {
       error = ErrorUtils.aggregateError(error, t);
@@ -286,7 +299,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
     try {
       if (this.m_stderrWorker != null) {
-        this.m_stderrWorker.m_alive = false;
+        this.m_stderrWorker.m_mode = 2;
       }
     } catch (final Throwable t) {
       error = ErrorUtils.aggregateError(error, t);
@@ -318,7 +331,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
     try {
       if (this.m_stdinWorker != null) {
-        this.m_stdinWorker.m_alive = false;
+        this.m_stdinWorker.m_mode = 2;
       }
     } catch (final Throwable t) {
       error = ErrorUtils.aggregateError(error, t);

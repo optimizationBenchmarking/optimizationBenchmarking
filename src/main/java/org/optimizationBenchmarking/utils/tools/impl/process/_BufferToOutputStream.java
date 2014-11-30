@@ -7,7 +7,13 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer;
 
-/** a thread shoveling data from a buffer to an output stream */
+/**
+ * A thread shoveling data from a
+ * {@link org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer
+ * buffer} to an {@link java.io.OutputStream} as long as
+ * <code>{@link #m_mode}&leq;1</code>. As soon as
+ * <code>{@link #m_mode}==2</code>, it will cease all activity.
+ */
 final class _BufferToOutputStream extends _WorkerThread {
 
   /** the source */
@@ -35,13 +41,13 @@ final class _BufferToOutputStream extends _WorkerThread {
   /** {@inheritDoc} */
   @Override
   public final void run() {
-    final byte[] buffer;
+    byte[] buffer;
     int s;
 
     buffer = new byte[4096];
     try {
       try {
-        while (this.m_alive) {
+        while (this.m_mode < 2) {
           if (this.m_source.isClosed()) {
             break;
           }

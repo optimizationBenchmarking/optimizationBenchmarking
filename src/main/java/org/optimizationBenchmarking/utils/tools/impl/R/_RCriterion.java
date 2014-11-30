@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessTool;
+import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 
 /** check whether a program produces the output we'd expect from {@code R} */
 final class _RCriterion implements IPredicate<Path> {
@@ -27,8 +27,8 @@ final class _RCriterion implements IPredicate<Path> {
     String s;
     boolean hasRVersion, hasRFoundation;
 
-    if (ExternalProcessTool.INSTANCE.canUse()) {
-      esb = ExternalProcessTool.INSTANCE.use();
+    if (ProcessExecutor.INSTANCE.canUse()) {
+      esb = ProcessExecutor.INSTANCE.use();
       esb.setExecutable(object);
       esb.addStringArgument("--version"); //$NON-NLS-1$
       esb.setDirectory(PathUtils.getTempDir());

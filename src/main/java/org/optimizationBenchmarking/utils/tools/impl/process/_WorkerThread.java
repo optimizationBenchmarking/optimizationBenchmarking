@@ -1,12 +1,22 @@
 package org.optimizationBenchmarking.utils.tools.impl.process;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Logger;
 
-/** thread for shoveling data to and from an external process */
+/**
+ * The base class for worker {@link java.lang.Thread threads} for shoveling
+ * data to and from an external process. By default, they will be
+ * {@link java.lang.Thread#isDaemon() deamon} threads and run at the
+ * {@link java.lang.Thread#MIN_PRIORITY lowest priority}.
+ */
 abstract class _WorkerThread extends Thread {
 
-  /** are we alive? */
-  volatile boolean m_alive;
+  /**
+   * are we alive: {@code 0}=alive, {@code 1}=shutting down, data can be
+   * ignored, {@code 2}=dead, just quit
+   */
+  volatile int m_mode;
 
   /** the logger */
   final Logger m_log;
@@ -31,5 +41,29 @@ abstract class _WorkerThread extends Thread {
       // if we cannot set the priority, it is also OK
     }
     this.setDaemon(true);
+  }
+
+  /**
+   * discard all data from a given input stream
+   * 
+   * @param is
+   *          the stream
+   * @throws IOException
+   *           if i/o fails
+   */
+  final void _discard(final InputStream is) throws IOException {
+    long s;
+    try {
+      while (this.m_mode < 2) {
+        s = is.skip(0x1ffffff0L);
+        if (s <= 0L) {
+          if (is.read() < 0) {// check for end-of-stream
+            break;
+          }
+        }
+      }
+    } finally {
+      is.close();
+    }
   }
 }
