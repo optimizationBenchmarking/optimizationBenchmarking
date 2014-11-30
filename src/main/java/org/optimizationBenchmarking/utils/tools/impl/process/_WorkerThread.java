@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.tools.impl.process;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.logging.Logger;
 
 /**
@@ -41,29 +39,5 @@ abstract class _WorkerThread extends Thread {
       // if we cannot set the priority, it is also OK
     }
     this.setDaemon(true);
-  }
-
-  /**
-   * discard all data from a given input stream
-   * 
-   * @param is
-   *          the stream
-   * @throws IOException
-   *           if i/o fails
-   */
-  final void _discard(final InputStream is) throws IOException {
-    long s;
-    try {
-      while (this.m_mode < 2) {
-        s = is.skip(0x1ffffff0L);
-        if (s <= 0L) {
-          if (is.read() < 0) {// check for end-of-stream
-            break;
-          }
-        }
-      }
-    } finally {
-      is.close();
-    }
   }
 }

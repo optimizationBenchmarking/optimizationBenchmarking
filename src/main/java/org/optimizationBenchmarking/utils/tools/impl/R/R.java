@@ -3,6 +3,8 @@ package org.optimizationBenchmarking.utils.tools.impl.R;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
+import org.optimizationBenchmarking.utils.io.encoding.TextEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
@@ -32,10 +34,13 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
 public final class R extends Tool<REngineBuilder> {
 
   /** the parameter denoting the path of the {@code R} binary */
-  public static final String PARAM_R_BINARY = "pathOfR"; //$NON-NLS-1$
+  public static final String PARAM_R_BINARY = "pathOfRBinary"; //$NON-NLS-1$
+
+  /** the shared instance */
+  static final R INSTANCE = new R();
 
   /** the path to the {@code R} executable */
-  private final Path m_r;
+  final Path m_rBinary;
 
   /** create */
   R() {
@@ -52,13 +57,13 @@ public final class R extends Tool<REngineBuilder> {
     } catch (final Throwable t) {
       r = null;
     }
-    this.m_r = r;
+    this.m_rBinary = r;
   }
 
   /** {@inheritDoc} */
   @Override
   public final boolean canUse() {
-    return (this.m_r != null);
+    return (this.m_rBinary != null);
   }
 
   /** {@inheritDoc} */
@@ -73,12 +78,15 @@ public final class R extends Tool<REngineBuilder> {
    * @return the globally shared instance of {@code R}
    */
   public static final R getInstance() {
-    return __REngineLoader.INSTANCE;
+    return R.INSTANCE;
   }
 
-  /** the R engine loader */
-  static final class __REngineLoader {
-    /** the shared instance */
-    static final R INSTANCE = new R();
+  /**
+   * Get the name of the encoding to use
+   * 
+   * @return the name of the encoding to use
+   */
+  static final TextEncoding _encoding() {
+    return StreamEncoding.getUTF8();
   }
 }

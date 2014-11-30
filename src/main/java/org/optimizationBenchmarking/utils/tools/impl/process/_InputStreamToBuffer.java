@@ -47,9 +47,9 @@ final class _InputStreamToBuffer extends _WorkerThread {
 
     try {
       try {
-        buffer = new byte[4096];
         try {
-          while (this.m_mode < 1) {
+          buffer = new byte[4096];
+          while (this.m_mode < 2) {
             if (this.m_dest.isClosed()) {
               break;
             }
@@ -57,14 +57,14 @@ final class _InputStreamToBuffer extends _WorkerThread {
             if (s <= 0) {
               break;
             }
-            this.m_dest.writeToBuffer(buffer, 0, s);
+            if (this.m_mode < 1) {
+              this.m_dest.writeToBuffer(buffer, 0, s);
+            }
           }
-
           buffer = null;
         } finally {
           this.m_dest.close();
         }
-        this._discard(this.m_source);
       } finally {
         this.m_source.close();
       }

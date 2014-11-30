@@ -129,99 +129,242 @@ public final class ExternalProcess extends ToolJob implements Closeable {
    * @return the return value
    */
   public final int waitFor() {
+    try {
+      return this.__close(false);
+    } catch (final IOException ioe) {
+      return (-1);// we should never get here
+    }
+  }
 
-    boolean waiting;
+  /**
+   * Terminate the process if it is still alive
+   * 
+   * @param kill
+   *          should we use force?
+   * @return the process' return value
+   * @throws IOException
+   *           if i/o fails
+   */
+  private final int __close(final boolean kill) throws IOException {
+    Throwable error;
+    boolean shouldMessage, shouldKill;
     int returnValue;
 
+    error = null;
+    shouldMessage = false;
     returnValue = (-1);
-
-    try {
-      waiting = true;
-      if (this.m_stdinWorker != null) {
-        this.m_stdinWorker.m_mode = 1;
-      }
-      if (this.m_stdoutWorker != null) {
-        this.m_stdoutWorker.m_mode = 1;
-      }
-      if (this.m_stderrWorker != null) {
-        this.m_stderrWorker.m_mode = 1;
-      }
-
-      while (waiting) {
-        waiting = false;
-
-        if (this.m_process != null) {
-          try {
-            returnValue = this.m_process.waitFor();
-            this.m_process = null;
-          } catch (final InterruptedException ie) {
-            waiting = true;
+    // <kill the main process>
+    if (this.m_process != null) {
+      try {
+        shouldKill = kill;
+        if (!kill) {
+          waiter: for (;;) {
+            try {
+              returnValue = this.m_process.waitFor();
+              break waiter;
+            } catch (final InterruptedException ie) {
+              // ingore
+            } catch (final Throwable tt) {
+              shouldKill = true;
+              error = ErrorUtils.aggregateError(error, tt);
+              break waiter;
+            }
           }
         }
 
-        if (this.m_stdinWorker != null) {
-          try {
-            this.m_stdinWorker.join();
-            this.m_stdinWorker = null;
-          } catch (final InterruptedException ie) {
-            waiting = true;
-          }
+        if (shouldKill) {
+          this.m_process.destroy();
+          shouldMessage = true;
         }
-
-        if (this.m_stdoutWorker != null) {
-          try {
-            this.m_stdoutWorker.join();
-            this.m_stdoutWorker = null;
-          } catch (final InterruptedException ie) {
-            waiting = true;
-          }
-        }
-
-        if (this.m_stderrWorker != null) {
-          try {
-            this.m_stderrWorker.join();
-            this.m_stderrWorker = null;
-          } catch (final InterruptedException ie) {
-            waiting = true;
-          }
-        }
+      } catch (final Throwable t) {
+        error = ErrorUtils.aggregateError(error, t);
+      } finally {
+        this.m_process = null;
       }
-    } finally {
-      // all threads and related processes have terminated
+    }
+    // </kill the main process>
 
-      this.m_stderr = null;
-      if (this.m_stderrBuffer != null) {
-        this.m_stderrBuffer.close();
-        this.m_stderrBuffer = null;
+    // <kill stdout>
+    if (this.m_stdout != null) {
+      try {
+        this.m_stdout.close();
+      } catch (final Throwable t) {
+        error = ErrorUtils.aggregateError(error, t);
+      } finally {
+        this.m_stdout = null;
       }
-      if (this.m_stderrWorker != null) {
-        this.m_stderrWorker.m_mode = 2;
-        this.m_stderrWorker = null;
-      }
+    }
 
-      this.m_stdout = null;
-      if (this.m_stdoutBuffer != null) {
+    if (this.m_stdoutBuffer != null) {
+      try {
         this.m_stdoutBuffer.close();
+      } catch (final Throwable t) {
+        error = ErrorUtils.aggregateError(error, t);
+      } finally {
         this.m_stdoutBuffer = null;
       }
-      if (this.m_stdoutWorker != null) {
-        this.m_stdoutWorker.m_mode = 2;
+    }
+
+    if (this.m_stdoutWorker != null) {
+      try {
+        shouldKill = kill;
+        if (!kill) {
+          waiter: for (;;) {
+            try {
+              this.m_stdoutWorker.m_mode = 1;
+              this.m_stdoutWorker.join();
+              break waiter;
+            } catch (final InterruptedException ie) {
+              // ingore
+            } catch (final Throwable tt) {
+              shouldKill = true;
+              error = ErrorUtils.aggregateError(error, tt);
+              break waiter;
+            }
+          }
+        }
+
+        if (shouldKill) {
+          this.m_stdoutWorker.m_mode = 2;
+        }
+      } catch (final Throwable t) {
+        error = ErrorUtils.aggregateError(error, t);
+      } finally {
         this.m_stdoutWorker = null;
       }
+    }
+    // </kill stdout>
 
-      this.m_stdin = null;
-      if (this.m_stdinBuffer != null) {
+    // <kill stderr>
+    if (this.m_stderr != null) {
+      try {
+        this.m_stderr.close();
+      } catch (final Throwable t) {
+        error = ErrorUtils.aggregateError(error, t);
+      } finally {
+        this.m_stderr = null;
+      }
+    }
+
+    if (this.m_stderrBuffer != null) {
+      try {
+        this.m_stderrBuffer.close();
+      } catch (final Throwable t) {
+        error = ErrorUtils.aggregateError(error, t);
+      } finally {
+        this.m_stderrBuffer = null;
+      }
+    }
+
+    if (this.m_stderrWorker != null) {
+      try {
+        shouldKill = kill;
+        if (!kill) {
+          waiter: for (;;) {
+            try {
+              this.m_stderrWorker.m_mode = 1;
+              this.m_stderrWorker.join();
+              break waiter;
+            } catch (final InterruptedException ie) {
+              // ingore
+            } catch (final Throwable tt) {
+              shouldKill = true;
+              error = ErrorUtils.aggregateError(error, tt);
+              break waiter;
+            }
+          }
+        }
+
+        if (shouldKill) {
+          this.m_stderrWorker.m_mode = 2;
+        }
+      } catch (final Throwable t) {
+        error = ErrorUtils.aggregateError(error, t);
+      } finally {
+        this.m_stderrWorker = null;
+      }
+    }
+    // </kill stderr>
+
+    // <kill stdin>
+    if (this.m_stdin != null) {
+      try {
+        this.m_stdin.close();
+      } catch (final Throwable t) {
+        error = ErrorUtils.aggregateError(error, t);
+      } finally {
+        this.m_stdin = null;
+      }
+    }
+
+    if (this.m_stdinBuffer != null) {
+      try {
         this.m_stdinBuffer.close();
+      } catch (final Throwable t) {
+        error = ErrorUtils.aggregateError(error, t);
+      } finally {
         this.m_stdinBuffer = null;
       }
-      if (this.m_stdinWorker != null) {
-        this.m_stdinWorker.m_mode = 2;
+    }
+
+    if (this.m_stdinWorker != null) {
+      try {
+        shouldKill = kill;
+        if (!kill) {
+          waiter: for (;;) {
+            try {
+              this.m_stdinWorker.m_mode = 1;
+              this.m_stdinWorker.join();
+              break waiter;
+            } catch (final InterruptedException ie) {
+              // ingore
+            } catch (final Throwable tt) {
+              shouldKill = true;
+              error = ErrorUtils.aggregateError(error, tt);
+              break waiter;
+            }
+          }
+        }
+
+        if (shouldKill) {
+          this.m_stdinWorker.m_mode = 2;
+        }
+      } catch (final Throwable t) {
+        error = ErrorUtils.aggregateError(error, t);
+      } finally {
         this.m_stdinWorker = null;
       }
     }
 
-    if ((this.m_log != null) && (this.m_log.isLoggable(Level.INFO))) {
-      this.m_log.info("Normally ended: " + this.m_name); //$NON-NLS-1$
+    // </kill stdin>
+
+    error = ErrorUtils.aggregateError(error, this.m_error);
+    if (error != null) {
+      if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
+        this.m_log.log(Level.SEVERE,
+            ((kill ? "Error while forcefully killing " : //$NON-NLS-1$
+                "Error while gracefully shutting down ")//$NON-NLS-1$
+            + this.m_name), error);
+      }
+      if (kill) {
+        ErrorUtils.throwAsIOException(error);
+      } else {
+        this.m_error = error;
+      }
+    } else {
+      if (kill) {
+        if (shouldMessage) {
+          if ((this.m_log != null)
+              && (this.m_log.isLoggable(Level.WARNING))) {
+            this.m_log.warning("Forcefully killed " + this.m_name); //$NON-NLS-1$
+          }
+        }
+      } else {
+        if ((this.m_log != null) && (this.m_log.isLoggable(Level.INFO))) {
+          this.m_log.info("Gracefully shut down " + this.m_name + //$NON-NLS-1$
+              ", return value=" + returnValue);//$NON-NLS-1$
+        }
+      }
     }
 
     return returnValue;
@@ -235,137 +378,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
    */
   @Override
   public final void close() throws IOException {
-    Throwable error;
-    boolean shouldMessage;
-
-    error = null;
-
-    shouldMessage = false;
-    // <kill the main process>
-    try {
-      if (this.m_process != null) {
-        this.m_process.destroy();
-        shouldMessage = true;
-      }
-    } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
-    } finally {
-      this.m_process = null;
-    }
-    // </kill the main process>
-
-    // <kill stdout>
-    try {
-      if (this.m_stdout != null) {
-        this.m_stdout.close();
-      }
-    } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
-    } finally {
-      this.m_stdout = null;
-    }
-
-    try {
-      if (this.m_stdoutWorker != null) {
-        this.m_stdoutWorker.m_mode = 2;
-      }
-    } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
-    } finally {
-      this.m_stdoutWorker = null;
-    }
-
-    try {
-      if (this.m_stdoutBuffer != null) {
-        this.m_stdoutBuffer.close();
-      }
-    } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
-    } finally {
-      this.m_stdoutBuffer = null;
-    }
-    // </kill stdout>
-
-    // <kill stderr>
-    try {
-      if (this.m_stderr != null) {
-        this.m_stderr.close();
-      }
-    } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
-    } finally {
-      this.m_stderr = null;
-    }
-
-    try {
-      if (this.m_stderrWorker != null) {
-        this.m_stderrWorker.m_mode = 2;
-      }
-    } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
-    } finally {
-      this.m_stderrWorker = null;
-    }
-
-    try {
-      if (this.m_stderrBuffer != null) {
-        this.m_stderrBuffer.close();
-      }
-    } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
-    } finally {
-      this.m_stderrBuffer = null;
-    }
-    // </kill stderr>
-
-    // <kill stdin>
-    try {
-      if (this.m_stdin != null) {
-        this.m_stdin.close();
-      }
-    } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
-    } finally {
-      this.m_stdin = null;
-    }
-
-    try {
-      if (this.m_stdinWorker != null) {
-        this.m_stdinWorker.m_mode = 2;
-      }
-    } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
-    } finally {
-      this.m_stdinWorker = null;
-    }
-
-    try {
-      if (this.m_stdinBuffer != null) {
-        this.m_stdinBuffer.close();
-      }
-    } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
-    } finally {
-      this.m_stdinBuffer = null;
-    }
-    // </kill stdin>
-
-    error = ErrorUtils.aggregateError(error, this.m_error);
-
-    if (error != null) {
-      if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
-        this.m_log.log(Level.SEVERE,
-            ("Error while terminating " + this.m_name), //$NON-NLS-1$
-            error);
-      }
-      ErrorUtils.throwAsIOException(error);
-    } else {
-      if (shouldMessage) {
-        if ((this.m_log != null) && (this.m_log.isLoggable(Level.WARNING))) {
-          this.m_log.warning("Forcefully terminated: " + this.m_name); //$NON-NLS-1$
-        }
-      }
-    }
+    this.__close(true);
   }
 
   /**

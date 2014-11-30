@@ -56,6 +56,7 @@ final class _BufferToOutputStream extends _WorkerThread {
             break;
           }
           this.m_dest.write(buffer, 0, s);
+          this.m_dest.flush();
         }
       } finally {
         try {

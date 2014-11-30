@@ -33,8 +33,15 @@ final class _DiscardInputStream extends _WorkerThread {
   /** {@inheritDoc} */
   @Override
   public final void run() {
+    byte[] buffer;
     try {
-      this._discard(this.m_source);
+      buffer = new byte[4096];
+      while (this.m_mode < 2) {
+        if (this.m_source.read(buffer) <= 0) {
+          break;
+        }
+      }
+      buffer = null;
     } catch (final Throwable t) {
       if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
         this.m_log.log(Level.SEVERE,
