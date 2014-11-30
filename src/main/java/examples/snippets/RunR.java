@@ -2,6 +2,7 @@ package examples.snippets;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
 import org.optimizationBenchmarking.utils.tools.impl.R.R;
 import org.optimizationBenchmarking.utils.tools.impl.R.REngine;
 
@@ -19,6 +20,8 @@ public final class RunR {
    *          ignored
    */
   public static final void main(final String[] args) {
+    int i;
+
     Configuration.setup(args);
 
     try (final REngine r = R
@@ -27,13 +30,15 @@ public final class RunR {
         .setLogger(
             Configuration.getRoot().getLogger(Configuration.PARAM_LOGGER,
                 null)).create()) {
-      System.out.println("R has been started."); //$NON-NLS-1$
+
+      for (i = 2; i < 100; i++) {
+        System.out.println(r.loadMatrix(new DoubleMatrix2D(
+            new double[i][i])));
+      }
 
     } catch (final Throwable t) {
       t.printStackTrace();
     }
-
-    System.out.println("R has been closed.");//$NON-NLS-1$
   }
 
   /** the forbidden constructor */
