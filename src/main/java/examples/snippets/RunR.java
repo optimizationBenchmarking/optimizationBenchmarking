@@ -75,7 +75,7 @@ public final class RunR {
       try (IAssignment ass = r.assign()) {
         var = ass.getVariable();
         try (final IExpression expr = ass.value()) {
-          try (final IFunction fct = expr.determinant()) {
+          try (final IFunction fct = expr.matrixDeterminant()) {
             try (final IExpression expr2 = fct.parameter()) {
 
               try (final IFunction fct2 = expr2.mul()) {

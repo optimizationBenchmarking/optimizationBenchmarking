@@ -271,37 +271,62 @@ final class _RExpression extends _RExpressionScope implements IExpression {
 
   /** {@inheritDoc} */
   @Override
-  public final IFunction determinant() {
-    return new _RNamedFunction("det", //$NON-NLS-1$
-        EmptyUtils.EMPTY_CHARS, this, this.m_engine);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public final IFunction mul() {
-    return new _RNamedFunction(null, new char[] { '*' }, this,
+    return new _RNamedFunction(null, new String[] { "*" }, this, //$NON-NLS-1$
         this.m_engine);
   }
 
   /** {@inheritDoc} */
   @Override
   public final IFunction div() {
-    return new _RNamedFunction(null, new char[] { '/' }, this,
+    return new _RNamedFunction(null, new String[] { "/" }, this,//$NON-NLS-1$
         this.m_engine);
   }
 
   /** {@inheritDoc} */
   @Override
   public final IFunction add() {
-    return new _RNamedFunction(null, new char[] { '+' }, this,
+    return new _RNamedFunction(null, new String[] { "+" }, this,//$NON-NLS-1$
         this.m_engine);
   }
 
   /** {@inheritDoc} */
   @Override
   public final IFunction sub() {
-    return new _RNamedFunction(null, new char[] { '-' }, this,
+    return new _RNamedFunction(null, new String[] { "-" }, this,//$NON-NLS-1$
         this.m_engine);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IFunction matrixDeterminant() {
+    this._setType(EDataType.DOUBLE);
+    return new _RNamedFunction("det", //$NON-NLS-1$
+        EmptyUtils.EMPTY_STRINGS, this, this.m_engine);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IFunction matrixTranspose() {
+    this._setType(EDataType.MATRIX);
+    return new _RNamedFunction("t", //$NON-NLS-1$
+        EmptyUtils.EMPTY_STRINGS, this, this.m_engine);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IFunction matrixMul() {
+    this._setType(EDataType.MATRIX);
+    return new _RNamedFunction(null,
+        new String[] { "%*%" }, this, this.m_engine);//$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IFunction matrixInvert() {
+    this._setType(EDataType.MATRIX);
+    return new _RNamedFunction("solve", //$NON-NLS-1$
+        EmptyUtils.EMPTY_STRINGS, this, this.m_engine);
   }
 
   /** {@inheritDoc} */
@@ -310,9 +335,11 @@ final class _RExpression extends _RExpressionScope implements IExpression {
       final HierarchicalFSM child) {
     EDataType type;
 
-    if (child instanceof _RNamedFunction) {
-      type = ((_RNamedFunction) child).m_type;
-      this._setType((type != null) ? type : EDataType.UNKNOWN);
+    if (this.m_type == null) {
+      if (child instanceof _RNamedFunction) {
+        type = ((_RNamedFunction) child).m_type;
+        this._setType((type != null) ? type : EDataType.UNKNOWN);
+      }
     }
 
     super.afterChildClosed(child);

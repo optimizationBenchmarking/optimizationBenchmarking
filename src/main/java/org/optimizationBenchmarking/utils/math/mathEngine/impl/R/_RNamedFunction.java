@@ -12,7 +12,7 @@ final class _RNamedFunction extends _RExpressionScope implements IFunction {
   /** the name of the function */
   private final String m_name;
   /** the infixes */
-  private final char[] m_infix;
+  private final String[] m_infix;
 
   /** the number of children, to be utilized by sub-classes */
   private int m_childCount;
@@ -29,7 +29,7 @@ final class _RNamedFunction extends _RExpressionScope implements IFunction {
    * @param infixes
    *          the infixes
    */
-  _RNamedFunction(final String name, final char[] infixes,
+  _RNamedFunction(final String name, final String[] infixes,
       final _RScope owner, final _REngine engine) {
     super(owner, engine);
     this.m_name = name;

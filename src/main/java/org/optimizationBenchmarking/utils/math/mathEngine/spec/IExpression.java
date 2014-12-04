@@ -68,13 +68,6 @@ public interface IExpression extends IMathEngineScope {
   public abstract IFunction functionResult(final String name);
 
   /**
-   * The determinant of a matrix
-   * 
-   * @return the matrix determinant
-   */
-  public abstract IFunction determinant();
-
-  /**
    * The result of a multiplication
    * 
    * @return the result of a multiplication
@@ -101,4 +94,32 @@ public interface IExpression extends IMathEngineScope {
    * @return the result of a subtraction
    */
   public abstract IFunction sub();
+
+  /**
+   * The determinant of a matrix
+   * 
+   * @return the matrix determinant
+   */
+  public abstract IFunction matrixDeterminant();
+
+  /**
+   * The result of a matrix transposition
+   * 
+   * @return the result of a matrix transposition
+   */
+  public abstract IFunction matrixTranspose();
+
+  /**
+   * The result of a matrix transposition
+   * 
+   * @return the result of a matrix transposition
+   */
+  public abstract IFunction matrixMul();
+
+  /**
+   * The result of a matrix inversion
+   * 
+   * @return the result of a matrix inversion
+   */
+  public abstract IFunction matrixInvert();
 }
