@@ -1,28 +1,28 @@
-package org.optimizationBenchmarking.utils.tools.impl.R;
+package org.optimizationBenchmarking.utils.math.mathEngine.impl.R;
 
 import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
-import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
+import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngineBuilder;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
 import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 
 /**
  * The builder for an R engine.
  */
-public final class REngineBuilder extends
-    ToolJobBuilder<REngine, REngineBuilder> {
+final class _REngineBuilder extends
+    MathEngineBuilder<_REngine, _REngineBuilder> {
 
   /** create the R engine builder */
-  REngineBuilder() {
+  _REngineBuilder() {
     super();
   }
 
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override
-  public final REngine create() throws IOException {
+  public final _REngine create() throws IOException {
     final ExternalProcessBuilder builder;
     final Logger log;
     final TempDir temp;
@@ -43,7 +43,7 @@ public final class REngineBuilder extends
 
     builder.setLogger(log);
 
-    return new REngine(builder.create(), temp, log);
+    return new _REngine(builder.create(), temp, log);
   }
 
 }

@@ -34,7 +34,7 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
    * @param instance
    *          the instance, or {@code null} if unspecified
    */
-  public MatrixTest(final MatrixTest<MT> owner, final MT instance,
+  public MatrixTest(final InstanceTest<MT> owner, final MT instance,
       final boolean isSingleton) {
     super(owner, instance, isSingleton, false);
   }

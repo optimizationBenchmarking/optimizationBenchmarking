@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.tools.impl.R;
+package org.optimizationBenchmarking.utils.math.mathEngine.impl.R;
 
 import java.nio.file.Path;
 
@@ -9,8 +9,9 @@ import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
+import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngineTool;
+import org.optimizationBenchmarking.utils.math.mathEngine.spec.IMathEngineBuilder;
 import org.optimizationBenchmarking.utils.predicates.AndPredicate;
-import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
 
 /**
  * <p>
@@ -31,7 +32,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
  * Instead, we therefore run {@code R} as external process.
  * </p>
  */
-public final class R extends Tool<REngineBuilder> {
+public final class R extends MathEngineTool<IMathEngineBuilder> {
 
   /** the parameter denoting the path of the {@code R} binary */
   public static final String PARAM_R_BINARY = "pathOfRBinary"; //$NON-NLS-1$
@@ -68,8 +69,8 @@ public final class R extends Tool<REngineBuilder> {
 
   /** {@inheritDoc} */
   @Override
-  protected final REngineBuilder createBuilder() {
-    return new REngineBuilder();
+  protected final _REngineBuilder createBuilder() {
+    return new _REngineBuilder();
   }
 
   /**
