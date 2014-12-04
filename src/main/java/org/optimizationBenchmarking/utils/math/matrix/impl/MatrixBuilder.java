@@ -802,7 +802,6 @@ public final class MatrixBuilder implements IAggregate {
     }
 
     /** {@inheritDoc} */
-    @SuppressWarnings("cast")
     @Override
     final _Array _append(final float v, final int size) {
       final int[] intData;
