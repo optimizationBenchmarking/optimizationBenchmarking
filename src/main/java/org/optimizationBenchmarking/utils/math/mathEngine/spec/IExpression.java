@@ -66,4 +66,39 @@ public interface IExpression extends IMathEngineScope {
    * @return the scope to fill in the function parameters
    */
   public abstract IFunction functionResult(final String name);
+
+  /**
+   * The determinant of a matrix
+   * 
+   * @return the matrix determinant
+   */
+  public abstract IFunction determinant();
+
+  /**
+   * The result of a multiplication
+   * 
+   * @return the result of a multiplication
+   */
+  public abstract IFunction mul();
+
+  /**
+   * The result of a division
+   * 
+   * @return the result of a division
+   */
+  public abstract IFunction div();
+
+  /**
+   * The result of a addition
+   * 
+   * @return the result of a addition
+   */
+  public abstract IFunction add();
+
+  /**
+   * The result of a subtraction
+   * 
+   * @return the result of a subtraction
+   */
+  public abstract IFunction sub();
 }

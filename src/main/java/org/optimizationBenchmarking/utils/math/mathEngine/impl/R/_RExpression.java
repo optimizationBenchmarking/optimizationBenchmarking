@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.EmptyUtils;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.EDataType;
@@ -265,7 +266,42 @@ final class _RExpression extends _RExpressionScope implements IExpression {
           "Function name must not be null or empty, but is: '" //$NON-NLS-1$
               + name + '\'');
     }
-    return new _RNamedFunction(name, this, this.m_engine);
+    return new _RNamedFunction(name, null, this, this.m_engine);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IFunction determinant() {
+    return new _RNamedFunction("det", //$NON-NLS-1$
+        EmptyUtils.EMPTY_CHARS, this, this.m_engine);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IFunction mul() {
+    return new _RNamedFunction(null, new char[] { '*' }, this,
+        this.m_engine);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IFunction div() {
+    return new _RNamedFunction(null, new char[] { '/' }, this,
+        this.m_engine);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IFunction add() {
+    return new _RNamedFunction(null, new char[] { '+' }, this,
+        this.m_engine);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IFunction sub() {
+    return new _RNamedFunction(null, new char[] { '-' }, this,
+        this.m_engine);
   }
 
   /** {@inheritDoc} */
