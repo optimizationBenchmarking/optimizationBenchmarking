@@ -30,13 +30,19 @@ import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
  * (seemingly) default Java/R Interface. However, implementing such a
  * wrapper would have led to several complex problems: Not only do we need
  * to detect several different binaries or libraries, which itself would
- * have been OK, we also need to set environment variables. That was the
- * killer argument against it, since the goal of the Tool API is a to be
- * close-to "zero-configuration" and hide everything under the hood.
- * Another problem is that JRI is single-threaded.
+ * have been OK (as we have to detect the {@code R} binary now anyway), we
+ * also need to set environment variables. That was the killer argument
+ * against it, since the goal of the Tool API is a to be close-to
+ * "zero-configuration" and hide everything under the hood. Thus, we don't
+ * want to have to set environment variables of {@code R} just to execute
+ * our program. Another problem is that JRI is single-threaded.
  * </p>
  * <p>
- * Instead, we therefore run {@code R} as external process.
+ * Instead, we therefore run {@code R} as external process, which allows
+ * for multiple instances running at the same time. Communication is done
+ * via stdin and stdout of that process, and potentially via temporary
+ * files when necessary. This has the downside that it is probably much,
+ * much slower than what JRI can do.
  * </p>
  */
 public final class R extends MathEngineTool<REngineBuilder> {
@@ -92,6 +98,15 @@ public final class R extends MathEngineTool<REngineBuilder> {
 
       try {
         r = PathUtils.normalize("C:\\Program Files\\R\\"); //$NON-NLS-1$
+        if (r != null) {
+          list.add(r);
+        }
+      } catch (final Throwable t) {
+        //
+      }
+
+      try {
+        r = PathUtils.normalize("C:\\Program Files (x86)\\R\\"); //$NON-NLS-1$
         if (r != null) {
           list.add(r);
         }

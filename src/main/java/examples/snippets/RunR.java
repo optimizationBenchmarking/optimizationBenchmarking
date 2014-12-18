@@ -19,7 +19,10 @@ import org.optimizationBenchmarking.utils.math.matrix.impl.LongMatrix2D;
 
 /**
  * <p>
- * This is a small test of {@code R}.
+ * This is a small test of how {@code R} can be automated using our
+ * {@link org.optimizationBenchmarking.utils.math.mathEngine.impl.R.R R
+ * tool}. Our implementation is still preliminary, but it can be believed
+ * that it is a good proof-of-concept.
  * </p>
  */
 public final class RunR implements Runnable {
@@ -33,9 +36,10 @@ public final class RunR implements Runnable {
    *           if something goes wrong
    */
   public static final void main(final String[] args) throws Throwable {
-    Configuration.setup(args);
     ExecutorService es;
     int i;
+
+    Configuration.setup(args);
 
     es = Executors.newFixedThreadPool(10);
     for (i = 1; i <= 20; i++) {
@@ -44,7 +48,6 @@ public final class RunR implements Runnable {
 
     es.shutdown();
     es.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS);
-
   }
 
   /** the forbidden constructor */
@@ -59,6 +62,7 @@ public final class RunR implements Runnable {
     Random random;
     byte[] randomMatrix;
     String id;
+    float factor;
 
     if (!R.getInstance().canUse()) {
       System.out.println(//
@@ -74,7 +78,7 @@ public final class RunR implements Runnable {
         .setLogger(
             Configuration.getRoot().getLogger(Configuration.PARAM_LOGGER,
                 null)).create()) {
-      id = (r.toString() + ' ');
+      id = ((r.toString() + ':') + ' ');
 
       input = new DoubleMatrix2D(new double[][] { { 1, 2, 3 },
           { 4, 5, 6 }, { 7, 8, 9 } });
@@ -100,7 +104,9 @@ public final class RunR implements Runnable {
       try (IAssignment ass = r.assign()) {
         var = ass.getVariable();
         try (final IExpression expr = ass.value()) {
-          try (final IFunction fct = expr.functionResult("103.5*")) { //$NON-NLS-1$
+          factor = (((1 + random.nextInt(10)) / (1 + ((float) (random
+              .nextInt(10))))));
+          try (final IFunction fct = expr.functionResult(factor + "*")) { //$NON-NLS-1$
             try (final IExpression expr2 = fct.parameter()) {
               expr2.matrixValue(input);
             }

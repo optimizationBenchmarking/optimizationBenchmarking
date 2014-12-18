@@ -11,7 +11,8 @@ import java.util.Arrays;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 
 /**
- * A simple tool to get the median file size
+ * A simple tool to get the median file size from logs created with <a
+ * href="http://www.logisticPlanning.org/tsp/">TSPSuite</a>.
  */
 public final class MedianFileSize extends SimpleFileVisitor<Path> {
 
