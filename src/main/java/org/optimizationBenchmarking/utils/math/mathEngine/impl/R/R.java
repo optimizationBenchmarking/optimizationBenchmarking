@@ -11,7 +11,6 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.encoding.TextEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
-import org.optimizationBenchmarking.utils.io.paths.TempDir;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
@@ -104,7 +103,8 @@ public final class R extends MathEngineTool<REngineBuilder> {
       try {
         r = PathUtils.findFirstInPath(//
             new AndPredicate<>(//
-                new FileNamePredicate(true, new String[] { "R" }),//$NON-NLS-1$
+                new FileNamePredicate(true, new String[] { "R",//$NON-NLS-1$ 
+                    "Rterm" }),//$NON-NLS-1$
                 new AndPredicate<>(
                     //
                     CanExecutePredicate.INSTANCE,
@@ -117,56 +117,52 @@ public final class R extends MathEngineTool<REngineBuilder> {
           builder.setExecutable(r);
           builder.setMergeStdOutAndStdErr(true);
 
-          try (final TempDir temp = new TempDir()) {
+          builder.setDirectory(PathUtils.getTempDir());
+          builder.addStringArgument("--help"); //$NON-NLS-1$
 
-            builder.setDirectory(temp.getPath());
-            builder.addStringArgument("--help"); //$NON-NLS-1$
+          try (final ExternalProcess ep = builder.create()) {
+            try (final InputStreamReader isr = new InputStreamReader(
+                ep.getStdOut())) {
+              try (final BufferedReader br = new BufferedReader(isr)) {
+                params = new HashSet<>();
+                enc = "--encoding";//$NON-NLS-1$
 
-            try (final ExternalProcess ep = builder.create()) {
-              try (final InputStreamReader isr = new InputStreamReader(
-                  ep.getStdOut())) {
-                try (final BufferedReader br = new BufferedReader(isr)) {
-                  params = new HashSet<>();
-                  enc = "--encoding";//$NON-NLS-1$
+                wantedParams = new String[] {//
+                "--vanilla", //$NON-NLS-1$
+                    "--slave", //$NON-NLS-1$
+                    "--no-readline", //$NON-NLS-1$
+                    "--no-save", //$NON-NLS-1$
+                    "--no-environ", //$NON-NLS-1$
+                    "--no-site-file", //$NON-NLS-1$
+                    "--no-init-file", //$NON-NLS-1$
+                    "--no-restore-data", //$NON-NLS-1$
+                    "--no-restore-history", //$NON-NLS-1$
+                    "--no-restore", //$NON-NLS-1$                      
+                    enc, };
 
-                  wantedParams = new String[] {//
-                  "--vanilla", //$NON-NLS-1$
-                      "--slave", //$NON-NLS-1$
-                      "--no-readline", //$NON-NLS-1$
-                      "--no-save", //$NON-NLS-1$
-                      "--no-environ", //$NON-NLS-1$
-                      "--no-site-file", //$NON-NLS-1$
-                      "--no-init-file", //$NON-NLS-1$
-                      "--no-restore-data", //$NON-NLS-1$
-                      "--no-restore-history", //$NON-NLS-1$
-                      "--no-restore", //$NON-NLS-1$                      
-                      enc, };
-
-                  findParams: while ((s = br.readLine()) != null) {
-                    s = s.trim();
-                    for (final String t : wantedParams) {
-                      if (s.startsWith(t)) {
-                        if (params.add(t)) {
-                          if (params.size() >= wantedParams.length) {
-                            break findParams;
-                          }
+                findParams: while ((s = br.readLine()) != null) {
+                  s = s.trim();
+                  for (final String t : wantedParams) {
+                    if (s.startsWith(t)) {
+                      if (params.add(t)) {
+                        if (params.size() >= wantedParams.length) {
+                          break findParams;
                         }
                       }
                     }
                   }
+                }
 
-                  if (params.contains(enc)) {
-                    params.remove(enc);
-                    params.add(enc + '=' + R._encoding().name());
-                  }
+                if (params.contains(enc)) {
+                  params.remove(enc);
+                  params.add(enc + '=' + R._encoding().name());
                 }
               }
-              if (ep.waitFor() != 0) {
-                r = null;
-                params = null;
-              }
             }
-
+            if (ep.waitFor() != 0) {
+              r = null;
+              params = null;
+            }
           }
 
         }

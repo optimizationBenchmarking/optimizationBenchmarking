@@ -76,11 +76,26 @@ final class _RAtLeastVersion3Criterion implements IPredicate<Path> {
           }
         }
 
-        if (ep.waitFor() == 0) {
-          return (hasRVersion && hasRFoundation);
+        if (ep.waitFor() != 0) {
+          return false;
         }
       } catch (final Throwable t) {
         return false;
+      }
+
+      if (hasRVersion && hasRFoundation) {
+        esb = executor.use();
+        esb.setExecutable(object);
+        esb.addStringArgument("--help"); //$NON-NLS-1$
+        esb.setDirectory(PathUtils.getTempDir());
+        esb.setStdErr(EProcessStream.IGNORE);
+        esb.setStdOut(EProcessStream.IGNORE);
+        esb.setStdIn(EProcessStream.IGNORE);
+        try (ExternalProcess ep = esb.create()) {
+          return (ep.waitFor() == 0);
+        } catch (final Throwable t) {
+          return false;
+        }
       }
     }
 
