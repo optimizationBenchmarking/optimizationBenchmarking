@@ -73,11 +73,8 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
  */
 public final class ProcessExecutor extends Tool<ExternalProcessBuilder> {
 
-  /** the globally shared instance of the external process tool */
-  public static final ProcessExecutor INSTANCE = new ProcessExecutor();
-
   /** create */
-  private ProcessExecutor() {
+  ProcessExecutor() {
     super();
   }
 
@@ -91,5 +88,20 @@ public final class ProcessExecutor extends Tool<ExternalProcessBuilder> {
   @Override
   protected final ExternalProcessBuilder createBuilder() {
     return new ExternalProcessBuilder();
+  }
+
+  /**
+   * Get the instance of the process executor
+   * 
+   * @return the instance of the process executor
+   */
+  public static final ProcessExecutor getInstance() {
+    return ProcessExecutorLoader.INSTANCE;
+  }
+
+  /** the loader of the ProcessExecutor */
+  private static final class ProcessExecutorLoader {
+    /** the globally shared instance of the external process tool */
+    static final ProcessExecutor INSTANCE = new ProcessExecutor();
   }
 }

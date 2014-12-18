@@ -10,6 +10,7 @@ import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -70,6 +71,25 @@ public final class PathUtils {
           + "' has a null file system provider.");//$NON-NLS-1$
     }
     return fsp;
+  }
+
+  /**
+   * Try to find a canonical version of a given path
+   * 
+   * @param path
+   *          the path
+   * @return the canonicalized version
+   */
+  public static final Path normalize(final String path) {
+    final String s;
+
+    s = TextUtils.prepare(path);
+    if (s == null) {
+      throw new IllegalArgumentException(//
+          "Path cannot be null or empty, but is '" //$NON-NLS-1$
+              + s + "'.");//$NON-NLS-1$
+    }
+    return PathUtils.normalize(Paths.get(path));
   }
 
   /**
@@ -202,13 +222,21 @@ public final class PathUtils {
    * 
    * @param path
    *          the path
+   * @param useSlashAsSeparator
+   *          {@code true} if slashes should be enforced as separators,
+   *          {@code false} to use native separators
    * @return the string representing the physical path
    */
-  public static final String getPhysicalPath(final Path path) {
+  public static final String getPhysicalPath(final Path path,
+      final boolean useSlashAsSeparator) {
     final String result;
 
     result = PathUtils.getPhysicalFile(path).toString();
     if (result != null) {
+      if (useSlashAsSeparator && (File.separatorChar != '/')) {
+        return result.replace(File.separatorChar, '/');
+      }
+
       return result;
     }
     throw new IllegalArgumentException(//

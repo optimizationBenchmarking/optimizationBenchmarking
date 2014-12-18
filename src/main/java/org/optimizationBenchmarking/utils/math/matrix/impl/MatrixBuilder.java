@@ -584,6 +584,16 @@ public final class MatrixBuilder implements IAggregate {
         }
       }
 
+      if (v != v) {
+        return this._append(Float.NaN, size);
+      }
+      if (v >= Double.POSITIVE_INFINITY) {
+        return this._append(Float.POSITIVE_INFINITY, size);
+      }
+      if (v <= Double.NEGATIVE_INFINITY) {
+        return this._append(Float.NEGATIVE_INFINITY, size);
+      }
+
       flt = ((float) v);
       if (flt == v) {
         return this._append(flt, size);
@@ -694,6 +704,16 @@ public final class MatrixBuilder implements IAggregate {
       final double[] doubleData;
       float flt;
       int i;
+
+      if (v != v) {
+        return this._append(Float.NaN, size);
+      }
+      if (v >= Double.POSITIVE_INFINITY) {
+        return this._append(Float.POSITIVE_INFINITY, size);
+      }
+      if (v <= Double.NEGATIVE_INFINITY) {
+        return this._append(Float.NEGATIVE_INFINITY, size);
+      }
 
       flt = ((float) v);
       if (v == flt) {
@@ -875,6 +895,16 @@ public final class MatrixBuilder implements IAggregate {
         if (v == l) {
           return this._append(l, size);
         }
+      }
+
+      if (v != v) {
+        return this._append(Float.NaN, size);
+      }
+      if (v >= Double.POSITIVE_INFINITY) {
+        return this._append(Float.POSITIVE_INFINITY, size);
+      }
+      if (v <= Double.NEGATIVE_INFINITY) {
+        return this._append(Float.NEGATIVE_INFINITY, size);
       }
 
       flt = ((float) v);
@@ -1070,6 +1100,16 @@ public final class MatrixBuilder implements IAggregate {
         if (v == l) {
           return this._append(l, size);
         }
+      }
+
+      if (v != v) {
+        return this._append(Float.NaN, size);
+      }
+      if (v >= Double.POSITIVE_INFINITY) {
+        return this._append(Float.POSITIVE_INFINITY, size);
+      }
+      if (v <= Double.NEGATIVE_INFINITY) {
+        return this._append(Float.NEGATIVE_INFINITY, size);
       }
 
       f = ((float) v);
@@ -1302,6 +1342,16 @@ public final class MatrixBuilder implements IAggregate {
         if (v == l) {
           return this._append(l, size);
         }
+      }
+
+      if (v != v) {
+        return this._append(Float.NaN, size);
+      }
+      if (v >= Double.POSITIVE_INFINITY) {
+        return this._append(Float.POSITIVE_INFINITY, size);
+      }
+      if (v <= Double.NEGATIVE_INFINITY) {
+        return this._append(Float.NEGATIVE_INFINITY, size);
       }
 
       f = ((float) v);

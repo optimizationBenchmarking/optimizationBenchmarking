@@ -31,6 +31,12 @@ public final class RunR {
 
     Configuration.setup(args);
 
+    if (!R.getInstance().canUse()) {
+      System.out.println(//
+          "Cannot use R (likely it is not installed). Exitting."); //$NON-NLS-1$
+      return;
+    }
+
     try (final IMathEngine r = R
         .getInstance()
         .use()

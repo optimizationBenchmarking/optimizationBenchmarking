@@ -30,7 +30,7 @@ final class _RNamedFunction extends _RExpressionScope implements IFunction {
    *          the infixes
    */
   _RNamedFunction(final String name, final String[] infixes,
-      final _RScope owner, final _REngine engine) {
+      final _RScope owner, final REngine engine) {
     super(owner, engine);
     this.m_name = name;
     this.m_infix = infixes;
@@ -97,7 +97,7 @@ final class _RNamedFunction extends _RExpressionScope implements IFunction {
     } catch (final Throwable t) {
       this.m_engine._handleError(t);
     }
-    return new _RExpression(this, this.m_engine);
+    return new RExpression(this, this.m_engine);
   }
 
 }

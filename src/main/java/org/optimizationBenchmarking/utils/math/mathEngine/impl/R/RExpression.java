@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 
 /** A class for creating an expression in R */
-final class _RExpression extends _RExpressionScope implements IExpression {
+final class RExpression extends _RExpressionScope implements IExpression {
 
   /** the negative infinity */
   static final String NEGATIVE_INFINITY = "-Inf"; //$NON-NLS-1$  
@@ -39,7 +39,7 @@ final class _RExpression extends _RExpressionScope implements IExpression {
    * @param engine
    *          the engine
    */
-  _RExpression(final _RScope owner, final _REngine engine) {
+  RExpression(final _RScope owner, final REngine engine) {
     super(owner, engine);
     this.open();
     this.m_type = null;
@@ -65,13 +65,13 @@ final class _RExpression extends _RExpressionScope implements IExpression {
    */
   private static final String __toString(final double d) {
     if (d != d) {
-      return _RExpression.NAN;
+      return RExpression.NAN;
     }
     if (d <= Double.NEGATIVE_INFINITY) {
-      return _RExpression.NEGATIVE_INFINITY;
+      return RExpression.NEGATIVE_INFINITY;
     }
     if (d >= Double.POSITIVE_INFINITY) {
-      return _RExpression.POSITIVE_INFINITY;
+      return RExpression.POSITIVE_INFINITY;
     }
     return SimpleNumberAppender.INSTANCE
         .toString(d, ETextCase.IN_SENTENCE);
@@ -105,11 +105,11 @@ final class _RExpression extends _RExpressionScope implements IExpression {
       dest = new BufferedWriter(new OutputStreamWriter(
           PathUtils.openOutputStream(temp)));
       out.write("scan(\"");//$NON-NLS-1$
-      out.write(temp.toString());
+      out.write(PathUtils.getPhysicalPath(temp, true));
       out.write("\",n=");//$NON-NLS-1$
       out.write(Integer.toString(size));
       out.write(",quiet=");//$NON-NLS-1$
-      out.write(_RExpression.TRUE);
+      out.write(RExpression.TRUE);
       separator = ' ';
     } else {
       temp = null;
@@ -128,7 +128,7 @@ final class _RExpression extends _RExpressionScope implements IExpression {
               } else {
                 dest.write(separator);
               }
-              dest.write(_RExpression.__toString(matrix.getLong(i, j)));
+              dest.write(RExpression.__toString(matrix.getLong(i, j)));
             }
           }
         } else {
@@ -139,7 +139,7 @@ final class _RExpression extends _RExpressionScope implements IExpression {
               } else {
                 dest.write(separator);
               }
-              dest.write(_RExpression.__toString(matrix.getDouble(i, j)));
+              dest.write(RExpression.__toString(matrix.getDouble(i, j)));
             }
           }
         }
@@ -179,7 +179,7 @@ final class _RExpression extends _RExpressionScope implements IExpression {
       out.write(",ncol=");//$NON-NLS-1$
       out.write(Integer.toString(n));
       out.write(",byrow="); //$NON-NLS-1$
-      out.write(_RExpression.TRUE);
+      out.write(RExpression.TRUE);
       out.write(')');
     } catch (final Throwable ioe) {
       this.m_engine._handleError(ioe);
@@ -227,7 +227,7 @@ final class _RExpression extends _RExpressionScope implements IExpression {
   public final void doubleValue(final double d) {
     this._setType(EDataType.DOUBLE);
     try {
-      this.m_engine.m_out.write(_RExpression.__toString(d));
+      this.m_engine.m_out.write(RExpression.__toString(d));
     } catch (final Throwable ioe) {
       this.m_engine._handleError(ioe);
     }
@@ -238,7 +238,7 @@ final class _RExpression extends _RExpressionScope implements IExpression {
   public final void longValue(final long l) {
     this._setType(EDataType.LONG);
     try {
-      this.m_engine.m_out.write(_RExpression.__toString(l));
+      this.m_engine.m_out.write(RExpression.__toString(l));
     } catch (final Throwable ioe) {
       this.m_engine._handleError(ioe);
     }
@@ -249,8 +249,7 @@ final class _RExpression extends _RExpressionScope implements IExpression {
   public final void booleanValue(final boolean b) {
     this._setType(EDataType.BOOLEAN);
     try {
-      this.m_engine.m_out
-          .write(b ? _RExpression.TRUE : _RExpression.FALSE);
+      this.m_engine.m_out.write(b ? RExpression.TRUE : RExpression.FALSE);
     } catch (final Throwable ioe) {
       this.m_engine._handleError(ioe);
     }
@@ -319,14 +318,6 @@ final class _RExpression extends _RExpressionScope implements IExpression {
     this._setType(EDataType.MATRIX);
     return new _RNamedFunction(null,
         new String[] { "%*%" }, this, this.m_engine);//$NON-NLS-1$
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final IFunction matrixInvert() {
-    this._setType(EDataType.MATRIX);
-    return new _RNamedFunction("solve", //$NON-NLS-1$
-        EmptyUtils.EMPTY_STRINGS, this, this.m_engine);
   }
 
   /** {@inheritDoc} */

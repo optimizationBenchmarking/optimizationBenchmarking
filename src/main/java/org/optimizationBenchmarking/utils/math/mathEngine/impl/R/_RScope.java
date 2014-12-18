@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 abstract class _RScope extends HierarchicalFSM {
 
   /** the {@code R} engine */
-  final _REngine m_engine;
+  final REngine m_engine;
 
   /**
    * create the {@code R}-scope
@@ -20,7 +20,7 @@ abstract class _RScope extends HierarchicalFSM {
    * @param engine
    *          the engine
    */
-  _RScope(final _RScope owner, final _REngine engine) {
+  _RScope(final _RScope owner, final REngine engine) {
     super(owner);
 
     if (engine != null) {
@@ -30,7 +30,7 @@ abstract class _RScope extends HierarchicalFSM {
         this.m_engine = owner.m_engine;
       } else {
         throw new IllegalArgumentException(
-            "_REngine and owner cannot both be null."); //$NON-NLS-1$
+            "REngine and owner cannot both be null."); //$NON-NLS-1$
       }
     }
   }

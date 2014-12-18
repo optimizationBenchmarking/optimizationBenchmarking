@@ -18,7 +18,7 @@ abstract class _RExpressionScope extends _RScope {
    * @param engine
    *          the engine
    */
-  _RExpressionScope(final _RScope owner, final _REngine engine) {
+  _RExpressionScope(final _RScope owner, final REngine engine) {
     super(owner, engine);
     this.m_type = null;
   }

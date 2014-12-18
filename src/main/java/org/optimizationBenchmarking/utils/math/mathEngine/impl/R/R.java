@@ -1,17 +1,25 @@
 package org.optimizationBenchmarking.utils.math.mathEngine.impl.R;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashSet;
 
+import org.optimizationBenchmarking.utils.EmptyUtils;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.encoding.TextEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.io.paths.TempDir;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngineTool;
-import org.optimizationBenchmarking.utils.math.mathEngine.spec.IMathEngineBuilder;
 import org.optimizationBenchmarking.utils.predicates.AndPredicate;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
+import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 
 /**
  * <p>
@@ -32,33 +40,147 @@ import org.optimizationBenchmarking.utils.predicates.AndPredicate;
  * Instead, we therefore run {@code R} as external process.
  * </p>
  */
-public final class R extends MathEngineTool<IMathEngineBuilder> {
+public final class R extends MathEngineTool<REngineBuilder> {
 
   /** the parameter denoting the path of the {@code R} binary */
   public static final String PARAM_R_BINARY = "pathOfRBinary"; //$NON-NLS-1$
 
-  /** the shared instance */
-  static final R INSTANCE = new R();
-
   /** the path to the {@code R} executable */
   final Path m_rBinary;
+
+  /** the parameters to use for running {@code R} */
+  final String[] m_params;
 
   /** create */
   R() {
     super();
-    Path r;
 
-    try {
-      r = PathUtils.findFirstInPath(
-          new AndPredicate<>(new FileNamePredicate(true,
-              new String[] { "R" }), new AndPredicate<>( //$NON-NLS-1$
-              CanExecutePredicate.INSTANCE, new _RCriterion())),
-          IsFilePredicate.INSTANCE, new Path[] { Configuration.getRoot()
-              .getPath(R.PARAM_R_BINARY, null) });
-    } catch (final Throwable t) {
+    Path r;
+    ArrayList<Path> list;
+    HashSet<String> params;
+    int size;
+    ProcessExecutor exec;
+    ExternalProcessBuilder builder;
+    final String[] wantedParams;
+    final String enc;
+    String s;
+
+    r = null;
+    params = null;
+
+    exec = ProcessExecutor.getInstance();
+
+    if ((exec != null) && (exec.canUse())) {
+
+      list = new ArrayList<>();
+      try {
+        r = Configuration.getRoot().getPath(R.PARAM_R_BINARY, null);
+        if (r != null) {
+          list.add(r);
+        }
+      } catch (final Throwable t) {
+        //
+      }
+
+      try {
+        r = PathUtils.normalize("/usr/bin/R"); //$NON-NLS-1$
+        if (r != null) {
+          list.add(r);
+        }
+      } catch (final Throwable t) {
+        //
+      }
+
+      try {
+        r = PathUtils.normalize("C:\\Program Files\\R\\"); //$NON-NLS-1$
+        if (r != null) {
+          list.add(r);
+        }
+      } catch (final Throwable t) {
+        //
+      }
+
       r = null;
+      try {
+        r = PathUtils.findFirstInPath(//
+            new AndPredicate<>(//
+                new FileNamePredicate(true, new String[] { "R" }),//$NON-NLS-1$
+                new AndPredicate<>(
+                    //
+                    CanExecutePredicate.INSTANCE,
+                    new _RAtLeastVersion3Criterion())),//
+            IsFilePredicate.INSTANCE, //
+            list.toArray(new Path[list.size()]));
+
+        if (r != null) {
+          builder = exec.use();
+          builder.setExecutable(r);
+          builder.setMergeStdOutAndStdErr(true);
+
+          try (final TempDir temp = new TempDir()) {
+
+            builder.setDirectory(temp.getPath());
+            builder.addStringArgument("--help"); //$NON-NLS-1$
+
+            try (final ExternalProcess ep = builder.create()) {
+              try (final InputStreamReader isr = new InputStreamReader(
+                  ep.getStdOut())) {
+                try (final BufferedReader br = new BufferedReader(isr)) {
+                  params = new HashSet<>();
+                  enc = "--encoding";//$NON-NLS-1$
+
+                  wantedParams = new String[] {//
+                  "--vanilla", //$NON-NLS-1$
+                      "--slave", //$NON-NLS-1$
+                      "--no-readline", //$NON-NLS-1$
+                      "--no-save", //$NON-NLS-1$
+                      "--no-environ", //$NON-NLS-1$
+                      "--no-site-file", //$NON-NLS-1$
+                      "--no-init-file", //$NON-NLS-1$
+                      "--no-restore-data", //$NON-NLS-1$
+                      "--no-restore-history", //$NON-NLS-1$
+                      "--no-restore", //$NON-NLS-1$                      
+                      enc, };
+
+                  findParams: while ((s = br.readLine()) != null) {
+                    s = s.trim();
+                    for (final String t : wantedParams) {
+                      if (s.startsWith(t)) {
+                        if (params.add(t)) {
+                          if (params.size() >= wantedParams.length) {
+                            break findParams;
+                          }
+                        }
+                      }
+                    }
+                  }
+
+                  if (params.contains(enc)) {
+                    params.remove(enc);
+                    params.add(enc + '=' + R._encoding().name());
+                  }
+                }
+              }
+              if (ep.waitFor() != 0) {
+                r = null;
+                params = null;
+              }
+            }
+
+          }
+
+        }
+
+      } catch (final Throwable t) {
+        r = null;
+      }
     }
+
     this.m_rBinary = r;
+    this.m_params = (((params != null) && ((size = params.size()) > 0))//
+    ? params.toArray(new String[size])
+        : EmptyUtils.EMPTY_STRINGS);
+
   }
 
   /** {@inheritDoc} */
@@ -69,8 +191,8 @@ public final class R extends MathEngineTool<IMathEngineBuilder> {
 
   /** {@inheritDoc} */
   @Override
-  protected final _REngineBuilder createBuilder() {
-    return new _REngineBuilder();
+  protected final REngineBuilder createBuilder() {
+    return new REngineBuilder();
   }
 
   /**
@@ -79,7 +201,7 @@ public final class R extends MathEngineTool<IMathEngineBuilder> {
    * @return the globally shared instance of {@code R}
    */
   public static final R getInstance() {
-    return R.INSTANCE;
+    return RLoader.INSTANCE;
   }
 
   /**
@@ -89,5 +211,11 @@ public final class R extends MathEngineTool<IMathEngineBuilder> {
    */
   static final TextEncoding _encoding() {
     return StreamEncoding.getUTF8();
+  }
+
+  /** create the R engine */
+  private static final class RLoader {
+    /** the shared instance */
+    static final R INSTANCE = new R();
   }
 }

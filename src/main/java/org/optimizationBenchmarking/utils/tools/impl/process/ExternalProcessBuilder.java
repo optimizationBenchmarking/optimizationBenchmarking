@@ -55,7 +55,7 @@ public final class ExternalProcessBuilder extends
   public final ExternalProcessBuilder setExecutable(final Path path) {
     String s;
 
-    s = PathUtils.getPhysicalPath(path);
+    s = PathUtils.getPhysicalPath(path, false);
     if (this.m_command.isEmpty()) {
       this.m_command.add(s);
     } else {
@@ -93,7 +93,7 @@ public final class ExternalProcessBuilder extends
    * @return this builder
    */
   public final ExternalProcessBuilder addPathArgument(final Path path) {
-    return this.addStringArgument(PathUtils.getPhysicalPath(path));
+    return this.addStringArgument(PathUtils.getPhysicalPath(path, false));
   }
 
   /**
@@ -123,7 +123,7 @@ public final class ExternalProcessBuilder extends
   public final ExternalProcessBuilder putEnvironmentPath(final String key,
       final Path value) {
     final String s;
-    s = PathUtils.getPhysicalPath(value);
+    s = PathUtils.getPhysicalPath(value, false);
     return this.putEnvironmentString(key, s);
   }
 

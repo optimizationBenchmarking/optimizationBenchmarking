@@ -11,39 +11,38 @@ import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 /**
  * The builder for an R engine.
  */
-final class _REngineBuilder extends
-    MathEngineBuilder<_REngine, _REngineBuilder> {
+public final class REngineBuilder extends
+    MathEngineBuilder<REngine, REngineBuilder> {
 
   /** create the R engine builder */
-  _REngineBuilder() {
+  REngineBuilder() {
     super();
   }
 
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override
-  public final _REngine create() throws IOException {
+  public final REngine create() throws IOException {
     final ExternalProcessBuilder builder;
     final Logger log;
     final TempDir temp;
+    final R r;
 
     log = this.m_logger;
 
-    builder = ProcessExecutor.INSTANCE.use();
-    builder.setExecutable(R.INSTANCE.m_rBinary);
+    builder = ProcessExecutor.getInstance().use();
+    r = R.getInstance();
+    builder.setExecutable(r.m_rBinary);
 
     temp = new TempDir();
 
     builder.setDirectory(temp.getPath());
-    builder.addStringArgument("--vanilla"); //$NON-NLS-1$
-    builder.addStringArgument("--slave"); //$NON-NLS-1$
-    builder.addStringArgument("--no-readline"); //$NON-NLS-1$
-    builder.addStringArgument("--encoding=" + //$NON-NLS-1$
-        R._encoding().name());
-
+    for (final String s : r.m_params) {
+      builder.addStringArgument(s);
+    }
     builder.setLogger(log);
 
-    return new _REngine(builder.create(), temp, log);
+    return new REngine(builder.create(), temp, log);
   }
 
 }

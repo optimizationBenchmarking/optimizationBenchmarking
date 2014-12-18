@@ -24,7 +24,7 @@ abstract class _RBlockingScope extends _RScope {
    * @param engine
    *          the engine
    */
-  _RBlockingScope(final _RBlockingScope owner, final _REngine engine) {
+  _RBlockingScope(final _RBlockingScope owner, final REngine engine) {
     super(owner, engine);
   }
 

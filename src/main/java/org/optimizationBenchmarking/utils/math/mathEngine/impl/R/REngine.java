@@ -14,7 +14,6 @@ import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.EDataType;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngine;
-import org.optimizationBenchmarking.utils.math.mathEngine.spec.IAssignment;
 import org.optimizationBenchmarking.utils.math.mathEngine.spec.IVariable;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
@@ -27,7 +26,7 @@ import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterato
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 
 /** The {@code R} Engine */
-final class _REngine extends MathEngine {
+public final class REngine extends MathEngine {
 
   /** the instance of {@code R} */
   private final ExternalProcess m_process;
@@ -56,7 +55,7 @@ final class _REngine extends MathEngine {
    * @throws IOException
    *           if it must
    */
-  _REngine(final ExternalProcess process, final TempDir temp,
+  REngine(final ExternalProcess process, final TempDir temp,
       final Logger logger) throws IOException {
     super();
 
@@ -77,14 +76,14 @@ final class _REngine extends MathEngine {
 
   /** {@inheritDoc} */
   @Override
-  public final IAssignment assign(final IVariable variable) {
-    return new _RAssignment(((variable != null) ? variable
+  public final RAssignment assign(final IVariable variable) {
+    return new RAssignment(((variable != null) ? variable
         : this.variableCreate()), this);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final IAssignment assign() {
+  public final RAssignment assign() {
     return this.assign(null);
   }
 
@@ -253,9 +252,9 @@ final class _REngine extends MathEngine {
       out.write("write.table(");//$NON-NLS-1$
       out.write(this.variableName(variable));
       out.write(",row.names="); //$NON-NLS-1$
-      out.write(_RExpression.FALSE);
+      out.write(RExpression.FALSE);
       out.write(",col.names="); //$NON-NLS-1$
-      out.write(_RExpression.FALSE);
+      out.write(RExpression.FALSE);
       out.write(");"); //$NON-NLS-1$
       out.newLine();
       out.flush();
@@ -272,23 +271,23 @@ final class _REngine extends MathEngine {
         iterateTokens: while (iterator.hasNext()) {
           token = iterator.next();
           n++;
-          if (_RExpression.NAN.equalsIgnoreCase(token)) {
+          if (RExpression.NAN.equalsIgnoreCase(token)) {
             mb.append(Double.NaN);
             continue iterateTokens;
           }
-          if (_RExpression.NEGATIVE_INFINITY.equalsIgnoreCase(token)) {
+          if (RExpression.NEGATIVE_INFINITY.equalsIgnoreCase(token)) {
             mb.append(Double.NEGATIVE_INFINITY);
             continue iterateTokens;
           }
-          if (_RExpression.POSITIVE_INFINITY.equalsIgnoreCase(token)) {
+          if (RExpression.POSITIVE_INFINITY.equalsIgnoreCase(token)) {
             mb.append(Double.POSITIVE_INFINITY);
             continue iterateTokens;
           }
-          if (_RExpression.TRUE.equalsIgnoreCase(token)) {
+          if (RExpression.TRUE.equalsIgnoreCase(token)) {
             mb.append(1);
             continue iterateTokens;
           }
-          if (_RExpression.FALSE.equalsIgnoreCase(token)) {
+          if (RExpression.FALSE.equalsIgnoreCase(token)) {
             mb.append(0);
             continue iterateTokens;
           }
@@ -349,19 +348,19 @@ final class _REngine extends MathEngine {
     final String token;
 
     token = this.__getScalar(variable);
-    if (_RExpression.NAN.equalsIgnoreCase(token)) {
+    if (RExpression.NAN.equalsIgnoreCase(token)) {
       return Double.NaN;
     }
-    if (_RExpression.NEGATIVE_INFINITY.equalsIgnoreCase(token)) {
+    if (RExpression.NEGATIVE_INFINITY.equalsIgnoreCase(token)) {
       return Double.NEGATIVE_INFINITY;
     }
-    if (_RExpression.POSITIVE_INFINITY.equalsIgnoreCase(token)) {
+    if (RExpression.POSITIVE_INFINITY.equalsIgnoreCase(token)) {
       return Double.POSITIVE_INFINITY;
     }
-    if (_RExpression.TRUE.equalsIgnoreCase(token)) {
+    if (RExpression.TRUE.equalsIgnoreCase(token)) {
       return 1d;
     }
-    if (_RExpression.FALSE.equalsIgnoreCase(token)) {
+    if (RExpression.FALSE.equalsIgnoreCase(token)) {
       return 0d;
     }
     return DoubleParser.INSTANCE.parseDouble(token);
@@ -373,10 +372,10 @@ final class _REngine extends MathEngine {
     final String token;
 
     token = this.__getScalar(variable);
-    if (_RExpression.TRUE.equalsIgnoreCase(token)) {
+    if (RExpression.TRUE.equalsIgnoreCase(token)) {
       return 1L;
     }
-    if (_RExpression.FALSE.equalsIgnoreCase(token)) {
+    if (RExpression.FALSE.equalsIgnoreCase(token)) {
       return 0L;
     }
     return LongParser.INSTANCE.parseLong(token);
@@ -388,10 +387,10 @@ final class _REngine extends MathEngine {
     final String token;
 
     token = this.__getScalar(variable);
-    if (_RExpression.TRUE.equalsIgnoreCase(token)) {
+    if (RExpression.TRUE.equalsIgnoreCase(token)) {
       return true;
     }
-    if (_RExpression.FALSE.equalsIgnoreCase(token)) {
+    if (RExpression.FALSE.equalsIgnoreCase(token)) {
       return false;
     }
     return BooleanParser.INSTANCE.parseBoolean(token);

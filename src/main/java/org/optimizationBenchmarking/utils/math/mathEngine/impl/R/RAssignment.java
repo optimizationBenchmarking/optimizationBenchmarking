@@ -5,13 +5,12 @@ import java.io.IOException;
 
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.math.mathEngine.spec.IAssignment;
-import org.optimizationBenchmarking.utils.math.mathEngine.spec.IExpression;
 import org.optimizationBenchmarking.utils.math.mathEngine.spec.IVariable;
 
 /**
  * Assign the value of a variable, or allocate a new variable and assign it
  */
-public final class _RAssignment extends _RBlockingScope implements
+public final class RAssignment extends _RBlockingScope implements
     IAssignment {
 
   /** the variable to use */
@@ -28,7 +27,7 @@ public final class _RAssignment extends _RBlockingScope implements
    * @param engine
    *          the engine
    */
-  _RAssignment(final IVariable var, final _REngine engine) {
+  RAssignment(final IVariable var, final REngine engine) {
     super(null, engine);
     this.m_var = var;
     this.open();
@@ -86,7 +85,7 @@ public final class _RAssignment extends _RBlockingScope implements
   @Override
   protected synchronized void afterChildClosed(final HierarchicalFSM child) {
     this.m_engine._variableSetDataType(this.m_var,
-        ((_RExpression) child).m_type);
+        ((RExpression) child).m_type);
     super.afterChildClosed(child);
   }
 
@@ -98,11 +97,11 @@ public final class _RAssignment extends _RBlockingScope implements
 
   /** {@inheritDoc} */
   @Override
-  public final IExpression value() {
+  public final RExpression value() {
     if (this.m_isAssigned) {
       throw new IllegalStateException("Assignment already done."); //$NON-NLS-1$
     }
     this.m_isAssigned = true;
-    return new _RExpression(this, this.m_engine);
+    return new RExpression(this, this.m_engine);
   }
 }

@@ -13,22 +13,25 @@ import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuil
 import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 
 /** check whether a program produces the output we'd expect from {@code R} */
-final class _RCriterion implements IPredicate<Path> {
+final class _RAtLeastVersion3Criterion implements IPredicate<Path> {
 
   /** create */
-  _RCriterion() {
+  _RAtLeastVersion3Criterion() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
   public final boolean check(final Path object) {
+    ProcessExecutor executor;
     ExternalProcessBuilder esb;
     String s;
     boolean hasRVersion, hasRFoundation;
+    int i;
 
-    if (ProcessExecutor.INSTANCE.canUse()) {
-      esb = ProcessExecutor.INSTANCE.use();
+    executor = ProcessExecutor.getInstance();
+    if (executor.canUse()) {
+      esb = executor.use();
       esb.setExecutable(object);
       esb.addStringArgument("--version"); //$NON-NLS-1$
       esb.setDirectory(PathUtils.getTempDir());
@@ -39,21 +42,33 @@ final class _RCriterion implements IPredicate<Path> {
       try (ExternalProcess ep = esb.create()) {
         try (InputStreamReader isr = new InputStreamReader(ep.getStdOut())) {
           try (BufferedReader br = new BufferedReader(isr)) {
-            while ((s = br.readLine()) != null) {
+            looper: while ((s = br.readLine()) != null) {
               s = TextUtils.prepare(s);
               if (s != null) {
                 if (s.startsWith("R version ")) { //$NON-NLS-1$
-                  hasRVersion = true;
-                  if (hasRFoundation) {
-                    break;
-                  }
-                } else {
-                  if (s.contains(//
-                      "The R Foundation for Statistical Computing")) { //$NON-NLS-1$
-                    hasRFoundation = true;
-                    if (hasRVersion) {
-                      break;
+                  i = s.indexOf('.', 10);
+                  if (i > 0) {
+                    try {
+                      i = Integer.parseInt(s.substring(10, i));
+                      if (i >= 3) {
+                        hasRVersion = true;
+                        if (hasRFoundation) {
+                          break;
+                        }
+                        continue looper;
+                      }
+                    } catch (final Throwable tt) {
+                      //
                     }
+                  }
+                  hasRVersion = hasRFoundation = false;
+                  break looper;
+                }
+                if (s.contains(//
+                    "The R Foundation for Statistical Computing")) { //$NON-NLS-1$
+                  hasRFoundation = true;
+                  if (hasRVersion) {
+                    break;
                   }
                 }
               }

@@ -115,11 +115,4 @@ public interface IExpression extends IMathEngineScope {
    * @return the result of a matrix transposition
    */
   public abstract IFunction matrixMul();
-
-  /**
-   * The result of a matrix inversion
-   * 
-   * @return the result of a matrix inversion
-   */
-  public abstract IFunction matrixInvert();
 }
