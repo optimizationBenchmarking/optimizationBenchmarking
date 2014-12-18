@@ -1,6 +1,10 @@
 package examples.snippets;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.R.R;
 import org.optimizationBenchmarking.utils.math.mathEngine.spec.IAssignment;
@@ -9,6 +13,7 @@ import org.optimizationBenchmarking.utils.math.mathEngine.spec.IFunction;
 import org.optimizationBenchmarking.utils.math.mathEngine.spec.IMathEngine;
 import org.optimizationBenchmarking.utils.math.mathEngine.spec.IVariable;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.math.matrix.impl.ByteMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.LongMatrix2D;
 
@@ -17,19 +22,43 @@ import org.optimizationBenchmarking.utils.math.matrix.impl.LongMatrix2D;
  * This is a small test of {@code R}.
  * </p>
  */
-public final class RunR {
+public final class RunR implements Runnable {
 
   /**
    * The main routine
    * 
    * @param args
-   *          ignored
+   *          passed to configuration
+   * @throws Throwable
+   *           if something goes wrong
    */
-  public static final void main(final String[] args) {
+  public static final void main(final String[] args) throws Throwable {
+    Configuration.setup(args);
+    ExecutorService es;
+    int i;
+
+    es = Executors.newFixedThreadPool(10);
+    for (i = 1; i <= 20; i++) {
+      es.submit(new RunR());
+    }
+
+    es.shutdown();
+    es.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS);
+
+  }
+
+  /** the forbidden constructor */
+  private RunR() {
+    super();
+  }
+
+  @Override
+  public void run() {
     IMatrix input, output;
     IVariable var;
-
-    Configuration.setup(args);
+    Random random;
+    byte[] randomMatrix;
+    String id;
 
     if (!R.getInstance().canUse()) {
       System.out.println(//
@@ -37,12 +66,15 @@ public final class RunR {
       return;
     }
 
+    random = new Random();
+
     try (final IMathEngine r = R
         .getInstance()
         .use()
         .setLogger(
             Configuration.getRoot().getLogger(Configuration.PARAM_LOGGER,
                 null)).create()) {
+      id = (r.toString() + ' ');
 
       input = new DoubleMatrix2D(new double[][] { { 1, 2, 3 },
           { 4, 5, 6 }, { 7, 8, 9 } });
@@ -56,14 +88,14 @@ public final class RunR {
           }
         }
       }
-      System.out.println(r.getAsDouble(var));
+      System.out.println(id + r.getAsDouble(var));
       output = r.getAsMatrix(var);
-      System.out.println(output.getClass().getSimpleName() + ' ' + output);
+      System.out.println(id + output.getClass().getSimpleName() + ' '
+          + output);
 
-      input = new DoubleMatrix2D(new double[][] {
-          { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },
-          { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 },
-          { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } });
+      randomMatrix = new byte[4 * 5];
+      random.nextBytes(randomMatrix);
+      input = new ByteMatrix1D(randomMatrix, 4, 5);
 
       try (IAssignment ass = r.assign()) {
         var = ass.getVariable();
@@ -76,7 +108,8 @@ public final class RunR {
         }
       }
       output = r.getAsMatrix(var);
-      System.out.println(output.getClass().getSimpleName() + ' ' + output);
+      System.out.println(id + output.getClass().getSimpleName() + ' '
+          + output);
 
       try (IAssignment ass = r.assign()) {
         var = ass.getVariable();
@@ -100,15 +133,11 @@ public final class RunR {
         }
       }
       output = r.getAsMatrix(var);
-      System.out.println(output.getClass().getSimpleName() + ' ' + output);
+      System.out.println(id + output.getClass().getSimpleName() + ' '
+          + output);
 
     } catch (final Throwable t) {
       t.printStackTrace();
     }
-  }
-
-  /** the forbidden constructor */
-  private RunR() {
-    ErrorUtils.doNotCall();
   }
 }

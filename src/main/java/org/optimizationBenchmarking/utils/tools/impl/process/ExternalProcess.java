@@ -118,8 +118,8 @@ public final class ExternalProcess extends ToolJob implements Closeable {
       this.m_stderrWorker.start();
     }
 
-    if ((this.m_log != null) && (this.m_log.isLoggable(Level.INFO))) {
-      this.m_log.info("Successfully started: " + this.m_name); //$NON-NLS-1$
+    if ((this.m_log != null) && (this.m_log.isLoggable(Level.FINE))) {
+      this.m_log.fine("Successfully started: " + this.m_name); //$NON-NLS-1$
     }
   }
 
@@ -360,8 +360,8 @@ public final class ExternalProcess extends ToolJob implements Closeable {
           }
         }
       } else {
-        if ((this.m_log != null) && (this.m_log.isLoggable(Level.INFO))) {
-          this.m_log.info("Gracefully shut down " + this.m_name + //$NON-NLS-1$
+        if ((this.m_log != null) && (this.m_log.isLoggable(Level.FINE))) {
+          this.m_log.fine("Gracefully shut down " + this.m_name + //$NON-NLS-1$
               ", return value=" + returnValue);//$NON-NLS-1$
         }
       }

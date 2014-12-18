@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +29,9 @@ import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 /** The {@code R} Engine */
 public final class REngine extends MathEngine {
 
+  /** the engine ID */
+  private static final AtomicLong ENGINE_ID = new AtomicLong();
+
   /** the instance of {@code R} */
   private final ExternalProcess m_process;
 
@@ -42,6 +46,9 @@ public final class REngine extends MathEngine {
 
   /** the temporary directory in which we run {@code R} */
   final TempDir m_temp;
+
+  /** the id of the engine */
+  private final String m_id;
 
   /**
    * create
@@ -69,8 +76,11 @@ public final class REngine extends MathEngine {
     this.m_in = e.wrapInputStream(process.getStdOut());
     this.m_out = e.wrapOutputStream(process.getStdIn());
 
+    this.m_id = (((this.getClass().getSimpleName() + ' ') + '#') + //
+    Long.toString(REngine.ENGINE_ID.incrementAndGet()));
+
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
-      logger.info("R engine successfully started"); //$NON-NLS-1$
+      logger.info(this.m_id + " successfully started"); //$NON-NLS-1$
     }
   }
 
@@ -115,7 +125,8 @@ public final class REngine extends MathEngine {
     if (t != null) {
       if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
         this.m_log.log(Level.SEVERE,
-            "Error during communication with R.", t); //$NON-NLS-1$
+            ("Error during communication with R in engine " + //$NON-NLS-1$ 
+            this.hashCode()), t);
       }
       ErrorUtils.throwAsRuntimeException(t);
     }
@@ -165,12 +176,13 @@ public final class REngine extends MathEngine {
 
     if (error != null) {
       if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
-        this.m_log.log(Level.SEVERE, "Error during shutdown of R", error); //$NON-NLS-1$
+        this.m_log.log(Level.SEVERE, ("Error during shutdown of "//$NON-NLS-1$
+            + this.m_id), error);
       }
       ErrorUtils.throwAsIOException(error);
     } else {
       if ((this.m_log != null) && (this.m_log.isLoggable(Level.INFO))) {
-        this.m_log.info("R engine shut down gracefully.");//$NON-NLS-1$
+        this.m_log.info(this.m_id + " shut down gracefully.");//$NON-NLS-1$
       }
     }
   }
@@ -395,4 +407,11 @@ public final class REngine extends MathEngine {
     }
     return BooleanParser.INSTANCE.parseBoolean(token);
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return this.m_id;
+  }
+
 }

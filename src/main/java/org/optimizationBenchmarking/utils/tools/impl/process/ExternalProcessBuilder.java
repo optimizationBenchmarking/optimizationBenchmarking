@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +22,9 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  */
 public final class ExternalProcessBuilder extends
     ToolJobBuilder<ExternalProcess, ExternalProcessBuilder> {
+
+  /** an atomic process counter */
+  private static final AtomicLong PROC_ID = new AtomicLong();
 
   /** the command */
   private final ArrayList<String> m_command;
@@ -373,6 +377,7 @@ public final class ExternalProcessBuilder extends
     File f;
     MemoryTextOutput buffer;
     int realStreams;
+    char append;
 
     this.validate();
 
@@ -380,25 +385,35 @@ public final class ExternalProcessBuilder extends
 
     if (log != null) {
       buffer = new MemoryTextOutput();
-      buffer.append("process ");//$NON-NLS-1$
-      buffer.append(this.m_command);
+      buffer.append("process #");//$NON-NLS-1$
+      buffer.append(Long.toString(ExternalProcessBuilder.PROC_ID
+          .incrementAndGet()));
+      buffer.append(' ');
+      buffer.append('(');
+      append = '[';
+      for (final String s : this.m_command) {
+        buffer.append(append);
+        buffer.append(s);
+        append = ' ';
+      }
       f = this.m_pb.directory();
       if (f != null) {
-        buffer.append(" in directory '");//$NON-NLS-1$
+        buffer.append("] in directory '");//$NON-NLS-1$
         buffer.append(f);
         buffer.append('\'');
         f = null;
       } else {
         buffer.append(" in the current working directory"); //$NON-NLS-1$
       }
+      buffer.append(')');
       name = buffer.toString();
       buffer = null;
     } else {
       name = null;
     }
 
-    if ((log != null) && (log.isLoggable(Level.INFO))) {
-      log.info("Now starting " + name); //$NON-NLS-1$
+    if ((log != null) && (log.isLoggable(Level.FINE))) {
+      log.fine("Now starting " + name); //$NON-NLS-1$
     }
 
     try {
