@@ -1,10 +1,12 @@
 package examples.org.optimizationBenchmarking.utils.bibliography.data;
 
+import java.io.IOException;
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.io.BibTeXOutput;
 import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXMLOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.parsers.LoggerParser;
 
 /**
  * A class to test generating some of bibliographic data records with the
@@ -29,20 +31,23 @@ public abstract class BibliographyExample implements Runnable {
   @Override
   public final void run() {
     Bibliography bib;
-    ITextOutput t;
+    Logger log;
 
     bib = this.createBibliography();
+    log = LoggerParser.INSTANCE.parseObject("global;ALL"); //$NON-NLS-1$
 
-    t = AbstractTextOutput.wrap(System.out);
-    BibTeXOutput.getInstance().storeText(bib, t);
-    t.flush();
+    try {
+      BibTeXOutput.getInstance().use().setStream(System.out)
+          .setSource(bib).setLogger(log).create().call();
 
-    t.appendLineBreak();
-    t.appendLineBreak();
-    t.appendLineBreak();
-    t.appendLineBreak();
-    BibliographyXMLOutput.getInstance().storeText(bib, t);
-    t.flush();
+      System.out.println();
+      System.out.println();
+
+      BibliographyXMLOutput.getInstance().use().setStream(System.out)
+          .setSource(bib).setLogger(log).create().call();
+    } catch (final IOException ioe) {
+      ioe.printStackTrace();
+    }
   }
 
 }

@@ -8,7 +8,6 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
-import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
@@ -28,8 +27,8 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.FileProducerTool;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** A document driver. */
-public abstract class DocumentDriver extends
-    FileProducerTool<IDocumentBuilder> implements IDocumentDriver {
+public abstract class DocumentDriver extends FileProducerTool implements
+    IDocumentDriver {
 
   /** create the document driver */
   protected DocumentDriver() {
@@ -55,7 +54,8 @@ public abstract class DocumentDriver extends
 
   /** {@inheritDoc} */
   @Override
-  protected DocumentBuilder createBuilder() {
+  public DocumentBuilder use() {
+    this.beforeUse();
     return new DocumentBuilder(this);
   }
 

@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.bibliography.io;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibArticle;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthor;
@@ -22,7 +21,8 @@ import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
-import org.optimizationBenchmarking.utils.io.structured.TextOutputDriver;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJobLog;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.TextOutputTool;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransformer;
@@ -32,7 +32,7 @@ import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransfor
  * of bibliographic data. Currently, this API only supports output and
  * cannot yet read BibTeX data.
  */
-public final class BibTeXOutput extends TextOutputDriver<Object> {
+public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /** the spaces */
   private static final char[] FIELD;
@@ -125,19 +125,21 @@ public final class BibTeXOutput extends TextOutputDriver<Object> {
 
   /** {@inheritDoc} */
   @Override
-  protected final void doStoreText(final Object data,
-      final ITextOutput textOut, final Logger logger) {
+  protected final void text(final IOJobLog log, final Object data,
+      final ITextOutput textOut) {
     final ITextOutput enc;
     final char[] buf;
 
     enc = LaTeXCharTransformer.getInstance().transform(textOut,
         TextUtils.DEFAULT_NORMALIZER_FORM);
     buf = BibTeXOutput.FIELD.clone();
+
     if (data instanceof Bibliography) {
       BibTeXOutput.__storeBibliography(((Bibliography) data), textOut,
           enc, buf);
       return;
     }
+
     if (data instanceof BibRecord) {
       BibTeXOutput.__storeRecord(((BibRecord) data), textOut, enc, buf);
       return;

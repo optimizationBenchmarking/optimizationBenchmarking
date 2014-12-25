@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
@@ -20,8 +19,8 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver}
  * interface.
  */
-public abstract class AbstractGraphicDriver extends
-    FileProducerTool<IGraphicBuilder> implements IGraphicDriver {
+public abstract class AbstractGraphicDriver extends FileProducerTool
+    implements IGraphicDriver {
 
   /** the graphic format managed by this driver */
   private final EGraphicFormat m_format;
@@ -58,7 +57,8 @@ public abstract class AbstractGraphicDriver extends
 
   /** {@inheritDoc} */
   @Override
-  protected final GraphicBuilder createBuilder() {
+  public final GraphicBuilder use() {
+    this.beforeUse();
     return new GraphicBuilder(this);
   }
 

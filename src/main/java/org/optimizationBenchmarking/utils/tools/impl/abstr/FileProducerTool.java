@@ -3,17 +3,13 @@ package org.optimizationBenchmarking.utils.tools.impl.abstr;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerBuilder;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerTool;
 
 /**
  * A tool which can produce a specific kind of file
- * 
- * @param <B>
- *          the builder type
  */
-public abstract class FileProducerTool<B extends IFileProducerBuilder>
-    extends Tool<B> implements IFileProducerTool {
+public abstract class FileProducerTool extends Tool implements
+    IFileProducerTool {
 
   /**
    * Create the file producer tool.

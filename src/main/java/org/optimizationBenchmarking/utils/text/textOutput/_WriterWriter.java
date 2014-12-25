@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * A {@link java.io.Writer} wrapped around a
- * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
+ * A {@link java.io.Writer} wrapped around a {@link java.io.Writer}
  */
 final class _WriterWriter extends Writer {
 

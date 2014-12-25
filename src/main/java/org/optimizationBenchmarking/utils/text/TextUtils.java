@@ -11,7 +11,11 @@ import java.text.Normalizer;
  */
 public final class TextUtils {
 
-  /** the null string */
+  /**
+   * the string corresponding to the text representation of an object which
+   * is {@code null}, i.e.,
+   * <code>{@link java.lang.String#valueOf(Object) String.valueOf}((Object) null)</code>
+   */
   public static final String NULL_STRING = String.valueOf((Object) null);
 
   /** the default normalizer form */

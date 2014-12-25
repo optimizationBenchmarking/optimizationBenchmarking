@@ -71,7 +71,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
  * potentially much more memory consuming.
  * </p>
  */
-public final class ProcessExecutor extends Tool<ExternalProcessBuilder> {
+public final class ProcessExecutor extends Tool {
 
   /** create */
   ProcessExecutor() {
@@ -86,7 +86,8 @@ public final class ProcessExecutor extends Tool<ExternalProcessBuilder> {
 
   /** {@inheritDoc} */
   @Override
-  protected final ExternalProcessBuilder createBuilder() {
+  public final ExternalProcessBuilder use() {
+    this.beforeUse();
     return new ExternalProcessBuilder();
   }
 

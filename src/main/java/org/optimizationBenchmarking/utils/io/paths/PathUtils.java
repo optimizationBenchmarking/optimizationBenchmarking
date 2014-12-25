@@ -86,7 +86,7 @@ public final class PathUtils {
     s = TextUtils.prepare(path);
     if (s == null) {
       throw new IllegalArgumentException(//
-          "Path cannot be null or empty, but is '" //$NON-NLS-1$
+          "Path cannot be null, empty, or composed only of whitespace but is '" //$NON-NLS-1$
               + s + "'.");//$NON-NLS-1$
     }
     return PathUtils.normalize(Paths.get(path));
@@ -1205,11 +1205,12 @@ public final class PathUtils {
   private static final class __PathVisitor extends SimpleFileVisitor<Path> {
 
     /** some paths we should always skip when traveling through the path */
-    static final Path[] SKIP;
+    static final Object[] SKIP;
 
     static {
-      final HashSet<Path> skip;
+      final HashSet<Object> skip;
       Path p, win;
+      Object id;
 
       skip = new HashSet<>();
       p = PathUtils.getTempDir();
@@ -1226,6 +1227,11 @@ public final class PathUtils {
           p = __DirPathParser.PARSER.parseString(template);
           if (p != null) {
             skip.add(p);
+            id = Files.readAttributes(p, BasicFileAttributes.class)
+                .fileKey();
+            if (id != null) {
+              skip.add(id);
+            }
           }
         } catch (final Throwable t) {//
         }
@@ -1319,6 +1325,11 @@ public final class PathUtils {
             p = PathUtils.createPathInside(win, template);
             if ((p != null) && (Files.isDirectory(p))) {
               skip.add(p);
+              id = Files.readAttributes(p, BasicFileAttributes.class)
+                  .fileKey();
+              if (id != null) {
+                skip.add(id);
+              }
             }
           } catch (final Throwable t) {
             //
@@ -1326,14 +1337,14 @@ public final class PathUtils {
         }
       }
 
-      SKIP = skip.toArray(new Path[skip.size()]);
+      SKIP = skip.toArray(new Object[skip.size()]);
     }
 
     /** the visitor to carry around */
     private final FileVisitor<Path> m_visitor;
 
     /** the paths already done */
-    private final HashSet<Path> m_done;
+    private final HashSet<Object> m_done;
 
     /** are we in the user-defined template root mode? */
     boolean m_inUserDefinedTemplates;
@@ -1352,7 +1363,7 @@ public final class PathUtils {
       this.m_visitor = visitor;
 
       this.m_done = new HashSet<>(4096);
-      for (final Path skip : __PathVisitor.SKIP) {
+      for (final Object skip : __PathVisitor.SKIP) {
         this.m_done.add(skip);
       }
 
@@ -1366,13 +1377,25 @@ public final class PathUtils {
      * 
      * @param p
      *          the path to add
+     * @param id
+     *          the id
      * @param s
-     *          the set
+     *          the hash set to add to
      * @return the return value
      */
-    private static final boolean __add(final Path p, final HashSet<Path> s) {
+    private static final boolean __add(final Path p, final Object id,
+        final HashSet<Object> s) {
+      boolean ret;
+
       synchronized (s) {
-        return s.add(p);
+        ret = s.add(p);
+        if (!ret) {
+          return false;
+        }
+        if (id == null) {
+          return true;
+        }
+        return s.add(id);
       }
     }
 
@@ -1382,7 +1405,7 @@ public final class PathUtils {
         final BasicFileAttributes attrs) throws IOException {
 
       if ((dir == null) || (attrs == null)
-          || (!(__PathVisitor.__add(dir, this.m_done)))) {
+          || (!(__PathVisitor.__add(dir, attrs.fileKey(), this.m_done)))) {
         return ((this.m_lastResult == FileVisitResult.TERMINATE) ? FileVisitResult.TERMINATE
             : FileVisitResult.SKIP_SUBTREE);
       }

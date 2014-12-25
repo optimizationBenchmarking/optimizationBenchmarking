@@ -5,16 +5,11 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.tools.spec.ITool;
-import org.optimizationBenchmarking.utils.tools.spec.IToolJobBuilder;
 
 /**
  * A base class to derive tools from.
- * 
- * @param <JB>
- *          the tool job builder class
  */
-public abstract class Tool<JB extends IToolJobBuilder> extends HashObject
-    implements ITool {
+public abstract class Tool extends HashObject implements ITool {
 
   /** create */
   protected Tool() {
@@ -27,21 +22,12 @@ public abstract class Tool<JB extends IToolJobBuilder> extends HashObject
     return false;
   }
 
-  /**
-   * Create a tool job builder
-   * 
-   * @return the tool job builder
-   */
-  protected abstract JB createBuilder();
-
-  /** {@inheritDoc} */
-  @Override
-  public final JB use() {
-    if (this.canUse()) {
-      return this.createBuilder();
+  /** Call this method in {@link #use()} */
+  protected void beforeUse() {
+    if (!(this.canUse())) {
+      throw new UnsupportedOperationException("Tool '" + //$NON-NLS-1$
+          TextUtils.className(this.getClass()) + "' cannot be used."); //$NON-NLS-1$
     }
-    throw new UnsupportedOperationException("Tool '" + //$NON-NLS-1$
-        TextUtils.className(this.getClass()) + "' cannot be used."); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

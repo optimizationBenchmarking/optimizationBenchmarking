@@ -69,10 +69,15 @@ public abstract class BibliographyTest extends ArrayListViewTest {
   public void testSerializeToAndDeserializeFromXMLEqual()
       throws IOException {
     final Bibliography a, b, c;
+    final BibliographyXMLOutput output;
+
+    output = BibliographyXMLOutput.getInstance();
+    Assert.assertNotNull(output);
+    Assert.assertTrue(output.canUse());
 
     a = this.getBibliography();
     try (final ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-      BibliographyXMLOutput.getInstance().storeStream(a, bos);
+      output.use().setStream(bos).setSource(a).create().call();
       try (final ByteArrayInputStream bis = new ByteArrayInputStream(
           bos.toByteArray())) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
@@ -86,7 +91,7 @@ public abstract class BibliographyTest extends ArrayListViewTest {
     Assert.assertEquals(b, a);
 
     try (final CharArrayWriter cw = new CharArrayWriter()) {
-      BibliographyXMLOutput.getInstance().storeWriter(b, cw);
+      output.use().setWriter(cw).setSource(b).create().call();
       try (final CharArrayReader cr = new CharArrayReader(cw.toCharArray())) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
           BibliographyXMLInput.getInstance().loadReader(bb, cr);
@@ -112,11 +117,16 @@ public abstract class BibliographyTest extends ArrayListViewTest {
       throws IOException {
     final Bibliography a, b, c;
     final String x, y, z;
+    final BibliographyXMLOutput output;
+
+    output = BibliographyXMLOutput.getInstance();
+    Assert.assertNotNull(output);
+    Assert.assertTrue(output.canUse());
 
     a = this.getBibliography();
 
     try (final StringWriter cw = new StringWriter()) {
-      BibliographyXMLOutput.getInstance().storeWriter(a, cw);
+      output.use().setWriter(cw).setSource(a).create().call();
       x = cw.toString();
       try (final StringReader cr = new StringReader(x)) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
@@ -130,7 +140,7 @@ public abstract class BibliographyTest extends ArrayListViewTest {
     Assert.assertEquals(b, a);
 
     try (final StringWriter cw = new StringWriter()) {
-      BibliographyXMLOutput.getInstance().storeWriter(b, cw);
+      output.use().setWriter(cw).setSource(b).create().call();
       y = cw.toString();
       try (final StringReader cr = new StringReader(y)) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
@@ -145,7 +155,7 @@ public abstract class BibliographyTest extends ArrayListViewTest {
     Assert.assertEquals(b, c);
 
     try (final StringWriter cw = new StringWriter()) {
-      BibliographyXMLOutput.getInstance().storeWriter(c, cw);
+      output.use().setWriter(cw).setSource(c).create().call();
       z = cw.toString();
     }
 

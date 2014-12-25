@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.bibliography.io;
 
 import java.net.URI;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibArticle;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthor;
@@ -21,12 +20,13 @@ import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
-import org.optimizationBenchmarking.utils.io.structured.XMLOutputDriver;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJobLog;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLOutputTool;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
 import org.optimizationBenchmarking.utils.io.xml.XMLElement;
 
 /** the configuration xml output */
-public final class BibliographyXMLOutput extends XMLOutputDriver<Object> {
+public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /** create */
   BibliographyXMLOutput() {
@@ -44,8 +44,8 @@ public final class BibliographyXMLOutput extends XMLOutputDriver<Object> {
 
   /** {@inheritDoc} */
   @Override
-  protected void doStoreXML(final Object data, final XMLBase dest,
-      final Logger logger) {
+  protected void xml(final IOJobLog log, final Object data,
+      final XMLBase dest) {
     try (XMLElement root = dest.element()) {
       root.namespaceSetPrefix(BibliographyXMLConstants.NAMESPACE_URI,
           "bib"); //$NON-NLS-1$

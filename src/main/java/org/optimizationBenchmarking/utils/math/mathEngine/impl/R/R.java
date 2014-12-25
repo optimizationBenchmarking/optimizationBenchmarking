@@ -16,6 +16,7 @@ import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
 import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngineTool;
 import org.optimizationBenchmarking.utils.predicates.AndPredicate;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
 import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
@@ -45,7 +46,7 @@ import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
  * much slower than what JRI can do.
  * </p>
  */
-public final class R extends MathEngineTool<REngineBuilder> {
+public final class R extends MathEngineTool {
 
   /** the parameter denoting the path of the {@code R} binary */
   public static final String PARAM_R_BINARY = "pathOfRBinary"; //$NON-NLS-1$
@@ -202,7 +203,8 @@ public final class R extends MathEngineTool<REngineBuilder> {
 
   /** {@inheritDoc} */
   @Override
-  protected final REngineBuilder createBuilder() {
+  public final REngineBuilder use() {
+    this.beforeUse();
     return new REngineBuilder();
   }
 
@@ -213,6 +215,18 @@ public final class R extends MathEngineTool<REngineBuilder> {
    */
   public static final R getInstance() {
     return RLoader.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "R Process Automator"; //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append(this.toString());
   }
 
   /**
