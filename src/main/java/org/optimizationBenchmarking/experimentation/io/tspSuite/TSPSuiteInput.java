@@ -1,20 +1,26 @@
-package org.optimizationBenchmarking.experimentation.evaluation.io.tspSuite;
+package org.optimizationBenchmarking.experimentation.io.tspSuite;
 
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.Reader;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.evaluation.data.DimensionContext;
 import org.optimizationBenchmarking.experimentation.evaluation.data.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.evaluation.data.EDimensionType;
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.evaluation.data.InstanceContext;
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.experimentation.evaluation.data.RunContext;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
-import org.optimizationBenchmarking.utils.io.structured.FileInputDriver;
+import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.FileInputTool;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A class for loading <a
@@ -22,7 +28,26 @@ import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
  * the {@link org.optimizationBenchmarking.experimentation.evaluation.data
  * experiment data structures}.
  */
-public class TSPSuiteInput extends FileInputDriver<ExperimentSetContext> {
+public class TSPSuiteInput extends FileInputTool<ExperimentSetContext> {
+  /** the string indicating the begin of a comment: {@value} */
+  private static final String COMMENT_START = "//"; //$NON-NLS-1$
+  /**
+   * the identifier of the section in the job files which holds the
+   * algorithm information
+   */
+  private static final String ALGORITHM_DATA_SECTION = "ALGORITHM_DATA_SECTION"; //$NON-NLS-1$
+  /**
+   * the identifier to begin the section in the job files which holds the
+   * logged information: {@value}
+   */
+  private static final String LOG_DATA_SECTION = "LOG_DATA_SECTION"; //$NON-NLS-1$
+  /**
+   * the identifier beginning the section in the job files which holds the
+   * infos about the deterministic initializer: {@value}
+   */
+  private static final String DETERMINISTIC_INITIALIZATION_SECTION = "DETERMINISTIC_INITIALIZATION_SECTION"; //$NON-NLS-1$
+  /** the string used to end sections: {@value} */
+  private static final String SECTION_END = "SECTION_END"; //$NON-NLS-1$
 
   /** the tour length dimension */
   private static final String LENGTH = "L"; //$NON-NLS-1$
@@ -323,6 +348,13 @@ public class TSPSuiteInput extends FileInputDriver<ExperimentSetContext> {
     return __TSPSuiteInputLoader.INSTANCE;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  protected _TSPSuiteInputToken createToken(final IOJob job,
+      final ExperimentSetContext data) {
+    return new _TSPSuiteInputToken(data);
+  }
+
   /**
    * get the instance name
    * 
@@ -355,9 +387,9 @@ public class TSPSuiteInput extends FileInputDriver<ExperimentSetContext> {
     final BoundedLongParser p1, p2;
     final BoundedDoubleParser bd;
 
-    p1 = new BoundedLongParser(0, Long.MAX_VALUE);
-    p2 = new BoundedLongParser(1, Long.MAX_VALUE);
-    bd = new BoundedDoubleParser(00, Double.MAX_VALUE);
+    p1 = new BoundedLongParser(0L, Long.MAX_VALUE);
+    p2 = new BoundedLongParser(1L, Long.MAX_VALUE);
+    bd = new BoundedDoubleParser(0d, Double.MAX_VALUE);
 
     try (final DimensionContext d = esb.createDimension()) {
       d.setName("FEs"); //$NON-NLS-1$
@@ -1480,33 +1512,200 @@ public class TSPSuiteInput extends FileInputDriver<ExperimentSetContext> {
 
   /** {@inheritDoc} */
   @Override
-  protected void doLoadPath(final ExperimentSetContext loadContext,
-      final Path path, final Logger logger,
-      final StreamEncoding<?, ?> defaultEncoding) throws IOException {
-    Throwable error;
+  protected void before(final IOJob job, final ExperimentSetContext data)
+      throws Throwable {
+    super.before(job, data);
+    TSPSuiteInput.makeTSPSuiteDimensionSet(data);
+    TSPSuiteInput.makeTSPLibInstanceSet(data);
+  }
 
-    error = null;
+  /** {@inheritDoc} */
+  @Override
+  protected boolean isFileInDirectoryLoadable(final IOJob job,
+      final ExperimentSetContext data, final Path path,
+      final BasicFileAttributes attributes) throws Throwable {
+    final String name;
+    int len;
+    char ch;
 
-    try {
-      TSPSuiteInput.makeTSPSuiteDimensionSet(loadContext);
-    } catch (final Throwable a) {
-      error = ErrorUtils.aggregateError(error, a);
+    if (super.isFileInDirectoryLoadable(job, data, path, attributes)) {
+
+      name = TextUtils.normalize(path.getFileName().toString());
+      if (name != null) {
+        len = name.length();
+        if (len > 4) {
+          ch = name.charAt(--len);
+          if ((ch == 't') || (ch == 'T')) {
+            ch = name.charAt(--len);
+            if ((ch == 'x') || (ch == 'X')) {
+              ch = name.charAt(--len);
+              if ((ch == 't') || (ch == 'T')) {
+                ch = name.charAt(--len);
+                if (ch == '.') {
+                  return true;
+                }
+              }
+            }
+          }
+        }
+      }
     }
-    try {
-      TSPSuiteInput.makeTSPLibInstanceSet(loadContext);
-    } catch (final Throwable b) {
-      error = ErrorUtils.aggregateError(error, b);
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void leaveDirectory(final IOJob job,
+      final ExperimentSetContext data, final Path path) throws Throwable {
+    _TSPSuiteInputToken token;
+
+    token = ((_TSPSuiteInputToken) (job.getToken()));
+
+    if (token.m_instanceRunsRoot != null) {
+      if (Files.isSameFile(token.m_instanceRunsRoot, path)) {
+        token._popIRSC();
+      }
     }
 
-    try {
-      new _TSPSuiteHandler(loadContext)._loadPath(path, logger,
-          defaultEncoding);
-    } catch (final Throwable c) {
-      error = ErrorUtils.aggregateError(error, c);
+    if (token.m_experimentRoot != null) {
+      if (Files.isSameFile(token.m_experimentRoot, path)) {
+        token._popEC();
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void file(final IOJob job, final ExperimentSetContext data,
+      final Path path, final BasicFileAttributes attributes,
+      final StreamEncoding<?, ?> encoding) throws Throwable {
+
+    if (job.canLog(IOJob.FINER_LOG_LEVEL)) {
+      job.log(IOJob.FINER_LOG_LEVEL, (("Beginning to load run from file '" //$NON-NLS-1$
+          + path) + '\''));
     }
 
-    if (error != null) {
-      ErrorUtils.throwAsIOException(error);
+    try (final InputStream stream = PathUtils.openInputStream(path)) {
+      try (final InputStream input = StreamEncoding.openInputStream(
+          stream, encoding)) {
+        try (final Reader reader = StreamEncoding.openReader(stream,
+            encoding)) {
+          if (reader instanceof BufferedReader) {
+            this.__reader(job, data, path, ((BufferedReader) reader));
+          } else {
+            try (final BufferedReader buffered = new BufferedReader(reader)) {
+              this.__reader(job, data, path, buffered);
+            }
+          }
+        }
+      }
+    }
+
+    if (job.canLog(IOJob.FINER_LOG_LEVEL)) {
+      job.log(IOJob.FINER_LOG_LEVEL, (("Finished loading run from file '" //$NON-NLS-1$
+          + path) + '\''));
+    }
+  }
+
+  /**
+   * prepare a string for processing
+   * 
+   * @param s
+   *          the string
+   * @return the result
+   */
+  private static final String __prepare(final String s) {
+    int i;
+    String t;
+
+    t = TextUtils.normalize(s);
+    if (t == null) {
+      return null;
+    }
+    i = t.indexOf(TSPSuiteInput.COMMENT_START);
+    if (i == 0) {
+      return null;
+    }
+    if (i < 0) {
+      return t;
+    }
+    return TextUtils.prepare(t.substring(0, i));
+  }
+
+  /**
+   * load the file data
+   * 
+   * @param job
+   *          the job
+   * @param data
+   *          the data
+   * @param file
+   *          the file
+   * @param reader
+   *          the reader
+   * @throws Throwable
+   *           if it fails
+   */
+  private final void __reader(final IOJob job,
+      final ExperimentSetContext data, final Path file,
+      final BufferedReader reader) throws Throwable {
+    String s;
+    RunContext run;
+    int state, idx;
+    _TSPSuiteInputToken token;
+
+    token = ((_TSPSuiteInputToken) (job.getToken()));
+
+    run = null;
+    state = 0;
+
+    while ((s = reader.readLine()) != null) {
+      s = TSPSuiteInput.__prepare(s);
+      if (s == null) {
+        continue;
+      }
+
+      if (state == 0) {
+        if (TSPSuiteInput.LOG_DATA_SECTION.equalsIgnoreCase(s)) {
+          state = 1;
+          if (run == null) {
+            run = token._beginRun(file);
+          }
+        } else {
+          if (TSPSuiteInput.ALGORITHM_DATA_SECTION.equalsIgnoreCase(s) || //
+              TSPSuiteInput.DETERMINISTIC_INITIALIZATION_SECTION
+                  .equalsIgnoreCase(s)) {
+            state = 2;
+            if (run == null) {
+              run = token._beginRun(file);
+            }
+          }
+        }
+
+      } else {
+        if (TSPSuiteInput.SECTION_END.equalsIgnoreCase(s)) {
+          state = 0;
+        } else {
+          if (state == 1) {
+            run.addDataPoint(s);
+          } else {
+            if (state == 2) {
+              idx = s.indexOf(':');
+              if (idx <= 0) {
+                continue;
+              }
+              run.setParameterValue(
+                  TextUtils.prepare(s.substring(0, idx)),
+                  TextUtils.prepare(s.substring(idx + 1)));
+            }
+          }
+
+        }
+      }
+    }
+
+    if (run != null) {
+      run.close();
     }
   }
 

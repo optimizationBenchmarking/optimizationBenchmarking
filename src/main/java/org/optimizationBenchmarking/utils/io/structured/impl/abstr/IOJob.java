@@ -7,7 +7,16 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** The base class for I/O jobs */
-public class IOJobLog {
+public class IOJob {
+
+  /** the even finer log level */
+  public static final Level FINER_LOG_LEVEL = Level.FINEST;
+
+  /** the finer log level */
+  public static final Level FINE_LOG_LEVEL = Level.FINER;
+
+  /** the default log level */
+  public static final Level DEFAULT_LOG_LEVEL = Level.FINE;
 
   /** the logger */
   final Logger m_logger;
@@ -19,7 +28,11 @@ public class IOJobLog {
   String m_id;
 
   /** the owning tool */
-  final IOTool<?> m_tool;
+  @SuppressWarnings("rawtypes")
+  final IOTool m_tool;
+
+  /** the job token: a multi-purpose variable */
+  Object m_token;
 
   /**
    * create the _IOJob
@@ -29,7 +42,7 @@ public class IOJobLog {
    * @param tool
    *          the owning tool
    */
-  IOJobLog(final Logger logger, final IOTool<?> tool) {
+  IOJob(final Logger logger, final IOTool<?> tool) {
     super();
     _IOJobBuilder._validateTool(tool);
     this.m_logger = logger;
@@ -70,7 +83,7 @@ public class IOJobLog {
    *         {@code false} otherwise
    */
   public final boolean canLog() {
-    return this.canLog(IOTool.DEFAULT_LOG_LEVEL);
+    return this.canLog(IOJob.DEFAULT_LOG_LEVEL);
   }
 
   /**
@@ -86,13 +99,28 @@ public class IOJobLog {
   }
 
   /**
+   * Log a given message at a given level
+   * 
+   * @param level
+   *          the level
+   * @param message
+   *          the message
+   * @param information
+   *          an information object
+   */
+  public final void log(final Level level, final String message,
+      final Object information) {
+    this.m_logger.log(level, (this._id() + message), information);
+  }
+
+  /**
    * Log a given message at the default log level
    * 
    * @param message
    *          the message
    */
   public final void log(final String message) {
-    this.log(IOTool.DEFAULT_LOG_LEVEL, message);
+    this.log(IOJob.DEFAULT_LOG_LEVEL, message);
   }
 
   /**
@@ -154,5 +182,15 @@ public class IOJobLog {
       this.m_id = mto.toString();
     }
     return this.m_id;
+  }
+
+  /**
+   * Get the token returned by
+   * {@link org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool#before(IOJob, Object)}
+   * 
+   * @return the token
+   */
+  public final Object getToken() {
+    return this.m_token;
   }
 }

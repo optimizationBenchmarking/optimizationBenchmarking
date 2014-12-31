@@ -42,15 +42,13 @@ final class _InputJob extends _IOJob {
     final FileInputTool tool;
     final _Location[] sources;
 
-    tool = ((FileInputTool) (this.m_tool));
-    tool.before(this, this.m_data);
-
     sources = this.m_sources;
     if ((sources.length > 0) && (this.canLog())) {
       this.log("Begin loading data from " + sources.length + //$NON-NLS-1$
           " sources.");//$NON-NLS-1$
     }
 
+    tool = ((FileInputTool) (this.m_tool));
     for (final _Location source : sources) {
       this.m_id = null;
       this.m_currentSource = source;
@@ -63,8 +61,6 @@ final class _InputJob extends _IOJob {
       this.log("Finished loading data from " + sources.length + //$NON-NLS-1$
           " sources.");//$NON-NLS-1$
     }
-
-    tool.after(this, this.m_data);
   }
 
   /** {@inheritDoc} */

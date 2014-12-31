@@ -70,6 +70,11 @@ public abstract class BibliographyTest extends ArrayListViewTest {
       throws IOException {
     final Bibliography a, b, c;
     final BibliographyXMLOutput output;
+    final BibliographyXMLInput input;
+
+    input = BibliographyXMLInput.getInstance();
+    Assert.assertNotNull(input);
+    Assert.assertTrue(input.canUse());
 
     output = BibliographyXMLOutput.getInstance();
     Assert.assertNotNull(output);
@@ -81,7 +86,7 @@ public abstract class BibliographyTest extends ArrayListViewTest {
       try (final ByteArrayInputStream bis = new ByteArrayInputStream(
           bos.toByteArray())) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
-          BibliographyXMLInput.getInstance().loadStream(bb, bis);
+          input.use().addStream(bis).setDestination(bb).create().call();
           b = bb.getResult();
         }
       }
@@ -94,7 +99,7 @@ public abstract class BibliographyTest extends ArrayListViewTest {
       output.use().setWriter(cw).setSource(b).create().call();
       try (final CharArrayReader cr = new CharArrayReader(cw.toCharArray())) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
-          BibliographyXMLInput.getInstance().loadReader(bb, cr);
+          input.use().addReader(cr).setDestination(bb).create().call();
           c = bb.getResult();
         }
       }
@@ -118,6 +123,11 @@ public abstract class BibliographyTest extends ArrayListViewTest {
     final Bibliography a, b, c;
     final String x, y, z;
     final BibliographyXMLOutput output;
+    final BibliographyXMLInput input;
+
+    input = BibliographyXMLInput.getInstance();
+    Assert.assertNotNull(input);
+    Assert.assertTrue(input.canUse());
 
     output = BibliographyXMLOutput.getInstance();
     Assert.assertNotNull(output);
@@ -130,7 +140,7 @@ public abstract class BibliographyTest extends ArrayListViewTest {
       x = cw.toString();
       try (final StringReader cr = new StringReader(x)) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
-          BibliographyXMLInput.getInstance().loadReader(bb, cr);
+          input.use().addReader(cr).setDestination(bb).create().call();
           b = bb.getResult();
         }
       }
@@ -144,7 +154,7 @@ public abstract class BibliographyTest extends ArrayListViewTest {
       y = cw.toString();
       try (final StringReader cr = new StringReader(y)) {
         try (final BibliographyBuilder bb = new BibliographyBuilder()) {
-          BibliographyXMLInput.getInstance().loadReader(bb, cr);
+          input.use().addReader(cr).setDestination(bb).create().call();
           c = bb.getResult();
         }
       }

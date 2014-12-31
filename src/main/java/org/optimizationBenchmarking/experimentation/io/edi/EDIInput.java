@@ -1,7 +1,7 @@
-package org.optimizationBenchmarking.experimentation.evaluation.io.edi;
+package org.optimizationBenchmarking.experimentation.io.edi;
 
 import java.nio.file.Path;
-import java.util.logging.Logger;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParserFactory;
@@ -10,7 +10,8 @@ import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.io.structured.XMLInputDriver;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
@@ -19,7 +20,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * {@link org.optimizationBenchmarking.experimentation.evaluation.data
  * experiment data structures}.
  */
-public final class EDIInput extends XMLInputDriver<ExperimentSetContext> {
+public final class EDIInput extends XMLInputTool<ExperimentSetContext> {
 
   /** create */
   EDIInput() {
@@ -75,14 +76,15 @@ public final class EDIInput extends XMLInputDriver<ExperimentSetContext> {
 
   /** {@inheritDoc} */
   @Override
-  protected boolean isFileInDirectoryLoadable(
-      final ExperimentSetContext loadContext, final Path file) {
+  protected boolean isFileInDirectoryLoadable(final IOJob job,
+      final ExperimentSetContext data, final Path path,
+      final BasicFileAttributes attributes) throws Throwable {
     final String n;
     final char lm3, lm2, lm1, lm0;
     int len;
 
-    if (super.isFileInDirectoryLoadable(loadContext, file)) {
-      n = file.toString();
+    if (super.isFileInDirectoryLoadable(job, data, path, attributes)) {
+      n = path.toString();
       len = n.length();
       if (len <= 4) {
         return false;
@@ -103,9 +105,9 @@ public final class EDIInput extends XMLInputDriver<ExperimentSetContext> {
 
   /** {@inheritDoc} */
   @Override
-  protected final DefaultHandler wrapLoadContext(
-      final ExperimentSetContext loaderContext, final Logger logger) {
-    return new _EDIContentHandler(null, loaderContext, logger);
+  protected final DefaultHandler wrapDestination(
+      final ExperimentSetContext dataDestination, final IOJob job) {
+    return new _EDIContentHandler(null, dataDestination, job);
   }
 
   /** the loader */

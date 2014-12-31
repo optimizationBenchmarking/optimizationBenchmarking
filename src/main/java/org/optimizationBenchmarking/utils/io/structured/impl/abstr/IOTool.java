@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.logging.Level;
 
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
@@ -22,15 +21,6 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
  *          the source/dest data type
  */
 public abstract class IOTool<D> extends Tool implements IIOTool {
-
-  /** the default log level */
-  protected static final Level DEFAULT_LOG_LEVEL = Level.FINE;
-
-  /** the finer log level */
-  protected static final Level FINE_LOG_LEVEL = Level.FINER;
-
-  /** the even finer log level */
-  protected static final Level FINER_LOG_LEVEL = Level.FINEST;
 
   /** the job counter */
   final AtomicLong m_jobCounter;
@@ -48,10 +38,63 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
   }
 
   /**
+   * This method is the very first method to be invoked before a job
+   * begins, even before {@link #before(IOJob, Object)}, and creates a
+   * token for the job. This token can later be used to store job-specific
+   * data.
+   * 
+   * @param job
+   *          the job
+   * @param data
+   *          the source/destination data
+   * @return the token, or {@code null} if none is needed.
+   * @throws Throwable
+   *           if it must
+   */
+  protected Object createToken(final IOJob job, final D data)
+      throws Throwable {
+    return null;
+  }
+
+  /**
+   * This method is invoked before beginning the I/O process
+   * 
+   * @param job
+   *          the job
+   * @param data
+   *          the source/destination data
+   * @throws Throwable
+   *           if it must
+   */
+  protected void before(final IOJob job, final D data) throws Throwable {//
+  }
+
+  /**
+   * This method is invoked after finishing the I/O process
+   * 
+   * @param job
+   *          the job
+   * @param data
+   *          the source/destination data
+   * @throws Throwable
+   *           if it must
+   */
+  protected void after(final IOJob job, final D data) throws Throwable {
+    //
+  }
+
+  /** can we do raw streams ? */
+  void _checkRawStreams() {
+    throw new UnsupportedOperationException(//
+        this.getClass().getSimpleName() + //
+            " cannot deal with raw (unzipped) streams, only with files and folders."); //$NON-NLS-1$
+  }
+
+  /**
    * handle a location
    * 
-   * @param log
-   *          the log
+   * @param job
+   *          the job
    * @param data
    *          the data
    * @param location
@@ -59,7 +102,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    * @throws Throwable
    *           if it must
    */
-  void _handle(final IOJobLog log, final D data, final _Location location)
+  void _handle(final IOJob job, final D data, final _Location location)
       throws Throwable {
     final MemoryTextOutput text;
     final Class<?> clazz;
@@ -68,15 +111,15 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
     in = (this instanceof FileInputTool);
 
     if (location.m_location1 instanceof Path) {
-      if (log.canLog()) {
-        log.log((in ? "Beginning input from Path '" : //$NON-NLS-1$
+      if (job.canLog()) {
+        job.log((in ? "Beginning input from Path '" : //$NON-NLS-1$
             "Beginning output to Path '")//$NON-NLS-1$
             + location.m_location1 + '\'');
       }
-      this.__pathPath(log, data, ((Path) (location.m_location1)),
+      this.__pathPath(job, data, ((Path) (location.m_location1)),
           location.m_encoding, location.m_zipped);
-      if (log.canLog()) {
-        log.log((in ? "Finished input from Path '" : //$NON-NLS-1$
+      if (job.canLog()) {
+        job.log((in ? "Finished input from Path '" : //$NON-NLS-1$
             "Finished output to Path '")//$NON-NLS-1$
             + location.m_location1 + '\'');
       }
@@ -84,15 +127,15 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
     }
 
     if (location.m_location1 instanceof File) {
-      if (log.canLog()) {
-        log.log((in ? "Beginning input from File '" : //$NON-NLS-1$
+      if (job.canLog()) {
+        job.log((in ? "Beginning input from File '" : //$NON-NLS-1$
             "Beginning output to File '")//$NON-NLS-1$
             + location.m_location1 + '\'');
       }
-      this.__fileFile(log, data, ((File) (location.m_location1)),
+      this.__fileFile(job, data, ((File) (location.m_location1)),
           location.m_encoding, location.m_zipped);
-      if (log.canLog()) {
-        log.log((in ? "Finished input from File '" : //$NON-NLS-1$
+      if (job.canLog()) {
+        job.log((in ? "Finished input from File '" : //$NON-NLS-1$
             "Finished output to File '")//$NON-NLS-1$
             + location.m_location1 + '\'');
       }
@@ -104,30 +147,30 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
         clazz = ((Class<?>) (location.m_location2));
 
         if (Path.class.isAssignableFrom(clazz)) {
-          if (log.canLog()) {
-            log.log((in ? "Beginning input from Path identified by String '" : //$NON-NLS-1$
+          if (job.canLog()) {
+            job.log((in ? "Beginning input from Path identified by String '" : //$NON-NLS-1$
                 "Beginning output to Path identified by String '")//$NON-NLS-1$
                 + location.m_location1 + '\'');
           }
-          this.__pathString(log, data, ((String) (location.m_location1)),
+          this.__pathString(job, data, ((String) (location.m_location1)),
               location.m_encoding, location.m_zipped);
-          if (log.canLog()) {
-            log.log((in ? "Finished input from Path identified by String '" : //$NON-NLS-1$
+          if (job.canLog()) {
+            job.log((in ? "Finished input from Path identified by String '" : //$NON-NLS-1$
                 "Finished output to Path identified by String '")//$NON-NLS-1$
                 + location.m_location1 + '\'');
           }
         }
 
         if (File.class.isAssignableFrom(clazz)) {
-          if (log.canLog()) {
-            log.log((in ? "Beginning input from File identified by String '" : //$NON-NLS-1$
+          if (job.canLog()) {
+            job.log((in ? "Beginning input from File identified by String '" : //$NON-NLS-1$
                 "Beginning output to File identified by String '")//$NON-NLS-1$
                 + location.m_location1 + '\'');
           }
-          this.__fileString(log, data, ((String) (location.m_location1)),
+          this.__fileString(job, data, ((String) (location.m_location1)),
               location.m_encoding, location.m_zipped);
-          if (log.canLog()) {
-            log.log((in ? "Finished input from File identified by String '" : //$NON-NLS-1$
+          if (job.canLog()) {
+            job.log((in ? "Finished input from File identified by String '" : //$NON-NLS-1$
                 "Finished output to File identified by String '")//$NON-NLS-1$
                 + location.m_location1 + '\'');
           }
@@ -163,8 +206,8 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
   /**
    * Perform I/O to a file
    * 
-   * @param log
-   *          the log
+   * @param job
+   *          the job
    * @param data
    *          the data
    * @param file
@@ -176,7 +219,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    * @throws Throwable
    *           if I/O fails
    */
-  private final void __fileString(final IOJobLog log, final D data,
+  private final void __fileString(final IOJob job, final D data,
       final String file, final StreamEncoding<?, ?> encoding,
       final boolean zipped) throws Throwable {
     final String prepared;
@@ -188,14 +231,14 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
               + file + "' is.");//$NON-NLS-1$
     }
 
-    this.__fileFile(log, data, new File(prepared), encoding, zipped);
+    this.__fileFile(job, data, new File(prepared), encoding, zipped);
   }
 
   /**
    * Perform I/O to a file
    * 
-   * @param log
-   *          the log
+   * @param job
+   *          the job
    * @param data
    *          the data
    * @param file
@@ -207,7 +250,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    * @throws Throwable
    *           if I/O fails
    */
-  private final void __fileFile(final IOJobLog log, final D data,
+  private final void __fileFile(final IOJob job, final D data,
       final File file, final StreamEncoding<?, ?> encoding,
       final boolean zipped) throws Throwable {
     Path path;
@@ -218,14 +261,14 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
           + "' to a path."); //$NON-NLS-1$
     }
 
-    this.__pathPath(log, data, path, encoding, zipped);
+    this.__pathPath(job, data, path, encoding, zipped);
   }
 
   /**
    * Perform I/O to a path
    * 
-   * @param log
-   *          the log
+   * @param job
+   *          the job
    * @param data
    *          the data
    * @param path
@@ -237,18 +280,18 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    * @throws Throwable
    *           if I/O fails
    */
-  private final void __pathPath(final IOJobLog log, final D data,
+  private final void __pathPath(final IOJob job, final D data,
       final Path path, final StreamEncoding<?, ?> encoding,
       final boolean zipped) throws Throwable {
-    this.__pathNormalized(log, data, PathUtils.normalize(path), encoding,
+    this._pathNormalized(job, data, PathUtils.normalize(path), encoding,
         zipped);
   }
 
   /**
    * Perform I/O to a path
    * 
-   * @param log
-   *          the log
+   * @param job
+   *          the job
    * @param data
    *          the data
    * @param path
@@ -260,18 +303,18 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    * @throws Throwable
    *           if I/O fails
    */
-  private final void __pathString(final IOJobLog log, final D data,
+  private final void __pathString(final IOJob job, final D data,
       final String path, final StreamEncoding<?, ?> encoding,
       final boolean zipped) throws Throwable {
-    this.__pathNormalized(log, data, PathUtils.normalize(path), encoding,
+    this._pathNormalized(job, data, PathUtils.normalize(path), encoding,
         zipped);
   }
 
   /**
    * Perform I/O to a path
    * 
-   * @param log
-   *          the log
+   * @param job
+   *          the job
    * @param data
    *          the data
    * @param path
@@ -283,7 +326,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    * @throws Throwable
    *           if I/O fails
    */
-  private final void __pathNormalized(final IOJobLog log, final D data,
+  final void _pathNormalized(final IOJob job, final D data,
       final Path path, final StreamEncoding<?, ?> encoding,
       final boolean zipped) throws Throwable {
     BasicFileAttributes attributes;
@@ -298,20 +341,20 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
       attributes = null;
     }
 
-    if (log.canLog()) {
-      log.log(((this instanceof FileInputTool) ? //
+    if (job.canLog()) {
+      job.log(((this instanceof FileInputTool) ? //
       "Reading input from Path '" : //$NON-NLS-1$
           "Writing output ot Path '") + //$NON-NLS-1$
           path + "' with attributes " + attributes);//$NON-NLS-1$
     }
-    this.path(log, data, path, attributes, encoding, zipped);
+    this._path(job, data, path, attributes, encoding, zipped);
   }
 
   /**
    * Handle a path
    * 
-   * @param log
-   *          the log where logging info can be written
+   * @param job
+   *          the job where logging info can be written
    * @param data
    *          the data to be written or read
    * @param path
@@ -324,7 +367,31 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    *          should we ZIP-compress / expect ZIP compression
    * @throws Throwable
    */
-  protected void path(final IOJobLog log, final D data, final Path path,
+  void _path(final IOJob job, final D data, final Path path,
+      final BasicFileAttributes attributes,
+      final StreamEncoding<?, ?> encoding, final boolean zipped)
+      throws Throwable {
+    this.path(job, data, path, attributes, encoding, zipped);
+  }
+
+  /**
+   * Handle a path
+   * 
+   * @param job
+   *          the job where logging info can be written
+   * @param data
+   *          the data to be written or read
+   * @param path
+   *          the path
+   * @param attributes
+   *          the attributes
+   * @param encoding
+   *          the encoding
+   * @param zipped
+   *          should we ZIP-compress / expect ZIP compression
+   * @throws Throwable
+   */
+  protected void path(final IOJob job, final D data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final boolean zipped)
       throws Throwable {

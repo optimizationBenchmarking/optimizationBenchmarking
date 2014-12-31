@@ -140,4 +140,72 @@ public interface ITextInputJobBuilder<D> extends IStreamInputJobBuilder<D> {
    * @return this builder
    */
   public abstract ITextInputJobBuilder<D> addReader(final Reader reader);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPStream(
+      final InputStream stream, final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPStream(
+      final InputStream stream);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPResource(
+      final Class<?> clazz, final String name,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPResource(
+      final Class<?> clazz, final String name);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPResource(
+      final String clazz, final String name,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPResource(
+      final String clazz, final String name);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPURI(final URI uri,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPURI(final URI uri);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPURL(final URL url,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPURL(final URL url);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPURI(final String uri,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPURI(final String uri);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPURL(final String url,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> addZIPURL(final String url);
 }

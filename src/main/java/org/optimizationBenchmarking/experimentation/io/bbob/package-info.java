@@ -4,4 +4,4 @@
  * the {@link org.optimizationBenchmarking.experimentation.evaluation.data
  * experiment data structures}.
  */
-package org.optimizationBenchmarking.experimentation.evaluation.io.bbob;
+package org.optimizationBenchmarking.experimentation.io.bbob;

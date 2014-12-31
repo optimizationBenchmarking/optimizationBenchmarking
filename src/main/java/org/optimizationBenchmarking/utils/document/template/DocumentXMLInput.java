@@ -1,21 +1,20 @@
 package org.optimizationBenchmarking.utils.document.template;
 
-import java.util.logging.Logger;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.io.structured.XMLInputDriver;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * A driver for loading a document into a handler
  */
 public final class DocumentXMLInput extends
-    XMLInputDriver<DocumentXMLHandler> {
+    XMLInputTool<DocumentXMLHandler> {
 
   /** create */
   DocumentXMLInput() {
@@ -73,9 +72,9 @@ public final class DocumentXMLInput extends
 
   /** {@inheritDoc} */
   @Override
-  protected DefaultHandler wrapLoadContext(
-      final DocumentXMLHandler loaderContext, final Logger logger) {
-    return loaderContext;
+  protected DefaultHandler wrapDestination(
+      final DocumentXMLHandler dataDestination, final IOJob job) {
+    return dataDestination;
   }
 
   /** the loader for lazy initialization */

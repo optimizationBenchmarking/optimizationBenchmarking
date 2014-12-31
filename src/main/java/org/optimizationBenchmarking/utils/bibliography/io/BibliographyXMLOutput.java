@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
-import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJobLog;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLOutputTool;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
 import org.optimizationBenchmarking.utils.io.xml.XMLElement;
@@ -44,8 +44,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /** {@inheritDoc} */
   @Override
-  protected void xml(final IOJobLog log, final Object data,
-      final XMLBase dest) {
+  protected void xml(final IOJob job, final Object data, final XMLBase dest) {
     try (XMLElement root = dest.element()) {
       root.namespaceSetPrefix(BibliographyXMLConstants.NAMESPACE_URI,
           "bib"); //$NON-NLS-1$

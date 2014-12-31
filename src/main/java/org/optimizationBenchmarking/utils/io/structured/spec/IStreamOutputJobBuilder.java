@@ -87,4 +87,33 @@ public interface IStreamOutputJobBuilder<D> extends
    */
   public abstract IStreamOutputJobBuilder<D> setStream(
       final OutputStream stream);
+
+  /**
+   * Equivalent to
+   * {@link #setStream(OutputStream, StreamEncoding, boolean)
+   * setStream(stream, encoding, true)}
+   * 
+   * @param stream
+   *          the stream to write the output to
+   * @param encoding
+   *          a stream encoding to use ({@code null} if not specified or
+   *          not necessary)
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamOutputJobBuilder<D> setZIPStream(
+      final OutputStream stream, final StreamEncoding<?, ?> encoding);
+
+  /**
+   * Equivalent to
+   * {@link #setStream(OutputStream, StreamEncoding, boolean)
+   * setStream(stream, null, true)}
+   * 
+   * @param stream
+   *          the stream to write the output to
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamOutputJobBuilder<D> setZIPStream(
+      final OutputStream stream);
 }

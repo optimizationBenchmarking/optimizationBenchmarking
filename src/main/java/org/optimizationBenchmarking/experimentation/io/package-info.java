@@ -4,4 +4,4 @@
  * experiment data structures}, supporting several different file and data
  * formats.
  */
-package org.optimizationBenchmarking.experimentation.evaluation.io;
+package org.optimizationBenchmarking.experimentation.io;

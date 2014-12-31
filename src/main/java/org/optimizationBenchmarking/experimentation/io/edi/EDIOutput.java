@@ -1,8 +1,6 @@
-package org.optimizationBenchmarking.experimentation.evaluation.io.edi;
+package org.optimizationBenchmarking.experimentation.io.edi;
 
 import java.util.HashSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.evaluation.data.DataPoint;
 import org.optimizationBenchmarking.experimentation.evaluation.data.Dimension;
@@ -18,7 +16,8 @@ import org.optimizationBenchmarking.experimentation.evaluation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.evaluation.data.ParameterValue;
 import org.optimizationBenchmarking.experimentation.evaluation.data.Run;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.io.structured.XMLOutputDriver;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLOutputTool;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
 import org.optimizationBenchmarking.utils.io.xml.XMLElement;
 import org.optimizationBenchmarking.utils.parsers.NumberParser;
@@ -32,7 +31,7 @@ import org.optimizationBenchmarking.utils.text.numbers.XMLNumberAppender;
  * {@link org.optimizationBenchmarking.experimentation.evaluation.data
  * experiment data structures}.
  */
-public final class EDIOutput extends XMLOutputDriver<Object> {
+public final class EDIOutput extends XMLOutputTool<Object> {
 
   /** create */
   EDIOutput() {
@@ -51,30 +50,29 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
   /** {@inheritDoc} */
   @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  protected void doStoreXML(final Object data, final XMLBase dest,
-      final Logger logger) {
+  protected void xml(final IOJob job, final Object data,
+      final XMLBase xmlBase) throws Throwable {
     final ArraySetView v;
-    try (final XMLElement root = dest.element()) {
+    try (final XMLElement root = xmlBase.element()) {
       root.namespaceSetPrefix(_EDIConstants.NAMESPACE_URI, "e"); //$NON-NLS-1$
       root.name(_EDIConstants.NAMESPACE_URI,
           _EDIConstants.E_EXPERIMENT_DATA);
       write: {
         if (data instanceof ExperimentSet) {
-          EDIOutput.__writeExperimentSet(((ExperimentSet) data), root,
-              logger);
+          EDIOutput
+              .__writeExperimentSet(((ExperimentSet) data), root, job);
           break write;
         }
         if (data instanceof DimensionSet) {
-          EDIOutput.__writeDimensionSet(((DimensionSet) data), root,
-              logger);
+          EDIOutput.__writeDimensionSet(((DimensionSet) data), root, job);
           break write;
         }
         if (data instanceof InstanceSet) {
-          EDIOutput.__writeInstanceSet(((InstanceSet) data), root, logger);
+          EDIOutput.__writeInstanceSet(((InstanceSet) data), root, job);
           break write;
         }
         if (data instanceof Experiment) {
-          EDIOutput.__writeExperiment(((Experiment) data), root, logger,
+          EDIOutput.__writeExperiment(((Experiment) data), root, job,
               new HashSet<>());
           break write;
         }
@@ -82,7 +80,7 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
           v = ((ArraySetView) data);
           if (v.size() > 0) {
             if (v.get(0) instanceof Experiment) {
-              EDIOutput.__writeExperiments(v, root, logger);
+              EDIOutput.__writeExperiments(v, root, job);
               break write;
             }
           }
@@ -101,21 +99,23 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
    * @param dest
    *          the destination
    * @param logger
-   *          the logger for log output
+   *          the logger for job output
    */
   private static final void __writeExperimentSet(final ExperimentSet es,
-      final XMLElement dest, final Logger logger) {
+      final XMLElement dest, final IOJob logger) {
 
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Beginning to write experiment set " + es); //$NON-NLS-1$
+    if (logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Beginning to write experiment set " + es)); //$NON-NLS-1$
     }
 
     EDIOutput.__writeDimensionSet(es.getDimensions(), dest, logger);
     EDIOutput.__writeInstanceSet(es.getInstances(), dest, logger);
     EDIOutput.__writeExperiments(es.getData(), dest, logger);
 
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Finished writing experiment set " + es); //$NON-NLS-1$
+    if (logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Finished writing experiment set " + es)); //$NON-NLS-1$
     }
   }
 
@@ -127,18 +127,19 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
    * @param dest
    *          the destination
    * @param logger
-   *          the logger for log output
+   *          the logger for job output
    */
   private static final void __writeDimensionSet(final DimensionSet ds,
-      final XMLElement dest, final Logger logger) {
+      final XMLElement dest, final IOJob logger) {
     EPrimitiveType t;
     NumberParser<?> p;
     String s;
     long l;
     double f;
 
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Beginning to write dimension set " + ds); //$NON-NLS-1$
+    if (logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Beginning to write dimension set " + ds)); //$NON-NLS-1$
     }
 
     try (final XMLElement root = dest.element()) {
@@ -246,8 +247,9 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
 
     }
 
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Finished to write dimension set " + ds); //$NON-NLS-1$
+    if (logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Finished to write dimension set " + ds)); //$NON-NLS-1$
     }
   }
 
@@ -259,10 +261,10 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
    * @param dest
    *          the destination
    * @param logger
-   *          the logger for log output
+   *          the logger for job output
    */
   private static final void __writeInstanceSet(final InstanceSet ds,
-      final XMLElement dest, final Logger logger) {
+      final XMLElement dest, final IOJob logger) {
     final HashSet<Object> hs;
     final ArraySetView<Dimension> dims;
     String s;
@@ -271,8 +273,9 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
     NumberParser<?> p;
     boolean x, y;
 
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Beginning to write instance set " + ds); //$NON-NLS-1$
+    if (logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Beginning to write instance set " + ds)); //$NON-NLS-1$
     }
 
     try (final XMLElement root = dest.element()) {
@@ -387,8 +390,9 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
       }
     }
 
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Finished to write instance set " + ds); //$NON-NLS-1$
+    if (logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Finished to write instance set " + ds)); //$NON-NLS-1$
     }
   }
 
@@ -400,12 +404,12 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
    * @param dest
    *          the dest
    * @param logger
-   *          the logger for log output
+   *          the logger for job output
    * @param described
    *          the described elements
    */
   private static final void __writeExperiment(final Experiment e,
-      final XMLElement dest, final Logger logger,
+      final XMLElement dest, final IOJob logger,
       final HashSet<Object> described) {
     final boolean[] isInt;
     final int k;
@@ -414,8 +418,9 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
     Parameter fe;
     int i;
 
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Beginning to write experiment " + e); //$NON-NLS-1$
+    if (logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Beginning to write experiment " + e)); //$NON-NLS-1$
     }
 
     try (final XMLElement root = dest.element()) {
@@ -513,8 +518,9 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
 
     }
 
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Finished writing experiment " + e); //$NON-NLS-1$
+    if (logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Finished writing experiment " + e)); //$NON-NLS-1$
     }
   }
 
@@ -526,15 +532,16 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
    * @param dest
    *          the dest
    * @param logger
-   *          the logger for log output
+   *          the logger for job output
    */
   private static final void __writeExperiments(
       final ArraySetView<Experiment> es, final XMLElement dest,
-      final Logger logger) {
+      final IOJob logger) {
     final HashSet<Object> described;
 
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Beginning to write experiments."); //$NON-NLS-1$
+    if (logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      logger
+          .log(IOJob.FINE_LOG_LEVEL, ("Beginning to write experiments.")); //$NON-NLS-1$
     }
 
     try (final XMLElement root = dest.element()) {
@@ -547,8 +554,8 @@ public final class EDIOutput extends XMLOutputDriver<Object> {
 
     }
 
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer("Finished to write experiments."); //$NON-NLS-1$
+    if (logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      logger.log(IOJob.FINE_LOG_LEVEL, ("Finished to write experiments.")); //$NON-NLS-1$
     }
   }
 

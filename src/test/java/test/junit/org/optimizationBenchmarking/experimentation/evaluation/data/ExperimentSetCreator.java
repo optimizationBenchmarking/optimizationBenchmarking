@@ -22,8 +22,8 @@ import org.optimizationBenchmarking.experimentation.evaluation.data.InstanceRuns
 import org.optimizationBenchmarking.experimentation.evaluation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.evaluation.data.ParameterValue;
 import org.optimizationBenchmarking.experimentation.evaluation.data.Run;
-import org.optimizationBenchmarking.experimentation.evaluation.io.edi.EDIInput;
-import org.optimizationBenchmarking.experimentation.evaluation.io.edi.EDIOutput;
+import org.optimizationBenchmarking.experimentation.io.edi.EDIInput;
+import org.optimizationBenchmarking.experimentation.io.edi.EDIOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
@@ -332,12 +332,21 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
   @Test(timeout = 3600000)
   public void testEDISerializationCanonical() {
     final ExperimentSet inst, es1, es2;
+    final EDIOutput output;
+    final EDIInput input;
     String s1, s2;
+
+    output = EDIOutput.getInstance();
+    Assert.assertNotNull(output);
+    Assert.assertTrue(output.canUse());
+    input = EDIInput.getInstance();
+    Assert.assertNotNull(input);
+    Assert.assertTrue(input.canUse());
 
     inst = this.getInstance();
     try {
       try (final StringWriter w = new StringWriter()) {
-        EDIOutput.getInstance().storeWriter(inst, w);
+        output.use().setWriter(w).setSource(inst).create().call();
         s1 = w.toString();
       }
     } catch (final IOException e) {
@@ -347,7 +356,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
     try {
       try (final StringReader r = new StringReader(s1)) {
         try (final ExperimentSetContext esc = new ExperimentSetContext()) {
-          EDIInput.getInstance().loadReader(esc, r);
+          input.use().addReader(r).setDestination(esc).create().call();
           es1 = esc.getResult();
         }
       }
@@ -358,7 +367,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
     try {
       try (final StringWriter w = new StringWriter()) {
-        EDIOutput.getInstance().storeWriter(es1, w);
+        output.use().setWriter(w).setSource(es1).create().call();
         s2 = w.toString();
       }
     } catch (final IOException e) {
@@ -371,7 +380,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
       try (final StringReader r = new StringReader(s2)) {
         s2 = null;
         try (final ExperimentSetContext esc = new ExperimentSetContext()) {
-          EDIInput.getInstance().loadReader(esc, r);
+          input.use().addReader(r).setDestination(esc).create().call();
           es2 = esc.getResult();
         }
       }

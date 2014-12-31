@@ -77,68 +77,70 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
    * 
    * @param dataDestination
    *          the destination
-   * @param log
-   *          the log to use
+   * @param job
+   *          the job to use
    * @return the handler
+   * @throws Throwable
+   *           if it fails
    */
   protected DefaultHandler wrapDestination(final S dataDestination,
-      final IOJobLog log) {
+      final IOJob job) throws Throwable {
     return ((DefaultHandler) dataDestination);
   }
 
   /** {@inheritDoc} */
   @Override
-  void _handle(final IOJobLog log, final S data, final _Location location)
+  void _handle(final IOJob job, final S data, final _Location location)
       throws Throwable {
     if (location.m_location1 instanceof InputSource) {
-      if (log.canLog()) {
-        log.log("Beginning input from InputSource."); //$NON-NLS-1$
+      if (job.canLog()) {
+        job.log("Beginning input from InputSource."); //$NON-NLS-1$
       }
-      this.__xml(log, data, ((InputSource) (location.m_location1)));
-      if (log.canLog()) {
-        log.log("Finished input from InputSource."); //$NON-NLS-1$
+      this.__xml(job, data, ((InputSource) (location.m_location1)));
+      if (job.canLog()) {
+        job.log("Finished input from InputSource."); //$NON-NLS-1$
       }
       return;
     }
-    super._handle(log, data, location);
+    super._handle(job, data, location);
   }
 
   /**
    * Read the data from an XML document
    * 
-   * @param log
-   *          the log where logging info can be written
+   * @param job
+   *          the job where logging info can be written
    * @param data
    *          the data to be filled with information
    * @param source
    *          the InputSource to read from
    * @throws Throwable
    */
-  private final void __xml(final IOJobLog log, final S data,
+  private final void __xml(final IOJob job, final S data,
       final InputSource source) throws Throwable {
     this.m_spf.newSAXParser().parse(source,
-        this.wrapDestination(data, log));
+        this.wrapDestination(data, job));
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void reader(final IOJobLog log, final S data,
+  protected void reader(final IOJob job, final S data,
       final BufferedReader reader) throws Throwable {
-    this.__xml(log, data, new InputSource(reader));
+    this.__xml(job, data, new InputSource(reader));
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void stream(final IOJobLog log, final S data,
+  protected void stream(final IOJob job, final S data,
       final InputStream stream, final StreamEncoding<?, ?> encoding)
       throws Throwable {
     this.m_spf.newSAXParser().parse(stream,
-        this.wrapDestination(data, log));
+        this.wrapDestination(data, job));
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void file(final IOJobLog log, final S data, final Path path,
+  protected void file(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding) throws Throwable {
     File file;
@@ -151,9 +153,9 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
 
     if (file != null) {
       this.m_spf.newSAXParser().parse(file,
-          this.wrapDestination(data, log));
+          this.wrapDestination(data, job));
     } else {
-      super.file(log, data, path, attributes, encoding);
+      super.file(job, data, path, attributes, encoding);
     }
   }
 

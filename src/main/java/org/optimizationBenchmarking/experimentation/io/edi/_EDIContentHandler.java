@@ -1,8 +1,8 @@
-package org.optimizationBenchmarking.experimentation.evaluation.io.edi;
+package org.optimizationBenchmarking.experimentation.io.edi;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.evaluation.data.DimensionContext;
 import org.optimizationBenchmarking.experimentation.evaluation.data.EDimensionDirection;
@@ -13,6 +13,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.data.InstanceCont
 import org.optimizationBenchmarking.experimentation.evaluation.data.InstanceRunsContext;
 import org.optimizationBenchmarking.experimentation.evaluation.data.RunContext;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
 import org.optimizationBenchmarking.utils.parsers.LongParser;
@@ -40,7 +41,7 @@ final class _EDIContentHandler extends DelegatingHandler {
   private int m_inPoint;
 
   /** the logger */
-  private final Logger m_logger;
+  private final IOJob m_logger;
 
   /**
    * create
@@ -53,7 +54,7 @@ final class _EDIContentHandler extends DelegatingHandler {
    *          the logger
    */
   public _EDIContentHandler(final DelegatingHandler owner,
-      final ExperimentSetContext esb, final Logger logger) {
+      final ExperimentSetContext esb, final IOJob logger) {
     super(owner);
     this.m_stack = new ArrayList<>();
     this.m_stack.add(esb);
@@ -66,8 +67,7 @@ final class _EDIContentHandler extends DelegatingHandler {
   public final void doWarning(final SAXParseException e)
       throws SAXException {
 
-    if ((this.m_logger != null)
-        && (this.m_logger.isLoggable(Level.WARNING))) {
+    if (this.m_logger.canLog(Level.WARNING)) {
       this.m_logger.log(Level.WARNING, "Warning during XML parsing.", //$NON-NLS-1$
           e);
     }
@@ -77,26 +77,22 @@ final class _EDIContentHandler extends DelegatingHandler {
   /** {@inheritDoc} */
   @Override
   public final void doError(final SAXParseException e) throws SAXException {
-
-    if ((this.m_logger != null)
-        && (this.m_logger.isLoggable(Level.SEVERE))) {
-      this.m_logger.log(Level.SEVERE, "Error during XML parsing.", //$NON-NLS-1$
-          e);
+    try {
+      this.m_logger.handleError(e, "Error during XML parsing."); //$NON-NLS-1$
+    } catch (final IOException ioe) {
+      throw new SAXException(ioe);
     }
-    throw e;
   }
 
   /** {@inheritDoc} */
   @Override
   public final void doFatalError(final SAXParseException e)
       throws SAXException {
-
-    if ((this.m_logger != null)
-        && (this.m_logger.isLoggable(Level.SEVERE))) {
-      this.m_logger.log(Level.SEVERE, "Fatal error during XML parsing.", //$NON-NLS-1$
-          e);
+    try {
+      this.m_logger.handleError(e, "Fatal error during XML parsing."); //$NON-NLS-1$
+    } catch (final IOException ioe) {
+      throw new SAXException(ioe);
     }
-    throw e;
   }
 
   /**
@@ -172,8 +168,9 @@ final class _EDIContentHandler extends DelegatingHandler {
         _EDIConstants.NAMESPACE, _EDIConstants.A_NAME);
     d.setName(s);
 
-    if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
-      this.m_logger.fine("Begin of dimension '" + s + '\''); //$NON-NLS-1$
+    if (this.m_logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      this.m_logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Begin of dimension '" + s + '\'')); //$NON-NLS-1$
     }
 
     s = DelegatingHandler.getAttributeNormalized(atts,
@@ -335,8 +332,9 @@ final class _EDIContentHandler extends DelegatingHandler {
         _EDIConstants.NAMESPACE, _EDIConstants.A_NAME);
     d.setName(s);
 
-    if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
-      this.m_logger.fine("Begin of experiment '" + s + '\''); //$NON-NLS-1$
+    if (this.m_logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      this.m_logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Begin of experiment '" + s + '\'')); //$NON-NLS-1$
     }
 
     s = DelegatingHandler.getAttributeNormalized(atts,
@@ -416,8 +414,9 @@ final class _EDIContentHandler extends DelegatingHandler {
         _EDIConstants.NAMESPACE, _EDIConstants.A_NAME);
     d.setName(s);
 
-    if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
-      this.m_logger.fine("Begin of instance '" + s + '\''); //$NON-NLS-1$
+    if (this.m_logger.canLog(IOJob.FINE_LOG_LEVEL)) {
+      this.m_logger.log(IOJob.FINE_LOG_LEVEL,
+          ("Begin of instance '" + s + '\'')); //$NON-NLS-1$
     }
 
     s = DelegatingHandler.getAttributeNormalized(atts,
@@ -564,10 +563,9 @@ final class _EDIContentHandler extends DelegatingHandler {
       final String localName, final String qName,
       final Attributes attributes) throws SAXException {
 
-    if ((this.m_logger != null)
-        && (this.m_logger.isLoggable(Level.FINEST))) {
-      this.m_logger.finest("Start of element <" + //$NON-NLS-1$
-          uri + ':' + localName + '>');
+    if ((this.m_logger.canLog(IOJob.FINER_LOG_LEVEL))) {
+      this.m_logger.log(IOJob.FINER_LOG_LEVEL, ("Start of element <" + //$NON-NLS-1$
+          uri + ':' + localName + '>'));
     }
 
     if ((uri == null) || _EDIConstants.NAMESPACE.equalsIgnoreCase(uri)) {
@@ -626,10 +624,9 @@ final class _EDIContentHandler extends DelegatingHandler {
   protected final void doEndElement(final String uri,
       final String localName, final String qName) throws SAXException {
 
-    if ((this.m_logger != null)
-        && (this.m_logger.isLoggable(Level.FINEST))) {
-      this.m_logger.finest("End of element </" + //$NON-NLS-1$
-          uri + ':' + localName + '>');
+    if ((this.m_logger.canLog(IOJob.FINER_LOG_LEVEL))) {
+      this.m_logger.log(IOJob.FINER_LOG_LEVEL, ("End of element </" + //$NON-NLS-1$
+          uri + ':' + localName + '>'));
     }
 
     if ((uri == null) || _EDIConstants.NAMESPACE.equalsIgnoreCase(uri)) {

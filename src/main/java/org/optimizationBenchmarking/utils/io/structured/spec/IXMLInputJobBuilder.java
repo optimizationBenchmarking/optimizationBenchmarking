@@ -144,4 +144,72 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
    */
   public abstract IXMLInputJobBuilder<D> addInputSource(
       final InputSource source);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPStream(
+      final InputStream stream, final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPStream(
+      final InputStream stream);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPResource(
+      final Class<?> clazz, final String name,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPResource(
+      final Class<?> clazz, final String name);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPResource(
+      final String clazz, final String name,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPResource(
+      final String clazz, final String name);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPURI(final URI uri,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPURI(final URI uri);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPURL(final URL url,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPURL(final URL url);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPURI(final String uri,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPURI(final String uri);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPURL(final String url,
+      final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> addZIPURL(final String url);
 }

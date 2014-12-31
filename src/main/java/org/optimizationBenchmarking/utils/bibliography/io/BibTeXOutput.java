@@ -21,7 +21,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
-import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJobLog;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.TextOutputTool;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -125,7 +125,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /** {@inheritDoc} */
   @Override
-  protected final void text(final IOJobLog log, final Object data,
+  protected final void text(final IOJob job, final Object data,
       final ITextOutput textOut) {
     final ITextOutput enc;
     final char[] buf;

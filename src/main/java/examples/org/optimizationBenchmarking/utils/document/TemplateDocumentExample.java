@@ -109,9 +109,11 @@ public class TemplateDocumentExample extends DocumentExample {
     try (final IDocumentBody body = this.m_doc.body()) {
 
       try {
-        DocumentXMLInput.getInstance().loadResource(
-            new DocumentXMLHandler(body, properties),
-            TemplateDocumentExample.class, "template.xml"); //$NON-NLS-1$
+        DocumentXMLInput
+            .getInstance()
+            .use()
+            .setDestination(new DocumentXMLHandler(body, properties))
+            .addResource(TemplateDocumentExample.class, "template.xml").create().call(); //$NON-NLS-1$
       } catch (final IOException ioe) {
         ErrorUtils.throwAsRuntimeException(ioe);
       }

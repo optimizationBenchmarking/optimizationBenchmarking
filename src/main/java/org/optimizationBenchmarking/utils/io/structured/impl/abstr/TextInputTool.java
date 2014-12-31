@@ -33,28 +33,28 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
 
   /** {@inheritDoc} */
   @Override
-  void _handle(final IOJobLog log, final S data, final _Location location)
+  void _handle(final IOJob job, final S data, final _Location location)
       throws Throwable {
 
     if (location.m_location1 instanceof Reader) {
-      if (log.canLog()) {
-        log.log("Beginning input from Reader."); //$NON-NLS-1$
+      if (job.canLog()) {
+        job.log("Beginning input from Reader."); //$NON-NLS-1$
       }
-      this.__reader(log, data, ((Reader) (location.m_location1)));
-      if (log.canLog()) {
-        log.log("Finished input from Reader."); //$NON-NLS-1$
+      this.__reader(job, data, ((Reader) (location.m_location1)));
+      if (job.canLog()) {
+        job.log("Finished input from Reader."); //$NON-NLS-1$
       }
       return;
     }
 
-    super._handle(log, data, location);
+    super._handle(job, data, location);
   }
 
   /**
    * Handle a reader
    * 
-   * @param log
-   *          the log where logging info can be written
+   * @param job
+   *          the job where logging info can be written
    * @param data
    *          the data to be read
    * @param reader
@@ -62,20 +62,20 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
    * @throws Throwable
    *           if it must
    */
-  private final void __reader(final IOJobLog log, final S data,
+  private final void __reader(final IOJob job, final S data,
       final Reader reader) throws Throwable {
     if (reader instanceof BufferedReader) {
-      this.reader(log, data, ((BufferedReader) reader));
+      this.reader(job, data, ((BufferedReader) reader));
     } else {
       try (final BufferedReader buffered = new BufferedReader(reader)) {
-        this.reader(log, data, buffered);
+        this.reader(job, data, buffered);
       }
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void stream(final IOJobLog log, final S data,
+  protected void stream(final IOJob job, final S data,
       final InputStream stream, final StreamEncoding<?, ?> encoding)
       throws Throwable {
     final Class<?> clazz;
@@ -84,17 +84,17 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
         && (encoding != StreamEncoding.BINARY)
         && ((clazz = encoding.getInputClass()) != null)
         && (Reader.class.isAssignableFrom(clazz))) {
-      if (log.canLog(IOTool.FINE_LOG_LEVEL)) {
-        log.log(IOTool.FINE_LOG_LEVEL,
+      if (job.canLog(IOJob.FINE_LOG_LEVEL)) {
+        job.log(IOJob.FINE_LOG_LEVEL,
             "Using text encoding " + encoding.name()); //$NON-NLS-1$
       }
       try (final Reader reader = ((Reader) (encoding
           .wrapInputStream(stream)))) {
-        this.__reader(log, data, reader);
+        this.__reader(job, data, reader);
       }
     } else {
       try (final InputStreamReader reader = new InputStreamReader(stream)) {
-        this.__reader(log, data, reader);
+        this.__reader(job, data, reader);
       }
     }
   }
@@ -102,8 +102,8 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
   /**
    * Handle a reader
    * 
-   * @param log
-   *          the log where logging info can be written
+   * @param job
+   *          the job where logging info can be written
    * @param data
    *          the data to be read
    * @param reader
@@ -111,7 +111,7 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
    * @throws Throwable
    *           if it must
    */
-  protected void reader(final IOJobLog log, final S data,
+  protected void reader(final IOJob job, final S data,
       final BufferedReader reader) throws Throwable {
     //
   }

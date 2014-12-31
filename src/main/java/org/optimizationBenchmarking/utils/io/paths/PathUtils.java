@@ -20,8 +20,10 @@ import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
@@ -523,8 +525,8 @@ public final class PathUtils {
   }
 
   /**
-   * Unzip zip archive represented by an {@link java.io.InputStream} to a
-   * folder. This method does not close the input stream.
+   * Unzip a ZIP archive represented by an {@link java.io.InputStream} to a
+   * folder. This method does not necessarily close the input stream.
    * 
    * @param input
    *          the input stream
@@ -572,6 +574,30 @@ public final class PathUtils {
           zis.closeEntry();
         }
       }
+    }
+  }
+
+  /**
+   * ZIP a file or folder into a ZIP archive represented by an
+   * {@link java.io.OutputStream}. This method does not necessarily close
+   * the output stream.
+   * 
+   * @param output
+   *          the output stream
+   * @param source
+   *          the source file or folder
+   * @throws IOException
+   *           if I/O fails
+   */
+  public static final void zipToStream(final Path source,
+      final OutputStream output) throws IOException {
+    final Path res;
+
+    res = PathUtils.normalize(source);
+    try (final ZipOutputStream zipStream = new ZipOutputStream(output)) {
+      zipStream.setMethod(ZipOutputStream.DEFLATED);
+      zipStream.setLevel(Deflater.BEST_COMPRESSION);
+      Files.walkFileTree(res, new __Zipper(res, zipStream));
     }
   }
 
@@ -1590,7 +1616,73 @@ public final class PathUtils {
     public final File run() {
       return PathUtils._canonicalize(this.m_file);
     }
-
   }
 
+  /**
+   * A visitor for the storing paths into a ZIP archive.
+   */
+  private static final class __Zipper extends SimpleFileVisitor<Path> {
+
+    /** the root path */
+    private final Path m_root;
+
+    /** the output stream */
+    private final ZipOutputStream m_zipStream;
+
+    /**
+     * create the zipper
+     * 
+     * @param root
+     *          the root path
+     * @param zipStream
+     *          the stream
+     */
+    __Zipper(final Path root, final ZipOutputStream zipStream) {
+      super();
+      this.m_root = root;
+      this.m_zipStream = zipStream;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult preVisitDirectory(final Path dir,
+        final BasicFileAttributes attrs) {
+      return FileVisitResult.CONTINUE;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult visitFile(final Path file,
+        final BasicFileAttributes attrs) throws IOException {
+      String name;
+
+      if (file.equals(this.m_root)) {
+        name = PathUtils.getName(file);
+      } else {
+        name = this.m_root.relativize(file).toString();
+      }
+
+      this.m_zipStream.putNextEntry(new ZipEntry(name));
+      try {
+        Files.copy(file, this.m_zipStream);
+      } finally {
+        this.m_zipStream.closeEntry();
+      }
+      return FileVisitResult.CONTINUE;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult visitFileFailed(final Path file,
+        final IOException exc) throws IOException {
+      throw exc;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final FileVisitResult postVisitDirectory(final Path dir,
+        final IOException exc) throws IOException {
+      return FileVisitResult.CONTINUE;
+    }
+  }
 }

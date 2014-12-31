@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.optimizationBenchmarking.experimentation.evaluation.data.DimensionSet;
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.evaluation.io.bbob.BBOBInput;
+import org.optimizationBenchmarking.experimentation.io.bbob.BBOBInput;
 
 /** A class for creating in parallel sets */
 public class ExperimentSetCreatorRandomBBOBParallel extends

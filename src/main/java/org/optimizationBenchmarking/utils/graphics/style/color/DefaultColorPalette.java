@@ -77,8 +77,12 @@ public final class DefaultColorPalette extends ColorPalette {
 
       pal = null;
       try (final __DefaultColorPaletteBuilder cspb = new __DefaultColorPaletteBuilder()) {
-        PaletteInputDriver.INSTANCE.loadResource(cspb,
-            DefaultColorPalette.class, "defaultColor.colorPalette"); //$NON-NLS-1$
+        PaletteInputDriver
+            .getInstance()
+            .use()
+            .setDestination(cspb)
+            .addResource(DefaultColorPalette.class,
+                "defaultColor.colorPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         ErrorUtils.throwAsRuntimeException(t);

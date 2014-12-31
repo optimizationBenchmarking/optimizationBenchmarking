@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.optimizationBenchmarking.experimentation.evaluation.data.DimensionSet;
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.evaluation.io.tspSuite.TSPSuiteInput;
+import org.optimizationBenchmarking.experimentation.io.tspSuite.TSPSuiteInput;
 
 /** A class for creating in parallel sets */
 public class ExperimentSetCreatorRandomTSPSuiteParallel extends

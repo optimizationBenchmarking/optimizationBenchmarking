@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.evaluation.io.edi;
+package org.optimizationBenchmarking.experimentation.io.edi;
 
 import java.net.URI;
 

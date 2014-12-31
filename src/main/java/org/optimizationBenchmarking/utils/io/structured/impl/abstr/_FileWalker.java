@@ -19,7 +19,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
   /** the context */
   private final L m_data;
   /** the logger */
-  private final IOJobLog m_log;
+  private final IOJob m_log;
   /** the default encoding */
   private final StreamEncoding<?, ?> m_encoding;
   /** are files zipped? */
@@ -41,7 +41,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
    * @param tool
    *          the tool
    */
-  _FileWalker(final IOJobLog log, final L data,
+  _FileWalker(final IOJob log, final L data,
       final StreamEncoding<?, ?> encoding, final boolean zipped,
       final FileInputTool<L> tool) {
     super();
@@ -69,15 +69,15 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
     }
 
     if (enter) {
-      if (this.m_log.canLog(IOTool.FINE_LOG_LEVEL)) {
-        this.m_log.log(IOTool.FINE_LOG_LEVEL, ("Now entering directory '" + //$NON-NLS-1$
+      if (this.m_log.canLog(IOJob.FINE_LOG_LEVEL)) {
+        this.m_log.log(IOJob.FINE_LOG_LEVEL, ("Now entering directory '" + //$NON-NLS-1$
             dir + '\'') + '.');
       }
       return FileVisitResult.CONTINUE;
     }
 
-    if (this.m_log.canLog(IOTool.FINE_LOG_LEVEL)) {
-      this.m_log.log(IOTool.FINE_LOG_LEVEL, ("Skipping directory '" + //$NON-NLS-1$
+    if (this.m_log.canLog(IOJob.FINE_LOG_LEVEL)) {
+      this.m_log.log(IOJob.FINE_LOG_LEVEL, ("Skipping directory '" + //$NON-NLS-1$
           dir + '\'') + '.');
     }
 
@@ -105,8 +105,8 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
     }
 
     if (load) {
-      if (this.m_log.canLog(IOTool.FINER_LOG_LEVEL)) {
-        this.m_log.log(IOTool.FINER_LOG_LEVEL, "Begin loading file '" + //$NON-NLS-1$
+      if (this.m_log.canLog(IOJob.FINER_LOG_LEVEL)) {
+        this.m_log.log(IOJob.FINER_LOG_LEVEL, "Begin loading file '" + //$NON-NLS-1$
             file + '\'' + '.');
       }
 
@@ -119,13 +119,13 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
             '\'') + '.'));
       }
 
-      if (this.m_log.canLog(IOTool.FINER_LOG_LEVEL)) {
-        this.m_log.log(IOTool.FINER_LOG_LEVEL, "Finished loading file '" + //$NON-NLS-1$
+      if (this.m_log.canLog(IOJob.FINER_LOG_LEVEL)) {
+        this.m_log.log(IOJob.FINER_LOG_LEVEL, "Finished loading file '" + //$NON-NLS-1$
             file + '\'' + '.');
       }
     } else {
-      if (this.m_log.canLog(IOTool.FINER_LOG_LEVEL)) {
-        this.m_log.log(IOTool.FINER_LOG_LEVEL, "Skipping file '" + //$NON-NLS-1$
+      if (this.m_log.canLog(IOJob.FINER_LOG_LEVEL)) {
+        this.m_log.log(IOJob.FINER_LOG_LEVEL, "Skipping file '" + //$NON-NLS-1$
             file + '\'' + '.');
       }
     }
@@ -156,8 +156,8 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
           + dir) + '\'') + '.'));
     }
 
-    if (this.m_log.canLog(IOTool.FINE_LOG_LEVEL)) {
-      this.m_log.log(IOTool.FINE_LOG_LEVEL, ("Now leaving directory '" + //$NON-NLS-1$
+    if (this.m_log.canLog(IOJob.FINE_LOG_LEVEL)) {
+      this.m_log.log(IOJob.FINE_LOG_LEVEL, ("Now leaving directory '" + //$NON-NLS-1$
           dir + '\'') + '.');
     }
 

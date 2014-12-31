@@ -225,6 +225,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
   synchronized final void _configure(final String[] args)
       throws IOException {
     final Path f;
+    ConfigurationPropertiesInput input;
 
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
         ConfigurationBuilder.FLAG_HAS_BEEN_CONFIGURED,
@@ -235,7 +236,10 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
     f = this.m_data._get(Configuration.PARAM_PROPERTY_FILE,
         PathParser.INSTANCE, null, false);
     if (f != null) {
-      ConfigurationPropertiesInput.getInstance().loadPath(this, f);
+      input = ConfigurationPropertiesInput.getInstance();
+      if (input.canUse()) {
+        input.use().addPath(f).setDestination(this).create().call();
+      }
     }
   }
 

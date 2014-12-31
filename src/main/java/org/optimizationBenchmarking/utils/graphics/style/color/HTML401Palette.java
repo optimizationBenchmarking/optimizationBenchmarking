@@ -83,8 +83,11 @@ public final class HTML401Palette extends ColorPalette {
 
       pal = null;
       try (final __DefaultHTML401PaletteBuilder cspb = new __DefaultHTML401PaletteBuilder()) {
-        PaletteInputDriver.INSTANCE.loadResource(cspb,
-            HTML401Palette.class, "html401.colorPalette"); //$NON-NLS-1$
+        PaletteInputDriver
+            .getInstance()
+            .use()
+            .setDestination(cspb)
+            .addResource(HTML401Palette.class, "html401.colorPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         ErrorUtils.throwAsRuntimeException(t);

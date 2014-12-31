@@ -41,15 +41,21 @@ public class FontPaletteExample {
     final FontPalette[] list = new FontPalette[4];
 
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-      PaletteInputDriver.INSTANCE.loadResource(tb,
-          FontPaletteExample.class, "examples.fontPalette"); //$NON-NLS-1$
+      PaletteInputDriver
+          .getInstance()
+          .use()
+          .setDestination(tb)
+          .addResource(FontPaletteExample.class, "examples.fontPalette").create().call(); //$NON-NLS-1$
       list[0] = tb.getResult();
     } catch (final Throwable tt) {
       tt.printStackTrace();
     }
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-      PaletteInputDriver.INSTANCE.loadResource(tb, XHTML10Driver.class,
-          "xhtml10.fontPalette"); //$NON-NLS-1$
+      PaletteInputDriver
+          .getInstance()
+          .use()
+          .setDestination(tb)
+          .addResource(XHTML10Driver.class, "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
       list[1] = tb.getResult();
     } catch (final Throwable tt) {
       tt.printStackTrace();

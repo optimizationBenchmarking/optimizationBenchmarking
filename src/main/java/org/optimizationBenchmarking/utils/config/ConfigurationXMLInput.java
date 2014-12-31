@@ -1,19 +1,18 @@
 package org.optimizationBenchmarking.utils.config;
 
-import java.util.logging.Logger;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.io.structured.XMLInputDriver;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 import org.xml.sax.helpers.DefaultHandler;
 
 /** the configuration xml input */
 public final class ConfigurationXMLInput extends
-    XMLInputDriver<ConfigurationBuilder> {
+    XMLInputTool<ConfigurationBuilder> {
 
   /** create */
   ConfigurationXMLInput() {
@@ -68,9 +67,9 @@ public final class ConfigurationXMLInput extends
 
   /** {@inheritDoc} */
   @Override
-  protected DefaultHandler wrapLoadContext(
-      final ConfigurationBuilder loaderContext, final Logger logger) {
-    return new ConfigurationXMLHandler(null, loaderContext);
+  protected DefaultHandler wrapDestination(
+      final ConfigurationBuilder dataDestination, final IOJob job) {
+    return new ConfigurationXMLHandler(null, dataDestination);
   }
 
   /** the loader */

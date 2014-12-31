@@ -208,8 +208,11 @@ public class LaTeXDocumentClass extends PageDimension {
 
       p = null;
       try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-        PaletteInputDriver.INSTANCE.loadResource(tb,
-            LaTeXDocumentClass.class, "latex.fontPalette"); //$NON-NLS-1$
+        PaletteInputDriver
+            .getInstance()
+            .use()
+            .setDestination(tb)
+            .addResource(LaTeXDocumentClass.class, "latex.fontPalette").create().call(); //$NON-NLS-1$
         p = tb.getResult();
       } catch (final Throwable tt) {
         ErrorUtils.throwAsRuntimeException(tt);

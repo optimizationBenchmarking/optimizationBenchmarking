@@ -27,53 +27,53 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
 
   /** {@inheritDoc} */
   @Override
-  void _handle(final IOJobLog log, final S data, final _Location location)
+  void _handle(final IOJob job, final S data, final _Location location)
       throws Throwable {
 
     if (location.m_location1 instanceof ITextOutput) {
-      if (log.canLog()) {
-        log.log("Beginning output to ITextOutput."); //$NON-NLS-1$
+      if (job.canLog()) {
+        job.log("Beginning output to ITextOutput."); //$NON-NLS-1$
       }
-      this.text(log, data, ((ITextOutput) (location.m_location1)));
-      if (log.canLog()) {
-        log.log("Finished output to ITextOutput."); //$NON-NLS-1$
+      this.text(job, data, ((ITextOutput) (location.m_location1)));
+      if (job.canLog()) {
+        job.log("Finished output to ITextOutput."); //$NON-NLS-1$
       }
       return;
     }
 
     if (location.m_location1 instanceof Writer) {
-      if (log.canLog()) {
-        log.log("Beginning output to Writer."); //$NON-NLS-1$
+      if (job.canLog()) {
+        job.log("Beginning output to Writer."); //$NON-NLS-1$
       }
-      this.__writer(log, data, ((Writer) (location.m_location1)));
-      if (log.canLog()) {
-        log.log("Finished output to Writer."); //$NON-NLS-1$
+      this.__writer(job, data, ((Writer) (location.m_location1)));
+      if (job.canLog()) {
+        job.log("Finished output to Writer."); //$NON-NLS-1$
       }
       return;
     }
 
-    super._handle(log, data, location);
+    super._handle(job, data, location);
   }
 
   /**
    * Store the data element to a writer
    * 
-   * @param log
-   *          the log where logging info can be written
+   * @param job
+   *          the job where logging info can be written
    * @param data
    *          the data to be written
    * @param writer
    *          the writer to write to
    * @throws Throwable
    */
-  private void __writer(final IOJobLog log, final S data,
-      final Writer writer) throws Throwable {
+  private void __writer(final IOJob job, final S data, final Writer writer)
+      throws Throwable {
 
     if (writer instanceof BufferedWriter) {
-      this.text(log, data, AbstractTextOutput.wrap(writer));
+      this.text(job, data, AbstractTextOutput.wrap(writer));
     } else {
       try (final BufferedWriter buffered = new BufferedWriter(writer)) {
-        this.text(log, data, AbstractTextOutput.wrap(buffered));
+        this.text(job, data, AbstractTextOutput.wrap(buffered));
       }
     }
   }
@@ -81,22 +81,22 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
   /**
    * Store the data element to a text output device
    * 
-   * @param log
-   *          the log where logging info can be written
+   * @param job
+   *          the job where logging info can be written
    * @param data
    *          the data to be written
    * @param textOut
    *          the ITextOutput to write to
    * @throws Throwable
    */
-  protected void text(final IOJobLog log, final S data,
+  protected void text(final IOJob job, final S data,
       final ITextOutput textOut) throws Throwable {
     //
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void stream(final IOJobLog log, final S data,
+  protected void stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding)
       throws Throwable {
     Class<?> clazz;
@@ -106,21 +106,21 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
         && (encoding != StreamEncoding.BINARY)
         && ((clazz = encoding.getOutputClass()) != null)
         && (Writer.class.isAssignableFrom(clazz))) {
-      if (log.canLog(IOTool.FINE_LOG_LEVEL)) {
-        log.log(IOTool.FINE_LOG_LEVEL,
+      if (job.canLog(IOJob.FINE_LOG_LEVEL)) {
+        job.log(IOJob.FINE_LOG_LEVEL,
             "Using text encoding " + encoding.name()); //$NON-NLS-1$
       }
       try (final Writer writer = ((Writer) (encoding
           .wrapOutputStream(stream)))) {
-        this.__writer(log, data, writer);
+        this.__writer(job, data, writer);
       }
     } else {
       if (stream instanceof Appendable) {
-        this.text(log, data, AbstractTextOutput.wrap((Appendable) stream));
+        this.text(job, data, AbstractTextOutput.wrap((Appendable) stream));
       } else {
         try (final OutputStreamWriter writer = new OutputStreamWriter(
             stream)) {
-          this.__writer(log, data, writer);
+          this.__writer(job, data, writer);
         }
       }
     }

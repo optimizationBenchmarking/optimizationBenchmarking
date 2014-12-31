@@ -73,6 +73,16 @@ public interface ITextOutputJobBuilder<D> extends
   public abstract ITextOutputJobBuilder<D> setStream(
       final OutputStream stream);
 
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextOutputJobBuilder<D> setZIPStream(
+      final OutputStream stream, final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextOutputJobBuilder<D> setZIPStream(
+      final OutputStream stream);
+
   /**
    * Set the writer. The Writer may or may not be closed when the output is
    * finished.

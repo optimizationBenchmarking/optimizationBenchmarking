@@ -104,7 +104,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    *          Is the input a compressed ZIP archive?
    * @return this builder
    */
-  public abstract IFileInputJobBuilder<D> addResource(
+  public abstract IStreamInputJobBuilder<D> addResource(
       final Class<?> clazz, final String name,
       final StreamEncoding<?, ?> encoding, final boolean isZipCompressed);
 
@@ -118,7 +118,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    *          the name of the resource
    * @return this builder
    */
-  public abstract IFileInputJobBuilder<D> addResource(
+  public abstract IStreamInputJobBuilder<D> addResource(
       final Class<?> clazz, final String name);
 
   /**
@@ -135,9 +135,9 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    *          Is the input a compressed ZIP archive?
    * @return this builder
    */
-  public abstract IFileInputJobBuilder<D> addResource(final String clazz,
-      final String name, final StreamEncoding<?, ?> encoding,
-      final boolean isZipCompressed);
+  public abstract IStreamInputJobBuilder<D> addResource(
+      final String clazz, final String name,
+      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed);
 
   /**
    * Add an input resource, using the default encoding and expecting no ZIP
@@ -149,8 +149,8 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    *          the name of the resource
    * @return this builder
    */
-  public abstract IFileInputJobBuilder<D> addResource(final String clazz,
-      final String name);
+  public abstract IStreamInputJobBuilder<D> addResource(
+      final String clazz, final String name);
 
   /**
    * Add a URI to read from.
@@ -251,4 +251,203 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    * @return this builder
    */
   public abstract IStreamInputJobBuilder<D> addURL(final String url);
+
+  /**
+   * Equivalent to {@link #addStream(InputStream, StreamEncoding, boolean)
+   * addStream(stream, encoding, true)}.
+   * 
+   * @param stream
+   *          the stream to read the input from
+   * @param encoding
+   *          a stream encoding to use ({@code null} if not specified or
+   *          not necessary)
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPStream(
+      final InputStream stream, final StreamEncoding<?, ?> encoding);
+
+  /**
+   * Equivalent to {@link #addStream(InputStream, StreamEncoding, boolean)
+   * addStream(stream, null, true)}.
+   * 
+   * @param stream
+   *          the stream to read the input from
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPStream(
+      final InputStream stream);
+
+  /**
+   * Equivalent to
+   * {@link #addResource(Class, String, StreamEncoding, boolean)
+   * addResource(clazz, name, encoding, true)}.
+   * 
+   * @param clazz
+   *          the class from which the resource should be loaded
+   * @param name
+   *          the name of the resource
+   * @param encoding
+   *          a stream encoding to use ({@code null} if not specified or
+   *          not necessary)
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPResource(
+      final Class<?> clazz, final String name,
+      final StreamEncoding<?, ?> encoding);
+
+  /**
+   * Equivalent to
+   * {@link #addResource(Class, String, StreamEncoding, boolean)
+   * addResource(clazz, name, null, true)}.
+   * 
+   * @param clazz
+   *          the class from which the resource should be loaded
+   * @param name
+   *          the name of the resource
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPResource(
+      final Class<?> clazz, final String name);
+
+  /**
+   * Equivalent to
+   * {@link #addResource(String, String, StreamEncoding, boolean)
+   * addResource(clazz, name, encoding, true)}.
+   * 
+   * @param clazz
+   *          the class from which the resource should be loaded
+   * @param name
+   *          the name of the resource
+   * @param encoding
+   *          a stream encoding to use ({@code null} if not specified or
+   *          not necessary)
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPResource(
+      final String clazz, final String name,
+      final StreamEncoding<?, ?> encoding);
+
+  /**
+   * Equivalent to
+   * {@link #addResource(String, String, StreamEncoding, boolean)
+   * addResource(clazz, name, null, true)}.
+   * 
+   * @param clazz
+   *          the class from which the resource should be loaded
+   * @param name
+   *          the name of the resource
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPResource(
+      final String clazz, final String name);
+
+  /**
+   * Equivalent to {@link #addURI(URI, StreamEncoding, boolean) addURI(uri,
+   * encoding, true)}.
+   * 
+   * @param uri
+   *          the URI to read the input from
+   * @param encoding
+   *          a stream encoding to use ({@code null} if not specified or
+   *          not necessary)
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPURI(final URI uri,
+      final StreamEncoding<?, ?> encoding);
+
+  /**
+   * Equivalent to {@link #addURI(URI, StreamEncoding, boolean) addURI(uri,
+   * null, true)}.
+   * 
+   * @param uri
+   *          the URI to read the input from
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPURI(final URI uri);
+
+  /**
+   * Equivalent to {@link #addURL(URL, StreamEncoding, boolean) addURL(url,
+   * encoding, true)}.
+   * 
+   * @param url
+   *          the URL to read the input from
+   * @param encoding
+   *          a stream encoding to use ({@code null} if not specified or
+   *          not necessary)
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPURL(final URL url,
+      final StreamEncoding<?, ?> encoding);
+
+  /**
+   * Equivalent to {@link #addURL(URL, StreamEncoding, boolean) addURL(url,
+   * null, true)}.
+   * 
+   * @param url
+   *          the URL to read the input from
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPURL(final URL url);
+
+  /**
+   * Equivalent to {@link #addURI(String, StreamEncoding, boolean)
+   * addURI(uri, encoding, true)}.
+   * 
+   * @param uri
+   *          the URI to read the input from
+   * @param encoding
+   *          a stream encoding to use ({@code null} if not specified or
+   *          not necessary)
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPURI(final String uri,
+      final StreamEncoding<?, ?> encoding);
+
+  /**
+   * Equivalent to {@link #addURI(String, StreamEncoding, boolean)
+   * addURI(uri, null, true)}.
+   * 
+   * @param uri
+   *          the URI to read the input from
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPURI(final String uri);
+
+  /**
+   * Equivalent to {@link #addURL(URL, StreamEncoding, boolean) addURL(url,
+   * encoding, true)}.
+   * 
+   * @param url
+   *          the URL to read the input from
+   * @param encoding
+   *          a stream encoding to use ({@code null} if not specified or
+   *          not necessary)
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPURL(final String url,
+      final StreamEncoding<?, ?> encoding);
+
+  /**
+   * Equivalent to {@link #addURL(URL, StreamEncoding, boolean) addURL(url,
+   * null, true)}.
+   * 
+   * @param url
+   *          the URL to read the input from
+   * @return this builder
+   */
+  @Override
+  public abstract IStreamInputJobBuilder<D> addZIPURL(final String url);
 }

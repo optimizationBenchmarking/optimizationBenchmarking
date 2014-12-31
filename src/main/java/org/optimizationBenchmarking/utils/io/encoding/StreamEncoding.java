@@ -404,6 +404,112 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   }
 
   /**
+   * Open a reader on top of a given stream, taking the given encoding as
+   * encoding suggestion
+   * 
+   * @param stream
+   *          the input stream
+   * @param encoding
+   *          the encoding suggestion
+   * @return the reader
+   * @throws IOException
+   *           if i/o fails
+   */
+  public static final Reader openReader(final InputStream stream,
+      final StreamEncoding<?, ?> encoding) throws IOException {
+    final Class<?> clazz;
+
+    if ((encoding != null) && (encoding != StreamEncoding.BINARY)
+        && (encoding != StreamEncoding.TEXT)
+        && (encoding != StreamEncoding.UNKNOWN)
+        && ((clazz = encoding.getInputClass()) != null)
+        && (Reader.class.isAssignableFrom(clazz))) {
+      return ((Reader) (encoding.wrapInputStream(stream)));
+    }
+    return new InputStreamReader(stream);
+  }
+
+  /**
+   * Wrap an input stream into another input stream, if the given encoding
+   * suggests doing so
+   * 
+   * @param stream
+   *          the input stream
+   * @param encoding
+   *          the encoding suggestion
+   * @return the input stream
+   * @throws IOException
+   *           if i/o fails
+   */
+  public static final InputStream openInputStream(
+      final InputStream stream, final StreamEncoding<?, ?> encoding)
+      throws IOException {
+    final Class<?> clazz;
+
+    if ((encoding != null) && (encoding != StreamEncoding.BINARY)
+        && (encoding != StreamEncoding.TEXT)
+        && (encoding != StreamEncoding.UNKNOWN)
+        && ((clazz = encoding.getInputClass()) != null)
+        && (InputStream.class.isAssignableFrom(clazz))) {
+      return ((InputStream) (encoding.wrapInputStream(stream)));
+    }
+    return stream;
+  }
+
+  /**
+   * Open a writer on top of a given stream, taking the given encoding as
+   * encoding suggestion
+   * 
+   * @param stream
+   *          the output stream
+   * @param encoding
+   *          the encoding suggestion
+   * @return the writer
+   * @throws IOException
+   *           if i/o fails
+   */
+  public static final Writer openWriter(final OutputStream stream,
+      final StreamEncoding<?, ?> encoding) throws IOException {
+    final Class<?> clazz;
+
+    if ((encoding != null) && (encoding != StreamEncoding.BINARY)
+        && (encoding != StreamEncoding.TEXT)
+        && (encoding != StreamEncoding.UNKNOWN)
+        && ((clazz = encoding.getOutputClass()) != null)
+        && (Writer.class.isAssignableFrom(clazz))) {
+      return ((Writer) (encoding.wrapOutputStream(stream)));
+    }
+    return new OutputStreamWriter(stream);
+  }
+
+  /**
+   * Wrap an output stream into another output stream, if the given
+   * encoding suggests doing so
+   * 
+   * @param stream
+   *          the output stream
+   * @param encoding
+   *          the encoding suggestion
+   * @return the output stream
+   * @throws IOException
+   *           if i/o fails
+   */
+  public static final OutputStream openOutputStream(
+      final OutputStream stream, final StreamEncoding<?, ?> encoding)
+      throws IOException {
+    final Class<?> clazz;
+
+    if ((encoding != null) && (encoding != StreamEncoding.BINARY)
+        && (encoding != StreamEncoding.TEXT)
+        && (encoding != StreamEncoding.UNKNOWN)
+        && ((clazz = encoding.getOutputClass()) != null)
+        && (OutputStream.class.isAssignableFrom(clazz))) {
+      return ((OutputStream) (encoding.wrapOutputStream(stream)));
+    }
+    return stream;
+  }
+
+  /**
    * Obtain a text encoding identified by a given string
    * 
    * @param s

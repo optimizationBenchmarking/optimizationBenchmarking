@@ -1,15 +1,14 @@
 package org.optimizationBenchmarking.utils.config;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.io.structured.TextInputDriver;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.TextInputTool;
 
 /** the configuration properties input */
 public final class ConfigurationPropertiesInput extends
-    TextInputDriver<ConfigurationBuilder> {
+    TextInputTool<ConfigurationBuilder> {
 
   /** create */
   ConfigurationPropertiesInput() {
@@ -27,14 +26,14 @@ public final class ConfigurationPropertiesInput extends
 
   /** {@inheritDoc} */
   @Override
-  protected final void doLoadReader(
-      final ConfigurationBuilder loadContext, final BufferedReader reader,
-      final Logger logger) throws IOException {
+  protected final void reader(final IOJob job,
+      final ConfigurationBuilder data, final BufferedReader reader)
+      throws Throwable {
     Properties pr;
 
     pr = new Properties();
     pr.load(reader);
-    loadContext.putProperties(pr);
+    data.putProperties(pr);
   }
 
   /** the loader */

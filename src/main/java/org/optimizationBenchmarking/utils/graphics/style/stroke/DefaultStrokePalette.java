@@ -81,8 +81,12 @@ public final class DefaultStrokePalette extends StrokePalette {
       Palette<StrokeStyle> pal;
       pal = null;
       try (final __DefaultStrokePaletteBuilder cspb = new __DefaultStrokePaletteBuilder()) {
-        PaletteInputDriver.INSTANCE.loadResource(cspb,
-            DefaultStrokePalette.class, "default.strokePalette"); //$NON-NLS-1$
+        PaletteInputDriver
+            .getInstance()
+            .use()
+            .setDestination(cspb)
+            .addResource(DefaultStrokePalette.class,
+                "default.strokePalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         ErrorUtils.throwAsRuntimeException(t);

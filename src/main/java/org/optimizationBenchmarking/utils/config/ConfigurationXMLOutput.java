@@ -1,15 +1,15 @@
 package org.optimizationBenchmarking.utils.config;
 
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.io.structured.XMLOutputDriver;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLOutputTool;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
 import org.optimizationBenchmarking.utils.io.xml.XMLElement;
 
 /** the configuration xml output */
 public final class ConfigurationXMLOutput extends
-    XMLOutputDriver<Configuration> {
+    XMLOutputTool<Configuration> {
 
   /** create */
   ConfigurationXMLOutput() {
@@ -27,9 +27,9 @@ public final class ConfigurationXMLOutput extends
 
   /** {@inheritDoc} */
   @Override
-  protected void doStoreXML(final Configuration data, final XMLBase dest,
-      final Logger logger) {
-    try (XMLElement root = dest.element()) {
+  protected void xml(final IOJob job, final Configuration data,
+      final XMLBase xmlBase) throws Throwable {
+    try (XMLElement root = xmlBase.element()) {
       root.namespaceSetPrefix(_ConfigXMLConstants.NAMESPACE_URI, "cfg"); //$NON-NLS-1$
       root.name(_ConfigXMLConstants.NAMESPACE_URI,
           _ConfigXMLConstants.ELEMENT_CONFIGURATION_ROOT);

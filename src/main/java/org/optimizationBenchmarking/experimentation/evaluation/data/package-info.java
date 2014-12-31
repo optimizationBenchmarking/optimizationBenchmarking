@@ -8,9 +8,9 @@
  * {@link org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM
  * hierarchical API}, which allow us to construct and populate complex data
  * objects in a simple way. In particular, the API can nicely be plugged
- * into {@link org.optimizationBenchmarking.experimentation.evaluation.io
- * I/O classes} . It also tries to create data structures which are as
- * compact as possible, by detecting redundant features.</li>
+ * into {@link org.optimizationBenchmarking.experimentation.io I/O classes}
+ * . It also tries to create data structures which are as compact as
+ * possible, by detecting redundant features.</li>
  * <li>On-the-fly compiling: Necessary data structures are compiled on the
  * fly, based on the provided descriptions. This allows for precise loading
  * (e.g., using {@code long}s where {@code longs} are needed,

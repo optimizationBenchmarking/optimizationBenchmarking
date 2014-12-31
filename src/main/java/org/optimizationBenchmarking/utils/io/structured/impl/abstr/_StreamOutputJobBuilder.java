@@ -28,19 +28,10 @@ class _StreamOutputJobBuilder<DT, JBT extends _StreamOutputJobBuilder<DT, JBT>>
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("unchecked")
   @Override
   public final JBT setStream(final OutputStream stream,
       final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
-    if (stream == null) {
-      throw new IllegalArgumentException(
-          "Destination OutputStream cannot be null."); //$NON-NLS-1$
-    }
-    this.m_dest._setLocation(stream, null);
-    this.m_dest.m_encoding = ((encoding != null) ? encoding
-        : StreamEncoding.UNKNOWN);
-    this.m_dest.m_zipped = zipCompress;
-    return ((JBT) this);
+    return super.setStream(stream, encoding, zipCompress);
   }
 
   /** {@inheritDoc} */

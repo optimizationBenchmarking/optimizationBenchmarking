@@ -892,8 +892,11 @@ public final class XHTML10Driver extends DocumentDriver {
 
       p = null;
       try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-        PaletteInputDriver.INSTANCE.loadResource(tb, XHTML10Driver.class,
-            "xhtml10.fontPalette"); //$NON-NLS-1$
+        PaletteInputDriver
+            .getInstance()
+            .use()
+            .setDestination(tb)
+            .addResource(XHTML10Driver.class, "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
         p = tb.getResult();
       } catch (final Throwable tt) {
         ErrorUtils.throwAsRuntimeException(tt);

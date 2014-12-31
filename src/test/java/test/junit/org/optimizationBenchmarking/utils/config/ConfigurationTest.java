@@ -15,8 +15,6 @@ import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
-import org.optimizationBenchmarking.utils.config.ConfigurationPropertiesInput;
-import org.optimizationBenchmarking.utils.config.ConfigurationPropertiesOutput;
 import org.optimizationBenchmarking.utils.config.ConfigurationXMLInput;
 import org.optimizationBenchmarking.utils.config.ConfigurationXMLOutput;
 import org.optimizationBenchmarking.utils.parsers.BooleanParser;
@@ -177,7 +175,17 @@ public class ConfigurationTest extends TestBase {
     final Configuration inst, b;
     final Random r;
     final StringMapCI<String> data;
+    final ConfigurationXMLInput input;
+    final ConfigurationXMLOutput output;
     String x, y;
+
+    input = ConfigurationXMLInput.getInstance();
+    Assert.assertNotNull(input);
+    Assert.assertTrue(input.canUse());
+
+    output = ConfigurationXMLOutput.getInstance();
+    Assert.assertNotNull(output);
+    Assert.assertTrue(output.canUse());
 
     r = new Random();
 
@@ -198,13 +206,13 @@ public class ConfigurationTest extends TestBase {
 
     try {
       try (StringWriter sw = new StringWriter()) {
-        ConfigurationXMLOutput.getInstance().storeWriter(inst, sw);
+        output.use().setWriter(sw).setSource(inst).create().call();
         x = sw.toString();
       }
 
       try (final ConfigurationBuilder fb = new ConfigurationBuilder()) {
         try (StringReader sr = new StringReader(x)) {
-          ConfigurationXMLInput.getInstance().loadReader(fb, sr);
+          input.use().addReader(sr).setDestination(fb).create().call();
         }
         b = fb.getResult();
       }
@@ -225,7 +233,17 @@ public class ConfigurationTest extends TestBase {
     final Configuration inst, b;
     final Random r;
     final StringMapCI<String> data;
+    final ConfigurationXMLInput input;
+    final ConfigurationXMLOutput output;
     String x, y;
+
+    input = ConfigurationXMLInput.getInstance();
+    Assert.assertNotNull(input);
+    Assert.assertTrue(input.canUse());
+
+    output = ConfigurationXMLOutput.getInstance();
+    Assert.assertNotNull(output);
+    Assert.assertTrue(output.canUse());
 
     r = new Random();
 
@@ -246,13 +264,13 @@ public class ConfigurationTest extends TestBase {
 
     try {
       try (StringWriter sw = new StringWriter()) {
-        ConfigurationPropertiesOutput.getInstance().storeWriter(inst, sw);
+        output.use().setWriter(sw).setSource(inst).create().call();
         x = sw.toString();
       }
 
       try (final ConfigurationBuilder fb = new ConfigurationBuilder()) {
         try (StringReader sr = new StringReader(x)) {
-          ConfigurationPropertiesInput.getInstance().loadReader(fb, sr);
+          input.use().addReader(sr).setDestination(fb).create().call();
         }
         b = fb.getResult();
       }

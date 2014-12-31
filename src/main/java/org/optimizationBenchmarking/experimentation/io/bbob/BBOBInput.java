@@ -1,27 +1,32 @@
-package org.optimizationBenchmarking.experimentation.evaluation.io.bbob;
+package org.optimizationBenchmarking.experimentation.io.bbob;
 
-import java.io.IOException;
 import java.nio.file.Path;
-import java.util.logging.Logger;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import org.optimizationBenchmarking.experimentation.evaluation.data.DimensionContext;
 import org.optimizationBenchmarking.experimentation.evaluation.data.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.evaluation.data.EDimensionType;
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.evaluation.data.InstanceContext;
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
-import org.optimizationBenchmarking.utils.io.structured.FileInputDriver;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.FileInputTool;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedIntParser;
 
 /**
+ * <p>
  * A class for loading <a
  * href="http://coco.gforge.inria.fr/doku.php">COCO/BBOB</a> data sets into
  * the {@link org.optimizationBenchmarking.experimentation.evaluation.data
  * experiment data structures}.
+ * </p>
+ * <p>
+ * TODO: The _BBOBHander class should be removed and this input tool should
+ * only rely on the methods of the file input tool.
+ * </p>
  */
-public class BBOBInput extends FileInputDriver<ExperimentSetContext> {
+public class BBOBInput extends FileInputTool<ExperimentSetContext> {
 
   /** the dimensions */
   private static final String FEATURE_DIMENSION = "dim"; //$NON-NLS-1$
@@ -1015,31 +1020,25 @@ public class BBOBInput extends FileInputDriver<ExperimentSetContext> {
 
   /** {@inheritDoc} */
   @Override
-  protected void doLoadPath(final ExperimentSetContext loadContext,
-      final Path path, final Logger logger,
-      final StreamEncoding<?, ?> defaultEncoding) throws IOException {
-    Throwable error;
+  protected void before(final IOJob job, final ExperimentSetContext data)
+      throws Throwable {
+    super.before(job, data);
 
-    error = null;
+    BBOBInput.makeBBOBDimensionSet(data);
 
-    try {
-      BBOBInput.makeBBOBDimensionSet(loadContext);
-    } catch (final Throwable a) {
-      error = ErrorUtils.aggregateError(error, a);
-    }
-    try {
-      BBOBInput.makeBBOBInstanceSet(loadContext);
-    } catch (final Throwable b) {
-      error = ErrorUtils.aggregateError(error, b);
-    }
-    try {
-      new _BBOBHandler(logger, loadContext)._handle(path);
-    } catch (final Throwable c) {
-      error = ErrorUtils.aggregateError(error, c);
-    }
+    BBOBInput.makeBBOBInstanceSet(data);
+  }
 
-    if (error != null) {
-      ErrorUtils.throwAsIOException(error);
+  /** {@inheritDoc} */
+  @Override
+  protected void path(final IOJob job, final ExperimentSetContext data,
+      final Path path, final BasicFileAttributes attributes,
+      final StreamEncoding<?, ?> encoding, final boolean zipped)
+      throws Throwable {
+    if (zipped) {
+      super.path(job, data, path, attributes, encoding, zipped);
+    } else {
+      new _BBOBHandler(job, data)._handle(path);
     }
   }
 

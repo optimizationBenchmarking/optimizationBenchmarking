@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.bibliography.io;
 
-import java.util.logging.Logger;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.validation.Schema;
@@ -9,14 +7,15 @@ import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
-import org.optimizationBenchmarking.utils.io.structured.XMLInputDriver;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * A driver for reading bibliography xml
  */
 public final class BibliographyXMLInput extends
-    XMLInputDriver<BibliographyBuilder> {
+    XMLInputTool<BibliographyBuilder> {
 
   /** create */
   BibliographyXMLInput() {
@@ -72,8 +71,8 @@ public final class BibliographyXMLInput extends
 
   /** {@inheritDoc} */
   @Override
-  protected DefaultHandler wrapLoadContext(
-      final BibliographyBuilder loaderContext, final Logger logger) {
+  protected DefaultHandler wrapDestination(
+      final BibliographyBuilder loaderContext, final IOJob logger) {
     return new BibliographyXMLHandler(null, loaderContext);
   }
 

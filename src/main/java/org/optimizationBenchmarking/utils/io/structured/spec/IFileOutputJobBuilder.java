@@ -1,13 +1,15 @@
 package org.optimizationBenchmarking.utils.io.structured.spec;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 
 /**
- * A file output job builder.
+ * A file output job builder is a device that may store data into a single
+ * file or into multiple files in a folder structure..
  * 
  * @param <D>
  *          the data type which can be stored
@@ -131,4 +133,29 @@ public interface IFileOutputJobBuilder<D> extends IIOJobBuilder {
    */
   public abstract IFileOutputJobBuilder<D> setFile(final String file);
 
+  /**
+   * Set the stream to which should receive a ZIP archive with all the
+   * output. The stream may or may not be closed upon termination.
+   * 
+   * @param stream
+   *          the stream to write the output to
+   * @param encoding
+   *          a stream encoding to use ({@code null} if not specified or
+   *          not necessary)
+   * @return this builder
+   */
+  public abstract IFileOutputJobBuilder<D> setZIPStream(
+      final OutputStream stream, final StreamEncoding<?, ?> encoding);
+
+  /**
+   * Set the stream to write all the output as ZIP archive to, using the
+   * default encoding and ZIP compression. The stream may or may not be
+   * closed upon termination.
+   * 
+   * @param stream
+   *          the stream to write the output to
+   * @return this builder
+   */
+  public abstract IFileOutputJobBuilder<D> setZIPStream(
+      final OutputStream stream);
 }

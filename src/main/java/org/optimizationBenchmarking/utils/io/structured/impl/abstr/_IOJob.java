@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * The base class for I/O jobs
  */
-abstract class _IOJob extends IOJobLog implements IIOJob {
+abstract class _IOJob extends IOJob implements IIOJob {
 
   /** the data */
   final Object m_data;
@@ -56,7 +56,13 @@ abstract class _IOJob extends IOJobLog implements IIOJob {
       if (this.canLog()) {
         this.log("Begin of I/O"); //$NON-NLS-1$
       }
+
+      this.m_token = this.m_tool.createToken(this, this.m_data);
+      this.m_tool.before(this, this.m_data);
       this._doCall();
+      this.m_tool.after(this, this.m_data);
+      this.m_token = null;
+
       if (this.canLog()) {
         this.log("End of I/O"); //$NON-NLS-1$
       }

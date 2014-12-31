@@ -75,6 +75,16 @@ public interface IXMLOutputJobBuilder<D> extends ITextOutputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
+  public abstract IXMLOutputJobBuilder<D> setZIPStream(
+      final OutputStream stream, final StreamEncoding<?, ?> encoding);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLOutputJobBuilder<D> setZIPStream(
+      final OutputStream stream);
+
+  /** {@inheritDoc} */
+  @Override
   public abstract IXMLOutputJobBuilder<D> setWriter(final Writer writer);
 
   /** {@inheritDoc} */

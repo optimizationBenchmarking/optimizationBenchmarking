@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
@@ -160,5 +161,45 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
       throw new IllegalArgumentException(//
           "Destination for output must be set."); //$NON-NLS-1$
     }
+  }
+
+  /**
+   * Set the stream to write to. The stream may or may not be closed upon
+   * termination.
+   * 
+   * @param stream
+   *          the stream to write the output to
+   * @param encoding
+   *          a stream encoding to use ({@code null} if not specified or
+   *          not necessary)
+   * @param zipCompress
+   *          Should the output be compressed into a single ZIP archive?
+   * @return this builder
+   */
+  @SuppressWarnings("unchecked")
+  JBT setStream(final OutputStream stream,
+      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+    if (stream == null) {
+      throw new IllegalArgumentException(
+          "Destination OutputStream cannot be null."); //$NON-NLS-1$
+    }
+    this.m_dest._setLocation(stream, null);
+    this.m_dest.m_encoding = ((encoding != null) ? encoding
+        : StreamEncoding.UNKNOWN);
+    this.m_dest.m_zipped = zipCompress;
+    return ((JBT) this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final JBT setZIPStream(final OutputStream stream,
+      final StreamEncoding<?, ?> encoding) {
+    return this.setStream(stream, encoding, true);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final JBT setZIPStream(final OutputStream stream) {
+    return this.setStream(stream, null, true);
   }
 }
