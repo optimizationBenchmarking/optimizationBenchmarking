@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
  * @param <D>
  *          the data element which will be filled
  */
-public interface IFileInputJobBuilder<D> extends IIOJobBuilder {
+public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
@@ -23,16 +23,6 @@ public interface IFileInputJobBuilder<D> extends IIOJobBuilder {
 
   /** {@inheritDoc} */
   @Override
-  public abstract IIOJob create();
-
-  /**
-   * Set the destination data object, i.e., the object to be filled with
-   * the loaded data
-   * 
-   * @param destination
-   *          the destination data object
-   * @return this builder
-   */
   public abstract IFileInputJobBuilder<D> setDestination(
       final D destination);
 

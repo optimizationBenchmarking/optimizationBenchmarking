@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
  * @param <D>
  *          the data type which can be stored
  */
-public interface IFileOutputJobBuilder<D> extends IIOJobBuilder {
+public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
@@ -22,15 +22,6 @@ public interface IFileOutputJobBuilder<D> extends IIOJobBuilder {
 
   /** {@inheritDoc} */
   @Override
-  public abstract IIOJob create();
-
-  /**
-   * Set the source data object, i.e., the object to be stored
-   * 
-   * @param source
-   *          the source data object
-   * @return this builder
-   */
   public abstract IFileOutputJobBuilder<D> setSource(final D source);
 
   /**

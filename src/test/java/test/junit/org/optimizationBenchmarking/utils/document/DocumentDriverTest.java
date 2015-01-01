@@ -118,7 +118,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     int i;
 
     r = new Random();
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 2; i++) {
       this.__doRandomTest(null, r);
     }
     this.__doTemplateTest(null);
@@ -149,7 +149,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     p = new ForkJoinPool(proc,
         ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, fifo);
 
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 2; i++) {
       this.__doRandomTest(p, r);
     }
     this.__doTemplateTest(p);

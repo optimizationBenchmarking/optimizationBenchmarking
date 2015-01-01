@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 
 import org.optimizationBenchmarking.utils.io.structured.spec.IIOJob;
 import org.optimizationBenchmarking.utils.io.structured.spec.IIOJobBuilder;
-import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.ConfigurableToolJobBuilder;
 
 /**
  * The base class for building IO jobs
@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  *          the job builder type
  */
 abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
-    ToolJobBuilder<IIOJob, JBT> implements IIOJobBuilder {
+    ConfigurableToolJobBuilder<IIOJob, JBT> implements IIOJobBuilder {
 
   /** the tool */
   final IOTool<?> m_tool;
