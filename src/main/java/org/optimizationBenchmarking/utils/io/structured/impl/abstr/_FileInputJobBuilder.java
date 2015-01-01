@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.spec.IFileInputJobBuilder;
 
@@ -36,6 +37,46 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
   _FileInputJobBuilder(final FileInputTool<DT> tool) {
     super(tool);
     this.m_sources = new ArrayList<>();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected String getParameterPrefix() {
+    return IOTool.INPUT_PARAM_PREFIX;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void configure(final Configuration config) {
+    super.configure(config);
+
+    for (final String source : config.getStringList(
+        IOTool.PARAM_INPUT_SOURCES, null)) {
+      if (source != null) {
+        this._location(source);
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _setPath(final String path,
+      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+    this.addPath(path, encoding, zipCompress);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _setURI(final String uri,
+      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+    this.addURI(uri, encoding, zipCompress);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _setURL(final String url,
+      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+    this.addURL(url, encoding, zipCompress);
   }
 
   /**

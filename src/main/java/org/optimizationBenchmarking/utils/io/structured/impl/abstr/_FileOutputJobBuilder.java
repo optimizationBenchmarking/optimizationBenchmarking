@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.OutputStream;
 import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.spec.IFileOutputJobBuilder;
 
@@ -33,6 +34,48 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
   _FileOutputJobBuilder(final FileOutputTool<DT> tool) {
     super(tool);
     this.m_dest = new _Location();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected String getParameterPrefix() {
+    return IOTool.OUTPUT_PARAM_PREFIX;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void configure(final Configuration config) {
+    String dest;
+
+    super.configure(config);
+
+    dest = config.getString(IOTool.PARAM_OUTPUT_DESTINATION, null);
+    if (dest != null) {
+      this._location(dest);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _setPath(final String path,
+      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+    this.setPath(path, encoding, zipCompress);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _setURI(final String uri,
+      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+    throw new UnsupportedOperationException(
+        "Output not possible to a URI."); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _setURL(final String url,
+      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+    throw new UnsupportedOperationException(
+        "Output not possible to a URL."); //$NON-NLS-1$
   }
 
   /**

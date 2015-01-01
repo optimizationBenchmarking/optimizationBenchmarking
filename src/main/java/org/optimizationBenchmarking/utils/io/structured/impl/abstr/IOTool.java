@@ -22,6 +22,44 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
  */
 public abstract class IOTool<D> extends Tool implements IIOTool {
 
+  /** the input prefix */
+  public static final String INPUT_PARAM_PREFIX = "input"; //$NON-NLS-1$
+
+  /** the input sources parameter */
+  public static final String PARAM_INPUT_SOURCES = "inputSources"; //$NON-NLS-1$
+
+  /** the output prefix */
+  public static final String OUTPUT_PARAM_PREFIX = "output"; //$NON-NLS-1$
+
+  /** the output destination parameter */
+  public static final String PARAM_OUTPUT_DESTINATION = "outputDest"; //$NON-NLS-1$
+
+  /**
+   * indicates a path element {@value} , which can be used in the
+   * {@link #PARAM_INPUT_SOURCES} or {@link #PARAM_OUTPUT_DESTINATION}
+   * parameters
+   */
+  public static final String PATH_ELEMENT = "path"; //$NON-NLS-1$
+
+  /**
+   * indicates a zipped path element {@value} , which can be used in the
+   * {@link #PARAM_INPUT_SOURCES} or {@link #PARAM_OUTPUT_DESTINATION}
+   * parameters
+   */
+  public static final String ZIPPED_PATH_ELEMENT = "zipPath"; //$NON-NLS-1$
+
+  /**
+   * indicates a zipped url element {@value} , which can be used in the
+   * {@link #PARAM_INPUT_SOURCES} parameter
+   */
+  public static final String ZIPPED_URL_ELEMENT = "zipURL"; //$NON-NLS-1$
+
+  /**
+   * indicates a zipped uri element {@value} , which can be used in the
+   * {@link #PARAM_INPUT_SOURCES} parameter
+   */
+  public static final String ZIPPED_URI_ELEMENT = "zipURI"; //$NON-NLS-1$
+
   /** the job counter */
   final AtomicLong m_jobCounter;
 
