@@ -7,6 +7,7 @@ import java.io.Writer;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A version of the text output wrapped around an
@@ -29,6 +30,11 @@ class _AppendableWrappedTextOutputBase<A extends Appendable> extends
    */
   _AppendableWrappedTextOutputBase(final A out) {
     super();
+    if (out == null) {
+      throw new IllegalArgumentException(//
+          "The Appendable instance to be wrapped into a " + //$NON-NLS-1$
+              TextUtils.className(this.getClass()) + " cannot be null.");//$NON-NLS-1$
+    }
     this.m_out = out;
   }
 

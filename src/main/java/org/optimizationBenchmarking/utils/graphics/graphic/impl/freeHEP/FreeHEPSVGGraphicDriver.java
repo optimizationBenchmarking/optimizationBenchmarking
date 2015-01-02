@@ -2,10 +2,12 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
@@ -121,6 +123,7 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   protected final Graphic createGraphic(final Logger logger,
       final IFileProducerListener listener, final Path basePath,
@@ -131,6 +134,7 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
     final Dimension dim;
     final ELength sizeUnit;
     final Path path;
+    OutputStream stream;
 
     up = new org.freehep.util.UserProperties();
     up.putAll(this.m_props);
@@ -148,9 +152,14 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
     }
 
     path = this.makePath(basePath, mainDocumentNameSuggestion);
+    try {
+      stream = PathUtils.openOutputStream(path);
+    } catch (final Throwable thro) {
+      ErrorUtils.throwAsRuntimeException(thro);
+      return null; // we'll never get here
+    }
     synchronized (org.freehep.graphicsio.svg.SVGGraphics2D.class) {
-      g = new org.freehep.graphicsio.svg.SVGGraphics2D(
-          PathUtils.openOutputStream(path), dim);
+      g = new org.freehep.graphicsio.svg.SVGGraphics2D(stream, dim);
       g.setProperties(up);
       g.setClip(0, 0, dim.width, dim.height);
       GraphicUtils.setDefaultRenderingHints(g);

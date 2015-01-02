@@ -192,13 +192,21 @@ public class RandomDocumentExample extends DocumentExample {
   /** the seed to use */
   private static final long SEED = new Random().nextLong();
 
-  /** the maximum code depth */
+  /** the maximum code depth: {@value} */
   private static final int CODE_MAX_DEPTH = 8;
   /** the spaces */
   private static final char[] SPACES = new char[RandomDocumentExample.CODE_MAX_DEPTH << 1];
   static {
     Arrays.fill(RandomDocumentExample.SPACES, ' ');
   }
+
+  /**
+   * The maximum number of times all {@code while}s together will be
+   * allowed to loop &ndash; {@value} &ndash; in order to prevent endless
+   * loops (which should not occur anyway) or very long running example
+   * documents.
+   */
+  private static final int MAX_ITERATIONS = 5000;
 
   /** the log */
   private final PrintStream m_log;
@@ -232,6 +240,9 @@ public class RandomDocumentExample extends DocumentExample {
 
   /** the allocated labels */
   private final ArrayList<ILabel>[] m_allocatedLabels;
+
+  /** the total number of function calls */
+  private int m_totalIterations;
 
   /**
    * run the example: there are problems with the pdf output
@@ -325,6 +336,7 @@ public class RandomDocumentExample extends DocumentExample {
    */
   private final void __done(final int index) {
     this.m_done[index] = true;
+
   }
 
   /**
@@ -393,6 +405,7 @@ public class RandomDocumentExample extends DocumentExample {
    *          the header
    */
   private final void __createHeader(final IDocumentHeader header) {
+
     RandomDocumentExample._createRandomHeader(header, this.m_doc
         .getClass().getSimpleName(), this.m_rand);
   }
@@ -613,7 +626,8 @@ public class RandomDocumentExample extends DocumentExample {
                 }
               }
             }
-          } while ((!(hasText || hasSection)) || this.m_rand.nextBoolean());
+          } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+              && ((!(hasText || hasSection)) || this.m_rand.nextBoolean()));
 
           if (ra != null) {
             looper: for (final Future<Void> f : ra) {
@@ -893,7 +907,8 @@ public class RandomDocumentExample extends DocumentExample {
         }
 
         first = false;
-      } while (this.m_rand.nextInt(depth + 2) <= 0);
+      } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+          && ((this.m_rand.nextInt(depth + 2) <= 0)));
     } catch (final Throwable a) {
       error = ErrorUtils.aggregateError(error, a);
     }
@@ -916,6 +931,7 @@ public class RandomDocumentExample extends DocumentExample {
     int ic;
 
     b = this.m_rand.nextBoolean();
+
     if (listDepth <= 0) {
       if (b) {
         this.__done(RandomDocumentExample.ENUM);
@@ -938,7 +954,8 @@ public class RandomDocumentExample extends DocumentExample {
             this.__createList(item, (listDepth + 1));
           }
         }
-      } while (((++ic) <= 2) || (this.m_rand.nextBoolean()));
+      } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+          && (((++ic) <= 2) || (this.m_rand.nextBoolean())));
 
     }
   }
@@ -951,11 +968,13 @@ public class RandomDocumentExample extends DocumentExample {
    */
   private final void __createBody(final IDocumentBody body) {
     this.m_maxSectionDepth = 0;
+
     Arrays.fill(this.m_done, false);
     do {
       this._createSection(body, 0);
-    } while ((!(this.__hasAll())) || this.__hasUnusedAllocateLabels()
-        || (this.m_maxSectionDepth < 3) || (this.m_rand.nextInt(3) > 0));
+    } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+        && ((!(this.__hasAll())) || this.__hasUnusedAllocateLabels()
+            || (this.m_maxSectionDepth < 3) || (this.m_rand.nextInt(3) > 0)));
   }
 
   /**
@@ -966,10 +985,12 @@ public class RandomDocumentExample extends DocumentExample {
    */
   private final void __createFooter(final IDocumentBody footer) {
     this.m_maxSectionDepth = 0;
+
     Arrays.fill(this.m_done, false);
     do {
       this._createSection(footer, 0);
-    } while (this.m_rand.nextBoolean());
+    } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+        && (this.m_rand.nextBoolean()));
   }
 
   /**
@@ -1006,6 +1027,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /** create the bibliography */
   private final void __createBib() {
+
     this.m_bib = new RandomBibliography(this.m_rand).createBibliography();
   }
 
@@ -1028,7 +1050,8 @@ public class RandomDocumentExample extends DocumentExample {
       synchronized (a) {
         a.add(l);
       }
-    } while (this.m_rand.nextInt(20) > 0);
+    } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+        && (this.m_rand.nextInt(20) > 0));
   }
 
   /**
@@ -1087,6 +1110,7 @@ public class RandomDocumentExample extends DocumentExample {
             }
           }
 
+          this.m_totalIterations = 0;
           this.m_maxSectionDepth = 0;
           this.m_labels.clear();
           for (final ArrayList<ILabel> l : this.m_allocatedLabels) {
@@ -1125,6 +1149,7 @@ public class RandomDocumentExample extends DocumentExample {
           } finally {
             try (final IDocumentBody body = this.m_doc.body()) {
               try {
+                this.m_totalIterations = 0;
                 this.__createBody(body);
               } catch (final Throwable tt) {
                 error = ErrorUtils.aggregateError(error, tt);
@@ -1133,6 +1158,7 @@ public class RandomDocumentExample extends DocumentExample {
             } finally {
               try (final IDocumentBody footer = this.m_doc.footer()) {
                 try {
+                  this.m_totalIterations = 0;
                   this.__createFooter(footer);
                 } catch (final Throwable tt) {
                   error = ErrorUtils.aggregateError(error, tt);
@@ -1318,10 +1344,10 @@ public class RandomDocumentExample extends DocumentExample {
               a = r.nextInt(vars);
               do {
                 b = r.nextInt(vars);
-              } while (a == b);
+              } while ((vars > 1) && (a == b));
               do {
                 c = r.nextInt(vars);
-              } while ((a == c) || (b == c));
+              } while ((vars > 2) && ((a == c) || (b == c)));
               body.append((char) ('a' + a));
               body.append(' ');
               body.append('=');
@@ -1384,13 +1410,13 @@ public class RandomDocumentExample extends DocumentExample {
               a = r.nextInt(vars);
               do {
                 b = r.nextInt(vars);
-              } while (a == b);
+              } while ((vars > 1) && (a == b));
               do {
                 c = r.nextInt(vars);
-              } while ((a == c) || (b == c));
+              } while ((vars > 2) && ((a == c) || (b == c)));
               do {
                 d = r.nextInt(vars);
-              } while ((a == d) || (b == d) || (c == d));
+              } while ((vars > 3) && ((a == d) || (b == d) || (c == d)));
 
               body.append((char) ('a' + a));
               body.append(' ');
@@ -1463,7 +1489,7 @@ public class RandomDocumentExample extends DocumentExample {
               a = r.nextInt(vars);
               do {
                 b = r.nextInt(vars);
-              } while (a == b);
+              } while ((vars > 1) && (a == b));
               body.append("if("); //$NON-NLS-1$
               body.append((char) ('a' + a));
               body.append(' ');
@@ -1483,10 +1509,10 @@ public class RandomDocumentExample extends DocumentExample {
               a = r.nextInt(vars);
               do {
                 b = r.nextInt(vars);
-              } while (a == b);
+              } while ((vars > 1) && (a == b));
               do {
                 c = r.nextInt(vars);
-              } while ((a == c) || (b == c));
+              } while ((vars > 2) && (((a == c) || (b == c))));
               body.append("for("); //$NON-NLS-1$
               body.append((char) ('a' + a));
               body.append(' ');
@@ -1568,6 +1594,7 @@ public class RandomDocumentExample extends DocumentExample {
     def = new ArrayList<>();
     pureDef = new ArrayList<>();
     min = (this.m_rand.nextInt(3) + 1);
+
     do {
       d = RandomDocumentExample.CELLS[this.m_rand
           .nextInt(RandomDocumentExample.CELLS.length)];
@@ -1575,7 +1602,8 @@ public class RandomDocumentExample extends DocumentExample {
       if (d != TableCellDef.VERTICAL_SEPARATOR) {
         pureDef.add(d);
       }
-    } while ((pureDef.size() < min) || this.m_rand.nextBoolean());
+    } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+        && ((pureDef.size() < min) || this.m_rand.nextBoolean()));
     pureDefs = pureDef.toArray(new TableCellDef[pureDef.size()]);
 
     try (final ITable tab = sb.table(this.__getLabel(ELabelType.TABLE),
@@ -1617,10 +1645,12 @@ public class RandomDocumentExample extends DocumentExample {
     TableCellDef d;
 
     neededRows = minRows;
+
     rows = 0;
     blocked = new int[cells.length];
-    while ((rows < maxRows)
-        && ((rows < neededRows) || (this.m_rand.nextInt(4) > 0))) {
+    while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+        && ((rows < maxRows) && ((rows < neededRows) || (this.m_rand
+            .nextInt(4) > 0)))) {
       try (final ITableRow row = sec.row()) {
         rows++;
         for (i = 0; i < cells.length; i++) {
@@ -1657,7 +1687,8 @@ public class RandomDocumentExample extends DocumentExample {
               do {
                 d = RandomDocumentExample.CELLS[this.m_rand
                     .nextInt(RandomDocumentExample.CELLS.length)];
-              } while (d == TableCellDef.VERTICAL_SEPARATOR);
+              } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+                  && ((d == TableCellDef.VERTICAL_SEPARATOR)));
               try (final IPlainText cell = row.cell((maxX - i),
                   (maxY - rows), d)) {
                 if (this.m_rand.nextBoolean()) {
@@ -1685,6 +1716,7 @@ public class RandomDocumentExample extends DocumentExample {
     final EFigureSize v;
 
     s = EFigureSize.values();
+
     this.__done(RandomDocumentExample.FIGURE);
     try (final IFigure fig = sb.figure(this.__getLabel(ELabelType.FIGURE),
         (v = s[this.m_rand.nextInt(s.length)]),
@@ -1706,6 +1738,7 @@ public class RandomDocumentExample extends DocumentExample {
     int i;
 
     s = EFigureSize.values();
+
     v = s[this.m_rand.nextInt(s.length)];
     c = v.getNX();
     this.__done(RandomDocumentExample.FIGURE_SERIES);
@@ -1774,7 +1807,8 @@ public class RandomDocumentExample extends DocumentExample {
         do {
           dirX += (this.m_rand.nextBoolean() ? (1) : (-1));
           dirY += (this.m_rand.nextBoolean() ? (1) : (-1));
-        } while ((dirX == 0) && (dirY == 0));
+        } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+            && ((dirX == 0) && (dirY == 0)));
 
         data[0][i] = data[0][i - 1];
 
@@ -1858,7 +1892,7 @@ public class RandomDocumentExample extends DocumentExample {
   private final void __randomGraphic(final Graphic g) {
     final Rectangle2D r;
     final ArrayList<AffineTransform> at;
-    int k, e, i;
+    int k, e, i, limit;
     Point2D a, b;
     double[][] d;
     MemoryTextOutput mo;
@@ -1872,6 +1906,7 @@ public class RandomDocumentExample extends DocumentExample {
 
     r = g.getBounds();
     k = 0;
+    limit = (RandomDocumentExample.MAX_ITERATIONS - (this.m_totalIterations++));
     do {
       switch (this.m_rand.nextInt(15)) {
         case 0: {
@@ -2008,7 +2043,7 @@ public class RandomDocumentExample extends DocumentExample {
           k++;
         }
       }
-    } while ((k < e) || (this.m_rand.nextInt(10) > 0));
+    } while (((limit--) > 0) && ((k < e) || (this.m_rand.nextInt(10) > 0)));
   }
 
   /**
@@ -2018,6 +2053,7 @@ public class RandomDocumentExample extends DocumentExample {
    *          the section body
    */
   private final void __createEquation(final ISectionBody sb) {
+
     try (final IEquation equ = sb.equation(this
         .__getLabel(ELabelType.EQUATION))) {
       this.__done(RandomDocumentExample.EQUATION);
@@ -2034,6 +2070,7 @@ public class RandomDocumentExample extends DocumentExample {
    */
   private final void __createInlineMath(final IComplexText sb) {
     try (final IMath equ = sb.inlineMath()) {
+
       this.__done(RandomDocumentExample.INLINE_MATH);
       this.__fillMath(equ, 1, 1, 4);
     }
@@ -2056,6 +2093,7 @@ public class RandomDocumentExample extends DocumentExample {
     int args;
 
     args = 0;
+
     do {
       switch (this.m_rand.nextInt((depth <= 0) ? 3 : 23)) {
 
@@ -2230,8 +2268,9 @@ public class RandomDocumentExample extends DocumentExample {
       }
 
       args++;
-    } while ((args < minArgs)
-        || ((args < maxArgs) && this.m_rand.nextBoolean()));
+    } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+        && ((args < minArgs) || ((args < maxArgs) && this.m_rand
+            .nextBoolean())));
 
   }
 }

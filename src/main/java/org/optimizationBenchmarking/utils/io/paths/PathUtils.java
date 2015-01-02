@@ -61,17 +61,21 @@ public final class PathUtils {
     final FileSystem fs;
     final FileSystemProvider fsp;
 
+    PathUtils.__pathNotNull(path);
+
     fs = path.getFileSystem();
     if (fs == null) {
       throw new IllegalArgumentException("Path '" + path + //$NON-NLS-1$
           "' has a null file system."); //$NON-NLS-1$
     }
+
     fsp = fs.provider();
     if (fsp == null) {
       throw new IllegalArgumentException("Path '" + path + //$NON-NLS-1$
           "' with file system '" + fs//$NON-NLS-1$
           + "' has a null file system provider.");//$NON-NLS-1$
     }
+
     return fsp;
   }
 
@@ -247,13 +251,18 @@ public final class PathUtils {
   }
 
   /**
-   * Open an output stream to a given path
+   * Open an output stream to a given path. This method never returns
+   * {@code null}.
    * 
    * @param path
    *          the path
    * @return the output stream
+   * @throws IOException
+   *           if I/O fails
    */
-  public static final OutputStream openOutputStream(final Path path) {
+  public static final OutputStream openOutputStream(final Path path)
+      throws IOException {
+    OutputStream stream;
     Throwable error;
     Path parent;
 
@@ -275,33 +284,55 @@ public final class PathUtils {
       }
     }
 
+    stream = null;
     try {
-      return PathUtils.getFileSystemProvider(path).newOutputStream(path,
+      stream = PathUtils.getFileSystemProvider(path).newOutputStream(path,
           StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,
           StandardOpenOption.WRITE);
     } catch (final Throwable t3) {
-      ErrorUtils.throwAsRuntimeException(t3, error);
+      stream = null;
+      ErrorUtils.throwAsIOException(t3, error);
     }
-    return null;// this will never be reached
+
+    if (stream == null) {
+      throw new IllegalStateException(//
+          "Provider did not throw an exception when creating OutputStream for path '"//$NON-NLS-1$ 
+              + path + "', but returned null."); //$NON-NLS-1$
+    }
+    return stream;
   }
 
   /**
-   * Open an input stream from a given path
+   * Open an input stream from a given path. This method never returns
+   * {@code null}.
    * 
    * @param path
    *          the path
    * @return the input stream
+   * @throws IOException
+   *           if I/o fails
    */
-  public static final InputStream openInputStream(final Path path) {
+  public static final InputStream openInputStream(final Path path)
+      throws IOException {
+    InputStream stream;
+
     PathUtils.__pathNotNull(path);
 
+    stream = null;
     try {
-      return PathUtils.getFileSystemProvider(path).newInputStream(path,
+      stream = PathUtils.getFileSystemProvider(path).newInputStream(path,
           StandardOpenOption.READ);
     } catch (final Throwable t3) {
-      ErrorUtils.throwAsRuntimeException(t3);
+      ErrorUtils.throwAsIOException(t3);
+      stream = null;
     }
-    return null;// this will never be reached
+
+    if (stream == null) {
+      throw new IllegalStateException(//
+          "Provider did not throw an exception when creating InputStream for path '"//$NON-NLS-1$ 
+              + path + "', but returned null."); //$NON-NLS-1$
+    }
+    return stream;
   }
 
   /**

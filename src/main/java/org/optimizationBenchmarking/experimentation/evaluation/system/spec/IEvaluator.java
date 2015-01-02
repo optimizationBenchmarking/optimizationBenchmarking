@@ -1,11 +1,11 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.spec;
 
-import org.optimizationBenchmarking.utils.tools.spec.ITool;
+import org.optimizationBenchmarking.utils.tools.spec.IConfigurableJobTool;
 
 /**
  * The evaluator is a tool.
  */
-public interface IEvaluator extends ITool {
+public interface IEvaluator extends IConfigurableJobTool {
 
   /**
    * Create a builder for a new evaluation process

@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import java.io.BufferedWriter;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -276,8 +277,25 @@ public class Document extends DocumentElement implements IDocument {
    */
   protected Document(final DocumentDriver driver, final Path docPath,
       final Logger logger, final IFileProducerListener listener) {
-    this(driver, new BufferedWriter(new OutputStreamWriter(
-        PathUtils.openOutputStream(docPath))), docPath, logger, listener);
+    this(driver, Document.__getOutput(docPath), docPath, logger, listener);
+  }
+
+  /**
+   * Get the output writer
+   * 
+   * @param docPath
+   *          the document path
+   * @return the writer
+   */
+  private static final BufferedWriter __getOutput(final Path docPath) {
+    final OutputStream stream;
+    try {
+      stream = PathUtils.openOutputStream(docPath);
+    } catch (final Throwable thro) {
+      ErrorUtils.throwAsRuntimeException(thro);
+      return null; // we'll never get here
+    }
+    return new BufferedWriter(new OutputStreamWriter(stream));
   }
 
   /**

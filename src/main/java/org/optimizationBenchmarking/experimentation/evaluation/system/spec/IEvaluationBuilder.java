@@ -5,13 +5,13 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
+import org.optimizationBenchmarking.utils.tools.spec.IConfigurableToolJobBuilder;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
-import org.optimizationBenchmarking.utils.tools.spec.IToolJobBuilder;
 
 /**
  * A builder for an evaluation job
  */
-public interface IEvaluationBuilder extends IToolJobBuilder {
+public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
 
   /** {@inheritDoc} */
   @Override

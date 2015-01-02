@@ -171,6 +171,11 @@ public class AbstractTextOutput implements ITextOutput, IStreamEncoded {
    * @return the text output
    */
   public static final AbstractTextOutput wrap(final Appendable in) {
+    if (in == null) {
+      throw new IllegalArgumentException(//
+          "Cannot wrap a null Appendable into an AbstractTextOutput."); //$NON-NLS-1$
+    }
+
     if (in instanceof AbstractTextOutput) {
       return ((AbstractTextOutput) (in));
     }

@@ -59,17 +59,21 @@ public final class ErrorUtils {
 
   /**
    * Throw an {@link java.io.IOException} error if an {@code unrecoverable}
-   * error took place. In this case, if there also was a
-   * {@code recoverable}
+   * error took place. If an {@link java.lang.RuntimeException} took place,
+   * do not throw it as {@link java.io.IOException}, but again directly as
+   * {@link java.lang.RuntimeException}. In this case, if there also was a
+   * {@code recoverable} error, throw that as suppressed error.
    * 
    * @param unrecoverable
    *          the error
    * @param recoverable
    *          the recoverable error
    * @throws RuntimeException
-   *           if there was an unrecoverable RuntimeException
+   *           if there was an unrecoverable
+   *           {@link java.lang.RuntimeException} or the input exception
+   *           was already a {@link java.lang.RuntimeException}
    * @throws IOException
-   *           if there was an io exception
+   *           if there was an {@link java.io.IOException}
    */
   public static final void throwAsIOException(
       final Throwable unrecoverable, final Throwable recoverable)
@@ -93,6 +97,9 @@ public final class ErrorUtils {
 
     if (a instanceof RuntimeException) {
       throw ((RuntimeException) a);
+    }
+    if (a instanceof IOException) {
+      throw ((IOException) a);
     }
     throw new IOException(//
         "An unrecoverable error was detected and is re-thrown as IOException.", //$NON-NLS-1$

@@ -2,10 +2,12 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
@@ -140,6 +142,7 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   protected final Graphic createGraphic(final Logger logger,
       final IFileProducerListener listener, final Path basePath,
@@ -150,6 +153,7 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
     final Dimension dim;
     final ELength sizeUnit;
     final Path path;
+    OutputStream stream;
 
     up = new org.freehep.util.UserProperties();
     up.putAll(this.m_props);
@@ -167,14 +171,18 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
     }
 
     path = this.makePath(basePath, mainDocumentNameSuggestion);
+    try {
+      stream = PathUtils.openOutputStream(path);
+    } catch (final Throwable thro) {
+      ErrorUtils.throwAsRuntimeException(thro);
+      return null; // we'll never get here
+    }
     synchronized (org.freehep.graphicsio.PageConstants.class) {
       FreeHEPPDFGraphicDriver.s_messWith.setSize(dim);
       try {
         synchronized (org.freehep.graphicsio.pdf.PDFGraphics2D.class) {
           org.freehep.graphicsio.pdf.PDFGraphics2D.setClipEnabled(true);
-
-          g = new org.freehep.graphicsio.pdf.PDFGraphics2D(
-              PathUtils.openOutputStream(path), dim);
+          g = new org.freehep.graphicsio.pdf.PDFGraphics2D(stream, dim);
           g.setProperties(up);
           g.setMultiPage(false);
           GraphicUtils.setDefaultRenderingHints(g);
