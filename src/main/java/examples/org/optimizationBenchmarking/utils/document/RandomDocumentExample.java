@@ -626,16 +626,19 @@ public class RandomDocumentExample extends DocumentExample {
                 }
               }
             }
-          } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
-              && ((!(hasText || hasSection)) || this.m_rand.nextBoolean()));
+          } while ((!(hasText || hasSection))
+              || (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS) && this.m_rand
+                  .nextBoolean()));
 
           if (ra != null) {
             looper: for (final Future<Void> f : ra) {
-              try {
-                f.get();
-              } catch (final Throwable tt) {
-                error = ErrorUtils.aggregateError(error, tt);
-                break looper;
+              if (f != null) {
+                try {
+                  f.get();
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break looper;
+                }
               }
             }
           }
@@ -972,9 +975,10 @@ public class RandomDocumentExample extends DocumentExample {
     Arrays.fill(this.m_done, false);
     do {
       this._createSection(body, 0);
-    } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
-        && ((!(this.__hasAll())) || this.__hasUnusedAllocateLabels()
-            || (this.m_maxSectionDepth < 3) || (this.m_rand.nextInt(3) > 0)));
+    } while (this.__hasUnusedAllocateLabels()
+        || (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS) && ((!(this
+            .__hasAll())) || (this.m_maxSectionDepth < 3) || (this.m_rand
+            .nextInt(3) > 0))));
   }
 
   /**
@@ -1602,8 +1606,9 @@ public class RandomDocumentExample extends DocumentExample {
       if (d != TableCellDef.VERTICAL_SEPARATOR) {
         pureDef.add(d);
       }
-    } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
-        && ((pureDef.size() < min) || this.m_rand.nextBoolean()));
+    } while ((pureDef.size() < min)
+        || (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS) && this.m_rand
+            .nextBoolean()));
     pureDefs = pureDef.toArray(new TableCellDef[pureDef.size()]);
 
     try (final ITable tab = sb.table(this.__getLabel(ELabelType.TABLE),
@@ -1648,9 +1653,8 @@ public class RandomDocumentExample extends DocumentExample {
 
     rows = 0;
     blocked = new int[cells.length];
-    while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
-        && ((rows < maxRows) && ((rows < neededRows) || (this.m_rand
-            .nextInt(4) > 0)))) {
+    while (((rows < maxRows) && ((rows < neededRows) || (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS) && (this.m_rand
+        .nextInt(4) > 0))))) {
       try (final ITableRow row = sec.row()) {
         rows++;
         for (i = 0; i < cells.length; i++) {
@@ -1687,8 +1691,7 @@ public class RandomDocumentExample extends DocumentExample {
               do {
                 d = RandomDocumentExample.CELLS[this.m_rand
                     .nextInt(RandomDocumentExample.CELLS.length)];
-              } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
-                  && ((d == TableCellDef.VERTICAL_SEPARATOR)));
+              } while (d == TableCellDef.VERTICAL_SEPARATOR);
               try (final IPlainText cell = row.cell((maxX - i),
                   (maxY - rows), d)) {
                 if (this.m_rand.nextBoolean()) {
@@ -1807,8 +1810,7 @@ public class RandomDocumentExample extends DocumentExample {
         do {
           dirX += (this.m_rand.nextBoolean() ? (1) : (-1));
           dirY += (this.m_rand.nextBoolean() ? (1) : (-1));
-        } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
-            && ((dirX == 0) && (dirY == 0)));
+        } while ((dirX == 0) && (dirY == 0));
 
         data[0][i] = data[0][i - 1];
 
@@ -2268,9 +2270,10 @@ public class RandomDocumentExample extends DocumentExample {
       }
 
       args++;
-    } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
-        && ((args < minArgs) || ((args < maxArgs) && this.m_rand
-            .nextBoolean())));
+    } while ((args < minArgs)
+        || (((args < maxArgs)
+            && ((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS) && this.m_rand
+              .nextBoolean())));
 
   }
 }
