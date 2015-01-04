@@ -129,50 +129,6 @@ public class RandomDocumentExample extends DocumentExample {
     DRIVERS = ArrayListView.collectionToView(list, false);
   }
 
-  /** the normal text */
-  private static final int NORMAL_TEXT = 0;
-  /** in braces */
-  private static final int IN_BRACES = (RandomDocumentExample.NORMAL_TEXT + 1);
-  /** in quotes */
-  private static final int IN_QUOTES = (RandomDocumentExample.IN_BRACES + 1);
-  /** with font */
-  private static final int WITH_FONT = (RandomDocumentExample.IN_QUOTES + 1);
-  /** with color */
-  private static final int WITH_COLOR = (RandomDocumentExample.WITH_FONT + 1);
-  /** section */
-  private static final int SECTION = (RandomDocumentExample.WITH_COLOR + 1);
-  /** enum */
-  private static final int ENUM = (RandomDocumentExample.SECTION + 1);
-  /** itemize */
-  private static final int ITEMIZE = (RandomDocumentExample.ENUM + 1);
-  /** figure */
-  private static final int FIGURE = (RandomDocumentExample.ITEMIZE + 1);
-  /** figure series */
-  private static final int FIGURE_SERIES = (RandomDocumentExample.FIGURE + 1);
-  /** table */
-  private static final int TABLE = (RandomDocumentExample.FIGURE_SERIES + 1);
-  /** equation */
-  private static final int EQUATION = (RandomDocumentExample.TABLE + 1);
-  /** inline math */
-  private static final int INLINE_MATH = (RandomDocumentExample.EQUATION + 1);
-  /** citation */
-  private static final int CITATION = (RandomDocumentExample.INLINE_MATH + 1);
-  /** code */
-  private static final int CODE = (RandomDocumentExample.CITATION + 1);
-  /** inline code */
-  private static final int INLINE_CODE = (RandomDocumentExample.CODE + 1);
-  /** emph */
-  private static final int EMPH = (RandomDocumentExample.INLINE_CODE + 1);
-  /** sub-script */
-  private static final int SUBSCRIPT = (RandomDocumentExample.EMPH + 1);
-  /** super-script */
-  private static final int SUPERSCRIPT = (RandomDocumentExample.SUBSCRIPT + 1);
-  /** ref */
-  private static final int REFERENCE = (RandomDocumentExample.SUPERSCRIPT + 1);
-
-  /** all elements */
-  private static final int ALL_LENGTH = (RandomDocumentExample.REFERENCE + 1);
-
   /** the table cell defs */
   private static final TableCellDef[] CELLS = { TableCellDef.CENTER,
       TableCellDef.RIGHT, TableCellDef.LEFT,
@@ -180,12 +136,10 @@ public class RandomDocumentExample extends DocumentExample {
 
   /** the comparison */
   private static final EComparison[] COMP = EComparison.values();
-
   /** the modes */
   private static final ECitationMode[] CITES = ECitationMode.values();
   /** the sequence modes */
   private static final ESequenceMode[] SEQUENCE = ESequenceMode.values();
-
   /** the label types */
   private static final ELabelType[] LABEL_TYPES = ELabelType.values();
 
@@ -200,13 +154,40 @@ public class RandomDocumentExample extends DocumentExample {
     Arrays.fill(RandomDocumentExample.SPACES, ' ');
   }
 
-  /**
-   * The maximum number of times all {@code while}s together will be
-   * allowed to loop &ndash; {@value} &ndash; in order to prevent endless
-   * loops (which should not occur anyway) or very long running example
-   * documents.
-   */
-  private static final int MAX_ITERATIONS = 5000;
+  /** the maximum allowed section depth */
+  private static final int MAX_ALLOWED_SECTION_DEPTH = 4;
+
+  /** the choices for complex text */
+  private static final _ERandomDocumentExampleElements[] COMPLEX_TEXT = {
+      _ERandomDocumentExampleElements.IN_BRACES,
+      _ERandomDocumentExampleElements.IN_QUOTES,
+      _ERandomDocumentExampleElements.WITH_FONT,
+      _ERandomDocumentExampleElements.WITH_COLOR,
+      _ERandomDocumentExampleElements.EMPH,
+      _ERandomDocumentExampleElements.INLINE_CODE,
+      _ERandomDocumentExampleElements.SUBSCRIPT,
+      _ERandomDocumentExampleElements.SUPERSCRIPT,
+      _ERandomDocumentExampleElements.INLINE_MATH,
+      _ERandomDocumentExampleElements.REFERENCE,
+      _ERandomDocumentExampleElements.CITATION, };
+  /** the choices for simple text */
+  private static final _ERandomDocumentExampleElements[] SIMPLE_TEXT = {
+      _ERandomDocumentExampleElements.IN_BRACES,
+      _ERandomDocumentExampleElements.IN_QUOTES, };
+  /** the choices for inside a section */
+  private static final _ERandomDocumentExampleElements[] SECTION_PLAIN = {
+      _ERandomDocumentExampleElements.SECTION,
+      _ERandomDocumentExampleElements.ENUM,
+      _ERandomDocumentExampleElements.ITEMIZE,
+      _ERandomDocumentExampleElements.FIGURE,
+      _ERandomDocumentExampleElements.FIGURE_SERIES,
+      _ERandomDocumentExampleElements.TABLE,
+      _ERandomDocumentExampleElements.EQUATION,
+      _ERandomDocumentExampleElements.CODE,
+      _ERandomDocumentExampleElements.NORMAL_TEXT, };
+
+  /** the maximum runtime: {@value} ms */
+  private static final long MAX_RUNTIME = 1400_000L;
 
   /** the log */
   private final PrintStream m_log;
@@ -223,12 +204,6 @@ public class RandomDocumentExample extends DocumentExample {
   /** the strokes */
   private StrokeStyle[] m_strokes;
 
-  /** the maximum achieved section depth */
-  private volatile int m_maxSectionDepth;
-
-  /** the elements which have been done */
-  private final boolean[] m_done;
-
   /** the labels */
   private final ArrayList<ILabel> m_labels;
 
@@ -241,11 +216,14 @@ public class RandomDocumentExample extends DocumentExample {
   /** the allocated labels */
   private final ArrayList<ILabel>[] m_allocatedLabels;
 
-  /** the total number of function calls */
-  private int m_totalIterations;
+  /** the start time */
+  private _RandomDocumentExampleTermination m_termination;
+
+  /** the maximum runtime */
+  private final long m_maxTime;
 
   /**
-   * run the example: there are problems with the pdf output
+   * run the example
    * 
    * @param args
    *          the arguments
@@ -329,17 +307,6 @@ public class RandomDocumentExample extends DocumentExample {
   }
 
   /**
-   * mark a thing as done
-   * 
-   * @param index
-   *          the index
-   */
-  private final void __done(final int index) {
-    this.m_done[index] = true;
-
-  }
-
-  /**
    * note a used label
    * 
    * @param e
@@ -378,18 +345,6 @@ public class RandomDocumentExample extends DocumentExample {
   }
 
   /**
-   * note the maximum section depth
-   * 
-   * @param i
-   *          the value
-   */
-  private synchronized final void __maxSecDepth(final int i) {
-    if (i > this.m_maxSectionDepth) {
-      this.m_maxSectionDepth = i;
-    }
-  }
-
-  /**
    * get the next figure
    * 
    * @return the next figure
@@ -405,7 +360,6 @@ public class RandomDocumentExample extends DocumentExample {
    *          the header
    */
   private final void __createHeader(final IDocumentHeader header) {
-
     RandomDocumentExample._createRandomHeader(header, this.m_doc
         .getClass().getSimpleName(), this.m_rand);
   }
@@ -458,20 +412,6 @@ public class RandomDocumentExample extends DocumentExample {
   }
 
   /**
-   * check if examples for any possible thing are included
-   * 
-   * @return the things
-   */
-  private final boolean __hasAll() {
-    for (final boolean b : this.m_done) {
-      if (!b) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /**
    * Create a section in a section container
    * 
    * @param sc
@@ -483,7 +423,7 @@ public class RandomDocumentExample extends DocumentExample {
       final int sectionDepth) {
     Throwable error;
     boolean hasSection, hasText, needsText, needsNewLine;
-    int cur, last;
+    _ERandomDocumentExampleElements cur, last;
     ArrayList<Future<Void>> ra;
     _SectionTask st;
 
@@ -493,15 +433,15 @@ public class RandomDocumentExample extends DocumentExample {
     needsNewLine = hasText = hasSection = false;
 
     error = null;
-    this.__done(RandomDocumentExample.SECTION);
-    try {
+    this.m_termination._done(_ERandomDocumentExampleElements.SECTION);
 
-      this.__maxSecDepth(sectionDepth + 1);
-      cur = last = (-1);
+    try {
+      this.m_termination._setMaxSectionDepth(sectionDepth + 1);
+      cur = last = null;
       ra = null;
 
-      try (final ISection section = sc.section(this
-          .__getLabel(ELabelType.SECTION))) {
+      try (final ISection section = sc.section(this.m_termination
+          ._getLabel(this.m_rand, ELabelType.SECTION))) {
         this.__useLabel(section);
 
         try (final IPlainText title = section.title()) {
@@ -513,23 +453,38 @@ public class RandomDocumentExample extends DocumentExample {
           main: do {
 
             if (hasSection) {
-              cur = 0;
+              cur = _ERandomDocumentExampleElements.SECTION;
             } else {
               if (needsText) {
-                cur = ((this.m_rand.nextInt(3) > 0) ? 8 : 0);
+                if (sectionDepth > RandomDocumentExample.MAX_ALLOWED_SECTION_DEPTH) {
+                  cur = _ERandomDocumentExampleElements.NORMAL_TEXT;
+                } else {
+                  cur = ((this.m_rand.nextInt(3) > 0)//
+                  ? _ERandomDocumentExampleElements.NORMAL_TEXT
+                      : _ERandomDocumentExampleElements.SECTION);
+                }
               } else {
-                do {
-                  cur = this.m_rand.nextInt(8);
-                } while ((cur == last)// never have two same
-                    || ((cur == 2) && (last == 3))
-                    || ((cur == 3) && (last == 2)));
+                cur = this.m_termination._suggest(this.m_rand,
+                    RandomDocumentExample.SECTION_PLAIN);
+                while ((cur == last)// never have two same
+                    || ((cur == _ERandomDocumentExampleElements.FIGURE) && //
+                    (last == _ERandomDocumentExampleElements.FIGURE_SERIES))//
+                    || ((cur == _ERandomDocumentExampleElements.FIGURE_SERIES) && //
+                    (last == _ERandomDocumentExampleElements.FIGURE))//
+                    || ((cur == _ERandomDocumentExampleElements.ENUM) && //
+                    (last == _ERandomDocumentExampleElements.ITEMIZE))//
+                    || ((cur == _ERandomDocumentExampleElements.ITEMIZE) && //
+                    (last == _ERandomDocumentExampleElements.ENUM))) {
+                  cur = RandomDocumentExample.SECTION_PLAIN[this.m_rand
+                      .nextInt(RandomDocumentExample.SECTION_PLAIN.length)];
+                }
               }
             }
             last = cur;
 
             switch (cur) {
-              case 0: {
-                if (sectionDepth > 4) {
+              case SECTION: {
+                if (sectionDepth > RandomDocumentExample.MAX_ALLOWED_SECTION_DEPTH) {
                   continue main;
                 }
                 hasSection = true;
@@ -549,13 +504,12 @@ public class RandomDocumentExample extends DocumentExample {
                     break main;
                   }
                 }
-                needsNewLine = true;
                 needsText = false;
                 break;
               }
-              case 1: {
+              case ENUM: {
                 try {
-                  this.__createList(body, 0);
+                  this.__createList(body, 0, cur);
                   needsNewLine = false;
                   needsText = true;
                   break;
@@ -564,7 +518,18 @@ public class RandomDocumentExample extends DocumentExample {
                   break main;
                 }
               }
-              case 2: {
+              case ITEMIZE: {
+                try {
+                  this.__createList(body, 0, cur);
+                  needsNewLine = false;
+                  needsText = true;
+                  break;
+                } catch (final Throwable tt) {
+                  error = ErrorUtils.aggregateError(error, tt);
+                  break main;
+                }
+              }
+              case FIGURE: {
                 try {
                   this.__createFigure(body);
                   needsText = needsNewLine = true;
@@ -574,7 +539,7 @@ public class RandomDocumentExample extends DocumentExample {
                   break main;
                 }
               }
-              case 3: {
+              case FIGURE_SERIES: {
                 try {
                   this.__createFigureSeries(body);
                   needsText = needsNewLine = true;
@@ -584,7 +549,7 @@ public class RandomDocumentExample extends DocumentExample {
                   break main;
                 }
               }
-              case 4: {
+              case TABLE: {
                 try {
                   this.__createTable(body);
                   needsText = needsNewLine = true;
@@ -594,7 +559,7 @@ public class RandomDocumentExample extends DocumentExample {
                   break main;
                 }
               }
-              case 5: {
+              case EQUATION: {
                 try {
                   this.__createEquation(body);
                   needsText = needsNewLine = false;
@@ -604,7 +569,7 @@ public class RandomDocumentExample extends DocumentExample {
                   break main;
                 }
               }
-              case 6: {
+              case CODE: {
                 try {
                   this.__createCode(body);
                   needsText = needsNewLine = true;
@@ -627,7 +592,7 @@ public class RandomDocumentExample extends DocumentExample {
               }
             }
           } while ((!(hasText || hasSection))
-              || (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS) && this.m_rand
+              || (this.m_termination._continue() && this.m_rand
                   .nextBoolean()));
 
           if (ra != null) {
@@ -676,7 +641,7 @@ public class RandomDocumentExample extends DocumentExample {
     labels = null;
     error = null;
 
-    this.__done(RandomDocumentExample.NORMAL_TEXT);
+    this.m_termination._done(_ERandomDocumentExampleElements.NORMAL_TEXT);
     try {
       main: do {
         spacer: {
@@ -698,11 +663,15 @@ public class RandomDocumentExample extends DocumentExample {
 
         if ((out instanceof IPlainText) && (depth < 10)) {
 
-          switch (this.m_rand.nextInt(//
-              (out instanceof IComplexText) ? 11 : 2)) {
-            case 0: {
+          switch (this.m_termination
+              ._suggest(
+                  this.m_rand,
+                  (out instanceof IComplexText) ? RandomDocumentExample.COMPLEX_TEXT
+                      : RandomDocumentExample.SIMPLE_TEXT)) {
+            case IN_BRACES: {
               out.append(' ');
-              this.__done(RandomDocumentExample.IN_BRACES);
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.IN_BRACES);
               try (final IPlainText t = ((IPlainText) out).inBraces()) {
                 try {
                   this.__text(t, (depth + 1), this.m_rand.nextBoolean());
@@ -713,9 +682,10 @@ public class RandomDocumentExample extends DocumentExample {
               }
               break;
             }
-            case 1: {
+            case IN_QUOTES: {
               out.append(' ');
-              this.__done(RandomDocumentExample.IN_QUOTES);
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.IN_QUOTES);
               try (final IPlainText t = ((IPlainText) out).inQuotes()) {
                 try {
                   this.__text(t, (depth + 1), this.m_rand.nextBoolean());
@@ -726,9 +696,10 @@ public class RandomDocumentExample extends DocumentExample {
               }
               break;
             }
-            case 2: {
+            case WITH_FONT: {
               out.append(' ');
-              this.__done(RandomDocumentExample.WITH_FONT);
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.WITH_FONT);
               try (final IPlainText t = ((IComplexText) out)
                   .style((s = this.m_fonts[this.m_rand
                       .nextInt(this.m_fonts.length)]))) {
@@ -744,9 +715,10 @@ public class RandomDocumentExample extends DocumentExample {
               }
               break;
             }
-            case 3: {
+            case WITH_COLOR: {
               out.append(' ');
-              this.__done(RandomDocumentExample.WITH_COLOR);
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.WITH_COLOR);
               try (final IPlainText t = ((IComplexText) out)
                   .style((s = this.m_colors[this.m_rand
                       .nextInt(this.m_colors.length)]))) {
@@ -762,9 +734,10 @@ public class RandomDocumentExample extends DocumentExample {
               }
               break;
             }
-            case 4: {
+            case EMPH: {
               out.append(' ');
-              this.__done(RandomDocumentExample.EMPH);
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.EMPH);
               try (final IPlainText t = ((IComplexText) out).emphasize()) {
                 try {
                   t.append("Something Emphasized: "); //$NON-NLS-1$
@@ -776,9 +749,10 @@ public class RandomDocumentExample extends DocumentExample {
               }
               break;
             }
-            case 5: {
+            case INLINE_CODE: {
               out.append(' ');
-              this.__done(RandomDocumentExample.INLINE_CODE);
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.INLINE_CODE);
               try (final IPlainText t = ((IComplexText) out).inlineCode()) {
                 try {
                   t.append("Inline Code: "); //$NON-NLS-1$
@@ -790,8 +764,9 @@ public class RandomDocumentExample extends DocumentExample {
               }
               break;
             }
-            case 6: {
-              this.__done(RandomDocumentExample.SUBSCRIPT);
+            case SUBSCRIPT: {
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.SUBSCRIPT);
               out.append(" Sub: "); //$NON-NLS-1$
               try (final IPlainText t = ((IComplexText) out).subscript()) {
                 try {
@@ -803,8 +778,9 @@ public class RandomDocumentExample extends DocumentExample {
               }
               break;
             }
-            case 7: {
-              this.__done(RandomDocumentExample.SUPERSCRIPT);
+            case SUPERSCRIPT: {
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.SUPERSCRIPT);
               out.append(" Super: "); //$NON-NLS-1$
               try (final IPlainText t = ((IComplexText) out).superscript()) {
                 try {
@@ -818,8 +794,9 @@ public class RandomDocumentExample extends DocumentExample {
               break;
             }
 
-            case 8: {
-              this.__done(RandomDocumentExample.INLINE_MATH);
+            case INLINE_MATH: {
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.INLINE_MATH);
               out.append(" Inline equation: ");//$NON-NLS-1$
               try {
                 this.__createInlineMath(((IComplexText) out));
@@ -830,8 +807,9 @@ public class RandomDocumentExample extends DocumentExample {
               break;
             }
 
-            case 9: {
-              this.__done(RandomDocumentExample.REFERENCE);
+            case REFERENCE: {
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.REFERENCE);
               try {
                 if (labels == null) {
                   labels = new ArrayList<>();
@@ -866,8 +844,9 @@ public class RandomDocumentExample extends DocumentExample {
               break;
             }
 
-            case 10: {
-              this.__done(RandomDocumentExample.CITATION);
+            case CITATION: {
+              this.m_termination
+                  ._done(_ERandomDocumentExampleElements.CITATION);
               try {
                 out.append(" And here we cite ");//$NON-NLS-1$
 
@@ -902,7 +881,8 @@ public class RandomDocumentExample extends DocumentExample {
           try {
             out.append(' ');
             LoremIpsum.appendLoremIpsum(out, this.m_rand);
-            this.__done(RandomDocumentExample.NORMAL_TEXT);
+            this.m_termination
+                ._done(_ERandomDocumentExampleElements.NORMAL_TEXT);
           } catch (final Throwable tt) {
             error = ErrorUtils.aggregateError(error, tt);
             break main;
@@ -910,7 +890,7 @@ public class RandomDocumentExample extends DocumentExample {
         }
 
         first = false;
-      } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+      } while ((this.m_termination._continue())
           && ((this.m_rand.nextInt(depth + 2) <= 0)));
     } catch (final Throwable a) {
       error = ErrorUtils.aggregateError(error, a);
@@ -927,23 +907,17 @@ public class RandomDocumentExample extends DocumentExample {
    *          the section body
    * @param listDepth
    *          the list depth
+   * @param type
+   *          the list type
    */
   private final void __createList(final IStructuredText sb,
-      final int listDepth) {
-    final boolean b;
+      final int listDepth, final _ERandomDocumentExampleElements type) {
     int ic;
 
-    b = this.m_rand.nextBoolean();
+    this.m_termination._done(type);
 
-    if (listDepth <= 0) {
-      if (b) {
-        this.__done(RandomDocumentExample.ENUM);
-      } else {
-        this.__done(RandomDocumentExample.ITEMIZE);
-      }
-    }
-
-    try (final IList list = (b ? sb.enumeration() : sb.itemization())) {
+    try (final IList list = ((_ERandomDocumentExampleElements.ENUM == type) ? sb
+        .enumeration() : sb.itemization())) {
       ic = 0;
       do {
         try (final IStructuredText item = list.item()) {
@@ -954,10 +928,12 @@ public class RandomDocumentExample extends DocumentExample {
           }
           if ((listDepth <= 4)
               && (this.m_rand.nextInt(listDepth + 5) <= 0)) {
-            this.__createList(item, (listDepth + 1));
+            this.__createList(item, (listDepth + 1), this.m_rand
+                .nextBoolean() ? _ERandomDocumentExampleElements.ENUM
+                : _ERandomDocumentExampleElements.ITEMIZE);
           }
         }
-      } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
+      } while (this.m_termination._continue()
           && (((++ic) <= 2) || (this.m_rand.nextBoolean())));
 
     }
@@ -970,15 +946,10 @@ public class RandomDocumentExample extends DocumentExample {
    *          the body
    */
   private final void __createBody(final IDocumentBody body) {
-    this.m_maxSectionDepth = 0;
-
-    Arrays.fill(this.m_done, false);
     do {
       this._createSection(body, 0);
-    } while (this.__hasUnusedAllocateLabels()
-        || (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS) && ((!(this
-            .__hasAll())) || (this.m_maxSectionDepth < 3) || (this.m_rand
-            .nextInt(3) > 0))));
+    } while (this.m_termination._isSomethingMissing()
+        || (this.m_termination._continue() && (this.m_rand.nextBoolean())));
   }
 
   /**
@@ -988,13 +959,9 @@ public class RandomDocumentExample extends DocumentExample {
    *          the footer
    */
   private final void __createFooter(final IDocumentBody footer) {
-    this.m_maxSectionDepth = 0;
-
-    Arrays.fill(this.m_done, false);
     do {
       this._createSection(footer, 0);
-    } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
-        && (this.m_rand.nextBoolean()));
+    } while (this.m_termination._continue() && (this.m_rand.nextBoolean()));
   }
 
   /**
@@ -1007,9 +974,26 @@ public class RandomDocumentExample extends DocumentExample {
    * @param log
    *          the log stream
    */
-  @SuppressWarnings("unchecked")
   public RandomDocumentExample(final IDocument doc, final Random r,
       final PrintStream log) {
+    this(doc, r, log, RandomDocumentExample.MAX_RUNTIME);
+  }
+
+  /**
+   * create
+   * 
+   * @param doc
+   *          the document
+   * @param r
+   *          the randomizer
+   * @param log
+   *          the log stream
+   * @param maxTime
+   *          a goal for the maximum runtime
+   */
+  @SuppressWarnings("unchecked")
+  public RandomDocumentExample(final IDocument doc, final Random r,
+      final PrintStream log, final long maxTime) {
     super(doc);
     int i;
 
@@ -1019,7 +1003,6 @@ public class RandomDocumentExample extends DocumentExample {
     } else {
       this.m_rand = r;
     }
-    this.m_done = new boolean[RandomDocumentExample.ALL_LENGTH];
     this.m_labels = new ArrayList<>();
 
     this.m_allocatedLabels = new ArrayList[i = RandomDocumentExample.LABEL_TYPES.length];
@@ -1027,6 +1010,7 @@ public class RandomDocumentExample extends DocumentExample {
       this.m_allocatedLabels[i] = new ArrayList<>();
     }
     this.m_log = log;
+    this.m_maxTime = Math.max(3L, maxTime);
   }
 
   /** create the bibliography */
@@ -1044,8 +1028,8 @@ public class RandomDocumentExample extends DocumentExample {
     do {
       i = this.m_rand.nextInt(RandomDocumentExample.LABEL_TYPES.length);
       l = this.m_doc.createLabel(RandomDocumentExample.LABEL_TYPES[i]);
-
       a = this.m_allocatedLabels[i];
+
       synchronized (a) {
         a.add(l);
       }
@@ -1054,56 +1038,17 @@ public class RandomDocumentExample extends DocumentExample {
       synchronized (a) {
         a.add(l);
       }
-    } while (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS)
-        && (this.m_rand.nextInt(20) > 0));
-  }
-
-  /**
-   * are some pre-allocated, but unused labels left?
-   * 
-   * @return {@code true} if some labels are left
-   */
-  private final boolean __hasUnusedAllocateLabels() {
-    for (final ArrayList<ILabel> l : this.m_allocatedLabels) {
-      synchronized (l) {
-        if (l.isEmpty()) {
-          continue;
-        }
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * get a label
-   * 
-   * @param type
-   *          the label type
-   * @return the label (or AUTO)
-   */
-  private final ILabel __getLabel(final ELabelType type) {
-    final ArrayList<ILabel> l;
-    final int s;
-
-    l = this.m_allocatedLabels[type.ordinal()];
-    synchronized (l) {
-      s = l.size();
-      if (s > 0) {
-        return l.remove(this.m_rand.nextInt(s));
-      }
-    }
-
-    return ELabelType.AUTO;
+    } while (this.m_rand.nextInt(7) > 0);
   }
 
   /** {@inheritDoc} */
   @Override
   public final void run() {
     Throwable error;
+    long end;
 
     error = null;
+    end = (System.currentTimeMillis() + this.m_maxTime);
     main: {
       try {
         try {
@@ -1114,15 +1059,11 @@ public class RandomDocumentExample extends DocumentExample {
             }
           }
 
-          this.m_totalIterations = 0;
-          this.m_maxSectionDepth = 0;
           this.m_labels.clear();
           for (final ArrayList<ILabel> l : this.m_allocatedLabels) {
             l.clear();
           }
           this.m_figureCounter = 0L;
-
-          Arrays.fill(this.m_done, false);
 
           try {
             this.__loadStyles();
@@ -1153,8 +1094,15 @@ public class RandomDocumentExample extends DocumentExample {
           } finally {
             try (final IDocumentBody body = this.m_doc.body()) {
               try {
-                this.m_totalIterations = 0;
-                this.__createBody(body);
+                this.m_termination = new _RandomDocumentExampleTermination(
+                    this.m_allocatedLabels, (Math.max(1L,
+                        (end - System.currentTimeMillis())) >>> 2));
+                try {
+                  this.__createBody(body);
+                } finally {
+                  this.m_termination._terminate();
+                  this.m_termination = null;
+                }
               } catch (final Throwable tt) {
                 error = ErrorUtils.aggregateError(error, tt);
                 break main;
@@ -1162,8 +1110,16 @@ public class RandomDocumentExample extends DocumentExample {
             } finally {
               try (final IDocumentBody footer = this.m_doc.footer()) {
                 try {
-                  this.m_totalIterations = 0;
-                  this.__createFooter(footer);
+                  this.m_termination = new _RandomDocumentExampleTermination(
+                      this.m_allocatedLabels, (Math.max(1L,
+                          (end - System.currentTimeMillis())) >>> 2));
+                  try {
+                    this.m_termination._assumeAllDone();
+                    this.__createFooter(footer);
+                  } finally {
+                    this.m_termination._terminate();
+                    this.m_termination = null;
+                  }
                 } catch (final Throwable tt) {
                   error = ErrorUtils.aggregateError(error, tt);
                   break main;
@@ -1310,8 +1266,9 @@ public class RandomDocumentExample extends DocumentExample {
     boolean needsContent;
 
     r = this.m_rand;
-    this.__done(RandomDocumentExample.CODE);
-    try (final ICode code = sb.code(this.__getLabel(ELabelType.CODE),
+    this.m_termination._done(_ERandomDocumentExampleElements.CODE);
+    try (final ICode code = sb.code(
+        this.m_termination._getLabel(this.m_rand, ELabelType.CODE),
         r.nextBoolean())) {
       this.__useLabel(code);
       try (final IPlainText cap = code.caption()) {
@@ -1593,7 +1550,7 @@ public class RandomDocumentExample extends DocumentExample {
     TableCellDef d;
     int min;
 
-    this.__done(RandomDocumentExample.TABLE);
+    this.m_termination._done(_ERandomDocumentExampleElements.TABLE);
 
     def = new ArrayList<>();
     pureDef = new ArrayList<>();
@@ -1607,11 +1564,11 @@ public class RandomDocumentExample extends DocumentExample {
         pureDef.add(d);
       }
     } while ((pureDef.size() < min)
-        || (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS) && this.m_rand
-            .nextBoolean()));
+        || (((this.m_termination._continue()) && this.m_rand.nextBoolean())));
     pureDefs = pureDef.toArray(new TableCellDef[pureDef.size()]);
 
-    try (final ITable tab = sb.table(this.__getLabel(ELabelType.TABLE),
+    try (final ITable tab = sb.table(
+        this.m_termination._getLabel(this.m_rand, ELabelType.TABLE),
         this.m_rand.nextBoolean(),
         def.toArray(new TableCellDef[def.size()]))) {
       this.__useLabel(tab);
@@ -1653,8 +1610,8 @@ public class RandomDocumentExample extends DocumentExample {
 
     rows = 0;
     blocked = new int[cells.length];
-    while (((rows < maxRows) && ((rows < neededRows) || (((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS) && (this.m_rand
-        .nextInt(4) > 0))))) {
+    while (((rows < maxRows) && ((rows < neededRows) || (this.m_termination
+        ._continue() && (this.m_rand.nextInt(4) > 0))))) {
       try (final ITableRow row = sec.row()) {
         rows++;
         for (i = 0; i < cells.length; i++) {
@@ -1720,8 +1677,9 @@ public class RandomDocumentExample extends DocumentExample {
 
     s = EFigureSize.values();
 
-    this.__done(RandomDocumentExample.FIGURE);
-    try (final IFigure fig = sb.figure(this.__getLabel(ELabelType.FIGURE),
+    this.m_termination._done(_ERandomDocumentExampleElements.FIGURE);
+    try (final IFigure fig = sb.figure(
+        this.m_termination._getLabel(this.m_rand, ELabelType.FIGURE),
         (v = s[this.m_rand.nextInt(s.length)]),
         RandomUtils.longToString(null, this.__nextFigure()))) {
       this.__fillFigure(fig, v);
@@ -1744,9 +1702,10 @@ public class RandomDocumentExample extends DocumentExample {
 
     v = s[this.m_rand.nextInt(s.length)];
     c = v.getNX();
-    this.__done(RandomDocumentExample.FIGURE_SERIES);
+    this.m_termination
+        ._done(_ERandomDocumentExampleElements.FIGURE_SERIES);
     try (final IFigureSeries fs = sb.figureSeries(
-        this.__getLabel(ELabelType.FIGURE), v,
+        this.m_termination._getLabel(this.m_rand, ELabelType.FIGURE), v,
         RandomUtils.longToString(null, this.__nextFigure()))) {
       this.__useLabel(fs);
       try (final IPlainText caption = fs.caption()) {
@@ -1757,9 +1716,9 @@ public class RandomDocumentExample extends DocumentExample {
         LoremIpsum.appendLoremIpsum(caption, this.m_rand);
       }
       for (i = (1 + this.m_rand.nextInt(10 * c)); (--i) >= 0;) {
-        try (final IFigure fig = fs.figure(
-            this.__getLabel(ELabelType.SUBFIGURE),
-            RandomUtils.longToString(null, this.__nextFigure()))) {
+        try (final IFigure fig = fs.figure(this.m_termination._getLabel(
+            this.m_rand, ELabelType.SUBFIGURE), RandomUtils.longToString(
+            null, this.__nextFigure()))) {
           this.__fillFigure(fig, null);
         }
       }
@@ -1908,7 +1867,7 @@ public class RandomDocumentExample extends DocumentExample {
 
     r = g.getBounds();
     k = 0;
-    limit = (RandomDocumentExample.MAX_ITERATIONS - (this.m_totalIterations++));
+    limit = 1000;
     do {
       switch (this.m_rand.nextInt(15)) {
         case 0: {
@@ -2056,9 +2015,9 @@ public class RandomDocumentExample extends DocumentExample {
    */
   private final void __createEquation(final ISectionBody sb) {
 
-    try (final IEquation equ = sb.equation(this
-        .__getLabel(ELabelType.EQUATION))) {
-      this.__done(RandomDocumentExample.EQUATION);
+    try (final IEquation equ = sb.equation(this.m_termination._getLabel(
+        this.m_rand, ELabelType.EQUATION))) {
+      this.m_termination._done(_ERandomDocumentExampleElements.EQUATION);
       this.__useLabel(equ);
       this.__fillMath(equ, 1, 1, 5);
     }
@@ -2073,7 +2032,8 @@ public class RandomDocumentExample extends DocumentExample {
   private final void __createInlineMath(final IComplexText sb) {
     try (final IMath equ = sb.inlineMath()) {
 
-      this.__done(RandomDocumentExample.INLINE_MATH);
+      this.m_termination
+          ._done(_ERandomDocumentExampleElements.INLINE_MATH);
       this.__fillMath(equ, 1, 1, 4);
     }
   }
@@ -2271,9 +2231,8 @@ public class RandomDocumentExample extends DocumentExample {
 
       args++;
     } while ((args < minArgs)
-        || (((args < maxArgs)
-            && ((this.m_totalIterations++) < RandomDocumentExample.MAX_ITERATIONS) && this.m_rand
-              .nextBoolean())));
+        || (((args < maxArgs) && (this.m_termination._continue()) && this.m_rand
+            .nextBoolean())));
 
   }
 }

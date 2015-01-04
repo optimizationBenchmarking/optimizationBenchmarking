@@ -31,25 +31,25 @@ public final class RandomBibliography extends BibliographyExample {
   private final Random m_rand;
 
   /** the character ranges */
-  private static final char[][] RANGES = { { '\u03a0', '\u03f3' },//
-      { '\u0400', '\u04f9' },//
-      // { '\u0531', '\u0588' },//
-      { '\u05d0', '\u05f2' },//
-      { '\u0621', '\u06e6' },//
-      { '\u0901', '\u0970' },//
-      { '\u0981', '\u09fa' },//
-      { '\u0a02', '\u0a74' },//
-      { '\u0a81', '\u0aff' },//
-      { '\u0b01', '\u0b70' },//
-      { '\u0b82', '\u0bf2' },//
-      // { '\u0c01', '\u0c6f' },//
-      { '\u0c82', '\u0cef' },//
-      { '\u0d02', '\u0d6f' },//
-      { '\u0e01', '\u0e58' },//
-      // { '\u0e81', '\u0edd' },//
-      // { '\u0f00', '\u0fb9' },//
-      { '\u10a0', '\u10fb' },//
-      { '\u10a0', '\u10fb' },//
+  private static final char[][] RANGES = { //
+  { '\u03a0', '\u03f3' },//
+      { '\u0410', '\u044f' },//
+      { '\u0531', '\u0556' },//
+      { '\u05d0', '\u05ea' },//
+      { '\u0621', '\u064a' },//
+      { '\u0905', '\u0939' },//
+      { '\u0985', '\u09b9' },//
+      { '\u0a05', '\u0a39' },//
+      { '\u0a85', '\u0ab9' },//
+      { '\u0b05', '\u0b39' },//
+      { '\u0b85', '\u0bb9' },//
+      { '\u0c05', '\u0c39' },//
+      { '\u0c85', '\u0cb9' },//
+      { '\u0d05', '\u0d39' },//
+      { '\u0e01', '\u0e2e' },//
+      { '\u0e81', '\u0eae' },//
+      { '\u0f40', '\u0f69' },//
+      { '\u10a0', '\u10f6' },//
       { '\uac00', '\ud768' },//
       { '\u3041', '\u3357' },//
       { '\u4e00', '\u9fa5' },//
@@ -336,7 +336,7 @@ public final class RandomBibliography extends BibliographyExample {
    * @return the normalized character if yes, 0 if no
    */
   private static final char __canUseChar(final char ch) {
-    String s;
+    String charString, plainString;
     char t;
 
     if ((!(Character.isDefined(ch))) || Character.isDigit(ch)
@@ -351,18 +351,19 @@ public final class RandomBibliography extends BibliographyExample {
       return 0;
     }
 
-    s = Normalizer.normalize(String.valueOf(ch), Form.NFC);
-    if (s.length() != 1) {
+    charString = String.valueOf(ch);
+    plainString = Normalizer.normalize(charString, Form.NFC);
+    if (plainString.length() != 1) {
       return 0;
     }
     try {
-      Integer.parseInt(s);
+      Integer.parseInt(plainString);
       return 0;
     } catch (final Throwable tt) {
       //
     }
 
-    t = s.charAt(0);
+    t = plainString.charAt(0);
     if ((t > ' ') && //
         ((t < '0') || (t > '9')) && //
         ((t < 'a') || (t > 'z')) && //
@@ -373,6 +374,7 @@ public final class RandomBibliography extends BibliographyExample {
           ((t > 'z') && (t < 0x7e))) {
         return 0;
       }
+
       return t;
     }
     return 0;

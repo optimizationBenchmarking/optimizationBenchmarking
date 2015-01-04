@@ -60,7 +60,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     try (final TempDir td = new TempDir()) {
       try (final IDocument doc = driver.use().setBasePath(td.getPath())
           .setMainDocumentNameSuggestion("document").create()) { //$NON-NLS-1$
-        ex = new RandomDocumentExample(doc, r, null);
+        ex = new RandomDocumentExample(doc, r, null, 75_000L);
         if (service != null) {
           f = service.submit(ex);
           f.get();
@@ -118,7 +118,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     int i;
 
     r = new Random();
-    for (i = 0; i < 2; i++) {
+    for (i = 1; i <= 3; i++) {
       this.__doRandomTest(null, r);
     }
     this.__doTemplateTest(null);
@@ -149,7 +149,7 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
     p = new ForkJoinPool(proc,
         ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, fifo);
 
-    for (i = 0; i < 2; i++) {
+    for (i = 1; i <= 3; i++) {
       this.__doRandomTest(p, r);
     }
     this.__doTemplateTest(p);
