@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.EmptyUtils;
-import org.optimizationBenchmarking.utils.math.random.Randomizer;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.transformations.CharTransformer;
 
@@ -146,14 +146,14 @@ public abstract class CharTransformerTest extends
    */
   @Test(timeout = 3600000)
   public void testMultiTransform() throws IOException {
-    final Randomizer r;
+    final Random r;
     final CharTransformer t;
     final StringBuilder a, b;
     final String[][] cases;
     int i, j, x;
     String s;
 
-    r = new Randomizer();
+    r = new Random();
     a = new StringBuilder();
     b = new StringBuilder();
 

@@ -21,8 +21,8 @@ import org.optimizationBenchmarking.experimentation.evaluation.data.InstanceCont
 import org.optimizationBenchmarking.experimentation.evaluation.data.InstanceRunsContext;
 import org.optimizationBenchmarking.experimentation.evaluation.data.InstanceSet;
 import org.optimizationBenchmarking.experimentation.evaluation.data.RunContext;
-import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 import org.optimizationBenchmarking.utils.parsers.ByteParser;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
 import org.optimizationBenchmarking.utils.parsers.FloatParser;

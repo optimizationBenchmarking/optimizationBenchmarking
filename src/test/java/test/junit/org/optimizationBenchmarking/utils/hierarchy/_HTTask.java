@@ -8,8 +8,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Ignore;
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput;
+import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 
 /** a thread for testing the hierarchy */
 @Ignore

@@ -5,7 +5,6 @@ import java.text.Normalizer.Form;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibArticleBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
@@ -21,6 +20,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibWebsiteBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
+import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 
 /**
  * A class to test generating a random bibliography.

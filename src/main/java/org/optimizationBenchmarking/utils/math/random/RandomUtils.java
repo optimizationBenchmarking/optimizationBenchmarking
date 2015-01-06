@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils;
+package org.optimizationBenchmarking.utils.math.random;
 
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 

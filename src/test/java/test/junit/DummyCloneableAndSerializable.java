@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  * A dummy {@link java.io.Serializable serializable} and
  * {@link java.lang.Cloneable cloneable} class for testing purposes. If
  * clone-ability is not necessary, use
- * {@link org.optimizationBenchmarking.utils.RandomUtils#longToObject(long, boolean)}
+ * {@link org.optimizationBenchmarking.utils.math.random.RandomUtils#longToObject(long, boolean)}
  * instead.
  */
 public class DummyCloneableAndSerializable implements Serializable,

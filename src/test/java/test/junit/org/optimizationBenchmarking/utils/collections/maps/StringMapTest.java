@@ -4,9 +4,9 @@ import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.optimizationBenchmarking.utils.RandomUtils;
 import org.optimizationBenchmarking.utils.collections.maps.ObjectMap;
 import org.optimizationBenchmarking.utils.collections.maps.StringMap;
+import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 
 /**
  * This is a test designed to verify that our tests are compatible to the

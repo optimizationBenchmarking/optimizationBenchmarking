@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.data.DimensionCon
 import org.optimizationBenchmarking.experimentation.evaluation.data.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.evaluation.data.EDimensionType;
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.utils.RandomUtils;
+import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
 import org.optimizationBenchmarking.utils.parsers.LongParser;
 
