@@ -559,6 +559,12 @@ public final class EDIOutput extends XMLOutputTool<Object> {
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "BBOB Experiment Data Output"; //$NON-NLS-1$
+  }
+
   /** the loader */
   private static final class __EDIOutputLoader {
     /** create */

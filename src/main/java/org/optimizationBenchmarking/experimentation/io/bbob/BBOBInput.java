@@ -1042,6 +1042,12 @@ public class BBOBInput extends FileInputTool<ExperimentSetContext> {
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "BBOB Experiment Data Input"; //$NON-NLS-1$
+  }
+
   /** the loader */
   private static final class __BBOBInputLoader {
     /** the globally shared instance */

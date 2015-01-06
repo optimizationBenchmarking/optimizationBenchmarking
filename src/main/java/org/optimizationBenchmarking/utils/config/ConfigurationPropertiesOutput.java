@@ -45,6 +45,12 @@ public final class ConfigurationPropertiesOutput extends
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Configuration Properties Output"; //$NON-NLS-1$
+  }
+
   /** the loader */
   private static final class __ConfigurationPropertiesOutputLoader {
     /** the configuration properties io driver */

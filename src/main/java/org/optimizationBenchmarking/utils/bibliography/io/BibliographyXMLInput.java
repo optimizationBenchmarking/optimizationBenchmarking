@@ -76,6 +76,12 @@ public final class BibliographyXMLInput extends
     return new BibliographyXMLHandler(null, loaderContext);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Bibliography XML Input"; //$NON-NLS-1$
+  }
+
   /** the loader */
   private static final class __BibliographyXMLInputLoader {
     /** create */

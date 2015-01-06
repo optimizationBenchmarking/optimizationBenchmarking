@@ -1709,6 +1709,12 @@ public class TSPSuiteInput extends FileInputTool<ExperimentSetContext> {
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "TSPSuite Experimet Data Input"; //$NON-NLS-1$
+  }
+
   /** the loader */
   private static final class __TSPSuiteInputLoader {
 

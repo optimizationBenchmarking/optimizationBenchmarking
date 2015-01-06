@@ -36,6 +36,12 @@ public final class ConfigurationPropertiesInput extends
     data.putProperties(pr);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Configuration Properties Input"; //$NON-NLS-1$
+  }
+
   /** the loader */
   private static final class __ConfigurationPropertiesInputLoader {
 

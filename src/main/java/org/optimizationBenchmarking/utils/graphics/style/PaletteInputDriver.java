@@ -41,6 +41,12 @@ public final class PaletteInputDriver extends
     return __PaletteInputDriverLoader.INSTANCE;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Style Palette Input"; //$NON-NLS-1$
+  }
+
   /** the internal palette driver loader */
   private static final class __PaletteInputDriverLoader {
 

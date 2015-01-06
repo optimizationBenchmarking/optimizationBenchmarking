@@ -61,6 +61,12 @@ public final class ConfigurationXMLOutput extends
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Configuration XML Output"; //$NON-NLS-1$
+  }
+
   /** the loader */
   private static final class __ConfigurationXMLOutputLoader {
     /** the configuration xml */

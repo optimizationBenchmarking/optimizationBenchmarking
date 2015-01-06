@@ -77,6 +77,12 @@ public final class DocumentXMLInput extends
     return dataDestination;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Document Template XML Input"; //$NON-NLS-1$
+  }
+
   /** the loader for lazy initialization */
   private static final class __DocumentXMLInputLoader {
 

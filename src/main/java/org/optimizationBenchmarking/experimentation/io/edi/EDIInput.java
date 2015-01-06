@@ -110,6 +110,12 @@ public final class EDIInput extends XMLInputTool<ExperimentSetContext> {
     return new _EDIContentHandler(null, dataDestination, job);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "EDI Experiment Data Input"; //$NON-NLS-1$
+  }
+
   /** the loader */
   private static final class __EDIInputLoader {
     /** create */

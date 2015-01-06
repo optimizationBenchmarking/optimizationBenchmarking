@@ -1074,6 +1074,12 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Bibliography BibTeX Output"; //$NON-NLS-1$
+  }
+
   /** the loader for lazy initialization */
   private static final class __BibTeXOutputLoader {
 

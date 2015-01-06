@@ -72,6 +72,12 @@ public final class ConfigurationXMLInput extends
     return new ConfigurationXMLHandler(null, dataDestination);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Configuration XML Input"; //$NON-NLS-1$
+  }
+
   /** the loader */
   private static final class __ConfigurationXMLInputLoader {
     /** the configuration xml */

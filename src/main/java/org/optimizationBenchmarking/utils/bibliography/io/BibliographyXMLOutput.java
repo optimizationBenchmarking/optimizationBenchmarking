@@ -705,6 +705,12 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Bibliography XML Output"; //$NON-NLS-1$
+  }
+
   /** the loader for lazy initialization */
   private static final class __BibliographyXMLOutputLoader {
     /** the configuration xml */
