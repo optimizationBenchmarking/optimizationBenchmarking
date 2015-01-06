@@ -5,19 +5,44 @@ import java.util.Random;
 import org.optimizationBenchmarking.utils.ErrorUtils;
 
 /**
- * This class provides methods for shuffling things.
+ * This class provides methods for shuffling arrays and parts of arrays.
  */
 public class Shuffle {
 
   /**
+   * <p>
    * Randomly shuffle a sub-sequence of an array or permutation of
    * {@code bytes}. After this procedure, the {@code count} elements of the
    * array beginning at index {@code start} are uniformly randomly
    * distributed.
+   * </p>
+   * <ul>
+   * <li>{@code start} must be a valid index in the array, i.e., between
+   * {@code 0} and {@code array.length-1} , inclusively, or an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code array==null}, an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code (count>= -1) && (count <= 1)} or {@code array.length<=1}
+   * , nothing is done.</li>
+   * <li>If {@code Math.abs(count) >= array.length}, the complete array is
+   * shuffled.</li>
+   * <li>If {@code count<0}, then the {@code Math.abs(count)} elements left
+   * of (inclusively) {@code start} are shuffled. If {@code start<-count},
+   * shuffling wraps at the array begin to the array end. I.e.,
+   * {@code count=5}, {@code start=2}, and {@code array.length=7} would
+   * shuffle the {@code 5} elements at indexes {@code 2}, {@code 1},
+   * {@code 0}, {@code 6}, and {@code 5}.</li>
+   * <li>If {@code count>0} and {@code count+start >= array.length},
+   * shuffling wraps at the array end. I.e., if {@code count=6},
+   * {@code start=3}, and {@code array.length=8}, we shuffle the {@code 6}
+   * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
+   * {@code 7}, and {@code 0}.</li>
+   * </ul>
    * 
    * @param array
-   *          the array of {@code byte}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code byte}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -25,7 +50,8 @@ public class Shuffle {
    * @param random
    *          the random number generator
    * @throws IllegalArgumentException
-   *           if {@code array==null} or {@code count<0}
+   *           if {@code array==null} or {@code start<0} or or
+   *           {@code start>=array.length}
    */
   public static final void shuffle(final byte[] array, final int start,
       final int count, final Random random) {
@@ -79,14 +105,18 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle an array or permutation of {@code byte}s. After this
    * procedure, the elements of the array are uniformly randomly
    * distributed.
+   * </p>
    * 
    * @param array
-   *          the array of {@code byte}s that should be randomized
+   *          the array of {@code byte}s that should be shuffled
    * @param random
    *          the random number generator
+   * @throws IllegalArgumentException
+   *           if {@code array==null}
    */
   public static final void shuffle(final byte[] array, final Random random) {
     final int length;
@@ -105,15 +135,19 @@ public class Shuffle {
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed. This method therefore applies the
-   * <a href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
+   * are uniformly randomly distributed.</p>
+   * <p>
+   * This method therefore applies the <a
+   * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
    * Fisher-Yates Shuffle</a> in the <a href=
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
+   * </p>
    * 
    * @param array
-   *          the array of {@code byte}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code byte}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -151,14 +185,39 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle a sub-sequence of an array or permutation of
    * {@code bytes}. After this procedure, the {@code count} elements of the
    * array beginning at index {@code start} are uniformly randomly
    * distributed.
+   * </p>
+   * <ul>
+   * <li>{@code start} must be a valid index in the array, i.e., between
+   * {@code 0} and {@code array.length-1} , inclusively, or an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code array==null}, an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code (count>= -1) && (count <= 1)} or {@code array.length<=1}
+   * , nothing is done.</li>
+   * <li>If {@code Math.abs(count) >= array.length}, the complete array is
+   * shuffled.</li>
+   * <li>If {@code count<0}, then the {@code Math.abs(count)} elements left
+   * of (inclusively) {@code start} are shuffled. If {@code start<-count},
+   * shuffling wraps at the array begin to the array end. I.e.,
+   * {@code count=5}, {@code start=2}, and {@code array.length=7} would
+   * shuffle the {@code 5} elements at indexes {@code 2}, {@code 1},
+   * {@code 0}, {@code 6}, and {@code 5}.</li>
+   * <li>If {@code count>0} and {@code count+start >= array.length},
+   * shuffling wraps at the array end. I.e., if {@code count=6},
+   * {@code start=3}, and {@code array.length=8}, we shuffle the {@code 6}
+   * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
+   * {@code 7}, and {@code 0}.</li>
+   * </ul>
    * 
    * @param array
-   *          the array of {@code short}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code short}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -166,7 +225,8 @@ public class Shuffle {
    * @param random
    *          the random number generator
    * @throws IllegalArgumentException
-   *           if {@code array==null} or {@code count<0}
+   *           if {@code array==null} or {@code start<0} or or
+   *           {@code start>=array.length}
    */
   public static final void shuffle(final short[] array, final int start,
       final int count, final Random random) {
@@ -220,14 +280,18 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle an array or permutation of {@code short}s. After this
    * procedure, the elements of the array are uniformly randomly
    * distributed.
+   * </p>
    * 
    * @param array
-   *          the array of {@code short}s that should be randomized
+   *          the array of {@code short}s that should be shuffled
    * @param random
    *          the random number generator
+   * @throws IllegalArgumentException
+   *           if {@code array==null}
    */
   public static final void shuffle(final short[] array, final Random random) {
     final int length;
@@ -246,15 +310,19 @@ public class Shuffle {
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed. This method therefore applies the
-   * <a href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
+   * are uniformly randomly distributed.</p>
+   * <p>
+   * This method therefore applies the <a
+   * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
    * Fisher-Yates Shuffle</a> in the <a href=
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
+   * </p>
    * 
    * @param array
-   *          the array of {@code short}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code short}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -292,13 +360,39 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle a sub-sequence of an array or permutation of
    * {@code bytes}. After this procedure, the {@code count} elements of the
    * array beginning at index {@code start} are uniformly randomly
    * distributed.
+   * </p>
+   * <ul>
+   * <li>{@code start} must be a valid index in the array, i.e., between
+   * {@code 0} and {@code array.length-1} , inclusively, or an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code array==null}, an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code (count>= -1) && (count <= 1)} or {@code array.length<=1}
+   * , nothing is done.</li>
+   * <li>If {@code Math.abs(count) >= array.length}, the complete array is
+   * shuffled.</li>
+   * <li>If {@code count<0}, then the {@code Math.abs(count)} elements left
+   * of (inclusively) {@code start} are shuffled. If {@code start<-count},
+   * shuffling wraps at the array begin to the array end. I.e.,
+   * {@code count=5}, {@code start=2}, and {@code array.length=7} would
+   * shuffle the {@code 5} elements at indexes {@code 2}, {@code 1},
+   * {@code 0}, {@code 6}, and {@code 5}.</li>
+   * <li>If {@code count>0} and {@code count+start >= array.length},
+   * shuffling wraps at the array end. I.e., if {@code count=6},
+   * {@code start=3}, and {@code array.length=8}, we shuffle the {@code 6}
+   * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
+   * {@code 7}, and {@code 0}.</li>
+   * </ul>
    * 
    * @param array
-   *          the array of {@code int}s whose sub-sequence to be randomized
+   *          the array of {@code int}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -306,7 +400,8 @@ public class Shuffle {
    * @param random
    *          the random number generator
    * @throws IllegalArgumentException
-   *           if {@code array==null} or {@code count<0}
+   *           if {@code array==null} or {@code start<0} or or
+   *           {@code start>=array.length}
    */
   public static final void shuffle(final int[] array, final int start,
       final int count, final Random random) {
@@ -360,14 +455,18 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle an array or permutation of {@code int}s. After this
    * procedure, the elements of the array are uniformly randomly
    * distributed.
+   * </p>
    * 
    * @param array
-   *          the array of {@code int}s that should be randomized
+   *          the array of {@code int}s that should be shuffled
    * @param random
    *          the random number generator
+   * @throws IllegalArgumentException
+   *           if {@code array==null}
    */
   public static final void shuffle(final int[] array, final Random random) {
     final int length;
@@ -386,14 +485,19 @@ public class Shuffle {
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed. This method therefore applies the
-   * <a href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
+   * are uniformly randomly distributed.</p>
+   * <p>
+   * This method therefore applies the <a
+   * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
    * Fisher-Yates Shuffle</a> in the <a href=
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
+   * </p>
    * 
    * @param array
-   *          the array of {@code int}s whose sub-sequence to be randomized
+   *          the array of {@code int}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -430,14 +534,39 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle a sub-sequence of an array or permutation of
    * {@code bytes}. After this procedure, the {@code count} elements of the
    * array beginning at index {@code start} are uniformly randomly
    * distributed.
+   * </p>
+   * <ul>
+   * <li>{@code start} must be a valid index in the array, i.e., between
+   * {@code 0} and {@code array.length-1} , inclusively, or an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code array==null}, an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code (count>= -1) && (count <= 1)} or {@code array.length<=1}
+   * , nothing is done.</li>
+   * <li>If {@code Math.abs(count) >= array.length}, the complete array is
+   * shuffled.</li>
+   * <li>If {@code count<0}, then the {@code Math.abs(count)} elements left
+   * of (inclusively) {@code start} are shuffled. If {@code start<-count},
+   * shuffling wraps at the array begin to the array end. I.e.,
+   * {@code count=5}, {@code start=2}, and {@code array.length=7} would
+   * shuffle the {@code 5} elements at indexes {@code 2}, {@code 1},
+   * {@code 0}, {@code 6}, and {@code 5}.</li>
+   * <li>If {@code count>0} and {@code count+start >= array.length},
+   * shuffling wraps at the array end. I.e., if {@code count=6},
+   * {@code start=3}, and {@code array.length=8}, we shuffle the {@code 6}
+   * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
+   * {@code 7}, and {@code 0}.</li>
+   * </ul>
    * 
    * @param array
-   *          the array of {@code long}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code long}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -445,7 +574,8 @@ public class Shuffle {
    * @param random
    *          the random number generator
    * @throws IllegalArgumentException
-   *           if {@code array==null} or {@code count<0}
+   *           if {@code array==null} or {@code start<0} or or
+   *           {@code start>=array.length}
    */
   public static final void shuffle(final long[] array, final int start,
       final int count, final Random random) {
@@ -499,14 +629,20 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle an array or permutation of {@code long}s. After this
    * procedure, the elements of the array are uniformly randomly
    * distributed.
+   * </p>
    * 
    * @param array
-   *          the array of {@code long}s that should be randomized
+   *          the array of {@code long}s that whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param random
    *          the random number generator
+   * @throws IllegalArgumentException
+   *           if {@code array==null}
    */
   public static final void shuffle(final long[] array, final Random random) {
     final int length;
@@ -525,15 +661,19 @@ public class Shuffle {
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed. This method therefore applies the
-   * <a href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
+   * are uniformly randomly distributed.</p>
+   * <p>
+   * This method therefore applies the <a
+   * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
    * Fisher-Yates Shuffle</a> in the <a href=
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
+   * </p>
    * 
    * @param array
-   *          the array of {@code long}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code long}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -571,14 +711,39 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle a sub-sequence of an array or permutation of
    * {@code bytes}. After this procedure, the {@code count} elements of the
    * array beginning at index {@code start} are uniformly randomly
    * distributed.
+   * </p>
+   * <ul>
+   * <li>{@code start} must be a valid index in the array, i.e., between
+   * {@code 0} and {@code array.length-1} , inclusively, or an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code array==null}, an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code (count>= -1) && (count <= 1)} or {@code array.length<=1}
+   * , nothing is done.</li>
+   * <li>If {@code Math.abs(count) >= array.length}, the complete array is
+   * shuffled.</li>
+   * <li>If {@code count<0}, then the {@code Math.abs(count)} elements left
+   * of (inclusively) {@code start} are shuffled. If {@code start<-count},
+   * shuffling wraps at the array begin to the array end. I.e.,
+   * {@code count=5}, {@code start=2}, and {@code array.length=7} would
+   * shuffle the {@code 5} elements at indexes {@code 2}, {@code 1},
+   * {@code 0}, {@code 6}, and {@code 5}.</li>
+   * <li>If {@code count>0} and {@code count+start >= array.length},
+   * shuffling wraps at the array end. I.e., if {@code count=6},
+   * {@code start=3}, and {@code array.length=8}, we shuffle the {@code 6}
+   * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
+   * {@code 7}, and {@code 0}.</li>
+   * </ul>
    * 
    * @param array
-   *          the array of {@code float}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code float}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -586,7 +751,8 @@ public class Shuffle {
    * @param random
    *          the random number generator
    * @throws IllegalArgumentException
-   *           if {@code array==null} or {@code count<0}
+   *           if {@code array==null} or {@code start<0} or or
+   *           {@code start>=array.length}
    */
   public static final void shuffle(final float[] array, final int start,
       final int count, final Random random) {
@@ -640,14 +806,18 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle an array or permutation of {@code float}s. After this
    * procedure, the elements of the array are uniformly randomly
    * distributed.
+   * </p>
    * 
    * @param array
-   *          the array of {@code float}s that should be randomized
+   *          the array of {@code float}s that should be shuffled
    * @param random
    *          the random number generator
+   * @throws IllegalArgumentException
+   *           if {@code array==null}
    */
   public static final void shuffle(final float[] array, final Random random) {
     final int length;
@@ -666,15 +836,19 @@ public class Shuffle {
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed. This method therefore applies the
-   * <a href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
+   * are uniformly randomly distributed.</p>
+   * <p>
+   * This method therefore applies the <a
+   * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
    * Fisher-Yates Shuffle</a> in the <a href=
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
+   * </p>
    * 
    * @param array
-   *          the array of {@code float}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code float}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -712,14 +886,39 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle a sub-sequence of an array or permutation of
    * {@code bytes}. After this procedure, the {@code count} elements of the
    * array beginning at index {@code start} are uniformly randomly
    * distributed.
+   * </p>
+   * <ul>
+   * <li>{@code start} must be a valid index in the array, i.e., between
+   * {@code 0} and {@code array.length-1} , inclusively, or an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code array==null}, an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code (count>= -1) && (count <= 1)} or {@code array.length<=1}
+   * , nothing is done.</li>
+   * <li>If {@code Math.abs(count) >= array.length}, the complete array is
+   * shuffled.</li>
+   * <li>If {@code count<0}, then the {@code Math.abs(count)} elements left
+   * of (inclusively) {@code start} are shuffled. If {@code start<-count},
+   * shuffling wraps at the array begin to the array end. I.e.,
+   * {@code count=5}, {@code start=2}, and {@code array.length=7} would
+   * shuffle the {@code 5} elements at indexes {@code 2}, {@code 1},
+   * {@code 0}, {@code 6}, and {@code 5}.</li>
+   * <li>If {@code count>0} and {@code count+start >= array.length},
+   * shuffling wraps at the array end. I.e., if {@code count=6},
+   * {@code start=3}, and {@code array.length=8}, we shuffle the {@code 6}
+   * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
+   * {@code 7}, and {@code 0}.</li>
+   * </ul>
    * 
    * @param array
-   *          the array of {@code double}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code double}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -727,7 +926,8 @@ public class Shuffle {
    * @param random
    *          the random number generator
    * @throws IllegalArgumentException
-   *           if {@code array==null} or {@code count<0}
+   *           if {@code array==null} or {@code start<0} or or
+   *           {@code start>=array.length}
    */
   public static final void shuffle(final double[] array, final int start,
       final int count, final Random random) {
@@ -781,14 +981,18 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle an array or permutation of {@code double}s. After
    * this procedure, the elements of the array are uniformly randomly
    * distributed.
+   * </p>
    * 
    * @param array
-   *          the array of {@code double}s that should be randomized
+   *          the array of {@code double}s that should be shuffled
    * @param random
    *          the random number generator
+   * @throws IllegalArgumentException
+   *           if {@code array==null}
    */
   public static final void shuffle(final double[] array,
       final Random random) {
@@ -808,15 +1012,19 @@ public class Shuffle {
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed. This method therefore applies the
-   * <a href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
+   * are uniformly randomly distributed.</p>
+   * <p>
+   * This method therefore applies the <a
+   * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
    * Fisher-Yates Shuffle</a> in the <a href=
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
+   * </p>
    * 
    * @param array
-   *          the array of {@code double}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code double}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -854,14 +1062,39 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle a sub-sequence of an array or permutation of
    * {@code bytes}. After this procedure, the {@code count} elements of the
    * array beginning at index {@code start} are uniformly randomly
    * distributed.
+   * </p>
+   * <ul>
+   * <li>{@code start} must be a valid index in the array, i.e., between
+   * {@code 0} and {@code array.length-1} , inclusively, or an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code array==null}, an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code (count>= -1) && (count <= 1)} or {@code array.length<=1}
+   * , nothing is done.</li>
+   * <li>If {@code Math.abs(count) >= array.length}, the complete array is
+   * shuffled.</li>
+   * <li>If {@code count<0}, then the {@code Math.abs(count)} elements left
+   * of (inclusively) {@code start} are shuffled. If {@code start<-count},
+   * shuffling wraps at the array begin to the array end. I.e.,
+   * {@code count=5}, {@code start=2}, and {@code array.length=7} would
+   * shuffle the {@code 5} elements at indexes {@code 2}, {@code 1},
+   * {@code 0}, {@code 6}, and {@code 5}.</li>
+   * <li>If {@code count>0} and {@code count+start >= array.length},
+   * shuffling wraps at the array end. I.e., if {@code count=6},
+   * {@code start=3}, and {@code array.length=8}, we shuffle the {@code 6}
+   * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
+   * {@code 7}, and {@code 0}.</li>
+   * </ul>
    * 
    * @param array
-   *          the array of {@code boolean}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code boolean}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -869,7 +1102,8 @@ public class Shuffle {
    * @param random
    *          the random number generator
    * @throws IllegalArgumentException
-   *           if {@code array==null} or {@code count<0}
+   *           if {@code array==null} or {@code start<0} or or
+   *           {@code start>=array.length}
    */
   public static final void shuffle(final boolean[] array, final int start,
       final int count, final Random random) {
@@ -923,14 +1157,20 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle an array or permutation of {@code boolean}s. After
    * this procedure, the elements of the array are uniformly randomly
    * distributed.
+   * </p>
    * 
    * @param array
-   *          the array of {@code boolean}s that should be randomized
+   *          the array of {@code boolean}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param random
    *          the random number generator
+   * @throws IllegalArgumentException
+   *           if {@code array==null}
    */
   public static final void shuffle(final boolean[] array,
       final Random random) {
@@ -950,15 +1190,19 @@ public class Shuffle {
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed. This method therefore applies the
-   * <a href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
+   * are uniformly randomly distributed.</p>
+   * <p>
+   * This method therefore applies the <a
+   * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
    * Fisher-Yates Shuffle</a> in the <a href=
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
+   * </p>
    * 
    * @param array
-   *          the array of {@code boolean}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code boolean}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -996,14 +1240,39 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle a sub-sequence of an array or permutation of
    * {@code bytes}. After this procedure, the {@code count} elements of the
    * array beginning at index {@code start} are uniformly randomly
    * distributed.
+   * </p>
+   * <ul>
+   * <li>{@code start} must be a valid index in the array, i.e., between
+   * {@code 0} and {@code array.length-1} , inclusively, or an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code array==null}, an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code (count>= -1) && (count <= 1)} or {@code array.length<=1}
+   * , nothing is done.</li>
+   * <li>If {@code Math.abs(count) >= array.length}, the complete array is
+   * shuffled.</li>
+   * <li>If {@code count<0}, then the {@code Math.abs(count)} elements left
+   * of (inclusively) {@code start} are shuffled. If {@code start<-count},
+   * shuffling wraps at the array begin to the array end. I.e.,
+   * {@code count=5}, {@code start=2}, and {@code array.length=7} would
+   * shuffle the {@code 5} elements at indexes {@code 2}, {@code 1},
+   * {@code 0}, {@code 6}, and {@code 5}.</li>
+   * <li>If {@code count>0} and {@code count+start >= array.length},
+   * shuffling wraps at the array end. I.e., if {@code count=6},
+   * {@code start=3}, and {@code array.length=8}, we shuffle the {@code 6}
+   * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
+   * {@code 7}, and {@code 0}.</li>
+   * </ul>
    * 
    * @param array
-   *          the array of {@code char}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code char}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -1011,7 +1280,8 @@ public class Shuffle {
    * @param random
    *          the random number generator
    * @throws IllegalArgumentException
-   *           if {@code array==null} or {@code count<0}
+   *           if {@code array==null} or {@code start<0} or or
+   *           {@code start>=array.length}
    */
   public static final void shuffle(final char[] array, final int start,
       final int count, final Random random) {
@@ -1065,14 +1335,18 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle an array or permutation of {@code char}s. After this
    * procedure, the elements of the array are uniformly randomly
    * distributed.
+   * </p>
    * 
    * @param array
-   *          the array of {@code char}s that should be randomized
+   *          the array of {@code char}s that should be shuffled
    * @param random
    *          the random number generator
+   * @throws IllegalArgumentException
+   *           if {@code array==null}
    */
   public static final void shuffle(final char[] array, final Random random) {
     final int length;
@@ -1091,15 +1365,19 @@ public class Shuffle {
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed. This method therefore applies the
-   * <a href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
+   * are uniformly randomly distributed.</p>
+   * <p>
+   * This method therefore applies the <a
+   * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
    * Fisher-Yates Shuffle</a> in the <a href=
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
+   * </p>
    * 
    * @param array
-   *          the array of {@code char}s whose sub-sequence to be
-   *          randomized
+   *          the array of {@code char}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -1137,14 +1415,39 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle a sub-sequence of an array or permutation of
    * {@code bytes}. After this procedure, the {@code count} elements of the
    * array beginning at index {@code start} are uniformly randomly
    * distributed.
+   * </p>
+   * <ul>
+   * <li>{@code start} must be a valid index in the array, i.e., between
+   * {@code 0} and {@code array.length-1} , inclusively, or an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code array==null}, an
+   * {@link java.lang.IllegalArgumentException} is thrown.</li>
+   * <li>If {@code (count>= -1) && (count <= 1)} or {@code array.length<=1}
+   * , nothing is done.</li>
+   * <li>If {@code Math.abs(count) >= array.length}, the complete array is
+   * shuffled.</li>
+   * <li>If {@code count<0}, then the {@code Math.abs(count)} elements left
+   * of (inclusively) {@code start} are shuffled. If {@code start<-count},
+   * shuffling wraps at the array begin to the array end. I.e.,
+   * {@code count=5}, {@code start=2}, and {@code array.length=7} would
+   * shuffle the {@code 5} elements at indexes {@code 2}, {@code 1},
+   * {@code 0}, {@code 6}, and {@code 5}.</li>
+   * <li>If {@code count>0} and {@code count+start >= array.length},
+   * shuffling wraps at the array end. I.e., if {@code count=6},
+   * {@code start=3}, and {@code array.length=8}, we shuffle the {@code 6}
+   * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
+   * {@code 7}, and {@code 0}.</li>
+   * </ul>
    * 
    * @param array
-   *          the array of {@code java.lang.Object}s whose sub-sequence to
-   *          be randomized
+   *          the array of {@code java.lang.Object}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count
@@ -1152,7 +1455,8 @@ public class Shuffle {
    * @param random
    *          the random number generator
    * @throws IllegalArgumentException
-   *           if {@code array==null} or {@code count<0}
+   *           if {@code array==null} or {@code start<0} or or
+   *           {@code start>=array.length}
    */
   public static final void shuffle(final java.lang.Object[] array,
       final int start, final int count, final Random random) {
@@ -1206,15 +1510,19 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * Randomly shuffle an array or permutation of {@code java.lang.Object}s.
    * After this procedure, the elements of the array are uniformly randomly
    * distributed.
+   * </p>
    * 
    * @param array
    *          the array of {@code java.lang.Object}s that should be
-   *          randomized
+   *          shuffled
    * @param random
    *          the random number generator
+   * @throws IllegalArgumentException
+   *           if {@code array==null}
    */
   public static final void shuffle(final java.lang.Object[] array,
       final Random random) {
@@ -1234,15 +1542,19 @@ public class Shuffle {
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed. This method therefore applies the
-   * <a href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
+   * are uniformly randomly distributed.</p>
+   * <p>
+   * This method therefore applies the <a
+   * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
    * Fisher-Yates Shuffle</a> in the <a href=
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
+   * </p>
    * 
    * @param array
-   *          the array of {@code java.lang.Object}s whose sub-sequence to
-   *          be randomized
+   *          the array of {@code java.lang.Object}s whose sub-sequence
+   *          {@code start...(start+count) mod array.length} is to be
+   *          shuffled
    * @param start
    *          the start index
    * @param count

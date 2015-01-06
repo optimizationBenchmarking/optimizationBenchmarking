@@ -75,18 +75,31 @@ import examples.org.optimizationBenchmarking.utils.bibliography.data.RandomBibli
 import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExample;
 
 /**
+ * <p>
  * An example used to illustrate how documents can be created with the
- * document output API both serial and in parallel. The program takes two
- * parameters: the destination folder and the number of processors to use.
- * Several different document are used in parallel to generate documents.
- * The documents are entirely random, but based on the same seed, and
- * contains examples for all of the available primitives of the API. If
- * more than one processor is specified, then the creation of each of the
- * (nested) sections in a document is launched as a separate
+ * document output API both serial and in parallel.
+ * </p>
+ * <p>
+ * The program takes two parameters: the destination folder and the number
+ * of processors to use. Several different threads may work in parallel to
+ * generate the document. The documents are entirely random, but based on
+ * the same seed, and will (most likely) contain examples for all of the
+ * available primitives of the API.
+ * </p>
+ * <p>
+ * If more than one processor is specified, then the creation of each of
+ * the (nested) sections in a document is launched as a separate
  * {@link java.util.concurrent.RecursiveAction ForkJoinTask}. If only one
  * processor is specified, no parallelization will be performed and all
  * produced documents should look approximately the same, except for
  * necessary adaptation to the underlying output format.
+ * </p>
+ * <p>
+ * The class can be used for testing purposes, in which case the
+ * constructor also receives a timeout parameter. This parameter is a
+ * suggestion and best effort is used to not exceed it, however the actual
+ * runtime may be arbitrarily much longer.
+ * </p>
  */
 public class RandomDocumentExample extends DocumentExample {
 
@@ -989,7 +1002,7 @@ public class RandomDocumentExample extends DocumentExample {
    * @param log
    *          the log stream
    * @param maxTime
-   *          a goal for the maximum runtime
+   *          a goal suggestion for the maximum runtime
    */
   @SuppressWarnings("unchecked")
   public RandomDocumentExample(final IDocument doc, final Random r,

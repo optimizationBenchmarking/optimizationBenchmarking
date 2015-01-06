@@ -50,7 +50,7 @@ final class _RandomDocumentExampleTermination extends Thread {
    * @param autoAllocatedLabels
    *          the list of auto-allocated labels
    * @param maxTime
-   *          the default maximum runtime
+   *          the default maximum runtime <em>suggestion</em>
    */
   _RandomDocumentExampleTermination(
       final ArrayList<ILabel>[] autoAllocatedLabels, final long maxTime) {
@@ -342,6 +342,17 @@ final class _RandomDocumentExampleTermination extends Thread {
           done = true;
         }
         if ((time = System.currentTimeMillis()) >= this.m_end) {
+          // We cannot immediately stop, as there may be allocated labels
+          // which have not yet been used. Ignoring this may lead to errors
+          // in the document (it should not, but let's be sure to make a
+          // consistent example...). However, we can ignore any example
+          // element that has not yet been included, as this may at most
+          // leave some possible example away, i.e., lead to a less
+          // comprehensive example.
+          for (final AtomicBoolean atomic : this.m_done) {
+            atomic.set(true);
+          }
+          this.__checkAllDone();
           done = true;
         }
 
@@ -362,7 +373,9 @@ final class _RandomDocumentExampleTermination extends Thread {
         }
 
         try {
-          this.wait(this.m_end - time);
+          // The timeout may be negative if we have to wait for unused
+          // pre-allocated labels - in this case, wait 1s.
+          this.wait(Math.max(1000L, (this.m_end - time)));
         } catch (final InterruptedException inter) {
           this.m_state = _RandomDocumentExampleTermination.TERMINATED;
           return;
