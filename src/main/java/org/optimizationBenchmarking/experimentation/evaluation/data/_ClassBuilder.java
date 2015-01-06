@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.concurrent.Callable;
 
 import org.optimizationBenchmarking.utils.collections.iterators.InstanceIterator;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
@@ -25,7 +26,6 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.predicates.IPredicate;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
-import org.optimizationBenchmarking.utils.tasks.Task;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -33,7 +33,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * An internal class for constructing the perfect classes for experimental
  * data elements on-the-fly.
  */
-final class _ClassBuilder extends Task<Parser<DataPoint>> implements
+final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     Comparator<Dimension> {
 
   /** the counter */

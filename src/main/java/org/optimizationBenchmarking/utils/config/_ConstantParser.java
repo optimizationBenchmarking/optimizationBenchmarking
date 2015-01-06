@@ -2,9 +2,7 @@ package org.optimizationBenchmarking.utils.config;
 
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.parsers.StringParser;
-import org.optimizationBenchmarking.utils.reflection.GetStaticConstant;
-import org.optimizationBenchmarking.utils.reflection.GetStaticConstantByName;
-import org.optimizationBenchmarking.utils.tasks.Task;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
  * parse a constant
@@ -44,20 +42,20 @@ final class _ConstantParser<T> extends Parser<T> {
   /** {@inheritDoc} */
   @Override
   public final T parseString(final String string) throws Exception {
-    final T t;
-    final Task<T> task;
+    final T fieldValue;
     final String s;
 
     s = StringParser.INSTANCE.parseString(string);
 
     if (this.m_owning == null) {
-      task = new GetStaticConstantByName<>(s, this.m_base);
+      fieldValue = ReflectionUtils.getStaticFieldValueByName(s,
+          this.m_base);
     } else {
-      task = new GetStaticConstant<>(this.m_owning, s, this.m_base);
+      fieldValue = ReflectionUtils.getStaticFieldValue(this.m_owning, s,
+          this.m_base);
     }
-    t = task.call();
-    this.validate(t);
-    return t;
+    this.validate(fieldValue);
+    return fieldValue;
   }
 
   /** {@inheritDoc} */

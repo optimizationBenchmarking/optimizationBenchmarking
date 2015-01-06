@@ -27,7 +27,7 @@ import org.optimizationBenchmarking.utils.parsers.IntParser;
 import org.optimizationBenchmarking.utils.parsers.LongParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.parsers.ShortParser;
-import org.optimizationBenchmarking.utils.reflection.GetStaticConstantByName;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.ITextable;
@@ -502,8 +502,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         this.m_formatFormatter = this.m_cache.get(s);
         if (this.m_formatFormatter == null) {
           try {
-            this.m_formatFormatter = new GetStaticConstantByName<>(s,
-                Object.class).call();
+            this.m_formatFormatter = ReflectionUtils
+                .getStaticFieldValueByName(s, Object.class);
           } catch (NoSuchFieldException | IllegalArgumentException
               | IllegalAccessException | LinkageError
               | ClassNotFoundException | ClassCastException y) {

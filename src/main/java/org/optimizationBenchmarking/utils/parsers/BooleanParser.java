@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.parsers;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.optimizationBenchmarking.utils.reflection.GetStaticConstantByName;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** A parser for a given type */
 public class BooleanParser extends StrictBooleanParser {
@@ -95,7 +95,8 @@ public class BooleanParser extends StrictBooleanParser {
 
         // ok, it is no constant, maybe it is a public static final member?
         try {
-          bool = new GetStaticConstantByName<>(str, Object.class).call();
+          bool = ReflectionUtils.getStaticFieldValueByName(str,
+              Object.class);
           if ((bool != null) && (bool != string) && (bool != str)) {
             retVal = prep.getReturn(this.__parseObjectRaw(bool));
             break checker;

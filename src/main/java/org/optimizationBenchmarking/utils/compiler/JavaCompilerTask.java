@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.ToolProvider;
 
-import org.optimizationBenchmarking.utils.tasks.Task;
-
 /** A compiler task. */
-public class JavaCompilerTask extends Task<ClassLoader> {
+public class JavaCompilerTask implements Callable<ClassLoader> {
 
   /** the sources */
   private final List<JavaFileObject> m_sources;

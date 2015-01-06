@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-import org.optimizationBenchmarking.utils.reflection.GetStaticConstantByName;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.charset.Char;
 
 /** A parser for a given type */
@@ -56,7 +56,7 @@ public class CharParser extends StrictCharParser {
 
       // ok, it is no constant, maybe it is a public static final member?
       try {
-        var = new GetStaticConstantByName<>(str, Object.class).call();
+        var = ReflectionUtils.getStaticFieldValueByName(str, Object.class);
         if ((var != null) && (var != string) && (var != str)) {
           retVal = this.__parseObjectRaw(var);
           break checker;

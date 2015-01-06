@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.parsers.LongParser;
 import org.optimizationBenchmarking.utils.parsers.NumberParser;
 import org.optimizationBenchmarking.utils.parsers.StrictDoubleParser;
 import org.optimizationBenchmarking.utils.parsers.StrictLongParser;
-import org.optimizationBenchmarking.utils.reflection.GetStaticConstantByName;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -142,8 +142,8 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
     try {
       if (parserDesc.indexOf('#') > 0) {
-        parser = new GetStaticConstantByName<>(parserDesc,
-            NumberParser.class).call();
+        parser = ReflectionUtils.getStaticFieldValueByName(parserDesc,
+            NumberParser.class);
       } else {
         parser = ((NumberParser) ((new ClassParser(NumberParser.class)
             .parseString(parserDesc)).newInstance()));

@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.reflection.FindClass;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
  * A parser for classes
@@ -57,7 +57,7 @@ public class ClassParser<T extends Object> extends
       ClassNotFoundException, ClassCastException {
     Class<? extends T> c;
 
-    c = new FindClass<>(string, this.m_base).call();
+    c = ReflectionUtils.findClass(string, this.m_base);
     this.validate(c);
     return c;
   }
@@ -66,7 +66,7 @@ public class ClassParser<T extends Object> extends
   @Override
   public void validate(final Class<? extends T> instance)
       throws ClassCastException, ClassNotFoundException {
-    FindClass.validateSubClass(instance, this.m_base);
+    ReflectionUtils.validateSubClass(instance, this.m_base);
   }
 
   /** {@inheritDoc} */

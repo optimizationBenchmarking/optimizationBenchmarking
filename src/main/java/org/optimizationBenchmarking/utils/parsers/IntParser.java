@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-import org.optimizationBenchmarking.utils.reflection.GetStaticConstantByName;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** A parser for a given type */
 public class IntParser extends StrictIntParser {
@@ -95,8 +95,8 @@ public class IntParser extends StrictIntParser {
           // ok, it is no constant, maybe it is a public static final
           // member?
           try {
-            number = new GetStaticConstantByName<>(str, Object.class)
-                .call();
+            number = ReflectionUtils.getStaticFieldValueByName(str,
+                Object.class);
             if ((number != null) && (number != string) && (number != str)) {
               retVal = prep.getReturn(this.__parseObjectRaw(number));
               break checker;
