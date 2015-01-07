@@ -325,7 +325,7 @@ public final class LoremIpsum {
       final Random rand, final int maxLength) {
     boolean firstText, newSentence;
     int count, lastLength, curLength;
-    String string;
+    String string, lastString;
 
     if (maxLength <= 0) {
       return;
@@ -334,6 +334,8 @@ public final class LoremIpsum {
     firstText = newSentence = true;
     count = 0;
     lastLength = (-1);
+    lastString = null;
+
     do {
       newSentence = true;
       if (firstText) {
@@ -343,12 +345,16 @@ public final class LoremIpsum {
       }
 
       do {
+
+        // pick a word
         do {
           string = LoremIpsum.TEXT[rand.nextInt(LoremIpsum.TEXT.length)];
           curLength = string.length();
-        } while (((lastLength <= 2) && (curLength <= 2)) || //
+        } while ((string == lastString) || //
+            ((lastLength <= 2) && (curLength <= 2)) || //
             (newSentence && (curLength == 2)));
         lastLength = curLength;
+        lastString = string;
 
         if (newSentence) {
           out.append(Character.toUpperCase(string.charAt(0)));
