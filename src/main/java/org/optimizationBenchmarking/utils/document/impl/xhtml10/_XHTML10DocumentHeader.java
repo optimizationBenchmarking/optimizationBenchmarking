@@ -197,13 +197,13 @@ final class _XHTML10DocumentHeader extends DocumentHeader {
     }
 
     out.append(_XHTML10DocumentHeader.META_DESC);
-    enc.append(this.m_description);
+    out.append(this.m_description);
     out.append(XHTML10Driver.EMPTY_ATTRIB_TAG_END);
 
     out.append(_XHTML10DocumentHeader.META_LANG_EN);
 
     out.append(_XHTML10DocumentHeader.TITLE_BEGIN);
-    enc.append(this.m_title);
+    out.append(this.m_title);
     out.append(_XHTML10DocumentHeader.TITLE_END);
 
     out.append(_XHTML10DocumentHeader.HEADER_END_BODY_BEGINS);
@@ -211,13 +211,13 @@ final class _XHTML10DocumentHeader extends DocumentHeader {
     out.append(XHTML10Driver.SECTION_DIV_BEGIN);
     out.append(XHTML10Driver.SECTION_HEAD_DIV_BEGIN);
     out.append(XHTML10Driver.HEADLINE_BEGIN[0]);
-    enc.append(this.m_title);
+    out.append(this.m_title);
     out.append(XHTML10Driver.HEADLINE_END[0]);
     out.append(XHTML10Driver.DIV_END);
     out.append(XHTML10Driver.SECTION_BODY_DIV_BEGIN);
 
     out.append(_XHTML10DocumentHeader.ABSTRACT_DIV_BEGIN);
-    enc.append(this.m_description);
+    out.append(this.m_description);
     out.append(XHTML10Driver.DIV_END);
 
     if ((this.m_authors != null) && (!(this.m_authors.isEmpty()))) {

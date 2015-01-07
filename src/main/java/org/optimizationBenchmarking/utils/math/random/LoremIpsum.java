@@ -1,8 +1,11 @@
 package org.optimizationBenchmarking.utils.math.random;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Random;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -324,20 +327,25 @@ public final class LoremIpsum {
   public static final void appendLoremIpsum(final ITextOutput out,
       final Random rand, final int maxLength) {
     boolean firstText, newSentence;
-    int count, lastLength, curLength;
+    char lastSentenceEnd;
+    int count, lastLength, curLength, sentencePartLength, sentencePartCount;
     String string, lastString;
 
     if (maxLength <= 0) {
       return;
     }
 
-    firstText = newSentence = true;
+    firstText = true;
+    sentencePartCount = sentencePartLength = 0;
     count = 0;
     lastLength = (-1);
     lastString = null;
+    lastSentenceEnd = 0;
 
     do {
+      sentencePartLength = sentencePartCount = 0;
       newSentence = true;
+
       if (firstText) {
         firstText = false;
       } else {
@@ -346,28 +354,97 @@ public final class LoremIpsum {
 
       do {
 
-        // pick a word
+        // pick a word: different from last word
         do {
           string = LoremIpsum.TEXT[rand.nextInt(LoremIpsum.TEXT.length)];
           curLength = string.length();
         } while ((string == lastString) || //
             ((lastLength <= 2) && (curLength <= 2)) || //
-            (newSentence && (curLength == 2)));
+            ((sentencePartLength <= 0) && (curLength == 2)));
         lastLength = curLength;
         lastString = string;
 
         if (newSentence) {
+          // start sentence with capital letter
           out.append(Character.toUpperCase(string.charAt(0)));
-          string = string.substring(1);
+          out.append(string, 1, curLength);
           newSentence = false;
         } else {
-          out.append(' ');
-        }
-        out.append(string);
 
-      } while (((++count) < maxLength) && (rand.nextInt(10) > 0));
-      out.append('.');
-    } while (rand.nextBoolean());
+          // should we split sentence into sub-sentences?
+          if ((sentencePartLength > 3) && (sentencePartCount < 3)) {
+            split: {
+              switcher: switch (rand.nextInt(90)) {
+                case 0:
+                case 1:
+                case 2:
+                case 3: {
+                  out.append(',');
+                  break switcher;
+                }
+                case 4: {
+                  out.append(';');
+                  break switcher;
+                }
+                case 5: {
+                  out.append(':');
+                  break switcher;
+                }
+                case 6: {
+                  out.append(' ');
+                  out.append('\u2012');
+                  break switcher;
+                }
+                default: {
+                  break split;
+                }
+              }
+
+              // ok, sentence was split
+              sentencePartCount++;
+              sentencePartLength = 0;
+            }
+          }
+
+          // append the word inside the sentence
+          out.append(' ');
+          out.append(string);
+        }
+        sentencePartLength++;
+
+      } while (((++count) < maxLength) && //
+          (sentencePartLength < 10) && //
+          ((sentencePartLength <= 3) || (rand.nextInt(10) > 0)));
+
+      // end the sentence
+      switch (rand.nextInt(12)) {
+        case 0: {
+          if (lastSentenceEnd != '!') {
+            out.append('!');
+            lastSentenceEnd = '!';
+            break;
+          }
+        }
+        case 1: {
+          if (lastSentenceEnd != '?') {
+            out.append('?');
+            lastSentenceEnd = '?';
+            break;
+          }
+        }
+        case 2: {
+          if (lastSentenceEnd != '\u2026') {
+            out.append('\u2026');
+            lastSentenceEnd = '\u2026';
+            break;
+          }
+        }
+        default: {
+          out.append('.');
+          lastSentenceEnd = '.';
+        }
+      }
+    } while ((count < maxLength) && (rand.nextInt(4) > 0));
   }
 
   /**
@@ -392,6 +469,36 @@ public final class LoremIpsum {
     }
     LoremIpsum.appendLoremIpsum(out, rand, maxLength);
     return out.toString();
+  }
+
+  /**
+   * Print a lorem ipsum to {@code System.out}.
+   * 
+   * @param args
+   *          ignored
+   * @throws IOException
+   *           this should not happen
+   */
+  public static final void main(final String args[]) throws IOException {
+    final AbstractTextOutput dest;
+    final Random random;
+    int i;
+
+    // the writer is needed, because sometimes System.out does not support
+    // unicode (seemingly)??
+    try (OutputStreamWriter osw = new OutputStreamWriter(System.out)) {
+      dest = AbstractTextOutput.wrap(osw);
+      random = new Random();
+
+      for (i = 0; i < 40; i++) {
+        if (i > 0) {
+          dest.appendLineBreak();
+          dest.appendLineBreak();
+        }
+        LoremIpsum.appendLoremIpsum(dest, random);
+      }
+    }
+    System.out.flush();
   }
 
   /** the forbidden constructor */
