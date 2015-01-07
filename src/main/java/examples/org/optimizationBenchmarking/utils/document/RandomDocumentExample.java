@@ -64,13 +64,13 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokeStyle;
+import org.optimizationBenchmarking.utils.math.random.LoremIpsum;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
-import examples.org.optimizationBenchmarking.LoremIpsum;
 import examples.org.optimizationBenchmarking.utils.bibliography.data.RandomBibliography;
 import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExample;
 

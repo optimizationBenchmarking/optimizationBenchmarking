@@ -5,11 +5,11 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.optimizationBenchmarking.utils.math.random.LoremIpsum;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
-import examples.org.optimizationBenchmarking.LoremIpsum;
 import examples.org.optimizationBenchmarking.utils.io.xml.performance.serializers.SerializationMethod;
 import examples.org.optimizationBenchmarking.utils.io.xml.performance.serializers.XMLStreamWriterSerialization;
 

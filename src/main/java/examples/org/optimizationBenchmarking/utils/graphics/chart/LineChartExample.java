@@ -24,11 +24,11 @@ import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
+import org.optimizationBenchmarking.utils.math.random.LoremIpsum;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.MaximumAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.MinimumAggregate;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
-import examples.org.optimizationBenchmarking.LoremIpsum;
 import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 import examples.org.optimizationBenchmarking.utils.graphics.ColorPaletteExample;
 import examples.org.optimizationBenchmarking.utils.graphics.FontPaletteExample;

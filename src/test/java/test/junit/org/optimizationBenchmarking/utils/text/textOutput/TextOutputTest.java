@@ -6,6 +6,7 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.optimizationBenchmarking.utils.math.random.LoremIpsum;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -13,7 +14,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 import test.junit.TestBase;
-import examples.org.optimizationBenchmarking.LoremIpsum;
 
 /**
  * A base class to test implementations of

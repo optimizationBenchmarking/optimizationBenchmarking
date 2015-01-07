@@ -8,9 +8,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput;
+import org.optimizationBenchmarking.utils.math.random.LoremIpsum;
 import org.optimizationBenchmarking.utils.text.TextUtils;
-
-import examples.org.optimizationBenchmarking.LoremIpsum;
 
 /**
  * A recursive section task.

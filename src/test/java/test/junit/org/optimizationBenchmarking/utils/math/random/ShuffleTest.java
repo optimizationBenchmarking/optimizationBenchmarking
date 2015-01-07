@@ -27,7 +27,7 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 200; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
       arrayA = new byte[arrayLength];
       arrayB = new byte[arrayLength];
 
@@ -72,7 +72,7 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 200; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
       arrayA = new short[arrayLength];
       arrayB = new short[arrayLength];
 
@@ -119,7 +119,7 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 200; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
       arrayA = new int[arrayLength];
       arrayB = new int[arrayLength];
 
@@ -166,7 +166,7 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 200; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
       arrayA = new long[arrayLength];
       arrayB = new long[arrayLength];
 
@@ -213,7 +213,7 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 200; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
       arrayA = new float[arrayLength];
       arrayB = new float[arrayLength];
 
@@ -260,7 +260,7 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 200; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
       arrayA = new double[arrayLength];
       arrayB = new double[arrayLength];
 
@@ -307,7 +307,7 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 200; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
       arrayA = new char[arrayLength];
       arrayB = new char[arrayLength];
 
@@ -354,7 +354,7 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 200; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
       arrayA = new boolean[arrayLength];
       arrayB = new boolean[arrayLength];
 
@@ -401,7 +401,7 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 200; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
       arrayA = new Object[arrayLength];
       arrayB = new Object[arrayLength];
 
