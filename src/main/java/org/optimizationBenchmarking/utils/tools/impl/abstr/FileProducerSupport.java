@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
@@ -51,7 +52,9 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * file producer listener} is fired exactly once when the file producer
  * support is {@link #close() closed} if and only if a
  * {@link org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener}
- * was passed in the constructor.
+ * was passed in the constructor. The event method is called outside of a
+ * synchronized block, i.e., not synchronized. This should make deadlocks
+ * unlikely.
  * </p>
  * <p>
  * All file collections obtained via {@link #getProducedFiles()} or passed
@@ -61,8 +64,16 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * affected by any concurrent or later change of the internally managed
  * file list. The returned collections can safely be stored.
  * </p>
+ * <p>
+ * This class also implements
+ * {@link org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener}
+ * in an efficient way, so you can even stack listeners on top of each
+ * other efficiently. The use case is that sometimes, several file
+ * producing tools are combined to create an output document.
+ * </p>
  */
-public final class FileProducerSupport implements Closeable {
+public final class FileProducerSupport implements Closeable,
+    IFileProducerListener {
 
   /** the created files */
   private volatile LinkedHashMap<Path, IFileType> m_files;
@@ -206,24 +217,12 @@ public final class FileProducerSupport implements Closeable {
    *           if the file producer support has already been
    *           {@link #close() closed}.
    */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public synchronized final ArrayListView<ImmutableAssociation<Path, IFileType>> getProducedFiles() {
     if (!(this.m_open)) {
       throw new IllegalStateException(//
           "File producer support already closed."); //$NON-NLS-1$
     }
-    return this.__get();
-  }
-
-  /**
-   * Get the current collection of created files.
-   * 
-   * @return A collection with all the created files.
-   */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  private final ArrayListView<ImmutableAssociation<Path, IFileType>> __get() {
-    final Map.Entry[] data;
-    Map.Entry entry;
-    int i;
 
     if (this.m_output != null) {
       return this.m_output;
@@ -235,17 +234,32 @@ public final class FileProducerSupport implements Closeable {
     }
 
     if (this.m_files != null) {
-      data = this.m_files.entrySet().toArray(
-          new Map.Entry[this.m_files.size()]);
-      for (i = data.length; (--i) >= 0;) {
-        entry = data[i];
-        data[i] = new ImmutableAssociation(entry.getKey(),
-            entry.getValue());
-      }
-      return (this.m_output = new ArrayListView(data));
+      return (this.m_output = FileProducerSupport.__make(this.m_files));
     }
 
     return ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
+  }
+
+  /**
+   * make the list view for a map
+   * 
+   * @param map
+   *          the map
+   * @return the list view
+   */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  private static final ArrayListView<ImmutableAssociation<Path, IFileType>> __make(
+      final LinkedHashMap<Path, IFileType> map) {
+    final Map.Entry[] data;
+    Map.Entry entry;
+    int i;
+
+    data = map.entrySet().toArray(new Map.Entry[map.size()]);
+    for (i = data.length; (--i) >= 0;) {
+      entry = data[i];
+      data[i] = new ImmutableAssociation(entry.getKey(), entry.getValue());
+    }
+    return new ArrayListView(data);
   }
 
   /**
@@ -254,11 +268,14 @@ public final class FileProducerSupport implements Closeable {
    * onFilesFinalized} method of the specified listener, if such a listener
    * was passed in the constructor.
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings({ "unchecked", "rawtypes", "resource" })
   @Override
   public final void close() {
-    final ArrayListView<ImmutableAssociation<Path, IFileType>> pass;
+    final FileProducerSupport support;
     final IFileProducerListener listener;
+    final LinkedHashMap<Path, IFileType> files;
+    final ArrayListView<ImmutableAssociation<Path, IFileType>> output;
+    final ImmutableAssociation<Path, IFileType> single;
 
     synchronized (this) {
 
@@ -270,20 +287,60 @@ public final class FileProducerSupport implements Closeable {
 
       listener = this.m_listener;
       this.m_listener = null;
-
-      if (listener != null) {
-        pass = this.__get();
-      } else {
-        pass = null;
-      }
-
-      this.m_output = null;
+      files = this.m_files;
       this.m_files = null;
+      output = this.m_output;
+      this.m_output = null;
+      single = this.m_single;
       this.m_single = null;
     }
 
-    if (listener != null) {
-      listener.onFilesFinalized((Collection) pass);
+    if (listener == null) {
+      return;
     }
+
+    if (listener instanceof FileProducerSupport) {
+      support = ((FileProducerSupport) listener);
+      if (single != null) {
+        support.addFile(single);
+        return;
+      }
+      if (output != null) {
+        support.addFiles((Iterable) output);
+        return;
+      }
+      if (files != null) {
+        support.addFiles(files.entrySet());
+        return;
+      }
+      return;
+    }
+
+    if (output != null) {
+      listener.onFilesFinalized((Collection) output);
+      return;
+    }
+
+    if (single != null) {
+      listener.onFilesFinalized(new ArraySetView(
+          new ImmutableAssociation[] { single }));
+      return;
+    }
+
+    if (files != null) {
+      listener.onFilesFinalized((Collection) (//
+          FileProducerSupport.__make(files)));
+      return;
+    }
+
+    listener.onFilesFinalized(//
+        (ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void onFilesFinalized(
+      final Collection<Entry<Path, IFileType>> result) {
+    this.addFiles(result);
   }
 }
