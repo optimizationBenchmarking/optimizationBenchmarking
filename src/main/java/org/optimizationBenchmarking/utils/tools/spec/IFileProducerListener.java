@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.io.IFileType;
 
 /**
  * A listener for
- * {@link org.optimizationBenchmarking.utils.tools.spec.IFileProducerBuilder
+ * {@link org.optimizationBenchmarking.utils.tools.spec.IDocumentProducerBuilder
  * file producing jobs}. It is normal to use one instance of this listener
  * only for a single object/job. This instance will be notified with the
  * list of files that were created during the object's construction.

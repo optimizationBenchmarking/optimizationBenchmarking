@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * An XML I/O job builder.
@@ -17,6 +18,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the data type which can be stored
  */
 public interface IXMLOutputJobBuilder<D> extends ITextOutputJobBuilder<D> {
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLOutputJobBuilder<D> setFileProducerListener(
+      final IFileProducerListener listener);
 
   /** {@inheritDoc} */
   @Override

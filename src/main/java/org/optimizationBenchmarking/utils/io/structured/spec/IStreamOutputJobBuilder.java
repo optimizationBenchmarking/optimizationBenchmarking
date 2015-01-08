@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A stream output job builder.
@@ -15,6 +16,11 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
  */
 public interface IStreamOutputJobBuilder<D> extends
     IFileOutputJobBuilder<D> {
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IStreamOutputJobBuilder<D> setFileProducerListener(
+      final IFileProducerListener listener);
 
   /** {@inheritDoc} */
   @Override

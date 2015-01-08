@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerBuilder;
+import org.optimizationBenchmarking.utils.tools.spec.IDocumentProducerBuilder;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
 
@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
  *          the return type of the setter methods
  */
 public abstract class FileProducerBuilder<J extends IToolJob, R extends FileProducerBuilder<J, R>>
-    extends ToolJobBuilder<J, R> implements IFileProducerBuilder {
+    extends ToolJobBuilder<J, R> implements IDocumentProducerBuilder {
 
   /** the listener */
   protected IFileProducerListener m_listener;

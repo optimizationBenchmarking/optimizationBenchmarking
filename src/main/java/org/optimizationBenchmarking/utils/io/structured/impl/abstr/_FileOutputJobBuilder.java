@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.spec.IFileOutputJobBuilder;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * The class for building file output jobs
@@ -24,6 +25,9 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
 
   /** the destination */
   final _Location m_dest;
+
+  /** the file producer listener */
+  private IFileProducerListener m_listener;
 
   /**
    * create the job builder
@@ -192,7 +196,7 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
   @Override
   final _OutputJob _doCreate() {
     return new _OutputJob(this.m_logger, ((FileOutputTool) (this.m_tool)),
-        this.m_source, this.m_dest);
+        this.m_source, this.m_dest, this.m_listener);
   }
 
   /** {@inheritDoc} */
@@ -244,5 +248,14 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
   @Override
   public final JBT setZIPStream(final OutputStream stream) {
     return this.setStream(stream, null, true);
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
+  @Override
+  public final JBT setFileProducerListener(
+      final IFileProducerListener listener) {
+    this.m_listener = listener;
+    return ((JBT) this);
   }
 }

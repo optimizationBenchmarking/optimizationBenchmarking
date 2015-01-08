@@ -3,12 +3,17 @@ package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.FileProducerSupport;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** the output job */
 final class _OutputJob extends _IOJob {
 
   /** the destination */
-  private final _Location m_dest;
+  final _Location m_dest;
+
+  /** the file producer support */
+  final FileProducerSupport m_support;
 
   /**
    * create the _IOJob
@@ -21,14 +26,25 @@ final class _OutputJob extends _IOJob {
    *          the source data
    * @param dest
    *          the destination
+   * @param listener
+   *          the listener
    */
   _OutputJob(final Logger logger, final FileOutputTool<?> tool,
-      final Object data, final _Location dest) {
+      final Object data, final _Location dest,
+      final IFileProducerListener listener) {
     super(logger, tool, data);
+
     if (dest == null) {
       throw new IllegalArgumentException("Destination must not be null."); //$NON-NLS-1$
     }
     this.m_dest = dest;
+
+    if (listener != null) {
+      this.m_support = new FileProducerSupport(listener);
+    } else {
+      this.m_support = null;
+    }
+
   }
 
   /** {@inheritDoc} */
@@ -44,5 +60,13 @@ final class _OutputJob extends _IOJob {
   final void _appendID(final MemoryTextOutput textOut) {
     super._appendID(textOut);
     _Location._appendLocation(this.m_dest, textOut);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final void _last() {
+    if (this.m_support != null) {
+      this.m_support.close();
+    }
   }
 }

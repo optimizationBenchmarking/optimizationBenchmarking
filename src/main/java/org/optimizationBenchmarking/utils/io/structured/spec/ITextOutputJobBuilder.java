@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A text output job builder.
@@ -17,6 +18,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 public interface ITextOutputJobBuilder<D> extends
     IStreamOutputJobBuilder<D> {
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextOutputJobBuilder<D> setFileProducerListener(
+      final IFileProducerListener listener);
 
   /** {@inheritDoc} */
   @Override

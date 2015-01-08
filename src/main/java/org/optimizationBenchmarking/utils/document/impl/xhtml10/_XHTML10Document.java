@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -167,8 +166,7 @@ final class _XHTML10Document extends Document {
 
     super.onOpen();
 
-    this.addPath(new ImmutableAssociation<Path, IFileType>(this
-        .getDocumentPath(), EDocumentFormat.XHTML_1_0));
+    this.addFile(this.getDocumentPath(), EDocumentFormat.XHTML_1_0);
 
     out = this.getTextOutput();
     out.append(_XHTML10Document.XML_HEADER_BEGIN);
@@ -206,7 +204,7 @@ final class _XHTML10Document extends Document {
   /** {@inheritDoc} */
   @Override
   protected void postProcess(final Set<IStyle> usedStyles,
-      final ArrayListView<Map.Entry<Path, IFileType>> paths) {
+      final ArrayListView<ImmutableAssociation<Path, IFileType>> paths) {
     Path path;
     String s;
     char ch;
@@ -265,8 +263,7 @@ final class _XHTML10Document extends Document {
           ErrorUtils.throwAsRuntimeException(t);
         }
 
-        this.addPath(new ImmutableAssociation<Path, IFileType>(path,
-            EWebFileTypes.CSS));
+        this.addFile(path, EWebFileTypes.CSS);
       }
     } finally {
       super.postProcess(usedStyles, paths);

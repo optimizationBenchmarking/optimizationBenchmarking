@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.DefaultStrokePalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
-import org.optimizationBenchmarking.utils.tools.impl.abstr.FileProducerTool;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerTool;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver}
  * interface.
  */
-public abstract class AbstractGraphicDriver extends FileProducerTool
+public abstract class AbstractGraphicDriver extends DocumentProducerTool
     implements IGraphicDriver {
 
   /** the graphic format managed by this driver */

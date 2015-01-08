@@ -4,11 +4,11 @@ import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerBuilder;
+import org.optimizationBenchmarking.utils.tools.spec.IDocumentProducerBuilder;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** A builder for graphics objects */
-public interface IGraphicBuilder extends IFileProducerBuilder {
+public interface IGraphicBuilder extends IDocumentProducerBuilder {
 
   /** {@inheritDoc} */
   @Override

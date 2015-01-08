@@ -23,12 +23,12 @@ import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.tools.impl.abstr.FileProducerTool;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerTool;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** A document driver. */
-public abstract class DocumentDriver extends FileProducerTool implements
-    IDocumentDriver {
+public abstract class DocumentDriver extends DocumentProducerTool
+    implements IDocumentDriver {
 
   /** create the document driver */
   protected DocumentDriver() {

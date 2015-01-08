@@ -3,13 +3,13 @@ package org.optimizationBenchmarking.utils.document.spec;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerBuilder;
+import org.optimizationBenchmarking.utils.tools.spec.IDocumentProducerBuilder;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A builder for documents.
  */
-public interface IDocumentBuilder extends IFileProducerBuilder {
+public interface IDocumentBuilder extends IDocumentProducerBuilder {
 
   /** {@inheritDoc} */
   @Override

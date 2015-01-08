@@ -49,6 +49,11 @@ abstract class _IOJob extends IOJob implements IIOJob {
    */
   abstract void _doCall() throws Throwable;
 
+  /** this method is called at the end */
+  void _last() {
+    //
+  }
+
   /** {@inheritDoc} */
   @Override
   public final Void call() throws IOException {
@@ -62,6 +67,7 @@ abstract class _IOJob extends IOJob implements IIOJob {
       this._doCall();
       this.m_tool.after(this, this.m_data);
       this.m_token = null;
+      this._last();
 
       if (this.canLog()) {
         this.log("End of I/O"); //$NON-NLS-1$

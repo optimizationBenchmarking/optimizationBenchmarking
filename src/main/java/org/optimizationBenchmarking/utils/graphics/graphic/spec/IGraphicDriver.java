@@ -3,13 +3,13 @@ package org.optimizationBenchmarking.utils.graphics.graphic.spec;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerTool;
+import org.optimizationBenchmarking.utils.tools.spec.IDocumentProducerTool;
 
 /**
  * An interface for graphics drivers, i.e., objects that can create
  * graphics objects.
  */
-public interface IGraphicDriver extends IFileProducerTool {
+public interface IGraphicDriver extends IDocumentProducerTool {
 
   /** {@inheritDoc} */
   @Override

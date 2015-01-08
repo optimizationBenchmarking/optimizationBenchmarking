@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerBuilder;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A file output job builder is a device that may store data into a single
@@ -14,7 +16,13 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
  * @param <D>
  *          the data type which can be stored
  */
-public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D> {
+public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
+    IFileProducerBuilder {
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IFileOutputJobBuilder<D> setFileProducerListener(
+      final IFileProducerListener listener);
 
   /** {@inheritDoc} */
   @Override

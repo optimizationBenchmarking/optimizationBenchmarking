@@ -9,6 +9,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.io.structured.spec.EArchiveType;
 import org.optimizationBenchmarking.utils.io.structured.spec.IStreamOutputJobBuilder;
 import org.optimizationBenchmarking.utils.io.structured.spec.IStreamOutputTool;
 
@@ -49,7 +50,8 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final boolean zipped)
       throws Throwable {
-    Path file;
+    final Path file;
+    final _OutputJob outJob;
 
     if ((attributes != null) && (attributes.isDirectory())) {
       file = PathUtils.createPathInside(
@@ -66,6 +68,21 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
     try (final OutputStream fileOutput = PathUtils.openOutputStream(file)) {
       this._stream(job, data, fileOutput, encoding, zipped);
     }
+
+    if (zipped) {
+      outJob = ((_OutputJob) job);
+      if (outJob.m_support != null) {
+        outJob.m_support.addFile(file, EArchiveType.ZIP);
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void path(final IOJob job, final S data, final Path path,
+      final BasicFileAttributes attributes,
+      final StreamEncoding<?, ?> encoding) throws Throwable {
+    this._path(job, data, path, attributes, encoding, false);
   }
 
   /** {@inheritDoc} */

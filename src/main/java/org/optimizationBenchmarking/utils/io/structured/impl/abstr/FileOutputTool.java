@@ -3,10 +3,13 @@ package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Map;
 
+import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
+import org.optimizationBenchmarking.utils.io.structured.spec.EArchiveType;
 import org.optimizationBenchmarking.utils.io.structured.spec.IFileOutputJobBuilder;
 import org.optimizationBenchmarking.utils.io.structured.spec.IFileOutputTool;
 
@@ -85,7 +88,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
    * @return the default file name
    */
   protected String getDefaultZIPOutputFileName() {
-    return "output.zip"; //$NON-NLS-1$
+    return ("output." + EArchiveType.ZIP.getDefaultSuffix()); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
@@ -94,7 +97,8 @@ public class FileOutputTool<S> extends IOTool<S> implements
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final boolean zipped)
       throws Throwable {
-    Path file;
+    final Path file;
+    final _OutputJob outJob;
 
     if (zipped) {
       if ((attributes != null) && (attributes.isDirectory())) {
@@ -109,6 +113,11 @@ public class FileOutputTool<S> extends IOTool<S> implements
 
       try (final OutputStream output = PathUtils.openOutputStream(path)) {
         this._stream(job, data, output, encoding, true);
+      }
+
+      outJob = ((_OutputJob) job);
+      if (outJob.m_support != null) {
+        outJob.m_support.addFile(file, EArchiveType.ZIP);
       }
     } else {
       this.path(job, data, path, attributes, encoding, false);
@@ -142,5 +151,63 @@ public class FileOutputTool<S> extends IOTool<S> implements
   public IFileOutputJobBuilder<S> use() {
     this.beforeUse();
     return new _FileOutputJobBuilder(this);
+  }
+
+  /**
+   * Add a file to the job's internal list.
+   * 
+   * @param job
+   *          the job
+   * @param path
+   *          the path to the file
+   * @param type
+   *          the file type
+   */
+  protected final void addFile(final IOJob job, final Path path,
+      final IFileType type) {
+    final _OutputJob outJob;
+
+    outJob = ((_OutputJob) job);
+    if ((outJob.m_support != null) && (!(outJob.m_dest.m_zipped))) {
+      outJob.m_support.addFile(path, type);
+    }
+  }
+
+  /**
+   * Add a {@link java.nio.file.Path file}/
+   * {@link org.optimizationBenchmarking.utils.io.IFileType file type}
+   * -association to the job's internal list.
+   * 
+   * @param job
+   *          the job
+   * @param p
+   *          the path to add
+   */
+  protected final void addFile(final IOJob job,
+      final Map.Entry<Path, IFileType> p) {
+    final _OutputJob outJob;
+
+    outJob = ((_OutputJob) job);
+    if ((outJob.m_support != null) && (!(outJob.m_dest.m_zipped))) {
+      outJob.m_support.addFile(p);
+    }
+  }
+
+  /**
+   * Add a set of paths to the job's internal list.
+   * 
+   * @param job
+   *          the job
+   * @param ps
+   *          the paths to add
+   */
+  protected final void addFiles(final IOJob job,
+      final Iterable<Map.Entry<Path, IFileType>> ps) {
+    final _OutputJob outJob;
+
+    outJob = ((_OutputJob) job);
+    if ((outJob.m_support != null) && (!(outJob.m_dest.m_zipped))) {
+      outJob.m_support.addFiles(ps);
+    }
   }
 }
