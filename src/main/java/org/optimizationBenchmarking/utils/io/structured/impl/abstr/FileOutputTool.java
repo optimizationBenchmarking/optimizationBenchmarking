@@ -5,11 +5,11 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Map;
 
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
-import org.optimizationBenchmarking.utils.io.structured.spec.EArchiveType;
 import org.optimizationBenchmarking.utils.io.structured.spec.IFileOutputJobBuilder;
 import org.optimizationBenchmarking.utils.io.structured.spec.IFileOutputTool;
 
@@ -74,7 +74,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
       try (final TempDir temp = new TempDir()) {
         path = temp.getPath();
         this._pathNormalized(job, data, temp.getPath(), encoding, false);
-        PathUtils.zipToStream(path, stream);
+        EArchiveType.ZIP.compressPathToStream(path, stream);
       }
     } else {
       this._checkRawStreams();

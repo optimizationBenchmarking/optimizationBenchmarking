@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
@@ -196,7 +197,7 @@ public class FileInputTool<S> extends IOTool<S> implements
             ((("Begin unzipping to temporary folder '" //$NON-NLS-1$
             + path) + '\'') + '.'));
       }
-      PathUtils.unzipToFolder(stream, path);
+      EArchiveType.ZIP.decompressStreamToFolder(stream, path);
       if (job.canLog(IOJob.FINE_LOG_LEVEL)) {
         job.log(IOJob.FINE_LOG_LEVEL,
             ((("Finished unzipping to temporary folder '" //$NON-NLS-1$

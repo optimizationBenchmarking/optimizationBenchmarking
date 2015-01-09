@@ -75,20 +75,29 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 public final class FileProducerSupport implements Closeable,
     IFileProducerListener {
 
-  /** the created files */
+  /**
+   * the map of files if more than one was produced (otherwise,
+   * {@link #m_single} is used
+   */
   private volatile LinkedHashMap<Path, IFileType> m_files;
 
-  /** the immutable wrapped around {@link #m_files} */
+  /**
+   * the immutable array list view wrapped around {@link #m_files} or
+   * {@link #m_single}
+   */
   private volatile ArrayListView<ImmutableAssociation<Path, IFileType>> m_output;
 
   /** the listener, or {@code null} if none was specified */
   private volatile IFileProducerListener m_listener;
 
-  /** an assocation used for single files */
+  /**
+   * an association used instead of {@link #m_files} if only single files
+   * were produced
+   */
   private volatile ImmutableAssociation<Path, IFileType> m_single;
 
-  /** are we open? */
-  private volatile boolean m_open;
+  /** are we closed? */
+  private volatile boolean m_closed;
 
   /**
    * create
@@ -98,7 +107,6 @@ public final class FileProducerSupport implements Closeable,
    */
   public FileProducerSupport(final IFileProducerListener listener) {
     super();
-    this.m_open = true;
   }
 
   /**
@@ -144,7 +152,7 @@ public final class FileProducerSupport implements Closeable,
     }
 
     synchronized (this) {
-      if (!this.m_open) {
+      if (this.m_closed) {
         throw new IllegalStateException("Cannot add path '" + //$NON-NLS-1$
             normalized + " of type " + type + //$NON-NLS-1$
             ", because file producer support already closed.");//$NON-NLS-1$
@@ -219,7 +227,7 @@ public final class FileProducerSupport implements Closeable,
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public synchronized final ArrayListView<ImmutableAssociation<Path, IFileType>> getProducedFiles() {
-    if (!(this.m_open)) {
+    if (this.m_closed) {
       throw new IllegalStateException(//
           "File producer support already closed."); //$NON-NLS-1$
     }
@@ -279,11 +287,10 @@ public final class FileProducerSupport implements Closeable,
 
     synchronized (this) {
 
-      if (this.m_open) {
-        this.m_open = false;
-      } else {
+      if (this.m_closed) {
         return;
       }
+      this.m_closed = true;
 
       listener = this.m_listener;
       this.m_listener = null;

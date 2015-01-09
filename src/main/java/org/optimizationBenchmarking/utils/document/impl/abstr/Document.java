@@ -303,7 +303,7 @@ public class Document extends DocumentElement implements IDocument {
    * @param type
    *          the file type
    */
-  public final void addFile(final Path path, final IFileType type) {
+  protected final void addFile(final Path path, final IFileType type) {
     this.m_paths.addFile(path, type);
   }
 

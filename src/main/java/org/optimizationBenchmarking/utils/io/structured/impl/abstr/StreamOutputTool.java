@@ -7,9 +7,9 @@ import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
-import org.optimizationBenchmarking.utils.io.structured.spec.EArchiveType;
 import org.optimizationBenchmarking.utils.io.structured.spec.IStreamOutputJobBuilder;
 import org.optimizationBenchmarking.utils.io.structured.spec.IStreamOutputTool;
 
