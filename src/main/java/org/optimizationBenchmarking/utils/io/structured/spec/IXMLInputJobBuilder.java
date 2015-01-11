@@ -8,6 +8,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.xml.sax.InputSource;
 
@@ -30,7 +31,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLInputJobBuilder<D> addPath(final Path path,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -39,7 +40,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLInputJobBuilder<D> addFile(final File file,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -48,7 +49,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLInputJobBuilder<D> addPath(final String path,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -57,7 +58,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLInputJobBuilder<D> addFile(final String file,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -67,7 +68,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   @Override
   public abstract IXMLInputJobBuilder<D> addStream(
       final InputStream stream, final StreamEncoding<?, ?> encoding,
-      final boolean isZipCompressed);
+      final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -77,7 +78,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   @Override
   public abstract IXMLInputJobBuilder<D> addResource(final Class<?> clazz,
       final String name, final StreamEncoding<?, ?> encoding,
-      final boolean isZipCompressed);
+      final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -88,7 +89,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   @Override
   public abstract IXMLInputJobBuilder<D> addResource(final String clazz,
       final String name, final StreamEncoding<?, ?> encoding,
-      final boolean isZipCompressed);
+      final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -98,7 +99,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLInputJobBuilder<D> addURI(final URI uri,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -107,7 +108,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLInputJobBuilder<D> addURL(final URL url,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -116,7 +117,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLInputJobBuilder<D> addURI(final String uri,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -125,7 +126,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLInputJobBuilder<D> addURL(final String url,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -147,69 +148,75 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPStream(
-      final InputStream stream, final StreamEncoding<?, ?> encoding);
+  public abstract IXMLInputJobBuilder<D> addArchiveStream(
+      final InputStream stream, final StreamEncoding<?, ?> encoding,
+      final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPStream(
-      final InputStream stream);
+  public abstract IXMLInputJobBuilder<D> addArchiveStream(
+      final InputStream stream, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPResource(
+  public abstract IXMLInputJobBuilder<D> addArchiveResource(
       final Class<?> clazz, final String name,
-      final StreamEncoding<?, ?> encoding);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPResource(
-      final Class<?> clazz, final String name);
+  public abstract IXMLInputJobBuilder<D> addArchiveResource(
+      final Class<?> clazz, final String name,
+      final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPResource(
+  public abstract IXMLInputJobBuilder<D> addArchiveResource(
       final String clazz, final String name,
-      final StreamEncoding<?, ?> encoding);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPResource(
-      final String clazz, final String name);
+  public abstract IXMLInputJobBuilder<D> addArchiveResource(
+      final String clazz, final String name, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPURI(final URI uri,
-      final StreamEncoding<?, ?> encoding);
+  public abstract IXMLInputJobBuilder<D> addArchiveURI(final URI uri,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPURI(final URI uri);
+  public abstract IXMLInputJobBuilder<D> addArchiveURI(final URI uri,
+      final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPURL(final URL url,
-      final StreamEncoding<?, ?> encoding);
+  public abstract IXMLInputJobBuilder<D> addArchiveURL(final URL url,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPURL(final URL url);
+  public abstract IXMLInputJobBuilder<D> addArchiveURL(final URL url,
+      final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPURI(final String uri,
-      final StreamEncoding<?, ?> encoding);
+  public abstract IXMLInputJobBuilder<D> addArchiveURI(final String uri,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPURI(final String uri);
+  public abstract IXMLInputJobBuilder<D> addArchiveURI(final String uri,
+      final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPURL(final String url,
-      final StreamEncoding<?, ?> encoding);
+  public abstract IXMLInputJobBuilder<D> addArchiveURL(final String url,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLInputJobBuilder<D> addZIPURL(final String url);
+  public abstract IXMLInputJobBuilder<D> addArchiveURL(final String url,
+      final EArchiveType archiveType);
 }

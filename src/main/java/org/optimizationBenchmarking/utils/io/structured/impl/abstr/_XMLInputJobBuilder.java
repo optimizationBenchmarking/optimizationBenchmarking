@@ -34,7 +34,7 @@ class _XMLInputJobBuilder<DT, JBT extends _XMLInputJobBuilder<DT, JBT>>
       throw new IllegalArgumentException("InputSource cannot be null."); //$NON-NLS-1$
     }
     this.m_sources.add(new _Location(source, null, StreamEncoding.UNKNOWN,
-        false));
+        null));
     return ((JBT) this);
   }
 }

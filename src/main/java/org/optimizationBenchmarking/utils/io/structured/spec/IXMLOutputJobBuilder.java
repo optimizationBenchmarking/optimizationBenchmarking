@@ -6,6 +6,7 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -35,7 +36,7 @@ public interface IXMLOutputJobBuilder<D> extends ITextOutputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLOutputJobBuilder<D> setPath(final Path path,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -44,7 +45,7 @@ public interface IXMLOutputJobBuilder<D> extends ITextOutputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLOutputJobBuilder<D> setFile(final File file,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -53,7 +54,7 @@ public interface IXMLOutputJobBuilder<D> extends ITextOutputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLOutputJobBuilder<D> setPath(final String path,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -62,7 +63,7 @@ public interface IXMLOutputJobBuilder<D> extends ITextOutputJobBuilder<D> {
   /** {@inheritDoc} */
   @Override
   public abstract IXMLOutputJobBuilder<D> setFile(final String file,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -72,7 +73,7 @@ public interface IXMLOutputJobBuilder<D> extends ITextOutputJobBuilder<D> {
   @Override
   public abstract IXMLOutputJobBuilder<D> setStream(
       final OutputStream stream, final StreamEncoding<?, ?> encoding,
-      final boolean zipCompress);
+      final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -81,13 +82,14 @@ public interface IXMLOutputJobBuilder<D> extends ITextOutputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLOutputJobBuilder<D> setZIPStream(
-      final OutputStream stream, final StreamEncoding<?, ?> encoding);
+  public abstract IXMLOutputJobBuilder<D> setArchiveStream(
+      final OutputStream stream, final StreamEncoding<?, ?> encoding,
+      final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
-  public abstract IXMLOutputJobBuilder<D> setZIPStream(
-      final OutputStream stream);
+  public abstract IXMLOutputJobBuilder<D> setArchiveStream(
+      final OutputStream stream, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override

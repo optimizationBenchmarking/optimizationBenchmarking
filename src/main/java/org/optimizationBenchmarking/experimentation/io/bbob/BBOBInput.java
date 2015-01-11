@@ -1033,13 +1033,8 @@ public class BBOBInput extends FileInputTool<ExperimentSetContext> {
   @Override
   protected void path(final IOJob job, final ExperimentSetContext data,
       final Path path, final BasicFileAttributes attributes,
-      final StreamEncoding<?, ?> encoding, final boolean zipped)
-      throws Throwable {
-    if (zipped) {
-      super.path(job, data, path, attributes, encoding, zipped);
-    } else {
-      new _BBOBHandler(job, data)._handle(path);
-    }
+      final StreamEncoding<?, ?> encoding) throws Throwable {
+    new _BBOBHandler(job, data)._handle(path);
   }
 
   /** {@inheritDoc} */

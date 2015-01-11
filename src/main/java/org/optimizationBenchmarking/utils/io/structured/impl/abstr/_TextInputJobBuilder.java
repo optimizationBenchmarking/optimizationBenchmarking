@@ -35,7 +35,7 @@ class _TextInputJobBuilder<DT, JBT extends _TextInputJobBuilder<DT, JBT>>
       throw new IllegalArgumentException("Source Reader cannot be null."); //$NON-NLS-1$
     }
     this.m_sources.add(new _Location(reader, null, StreamEncoding.UNKNOWN,
-        false));
+        null));
     return ((JBT) this);
   }
 }

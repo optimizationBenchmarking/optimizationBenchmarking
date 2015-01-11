@@ -3,9 +3,6 @@ package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.zip.Deflater;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
@@ -48,7 +45,7 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
   @Override
   final void _path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
-      final StreamEncoding<?, ?> encoding, final boolean zipped)
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
       throws Throwable {
     final Path file;
     final _OutputJob outJob;
@@ -56,8 +53,10 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
     if ((attributes != null) && (attributes.isDirectory())) {
       file = PathUtils.createPathInside(
           path,
-          (zipped ? this.getDefaultZIPOutputFileName() : this
-              .getDefaultPlainOutputFileName()));
+          ((archiveType != null) ? //
+          (this.getArchiveFallbackFileName() + '.' + archiveType
+              .getDefaultSuffix()) : //
+              this.getDefaultPlainOutputFileName()));
       job.log("Path '" + path + //$NON-NLS-1$
           "' identifies a directory, creating file '" //$NON-NLS-1$
           + file + "' for output.");//$NON-NLS-1$
@@ -66,13 +65,13 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
     }
 
     try (final OutputStream fileOutput = PathUtils.openOutputStream(file)) {
-      this._stream(job, data, fileOutput, encoding, zipped);
+      this._stream(job, data, fileOutput, encoding, archiveType);
     }
 
-    if (zipped) {
+    if (archiveType != null) {
       outJob = ((_OutputJob) job);
       if (outJob.m_support != null) {
-        outJob.m_support.addFile(file, EArchiveType.ZIP);
+        outJob.m_support.addFile(file, archiveType);
       }
     }
   }
@@ -82,28 +81,26 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
   protected void path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding) throws Throwable {
-    this._path(job, data, path, attributes, encoding, false);
+    this._path(job, data, path, attributes, encoding, null);
   }
 
   /** {@inheritDoc} */
   @Override
   final void _stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding,
-      final boolean zipCompress) throws Throwable {
+      final EArchiveType archiveType) throws Throwable {
     String name;
 
-    if (zipCompress) {
+    if (archiveType != null) {
       name = this.getDefaultPlainOutputFileName();
       if (job.canLog()) {
-        job.log("Creating ZIP-compressed output with file '" + name //$NON-NLS-1$
+        job.log("Creating " + archiveType.getName() + //$NON-NLS-1$
+            " output with file '" + name //$NON-NLS-1$
             + "' as the data (and only) file in the compressed stream."); //$NON-NLS-1$
       }
-      try (final ZipOutputStream zipStream = new ZipOutputStream(stream)) {
-        zipStream.setMethod(ZipOutputStream.DEFLATED);
-        zipStream.setLevel(Deflater.BEST_COMPRESSION);
-        zipStream.putNextEntry(new ZipEntry(name));
-        this.__stream(job, data, zipStream, encoding);
-        zipStream.closeEntry();
+      try (final OutputStream output = archiveType.compressStream(stream,
+          this.getArchiveFallbackFileName())) {
+        this.__stream(job, data, output, encoding);
       }
     } else {
       this.__stream(job, data, stream, encoding);

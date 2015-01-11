@@ -33,14 +33,14 @@ public class FileOutputTool<S> extends IOTool<S> implements
       throws Throwable {
 
     if (location.m_location1 instanceof OutputStream) {
-      if (!(location.m_zipped)) {
+      if (location.m_archiveType == null) {
         this._checkRawStreams();
       }
       if (job.canLog()) {
         job.log("Beginning output to OutputStream."); //$NON-NLS-1$
       }
       this._stream(job, data, ((OutputStream) (location.m_location1)),
-          location.m_encoding, location.m_zipped);
+          location.m_encoding, location.m_archiveType);
       if (job.canLog()) {
         job.log("Finished output to OutputStream."); //$NON-NLS-1$
       }
@@ -61,20 +61,20 @@ public class FileOutputTool<S> extends IOTool<S> implements
    *          the stream
    * @param encoding
    *          the encoding
-   * @param zipCompress
-   *          should we ZIP-compress?
+   * @param archiveType
+   *          the archive type to use
    * @throws Throwable
    */
   void _stream(final IOJob job, final S data, final OutputStream stream,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress)
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
       throws Throwable {
     final Path path;
 
-    if (zipCompress) {
+    if (archiveType != null) {
       try (final TempDir temp = new TempDir()) {
         path = temp.getPath();
-        this._pathNormalized(job, data, temp.getPath(), encoding, false);
-        EArchiveType.ZIP.compressPathToStream(path, stream);
+        this._pathNormalized(job, data, temp.getPath(), encoding, null);
+        archiveType.compressPathToStream(path, stream);
       }
     } else {
       this._checkRawStreams();
@@ -82,62 +82,67 @@ public class FileOutputTool<S> extends IOTool<S> implements
   }
 
   /**
-   * Obtain the default name for a zipped file to write to if the
-   * destination path specifies a directory
+   * Get the default archive name
    * 
-   * @return the default file name
+   * @return the default archive name
    */
-  protected String getDefaultZIPOutputFileName() {
-    return ("output." + EArchiveType.ZIP.getDefaultSuffix()); //$NON-NLS-1$
+  protected String getDefaultArchiveName() {
+    return "data"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
   @Override
   void _path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
-      final StreamEncoding<?, ?> encoding, final boolean zipped)
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
       throws Throwable {
-    final Path file;
+    final Path file, tempDir;
     final _OutputJob outJob;
 
-    if (zipped) {
+    if (archiveType != null) {
       if ((attributes != null) && (attributes.isDirectory())) {
-        file = PathUtils.createPathInside(path,
-            this.getDefaultZIPOutputFileName());
+        file = PathUtils.createPathInside(path, (this
+            .getDefaultArchiveName() + '.' + archiveType
+            .getDefaultSuffix()));
         job.log("Path '" + path + //$NON-NLS-1$
-            "' identifies a directory, creating file '" //$NON-NLS-1$
+            "' identifies a directory, creating archive file '" //$NON-NLS-1$
             + file + "' for output.");//$NON-NLS-1$
       } else {
         file = path;
       }
 
       try (final OutputStream output = PathUtils.openOutputStream(path)) {
-        this._stream(job, data, output, encoding, true);
+        try (final TempDir temp = new TempDir()) {
+          tempDir = temp.getPath();
+          this.path(job, data, tempDir, attributes, encoding);
+          archiveType.compressPathToStream(tempDir, output);
+        }
       }
 
       outJob = ((_OutputJob) job);
       if (outJob.m_support != null) {
-        outJob.m_support.addFile(file, EArchiveType.ZIP);
+        outJob.m_support.addFile(file, archiveType);
       }
     } else {
-      this.path(job, data, path, attributes, encoding, false);
+      this.path(job, data, path, attributes, encoding);
     }
   }
 
   /**
-   * Handle a path
+   * Write the output to the given path.
    * 
    * @param job
-   *          the job where logging info can be written
+   *          the job
    * @param data
-   *          the data to be written or read
+   *          the data to be written
    * @param path
-   *          the path
+   *          the path to write to (may be a folder or a file)
    * @param attributes
    *          the attributes
    * @param encoding
-   *          the encoding
+   *          the encoding to use
    * @throws Throwable
+   *           if i/o fails
    */
   protected void path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
@@ -168,7 +173,8 @@ public class FileOutputTool<S> extends IOTool<S> implements
     final _OutputJob outJob;
 
     outJob = ((_OutputJob) job);
-    if ((outJob.m_support != null) && (!(outJob.m_dest.m_zipped))) {
+    if ((outJob.m_support != null)
+        && (outJob.m_dest.m_archiveType == null)) {
       outJob.m_support.addFile(path, type);
     }
   }
@@ -188,7 +194,8 @@ public class FileOutputTool<S> extends IOTool<S> implements
     final _OutputJob outJob;
 
     outJob = ((_OutputJob) job);
-    if ((outJob.m_support != null) && (!(outJob.m_dest.m_zipped))) {
+    if ((outJob.m_support != null)
+        && (outJob.m_dest.m_archiveType == null)) {
       outJob.m_support.addFile(p);
     }
   }
@@ -206,7 +213,8 @@ public class FileOutputTool<S> extends IOTool<S> implements
     final _OutputJob outJob;
 
     outJob = ((_OutputJob) job);
-    if ((outJob.m_support != null) && (!(outJob.m_dest.m_zipped))) {
+    if ((outJob.m_support != null)
+        && (outJob.m_dest.m_archiveType == null)) {
       outJob.m_support.addFiles(ps);
     }
   }

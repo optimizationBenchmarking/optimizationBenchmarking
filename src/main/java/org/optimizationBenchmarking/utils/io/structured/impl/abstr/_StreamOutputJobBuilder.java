@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 
 import java.io.OutputStream;
 
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.spec.IStreamOutputJobBuilder;
 
@@ -30,13 +31,13 @@ class _StreamOutputJobBuilder<DT, JBT extends _StreamOutputJobBuilder<DT, JBT>>
   /** {@inheritDoc} */
   @Override
   public final JBT setStream(final OutputStream stream,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
-    return super.setStream(stream, encoding, zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    return super.setStream(stream, encoding, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
   public final JBT setStream(final OutputStream stream) {
-    return this.setStream(stream, null, false);
+    return this.setStream(stream, null, null);
   }
 }

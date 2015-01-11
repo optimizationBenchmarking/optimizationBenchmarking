@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
@@ -33,7 +34,7 @@ public interface IStreamOutputJobBuilder<D> extends
   /** {@inheritDoc} */
   @Override
   public abstract IStreamOutputJobBuilder<D> setPath(final Path path,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -42,7 +43,7 @@ public interface IStreamOutputJobBuilder<D> extends
   /** {@inheritDoc} */
   @Override
   public abstract IStreamOutputJobBuilder<D> setFile(final File file,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -51,7 +52,7 @@ public interface IStreamOutputJobBuilder<D> extends
   /** {@inheritDoc} */
   @Override
   public abstract IStreamOutputJobBuilder<D> setPath(final String path,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -60,7 +61,7 @@ public interface IStreamOutputJobBuilder<D> extends
   /** {@inheritDoc} */
   @Override
   public abstract IStreamOutputJobBuilder<D> setFile(final String file,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /** {@inheritDoc} */
   @Override
@@ -75,13 +76,13 @@ public interface IStreamOutputJobBuilder<D> extends
    * @param encoding
    *          a stream encoding to use ({@code null} if not specified or
    *          not necessary)
-   * @param zipCompress
-   *          Should the output be compressed into a single ZIP archive?
+   * @param archiveType
+   *          if the output should be put into an archive
    * @return this builder
    */
   public abstract IStreamOutputJobBuilder<D> setStream(
       final OutputStream stream, final StreamEncoding<?, ?> encoding,
-      final boolean zipCompress);
+      final EArchiveType archiveType);
 
   /**
    * Set the stream to write to, using the default encoding and no ZIP
@@ -96,30 +97,35 @@ public interface IStreamOutputJobBuilder<D> extends
 
   /**
    * Equivalent to
-   * {@link #setStream(OutputStream, StreamEncoding, boolean)
-   * setStream(stream, encoding, true)}
+   * {@link #setStream(OutputStream, StreamEncoding, EArchiveType)
+   * setStream(stream, encoding, archiveType)}
    * 
    * @param stream
    *          the stream to write the output to
    * @param encoding
    *          a stream encoding to use ({@code null} if not specified or
    *          not necessary)
+   * @param archiveType
+   *          the archive type
    * @return this builder
    */
   @Override
-  public abstract IStreamOutputJobBuilder<D> setZIPStream(
-      final OutputStream stream, final StreamEncoding<?, ?> encoding);
+  public abstract IStreamOutputJobBuilder<D> setArchiveStream(
+      final OutputStream stream, final StreamEncoding<?, ?> encoding,
+      final EArchiveType archiveType);
 
   /**
    * Equivalent to
-   * {@link #setStream(OutputStream, StreamEncoding, boolean)
-   * setStream(stream, null, true)}
+   * {@link #setStream(OutputStream, StreamEncoding, EArchiveType)
+   * setStream(stream, null, archiveType)}
    * 
    * @param stream
    *          the stream to write the output to
+   * @param archiveType
+   *          the archive type
    * @return this builder
    */
   @Override
-  public abstract IStreamOutputJobBuilder<D> setZIPStream(
-      final OutputStream stream);
+  public abstract IStreamOutputJobBuilder<D> setArchiveStream(
+      final OutputStream stream, final EArchiveType archiveType);
 }

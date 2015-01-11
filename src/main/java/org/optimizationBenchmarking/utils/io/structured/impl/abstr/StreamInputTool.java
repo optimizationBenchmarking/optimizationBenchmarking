@@ -64,7 +64,7 @@ public class StreamInputTool<S> extends FileInputTool<S> implements
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding) throws Throwable {
     try (final InputStream input = PathUtils.openInputStream(path)) {
-      this._stream(job, data, input, encoding, false);
+      this._stream(job, data, input, encoding, null);
     }
   }
 }

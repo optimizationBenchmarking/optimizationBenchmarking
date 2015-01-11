@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.spec.IIOJob;
 import org.optimizationBenchmarking.utils.io.structured.spec.IIOJobBuilder;
@@ -63,22 +64,22 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
     }
 
     if (IOTool.PATH_ELEMENT.equalsIgnoreCase(function)) {
-      this._setPath(parameter, null, false);
+      this._setPath(parameter, null, null);
       return;
     }
 
     if (IOTool.ZIPPED_PATH_ELEMENT.equalsIgnoreCase(function)) {
-      this._setPath(parameter, null, true);
+      this._setPath(parameter, null, EArchiveType.ZIP);
       return;
     }
 
     if (IOTool.ZIPPED_URI_ELEMENT.equalsIgnoreCase(function)) {
-      this._setURI(parameter, null, true);
+      this._setURI(parameter, null, EArchiveType.ZIP);
       return;
     }
 
     if (IOTool.ZIPPED_URL_ELEMENT.equalsIgnoreCase(function)) {
-      this._setURL(parameter, null, true);
+      this._setURL(parameter, null, EArchiveType.ZIP);
       return;
     }
 
@@ -94,11 +95,11 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
    *          the path
    * @param encoding
    *          the encoding
-   * @param zipCompress
-   *          zip compress?
+   * @param archiveType
+   *          the archive type
    */
   abstract void _setPath(final String path,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /**
    * Set the uri
@@ -107,11 +108,11 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
    *          the uri
    * @param encoding
    *          the encoding
-   * @param zipCompress
-   *          zip compress?
+   * @param archiveType
+   *          the archive type
    */
   abstract void _setURI(final String uri,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /**
    * Set the url
@@ -120,11 +121,11 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
    *          the url
    * @param encoding
    *          the encoding
-   * @param zipCompress
-   *          zip compress?
+   * @param archiveType
+   *          the archive type
    */
   abstract void _setURL(final String url,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /**
    * validate the tool

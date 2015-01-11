@@ -16,12 +16,33 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
- * The archive types supported by the structured I/O API. In the future,
- * the Boolean "isZipCompressed" parameters of many of the output and input
- * job builders will be redesigned to take an argument of this type here
- * instead.
+ * <p>
+ * The archive types supported by the structured I/O API.
+ * </p>
+ * <p>
+ * Archive types may support building full file system structures inside an
+ * archive. The {@link #ZIP} format does this, for instance. Other archive
+ * types, such as {@link #GZIP}, may only support single compressed data
+ * streams.
+ * </p>
+ * <p>
+ * If full file system structures are supported, the
+ * {@link #compressPathToStream(Path, OutputStream)} and
+ * {@link #decompressStreamToFolder(InputStream, Path, String)} methods
+ * allow for the compression and decompression of such structures from the
+ * actual file system. Otherwise, if no file structure is permitted in an
+ * archive, then these methods will merge all compressed files into one
+ * single stream or extract the stream into a single file.
+ * </p>
+ * <p>
+ * If single data streams are supported, it is possible to store a single
+ * stream of data into another stream. If file system structures inside the
+ * archive are required, then an archive with a single file inside will be
+ * created to host the stream.
+ * </p>
  */
 public enum EArchiveType implements IFileType {
 
@@ -64,8 +85,8 @@ public enum EArchiveType implements IFileType {
     /** {@inheritDoc} */
     @Override
     public final void decompressStreamToFolder(
-        final InputStream sourceStream, final Path destFolder)
-        throws IOException {
+        final InputStream sourceStream, final Path destFolder,
+        final String fallbackFileName) throws IOException {
 
       final Path res;
       Path out;
@@ -109,9 +130,11 @@ public enum EArchiveType implements IFileType {
 
     /** {@inheritDoc} */
     @Override
-    public final OutputStream compressStream(final OutputStream destination)
+    public final OutputStream compressStream(
+        final OutputStream destination, final String fallbackFileName)
         throws IOException {
-      return new __ZipOutputStream(destination);
+      return new __ZipOutputStream(destination,
+          EArchiveType._fallback(fallbackFileName));
     }
 
     /** {@inheritDoc} */
@@ -162,21 +185,24 @@ public enum EArchiveType implements IFileType {
     /** {@inheritDoc} */
     @Override
     public final void decompressStreamToFolder(
-        final InputStream sourceStream, final Path destFolder)
-        throws IOException {
+        final InputStream sourceStream, final Path destFolder,
+        final String fallbackFileName) throws IOException {
 
       final Path res;
 
       res = PathUtils.normalize(destFolder);
       try (final GZIPInputStream zis = new GZIPInputStream(sourceStream)) {
-        Files.copy(zis,
-            PathUtils.createPathInside(res, EArchiveType.SINGULAR_FILE));
+        Files.copy(
+            zis,
+            PathUtils.createPathInside(res,
+                EArchiveType._fallback(fallbackFileName)));
       }
     }
 
     /** {@inheritDoc} */
     @Override
-    public final OutputStream compressStream(final OutputStream destination)
+    public final OutputStream compressStream(
+        final OutputStream destination, final String fallbackFileName)
         throws IOException {
       return new GZIPOutputStream(destination);
     }
@@ -191,10 +217,18 @@ public enum EArchiveType implements IFileType {
   };
 
   /**
-   * the singular file name for archive types which only support streams
-   * but no file structures
+   * get a fall back file name
+   * 
+   * @param fallbackFileName
+   *          the suggestion
+   * @return the name
    */
-  private static final String SINGULAR_FILE = "data"; //$NON-NLS-1$
+  static final String _fallback(final String fallbackFileName) {
+    final String name;
+
+    name = TextUtils.normalize(fallbackFileName);
+    return ((name != null) ? name : "data"); //$NON-NLS-1$
+  }
 
   /**
    * Compress a single file or a whole folder structure to an output
@@ -217,12 +251,16 @@ public enum EArchiveType implements IFileType {
    *          the source stream
    * @param destFolder
    *          the destination folder
+   * @param fallbackFileName
+   *          if the archive format only supports single streams and no
+   *          file systems, then a single file of this name is created in
+   *          the destination folder
    * @throws IOException
    *           if I/O fails
    */
   public abstract void decompressStreamToFolder(
-      final InputStream sourceStream, final Path destFolder)
-      throws IOException;
+      final InputStream sourceStream, final Path destFolder,
+      final String fallbackFileName) throws IOException;
 
   /**
    * Create an archive only containing a single file or data stream and
@@ -231,13 +269,18 @@ public enum EArchiveType implements IFileType {
    * @param destination
    *          the output stream to which the compressed output will be
    *          written
+   * @param fallbackFileName
+   *          if the archive format requires creating a file system
+   *          structure inside the archive, then a single file of this name
+   *          will be created
    * @return the wrapped (archived) stream to which uncompressed data can
    *         be written
    * @throws IOException
    *           if I/O fails
    */
   public abstract OutputStream compressStream(
-      final OutputStream destination) throws IOException;
+      final OutputStream destination, final String fallbackFileName)
+      throws IOException;
 
   /**
    * Open a single stream from an archive an load its data
@@ -346,13 +389,16 @@ public enum EArchiveType implements IFileType {
      * 
      * @param out
      *          the destination stream
+     * @param fallbackFileName
+     *          the file name to use
      * @throws IOException
      *           if I/O fails
      */
-    __ZipOutputStream(final OutputStream out) throws IOException {
+    __ZipOutputStream(final OutputStream out, final String fallbackFileName)
+        throws IOException {
       super();
       this.m_zos = EArchiveType._makeZipOutputStream(out);
-      this.m_zos.putNextEntry(new ZipEntry(EArchiveType.SINGULAR_FILE));
+      this.m_zos.putNextEntry(new ZipEntry(fallbackFileName));
     }
 
     /** {@inheritDoc} */

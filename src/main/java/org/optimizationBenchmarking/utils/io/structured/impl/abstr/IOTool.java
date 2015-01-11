@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.structured.spec.IIOTool;
@@ -125,7 +127,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
   void _checkRawStreams() {
     throw new UnsupportedOperationException(//
         this.getClass().getSimpleName() + //
-            " cannot deal with raw (unzipped) streams, only with files and folders."); //$NON-NLS-1$
+            " cannot deal with raw (uncompressed) streams, only with files and folders."); //$NON-NLS-1$
   }
 
   /**
@@ -155,7 +157,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
             + location.m_location1 + '\'');
       }
       this.__pathPath(job, data, ((Path) (location.m_location1)),
-          location.m_encoding, location.m_zipped);
+          location.m_encoding, location.m_archiveType);
       if (job.canLog()) {
         job.log((in ? "Finished input from Path '" : //$NON-NLS-1$
             "Finished output to Path '")//$NON-NLS-1$
@@ -171,7 +173,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
             + location.m_location1 + '\'');
       }
       this.__fileFile(job, data, ((File) (location.m_location1)),
-          location.m_encoding, location.m_zipped);
+          location.m_encoding, location.m_archiveType);
       if (job.canLog()) {
         job.log((in ? "Finished input from File '" : //$NON-NLS-1$
             "Finished output to File '")//$NON-NLS-1$
@@ -191,7 +193,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
                 + location.m_location1 + '\'');
           }
           this.__pathString(job, data, ((String) (location.m_location1)),
-              location.m_encoding, location.m_zipped);
+              location.m_encoding, location.m_archiveType);
           if (job.canLog()) {
             job.log((in ? "Finished input from Path identified by String '" : //$NON-NLS-1$
                 "Finished output to Path identified by String '")//$NON-NLS-1$
@@ -206,7 +208,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
                 + location.m_location1 + '\'');
           }
           this.__fileString(job, data, ((String) (location.m_location1)),
-              location.m_encoding, location.m_zipped);
+              location.m_encoding, location.m_archiveType);
           if (job.canLog()) {
             job.log((in ? "Finished input from File identified by String '" : //$NON-NLS-1$
                 "Finished output to File identified by String '")//$NON-NLS-1$
@@ -228,15 +230,17 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
     } else {
       text.append("null");//$NON-NLS-1$
     }
-    text.append(in ? " not supported as input source by " : //$NON-NLS-1$
-        " not supported as output destination by "); //$NON-NLS-1$
+    text.append(in ? " is not supported as input source by " : //$NON-NLS-1$
+        " is not supported as output destination by "); //$NON-NLS-1$
     this.toText(text);
-    text.append(" for data "); //$NON-NLS-1$
+    text.append(" for data type "); //$NON-NLS-1$
     if (data != null) {
       text.append(TextUtils.className(data.getClass()));
     } else {
       text.append("null");//$NON-NLS-1$
     }
+    text.append(" by tool ");//$NON-NLS-1$
+    this.toText(text);
     text.append('.');
     throw new UnsupportedOperationException(text.toString());
   }
@@ -252,14 +256,14 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    *          the file
    * @param encoding
    *          the encoding
-   * @param zipped
-   *          should we compress to ZIP
+   * @param archiveType
+   *          should we compress / decompress?
    * @throws Throwable
    *           if I/O fails
    */
   private final void __fileString(final IOJob job, final D data,
       final String file, final StreamEncoding<?, ?> encoding,
-      final boolean zipped) throws Throwable {
+      final EArchiveType archiveType) throws Throwable {
     final String prepared;
 
     prepared = TextUtils.prepare(file);
@@ -269,7 +273,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
               + file + "' is.");//$NON-NLS-1$
     }
 
-    this.__fileFile(job, data, new File(prepared), encoding, zipped);
+    this.__fileFile(job, data, new File(prepared), encoding, archiveType);
   }
 
   /**
@@ -283,23 +287,76 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    *          the file
    * @param encoding
    *          the encoding
-   * @param zipped
-   *          should we compress to ZIP
+   * @param archiveType
+   *          should we compress / decompress?
    * @throws Throwable
    *           if I/O fails
    */
   private final void __fileFile(final IOJob job, final D data,
       final File file, final StreamEncoding<?, ?> encoding,
-      final boolean zipped) throws Throwable {
+      final EArchiveType archiveType) throws Throwable {
+    Throwable convert, reason;
     Path path;
+    File useFile;
+    MemoryTextOutput memText;
+    IOException ioe;
+    String string;
 
-    path = file.toPath();
-    if (path == null) {
-      throw new IOException("Could not convert file '" + file//$NON-NLS-1$
-          + "' to a path."); //$NON-NLS-1$
+    convert = null;
+    try {
+      useFile = file.getCanonicalFile();
+    } catch (final Throwable t1) {
+      convert = t1;
+      try {
+        useFile = file.getAbsoluteFile();
+      } catch (final Throwable t2) {
+        useFile = file;
+        convert = ErrorUtils.aggregateError(convert, t2);
+      }
     }
 
-    this.__pathPath(job, data, path, encoding, zipped);
+    reason = null;
+    try {
+      path = useFile.toPath();
+    } catch (final Throwable t3) {
+      reason = t3;
+      path = null;
+    }
+    if (path == null) {
+      if (useFile != file) {
+        try {
+          path = file.toPath();
+        } catch (final Throwable t4) {
+          reason = ErrorUtils.aggregateError(t4, reason);
+          path = null;
+        }
+      }
+    }
+
+    if (path == null) {
+      memText = new MemoryTextOutput();
+      memText.append("Could not convert file '");//$NON-NLS-1$
+      memText.append(file.toString());
+      if (useFile != file) {
+        memText.append("' canonicalized to '");//$NON-NLS-1$
+        memText.append(useFile.toString());
+      }
+      memText.append("' to a path.");//$NON-NLS-1$
+
+      string = memText.toString();
+      memText = null;
+      if (reason != null) {
+        ioe = new IOException(string, reason);
+      } else {
+        ioe = new IOException(string);
+      }
+      if (convert != null) {
+        ioe.addSuppressed(convert);
+      }
+      throw ioe;
+    }
+
+    this.__pathPath(job, data, path, encoding, archiveType);
   }
 
   /**
@@ -313,16 +370,16 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    *          the path
    * @param encoding
    *          the encoding
-   * @param zipped
-   *          should we compress to ZIP
+   * @param archiveType
+   *          should we compress / decompress?
    * @throws Throwable
    *           if I/O fails
    */
   private final void __pathPath(final IOJob job, final D data,
       final Path path, final StreamEncoding<?, ?> encoding,
-      final boolean zipped) throws Throwable {
+      final EArchiveType archiveType) throws Throwable {
     this._pathNormalized(job, data, PathUtils.normalize(path), encoding,
-        zipped);
+        archiveType);
   }
 
   /**
@@ -336,16 +393,16 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    *          the path
    * @param encoding
    *          the encoding
-   * @param zipped
-   *          should we compress to ZIP
+   * @param archiveType
+   *          should we compress / decompress?
    * @throws Throwable
    *           if I/O fails
    */
   private final void __pathString(final IOJob job, final D data,
       final String path, final StreamEncoding<?, ?> encoding,
-      final boolean zipped) throws Throwable {
+      final EArchiveType archiveType) throws Throwable {
     this._pathNormalized(job, data, PathUtils.normalize(path), encoding,
-        zipped);
+        archiveType);
   }
 
   /**
@@ -359,37 +416,46 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    *          the path
    * @param encoding
    *          the encoding
-   * @param zipped
-   *          should we compress to ZIP
+   * @param archiveType
+   *          should we compress/decompress?
    * @throws Throwable
    *           if I/O fails
    */
   final void _pathNormalized(final IOJob job, final D data,
       final Path path, final StreamEncoding<?, ?> encoding,
-      final boolean zipped) throws Throwable {
+      final EArchiveType archiveType) throws Throwable {
+    final boolean input;
     BasicFileAttributes attributes;
 
     if (path == null) {
       throw new IOException("Path cannot be null."); //$NON-NLS-1$
     }
 
+    input = (this instanceof FileInputTool);
+
     try {
       attributes = Files.readAttributes(path, BasicFileAttributes.class);
     } catch (final IOException ioe) {
       attributes = null;
+      if (input) {
+        throw new IOException(
+            ("Error when trying to read attributes of input path '" + //$NON-NLS-1$
+                path + "' (maybe the path does not exist?)."),//$NON-NLS-1$
+            ioe);
+      }
     }
 
     if (job.canLog()) {
-      job.log(((this instanceof FileInputTool) ? //
+      job.log((input ? //
       "Reading input from Path '" : //$NON-NLS-1$
           "Writing output ot Path '") + //$NON-NLS-1$
           path + "' with attributes " + attributes);//$NON-NLS-1$
     }
-    this._path(job, data, path, attributes, encoding, zipped);
+    this._path(job, data, path, attributes, encoding, archiveType);
   }
 
   /**
-   * Handle a path
+   * Handle a path: Read input from the path or write output to the path.
    * 
    * @param job
    *          the job where logging info can be written
@@ -401,39 +467,26 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    *          the attributes
    * @param encoding
    *          the encoding
-   * @param zipped
-   *          should we ZIP-compress / expect ZIP compression
+   * @param archiveType
+   *          should we compress / expect compression?
    * @throws Throwable
    */
   void _path(final IOJob job, final D data, final Path path,
       final BasicFileAttributes attributes,
-      final StreamEncoding<?, ?> encoding, final boolean zipped)
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
       throws Throwable {
-    this.path(job, data, path, attributes, encoding, zipped);
+    if (archiveType != null) {
+      throw new IllegalStateException(//
+          "Can only handle uncompressed paths here."); //$NON-NLS-1$
+    }
   }
 
   /**
-   * Handle a path
+   * Obtain the default fallback file name for archived files
    * 
-   * @param job
-   *          the job where logging info can be written
-   * @param data
-   *          the data to be written or read
-   * @param path
-   *          the path
-   * @param attributes
-   *          the attributes
-   * @param encoding
-   *          the encoding
-   * @param zipped
-   *          should we ZIP-compress / expect ZIP compression
-   * @throws Throwable
+   * @return the default file name
    */
-  protected void path(final IOJob job, final D data, final Path path,
-      final BasicFileAttributes attributes,
-      final StreamEncoding<?, ?> encoding, final boolean zipped)
-      throws Throwable {
-    //
+  protected String getArchiveFallbackFileName() {
+    return "data"; //$NON-NLS-1$
   }
-
 }

@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 
 /**
@@ -22,8 +23,8 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
   private final IOJob m_log;
   /** the default encoding */
   private final StreamEncoding<?, ?> m_encoding;
-  /** are files zipped? */
-  private final boolean m_zipped;
+  /** the expected archive type */
+  private final EArchiveType m_archiveType;
   /** the driver to delegate to */
   private final FileInputTool<L> m_tool;
 
@@ -36,20 +37,20 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
    *          the logger
    * @param encoding
    *          the encoding
-   * @param zipped
-   *          are we zipped?
+   * @param archiveType
+   *          the expected archive type
    * @param tool
    *          the tool
    */
   _FileWalker(final IOJob log, final L data,
-      final StreamEncoding<?, ?> encoding, final boolean zipped,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType,
       final FileInputTool<L> tool) {
     super();
     this.m_data = data;
     this.m_log = log;
     this.m_encoding = encoding;
     this.m_tool = tool;
-    this.m_zipped = zipped;
+    this.m_archiveType = archiveType;
   }
 
   /** {@inheritDoc} */
@@ -90,7 +91,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
       final BasicFileAttributes attrs) throws IOException {
     boolean load;
 
-    if (this.m_zipped) {
+    if (this.m_archiveType != null) {
       load = true;
     } else {
       try {
@@ -112,7 +113,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
 
       try {
         this.m_tool._file(this.m_log, this.m_data, file, attrs,
-            this.m_encoding, this.m_zipped);
+            this.m_encoding, this.m_archiveType);
       } catch (final Throwable throwable) {
         this.m_log.handleError(throwable,
             ((("Error when loading file '" + file) + //$NON-NLS-1$

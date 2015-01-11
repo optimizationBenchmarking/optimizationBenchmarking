@@ -3,6 +3,7 @@ package test.junit.org.optimizationBenchmarking.experimentation.evaluation.data;
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.tspSuite.TSPSuiteInput;
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 
 /** A class for creating experiment sets */
 public class ExperimentSetCreatorTSPSuiteExample extends
@@ -27,8 +28,8 @@ public class ExperimentSetCreatorTSPSuiteExample extends
             .getInstance()
             .use()
             .setDestination(esc)
-            .addZIPResource(ExperimentSetCreatorTSPSuiteExample.class,
-                "tspSuiteExampleData.zip")//$NON-NLS-1$
+            .addArchiveResource(ExperimentSetCreatorTSPSuiteExample.class,
+                "tspSuiteExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$                
             .create().call();
 
         return esc.getResult();

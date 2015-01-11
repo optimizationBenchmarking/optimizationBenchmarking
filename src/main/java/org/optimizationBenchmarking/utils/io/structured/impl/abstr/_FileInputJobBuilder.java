@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.spec.IFileInputJobBuilder;
 
@@ -61,22 +62,22 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
   /** {@inheritDoc} */
   @Override
   final void _setPath(final String path,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
-    this.addPath(path, encoding, zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    this.addPath(path, encoding, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
   final void _setURI(final String uri,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
-    this.addURI(uri, encoding, zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    this.addURI(uri, encoding, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
   final void _setURL(final String url,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
-    this.addURL(url, encoding, zipCompress);
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    this.addURL(url, encoding, archiveType);
   }
 
   /**
@@ -105,169 +106,178 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
   @SuppressWarnings("unchecked")
   @Override
   public final JBT addPath(final Path path,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
 
     if (path == null) {
       throw new IllegalArgumentException("Source Path cannot be null."); //$NON-NLS-1$
     }
-    this.m_sources.add(new _Location(path, null, encoding, zipCompress));
+    this.m_sources.add(new _Location(path, null, encoding, archiveType));
     return ((JBT) this);
   }
 
   /** {@inheritDoc} */
   @Override
   public final JBT addPath(final Path path) {
-    return this.addPath(path, null, false);
+    return this.addPath(path, null, null);
   }
 
   /** {@inheritDoc} */
   @SuppressWarnings("unchecked")
   @Override
   public final JBT addFile(final File file,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
     if (file == null) {
       throw new IllegalArgumentException(
           "Destination File cannot be null."); //$NON-NLS-1$
     }
-    this.m_sources.add(new _Location(file, null, encoding, zipCompress));
+    this.m_sources.add(new _Location(file, null, encoding, archiveType));
     return ((JBT) this);
   }
 
   /** {@inheritDoc} */
   @Override
   public final JBT addFile(final File file) {
-    return this.addFile(file, null, false);
+    return this.addFile(file, null, null);
   }
 
   /** {@inheritDoc} */
   @Override
   @SuppressWarnings("unchecked")
   public final JBT addPath(final String path,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
     if (path == null) {
       throw new IllegalArgumentException(
           "Destination Path String cannot be null."); //$NON-NLS-1$
     }
     this.m_sources.add(new _Location(path, Path.class, encoding,
-        zipCompress));
+        archiveType));
     return ((JBT) this);
   }
 
   /** {@inheritDoc} */
   @Override
   public final JBT addPath(final String path) {
-    return this.addPath(path, null, false);
+    return this.addPath(path, null, null);
   }
 
   /** {@inheritDoc} */
   @Override
   @SuppressWarnings("unchecked")
   public final JBT addFile(final String file,
-      final StreamEncoding<?, ?> encoding, final boolean zipCompress) {
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
     if (file == null) {
       throw new IllegalArgumentException(
           "Destination File String cannot be null."); //$NON-NLS-1$
     }
     this.m_sources.add(new _Location(file, File.class, encoding,
-        zipCompress));
+        archiveType));
     return ((JBT) this);
   }
 
   /** {@inheritDoc} */
   @Override
   public final JBT addFile(final String file) {
-    return this.addFile(file, null, false);
+    return this.addFile(file, null, null);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPStream(final InputStream stream,
-      final StreamEncoding<?, ?> encoding) {
-    return this.addStream(stream, encoding, true);
+  public final JBT addArchiveStream(final InputStream stream,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    return this.addStream(stream, encoding, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPStream(final InputStream stream) {
-    return this.addStream(stream, null, true);
+  public final JBT addArchiveStream(final InputStream stream,
+      final EArchiveType archiveType) {
+    return this.addStream(stream, null, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPResource(final Class<?> clazz, final String name,
-      final StreamEncoding<?, ?> encoding) {
-    return this.addResource(clazz, name, encoding, true);
+  public final JBT addArchiveResource(final Class<?> clazz,
+      final String name, final StreamEncoding<?, ?> encoding,
+      final EArchiveType archiveType) {
+    return this.addResource(clazz, name, encoding, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPResource(final Class<?> clazz, final String name) {
-    return this.addResource(clazz, name, null, true);
+  public final JBT addArchiveResource(final Class<?> clazz,
+      final String name, final EArchiveType archiveType) {
+    return this.addResource(clazz, name, null, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPResource(final String clazz, final String name,
-      final StreamEncoding<?, ?> encoding) {
-    return this.addResource(clazz, name, encoding, true);
+  public final JBT addArchiveResource(final String clazz,
+      final String name, final StreamEncoding<?, ?> encoding,
+      final EArchiveType archiveType) {
+    return this.addResource(clazz, name, encoding, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPResource(final String clazz, final String name) {
-    return this.addResource(clazz, name, null, true);
+  public final JBT addArchiveResource(final String clazz,
+      final String name, final EArchiveType archiveType) {
+    return this.addResource(clazz, name, null, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPURI(final URI uri,
-      final StreamEncoding<?, ?> encoding) {
-    return this.addURI(uri, encoding, true);
+  public final JBT addArchiveURI(final URI uri,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    return this.addURI(uri, encoding, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPURI(final URI uri) {
-    return this.addURI(uri, null, true);
+  public final JBT addArchiveURI(final URI uri,
+      final EArchiveType archiveType) {
+    return this.addURI(uri, null, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPURI(final String uri,
-      final StreamEncoding<?, ?> encoding) {
-    return this.addURI(uri, encoding, true);
+  public final JBT addArchiveURI(final String uri,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    return this.addURI(uri, encoding, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPURI(final String uri) {
-    return this.addURI(uri, null, true);
+  public final JBT addArchiveURI(final String uri,
+      final EArchiveType archiveType) {
+    return this.addURI(uri, null, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPURL(final URL url,
-      final StreamEncoding<?, ?> encoding) {
-    return this.addURL(url, encoding, true);
+  public final JBT addArchiveURL(final URL url,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    return this.addURL(url, encoding, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPURL(final URL url) {
-    return this.addURL(url, null, true);
+  public final JBT addArchiveURL(final URL url,
+      final EArchiveType archiveType) {
+    return this.addURL(url, null, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPURL(final String url,
-      final StreamEncoding<?, ?> encoding) {
-    return this.addURL(url, encoding, true);
+  public final JBT addArchiveURL(final String url,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    return this.addURL(url, encoding, archiveType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final JBT addZIPURL(final String url) {
-    return this.addURL(url, null, true);
+  public final JBT addArchiveURL(final String url,
+      final EArchiveType archiveType) {
+    return this.addURL(url, null, archiveType);
   }
 
   /**
@@ -279,19 +289,18 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
    * @param encoding
    *          a stream encoding to use ({@code null} if not specified or
    *          not necessary)
-   * @param isZipCompressed
-   *          Should we assume that the stream is a ZIP-compressed archive?
+   * @param archiveType
+   *          the archive type
    * @return this builder
    */
   @SuppressWarnings("unchecked")
   JBT addStream(final InputStream stream,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed) {
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
     if (stream == null) {
       throw new IllegalArgumentException(
           "Source InputStream cannot be null."); //$NON-NLS-1$
     }
-    this.m_sources.add(new _Location(stream, null, encoding,
-        isZipCompressed));
+    this.m_sources.add(new _Location(stream, null, encoding, archiveType));
     return ((JBT) this);
   }
 
@@ -305,13 +314,13 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
    * @param encoding
    *          a stream encoding to use ({@code null} if not specified or
    *          not necessary)
-   * @param isZipCompressed
-   *          Is the input a compressed ZIP archive?
+   * @param archiveType
+   *          the archive type
    * @return this builder
    */
   @SuppressWarnings("unchecked")
   JBT addResource(final Class<?> clazz, final String name,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed) {
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
     if (clazz == null) {
       throw new IllegalArgumentException(
           "Source Class for Resource cannot be null."); //$NON-NLS-1$
@@ -319,8 +328,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
     if (name == null) {
       throw new IllegalArgumentException("Resource name cannot be null."); //$NON-NLS-1$
     }
-    this.m_sources.add(new _Location(clazz, name, encoding,
-        isZipCompressed));
+    this.m_sources.add(new _Location(clazz, name, encoding, archiveType));
     return ((JBT) this);
   }
 
@@ -334,13 +342,13 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
    * @param encoding
    *          a stream encoding to use ({@code null} if not specified or
    *          not necessary)
-   * @param isZipCompressed
-   *          Is the input a compressed ZIP archive?
+   * @param archiveType
+   *          the archive type
    * @return this builder
    */
   @SuppressWarnings("unchecked")
   JBT addResource(final String clazz, final String name,
-      final StreamEncoding<?, ?> encoding, final boolean isZipCompressed) {
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
     if (clazz == null) {
       throw new IllegalArgumentException(
           "Source Class name for Resource cannot be null."); //$NON-NLS-1$
@@ -348,8 +356,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
     if (name == null) {
       throw new IllegalArgumentException("Resource name cannot be null."); //$NON-NLS-1$
     }
-    this.m_sources.add(new _Location(clazz, name, encoding,
-        isZipCompressed));
+    this.m_sources.add(new _Location(clazz, name, encoding, archiveType));
     return ((JBT) this);
   }
 
@@ -361,18 +368,17 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
    * @param encoding
    *          a stream encoding to use ({@code null} if not specified or
    *          not necessary)
-   * @param isZipCompressed
-   *          Should we assume that the stream is a ZIP-compressed archive?
+   * @param archiveType
+   *          the archive type
    * @return this builder
    */
   @SuppressWarnings("unchecked")
   JBT addURI(final URI uri, final StreamEncoding<?, ?> encoding,
-      final boolean isZipCompressed) {
+      final EArchiveType archiveType) {
     if (uri == null) {
       throw new IllegalArgumentException("Source URI cannot be null."); //$NON-NLS-1$
     }
-    this.m_sources
-        .add(new _Location(uri, null, encoding, isZipCompressed));
+    this.m_sources.add(new _Location(uri, null, encoding, archiveType));
     return ((JBT) this);
   }
 
@@ -384,19 +390,19 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
    * @param encoding
    *          a stream encoding to use ({@code null} if not specified or
    *          not necessary)
-   * @param isZipCompressed
-   *          Should we assume that the stream is a ZIP-compressed archive?
+   * @param archiveType
+   *          the archive type
    * @return this builder
    */
   @SuppressWarnings("unchecked")
   JBT addURI(final String uri, final StreamEncoding<?, ?> encoding,
-      final boolean isZipCompressed) {
+      final EArchiveType archiveType) {
     if (uri == null) {
       throw new IllegalArgumentException(
           "Source URI string cannot be null."); //$NON-NLS-1$
     }
-    this.m_sources.add(new _Location(uri, URI.class, encoding,
-        isZipCompressed));
+    this.m_sources
+        .add(new _Location(uri, URI.class, encoding, archiveType));
     return ((JBT) this);
   }
 
@@ -408,18 +414,17 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
    * @param encoding
    *          a stream encoding to use ({@code null} if not specified or
    *          not necessary)
-   * @param isZipCompressed
-   *          Should we assume that the stream is a ZIP-compressed archive?
+   * @param archiveType
+   *          the archive type
    * @return this builder
    */
   @SuppressWarnings("unchecked")
   JBT addURL(final URL url, final StreamEncoding<?, ?> encoding,
-      final boolean isZipCompressed) {
+      final EArchiveType archiveType) {
     if (url == null) {
       throw new IllegalArgumentException("Source URL cannot be null."); //$NON-NLS-1$
     }
-    this.m_sources
-        .add(new _Location(url, null, encoding, isZipCompressed));
+    this.m_sources.add(new _Location(url, null, encoding, archiveType));
     return ((JBT) this);
   }
 
@@ -431,19 +436,19 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
    * @param encoding
    *          a stream encoding to use ({@code null} if not specified or
    *          not necessary)
-   * @param isZipCompressed
-   *          Should we assume that the stream is a ZIP-compressed archive?
+   * @param archiveType
+   *          the archive type
    * @return this builder
    */
   @SuppressWarnings("unchecked")
   JBT addURL(final String url, final StreamEncoding<?, ?> encoding,
-      final boolean isZipCompressed) {
+      final EArchiveType archiveType) {
     if (url == null) {
       throw new IllegalArgumentException(
           "Source URL string cannot be null."); //$NON-NLS-1$
     }
-    this.m_sources.add(new _Location(url, URL.class, encoding,
-        isZipCompressed));
+    this.m_sources
+        .add(new _Location(url, URL.class, encoding, archiveType));
     return ((JBT) this);
   }
 

@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -15,8 +16,8 @@ class _Location {
   /** the stream encoding */
   StreamEncoding<?, ?> m_encoding;
 
-  /** perform/handle ZIP compression? */
-  boolean m_zipped;
+  /** perform/handle compression? */
+  EArchiveType m_archiveType;
 
   /** the first location object */
   Object m_location1;
@@ -36,19 +37,19 @@ class _Location {
    *          the first location
    * @param location2
    *          the second location
-   * @param zipped
-   *          if the location zipped?
+   * @param archiveType
+   *          if the archive type, if any
    * @param encoding
    *          the encoding
    */
   _Location(final Object location1, final Object location2,
-      final StreamEncoding<?, ?> encoding, final boolean zipped) {
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
     super();
     this.m_location1 = location1;
     this.m_location2 = location2;
     this.m_encoding = ((encoding != null) ? encoding
         : StreamEncoding.UNKNOWN);
-    this.m_zipped = zipped;
+    this.m_archiveType = archiveType;
   }
 
   /**
