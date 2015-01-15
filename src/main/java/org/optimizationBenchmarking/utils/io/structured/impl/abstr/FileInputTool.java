@@ -34,7 +34,7 @@ public class FileInputTool<S> extends IOTool<S> implements
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public IFileInputJobBuilder<S> use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new _FileInputJobBuilder(this);
   }
 

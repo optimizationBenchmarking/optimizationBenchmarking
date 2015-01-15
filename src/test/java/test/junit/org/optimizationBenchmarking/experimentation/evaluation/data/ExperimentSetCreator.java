@@ -357,7 +357,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
       try (final StringReader r = new StringReader(s1)) {
         try (final ExperimentSetContext esc = new ExperimentSetContext()) {
           input.use().addReader(r).setDestination(esc).create().call();
-          es1 = esc.getResult();
+          es1 = esc.create();
         }
       }
     } catch (final IOException e) {
@@ -381,7 +381,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
         s2 = null;
         try (final ExperimentSetContext esc = new ExperimentSetContext()) {
           input.use().addReader(r).setDestination(esc).create().call();
-          es2 = esc.getResult();
+          es2 = esc.create();
         }
       }
     } catch (final IOException e) {

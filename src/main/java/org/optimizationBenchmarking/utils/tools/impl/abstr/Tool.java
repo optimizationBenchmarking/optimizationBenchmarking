@@ -22,8 +22,18 @@ public abstract class Tool extends HashObject implements ITool {
     return false;
   }
 
-  /** Call this method in {@link #use()} */
-  protected void beforeUse() {
+  /**
+   * Check if this tool can be used an throw a descriptive
+   * {@link java.lang.UnsupportedOperationException} otherwise. In other
+   * words: if {@link #canUse()} returns {@code false}, this method throws
+   * an exception. If {@link #canUse()} returns {@code true}, this method
+   * does nothing. This method should be called in {@link #use()} as well.
+   * 
+   * @throws UnsupportedOperationException
+   *           if {@link #canUse()} returns {@code false}.
+   */
+  @Override
+  public void checkCanUse() {
     if (!(this.canUse())) {
       throw new UnsupportedOperationException("Tool '" + //$NON-NLS-1$
           TextUtils.className(this.getClass()) + "' cannot be used."); //$NON-NLS-1$

@@ -5,12 +5,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.xml.parsers.SAXParserFactory;
 
-import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.spec.IXMLInputJobBuilder;
 import org.optimizationBenchmarking.utils.io.structured.spec.IXMLInputTool;
@@ -33,29 +30,27 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
   /** the SAX parser factory to use */
   private final SAXParserFactory m_spf;
 
+  /** the cause why this tool cannot be used */
+  private final Throwable m_cause;
+
   /** create */
   protected XMLInputTool() {
     super();
 
     SAXParserFactory spf;
-    Logger logger;
+    Throwable cause;
 
     spf = null;
+    cause = null;
     try {
       spf = SAXParserFactory.newInstance();
       this.configureSAXParserFactory(spf);
     } catch (final Throwable thrower) {
+      cause = thrower;
       spf = null;
-
-      logger = Configuration.getRoot().getLogger(
-          Configuration.PARAM_LOGGER, null);
-      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
-        logger.log(Level.SEVERE,
-            "Could not create and configure SAXParserFactory for " + //$NON-NLS-1$
-                TextUtils.className(this.getClass()), thrower);
-      }
     }
 
+    this.m_cause = cause;
     this.m_spf = spf;
   }
 
@@ -163,13 +158,26 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public IXMLInputJobBuilder<S> use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new _XMLInputJobBuilder(this);
   }
 
   /** {@inheritDoc} */
   @Override
   public boolean canUse() {
-    return (this.m_spf != null);
+    return ((this.m_spf != null) && (this.m_cause == null));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void checkCanUse() {
+    if (this.m_cause != null) {
+      throw new UnsupportedOperationException(//
+          "Cannot use tool '" + //$NON-NLS-1$
+              TextUtils.className(this.getClass())
+              + " due to error in XML parser initialization.",//$NON-NLS-1$
+          this.m_cause);
+    }
+    super.checkCanUse();
   }
 }

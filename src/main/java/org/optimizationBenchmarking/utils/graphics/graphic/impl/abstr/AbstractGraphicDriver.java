@@ -58,7 +58,7 @@ public abstract class AbstractGraphicDriver extends DocumentProducerTool
   /** {@inheritDoc} */
   @Override
   public final GraphicBuilder use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new GraphicBuilder(this);
   }
 

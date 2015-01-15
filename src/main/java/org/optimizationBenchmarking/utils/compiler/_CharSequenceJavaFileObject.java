@@ -5,7 +5,7 @@ import java.net.URI;
 import javax.tools.SimpleJavaFileObject;
 
 /** A java file object backed by strings in memory. */
-public class CharSequenceJavaFileObject extends SimpleJavaFileObject {
+final class _CharSequenceJavaFileObject extends SimpleJavaFileObject {
 
   /** the CharSequence representing the source code to be compiled */
   private final CharSequence m_content;
@@ -20,7 +20,7 @@ public class CharSequenceJavaFileObject extends SimpleJavaFileObject {
    * @param content
    *          source code to compile
    */
-  public CharSequenceJavaFileObject(final String className,
+  public _CharSequenceJavaFileObject(final String className,
       final CharSequence content) {
     super(URI.create("string:///" + className.replace('.', '/') //$NON-NLS-1$
         + Kind.SOURCE.extension), Kind.SOURCE);

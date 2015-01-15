@@ -87,7 +87,7 @@ public final class ProcessExecutor extends Tool {
   /** {@inheritDoc} */
   @Override
   public final ExternalProcessBuilder use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new ExternalProcessBuilder();
   }
 

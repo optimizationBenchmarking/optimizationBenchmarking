@@ -154,7 +154,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public IFileOutputJobBuilder<S> use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new _FileOutputJobBuilder(this);
   }
 

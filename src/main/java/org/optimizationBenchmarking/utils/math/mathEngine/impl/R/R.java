@@ -204,7 +204,7 @@ public final class R extends MathEngineTool {
   /** {@inheritDoc} */
   @Override
   public final REngineBuilder use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new REngineBuilder();
   }
 

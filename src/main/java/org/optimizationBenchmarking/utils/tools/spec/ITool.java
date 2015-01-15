@@ -26,6 +26,18 @@ public interface ITool extends ITextable {
   public abstract boolean canUse();
 
   /**
+   * Check if this tool can be used an throw a descriptive
+   * {@link java.lang.UnsupportedOperationException} otherwise. In other
+   * words: if {@link #canUse()} returns {@code false}, this method throws
+   * an exception. If {@link #canUse()} returns {@code true}, this method
+   * does nothing.
+   * 
+   * @throws UnsupportedOperationException
+   *           if {@link #canUse()} returns {@code false}.
+   */
+  public abstract void checkCanUse();
+
+  /**
    * <p>
    * Create a builder object for a single job to be executed with this
    * tool. All parameters of the job will be set via the returned instance

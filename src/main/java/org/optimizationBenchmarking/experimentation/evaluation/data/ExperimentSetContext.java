@@ -1,15 +1,17 @@
 package org.optimizationBenchmarking.experimentation.evaluation.data;
 
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
 
 /** A builder for experiments. */
-public final class ExperimentSetContext extends _FSM {
+public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /** a dimension set context was created */
   private static final int STATE_DIMENSION_SET_CONTEXT_CREATED = (_FSM.STATE_OPEN + 1);
@@ -99,10 +101,26 @@ public final class ExperimentSetContext extends _FSM {
   /** the instance set context */
   private volatile _InstanceSetContext m_isc;
 
+  /** the logger */
+  private final Logger m_logger;
+
   /** create */
   public ExperimentSetContext() {
+    this(null);
+  }
+
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger to use, or {@code null} if none is required
+   */
+  public ExperimentSetContext(final Logger logger) {
     super(null);
 
+    ExperimentDataTool.getInstance().checkCanUse();
+
+    this.m_logger = logger;
     this.m_normal = new HashMap<>();
 
     this.m_normal.put(Parameter.PARAMETER_ALGORITHM,
@@ -127,6 +145,15 @@ public final class ExperimentSetContext extends _FSM {
         _PropertyValueUnspecified.INSTANCE);
 
     this.open();
+  }
+
+  /**
+   * Get the logger
+   * 
+   * @return the logger
+   */
+  public final Logger getLogger() {
+    return this.m_logger;
   }
 
   /** {@inheritDoc} */
@@ -375,7 +402,7 @@ public final class ExperimentSetContext extends _FSM {
    * 
    * @return the created experiment set
    */
-  public synchronized final ExperimentSet getResult() {
+  public synchronized final ExperimentSet create() {
     final ExperimentSet es;
 
     this.__closeExperimentSetContext();

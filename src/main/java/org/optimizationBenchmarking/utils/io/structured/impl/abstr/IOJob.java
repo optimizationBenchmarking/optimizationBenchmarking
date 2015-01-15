@@ -5,9 +5,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
 /** The base class for I/O jobs */
-public class IOJob {
+public class IOJob extends ToolJob {
 
   /** the even finer log level */
   public static final Level FINER_LOG_LEVEL = Level.FINEST;
@@ -17,9 +18,6 @@ public class IOJob {
 
   /** the default log level */
   public static final Level DEFAULT_LOG_LEVEL = Level.FINE;
-
-  /** the logger */
-  final Logger m_logger;
 
   /** the long id */
   long m_lid;
@@ -43,9 +41,8 @@ public class IOJob {
    *          the owning tool
    */
   IOJob(final Logger logger, final IOTool<?> tool) {
-    super();
+    super(logger);
     _IOJobBuilder._validateTool(tool);
-    this.m_logger = logger;
     this.m_tool = tool;
   }
 

@@ -60,9 +60,6 @@ public final class ExternalProcess extends ToolJob implements Closeable {
    */
   ByteProducerConsumerBuffer m_stdinBuffer;
 
-  /** the logger */
-  private final Logger m_log;
-
   /** the process' name */
   private final String m_name;
 
@@ -77,13 +74,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
    * @param log
    *          the logger to use
    * @param name
-   *          thhe process' name
+   *          the process' name
    */
   ExternalProcess(final Process process, final Logger log,
       final String name) {
-    super();
+    super(log);
     this.m_process = process;
-    this.m_log = log;
     this.m_name = name;
   }
 
@@ -118,8 +114,8 @@ public final class ExternalProcess extends ToolJob implements Closeable {
       this.m_stderrWorker.start();
     }
 
-    if ((this.m_log != null) && (this.m_log.isLoggable(Level.FINE))) {
-      this.m_log.fine("Successfully started: " + this.m_name); //$NON-NLS-1$
+    if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
+      this.m_logger.fine("Successfully started: " + this.m_name); //$NON-NLS-1$
     }
   }
 
@@ -340,8 +336,9 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
     error = ErrorUtils.aggregateError(error, this.m_error);
     if (error != null) {
-      if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
-        this.m_log.log(Level.SEVERE,
+      if ((this.m_logger != null)
+          && (this.m_logger.isLoggable(Level.SEVERE))) {
+        this.m_logger.log(Level.SEVERE,
             ((kill ? "Error while forcefully killing " : //$NON-NLS-1$
                 "Error while gracefully shutting down ")//$NON-NLS-1$
             + this.m_name), error);
@@ -354,14 +351,15 @@ public final class ExternalProcess extends ToolJob implements Closeable {
     } else {
       if (kill) {
         if (shouldMessage) {
-          if ((this.m_log != null)
-              && (this.m_log.isLoggable(Level.WARNING))) {
-            this.m_log.warning("Forcefully killed " + this.m_name); //$NON-NLS-1$
+          if ((this.m_logger != null)
+              && (this.m_logger.isLoggable(Level.WARNING))) {
+            this.m_logger.warning("Forcefully killed " + this.m_name); //$NON-NLS-1$
           }
         }
       } else {
-        if ((this.m_log != null) && (this.m_log.isLoggable(Level.FINE))) {
-          this.m_log.fine("Gracefully shut down " + this.m_name + //$NON-NLS-1$
+        if ((this.m_logger != null)
+            && (this.m_logger.isLoggable(Level.FINE))) {
+          this.m_logger.fine("Gracefully shut down " + this.m_name + //$NON-NLS-1$
               ", return value=" + returnValue);//$NON-NLS-1$
         }
       }

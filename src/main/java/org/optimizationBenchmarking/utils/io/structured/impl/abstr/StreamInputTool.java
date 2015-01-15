@@ -27,7 +27,7 @@ public class StreamInputTool<S> extends FileInputTool<S> implements
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public IStreamInputJobBuilder<S> use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new _StreamInputJobBuilder(this);
   }
 

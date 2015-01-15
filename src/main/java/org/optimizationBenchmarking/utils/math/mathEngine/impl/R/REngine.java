@@ -41,9 +41,6 @@ public final class REngine extends MathEngine {
   /** the output to be written to the process */
   final BufferedWriter m_out;
 
-  /** the logger to use */
-  final Logger m_log;
-
   /** the temporary directory in which we run {@code R} */
   final TempDir m_temp;
 
@@ -58,18 +55,17 @@ public final class REngine extends MathEngine {
    * @param temp
    *          the temporary directory
    * @param logger
-   *          the logger
+   *          the logger, or {@code null} if none should be used
    * @throws IOException
    *           if it must
    */
   REngine(final ExternalProcess process, final TempDir temp,
       final Logger logger) throws IOException {
-    super();
+    super(logger);
 
     final TextEncoding e;
 
     this.m_process = process;
-    this.m_log = logger;
     this.m_temp = temp;
 
     e = R._encoding();
@@ -123,8 +119,9 @@ public final class REngine extends MathEngine {
    */
   final void _handleError(final Throwable t) {
     if (t != null) {
-      if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
-        this.m_log.log(Level.SEVERE,
+      if ((this.m_logger != null)
+          && (this.m_logger.isLoggable(Level.SEVERE))) {
+        this.m_logger.log(Level.SEVERE,
             ("Error during communication with R in engine " + //$NON-NLS-1$ 
             this.hashCode()), t);
       }
@@ -175,14 +172,16 @@ public final class REngine extends MathEngine {
     }
 
     if (error != null) {
-      if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
-        this.m_log.log(Level.SEVERE, ("Error during shutdown of "//$NON-NLS-1$
+      if ((this.m_logger != null)
+          && (this.m_logger.isLoggable(Level.SEVERE))) {
+        this.m_logger.log(Level.SEVERE, ("Error during shutdown of "//$NON-NLS-1$
             + this.m_id), error);
       }
       ErrorUtils.throwAsIOException(error);
     } else {
-      if ((this.m_log != null) && (this.m_log.isLoggable(Level.INFO))) {
-        this.m_log.info(this.m_id + " shut down gracefully.");//$NON-NLS-1$
+      if ((this.m_logger != null)
+          && (this.m_logger.isLoggable(Level.INFO))) {
+        this.m_logger.info(this.m_id + " shut down gracefully.");//$NON-NLS-1$
       }
     }
   }

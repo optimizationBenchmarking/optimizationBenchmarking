@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.iterators.InstanceIterator;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
@@ -16,8 +17,8 @@ import org.optimizationBenchmarking.utils.collections.lists.BasicList;
 import org.optimizationBenchmarking.utils.collections.lists.NumberList;
 import org.optimizationBenchmarking.utils.collections.visitors.IVisitor;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.compiler.CharSequenceJavaFileObject;
-import org.optimizationBenchmarking.utils.compiler.JavaCompilerTask;
+import org.optimizationBenchmarking.utils.compiler.JavaCompilerJobBuilder;
+import org.optimizationBenchmarking.utils.compiler.JavaCompilerTool;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.MatrixColumns;
@@ -75,13 +76,18 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
   /** the matrix choice */
   private Object m_matrixChoice;
 
+  /** the logger */
+  private final Logger m_logger;
+
   /**
    * create a new class builder
    * 
    * @param dimensions
    *          the dimensions
+   * @param logger
+   *          the logger
    */
-  _ClassBuilder(final DimensionSet dimensions) {
+  _ClassBuilder(final DimensionSet dimensions, final Logger logger) {
     super();
 
     final String hc;
@@ -89,6 +95,12 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     final ArraySetView<Dimension> dims;
     int i;
     long id;
+
+    this.m_logger = logger;
+
+    if (!(JavaCompilerTool.getInstance().canUse())) {
+      throw new IllegalStateException("No Java compiler found."); //$NON-NLS-1$
+    }
 
     this.m_dims = (dims = dimensions.getData());
     l = dims.size();
@@ -2059,31 +2071,30 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     final ClassLoader cl;
     final String qP;
     final Class<?>[] classes;
+    JavaCompilerJobBuilder builder;
     int i;
 
     this.__makeBasicIMatrix();
 
     qP = (this.m_package + '.' + this.m_factoryClass);
 
-    cl = new JavaCompilerTask(//
-        //
-        new CharSequenceJavaFileObject(
-            (this.m_package + '.' + this.m_dataPointClass),//
-            this.__createDataPoint()),//
-        //
-        new CharSequenceJavaFileObject(
-            (this.m_package + '.' + this.m_runClass),//
-            this.__createRun()),//
-        //
-        new CharSequenceJavaFileObject(
-            (this.m_package + '.' + this.m_runColumnsClass),//
-            this.__createRunColumnsClass()),//
-        //
-        new CharSequenceJavaFileObject(
-            (this.m_package + '.' + this.m_runColumnsRowIteratorClass),//
-            this.__createRunColumnsRowIterator()),//
-        //
-        new CharSequenceJavaFileObject(qP, this.__createFactory())).call();
+    builder = JavaCompilerTool.getInstance().use();
+    builder = builder.addClass(
+        (this.m_package + '.' + this.m_dataPointClass),//
+        this.__createDataPoint());
+    builder = builder.addClass((this.m_package + '.' + this.m_runClass),//
+        this.__createRun());
+    builder = builder.addClass(//
+        (this.m_package + '.' + this.m_runColumnsClass),//
+        this.__createRunColumnsClass());
+    builder = builder.addClass(//
+        (this.m_package + '.' + this.m_runColumnsRowIteratorClass),//
+        this.__createRunColumnsRowIterator());
+    builder = builder.addClass(qP, this.__createFactory());
+    if (this.m_logger != null) {
+      builder = builder.setLogger(this.m_logger);
+    }
+    cl = builder.create().call();
 
     try {
       i = this.m_parsers.length;

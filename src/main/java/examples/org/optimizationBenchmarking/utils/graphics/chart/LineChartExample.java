@@ -65,6 +65,11 @@ public class LineChartExample {
   /** the line types */
   private static final ELineType[] LINE_TYPES = ELineType.values();
 
+  /** the maximum value */
+  private static final double MAX_VAL = (0.1d * Double.MAX_VALUE);
+  /** the minimum value */
+  private static final double MIN_VAL = (-LineChartExample.MAX_VAL);
+
   /**
    * run the example: there are problems with the different output
    * 
@@ -76,9 +81,9 @@ public class LineChartExample {
   public static final void main(final String[] args) throws IOException {
     final Path dir;
     final Random rand;
-    final long seed;
     final PhysicalDimension size;
-    int z;
+    long seed;
+    int z, example;
 
     if ((args != null) && (args.length > 0)) {
       dir = Paths.get(args[0]);
@@ -91,21 +96,23 @@ public class LineChartExample {
     size = new PhysicalDimension((10 + rand.nextInt(12)),
         (6 + rand.nextInt(8)), ELength.CM);
 
-    seed = rand.nextLong();
-    z = 0;
-    for (final IGraphicDriver d : LineChartExample.GRAPHIC_DRIVERS) {
-      for (final IChartDriver c : LineChartExample.DRIVERS) {
-        try (final Graphic g = d
-            .use()
-            .setBasePath(dir)
-            .setMainDocumentNameSuggestion(
-                ((((((LineChartExample.class.getSimpleName() + '_') + (++z)) + '_') + d
-                    .getClass().getSimpleName()) + '_') + c.getClass()
-                    .getSimpleName())).setSize(size)
-            .setFileProducerListener(new FinishedPrinter(c, d)).create()) {
-          rand.setSeed(seed);
-          LineChartExample.randomLineChart(rand, g,
-              LineChartExample.randomStyleSet(rand), c);
+    for (example = 1; example <= 9; example++) {
+      seed = rand.nextLong();
+      z = 0;
+      for (final IGraphicDriver d : LineChartExample.GRAPHIC_DRIVERS) {
+        for (final IChartDriver c : LineChartExample.DRIVERS) {
+          try (final Graphic g = d
+              .use()
+              .setBasePath(dir)
+              .setMainDocumentNameSuggestion(
+                  ((((((((LineChartExample.class.getSimpleName() + '_') + example) + '_') + (++z)) + '_') + d
+                      .getClass().getSimpleName()) + '_') + c.getClass()
+                      .getSimpleName())).setSize(size)
+              .setFileProducerListener(new FinishedPrinter(c, d)).create()) {
+            rand.setSeed(seed);
+            LineChartExample.randomLineChart(rand, g,
+                LineChartExample.randomStyleSet(rand), c);
+          }
         }
       }
     }
@@ -426,15 +433,110 @@ public class LineChartExample {
    */
   private static final void __fill(final double[] data, final double min,
       final double max, final Random rand, final boolean canReverse) {
-    int i;
-    double realMax;
+    int i, j, k, div;
+    double realMin, realMax, temp, range;
 
-    data[0] = (min + (0.05 * (rand.nextDouble() - 0.5d) * (max - min)));
-    realMax = (max - (0.05 * (rand.nextDouble() - 0.5d) * (max - min)));
-    for (i = 1; i < data.length; i++) {
-      data[i] = (data[i - 1] + ((((1.3d * rand.nextDouble()) - 0.1d) / (data.length - i)) * (realMax - data[i - 1])));
+    realMax = max;
+    realMin = min;
+
+    findBounds: {
+      for (i = 1000; (--i) >= 0;) {
+
+        if (realMin > realMax) {
+          temp = realMin;
+          realMin = realMax;
+          realMax = realMin;
+        }
+
+        if (realMax <= realMin) {
+          if (realMin < 0d) {
+            realMin = (1.1d * realMin);
+          } else {
+            realMin = (0.9d * realMin);
+          }
+          realMin -= 1d;
+          realMin = Math.nextAfter(realMin, Double.NEGATIVE_INFINITY);
+
+          if (realMax < 0d) {
+            realMax = (0.9d * realMax);
+          } else {
+            realMax = (1.1d * realMax);
+          }
+          realMax += 1d;
+          realMax = Math.nextUp(realMax);
+        }
+
+        if ((realMin != realMin) || (realMin <= LineChartExample.MIN_VAL)) {
+          realMin = LineChartExample.MIN_VAL;
+        }
+        if ((realMax != realMax) || (realMax >= LineChartExample.MAX_VAL)) {
+          realMax = LineChartExample.MAX_VAL;
+        }
+        if (realMin > realMax) {
+          temp = realMin;
+          realMin = realMax;
+          realMax = realMin;
+        }
+        range = (realMax - realMin);
+        if ((range < Double.MAX_VALUE) && (range == range)) {
+          break findBounds;
+        }
+      }
+
+      // we could not sanitize the bounds, so let's use random data from
+      // [0,1)
+      for (i = data.length; (--i) >= 0;) {
+        data[i] = rand.nextDouble();
+      }
+      return;
     }
-    Arrays.sort(data);
+
+    data[0] = realMin;
+    div = (data.length - 1);
+    data[div] = realMax;
+    if (div > 1) {
+      for (i = div; (--i) > 0;) {
+        data[i] = ((realMin + ((i * range) / div)));
+      }
+    }
+
+    for (;;) {
+
+      if ((data.length > 2) && (rand.nextBoolean())) {
+        for (i = data.length; (--i) >= 0;) {
+          j = (1 + rand.nextInt(data.length - 2));
+          temp = (0.2d + (0.6d * rand.nextDouble()));
+          data[j] = ((temp * data[j - 1]) + ((1d - temp) * data[j + 1]));
+        }
+
+        if (rand.nextBoolean()) {
+          break;
+        }
+      }
+
+      if (rand.nextBoolean()) {
+        j = rand.nextInt(data.length);
+        for (k = 2; (--k) >= 0;) {
+          for (i = data.length; (--i) >= 0;) {
+
+            if (rand.nextInt(5) <= 0) {
+              j = rand.nextInt(data.length);
+            }
+
+            temp = ((rand.nextGaussian() * (0.01d * range)) + data[j]);
+            if ((temp >= realMin) && (temp <= realMax)) {
+              data[i] = temp;
+            }
+          }
+        }
+
+        if (rand.nextBoolean()) {
+          break;
+        }
+      }
+    }
+
+    Arrays.sort(data); // just in case
 
     if (canReverse) {
       if (rand.nextBoolean()) {

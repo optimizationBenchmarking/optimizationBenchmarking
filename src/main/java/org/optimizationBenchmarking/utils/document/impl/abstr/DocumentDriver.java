@@ -55,7 +55,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
   /** {@inheritDoc} */
   @Override
   public DocumentBuilder use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new DocumentBuilder(this);
   }
 

@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.math.mathEngine.spec.IMathEngine;
 import org.optimizationBenchmarking.utils.math.mathEngine.spec.IVariable;
@@ -14,9 +15,15 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
   /** the internal variable counter */
   private int m_varCounter;
 
-  /** create */
-  protected MathEngine() {
-    super();
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger to write log information to, or {@code null} if no
+   *          log output should be created
+   */
+  protected MathEngine(final Logger logger) {
+    super(logger);
   }
 
   /**

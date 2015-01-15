@@ -66,7 +66,7 @@ public class XMLOutputTool<S> extends TextOutputTool<S> implements
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public IXMLOutputJobBuilder<S> use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new _XMLOutputJobBuilder(this);
   }
 }

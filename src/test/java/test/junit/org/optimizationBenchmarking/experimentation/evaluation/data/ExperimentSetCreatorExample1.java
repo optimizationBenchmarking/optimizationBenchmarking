@@ -1,5 +1,7 @@
 package test.junit.org.optimizationBenchmarking.experimentation.evaluation.data;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.evaluation.data.DimensionContext;
 import org.optimizationBenchmarking.experimentation.evaluation.data.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.evaluation.data.EDimensionType;
@@ -29,7 +31,8 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
   protected ExperimentSet buildExperimentSet() {
     final ExperimentSet es;
 
-    try (final ExperimentSetContext esb = new ExperimentSetContext()) {
+    try (final ExperimentSetContext esb = new ExperimentSetContext(
+        Logger.getGlobal())) {
 
       this.__createDimensionSet(esb);
 
@@ -37,7 +40,7 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
 
       this.__createExperimentSet(esb);
 
-      es = esb.getResult();
+      es = esb.create();
     }
 
     return es;

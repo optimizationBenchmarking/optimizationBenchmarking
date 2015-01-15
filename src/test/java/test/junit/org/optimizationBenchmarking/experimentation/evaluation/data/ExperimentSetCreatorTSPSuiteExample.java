@@ -1,5 +1,7 @@
 package test.junit.org.optimizationBenchmarking.experimentation.evaluation.data;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.tspSuite.TSPSuiteInput;
@@ -18,11 +20,8 @@ public class ExperimentSetCreatorTSPSuiteExample extends
   @Override
   protected ExperimentSet buildExperimentSet() {
     try {
-      try (final ExperimentSetContext esc = new ExperimentSetContext()) {
-        // TSPSuiteInput.INSTANCE.loadZIPArchive(esc,
-        // ExperimentSetCreatorTSPSuiteExample.class
-        //                .getResourceAsStream("tspSuiteExampleData.zip"),//$NON-NLS-1$
-        // null, null);
+      try (final ExperimentSetContext esc = new ExperimentSetContext(
+          Logger.getGlobal())) {
 
         TSPSuiteInput
             .getInstance()
@@ -32,7 +31,7 @@ public class ExperimentSetCreatorTSPSuiteExample extends
                 "tspSuiteExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$                
             .create().call();
 
-        return esc.getResult();
+        return esc.create();
       }
     } catch (final Throwable t) {
       if (t instanceof RuntimeException) {

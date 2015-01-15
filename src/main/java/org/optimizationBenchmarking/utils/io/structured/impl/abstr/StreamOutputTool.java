@@ -166,7 +166,7 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public IStreamOutputJobBuilder<S> use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new _StreamOutputJobBuilder(this);
   }
 }

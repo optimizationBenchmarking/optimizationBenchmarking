@@ -130,7 +130,7 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public ITextOutputJobBuilder<S> use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new _TextOutputJobBuilder(this);
   }
 }

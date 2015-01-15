@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import org.junit.Assert;
 import org.optimizationBenchmarking.experimentation.evaluation.data.DataPoint;
@@ -60,7 +61,8 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
     r = new Random();
     this.m_v = r.nextLong();
 
-    try (final ExperimentSetContext esb = new ExperimentSetContext()) {
+    try (final ExperimentSetContext esb = new ExperimentSetContext(
+        Logger.getGlobal())) {
 
       this._createDimensionSet(esb, r);
 
@@ -69,7 +71,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
       this._createExperimentSet(esb, esb.getDimensionSet(),
           esb.getInstanceSet(), r);
 
-      es = esb.getResult();
+      es = esb.create();
     }
 
     return es;

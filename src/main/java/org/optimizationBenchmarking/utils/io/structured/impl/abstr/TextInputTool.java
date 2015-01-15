@@ -27,7 +27,7 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public ITextInputJobBuilder<S> use() {
-    this.beforeUse();
+    this.checkCanUse();
     return new _TextInputJobBuilder(this);
   }
 

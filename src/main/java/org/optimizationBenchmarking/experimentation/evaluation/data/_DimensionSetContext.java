@@ -36,7 +36,8 @@ final class _DimensionSetContext extends
   /** {@inheritDoc} */
   @Override
   final DimensionSet _doCompile(final ArrayList<Dimension> data) {
-    return new DimensionSet(data.toArray(new Dimension[data.size()]));
+    return new DimensionSet(data.toArray(new Dimension[data.size()]), this
+        .getOwner().getLogger());
   }
 
   /** {@inheritDoc} */
