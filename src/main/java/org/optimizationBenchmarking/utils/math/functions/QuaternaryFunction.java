@@ -268,6 +268,74 @@ public class QuaternaryFunction extends MathematicalFunction {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * Compute the function result as {@code double} based on four
+   * {@code long} inputs
+   * 
+   * @param x0
+   *          the 1st {@code long} argument of the function
+   * @param x1
+   *          the 2nd {@code long} argument of the function
+   * @param x2
+   *          the 3rd {@code long} argument of the function
+   * @param x3
+   *          the 4th {@code long} argument of the function
+   * @return the return value of this function, a {@code long}
+   */
+  public double computeAsDouble(final long x0, final long x1,
+      final long x2, final long x3) {
+    return this.computeAsDouble(((double) x0), ((double) x1),
+        ((double) x2), ((double) x3));
+  }
+
+  /**
+   * Compute the function result as {@code double} based on four
+   * {@code int} inputs
+   * 
+   * @param x0
+   *          the 1st {@code int} argument of the function
+   * @param x1
+   *          the 2nd {@code int} argument of the function
+   * @param x2
+   *          the 3rd {@code int} argument of the function
+   * @param x3
+   *          the 4th {@code int} argument of the function
+   * @return the return value of this function, a {@code long}
+   */
+  public double computeAsDouble(final int x0, final int x1, final int x2,
+      final int x3) {
+    return this.computeAsDouble(((long) x0), ((long) x1), ((long) x2),
+        ((long) x3));
+  }
+
+  /**
+   * Delegate the function call with open parameter count to the
+   * corresponding function with exactly 4 parameters.
+   * 
+   * @param x
+   *          the parameter array
+   * @return the return value of this function, a double
+   */
+  @Override
+  public final double computeAsDouble(final long... x) {
+    this._checkArity(x.length);
+    return this.computeAsDouble(x[0], x[1], x[2], x[3]);
+  }
+
+  /**
+   * Delegate the function call with open parameter count to the
+   * corresponding function with exactly 4 parameters.
+   * 
+   * @param x
+   *          the parameter array
+   * @return the return value of this function, a double
+   */
+  @Override
+  public final double computeAsDouble(final int... x) {
+    this._checkArity(x.length);
+    return this.computeAsDouble(x[0], x[1], x[2], x[3]);
+  }
+
   /** {@inheritDoc} */
   @Override
   public QuaternaryFunction invertFor(final int index) {

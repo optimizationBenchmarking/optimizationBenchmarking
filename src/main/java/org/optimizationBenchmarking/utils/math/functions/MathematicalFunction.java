@@ -105,6 +105,58 @@ public abstract class MathematicalFunction implements Serializable {
   }
 
   /**
+   * Compute the result of this function as {@code double} when all
+   * parameters are {@code long} valued.
+   * 
+   * @param x
+   *          the vector of parameters, which must contain (at least)
+   *          {@link #getMinArity()} and at most {@link #getMaxArity()}
+   *          {@code long} values
+   * @return the result of this function, computed in {@code double}
+   *         precision
+   */
+  public double computeAsDouble(final long... x) {
+    final double[] a;
+    int i;
+
+    i = x.length;
+    this._checkArity(i);
+
+    a = new double[i];
+    for (; (--i) >= 0;) {
+      a[i] = (x[i]);
+    }
+
+    return this.computeAsDouble(a);
+  }
+
+  /**
+   * Compute the result of this function as {@code double} when all
+   * parameters are {@code int} valued.
+   * 
+   * @param x
+   *          the vector of parameters, which must contain (at least)
+   *          {@link #getMinArity()} and at most {@link #getMaxArity()}
+   *          {@code int} values
+   * @return the result of this function, computed in {@code double}
+   *         precision
+   */
+  public double computeAsDouble(final int... x) {
+    final long[] a;
+    int i;
+
+    i = x.length;
+    this._checkArity(i);
+
+    a = new long[i];
+    for (; (--i) >= 0;) {
+      a[i] = (x[i]);
+    }
+
+    return this.computeAsDouble(a);
+  }
+
+  /**
    * Compute the function value in the {@code byte} domain. This basic
    * function template delegates the computation to the {@code int} variant
    * of this function. The {@code int} result of that function is then

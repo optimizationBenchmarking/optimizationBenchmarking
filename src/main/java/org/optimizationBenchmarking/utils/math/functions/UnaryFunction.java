@@ -30,7 +30,7 @@ public class UnaryFunction extends MathematicalFunction {
 
   /**
    * Delegate the function call with open parameter count to the
-   * corresponding function with exactly 1 parameters.
+   * corresponding function with exactly 1 parameter.
    * 
    * @param x
    *          the parameter array
@@ -44,7 +44,7 @@ public class UnaryFunction extends MathematicalFunction {
 
   /**
    * Delegate the function call with open parameter count to the
-   * corresponding function with exactly 1 parameters.
+   * corresponding function with exactly 1 parameter.
    * 
    * @param x
    *          the parameter array
@@ -58,7 +58,7 @@ public class UnaryFunction extends MathematicalFunction {
 
   /**
    * Delegate the function call with open parameter count to the
-   * corresponding function with exactly 1 parameters.
+   * corresponding function with exactly 1 parameter.
    * 
    * @param x
    *          the parameter array
@@ -72,7 +72,7 @@ public class UnaryFunction extends MathematicalFunction {
 
   /**
    * Delegate the function call with open parameter count to the
-   * corresponding function with exactly 1 parameters.
+   * corresponding function with exactly 1 parameter.
    * 
    * @param x
    *          the parameter array
@@ -86,7 +86,7 @@ public class UnaryFunction extends MathematicalFunction {
 
   /**
    * Delegate the function call with open parameter count to the
-   * corresponding function with exactly 1 parameters.
+   * corresponding function with exactly 1 parameter.
    * 
    * @param x
    *          the parameter array
@@ -100,7 +100,7 @@ public class UnaryFunction extends MathematicalFunction {
 
   /**
    * Delegate the function call with open parameter count to the
-   * corresponding function with exactly 1 parameters.
+   * corresponding function with exactly 1 parameter.
    * 
    * @param x
    *          the parameter array
@@ -119,7 +119,7 @@ public class UnaryFunction extends MathematicalFunction {
    * casted to {@code byte}.
    * 
    * @param x0
-   *          the 1st byte argument of the function
+   *          the byte argument of the function
    * @return the return value of this function, a {@code byte}
    */
   public byte computeAsByte(final byte x0) {
@@ -138,7 +138,7 @@ public class UnaryFunction extends MathematicalFunction {
    * casted to {@code short}.
    * 
    * @param x0
-   *          the 1st short argument of the function
+   *          the short argument of the function
    * @return the return value of this function, a {@code short}
    */
   public short computeAsShort(final short x0) {
@@ -157,7 +157,7 @@ public class UnaryFunction extends MathematicalFunction {
    * then casted to {@code int}.
    * 
    * @param x0
-   *          the 1st int argument of the function
+   *          the int argument of the function
    * @return the return value of this function, a {@code int}
    */
   public int computeAsInt(final int x0) {
@@ -176,7 +176,7 @@ public class UnaryFunction extends MathematicalFunction {
    * is then casted to {@code long}.
    * 
    * @param x0
-   *          the 1st long argument of the function
+   *          the long argument of the function
    * @return the return value of this function, a {@code long}
    */
   public long computeAsLong(final long x0) {
@@ -203,7 +203,7 @@ public class UnaryFunction extends MathematicalFunction {
    * is then casted to {@code float}.
    * 
    * @param x0
-   *          the 1st float argument of the function
+   *          the float argument of the function
    * @return the return value of this function, a {@code float}
    */
   public float computeAsFloat(final float x0) {
@@ -219,11 +219,63 @@ public class UnaryFunction extends MathematicalFunction {
    * sub-class of this class must, at least, override this function.
    * 
    * @param x0
-   *          the 1st {@code double} argument of the function
+   *          the {@code double} argument of the function
    * @return the return value of this function, a {@code double}
    */
   public double computeAsDouble(final double x0) {
     throw new UnsupportedOperationException();
+  }
+
+  /**
+   * Compute the function result as {@code double} based on an {@code long}
+   * input
+   * 
+   * @param x0
+   *          the {@code long} argument of the function
+   * @return the return value of this function, a {@code double}
+   */
+  public double computeAsDouble(final long x0) {
+    return this.computeAsDouble((double) x0);
+  }
+
+  /**
+   * Compute the function result as {@code double} based on an {@code int}
+   * input
+   * 
+   * @param x0
+   *          the {@code int} argument of the function
+   * @return the return value of this function, a {@code double}
+   */
+  public double computeAsDouble(final int x0) {
+    return this.computeAsDouble((long) x0);
+  }
+
+  /**
+   * Delegate the function call with open parameter count to the
+   * corresponding function with exactly 1 parameter.
+   * 
+   * @param x
+   *          the parameter array
+   * @return the return value of this function, a double
+   */
+  @Override
+  public final double computeAsDouble(final long... x) {
+    this._checkArity(x.length);
+    return this.computeAsDouble(x[0]);
+  }
+
+  /**
+   * Delegate the function call with open parameter count to the
+   * corresponding function with exactly 1 parameter.
+   * 
+   * @param x
+   *          the parameter array
+   * @return the return value of this function, a double
+   */
+  @Override
+  public final double computeAsDouble(final int... x) {
+    this._checkArity(x.length);
+    return this.computeAsDouble(x[0]);
   }
 
   /** {@inheritDoc} */

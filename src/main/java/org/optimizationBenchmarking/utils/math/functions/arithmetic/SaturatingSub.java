@@ -40,13 +40,39 @@ public final class SaturatingSub extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final long computeAsLong(final long x0, final long x1) {
-    if (x1 <= Long.MIN_VALUE) {
-      if (x0 < 0L) {
+    switch (SaturatingSub.getOverflowType(x0, x1)) {
+      case -1: {
+        return Long.MIN_VALUE;
+      }
+      case 1: {
+        return Long.MAX_VALUE;
+      }
+      default: {
         return (x0 - x1);
       }
-      return Long.MAX_VALUE;
     }
-    return SaturatingAdd.INSTANCE.computeAsLong(x0, (-x1));
+  }
+
+  /**
+   * Get the overflow type when subtracting two {@code long} numbers
+   * 
+   * @param x0
+   *          the first number
+   * @param x1
+   *          the second number
+   * @return {@code -1} if the result would be smaller than
+   *         {@link java.lang.Long#MIN_VALUE}, {@code 1} if the result
+   *         would be bigger than than {@link java.lang.Long#MAX_VALUE},
+   *         {@code 0} if no overflow would occur
+   */
+  public static final int getOverflowType(final long x0, final long x1) {
+    if (x1 <= Long.MIN_VALUE) {
+      if (x0 < 0L) {
+        return 0;
+      }
+      return 1;
+    }
+    return SaturatingAdd.getOverflowType(x0, (-x1));
   }
 
   /** {@inheritDoc} */

@@ -56,6 +56,21 @@ public final class Negate extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public final double computeAsDouble(final long x0) {
+    if (x0 <= Long.MIN_VALUE) {
+      return (-((double) x0));
+    }
+    return (-x0);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double computeAsDouble(final int x0) {
+    return (-((double) x0));
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final Negate invertFor(final int index) {
     return Negate.INSTANCE;
   }

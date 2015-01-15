@@ -51,7 +51,60 @@ public final class Div extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
+    long a, b, res;
+
+    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
+      a = ((long) x0);
+      if (a == x0) {
+
+        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
+          b = ((long) x1);
+          if (b == x1) {
+
+            if (b == 0L) {
+              if (a < 0L) {
+                return Double.NEGATIVE_INFINITY;
+              }
+              if (a > 0L) {
+                return Double.POSITIVE_INFINITY;
+              }
+              return Double.NaN;
+            }
+
+            res = (a / b);
+            if ((b * res) == a) {
+              return res;
+            }
+
+          }
+        }
+      }
+    }
+
     return (x0 / x1);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double computeAsDouble(final long x0, final long x1) {
+    long res;
+
+    if (x1 == 0L) {
+      if (x0 < 0L) {
+        return Double.NEGATIVE_INFINITY;
+      }
+      if (x0 > 0L) {
+        return Double.POSITIVE_INFINITY;
+      }
+      return Double.NaN;
+    }
+
+    res = (x0 / x1);
+    if ((x1 * res) == x0) {
+      return res;
+    }
+
+    return (((double) x0) / ((double) x1));
   }
 
   /** {@inheritDoc} */

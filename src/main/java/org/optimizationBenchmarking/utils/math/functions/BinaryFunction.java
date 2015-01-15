@@ -238,6 +238,62 @@ public class BinaryFunction extends MathematicalFunction {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * Compute the function result as {@code double} based on two
+   * {@code long} inputs
+   * 
+   * @param x0
+   *          the 1st {@code long} argument of the function
+   * @param x1
+   *          the 2nd {@code long} argument of the function
+   * @return the return value of this function, a {@code long}
+   */
+  public double computeAsDouble(final long x0, final long x1) {
+    return this.computeAsDouble(((double) x0), ((double) x1));
+  }
+
+  /**
+   * Compute the function result as {@code double} based on two {@code int}
+   * inputs
+   * 
+   * @param x0
+   *          the 1st {@code int} argument of the function
+   * @param x1
+   *          the 2nd {@code int} argument of the function
+   * @return the return value of this function, a {@code long}
+   */
+  public double computeAsDouble(final int x0, final int x1) {
+    return this.computeAsDouble(((long) x0), ((long) x1));
+  }
+
+  /**
+   * Delegate the function call with open parameter count to the
+   * corresponding function with exactly 2 parameters.
+   * 
+   * @param x
+   *          the parameter array
+   * @return the return value of this function, a double
+   */
+  @Override
+  public final double computeAsDouble(final long... x) {
+    this._checkArity(x.length);
+    return this.computeAsDouble(x[0], x[1]);
+  }
+
+  /**
+   * Delegate the function call with open parameter count to the
+   * corresponding function with exactly 2 parameters.
+   * 
+   * @param x
+   *          the parameter array
+   * @return the return value of this function, a double
+   */
+  @Override
+  public final double computeAsDouble(final int... x) {
+    this._checkArity(x.length);
+    return this.computeAsDouble(x[0], x[1]);
+  }
+
   /** {@inheritDoc} */
   @Override
   public BinaryFunction invertFor(final int index) {

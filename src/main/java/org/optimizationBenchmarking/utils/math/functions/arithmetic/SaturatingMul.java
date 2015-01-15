@@ -40,30 +40,60 @@ public final class SaturatingMul extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final long computeAsLong(final long x0, final long x1) {
+    switch (SaturatingMul.getOverflowType(x0, x1)) {
+      case -1: {
+        return Long.MIN_VALUE;
+      }
+      case 0: {
+        return 0;
+      }
+      case 1: {
+        return Long.MAX_VALUE;
+      }
+      default: {
+        return (x0 * x1);
+      }
+    }
+  }
+
+  /**
+   * Get the overflow type when multiplying two {@code long} numbers
+   * 
+   * @param x0
+   *          the first number
+   * @param x1
+   *          the second number
+   * @return {@code -1} if the result would be smaller than
+   *         {@link java.lang.Long#MIN_VALUE}, {@code 1} if the result
+   *         would be bigger than than {@link java.lang.Long#MAX_VALUE},
+   *         {@code 0} if the result would be 0, {@code 2} if no overflow
+   *         would occur,
+   */
+  public static final int getOverflowType(final long x0, final long x1) {
     if (x0 > x1) {
-      return this.computeAsLong(x1, x0);
+      return SaturatingMul.getOverflowType(x1, x0);
     }
     if (x0 < 0L) {
       if (x1 < 0L) {
         if (x0 >= (Long.MAX_VALUE / x1)) {
-          return x0 * x1;
+          return 2;
         }
-        return Long.MAX_VALUE;
+        return 1;
       }
       if (x1 > 0L) {
         if ((Long.MIN_VALUE / x1) <= x0) {
-          return (x0 * x1);
+          return 2;
         }
-        return Long.MIN_VALUE;
+        return (-1);
       }
-      return 0L;
+      return 0;
     }
 
     if (x0 > 0) {
       if (x0 <= (Long.MAX_VALUE / x1)) {
-        return (x0 * x1);
+        return 2;
       }
-      return Long.MAX_VALUE;
+      return 1;
     }
     return 0;
   }

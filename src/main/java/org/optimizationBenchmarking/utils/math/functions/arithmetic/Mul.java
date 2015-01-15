@@ -56,6 +56,28 @@ public final class Mul extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public final double computeAsDouble(final long x0, final long x1) {
+    final long res;
+
+    if ((x0 == 0L) || (x1 == 0L)) {
+      return 0L;
+    }
+
+    res = (x0 * x1);
+    if ((res / x0) == x1) {
+      return res;
+    }
+    return (((double) x0) * ((double) x1));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double computeAsDouble(final int x0, final int x1) {
+    return this.computeAsDouble(((long) x0), ((long) x1));
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final BinaryFunction invertFor(final int index) {
     if (index == 0) {
       return Div.INSTANCE;

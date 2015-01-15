@@ -80,14 +80,9 @@ public final class FactorialLog extends UnaryFunction {
     FactorialLog.factorialLogL(mid + 1, end));
   }
 
-  /**
-   * compute the factorial of a number i
-   * 
-   * @param i
-   *          the number
-   * @return the factorial of <code>i</Coe
-   */
-  public static final double factorialLog(final long i) {
+  /** {@inheritDoc} */
+  @Override
+  public final double computeAsDouble(final long i) {
     double d;
     int v;
 
@@ -112,7 +107,13 @@ public final class FactorialLog extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
-    return FactorialLog.factorialLog(Math.round(x1));
+    if (x1 <= 1d) {
+      return 0d;
+    }
+    if (x1 > Long.MAX_VALUE) {
+      return Double.POSITIVE_INFINITY;
+    }
+    return this.computeAsDouble(Math.round(x1));
   }
 
   // default, automatic serialization replacement and resolve routines for

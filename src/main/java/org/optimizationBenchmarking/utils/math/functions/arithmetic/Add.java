@@ -56,6 +56,26 @@ public final class Add extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public final double computeAsDouble(final long x0, final long x1) {
+    switch (SaturatingAdd.getOverflowType(x0, x1)) {
+      case -1:
+      case 1: {
+        return this.computeAsDouble(((double) x0), ((double) x1));
+      }
+      default: {
+        return (x0 + x1);
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double computeAsDouble(final int x0, final int x1) {
+    return (((long) x0) + ((long) x1));
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final BinaryFunction invertFor(final int index) {
     if (index == 1) {
       return SubBA.INSTANCE;

@@ -56,6 +56,24 @@ public final class SubBA extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public final double computeAsDouble(final long x0, final long x1) {
+    if (x0 <= Long.MIN_VALUE) {
+      if (x1 < 0L) {
+        return (x1 - x0);
+      }
+      return (((double) x1) - ((double) x0));
+    }
+    return Add.INSTANCE.computeAsDouble(x1, (-x0));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double computeAsDouble(final int x0, final int x1) {
+    return (((long) x0) - ((long) x1));
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final BinaryFunction invertFor(final int index) {
     if (index == 1) {
       return Add.INSTANCE;

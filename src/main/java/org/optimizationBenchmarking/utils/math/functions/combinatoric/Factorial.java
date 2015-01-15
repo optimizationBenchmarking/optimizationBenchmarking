@@ -249,6 +249,30 @@ public final class Factorial extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public final double computeAsDouble(final long x1) {
+    if (x1 <= 1L) {
+      return 1L;
+    }
+    if (x1 <= 170L) {
+      return Factorial.FACTORIALS2[(int) x1];
+    }
+    return Double.POSITIVE_INFINITY;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double computeAsDouble(final int x1) {
+    if (x1 <= 1L) {
+      return 1L;
+    }
+    if (x1 <= 170) {
+      return Factorial.FACTORIALS2[x1];
+    }
+    return Double.POSITIVE_INFINITY;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final int computeAsInt(final int x1) {
     if (x1 <= 1) {
       return 1;

@@ -54,6 +54,18 @@ public final class Absolute extends UnaryFunction {
     return (Math.abs(x0));
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final double computeAsDouble(final long x0) {
+    return ((x0 <= Long.MIN_VALUE) ? (-((double) x0)) : Math.abs(x0));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double computeAsDouble(final int x0) {
+    return ((x0 <= Integer.MIN_VALUE) ? (-((double) x0)) : Math.abs(x0));
+  }
+
   // default, automatic serialization replacement and resolve routines for
   // singletons
   //
