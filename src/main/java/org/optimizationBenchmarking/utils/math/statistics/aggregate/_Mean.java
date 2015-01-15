@@ -192,7 +192,7 @@ final class _Mean extends _InternalAggregate {
           return;
         }
 
-        lres = GCD.INSTANCE.compute(lsum, count);
+        lres = GCD.INSTANCE.computeAsLong(lsum, count);
         div = ((double) (lsum / lres)) / ((double) (count / lres));
         if ((div > Double.NEGATIVE_INFINITY)
             && (div < Double.POSITIVE_INFINITY) && (div == div)) {

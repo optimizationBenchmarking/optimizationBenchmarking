@@ -32,7 +32,7 @@ public final class FirstUnaryDerivative extends BasicUnaryDerivative {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     double h, th, xi;
     final UnaryFunction f;
 
@@ -42,7 +42,8 @@ public final class FirstUnaryDerivative extends BasicUnaryDerivative {
     f = this.m_f;
     th = (2d * h);
 
-    return (((((-f.compute(x1 + th)) + (8d * f.compute(x1 + h))) - (8d * f
-        .compute(x1 - h))) + (f.compute(x1 - th))) / (12d * h));
+    return (((((-f.computeAsDouble(x1 + th)) + (8d * f.computeAsDouble(x1
+        + h))) - (8d * f.computeAsDouble(x1 - h))) + (f.computeAsDouble(x1
+        - th))) / (12d * h));
   }
 }

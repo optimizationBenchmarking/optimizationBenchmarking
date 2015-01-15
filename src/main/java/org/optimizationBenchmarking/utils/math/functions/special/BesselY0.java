@@ -23,13 +23,14 @@ public final class BesselY0 extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     double y, z, x1x1;
 
     if (x1 < 8.0d) {
       y = (x1 * x1);
       return ((-2957821389.0d + (y * (7062834065.0d + (y * (-512359803.6d + (y * (10879881.29d + (y * (-86327.92757d + (y * 228.4622733)))))))))) / (40076544269.0d + (y * (745249964.8d + (y * (7189466.438d + (y * (47447.26470d + (y * (226.1030244d + (y * 1.0d)))))))))))
-          + (0.636619772d * BesselJ0.INSTANCE.compute(x1) * Math.log(x1));
+          + (0.636619772d * BesselJ0.INSTANCE.computeAsDouble(x1) * Math
+              .log(x1));
     }
 
     z = 8.0d / x1;

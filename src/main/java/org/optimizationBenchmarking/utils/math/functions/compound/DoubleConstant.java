@@ -36,7 +36,7 @@ public class DoubleConstant extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0) {
+  public final double computeAsDouble(final double x0) {
     return this.m_constant;
   }
 

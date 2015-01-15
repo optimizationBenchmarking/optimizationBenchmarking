@@ -23,7 +23,7 @@ public final class BetaLn extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return org.apache.commons.math3.special.Beta.logBeta(x1, x2);
   }
 

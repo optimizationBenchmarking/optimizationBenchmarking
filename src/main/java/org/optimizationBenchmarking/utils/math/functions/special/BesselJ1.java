@@ -23,7 +23,7 @@ public final class BesselJ1 extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     double ax1, y, z, x1x1;
 
     if ((ax1 = Math.abs(x1)) < 8.0d) {

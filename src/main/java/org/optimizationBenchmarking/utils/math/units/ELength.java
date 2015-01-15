@@ -406,7 +406,7 @@ public enum ELength implements IUnit {
     if (other != null) {
       f = ELength.CONVERT[this.ordinal()][other.ordinal()];
       if (f != null) {
-        return f.compute(value);
+        return f.computeAsLong(value);
       }
     }
     throw new IllegalArgumentException();
@@ -436,7 +436,7 @@ public enum ELength implements IUnit {
     if (other != null) {
       f = ELength.CONVERT[this.ordinal()][other.ordinal()];
       if (f != null) {
-        return f.compute(value);
+        return f.computeAsDouble(value);
       }
     }
     throw new IllegalArgumentException();

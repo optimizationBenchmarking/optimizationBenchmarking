@@ -23,8 +23,8 @@ public final class Beta extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
-    return Math.exp(BetaLn.INSTANCE.compute(x1, x2));
+  public final double computeAsDouble(final double x1, final double x2) {
+    return Math.exp(BetaLn.INSTANCE.computeAsDouble(x1, x2));
   }
 
   // default, automatic serialization replacement and resolve routines for

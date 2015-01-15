@@ -45,10 +45,10 @@ public final class BesselJN extends BinaryFunction {
     boolean jsum;
 
     if (n == 0) {
-      return BesselJ0.INSTANCE.compute(x);
+      return BesselJ0.INSTANCE.computeAsDouble(x);
     }
     if (n == 1) {
-      return BesselJ1.INSTANCE.compute(x);
+      return BesselJ1.INSTANCE.computeAsDouble(x);
     }
 
     ax = Math.abs(x);
@@ -60,8 +60,8 @@ public final class BesselJN extends BinaryFunction {
     tox = (2.0 / ax);
 
     if (ax > n) {
-      bjm = BesselJ0.INSTANCE.compute(ax);
-      bj = BesselJ1.INSTANCE.compute(ax);
+      bjm = BesselJ0.INSTANCE.computeAsDouble(ax);
+      bj = BesselJ1.INSTANCE.computeAsDouble(ax);
 
       for (j = 1; j < n; j++) {
         bjp = (j * tox * bj) - bjm;
@@ -105,7 +105,7 @@ public final class BesselJN extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return BesselJN.besslJN(((int) (Math.round(x1))), x2);
   }
 

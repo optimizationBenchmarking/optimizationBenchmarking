@@ -22,7 +22,7 @@ public final class Log extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     final double d;
 
     if (x1 == 10d) {

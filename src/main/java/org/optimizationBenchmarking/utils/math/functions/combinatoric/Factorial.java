@@ -223,7 +223,7 @@ public final class Factorial extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     final int i;
     i = ((int) (Math.round(x1)));
     if (i <= 1) {
@@ -237,7 +237,7 @@ public final class Factorial extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x1) {
+  public final long computeAsLong(final long x1) {
     if (x1 <= 1L) {
       return 1L;
     }
@@ -249,7 +249,7 @@ public final class Factorial extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x1) {
+  public final int computeAsInt(final int x1) {
     if (x1 <= 1) {
       return 1;
     }

@@ -21,38 +21,41 @@ public final class Add3 extends TernaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte compute(final byte x0, final byte x1, final byte x2) {
+  public final byte computeAsByte(final byte x0, final byte x1,
+      final byte x2) {
     return ((byte) (x0 + x1 + x2));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final short compute(final short x0, final short x1, final short x2) {
+  public final short computeAsShort(final short x0, final short x1,
+      final short x2) {
     return ((short) (x0 + x1 + x2));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x0, final int x1, final int x2) {
+  public final int computeAsInt(final int x0, final int x1, final int x2) {
     return (x0 + x1 + x2);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x0, final long x1, final long x2) {
+  public final long computeAsLong(final long x0, final long x1,
+      final long x2) {
     return (x0 + x1 + x2);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final float compute(final float x0, final float x1, final float x2) {
-    return ((float) (this.compute(((double) x0), ((double) x1),
-        ((double) x2))));
+  public final float computeAsFloat(final float x0, final float x1,
+      final float x2) {
+    return ((float) (this.computeAsDouble(x0, x1, x2)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0, final double x1,
+  public final double computeAsDouble(final double x0, final double x1,
       final double x2) {
     double s1, s2, s3, c1, c2, c3, y, t;
     boolean n, p, us1, us2, us3;

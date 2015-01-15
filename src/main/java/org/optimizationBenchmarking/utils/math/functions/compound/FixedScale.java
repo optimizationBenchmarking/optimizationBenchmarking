@@ -49,8 +49,8 @@ public class FixedScale extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0) {
-    return (this.m_scale * this.m_f.compute(x0));
+  public final double computeAsDouble(final double x0) {
+    return (this.m_scale * this.m_f.computeAsDouble(x0));
   }
 
   /** {@inheritDoc} */

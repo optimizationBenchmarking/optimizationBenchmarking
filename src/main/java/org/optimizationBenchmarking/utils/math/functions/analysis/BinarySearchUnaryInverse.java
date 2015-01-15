@@ -78,7 +78,7 @@ public final class BinarySearchUnaryInverse extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     double lower, upper, mid, midVal, testA, testB, testC, testD;
     final double lowerY, upperY;
     final UnaryFunction f;
@@ -110,7 +110,7 @@ public final class BinarySearchUnaryInverse extends UnaryFunction {
     keyBits = Double.doubleToLongBits(x1);
     while (lower < upper) {
       mid = (0.5d * (lower + upper));
-      midVal = f.compute(mid);
+      midVal = f.computeAsDouble(mid);
       hasRes = false;
       if (midVal < x1) {
         setLower = (!(falling));
@@ -139,23 +139,24 @@ public final class BinarySearchUnaryInverse extends UnaryFunction {
 
       if (hasRes) {
         testA = Math.rint(mid);
-        if ((testA > lower) && (testA < upper) && (f.compute(testA) == x1)) {
+        if ((testA > lower) && (testA < upper)
+            && (f.computeAsDouble(testA) == x1)) {
           return testA;
         }
         testB = Math.ceil(mid);
         if ((testB != testA) && (testB > lower) && (testB < upper)
-            && (f.compute(testB) == x1)) {
+            && (f.computeAsDouble(testB) == x1)) {
           return testB;
         }
         testC = Math.floor(mid);
         if ((testC != testA) && (testC != testB) && (testC > lower)
-            && (testC < upper) && (f.compute(testC) == x1)) {
+            && (testC < upper) && (f.computeAsDouble(testC) == x1)) {
           return testC;
         }
         testD = (0.5d * (testB + testC));
         if ((testD != testA) && (testD != testB) && (testD != testA)
             && (testD > lower) && (testD < upper)
-            && (f.compute(testD) == x1)) {
+            && (f.computeAsDouble(testD) == x1)) {
           return testD;
         }
         return mid;

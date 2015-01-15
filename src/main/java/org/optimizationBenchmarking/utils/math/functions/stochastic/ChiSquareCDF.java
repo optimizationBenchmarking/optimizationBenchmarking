@@ -64,7 +64,7 @@ public final class ChiSquareCDF extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return ChiSquareCDF.chiSquareCDF(x1, ((int) (Math.round(x2))));
   }
 

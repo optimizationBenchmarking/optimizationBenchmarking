@@ -43,7 +43,7 @@ public final class GammaRegularizedP extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return GammaRegularizedP.regularizedGammaP(x1, x2, MathConstants.EPS);
   }
 

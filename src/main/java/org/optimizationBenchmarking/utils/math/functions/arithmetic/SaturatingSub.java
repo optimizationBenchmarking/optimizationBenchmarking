@@ -18,46 +18,46 @@ public final class SaturatingSub extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte compute(final byte x0, final byte x1) {
+  public final byte computeAsByte(final byte x0, final byte x1) {
     return ((byte) (Math.max(Byte.MIN_VALUE,
         Math.min(Byte.MAX_VALUE, ((x0) - (x1))))));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final short compute(final short x0, final short x1) {
+  public final short computeAsShort(final short x0, final short x1) {
     return ((short) (Math.max(Short.MIN_VALUE,
         Math.min(Short.MAX_VALUE, ((x0) - (x1))))));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x0, final int x1) {
+  public final int computeAsInt(final int x0, final int x1) {
     return ((int) (Math.max(Integer.MIN_VALUE,
         Math.min(Integer.MAX_VALUE, (((long) x0) - ((long) x1))))));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x0, final long x1) {
+  public final long computeAsLong(final long x0, final long x1) {
     if (x1 <= Long.MIN_VALUE) {
       if (x0 < 0L) {
         return (x0 - x1);
       }
       return Long.MAX_VALUE;
     }
-    return SaturatingAdd.INSTANCE.compute(x0, (-x1));
+    return SaturatingAdd.INSTANCE.computeAsLong(x0, (-x1));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final float compute(final float x0, final float x1) {
+  public final float computeAsFloat(final float x0, final float x1) {
     return (x0 + x1);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0, final double x1) {
+  public final double computeAsDouble(final double x0, final double x1) {
     return (x0 + x1);
   }
 

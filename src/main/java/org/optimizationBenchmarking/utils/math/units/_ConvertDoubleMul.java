@@ -21,7 +21,7 @@ final class _ConvertDoubleMul extends _ConversionFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0) {
+  public final double computeAsDouble(final double x0) {
     return (x0 * this.m_multiplier);
   }
 

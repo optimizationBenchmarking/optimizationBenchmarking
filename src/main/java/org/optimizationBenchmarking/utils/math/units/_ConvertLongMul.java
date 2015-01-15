@@ -39,7 +39,7 @@ final class _ConvertLongMul extends _ConversionFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x0) {
+  public final long computeAsLong(final long x0) {
     if (x0 > this.m_max) {
       if (this.m_multiplier > 0L) {
         return Long.MAX_VALUE;
@@ -57,12 +57,12 @@ final class _ConvertLongMul extends _ConversionFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0) {
+  public final double computeAsDouble(final double x0) {
     long l;
     if ((x0 > this.m_min) && (x0 < this.m_max)) {
       l = ((long) x0);
       if (l == x0) {
-        l = this.compute(l);
+        l = this.computeAsLong(l);
         if ((l > Long.MIN_VALUE) && (l < Long.MAX_VALUE)) {
           return l;
         }

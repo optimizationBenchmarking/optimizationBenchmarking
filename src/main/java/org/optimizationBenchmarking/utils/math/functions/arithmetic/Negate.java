@@ -20,37 +20,37 @@ public final class Negate extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte compute(final byte x0) {
+  public final byte computeAsByte(final byte x0) {
     return ((byte) (-x0));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final short compute(final short x0) {
+  public final short computeAsShort(final short x0) {
     return ((short) (-x0));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x0) {
+  public final int computeAsInt(final int x0) {
     return (-x0);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x0) {
+  public final long computeAsLong(final long x0) {
     return (-x0);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final float compute(final float x0) {
+  public final float computeAsFloat(final float x0) {
     return (-x0);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0) {
+  public final double computeAsDouble(final double x0) {
     return (-x0);
   }
 

@@ -21,38 +21,38 @@ public final class BNot extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte compute(final byte x1) {
+  public final byte computeAsByte(final byte x1) {
     return ((byte) (~x1));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final short compute(final short x1) {
+  public final short computeAsShort(final short x1) {
     return ((short) (~x1));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x1) {
+  public final int computeAsInt(final int x1) {
     return (~x1);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x1) {
+  public final long computeAsLong(final long x1) {
     return (~x1);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final float compute(final float x1) {
-    return this.compute(((long) x1));
+  public final float computeAsFloat(final float x1) {
+    return this.computeAsLong(((long) x1));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
-    return this.compute(((long) x1));
+  public final double computeAsDouble(final double x1) {
+    return this.computeAsLong(((long) x1));
   }
 
   // default, automatic serialization replacement and resolve routines for

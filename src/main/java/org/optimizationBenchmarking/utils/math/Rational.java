@@ -128,7 +128,7 @@ public class Rational extends BasicNumber {
               if (temp2 > 0L) {
                 temp1 = Rational.__mulNonZero(a_down, temp1);
                 if (temp1 > 0L) {
-                  gcd = GCD.INSTANCE.compute(temp2, temp1);
+                  gcd = GCD.INSTANCE.computeAsLong(temp2, temp1);
                   if (gcd > 0) {
                     a_up = (temp2 / gcd);
                     a_down = (temp1 / gcd);
@@ -162,7 +162,7 @@ public class Rational extends BasicNumber {
               if (temp2 > 0L) {
                 temp1 = Rational.__mulNonZero(b_down, temp1);
                 if (temp1 > 0L) {
-                  gcd = GCD.INSTANCE.compute(temp2, temp1);
+                  gcd = GCD.INSTANCE.computeAsLong(temp2, temp1);
                   if (gcd > 0) {
                     b_up = (temp2 / gcd);
                     b_down = (temp1 / gcd);
@@ -198,7 +198,7 @@ public class Rational extends BasicNumber {
         mid_up += temp2;
         mid_down <<= 1L;
       }
-      gcd = GCD.INSTANCE.compute(mid_up, mid_down);
+      gcd = GCD.INSTANCE.computeAsLong(mid_up, mid_down);
       if (gcd <= 0L) {
         break outer;
       }
@@ -293,7 +293,7 @@ public class Rational extends BasicNumber {
     }
 
     if (doGcd) {
-      gcd = GCD.INSTANCE.compute(u, d);
+      gcd = GCD.INSTANCE.computeAsLong(u, d);
       if (gcd > 1L) {// > 0: if min_value its min_value
         u /= gcd;
         d /= gcd;
@@ -561,7 +561,7 @@ public class Rational extends BasicNumber {
       return Rational.ONE;
     }
 
-    gcd_a_up_b_down = GCD.INSTANCE.compute(a_up, b_down);
+    gcd_a_up_b_down = GCD.INSTANCE.computeAsLong(a_up, b_down);
     if (gcd_a_up_b_down < 0L) {
       up1 = a_up;
       down1 = b_down;
@@ -570,7 +570,7 @@ public class Rational extends BasicNumber {
       down1 = (b_down / gcd_a_up_b_down);
     }
 
-    gcd_a_down_b_up = GCD.INSTANCE.compute(a_down, b_up);
+    gcd_a_down_b_up = GCD.INSTANCE.computeAsLong(a_down, b_up);
     if (gcd_a_down_b_up < 0L) {
       up2 = b_up;
       down2 = a_down;
@@ -593,7 +593,7 @@ public class Rational extends BasicNumber {
       return Rational.NaN;
     }
 
-    gcd = GCD.INSTANCE.compute(new_up, new_down);
+    gcd = GCD.INSTANCE.computeAsLong(new_up, new_down);
     if (gcd > 1L) {
       return new Rational((new_up / gcd), (new_down / gcd));
     }

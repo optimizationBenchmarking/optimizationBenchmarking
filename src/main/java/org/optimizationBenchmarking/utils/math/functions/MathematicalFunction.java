@@ -2,8 +2,6 @@ package org.optimizationBenchmarking.utils.math.functions;
 
 import java.io.Serializable;
 
-import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-
 /**
  * <p>
  * The base class for mathematical functions. It is our goal to implement
@@ -102,7 +100,7 @@ public abstract class MathematicalFunction implements Serializable {
    * @return the result of this function, computed in {@code double}
    *         precision
    */
-  public double compute(final double... x) {
+  public double computeAsDouble(final double... x) {
     throw new UnsupportedOperationException();
   }
 
@@ -121,7 +119,7 @@ public abstract class MathematicalFunction implements Serializable {
    *           if a floating point delegate in the delegation chain returns
    *           {@code Double.NaN}.
    */
-  public byte compute(final byte... x) {
+  public byte computeAsByte(final byte... x) {
     final int[] a;
     int i;
     final int r;
@@ -134,8 +132,8 @@ public abstract class MathematicalFunction implements Serializable {
       a[i] = (x[i]);
     }
 
-    r = Math
-        .min(Byte.MAX_VALUE, Math.max(Byte.MIN_VALUE, this.compute(a)));
+    r = Math.min(Byte.MAX_VALUE,
+        Math.max(Byte.MIN_VALUE, this.computeAsInt(a)));
     return ((byte) (r));
   }
 
@@ -154,7 +152,7 @@ public abstract class MathematicalFunction implements Serializable {
    *           if a floating point delegate in the delegation chain returns
    *           {@code Double.NaN}.
    */
-  public short compute(final short... x) {
+  public short computeAsShort(final short... x) {
     final int[] a;
     int i;
     final int r;
@@ -168,7 +166,7 @@ public abstract class MathematicalFunction implements Serializable {
     }
 
     r = Math.min(Short.MAX_VALUE,
-        Math.max(Short.MIN_VALUE, this.compute(a)));
+        Math.max(Short.MIN_VALUE, this.computeAsInt(a)));
     return ((short) (r));
   }
 
@@ -187,7 +185,7 @@ public abstract class MathematicalFunction implements Serializable {
    *           if a floating point delegate in the delegation chain returns
    *           {@code Double.NaN}.
    */
-  public int compute(final int... x) {
+  public int computeAsInt(final int... x) {
     final long[] a;
     int i;
     final long r;
@@ -201,7 +199,7 @@ public abstract class MathematicalFunction implements Serializable {
     }
 
     r = Math.min(Integer.MAX_VALUE,
-        Math.max(Integer.MIN_VALUE, this.compute(a)));
+        Math.max(Integer.MIN_VALUE, this.computeAsLong(a)));
     return ((int) (r));
   }
 
@@ -220,7 +218,7 @@ public abstract class MathematicalFunction implements Serializable {
    *           if a floating point delegate in the delegation chain returns
    *           {@code Double.NaN}.
    */
-  public long compute(final long... x) {
+  public long computeAsLong(final long... x) {
     final double[] a;
     int i;
     final double r;
@@ -233,7 +231,7 @@ public abstract class MathematicalFunction implements Serializable {
       a[i] = (x[i]);
     }
 
-    r = this.compute(a);
+    r = this.computeAsDouble(a);
     if (r <= (java.lang.Double.NEGATIVE_INFINITY)) {
       return (java.lang.Long.MIN_VALUE);
     }
@@ -258,7 +256,7 @@ public abstract class MathematicalFunction implements Serializable {
    *          {@code float} values
    * @return the return value of this function, a float
    */
-  public float compute(final float... x) {
+  public float computeAsFloat(final float... x) {
     final double[] a;
     int i;
     final double r;
@@ -271,7 +269,7 @@ public abstract class MathematicalFunction implements Serializable {
       a[i] = (x[i]);
     }
 
-    r = this.compute(a);
+    r = this.computeAsDouble(a);
     return ((float) (r));
   }
 
@@ -379,51 +377,5 @@ public abstract class MathematicalFunction implements Serializable {
   @Override
   public int hashCode() {
     return this.getClass().hashCode();
-  }
-
-  /**
-   * Compute the values over the specified column of the given matrix
-   * 
-   * @param matrix
-   *          the matrix
-   * @param column
-   *          the column
-   * @return the aggregate
-   */
-  public double computeOverColumn(final IMatrix matrix, final int column) {
-    final int m;
-    final double[] d;
-    int i;
-
-    m = matrix.m();
-    this._checkArity(m);
-    d = new double[m];
-    for (i = 0; i < m; i++) {
-      d[i] = matrix.getDouble(i, column);
-    }
-    return this.compute(d);
-  }
-
-  /**
-   * Compute the values over the specified row of the given matrix
-   * 
-   * @param matrix
-   *          the matrix
-   * @param row
-   *          the row
-   * @return the aggregate
-   */
-  public double computeOverRow(final IMatrix matrix, final int row) {
-    final int n;
-    final double[] d;
-    int i;
-
-    n = matrix.m();
-    this._checkArity(n);
-    d = new double[n];
-    for (i = 0; i < n; i++) {
-      d[i] = matrix.getDouble(row, i);
-    }
-    return this.compute(d);
   }
 }

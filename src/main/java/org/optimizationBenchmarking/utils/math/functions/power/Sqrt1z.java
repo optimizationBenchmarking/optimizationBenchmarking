@@ -19,7 +19,7 @@ public final class Sqrt1z extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     return Math.sqrt(1d - (x1 * x1));
   }
 

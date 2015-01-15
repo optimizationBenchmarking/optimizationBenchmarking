@@ -175,9 +175,9 @@ public final class GraphicsExample {
 
     r = g.getBounds();
 
-    g.translate((r.getX() + x.compute(40d)), //
-        (r.getY() + x.compute(25d)));
-    jcb.setBounds(0, 0, x.compute(50), x.compute(30));
+    g.translate((r.getX() + x.computeAsDouble(40d)), //
+        (r.getY() + x.computeAsDouble(25d)));
+    jcb.setBounds(0, 0, x.computeAsInt(50), x.computeAsInt(30));
 
     jcb.paint(g);
   }

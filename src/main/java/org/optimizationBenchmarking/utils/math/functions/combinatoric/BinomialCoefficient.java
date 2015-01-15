@@ -34,7 +34,7 @@ public final class BinomialCoefficient extends BinaryFunction {
    * @return the coefficient
    */
   @Override
-  public final long compute(final long n, final long k) {
+  public final long computeAsLong(final long n, final long k) {
     if ((k < 0L) || (k > n) || (n < 0L)) {
       return 0L;
     }
@@ -85,10 +85,10 @@ public final class BinomialCoefficient extends BinaryFunction {
 
       // overflow handling
       if (rn <= r) {
-        g = GCD.INSTANCE.compute(r, d);
+        g = GCD.INSTANCE.computeAsLong(r, d);
         rn = (((r / g) * v) / (d / g));
         if (rn <= r) {
-          g = GCD.INSTANCE.compute(v, d);
+          g = GCD.INSTANCE.computeAsLong(v, d);
           rn = ((r * (v / g)) / (d / g));
           if (rn <= r) {
             return (-1L);
@@ -104,7 +104,7 @@ public final class BinomialCoefficient extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     final double a, b, c, nmk, ra, rb;
     final long ln, lk, lr, nmkl;
 
@@ -129,21 +129,21 @@ public final class BinomialCoefficient extends BinaryFunction {
       }
 
       nmkl = (ln - lk);
-      a = (x2 * (Beta.INSTANCE.compute(x2, nmkl + 1L)));
-      b = (nmkl * (Beta.INSTANCE.compute(x2 + 1L, nmkl)));
+      a = (x2 * (Beta.INSTANCE.computeAsDouble(x2, nmkl + 1L)));
+      b = (nmkl * (Beta.INSTANCE.computeAsDouble(x2 + 1L, nmkl)));
     } else {
       nmk = (x1 - x2);
-      a = (x2 * (Beta.INSTANCE.compute(x2, nmk + 1d)));
-      b = (nmk * (Beta.INSTANCE.compute(x2 + 1d, nmk)));
+      a = (x2 * (Beta.INSTANCE.computeAsDouble(x2, nmk + 1d)));
+      b = (nmk * (Beta.INSTANCE.computeAsDouble(x2 + 1d, nmk)));
     }
 
     ra = (1d / a);
     rb = (1d / b);
     if (Double.isInfinite(ra) || Double.isNaN(ra)) {
       if (Double.isInfinite(rb) || Double.isNaN(rb)) {
-        return Math.exp(GammaLn.INSTANCE.compute(x1 + 1d)
-            - GammaLn.INSTANCE.compute(x2 + 1d)
-            - GammaLn.INSTANCE.compute((x1 - x2) + 1d));
+        return Math.exp(GammaLn.INSTANCE.computeAsDouble(x1 + 1d)
+            - GammaLn.INSTANCE.computeAsDouble(x2 + 1d)
+            - GammaLn.INSTANCE.computeAsDouble((x1 - x2) + 1d));
       }
 
       return rb;

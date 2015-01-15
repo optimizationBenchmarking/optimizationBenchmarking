@@ -21,7 +21,7 @@ public final class Pow extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x1, final int x2) {
+  public final int computeAsInt(final int x1, final int x2) {
     int result, exp, base;
 
     if (x2 <= (1)) {
@@ -76,7 +76,7 @@ public final class Pow extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x1, final long x2) {
+  public final long computeAsLong(final long x1, final long x2) {
     long result, exp, base;
 
     if (x2 <= (1L)) {
@@ -131,13 +131,13 @@ public final class Pow extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final float compute(final float x1, final float x2) {
+  public final float computeAsFloat(final float x1, final float x2) {
     return ((float) (Math.pow(x1, x2)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return (Math.pow(x1, x2));
   }
 

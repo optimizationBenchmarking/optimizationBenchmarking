@@ -37,15 +37,15 @@ public final class BesselYN extends BinaryFunction {
     double by, bym, byp, tox, j;
 
     if (n == 0) {
-      return BesselY0.INSTANCE.compute(x);
+      return BesselY0.INSTANCE.computeAsDouble(x);
     }
     if (n == 1) {
-      return BesselY1.INSTANCE.compute(x);
+      return BesselY1.INSTANCE.computeAsDouble(x);
     }
 
     tox = (2.0d / x);
-    by = BesselY1.INSTANCE.compute(x);
-    bym = BesselY0.INSTANCE.compute(x);
+    by = BesselY1.INSTANCE.computeAsDouble(x);
+    bym = BesselY0.INSTANCE.computeAsDouble(x);
 
     for (j = 1; j < n; j++) {
       byp = ((j * tox * by) - bym);
@@ -58,7 +58,7 @@ public final class BesselYN extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return BesselYN.besselYN(((int) (Math.round(x1))), x2);
   }
 

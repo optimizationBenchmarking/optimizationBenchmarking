@@ -111,7 +111,7 @@ public final class FactorialLog extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     return FactorialLog.factorialLog(Math.round(x1));
   }
 

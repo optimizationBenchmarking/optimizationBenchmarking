@@ -42,7 +42,7 @@ public class StableSumTest {
             val = rand.nextLong();
           }
         }
-        tmp = SaturatingAdd.INSTANCE.compute(sum, val);
+        tmp = SaturatingAdd.INSTANCE.computeAsLong(sum, val);
       } while ((tmp - val) != sum);
       sum = tmp;
 

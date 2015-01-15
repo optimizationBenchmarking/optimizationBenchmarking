@@ -21,13 +21,13 @@ final class _ConvertLongDiv extends _ConversionFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x0) {
+  public final long computeAsLong(final long x0) {
     return (x0 / this.m_divisor);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0) {
+  public final double computeAsDouble(final double x0) {
     long l;
     if ((x0 > Long.MIN_VALUE) && (x0 < Long.MAX_VALUE)) {
       l = ((long) x0);

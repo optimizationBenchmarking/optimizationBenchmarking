@@ -21,7 +21,7 @@ public final class CeilDiv extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte compute(final byte x1, final byte x2) {
+  public final byte computeAsByte(final byte x1, final byte x2) {
     int res1, res2;
 
     if (x2 == ((byte) (0))) {
@@ -45,7 +45,7 @@ public final class CeilDiv extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final short compute(final short x1, final short x2) {
+  public final short computeAsShort(final short x1, final short x2) {
     int res1, res2;
 
     if (x2 == ((short) (0))) {
@@ -69,7 +69,7 @@ public final class CeilDiv extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x1, final int x2) {
+  public final int computeAsInt(final int x1, final int x2) {
     int res1, res2;
 
     if (x2 == (0)) {
@@ -93,7 +93,7 @@ public final class CeilDiv extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x1, final long x2) {
+  public final long computeAsLong(final long x1, final long x2) {
     long res1, res2;
 
     if (x2 == (0L)) {
@@ -117,7 +117,7 @@ public final class CeilDiv extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return Math.ceil(x1 / x2);
   }
 

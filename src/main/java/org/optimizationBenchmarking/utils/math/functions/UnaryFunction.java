@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.math.functions;
 
-import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-
 /**
  * <p>
  * The base class for unary functions, i.e., mathematical functions that
@@ -39,9 +37,9 @@ public class UnaryFunction extends MathematicalFunction {
    * @return the return value of this function, a byte
    */
   @Override
-  public final byte compute(final byte... x) {
+  public final byte computeAsByte(final byte... x) {
     this._checkArity(x.length);
-    return this.compute(x[0]);
+    return this.computeAsByte(x[0]);
   }
 
   /**
@@ -53,9 +51,9 @@ public class UnaryFunction extends MathematicalFunction {
    * @return the return value of this function, a short
    */
   @Override
-  public final short compute(final short... x) {
+  public final short computeAsShort(final short... x) {
     this._checkArity(x.length);
-    return this.compute(x[0]);
+    return this.computeAsShort(x[0]);
   }
 
   /**
@@ -67,9 +65,9 @@ public class UnaryFunction extends MathematicalFunction {
    * @return the return value of this function, a int
    */
   @Override
-  public final int compute(final int... x) {
+  public final int computeAsInt(final int... x) {
     this._checkArity(x.length);
-    return this.compute(x[0]);
+    return this.computeAsInt(x[0]);
   }
 
   /**
@@ -81,9 +79,9 @@ public class UnaryFunction extends MathematicalFunction {
    * @return the return value of this function, a long
    */
   @Override
-  public final long compute(final long... x) {
+  public final long computeAsLong(final long... x) {
     this._checkArity(x.length);
-    return this.compute(x[0]);
+    return this.computeAsLong(x[0]);
   }
 
   /**
@@ -95,9 +93,9 @@ public class UnaryFunction extends MathematicalFunction {
    * @return the return value of this function, a float
    */
   @Override
-  public final float compute(final float... x) {
+  public final float computeAsFloat(final float... x) {
     this._checkArity(x.length);
-    return this.compute(x[0]);
+    return this.computeAsFloat(x[0]);
   }
 
   /**
@@ -109,9 +107,9 @@ public class UnaryFunction extends MathematicalFunction {
    * @return the return value of this function, a double
    */
   @Override
-  public final double compute(final double... x) {
+  public final double computeAsDouble(final double... x) {
     this._checkArity(x.length);
-    return this.compute(x[0]);
+    return this.computeAsDouble(x[0]);
   }
 
   /**
@@ -124,11 +122,11 @@ public class UnaryFunction extends MathematicalFunction {
    *          the 1st byte argument of the function
    * @return the return value of this function, a {@code byte}
    */
-  public byte compute(final byte x0) {
+  public byte computeAsByte(final byte x0) {
     final int r;
 
     r = Math.min(Byte.MAX_VALUE,
-        Math.max(Byte.MIN_VALUE, this.compute(((int) (x0)))));
+        Math.max(Byte.MIN_VALUE, this.computeAsInt(x0)));
 
     return ((byte) (r));
   }
@@ -143,11 +141,11 @@ public class UnaryFunction extends MathematicalFunction {
    *          the 1st short argument of the function
    * @return the return value of this function, a {@code short}
    */
-  public short compute(final short x0) {
+  public short computeAsShort(final short x0) {
     final int r;
 
     r = Math.min(Short.MAX_VALUE,
-        Math.max(Short.MIN_VALUE, this.compute(((int) (x0)))));
+        Math.max(Short.MIN_VALUE, this.computeAsInt(x0)));
 
     return ((short) (r));
   }
@@ -162,10 +160,10 @@ public class UnaryFunction extends MathematicalFunction {
    *          the 1st int argument of the function
    * @return the return value of this function, a {@code int}
    */
-  public int compute(final int x0) {
+  public int computeAsInt(final int x0) {
     final long r;
 
-    r = this.compute(((long) (x0)));
+    r = this.computeAsLong(x0);
 
     return ((int) (Math.min(Integer.MAX_VALUE,
         Math.max(Integer.MIN_VALUE, r))));
@@ -181,10 +179,10 @@ public class UnaryFunction extends MathematicalFunction {
    *          the 1st long argument of the function
    * @return the return value of this function, a {@code long}
    */
-  public long compute(final long x0) {
+  public long computeAsLong(final long x0) {
     final double r;
 
-    r = this.compute(((double) (x0)));
+    r = this.computeAsDouble(x0);
 
     if (r <= (java.lang.Double.NEGATIVE_INFINITY)) {
       return (java.lang.Long.MIN_VALUE);
@@ -208,10 +206,10 @@ public class UnaryFunction extends MathematicalFunction {
    *          the 1st float argument of the function
    * @return the return value of this function, a {@code float}
    */
-  public float compute(final float x0) {
+  public float computeAsFloat(final float x0) {
     final double r;
 
-    r = this.compute(((double) (x0)));
+    r = this.computeAsDouble(x0);
 
     return ((float) (r));
   }
@@ -224,7 +222,7 @@ public class UnaryFunction extends MathematicalFunction {
    *          the 1st {@code double} argument of the function
    * @return the return value of this function, a {@code double}
    */
-  public double compute(final double x0) {
+  public double computeAsDouble(final double x0) {
     throw new UnsupportedOperationException();
   }
 
@@ -238,20 +236,5 @@ public class UnaryFunction extends MathematicalFunction {
   @Override
   public UnaryFunction integrateFor(final int index) {
     return null;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final double computeOverColumn(final IMatrix matrix,
-      final int column) {
-    this._checkArity(matrix.m());
-    return this.compute(matrix.getDouble(0, column));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final double computeOverRow(final IMatrix matrix, final int row) {
-    this._checkArity(matrix.n());
-    return this.compute(matrix.getDouble(row, 0));
   }
 }

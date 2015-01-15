@@ -25,7 +25,7 @@ public final class NormalInvCDF extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     return NormalPDF.DISTRIBUTION.inverseCumulativeProbability(x1);
   }
 

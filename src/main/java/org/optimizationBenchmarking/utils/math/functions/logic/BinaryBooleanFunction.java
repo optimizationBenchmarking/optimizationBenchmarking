@@ -82,7 +82,7 @@ public abstract class BinaryBooleanFunction extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte compute(final byte x1, final byte x2) {
+  public final byte computeAsByte(final byte x1, final byte x2) {
     return NumericalLogic.boolean2byte(this.compute(//
         NumericalLogic.byte2boolean(x1),//
         NumericalLogic.byte2boolean(x2)));
@@ -90,7 +90,7 @@ public abstract class BinaryBooleanFunction extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final short compute(final short x1, final short x2) {
+  public final short computeAsShort(final short x1, final short x2) {
     return NumericalLogic.boolean2short(this.compute(//
         NumericalLogic.short2boolean(x1),//
         NumericalLogic.short2boolean(x2)));
@@ -98,7 +98,7 @@ public abstract class BinaryBooleanFunction extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x1, final int x2) {
+  public final int computeAsInt(final int x1, final int x2) {
     return NumericalLogic.boolean2int(this.compute(//
         NumericalLogic.int2boolean(x1),//
         NumericalLogic.int2boolean(x2)));
@@ -106,7 +106,7 @@ public abstract class BinaryBooleanFunction extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x1, final long x2) {
+  public final long computeAsLong(final long x1, final long x2) {
     return NumericalLogic.boolean2long(this.compute(//
         NumericalLogic.long2boolean(x1),//
         NumericalLogic.long2boolean(x2)));
@@ -114,7 +114,7 @@ public abstract class BinaryBooleanFunction extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final float compute(final float x1, final float x2) {
+  public final float computeAsFloat(final float x1, final float x2) {
     return NumericalLogic.boolean2float(this.compute(//
         NumericalLogic.float2boolean(x1),//
         NumericalLogic.float2boolean(x2)));
@@ -122,7 +122,7 @@ public abstract class BinaryBooleanFunction extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return NumericalLogic.boolean2double(this.compute(//
         NumericalLogic.double2boolean(x1),//
         NumericalLogic.double2boolean(x2)));

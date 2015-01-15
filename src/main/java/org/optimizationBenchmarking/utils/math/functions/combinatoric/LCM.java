@@ -29,7 +29,7 @@ public final class LCM extends BinaryFunction {
    * @return the coefficient
    */
   @Override
-  public final int compute(final int a, final int b) {
+  public final int computeAsInt(final int a, final int b) {
     int x, y, t;
 
     x = Math.abs(a);
@@ -41,7 +41,7 @@ public final class LCM extends BinaryFunction {
       y = t;
     }
 
-    return Math.abs((x / GCD.INSTANCE.compute(x, y)) * y);
+    return Math.abs((x / GCD.INSTANCE.computeAsInt(x, y)) * y);
   }
 
   /**
@@ -54,7 +54,7 @@ public final class LCM extends BinaryFunction {
    * @return the coefficient
    */
   @Override
-  public final long compute(final long a, final long b) {
+  public final long computeAsLong(final long a, final long b) {
     long x, y, t;
 
     x = Math.abs(a);
@@ -66,13 +66,13 @@ public final class LCM extends BinaryFunction {
       y = t;
     }
 
-    return Math.abs((x / GCD.INSTANCE.compute(x, y)) * y);
+    return Math.abs((x / GCD.INSTANCE.computeAsLong(x, y)) * y);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
-    return LCM.INSTANCE.compute(Math.round(x1), Math.round(x2));
+  public final double computeAsDouble(final double x1, final double x2) {
+    return LCM.INSTANCE.computeAsLong(Math.round(x1), Math.round(x2));
   }
 
   // default, automatic serialization replacement and resolve routines for

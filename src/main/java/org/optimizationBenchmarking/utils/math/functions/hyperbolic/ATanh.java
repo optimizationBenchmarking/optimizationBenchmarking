@@ -19,7 +19,7 @@ public final class ATanh extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     return org.apache.commons.math3.util.FastMath.atanh(x1);
   }
 

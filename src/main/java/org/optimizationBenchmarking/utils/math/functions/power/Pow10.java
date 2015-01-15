@@ -21,37 +21,37 @@ public final class Pow10 extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte compute(final byte x1) {
-    return Pow.INSTANCE.compute(((byte) (10)), x1);
+  public final byte computeAsByte(final byte x1) {
+    return Pow.INSTANCE.computeAsByte(((byte) (10)), x1);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final short compute(final short x1) {
-    return Pow.INSTANCE.compute(((short) (10)), x1);
+  public final short computeAsShort(final short x1) {
+    return Pow.INSTANCE.computeAsShort(((short) (10)), x1);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x1) {
-    return Pow.INSTANCE.compute((10), x1);
+  public final int computeAsInt(final int x1) {
+    return Pow.INSTANCE.computeAsInt((10), x1);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x1) {
-    return Pow.INSTANCE.compute((10L), x1);
+  public final long computeAsLong(final long x1) {
+    return Pow.INSTANCE.computeAsLong((10L), x1);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final float compute(final float x1) {
+  public final float computeAsFloat(final float x1) {
     return ((float) (Math.pow(10d, x1)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     return (Math.pow(10d, x1));
   }
 

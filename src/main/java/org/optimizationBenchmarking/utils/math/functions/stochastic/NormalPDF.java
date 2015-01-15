@@ -30,7 +30,7 @@ public final class NormalPDF extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     return NormalPDF.DISTRIBUTION.density(x1);
   }
 

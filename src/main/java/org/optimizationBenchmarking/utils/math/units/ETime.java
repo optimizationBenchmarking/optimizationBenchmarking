@@ -357,7 +357,7 @@ public enum ETime implements IUnit {
     if (other != null) {
       f = ETime.CONVERT[this.ordinal()][other.ordinal()];
       if (f != null) {
-        return f.compute(value);
+        return f.computeAsLong(value);
       }
     }
     throw new IllegalArgumentException();
@@ -387,7 +387,7 @@ public enum ETime implements IUnit {
     if (other != null) {
       f = ETime.CONVERT[this.ordinal()][other.ordinal()];
       if (f != null) {
-        return f.compute(value);
+        return f.computeAsDouble(value);
       }
     }
     throw new IllegalArgumentException();

@@ -78,7 +78,7 @@ public final class TCDF extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return TCDF.tCDF(Math.round(x1), x2);
   }
 

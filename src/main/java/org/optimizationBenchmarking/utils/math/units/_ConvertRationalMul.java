@@ -25,13 +25,13 @@ final class _ConvertRationalMul extends _ConversionFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0) {
+  public final double computeAsDouble(final double x0) {
     return this.m_multiplier.multiply(x0);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x0) {
+  public final long computeAsLong(final long x0) {
     final Rational r;
 
     r = this.m_multiplier.multiply(x0);
@@ -39,7 +39,7 @@ final class _ConvertRationalMul extends _ConversionFunction {
       return r.longValue();
     }
     return ((long) (Math.max(Long.MIN_VALUE,
-        Math.min(Long.MAX_VALUE, this.compute((double) x0)))));
+        Math.min(Long.MAX_VALUE, this.computeAsDouble(x0)))));
   }
 
   /** {@inheritDoc} */

@@ -19,31 +19,31 @@ class _ConversionFunction extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte compute(final byte x0) {
+  public final byte computeAsByte(final byte x0) {
     return ((byte) (Math.max(Byte.MIN_VALUE,
-        Math.min(Byte.MAX_VALUE, this.compute((long) x0)))));
+        Math.min(Byte.MAX_VALUE, this.computeAsLong(x0)))));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final short compute(final short x0) {
+  public final short computeAsShort(final short x0) {
     return ((short) (Math.max(Short.MIN_VALUE,
-        Math.min(Short.MAX_VALUE, this.compute((long) x0)))));
+        Math.min(Short.MAX_VALUE, this.computeAsLong(x0)))));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x0) {
+  public final int computeAsInt(final int x0) {
     return ((int) (Math.max(Integer.MIN_VALUE,
-        Math.min(Integer.MAX_VALUE, this.compute((long) x0)))));
+        Math.min(Integer.MAX_VALUE, this.computeAsLong(x0)))));
   }
 
   /** {@inheritDoc} */
   @Override
-  public long compute(final long x0) {
+  public long computeAsLong(final long x0) {
     return ((long) (Math.max(Long.MIN_VALUE,//
         Math.min(Long.MAX_VALUE,//
-            this.compute((double) x0)))));
+            this.computeAsDouble(x0)))));
   }
 
   /** {@inheritDoc} */

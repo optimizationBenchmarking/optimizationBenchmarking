@@ -29,7 +29,7 @@ public final class GCD extends BinaryFunction {
    * @return the coefficient
    */
   @Override
-  public final int compute(final int a, final int b) {
+  public final int computeAsInt(final int a, final int b) {
     int u, v, r;
 
     u = a;
@@ -57,7 +57,7 @@ public final class GCD extends BinaryFunction {
    * @return the coefficient
    */
   @Override
-  public final long compute(final long a, final long b) {
+  public final long computeAsLong(final long a, final long b) {
     long u, v, r;
 
     u = a;
@@ -77,8 +77,8 @@ public final class GCD extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
-    return GCD.INSTANCE.compute(Math.round(x1), Math.round(x2));
+  public final double computeAsDouble(final double x1, final double x2) {
+    return GCD.INSTANCE.computeAsLong(Math.round(x1), Math.round(x2));
   }
 
   // default, automatic serialization replacement and resolve routines for

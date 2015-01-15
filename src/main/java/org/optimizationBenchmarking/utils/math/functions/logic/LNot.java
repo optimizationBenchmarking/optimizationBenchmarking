@@ -20,39 +20,39 @@ public final class LNot extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte compute(final byte x1) {
+  public final byte computeAsByte(final byte x1) {
     return NumericalLogic.boolean2byte(!(NumericalLogic.byte2boolean(x1)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final short compute(final short x1) {
+  public final short computeAsShort(final short x1) {
     return NumericalLogic
         .boolean2short(!(NumericalLogic.short2boolean(x1)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x1) {
+  public final int computeAsInt(final int x1) {
     return NumericalLogic.boolean2int(!(NumericalLogic.int2boolean(x1)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x1) {
+  public final long computeAsLong(final long x1) {
     return NumericalLogic.boolean2long(!(NumericalLogic.long2boolean(x1)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final float compute(final float x1) {
+  public final float computeAsFloat(final float x1) {
     return NumericalLogic
         .boolean2float(!(NumericalLogic.float2boolean(x1)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     return NumericalLogic.boolean2double(!(NumericalLogic
         .double2boolean(x1)));
   }

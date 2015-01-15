@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.statistics;
 
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
-import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
 
 /** A statistic parameter. */
@@ -37,7 +36,7 @@ public abstract class StatisticParameter extends MathematicalFunction {
 
   /** {@inheritDoc} */
   @Override
-  public double compute(final double... x) {
+  public double computeAsDouble(final double... x) {
     final ScalarAggregate ag;
 
     ag = this.createAggregate();
@@ -49,7 +48,7 @@ public abstract class StatisticParameter extends MathematicalFunction {
 
   /** {@inheritDoc} */
   @Override
-  public byte compute(final byte... x) {
+  public byte computeAsByte(final byte... x) {
     final ScalarAggregate ag;
 
     ag = this.createAggregate();
@@ -61,7 +60,7 @@ public abstract class StatisticParameter extends MathematicalFunction {
 
   /** {@inheritDoc} */
   @Override
-  public short compute(final short... x) {
+  public short computeAsShort(final short... x) {
     final ScalarAggregate ag;
 
     ag = this.createAggregate();
@@ -73,7 +72,7 @@ public abstract class StatisticParameter extends MathematicalFunction {
 
   /** {@inheritDoc} */
   @Override
-  public int compute(final int... x) {
+  public int computeAsInt(final int... x) {
     final ScalarAggregate ag;
 
     ag = this.createAggregate();
@@ -85,7 +84,7 @@ public abstract class StatisticParameter extends MathematicalFunction {
 
   /** {@inheritDoc} */
   @Override
-  public long compute(final long... x) {
+  public long computeAsLong(final long... x) {
     final ScalarAggregate ag;
 
     ag = this.createAggregate();
@@ -97,7 +96,7 @@ public abstract class StatisticParameter extends MathematicalFunction {
 
   /** {@inheritDoc} */
   @Override
-  public float compute(final float... x) {
+  public float computeAsFloat(final float... x) {
     final ScalarAggregate ag;
 
     ag = this.createAggregate();
@@ -105,25 +104,5 @@ public abstract class StatisticParameter extends MathematicalFunction {
       ag.append(d);
     }
     return ag.longValue();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public double computeOverColumn(final IMatrix matrix, final int column) {
-    final ScalarAggregate ag;
-
-    ag = this.createAggregate();
-    matrix.aggregateColumn(column, ag);
-    return ag.doubleValue();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public double computeOverRow(final IMatrix matrix, final int row) {
-    final ScalarAggregate ag;
-
-    ag = this.createAggregate();
-    matrix.aggregateRow(row, ag);
-    return ag.doubleValue();
   }
 }

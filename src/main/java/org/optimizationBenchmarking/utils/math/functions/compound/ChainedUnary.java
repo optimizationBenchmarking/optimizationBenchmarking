@@ -36,8 +36,8 @@ public class ChainedUnary extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0) {
-    return this.m_outer.compute(this.m_inner.compute(x0));
+  public final double computeAsDouble(final double x0) {
+    return this.m_outer.computeAsDouble(this.m_inner.computeAsDouble(x0));
   }
 
   /** {@inheritDoc} */

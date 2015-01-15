@@ -40,12 +40,12 @@ public final class PoissonCDF extends BinaryFunction {
       return 0.0d;
     }
 
-    return GammaRegularizedQ.INSTANCE.compute(k + 1, x);
+    return GammaRegularizedQ.INSTANCE.computeAsDouble(k + 1, x);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return PoissonCDF.poissonCDF(((int) (Math.round(x1))), x2);
   }
 

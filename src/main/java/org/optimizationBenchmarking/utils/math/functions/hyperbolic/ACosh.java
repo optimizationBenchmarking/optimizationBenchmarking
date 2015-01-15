@@ -19,7 +19,7 @@ public final class ACosh extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1) {
+  public final double computeAsDouble(final double x1) {
     return Math.log(x1 + Math.sqrt((x1 * x1) - 1d));
   }
 

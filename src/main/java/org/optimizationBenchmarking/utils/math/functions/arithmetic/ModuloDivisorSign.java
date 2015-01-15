@@ -102,31 +102,31 @@ public final class ModuloDivisorSign extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte compute(final byte x0, final byte x1) {
+  public final byte computeAsByte(final byte x0, final byte x1) {
     return ((byte) (ModuloDivisorSign.modulo(x0, x1)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final short compute(final short x0, final short x1) {
+  public final short computeAsShort(final short x0, final short x1) {
     return ((short) (ModuloDivisorSign.modulo(x0, x1)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int compute(final int x0, final int x1) {
+  public final int computeAsInt(final int x0, final int x1) {
     return (ModuloDivisorSign.modulo(x0, x1));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long compute(final long x0, final long x1) {
+  public final long computeAsLong(final long x0, final long x1) {
     return (ModuloDivisorSign.modulo(x0, x1));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x0, final double x1) {
+  public final double computeAsDouble(final double x0, final double x1) {
     return (ModuloDivisorSign.modulo(x0, x1));
   }
 

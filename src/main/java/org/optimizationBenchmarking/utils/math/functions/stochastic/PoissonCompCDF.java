@@ -41,12 +41,12 @@ public final class PoissonCompCDF extends BinaryFunction {
       return 0.0d;
     }
 
-    return GammaRegularizedP.INSTANCE.compute(k + 1, x);
+    return GammaRegularizedP.INSTANCE.computeAsDouble(k + 1, x);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double compute(final double x1, final double x2) {
+  public final double computeAsDouble(final double x1, final double x2) {
     return PoissonCompCDF.poissonCompCDF(((int) (Math.round(x1))), x2);
   }
 
