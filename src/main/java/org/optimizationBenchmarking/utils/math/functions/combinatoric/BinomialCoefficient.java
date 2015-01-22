@@ -120,9 +120,9 @@ public final class BinomialCoefficient extends BinaryFunction {
       return x1;
     }
 
-    if ((x2 < Long.MAX_VALUE) && (x1 < Long.MAX_VALUE)) {
-      lk = Math.round(x2);
-      ln = Math.round(x1);
+    if ((x2 <= Long.MAX_VALUE) && (x1 <= Long.MAX_VALUE)) {
+      lk = ((long) (x2));
+      ln = ((long) (x1));
       lr = BinomialCoefficient.internalBinomial(ln, lk);
       if (lr >= 0L) {
         return lr;

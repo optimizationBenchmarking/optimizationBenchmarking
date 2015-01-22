@@ -30,21 +30,18 @@ public final class GCD extends BinaryFunction {
    */
   @Override
   public final int computeAsInt(final int a, final int b) {
-    int u, v, r;
+    int u, v, temp;
 
     u = a;
     v = b;
 
-    r = (0);
-
-    while (true) {
-      if (v == 0L) {
-        return Math.abs(u);
-      }
-      r = (u % v);
+    while (v != 0) {
+      temp = (u % v);
       u = v;
-      v = r;
+      v = temp;
     }
+
+    return Math.abs(u);
   }
 
   /**
@@ -58,27 +55,59 @@ public final class GCD extends BinaryFunction {
    */
   @Override
   public final long computeAsLong(final long a, final long b) {
-    long u, v, r;
+    long u, v, temp;
 
     u = a;
     v = b;
 
-    r = (0);
-
-    while (true) {
-      if (v == 0L) {
-        return Math.abs(u);
-      }
-      r = (u % v);
+    while (v != 0L) {
+      temp = (u % v);
       u = v;
-      v = r;
+      v = temp;
     }
+
+    return Math.abs(u);
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1, final double x2) {
-    return GCD.INSTANCE.computeAsLong(Math.round(x1), Math.round(x2));
+    long a, b;
+    double u, v, temp;
+
+    u = x1;
+    v = x2;
+
+    for (;;) {
+      if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
+        a = ((long) v);
+        if (a == v) {
+          if (a == 0L) {
+            return Math.abs(u);
+          }
+
+          if ((u >= Long.MIN_VALUE) && (u <= Long.MAX_VALUE)) {
+            b = ((long) u);
+            if (b == u) {
+              return this.computeAsLong(b, a);
+            }
+          }
+
+        }
+      } else {
+        if (v != v) {
+          return Double.NaN;
+        }
+      }
+
+      if (v == 0d) {
+        return Math.abs(u);
+      }
+
+      temp = (u % v);
+      u = v;
+      v = temp;
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for
