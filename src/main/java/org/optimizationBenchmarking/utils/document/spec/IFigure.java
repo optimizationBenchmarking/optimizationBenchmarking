@@ -1,11 +1,14 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
+import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartSelector;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 
 /**
  * The interface to create and draw on figures.
  */
-public interface IFigure extends IDocumentElement, ILabeledObject {
+public interface IFigure extends IDocumentElement, ILabeledObject,
+    IChartSelector {
 
   /**
    * write the figure caption
@@ -15,9 +18,21 @@ public interface IFigure extends IDocumentElement, ILabeledObject {
   public abstract IComplexText caption();
 
   /**
-   * The figure body to paint on
+   * Use the figure to directly paint a raw graphic. If you choose to paint
+   * a graphic directly, you cannot paint a
+   * {@link org.optimizationBenchmarking.utils.graphics.chart.spec.IChartSelector
+   * chart}.
    * 
    * @return the figure body to paint on
    */
-  public abstract Graphic body();
+  public abstract Graphic graphic();
+
+  /**
+   * Create a line chart. If you create a chart, you cannot draw a
+   * {@link #graphic() raw graphic} anymore.
+   * 
+   * @return the line chart
+   */
+  @Override
+  public abstract ILineChart lineChart();
 }

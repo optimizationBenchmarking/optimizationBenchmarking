@@ -4,13 +4,15 @@ import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URL;
-import java.security.AccessController;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import org.optimizationBenchmarking.utils.EmptyUtils;
@@ -18,11 +20,25 @@ import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.ByteArrayIOStream;
 import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * Some utilities for reflection access.
  */
-public class ReflectionUtils {
+public final class ReflectionUtils {
+
+  /** the default name of the singleton constant: {@value} */
+  private static final String DEFAULT_SINGLETON_CONSTANT_NAME = "INSTANCE"; //$NON-NLS-1$
+
+  /** the default name of the singleton instance getter method: {@value} */
+  private static final String DEFAULT_SINGLETON_GETTER_NAME = "getInstance"; //$NON-NLS-1$
+
+  /**
+   * the modifiers required to access a field or method from reflection: *
+   * * {@value}
+   */
+  private static final int REQUIRED_MODIFIERS_FOR_ACCESS = (Modifier.PUBLIC
+      | Modifier.FINAL | Modifier.STATIC);
 
   /**
    * Make sure that a class is loaded. This method can be used as some kind
@@ -47,7 +63,8 @@ public class ReflectionUtils {
       b = ((clazz != null) ? clazz : TextUtils.NULL_STRING);
       if ((!(t instanceof ClassNotFoundException))
           || ((a == null) || (!(a.contains(b))))) {
-        throw new ClassNotFoundException(("Could not load " + b), t); //$NON-NLS-1$
+        throw new ClassNotFoundException(("Could not load class '"//$NON-NLS-1$ 
+            + b + '\''), t);
       }
       throw ((ClassNotFoundException) t);
     }
@@ -257,54 +274,6 @@ public class ReflectionUtils {
   }
 
   /**
-   * Get a system property value: Try to obtain the value of property
-   * {@code name} via {@link java.lang.System#getProperty(String)}. If that
-   * fails, try to use a
-   * {@link java.security.AccessController#doPrivileged(java.security.PrivilegedAction)
-   * privileged action} to get the property.
-   * 
-   * @param name
-   *          the property name
-   * @return the property value
-   */
-  public static final String getSystemProperty(final String name) {
-    if (name == null) {
-      throw new IllegalArgumentException(//
-          "System property name cannot be null."); //$NON-NLS-1$
-    }
-    try {
-      return System.getProperty(name);
-    } catch (final Throwable t) {
-      return AccessController.doPrivileged(new _PropertyGetter(name));
-    }
-  }
-
-  /**
-   * Get an environment variable value: Try to obtain the value of
-   * environment variable {@code name} via
-   * {@link java.lang.System#getenv(String)}. If that fails, try to use a
-   * {@link java.security.AccessController#doPrivileged(java.security.PrivilegedAction)
-   * privileged action} to get the value.
-   * 
-   * @param name
-   *          the property name
-   * @return the property value
-   */
-  public static final String getSystemEnvironment(final String name) {
-    if (name == null) {
-      throw new IllegalArgumentException(//
-          "Environment variable name cannot be null."); //$NON-NLS-1$
-    }
-
-    try {
-      return System.getenv(name);
-    } catch (final Throwable t) {
-      return AccessController.doPrivileged(//
-          new _EnvironmentGetter(name));
-    }
-  }
-
-  /**
    * Check whether {@code subClass} is really a sub-class of
    * {@code baseClass} and throw an {@link java.lang.ClassCastException}
    * otherwise.
@@ -372,8 +341,8 @@ public class ReflectionUtils {
       final Class<C> base) throws LinkageError,
       ExceptionInInitializerError, ClassNotFoundException,
       ClassCastException {
-    Class<?> found;
     final String clazzName;
+    Class<?> found;
 
     if (base == null) {
       throw new IllegalArgumentException(//
@@ -410,76 +379,461 @@ public class ReflectionUtils {
   }
 
   /**
-   * Get a the value of a static constant.
+   * Throw an {@link java.lang.IllegalArgumentException}
    * 
-   * @param clazz
-   *          the class which hosts the constant
-   * @param name
-   *          the constant's name
    * @param base
-   *          the type of the constant
-   * @return the static constant field's value
-   * @param <T>
-   *          the type of the constant
-   * @throws NoSuchFieldException
-   *           if the field was not found
-   * @throws SecurityException
-   *           if security does not allow checking, finding, or accessing
-   *           the field
-   * @throws IllegalArgumentException
-   *           if the {@code clazz}, {@code base} or {@code name} are
-   *           invalid
-   * @throws IllegalAccessException
-   *           if accessing the field was not permitted
+   *          the base class
+   * @param container
+   *          the container class
+   * @param name
+   *          the provided name string
+   * @param reasonString
+   *          the reason string
+   * @param reasonException
+   *          the causing exception
+   * @return the exception
    */
-  public static final <T> T getStaticFieldValue(final Class<?> clazz,
-      final String name, final Class<T> base) throws NoSuchFieldException,
-      SecurityException, IllegalArgumentException, IllegalAccessException {
-    final Object value;
-    final String fieldName;
-    final Field field;
+  private static final ReflectiveOperationException __makeFindInstanceError(
+      final Class<?> base, final Class<?> container, final String name,
+      final String reasonString, final Throwable reasonException) {
+    final String string;
+    MemoryTextOutput text;
 
-    if (clazz == null) {
-      throw new IllegalArgumentException(//
-          "Class hosting a static constant cannot be null."); //$NON-NLS-1$
+    text = new MemoryTextOutput();
+    text.append("Cannot find an instance of the base class "); //$NON-NLS-1$
+    if (base != null) {
+      text.append(TextUtils.className(base));
+    } else {
+      text.append(TextUtils.NULL_STRING);
+    }
+    text.append(" within the container class "); //$NON-NLS-1$
+    if (container != null) {
+      text.append(TextUtils.className(container));
+    } else {
+      text.append(TextUtils.NULL_STRING);
+    }
+    if (name != null) {
+      text.append(" under name '");//$NON-NLS-1$
+      text.append(name);
+      text.append('\'');
     }
 
-    if (base == null) {
-      throw new IllegalArgumentException(//
-          "Must provide base class for getting a static constant, but provided null."); //$NON-NLS-1$
+    if (reasonString != null) {
+      text.append(" because "); //$NON-NLS-1$
+      text.append(reasonString);
     }
+    text.append('.');
 
-    fieldName = TextUtils.prepare(name);
-    if (fieldName == null) {
-      throw new IllegalArgumentException(((//
-          "Static constant name cannot be null or empty, but is '"//$NON-NLS-1$
-          + name) + '\'') + '.');
+    string = text.toString();
+    text = null;
+    if (reasonException != null) {
+      return new ReflectiveOperationException(string, reasonException);
     }
-
-    if (fieldName.lastIndexOf('.') >= 0) {
-      throw new IllegalArgumentException(//
-          "Field name must not contain '.', but '" + //$NON-NLS-1$
-              name + "' does.");//$NON-NLS-1$
-    }
-
-    field = clazz.getField(fieldName);
-    if (field == null) {
-      throw new NoSuchFieldException(//
-          "getField returned null for '" + //$NON-NLS-1$
-              name + "'!?");//$NON-NLS-1$
-    }
-
-    value = field.get(null);
-    if (value == null) {
-      return null;
-    }
-
-    ReflectionUtils.validateSubClass(value.getClass(), base);
-    return base.cast(value);
+    return new ReflectiveOperationException(string);
   }
 
   /**
-   * Get the value of a static constant by name
+   * Check whether a class {@code base} is assignable by the class
+   * {@code result}.
+   * 
+   * @param base
+   *          the class to assign to
+   * @param result
+   *          the class to assign from
+   * @return {@code true} if variables of type {@code base} are assignable
+   *         from {@code result}
+   */
+  private static final boolean __isAssignable(final Class<?> base,
+      final Class<?> result) {
+    final EPrimitiveType primitive;
+    if (base.isAssignableFrom(result)) {
+      return true;
+    }
+    if (result.isPrimitive()) {
+      primitive = EPrimitiveType.getPrimitiveType(result);
+      if (primitive != null) {
+        return base.isAssignableFrom(primitive.getWrapperClass());
+      }
+    }
+    return false;
+  }
+
+  /**
+   * return a value from a field
+   * 
+   * @param base
+   *          the base class
+   * @param container
+   *          the container class
+   * @param name
+   *          the field name
+   * @param field
+   *          the field
+   * @return the value
+   * @throws IllegalArgumentException
+   *           the the argument is illegal
+   * @throws ReflectiveOperationException
+   *           if the operation fails
+   */
+  private static final <T> T __field(final Class<T> base,
+      final Class<?> container, final String name, final Field field)
+      throws IllegalArgumentException, ReflectiveOperationException {
+    final int mod;
+    final Class<?> retClass;
+
+    mod = field.getModifiers();
+    if ((mod & ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS) != ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS) {
+      throw ReflectionUtils.__makeFindInstanceError(base,
+          container,
+          name,
+          ("field " + field + " is not " + //$NON-NLS-1$//$NON-NLS-2$                    
+          Modifier.toString(ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS
+              & (~mod))), null);
+    }
+
+    retClass = field.getType();
+    if (!(ReflectionUtils.__isAssignable(base, retClass))) {
+      throw ReflectionUtils.__makeFindInstanceError(base, container, name,
+          ("field " + field + //$NON-NLS-1$
+              " of type " + TextUtils.className(retClass) + //$NON-NLS-1$
+          " is incompatible to base class"), null);//$NON-NLS-1$
+    }
+
+    return base.cast(field.get(null));
+  }
+
+  /**
+   * return a value from a getter method
+   * 
+   * @param base
+   *          the base class
+   * @param container
+   *          the container class
+   * @param name
+   *          the getter method name
+   * @param method
+   *          the method
+   * @return the value
+   * @throws IllegalArgumentException
+   *           the the argument is illegal
+   * @throws ReflectiveOperationException
+   *           if the operation fails
+   */
+  private static final <T> T __method(final Class<T> base,
+      final Class<?> container, final String name, final Method method)
+      throws IllegalArgumentException, ReflectiveOperationException {
+    final int mod;
+    final Class<?> retClass;
+    final Class<?>[] params;
+
+    mod = method.getModifiers();
+    if ((mod & ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS) != ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS) {
+      throw ReflectionUtils.__makeFindInstanceError(base,
+          container,
+          name,
+          ("method " + method + " is not " + //$NON-NLS-1$//$NON-NLS-2$                    
+          Modifier.toString(ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS
+              & (~mod))), null);
+    }
+
+    retClass = method.getReturnType();
+    if (!(ReflectionUtils.__isAssignable(base, retClass))) {
+      throw ReflectionUtils.__makeFindInstanceError(base, container, name,
+          ("return type " + TextUtils.className(retClass) + //$NON-NLS-1$
+              " of method " + method + //$NON-NLS-1$           
+          " is incompatible to base class"), null);//$NON-NLS-1$
+    }
+
+    params = method.getParameterTypes();
+    if ((params != null) && (params.length != 0)) {
+      throw ReflectionUtils.__makeFindInstanceError(base, container, name,
+          ("method " + method + //$NON-NLS-1$           
+              " has more than 0 parameters: " + //$NON-NLS-1$           
+          Arrays.toString(params)), null);
+    }
+
+    return base.cast(method.invoke(null));
+  }
+
+  /**
+   * return a value from a constructor
+   * 
+   * @param base
+   *          the base class
+   * @param container
+   *          the container class
+   * @param name
+   *          the getter method name
+   * @param constructor
+   *          the constructor
+   * @return the value
+   * @throws IllegalArgumentException
+   *           the the argument is illegal
+   * @throws ReflectiveOperationException
+   *           if the operation fails
+   */
+  private static final <T> T __constructor(final Class<T> base,
+      final Class<?> container, final String name,
+      final Constructor<?> constructor) throws IllegalArgumentException,
+      ReflectiveOperationException {
+    final int mod;
+    final Class<?> retClass;
+    final Class<?>[] params;
+
+    mod = constructor.getModifiers();
+    if ((mod & Modifier.PUBLIC) != Modifier.PUBLIC) {
+      throw ReflectionUtils.__makeFindInstanceError(base, container, name,
+          ("constructor " + constructor + " is not " + //$NON-NLS-1$//$NON-NLS-2$                    
+          Modifier.toString(Modifier.PUBLIC)), null);
+    }
+
+    retClass = constructor.getDeclaringClass();
+    if (!(base.isAssignableFrom(retClass))) {
+      throw ReflectionUtils.__makeFindInstanceError(base, container, name,
+          ("return type " + TextUtils.className(retClass) + //$NON-NLS-1$
+              " of constructor " + constructor + //$NON-NLS-1$           
+          " is incompatible to base class"), null);//$NON-NLS-1$
+    }
+
+    params = constructor.getParameterTypes();
+    if ((params != null) && (params.length != 0)) {
+      throw ReflectionUtils.__makeFindInstanceError(base, container, name,
+          ("constructor " + constructor + //$NON-NLS-1$           
+              " has more than 0 parameters: " + //$NON-NLS-1$           
+          Arrays.toString(params)), null);
+    }
+
+    return base.cast(constructor.newInstance());
+  }
+
+  /**
+   * <p>
+   * Obtain an instance of a given {@code base} class hosted within a
+   * {@code container} class in a best effort approach. Optionally, a
+   * {@code name} for a {@code public static final} constant field or
+   * getter method may be provided. This method proceeds as follows:
+   * </p>
+   * <ol>
+   * <li>If {@code name} is neither {@code null} nor an empty string nor
+   * only consists just of white space, we store a
+   * {@link java.lang.String#trim() trimmed} version of this name in the
+   * local variable {@code useName}. for
+   * <ol>
+   * <li>A field with name {@code useName} is looked for. If the field is
+   * not {@code public static final} or has a wrong type, we fail with an
+   * exception. We access the field and return its value.</li>
+   * <li>A method with name {@code useName} is looked for. If the method is
+   * not parameterless and {@code public static final} or has a wrong type,
+   * we fail with an exception. We invoke the method and return its value.</li>
+   * <li>If {@code base} is an {@link java.lang.Enum} and
+   * {@code container==base}, then we try to find if there is any instance
+   * of {@code base} whose {@link java.lang.Enum#name() name} or
+   * {@link java.lang.Enum#toString()} equals to {@code useName} while
+   * {@link java.lang.String#equalsIgnoreCase(String) ignoring the case}.
+   * If so, that instance is returned.</li>
+   * <li>If {@code useName} is the same as the class name of
+   * {@code container} and {@code base} is assignable from
+   * {@code container}, then we check if {@code container} has a
+   * parameterless public constructor. If so, we invoke it and return its
+   * result.</li>
+   * <li>If neither exists, we fail with an exception.</li>
+   * </ol>
+   * <li>We check if a {@code public static final} field with the name
+   * {@value #DEFAULT_SINGLETON_CONSTANT_NAME} and an appropriate return
+   * type exists. If so, we access the field and return its value.</li>
+   * <li>We check if a parameterless {@code public static final} method
+   * with the name {@value #DEFAULT_SINGLETON_GETTER_NAME} and an
+   * appropriate type exists. If so, we invoke the method and return its
+   * return value.</li>
+   * <li>We check if {@code base} is assignable from {@code container} and
+   * {@code container} has a parameterless {@code public} constructor. If
+   * so, we invoke the constructor and return the new instance.</li>
+   * <li>If {@code base} is assignable from {@code container}, then we
+   * check if {@code container} has a parameterless public constructor. If
+   * so, we invoke it and return its result.</li>
+   * <li>We fail with an error.</li>
+   * </ol>
+   * 
+   * @param base
+   *          the base class
+   * @param container
+   *          the container
+   * @param name
+   *          the name
+   * @return the instance
+   * @param <T>
+   *          the expected return type
+   * @throws ReflectiveOperationException
+   *           if we fail to obtain the instance
+   */
+  @SuppressWarnings("rawtypes")
+  public static final <T> T getInstance(final Class<T> base,
+      final Class<?> container, final String name)
+      throws ReflectiveOperationException {
+    final Class<?> useContainer;
+    String useName;
+    Throwable errorA, errorB, errorC;
+    Field field;
+    Method method;
+    Constructor<?> constructor;
+    ReflectiveOperationException bottom;
+    T[] constants;
+
+    if (base == null) {
+      throw ReflectionUtils.__makeFindInstanceError(base, container, name,
+          "base class cannot be null", null); //$NON-NLS-1$
+    }
+
+    if (container == null) {
+      if (base.isEnum()) {
+        useContainer = base;
+      } else {
+        throw ReflectionUtils.__makeFindInstanceError(base, container,
+            name, "container class cannot be null", null); //$NON-NLS-1$
+      }
+    } else {
+      useContainer = container;
+    }
+
+    if (useContainer.isPrimitive()) {
+      throw ReflectionUtils.__makeFindInstanceError(base, useContainer,
+          name, "container class cannot be a primitive type", null); //$NON-NLS-1$
+    }
+    if (useContainer.isArray()) {
+      throw ReflectionUtils.__makeFindInstanceError(base, useContainer,
+          name, "base class cannot be an array type", null); //$NON-NLS-1$
+    }
+    if (base.isAnnotation()) {
+      throw ReflectionUtils.__makeFindInstanceError(base, useContainer,
+          name, "base class cannot be an annotation type", null); //$NON-NLS-1$
+    }
+    if (useContainer.isAnnotation()) {
+      throw ReflectionUtils.__makeFindInstanceError(base, useContainer,
+          name, "container class cannot be an annotation type", null); //$NON-NLS-1$
+    }
+
+    errorA = errorB = errorC = null;
+    useName = null;
+
+    checkNamed: {
+      if (name != null) {
+        if (name.indexOf('.') >= 0) {
+          throw ReflectionUtils.__makeFindInstanceError(base,
+              useContainer, name, "name must not contain a '.'", null); //$NON-NLS-1$
+        }
+        useName = TextUtils.prepare(name);
+        if (useName != null) {
+          try {
+            field = container.getField(useName);
+          } catch (final Throwable t) {
+            field = null;
+            errorA = t;
+          }
+
+          if (field != null) {
+            return ReflectionUtils.__field(base, useContainer, useName,
+                field);
+          }
+
+          try {
+            method = container.getMethod(useName);
+          } catch (final Throwable t) {
+            method = null;
+            errorB = t;
+          }
+
+          if (method != null) {
+            return ReflectionUtils.__method(base, useContainer, useName,
+                method);
+          }
+
+          if (base.isEnum()
+              && ((base == container) || base.isAssignableFrom(container))) {
+            constants = base.getEnumConstants();
+            if (constants != null) {
+              for (final T constx : constants) {
+                if (useName.equalsIgnoreCase(((Enum) constx).name())) {
+                  return constx;
+                }
+              }
+              for (final T constx : constants) {
+                if (useName.equalsIgnoreCase(constx.toString())) {
+                  return constx;
+                }
+              }
+            }
+          }
+
+          break checkNamed;
+        }
+      }
+
+      try {
+        field = container
+            .getField(ReflectionUtils.DEFAULT_SINGLETON_CONSTANT_NAME);
+      } catch (final Throwable t) {
+        field = null;
+        errorA = t;
+      }
+
+      if (field != null) {
+        return ReflectionUtils.__field(base, useContainer, useName, field);
+      }
+
+      try {
+        method = container
+            .getMethod(ReflectionUtils.DEFAULT_SINGLETON_GETTER_NAME);
+      } catch (final Throwable t) {
+        method = null;
+        errorB = t;
+      }
+
+      if (method != null) {
+        return ReflectionUtils.__method(base, useContainer, useName,
+            method);
+      }
+    }
+
+    if (!(base.isEnum())) {
+      if (base.isAssignableFrom(useContainer)) {
+        if ((useName == null)
+            || (useContainer.getSimpleName().equals(useName))) {
+          try {
+            constructor = container.getConstructor();
+          } catch (final Throwable t) {
+            constructor = null;
+            errorC = t;
+          }
+
+          if (constructor != null) {
+            return ReflectionUtils.__constructor(base, useContainer,
+                useName, constructor);
+          }
+        }
+      }
+    }
+
+    bottom = ReflectionUtils
+        .__makeFindInstanceError(
+            base,
+            useContainer,
+            useName,
+            "no appropriate public static final field, parameterless public static final method, or public constructor found to get an instance of base class"//$NON-NLS-1$
+            , null);
+    if (errorA != null) {
+      bottom.addSuppressed(errorA);
+    }
+    if (errorB != null) {
+      bottom.addSuppressed(errorB);
+    }
+    if (errorC != null) {
+      bottom.addSuppressed(errorC);
+    }
+    throw bottom;
+  }
+
+  /**
+   * Get an instance by a identifier string
    * 
    * @param identifier
    *          the identifier, of form
@@ -490,32 +844,15 @@ public class ReflectionUtils {
    * @return the value of the constant
    * @param <T>
    *          the return type
-   * @throws NoSuchFieldException
-   *           if the field does not exist
-   * @throws SecurityException
-   *           if security does not allow to access the class or field
-   * @throws IllegalArgumentException
-   *           the the identifier or base class are invalid
-   * @throws IllegalAccessException
-   *           the security does not permit doing this
-   * @throws LinkageError
-   *           if there is a linkage error when accessing the class
-   * @throws ExceptionInInitializerError
-   *           if there is an error when loading the class
-   * @throws ClassNotFoundException
-   *           if the class does not exist
-   * @throws ClassCastException
-   *           if the class hierarchy or return type do not match
+   * @throws ReflectiveOperationException
+   *           if the reflective operation fails
    */
-  public static final <T> T getStaticFieldValueByName(
-      final String identifier, final Class<T> base)
-      throws NoSuchFieldException, SecurityException,
-      IllegalArgumentException, IllegalAccessException, LinkageError,
-      ExceptionInInitializerError, ClassNotFoundException,
-      ClassCastException {
-    Class<? extends Object> host;
-    String idString;
-    int index;
+  public static final <T> T getInstanceByName(final Class<T> base,
+      final String identifier) throws ReflectiveOperationException {
+    final String idString, className, fieldName;
+    Class<? extends Object> container;
+    Throwable cause;
+    final int index;
 
     idString = TextUtils.prepare(identifier);
     if (idString == null) {
@@ -525,24 +862,29 @@ public class ReflectionUtils {
     }
 
     index = idString.lastIndexOf('#');
-    if (index < 0) {
-      index = idString.lastIndexOf('.');
-    }
     if ((index <= 0) || (index >= (idString.length() - 1))) {
-      throw new IllegalArgumentException(
-          "Class+constant identifier '" + idString //$NON-NLS-1$
-              + "' is invalid");//$NON-NLS-1$
+      className = idString;
+      fieldName = null;
+    } else {
+      className = idString.substring(0, index);
+      fieldName = idString.substring(index + 1);
     }
 
-    host = ReflectionUtils.findClass(idString.substring(0, index),
-        Object.class);
-    if (host == null) {
-      throw new ClassNotFoundException(//
-          "findClass returned null for '" + //$NON-NLS-1$
-              identifier + "'!?");//$NON-NLS-1$
+    cause = null;
+    try {
+      container = ReflectionUtils.findClass(className, Object.class);
+    } catch (final Throwable t) {
+      cause = t;
+      container = null;
     }
-    return ReflectionUtils.getStaticFieldValue(host,
-        idString.substring(index + 1), base);
+    if (container == null) {
+      throw ReflectionUtils.__makeFindInstanceError(base, null, fieldName,
+          ("could not discover class '" + className//$NON-NLS-1$
+              + "' based on string '" + idString + '\''),//$NON-NLS-1$
+          cause);
+    }
+
+    return ReflectionUtils.getInstance(base, container, fieldName);
   }
 
   /** the forbidden constructor */

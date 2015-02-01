@@ -32,8 +32,9 @@ public abstract class ConfigurableToolJobBuilder<J extends IToolJob, R extends C
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
   @Override
-  public void configure(final Configuration config) {
+  public R configure(final Configuration config) {
     final String prefix;
     Logger defau;
 
@@ -49,5 +50,7 @@ public abstract class ConfigurableToolJobBuilder<J extends IToolJob, R extends C
       this.setLogger(config.getLogger(
           (prefix + Configuration.PARAM_LOGGER), defau));
     }
+
+    return ((R) this);
   }
 }

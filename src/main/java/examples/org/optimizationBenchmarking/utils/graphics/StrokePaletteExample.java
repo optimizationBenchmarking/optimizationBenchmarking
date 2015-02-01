@@ -8,11 +8,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.DefaultStrokePalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
@@ -25,9 +26,6 @@ import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
  * An example used to illustrate the available color palettes.
  */
 public class StrokePaletteExample {
-
-  /** the graphic driver to use */
-  private static final ArrayListView<IGraphicDriver> DRIVERS = GraphicsExample.DRIVERS;
 
   /** the palettes to print */
   public static final ArrayListView<StrokePalette> PALETTES = new ArrayListView<>(
@@ -44,7 +42,8 @@ public class StrokePaletteExample {
    */
   public static final void main(final String[] args) throws IOException {
     final Path dir;
-    int z;
+    Path sub;
+    int j, z;
 
     if ((args != null) && (args.length > 0)) {
       dir = Paths.get(args[0]);
@@ -52,12 +51,13 @@ public class StrokePaletteExample {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
 
-    z = 0;
-    for (final IGraphicDriver d : StrokePaletteExample.DRIVERS) {
+    j = z = 0;
+    for (final GraphicConfiguration d : GraphicConfigExample.CONFIGURATIONS) {
+      sub = dir.resolve("example_" + (++j));//$NON-NLS-1$
       for (final StrokePalette p : StrokePaletteExample.PALETTES) {//
         StrokePaletteExample
             .__paint(
-                dir,
+                sub,
                 ((((StrokePaletteExample.class.getSimpleName() + '_') + (++z)) + '_')
                     + d.getClass().getSimpleName() + '_' + p.getClass()
                     .getSimpleName()), d, p);
@@ -78,7 +78,7 @@ public class StrokePaletteExample {
    *          the driver to use
    */
   private static final void __paint(final Path dir, final String name,
-      final IGraphicDriver driver, final StrokePalette palette) {
+      final GraphicConfiguration driver, final StrokePalette palette) {
     final Rectangle2D b;
     final int s;
     final double h, w;
@@ -94,10 +94,9 @@ public class StrokePaletteExample {
 
     s = styles.size();
 
-    try (final Graphic g = driver.use().setBasePath(dir)
-        .setMainDocumentNameSuggestion(name)
-        .setSize(new PhysicalDimension(160, 160, ELength.MM))
-        .setFileProducerListener(new FinishedPrinter(driver)).create()) {
+    try (final Graphic g = driver.createGraphic(dir, name,
+        new PhysicalDimension(160, 160, ELength.MM), new FinishedPrinter(
+            driver), Logger.getGlobal())) {
 
       b = g.getBounds();
       g.setColor(Color.white);

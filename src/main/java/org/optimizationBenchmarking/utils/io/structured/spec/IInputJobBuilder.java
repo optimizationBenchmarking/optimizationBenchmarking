@@ -2,6 +2,8 @@ package org.optimizationBenchmarking.utils.io.structured.spec;
 
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
+
 /**
  * An input job builder.
  * 
@@ -9,6 +11,10 @@ import java.util.logging.Logger;
  *          the data element which will be filled
  */
 public interface IInputJobBuilder<D> extends IIOJobBuilder {
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IInputJobBuilder<D> configure(final Configuration config);
 
   /** {@inheritDoc} */
   @Override

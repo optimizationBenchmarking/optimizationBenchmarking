@@ -1,10 +1,11 @@
 package org.optimizationBenchmarking.utils.config;
 
-import org.optimizationBenchmarking.utils.parsers.ClassParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
+import org.optimizationBenchmarking.utils.parsers.StringParser;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
- * an instance parser
+ * parse a constant
  * 
  * @param <T>
  *          the instance type
@@ -14,7 +15,7 @@ final class _InstanceParser<T> extends Parser<T> {
   private static final long serialVersionUID = 1L;
 
   /** the base class */
-  private final ClassParser<T> m_classParser;
+  private final Class<T> m_base;
 
   /**
    * create
@@ -30,57 +31,34 @@ final class _InstanceParser<T> extends Parser<T> {
       throw new IllegalArgumentException(//
           "A base class must be provided."); //$NON-NLS-1$
     }
-    this.m_classParser = new ClassParser<>(baseClass);
-  }
-
-  /**
-   * parse a class
-   * 
-   * @param clazz
-   *          the class
-   * @return the instance
-   * @throws ClassCastException
-   *           if the class did not fit
-   * @throws IllegalAccessException
-   *           if the access was illegal
-   * @throws InstantiationException
-   *           the the instantiation failed
-   */
-  private final T __parseClass(final Class<? extends T> clazz)
-      throws ClassCastException, InstantiationException,
-      IllegalAccessException {
-    final T ret;
-
-    ret = clazz.newInstance();
-    this.validate(ret);
-    return ret;
+    this.m_base = baseClass;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final T parseString(final String string)
-      throws ClassCastException, ClassNotFoundException,
-      InstantiationException, IllegalAccessException {
-    return this.__parseClass(this.m_classParser.parseString(string));
+  public final T parseString(final String string) throws Exception {
+    final T fieldValue;
+
+    fieldValue = ReflectionUtils.getInstanceByName(this.m_base,
+        StringParser.INSTANCE.parseString(string));
+    this.validate(fieldValue);
+    return fieldValue;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final T parseObject(final Object o)
-      throws IllegalArgumentException, InstantiationException,
-      IllegalAccessException, LinkageError, ExceptionInInitializerError,
-      ClassNotFoundException, ClassCastException {
+  public final T parseObject(final Object o) throws Exception {
     final Class<T> base;
     final T obj;
 
-    base = this.m_classParser.getBaseClass();
+    base = this.m_base;
     if (base.isInstance(o)) {
       obj = base.cast(o);
       this.validate(obj);
       return obj;
     }
 
-    return this.__parseClass(this.m_classParser.parseObject(o));
+    return this.parseString(String.valueOf(o));
   }
 
   /** {@inheritDoc} */
@@ -95,6 +73,6 @@ final class _InstanceParser<T> extends Parser<T> {
   /** {@inheritDoc} */
   @Override
   public final Class<T> getOutputClass() {
-    return this.m_classParser.getBaseClass();
+    return this.m_base;
   }
 }

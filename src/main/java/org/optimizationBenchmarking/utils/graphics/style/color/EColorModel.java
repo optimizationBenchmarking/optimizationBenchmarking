@@ -71,7 +71,7 @@ public enum EColorModel {
   },
 
   /** 24 bits for rbg */
-  RBG_24_BIT(BufferedImage.TYPE_INT_RGB) {
+  RGB_24_BIT(BufferedImage.TYPE_INT_RGB) {
 
     /** {@inheritDoc} */
     @Override
@@ -86,8 +86,8 @@ public enum EColorModel {
     }
   },
 
-  /** 32 bits for rbg and alpha */
-  RBGA_32_BIT(BufferedImage.TYPE_INT_ARGB) {
+  /** 32 bits for RGB and alpha */
+  ARGB_32_BIT(BufferedImage.TYPE_INT_ARGB) {
 
     /** {@inheritDoc} */
     @Override

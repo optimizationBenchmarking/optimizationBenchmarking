@@ -163,14 +163,27 @@ public final class TextUtils {
    */
   public static final String className(final Class<?> c) {
     String s;
+    Class<?> z;
 
     if (c == null) {
-      return "No class specified."; //$NON-NLS-1$
+      return "Cannot get name of null class."; //$NON-NLS-1$
     }
 
     s = c.getCanonicalName();
     if ((s != null) && (s.length() > 0)) {
       return s;
+    }
+
+    z = c;
+    s = "";//$NON-NLS-1$
+    while ((z != null) && (z.isArray())) {
+      s += "[]";//$NON-NLS-1$
+      z = z.getComponentType();
+    }
+    if (z != null) {
+      if (s.length() > 0) {
+        return (TextUtils.className(z) + s);
+      }
     }
 
     s = c.getName();

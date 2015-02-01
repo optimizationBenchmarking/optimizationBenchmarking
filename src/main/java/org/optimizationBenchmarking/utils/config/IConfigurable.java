@@ -22,7 +22,8 @@ public interface IConfigurable {
    * 
    * @param config
    *          the configuration to use
+   * @return this configurable instance
    */
-  public abstract void configure(final Configuration config);
+  public abstract IConfigurable configure(final Configuration config);
 
 }

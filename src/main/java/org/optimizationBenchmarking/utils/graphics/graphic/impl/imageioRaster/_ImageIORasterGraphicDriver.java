@@ -13,12 +13,10 @@ import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
-import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
-import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
@@ -27,36 +25,14 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  */
 abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
 
-  /** the dots per inch */
-  final int m_dpi;
-
-  /** the color model */
-  final EColorModel m_colors;
-
   /**
    * the hidden constructor
    * 
    * @param type
    *          the graphic type
-   * @param dotsPerInch
-   *          the dots per inch
-   * @param colors
-   *          the colors
    */
-  _ImageIORasterGraphicDriver(final EGraphicFormat type,
-      final EColorModel colors, final int dotsPerInch) {
+  _ImageIORasterGraphicDriver(final EGraphicFormat type) {
     super(type);
-
-    if ((dotsPerInch <= 1) || (dotsPerInch >= 1000000)) {
-      throw new IllegalArgumentException("Illegal DPI: " + dotsPerInch); //$NON-NLS-1$
-    }
-
-    if (colors == null) {
-      throw new IllegalArgumentException("Color model must not be null."); //$NON-NLS-1$
-    }
-
-    this.m_dpi = dotsPerInch;
-    this.m_colors = colors;
   }
 
   /**
@@ -156,32 +132,28 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
     }
   }
 
-  /** {@inheritDoc} */
-  @Override
-  protected int calcHashCode() {
-    return HashUtils.combineHashes(HashUtils.hashCode(this.m_dpi),
-        HashUtils.hashCode(this.m_colors));
+  /**
+   * pre-process the color
+   * 
+   * @param model
+   *          the model
+   * @return the pre-processed model
+   */
+  EColorModel _processColorModel(final EColorModel model) {
+    return model;
   }
 
   /** {@inheritDoc} */
   @Override
-  public void toText(final ITextOutput textOut) {
-    textOut.append(this.m_colors.toString());
-    textOut.append(" Graphics @ "); //$NON-NLS-1$
-    textOut.append(this.m_dpi);
-    textOut.append(" DPI"); //$NON-NLS-1$
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final Graphic createGraphic(final Logger logger,
-      final IFileProducerListener listener, final Path basePath,
-      final String mainDocumentNameSuggestion, final PhysicalDimension size) {
+  protected final Graphic createGraphic(final GraphicBuilder builder) {
     final BufferedImage img;
     final Graphics2D g;
     final double w, h, wIn, hIn, hDPI, wDPI;
-    final int wPt, hPt, wPx, hPx;
+    final int wPt, hPt, wPx, hPx, dpi;
     final ELength sizeUnit;
+    final PhysicalDimension size;
+
+    size = builder.getSize();
 
     w = size.getWidth();
     h = size.getHeight();
@@ -193,13 +165,15 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
 
     wIn = ELength.PT.convertTo(((double) wPt), ELength.INCH);
     hIn = ELength.PT.convertTo(((double) hPt), ELength.INCH);
-    wPx = Math.max(1, ((int) ((Math.ceil(wIn * this.m_dpi)) + 0.5d)));
-    hPx = Math.max(1, ((int) ((Math.ceil(hIn * this.m_dpi)) + 0.5d)));
+    dpi = builder.getDotsPerInch();
+    wPx = Math.max(1, ((int) ((Math.ceil(wIn * dpi)) + 0.5d)));
+    hPx = Math.max(1, ((int) ((Math.ceil(hIn * dpi)) + 0.5d)));
 
     wDPI = (wPx / wIn);
     hDPI = (hPx / hIn);
 
-    img = new BufferedImage(wPx, hPx, this.m_colors.getBufferedImageType());
+    img = new BufferedImage(wPx, hPx, this._processColorModel(
+        builder.getColorModel()).getBufferedImageType());
     g = ((Graphics2D) (img.getGraphics()));
     GraphicUtils.setDefaultRenderingHints(g);
 
@@ -208,8 +182,10 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
     }
 
     return this._create(
-        this.makePath(basePath, mainDocumentNameSuggestion), logger,
-        listener, img, g, wPt, hPt, wDPI, hDPI);
+        this.makePath(builder.getBasePath(),
+            builder.getMainDocumentNameSuggestion()), builder.getLogger(),
+        builder.getFileProducerListener(), img, g, wPt, hPt, wDPI, hDPI,
+        builder.getQuality());
   }
 
   /**
@@ -234,16 +210,13 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
    *          the resolution along the y-axis
    * @param img
    *          the buffered image
+   * @param quality
+   *          the quality
    * @return the graphic
    */
   abstract _ImageIORasterGraphic _create(final Path path,
       final Logger logger, final IFileProducerListener listener,
       final BufferedImage img, final Graphics2D g, final int w,
-      final int h, final double xDPI, final double yDPI);
-
-  /** {@inheritDoc} */
-  @Override
-  public final ColorPalette getColorPalette() {
-    return this.m_colors.getDefaultPalette();
-  }
+      final int h, final double xDPI, final double yDPI,
+      final double quality);
 }

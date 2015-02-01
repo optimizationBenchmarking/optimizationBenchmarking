@@ -1,78 +1,96 @@
 package org.optimizationBenchmarking.utils.graphics.chart.impl.abstr;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ELineType;
-import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.ILine2D;
+import org.optimizationBenchmarking.utils.hierarchy.FSM;
+import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
-/** The base class for lines */
-public final class Line2D extends _DataSeries2D {
+/**
+ * The base class for all 2-dimensional lines
+ */
+public class Line2D extends DataSeries2D implements ILine2D {
+
+  /** the type has been set */
+  static final int FLAG_HAS_TYPE = (DataSeries2D.FLAG_HAS_END << 1);
 
   /** the line type */
-  private final ELineType m_type;
+  ELineType m_type;
 
   /**
-   * Create a data series
+   * create the chart item
    * 
+   * @param owner
+   *          the owner
    * @param id
    *          the id
-   * @param title
-   *          the title
-   * @param titleFont
-   *          the title font
-   * @param color
-   *          the color
-   * @param stroke
-   *          the stroke
-   * @param data
-   *          the matrix
-   * @param hasStart
-   *          do we have a starting point?
-   * @param startX
-   *          the start x
-   * @param startY
-   *          the start y
-   * @param hasEnd
-   *          do we have a ending point?
-   * @param endX
-   *          the end x
-   * @param endY
-   *          the end y
-   * @param type
-   *          the line type
    */
-  Line2D(final int id, final String title, final Font titleFont,
-      final Color color, final Stroke stroke, final IMatrix data,
-      final boolean hasStart, final double startX, final double startY,
-      final boolean hasEnd, final double endX, final double endY,
-      final ELineType type) {
-    super(id, title, titleFont, color, stroke, data, hasStart, startX,
-        startY, hasEnd, endX, endY);
-    Line2D._assertType(type);
-    this.m_type = type;
+  protected Line2D(final Chart owner, final int id) {
+    super(owner, id);
+
+    this.m_type = ELineType.DEFAULT;
+    this.open();
   }
 
-  /**
-   * Assert the line type
-   * 
-   * @param type
-   *          the line type
-   */
-  static final void _assertType(final ELineType type) {
-    if (type == null) {
-      throw new IllegalArgumentException("Line type must not be null."); //$NON-NLS-1$
+  /** {@inheritDoc} */
+  @Override
+  protected final void fsmFlagsAppendName(final int flagValue,
+      final int flagIndex, final MemoryTextOutput append) {
+    switch (flagValue) {
+      case FLAG_HAS_TYPE: {
+        append.append("typeSet");break;} //$NON-NLS-1$      
+      default: {
+        super.fsmFlagsAppendName(flagValue, flagIndex, append);
+      }
     }
   }
 
-  /**
-   * Get the line type
-   * 
-   * @return the line type
-   */
-  public final ELineType getType() {
-    return this.m_type;
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void setType(final ELineType type) {
+    this.fsmStateAssert(ChartElement.STATE_ALIVE);
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING, Line2D.FLAG_HAS_TYPE,
+        Line2D.FLAG_HAS_TYPE, FSM.FLAG_NOTHING);
+    CompiledLine2D._assertType(type);
+    this.m_type = type;
   }
 
+  /** {@inheritDoc} */
+  @SuppressWarnings("resource")
+  @Override
+  protected synchronized final void onClose() {
+    final HierarchicalFSM owner;
+    final Chart cb;
+    final Font titleFont;
+    Stroke stroke;
+
+    this.fsmFlagsAssertTrue(DataSeries.FLAG_HAS_COLOR);
+
+    super.onClose();
+
+    owner = this.getOwner();
+    if (owner instanceof Chart) {
+      cb = ((Chart) owner);
+      if (this.m_title != null) {
+        titleFont = ((this.m_titleFont != null) ? this.m_titleFont : //
+            cb._getLineTitleFont());
+      } else {
+        titleFont = null;
+      }
+      stroke = this.m_stroke;
+      if (stroke == null) {
+        stroke = cb._getLineStroke();
+      }
+
+      if (owner instanceof LineChart) {
+        ((LineChart) owner)._addLine(new CompiledLine2D(this.m_id,
+            this.m_title, titleFont, this.m_color, stroke, this.m_data,
+            this.m_hasStart, this.m_startX, this.m_startY, this.m_hasEnd,
+            this.m_endX, this.m_endY, this.m_type));
+      }
+    }
+  }
 }

@@ -17,5 +17,6 @@ public interface IConfigurableToolJobBuilder extends IToolJobBuilder,
 
   /** {@inheritDoc} */
   @Override
-  public abstract void configure(final Configuration config);
+  public abstract IConfigurableToolJobBuilder configure(
+      final Configuration config);
 }

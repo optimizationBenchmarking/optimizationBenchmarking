@@ -5,18 +5,18 @@ import java.awt.Dimension;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A driver which creates <a
@@ -24,20 +24,45 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  */
 public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
-  final Map<Object, Object> m_props;
+  private final Map<Object, Object> m_props;
+
+  /** the error */
+  private final Throwable m_error;
 
   /** the hidden constructor */
   FreeHEPEMFGraphicDriver() {
     super(EGraphicFormat.EMF);
 
     Map<Object, Object> o;
+    Throwable error;
 
+    error = null;
     try {
       o = FreeHEPEMFGraphicDriver.__initialize();
     } catch (final Throwable t) {
       o = null;
+      error = t;
     }
     this.m_props = o;
+    this.m_error = error;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void checkCanUse() {
+    if (this.m_error != null) {
+      throw new UnsupportedOperationException(
+          ("Cannot use " + //$NON-NLS-1$
+          TextUtils.className(FreeHEPEMFGraphicDriver.class)),
+          this.m_error);
+    }
+    super.checkCanUse();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean canUse() {
+    return ((this.m_props != null) && (this.m_error == null));
   }
 
   /**
@@ -105,12 +130,6 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean canUse() {
-    return (this.m_props != null);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public final String toString() {
     return "FreeHEP-based EMF Driver"; //$NON-NLS-1$
   }
@@ -118,9 +137,7 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override
-  protected final Graphic createGraphic(final Logger logger,
-      final IFileProducerListener listener, final Path basePath,
-      final String mainDocumentNameSuggestion, final PhysicalDimension size) {
+  protected final Graphic createGraphic(final GraphicBuilder builder) {
 
     final org.freehep.util.UserProperties up;
     final org.freehep.graphicsio.emf.EMFGraphics2D g;
@@ -128,10 +145,14 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
     final Dimension dim;
     final ELength sizeUnit;
     final Path path;
+    final PhysicalDimension size;
+
     OutputStream stream;
 
     up = new org.freehep.util.UserProperties();
     up.putAll(this.m_props);
+
+    size = builder.getSize();
 
     sizeUnit = size.getUnit();
     wd = sizeUnit.convertTo(size.getWidth(), ELength.POINT);
@@ -145,7 +166,8 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
           " translated to " + dim);//$NON-NLS-1$
     }
 
-    path = this.makePath(basePath, mainDocumentNameSuggestion);
+    path = this.makePath(builder.getBasePath(),
+        builder.getMainDocumentNameSuggestion());
     try {
       stream = PathUtils.openOutputStream(path);
     } catch (final Throwable thro) {
@@ -161,8 +183,8 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
     }
     GraphicUtils.setDefaultRenderingHints(g);
 
-    return new _FreeHEPEMFGraphic(g, logger, listener, path, dim.width,
-        dim.height);
+    return new _FreeHEPEMFGraphic(g, builder.getLogger(),
+        builder.getFileProducerListener(), path, dim.width, dim.height);
   }
 
   /**

@@ -21,5 +21,5 @@ public interface IDocumentProducerTool extends IFileProducerTool {
    * @return the file producer builder
    */
   @Override
-  public abstract IDocumentProducerBuilder use();
+  public abstract IDocumentProducerJobBuilder use();
 }

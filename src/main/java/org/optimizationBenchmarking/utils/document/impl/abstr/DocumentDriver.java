@@ -1,8 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import java.nio.file.Path;
-import java.util.logging.Logger;
-
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
@@ -11,20 +8,14 @@ import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
-import org.optimizationBenchmarking.utils.graphics.EScreenSize;
-import org.optimizationBenchmarking.utils.graphics.PageDimension;
-import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
-import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerTool;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** A document driver. */
 public abstract class DocumentDriver extends DocumentProducerTool
@@ -36,57 +27,13 @@ public abstract class DocumentDriver extends DocumentProducerTool
   }
 
   /**
-   * create a document
+   * Obtain the default graphics driver for this document type
    * 
-   * @param listener
-   *          the listener
-   * @param logger
-   *          the logger to be notified with logging infos
-   * @param basePath
-   *          the base path
-   * @param mainDocumentNameSuggestion
-   *          the main document name suggestion
-   * @return the document
+   * @return the default graphics driver for this document type
    */
-  protected abstract Document doCreateDocument(final Logger logger,
-      final IFileProducerListener listener, final Path basePath,
-      final String mainDocumentNameSuggestion);
-
-  /** {@inheritDoc} */
-  @Override
-  public DocumentBuilder use() {
-    this.checkCanUse();
-    return new DocumentBuilder(this);
-  }
-
-  /**
-   * Obtain the graphics driver
-   * 
-   * @return the graphics driver
-   */
-  protected IGraphicDriver getGraphicDriver() {
+  protected IGraphicDriver getDefaultGraphicDriver() {
     return EGraphicFormat.NULL.getDefaultDriver();
   }
-
-  /**
-   * Translate a figure size to a physical dimension
-   * 
-   * @param size
-   *          the size
-   * @return the translated size
-   */
-  protected PhysicalDimension getSize(final EFigureSize size) {
-    return size.approximateSize(new PageDimension(EScreenSize.DEFAULT
-        .getPageSize(EScreenSize.DEFAULT_SCREEN_DPI)));
-  }
-
-  /**
-   * Create a style set to be used in a
-   * {@link org.optimizationBenchmarking.utils.document.impl.abstr.Document}
-   * 
-   * @return the style set
-   */
-  protected abstract StyleSet createStyleSet();
 
   /**
    * Encode a text output
@@ -773,25 +720,6 @@ public abstract class DocumentDriver extends DocumentProducerTool
    */
   protected FigureCaption createFigureCaption(final Figure owner) {
     return new FigureCaption(owner);
-  }
-
-  /**
-   * Create a graphics object with the size {@code size} in the length unit
-   * {@code size.getUnit()}. If the resulting object is an object which
-   * writes contents to a file, then it will write its contents to a file
-   * in the specified by {@code folder}. The file name will be generated
-   * based on a {@code nameSuggestion}. It may be slightly different,
-   * though, maybe with a different suffix. Once the graphic is
-   * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic#close()
-   * closed}, it will notify the provided {@code listener} interface
-   * (unless {@code listener==null}).
-   * 
-   * @param size
-   *          the size of the graphic
-   * @return the graphic object
-   */
-  protected IGraphicBuilder createGraphic(final EFigureSize size) {
-    return this.getGraphicDriver().use().setSize(this.getSize(size));
   }
 
   /**

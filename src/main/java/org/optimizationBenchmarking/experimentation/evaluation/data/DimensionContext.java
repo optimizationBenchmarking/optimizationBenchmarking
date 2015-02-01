@@ -142,8 +142,8 @@ public final class DimensionContext extends _NamedContext<Dimension> {
 
     try {
       if (parserDesc.indexOf('#') > 0) {
-        parser = ReflectionUtils.getStaticFieldValueByName(parserDesc,
-            NumberParser.class);
+        parser = ReflectionUtils.getInstanceByName(NumberParser.class,
+            parserDesc);
       } else {
         parser = ((NumberParser) ((new ClassParser(NumberParser.class)
             .parseString(parserDesc)).newInstance()));

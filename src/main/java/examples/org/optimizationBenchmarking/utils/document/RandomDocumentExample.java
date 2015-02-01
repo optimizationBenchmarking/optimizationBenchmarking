@@ -248,9 +248,11 @@ public class RandomDocumentExample extends DocumentExample {
     final ForkJoinPool pool;
     final int proc;
     final Logger log;
+    Random rand;
     RandomDocumentExample de;
     String last, cur;
-    int i;
+    long seed;
+    int example, i;
 
     log = DocumentExample._getLogger();
 
@@ -275,7 +277,6 @@ public class RandomDocumentExample extends DocumentExample {
       System.out.println(" processor(s).");//$NON-NLS-1$
     }
 
-    i = 0;
     cur = null;
     if (proc > 1) {
       pool = new ForkJoinPool(proc,
@@ -284,32 +285,43 @@ public class RandomDocumentExample extends DocumentExample {
       pool = null;
     }
 
-    for (final IDocumentDriver driver : RandomDocumentExample.DRIVERS) {//
-      last = cur;
-      cur = driver.getClass().getSimpleName();
+    rand = new Random();
+    rand.setSeed(RandomDocumentExample.SEED);
+    for (example = 1; example <= 5; example++) {
+      seed = rand.nextLong();
+      i = 0;
 
-      if (!(cur.equals(last))) {
-        i = 0;
+      for (final IDocumentDriver driver : RandomDocumentExample.DRIVERS) {//
+        rand.setSeed(seed);
+        last = cur;
+        cur = driver.getClass().getSimpleName();
+
+        if (!(cur.equals(last))) {
+          i = 0;
+        }
+        i++;
+
+        de = new RandomDocumentExample(driver.use()
+            .setBasePath(dir.resolve((((("random/example"//$NON-NLS-1$ 
+                + example) + '/') + cur) + '_')
+                + i)).setMainDocumentNameSuggestion("report")//$NON-NLS-1$
+            .setFileProducerListener(new FinishedPrinter(driver))
+            .setLogger(log).create(), rand, System.out);
+
+        if (pool != null) {
+          pool.execute(de);
+        } else {
+          de.run();
+        }
       }
-      i++;
-
-      de = new RandomDocumentExample(driver.use()
-          .setBasePath(dir.resolve((("random/" + cur) + '_') + i))//$NON-NLS-1$
-          .setMainDocumentNameSuggestion("report")//$NON-NLS-1$
-          .setFileProducerListener(new FinishedPrinter(driver))
-          .setLogger(log).create(), null, System.out);
 
       if (pool != null) {
-        pool.execute(de);
-      } else {
-        de.run();
+        pool.shutdown();
+        pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
       }
+
     }
 
-    if (pool != null) {
-      pool.shutdown();
-      pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-    }
     synchronized (System.out) {
       System.out.print("Finished creating documents to folder ");//$NON-NLS-1$
       System.out.print(dir);

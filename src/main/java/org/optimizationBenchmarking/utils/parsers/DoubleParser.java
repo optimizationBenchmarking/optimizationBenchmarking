@@ -104,8 +104,7 @@ public class DoubleParser extends StrictDoubleParser {
           // ok, it is no constant, maybe it is a public static final
           // member?
           try {
-            number = ReflectionUtils.getStaticFieldValueByName(str,
-                Object.class);
+            number = ReflectionUtils.getInstanceByName(Object.class, str);
             if ((number != null) && (number != string) && (number != str)) {
               retVal = prep.getReturn(this.__parseObjectRaw(number));
               break checker;

@@ -8,6 +8,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 
@@ -18,6 +19,11 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
  *          the data type which can be stored
  */
 public interface ITextInputJobBuilder<D> extends IStreamInputJobBuilder<D> {
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract ITextInputJobBuilder<D> configure(
+      final Configuration config);
 
   /** {@inheritDoc} */
   @Override

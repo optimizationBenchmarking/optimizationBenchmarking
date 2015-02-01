@@ -1,18 +1,16 @@
 package org.optimizationBenchmarking.utils.graphics.graphic.impl;
 
 import java.nio.file.Path;
-import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.JavaDefaultPalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.DefaultStrokePalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** the null driver */
 public final class NullGraphicDriver extends AbstractGraphicDriver {
@@ -39,10 +37,9 @@ public final class NullGraphicDriver extends AbstractGraphicDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final Graphic createGraphic(final Logger logger,
-      final IFileProducerListener listener, final Path basePath,
-      final String mainDocumentNameSuggestion, final PhysicalDimension size) {
-    return new _NullGraphic(logger, listener, size);
+  protected final Graphic createGraphic(final GraphicBuilder builder) {
+    return new _NullGraphic(builder.getLogger(),
+        builder.getFileProducerListener(), builder.getSize());
   }
 
   /** {@inheritDoc} */

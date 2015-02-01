@@ -14,6 +14,9 @@ import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.DelegatingLineChart;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartBuilder;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
@@ -301,24 +304,49 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
     }
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public synchronized final Graphic body() {
+  /**
+   * Create the graphic
+   * 
+   * @return the graphic
+   */
+  private final Graphic __graphic() {
     final Graphic g;
     final Rectangle2D r;
 
-    this.fsmStateAssertAndSet(BasicFigure.STATE_CAPTION_CLOSED,
-        BasicFigure.STATE_GRAPHIC_CREATED);
-    g = this.m_driver.createGraphic(this.m_size)
-        .setBasePath(this.m_folder).setLogger(this.m_doc.m_logger)
-        .setMainDocumentNameSuggestion(this.m_suggestion)
-        .setFileProducerListener(new __GraphicListener()).create();
+    g = this.m_doc.createGraphic(this.m_folder, this.m_suggestion,
+        this.m_size, new __GraphicListener(), this.m_doc.m_logger);
     this.m_doc.m_styles.initialize(g);
 
     r = g.getBounds();
     this.m_figureSize = new PhysicalDimension(r.getWidth(), r.getHeight(),
         ELength.POINT);
     return g;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final Graphic graphic() {
+    this.fsmStateAssertAndSet(BasicFigure.STATE_CAPTION_CLOSED,
+        BasicFigure.STATE_GRAPHIC_CREATED);
+
+    return this.__graphic();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final ILineChart lineChart() {
+    final Document doc;
+    final IChartBuilder builder;
+
+    this.fsmStateAssertAndSet(BasicFigure.STATE_CAPTION_CLOSED,
+        BasicFigure.STATE_GRAPHIC_CREATED);
+
+    doc = this.m_doc;
+    builder = doc.m_chartDriver.use();
+    builder.setStyleSet(doc.m_styles);
+    builder.setLogger(doc.m_logger);
+    builder.setGraphic(this.__graphic());
+    return new DelegatingLineChart(builder.create().lineChart());
   }
 
   /**

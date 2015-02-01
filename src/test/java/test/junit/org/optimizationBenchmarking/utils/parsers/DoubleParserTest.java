@@ -62,9 +62,9 @@ public class DoubleParserTest extends ParserTest<Double> {
             DoubleParserTest.__entry(-2.4d, "-2.4"),//$NON-NLS-1$
             DoubleParserTest.__entry(21d, "21"),//$NON-NLS-1$
             DoubleParserTest.__entry(Integer.MAX_VALUE,
-                "Integer.MAX_VALUE"),//$NON-NLS-1$
+                "Integer#MAX_VALUE"),//$NON-NLS-1$
             DoubleParserTest.__entry(Double.POSITIVE_INFINITY,
-                "Double.POSITIVE_INFINITY"), //$NON-NLS-1$
+                "Double#POSITIVE_INFINITY"), //$NON-NLS-1$
             DoubleParserTest.__entry((Integer.MAX_VALUE),
                 String.valueOf(Integer.MAX_VALUE)),//
             DoubleParserTest.__entry(Double.POSITIVE_INFINITY,
@@ -78,28 +78,28 @@ public class DoubleParserTest extends ParserTest<Double> {
             DoubleParserTest.__entry(3, "0x3"),//$NON-NLS-1$
             DoubleParserTest.__entry(-16, "-0x10"),//$NON-NLS-1$
             DoubleParserTest.__entry(Double.POSITIVE_INFINITY,//
-                "Double.POSITIVE_INFINITY"),//$NON-NLS-1$
+                "Double#POSITIVE_INFINITY"),//$NON-NLS-1$
             DoubleParserTest.__entry(Double.NEGATIVE_INFINITY,//
-                "\"-+- +-'Double.POSITIVE_INFINITY'\""),//$NON-NLS-1$
-            DoubleParserTest.__entry(Math.E, "Math.E"),//$NON-NLS-1$
+                "\"-+- +-'Double#POSITIVE_INFINITY'\""),//$NON-NLS-1$
+            DoubleParserTest.__entry(Math.E, "Math#E"),//$NON-NLS-1$
             DoubleParserTest.__entry(-Math.PI, "-\u03c0"),//$NON-NLS-1$
             DoubleParserTest.__entry(-Math.PI, "-\\u03c0"),//$NON-NLS-1$
             DoubleParserTest.__entry(-Math.PI, "-(\\u03c0)"),//$NON-NLS-1$
             DoubleParserTest.__entry(-Math.PI, "\"-(\\u03c0)\""),//$NON-NLS-1$
             DoubleParserTest.__entry(Math.PI, "-\"-(\\u03c0)\""),//$NON-NLS-1$
-            DoubleParserTest.__entry(-Math.PI, "-java.lang.Math.PI"),//$NON-NLS-1$
+            DoubleParserTest.__entry(-Math.PI, "-java.lang.Math#PI"),//$NON-NLS-1$
             DoubleParserTest.__entry(Double.NaN,
                 String.valueOf(Double.NaN)),//
             DoubleParserTest.__entry(-Math.PI,//
                 ('-' + Character.toString((char) 0x3c0))),
-            DoubleParserTest.__entry(Math.E, " Ma th. E "),//$NON-NLS-1$
-            DoubleParserTest.__entry(Math.E / 100, (" Ma th. E %")),//$NON-NLS-1$
+            DoubleParserTest.__entry(Math.E, " Ma th# E "),//$NON-NLS-1$
+            DoubleParserTest.__entry(Math.E / 100, (" Ma th# E %")),//$NON-NLS-1$
             DoubleParserTest.__entry(
                 -(1 | 2 | 4 | 8 | 256 | 512 | 1024 | 2048),//
                 ("-0b0000_1111_0000_1111")),//$NON-NLS-1$
             DoubleParserTest.__entry(Integer.MAX_VALUE,//
-                "Integer.MAX_VALUE"),//$NON-NLS-1$
-            DoubleParserTest.__entry(Short.SIZE, "Short.SIZE"),//$NON-NLS-1$;
+                "Integer#MAX_VALUE"),//$NON-NLS-1$
+            DoubleParserTest.__entry(Short.SIZE, "Short#SIZE"),//$NON-NLS-1$;
             DoubleParserTest.__entry(-0.3334d, "-[0.3334]"),//$NON-NLS-1$
             DoubleParserTest.__entry(-0.3334d / 100d, "-[0.3334]%"),//$NON-NLS-1$
             DoubleParserTest.__entry(-0.3334d / 1e6d, "-[0.3334" + //$NON-NLS-1$

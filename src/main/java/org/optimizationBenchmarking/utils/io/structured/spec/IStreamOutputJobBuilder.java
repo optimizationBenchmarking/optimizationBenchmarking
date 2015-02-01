@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
@@ -17,6 +18,11 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  */
 public interface IStreamOutputJobBuilder<D> extends
     IFileOutputJobBuilder<D> {
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IStreamOutputJobBuilder<D> configure(
+      final Configuration config);
 
   /** {@inheritDoc} */
   @Override

@@ -56,7 +56,7 @@ public class CharParser extends StrictCharParser {
 
       // ok, it is no constant, maybe it is a public static final member?
       try {
-        var = ReflectionUtils.getStaticFieldValueByName(str, Object.class);
+        var = ReflectionUtils.getInstanceByName(Object.class, str);
         if ((var != null) && (var != string) && (var != str)) {
           retVal = this.__parseObjectRaw(var);
           break checker;

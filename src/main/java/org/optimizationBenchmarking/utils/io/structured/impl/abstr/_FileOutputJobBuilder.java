@@ -49,15 +49,18 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
 
   /** {@inheritDoc} */
   @Override
-  public void configure(final Configuration config) {
-    String dest;
+  public JBT configure(final Configuration config) {
+    final String dest;
+    final JBT res;
 
-    super.configure(config);
+    res = super.configure(config);
 
     dest = config.getString(IOTool.PARAM_OUTPUT_DESTINATION, null);
     if (dest != null) {
       this._location(dest);
     }
+
+    return res;
   }
 
   /** {@inheritDoc} */
@@ -196,8 +199,9 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
   @SuppressWarnings("rawtypes")
   @Override
   final _OutputJob _doCreate() {
-    return new _OutputJob(this.m_logger, ((FileOutputTool) (this.m_tool)),
-        this.m_source, this.m_dest, this.m_listener);
+    return new _OutputJob(this.getLogger(),
+        ((FileOutputTool) (this.m_tool)), this.m_source, this.m_dest,
+        this.m_listener);
   }
 
   /** {@inheritDoc} */

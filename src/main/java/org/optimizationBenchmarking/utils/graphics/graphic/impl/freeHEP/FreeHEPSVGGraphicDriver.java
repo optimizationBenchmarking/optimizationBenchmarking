@@ -5,18 +5,18 @@ import java.awt.Dimension;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A driver which creates <a
@@ -27,23 +27,43 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final Map<Object, Object> m_props;
 
-  /**
-   * the hidden constructor
-   * 
-   * @param compress
-   *          should we compress?
-   */
-  FreeHEPSVGGraphicDriver(final boolean compress) {
-    super(compress ? EGraphicFormat.SVGZ : EGraphicFormat.SVG);
+  /** the error */
+  private final Throwable m_error;
+
+  /** the hidden constructor */
+  FreeHEPSVGGraphicDriver() {
+    super(EGraphicFormat.SVG);
 
     Map<Object, Object> o;
+    Throwable error;
 
+    error = null;
     try {
-      o = FreeHEPSVGGraphicDriver.__initialize(compress);
+      o = FreeHEPSVGGraphicDriver._initialize(false);
     } catch (final Throwable t) {
       o = null;
+      error = t;
     }
     this.m_props = o;
+    this.m_error = error;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void checkCanUse() {
+    if (this.m_error != null) {
+      throw new UnsupportedOperationException(
+          ("Cannot use " + //$NON-NLS-1$
+          TextUtils.className(FreeHEPSVGGraphicDriver.class)),
+          this.m_error);
+    }
+    super.checkCanUse();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean canUse() {
+    return ((this.m_props != null) && (this.m_error == null));
   }
 
   /**
@@ -55,8 +75,8 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
    * @throws ClassNotFoundException
    *           if at least one of the class could not be loaded
    */
-  private static final Map<Object, Object> __initialize(
-      final boolean compress) throws ClassNotFoundException {
+  static final Map<Object, Object> _initialize(final boolean compress)
+      throws ClassNotFoundException {
 
     ReflectionUtils.ensureClassesAreLoaded(
         "org.freehep.graphics2d.font.FontUtilities", //$NON-NLS-1$
@@ -91,54 +111,38 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
     return props;
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final boolean canUse() {
-    return (this.m_props != null);
-  }
-
   /**
-   * get the plain, uncompressed instance of the FreeHEP SVG driver
+   * get the instance of the FreeHEP SVG driver
    * 
-   * @return the plain, uncompressed instance of the FreeHEP SVG driver
+   * @return the instance of the FreeHEP SVG driver
    */
-  public static final FreeHEPSVGGraphicDriver getPlainInstance() {
-    return __FreeHEPSVGGraphicDriverPlainLoader.INSTANCE;
-  }
-
-  /**
-   * get the compressed instance of the FreeHEP SVG driver
-   * 
-   * @return the compressed instance of the FreeHEP SVG driver
-   */
-  public static final FreeHEPSVGGraphicDriver getCompressedInstance() {
-    return __FreeHEPSVGGraphicDriverCompressedLoader.INSTANCE;
+  public static final FreeHEPSVGGraphicDriver getInstance() {
+    return __FreeHEPSVGGraphicDriverLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return ((this.getFileType() == EGraphicFormat.SVG) ? "FreeHEP-based SVG Driver" : //$NON-NLS-1$
-        "FreeHEP-based SVGZ Driver"); //$NON-NLS-1$
+    return ("FreeHEP-based SVG Driver"); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override
-  protected final Graphic createGraphic(final Logger logger,
-      final IFileProducerListener listener, final Path basePath,
-      final String mainDocumentNameSuggestion, final PhysicalDimension size) {
+  protected final Graphic createGraphic(final GraphicBuilder builder) {
     final org.freehep.util.UserProperties up;
     final org.freehep.graphicsio.svg.SVGGraphics2D g;
     final double wd, hd;
     final Dimension dim;
     final ELength sizeUnit;
     final Path path;
+    final PhysicalDimension size;
     OutputStream stream;
 
     up = new org.freehep.util.UserProperties();
     up.putAll(this.m_props);
 
+    size = builder.getSize();
     sizeUnit = size.getUnit();
     wd = sizeUnit.convertTo(size.getWidth(), ELength.POINT);
     hd = sizeUnit.convertTo(size.getHeight(), ELength.POINT);
@@ -151,7 +155,8 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
           " translated to " + dim);//$NON-NLS-1$
     }
 
-    path = this.makePath(basePath, mainDocumentNameSuggestion);
+    path = this.makePath(builder.getBasePath(),
+        builder.getMainDocumentNameSuggestion());
     try {
       stream = PathUtils.openOutputStream(path);
     } catch (final Throwable thro) {
@@ -167,29 +172,19 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
     }
     GraphicUtils.setDefaultRenderingHints(g);
 
-    return new _FreeHEPSVGGraphic(g, logger, listener, path, dim.width,
-        dim.height, this.getFileType());
+    return new _FreeHEPSVGGraphic(g, builder.getLogger(),
+        builder.getFileProducerListener(), path, dim.width, dim.height,
+        this.getFileType());
   }
 
   /** the loader class */
-  private static final class __FreeHEPSVGGraphicDriverPlainLoader {
+  private static final class __FreeHEPSVGGraphicDriverLoader {
     /**
      * the globally shared instance of the <a
      * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
      * graphic driver
      */
-    static final FreeHEPSVGGraphicDriver INSTANCE = new FreeHEPSVGGraphicDriver(
-        false);
+    static final FreeHEPSVGGraphicDriver INSTANCE = new FreeHEPSVGGraphicDriver();
   }
 
-  /** the loader class */
-  private static final class __FreeHEPSVGGraphicDriverCompressedLoader {
-    /**
-     * the globally shared instance of the <a
-     * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics"
-     * >SVGZ</a> graphic driver
-     */
-    static final FreeHEPSVGGraphicDriver INSTANCE = new FreeHEPSVGGraphicDriver(
-        true);
-  }
 }

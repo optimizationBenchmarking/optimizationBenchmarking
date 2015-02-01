@@ -7,7 +7,7 @@ import java.awt.Stroke;
 import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.Line2D;
+import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.CompiledLine2D;
 
 /**
  * <p>
@@ -35,7 +35,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
   private volatile int m_paintIndex;
 
   /** the lines */
-  private final ArrayListView<Line2D> m_lines;
+  private final ArrayListView<CompiledLine2D> m_lines;
 
   /**
    * create
@@ -43,7 +43,8 @@ final class _JFreeChartXYLineAndShapeRenderer extends
    * @param lines
    *          the lines
    */
-  _JFreeChartXYLineAndShapeRenderer(final ArrayListView<Line2D> lines) {
+  _JFreeChartXYLineAndShapeRenderer(
+      final ArrayListView<CompiledLine2D> lines) {
     super();
     this.m_lines = lines;
   }

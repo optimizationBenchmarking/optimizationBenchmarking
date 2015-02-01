@@ -9,26 +9,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedHashSet;
+import java.util.logging.Logger;
 
 import javax.swing.JList;
 import javax.swing.border.BevelBorder;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
-import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEMFGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEPSGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPPDFGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPSVGGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOBMPGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOGIFGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOJPEGGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOPNGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
-import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.math.MathConstants;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.units.ELength;
@@ -37,77 +26,6 @@ import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 
 /** An example for using the graphic output subsystem. */
 public final class GraphicsExample {
-
-  /** the list of graphics drivers */
-  public static final ArrayListView<IGraphicDriver> DRIVERS;
-
-  static {
-    final LinkedHashSet<IGraphicDriver> list;
-
-    list = new LinkedHashSet<>();
-
-    IGraphicDriver d;
-    d = FreeHEPEPSGraphicDriver.getInstance();
-    if (d.canUse()) {
-      list.add(d);
-    }
-
-    d = FreeHEPPDFGraphicDriver.getInstance();
-    if (d.canUse()) {
-      list.add(d);
-    }
-
-    d = FreeHEPSVGGraphicDriver.getCompressedInstance();
-    if (d.canUse()) {
-      list.add(d);
-    }
-
-    d = FreeHEPSVGGraphicDriver.getPlainInstance();
-    if (d.canUse()) {
-      list.add(d);
-    }
-
-    d = FreeHEPEMFGraphicDriver.getInstance();
-    if (d.canUse()) {
-      list.add(d);
-    }
-
-    d = ImageIOPNGGraphicDriver.getInstance(EColorModel.RBGA_32_BIT, 256);
-    if (d.canUse()) {
-      list.add(d);
-    }
-
-    d = ImageIOJPEGGraphicDriver.getInstance(EColorModel.RBGA_32_BIT, 333,
-        0.0f);
-    if (d.canUse()) {
-      list.add(d);
-    }
-
-    d = ImageIOGIFGraphicDriver.getInstance(EColorModel.RBGA_32_BIT, 600);
-    if (d.canUse()) {
-      list.add(d);
-    }
-
-    d = EGraphicFormat.NULL.getDefaultDriver();
-    if (d.canUse()) {
-      list.add(d);
-    }
-
-    for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
-      d = format.getDefaultDriver();
-      if (d.canUse()) {
-        list.add(d);
-      }
-    }
-
-    d = ImageIOBMPGraphicDriver.getInstance(EColorModel.RGB_15_BIT, 16);
-    if (d.canUse()) {
-      list.add(d);
-    }
-
-    DRIVERS = new ArrayListView<>(list.toArray(new IGraphicDriver[list
-        .size()]));
-  }
 
   /** the size */
   private static final PhysicalDimension SIZE = new PhysicalDimension(
@@ -131,15 +49,13 @@ public final class GraphicsExample {
     }
 
     z = 0;
-    for (final IGraphicDriver driver : GraphicsExample.DRIVERS) {
+    for (final GraphicConfiguration driver : GraphicConfigExample.CONFIGURATIONS) {
       try (final Graphic g = driver
-          .use()
-          .setBasePath(dir)
-          .setMainDocumentNameSuggestion(
-              ((((GraphicsExample.class.getSimpleName() + '_') + (++z)) + '_') + driver
-                  .getClass().getSimpleName()))
-          .setSize(GraphicsExample.SIZE)
-          .setFileProducerListener(new FinishedPrinter(driver)).create()) {
+          .createGraphic(
+              dir,
+              (((((GraphicsExample.class.getSimpleName() + '_') + (++z)) + '_') + driver
+                  .toString())), GraphicsExample.SIZE,
+              new FinishedPrinter(driver), Logger.getGlobal())) {
         for (int i = 1; i < 50; i++) {
           GraphicsExample.__paint(g);
           GraphicsExample.__paintComponent(g);

@@ -17,7 +17,7 @@ public abstract class ToolJobBuilder<J extends IToolJob, R extends ToolJobBuilde
     implements IToolJobBuilder {
 
   /** the logger */
-  protected Logger m_logger;
+  Logger m_logger;
 
   /** create the tool job builder */
   protected ToolJobBuilder() {
@@ -30,6 +30,15 @@ public abstract class ToolJobBuilder<J extends IToolJob, R extends ToolJobBuilde
   public final R setLogger(final Logger logger) {
     this.m_logger = logger;
     return ((R) this);
+  }
+
+  /**
+   * Get the logger
+   * 
+   * @return the logger
+   */
+  public final Logger getLogger() {
+    return this.m_logger;
   }
 
   /**

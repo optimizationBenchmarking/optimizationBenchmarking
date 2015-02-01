@@ -8,6 +8,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.xml.sax.InputSource;
@@ -19,6 +20,11 @@ import org.xml.sax.InputSource;
  *          the data type which can be stored
  */
 public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IXMLInputJobBuilder<D> configure(
+      final Configuration config);
 
   /** {@inheritDoc} */
   @Override

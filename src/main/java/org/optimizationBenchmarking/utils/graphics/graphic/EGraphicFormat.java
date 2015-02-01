@@ -6,6 +6,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPE
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPEPSGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPPDFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPSVGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPSVGZGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOBMPGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOGIFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOJPEGGraphicDriver;
@@ -29,9 +30,13 @@ public enum EGraphicFormat implements IFileType {
     }
   },
   /**
-   * the <a
+   * The <a
    * href="http://en.wikipedia.org/wiki/Encapsulated_PostScript">EPS</a>
-   * format
+   * format is a <a
+   * href="http://en.wikipedia.org/wiki/Vector_graphics">vector graphic</a>
+   * format based on the PostScript language which is understood by many
+   * printers. EPS files may be a bit larger than {@link #PDF}s and EPS
+   * viewers are less wide-spread.
    */
   EPS("Encapsulated PostScript", true,//$NON-NLS-1$
       "eps", "image/eps") { //$NON-NLS-1$//$NON-NLS-2$
@@ -43,9 +48,13 @@ public enum EGraphicFormat implements IFileType {
   },
 
   /**
-   * the <a
+   * The <a
    * href="http://en.wikipedia.org/wiki/Portable_Document_Format">PDF</a>
-   * format
+   * format is a <a
+   * href="http://en.wikipedia.org/wiki/Vector_graphics">vector graphic</a>
+   * format which is maybe the most wide-spread format for
+   * platform-independent documents and vector images. Viewers are
+   * available on almost all platforms.
    */
   PDF("Portable Document Format", true,//$NON-NLS-1$
       "pdf", "application/pdf") { //$NON-NLS-1$//$NON-NLS-2$
@@ -57,36 +66,42 @@ public enum EGraphicFormat implements IFileType {
   },
 
   /**
-   * the <a
+   * The <a
    * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
-   * format
+   * format is a <a
+   * href="http://en.wikipedia.org/wiki/Vector_graphics">vector graphic</a>
+   * format intended for the web. It is based on XML and browser support is
+   * now increasing, although not all browsers can display SVGs properly.
    */
   SVG("Scalable Vector Graphics", true,//$NON-NLS-1$
       "svg", "image/svg+xml") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return FreeHEPSVGGraphicDriver.getPlainInstance();
+      return FreeHEPSVGGraphicDriver.getInstance();
     }
   },
 
   /**
-   * the <a
+   * The <a
    * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
-   * format
+   * format is the ZIP-compressed version of {@link #SVG}.
    */
   SVGZ("Compressed Scalable Vector Graphics", SVG.m_isVector,//$NON-NLS-1$
       "svgz", SVG.m_mime) { //$NON-NLS-1$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return FreeHEPSVGGraphicDriver.getCompressedInstance();
+      return FreeHEPSVGZGraphicDriver.getInstance();
     }
   },
 
   /**
-   * the <a href="http://en.wikipedia.org/wiki/Windows_Metafile">EMF</a>
-   * format
+   * The <a href="http://en.wikipedia.org/wiki/Windows_Metafile">EMF</a>
+   * format is a <a
+   * href="http://en.wikipedia.org/wiki/Vector_graphics">vector graphic</a>
+   * format developed by Microsoft and mainly supported on Microsoft
+   * Windows.
    */
   EMF("Enhanced Metafile", true,//$NON-NLS-1$
       "emf", "image/x-emf") { //$NON-NLS-1$//$NON-NLS-2$
@@ -97,97 +112,93 @@ public enum EGraphicFormat implements IFileType {
     }
   },
 
-  /** the <a href="http://en.wikipedia.org/wiki/JPEG">JPEG</a> format */
+  /**
+   * The <a href="http://en.wikipedia.org/wiki/JPEG">JPEG</a> format is a
+   * lossy <a href="http://en.wikipedia.org/wiki/Raster_graphics">raster
+   * graphics</a> image format. This format is mainly suitable for photos.
+   */
   JPEG("JPEG Image", false,//$NON-NLS-1$
       "jpg", "image/jpeg") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return ImageIOJPEGGraphicDriver.getDefaultInstance();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public IGraphicDriver getDriver(final EColorModel color,
-        final int dotsPerInch, final double quality) {
-      return ImageIOJPEGGraphicDriver.getInstance(color, dotsPerInch,
-          ((float) quality));
+      return ImageIOJPEGGraphicDriver.getInstance();
     }
   },
 
   /**
-   * the <a
+   * The <a
    * href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG</a>
-   * format
+   * format is a lossless <a
+   * href="http://en.wikipedia.org/wiki/Raster_graphics">raster
+   * graphics</a> format, something like an extended and improved version
+   * of {@link #GIF}.
    */
   PNG("Portable Network Graphics", false,//$NON-NLS-1$
       "png", "image/png") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return ImageIOPNGGraphicDriver.getDefaultInstance();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public IGraphicDriver getDriver(final EColorModel color,
-        final int dotsPerInch, final double quality) {
-      return ImageIOPNGGraphicDriver.getInstance(color, dotsPerInch);
+      return ImageIOPNGGraphicDriver.getInstance();
     }
   },
 
   /**
-   * the <a
+   * The <a
    * href="http://en.wikipedia.org/wiki/Graphics_Interchange_Format">
-   * GIF</a> format
+   * GIF</a> format is a <a
+   * href="http://en.wikipedia.org/wiki/Raster_graphics">raster
+   * graphics</a> format supporting at most 256 colors. For many
+   * applications, it has been superseded by {@link #PNG}.
    */
   GIF("Graphics Interchange Format", false,//$NON-NLS-1$
       "gif", "image/gif") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return ImageIOGIFGraphicDriver.getDefaultInstance();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public IGraphicDriver getDriver(final EColorModel color,
-        final int dotsPerInch, final double quality) {
-      return ImageIOGIFGraphicDriver.getInstance(color, dotsPerInch);
+      return ImageIOGIFGraphicDriver.getInstance();
     }
   },
   /**
-   * the <a href="http://en.wikipedia.org/wiki/BMP_file_format">BMP</a>
-   * format
+   * The <a href="http://en.wikipedia.org/wiki/BMP_file_format">BMP</a>
+   * format is lossless <a
+   * href="http://en.wikipedia.org/wiki/Raster_graphics">raster
+   * graphics</a> format. It is mainly supported on Microsoft Windows
+   * systems and not as far-spred as {@link #PNG}.
    */
   BMP("Bitmap Image Format", false,//$NON-NLS-1$
       "bmp", "image/bmp") { //$NON-NLS-1$//$NON-NLS-2$
     /** {@inheritDoc} */
     @Override
     public final IGraphicDriver getDefaultDriver() {
-      return ImageIOBMPGraphicDriver.getDefaultInstance();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public IGraphicDriver getDriver(final EColorModel color,
-        final int dotsPerInch, final double quality) {
-      return ImageIOBMPGraphicDriver.getInstance(color, dotsPerInch);
+      return ImageIOBMPGraphicDriver.getInstance();
     }
   },
 
   ;
 
-  /** the default color model */
-  public static final EColorModel DEFAULT_COLOR_MODEL = EColorModel.RBG_24_BIT;
+  /**
+   * The default color model: {@value} . See
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder#setColorModel(EColorModel)}
+   * .
+   */
+  public static final EColorModel DEFAULT_COLOR_MODEL = EColorModel.RGB_24_BIT;
 
-  /** the default value for dots per inch */
+  /**
+   * The default value for dots per inch: {@value} . See
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder#setDotsPerInch(int)}
+   * .
+   */
   public static final int DEFAULT_DPI = 300;
 
-  /** the default image encoding quality */
+  /**
+   * The default image encoding quality: {@value} . See
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder#setQuality(double)}
+   * .
+   */
   public static final double DEFAULT_QUALITY = 0.8d;
 
-  /** the set of graphic formats */
+  /** The set of graphic formats. */
   public static final ArraySetView<EGraphicFormat> INSTANCES = //
   new ArraySetView<>(EGraphicFormat.values());
 
@@ -230,29 +241,6 @@ public enum EGraphicFormat implements IFileType {
    */
   public IGraphicDriver getDefaultDriver() {
     throw new UnsupportedOperationException();
-  }
-
-  /**
-   * Get a driver producing images of the color model and resolution. Not
-   * all color models and resolutions need to be supported. Some graphics
-   * drivers, for example, may be resolution-independent (vector graphics).
-   * Others may only support specific color models. This method tries to
-   * return a graphic driver instance which comes a close as possible to
-   * the requested configuration, but does not guarantee to match it.
-   * 
-   * @param color
-   *          the color model
-   * @param dotsPerInch
-   *          the resolution in dots per
-   *          {@link org.optimizationBenchmarking.utils.math.units.ELength#INCH
-   *          inch}
-   * @param quality
-   *          the encoding quality: 1 is best, 0 is worst
-   * @return the driver
-   */
-  public IGraphicDriver getDriver(final EColorModel color,
-      final int dotsPerInch, final double quality) {
-    return this.getDefaultDriver();
   }
 
   /**

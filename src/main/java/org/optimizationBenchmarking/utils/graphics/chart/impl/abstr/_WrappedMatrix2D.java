@@ -50,7 +50,7 @@ final class _WrappedMatrix2D extends AbstractMatrix {
       final double endX, final double endY) {
     super();
 
-    _DataSeries2D._checkMatrix2D(matrix);
+    CompiledDataSeries2D._checkMatrix2D(matrix);
     this.m_matrix = matrix;
 
     this.m_hasStart = hasStart;

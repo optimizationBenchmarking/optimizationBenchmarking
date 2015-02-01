@@ -7,9 +7,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.spi.ImageWriterSpi;
 
-import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
@@ -27,62 +25,21 @@ public final class ImageIOBMPGraphicDriver extends
    * @return the default instance of the BMP driver based on Java's imaging
    *         API
    */
-  public static final ImageIOBMPGraphicDriver getDefaultInstance() {
+  public static final ImageIOBMPGraphicDriver getInstance() {
     return __ImageIOBMPGraphicDriverLoader.INSTANCE;
   }
 
   /**
-   * Get the instance of the BMP driver with the given setup
-   * 
-   * @param dotsPerInch
-   *          the dots per inch
-   * @param colors
-   *          the colors
-   * @return the corresponding instance
-   */
-  public static final ImageIOBMPGraphicDriver getInstance(
-      final EColorModel colors, final int dotsPerInch) {
-    if ((colors == EGraphicFormat.DEFAULT_COLOR_MODEL)
-        && (dotsPerInch == EGraphicFormat.DEFAULT_DPI)) {
-      return ImageIOBMPGraphicDriver.getDefaultInstance();
-    }
-    return new ImageIOBMPGraphicDriver(colors, dotsPerInch);
-  }
-
-  /**
    * Create a new BMP driver for based on {@link javax.imageio ImageIO}.
-   * 
-   * @param dotsPerInch
-   *          the dots per inch
-   * @param colors
-   *          the colors
    */
-  ImageIOBMPGraphicDriver(final EColorModel colors, final int dotsPerInch) {
-    super(EGraphicFormat.BMP, colors, dotsPerInch);
+  ImageIOBMPGraphicDriver() {
+    super(EGraphicFormat.BMP);
   }
 
   /** {@inheritDoc} */
   @Override
   public final boolean canUse() {
     return (ImageIOBMPGraphicDriver._ImageIOBMPSPILoader.SPI != null);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final boolean equals(final Object o) {
-    final ImageIOBMPGraphicDriver d;
-    if (o == this) {
-      return true;
-    }
-    if (o == null) {
-      return false;
-    }
-    if (o instanceof ImageIOBMPGraphicDriver) {
-      d = ((ImageIOBMPGraphicDriver) o);
-      return ((this.m_dpi == d.m_dpi) && //
-      (EComparison.equals(this.m_colors, d.m_colors)));
-    }
-    return false;
   }
 
   /** {@inheritDoc} */
@@ -97,7 +54,8 @@ public final class ImageIOBMPGraphicDriver extends
   final _ImageIORasterGraphic _create(final Path path,
       final Logger logger, final IFileProducerListener listener,
       final BufferedImage img, final Graphics2D g, final int w,
-      final int h, final double xDPI, final double yDPI) {
+      final int h, final double xDPI, final double yDPI,
+      final double quality) {
     return new _ImageIOBMPGraphic(path, logger, listener, img, g, w, h,
         xDPI, yDPI);
   }
@@ -116,8 +74,6 @@ public final class ImageIOBMPGraphicDriver extends
      * href="http://en.wikipedia.org/wiki/BMP_file_format" >BMP</a> driver
      * instance
      */
-    static final ImageIOBMPGraphicDriver INSTANCE = //
-    new ImageIOBMPGraphicDriver(EGraphicFormat.DEFAULT_COLOR_MODEL,
-        EGraphicFormat.DEFAULT_DPI);
+    static final ImageIOBMPGraphicDriver INSTANCE = new ImageIOBMPGraphicDriver();
   }
 }

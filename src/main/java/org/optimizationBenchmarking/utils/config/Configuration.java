@@ -302,33 +302,6 @@ public final class Configuration implements Serializable {
   }
 
   /**
-   * <p>
-   * Get the value of a public static constant. Constants will not be
-   * configured automatically. They are static and should be considered as
-   * immutable anyway.
-   * </p>
-   * 
-   * @param key
-   *          the key
-   * @param defInstance
-   *          the default instance, or {@code null}
-   * @param owningClass
-   *          the class which should contain the constant
-   * @param baseClass
-   *          the base class of the constant to return, used to check type
-   *          consistency
-   * @return the constant
-   * @param <T>
-   *          the type of object to return
-   */
-  public final <T> T getConstant(final String key,
-      final Class<?> owningClass, final Class<T> baseClass,
-      final T defInstance) {
-    return this.get(key, new _ConstantParser<>(owningClass, baseClass),
-        defInstance);
-  }
-
-  /**
    * Get a path (file or directory) parameter
    * 
    * @param key

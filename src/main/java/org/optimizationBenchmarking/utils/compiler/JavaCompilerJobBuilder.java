@@ -75,7 +75,7 @@ public final class JavaCompilerJobBuilder extends
   public final JavaCompilerJob create() {
     this.validate();
     synchronized (this.m_files) {
-      return new JavaCompilerJob(this.m_logger, this.m_files.values());
+      return new JavaCompilerJob(this.getLogger(), this.m_files.values());
     }
   }
 }

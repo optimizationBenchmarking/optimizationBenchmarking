@@ -30,9 +30,9 @@ import org.jfree.ui.Size2D;
 import org.jfree.ui.VerticalAlignment;
 import org.jfree.util.UnitType;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
-import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.Axis;
-import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.Line2D;
-import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.LineChart;
+import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.CompiledAxis;
+import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.CompiledLine2D;
+import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.CompiledLineChart;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 
@@ -85,12 +85,12 @@ final class _JFreeChartLineChart2DRenderer {
    * @param chart
    *          the chart to paint
    */
-  _JFreeChartLineChart2DRenderer(final LineChart chart) {
+  _JFreeChartLineChart2DRenderer(final CompiledLineChart chart) {
     super();
 
     final _JFreeChartXYLineAndShapeRenderer renderer;
     final LegendItemCollection legendCollection;
-    final Axis x, y;
+    final CompiledAxis x, y;
     final LegendTitle legend;
     TextTitle chartTitle;
     double min, max;
@@ -199,7 +199,7 @@ final class _JFreeChartLineChart2DRenderer {
 
     legendCollection = new LegendItemCollection();
     if (this.m_legendMode.isLegendShown()) {
-      for (final Line2D line : chart.getLines()) {
+      for (final CompiledLine2D line : chart.getLines()) {
         title = line.getTitle();
         if (title != null) {
           legendItem = new LegendItem(title, null, null, null, // text

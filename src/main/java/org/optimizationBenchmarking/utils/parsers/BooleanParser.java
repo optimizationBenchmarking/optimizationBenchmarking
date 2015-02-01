@@ -95,8 +95,7 @@ public class BooleanParser extends StrictBooleanParser {
 
         // ok, it is no constant, maybe it is a public static final member?
         try {
-          bool = ReflectionUtils.getStaticFieldValueByName(str,
-              Object.class);
+          bool = ReflectionUtils.getInstanceByName(Object.class, str);
           if ((bool != null) && (bool != string) && (bool != str)) {
             retVal = prep.getReturn(this.__parseObjectRaw(bool));
             break checker;

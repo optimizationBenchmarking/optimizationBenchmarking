@@ -14,7 +14,7 @@ public final class ExperimentDataJobBuilder extends
   /** {@inheritDoc} */
   @Override
   public final ExperimentSetContext create() throws Exception {
-    return new ExperimentSetContext(this.m_logger);
+    return new ExperimentSetContext(this.getLogger());
   }
 
 }

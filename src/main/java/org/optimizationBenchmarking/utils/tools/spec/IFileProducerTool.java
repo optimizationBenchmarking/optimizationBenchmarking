@@ -9,5 +9,5 @@ public interface IFileProducerTool extends ITool {
    * @return the file producer builder
    */
   @Override
-  public abstract IFileProducerBuilder use();
+  public abstract IFileProducerJobBuilder use();
 }

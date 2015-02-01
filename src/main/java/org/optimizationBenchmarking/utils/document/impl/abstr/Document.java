@@ -15,9 +15,16 @@ import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
+import org.optimizationBenchmarking.utils.graphics.EScreenSize;
+import org.optimizationBenchmarking.utils.graphics.PageDimension;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
@@ -110,6 +117,12 @@ public class Document extends DocumentElement implements IDocument {
   /** the document name */
   private transient volatile String m_docName;
 
+  /** the graphic configuration */
+  private final GraphicConfiguration m_graphicConfig;
+
+  /** the chart driver */
+  final IChartDriver m_chartDriver;
+
   /**
    * Create a document.
    * 
@@ -119,26 +132,32 @@ public class Document extends DocumentElement implements IDocument {
    *          the writer
    * @param docPath
    *          the path to the document
-   * @param listener
-   *          the object listener the object listener
-   * @param logger
-   *          the logger
+   * @param builder
+   *          the document builder
    */
   private Document(final DocumentDriver driver,
       final BufferedWriter writer, final Path docPath,
-      final Logger logger, final IFileProducerListener listener) {
+      final DocumentBuilder builder) {
     super(driver, writer);
 
-    this.m_styles = driver.createStyleSet();
+    this.m_graphicConfig = builder.getGraphicConfiguration();
+    if (this.m_graphicConfig == null) {
+      throw new IllegalArgumentException(//
+          "Graphic configuration must not be null."); //$NON-NLS-1$
+    }
+
+    this.m_styles = builder.createStyleSet();
     if (this.m_styles == null) {
       throw new IllegalArgumentException(//
           "Style set must not be null."); //$NON-NLS-1$
     }
 
-    this.m_logger = logger;
+    this.m_chartDriver = builder.getChartDriver();
+    this.m_logger = builder.getLogger();
     this.m_documentPath = PathUtils.normalize(docPath);
     this.m_basePath = PathUtils.normalize(docPath.getParent());
-    this.m_paths = new FileProducerSupport(listener);
+    this.m_paths = new FileProducerSupport(
+        builder.getFileProducerListener());
 
     this.m_citations = new BibliographyBuilder();
     this.m_writer = writer;
@@ -148,6 +167,36 @@ public class Document extends DocumentElement implements IDocument {
 
     this.m_counters = new int[ELabelType.INSTANCES.size()];
     this.m_mto = new MemoryTextOutput(16);
+  }
+
+  /**
+   * Create a document.
+   * 
+   * @param driver
+   *          the document driver
+   * @param builder
+   *          the document builder
+   */
+  protected Document(final DocumentDriver driver,
+      final DocumentBuilder builder) {
+    this(driver, PathUtils.createPathInside(builder.getBasePath(),
+        PathUtils.makeFileName(builder.getMainDocumentNameSuggestion(),
+            driver.getFileType().getDefaultSuffix())), builder);
+  }
+
+  /**
+   * Create a document.
+   * 
+   * @param driver
+   *          the document driver
+   * @param docPath
+   *          the path to the document
+   * @param builder
+   *          the document builder
+   */
+  private Document(final DocumentDriver driver, final Path docPath,
+      final DocumentBuilder builder) {
+    this(driver, Document.__getOutput(docPath), docPath, builder);
   }
 
   /** {@inheritDoc} */
@@ -258,23 +307,6 @@ public class Document extends DocumentElement implements IDocument {
     synchronized (this.m_usedStyles) {
       this.m_usedStyles.add(style);
     }
-  }
-
-  /**
-   * Create a document.
-   * 
-   * @param driver
-   *          the document driver
-   * @param docPath
-   *          the path to the document
-   * @param listener
-   *          the object listener the object listener
-   * @param logger
-   *          the logger
-   */
-  protected Document(final DocumentDriver driver, final Path docPath,
-      final Logger logger, final IFileProducerListener listener) {
-    this(driver, Document.__getOutput(docPath), docPath, logger, listener);
   }
 
   /**
@@ -602,5 +634,50 @@ public class Document extends DocumentElement implements IDocument {
   @Override
   public final StyleSet getStyles() {
     return this.m_styles;
+  }
+
+  /**
+   * Translate a figure size to a physical dimension
+   * 
+   * @param size
+   *          the size
+   * @return the translated size
+   */
+  protected PhysicalDimension getSize(final EFigureSize size) {
+    return size.approximateSize(new PageDimension(EScreenSize.DEFAULT
+        .getPageSize(EScreenSize.DEFAULT_SCREEN_DPI)));
+  }
+
+  /**
+   * Create a graphics object with a {@code size} relative to the document
+   * base size. If the resulting object is an object which writes contents
+   * to a file, then it will write its contents to a file in the specified
+   * by {@code basePath}. The file name will be generated based on a
+   * {@code name}. It may be slightly different, though, maybe with a
+   * different suffix. Once the graphic is
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic#close()
+   * closed}, it will notify the provided {@code listener} interface
+   * (unless {@code listener==null}).
+   * 
+   * @param basePath
+   *          the base path, i.e., the folder in which the graphic should
+   *          be created
+   * @param name
+   *          the name of the graphics file (without extension)
+   * @param size
+   *          the size of the graphic, relative to the document-defined
+   *          base size
+   * @param listener
+   *          the listener to be notified when painting the graphic has
+   *          been completed
+   * @param logger
+   *          the logger to use
+   * @return the graphic object
+   */
+  protected Graphic createGraphic(final Path basePath, final String name,
+      final EFigureSize size, final IFileProducerListener listener,
+      final Logger logger) {
+    return this.m_graphicConfig.createGraphic(basePath, name,
+        this.getSize(size), listener, logger);
   }
 }

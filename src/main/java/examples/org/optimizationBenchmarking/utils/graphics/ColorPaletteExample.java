@@ -8,11 +8,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
@@ -28,9 +29,6 @@ import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
  * An example used to illustrate the available color palettes.
  */
 public class ColorPaletteExample {
-
-  /** the graphic drivers to use */
-  private static final ArrayListView<IGraphicDriver> DRIVERS = GraphicsExample.DRIVERS;
 
   /** the palettes to print */
   public static final ArrayListView<ColorPalette> PALETTES = new ArrayListView<>(
@@ -48,7 +46,8 @@ public class ColorPaletteExample {
    */
   public static final void main(final String[] args) throws IOException {
     final Path dir;
-    int i;
+    Path sub;
+    int i, j;
 
     if ((args != null) && (args.length > 0)) {
       dir = Paths.get(args[0]);
@@ -56,15 +55,16 @@ public class ColorPaletteExample {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
 
-    i = 0;
-    for (final IGraphicDriver d : ColorPaletteExample.DRIVERS) {
-      for (final ColorPalette p : ColorPaletteExample.PALETTES) {//
+    i = j = 0;
+    for (final ColorPalette p : ColorPaletteExample.PALETTES) {//
+      sub = dir.resolve("example_" + (++j)); //$NON-NLS-1$
+      for (final GraphicConfiguration d : GraphicConfigExample.CONFIGURATIONS) {
         ColorPaletteExample
             .__paint(
-                dir,
+                sub,
                 ((((ColorPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
-                    + d.getClass().getSimpleName() + '_' + p.getClass()
-                    .getSimpleName()), d, p);
+                    + d.toString() + '_' + p.getClass().getSimpleName()),
+                d, p);
       }
     }
   }
@@ -82,7 +82,7 @@ public class ColorPaletteExample {
    *          the graphic driver to use
    */
   private static final void __paint(final Path dir, final String name,
-      final IGraphicDriver driver, final ColorPalette palette) {
+      final GraphicConfiguration driver, final ColorPalette palette) {
     final int s, w;
     final Rectangle2D b;
     int c, i, j, k;
@@ -90,10 +90,9 @@ public class ColorPaletteExample {
     ColorStyle st;
     Color use;
 
-    try (final Graphic g = driver.use().setBasePath(dir)
-        .setMainDocumentNameSuggestion(name)
-        .setSize(new PhysicalDimension(160, 160, ELength.MM))
-        .setFileProducerListener(new FinishedPrinter(driver)).create()) {
+    try (final Graphic g = driver.createGraphic(dir, name,
+        new PhysicalDimension(160, 160, ELength.MM), new FinishedPrinter(
+            driver), Logger.getGlobal())) {
 
       b = g.getBounds();
       g.setFont(new Font("Arial", Font.PLAIN, //$NON-NLS-1$

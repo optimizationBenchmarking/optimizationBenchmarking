@@ -9,13 +9,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
+import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentBuilder;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
@@ -25,7 +25,6 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** the XHTML document */
 final class _XHTML10Document extends Document {
@@ -146,14 +145,11 @@ final class _XHTML10Document extends Document {
    *          the document driver
    * @param docPath
    *          the path to the document
-   * @param listener
-   *          the object listener the object listener
-   * @param logger
-   *          the logger
+   * @param builder
+   *          the document builder
    */
-  _XHTML10Document(final XHTML10Driver driver, final Path docPath,
-      final Logger logger, final IFileProducerListener listener) {
-    super(driver, docPath, logger, listener);
+  _XHTML10Document(final DocumentBuilder builder) {
+    super(builder, docPath, builder);
     this.open();
   }
 

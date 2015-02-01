@@ -1,9 +1,5 @@
 package org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr;
 
-import java.nio.file.Path;
-import java.util.logging.Logger;
-
-import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
@@ -11,8 +7,8 @@ import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.DefaultStrokePalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerTool;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * An abstract implementation of the
@@ -39,21 +35,11 @@ public abstract class AbstractGraphicDriver extends DocumentProducerTool
   /**
    * Create the graphic
    * 
-   * @param logger
-   *          the logger
-   * @param listener
-   *          the listener
-   * @param basePath
-   *          the base path where to create the graphics file
-   * @param mainDocumentNameSuggestion
-   *          the name suggestion
-   * @param size
-   *          the size
+   * @param builder
+   *          the graphic builder
    * @return the graphic
    */
-  protected abstract Graphic createGraphic(final Logger logger,
-      final IFileProducerListener listener, final Path basePath,
-      final String mainDocumentNameSuggestion, final PhysicalDimension size);
+  protected abstract Graphic createGraphic(final GraphicBuilder builder);
 
   /** {@inheritDoc} */
   @Override
@@ -71,7 +57,7 @@ public abstract class AbstractGraphicDriver extends DocumentProducerTool
   /** {@inheritDoc} */
   @Override
   public ColorPalette getColorPalette() {
-    return EColorModel.RBGA_32_BIT.getDefaultPalette();
+    return EColorModel.ARGB_32_BIT.getDefaultPalette();
   }
 
   /** {@inheritDoc} */
@@ -80,4 +66,9 @@ public abstract class AbstractGraphicDriver extends DocumentProducerTool
     return DefaultStrokePalette.getInstance();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public void toText(final ITextOutput textOut) {
+    textOut.append(this.m_format);
+  }
 }

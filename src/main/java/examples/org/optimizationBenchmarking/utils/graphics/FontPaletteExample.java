@@ -8,13 +8,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDocumentClass;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
@@ -30,9 +31,6 @@ import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
  * An example used to illustrate the available color palettes.
  */
 public class FontPaletteExample {
-
-  /** the graphic driver to use */
-  private static final ArrayListView<IGraphicDriver> DRIVERS = GraphicsExample.DRIVERS;
 
   /** the palettes to print */
   public static final ArrayListView<FontPalette> PALETTES;
@@ -77,7 +75,8 @@ public class FontPaletteExample {
    */
   public static final void main(final String[] args) throws IOException {
     final Path dir;
-    int i;
+    Path sub;
+    int i, j;
 
     if ((args != null) && (args.length > 0)) {
       dir = Paths.get(args[0]);
@@ -85,14 +84,15 @@ public class FontPaletteExample {
       dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
     }
 
-    i = 0;
+    i = j = 0;
     for (final FontPalette p : FontPaletteExample.PALETTES) {//
-      for (final IGraphicDriver d : FontPaletteExample.DRIVERS) {
+      sub = dir.resolve("example_" + (++j));//$NON-NLS-1$
+      for (final GraphicConfiguration d : GraphicConfigExample.CONFIGURATIONS) {
         FontPaletteExample
             .__paint(
-                dir,
+                sub,
                 (((FontPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
-                    + (d.getClass().getSimpleName()), d, p);
+                    + (d.toString()), d, p);
       }
     }
   }
@@ -110,7 +110,7 @@ public class FontPaletteExample {
    *          the graphic driver to use
    */
   private static final void __paint(final Path dir, final String name,
-      final IGraphicDriver driver, final FontPalette palette) {
+      final GraphicConfiguration driver, final FontPalette palette) {
     final Rectangle2D b;
     final int s;
     final double w;
@@ -133,10 +133,9 @@ public class FontPaletteExample {
 
     s = styles.size();
 
-    try (final Graphic g = driver.use().setBasePath(dir)
-        .setMainDocumentNameSuggestion(name)
-        .setSize(new PhysicalDimension(320, 160, ELength.MM))
-        .setFileProducerListener(new FinishedPrinter(driver)).create()) {
+    try (final Graphic g = driver.createGraphic(dir, name,
+        new PhysicalDimension(320, 160, ELength.MM), new FinishedPrinter(
+            driver), Logger.getGlobal())) {
 
       b = g.getBounds();
       g.setColor(Color.white);

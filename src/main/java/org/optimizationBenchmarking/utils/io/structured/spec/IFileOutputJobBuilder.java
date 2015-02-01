@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerBuilder;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerJobBuilder;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  *          the data type which can be stored
  */
 public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
-    IFileProducerBuilder {
+    IFileProducerJobBuilder {
 
   /** {@inheritDoc} */
   @Override

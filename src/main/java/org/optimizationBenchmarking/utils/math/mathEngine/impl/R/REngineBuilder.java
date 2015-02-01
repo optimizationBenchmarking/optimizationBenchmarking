@@ -28,7 +28,7 @@ public final class REngineBuilder extends
     final TempDir temp;
     final R r;
 
-    log = this.m_logger;
+    log = this.getLogger();
 
     builder = ProcessExecutor.getInstance().use();
     r = R.getInstance();

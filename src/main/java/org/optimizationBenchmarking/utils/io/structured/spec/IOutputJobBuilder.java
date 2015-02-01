@@ -2,6 +2,8 @@ package org.optimizationBenchmarking.utils.io.structured.spec;
 
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
+
 /**
  * A file output job builder is a device that may store data.
  * 
@@ -9,6 +11,10 @@ import java.util.logging.Logger;
  *          the data type which can be stored
  */
 public interface IOutputJobBuilder<D> extends IIOJobBuilder {
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IOutputJobBuilder<D> configure(final Configuration config);
 
   /** {@inheritDoc} */
   @Override

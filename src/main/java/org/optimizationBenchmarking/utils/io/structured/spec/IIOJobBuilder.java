@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.io.structured.spec;
 
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.tools.spec.IConfigurableToolJobBuilder;
 
 /**
@@ -16,4 +17,8 @@ public interface IIOJobBuilder extends IConfigurableToolJobBuilder {
   /** {@inheritDoc} */
   @Override
   public abstract IIOJob create();
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IIOJobBuilder configure(final Configuration config);
 }

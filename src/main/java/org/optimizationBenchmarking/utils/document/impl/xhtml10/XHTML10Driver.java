@@ -1,9 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
-import java.nio.file.Path;
-import java.util.logging.Logger;
-
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
@@ -37,22 +33,13 @@ import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
-import org.optimizationBenchmarking.utils.graphics.EScreenSize;
-import org.optimizationBenchmarking.utils.graphics.PageDimension;
-import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
-import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
-import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.XMLCharTransformer;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * The driver for xhtml output
@@ -128,58 +115,9 @@ public final class XHTML10Driver extends DocumentDriver {
   /** the 3rd part of a reference */
   static final char[] A_REF_END = { '<', '/', 'a', '>' };
 
-  /** the graphic driver */
-  private final IGraphicDriver m_graphicDriver;
-
-  /** the screen size */
-  private final PageDimension m_size;
-
-  /** the font palette */
-  private final FontPalette m_fonts;
-
-  /**
-   * Create a new xhtml driver
-   * 
-   * @param gd
-   *          the graphic driver to use
-   * @param size
-   *          the physical screen size to render for
-   * @param fonts
-   *          the font palette
-   */
-  XHTML10Driver(final IGraphicDriver gd, final PhysicalDimension size,
-      final FontPalette fonts) {
+  /** Create a new xhtml driver */
+  XHTML10Driver() {
     super();
-
-    PhysicalDimension dim;
-
-    if (gd == null) {
-      this.m_graphicDriver = __XHTML10DefaultGraphicDriverLoader.INSTANCE;
-    } else {
-      if (gd.canUse()) {
-        this.m_graphicDriver = gd;
-      } else {
-        if ((__XHTML10DefaultGraphicDriverLoader.INSTANCE != null)
-            && (__XHTML10DefaultGraphicDriverLoader.INSTANCE.canUse())) {
-          this.m_graphicDriver = __XHTML10DefaultGraphicDriverLoader.INSTANCE;
-        } else {
-          this.m_graphicDriver = gd;
-        }
-      }
-    }
-
-    if (size instanceof PageDimension) {
-      this.m_size = ((PageDimension) size);
-    } else {
-      dim = ((size != null) ? size : EScreenSize.DEFAULT
-          .getPageSize(EScreenSize.DEFAULT_SCREEN_DPI));
-      dim = new PhysicalDimension((0.91d * dim.getWidth()),//
-          (0.91d * dim.getHeight()), dim.getUnit());
-      this.m_size = new PageDimension(dim);
-    }
-
-    this.m_fonts = ((fonts == null) ? XHTML10Driver
-        .getDefaultFontPalette() : fonts);
   }
 
   /** {@inheritDoc} */
@@ -190,40 +128,8 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean equals(final Object o) {
-    final XHTML10Driver d;
-    if (o == null) {
-      return false;
-    }
-    if (o == this) {
-      return true;
-    }
-    if (o instanceof XHTML10Driver) {
-      d = ((XHTML10Driver) o);
-      return (EComparison.equals(this.m_graphicDriver, d.m_graphicDriver)
-          && EComparison.equals(this.m_size, d.m_size)//
-      && EComparison.equals(this.m_fonts, d.m_fonts));
-    }
-    return false;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final int calcHashCode() {
-    return HashUtils.combineHashes(//
-        HashUtils.hashCode(this.m_graphicDriver),//
-        HashUtils.combineHashes(HashUtils.hashCode(this.m_size),//
-            HashUtils.hashCode(this.m_fonts)));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void toText(final ITextOutput textOut) {
-    textOut.append("XHTML 1.0 Document Driver with "); //$NON-NLS-1$
-    this.m_graphicDriver.toText(textOut);
-    textOut.append(" Graphics and "); //$NON-NLS-1$
-    this.m_size.toText(textOut);
-    textOut.append(" Pages"); //$NON-NLS-1$
+  public final String toString() {
+    return "XHTML 1.0 Document Driver"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
@@ -242,36 +148,6 @@ public final class XHTML10Driver extends DocumentDriver {
   static final ITextOutput _encode(final ITextOutput raw) {
     return XMLCharTransformer.getInstance().transform(raw,
         TextUtils.DEFAULT_NORMALIZER_FORM);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final IGraphicDriver getGraphicDriver() {
-    return this.m_graphicDriver;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final PhysicalDimension getSize(final EFigureSize size) {
-    return size.approximateSize(this.m_size);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final StyleSet createStyleSet() {
-    final IGraphicDriver driver;
-    driver = this.getGraphicDriver();
-    return new StyleSet(this.m_fonts, driver.getColorPalette(),
-        driver.getStrokePalette());
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final Document doCreateDocument(final Logger logger,
-      final IFileProducerListener listener, final Path basePath,
-      final String mainDocumentNameSuggestion) {
-    return new _XHTML10Document(this, this.makePath(basePath,
-        mainDocumentNameSuggestion), logger, listener);
   }
 
   /** {@inheritDoc} */
@@ -730,8 +606,19 @@ public final class XHTML10Driver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   public final boolean canUse() {
-    return ((this.m_graphicDriver != null)
-        && (this.m_graphicDriver.canUse()) && (this.m_fonts != null));
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final XHTML10DocumentBuilder use() {
+    return new XHTML10DocumentBuilder(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final IGraphicDriver getDefaultGraphicDriver() {
+    return __XHTML10DefaultGraphicDriverLoader.INSTANCE;
   }
 
   /**
@@ -765,45 +652,18 @@ public final class XHTML10Driver extends DocumentDriver {
   }
 
   /**
-   * Get the default XHTML driver
+   * Get the XHTML driver
    * 
-   * @return the default XHTML driver
+   * @return the XHTML driver
    */
-  public static final XHTML10Driver getDefaultDriver() {
-    return __DefaultXHTML10DriverLoader.INSTANCE;
-  }
-
-  /**
-   * Create a new XHTML driver
-   * 
-   * @param gd
-   *          the graphic driver to use
-   * @param size
-   *          the physical screen size to render for
-   * @param fonts
-   *          the font palette
-   * @return the instance of the driver
-   */
-  public static final XHTML10Driver getInstance(final IGraphicDriver gd,
-      final PhysicalDimension size, final FontPalette fonts) {
-    return new XHTML10Driver(gd, size, fonts);
-  }
-
-  /**
-   * obtain the default font palette
-   * 
-   * @return the default font palette
-   */
-  public static final FontPalette getDefaultFontPalette() {
-    return __XHTML10DefaultFontPaletteLoader.INSTANCE;
+  public static final XHTML10Driver getInstance() {
+    return __XHTML10DriverLoader.INSTANCE;
   }
 
   /** the loader class for the default xhtml driver */
-  private static final class __DefaultXHTML10DriverLoader {
+  private static final class __XHTML10DriverLoader {
     /** the instance */
-    static final XHTML10Driver INSTANCE = new XHTML10Driver(null, null,
-        null);
-
+    static final XHTML10Driver INSTANCE = new XHTML10Driver();
   }
 
   /** the graphic driver loader */
@@ -879,32 +739,6 @@ public final class XHTML10Driver extends DocumentDriver {
 
       INSTANCE = a;
     }
-  }
-
-  /** the default font palette */
-  private static final class __XHTML10DefaultFontPaletteLoader {
-
-    /** the internal font palette */
-    static final FontPalette INSTANCE;
-
-    static {
-      FontPalette p;
-
-      p = null;
-      try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-        PaletteInputDriver
-            .getInstance()
-            .use()
-            .setDestination(tb)
-            .addResource(XHTML10Driver.class, "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
-        p = tb.getResult();
-      } catch (final Throwable tt) {
-        ErrorUtils.throwAsRuntimeException(tt);
-      }
-
-      INSTANCE = p;
-    }
-
   }
 
 }

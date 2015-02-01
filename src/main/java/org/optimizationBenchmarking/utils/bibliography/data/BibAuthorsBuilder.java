@@ -58,7 +58,7 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
     int i;
 
     if (author == null) {
-      throw new IllegalArgumentException("Element cannot be null."); //$NON-NLS-1$
+      throw new IllegalArgumentException("Author to add cannot be null."); //$NON-NLS-1$
     }
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
@@ -69,7 +69,7 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
     for (i = 0; i < oldSize; i++) {
       if (EComparison.equals(data[i], author)) {
         throw new IllegalArgumentException(//
-            "A set cannot contain two equal elements, so you cannot add element '" //$NON-NLS-1$
+            "An author set cannot contain two equal elements, so you cannot add element '" //$NON-NLS-1$
                 + author + "', which already exists at index " //$NON-NLS-1$
                 + i);
       }
@@ -83,6 +83,23 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
 
     data[oldSize] = author;
     this.m_size = (oldSize + 1);
+  }
+
+  /**
+   * Add a set of authors
+   * 
+   * @param authors
+   *          the authors to add
+   */
+  public final void addAuthors(final Iterable<BibAuthor> authors) {
+    if (authors == null) {
+      throw new IllegalArgumentException("Authors to add cannot be null."); //$NON-NLS-1$
+    }
+
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
+    for (final BibAuthor author : authors) {
+      this.addAuthor(author);
+    }
   }
 
   /** {@inheritDoc} */

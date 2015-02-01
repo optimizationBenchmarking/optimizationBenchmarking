@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
@@ -20,8 +21,8 @@ import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ITitledElement;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
 import org.optimizationBenchmarking.utils.math.random.LoremIpsum;
@@ -32,16 +33,13 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
 import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 import examples.org.optimizationBenchmarking.utils.graphics.ColorPaletteExample;
 import examples.org.optimizationBenchmarking.utils.graphics.FontPaletteExample;
-import examples.org.optimizationBenchmarking.utils.graphics.GraphicsExample;
+import examples.org.optimizationBenchmarking.utils.graphics.GraphicConfigExample;
 import examples.org.optimizationBenchmarking.utils.graphics.StrokePaletteExample;
 
 /**
  * An example for rendering line charts.
  */
 public class LineChartExample {
-
-  /** the graphic driver to use */
-  private static final ArrayListView<IGraphicDriver> GRAPHIC_DRIVERS = GraphicsExample.DRIVERS;
 
   /** the chart drivers */
   public static final ArrayListView<IChartDriver> DRIVERS;
@@ -83,6 +81,7 @@ public class LineChartExample {
     final Random rand;
     final PhysicalDimension size;
     long seed;
+    Path sub;
     int z, example;
 
     if ((args != null) && (args.length > 0)) {
@@ -98,17 +97,16 @@ public class LineChartExample {
 
     for (example = 1; example <= 9; example++) {
       seed = rand.nextLong();
+      sub = dir.resolve("example_" + example); //$NON-NLS-1$
       z = 0;
-      for (final IGraphicDriver d : LineChartExample.GRAPHIC_DRIVERS) {
+      for (final GraphicConfiguration d : GraphicConfigExample.CONFIGURATIONS) {
         for (final IChartDriver c : LineChartExample.DRIVERS) {
           try (final Graphic g = d
-              .use()
-              .setBasePath(dir)
-              .setMainDocumentNameSuggestion(
+              .createGraphic(
+                  sub,//
                   ((((((((LineChartExample.class.getSimpleName() + '_') + example) + '_') + (++z)) + '_') + d
-                      .getClass().getSimpleName()) + '_') + c.getClass()
-                      .getSimpleName())).setSize(size)
-              .setFileProducerListener(new FinishedPrinter(c, d)).create()) {
+                      .toString()) + '_') + c.getClass().getSimpleName()),//
+                  size, new FinishedPrinter(c, d), Logger.getGlobal())) {
             rand.setSeed(seed);
             LineChartExample.randomLineChart(rand, g,
                 LineChartExample.randomStyleSet(rand), c);
@@ -152,7 +150,9 @@ public class LineChartExample {
     final double minX, maxX, minY, maxY;
     double a, b, c;
 
-    try (final ILineChart chart = driver.lineChart(graphic, styles)) {
+    try (final ILineChart chart = driver.use().setGraphic(graphic)
+        .setStyleSet(styles).setLogger(Logger.getGlobal()).create()
+        .lineChart()) {
       LineChartExample.__title(chart, rand, styles, null, 8);
       chart.setLegendMode(LineChartExample.LEGEND_MODES[rand
           .nextInt(LineChartExample.LEGEND_MODES.length)]);

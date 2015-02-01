@@ -48,8 +48,10 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
 
   /** {@inheritDoc} */
   @Override
-  public void configure(final Configuration config) {
-    super.configure(config);
+  public JBT configure(final Configuration config) {
+    final JBT res;
+
+    res = super.configure(config);
 
     for (final String source : config.getStringList(
         IOTool.PARAM_INPUT_SOURCES, null)) {
@@ -57,6 +59,8 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
         this._location(source);
       }
     }
+
+    return res;
   }
 
   /** {@inheritDoc} */
@@ -459,8 +463,8 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
     _Location[] ar;
     ar = this.m_sources.toArray(new _Location[this.m_sources.size()]);
     this.m_sources = null;
-    return new _InputJob(this.m_logger, ((FileInputTool) (this.m_tool)),
-        this.m_dest, ar);
+    return new _InputJob(this.getLogger(),
+        ((FileInputTool) (this.m_tool)), this.m_dest, ar);
   }
 
   /** {@inheritDoc} */

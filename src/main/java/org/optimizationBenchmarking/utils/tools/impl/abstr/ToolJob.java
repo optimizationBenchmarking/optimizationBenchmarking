@@ -21,4 +21,14 @@ public abstract class ToolJob implements IToolJob {
     super();
     this.m_logger = logger;
   }
+
+  /**
+   * create
+   * 
+   * @param builder
+   *          the builder
+   */
+  protected ToolJob(final ToolJobBuilder<?, ?> builder) {
+    this(builder.m_logger);
+  }
 }

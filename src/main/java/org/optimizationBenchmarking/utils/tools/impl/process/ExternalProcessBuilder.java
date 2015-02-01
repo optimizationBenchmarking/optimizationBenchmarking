@@ -381,13 +381,12 @@ public final class ExternalProcessBuilder extends
 
     this.validate();
 
-    log = this.m_logger;
+    log = this.getLogger();
 
     if (log != null) {
       buffer = new MemoryTextOutput();
       buffer.append("process #");//$NON-NLS-1$
-      buffer.append(Long.toString(ExternalProcessBuilder.PROC_ID
-          .incrementAndGet()));
+      buffer.append(ExternalProcessBuilder.PROC_ID.incrementAndGet());
       buffer.append(' ');
       buffer.append('(');
       append = '[';
@@ -403,7 +402,7 @@ public final class ExternalProcessBuilder extends
         buffer.append('\'');
         f = null;
       } else {
-        buffer.append(" in the current working directory"); //$NON-NLS-1$
+        buffer.append("] in the current working directory"); //$NON-NLS-1$
       }
       buffer.append(')');
       name = buffer.toString();

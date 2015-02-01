@@ -6,7 +6,7 @@ import org.jfree.data.general.DatasetGroup;
 import org.jfree.data.xy.XYDataset;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.Line2D;
+import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.CompiledLine2D;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** a 2D line for jfreechart */
@@ -35,11 +35,11 @@ final class _JFreeChartLines2D implements XYDataset {
    * @param lines
    *          the lines
    */
-  _JFreeChartLines2D(final ArrayListView<Line2D> lines) {
+  _JFreeChartLines2D(final ArrayListView<CompiledLine2D> lines) {
     super();
 
     final int size;
-    Line2D line;
+    CompiledLine2D line;
     int i;
     String key;
 
