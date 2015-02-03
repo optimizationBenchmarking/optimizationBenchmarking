@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
-import org.optimizationBenchmarking.experimentation.evaluation.data.DataSet;
-import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.DataSet;
+import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;

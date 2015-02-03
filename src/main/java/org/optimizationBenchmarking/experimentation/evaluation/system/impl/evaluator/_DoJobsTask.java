@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.util.concurrent.RecursiveAction;
 
-import org.optimizationBenchmarking.experimentation.evaluation.data.DataSet;
+import org.optimizationBenchmarking.experimentation.data.DataSet;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 
 /** the job task */

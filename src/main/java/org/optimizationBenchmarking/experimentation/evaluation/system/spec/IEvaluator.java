@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IConfigurableJobTool;
 /**
  * The evaluator is a tool which can be used to create a document
  * summarizing the properties of an
- * {@link org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet}
+ * {@link org.optimizationBenchmarking.experimentation.data.ExperimentSet}
  * .
  */
 public interface IEvaluator extends IConfigurableJobTool {

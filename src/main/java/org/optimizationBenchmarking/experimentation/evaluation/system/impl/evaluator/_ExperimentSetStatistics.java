@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
-import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 

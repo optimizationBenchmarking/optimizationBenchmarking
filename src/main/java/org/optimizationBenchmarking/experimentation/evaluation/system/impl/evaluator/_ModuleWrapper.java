@@ -1,8 +1,8 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
-import org.optimizationBenchmarking.experimentation.evaluation.data.DataSet;
-import org.optimizationBenchmarking.experimentation.evaluation.data.Experiment;
-import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.DataSet;
+import org.optimizationBenchmarking.experimentation.data.Experiment;
+import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IConfiguredExperimentModule;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IConfiguredExperimentSetModule;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IConfiguredModule;

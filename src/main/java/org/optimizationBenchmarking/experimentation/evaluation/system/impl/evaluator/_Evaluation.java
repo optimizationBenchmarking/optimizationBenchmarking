@@ -2,9 +2,9 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.util.HashSet;
 
-import org.optimizationBenchmarking.experimentation.evaluation.data.Experiment;
-import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.evaluation.data.Parameter;
+import org.optimizationBenchmarking.experimentation.data.Experiment;
+import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluation;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;

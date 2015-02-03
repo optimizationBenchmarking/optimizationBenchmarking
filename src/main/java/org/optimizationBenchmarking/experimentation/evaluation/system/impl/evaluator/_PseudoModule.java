@@ -2,9 +2,9 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.util.concurrent.ForkJoinTask;
 
-import org.optimizationBenchmarking.experimentation.evaluation.data.DataSet;
-import org.optimizationBenchmarking.experimentation.evaluation.data.Experiment;
-import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.DataSet;
+import org.optimizationBenchmarking.experimentation.data.Experiment;
+import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;

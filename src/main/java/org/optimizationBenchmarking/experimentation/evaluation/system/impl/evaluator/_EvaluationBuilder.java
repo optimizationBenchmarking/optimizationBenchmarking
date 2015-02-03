@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendix;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IConfiguredExperimentModule;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IConfiguredExperimentSetModule;
