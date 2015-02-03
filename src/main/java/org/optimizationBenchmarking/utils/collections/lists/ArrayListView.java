@@ -354,7 +354,7 @@ public class ArrayListView<DT> extends BasicList<DT> {
   /** {@inheritDoc} */
   @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  public final boolean equals(final Object o) {
+  public boolean equals(final Object o) {
     final Iterator<DT> ita;
     final Iterator<Object> itb;
 
@@ -391,7 +391,7 @@ public class ArrayListView<DT> extends BasicList<DT> {
 
   /** {@inheritDoc} */
   @Override
-  public final int hashCode() {
+  public int hashCode() {
     int hashCode;
 
     hashCode = 1;

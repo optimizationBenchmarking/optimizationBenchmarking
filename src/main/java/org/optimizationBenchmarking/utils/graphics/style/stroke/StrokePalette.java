@@ -2,7 +2,9 @@ package org.optimizationBenchmarking.utils.graphics.style.stroke;
 
 import java.awt.Graphics2D;
 
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 
 /**
  * A stroke palette.
@@ -160,5 +162,31 @@ public class StrokePalette extends Palette<StrokeStyle> {
   @Override
   public final void initialize(final Graphics2D graphics) {
     graphics.setStroke(this.m_default);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return HashUtils.combineHashes(HashUtils.combineHashes(
+        super.hashCode(), HashUtils.hashCode(this.m_default)), HashUtils
+        .combineHashes(HashUtils.hashCode(this.m_thick),
+            HashUtils.hashCode(this.m_thin)));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    final StrokePalette other;
+
+    if (o == this) {
+      return true;
+    }
+    if (o instanceof StrokePalette) {
+      other = ((StrokePalette) o);
+      return (EComparison.equals(this.m_default, other.m_default) && //
+          EComparison.equals(this.m_thick, other.m_thick) && //
+          EComparison.equals(this.m_thin, other.m_thin) && super.equals(o));
+    }
+    return false;
   }
 }

@@ -2,8 +2,10 @@ package org.optimizationBenchmarking.utils.graphics.style.font;
 
 import java.awt.Graphics2D;
 
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 
 /**
  * A palette of font styles.
@@ -200,4 +202,30 @@ public class FontPalette extends Palette<FontStyle> {
     graphics.setFont(this.m_default.getFont());
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return HashUtils.combineHashes(
+        HashUtils.combineHashes(super.hashCode(),
+            HashUtils.hashCode(this.m_default)),
+        HashUtils.combineHashes(HashUtils.hashCode(this.m_emph),
+            HashUtils.hashCode(this.m_code)));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    final FontPalette other;
+    if (o == this) {
+      return true;
+    }
+    if (o instanceof FontPalette) {
+      other = ((FontPalette) o);
+      return (EComparison.equals(this.m_default, other.m_default) && //
+          EComparison.equals(this.m_emph, other.m_emph) && //
+          EComparison.equals(this.m_code, other.m_code) && //
+      super.equals(o));
+    }
+    return false;
+  }
 }
