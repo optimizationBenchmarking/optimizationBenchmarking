@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.evaluation.data.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendix;
@@ -273,7 +274,7 @@ final class _EvaluationBuilder extends
           module = null;
           try {
             module = ReflectionUtils.getInstance(IEvaluationModule.class,
-                required);
+                required, null);
           } catch (final ReflectiveOperationException refError) {
             except = refError;
             module = null;
@@ -313,12 +314,13 @@ final class _EvaluationBuilder extends
       final boolean hasMoreThanOneExperiment,
       final ArrayList<_ModuleEntry> entries) {
     final ArrayList<IConfiguredModule>[] res;
+    final Logger logger;
     IConfiguredModule configured;
     IEvaluationModuleSetup setup;
     int type;
 
     res = new ArrayList[4];
-
+    logger = this.getLogger();
     for (final _ModuleEntry entry : entries) {
       setup = entry.m_module.use();
       if (setup == null) {
@@ -326,8 +328,8 @@ final class _EvaluationBuilder extends
             "Module setup object cannot be null, but use() of module '" //$NON-NLS-1$
                 + entry.m_module + "' returned null.");//$NON-NLS-1$
       }
-      if (this.m_logger != null) {
-        setup.setLogger(this.m_logger);
+      if (logger != null) {
+        setup.setLogger(logger);
       }
       setup.configure(entry.m_config);
       configured = setup.create();

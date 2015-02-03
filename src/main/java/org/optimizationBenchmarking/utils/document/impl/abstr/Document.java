@@ -22,7 +22,9 @@ import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartBuilder;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartSelector;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
@@ -121,7 +123,7 @@ public class Document extends DocumentElement implements IDocument {
   private final GraphicConfiguration m_graphicConfig;
 
   /** the chart driver */
-  final IChartDriver m_chartDriver;
+  private final IChartDriver m_chartDriver;
 
   /**
    * Create a document.
@@ -140,11 +142,14 @@ public class Document extends DocumentElement implements IDocument {
       final DocumentBuilder builder) {
     super(driver, writer);
 
-    this.m_graphicConfig = builder.getGraphicConfiguration();
+    this.m_graphicConfig = builder._graphicConfig();
     if (this.m_graphicConfig == null) {
       throw new IllegalArgumentException(//
           "Graphic configuration must not be null."); //$NON-NLS-1$
     }
+
+    DocumentConfiguration._checkChartDriver(//
+        this.m_chartDriver = builder.getChartDriver());
 
     this.m_styles = builder.createStyleSet();
     if (this.m_styles == null) {
@@ -152,7 +157,6 @@ public class Document extends DocumentElement implements IDocument {
           "Style set must not be null."); //$NON-NLS-1$
     }
 
-    this.m_chartDriver = builder.getChartDriver();
     this.m_logger = builder.getLogger();
     this.m_documentPath = PathUtils.normalize(docPath);
     this.m_basePath = PathUtils.normalize(docPath.getParent());
@@ -679,5 +683,22 @@ public class Document extends DocumentElement implements IDocument {
       final Logger logger) {
     return this.m_graphicConfig.createGraphic(basePath, name,
         this.getSize(size), listener, logger);
+  }
+
+  /**
+   * Create a chart selector
+   * 
+   * @param graphic
+   *          the graphic
+   * @return the chart selector
+   */
+  protected IChartSelector createChart(final Graphic graphic) {
+    final IChartBuilder builder;
+
+    builder = this.m_chartDriver.use();
+    builder.setStyleSet(this.m_styles);
+    builder.setLogger(this.m_logger);
+    builder.setGraphic(graphic);
+    return builder.create();
   }
 }

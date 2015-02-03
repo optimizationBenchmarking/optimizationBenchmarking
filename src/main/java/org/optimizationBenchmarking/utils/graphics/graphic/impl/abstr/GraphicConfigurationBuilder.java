@@ -13,20 +13,11 @@ import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
  * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder
  * graphic builder}.
  */
-public final class GraphicConfigurationBuilder extends
-    GraphicConfiguration implements IConfigurable {
+public class GraphicConfigurationBuilder extends GraphicConfiguration
+    implements IConfigurable {
 
   /** the graphic driver parameter */
   public static final String PARAM_GRAPHIC_DRIVER = "graphicDriver"; //$NON-NLS-1$
-
-  /** the minimum allowed dpi */
-  private static final int MIN_DPI = 26;
-  /** the maximum allowed dpi */
-  private static final int MAX_DPI = 10000;
-  /** the minimum allowed quality value */
-  private static final double MIN_QUALITY = 0d;
-  /** the maximum allowed quality value */
-  private static final double MAX_QUALITY = 1d;
 
   /** create the graphic configuration builder */
   public GraphicConfigurationBuilder() {
@@ -35,8 +26,7 @@ public final class GraphicConfigurationBuilder extends
 
   /** {@inheritDoc} */
   @Override
-  public final GraphicConfigurationBuilder configure(
-      final Configuration config) {
+  public GraphicConfigurationBuilder configure(final Configuration config) {
     final IGraphicDriver oldDriver, newDriver;
 
     this._innerConfigure(config);
@@ -49,6 +39,34 @@ public final class GraphicConfigurationBuilder extends
       this.setGraphicDriver(newDriver);
     }
     return this;
+  }
+
+  /**
+   * Copy settings from a graphic configuration
+   * 
+   * @param copyFrom
+   *          the graphic configuration to copy from
+   */
+  public void assign(final GraphicConfiguration copyFrom) {
+    final EColorModel model;
+    final int dpi;
+    final IGraphicDriver driver;
+    final double quality;
+
+    if (copyFrom != null) {
+      if ((model = copyFrom.m_colorModel) != null) {
+        this.setColorModel(model);
+      }
+      if ((dpi = copyFrom.m_dpi) > 0) {
+        this.setDotsPerInch(dpi);
+      }
+      if ((driver = copyFrom.m_driver) != null) {
+        this.setGraphicDriver(driver);
+      }
+      if ((quality = copyFrom.m_quality) >= 0d) {
+        this.setQuality(quality);
+      }
+    }
   }
 
   /**
@@ -72,15 +90,14 @@ public final class GraphicConfigurationBuilder extends
 
     oldDPI = ((this.m_dpi > 0) ? this.m_dpi : (-1));
     newDPI = config.getInt(GraphicBuilder.PARAM_DPI,//
-        (-1), GraphicConfigurationBuilder.MAX_DPI, oldDPI);
+        (-1), GraphicConfiguration.MAX_DPI, oldDPI);
     if ((oldDPI > 0) || (newDPI > 0)) {
       this.setDotsPerInch(newDPI);
     }
 
     oldQuality = ((this.m_quality >= 0d) ? this.m_quality : (-1d));
-    newQuality = config.getDouble(GraphicBuilder.PARAM_QUALITY,
-        GraphicConfigurationBuilder.MIN_QUALITY,
-        GraphicConfigurationBuilder.MAX_QUALITY, oldQuality);
+    newQuality = config.getDouble(GraphicBuilder.PARAM_QUALITY, (-1d),
+        GraphicConfiguration.MAX_QUALITY, oldQuality);
     if ((oldQuality >= 0) || (newQuality >= 0)) {
       this.setQuality(newQuality);
     }
@@ -95,12 +112,7 @@ public final class GraphicConfigurationBuilder extends
    * @see #getDotsPerInch()
    */
   public final void setDotsPerInch(final int dotsPerInch) {
-    if ((dotsPerInch < GraphicConfigurationBuilder.MIN_DPI)
-        || (dotsPerInch > GraphicConfigurationBuilder.MAX_DPI)) {
-      throw new IllegalArgumentException(//
-          "Cannot create images with less than 1 pixel per MM (26 dot per inch) or more than 100000 dots per inch, since such images would be nonsense. You specified "//$NON-NLS-1$ 
-              + dotsPerInch + "dpi, which is outside the sane range."); //$NON-NLS-1$
-    }
+    GraphicConfiguration._checkDotsPerInch(dotsPerInch);
     this.m_dpi = dotsPerInch;
   }
 
@@ -113,9 +125,7 @@ public final class GraphicConfigurationBuilder extends
    * @see #getColorModel()
    */
   public final void setColorModel(final EColorModel colorModel) {
-    if (colorModel == null) {
-      throw new IllegalArgumentException("Color model cannot be null."); //$NON-NLS-1$
-    }
+    GraphicConfiguration._checkColorModel(colorModel);
     this.m_colorModel = colorModel;
   }
 
@@ -128,13 +138,7 @@ public final class GraphicConfigurationBuilder extends
    * @see #getQuality()
    */
   public final void setQuality(final double quality) {
-    if ((quality < GraphicConfigurationBuilder.MIN_QUALITY)
-        || (quality > GraphicConfigurationBuilder.MAX_QUALITY)
-        || (quality != quality)) {
-      throw new IllegalArgumentException(//
-          "Graphic quality must be in [0,1], but you specified " //$NON-NLS-1$
-              + quality);
-    }
+    GraphicConfiguration._checkQuality(quality);
     this.m_quality = quality;
   }
 
@@ -145,11 +149,8 @@ public final class GraphicConfigurationBuilder extends
    *          the graphic driver
    * @see #getGraphicDriver()
    */
-  public final void setGraphicDriver(final IGraphicDriver driver) {
-    if (driver == null) {
-      throw new IllegalArgumentException("Cannot set null driver."); //$NON-NLS-1$
-    }
-    driver.checkCanUse();
+  public void setGraphicDriver(final IGraphicDriver driver) {
+    GraphicConfiguration._checkDriver(driver);
     this.m_driver = driver;
   }
 

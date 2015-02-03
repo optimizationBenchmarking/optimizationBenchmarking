@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import javax.imageio.spi.ImageWriterSpi;
 
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
@@ -43,9 +42,8 @@ public final class ImageIOPNGGraphicDriver extends
 
   /** {@inheritDoc} */
   @Override
-  public final void toText(final ITextOutput textOut) {
-    textOut.append("javax.imageio-based PNG Driver for "); //$NON-NLS-1$
-    super.toText(textOut);
+  public final String toString() {
+    return "javax.imageio-based PNG Driver"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

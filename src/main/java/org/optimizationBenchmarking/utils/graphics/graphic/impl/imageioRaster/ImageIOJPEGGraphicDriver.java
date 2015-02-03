@@ -42,6 +42,12 @@ public final class ImageIOJPEGGraphicDriver extends
 
   /** {@inheritDoc} */
   @Override
+  public final String toString() {
+    return "javax.imageio-based JPEG Driver"; //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
   final EColorModel _processColorModel(final EColorModel model) {
     switch (model) {
       case GRAY_16_BIT: {

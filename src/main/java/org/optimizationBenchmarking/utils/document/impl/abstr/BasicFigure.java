@@ -14,8 +14,6 @@ import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
-import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.DelegatingLineChart;
-import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartBuilder;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
@@ -333,20 +331,17 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   public synchronized final ILineChart lineChart() {
-    final Document doc;
-    final IChartBuilder builder;
+    final Graphic g;
 
     this.fsmStateAssertAndSet(BasicFigure.STATE_CAPTION_CLOSED,
         BasicFigure.STATE_GRAPHIC_CREATED);
 
-    doc = this.m_doc;
-    builder = doc.m_chartDriver.use();
-    builder.setStyleSet(doc.m_styles);
-    builder.setLogger(doc.m_logger);
-    builder.setGraphic(this.__graphic());
-    return new DelegatingLineChart(builder.create().lineChart());
+    g = this.__graphic();
+    return new _DelegatingLineChart(g, this.m_doc.createChart(g)
+        .lineChart());
   }
 
   /**

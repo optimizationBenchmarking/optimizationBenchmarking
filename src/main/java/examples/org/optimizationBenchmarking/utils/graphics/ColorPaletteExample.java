@@ -58,7 +58,7 @@ public class ColorPaletteExample {
     i = j = 0;
     for (final ColorPalette p : ColorPaletteExample.PALETTES) {//
       sub = dir.resolve("example_" + (++j)); //$NON-NLS-1$
-      for (final GraphicConfiguration d : GraphicConfigExample.CONFIGURATIONS) {
+      for (final GraphicConfiguration d : ExampleGraphicConfigurations.CONFIGURATIONS) {
         ColorPaletteExample
             .__paint(
                 sub,

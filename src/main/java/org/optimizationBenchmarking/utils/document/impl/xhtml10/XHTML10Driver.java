@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
+import java.util.ArrayList;
+
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
@@ -33,9 +35,14 @@ import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.graphics.EScreenSize;
+import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
+import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
+import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
+import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -118,6 +125,12 @@ public final class XHTML10Driver extends DocumentDriver {
   /** Create a new xhtml driver */
   XHTML10Driver() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IGraphicDriver getDefaultGraphicDriver() {
+    return XHTML10Driver.defaultGraphicDriver();
   }
 
   /** {@inheritDoc} */
@@ -606,7 +619,41 @@ public final class XHTML10Driver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   public final boolean canUse() {
-    return true;
+    return (__XHTML10DefaultGraphicDriverLoader.INSTANCE != null)
+        && (__XHTML10DefaultFontPaletteLoader.INSTANCE != null);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void checkCanUse() {
+    UnsupportedOperationException errorA, errorB, error;
+
+    if (__XHTML10DefaultGraphicDriverLoader.INSTANCE == null) {
+      errorA = __XHTML10DefaultGraphicDriverLoader.ERROR;
+    } else {
+      errorA = null;
+    }
+    if (__XHTML10DefaultFontPaletteLoader.INSTANCE == null) {
+      errorB = __XHTML10DefaultFontPaletteLoader.ERROR;
+    } else {
+      errorB = null;
+    }
+
+    if (errorA != null) {
+      if (errorB != null) {
+        error = new UnsupportedOperationException(//
+            "Cannot use XHTML 1.0 Document Driver"); //$NON-NLS-1$
+        error.addSuppressed(errorA);
+        error.addSuppressed(errorB);
+        throw error;
+      }
+      throw errorA;
+    }
+    if (errorB != null) {
+      throw errorB;
+    }
+
+    super.checkCanUse();
   }
 
   /** {@inheritDoc} */
@@ -617,8 +664,21 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
-  protected final IGraphicDriver getDefaultGraphicDriver() {
-    return __XHTML10DefaultGraphicDriverLoader.INSTANCE;
+  protected void checkGraphicDriver(final IGraphicDriver driver) {
+    final EGraphicFormat format;
+    switch (format = driver.getFileType()) {
+      case SVG:
+      case JPEG:
+      case PNG:
+      case GIF:
+      case BMP: {
+        return;
+      }
+      default: {
+        throw new IllegalArgumentException(//
+            "XHTML 1.0 driver only supports PNG, GIF, JPEG, SVG, and BMP graphic formats, but you supplied " + format); //$NON-NLS-1$
+      }
+    }
   }
 
   /**
@@ -660,85 +720,171 @@ public final class XHTML10Driver extends DocumentDriver {
     return __XHTML10DriverLoader.INSTANCE;
   }
 
+  /**
+   * Get the default palette of the XHTML 1.0 driver
+   * 
+   * @return the default palette of the XHTML 1.0 driver
+   */
+  public static final FontPalette defaultFontPalette() {
+    return __XHTML10DefaultFontPaletteLoader.INSTANCE;
+  }
+
+  /**
+   * Get the default page dimension for XHTML 1.0 documents
+   * 
+   * @return the default page dimension for XHTML 1.0 documents
+   */
+  public static final PageDimension defaultPageDimension() {
+    return __XHTML10DefaultScreenSize.INSTANCE;
+  }
+
+  /**
+   * Get the default graphic driver for XHTML 1.0 documents
+   * 
+   * @return the default graphic driver for XHTML 1.0 documents
+   */
+  public static final IGraphicDriver defaultGraphicDriver() {
+    return __XHTML10DefaultGraphicDriverLoader.INSTANCE;
+  }
+
   /** the loader class for the default xhtml driver */
   private static final class __XHTML10DriverLoader {
     /** the instance */
     static final XHTML10Driver INSTANCE = new XHTML10Driver();
   }
 
-  /** the graphic driver loader */
+  /** the default graphic driver */
   private static final class __XHTML10DefaultGraphicDriverLoader {
 
     /** the default graphic driver */
     static final IGraphicDriver INSTANCE;
 
+    /** the error */
+    static final UnsupportedOperationException ERROR;
+
     static {
-      IGraphicDriver a, b;
+      IGraphicDriver driver;
+      ArrayList<Throwable> error;
 
-      finder: {
-        a = b = EGraphicFormat.PNG.getDefaultDriver();
-        if ((a != null) && a.canUse()) {
-          break finder;
+      error = null;
+      try {
+        driver = EGraphicFormat.PNG.getDefaultDriver();
+        driver.checkCanUse();
+      } catch (final Throwable t) {
+        driver = null;
+        error = new ArrayList<>();
+        error.add(t);
+      }
+
+      if (driver == null) {
+
+        try {
+          driver = EGraphicFormat.GIF.getDefaultDriver();
+          driver.checkCanUse();
+        } catch (final Throwable t) {
+          driver = null;
+          error.add(t);
         }
 
-        b = EGraphicFormat.GIF.getDefaultDriver();
-        if (b != null) {
-          if (b.canUse()) {
-            a = b;
-            break finder;
-          }
-          if (a == null) {
-            a = b;
-          }
-        }
+        if (driver == null) {
 
-        b = EGraphicFormat.SVGZ.getDefaultDriver();
-        if (b != null) {
-          if (b.canUse()) {
-            a = b;
-            break finder;
+          try {
+            driver = EGraphicFormat.JPEG.getDefaultDriver();
+            driver.checkCanUse();
+          } catch (final Throwable t) {
+            driver = null;
+            error.add(t);
           }
-          if (a == null) {
-            a = b;
-          }
-        }
 
-        b = EGraphicFormat.SVG.getDefaultDriver();
-        if (b != null) {
-          if (b.canUse()) {
-            a = b;
-            break finder;
-          }
-          if (a == null) {
-            a = b;
-          }
-        }
+          if (driver == null) {
 
-        b = EGraphicFormat.JPEG.getDefaultDriver();
-        if (b != null) {
-          if (b.canUse()) {
-            a = b;
-            break finder;
-          }
-          if (a == null) {
-            a = b;
-          }
-        }
+            try {
+              driver = EGraphicFormat.SVG.getDefaultDriver();
+              driver.checkCanUse();
+            } catch (final Throwable t) {
+              driver = null;
+              error.add(t);
+            }
 
-        b = EGraphicFormat.BMP.getDefaultDriver();
-        if (b != null) {
-          if (b.canUse()) {
-            a = b;
-            break finder;
-          }
-          if (a == null) {
-            a = b;
+            if (driver == null) {
+
+              try {
+                driver = EGraphicFormat.BMP.getDefaultDriver();
+                driver.checkCanUse();
+              } catch (final Throwable t) {
+                driver = null;
+                error.add(t);
+              }
+
+            }
+
           }
         }
       }
 
-      INSTANCE = a;
+      if (driver == null) {
+        INSTANCE = null;
+
+        ERROR = new UnsupportedOperationException(
+            "Could not find any suitable graphic driver. Maybe some libraries are missing which support any of required graphics formats (PNG, GIF, JPEG, SVG, BMP)."); //$NON-NLS-1$
+
+        if (error != null) {
+          for (final Throwable t : error) {
+            __XHTML10DefaultGraphicDriverLoader.ERROR.addSuppressed(t);
+          }
+        }
+      } else {
+        INSTANCE = driver;
+        ERROR = null;
+      }
     }
   }
 
+  /** the default screen size */
+  private static final class __XHTML10DefaultScreenSize {
+
+    /** the default page dimension */
+    static final PageDimension INSTANCE = XHTML10ConfigurationBuilder
+        ._pageDimension(EScreenSize.DEFAULT.getPageSize());
+  }
+
+  /** the default font palette */
+  private static final class __XHTML10DefaultFontPaletteLoader {
+
+    /** the default font palette */
+    static final FontPalette INSTANCE;
+
+    /** the error */
+    static final UnsupportedOperationException ERROR;
+
+    static {
+      FontPalette p;
+      Throwable error;
+      String s;
+
+      p = null;
+      error = null;
+      try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
+        PaletteInputDriver
+            .getInstance()
+            .use()
+            .setDestination(tb)
+            .addResource(XHTML10Driver.class, "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
+        p = tb.getResult();
+      } catch (final Throwable tt) {
+        error = tt;
+        p = null;
+      }
+
+      if (p != null) {
+        INSTANCE = p;
+        ERROR = null;
+      } else {
+        s = "Could not load font palette."; //$NON-NLS-1$
+        ERROR = ((error != null) ? new UnsupportedOperationException(s,
+            error) : new UnsupportedOperationException(s));
+        INSTANCE = null;
+      }
+    }
+  }
 }

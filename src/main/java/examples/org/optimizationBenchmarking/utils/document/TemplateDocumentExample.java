@@ -11,9 +11,9 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
-import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLHandler;
@@ -48,7 +48,6 @@ public class TemplateDocumentExample extends DocumentExample {
     final Path dir;
     final Logger log;
     TemplateDocumentExample de;
-    String last, cur;
     int i;
 
     log = DocumentExample._getLogger();
@@ -60,26 +59,15 @@ public class TemplateDocumentExample extends DocumentExample {
     }
     synchronized (System.out) {
       System.out.print("Begin creating documents to folder ");//$NON-NLS-1$
-      System.out.print(dir);
+      System.out.println(dir);
     }
 
     i = 0;
-    cur = null;
-
-    for (final IDocumentDriver driver : RandomDocumentExample.DRIVERS) {//
-      last = cur;
-      cur = driver.getClass().getSimpleName();
-
-      if (!(cur.equals(last))) {
-        i = 0;
-      }
-      i++;
-
-      de = new TemplateDocumentExample(driver.use()
-          .setBasePath(dir.resolve((("template/" + cur) + '_') + i))//$NON-NLS-1$
-          .setMainDocumentNameSuggestion("report")//$NON-NLS-1$
-          .setFileProducerListener(new FinishedPrinter(driver))
-          .setLogger(log).create());
+    for (final DocumentConfiguration config : ExampleDocumentConfigurations.CONFIGURATIONS) {//
+      de = new TemplateDocumentExample(config.createDocument(
+          dir.resolve((("template/" + config.toString()) + '_') + (++i)),//$NON-NLS-1$ 
+          "report",//$NON-NLS-1$
+          new FinishedPrinter(config.getDocumentDriver()), log));
 
       de.run();
     }

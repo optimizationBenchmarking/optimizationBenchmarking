@@ -2,7 +2,9 @@ package examples.org.optimizationBenchmarking.utils.graphics;
 
 import java.util.LinkedHashSet;
 
+import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfigurationBuilder;
@@ -19,27 +21,35 @@ import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.hash.HashObject;
 
-/** a graphic configuration example */
-public final class GraphicConfigExample extends HashObject {
+/**
+ * A set of examples for graphics configurations. Each object in
+ * {@link #CONFIGURATIONS} represents one fully-configured graphic setup,
+ * including a
+ * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver
+ * graphic driver} and its configurations. We can use the objects here to
+ * generate example graphics and figures to demonstrate the capabilities of
+ * our graphics package.
+ */
+public final class ExampleGraphicConfigurations extends HashObject {
 
   /** the shared instances */
-  public static final ArrayListView<GraphicConfiguration> CONFIGURATIONS;
+  public static final ArrayListView<GraphicConfiguration> CONFIGURATIONS = ExampleGraphicConfigurations
+      .__make();
 
-  /** the shared drivers */
-  public static final ArrayListView<IGraphicDriver> DRIVERS;
-
-  static {
+  /**
+   * make the graphics configurations
+   * 
+   * @return the graphics configurations
+   */
+  private static final ArrayListView<GraphicConfiguration> __make() {
     final LinkedHashSet<GraphicConfiguration> examples;
-    final LinkedHashSet<IGraphicDriver> drivers;
     GraphicConfigurationBuilder builder;
 
     examples = new LinkedHashSet<>();
-    drivers = new LinkedHashSet<>();
 
     IGraphicDriver d;
     d = FreeHEPEPSGraphicDriver.getInstance();
     if (d.canUse()) {
-      drivers.add(d);
       builder = new GraphicConfigurationBuilder();
       builder.setGraphicDriver(d);
       examples.add(builder.immutable());
@@ -47,7 +57,6 @@ public final class GraphicConfigExample extends HashObject {
 
     d = FreeHEPPDFGraphicDriver.getInstance();
     if (d.canUse()) {
-      drivers.add(d);
       builder = new GraphicConfigurationBuilder();
       builder.setGraphicDriver(d);
       examples.add(builder.immutable());
@@ -55,7 +64,6 @@ public final class GraphicConfigExample extends HashObject {
 
     d = FreeHEPSVGZGraphicDriver.getInstance();
     if (d.canUse()) {
-      drivers.add(d);
       builder = new GraphicConfigurationBuilder();
       builder.setGraphicDriver(d);
       examples.add(builder.immutable());
@@ -63,7 +71,6 @@ public final class GraphicConfigExample extends HashObject {
 
     d = FreeHEPSVGGraphicDriver.getInstance();
     if (d.canUse()) {
-      drivers.add(d);
       builder = new GraphicConfigurationBuilder();
       builder.setGraphicDriver(d);
       examples.add(builder.immutable());
@@ -78,7 +85,6 @@ public final class GraphicConfigExample extends HashObject {
 
     d = ImageIOPNGGraphicDriver.getInstance();
     if (d.canUse()) {
-      drivers.add(d);
       builder = new GraphicConfigurationBuilder();
       builder.setGraphicDriver(d);
       examples.add(builder.immutable());
@@ -101,7 +107,6 @@ public final class GraphicConfigExample extends HashObject {
 
     d = ImageIOJPEGGraphicDriver.getInstance();
     if (d.canUse()) {
-      drivers.add(d);
       builder = new GraphicConfigurationBuilder();
       builder.setGraphicDriver(d);
       examples.add(builder.immutable());
@@ -197,7 +202,18 @@ public final class GraphicConfigExample extends HashObject {
       }
     }
 
-    CONFIGURATIONS = ArrayListView.collectionToView(examples, false);
-    DRIVERS = ArrayListView.collectionToView(drivers, false);
+    d = XHTML10Driver.defaultGraphicDriver();
+    if (d.canUse()) {
+      builder = new GraphicConfigurationBuilder();
+      builder.setGraphicDriver(d);
+      examples.add(builder.immutable());
+    }
+
+    return ArrayListView.collectionToView(examples, false);
+  }
+
+  /** the forbidden constructor */
+  private ExampleGraphicConfigurations() {
+    ErrorUtils.doNotCall();
   }
 }

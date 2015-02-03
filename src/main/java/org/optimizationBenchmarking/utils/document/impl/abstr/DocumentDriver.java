@@ -27,15 +27,6 @@ public abstract class DocumentDriver extends DocumentProducerTool
   }
 
   /**
-   * Obtain the default graphics driver for this document type
-   * 
-   * @return the default graphics driver for this document type
-   */
-  protected IGraphicDriver getDefaultGraphicDriver() {
-    return EGraphicFormat.NULL.getDefaultDriver();
-  }
-
-  /**
    * Encode a text output
    * 
    * @param raw
@@ -914,5 +905,24 @@ public abstract class DocumentDriver extends DocumentProducerTool
       final TableFooterRow owner, final int rowSpan, final int colSpan,
       final TableCellDef[] def) {
     return new TableFooterCell(owner, rowSpan, colSpan, def);
+  }
+
+  /**
+   * Obtain the default graphics driver for this document type
+   * 
+   * @return the default graphics driver for this document type
+   */
+  protected IGraphicDriver getDefaultGraphicDriver() {
+    return EGraphicFormat.NULL.getDefaultDriver();
+  }
+
+  /**
+   * check the graphic driver
+   * 
+   * @param driver
+   *          the driver, never {@code null}
+   */
+  protected void checkGraphicDriver(final IGraphicDriver driver) {
+    //
   }
 }

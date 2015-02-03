@@ -22,6 +22,15 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  */
 public class GraphicConfiguration implements ITextable {
 
+  /** the minimum allowed dpi */
+  private static final int MIN_DPI = 26;
+  /** the maximum allowed dpi */
+  static final int MAX_DPI = 10000;
+  /** the minimum allowed quality value */
+  private static final double MIN_QUALITY = 0d;
+  /** the maximum allowed quality value */
+  static final double MAX_QUALITY = 1d;
+
   /** the driver */
   IGraphicDriver m_driver;
 
@@ -42,35 +51,104 @@ public class GraphicConfiguration implements ITextable {
   }
 
   /**
+   * make a copy of a given graphic configuration
+   * 
+   * @param copy
+   *          the graphic configuration to copy
+   */
+  protected GraphicConfiguration(final GraphicConfiguration copy) {
+    super();
+
+    GraphicConfiguration._checkDriver(this.m_driver = copy
+        .getGraphicDriver());
+
+    this.m_colorModel = copy.m_colorModel;
+    if (this.m_colorModel != null) {
+      GraphicConfiguration._checkColorModel(this.m_colorModel);
+    }
+
+    this.m_quality = copy.m_quality;
+    if (this.m_quality >= 0d) {
+      GraphicConfiguration._checkQuality(this.m_quality);
+    }
+
+    this.m_dpi = copy.m_dpi;
+    if (this.m_dpi > 0) {
+      GraphicConfiguration._checkDotsPerInch(this.m_dpi);
+    }
+  }
+
+  /**
    * Get the immutable version of this configuration
    * 
    * @return the immutable version of this configuration
    */
-  public final GraphicConfiguration immutable() {
-    final GraphicConfiguration res;
+  public GraphicConfiguration immutable() {
 
-    this.__checkDriver();
+    GraphicConfiguration._checkDriver(this.m_driver);
 
     if (this.getClass() == GraphicConfiguration.class) {
       return this;
     }
 
-    res = new GraphicConfiguration();
-    res.m_driver = this.m_driver;
-    res.m_colorModel = this.m_colorModel;
-    res.m_dpi = this.m_dpi;
-    res.m_quality = this.m_quality;
-
-    return res;
+    return new GraphicConfiguration(this);
   }
 
-  /** check whether the graphic driver has been set */
-  private final void __checkDriver() {
-    if (this.m_driver == null) {
+  /**
+   * check whether a graphic driver is OK
+   * 
+   * @param driver
+   *          the driver
+   */
+  static final void _checkDriver(final IGraphicDriver driver) {
+    if (driver == null) {
       throw new IllegalStateException(//
           "Graphic driver cannot be null."); //$NON-NLS-1$
     }
-    this.m_driver.checkCanUse();
+    driver.checkCanUse();
+  }
+
+  /**
+   * check the color model
+   * 
+   * @param colorModel
+   *          the color model
+   */
+  static final void _checkColorModel(final EColorModel colorModel) {
+    if (colorModel == null) {
+      throw new IllegalArgumentException("Color model cannot be null."); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * check the dots per inch
+   * 
+   * @param dotsPerInch
+   *          the dots per inch
+   */
+  static final void _checkDotsPerInch(final int dotsPerInch) {
+    if ((dotsPerInch < GraphicConfiguration.MIN_DPI)
+        || (dotsPerInch > GraphicConfiguration.MAX_DPI)) {
+      throw new IllegalArgumentException(//
+          "Cannot create images with less than 1 pixel per MM (26 dot per inch) or more than 100000 dots per inch, since such images would be nonsense. You specified "//$NON-NLS-1$ 
+              + dotsPerInch + "dpi, which is outside the sane range."); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * check a quality value
+   * 
+   * @param quality
+   *          the quality value
+   */
+  static final void _checkQuality(final double quality) {
+    if ((quality < GraphicConfiguration.MIN_QUALITY)
+        || (quality > GraphicConfiguration.MAX_QUALITY)
+        || (quality != quality)) {
+      throw new IllegalArgumentException(//
+          "Graphic quality must be in [0,1], but you specified " //$NON-NLS-1$
+              + quality);
+    }
   }
 
   /**
@@ -80,6 +158,16 @@ public class GraphicConfiguration implements ITextable {
    */
   public final int getDotsPerInch() {
     return ((this.m_dpi > 0) ? this.m_dpi : EGraphicFormat.DEFAULT_DPI);
+  }
+
+  /**
+   * Has the dots-per-inch setting been provided?
+   * 
+   * @return {@code true} if the dots-per-inch setting has been provided,
+   *         {@code false} otherwise
+   */
+  public final boolean hasDotsPerInch() {
+    return (this.m_dpi > 0);
   }
 
   /**
@@ -93,6 +181,16 @@ public class GraphicConfiguration implements ITextable {
   }
 
   /**
+   * Has the quality setting been provided?
+   * 
+   * @return {@code true} if the quality has been provided, {@code false}
+   *         otherwise
+   */
+  public final boolean hasQuality() {
+    return (this.m_quality >= 0d);
+  }
+
+  /**
    * Get the color model
    * 
    * @return the color model
@@ -100,6 +198,15 @@ public class GraphicConfiguration implements ITextable {
   public final EColorModel getColorModel() {
     return ((this.m_colorModel != null) ? this.m_colorModel
         : EGraphicFormat.DEFAULT_COLOR_MODEL);
+  }
+
+  /**
+   * Has the color model been provided?
+   * 
+   * @return {@code true} if the color model has been provided
+   */
+  public final boolean hasColorModel() {
+    return (this.m_colorModel != null);
   }
 
   /**
@@ -138,7 +245,7 @@ public class GraphicConfiguration implements ITextable {
       final IFileProducerListener listener, final Logger logger) {
     final IGraphicBuilder builder;
 
-    this.__checkDriver();
+    GraphicConfiguration._checkDriver(this.m_driver);
 
     builder = this.m_driver.use();
     builder.setBasePath(basePath);
@@ -174,7 +281,7 @@ public class GraphicConfiguration implements ITextable {
 
   /** to string */
   @Override
-  public final void toText(final ITextOutput textOut) {
+  public void toText(final ITextOutput textOut) {
 
     if (this.m_driver != null) {
       textOut.append(this.m_driver.getClass().getSimpleName());
@@ -193,14 +300,14 @@ public class GraphicConfiguration implements ITextable {
 
     if (this.m_quality >= 0d) {
       textOut.append('@');
+      textOut.append('q');
       textOut.append(this.m_quality);
-      textOut.append("quality"); //$NON-NLS-1$
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int hashCode() {
+  public int hashCode() {
     int hc;
 
     hc = HashUtils.hashCode(this.m_driver);
@@ -220,7 +327,7 @@ public class GraphicConfiguration implements ITextable {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean equals(final Object o) {
+  public boolean equals(final Object o) {
     final GraphicConfiguration example;
 
     if (o == this) {

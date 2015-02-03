@@ -69,6 +69,12 @@ public abstract class AbstractGraphicDriver extends DocumentProducerTool
   /** {@inheritDoc} */
   @Override
   public void toText(final ITextOutput textOut) {
-    textOut.append(this.m_format);
+    textOut.append(this.toString());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    return this.getClass().getSimpleName();
   }
 }

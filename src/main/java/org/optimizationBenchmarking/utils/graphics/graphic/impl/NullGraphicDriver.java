@@ -10,7 +10,6 @@ import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.JavaDefaultPalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.DefaultStrokePalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** the null driver */
 public final class NullGraphicDriver extends AbstractGraphicDriver {
@@ -65,12 +64,6 @@ public final class NullGraphicDriver extends AbstractGraphicDriver {
   @Override
   public final boolean canUse() {
     return true;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void toText(final ITextOutput textOut) {
-    textOut.append(this.toString());
   }
 
   /** the loader */

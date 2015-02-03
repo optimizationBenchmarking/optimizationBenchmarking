@@ -49,7 +49,7 @@ public final class GraphicsExample {
     }
 
     z = 0;
-    for (final GraphicConfiguration driver : GraphicConfigExample.CONFIGURATIONS) {
+    for (final GraphicConfiguration driver : ExampleGraphicConfigurations.CONFIGURATIONS) {
       try (final Graphic g = driver
           .createGraphic(
               dir,

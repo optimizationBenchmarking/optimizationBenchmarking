@@ -10,16 +10,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDocumentClass;
-import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -31,39 +26,6 @@ import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
  * An example used to illustrate the available color palettes.
  */
 public class FontPaletteExample {
-
-  /** the palettes to print */
-  public static final ArrayListView<FontPalette> PALETTES;
-
-  static {
-    final FontPalette[] list = new FontPalette[4];
-
-    try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-      PaletteInputDriver
-          .getInstance()
-          .use()
-          .setDestination(tb)
-          .addResource(FontPaletteExample.class, "examples.fontPalette").create().call(); //$NON-NLS-1$
-      list[0] = tb.getResult();
-    } catch (final Throwable tt) {
-      tt.printStackTrace();
-    }
-    try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-      PaletteInputDriver
-          .getInstance()
-          .use()
-          .setDestination(tb)
-          .addResource(XHTML10Driver.class, "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
-      list[1] = tb.getResult();
-    } catch (final Throwable tt) {
-      tt.printStackTrace();
-    }
-
-    list[2] = XHTML10Driver.getDefaultFontPalette();
-    list[3] = LaTeXDocumentClass.getDefaultFontPalette();
-
-    PALETTES = new ArrayListView<>(list);
-  }
 
   /**
    * run the example: there are problems with the pdf output
@@ -85,9 +47,9 @@ public class FontPaletteExample {
     }
 
     i = j = 0;
-    for (final FontPalette p : FontPaletteExample.PALETTES) {//
+    for (final FontPalette p : ExampleFontPalettes.PALETTES) {//
       sub = dir.resolve("example_" + (++j));//$NON-NLS-1$
-      for (final GraphicConfiguration d : GraphicConfigExample.CONFIGURATIONS) {
+      for (final GraphicConfiguration d : ExampleGraphicConfigurations.CONFIGURATIONS) {
         FontPaletteExample
             .__paint(
                 sub,

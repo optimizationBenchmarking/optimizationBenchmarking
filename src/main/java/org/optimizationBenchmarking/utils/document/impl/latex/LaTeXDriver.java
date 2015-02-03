@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
-import java.nio.file.Path;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
@@ -28,50 +27,25 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooterRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
-import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
-import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
-import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
+import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
+import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.io.IFileType;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * The driver for LaTeX output
  */
 public final class LaTeXDriver extends DocumentDriver {
 
-  /** the graphic driver */
-  private final IGraphicDriver m_graphicDriver;
-
-  /** the document class */
-  private final LaTeXDocumentClass m_class;
-
-  /**
-   * Create a new LaTeX driver
-   * 
-   * @param gd
-   *          the graphic driver to use
-   * @param clazz
-   *          the document class
-   */
-  public LaTeXDriver(final IGraphicDriver gd,
-      final LaTeXDocumentClass clazz) {
+  /** Create a new LaTeX driver */
+  LaTeXDriver() {
     super();
-
-    if (clazz == null) {
-      throw new IllegalArgumentException(
-          "Document class must not be null."); //$NON-NLS-1$
-    }
-
-    this.m_graphicDriver = ((gd != null) ? gd : EGraphicFormat.EPS
-        .getDefaultDriver());
-
-    this.m_class = clazz;
   }
 
   /**
@@ -79,74 +53,14 @@ public final class LaTeXDriver extends DocumentDriver {
    * 
    * @return the default latex driver
    */
-  public static final LaTeXDriver getDefaultDriver() {
-    return __DefaultLaTeXDriverLoader.INSTANCE;
+  public static final LaTeXDriver getInstance() {
+    return __LaTeXDriverLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final boolean equals(final Object o) {
-    final LaTeXDriver d;
-    if (o == null) {
-      return false;
-    }
-    if (o == this) {
-      return true;
-    }
-    if (o instanceof LaTeXDriver) {
-      d = ((LaTeXDriver) o);
-      return (EComparison.equals(this.m_graphicDriver, d.m_graphicDriver) && EComparison
-          .equals(this.m_class, d.m_class));
-    }
-    return false;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final int calcHashCode() {
-    return HashUtils.combineHashes(//
-        HashUtils.hashCode(this.m_graphicDriver),//
-        HashUtils.hashCode(this.m_class));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void toText(final ITextOutput textOut) {
-    textOut.append("LaTeX 2\u03b5 Document Driver with "); //$NON-NLS-1$
-    textOut.append(this.m_graphicDriver);
-    textOut.append(" Graphics and "); //$NON-NLS-1$
-    this.m_class.toText(textOut);
-    textOut.append(" Pages"); //$NON-NLS-1$
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final IGraphicDriver getGraphicDriver() {
-    return this.m_graphicDriver;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final PhysicalDimension getSize(final EFigureSize size) {
-    return size.approximateSize(this.m_class);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final StyleSet createStyleSet() {
-    final IGraphicDriver driver;
-    driver = this.getGraphicDriver();
-    return new StyleSet(this.m_class.m_fonts, driver.getColorPalette(),
-        driver.getStrokePalette());
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final Document doCreateDocument(final Logger logger,
-      final IFileProducerListener listener, final Path basePath,
-      final String mainDocumentNameSuggestion) {
-    return new _LaTeXDocument(this, this.makePath(basePath,
-        mainDocumentNameSuggestion), logger, listener);
+  public final String toString() {
+    return "LaTeX 2\u03b5 Document Driver"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
@@ -571,10 +485,204 @@ public final class LaTeXDriver extends DocumentDriver {
     return ELaTeXFileTypes.LATEX;
   }
 
-  /** the loader for the default LaTeX driver */
-  private static final class __DefaultLaTeXDriverLoader {
-    /** the shared instance */
-    static final LaTeXDriver INSTANCE = new LaTeXDriver(null, null);
+  /** {@inheritDoc} */
+  @Override
+  public IDocumentBuilder use() {
+    this.checkCanUse();
+    return new LaTeXDocumentBuilder(this);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final boolean canUse() {
+    return (__LaTeXDefaultGraphicDriverLoader.INSTANCE != null)
+        && (_LaTeXDefaultFontPaletteLoader.INSTANCE != null);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IGraphicDriver getDefaultGraphicDriver() {
+    return LaTeXDriver.defaultGraphicDriver();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void checkCanUse() {
+    UnsupportedOperationException errorA, errorB, error;
+
+    if (__LaTeXDefaultGraphicDriverLoader.INSTANCE == null) {
+      errorA = __LaTeXDefaultGraphicDriverLoader.ERROR;
+    } else {
+      errorA = null;
+    }
+    if (_LaTeXDefaultFontPaletteLoader.INSTANCE == null) {
+      errorB = _LaTeXDefaultFontPaletteLoader.ERROR;
+    } else {
+      errorB = null;
+    }
+
+    if (errorA != null) {
+      if (errorB != null) {
+        error = new UnsupportedOperationException(//
+            "Cannot use LaTeX Document Driver"); //$NON-NLS-1$
+        error.addSuppressed(errorA);
+        error.addSuppressed(errorB);
+        throw error;
+      }
+      throw errorA;
+    }
+    if (errorB != null) {
+      throw errorB;
+    }
+
+    super.checkCanUse();
+  }
+
+  /**
+   * Get the default graphic driver for LaTeX documents
+   * 
+   * @return the default graphic driver for LaTeX documents
+   */
+  public static final IGraphicDriver defaultGraphicDriver() {
+    return __LaTeXDefaultGraphicDriverLoader.INSTANCE;
+  }
+
+  /**
+   * obtain the default font palette
+   * 
+   * @return the default font palette
+   */
+  public static final FontPalette defaultFontPalette() {
+    return _LaTeXDefaultFontPaletteLoader.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void checkGraphicDriver(final IGraphicDriver driver) {
+    final EGraphicFormat format;
+
+    format = driver.getFileType();
+    if (_LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[format
+        .ordinal()]) {
+      return;
+    }
+
+    throw new IllegalArgumentException(//
+        "LaTeX driver does not support graphic format " + format); //$NON-NLS-1$
+  }
+
+  /** the loader for the default LaTeX driver */
+  private static final class __LaTeXDriverLoader {
+    /** the shared instance */
+    static final LaTeXDriver INSTANCE = new LaTeXDriver();
+  }
+
+  /** the default font palette */
+  static final class _LaTeXDefaultFontPaletteLoader {
+
+    /** the internal font palette */
+    static final FontPalette INSTANCE;
+
+    /** the error */
+    static final UnsupportedOperationException ERROR;
+
+    static {
+      FontPalette p;
+      Throwable error;
+      String msg;
+
+      p = null;
+      error = null;
+      try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
+        PaletteInputDriver
+            .getInstance()
+            .use()
+            .setDestination(tb)
+            .addResource(LaTeXDriver.class, "latex.fontPalette").create().call(); //$NON-NLS-1$
+        p = tb.getResult();
+      } catch (final Throwable tt) {
+        error = tt;
+        p = null;
+      }
+
+      if (p != null) {
+        INSTANCE = p;
+        ERROR = null;
+      } else {
+        INSTANCE = null;
+        msg = "Could not load default font palette."; //$NON-NLS-1$
+        ERROR = ((error != null) ? new UnsupportedOperationException(msg,
+            error) : new UnsupportedOperationException(msg));
+      }
+    }
+
+  }
+
+  /** the loader for the supported graphics formats */
+  static final class _LaTeXSupportedFormatsLoader {
+    /** the supported graphic formats */
+    static final boolean[] SUPPORTED_GRAPHIC_FORMATS;
+
+    static {
+      SUPPORTED_GRAPHIC_FORMATS = new boolean[EGraphicFormat.INSTANCES
+          .size()];
+
+      outer: for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
+        for (final ELaTeXEngine engine : ELaTeXEngine.INSTANCES) {
+          if (engine._supportsGraphicFormat(format)) {
+            _LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[format
+                .ordinal()] = true;
+            continue outer;
+          }
+        }
+      }
+
+    }
+  }
+
+  /** the default graphic driver */
+  private static final class __LaTeXDefaultGraphicDriverLoader {
+
+    /** the default graphic driver */
+    static final IGraphicDriver INSTANCE;
+
+    /** the error */
+    static final UnsupportedOperationException ERROR;
+
+    static {
+      IGraphicDriver driver;
+      ArrayList<Throwable> error;
+
+      error = null;
+      driver = null;
+      for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
+        if (_LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[format
+            .ordinal()]) {
+          try {
+            driver = format.getDefaultDriver();
+            driver.checkCanUse();
+          } catch (final Throwable t) {
+            driver = null;
+            if (error == null) {
+              error = new ArrayList<>();
+            }
+            error.add(t);
+          }
+        }
+      }
+      if (driver == null) {
+        INSTANCE = null;
+        ERROR = new UnsupportedOperationException(//
+            "Could not load a driver for any supported graphic format."); //$NON-NLS-1$
+        if (error != null) {
+          for (final Throwable tt : error) {
+            __LaTeXDefaultGraphicDriverLoader.ERROR.addSuppressed(tt);
+          }
+        }
+      } else {
+        INSTANCE = driver;
+        ERROR = null;
+      }
+    }
+  }
 }

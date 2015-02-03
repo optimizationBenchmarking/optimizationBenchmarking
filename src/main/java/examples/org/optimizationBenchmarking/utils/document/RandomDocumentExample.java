@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
@@ -24,11 +23,8 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
-import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDocumentClass;
-import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
+import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
@@ -36,7 +32,6 @@ import org.optimizationBenchmarking.utils.document.spec.ICode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
-import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
 import org.optimizationBenchmarking.utils.document.spec.IEquation;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
@@ -55,9 +50,7 @@ import org.optimizationBenchmarking.utils.document.spec.ITableRow;
 import org.optimizationBenchmarking.utils.document.spec.ITableSection;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
-import org.optimizationBenchmarking.utils.graphics.EScreenSize;
-import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
@@ -102,45 +95,6 @@ import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExamp
  * </p>
  */
 public class RandomDocumentExample extends DocumentExample {
-
-  /** the document driver to use */
-  public static final ArrayListView<IDocumentDriver> DRIVERS;
-
-  static {
-    final LinkedHashSet<IDocumentDriver> list;
-    IDocumentDriver driver;
-
-    list = new LinkedHashSet<>();
-
-    driver = XHTML10Driver.getDefaultDriver();
-    if ((driver != null) && (driver.canUse())) {
-      list.add(driver);
-    }
-
-    driver = XHTML10Driver.getInstance(
-        EGraphicFormat.JPEG.getDefaultDriver(),
-        EScreenSize.WQXGA.getPageSize(120), null);
-    if ((driver != null) && (driver.canUse())) {
-      list.add(driver);
-    }
-
-    driver = XHTML10Driver.getInstance(
-        EGraphicFormat.GIF.getDefaultDriver(),
-        EScreenSize.SVGA.getPageSize(90),
-        LaTeXDocumentClass.getDefaultFontPalette());
-    if ((driver != null) && (driver.canUse())) {
-      list.add(driver);
-    }
-
-    for (final EDocumentFormat format : EDocumentFormat.values()) {
-      driver = format.getDefaultDriver();
-      if ((driver != null) && (driver.canUse())) {
-        list.add(driver);
-      }
-    }
-
-    DRIVERS = ArrayListView.collectionToView(list, false);
-  }
 
   /** the table cell defs */
   private static final TableCellDef[] CELLS = { TableCellDef.CENTER,
@@ -250,9 +204,7 @@ public class RandomDocumentExample extends DocumentExample {
     final Logger log;
     Random rand;
     RandomDocumentExample de;
-    String last, cur;
-    long seed;
-    int example, i;
+    long seed, i;
 
     log = DocumentExample._getLogger();
 
@@ -277,7 +229,6 @@ public class RandomDocumentExample extends DocumentExample {
       System.out.println(" processor(s).");//$NON-NLS-1$
     }
 
-    cur = null;
     if (proc > 1) {
       pool = new ForkJoinPool(proc,
           ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, true);
@@ -287,39 +238,26 @@ public class RandomDocumentExample extends DocumentExample {
 
     rand = new Random();
     rand.setSeed(RandomDocumentExample.SEED);
-    for (example = 1; example <= 5; example++) {
-      seed = rand.nextLong();
-      i = 0;
-
-      for (final IDocumentDriver driver : RandomDocumentExample.DRIVERS) {//
-        rand.setSeed(seed);
-        last = cur;
-        cur = driver.getClass().getSimpleName();
-
-        if (!(cur.equals(last))) {
-          i = 0;
-        }
-        i++;
-
-        de = new RandomDocumentExample(driver.use()
-            .setBasePath(dir.resolve((((("random/example"//$NON-NLS-1$ 
-                + example) + '/') + cur) + '_')
-                + i)).setMainDocumentNameSuggestion("report")//$NON-NLS-1$
-            .setFileProducerListener(new FinishedPrinter(driver))
-            .setLogger(log).create(), rand, System.out);
-
-        if (pool != null) {
-          pool.execute(de);
-        } else {
-          de.run();
-        }
-      }
+    seed = rand.nextLong();
+    i = 0;
+    for (final DocumentConfiguration config : ExampleDocumentConfigurations.CONFIGURATIONS) {//
+      rand.setSeed(seed);
+      de = new RandomDocumentExample(config.createDocument(
+          dir.resolve((("random/" + config.toString()) + '_') + (++i)),//$NON-NLS-1$ 
+          "report",//$NON-NLS-1$
+          new FinishedPrinter(config.getDocumentDriver()), log), rand,
+          System.out);
 
       if (pool != null) {
-        pool.shutdown();
-        pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+        pool.execute(de);
+      } else {
+        de.run();
       }
+    }
 
+    if (pool != null) {
+      pool.shutdown();
+      pool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
     }
 
     synchronized (System.out) {
@@ -404,7 +342,7 @@ public class RandomDocumentExample extends DocumentExample {
     boolean first;
 
     try (final IPlainText t = header.title()) {
-      t.append("Report Created by Driver "); //$NON-NLS-1$
+      t.append("Report Created by Class "); //$NON-NLS-1$
       t.append(clazz);
     }
 
@@ -1844,29 +1782,22 @@ public class RandomDocumentExample extends DocumentExample {
       LoremIpsum.appendLoremIpsum(cap, this.m_rand, 20);
     }
 
-    try (final Graphic g = fig.body()) {
-      switch (this.m_rand.nextInt(2)) {
-        case 0: {
-          LineChartExample.randomLineChart(this.m_rand, g,
-              this.m_doc.getStyles(), this.__randomChartDriver());
-          break;
-        }
-        default: {
+    switch (this.m_rand.nextInt(2)) {
+      case 0: {
+        try (final Graphic g = fig.graphic()) {
           this.__randomGraphic(g);
+        }
+        break;
+      }
+
+      default: {
+        try (final ILineChart lineChart = fig.lineChart()) {
+          LineChartExample.randomLineChart(this.m_rand, lineChart,
+              this.m_doc.getStyles());
           break;
         }
       }
     }
-  }
-
-  /**
-   * select a random chart driver
-   * 
-   * @return the chart driver
-   */
-  private final IChartDriver __randomChartDriver() {
-    return LineChartExample.DRIVERS.get(this.m_rand
-        .nextInt(LineChartExample.DRIVERS.size()));
   }
 
   /**

@@ -52,7 +52,7 @@ public class StrokePaletteExample {
     }
 
     j = z = 0;
-    for (final GraphicConfiguration d : GraphicConfigExample.CONFIGURATIONS) {
+    for (final GraphicConfiguration d : ExampleGraphicConfigurations.CONFIGURATIONS) {
       sub = dir.resolve("example_" + (++j));//$NON-NLS-1$
       for (final StrokePalette p : StrokePaletteExample.PALETTES) {//
         StrokePaletteExample

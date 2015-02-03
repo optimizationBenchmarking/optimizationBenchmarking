@@ -1,17 +1,22 @@
 package org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr;
 
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
+import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerJobBuilder;
 
 /** The base class for graphics builders */
 public final class GraphicBuilder extends
     DocumentProducerJobBuilder<Graphic, GraphicBuilder> implements
-    IGraphicBuilder {
+    IGraphicBuilder, ITextable {
 
   /** the dots per inch parameter */
   public static final String PARAM_DPI = "dpi"; //$NON-NLS-1$
@@ -165,5 +170,47 @@ public final class GraphicBuilder extends
     this.validate();
     return ((AbstractGraphicDriver) (this.m_config.getGraphicDriver()))
         .createGraphic(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    final MemoryTextOutput mto;
+
+    mto = new MemoryTextOutput();
+    this.toText(mto);
+    return mto.toString();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return HashUtils.combineHashes(HashUtils.hashCode(this.m_config),
+        HashUtils.hashCode(this.m_size));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    GraphicBuilder bui;
+    if (o == this) {
+      return true;
+    }
+    if (o instanceof GraphicBuilder) {
+      bui = ((GraphicBuilder) o);
+      return (EComparison.equals(this.m_config, bui.m_config) && //
+      EComparison.equals(this.m_size, bui.m_size));
+    }
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    this.m_config.toText(textOut);
+    if (this.m_size != null) {
+      textOut.append('@');
+      this.m_size.toText(textOut);
+    }
   }
 }

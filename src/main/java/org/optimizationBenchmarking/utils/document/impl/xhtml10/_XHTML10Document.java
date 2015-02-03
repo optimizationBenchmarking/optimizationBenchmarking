@@ -141,15 +141,11 @@ final class _XHTML10Document extends Document {
   /**
    * Create a document.
    * 
-   * @param driver
-   *          the document driver
-   * @param docPath
-   *          the path to the document
    * @param builder
    *          the document builder
    */
   _XHTML10Document(final DocumentBuilder builder) {
-    super(builder, docPath, builder);
+    super(XHTML10Driver.getInstance(), builder);
     this.open();
   }
 

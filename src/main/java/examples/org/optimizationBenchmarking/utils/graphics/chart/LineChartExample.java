@@ -6,14 +6,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
-import org.optimizationBenchmarking.utils.graphics.chart.impl.EChartFormat;
-import org.optimizationBenchmarking.utils.graphics.chart.impl.jfree.JFreeChartDriver;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ELineType;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IAxis;
@@ -32,31 +28,14 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
 
 import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
 import examples.org.optimizationBenchmarking.utils.graphics.ColorPaletteExample;
-import examples.org.optimizationBenchmarking.utils.graphics.FontPaletteExample;
-import examples.org.optimizationBenchmarking.utils.graphics.GraphicConfigExample;
+import examples.org.optimizationBenchmarking.utils.graphics.ExampleFontPalettes;
+import examples.org.optimizationBenchmarking.utils.graphics.ExampleGraphicConfigurations;
 import examples.org.optimizationBenchmarking.utils.graphics.StrokePaletteExample;
 
 /**
  * An example for rendering line charts.
  */
 public class LineChartExample {
-
-  /** the chart drivers */
-  public static final ArrayListView<IChartDriver> DRIVERS;
-
-  static {
-    final LinkedHashSet<IChartDriver> list;
-
-    list = new LinkedHashSet<>();
-    list.add(JFreeChartDriver.getInstance());
-
-    for (final EChartFormat format : EChartFormat.values()) {
-      list.add(format.getDefaultDriver());
-    }
-
-    DRIVERS = new ArrayListView<>(list.toArray(new IChartDriver[list
-        .size()]));
-  }
 
   /** get the legend modes */
   private static final ELegendMode[] LEGEND_MODES = ELegendMode.values();
@@ -99,8 +78,8 @@ public class LineChartExample {
       seed = rand.nextLong();
       sub = dir.resolve("example_" + example); //$NON-NLS-1$
       z = 0;
-      for (final GraphicConfiguration d : GraphicConfigExample.CONFIGURATIONS) {
-        for (final IChartDriver c : LineChartExample.DRIVERS) {
+      for (final GraphicConfiguration d : ExampleGraphicConfigurations.CONFIGURATIONS) {
+        for (final IChartDriver c : ExampleChartDrivers.DRIVERS) {
           try (final Graphic g = d
               .createGraphic(
                   sub,//
@@ -124,8 +103,8 @@ public class LineChartExample {
    * @return the style set
    */
   public static final StyleSet randomStyleSet(final Random rand) {
-    return new StyleSet(FontPaletteExample.PALETTES.get(rand
-        .nextInt(FontPaletteExample.PALETTES.size())),//
+    return new StyleSet(ExampleFontPalettes.PALETTES.get(rand
+        .nextInt(ExampleFontPalettes.PALETTES.size())),//
         ColorPaletteExample.PALETTES.get(rand
             .nextInt(ColorPaletteExample.PALETTES.size())),//
         StrokePaletteExample.PALETTES.get(rand
@@ -147,42 +126,58 @@ public class LineChartExample {
   public static final void randomLineChart(final Random rand,
       final Graphic graphic, final StyleSet styles,
       final IChartDriver driver) {
-    final double minX, maxX, minY, maxY;
-    double a, b, c;
 
     try (final ILineChart chart = driver.use().setGraphic(graphic)
         .setStyleSet(styles).setLogger(Logger.getGlobal()).create()
         .lineChart()) {
-      LineChartExample.__title(chart, rand, styles, null, 8);
-      chart.setLegendMode(LineChartExample.LEGEND_MODES[rand
-          .nextInt(LineChartExample.LEGEND_MODES.length)]);
-
-      c = Math.exp(rand.nextGaussian() * 4);
-      a = ((rand.nextDouble() - 0.5d) * c);
-      b = ((rand.nextDouble() - 0.5d) * c);
-      minX = Math.min(a, b);
-      maxX = Math.max(a, b);
-
-      c = Math.exp(rand.nextGaussian() * 4);
-      a = ((rand.nextDouble() - 0.5d) * c);
-      b = ((rand.nextDouble() - 0.5d) * c);
-      minY = Math.min(a, b);
-      maxY = Math.max(a, b);
-
-      try (final IAxis axis = chart.xAxis()) {
-        LineChartExample.__axis(axis, rand, styles, minX, maxX);
-      }
-      try (final IAxis axis = chart.yAxis()) {
-        LineChartExample.__axis(axis, rand, styles, minY, maxY);
-      }
-
-      do {
-        try (final ILine2D line = chart.line()) {
-          LineChartExample.__line(line, rand, styles, minX, maxX, minY,
-              maxY);
-        }
-      } while (rand.nextInt(4) > 0);
+      LineChartExample.randomLineChart(rand, chart, styles);
     }
+  }
+
+  /**
+   * Render a random line chart to a given graphic
+   * 
+   * @param rand
+   *          the random number generator
+   * @param styles
+   *          the styles
+   * @param chart
+   *          the chart
+   */
+  public static final void randomLineChart(final Random rand,
+      final ILineChart chart, final StyleSet styles) {
+    final double minX, maxX, minY, maxY;
+    double a, b, c;
+
+    LineChartExample.__title(chart, rand, styles, null, 8);
+    chart.setLegendMode(LineChartExample.LEGEND_MODES[rand
+        .nextInt(LineChartExample.LEGEND_MODES.length)]);
+
+    c = Math.exp(rand.nextGaussian() * 4);
+    a = ((rand.nextDouble() - 0.5d) * c);
+    b = ((rand.nextDouble() - 0.5d) * c);
+    minX = Math.min(a, b);
+    maxX = Math.max(a, b);
+
+    c = Math.exp(rand.nextGaussian() * 4);
+    a = ((rand.nextDouble() - 0.5d) * c);
+    b = ((rand.nextDouble() - 0.5d) * c);
+    minY = Math.min(a, b);
+    maxY = Math.max(a, b);
+
+    try (final IAxis axis = chart.xAxis()) {
+      LineChartExample.__axis(axis, rand, styles, minX, maxX);
+    }
+    try (final IAxis axis = chart.yAxis()) {
+      LineChartExample.__axis(axis, rand, styles, minY, maxY);
+    }
+
+    do {
+      try (final ILine2D line = chart.line()) {
+        LineChartExample
+            .__line(line, rand, styles, minX, maxX, minY, maxY);
+      }
+    } while (rand.nextInt(4) > 0);
   }
 
   /**

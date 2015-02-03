@@ -502,11 +502,9 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         this.m_formatFormatter = this.m_cache.get(s);
         if (this.m_formatFormatter == null) {
           try {
-            this.m_formatFormatter = ReflectionUtils
-                .getStaticFieldValueByName(s, Object.class);
-          } catch (NoSuchFieldException | IllegalArgumentException
-              | IllegalAccessException | LinkageError
-              | ClassNotFoundException | ClassCastException y) {
+            this.m_formatFormatter = ReflectionUtils.getInstanceByName(
+                Object.class, s);
+          } catch (final ReflectiveOperationException y) {
             ErrorUtils.throwAsRuntimeException(y);
           }
           if (this.m_formatFormatter != null) {

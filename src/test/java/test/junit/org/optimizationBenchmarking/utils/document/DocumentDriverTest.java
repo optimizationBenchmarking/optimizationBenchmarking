@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
-import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
 
 import test.junit.InstanceTest;
@@ -21,16 +21,17 @@ import examples.org.optimizationBenchmarking.utils.document.TemplateDocumentExam
 
 /** A test of a document driver */
 @Ignore
-public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
+public class DocumentDriverTest extends
+    InstanceTest<DocumentConfiguration> {
 
   /**
    * create
    * 
-   * @param driver
-   *          the driver
+   * @param config
+   *          the configuration
    */
-  public DocumentDriverTest(final IDocumentDriver driver) {
-    super(null, driver, false, false);
+  public DocumentDriverTest(final DocumentConfiguration config) {
+    super(null, config, false, false);
   }
 
   /**
@@ -50,16 +51,16 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
   private final void __doRandomTest(final ExecutorService service,
       final Random r) throws IOException, InterruptedException,
       ExecutionException {
-    final IDocumentDriver driver;
+    final DocumentConfiguration config;
     final RandomDocumentExample ex;
     final Future<?> f;
 
-    driver = this.getInstance();
-    Assert.assertNotNull(driver);
+    config = this.getInstance();
+    Assert.assertNotNull(config);
 
     try (final TempDir td = new TempDir()) {
-      try (final IDocument doc = driver.use().setBasePath(td.getPath())
-          .setMainDocumentNameSuggestion("document").create()) { //$NON-NLS-1$
+      try (final IDocument doc = config.createDocument(td.getPath(),
+          "document", null, null)) { //$NON-NLS-1$
         ex = new RandomDocumentExample(doc, r, null, 75_000L);
         if (service != null) {
           f = service.submit(ex);
@@ -85,16 +86,16 @@ public class DocumentDriverTest extends InstanceTest<IDocumentDriver> {
    */
   private final void __doTemplateTest(final ExecutorService service)
       throws IOException, InterruptedException, ExecutionException {
-    final IDocumentDriver driver;
+    final DocumentConfiguration config;
     final TemplateDocumentExample ex;
     final Future<?> f;
 
-    driver = this.getInstance();
-    Assert.assertNotNull(driver);
+    config = this.getInstance();
+    Assert.assertNotNull(config);
 
     try (final TempDir td = new TempDir()) {
-      try (final IDocument doc = driver.use().setBasePath(td.getPath())
-          .setMainDocumentNameSuggestion("document").create()) { //$NON-NLS-1$
+      try (final IDocument doc = config.createDocument(td.getPath(),
+          "document", null, null)) { //$NON-NLS-1$
         ex = new TemplateDocumentExample(doc);
         if (service != null) {
           f = service.submit(ex);

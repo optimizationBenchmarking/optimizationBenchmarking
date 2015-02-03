@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.graphics;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
 /** An enumeration of screen sizes */
@@ -37,6 +38,10 @@ public enum EScreenSize implements IMedium {
 
   /** the default pixels per inch of a screen */
   public static final int DEFAULT_SCREEN_DPI = 96;
+
+  /** the set of screen sizes */
+  public static final ArraySetView<EScreenSize> INSTANCES = //
+  new ArraySetView<>(EScreenSize.values());
 
   /** the width */
   private final int m_width;

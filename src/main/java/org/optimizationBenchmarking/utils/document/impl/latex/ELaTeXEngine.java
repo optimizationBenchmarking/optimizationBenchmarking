@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 
 /** The set of LaTeX engines which we may be able to use. */
@@ -50,6 +51,10 @@ public enum ELaTeXEngine {
     }
   },
   ;
+
+  /** the instances of the LaTeX engine set */
+  public static final ArraySetView<ELaTeXEngine> INSTANCES = new ArraySetView<>(
+      ELaTeXEngine.values());
 
   /**
    * check whether a given graphic format is supported

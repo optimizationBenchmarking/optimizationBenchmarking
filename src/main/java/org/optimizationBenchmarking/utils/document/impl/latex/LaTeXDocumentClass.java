@@ -3,15 +3,12 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 import java.nio.file.Path;
 import java.util.Map;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.graphics.EPaperSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.math.units.ELength;
@@ -34,7 +31,7 @@ public class LaTeXDocumentClass extends PageDimension {
   private final EPaperSize m_paperSize;
 
   /** the font palette */
-  final FontPalette m_fonts;
+  private final FontPalette m_fonts;
 
   /**
    * create a new document class
@@ -88,8 +85,15 @@ public class LaTeXDocumentClass extends PageDimension {
     } else {
       this.m_classParams = params;
     }
-    this.m_fonts = ((fonts == null) ? LaTeXDocumentClass
-        .getDefaultFontPalette() : fonts);
+
+    if (fonts == null) {
+      if (LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE == null) {
+        throw LaTeXDriver._LaTeXDefaultFontPaletteLoader.ERROR;
+      }
+      this.m_fonts = LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE;
+    } else {
+      this.m_fonts = fonts;
+    }
   }
 
   /**
@@ -126,6 +130,15 @@ public class LaTeXDocumentClass extends PageDimension {
    */
   public final EPaperSize getPaperSize() {
     return this.m_paperSize;
+  }
+
+  /**
+   * Get the font palette
+   * 
+   * @return the font palette
+   */
+  public final FontPalette getFontPalette() {
+    return this.m_fonts;
   }
 
   /** {@inheritDoc} */
@@ -186,40 +199,5 @@ public class LaTeXDocumentClass extends PageDimension {
    */
   public Map.Entry<Path, IFileType>[] initialize(final Path folder) {
     return null;
-  }
-
-  /**
-   * obtain the default font palette
-   * 
-   * @return the default font palette
-   */
-  public static final FontPalette getDefaultFontPalette() {
-    return __LaTeXDefaultFontPaletteLoader.INSTANCE;
-  }
-
-  /** the default font palette */
-  private static final class __LaTeXDefaultFontPaletteLoader {
-
-    /** the internal font palette */
-    static final FontPalette INSTANCE;
-
-    static {
-      FontPalette p;
-
-      p = null;
-      try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-        PaletteInputDriver
-            .getInstance()
-            .use()
-            .setDestination(tb)
-            .addResource(LaTeXDocumentClass.class, "latex.fontPalette").create().call(); //$NON-NLS-1$
-        p = tb.getResult();
-      } catch (final Throwable tt) {
-        ErrorUtils.throwAsRuntimeException(tt);
-      }
-
-      INSTANCE = p;
-    }
-
   }
 }

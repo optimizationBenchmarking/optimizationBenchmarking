@@ -12,7 +12,7 @@ public enum EDocumentFormat implements IFileType {
     /** {@inheritDoc} */
     @Override
     public final IDocumentDriver getDefaultDriver() {
-      return XHTML10Driver.getDefaultDriver();
+      return XHTML10Driver.getInstance();
     }
 
     /** {@inheritDoc} */
