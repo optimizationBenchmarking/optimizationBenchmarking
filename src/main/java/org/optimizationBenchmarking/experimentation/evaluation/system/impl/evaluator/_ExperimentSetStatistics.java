@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
@@ -9,11 +11,20 @@ final class _ExperimentSetStatistics extends _Part {
   /**
    * create the experiment set statistics module
    * 
+   * @param logger
+   *          the logger
    * @param children
    *          the children
    */
-  _ExperimentSetStatistics(final _PseudoModule[] children) {
-    super(children);
+  _ExperimentSetStatistics(final Logger logger,
+      final _PseudoModule[] children) {
+    super(logger, children);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final String _getName() {
+    return "Experiment Set Statistics"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

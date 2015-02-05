@@ -64,8 +64,20 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
    * @param data
    *          the data
    * @return this builder
+   * @see #setInput(IEvaluationInput)
    */
-  public abstract IEvaluationBuilder setData(final ExperimentSet data);
+  public abstract IEvaluationBuilder setInputData(final ExperimentSet data);
+
+  /**
+   * Set the input source for the data of this evaluation process.
+   * 
+   * @param input
+   *          the input object to obtain the data for the evaluation
+   *          process
+   * @return this builder
+   * @see #setInputData(ExperimentSet)
+   */
+  public abstract IEvaluationBuilder setInput(final IEvaluationInput input);
 
   /**
    * Set the document to which the evaluation result should be written
@@ -73,14 +85,27 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
    * @param doc
    *          the document
    * @return this builder
+   * @see #setOutput(IEvaluationOutput)
    */
-  public abstract IEvaluationBuilder setDocument(final IDocument doc);
+  public abstract IEvaluationBuilder setOutputDocument(final IDocument doc);
 
   /**
-   * Set the authors of the output document
+   * Set the output object generating the document to be used for storing
+   * the experiment output
+   * 
+   * @param output
+   *          the output object
+   * @return this builder
+   * @see #setOutputDocument(IDocument)
+   */
+  public abstract IEvaluationBuilder setOutput(
+      final IEvaluationOutput output);
+
+  /**
+   * Set the authors of the output document.
    * 
    * @param authors
-   *          the authors of the output document
+   *          the authors of the output document.
    * @return this builder
    */
   public abstract IEvaluationBuilder setAuthors(final BibAuthors authors);

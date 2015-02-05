@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.optimizationBenchmarking.org/formats/evaluationConfiguration/evaluationConfiguration.1.0.xsd"
+	targetNamespace="http://www.optimizationBenchmarking.org/formats/evaluationConfiguration/evaluationConfiguration.1.0.xsd"
+	xmlns:cfg="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd"
+	elementFormDefault="qualified">
+
+	<annotation>
+		<documentation>The XML Schema for configuring an evaluation process,
+			version 1.0.
+		</documentation>
+	</annotation>
+
+	<import
+		namespace="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd"
+		schemaLocation="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd" />
+
+
+	<element name="evaluation">
+		<complexType>
+			<sequence>
+				<element ref="cfg:configuration" minOccurs="0" maxOccurs="1" />
+				<element ref="tns:module" minOccurs="0" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="module">
+		<complexType>
+			<sequence>
+				<element ref="cfg:configuration" minOccurs="0" maxOccurs="1" />
+			</sequence>
+			<attribute name="class" type="token" use="required" />
+		</complexType>
+	</element>
+
+</schema>

@@ -100,15 +100,6 @@ public final class Experiment extends _IDObjectSet<InstanceRuns> {
     return this.m_parameters;
   }
 
-  /**
-   * Get the name of the experiment
-   * 
-   * @return the name of the experiment
-   */
-  public final String name() {
-    return this.m_name;
-  }
-
   /** {@inheritDoc} */
   @Override
   final int _compareTo(final _IDObject o) {

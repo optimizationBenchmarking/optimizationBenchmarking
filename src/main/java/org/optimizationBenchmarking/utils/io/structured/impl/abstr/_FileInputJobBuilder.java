@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
@@ -41,22 +42,20 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
   }
 
   /** {@inheritDoc} */
-  @Override
-  protected String getParameterPrefix() {
-    return IOTool.INPUT_PARAM_PREFIX;
-  }
-
-  /** {@inheritDoc} */
+  @SuppressWarnings("rawtypes")
   @Override
   public JBT configure(final Configuration config) {
     final JBT res;
+    final ArrayListView<String> strings;
 
     res = super.configure(config);
+    strings = ((FileInputTool) (this.m_tool))._getSources(config);
 
-    for (final String source : config.getStringList(
-        IOTool.PARAM_INPUT_SOURCES, null)) {
-      if (source != null) {
-        this._location(source);
+    if (strings != null) {
+      for (final String source : strings) {
+        if (source != null) {
+          this._location(source);
+        }
       }
     }
 

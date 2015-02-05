@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 
@@ -16,8 +19,10 @@ final class _Modules extends _PseudoModule {
   private final _Appendices m_appendices;
 
   /**
-   * create the evaluation job
+   * create the module job
    * 
+   * @param logger
+   *          the logger
    * @param desc
    *          the descriptions
    * @param experimentStatistics
@@ -27,11 +32,11 @@ final class _Modules extends _PseudoModule {
    * @param appendices
    *          the appendices
    */
-  _Modules(final _Descriptions desc,
+  _Modules(final Logger logger, final _Descriptions desc,
       final _ExperimentStatistics experimentStatistics,
       final _ExperimentSetStatistics experimentSetStatistics,
       final _Appendices appendices) {
-    super();
+    super(logger);
 
     int size;
     boolean have;
@@ -76,7 +81,7 @@ final class _Modules extends _PseudoModule {
     }
 
     if (!have) {
-      _EvaluationBuilder._noModuleError();
+      _ModulesBuilder._noStatisticModuleError();
     }
 
     this.m_children = new _PseudoModule[size];
@@ -94,6 +99,12 @@ final class _Modules extends _PseudoModule {
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  final String _getName() {
+    return "Root Module"; //$NON-NLS-1$
+  }
+
   /**
    * do all the body jobs
    * 
@@ -103,6 +114,11 @@ final class _Modules extends _PseudoModule {
    *          the document body
    */
   final void _bodyJobs(final ExperimentSet data, final IDocumentBody body) {
+
+    if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
+      this.m_logger.fine("Beginning to write output document body."); //$NON-NLS-1$
+    }
+
     if (this.m_desc != null) {
       this.m_desc._doJobs(data, body);
     }
@@ -111,6 +127,10 @@ final class _Modules extends _PseudoModule {
     }
     if (this.m_experimentSetStatistics != null) {
       this.m_experimentSetStatistics._doJobs(data, body);
+    }
+
+    if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
+      this.m_logger.fine("Finished writing output document body."); //$NON-NLS-1$
     }
   }
 
@@ -125,7 +145,18 @@ final class _Modules extends _PseudoModule {
   final void _footerJobs(final ExperimentSet data,
       final IDocumentBody footer) {
     if (this.m_appendices != null) {
+
+      if ((this.m_logger != null)
+          && (this.m_logger.isLoggable(Level.FINE))) {
+        this.m_logger.fine("Beginning to write output document footer."); //$NON-NLS-1$
+      }
+
       this.m_appendices._doJobs(data, footer);
+
+      if ((this.m_logger != null)
+          && (this.m_logger.isLoggable(Level.FINE))) {
+        this.m_logger.fine("Finished writing output document footer."); //$NON-NLS-1$
+      }
     }
   }
 }

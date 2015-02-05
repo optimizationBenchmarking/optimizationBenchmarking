@@ -42,20 +42,24 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
   }
 
   /** {@inheritDoc} */
-  @Override
-  protected String getParameterPrefix() {
-    return IOTool.OUTPUT_PARAM_PREFIX;
-  }
-
-  /** {@inheritDoc} */
+  @SuppressWarnings("rawtypes")
   @Override
   public JBT configure(final Configuration config) {
     final String dest;
     final JBT res;
+    String prefix, suffix;
 
     res = super.configure(config);
 
-    dest = config.getString(IOTool.PARAM_OUTPUT_DESTINATION, null);
+    prefix = this.getParameterPrefix();
+    if (prefix == null) {
+      prefix = IOTool.OUTPUT_PARAM_PREFIX;
+    }
+    suffix = ((FileOutputTool) (this.m_tool)).getDestinationParamSuffix();
+    if (suffix == null) {
+      suffix = IOTool.PARAM_DESTINATION_SUFFIX;
+    }
+    dest = config.getString((prefix + suffix), null);
     if (dest != null) {
       this._location(dest);
     }

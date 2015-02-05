@@ -23,6 +23,8 @@ import org.optimizationBenchmarking.utils.parsers.LoggerParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.parsers.PathParser;
 import org.optimizationBenchmarking.utils.parsers.StringParser;
+import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * <p>
@@ -74,7 +76,7 @@ import org.optimizationBenchmarking.utils.parsers.StringParser;
  * be stored in the configuration you called the getter method of.
  * </p>
  */
-public final class Configuration implements Serializable {
+public final class Configuration implements Serializable, ITextable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -618,5 +620,21 @@ public final class Configuration implements Serializable {
     }
     throw new IllegalStateException(//
         "The root configuration can only be setup at most once."); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    synchronized (this.m_data) {
+      textOut.append(this.m_data);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    synchronized (this.m_data) {
+      return this.m_data.toString();
+    }
   }
 }

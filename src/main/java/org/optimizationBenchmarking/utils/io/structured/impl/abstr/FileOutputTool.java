@@ -29,6 +29,21 @@ public class FileOutputTool<S> extends IOTool<S> implements
 
   /** {@inheritDoc} */
   @Override
+  protected String getParameterPrefix() {
+    return IOTool.OUTPUT_PARAM_PREFIX;
+  }
+
+  /**
+   * Get the suffix for the destination parameter
+   * 
+   * @return the suffix for the destination parameter
+   */
+  protected String getDestinationParamSuffix() {
+    return IOTool.PARAM_DESTINATION_SUFFIX;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   void _handle(final IOJob job, final S data, final _Location location)
       throws Throwable {
 

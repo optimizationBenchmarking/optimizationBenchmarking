@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.DataSet;
 import org.optimizationBenchmarking.experimentation.data.Experiment;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
@@ -20,18 +22,27 @@ final class _ModuleWrapper extends _PseudoModule {
   /**
    * create the pseudo module
    * 
+   * @param logger
+   *          the logger
    * @param module
    *          the module
    * @param children
    *          the children
    */
-  _ModuleWrapper(final _PseudoModule[] children,
+  _ModuleWrapper(final Logger logger, final _PseudoModule[] children,
       final IConfiguredModule module) {
-    super(children);
+    super(logger, children);
     if (module == null) {
       throw new IllegalArgumentException("Module must not be null."); //$NON-NLS-1$
     }
     this.m_module = module;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final String _getName() {
+    return ("Module " + //$NON-NLS-1$
+    TextUtils.className(this.m_module.getClass()));
   }
 
   /** {@inheritDoc} */

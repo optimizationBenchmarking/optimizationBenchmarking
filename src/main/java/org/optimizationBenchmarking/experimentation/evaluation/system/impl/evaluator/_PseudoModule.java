@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
 import java.util.concurrent.ForkJoinTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.DataSet;
 import org.optimizationBenchmarking.experimentation.data.Experiment;
@@ -13,23 +15,43 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 /** a pseudo-module represents a hierarchical ordering of modules */
 class _PseudoModule {
 
+  /** the logger */
+  final Logger m_logger;
+
   /** the child modules */
   _PseudoModule[] m_children;
 
   /**
    * create the pseudo module
    * 
+   * @param logger
+   *          the logger
    * @param children
    *          the children
    */
-  _PseudoModule(final _PseudoModule[] children) {
-    this();
+  _PseudoModule(final Logger logger, final _PseudoModule[] children) {
+    this(logger);
     this.m_children = children;
   }
 
-  /** create the pseudo module */
-  _PseudoModule() {
+  /**
+   * create the pseudo module
+   * 
+   * @param logger
+   *          the logger
+   */
+  _PseudoModule(final Logger logger) {
     super();
+    this.m_logger = logger;
+  }
+
+  /**
+   * get this module's name
+   * 
+   * @return the module's name
+   */
+  String _getName() {
+    return this.getClass().getSimpleName();
   }
 
   /**
@@ -42,8 +64,20 @@ class _PseudoModule {
    */
   void _doInitJobs(final ExperimentSet data, final IDocument document) {
     if (this.m_children != null) {
+      if ((this.m_logger != null)
+          && (this.m_logger.isLoggable(Level.FINEST))) {
+        this.m_logger
+            .finest("Beginning to execute initialization jobs of sub-modules of " + //$NON-NLS-1$
+                this._getName());
+      }
       for (final _PseudoModule module : this.m_children) {
         module._doInitJobs(data, document);
+      }
+      if ((this.m_logger != null)
+          && (this.m_logger.isLoggable(Level.FINEST))) {
+        this.m_logger
+            .finest("Finished executing initialization jobs of sub-modules of " + //$NON-NLS-1$
+                this._getName());
       }
     }
   }
@@ -58,8 +92,20 @@ class _PseudoModule {
    */
   void _doSummaryJobs(final ExperimentSet data, final IPlainText summary) {
     if (this.m_children != null) {
+      if ((this.m_logger != null)
+          && (this.m_logger.isLoggable(Level.FINEST))) {
+        this.m_logger
+            .finest("Beginning to execute summary jobs of sub-modules of " + //$NON-NLS-1$
+                this._getName());
+      }
       for (final _PseudoModule module : this.m_children) {
         module._doSummaryJobs(data, summary);
+      }
+      if ((this.m_logger != null)
+          && (this.m_logger.isLoggable(Level.FINEST))) {
+        this.m_logger
+            .finest("Finished executing summary jobs of sub-modules of " + //$NON-NLS-1$
+                this._getName());
       }
     }
   }
@@ -137,6 +183,13 @@ class _PseudoModule {
     String name;
     int i;
 
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.FINEST))) {
+      this.m_logger
+          .finest("Beginning to execute main jobs of sub-modules of " + //$NON-NLS-1$
+              this._getName());
+    }
+
     if ((children = this.m_children) == null) {
       return;
     }
@@ -205,6 +258,12 @@ class _PseudoModule {
       }
     }
 
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.FINEST))) {
+      this.m_logger
+          .finest("Finished executing main jobs of sub-modules of " + //$NON-NLS-1$
+              this._getName());
+    }
   }
 
   /** {@inheritDoc} */

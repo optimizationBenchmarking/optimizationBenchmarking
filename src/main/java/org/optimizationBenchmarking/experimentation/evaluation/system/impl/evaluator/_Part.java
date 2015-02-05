@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.DataSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
@@ -19,11 +21,19 @@ abstract class _Part extends _PseudoModule {
   /**
    * create the descriptions module
    * 
+   * @param logger
+   *          the logger
    * @param children
    *          the children
    */
-  _Part(final _PseudoModule[] children) {
-    super(children);
+  _Part(final Logger logger, final _PseudoModule[] children) {
+    super(logger, children);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  String _getName() {
+    return "Document Part"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

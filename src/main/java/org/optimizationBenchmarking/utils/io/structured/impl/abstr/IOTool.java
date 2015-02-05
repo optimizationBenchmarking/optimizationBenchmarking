@@ -28,37 +28,37 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
   public static final String INPUT_PARAM_PREFIX = "input"; //$NON-NLS-1$
 
   /** the input sources parameter */
-  public static final String PARAM_INPUT_SOURCES = "inputSources"; //$NON-NLS-1$
+  public static final String PARAM_SOURCES_SUFFIX = "Source"; //$NON-NLS-1$
 
   /** the output prefix */
   public static final String OUTPUT_PARAM_PREFIX = "output"; //$NON-NLS-1$
 
   /** the output destination parameter */
-  public static final String PARAM_OUTPUT_DESTINATION = "outputDest"; //$NON-NLS-1$
+  public static final String PARAM_DESTINATION_SUFFIX = "Dest"; //$NON-NLS-1$
 
   /**
    * indicates a path element {@value} , which can be used in the
-   * {@link #PARAM_INPUT_SOURCES} or {@link #PARAM_OUTPUT_DESTINATION}
+   * {@link #PARAM_SOURCES_SUFFIX} or {@link #PARAM_DESTINATION_SUFFIX}
    * parameters
    */
   public static final String PATH_ELEMENT = "path"; //$NON-NLS-1$
 
   /**
    * indicates a zipped path element {@value} , which can be used in the
-   * {@link #PARAM_INPUT_SOURCES} or {@link #PARAM_OUTPUT_DESTINATION}
+   * {@link #PARAM_SOURCES_SUFFIX} or {@link #PARAM_DESTINATION_SUFFIX}
    * parameters
    */
   public static final String ZIPPED_PATH_ELEMENT = "zipPath"; //$NON-NLS-1$
 
   /**
    * indicates a zipped url element {@value} , which can be used in the
-   * {@link #PARAM_INPUT_SOURCES} parameter
+   * {@link #PARAM_SOURCES_SUFFIX} parameter
    */
   public static final String ZIPPED_URL_ELEMENT = "zipURL"; //$NON-NLS-1$
 
   /**
    * indicates a zipped uri element {@value} , which can be used in the
-   * {@link #PARAM_INPUT_SOURCES} parameter
+   * {@link #PARAM_SOURCES_SUFFIX} parameter
    */
   public static final String ZIPPED_URI_ELEMENT = "zipURI"; //$NON-NLS-1$
 
@@ -70,6 +70,13 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
     super();
     this.m_jobCounter = new AtomicLong();
   }
+
+  /**
+   * Get a parameter prefix
+   * 
+   * @return the parameter prefix, or {@code null} if none is needed
+   */
+  protected abstract String getParameterPrefix();
 
   /** {@inheritDoc} */
   @Override

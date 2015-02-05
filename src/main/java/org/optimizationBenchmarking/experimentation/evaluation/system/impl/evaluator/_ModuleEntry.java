@@ -23,8 +23,8 @@ final class _ModuleEntry {
   _ModuleEntry(final IEvaluationModule module, final Configuration config) {
     super();
 
-    _EvaluationBuilder._checkModule(module);
-    _EvaluationBuilder._checkConfig(config);
+    _EvaluationSetup._checkModule(module);
+    _EvaluationSetup._checkConfiguration(config);
     this.m_module = module;
     this.m_config = config;
   }

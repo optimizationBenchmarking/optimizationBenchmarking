@@ -30,17 +30,21 @@ public class ConfigurationXMLHandler extends DelegatingHandler {
       final String qName, final Attributes attributes) throws SAXException {
     String a, b;
     if ((uri == null)
-        || (_ConfigXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+        || (ConfigurationXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
 
-      if (_ConfigXMLConstants.ELEMENT_CONFIGURATION_PARAMETER
+      if (ConfigurationXMLConstants.ELEMENT_CONFIGURATION_PARAMETER
           .equalsIgnoreCase(localName)) {
 
-        a = DelegatingHandler.getAttribute(attributes,
-            _ConfigXMLConstants.NAMESPACE,
-            _ConfigXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME);
-        b = DelegatingHandler.getAttribute(attributes,
-            _ConfigXMLConstants.NAMESPACE,
-            _ConfigXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE);
+        a = DelegatingHandler
+            .getAttribute(
+                attributes,
+                ConfigurationXMLConstants.NAMESPACE,
+                ConfigurationXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME);
+        b = DelegatingHandler
+            .getAttribute(
+                attributes,
+                ConfigurationXMLConstants.NAMESPACE,
+                ConfigurationXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE);
 
         this.m_dest.put(a, b);
       }
@@ -52,8 +56,8 @@ public class ConfigurationXMLHandler extends DelegatingHandler {
   protected void doEndElement(final String uri, final String localName,
       final String qName) throws SAXException {
     if ((uri == null)
-        || (_ConfigXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
-      if (_ConfigXMLConstants.ELEMENT_CONFIGURATION_ROOT
+        || (ConfigurationXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+      if (ConfigurationXMLConstants.ELEMENT_CONFIGURATION_ROOT
           .equalsIgnoreCase(localName)) {
         this.close();
       }

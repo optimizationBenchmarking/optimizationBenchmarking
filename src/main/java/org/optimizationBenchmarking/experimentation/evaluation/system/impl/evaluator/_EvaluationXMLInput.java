@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.config;
+package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParserFactory;
@@ -10,22 +10,33 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 import org.xml.sax.helpers.DefaultHandler;
 
-/** the configuration xml input */
-public final class ConfigurationXMLInput extends
-    XMLInputTool<ConfigurationBuilder> {
+/** the evaluation xml input */
+final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
 
   /** create */
-  ConfigurationXMLInput() {
+  _EvaluationXMLInput() {
     super();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  protected final String getSourcesParameterSuffix() {
+    return _EvaluationXMLConstants.PARAM_EVALUATION_SUFFIX;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected String getParameterPrefix() {
+    return _EvaluationXMLConstants.PARAM_EVALUATION_PREFIX;
+  }
+
   /**
-   * get the instance of the {@link ConfigurationXMLInput}
+   * get the instance of the {@link _EvaluationXMLInput}
    * 
-   * @return the instance of the {@link ConfigurationXMLInput}
+   * @return the instance of the {@link _EvaluationXMLInput}
    */
-  public static final ConfigurationXMLInput getInstance() {
-    return __ConfigurationXMLInputLoader.INSTANCE;
+  public static final _EvaluationXMLInput getInstance() {
+    return __EvaluationXMLInputLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -40,9 +51,10 @@ public final class ConfigurationXMLInput extends
     schema = null;
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+      sf.setResourceResolver(new _LSResourceResolver(sf
+          .getResourceResolver()));
       schema = sf.newSchema(//
-          ConfigurationXMLConstants.class
-              .getResource("configuration.1.0.xsd")); //$NON-NLS-1$
+          _EvaluationXMLConstants.class.getResource("evaluation.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
       rec = a;
     } finally {
@@ -68,20 +80,20 @@ public final class ConfigurationXMLInput extends
 
   /** {@inheritDoc} */
   @Override
-  protected DefaultHandler wrapDestination(
-      final ConfigurationBuilder dataDestination, final IOJob job) {
-    return new ConfigurationXMLHandler(null, dataDestination);
+  protected final DefaultHandler wrapDestination(
+      final _EvaluationSetup dataDestination, final IOJob job) {
+    return new _EvaluationXMLHandler(null, dataDestination);
   }
 
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Configuration XML Input"; //$NON-NLS-1$
+    return "Evaluation XML Input"; //$NON-NLS-1$
   }
 
   /** the loader */
-  private static final class __ConfigurationXMLInputLoader {
-    /** the configuration xml */
-    static final ConfigurationXMLInput INSTANCE = new ConfigurationXMLInput();
+  private static final class __EvaluationXMLInputLoader {
+    /** the evaluation xml */
+    static final _EvaluationXMLInput INSTANCE = new _EvaluationXMLInput();
   }
 }

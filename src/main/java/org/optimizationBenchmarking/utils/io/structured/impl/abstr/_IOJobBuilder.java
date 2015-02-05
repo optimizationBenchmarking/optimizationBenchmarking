@@ -31,6 +31,12 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
     this.m_tool = tool;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  protected final String getParameterPrefix() {
+    return this.m_tool.getParameterPrefix();
+  }
+
   /**
    * load the give source/dest list string
    * 

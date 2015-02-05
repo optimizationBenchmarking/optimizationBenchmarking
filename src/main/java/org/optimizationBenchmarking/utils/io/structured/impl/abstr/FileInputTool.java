@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
@@ -30,12 +32,66 @@ public class FileInputTool<S> extends IOTool<S> implements
     super();
   }
 
+  /**
+   * Are there any sources defined for this module in the given
+   * configuration? In other words, if we create a job builder for this
+   * input driver and configure it based on {@code config}, can we create
+   * and execute a job from it?
+   * 
+   * @param config
+   *          the configuration
+   * @return {@code true} if sources are defined, {@code false} otherwise
+   */
+  public final boolean areSourcesDefined(final Configuration config) {
+    ArrayListView<String> sources;
+
+    sources = this._getSources(config);
+    return ((sources != null) && (!(sources.isEmpty())));
+  }
+
+  /**
+   * Get the sources
+   * 
+   * @param config
+   *          the configuration
+   * @return the sources
+   */
+  final ArrayListView<String> _getSources(final Configuration config) {
+    String prefix, suffix;
+
+    prefix = this.getParameterPrefix();
+    if (prefix == null) {
+      prefix = IOTool.INPUT_PARAM_PREFIX;
+    }
+    suffix = this.getSourcesParameterSuffix();
+    if (suffix == null) {
+      suffix = IOTool.PARAM_SOURCES_SUFFIX;
+    }
+
+    return config.getStringList((prefix + suffix), null);
+  }
+
   /** {@inheritDoc} */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public IFileInputJobBuilder<S> use() {
     this.checkCanUse();
     return new _FileInputJobBuilder(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected String getParameterPrefix() {
+    return IOTool.INPUT_PARAM_PREFIX;
+  }
+
+  /**
+   * Get the suffix to be used for the source parameter
+   * 
+   * @return the suffix to be used for the source parameter
+   */
+  protected String getSourcesParameterSuffix() {
+    return IOTool.PARAM_SOURCES_SUFFIX;
   }
 
   /** {@inheritDoc} */
