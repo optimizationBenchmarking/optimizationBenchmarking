@@ -96,6 +96,13 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
       return;
     }
 
+    if (IOTool.ZIPPED_RESOURCE_ELEMENT.equalsIgnoreCase(function)) {
+      i = parameter.indexOf('#');
+      this._setResource(parameter.substring(0, i),
+          parameter.substring(i + 1), null, EArchiveType.ZIP);
+      return;
+    }
+
     throw new UnsupportedOperationException(//
         "Cannot process I/O function '" + function + //$NON-NLS-1$
             "' with parameter '" + parameter + '\'');//$NON-NLS-1$
