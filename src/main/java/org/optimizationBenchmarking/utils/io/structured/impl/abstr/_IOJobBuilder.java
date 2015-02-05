@@ -44,7 +44,7 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
    *          the location string
    */
   void _location(final String location) {
-    int start, end;
+    int start, end, i;
     String function, parameter;
 
     if (location == null) {
@@ -86,6 +86,13 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
 
     if (IOTool.ZIPPED_URL_ELEMENT.equalsIgnoreCase(function)) {
       this._setURL(parameter, null, EArchiveType.ZIP);
+      return;
+    }
+
+    if (IOTool.RESOURCE_ELEMENT.equalsIgnoreCase(function)) {
+      i = parameter.indexOf('#');
+      this._setResource(parameter.substring(0, i),
+          parameter.substring(i + 1), null, null);
       return;
     }
 
@@ -131,6 +138,21 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
    *          the archive type
    */
   abstract void _setURL(final String url,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
+
+  /**
+   * Set the resource
+   * 
+   * @param clazz
+   *          the class
+   * @param resource
+   *          the resource name
+   * @param encoding
+   *          the encoding
+   * @param archiveType
+   *          the archive type
+   */
+  abstract void _setResource(final String clazz, final String resource,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType);
 
   /**

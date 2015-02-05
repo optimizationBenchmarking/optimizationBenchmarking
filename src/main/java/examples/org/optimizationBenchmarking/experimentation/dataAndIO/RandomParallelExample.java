@@ -1,4 +1,4 @@
-package test.junit.org.optimizationBenchmarking.experimentation.dataAndIO;
+package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,11 +20,10 @@ import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
 import org.optimizationBenchmarking.experimentation.data.InstanceSet;
 
 /** A class for creating in parallel sets */
-public class ExperimentSetCreatorRandomParallel extends
-    ExperimentSetCreatorRandom {
+public class RandomParallelExample extends RandomExample {
 
   /** create */
-  public ExperimentSetCreatorRandomParallel() {
+  public RandomParallelExample() {
     super();
   }
 
@@ -129,6 +128,16 @@ public class ExperimentSetCreatorRandomParallel extends
     }
   }
 
+  /**
+   * The main routine
+   * 
+   * @param args
+   *          the command line arguments
+   */
+  public static void main(final String[] args) {
+    new RandomParallelExample().run();
+  }
+
   /** an action for creating an experiment */
   private final class _CreateExperiments extends RecursiveAction {
     /** the serial version uid */
@@ -161,9 +170,8 @@ public class ExperimentSetCreatorRandomParallel extends
     /** {@inheritDoc} */
     @Override
     protected final void compute() {
-      ExperimentSetCreatorRandomParallel.this._superCreateExperimentSet(
-          this.m_isc, this.m_dims, this.m_insts,
-          ThreadLocalRandom.current());
+      RandomParallelExample.this._superCreateExperimentSet(this.m_isc,
+          this.m_dims, this.m_insts, ThreadLocalRandom.current());
     }
   }
 
@@ -211,9 +219,9 @@ public class ExperimentSetCreatorRandomParallel extends
     /** {@inheritDoc} */
     @Override
     protected final void compute() {
-      ExperimentSetCreatorRandomParallel.this._createExperimentOuter(
-          this.m_isc, this.m_dims, this.m_is, this.m_params,
-          this.m_configs, ThreadLocalRandom.current());
+      RandomParallelExample.this._createExperimentOuter(this.m_isc,
+          this.m_dims, this.m_is, this.m_params, this.m_configs,
+          ThreadLocalRandom.current());
     }
   }
 
@@ -249,9 +257,8 @@ public class ExperimentSetCreatorRandomParallel extends
     /** {@inheritDoc} */
     @Override
     protected final void compute() {
-      ExperimentSetCreatorRandomParallel.this
-          ._createInstanceRunsOuter(this.m_ec, this.m_inst, this.m_dims,
-              ThreadLocalRandom.current());
+      RandomParallelExample.this._createInstanceRunsOuter(this.m_ec,
+          this.m_inst, this.m_dims, ThreadLocalRandom.current());
     }
   }
 
@@ -281,8 +288,9 @@ public class ExperimentSetCreatorRandomParallel extends
     /** {@inheritDoc} */
     @Override
     protected final void compute() {
-      ExperimentSetCreatorRandomParallel.this._createRun(this.m_ec,
-          this.m_dims, ThreadLocalRandom.current());
+      RandomParallelExample.this._createRun(this.m_ec, this.m_dims,
+          ThreadLocalRandom.current());
     }
   }
+
 }

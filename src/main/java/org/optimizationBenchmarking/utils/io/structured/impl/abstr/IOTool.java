@@ -62,6 +62,13 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    */
   public static final String ZIPPED_URI_ELEMENT = "zipURI"; //$NON-NLS-1$
 
+  /**
+   * indicates a resource element {@value} of the form
+   * {@code class#resource}, which can be used in the
+   * {@link #PARAM_SOURCES_SUFFIX} parameters
+   */
+  public static final String RESOURCE_ELEMENT = "resource"; //$NON-NLS-1$
+
   /** the job counter */
   final AtomicLong m_jobCounter;
 

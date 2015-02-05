@@ -24,60 +24,39 @@ import org.optimizationBenchmarking.experimentation.data.ParameterValue;
 import org.optimizationBenchmarking.experimentation.data.Run;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInput;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIOutput;
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 import test.junit.InstanceTest;
 import test.junit.org.optimizationBenchmarking.utils.collections.lists.ArraySetViewTestBase;
+import examples.org.optimizationBenchmarking.experimentation.dataAndIO.ExperimentSetCreator;
 
 /** A class for creating experiment sets */
 @Ignore
-public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
-
-  /** the list of existing creator classes */
-  @SuppressWarnings("unchecked")
-  static final ArrayListView<Class<? extends ExperimentSetCreator>> AVAILABLE_CREATORS = new ArrayListView<Class<? extends ExperimentSetCreator>>(
-      new Class[] { ExperimentSetCreatorExample1.class,
-          ExperimentSetCreatorBBOBExample.class,
-          ExperimentSetCreatorTSPSuiteExample.class,
-          ExperimentSetCreatorExample2Random.class,
-          ExperimentSetCreatorRandomBBOBParallel.class,
-          ExperimentSetCreatorRandomTSPSuiteParallel.class,
-          ExperimentSetCreatorRandom.class,
-          ExperimentSetCreatorRandomParallel.class });
-
-  /**
-   * An iterable going through {@link #AVAILABLE_CREATORS} and using them
-   * to instantiate experiment sets. Each iteration will work on a new
-   * experiment sets, which are dynamically created on the fly. They thus
-   * can be modified or used for whatever you want.
-   */
-  public static final Iterable<ExperimentSet> TEST_EXPERIMENT_SETS = new _ExperimentSetCreatorIterable();
+public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
 
   /** the instance */
-  private ExperimentSet m_inst;
-
-  /** create */
-  public ExperimentSetCreator() {
-    super();
-  }
+  private final ExperimentSetCreator m_inst;
 
   /**
-   * Build an experiment set
+   * create
    * 
-   * @return the constructed experiment set
+   * @param creator
+   *          the wrapped creator
    */
-  protected ExperimentSet buildExperimentSet() {
-    throw new UnsupportedOperationException();
+  protected ExperimentSetTest(final ExperimentSetCreator creator) {
+    super();
+    this.m_inst = creator;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final synchronized ExperimentSet getInstance() {
-    if (this.m_inst == null) {
-      this.m_inst = this.buildExperimentSet();
+  public final ExperimentSet getInstance() {
+    try {
+      return this.m_inst.getExperimentSet();
+    } catch (final Throwable tt) {
+      throw new RuntimeException("Failed to create experiment set.", //$NON-NLS-1$
+          tt);
     }
-    return this.m_inst;
   }
 
   /**
@@ -270,15 +249,13 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
           for (final Dimension dim : dims.getData()) {
             if (dim.getDirection().isIncreasing()) {
-              o = ExperimentSetCreator.__less(first.getDouble(dim
-                  .getIndex()));
-              p = ExperimentSetCreator.__more(last.getDouble(dim
-                  .getIndex()));
+              o = ExperimentSetTest
+                  .__less(first.getDouble(dim.getIndex()));
+              p = ExperimentSetTest.__more(last.getDouble(dim.getIndex()));
             } else {
-              o = ExperimentSetCreator.__more(first.getDouble(dim
-                  .getIndex()));
-              p = ExperimentSetCreator.__less(last.getDouble(dim
-                  .getIndex()));
+              o = ExperimentSetTest
+                  .__more(first.getDouble(dim.getIndex()));
+              p = ExperimentSetTest.__less(last.getDouble(dim.getIndex()));
             }
 
             if (dim.getDimensionType().isSolutionQualityMeasure()) {
@@ -363,7 +340,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
     } catch (final IOException e) {
       throw new RuntimeException(e);
     }
-    ExperimentSetCreator._assertEquals(inst, es1);
+    ExperimentSetTest._assertEquals(inst, es1);
 
     try {
       try (final StringWriter w = new StringWriter()) {
@@ -387,8 +364,8 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
     } catch (final IOException e) {
       throw new RuntimeException(e);
     }
-    ExperimentSetCreator._assertEquals(inst, es2);
-    ExperimentSetCreator._assertEquals(es1, es2);
+    ExperimentSetTest._assertEquals(inst, es2);
+    ExperimentSetTest._assertEquals(es1, es2);
 
   }
 
@@ -414,21 +391,21 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
 
     Assert.assertEquals(s = ae.size(), be.size());
     for (; (--s) >= 0;) {
-      ExperimentSetCreator._assertEquals(ae.get(s), be.get(s));
+      ExperimentSetTest._assertEquals(ae.get(s), be.get(s));
     }
 
     af = a.getFeatures().getData();
     bf = b.getFeatures().getData();
     Assert.assertEquals(s = af.size(), bf.size());
     for (; (--s) >= 0;) {
-      ExperimentSetCreator._assertEquals(af.get(s), bf.get(s));
+      ExperimentSetTest._assertEquals(af.get(s), bf.get(s));
     }
 
     ap = a.getParameters().getData();
     bp = b.getParameters().getData();
     Assert.assertEquals(s = ap.size(), bp.size());
     for (; (--s) >= 0;) {
-      ExperimentSetCreator._assertEquals(ap.get(s), bp.get(s));
+      ExperimentSetTest._assertEquals(ap.get(s), bp.get(s));
     }
 
     ad = a.getDimensions().getData();
@@ -555,8 +532,8 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
       }
       xe = x.next();
       ye = y.next();
-      ExperimentSetCreator.__assertVEquals(xe.getValue(), ye.getValue());
-      ExperimentSetCreator._assertEquals(xe.getKey(), ye.getKey());
+      ExperimentSetTest.__assertVEquals(xe.getValue(), ye.getValue());
+      ExperimentSetTest._assertEquals(xe.getKey(), ye.getKey());
     }
 
     ia = a.getData();
@@ -566,8 +543,8 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
     for (; (--si) >= 0;) {
       iae = ia.get(si);
       ibe = ib.get(si);
-      ExperimentSetCreator._assertEquals(iae.getInstance(),
-          ibe.getInstance());
+      ExperimentSetTest
+          ._assertEquals(iae.getInstance(), ibe.getInstance());
       ra = iae.getData();
       rb = ibe.getData();
       sr = ra.size();
@@ -613,7 +590,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
       ye = y.get(s);
       Assert.assertEquals(xe.getName(), ye.getName());
       Assert.assertEquals(xe.getDescription(), ye.getDescription());
-      ExperimentSetCreator.__assertVEquals(xe.getValue(), ye.getValue());
+      ExperimentSetTest.__assertVEquals(xe.getValue(), ye.getValue());
     }
   }
 
@@ -642,7 +619,7 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
       ye = y.get(s);
       Assert.assertEquals(xe.getName(), ye.getName());
       Assert.assertEquals(xe.getDescription(), ye.getDescription());
-      ExperimentSetCreator.__assertVEquals(xe.getValue(), ye.getValue());
+      ExperimentSetTest.__assertVEquals(xe.getValue(), ye.getValue());
     }
   }
 
@@ -673,8 +650,8 @@ public class ExperimentSetCreator extends InstanceTest<ExperimentSet> {
       }
       xe = x.next();
       ye = y.next();
-      ExperimentSetCreator.__assertVEquals(xe.getValue(), ye.getValue());
-      ExperimentSetCreator._assertEquals(xe.getKey(), ye.getKey());
+      ExperimentSetTest.__assertVEquals(xe.getValue(), ye.getValue());
+      ExperimentSetTest._assertEquals(xe.getKey(), ye.getKey());
     }
   }
 

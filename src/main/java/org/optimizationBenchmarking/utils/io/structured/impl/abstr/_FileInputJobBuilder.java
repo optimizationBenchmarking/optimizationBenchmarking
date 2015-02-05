@@ -64,6 +64,13 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
 
   /** {@inheritDoc} */
   @Override
+  final void _setResource(final String clazz, final String resource,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    this.addResource(clazz, resource, encoding, archiveType);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   final void _setPath(final String path,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
     this.addPath(path, encoding, archiveType);

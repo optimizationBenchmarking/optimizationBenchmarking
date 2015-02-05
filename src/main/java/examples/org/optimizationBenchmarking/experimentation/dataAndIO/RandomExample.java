@@ -1,4 +1,4 @@
-package test.junit.org.optimizationBenchmarking.experimentation.dataAndIO;
+package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import org.junit.Assert;
 import org.optimizationBenchmarking.experimentation.data.DataPoint;
 import org.optimizationBenchmarking.experimentation.data.Dimension;
 import org.optimizationBenchmarking.experimentation.data.DimensionContext;
@@ -34,7 +33,7 @@ import org.optimizationBenchmarking.utils.parsers.ShortParser;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** A class for creating experiment sets */
-public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
+public class RandomExample extends ExperimentSetCreator {
 
   /** naming */
   static final String NAMING = "abcdefghijklmnopqrstuvwxyz"; //$NON-NLS-1$
@@ -48,7 +47,7 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
   long m_v;
 
   /** create */
-  public ExperimentSetCreatorRandom() {
+  public RandomExample() {
     super();
   }
 
@@ -104,14 +103,14 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
 
-      dc.setName(RandomUtils.longToString(
-          ExperimentSetCreatorRandom.NAMING, this.m_v++));
+      dc.setName(RandomUtils
+          .longToString(RandomExample.NAMING, this.m_v++));
       if (r.nextBoolean()) {
-        dc.setDescription(RandomUtils.longToString(
-            ExperimentSetCreatorRandom.NAMING, this.m_v++));
+        dc.setDescription(RandomUtils.longToString(RandomExample.NAMING,
+            this.m_v++));
       }
-      dc.setParser(ExperimentSetCreatorRandom.PARSERS[r
-          .nextInt(ExperimentSetCreatorRandom.PARSERS.length)]);
+      dc.setParser(RandomExample.PARSERS[r
+          .nextInt(RandomExample.PARSERS.length)]);
       dc.setType(EDimensionType.INSTANCES.get(r
           .nextInt(EDimensionType.INSTANCES.size())));
       dc.setDirection(EDimensionDirection.INSTANCES.get(r
@@ -133,9 +132,9 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
 
     features = new HashMap<>();
     do {
-      features.put(RandomUtils.longToString(
-          ExperimentSetCreatorRandom.NAMING, this.m_v++), Integer
-          .valueOf(r.nextInt(11)));
+      features.put(
+          RandomUtils.longToString(RandomExample.NAMING, this.m_v++),
+          Integer.valueOf(r.nextInt(11)));
     } while (r.nextInt(4) > 0);
 
     return features.entrySet().toArray(new Map.Entry[features.size()]);
@@ -199,14 +198,14 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
           break;
         }
         case 6: {
-          o = Character.valueOf(ExperimentSetCreatorRandom.NAMING.charAt(r
-              .nextInt(ExperimentSetCreatorRandom.NAMING.length())));
+          o = Character.valueOf(RandomExample.NAMING.charAt(r
+              .nextInt(RandomExample.NAMING.length())));
           break;
         }
         case 7: {
           do {
-            o = s = RandomUtils.longToString(
-                ExperimentSetCreatorRandom.NAMING, r.nextLong());
+            o = s = RandomUtils.longToString(RandomExample.NAMING,
+                r.nextLong());
           } while (("true".equalsIgnoreCase(s)) || //$NON-NLS-1$
               ("false".equalsIgnoreCase(s))); //$NON-NLS-1$
           break;
@@ -222,8 +221,8 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
         }
         default: {
           do {
-            o = s = RandomUtils.longToString(
-                ExperimentSetCreatorRandom.NAMING, r.nextInt(10));
+            o = s = RandomUtils.longToString(RandomExample.NAMING,
+                r.nextInt(10));
           } while (("true".equalsIgnoreCase(s)) || //$NON-NLS-1$
               ("false".equalsIgnoreCase(s))); //$NON-NLS-1$
           break;
@@ -253,11 +252,11 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
       final Map.Entry<String, Integer>[] features, final Random r) {
 
     try (final InstanceContext ic = isc.createInstance()) {
-      ic.setName(RandomUtils.longToString(
-          ExperimentSetCreatorRandom.NAMING, this.m_v++));
+      ic.setName(RandomUtils
+          .longToString(RandomExample.NAMING, this.m_v++));
       if (r.nextBoolean()) {
-        ic.setDescription(RandomUtils.longToString(
-            ExperimentSetCreatorRandom.NAMING, this.m_v++));
+        ic.setDescription(RandomUtils.longToString(RandomExample.NAMING,
+            this.m_v++));
       }
 
       for (final Map.Entry<String, Object> e : this.__createValues(
@@ -472,7 +471,9 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
           lst.toArray(new Number[lst.size()]));
     }
 
-    Assert.assertNotNull(p1);
+    if (p1 == null) {
+      throw new IllegalStateException("Data point cannot be null."); //$NON-NLS-1$
+    }
     return p1;
   }
 
@@ -679,7 +680,9 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
           lst.toArray(new Number[lst.size()]));
     }
 
-    Assert.assertNotNull(p1);
+    if (p1 == null) {
+      throw new IllegalStateException("Data point cannot be null."); //$NON-NLS-1$
+    }
     return p1;
   }
 
@@ -875,11 +878,11 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
     }
 
     try (final ExperimentContext ec = isc.createExperiment()) {
-      ec.setName(RandomUtils.longToString(
-          ExperimentSetCreatorRandom.NAMING, this.m_v++));
+      ec.setName(RandomUtils
+          .longToString(RandomExample.NAMING, this.m_v++));
       if (r.nextBoolean()) {
-        ec.setDescription(RandomUtils.longToString(
-            ExperimentSetCreatorRandom.NAMING, this.m_v++));
+        ec.setDescription(RandomUtils.longToString(RandomExample.NAMING,
+            this.m_v++));
       }
 
       for (final Map.Entry<String, Object> e : config.entrySet()) {
@@ -944,4 +947,13 @@ public class ExperimentSetCreatorRandom extends ExperimentSetCreator {
     } while ((r.nextInt(5) > 0) && ((--z) >= 0));
   }
 
+  /**
+   * The main routine
+   * 
+   * @param args
+   *          the command line arguments
+   */
+  public static void main(final String[] args) {
+    new RandomExample().run();
+  }
 }

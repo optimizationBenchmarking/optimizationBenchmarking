@@ -76,6 +76,14 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
 
   /** {@inheritDoc} */
   @Override
+  final void _setResource(final String clazz, final String resource,
+      final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
+    throw new UnsupportedOperationException(
+        "Output not possible to a resource."); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
   final void _setURI(final String uri,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType) {
     throw new UnsupportedOperationException(

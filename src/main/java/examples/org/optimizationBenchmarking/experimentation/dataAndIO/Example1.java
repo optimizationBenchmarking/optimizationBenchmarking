@@ -1,4 +1,4 @@
-package test.junit.org.optimizationBenchmarking.experimentation.dataAndIO;
+package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import java.util.logging.Logger;
 
@@ -19,16 +19,16 @@ import org.optimizationBenchmarking.utils.parsers.LongParser;
 import org.optimizationBenchmarking.utils.parsers.StrictLongParser;
 
 /** A class for creating experiment sets */
-public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
+public final class Example1 extends ExperimentSetCreator {
 
   /** create */
-  public ExperimentSetCreatorExample1() {
+  public Example1() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
-  protected ExperimentSet buildExperimentSet() {
+  protected final ExperimentSet buildExperimentSet() {
     final ExperimentSet es;
 
     try (final ExperimentSetContext esb = new ExperimentSetContext(
@@ -629,5 +629,15 @@ public class ExperimentSetCreatorExample1 extends ExperimentSetCreator {
     rc.addDataPoint("11 15 37 42.2 48.3 62.5"); //$NON-NLS-1$
     rc.addDataPoint("17 13 39 43.3 47.4 63.4"); //$NON-NLS-1$
     rc.addDataPoint("24 11 44 44.4 46.5 64.3"); //$NON-NLS-1$
+  }
+
+  /**
+   * The main routine
+   * 
+   * @param args
+   *          the command line arguments
+   */
+  public static final void main(final String[] args) {
+    new Example1().run();
   }
 }

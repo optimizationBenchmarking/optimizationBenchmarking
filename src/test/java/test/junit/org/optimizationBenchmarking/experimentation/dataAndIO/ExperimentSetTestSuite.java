@@ -5,13 +5,10 @@ import org.junit.runners.Suite;
 
 /** the test suite class for experiment sets */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ ExperimentSetCreatorExample1.class,
-    ExperimentSetCreatorExample2Random.class,
-    ExperimentSetCreatorRandom.class,
-    ExperimentSetCreatorTSPSuiteExample.class,
-    ExperimentSetCreatorRandomTSPSuiteParallel.class,
-    ExperimentSetCreatorBBOBExample.class,
-    ExperimentSetCreatorRandomBBOBParallel.class })
+@Suite.SuiteClasses({ Example1Test.class, Example2RandomTest.class,
+    RandomTest.class, TSPSuiteTest.class,
+    RandomTSPSuiteParallelTest.class, BBOBExampleTest.class,
+    RandomBBOBParallelTest.class })
 public class ExperimentSetTestSuite {
   // a test suite class
 }
