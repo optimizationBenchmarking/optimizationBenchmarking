@@ -63,8 +63,16 @@ public class StreamInputTool<S> extends FileInputTool<S> implements
   protected void file(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding) throws Throwable {
-    try (final InputStream input = PathUtils.openInputStream(path)) {
-      this._stream(job, data, input, encoding, null);
+    final Object oldCur;
+
+    oldCur = job.m_current;
+    try {
+      job.m_current = path;
+      try (final InputStream input = PathUtils.openInputStream(path)) {
+        this._stream(job, data, input, encoding, null);
+      }
+    } finally {
+      job.m_current = oldCur;
     }
   }
 }

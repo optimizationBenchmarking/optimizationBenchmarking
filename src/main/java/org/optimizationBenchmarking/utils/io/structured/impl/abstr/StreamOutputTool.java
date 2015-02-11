@@ -49,30 +49,39 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
       throws Throwable {
     final Path file;
     final _OutputJob outJob;
+    final Object oldCur;
 
-    if ((attributes != null) && (attributes.isDirectory())) {
-      file = PathUtils.createPathInside(
-          path,
-          ((archiveType != null) ? //
-          (this.getArchiveFallbackFileName() + '.' + archiveType
-              .getDefaultSuffix()) : //
-              this.getDefaultPlainOutputFileName()));
-      job.log("Path '" + path + //$NON-NLS-1$
-          "' identifies a directory, creating file '" //$NON-NLS-1$
-          + file + "' for output.");//$NON-NLS-1$
-    } else {
-      file = path;
-    }
+    oldCur = job.m_current;
+    try {
+      job.m_current = path;
 
-    try (final OutputStream fileOutput = PathUtils.openOutputStream(file)) {
-      this._stream(job, data, fileOutput, encoding, archiveType);
-    }
-
-    if (archiveType != null) {
-      outJob = ((_OutputJob) job);
-      if (outJob.m_support != null) {
-        outJob.m_support.addFile(file, archiveType);
+      if ((attributes != null) && (attributes.isDirectory())) {
+        file = PathUtils.createPathInside(
+            path,
+            ((archiveType != null) ? //
+            (this.getArchiveFallbackFileName() + '.' + archiveType
+                .getDefaultSuffix()) : //
+                this.getDefaultPlainOutputFileName()));
+        job.log("Path '" + path + //$NON-NLS-1$
+            "' identifies a directory, creating file '" //$NON-NLS-1$
+            + file + "' for output.");//$NON-NLS-1$
+      } else {
+        file = path;
       }
+
+      try (final OutputStream fileOutput = PathUtils
+          .openOutputStream(file)) {
+        this._stream(job, data, fileOutput, encoding, archiveType);
+      }
+
+      if (archiveType != null) {
+        outJob = ((_OutputJob) job);
+        if (outJob.m_support != null) {
+          outJob.m_support.addFile(file, archiveType);
+        }
+      }
+    } finally {
+      job.m_current = oldCur;
     }
   }
 
@@ -81,7 +90,15 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
   protected void path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding) throws Throwable {
-    this._path(job, data, path, attributes, encoding, null);
+    final Object oldCur;
+
+    oldCur = job.m_current;
+    try {
+      job.m_current = path;
+      this._path(job, data, path, attributes, encoding, null);
+    } finally {
+      job.m_current = oldCur;
+    }
   }
 
   /** {@inheritDoc} */

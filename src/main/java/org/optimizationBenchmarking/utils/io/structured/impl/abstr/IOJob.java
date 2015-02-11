@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
@@ -32,6 +33,9 @@ public class IOJob extends ToolJob {
 
   /** the job token: a multi-purpose variable */
   Object m_token;
+
+  /** the current location */
+  Object m_current;
 
   /**
    * create the _IOJob
@@ -144,13 +148,24 @@ public class IOJob extends ToolJob {
    */
   public final void handleError(final Throwable throwable,
       final String message) throws IOException {
+    final Object o;
     String msg;
+
     msg = this._id();
+
     if (message == null) {
       msg += "failed without providing a detailed error message."; //$NON-NLS-1$
     } else {
       msg += message;
     }
+
+    if ((o = this.m_current) != null) {
+      msg += ((((" Possible source of error: '" + //$NON-NLS-1$ 
+      o) + "' of class ") + //$NON-NLS-1$
+      TextUtils.className(o.getClass())) + //
+      " (but this information may not be reliable).");//$NON-NLS-1$
+    }
+
     ErrorUtils.logError(this.getLogger(), msg, throwable, true);
     ErrorUtils.throwAsIOException(throwable);
   }

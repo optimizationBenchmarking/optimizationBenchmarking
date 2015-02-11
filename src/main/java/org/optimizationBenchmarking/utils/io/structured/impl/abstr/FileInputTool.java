@@ -17,6 +17,7 @@ import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
 import org.optimizationBenchmarking.utils.io.structured.spec.IFileInputJobBuilder;
 import org.optimizationBenchmarking.utils.io.structured.spec.IFileInputTool;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A tool for reading file input
@@ -291,15 +292,24 @@ public class FileInputTool<S> extends IOTool<S> implements
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
       throws Throwable {
-    if (archiveType != null) {
-      if (job.canLog()) {
-        job.log("Decompressing path '" + path + '\''); //$NON-NLS-1$
+    final Object oldCur;
+
+    oldCur = job.m_current;
+    try {
+      job.m_current = path;
+
+      if (archiveType != null) {
+        if (job.canLog()) {
+          job.log("Decompressing path '" + path + '\''); //$NON-NLS-1$
+        }
+        try (final InputStream stream = PathUtils.openInputStream(path)) {
+          this.__loadArchive(job, data, stream, encoding, archiveType);
+        }
+      } else {
+        this.file(job, data, path, attributes, encoding);
       }
-      try (final InputStream stream = PathUtils.openInputStream(path)) {
-        this.__loadArchive(job, data, stream, encoding, archiveType);
-      }
-    } else {
-      this.file(job, data, path, attributes, encoding);
+    } finally {
+      job.m_current = oldCur;
     }
   }
 
@@ -325,8 +335,16 @@ public class FileInputTool<S> extends IOTool<S> implements
       final Class<?> clazz, final String name,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
       throws Throwable {
-    try (final InputStream stream = clazz.getResourceAsStream(name)) {
-      this._stream(job, data, stream, encoding, archiveType);
+    final Object oldCur;
+
+    oldCur = job.m_current;
+    try {
+      job.m_current = (TextUtils.className(clazz) + '#' + name);
+      try (final InputStream stream = clazz.getResourceAsStream(name)) {
+        this._stream(job, data, stream, encoding, archiveType);
+      }
+    } finally {
+      job.m_current = oldCur;
     }
   }
 
@@ -349,8 +367,15 @@ public class FileInputTool<S> extends IOTool<S> implements
   private final void __url(final IOJob job, final S data, final URL url,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
       throws Throwable {
-    try (final InputStream stream = url.openStream()) {
-      this._stream(job, data, stream, encoding, archiveType);
+    final Object oldCur;
+    oldCur = job.m_current;
+    try {
+      job.m_current = url;
+      try (final InputStream stream = url.openStream()) {
+        this._stream(job, data, stream, encoding, archiveType);
+      }
+    } finally {
+      job.m_current = oldCur;
     }
   }
 
@@ -377,45 +402,53 @@ public class FileInputTool<S> extends IOTool<S> implements
     Path path;
     Throwable errorA, errorB, ioError;
 
-    errorA = null;
-    url = null;
+    final Object oldCur;
+    oldCur = job.m_current;
     try {
-      url = uri.toURL();
-    } catch (final Throwable throwable) {
-      errorA = throwable;
+      job.m_current = uri;
+
+      errorA = null;
       url = null;
-    }
+      try {
+        url = uri.toURL();
+      } catch (final Throwable throwable) {
+        errorA = throwable;
+        url = null;
+      }
 
-    if (url != null) {
-      this.__url(job, data, url, encoding, archiveType);
-      return;
-    }
+      if (url != null) {
+        this.__url(job, data, url, encoding, archiveType);
+        return;
+      }
 
-    path = null;
-    errorB = null;
-    try {
-      path = Paths.get(uri);
-    } catch (final Throwable throwable) {
-      errorB = throwable;
       path = null;
-    }
+      errorB = null;
+      try {
+        path = Paths.get(uri);
+      } catch (final Throwable throwable) {
+        errorB = throwable;
+        path = null;
+      }
 
-    if (path != null) {
-      this._path(job, data, path,
-          Files.readAttributes(path, BasicFileAttributes.class), encoding,
-          archiveType);
-      return;
-    }
+      if (path != null) {
+        this._path(job, data, path,
+            Files.readAttributes(path, BasicFileAttributes.class),
+            encoding, archiveType);
+        return;
+      }
 
-    ioError = new IOException("URI '" + uri + //$NON-NLS-1$
-        "' cannot be processed."); //$NON-NLS-1$
-    if (errorA != null) {
-      ioError.addSuppressed(errorA);
+      ioError = new IOException("URI '" + uri + //$NON-NLS-1$
+          "' cannot be processed."); //$NON-NLS-1$
+      if (errorA != null) {
+        ioError.addSuppressed(errorA);
+      }
+      if (errorB != null) {
+        ioError.addSuppressed(errorB);
+      }
+      throw ioError;
+    } finally {
+      job.m_current = oldCur;
     }
-    if (errorB != null) {
-      ioError.addSuppressed(errorB);
-    }
-    throw ioError;
   }
 
   /**
@@ -571,22 +604,30 @@ public class FileInputTool<S> extends IOTool<S> implements
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
       throws Throwable {
 
-    if (attributes == null) {
-      throw new IOException("Path '" + path + //$NON-NLS-1$
-          "' does not exist.");//$NON-NLS-1$
-    }
+    final Object oldCur;
+    oldCur = job.m_current;
+    try {
+      job.m_current = path;
 
-    if (archiveType == null) {
-      this.path(job, data, path, attributes, encoding);
-    } else {
-      if (attributes.isRegularFile()) {
-        this._file(job, data, path, attributes, encoding, archiveType);
+      if (attributes == null) {
+        throw new IOException("Path '" + path + //$NON-NLS-1$
+            "' does not exist.");//$NON-NLS-1$
+      }
+
+      if (archiveType == null) {
+        this.path(job, data, path, attributes, encoding);
       } else {
-        if (attributes.isDirectory()) {
-          Files.walkFileTree(path, new _FileWalker<>(job, data, encoding,
-              archiveType, this));
+        if (attributes.isRegularFile()) {
+          this._file(job, data, path, attributes, encoding, archiveType);
+        } else {
+          if (attributes.isDirectory()) {
+            Files.walkFileTree(path, new _FileWalker<>(job, data,
+                encoding, archiveType, this));
+          }
         }
       }
+    } finally {
+      job.m_current = oldCur;
     }
   }
 
@@ -610,13 +651,22 @@ public class FileInputTool<S> extends IOTool<S> implements
   protected void path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding) throws Throwable {
-    if (attributes.isRegularFile()) {
-      this._file(job, data, path, attributes, encoding, null);
-    } else {
-      if (attributes.isDirectory()) {
-        Files.walkFileTree(path, new _FileWalker<>(job, data, encoding,
-            null, this));
+    final Object oldCur;
+
+    oldCur = job.m_current;
+    try {
+      job.m_current = path;
+
+      if (attributes.isRegularFile()) {
+        this._file(job, data, path, attributes, encoding, null);
+      } else {
+        if (attributes.isDirectory()) {
+          Files.walkFileTree(path, new _FileWalker<>(job, data, encoding,
+              null, this));
+        }
       }
+    } finally {
+      job.m_current = oldCur;
     }
   }
 

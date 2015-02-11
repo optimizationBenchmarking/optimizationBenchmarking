@@ -113,33 +113,41 @@ public class FileOutputTool<S> extends IOTool<S> implements
       throws Throwable {
     final Path file, tempDir;
     final _OutputJob outJob;
+    final Object oldCur;
 
-    if (archiveType != null) {
-      if ((attributes != null) && (attributes.isDirectory())) {
-        file = PathUtils.createPathInside(path, (this
-            .getDefaultArchiveName() + '.' + archiveType
-            .getDefaultSuffix()));
-        job.log("Path '" + path + //$NON-NLS-1$
-            "' identifies a directory, creating archive file '" //$NON-NLS-1$
-            + file + "' for output.");//$NON-NLS-1$
-      } else {
-        file = path;
-      }
+    oldCur = job.m_current;
+    try {
+      job.m_current = path;
 
-      try (final OutputStream output = PathUtils.openOutputStream(path)) {
-        try (final TempDir temp = new TempDir()) {
-          tempDir = temp.getPath();
-          this.path(job, data, tempDir, attributes, encoding);
-          archiveType.compressPathToStream(tempDir, output);
+      if (archiveType != null) {
+        if ((attributes != null) && (attributes.isDirectory())) {
+          file = PathUtils.createPathInside(path, (this
+              .getDefaultArchiveName() + '.' + archiveType
+              .getDefaultSuffix()));
+          job.log("Path '" + path + //$NON-NLS-1$
+              "' identifies a directory, creating archive file '" //$NON-NLS-1$
+              + file + "' for output.");//$NON-NLS-1$
+        } else {
+          file = path;
         }
-      }
 
-      outJob = ((_OutputJob) job);
-      if (outJob.m_support != null) {
-        outJob.m_support.addFile(file, archiveType);
+        try (final OutputStream output = PathUtils.openOutputStream(path)) {
+          try (final TempDir temp = new TempDir()) {
+            tempDir = temp.getPath();
+            this.path(job, data, tempDir, attributes, encoding);
+            archiveType.compressPathToStream(tempDir, output);
+          }
+        }
+
+        outJob = ((_OutputJob) job);
+        if (outJob.m_support != null) {
+          outJob.m_support.addFile(file, archiveType);
+        }
+      } else {
+        this.path(job, data, path, attributes, encoding);
       }
-    } else {
-      this.path(job, data, path, attributes, encoding);
+    } finally {
+      job.m_current = oldCur;
     }
   }
 
