@@ -41,7 +41,7 @@ import examples.org.optimizationBenchmarking.utils.document.ExampleDocumentConfi
  * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver
  * graphic drivers}.
  */
-public class EvaluationExamples {
+public final class EvaluationExamples {
 
   /** the document configurations */
   public static final ArrayListView<DocumentConfiguration> DOCUMENT_CONFIGURATIONS = EvaluationExamples
@@ -150,30 +150,30 @@ public class EvaluationExamples {
    */
   private static final ArrayListView<DocumentConfiguration> __makeDocs() {
     final HashSet<DocumentConfiguration> configs;
-    final HashSet<IDocumentDriver> drivers;
-    final HashSet<IGraphicDriver> graphics;
-    final HashSet<IChartDriver> charts;
-    IDocumentDriver driver;
-    IGraphicDriver graphic;
-    IChartDriver chart;
+    final HashSet<IDocumentDriver> documentDrivers;
+    final HashSet<IGraphicDriver> graphicDrivers;
+    final HashSet<IChartDriver> chartDrivers;
+    IDocumentDriver documentDriver;
+    IGraphicDriver graphicDriver;
+    IChartDriver chartDriver;
 
     configs = new HashSet<>();
-    drivers = new HashSet<>();
-    graphics = new HashSet<>();
-    charts = new HashSet<>();
+    documentDrivers = new HashSet<>();
+    graphicDrivers = new HashSet<>();
+    chartDrivers = new HashSet<>();
 
     for (final DocumentConfiguration config : ExampleDocumentConfigurations.CONFIGURATIONS) {
-      driver = config.getDocumentDriver();
-      graphic = config.getGraphicDriver();
-      chart = config.getChartDriver();
+      documentDriver = config.getDocumentDriver();
+      graphicDriver = config.getGraphicDriver();
+      chartDriver = config.getChartDriver();
 
-      if ((!(drivers.contains(driver))) || //
-          (!(graphics.contains(graphic))) || //
-          (!(charts.contains(chart)))) {
+      if ((!(documentDrivers.contains(documentDriver))) || //
+          (!(graphicDrivers.contains(graphicDriver))) || //
+          (!(chartDrivers.contains(chartDriver)))) {
         if (configs.add(config)) {
-          drivers.add(driver);
-          charts.add(chart);
-          graphics.add(graphic);
+          documentDrivers.add(documentDriver);
+          chartDrivers.add(chartDriver);
+          graphicDrivers.add(graphicDriver);
         }
       }
     }
