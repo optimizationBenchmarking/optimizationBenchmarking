@@ -51,6 +51,10 @@ final class _InstanceParser<T> extends Parser<T> {
     final Class<T> base;
     final T obj;
 
+    if (o == null) {
+      return null;
+    }
+
     base = this.m_base;
     if (base.isInstance(o)) {
       obj = base.cast(o);

@@ -23,6 +23,9 @@ public final class Evaluator extends Tool implements IEvaluator {
   /** the authors */
   public static final String PARAM_AUTHORS = "authors"; //$NON-NLS-1$
 
+  /** the evaluation source suffix */
+  public static final String PARAM_EVALUATION_SETUP = (_EvaluationXMLConstants.PARAM_EVALUATION_PREFIX + _EvaluationXMLConstants.PARAM_EVALUATION_SUFFIX);
+
   /** create */
   Evaluator() {
     super();

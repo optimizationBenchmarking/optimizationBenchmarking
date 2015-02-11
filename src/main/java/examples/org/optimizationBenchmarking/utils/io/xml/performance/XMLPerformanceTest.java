@@ -132,9 +132,9 @@ public final class XMLPerformanceTest {
       System.out.println("> ==================="); //$NON-NLS-1$
       System.out.println();
       for (final int size : XMLPerformanceTest.DOCUMENT_SIZES) {
-        MemoryUtils.gc();
+        MemoryUtils.fullGC();
         XMLPerformanceTest.__doDocumentSize(size, delay, rand);
-        MemoryUtils.gc();
+        MemoryUtils.fullGC();
       }
       System.out.println();
       System.out.print("=================== </delay "); //$NON-NLS-1$
@@ -164,7 +164,7 @@ public final class XMLPerformanceTest {
     final long[][][] runtimes;
     int ser, out, runIndex;
 
-    MemoryUtils.gc();
+    MemoryUtils.fullGC();
 
     System.out.println();
     System.out.print("Runs for documents with "); //$NON-NLS-1$
@@ -181,12 +181,12 @@ public final class XMLPerformanceTest {
     runtimes = new long[XMLPerformanceTest.SERIALIZERS.length][XMLPerformanceTest.OUTPUT.length][XMLPerformanceTest.RUNS_PER_DOCUMENT_SIZE];
 
     for (runIndex = XMLPerformanceTest.RUNS_PER_DOCUMENT_SIZE; (--runIndex) >= 0;) {
-      MemoryUtils.gc();
+      MemoryUtils.fullGC();
       XMLPerformanceTest.__doDocument(size, delay, rand, runtimes,
           runIndex);
-      MemoryUtils.gc();
+      MemoryUtils.fullGC();
     }
-    MemoryUtils.gc();
+    MemoryUtils.fullGC();
 
     for (ser = 0; ser < XMLPerformanceTest.SERIALIZERS.length; ser++) {
       System.out.print(XMLPerformanceTest.SERIALIZERS[ser].toString());
@@ -203,7 +203,7 @@ public final class XMLPerformanceTest {
 
     System.out.flush();
     System.err.flush();
-    MemoryUtils.gc();
+    MemoryUtils.fullGC();
   }
 
   /**
@@ -247,7 +247,7 @@ public final class XMLPerformanceTest {
               XMLPerformanceTest.__serialize(
                   XMLPerformanceTest.OUTPUT[out],
                   XMLPerformanceTest.SERIALIZERS[ser], doc));
-          MemoryUtils.gc();
+          MemoryUtils.fullGC();
         }
       }
     }
@@ -299,7 +299,7 @@ public final class XMLPerformanceTest {
               ExampleDocument.createExampleDocument(rand,//
                   (1 + rand.nextInt(200)),//
                   (rand.nextBoolean() ? 0 : rand.nextInt(1000))));
-          MemoryUtils.gc();
+          MemoryUtils.fullGC();
         }
       }
     }

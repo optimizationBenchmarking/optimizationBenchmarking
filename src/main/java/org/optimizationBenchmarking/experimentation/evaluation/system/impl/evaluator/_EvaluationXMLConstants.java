@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.net.URI;
 
-import org.optimizationBenchmarking.utils.config.ConfigurationXMLConstants;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /** the evaluation xml constants */
@@ -12,7 +11,7 @@ final class _EvaluationXMLConstants {
       .create(
           "http://www.optimizationBenchmarking.org/formats/evaluationConfiguration/evaluationConfiguration.1.0.xsd").normalize(); //$NON-NLS-1$
   /** the namespace string */
-  static final String NAMESPACE = ConfigurationXMLConstants.NAMESPACE_URI
+  static final String NAMESPACE = _EvaluationXMLConstants.NAMESPACE_URI
       .toString();
 
   /** the root element of the evaluation process */

@@ -51,7 +51,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
     res = super.configure(config);
     strings = ((FileInputTool) (this.m_tool))._getSources(config);
 
-    if (strings != null) {
+    if ((strings != null) && (!(strings.isEmpty()))) {
       for (final String source : strings) {
         if (source != null) {
           this._location(source);

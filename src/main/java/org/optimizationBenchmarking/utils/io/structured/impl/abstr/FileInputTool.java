@@ -203,27 +203,26 @@ public class FileInputTool<S> extends IOTool<S> implements
           }
           return;
         }
-
-        if (String.class.isAssignableFrom(clazz)) {
-          if (location.m_archiveType == null) {
-            this._checkRawStreams();
-          }
-          if (job.canLog()) {
-            job.log("Beginning input from Resource specified as String: " + //$NON-NLS-1$
-                location.m_location1 + ':' + location.m_location2);
-          }
-          this.__resource(job, data,
-              Class.forName((String) (location.m_location1)),
-              ((String) (location.m_location2)), location.m_encoding,
-              location.m_archiveType);
-          if (job.canLog()) {
-            job.log("Finished input from Resource specified as String: " + //$NON-NLS-1$
-                location.m_location1 + ':' + location.m_location2);
-          }
-          return;
-        }
       }
 
+      if (location.m_location2 instanceof String) {
+        if (location.m_archiveType == null) {
+          this._checkRawStreams();
+        }
+        if (job.canLog()) {
+          job.log("Beginning input from Resource specified as String: " + //$NON-NLS-1$
+              location.m_location1 + ':' + location.m_location2);
+        }
+        this.__resource(job, data,
+            Class.forName((String) (location.m_location1)),
+            ((String) (location.m_location2)), location.m_encoding,
+            location.m_archiveType);
+        if (job.canLog()) {
+          job.log("Finished input from Resource specified as String: " + //$NON-NLS-1$
+              location.m_location1 + ':' + location.m_location2);
+        }
+        return;
+      }
     }
 
     super._handle(job, data, location);

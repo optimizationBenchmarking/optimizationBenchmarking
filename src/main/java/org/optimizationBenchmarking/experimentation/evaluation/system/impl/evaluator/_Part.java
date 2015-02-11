@@ -118,4 +118,16 @@ abstract class _Part extends _PseudoModule {
       }
     }
   }
+
+  /**
+   * Execute the jobs
+   * 
+   * @param data
+   *          the data
+   * @param dest
+   *          the destination
+   */
+  final void _execJobs(final DataSet<?> data, final ISectionContainer dest) {
+    super._doJobs(data, dest);
+  }
 }

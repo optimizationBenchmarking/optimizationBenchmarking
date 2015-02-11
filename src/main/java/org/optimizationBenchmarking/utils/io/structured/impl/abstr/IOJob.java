@@ -153,7 +153,7 @@ public class IOJob extends ToolJob {
 
     msg = this._id();
 
-    if (message == null) {
+    if ((message == null) || (message.length() <= 0)) {
       msg += "failed without providing a detailed error message."; //$NON-NLS-1$
     } else {
       msg += message;

@@ -11,7 +11,7 @@ public final class MemoryUtils {
    * experimental results. It makes not much sense in performance-critical
    * code.
    */
-  public static final void gc() {
+  public static final void fullGC() {
     final Runtime r;
     long best, cur, i;
 
@@ -31,5 +31,13 @@ public final class MemoryUtils {
         return;
       }
     }
+  }
+
+  /**
+   * A simple call to the garbage collector. Makes sense after
+   * memory-intense operations.
+   */
+  public static final void quickGC() {
+    System.gc();
   }
 }

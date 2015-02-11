@@ -79,7 +79,7 @@ final class _ExperimentStatistics extends _Part {
       }
       try (final ISectionBody body = section.body()) {
         this.__writeIntro(data, body);
-        super._doJobs(data, body);
+        this._execJobs(data, body);
       }
     }
   }
@@ -97,7 +97,7 @@ final class _ExperimentStatistics extends _Part {
         if (experimentCount > 1) {
           this.__experimentSection(experiment, body);
         } else {
-          super._doJobs(experiment, body);
+          this._execJobs(experiment, body);
         }
       }
     }

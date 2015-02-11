@@ -15,7 +15,6 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEval
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentModuleSetup;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetStatistic;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentStatistic;
-import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -60,8 +59,6 @@ final class _ModulesBuilder {
     modules = _ModulesBuilder.__makeModules(allConfiguredModules, logger);
     allConfiguredModules = null;
 
-    MemoryUtils.gc();
-
     if (modules == null) {
       throw new IllegalStateException("Root module cannot be null."); //$NON-NLS-1$
     }
@@ -101,33 +98,51 @@ final class _ModulesBuilder {
 
     if (modules != null) {
       size = modules.size();
-      if (textOut != null) {
-        textOut.append(size);
-        textOut.append(" modules"); //$NON-NLS-1$
-      }
     } else {
-      if (textOut != null) {
-        textOut.append("no modules");//$NON-NLS-1$
+      size = 0;
+    }
+
+    if (textOut != null) {
+      switch (size) {
+        case 0: {
+          textOut.append("no modules");//$NON-NLS-1$
+          return;
+        }
+        case 1: {
+          textOut.append("1 module"); //$NON-NLS-1$
+          break;
+        }
+        default: {
+          textOut.append(size);
+          textOut.append(" modules"); //$NON-NLS-1$
+        }
       }
+    }
+
+    if (size <= 0) {
       return;
     }
 
-    if (size > 0) {
-      size = 0;
-      for (final Object o : modules) {
-        size++;
-        if (o == null) {
-          throw new IllegalArgumentException("Module at index " //$NON-NLS-1$
-              + size + " is null."); //$NON-NLS-1$        
-        }
+    size = 0;
+    for (final Object o : modules) {
+      size++;
+      if (o == null) {
+        throw new IllegalArgumentException("Module at index " //$NON-NLS-1$
+            + size + " is null."); //$NON-NLS-1$        
+      }
 
+      if (textOut != null) {
         textOut.append((size <= 1) ? ':' : ',');
         textOut.append(' ');
-        if (o instanceof _ModuleEntry) {
-          entry = ((_ModuleEntry) o);
-          _EvaluationSetup._checkModuleEntry(entry);
+      }
+      if (o instanceof _ModuleEntry) {
+        entry = ((_ModuleEntry) o);
+        _EvaluationSetup._checkModuleEntry(entry);
+        if (textOut != null) {
           textOut.append(TextUtils.className(entry.m_module.getClass()));
-        } else {
+        }
+      } else {
+        if (textOut != null) {
           textOut.append(TextUtils.className(o.getClass()));
         }
       }
@@ -164,6 +179,7 @@ final class _ModulesBuilder {
     Iterable<Class<? extends IEvaluationModule>> requiredIt;
     int index;
     String s;
+    boolean canInc;
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
       logger.finer(//
@@ -189,8 +205,11 @@ final class _ModulesBuilder {
       }
 
       for (index = 0; index < modules.size();) {
+        canInc = true;
         entry = modules.get(index);
+
         _EvaluationSetup._checkModuleEntry(entry);
+
         requiredIt = entry.m_module.getRequiredModules();
         if (requiredIt != null) {
 
@@ -202,6 +221,7 @@ final class _ModulesBuilder {
               }
             }
 
+            canInc = false;
             except = null;
             module = null;
             try {
@@ -226,6 +246,10 @@ final class _ModulesBuilder {
                 new _ModuleEntry(module, setup
                     ._getConfiguration(entry.m_config)));
           }
+        }
+
+        if (canInc) {
+          index++;
         }
       }
 

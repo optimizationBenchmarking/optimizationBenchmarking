@@ -14,8 +14,20 @@ public class ExperimentInformation extends ExperimentStatistic {
 
   /** {@inheritDoc} */
   @Override
+  public boolean canUse() {
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public ExperimentInformationSetup use() {
     return new ExperimentInformationSetup();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    return ExperimentInformation.class.getSimpleName();
   }
 
   /**

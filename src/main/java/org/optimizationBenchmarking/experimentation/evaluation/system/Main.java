@@ -76,8 +76,6 @@ public class Main {
           Math.max(1, Runtime.getRuntime().availableProcessors()), 1);
       config = null;
 
-      MemoryUtils.gc();
-
       if (processors <= 1) {
 
         if ((logger != null) && (logger.isLoggable(Level.INFO))) {
@@ -135,7 +133,7 @@ public class Main {
             break;
           }
 
-          MemoryUtils.gc();
+          MemoryUtils.fullGC();
 
           if ((terminated == 1) && (logger != null)
               && (logger.isLoggable(Level.INFO))) {

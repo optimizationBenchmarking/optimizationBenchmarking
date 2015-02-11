@@ -54,7 +54,8 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
       sf.setResourceResolver(new _LSResourceResolver(sf
           .getResourceResolver()));
       schema = sf.newSchema(//
-          _EvaluationXMLConstants.class.getResource("evaluation.1.0.xsd")); //$NON-NLS-1$
+          _EvaluationXMLConstants.class
+              .getResource("evaluationConfiguration.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
       rec = a;
     } finally {

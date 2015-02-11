@@ -224,6 +224,7 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
             }
 
             this.m_dest._addModule(module, config);
+            this.m_state = _EvaluationXMLHandler.STATE_IN_EVALUATION;
             return;
           }
 

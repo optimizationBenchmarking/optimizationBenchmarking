@@ -62,7 +62,7 @@ public class PermutationIteratorTest {
         throw oome;// about 300'000 should always be possible
       }
     }
-    MemoryUtils.gc();
+    MemoryUtils.fullGC();
   }
 
   /** test the amount of created unique permutations of length 1 */

@@ -60,13 +60,44 @@ class _EvaluationSetup {
    *          the object to copy from
    */
   void _assign(final _EvaluationSetup copyFrom) {
+    final Logger logger;
+    final Configuration config, own;
+    final IEvaluationInput input;
+    final IEvaluationOutput output;
+    final BibAuthors authors;
+
     synchronized (this.m_synch) {
       synchronized (copyFrom.m_synch) {
-        this._setLogger(copyFrom._getLogger());
-        this._setBaseConfiguration(copyFrom._getBaseConfiguration());
-        this._setInput(copyFrom._getInput());
-        this._setOutput(copyFrom._getOutput());
-        this._setAuthors(copyFrom._getAuthors());
+
+        logger = copyFrom._getLogger();
+        if (logger != null) {
+          this._setLogger(copyFrom._getLogger());
+        }
+
+        config = copyFrom._getBaseConfiguration();
+        if (config != null) {
+          this._setBaseConfiguration(config);
+        }
+        own = copyFrom._getConfiguration();
+        if (own != null) {
+          this._setConfiguration(own);
+        }
+
+        input = copyFrom._getInput();
+        if (input != null) {
+          this._setInput(input);
+        }
+
+        output = copyFrom._getOutput();
+        if (output != null) {
+          this._setOutput(output);
+        }
+
+        authors = copyFrom._getAuthors();
+        if (authors != null) {
+          this._setAuthors(authors);
+        }
+
         for (final _ModuleEntry entry : copyFrom._getModules()) {
           this._addModule(entry);
         }

@@ -2,6 +2,9 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.sing
 
 import org.optimizationBenchmarking.experimentation.data.Experiment;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.ExperimentJob;
+import org.optimizationBenchmarking.utils.document.spec.IPlainText;
+import org.optimizationBenchmarking.utils.document.spec.ISection;
+import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 
 /**
@@ -29,7 +32,17 @@ public class ExperimentInformationMainJob extends
   /** {@inheritDoc} */
   @Override
   protected void execute() {
-    // TODO Auto-generated method stub
+    try (final ISection section = this.m_container.section(null)) {
+      try (final IPlainText title = section.title()) {
+        title.append("Basic Information"); //$NON-NLS-1$
+      }
+
+      try (final ISectionBody body = section.body()) {
+        body.append(this.m_experiment.getName());
+        // body.append(' ');
+        // body.append(this.m_experiment.getDescription());
+      }
+    }
 
   }
 

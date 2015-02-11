@@ -18,6 +18,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.StructuredIOInput;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluation;
 import org.optimizationBenchmarking.experimentation.io.spec.IExperimentInput;
+import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
@@ -114,7 +115,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
 
     try {
       authors = config.getStringList(Evaluator.PARAM_AUTHORS, null);
-      if (authors != null) {
+      if ((authors != null) && (!(authors.isEmpty()))) {
 
         if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
           logger.config("Setting authors to " + authors); //$NON-NLS-1$
@@ -302,7 +303,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
 
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       text = new MemoryTextOutput();
-      text.append("Input data successfully loaded - "); //$NON-NLS-1$
+      text.append("Input data successfully loaded -"); //$NON-NLS-1$
     } else {
       text = null;
     }
@@ -720,7 +721,9 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       }
     }
 
-    header.authors().addAuthors(authors);
+    try (final BibAuthorsBuilder authorsBuilder = header.authors()) {
+      authorsBuilder.addAuthors(authors);
+    }
 
     try (final BibDateBuilder bd = header.date()) {
       bd.fromNow();
@@ -756,6 +759,8 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     authors = this.__makeAuthors();
+
+    MemoryUtils.quickGC();
 
     try (final IDocument doc = this.__createDocument(logger)) {
       root._doInitJobs(data, doc);
