@@ -32,8 +32,8 @@ final class _LoggedSentinel extends Throwable {
    * @param message
    */
   private _LoggedSentinel(final Logger logger, final String message) {
-    super(((((("This error has been logged by logger " + //$NON-NLS-1$
-        _LoggedSentinel.__loggerName(logger)) + " with message '") + //$NON-NLS-1$
+    super(((((("This error has been logged to logger '" + //$NON-NLS-1$
+        _LoggedSentinel.__loggerName(logger)) + "' with message '") + //$NON-NLS-1$
         message) + '\'') + '.'), null, false, false);
     this.m_logger = logger;
   }
