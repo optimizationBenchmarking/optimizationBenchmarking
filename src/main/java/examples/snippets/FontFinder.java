@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**

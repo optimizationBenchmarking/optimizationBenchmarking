@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.math.random;
 
 import java.util.Random;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /**
  * This class provides methods for shuffling arrays and parts of arrays.

@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.text.textOutput;
 import java.io.IOException;
 import java.io.Writer;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /**
  * A basic version of the text output wrapped around any subclass of

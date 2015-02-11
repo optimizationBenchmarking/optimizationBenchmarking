@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** an iterator interface for the {@link java.io.BufferedReader} class */

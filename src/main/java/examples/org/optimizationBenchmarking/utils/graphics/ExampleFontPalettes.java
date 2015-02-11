@@ -2,10 +2,10 @@ package examples.org.optimizationBenchmarking.utils.graphics;
 
 import java.util.LinkedHashSet;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;

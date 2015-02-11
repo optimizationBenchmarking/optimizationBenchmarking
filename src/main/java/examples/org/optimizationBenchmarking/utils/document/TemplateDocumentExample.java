@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
@@ -19,6 +18,7 @@ import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLHandler;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLInput;
 import org.optimizationBenchmarking.utils.document.template.IDocumentCallback;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 
 /**

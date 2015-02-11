@@ -31,6 +31,7 @@ import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.structured.spec.IInputJobBuilder;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -135,11 +136,10 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
         }
       }
     } catch (final RuntimeException re) {
-      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
-        logger.log(Level.SEVERE,//
-            "Unrecoverable error while parsing the authors parameter.", //$NON-NLS-1$
-            re);
-      }
+      ErrorUtils.logError(logger,
+          "Unrecoverable error while parsing the authors parameter.", //$NON-NLS-1$
+          re, false);
+      throw re;
     }
   }
 
@@ -286,16 +286,14 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     try {
       data = this._takeInput().getExperimentSet();
     } catch (final Exception ex) {
-      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
-        logger
-            .log(
-                Level.SEVERE,
-                "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
-                ex);
-      }
       data = null;
-      throw new IllegalStateException("Could not load input data.",//$NON-NLS-1$
-          ex);
+      ErrorUtils
+          .logError(
+              logger,
+              "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
+              ex, false);
+      ErrorUtils.throwAsRuntimeException(ex);
+      return null;// will never be reached
     }
 
     if (data == null) {
@@ -557,15 +555,12 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       doc = this._takeOutput().getDocument();
     } catch (final Exception error) {
       doc = null;
-      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
-        logger
-            .log(
-                Level.SEVERE,
-                "Unrecoverable error during the process of allocating the output document.", //$NON-NLS-1$
-                error);
-      }
-      throw new IllegalStateException("Could not create output document.",//$NON-NLS-1$
-          error);
+      ErrorUtils
+          .logError(
+              logger,
+              "Unrecoverable error during the process of allocating the output document.", //$NON-NLS-1$
+              error, false);
+      throw new RuntimeException(error);// this will never be reached
     }
 
     if (doc == null) {

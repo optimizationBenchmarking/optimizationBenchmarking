@@ -2,8 +2,8 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.net.URI;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.config.ConfigurationXMLConstants;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /** the evaluation xml constants */
 final class _EvaluationXMLConstants {

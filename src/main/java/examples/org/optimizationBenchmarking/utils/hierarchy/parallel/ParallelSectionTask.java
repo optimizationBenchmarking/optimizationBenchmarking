@@ -6,7 +6,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput;
 import org.optimizationBenchmarking.utils.math.random.LoremIpsum;
 import org.optimizationBenchmarking.utils.text.TextUtils;

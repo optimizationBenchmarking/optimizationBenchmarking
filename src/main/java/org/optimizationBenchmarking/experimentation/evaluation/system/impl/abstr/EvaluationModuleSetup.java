@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr;
 
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IConfiguredModule;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationModuleSetup;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ConfigurableToolJobBuilder;
 
@@ -12,7 +11,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ConfigurableToolJobBu
  * @param <R>
  *          the return type of the setter methods
  */
-public abstract class EvaluationModuleSetup<J extends IConfiguredModule, R extends EvaluationModuleSetup<J, R>>
+public abstract class EvaluationModuleSetup<J extends ConfiguredModule, R extends EvaluationModuleSetup<J, R>>
     extends ConfigurableToolJobBuilder<J, R> implements
     IEvaluationModuleSetup {
 

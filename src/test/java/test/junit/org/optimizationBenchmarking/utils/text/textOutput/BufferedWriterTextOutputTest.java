@@ -3,7 +3,7 @@ package test.junit.org.optimizationBenchmarking.utils.text.textOutput;
 import java.io.BufferedWriter;
 import java.io.StringWriter;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 

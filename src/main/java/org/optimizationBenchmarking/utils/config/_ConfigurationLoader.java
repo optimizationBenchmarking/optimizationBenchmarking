@@ -1,10 +1,9 @@
 package org.optimizationBenchmarking.utils.config;
 
 import java.security.PrivilegedAction;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.EmptyUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /** the configuration loader */
 final class _ConfigurationLoader implements
@@ -30,7 +29,6 @@ final class _ConfigurationLoader implements
     String q;
     char a, b;
     Object o;
-    Logger log;
 
     try (final ConfigurationBuilder cb = new ConfigurationBuilder(null,
         false)) {
@@ -62,15 +60,11 @@ final class _ConfigurationLoader implements
 
         cb._configure(this.m_args);
       } catch (final Throwable tt) {
-        try {
-          log = cb.m_data.getLogger(Configuration.PARAM_LOGGER, null);
-          if ((log != null) && (log.isLoggable(Level.SEVERE))) {
-            log.log(Level.SEVERE, "Severe error during setup.", //$NON-NLS-1$
-                tt);
-          }
-        } catch (final Throwable ttt) {
-          ttt.printStackTrace();
-        }
+        ErrorUtils.logError(
+            cb.m_data.getLogger(Configuration.PARAM_LOGGER, null),//
+            "Severe error during setup.", //$NON-NLS-1$
+            tt, false);
+        ErrorUtils.throwAsRuntimeException(tt);
       }
       return cb.compile();
     }

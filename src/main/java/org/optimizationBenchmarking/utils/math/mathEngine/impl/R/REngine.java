@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.encoding.TextEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
@@ -118,21 +118,16 @@ public final class REngine extends MathEngine {
    *          the throwable
    */
   final void _handleError(final Throwable t) {
-    if (t != null) {
-      if ((this.m_logger != null)
-          && (this.m_logger.isLoggable(Level.SEVERE))) {
-        this.m_logger.log(Level.SEVERE,
-            ("Error during communication with R in engine " + //$NON-NLS-1$ 
-            this.hashCode()), t);
-      }
-      ErrorUtils.throwAsRuntimeException(t);
-    }
+    ErrorUtils.logError(this.getLogger(),
+        ("Error during communication with R in engine " + //$NON-NLS-1$ 
+        this.hashCode()), t, true);
+    ErrorUtils.throwAsRuntimeException(t);
   }
 
   /** {@inheritDoc} */
   @Override
   protected void doClose() throws IOException {
-
+    final Logger logger;
     Throwable error;
 
     error = null;
@@ -171,18 +166,15 @@ public final class REngine extends MathEngine {
       error = ErrorUtils.aggregateError(error, t);
     }
 
+    logger = this.getLogger();
     if (error != null) {
-      if ((this.m_logger != null)
-          && (this.m_logger.isLoggable(Level.SEVERE))) {
-        this.m_logger.log(Level.SEVERE, ("Error during shutdown of "//$NON-NLS-1$
-            + this.m_id), error);
-      }
+      ErrorUtils.logError(logger,//
+          ("Error during shutdown of "//$NON-NLS-1$
+          + this.m_id), error, true);
       ErrorUtils.throwAsIOException(error);
-    } else {
-      if ((this.m_logger != null)
-          && (this.m_logger.isLoggable(Level.INFO))) {
-        this.m_logger.info(this.m_id + " shut down gracefully.");//$NON-NLS-1$
-      }
+    }
+    if ((logger != null) && (logger.isLoggable(Level.INFO))) {
+      logger.info(this.m_id + " shut down gracefully.");//$NON-NLS-1$
     }
   }
 

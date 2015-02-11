@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 

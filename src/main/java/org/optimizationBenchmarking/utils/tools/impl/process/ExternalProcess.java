@@ -8,7 +8,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
@@ -85,6 +85,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /** start all threads associated with this process */
   final void _start() {
+    final Logger logger;
     __UncaughtExceptionHandler ueh;
 
     ueh = null;
@@ -114,8 +115,9 @@ public final class ExternalProcess extends ToolJob implements Closeable {
       this.m_stderrWorker.start();
     }
 
-    if ((this.m_logger != null) && (this.m_logger.isLoggable(Level.FINE))) {
-      this.m_logger.fine("Successfully started: " + this.m_name); //$NON-NLS-1$
+    logger = this.getLogger();
+    if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+      logger.fine("Successfully started: " + this.m_name); //$NON-NLS-1$
     }
   }
 
@@ -142,6 +144,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
    *           if i/o fails
    */
   private final int __close(final boolean kill) throws IOException {
+    final Logger logger;
     Throwable error;
     boolean shouldMessage, shouldKill;
     int returnValue;
@@ -334,11 +337,11 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
     // </kill stdin>
 
+    logger = this.getLogger();
     error = ErrorUtils.aggregateError(error, this.m_error);
     if (error != null) {
-      if ((this.m_logger != null)
-          && (this.m_logger.isLoggable(Level.SEVERE))) {
-        this.m_logger.log(Level.SEVERE,
+      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
+        logger.log(Level.SEVERE,
             ((kill ? "Error while forcefully killing " : //$NON-NLS-1$
                 "Error while gracefully shutting down ")//$NON-NLS-1$
             + this.m_name), error);
@@ -351,15 +354,13 @@ public final class ExternalProcess extends ToolJob implements Closeable {
     } else {
       if (kill) {
         if (shouldMessage) {
-          if ((this.m_logger != null)
-              && (this.m_logger.isLoggable(Level.WARNING))) {
-            this.m_logger.warning("Forcefully killed " + this.m_name); //$NON-NLS-1$
+          if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
+            logger.warning("Forcefully killed " + this.m_name); //$NON-NLS-1$
           }
         }
       } else {
-        if ((this.m_logger != null)
-            && (this.m_logger.isLoggable(Level.FINE))) {
-          this.m_logger.fine("Gracefully shut down " + this.m_name + //$NON-NLS-1$
+        if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+          logger.fine("Gracefully shut down " + this.m_name + //$NON-NLS-1$
               ", return value=" + returnValue);//$NON-NLS-1$
         }
       }

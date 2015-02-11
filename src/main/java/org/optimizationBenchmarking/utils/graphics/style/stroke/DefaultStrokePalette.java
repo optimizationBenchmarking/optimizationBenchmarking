@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.graphics.style.stroke;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 

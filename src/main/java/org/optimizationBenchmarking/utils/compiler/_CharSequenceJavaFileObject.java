@@ -4,8 +4,15 @@ import java.net.URI;
 
 import javax.tools.SimpleJavaFileObject;
 
+import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+
 /** A java file object backed by strings in memory. */
-final class _CharSequenceJavaFileObject extends SimpleJavaFileObject {
+final class _CharSequenceJavaFileObject extends SimpleJavaFileObject
+    implements ITextable {
+
+  /** the class name */
+  private final String m_className;
 
   /** the CharSequence representing the source code to be compiled */
   private final CharSequence m_content;
@@ -24,6 +31,7 @@ final class _CharSequenceJavaFileObject extends SimpleJavaFileObject {
       final CharSequence content) {
     super(URI.create("string:///" + className.replace('.', '/') //$NON-NLS-1$
         + Kind.SOURCE.extension), Kind.SOURCE);
+    this.m_className = className;
     this.m_content = content;
   }
 
@@ -35,6 +43,18 @@ final class _CharSequenceJavaFileObject extends SimpleJavaFileObject {
   public final CharSequence getCharContent(
       final boolean ignoreEncodingErrors) {
     return this.m_content;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append("Class '");//$NON-NLS-1$
+    textOut.append(this.m_className);
+    textOut.append("' generated in memory."); //$NON-NLS-1$
+    textOut.appendLineBreak();
+    textOut.append(super.toString());
+    textOut.appendLineBreak();
+    textOut.append(this.m_content);
   }
 
 }

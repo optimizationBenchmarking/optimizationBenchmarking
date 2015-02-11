@@ -2,8 +2,8 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.io.InputStream;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.config.ConfigurationXMLConstants;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.xml.SimpleLSInput;
 
 /** the local ls input implementation */

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXMLHandler;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
@@ -19,6 +18,7 @@ import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 import org.optimizationBenchmarking.utils.document.spec.IStructuredText;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
 import org.optimizationBenchmarking.utils.parsers.ByteParser;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;

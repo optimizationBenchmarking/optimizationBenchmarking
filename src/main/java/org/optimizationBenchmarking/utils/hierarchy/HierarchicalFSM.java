@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.hierarchy;
 
 import java.io.Closeable;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 

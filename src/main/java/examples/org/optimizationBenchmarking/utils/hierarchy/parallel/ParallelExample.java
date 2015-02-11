@@ -3,7 +3,7 @@ package examples.org.optimizationBenchmarking.utils.hierarchy.parallel;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput;
 
 /** An example for parallel text output */

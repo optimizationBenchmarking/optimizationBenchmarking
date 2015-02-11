@@ -25,6 +25,16 @@ public abstract class ConfiguredModule extends ToolJob implements
     super(logger);
   }
 
+  /**
+   * create the configured module
+   * 
+   * @param setup
+   *          the setup
+   */
+  protected ConfiguredModule(final EvaluationModuleSetup<?, ?> setup) {
+    super(setup);
+  }
+
   /** {@inheritDoc} */
   @Override
   public EModuleRelationship getRelationship(final IConfiguredModule module) {
@@ -63,6 +73,6 @@ public abstract class ConfiguredModule extends ToolJob implements
       throw new IllegalArgumentException(
           "Configured module must not be null."); //$NON-NLS-1$
     }
-    return module.m_logger;
+    return module.getLogger();
   }
 }

@@ -11,7 +11,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 

@@ -4,8 +4,8 @@ import java.io.Writer;
 import java.util.Arrays;
 import java.util.Random;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.MemoryUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 import examples.org.optimizationBenchmarking.utils.io.xml.performance.exampleDoc.ExampleDocument;
 import examples.org.optimizationBenchmarking.utils.io.xml.performance.output.NullOutputMethod;

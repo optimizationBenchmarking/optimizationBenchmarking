@@ -5,10 +5,10 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.Experiment;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
@@ -50,9 +50,8 @@ public abstract class EvaluationJob<M extends ConfiguredModule> extends
   public final void run() {
     final Logger logger;
     final Level level;
-    String msg;
 
-    if ((logger = this.m_logger) != null) {
+    if ((logger = this.getLogger()) != null) {
       if (logger.isLoggable(level = this._level())) {
         logger.log(level, ("Beginning job " + //$NON-NLS-1$
             this.toString() + '.'));
@@ -64,15 +63,8 @@ public abstract class EvaluationJob<M extends ConfiguredModule> extends
     try {
       this.execute();
     } catch (final Throwable throwable) {
-      if (throwable instanceof _HandledException) {
-        throw ((_HandledException) throwable);
-      }
-      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
-        msg = ("Severe error during execution of "//$NON-NLS-1$ 
-        + this.toString());
-        logger.log(Level.SEVERE, msg, throwable);
-        throw new _HandledException(msg, throwable);
-      }
+      ErrorUtils.logError(logger, ("Severe error during execution of "//$NON-NLS-1$ 
+          + this.toString()), throwable, false);
       ErrorUtils.throwAsRuntimeException(throwable);
     }
 

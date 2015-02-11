@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
 public abstract class ToolJob implements IToolJob {
 
   /** the logger to use */
-  protected final Logger m_logger;
+  private final Logger m_logger;
 
   /**
    * create
@@ -20,6 +20,15 @@ public abstract class ToolJob implements IToolJob {
   protected ToolJob(final Logger logger) {
     super();
     this.m_logger = logger;
+  }
+
+  /**
+   * Get the logger of this job
+   * 
+   * @return the logger of this job
+   */
+  protected final Logger getLogger() {
+    return this.m_logger;
   }
 
   /**

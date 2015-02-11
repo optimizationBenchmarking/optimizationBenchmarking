@@ -2,10 +2,10 @@ package org.optimizationBenchmarking.utils.bibliography.io;
 
 import java.net.URI;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /**
  * the string constants for the bibliography xml format of

@@ -2,7 +2,7 @@ package examples.org.optimizationBenchmarking.utils.io.xml;
 
 import java.net.URI;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.xml.XMLDocument;
 import org.optimizationBenchmarking.utils.io.xml.XMLElement;
 

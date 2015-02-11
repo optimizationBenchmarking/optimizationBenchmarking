@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.text.numbers;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /** a floating point number encoded as a character string */
 final class _CharFloat implements Cloneable {

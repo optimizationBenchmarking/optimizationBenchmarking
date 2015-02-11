@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
@@ -19,6 +18,7 @@ import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
@@ -619,11 +619,9 @@ public class Document extends DocumentElement implements IDocument {
       }
     }
     if (error != null) {
-      log = this.m_logger;
-      if ((log != null) && (log.isLoggable(Level.SEVERE))) {
-        log.log(Level.SEVERE, ("Error during finalization of" //$NON-NLS-1$
-            + this.__name()), error);
-      }
+      ErrorUtils.logError(this.m_logger,//
+          ("Error during finalization of" //$NON-NLS-1$
+          + this.__name()), error, true);
       ErrorUtils.throwAsRuntimeException(error);
     }
   }

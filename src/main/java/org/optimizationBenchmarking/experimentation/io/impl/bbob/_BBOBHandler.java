@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
 import org.optimizationBenchmarking.experimentation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.data.RunContext;
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
 import org.optimizationBenchmarking.utils.parsers.IntParser;

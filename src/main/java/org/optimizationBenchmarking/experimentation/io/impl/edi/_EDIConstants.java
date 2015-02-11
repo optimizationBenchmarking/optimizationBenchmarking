@@ -4,7 +4,7 @@ import java.net.URI;
 
 import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.EDimensionType;
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** an internal class with EDI constants */

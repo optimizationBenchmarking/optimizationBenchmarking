@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.parsers.ListParser;
 import org.optimizationBenchmarking.utils.parsers.PathParser;
 import org.optimizationBenchmarking.utils.predicates.IPredicate;

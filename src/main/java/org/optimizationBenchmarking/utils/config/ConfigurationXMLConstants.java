@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.config;
 
 import java.net.URI;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /**
  * the internal class for the XML constants of the configuration XML format

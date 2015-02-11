@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.experimentation.io.impl.edi;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
@@ -79,7 +78,7 @@ final class _EDIContentHandler extends DelegatingHandler {
   public final void doError(final SAXParseException e) throws SAXException {
     try {
       this.m_logger.handleError(e, "Error during XML parsing."); //$NON-NLS-1$
-    } catch (final IOException ioe) {
+    } catch (final Exception ioe) {
       throw new SAXException(ioe);
     }
   }
@@ -90,7 +89,7 @@ final class _EDIContentHandler extends DelegatingHandler {
       throws SAXException {
     try {
       this.m_logger.handleError(e, "Fatal error during XML parsing."); //$NON-NLS-1$
-    } catch (final IOException ioe) {
+    } catch (final Exception ioe) {
       throw new SAXException(ioe);
     }
   }

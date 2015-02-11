@@ -1,10 +1,9 @@
 package org.optimizationBenchmarking.utils.tools.impl.process;
 
 import java.io.InputStream;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /**
  * A thread shoveling data from an {@link java.io.InputStream} to the
@@ -43,11 +42,9 @@ final class _DiscardInputStream extends _WorkerThread {
       }
       buffer = null;
     } catch (final Throwable t) {
-      if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
-        this.m_log.log(Level.SEVERE,
-            "Error during discarding input stream (by skipping).", //$NON-NLS-1$
-            t);
-      }
+      ErrorUtils.logError(this.m_log,
+          "Error during discarding input stream (by skipping).", //$NON-NLS-1$
+          t, true);
       ErrorUtils.throwAsRuntimeException(t);
     }
   }

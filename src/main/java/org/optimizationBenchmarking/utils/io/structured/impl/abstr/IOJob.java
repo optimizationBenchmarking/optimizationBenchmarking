@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
@@ -70,7 +71,9 @@ public class IOJob extends ToolJob {
    * @return {@code true} if we can, {@code false} if we cannot
    */
   public final boolean canLog(final Level level) {
-    return ((this.m_logger != null) && (this.m_logger.isLoggable(level)));
+    final Logger logger;
+    logger = this.getLogger();
+    return ((logger != null) && (logger.isLoggable(level)));
   }
 
   /**
@@ -92,7 +95,12 @@ public class IOJob extends ToolJob {
    *          the message
    */
   public final void log(final Level level, final String message) {
-    this.m_logger.log(level, (this._id() + message));
+    final Logger logger;
+
+    logger = this.getLogger();
+    if (logger != null) {
+      logger.log(level, (this._id() + message));
+    }
   }
 
   /**
@@ -107,7 +115,11 @@ public class IOJob extends ToolJob {
    */
   public final void log(final Level level, final String message,
       final Object information) {
-    this.m_logger.log(level, (this._id() + message), information);
+    final Logger logger;
+    logger = this.getLogger();
+    if (logger != null) {
+      logger.log(level, (this._id() + message), information);
+    }
   }
 
   /**
@@ -128,39 +140,19 @@ public class IOJob extends ToolJob {
    * @param message
    *          the message
    * @throws IOException
-   *           the exception
+   *           if something fails
    */
   public final void handleError(final Throwable throwable,
       final String message) throws IOException {
-    final IOException ioe;
     String msg;
-
-    if (throwable instanceof _HandledIOException) {
-      throw ((IOException) throwable);
-    }
-
     msg = this._id();
     if (message == null) {
       msg += "failed without providing a detailed error message."; //$NON-NLS-1$
     } else {
       msg += message;
     }
-
-    if (throwable == null) {
-      ioe = new _HandledIOException(msg);
-    } else {
-      ioe = new _HandledIOException(msg, throwable);
-    }
-
-    if ((this.m_logger != null)
-        && (this.m_logger.isLoggable(Level.SEVERE))) {
-      try {
-        throw ioe;
-      } catch (final IOException exc) {
-        this.m_logger.log(Level.SEVERE, msg, exc);
-      }
-    }
-    throw ioe;
+    ErrorUtils.logError(this.getLogger(), msg, throwable, true);
+    ErrorUtils.throwAsIOException(throwable);
   }
 
   /**

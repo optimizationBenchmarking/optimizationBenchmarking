@@ -1,9 +1,12 @@
-package org.optimizationBenchmarking.utils;
+package org.optimizationBenchmarking.utils.error;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /** Some utilities to deal with errors */
 public final class ErrorUtils {
+
   /**
    * Throw an {@link java.lang.RuntimeException} error if an
    * {@code unrecoverable} error took place. In this case, if there also
@@ -151,5 +154,52 @@ public final class ErrorUtils {
   public static final void doNotCall() {
     throw new UnsupportedOperationException(//
         "You are not allowed to call this method."); //$NON-NLS-1$
+  }
+
+  /**
+   * Write an error to a logger, if the logger is not {@code null} and can
+   * log the log level {@link java.util.logging.Level#SEVERE}. If the error
+   * has been logged, it will never be logged to the same logger again
+   * unless {@code forceLog} is {@code true}.
+   * 
+   * @param logger
+   *          the logger to log to
+   * @param message
+   *          the message
+   * @param error
+   *          the error
+   * @param forceLog
+   *          force logging: always log if the logger is not {@code null}
+   *          and can log the log level
+   *          {@link java.util.logging.Level#SEVERE} is supported
+   */
+  public static final void logError(final Logger logger,
+      final String message, final Throwable error, final boolean forceLog) {
+    final boolean isLogged;
+    final String msg;
+
+    // If a logger is provided, then we try to log the error and the
+    // message.
+    if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
+      isLogged = _LoggedSentinel._hasBeenLogged(error, logger);
+      if (forceLog || (!isLogged)) {
+
+        if (message != null) {
+          msg = message;
+        } else {
+          msg = (("The error \"" + error) + "\" was detected."); //$NON-NLS-2$//$NON-NLS-1$
+        }
+
+        try {
+          logger.log(Level.SEVERE, msg, error);
+        } catch (final Throwable t) {
+          throw new RuntimeException(((//
+              "Error when logging error message '"//$NON-NLS-1$ 
+              + msg) + '\'') + '.');
+        } finally {
+          _LoggedSentinel._markAsLogged(error, msg, logger);
+        }
+      }
+    }
   }
 }

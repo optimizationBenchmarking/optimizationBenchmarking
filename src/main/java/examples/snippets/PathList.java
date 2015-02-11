@@ -3,7 +3,7 @@ package examples.snippets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;

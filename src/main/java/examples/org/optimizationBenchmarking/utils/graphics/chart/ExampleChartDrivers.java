@@ -2,8 +2,8 @@ package examples.org.optimizationBenchmarking.utils.graphics.chart;
 
 import java.util.LinkedHashSet;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.chart.impl.EChartFormat;
 import org.optimizationBenchmarking.utils.graphics.chart.impl.jfree.JFreeChartDriver;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;

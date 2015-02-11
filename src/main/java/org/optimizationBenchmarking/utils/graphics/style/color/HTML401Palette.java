@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.graphics.style.color;
 
 import java.util.ArrayList;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 

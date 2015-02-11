@@ -1,6 +1,6 @@
 package examples.org.optimizationBenchmarking.utils.hierarchy;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput;
 
 /**

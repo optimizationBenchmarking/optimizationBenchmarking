@@ -22,6 +22,17 @@ public abstract class ConfiguredExperimentModule extends ConfiguredModule
     super(logger);
   }
 
+  /**
+   * create the configured experiment module
+   * 
+   * @param setup
+   *          the setup
+   */
+  protected ConfiguredExperimentModule(
+      final ExperimentModuleSetup<?, ?> setup) {
+    super(setup);
+  }
+
   /** {@inheritDoc} */
   @Override
   public Runnable createMainJob(final Experiment data,

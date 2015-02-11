@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.math;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /**
  * This utility class allows us for checking the compatibility of numerical

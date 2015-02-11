@@ -28,10 +28,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
@@ -224,13 +224,11 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         this.m_listener.onFilesFinalized(v);
       }
     } catch (final Throwable t) {
-      if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
-        if (s == null) {
-          s = this.__name();
-        }
-        this.m_log.log(Level.SEVERE, ("Error when closing " //$NON-NLS-1$
-            + s), t);
+      if (s == null) {
+        s = this.__name();
       }
+      ErrorUtils.logError(this.m_log, ("Error when closing " //$NON-NLS-1$
+          + s), t, false);
       ErrorUtils.throwAsRuntimeException(t);
     }
 

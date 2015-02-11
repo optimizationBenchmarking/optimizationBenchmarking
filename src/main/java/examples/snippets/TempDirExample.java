@@ -3,7 +3,7 @@ package examples.snippets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
 
 /** Here we test the temporary folder API. */

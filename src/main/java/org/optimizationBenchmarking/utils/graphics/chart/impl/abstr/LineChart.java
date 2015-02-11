@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IAxis;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILine2D;
@@ -168,13 +168,9 @@ public class LineChart extends Chart implements ILineChart {
       this.m_lines = null;
       this.m_driver.renderLineChart(chart, graphic, logger);
     } catch (final Throwable error) {
-      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
-        logger
-            .log(
-                Level.SEVERE,
-                ("Unrecoverable error during rendering of compiled line chart #" //$NON-NLS-1$
-                + this._id()), error);
-      }
+      ErrorUtils.logError(logger,
+          ("Unrecoverable error during rendering of compiled line chart #" //$NON-NLS-1$
+          + this._id()), error, true);
       ErrorUtils.throwAsRuntimeException(error);
     } finally {
       this.m_lines = null;

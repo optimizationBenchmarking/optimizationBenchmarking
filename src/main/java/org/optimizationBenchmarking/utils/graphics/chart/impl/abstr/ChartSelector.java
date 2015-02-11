@@ -59,7 +59,7 @@ public class ChartSelector extends ToolJob implements IChartSelector {
    * @return the logger
    */
   final Logger _getLogger() {
-    return this.m_logger;
+    return this.getLogger();
   }
 
   /**

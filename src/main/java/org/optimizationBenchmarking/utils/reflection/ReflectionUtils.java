@@ -16,8 +16,8 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import org.optimizationBenchmarking.utils.EmptyUtils;
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.ByteArrayIOStream;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;

@@ -1,10 +1,9 @@
 package org.optimizationBenchmarking.utils.tools.impl.process;
 
 import java.io.OutputStream;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer;
 
 /**
@@ -66,13 +65,11 @@ final class _BufferToOutputStream extends _WorkerThread {
         }
       }
     } catch (final Throwable t) {
-      if ((this.m_log != null) && (this.m_log.isLoggable(Level.SEVERE))) {
-        this.m_log
-            .log(
-                Level.SEVERE,
-                "Error during shoveling bytes from byte buffer to input stream of external process.", //$NON-NLS-1$
-                t);
-      }
+      ErrorUtils
+          .logError(
+              this.m_log,
+              "Error during shoveling bytes from byte buffer to input stream of external process.", //$NON-NLS-1$
+              t, true);
       ErrorUtils.throwAsRuntimeException(t);
     }
   }

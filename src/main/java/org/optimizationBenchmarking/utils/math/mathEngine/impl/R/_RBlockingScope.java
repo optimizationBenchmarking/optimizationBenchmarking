@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.math.mathEngine.impl.R;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-import org.optimizationBenchmarking.utils.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 
 /**

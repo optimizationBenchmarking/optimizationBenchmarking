@@ -15,8 +15,8 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEval
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentModuleSetup;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetStatistic;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentStatistic;
-import org.optimizationBenchmarking.utils.ErrorUtils;
 import org.optimizationBenchmarking.utils.MemoryUtils;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -230,13 +230,11 @@ final class _ModulesBuilder {
       }
 
     } catch (final RuntimeException re) {
-      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
-        logger
-            .log(
-                Level.SEVERE,
-                "Unrecoverable error during compiliation of module list. Maybe there are unresolved dependencies.", //$NON-NLS-1$
-                re);
-      }
+      ErrorUtils
+          .logError(
+              logger,
+              "Unrecoverable error during compiliation of module list. Maybe there are unresolved dependencies.", //$NON-NLS-1$
+              re, false);
       throw re;
     }
 
@@ -345,14 +343,12 @@ final class _ModulesBuilder {
 
       _ModulesBuilder.__checkConfigured(res);
     } catch (final RuntimeException re) {
-      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
-        logger
-            .log(
-                Level.SEVERE,//
-                "Unrecoverable during module configuration process. Maybe you did not specify modules that can actually compute a statistic over the provided data.", //$NON-NLS-1$
-                re);
-        throw re;
-      }
+      ErrorUtils
+          .logError(
+              logger,
+              "Unrecoverable during module configuration process. Maybe you did not specify modules that can actually compute a statistic over the provided data.", //$NON-NLS-1$
+              re, false);
+      throw re;
     }
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
@@ -541,13 +537,9 @@ final class _ModulesBuilder {
         }
       }
     } catch (final RuntimeException re) {
-      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
-        logger
-            .log(
-                Level.SEVERE,//
-                "Unrecoverable error while building array of module wrappers.",//$NON-NLS-1$
-                re);
-      }
+      ErrorUtils.logError(logger, //
+          "Unrecoverable error while building array of module wrappers.",//$NON-NLS-1$
+          re, false);
       throw re;
     }
 
@@ -846,13 +838,11 @@ final class _ModulesBuilder {
         _ModulesBuilder._noStatisticModuleError();
       }
     } catch (final RuntimeException re) {
-      if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
-        logger
-            .log(
-                Level.SEVERE,
-                "Unrecoverable error while building module hierarchy and wrappers.",//$NON-NLS-1$
-                re);
-      }
+      ErrorUtils
+          .logError(
+              logger,
+              "Unrecoverable error while building module hierarchy and wrappers.",//$NON-NLS-1$
+              re, false);
       throw re;
     }
 
