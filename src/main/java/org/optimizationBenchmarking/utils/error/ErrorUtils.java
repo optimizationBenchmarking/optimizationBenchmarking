@@ -157,10 +157,41 @@ public final class ErrorUtils {
   }
 
   /**
-   * Write an error to a logger, if the logger is not {@code null} and can
-   * log the log level {@link java.util.logging.Level#SEVERE}. If the error
-   * has been logged, it will never be logged to the same logger again
-   * unless {@code forceLog} is {@code true}.
+   * <p>
+   * Log the {@link java.lang.Throwable error} to a
+   * {@link java.util.logging.Logger} with message {@code message}, if
+   * <ol>
+   * <li>the logger is not {@code null},</li>
+   * <li>the logger {@link java.util.logging.Logger#isLoggable(Level) can
+   * log} the log level {@link java.util.logging.Level#SEVERE}, and</li>
+   * <li>either
+   * <ul>
+   * <li>the error has not yet been logged to the {@code logger} before or</li>
+   * <li>{@code forceLog==true}</li>
+   * </ul>
+   * </li>
+   * </ol>
+   * <p>
+   * Additionally, {@code message} will be stored in {@code error}. If the
+   * same {@code error} is logged to the same {@code logger} again (with
+   * {@code forceLog==true}) or to another logger, {@code message} will be
+   * listed as well.
+   * </p>
+   * <p>
+   * This central error logging routine makes sure that the same error is
+   * not logged too often and the logs may get congested. Thus, we can very
+   * liberally add error logging calls in our code.
+   * </p>
+   * <p>
+   * The parameter {@code forceLog} should only be set to {@code true} if
+   * {@code message} contains additional information which may help us
+   * track down the error. For example, if {@code message} is
+   * {@code "An error has been detected while reading a file"}, then
+   * {@code forceLog} should be {@code false}. If {@code message} is
+   * instead
+   * {@code "An error has been detected while reading the file foo.txt"},
+   * {@code forceLog} should be {@code true}.
+   * </p>
    * 
    * @param logger
    *          the logger to log to
