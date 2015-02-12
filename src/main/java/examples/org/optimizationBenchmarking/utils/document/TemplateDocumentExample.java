@@ -63,7 +63,7 @@ public class TemplateDocumentExample extends DocumentExample {
     }
 
     i = 0;
-    for (final DocumentConfiguration config : ExampleDocumentConfigurations.CONFIGURATIONS) {//
+    for (final DocumentConfiguration config : ExampleDocumentConfigurations.ALL_CONFIGURATIONS) {//
       de = new TemplateDocumentExample(config.createDocument(
           dir.resolve((("template/" + config.toString()) + '_') + (++i)),//$NON-NLS-1$ 
           "report",//$NON-NLS-1$

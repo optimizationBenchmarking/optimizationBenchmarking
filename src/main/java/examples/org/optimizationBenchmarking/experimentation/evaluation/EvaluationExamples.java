@@ -2,7 +2,6 @@ package examples.org.optimizationBenchmarking.experimentation.evaluation;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.DocumentEvaluationOutput;
@@ -15,9 +14,6 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
-import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
-import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -44,8 +40,7 @@ import examples.org.optimizationBenchmarking.utils.document.ExampleDocumentConfi
 public final class EvaluationExamples {
 
   /** the document configurations */
-  public static final ArrayListView<DocumentConfiguration> DOCUMENT_CONFIGURATIONS = EvaluationExamples
-      .__makeDocs();
+  public static final ArrayListView<DocumentConfiguration> DOCUMENT_CONFIGURATIONS = ExampleDocumentConfigurations.FEW_DIVERSE_CONFIGURATIONS;
 
   /** the evaluator configurations */
   public static final ArrayListView<String> EVALUATOR_CONFIGURATIONS = new ArrayListView<>(
@@ -104,7 +99,7 @@ public final class EvaluationExamples {
           outputDir = PathUtils.normalize(dir
               .resolve(source.getSimpleName())
               .resolve(config.substring(0, config.lastIndexOf('.')))
-              .resolve(dest.toString() + (++i)));
+              .resolve((dest.toString() + '_') + (++i)));
 
           builder = Evaluator.getInstance().use();
           builder.setInput(input);
@@ -143,41 +138,4 @@ public final class EvaluationExamples {
 
   }
 
-  /**
-   * make the document configurations
-   * 
-   * @return the document configurations
-   */
-  private static final ArrayListView<DocumentConfiguration> __makeDocs() {
-    final HashSet<DocumentConfiguration> configs;
-    final HashSet<IDocumentDriver> documentDrivers;
-    final HashSet<IGraphicDriver> graphicDrivers;
-    final HashSet<IChartDriver> chartDrivers;
-    IDocumentDriver documentDriver;
-    IGraphicDriver graphicDriver;
-    IChartDriver chartDriver;
-
-    configs = new HashSet<>();
-    documentDrivers = new HashSet<>();
-    graphicDrivers = new HashSet<>();
-    chartDrivers = new HashSet<>();
-
-    for (final DocumentConfiguration config : ExampleDocumentConfigurations.CONFIGURATIONS) {
-      documentDriver = config.getDocumentDriver();
-      graphicDriver = config.getGraphicDriver();
-      chartDriver = config.getChartDriver();
-
-      if ((!(documentDrivers.contains(documentDriver))) || //
-          (!(graphicDrivers.contains(graphicDriver))) || //
-          (!(chartDrivers.contains(chartDriver)))) {
-        if (configs.add(config)) {
-          documentDrivers.add(documentDriver);
-          chartDrivers.add(chartDriver);
-          graphicDrivers.add(graphicDriver);
-        }
-      }
-    }
-
-    return ArrayListView.collectionToView(configs, false);
-  }
 }

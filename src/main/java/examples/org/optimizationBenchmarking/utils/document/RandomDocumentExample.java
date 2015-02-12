@@ -240,7 +240,7 @@ public class RandomDocumentExample extends DocumentExample {
     rand.setSeed(RandomDocumentExample.SEED);
     seed = rand.nextLong();
     i = 0;
-    for (final DocumentConfiguration config : ExampleDocumentConfigurations.CONFIGURATIONS) {//
+    for (final DocumentConfiguration config : ExampleDocumentConfigurations.ALL_CONFIGURATIONS) {//
       rand.setSeed(seed);
       de = new RandomDocumentExample(config.createDocument(
           dir.resolve((("random/" + config.toString()) + '_') + (++i)),//$NON-NLS-1$ 
