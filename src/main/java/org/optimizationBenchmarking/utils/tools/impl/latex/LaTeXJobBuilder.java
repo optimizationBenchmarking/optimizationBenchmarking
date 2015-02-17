@@ -339,41 +339,9 @@ public class LaTeXJobBuilder extends
    */
   private static final _LaTeXToolChainComponent __tex(
       final IFileType[] required) {
-    _LaTeXToolChainComponentDesc desc;
     _LaTeXToolChainComponent comp;
-    int main;
 
-    mainLoop: for (main = 0; main < 6; main++) {
-      switch (main) {
-        case 0: {
-          desc = _PdfLaTeX._getDescription();
-          break;
-        }
-        case 1: {
-          desc = _LaTeX._getDescription();
-          break;
-        }
-        case 2: {
-          desc = _PdfTeXAsPdfLaTeX._getDescription();
-          break;
-        }
-        case 3: {
-          desc = _PdfTeXAsLaTeX._getDescription();
-          break;
-        }
-        case 4: {
-          desc = _LaTeXAsPdfLaTeX._getDescription();
-          break;
-        }
-        case 5: {
-          desc = _PdfLaTeXAsLaTeX._getDescription();
-          break;
-        }
-        default: {
-          return null;
-        }
-      }
-
+    mainLoop: for (final _LaTeXToolChainComponentDesc desc : _AllEngines.ALL_ENGINES) {
       if (desc == null) {
         continue mainLoop;
       }

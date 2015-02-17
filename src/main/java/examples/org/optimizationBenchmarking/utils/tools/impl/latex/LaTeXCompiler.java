@@ -1,10 +1,17 @@
 package examples.org.optimizationBenchmarking.utils.tools.impl.latex;
 
+import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeXJobBuilder;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * <p>
@@ -77,7 +84,7 @@ import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeXJobBuilder;
  * optional</li>
  * </ul>
  */
-public class LaTeXCompiler {
+public final class LaTeXCompiler implements IFileProducerListener {
 
   /**
    * The main routine
@@ -91,15 +98,54 @@ public class LaTeXCompiler {
     final Configuration root;
     final LaTeXJobBuilder builder;
     final Callable<Void> job;
+    final Logger logger;
 
     Configuration.setup(args);
     root = Configuration.getRoot();
 
+    logger = root.getLogger(Configuration.PARAM_LOGGER, null);
+    if ((logger != null) && (logger.isLoggable(Level.INFO))) {
+      logger.info(//
+          "Now beginning to build LaTeX job. This entails searching for executables and may take a while."); //$NON-NLS-1$
+      logger.info(//
+          "Btw, LaTeX supports the following graphic formats: " //$NON-NLS-1$
+              + LaTeX.getAllSupportedGraphicFormats());
+    }
+
     builder = LaTeX.getInstance().use();
     builder.configure(root);
+    builder.setFileProducerListener(new LaTeXCompiler());
     job = builder.create();
 
+    if ((logger != null) && (logger.isLoggable(Level.INFO))) {
+      logger.info(//
+          "LaTeX job has been configured and created and will now be executed."); //$NON-NLS-1$
+    }
+
     job.call();
+
+    if ((logger != null) && (logger.isLoggable(Level.INFO))) {
+      logger.info(//
+          "LaTeX job has been completed."); //$NON-NLS-1$
+    }
+  }
+
+  /** create */
+  private LaTeXCompiler() {
+    super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void onFilesFinalized(
+      final Collection<Entry<Path, IFileType>> result) {
+    final Logger logger;
+
+    logger = Configuration.getRoot().getLogger(Configuration.PARAM_LOGGER,
+        null);
+    if ((logger != null) && (logger.isLoggable(Level.INFO))) {
+      logger.info("Files created: " + result);//$NON-NLS-1$
+    }
   }
 
 }

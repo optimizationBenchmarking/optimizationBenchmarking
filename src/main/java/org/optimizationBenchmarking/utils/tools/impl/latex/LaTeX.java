@@ -1,5 +1,9 @@
 package org.optimizationBenchmarking.utils.tools.impl.latex;
 
+import java.util.ArrayList;
+
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.FileProducerTool;
 import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 import org.optimizationBenchmarking.utils.tools.spec.IConfigurableJobTool;
@@ -105,9 +109,50 @@ public class LaTeX extends FileProducerTool implements
     return __LaTeXLoader.INSTANCE;
   }
 
+  /**
+   * Obtain all the supported graphic formats. This method returns a list
+   * of all graphic formats which may potentially be supported by a tool
+   * chain.
+   * 
+   * @return all the supported graphic formats
+   */
+  public static final ArraySetView<EGraphicFormat> getAllSupportedGraphicFormats() {
+    return __AllSupportedGraphicFormatsLoader.ALL;
+  }
+
   /** the loader */
   private static final class __LaTeXLoader {
     /** the instance */
     static final LaTeX INSTANCE = new LaTeX();
+  }
+
+  /** find all the supported graphics formats */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  private static final class __AllSupportedGraphicFormatsLoader {
+
+    /** all the supported graphic formats */
+    static final ArraySetView<EGraphicFormat> ALL;
+
+    static {
+      final ArrayList<EGraphicFormat> list;
+      final int size;
+
+      list = new ArrayList<>(EGraphicFormat.INSTANCES.size());
+      main: for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
+        for (final _LaTeXToolChainComponentDesc desc : _AllEngines.ALL_ENGINES) {
+          if (desc._supports(format)) {
+            list.add(format);
+            continue main;
+          }
+        }
+      }
+
+      size = list.size();
+      if (size > 0) {
+        ALL = new ArraySetView<>(list.toArray(new EGraphicFormat[size]));
+      } else {
+        ALL = ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
+      }
+    }
   }
 }

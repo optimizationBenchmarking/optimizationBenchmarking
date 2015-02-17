@@ -105,8 +105,7 @@ final class _GhostScript extends _LaTeXToolChainComponent {
         PathUtils.getPhysicalPath(pdf, false));
     builder.addPathArgument(ps);
     builder.addStringArgument("-c"); //$NON-NLS-1$
-    builder.addStringArgument(" quit"); //$NON-NLS-1$
-    builder.addPathArgument(pdf);
+    builder.addStringArgument("quit"); //$NON-NLS-1$
 
     builder.setLogger(logger);
     builder.setStdErr(EProcessStream.REDIRECT_TO_LOGGER);
