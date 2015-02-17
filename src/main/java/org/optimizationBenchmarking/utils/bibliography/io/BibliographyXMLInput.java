@@ -44,8 +44,7 @@ public final class BibliographyXMLInput extends
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       schema = sf.newSchema(//
-          BibliographyXMLConstants.class
-              .getResource(BibliographyXMLConstants.SCHEMA));
+          BibliographyXML.class.getResource(BibliographyXML.SCHEMA));
     } catch (final Throwable a) {
       rec = a;
     } finally {

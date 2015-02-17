@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.graphics.style.color.HTML401Palette;
 import org.optimizationBenchmarking.utils.graphics.style.color.JavaDefaultPalette;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
-import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
+import examples.org.optimizationBenchmarking.FinishedPrinter;
 
 /**
  * An example used to illustrate the available color palettes.

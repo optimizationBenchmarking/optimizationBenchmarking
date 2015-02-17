@@ -37,6 +37,8 @@ import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
+import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 
 /**
  * The driver for LaTeX output
@@ -482,7 +484,7 @@ public final class LaTeXDriver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   public final IFileType getFileType() {
-    return ELaTeXFileTypes.LATEX;
+    return ELaTeXFileType.TEX;
   }
 
   /** {@inheritDoc} */
@@ -626,17 +628,11 @@ public final class LaTeXDriver extends DocumentDriver {
     static {
       SUPPORTED_GRAPHIC_FORMATS = new boolean[EGraphicFormat.INSTANCES
           .size()];
-
-      outer: for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
-        for (final ELaTeXEngine engine : ELaTeXEngine.INSTANCES) {
-          if (engine._supportsGraphicFormat(format)) {
-            _LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[format
-                .ordinal()] = true;
-            continue outer;
-          }
-        }
+      for (final EGraphicFormat format : LaTeX
+          .getAllSupportedGraphicFormats()) {
+        _LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[format
+            .ordinal()] = true;
       }
-
     }
   }
 
@@ -655,9 +651,12 @@ public final class LaTeXDriver extends DocumentDriver {
 
       error = null;
       driver = null;
-      for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
-        if (_LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[format
-            .ordinal()]) {
+      for (final EGraphicFormat format : new EGraphicFormat[] {
+          EGraphicFormat.PDF, EGraphicFormat.EPS, EGraphicFormat.SVG,
+          EGraphicFormat.SVGZ, EGraphicFormat.EMF, EGraphicFormat.PNG,
+          EGraphicFormat.BMP, EGraphicFormat.GIF, EGraphicFormat.JPEG, }) {
+        if (_LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[//
+        format.ordinal()]) {
           try {
             driver = format.getDefaultDriver();
             driver.checkCanUse();

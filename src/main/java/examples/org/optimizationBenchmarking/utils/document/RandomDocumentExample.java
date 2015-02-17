@@ -64,6 +64,7 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
+import examples.org.optimizationBenchmarking.FinishedPrinter;
 import examples.org.optimizationBenchmarking.utils.bibliography.data.RandomBibliography;
 import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExample;
 

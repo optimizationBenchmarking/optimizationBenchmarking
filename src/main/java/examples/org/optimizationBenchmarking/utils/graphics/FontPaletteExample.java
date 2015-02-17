@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
-import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
+import examples.org.optimizationBenchmarking.FinishedPrinter;
 
 /**
  * An example used to illustrate the available color palettes.

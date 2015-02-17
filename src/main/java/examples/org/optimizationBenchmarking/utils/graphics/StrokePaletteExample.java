@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokePalette;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokeStyle;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
-import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
+import examples.org.optimizationBenchmarking.FinishedPrinter;
 
 /**
  * An example used to illustrate the available color palettes.

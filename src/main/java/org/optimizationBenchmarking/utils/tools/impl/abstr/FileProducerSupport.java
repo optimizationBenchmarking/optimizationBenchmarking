@@ -107,6 +107,7 @@ public final class FileProducerSupport implements Closeable,
    */
   public FileProducerSupport(final IFileProducerListener listener) {
     super();
+    this.m_listener = listener;
   }
 
   /**

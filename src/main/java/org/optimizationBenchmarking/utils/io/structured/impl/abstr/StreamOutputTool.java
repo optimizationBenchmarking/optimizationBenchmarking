@@ -49,7 +49,7 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
       throws Throwable {
     final Path file;
     final _OutputJob outJob;
-    final Object oldCur;
+    final Object oldCur, oldCur2;
 
     oldCur = job.m_current;
     try {
@@ -69,16 +69,53 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
         file = path;
       }
 
+      oldCur2 = job.m_current;
+      try {
+        job.m_current = file;
+        if (archiveType != null) {
+          try (final OutputStream fileOutput = PathUtils
+              .openOutputStream(file)) {
+            this._stream(job, data, fileOutput, encoding, archiveType);
+          }
+
+          outJob = ((_OutputJob) job);
+          if (outJob.m_support != null) {
+            outJob.m_support.addFile(file, archiveType);
+          }
+        } else {
+          this.file(job, data, file, encoding);
+        }
+      } finally {
+        job.m_current = oldCur2;
+      }
+    } finally {
+      job.m_current = oldCur;
+    }
+  }
+
+  /**
+   * Write the output to a plain file
+   * 
+   * @param job
+   *          the job
+   * @param data
+   *          the data
+   * @param file
+   *          the file
+   * @param encoding
+   *          the encoding
+   * @throws Throwable
+   *           if I/O fails
+   */
+  protected void file(final IOJob job, final S data, final Path file,
+      final StreamEncoding<?, ?> encoding) throws Throwable {
+    final Object oldCur;
+
+    oldCur = job.m_current;
+    try {
       try (final OutputStream fileOutput = PathUtils
           .openOutputStream(file)) {
-        this._stream(job, data, fileOutput, encoding, archiveType);
-      }
-
-      if (archiveType != null) {
-        outJob = ((_OutputJob) job);
-        if (outJob.m_support != null) {
-          outJob.m_support.addFile(file, archiveType);
-        }
+        this._stream(job, data, fileOutput, encoding, null);
       }
     } finally {
       job.m_current = oldCur;

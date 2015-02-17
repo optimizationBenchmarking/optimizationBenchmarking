@@ -22,7 +22,7 @@ import org.optimizationBenchmarking.utils.math.MathConstants;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
-import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
+import examples.org.optimizationBenchmarking.FinishedPrinter;
 
 /** An example for using the graphic output subsystem. */
 public final class GraphicsExample {

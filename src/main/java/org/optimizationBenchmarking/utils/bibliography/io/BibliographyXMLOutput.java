@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.utils.bibliography.io;
 
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibArticle;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthor;
@@ -20,6 +22,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
+import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLOutputTool;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
@@ -46,10 +49,9 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
   @Override
   protected void xml(final IOJob job, final Object data, final XMLBase dest) {
     try (XMLElement root = dest.element()) {
-      root.namespaceSetPrefix(BibliographyXMLConstants.NAMESPACE_URI,
-          "bib"); //$NON-NLS-1$
-      root.name(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ELEMENT_BIBLIOGRAPHY);
+      root.namespaceSetPrefix(BibliographyXML.NAMESPACE_URI, "bib"); //$NON-NLS-1$
+      root.name(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ELEMENT_BIBLIOGRAPHY);
       BibliographyXMLOutput.__write(data, root);
     }
   }
@@ -113,7 +115,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (o instanceof BibAuthors) {
       BibliographyXMLOutput.__writeAuthors(((BibAuthors) o),
-          BibliographyXMLConstants.ELEMENT_AUTHORS, dest);
+          BibliographyXML.ELEMENT_AUTHORS, dest);
       return;
     }
 
@@ -124,13 +126,13 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (o instanceof BibOrganization) {
       BibliographyXMLOutput.__writePlace(((BibOrganization) o),
-          BibliographyXMLConstants.ELEMENT_PUBLISHER, dest);
+          BibliographyXML.ELEMENT_PUBLISHER, dest);
       return;
     }
 
     if (o instanceof BibDate) {
       BibliographyXMLOutput.__writeDate(((BibDate) o),
-          BibliographyXMLConstants.ELEMENT_DATE, dest);
+          BibliographyXML.ELEMENT_DATE, dest);
       return;
     }
 
@@ -153,20 +155,20 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     s = rec.getTitle();
     if (s != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_TITLE, s);
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_TITLE, s);
     }
 
     uri = rec.getURL();
     if (uri != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_URL, uri.toString());
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_URL, uri.toString());
     }
 
     s = rec.getDOI();
     if (s != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_DOI, s);
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_DOI, s);
     }
   }
 
@@ -186,32 +188,32 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     s = rec.getSeries();
     if (s != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_SERIES, s);
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_SERIES, s);
     }
 
     s = rec.getVolume();
     if (s != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_VOLUME, s);
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_VOLUME, s);
     }
 
     s = rec.getISSN();
     if (s != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_ISSN, s);
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_ISSN, s);
     }
 
     s = rec.getISBN();
     if (s != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_ISBN, s);
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_ISBN, s);
     }
 
     s = rec.getEdition();
     if (s != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_EDITION, s);
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_EDITION, s);
     }
 
   }
@@ -232,20 +234,20 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     s = rec.getStartPage();
     if (s != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_START_PAGE, s);
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_START_PAGE, s);
     }
 
     s = rec.getEndPage();
     if (s != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_END_PAGE, s);
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_END_PAGE, s);
     }
 
     s = rec.getChapter();
     if (s != null) {
-      dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-          BibliographyXMLConstants.ATTR_CHAPTER, s);
+      dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+          BibliographyXML.ATTR_CHAPTER, s);
     }
   }
 
@@ -280,53 +282,53 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (rec != null) {
       try (XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI,
-            BibliographyXMLConstants.ELEMENT_ARTICLE);
+        dest.name(BibliographyXML.NAMESPACE_URI,
+            BibliographyXML.ELEMENT_ARTICLE);
 
         BibliographyXMLOutput.__writeRecordAttrs(rec, dest);
 
         s = rec.getJournal();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_JOURNAL, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_JOURNAL, s);
         }
 
         s = rec.getVolume();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_VOLUME, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_VOLUME, s);
         }
 
         s = rec.getNumber();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_NUMBER, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_NUMBER, s);
         }
 
         s = rec.getStartPage();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_START_PAGE, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_START_PAGE, s);
         }
 
         s = rec.getEndPage();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_END_PAGE, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_END_PAGE, s);
         }
 
         s = rec.getISSN();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_ISSN, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_ISSN, s);
         }
 
         BibliographyXMLOutput.__writeAuthors(rec.getAuthors(),
-            BibliographyXMLConstants.ELEMENT_AUTHORS, dest);
+            BibliographyXML.ELEMENT_AUTHORS, dest);
         BibliographyXMLOutput.__writePlace(rec.getPublisher(),
-            BibliographyXMLConstants.ELEMENT_PUBLISHER, dest);
+            BibliographyXML.ELEMENT_PUBLISHER, dest);
         BibliographyXMLOutput.__writeDate(rec.getDate(),
-            BibliographyXMLConstants.ELEMENT_DATE, dest);
+            BibliographyXML.ELEMENT_DATE, dest);
       }
     }
   }
@@ -344,19 +346,19 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (rec != null) {
       try (XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI,
-            BibliographyXMLConstants.ELEMENT_BOOK);
+        dest.name(BibliographyXML.NAMESPACE_URI,
+            BibliographyXML.ELEMENT_BOOK);
 
         BibliographyXMLOutput.__writeBookAttrs(rec, dest);
 
         BibliographyXMLOutput.__writeAuthors(rec.getAuthors(),
-            BibliographyXMLConstants.ELEMENT_AUTHORS, dest);
+            BibliographyXML.ELEMENT_AUTHORS, dest);
         BibliographyXMLOutput.__writeAuthors(rec.getEditors(),
-            BibliographyXMLConstants.ELEMENT_EDITORS, dest);
+            BibliographyXML.ELEMENT_EDITORS, dest);
         BibliographyXMLOutput.__writePlace(rec.getPublisher(),
-            BibliographyXMLConstants.ELEMENT_PUBLISHER, dest);
+            BibliographyXML.ELEMENT_PUBLISHER, dest);
         BibliographyXMLOutput.__writeDate(rec.getDate(),
-            BibliographyXMLConstants.ELEMENT_DATE, dest);
+            BibliographyXML.ELEMENT_DATE, dest);
       }
     }
   }
@@ -375,35 +377,35 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (rec != null) {
       try (XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI,
-            BibliographyXMLConstants.ELEMENT_TECH_REPORT);
+        dest.name(BibliographyXML.NAMESPACE_URI,
+            BibliographyXML.ELEMENT_TECH_REPORT);
 
         BibliographyXMLOutput.__writeRecordAttrs(rec, dest);
 
         s = rec.getSeries();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_SERIES, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_SERIES, s);
         }
 
         s = rec.getNumber();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_NUMBER, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_NUMBER, s);
         }
 
         s = rec.getISSN();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_ISSN, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_ISSN, s);
         }
 
         BibliographyXMLOutput.__writeAuthors(rec.getAuthors(),
-            BibliographyXMLConstants.ELEMENT_AUTHORS, dest);
+            BibliographyXML.ELEMENT_AUTHORS, dest);
         BibliographyXMLOutput.__writePlace(rec.getPublisher(),
-            BibliographyXMLConstants.ELEMENT_INSTITUTION, dest);
+            BibliographyXML.ELEMENT_INSTITUTION, dest);
         BibliographyXMLOutput.__writeDate(rec.getDate(),
-            BibliographyXMLConstants.ELEMENT_DATE, dest);
+            BibliographyXML.ELEMENT_DATE, dest);
       }
     }
   }
@@ -421,17 +423,17 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (rec != null) {
       try (XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI,
-            BibliographyXMLConstants.ELEMENT_WEBSITE);
+        dest.name(BibliographyXML.NAMESPACE_URI,
+            BibliographyXML.ELEMENT_WEBSITE);
 
         BibliographyXMLOutput.__writeRecordAttrs(rec, dest);
 
         BibliographyXMLOutput.__writeAuthors(rec.getAuthors(),
-            BibliographyXMLConstants.ELEMENT_AUTHORS, dest);
+            BibliographyXML.ELEMENT_AUTHORS, dest);
         BibliographyXMLOutput.__writePlace(rec.getPublisher(),
-            BibliographyXMLConstants.ELEMENT_PUBLISHER, dest);
+            BibliographyXML.ELEMENT_PUBLISHER, dest);
         BibliographyXMLOutput.__writeDate(rec.getDate(),
-            BibliographyXMLConstants.ELEMENT_DATE, dest);
+            BibliographyXML.ELEMENT_DATE, dest);
       }
     }
   }
@@ -450,28 +452,28 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (rec != null) {
       try (XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI,
-            BibliographyXMLConstants.ELEMENT_THESIS);
+        dest.name(BibliographyXML.NAMESPACE_URI,
+            BibliographyXML.ELEMENT_THESIS);
 
         BibliographyXMLOutput.__writeBookAttrs(rec, dest);
         type = rec.getType();
         if (type != null) {
-          dest.attributeRaw(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_THESIS_TYPE,
-              BibliographyXMLConstants.VAL_THESIS_TYPES[type.ordinal()]);
+          dest.attributeRaw(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_THESIS_TYPE,
+              BibliographyXML.VAL_THESIS_TYPES[type.ordinal()]);
 
         }
 
         BibliographyXMLOutput.__writeAuthors(rec.getAuthors(),
-            BibliographyXMLConstants.ELEMENT_AUTHORS, dest);
+            BibliographyXML.ELEMENT_AUTHORS, dest);
         BibliographyXMLOutput.__writeAuthors(rec.getEditors(),
-            BibliographyXMLConstants.ELEMENT_EDITORS, dest);
+            BibliographyXML.ELEMENT_EDITORS, dest);
         BibliographyXMLOutput.__writePlace(rec.getPublisher(),
-            BibliographyXMLConstants.ELEMENT_PUBLISHER, dest);
+            BibliographyXML.ELEMENT_PUBLISHER, dest);
         BibliographyXMLOutput.__writePlace(rec.getSchool(),
-            BibliographyXMLConstants.ELEMENT_SCHOOL, dest);
+            BibliographyXML.ELEMENT_SCHOOL, dest);
         BibliographyXMLOutput.__writeDate(rec.getDate(),
-            BibliographyXMLConstants.ELEMENT_DATE, dest);
+            BibliographyXML.ELEMENT_DATE, dest);
       }
     }
   }
@@ -489,13 +491,13 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (rec != null) {
       try (XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI,
-            BibliographyXMLConstants.ELEMENT_IN_COLLECTION);
+        dest.name(BibliographyXML.NAMESPACE_URI,
+            BibliographyXML.ELEMENT_IN_COLLECTION);
 
         BibliographyXMLOutput.__writeInBookAttrs(rec, dest);
 
         BibliographyXMLOutput.__writeAuthors(rec.getAuthors(),
-            BibliographyXMLConstants.ELEMENT_AUTHORS, dest);
+            BibliographyXML.ELEMENT_AUTHORS, dest);
         BibliographyXMLOutput.__writeBook(rec.getBook(), dest);
       }
     }
@@ -514,13 +516,13 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (rec != null) {
       try (XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI,
-            BibliographyXMLConstants.ELEMENT_IN_PROCEEDINGS);
+        dest.name(BibliographyXML.NAMESPACE_URI,
+            BibliographyXML.ELEMENT_IN_PROCEEDINGS);
 
         BibliographyXMLOutput.__writeInBookAttrs(rec, dest);
 
         BibliographyXMLOutput.__writeAuthors(rec.getAuthors(),
-            BibliographyXMLConstants.ELEMENT_AUTHORS, dest);
+            BibliographyXML.ELEMENT_AUTHORS, dest);
         BibliographyXMLOutput.__writeProceedings(rec.getBook(), dest);
       }
     }
@@ -539,21 +541,21 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (rec != null) {
       try (XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI,
-            BibliographyXMLConstants.ELEMENT_PROCEEDINGS);
+        dest.name(BibliographyXML.NAMESPACE_URI,
+            BibliographyXML.ELEMENT_PROCEEDINGS);
 
         BibliographyXMLOutput.__writeBookAttrs(rec, dest);
 
         BibliographyXMLOutput.__writeAuthors(rec.getEditors(),
-            BibliographyXMLConstants.ELEMENT_EDITORS, dest);
+            BibliographyXML.ELEMENT_EDITORS, dest);
         BibliographyXMLOutput.__writePlace(rec.getPublisher(),
-            BibliographyXMLConstants.ELEMENT_PUBLISHER, dest);
+            BibliographyXML.ELEMENT_PUBLISHER, dest);
         BibliographyXMLOutput.__writeDate(rec.getStartDate(),
-            BibliographyXMLConstants.ELEMENT_START_DATE, dest);
+            BibliographyXML.ELEMENT_START_DATE, dest);
         BibliographyXMLOutput.__writeDate(rec.getEndDate(),
-            BibliographyXMLConstants.ELEMENT_END_DATE, dest);
+            BibliographyXML.ELEMENT_END_DATE, dest);
         BibliographyXMLOutput.__writePlace(rec.getLocation(),
-            BibliographyXMLConstants.ELEMENT_LOCATION, dest);
+            BibliographyXML.ELEMENT_LOCATION, dest);
       }
     }
   }
@@ -573,7 +575,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if ((authors != null) && (!(authors.isEmpty()))) {
       try (final XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI, tag);
+        dest.name(BibliographyXML.NAMESPACE_URI, tag);
         for (final BibAuthor ba : authors) {
           BibliographyXMLOutput.__writeAuthor(ba, dest);
         }
@@ -595,25 +597,25 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
     if (author != null) {
       try (final XMLElement dest = owner.element()) {
 
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI,
-            BibliographyXMLConstants.ELEMENT_PERSON);
+        dest.name(BibliographyXML.NAMESPACE_URI,
+            BibliographyXML.ELEMENT_PERSON);
 
         s = author.getFamilyName();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_FAMILY_NAME, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_FAMILY_NAME, s);
         }
 
         s = author.getPersonalName();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_PERSONAL_NAME, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_PERSONAL_NAME, s);
         }
 
         s = author.getOriginalSpelling();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_NAME_ORIGINAL_SPELLING, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_NAME_ORIGINAL_SPELLING, s);
         }
       }
     }
@@ -635,24 +637,24 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (place != null) {
       try (final XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI, tag);
+        dest.name(BibliographyXML.NAMESPACE_URI, tag);
 
         s = place.getName();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_ORGANIZATION, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_ORGANIZATION, s);
         }
 
         s = place.getAddress();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_ADDRESS, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_ADDRESS, s);
         }
 
         s = place.getOriginalSpelling();
         if (s != null) {
-          dest.attributeEncoded(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_PLACE_ORIGINAL_SPELLING, s);
+          dest.attributeEncoded(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_PLACE_ORIGINAL_SPELLING, s);
         }
       }
     }
@@ -676,29 +678,28 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
     if (date != null) {
       try (final XMLElement dest = owner.element()) {
-        dest.name(BibliographyXMLConstants.NAMESPACE_URI, tag);
+        dest.name(BibliographyXML.NAMESPACE_URI, tag);
 
-        dest.attributeRaw(BibliographyXMLConstants.NAMESPACE_URI,
-            BibliographyXMLConstants.ATTR_YEAR,
-            Integer.toString(date.getYear()));
+        dest.attributeRaw(BibliographyXML.NAMESPACE_URI,
+            BibliographyXML.ATTR_YEAR, Integer.toString(date.getYear()));
 
         month = date.getMonth();
         if (month != null) {
-          dest.attributeRaw(BibliographyXMLConstants.NAMESPACE_URI,
-              BibliographyXMLConstants.ATTR_MONTH,
-              BibliographyXMLConstants.VAL_MONTHS[month.ordinal()]);
+          dest.attributeRaw(BibliographyXML.NAMESPACE_URI,
+              BibliographyXML.ATTR_MONTH,
+              BibliographyXML.VAL_MONTHS[month.ordinal()]);
 
           d = date.getDay();
           if ((d > 0) && (d <= 31)) {
-            dest.attributeRaw(BibliographyXMLConstants.NAMESPACE_URI,
-                BibliographyXMLConstants.ATTR_DAY, Integer.toString(d));
+            dest.attributeRaw(BibliographyXML.NAMESPACE_URI,
+                BibliographyXML.ATTR_DAY, Integer.toString(d));
           }
         } else {
           quarter = date.getQuarter();
           if (quarter != null) {
-            dest.attributeRaw(BibliographyXMLConstants.NAMESPACE_URI,
-                BibliographyXMLConstants.ATTR_QUARTER,
-                BibliographyXMLConstants.VAL_QUARTERS[quarter.ordinal()]);
+            dest.attributeRaw(BibliographyXML.NAMESPACE_URI,
+                BibliographyXML.ATTR_QUARTER,
+                BibliographyXML.VAL_QUARTERS[quarter.ordinal()]);
           }
         }
       }
@@ -709,6 +710,23 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
   @Override
   public final String toString() {
     return "Bibliography XML Output"; //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final String getDefaultPlainOutputFileName() {
+    return ("bibliography." + //$NON-NLS-1$ 
+    BibliographyXML.BIBXML.getDefaultSuffix());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void file(final IOJob job, final Object data, final Path file,
+      final StreamEncoding<?, ?> encoding) throws Throwable {
+    super.file(job, data, file, encoding);
+    if (Files.exists(file)) {
+      this.addFile(job, file, BibliographyXML.BIBXML);
+    }
   }
 
   /** the loader for lazy initialization */

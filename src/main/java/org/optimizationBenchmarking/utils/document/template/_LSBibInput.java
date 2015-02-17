@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.document.template;
 
 import java.io.InputStream;
 
-import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXMLConstants;
+import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXML;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.xml.SimpleLSInput;
 
@@ -28,11 +28,11 @@ final class _LSBibInput extends SimpleLSInput {
   @Override
   protected final InputStream createInputStream() {
     try {
-      return BibliographyXMLConstants.class
-          .getResourceAsStream(BibliographyXMLConstants.SCHEMA);
+      return BibliographyXML.class
+          .getResourceAsStream(BibliographyXML.SCHEMA);
     } catch (final Throwable tt) {
       try {
-        return BibliographyXMLConstants.NAMESPACE_URI.toURL().openStream();
+        return BibliographyXML.NAMESPACE_URI.toURL().openStream();
       } catch (final Throwable ttt) {
         ErrorUtils.throwAsRuntimeException(ttt);
         return null;

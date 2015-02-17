@@ -21,6 +21,8 @@ import org.optimizationBenchmarking.utils.document.template.IDocumentCallback;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 
+import examples.org.optimizationBenchmarking.FinishedPrinter;
+
 /**
  * A template-based document creation example.
  */

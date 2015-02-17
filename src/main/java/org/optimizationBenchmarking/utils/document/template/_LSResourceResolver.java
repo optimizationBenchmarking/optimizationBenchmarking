@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.document.template;
 
-import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXMLConstants;
+import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXML;
 import org.optimizationBenchmarking.utils.io.xml.SimpleLSResourceResolver;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
@@ -24,7 +24,7 @@ final class _LSResourceResolver extends SimpleLSResourceResolver {
       final String namespaceURI, final String publicId,
       final String systemId, final String baseURI) {
 
-    if (BibliographyXMLConstants.NAMESPACE.equalsIgnoreCase(namespaceURI)) {
+    if (BibliographyXML.NAMESPACE.equalsIgnoreCase(namespaceURI)) {
       return new _LSBibInput(publicId, systemId, baseURI);
     }
 

@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.utils.bibliography.io;
 
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibArticle;
@@ -21,11 +23,13 @@ import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
+import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.TextOutputTool;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransformer;
+import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
 
 /**
  * A driver for <a href="http://en.wikipedia.org/wiki/BibTeX">BibTeX</a> IO
@@ -112,6 +116,13 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
   /** create */
   BibTeXOutput() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final String getDefaultPlainOutputFileName() {
+    return ("bibliography." + //$NON-NLS-1$ 
+    ELaTeXFileType.BIB.getDefaultSuffix());
   }
 
   /**
@@ -1078,6 +1089,16 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
   @Override
   public final String toString() {
     return "Bibliography BibTeX Output"; //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void file(final IOJob job, final Object data, final Path file,
+      final StreamEncoding<?, ?> encoding) throws Throwable {
+    super.file(job, data, file, encoding);
+    if (Files.exists(file)) {
+      this.addFile(job, file, ELaTeXFileType.BIB);
+    }
   }
 
   /** the loader for lazy initialization */

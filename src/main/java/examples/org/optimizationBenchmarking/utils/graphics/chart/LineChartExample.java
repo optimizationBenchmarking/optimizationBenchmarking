@@ -26,7 +26,7 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.MaximumAggre
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.MinimumAggregate;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
-import examples.org.optimizationBenchmarking.utils.document.FinishedPrinter;
+import examples.org.optimizationBenchmarking.FinishedPrinter;
 import examples.org.optimizationBenchmarking.utils.graphics.ColorPaletteExample;
 import examples.org.optimizationBenchmarking.utils.graphics.ExampleFontPalettes;
 import examples.org.optimizationBenchmarking.utils.graphics.ExampleGraphicConfigurations;
