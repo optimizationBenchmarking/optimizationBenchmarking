@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.tools.impl.latex;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +40,7 @@ final class _LaTeX extends _LaTeXToolChainComponent {
   @Override
   final void _use(final _LaTeXMainJob job) throws IOException {
     final Logger logger;
-    final Path exec, tex, aux, dvi;
+    final Path exec, tex;
     final ExternalProcessBuilder builder;
     final int ret;
     boolean ok;
@@ -50,32 +49,19 @@ final class _LaTeX extends _LaTeXToolChainComponent {
       throw new UnsupportedOperationException("No LaTeX binary detected."); //$NON-NLS-1$
     }
 
+    if ((tex = this._getFile(job, ELaTeXFileType.TEX, true, null)) == null) {
+      return;
+    }
+
+    if (this._getFile(job, ELaTeXFileType.AUX, false, null) == null) {
+      return;
+    }
+
+    if (this._getFile(job, ELaTeXFileType.DVI, false, null) == null) {
+      return;
+    }
+
     logger = job._getLogger();
-
-    if (((tex = job._getFile(ELaTeXFileType.TEX)) == null)
-        || (!(Files.exists(tex)))) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(//
-            "No .tex file was found. This should never happen."); //$NON-NLS-1$
-      }
-      return;
-    }
-
-    if ((aux = job._getFile(ELaTeXFileType.AUX)) == null) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(//
-            "No .aux file was specified. This should never happen.");//$NON-NLS-1$
-      }
-      return;
-    }
-    if ((dvi = job._getFile(ELaTeXFileType.DVI)) == null) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(//
-            "No .dvi file was specified. This should never happen.");//$NON-NLS-1$
-      }
-      return;
-    }
-
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info((("Applying LaTeX to '" + tex) + '\'') + '.'); //$NON-NLS-1$
     }
@@ -99,22 +85,22 @@ final class _LaTeX extends _LaTeXToolChainComponent {
     }
 
     ok = true;
-    if (!(Files.exists(aux))) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(((("LaTeX executable '" //$NON-NLS-1$
-            + exec) + "' applied to tex file '") + //$NON-NLS-1$
-            tex)
-            + "' should have created an aux file, but did not.");//$NON-NLS-1$
-      }
+    if (this
+        ._getFile(
+            job,
+            ELaTeXFileType.AUX,
+            true,
+            " This could mean that the latex document does not contain any label, citation, or section."//$NON-NLS-1$
+        ) == null) {
       ok = false;
     }
-    if (!(Files.exists(dvi))) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(((("LaTeX executable '" //$NON-NLS-1$
-            + exec) + "' applied to tex file '") + //$NON-NLS-1$
-            tex)
-            + "' should have created an dvi file, but did not.");//$NON-NLS-1$
-      }
+    if (this
+        ._getFile(
+            job,
+            ELaTeXFileType.DVI,
+            true,
+            " This could mean that the latex document does not produce any (dvi) output."//$NON-NLS-1$
+        ) == null) {
       ok = false;
     }
 

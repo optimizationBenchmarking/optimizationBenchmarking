@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.tools.impl.latex;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,28 +73,21 @@ final class _Ps2Pdf extends _LaTeXToolChainComponent {
       throw new UnsupportedOperationException("No ps2pdf binary detected."); //$NON-NLS-1$
     }
 
+    if ((ps = this
+        ._getFile(
+            job,
+            ELaTeXFileType.PS,
+            true,
+            "This means either that LaTeX and dvips were not yet run or that the LaTeX or the dvi file contain errors." //$NON-NLS-1$
+        )) == null) {
+      return;
+    }
+
+    if ((pdf = this._getFile(job, ELaTeXFileType.PDF, false, null)) == null) {
+      return;
+    }
+
     logger = job._getLogger();
-
-    if (((ps = job._getFile(ELaTeXFileType.PS)) == null)
-        || (!(Files.exists(ps)))) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(//
-            ("No .ps file was found. This means either that LaTeX and dvips were not yet run or that the LaTeX file '" //$NON-NLS-1$ 
-            + job._getFile(ELaTeXFileType.TEX))
-                + //
-                "' does not produce a document. Either way, you should not have tried running ps2pdf."); //$NON-NLS-1$
-      }
-      return;
-    }
-
-    if ((pdf = job._getFile(ELaTeXFileType.PDF)) == null) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(//
-            "No .pdf file was specified. This should never happen."); //$NON-NLS-1$
-      }
-      return;
-    }
-
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info((("Applying ps2pdf to '" + ps) + '\'') + '.'); //$NON-NLS-1$
     }
@@ -120,14 +112,13 @@ final class _Ps2Pdf extends _LaTeXToolChainComponent {
       }
     }
 
-    if (!(Files.exists(pdf))) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(((("ps2pdf executable '" //$NON-NLS-1$
-            + exec) + "' applied to ps file '") + //$NON-NLS-1$
-            ps)
-            + "' should have created a pdf file, but did not.");//$NON-NLS-1$
-      }
-    } else {
+    if (this
+        ._getFile(
+            job,
+            ELaTeXFileType.PDF,
+            true,
+            "This could mean that ps2pdf failed to generate the pdf because the postscript file contains errors." //$NON-NLS-1$
+        ) != null) {
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
             (("Finished applying ps2pdf to '" + ps) + '\'') + '.'); //$NON-NLS-1$

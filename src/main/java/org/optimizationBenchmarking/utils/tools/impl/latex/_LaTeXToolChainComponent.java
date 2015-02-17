@@ -1,6 +1,10 @@
 package org.optimizationBenchmarking.utils.tools.impl.latex;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.IFileType;
 
@@ -35,6 +39,64 @@ abstract class _LaTeXToolChainComponent {
    *           if I/O fails
    */
   abstract void _use(final _LaTeXMainJob job) throws IOException;
+
+  /**
+   * require a path from the job
+   * 
+   * @param job
+   *          the job
+   * @param type
+   *          the type
+   * @param mustExist
+   *          must the file exist?
+   * @param message
+   *          a potential additional message
+   * @return the path
+   */
+  final Path _getFile(final _LaTeXMainJob job, final ELaTeXFileType type,
+      final boolean mustExist, final String message) {
+    final Logger logger;
+    final Path path;
+
+    if (type == null) {
+      throw new IllegalArgumentException("Cannot require null type."); //$NON-NLS-1$
+    }
+
+    path = job._getFile(type);
+    if (path == null) {
+      logger = job._getLogger();
+      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
+        logger.warning(this.getClass().getSimpleName()
+            + " required file of type " + //$NON-NLS-1$
+            type + " but it was specified as null for job '" + //$NON-NLS-1$
+            job._getFile(ELaTeXFileType.TEX) + '\'' + '.'
+            + ((message != null) ? message//
+                : " This should never happen."));//$NON-NLS-1$
+      }
+      return null;
+    }
+
+    if (mustExist) {
+      if (Files.exists(path)) {
+        return path;
+      }
+
+      logger = job._getLogger();
+      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
+        logger.warning(this.getClass().getSimpleName()
+            + " required that file of type " + //$NON-NLS-1$
+            type + " should exist, but '" + path//$NON-NLS-1$
+            + "' does not exist for job '" + //$NON-NLS-1$
+            job._getFile(ELaTeXFileType.TEX) + '\'' + '.'
+            + ((message != null) ? message//
+                : " This should never happen."));//$NON-NLS-1$
+      }
+
+      return null;
+    }
+
+    return path;
+  }
 
   /**
    * Check whether two file types equal

@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.tools.impl.latex;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,28 +52,21 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
       throw new UnsupportedOperationException("No dvips binary detected."); //$NON-NLS-1$
     }
 
+    if ((dvi = this
+        ._getFile(
+            job,
+            ELaTeXFileType.DVI,
+            true,//
+            " This could mean that (Pdf)LaTeX was not yet executed or does not produce any dvi output."//$NON-NLS-1$
+        )) == null) {
+      return;
+    }
+
+    if ((ps = this._getFile(job, ELaTeXFileType.PS, false, null)) == null) {
+      return;
+    }
+
     logger = job._getLogger();
-
-    if (((dvi = job._getFile(ELaTeXFileType.DVI)) == null)
-        || (!(Files.exists(dvi)))) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(//
-            ("No .dvi file was found. This means either that LaTeX was not yet run or that the LaTeX file '" //$NON-NLS-1$ 
-            + job._getFile(ELaTeXFileType.TEX))
-                + //
-                "' does not produce a document. Either way, you should not have tried running dvips."); //$NON-NLS-1$
-      }
-      return;
-    }
-
-    if ((ps = job._getFile(ELaTeXFileType.PS)) == null) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(//
-            "No .ps file was specified. This should never happen."); //$NON-NLS-1$
-      }
-      return;
-    }
-
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info((("Applying dvips to '" + dvi) + '\'') + '.'); //$NON-NLS-1$
     }
@@ -100,14 +92,13 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
       }
     }
 
-    if (!(Files.exists(ps))) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(((("dvips executable '" //$NON-NLS-1$
-            + exec) + "' applied to dvi file '") + //$NON-NLS-1$
-            dvi)
-            + "' should have created a ps file, but did not.");//$NON-NLS-1$
-      }
-    } else {
+    if (this
+        ._getFile(
+            job,
+            ELaTeXFileType.PS,
+            true,
+            " This could mean that no postscript output can be built from the dvi file or that the dvi file has errors.")//$NON-NLS-1$ 
+    != null) {
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
             (("Finished applying dvips to '" + dvi) + '\'') + '.'); //$NON-NLS-1$

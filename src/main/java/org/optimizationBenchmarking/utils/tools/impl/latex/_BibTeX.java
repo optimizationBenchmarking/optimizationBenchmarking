@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.tools.impl.latex;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,7 +51,7 @@ final class _BibTeX extends _LaTeXToolChainComponent {
   @Override
   final void _use(final _LaTeXMainJob job) throws IOException {
     final Logger logger;
-    final Path exec, aux, bbl;
+    final Path exec, aux;
     final ExternalProcessBuilder builder;
     final int ret;
 
@@ -60,20 +59,16 @@ final class _BibTeX extends _LaTeXToolChainComponent {
       throw new UnsupportedOperationException("No BibTeX binary detected."); //$NON-NLS-1$
     }
 
-    logger = job._getLogger();
-
-    if (((aux = job._getFile(ELaTeXFileType.AUX)) == null)
-        || (!(Files.exists(aux)))) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(//
-            ("No .aux file was found. This means either that LaTeX was not yet run or that the LaTeX file '" //$NON-NLS-1$ 
-            + job._getFile(ELaTeXFileType.TEX))
-                + //
-                "' does not contain any citations (or labels). Either way, you should not have tried running BibTeX."); //$NON-NLS-1$
-      }
+    if ((aux = this
+        ._getFile(
+            job,
+            ELaTeXFileType.AUX,
+            true,//
+            " This could mean that (Pdf)LaTeX was not yet executed or that no citations, labels, or sections are contained in the main document.")) == null) { //$NON-NLS-1$
       return;
     }
 
+    logger = job._getLogger();
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info((("Applying BibTeX to '" + aux) + '\'') + '.'); //$NON-NLS-1$
     }
@@ -97,15 +92,9 @@ final class _BibTeX extends _LaTeXToolChainComponent {
       }
     }
 
-    if (((bbl = job._getFile(ELaTeXFileType.BBL)) == null)
-        || (!(Files.exists(bbl)))) {
-      if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-        logger.warning(((("BibTeX executable '" //$NON-NLS-1$
-            + exec) + "' applied to aux file '") + //$NON-NLS-1$
-            aux)
-            + "' should have created a bbl file, but did not.");//$NON-NLS-1$
-      }
-    } else {
+    if (this._getFile(job, ELaTeXFileType.BBL, true,
+        " This could mean that the main document contains no citations.")//$NON-NLS-1$
+    != null) {
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
             (("Finished applying BibTeX to '" + aux) + '\'') + '.'); //$NON-NLS-1$
