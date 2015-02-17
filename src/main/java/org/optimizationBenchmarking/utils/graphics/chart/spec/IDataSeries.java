@@ -6,7 +6,7 @@ import java.awt.Stroke;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** The interface for building data series */
-public interface IDataSeries extends ITitledElement {
+public interface IDataSeries extends IDataElement {
 
   /**
    * set the title of the series
@@ -23,6 +23,7 @@ public interface IDataSeries extends ITitledElement {
    * @param color
    *          the color
    */
+  @Override
   public abstract void setColor(final Color color);
 
   /**
@@ -31,6 +32,7 @@ public interface IDataSeries extends ITitledElement {
    * @param stroke
    *          the stroke
    */
+  @Override
   public abstract void setStroke(final Stroke stroke);
 
   /**

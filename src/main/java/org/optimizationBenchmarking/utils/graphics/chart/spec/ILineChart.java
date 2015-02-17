@@ -1,15 +1,7 @@
 package org.optimizationBenchmarking.utils.graphics.chart.spec;
 
 /** The interface for line charts */
-public interface ILineChart extends ITitledElement {
-  /**
-   * set the title of the chart
-   * 
-   * @param title
-   *          the title
-   */
-  @Override
-  public abstract void setTitle(final String title);
+public interface ILineChart extends IChart {
 
   /**
    * define the {@code x}-axis
@@ -31,13 +23,5 @@ public interface ILineChart extends ITitledElement {
    * @return the data series builder for the line
    */
   public abstract ILine2D line();
-
-  /**
-   * Set the legend mode of the diagram
-   * 
-   * @param legendMode
-   *          the legend mode
-   */
-  public abstract void setLegendMode(final ELegendMode legendMode);
 
 }

@@ -3,6 +3,8 @@ package org.optimizationBenchmarking.utils.text.predicates;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.optimizationBenchmarking.utils.EmptyUtils;
+
 /**
  * check whether a string is in a list
  * 
@@ -20,7 +22,7 @@ public class StringInListIgnoreCase<T> extends StringInList<T> {
    * @param list
    *          the string list
    */
-  public StringInListIgnoreCase(final String[] list) {
+  public StringInListIgnoreCase(final String... list) {
     super(list);
   }
 
@@ -39,7 +41,11 @@ public class StringInListIgnoreCase<T> extends StringInList<T> {
   final String[] _getList(final String[] list) {
     int i;
 
-    for (i = list.length; (--i) >= 0;) {
+    if ((list == null) || ((i = list.length) <= 0)) {
+      return EmptyUtils.EMPTY_STRINGS;
+    }
+
+    for (; (--i) >= 0;) {
       list[i] = list[i].toLowerCase();
     }
     Arrays.sort(list);

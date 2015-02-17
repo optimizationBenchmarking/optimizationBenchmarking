@@ -1,26 +1,21 @@
 package org.optimizationBenchmarking.utils.graphics.chart.spec;
 
-import java.awt.Graphics2D;
-
-import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
-import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
-
 /** The base interface for charts */
-public interface IChart extends ITitledElement, IToolJob {
+public interface IChart extends ITitledElement {
+  /**
+   * set the title of the chart
+   * 
+   * @param title
+   *          the title
+   */
+  @Override
+  public abstract void setTitle(final String title);
 
   /**
-   * Set the graphic to paint on
+   * Set the legend mode of the diagram
    * 
-   * @param graphic
-   *          the graphic to paint on
+   * @param legendMode
+   *          the legend mode
    */
-  public abstract void setGraphic(final Graphics2D graphic);
-
-  /**
-   * Set the style set to use for painting
-   * 
-   * @param styles
-   *          the style set to use for painting
-   */
-  public abstract void setStyleSet(final StyleSet styles);
+  public abstract void setLegendMode(final ELegendMode legendMode);
 }

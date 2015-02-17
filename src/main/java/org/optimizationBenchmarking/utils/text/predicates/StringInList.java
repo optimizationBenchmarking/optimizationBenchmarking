@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.optimizationBenchmarking.utils.EmptyUtils;
 import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.predicates.IPredicate;
@@ -29,7 +30,7 @@ public class StringInList<T> extends HashObject implements IPredicate<T>,
    * @param list
    *          the string list
    */
-  public StringInList(final String[] list) {
+  public StringInList(final String... list) {
     super();
     this.m_list = this._getList(list.clone());
   }
@@ -65,6 +66,9 @@ public class StringInList<T> extends HashObject implements IPredicate<T>,
    * @return the list to use
    */
   String[] _getList(final String[] list) {
+    if ((list == null) || (list.length <= 0)) {
+      return EmptyUtils.EMPTY_STRINGS;
+    }
     Arrays.sort(list);
     return list;
   }

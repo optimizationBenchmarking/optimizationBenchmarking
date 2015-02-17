@@ -11,6 +11,12 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 public final class LaTeXDocumentBuilder extends DocumentBuilder {
 
   /**
+   * should we try to compile the document to pdf after it as has been
+   * created ?
+   */
+  private boolean m_compile;
+
+  /**
    * the LaTeX document builder
    * 
    * @param driver
@@ -18,6 +24,7 @@ public final class LaTeXDocumentBuilder extends DocumentBuilder {
    */
   LaTeXDocumentBuilder(final LaTeXDriver driver) {
     super(driver);
+    this.m_compile = true;
   }
 
   /** {@inheritDoc} */
@@ -54,6 +61,28 @@ public final class LaTeXDocumentBuilder extends DocumentBuilder {
     return new StyleSet(this.getDocumentClass().getFontPalette(),//
         this.getColorModel().getDefaultPalette(),//
         this.getGraphicDriver().getStrokePalette());
+  }
+
+  /**
+   * Should we try to compile the document to PDF after it has been
+   * created?
+   * 
+   * @param compile
+   *          {@code true} for enabling auto-compilation, {@code false} for
+   *          disabling auto-compilation
+   */
+  public final void setCompile(final boolean compile) {
+    this.m_compile = compile;
+  }
+
+  /**
+   * Should we try to compile the document?
+   * 
+   * @return {@code true} for enabling compilation, {@code false} for
+   *         disabling compilation
+   */
+  public final boolean shouldCompile() {
+    return this.m_compile;
   }
 
   /** {@inheritDoc} */

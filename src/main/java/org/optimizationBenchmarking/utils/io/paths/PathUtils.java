@@ -432,13 +432,21 @@ public final class PathUtils {
   }
 
   /**
-   * Get the name of a file or folder
+   * Get the name of a file or folder. If {@code fileOrFolder} refers to a
+   * file, then the name will include a potential file suffix/extension.
    * 
    * @param fileOrFolder
    *          the file or folder
-   * @return the name of the file or folder, or {@code null}
+   * @return the name of the file or folder, or {@code null} if
+   *         {@code fileOrFolder} is empty, {@code null}, or the underlying
+   *         implementation returns {@code null}.
+   * @see #getFileExtension(Path)
+   * @see #getFileExtension(String)
+   * @see #getFileNameWithoutExtension(Path)
+   * @see #getFileNameWithoutExtension(String)
    */
   public static final String getName(final Path fileOrFolder) {
+    final String name;
     Path p;
 
     if (fileOrFolder == null) {
@@ -450,7 +458,47 @@ public final class PathUtils {
     if (p == null) {
       return null;
     }
-    return p.toString();
+
+    name = p.toString();
+    if (name == null) {
+      return null;
+    }
+    if (name.length() <= 0) {
+      return null;
+    }
+    return name;
+  }
+
+  /**
+   * Get the extension (file name suffix) of a given file name, not
+   * including the dot and cast to lower case.
+   * 
+   * @param fileName
+   *          the file name
+   * @return the extension, or {@code null} if no extension exists or
+   *         {@code fileName} is {@code null}
+   * @see #getName(Path)
+   * @see #getFileExtension(Path)
+   * @see #getFileNameWithoutExtension(Path)
+   * @see #getFileNameWithoutExtension(String)
+   */
+  public static final String getFileExtension(final String fileName) {
+    final int last, length;
+
+    if (fileName == null) {
+      return null;
+    }
+
+    length = fileName.length();
+    if (length <= 0) {
+      return null;
+    }
+
+    last = fileName.lastIndexOf('.');
+    if ((last < 0) || (last >= (length - 1))) {
+      return null;
+    }
+    return fileName.substring(last + 1).toLowerCase();
   }
 
   /**
@@ -460,21 +508,81 @@ public final class PathUtils {
    * @param file
    *          the file
    * @return the extension, or {@code null} if no extension exists
+   * @see #getName(Path)
+   * @see #getFileExtension(String)
+   * @see #getFileNameWithoutExtension(Path)
+   * @see #getFileNameWithoutExtension(String)
    */
   public static final String getFileExtension(final Path file) {
-    final String str;
-    final int last;
+    final String name;
 
-    str = PathUtils.getName(file);
-    if (str == null) {
+    if (file == null) {
+      return null;
+    }
+    name = PathUtils.getName(file);
+    if (name == null) {
+      return null;
+    }
+    return PathUtils.getFileExtension(name);
+  }
+
+  /**
+   * Get the file name without extension of a given file.
+   * 
+   * @param fileName
+   *          the file name
+   * @return the file name without extension, or {@code null} if no name
+   *         exists or {@code fileName} is {@code null}
+   * @see #getName(Path)
+   * @see #getFileExtension(Path)
+   * @see #getFileExtension(String)
+   * @see #getFileNameWithoutExtension(Path)
+   */
+  public static final String getFileNameWithoutExtension(
+      final String fileName) {
+    final int last, length;
+
+    if (fileName == null) {
       return null;
     }
 
-    last = str.lastIndexOf('.');
-    if ((last < 0) || (last >= (str.length() - 1))) {
+    length = fileName.length();
+    if (length <= 0) {
       return null;
     }
-    return str.substring(last + 1).toLowerCase();
+    last = fileName.lastIndexOf('.');
+    if ((last < 0) || (last >= length)) {
+      return ((length > 0) ? fileName : null);
+    }
+    if (last <= 0) {
+      return null;
+    }
+    return fileName.substring(0, last);
+  }
+
+  /**
+   * Get the file name without extension of a given file.
+   * 
+   * @param file
+   *          the file
+   * @return the file name without extension, or {@code null} if no name
+   *         exists or {@code file} is {@code null}
+   * @see #getName(Path)
+   * @see #getFileExtension(Path)
+   * @see #getFileExtension(String)
+   * @see #getFileNameWithoutExtension(String)
+   */
+  public static final String getFileNameWithoutExtension(final Path file) {
+    final String name;
+
+    if (file == null) {
+      return null;
+    }
+    name = PathUtils.getName(file);
+    if (name == null) {
+      return null;
+    }
+    return PathUtils.getFileNameWithoutExtension(name);
   }
 
   /**

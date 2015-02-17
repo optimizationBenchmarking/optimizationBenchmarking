@@ -68,7 +68,7 @@ final class _BufferToOutputStream extends _WorkerThread {
       ErrorUtils
           .logError(
               this.m_log,
-              "Error during shoveling bytes from byte buffer to input stream of external process.", //$NON-NLS-1$
+              "Error during shoveling bytes from byte buffer to external process.", //$NON-NLS-1$
               t, true);
       ErrorUtils.throwAsRuntimeException(t);
     }

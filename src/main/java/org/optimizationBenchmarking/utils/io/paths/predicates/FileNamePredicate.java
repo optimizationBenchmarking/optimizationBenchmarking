@@ -30,7 +30,7 @@ public final class FileNamePredicate extends StringInListIgnoreCase<Path> {
    *          the string list
    */
   public FileNamePredicate(final boolean ignoreExtension,
-      final String[] list) {
+      final String... list) {
     super(list);
     this.m_ignoreExtension = ignoreExtension;
   }
@@ -53,20 +53,10 @@ public final class FileNamePredicate extends StringInListIgnoreCase<Path> {
   /** {@inheritDoc} */
   @Override
   protected final String getString(final Path file) {
-    String s;
-    int idx;
+    final String s;
 
-    s = PathUtils.getName(file);
-    if (s != null) {
-      if (this.m_ignoreExtension) {
-        idx = s.lastIndexOf('.');
-        if (idx > 0) {
-          s = s.substring(0, idx);
-        }
-      }
-      return s.toLowerCase();
-    }
-
-    return null;
+    s = (this.m_ignoreExtension ? PathUtils
+        .getFileNameWithoutExtension(file) : PathUtils.getName(file));
+    return ((s != null) ? s.toLowerCase() : null);
   }
 }

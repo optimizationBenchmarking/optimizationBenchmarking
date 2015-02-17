@@ -59,6 +59,8 @@ public final class PathList {
         { "gedit", "notepad" }, //$NON-NLS-1$//$NON-NLS-2$
         { "gcc", "g++", "gpp" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         { "vlc", }, //$NON-NLS-1$
+        { "dvips", "dvi2ps", "dvitops" }, //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+        { "pspdf", "ps2pdf", "pstopdf" }, //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
     }) {
       System.out.print(s[0] + ":\t");//$NON-NLS-1$
       System.out.println(//
@@ -78,8 +80,7 @@ public final class PathList {
       System.out.println(//
           PathUtils.findFirstInPath(new FileNamePredicate(false,
               new String[] { s }), IsFilePredicate.INSTANCE,//
-              new Path[] { null,//
-                  Paths.get("C:\\windows\\") }//$NON-NLS-1$
+              new Path[] { Paths.get("C:\\windows\\") }//$NON-NLS-1$
               ));
     }
   }

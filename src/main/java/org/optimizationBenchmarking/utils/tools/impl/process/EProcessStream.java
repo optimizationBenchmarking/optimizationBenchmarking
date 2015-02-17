@@ -5,16 +5,23 @@ import java.lang.ProcessBuilder.Redirect;
 /** An enumeration of ways to access the stream of a process */
 public enum EProcessStream {
 
-  /** access the process stream as, well, stream */
+  /** The process stream is accessed as stream. */
   AS_STREAM(Redirect.PIPE),
 
-  /** all data coming from or going to a stream is ignored */
+  /**
+   * All the data coming from a stream is interpreted as text and send to a
+   * logger. This type is only applicable to stdout and stderr. If no
+   * logger is specified, this level is equivalent to {@link #IGNORE}.
+   */
+  REDIRECT_TO_LOGGER(Redirect.PIPE),
+
+  /** All data coming from or going to the stream is ignored. */
   IGNORE(Redirect.PIPE),
 
-  /** the stream is redirected to a file/path */
+  /** The stream is redirected to a file/path. */
   REDIRECT_TO_PATH(null),
 
-  /** inherit the stream from the calling process */
+  /** Inherit the stream from the calling process. */
   INHERIT(Redirect.INHERIT);
 
   /** the redirection */

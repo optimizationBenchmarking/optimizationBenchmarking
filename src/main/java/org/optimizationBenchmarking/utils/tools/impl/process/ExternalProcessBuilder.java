@@ -27,6 +27,11 @@ public final class ExternalProcessBuilder extends
   /** an atomic process counter */
   private static final AtomicLong PROC_ID = new AtomicLong();
 
+  /** the log level for stdout log messages */
+  private static final Level STDOUT_LEVEL = Level.FINER;
+  /** the log level for stdderr log messages */
+  private static final Level STDERR_LEVEL = Level.FINE;
+
   /** the command */
   private final ArrayList<String> m_command;
   /** the process builder */
@@ -175,7 +180,8 @@ public final class ExternalProcessBuilder extends
    */
   public final ExternalProcessBuilder setStdIn(final EProcessStream def) {
     final Redirect redirect;
-    if ((def != null) && ((redirect = def.m_redir) != null)) {
+    if ((def != null) && (def != EProcessStream.REDIRECT_TO_LOGGER)
+        && ((redirect = def.m_redir) != null)) {
       this.m_pb.redirectInput(redirect);
       this.m_stdin = def;
       return this;
@@ -374,7 +380,7 @@ public final class ExternalProcessBuilder extends
     final ExternalProcess external;
     final Process process;
     final boolean merge;
-    final String name;
+    final String name, shortName;
     File f;
     MemoryTextOutput buffer;
     int realStreams;
@@ -388,6 +394,7 @@ public final class ExternalProcessBuilder extends
       buffer = new MemoryTextOutput();
       buffer.append("process #");//$NON-NLS-1$
       buffer.append(ExternalProcessBuilder.PROC_ID.incrementAndGet());
+      shortName = buffer.toString();
       buffer.append(' ');
       buffer.append('(');
       append = '[';
@@ -409,7 +416,7 @@ public final class ExternalProcessBuilder extends
       name = buffer.toString();
       buffer = null;
     } else {
-      name = null;
+      shortName = name = null;
     }
 
     if ((log != null) && (log.isLoggable(Level.FINE))) {
@@ -443,6 +450,7 @@ public final class ExternalProcessBuilder extends
         external.m_stdin.close();
         // fall though to NullOutputStream.INSTANCE
       }
+
       default: {
         external.m_stdin = NullOutputStream.INSTANCE;
         break;
@@ -455,6 +463,19 @@ public final class ExternalProcessBuilder extends
       case AS_STREAM: {
         realStreams++;
         break;
+      }
+
+      case REDIRECT_TO_LOGGER: {
+        if ((log != null)
+            && (log.isLoggable(ExternalProcessBuilder.STDOUT_LEVEL))) {
+          // ok, we can log
+          external.m_stdoutWorker = new _InputStreamToLogger(
+              external.m_stdout, log, ExternalProcessBuilder.STDOUT_LEVEL,
+              (shortName + " [stdout]: ")); //$NON-NLS-1$
+          external.m_stdout = NullInputStream.INSTANCE;
+          break;
+        }
+        // we cannot log the stdout anyway, so we can ignore it
       }
 
       case IGNORE: {
@@ -478,6 +499,20 @@ public final class ExternalProcessBuilder extends
         case AS_STREAM: {
           realStreams++;
           break;
+        }
+
+        case REDIRECT_TO_LOGGER: {
+          if ((log != null)
+              && (log.isLoggable(ExternalProcessBuilder.STDERR_LEVEL))) {
+            // ok, we can log
+            external.m_stderrWorker = new _InputStreamToLogger(
+                external.m_stderr, log,
+                ExternalProcessBuilder.STDERR_LEVEL,
+                (shortName + " [stderr]: ")); //$NON-NLS-1$
+            external.m_stderr = NullInputStream.INSTANCE;
+            break;
+          }
+          // we cannot log the stderr anyway, so we can ignore it
         }
 
         case IGNORE: {

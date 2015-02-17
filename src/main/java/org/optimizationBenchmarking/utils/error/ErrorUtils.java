@@ -206,12 +206,71 @@ public final class ErrorUtils {
    */
   public static final void logError(final Logger logger,
       final String message, final Throwable error, final boolean forceLog) {
+    ErrorUtils.logError(logger, Level.SEVERE, message, error, forceLog);
+  }
+
+  /**
+   * <p>
+   * Log the {@link java.lang.Throwable error} to a
+   * {@link java.util.logging.Logger} with message {@code message}, if
+   * <ol>
+   * <li>the logger is not {@code null},</li>
+   * <li>the logger {@link java.util.logging.Logger#isLoggable(Level) can
+   * log} the specified log {@link java.util.logging.Level level}, and</li>
+   * <li>either
+   * <ul>
+   * <li>the error has not yet been logged to the {@code logger} before or</li>
+   * <li>{@code forceLog==true}</li>
+   * </ul>
+   * </li>
+   * </ol>
+   * <p>
+   * Additionally, {@code message} will be stored in {@code error}. If the
+   * same {@code error} is logged to the same {@code logger} again (with
+   * {@code forceLog==true}) or to another logger, {@code message} will be
+   * listed as well.
+   * </p>
+   * <p>
+   * This central error logging routine makes sure that the same error is
+   * not logged too often and the logs may get congested. Thus, we can very
+   * liberally add error logging calls in our code.
+   * </p>
+   * <p>
+   * The parameter {@code forceLog} should only be set to {@code true} if
+   * {@code message} contains additional information which may help us
+   * track down the error. For example, if {@code message} is
+   * {@code "An error has been detected while reading a file"}, then
+   * {@code forceLog} should be {@code false}. If {@code message} is
+   * instead
+   * {@code "An error has been detected while reading the file foo.txt"},
+   * {@code forceLog} should be {@code true}.
+   * </p>
+   * 
+   * @param logger
+   *          the logger to log to
+   * @param level
+   *          the log level to use, or {@code null} to use the default
+   *          level ({@link java.util.logging.Level#SEVERE})
+   * @param message
+   *          the message
+   * @param error
+   *          the error
+   * @param forceLog
+   *          force logging: always log if the logger is not {@code null}
+   *          and can log the log the specified {@code level}
+   */
+  public static final void logError(final Logger logger,
+      final Level level, final String message, final Throwable error,
+      final boolean forceLog) {
     final boolean isLogged;
     final String msg;
+    final Level useLevel;
+
+    useLevel = ((level != null) ? level : Level.SEVERE);
 
     // If a logger is provided, then we try to log the error and the
     // message.
-    if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
+    if ((logger != null) && (logger.isLoggable(useLevel))) {
       isLogged = _LoggedSentinel._hasBeenLogged(error, logger);
       if (forceLog || (!isLogged)) {
 
@@ -222,7 +281,7 @@ public final class ErrorUtils {
         }
 
         try {
-          logger.log(Level.SEVERE, msg, error);
+          logger.log(useLevel, msg, error);
         } catch (final Throwable t) {
           throw new RuntimeException(((//
               "Error when logging error message '"//$NON-NLS-1$ 
