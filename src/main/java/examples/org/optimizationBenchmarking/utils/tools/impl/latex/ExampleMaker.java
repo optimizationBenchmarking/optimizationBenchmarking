@@ -54,6 +54,7 @@ public final class ExampleMaker {
 
     ExampleMaker.__makeExample(logger, "test-article.tex", dest); //$NON-NLS-1$
     ExampleMaker.__makeExample(logger, "test-report.tex", dest); //$NON-NLS-1$
+    ExampleMaker.__makeExample(logger, "test-book.tex", dest); //$NON-NLS-1$
     ExampleMaker.__makeExample(logger, "test-IEEEtran.tex", dest); //$NON-NLS-1$
     ExampleMaker.__makeExample(logger, "test-llncs.tex", dest); //$NON-NLS-1$
     ExampleMaker.__makeExample(logger, "test-sig-alternate.tex", dest); //$NON-NLS-1$

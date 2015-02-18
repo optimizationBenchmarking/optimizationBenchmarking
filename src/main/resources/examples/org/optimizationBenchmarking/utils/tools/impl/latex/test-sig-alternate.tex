@@ -57,7 +57,20 @@
 \item \textit{\textbf{\texttt{\underline{italic bold monospaced underlined text: \printFont}}}}%
 \item \textit{\textbf{\textrm{\underline{italic bold roman underlined  text: \printFont}}}}%
 \item \textit{\textbf{\textsf{\underline{italic bold sans-serif underlined text: \printFont}}}}%
-
 %
 \end{itemize}%
+%
+\section{Available Commands}%
+%
+\makeatletter%
+\begin{itemize}%
+\item \texttt{{\textbackslash}part}: \textbf{\ifx\part\@empty no\else yes\fi}%
+\item \texttt{{\textbackslash}chapter}: \textbf{\ifx\chapter\@empty no\else yes\fi}%
+\item \texttt{{\textbackslash}section}: \textbf{\ifx\section\@empty no\else yes\fi}%
+\item \texttt{{\textbackslash}subsection}: \textbf{\ifx\subsection\@empty no\else yes\fi}%
+\item \texttt{{\textbackslash}subsubsection}: \textbf{\ifx\subsubsection\@empty no\else yes\fi}%
+\item \texttt{{\textbackslash}paragraph}: \textbf{\ifx\paragraph\@empty no\else yes\fi}%
+\item \texttt{{\textbackslash}subparagraph}: \textbf{\ifx\subparagraph\@empty no\else yes\fi}%
+\end{itemize}%
+\makeatother%
 \end{document}%

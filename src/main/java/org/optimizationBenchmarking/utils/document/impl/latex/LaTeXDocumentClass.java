@@ -18,6 +18,54 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /** A document class for LaTeX documents */
 public class LaTeXDocumentClass extends PageDimension {
 
+  /** the article document class */
+  public static final LaTeXDocumentClass ARTICLE = new LaTeXDocumentClass(
+      "article", //class //$NON-NLS-1$
+      null,// parameters
+      EPaperSize.LETTER,// paper size
+      "unsrt",// bibtex style //$NON-NLS-1$
+      345d,// width
+      550d,// height
+      1,// column count
+      345d,// column width
+      ELength.PT,// length unit
+      LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE,// fonts
+      ELaTeXSection.SECTION,// highest supported section type
+      ELaTeXSection.SUBPARAGRAPH// lowest supported section type
+  );
+
+  /** the report document class */
+  public static final LaTeXDocumentClass REPORT = new LaTeXDocumentClass(
+      "report", //class //$NON-NLS-1$
+      null,// parameters
+      EPaperSize.LETTER,// paper size
+      "unsrt",// bibtex style //$NON-NLS-1$
+      345d,// width
+      550d,// height
+      1,// column count
+      345d,// column width
+      ELength.PT,// length unit
+      LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE,// fonts
+      ELaTeXSection.CHAPTER,// highest supported section type
+      ELaTeXSection.SUBPARAGRAPH// lowest supported section type
+  );
+
+  /** the report document class */
+  public static final LaTeXDocumentClass BOOK = new LaTeXDocumentClass(
+      "book", //class //$NON-NLS-1$
+      null,// parameters
+      EPaperSize.LETTER,// paper size
+      "unsrt",// bibtex style //$NON-NLS-1$
+      345d,// width
+      550d,// height
+      1,// column count
+      345d,// column width
+      ELength.PT,// length unit
+      LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE,// fonts
+      ELaTeXSection.CHAPTER,// highest supported section type
+      ELaTeXSection.SUBPARAGRAPH// lowest supported section type
+  );
+
   /** the class to use */
   private final String m_class;
 
@@ -32,6 +80,14 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /** the font palette */
   private final FontPalette m_fonts;
+
+  /** the highest supported section type, e.g., {@link ELaTeXSection#PART} */
+  private final ELaTeXSection m_highest;
+  /**
+   * the lowest supported section type, e.g.,
+   * {@link ELaTeXSection#SUBSECTION}
+   */
+  private final ELaTeXSection m_lowest;
 
   /**
    * create a new document class
@@ -56,13 +112,20 @@ public class LaTeXDocumentClass extends PageDimension {
    *          the length unit
    * @param fonts
    *          the font palette of this document class
+   * @param highestSection
+   *          the highest supported section type, e.g.,
+   *          {@link ELaTeXSection#PART}
+   * @param lowestSection
+   *          the lowest supported section type, e.g.,
+   *          {@link ELaTeXSection#SUBSECTION}
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public LaTeXDocumentClass(final String clazz,
       final ArrayListView<String> params, final EPaperSize paperSize,
       final String bibStyle, final double width, final double height,
       final int columnCount, final double columnWidth, final ELength unit,
-      final FontPalette fonts) {
+      final FontPalette fonts, final ELaTeXSection highestSection,
+      final ELaTeXSection lowestSection) {
     super(width, height, columnCount, columnWidth, unit);
 
     if ((this.m_class = TextUtils.normalize(clazz)) == null) {
@@ -93,6 +156,18 @@ public class LaTeXDocumentClass extends PageDimension {
       this.m_fonts = LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE;
     } else {
       this.m_fonts = fonts;
+    }
+
+    this.m_highest = ((highestSection != null) ? highestSection
+        : ELaTeXSection.SECTION);
+    this.m_lowest = ((lowestSection != null) ? lowestSection
+        : ELaTeXSection.SUBSUBSECTION);
+    if (this.m_highest.ordinal() > this.m_lowest.ordinal()) {
+      throw new IllegalArgumentException(//
+          "If the highest supported document section type is " //$NON-NLS-1$
+              + this.m_highest
+              + ", then the lowest supported document section type cannot be " //$NON-NLS-1$ 
+              + this.m_lowest + ", since this is 'semantically bigger'."); //$NON-NLS-1$
     }
   }
 
@@ -141,6 +216,24 @@ public class LaTeXDocumentClass extends PageDimension {
     return this.m_fonts;
   }
 
+  /**
+   * Get the highest supported section type
+   * 
+   * @return the highest supported section type
+   */
+  public final ELaTeXSection getHighestSectionType() {
+    return this.m_highest;
+  }
+
+  /**
+   * Get the lowest supported section type
+   * 
+   * @return the lowest supported section type
+   */
+  public final ELaTeXSection getLowestSectionType() {
+    return this.m_lowest;
+  }
+
   /** {@inheritDoc} */
   @Override
   public void toText(final ITextOutput textOut) {
@@ -158,14 +251,21 @@ public class LaTeXDocumentClass extends PageDimension {
   /** {@inheritDoc} */
   @Override
   public int hashCode() {
-    return HashUtils.combineHashes(//
+    return HashUtils.combineHashes(
+        //
         HashUtils.combineHashes(super.hashCode(),//
             HashUtils.combineHashes(//
                 HashUtils.hashCode(this.m_class),//
                 HashUtils.hashCode(this.m_classParams))),//
-        HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_bibStyle),//
-            HashUtils.hashCode(this.m_fonts)));
+        HashUtils.combineHashes(
+            //
+            HashUtils.combineHashes(//
+                HashUtils.hashCode(this.m_bibStyle),//
+                HashUtils.hashCode(this.m_fonts)), //
+            HashUtils.combineHashes(
+                //
+                HashUtils.hashCode(this.m_highest),
+                HashUtils.hashCode(this.m_lowest))));
   }
 
   /** {@inheritDoc} */
@@ -184,6 +284,8 @@ public class LaTeXDocumentClass extends PageDimension {
           EComparison.equals(this.m_classParams, c.m_classParams) && //
           EComparison.equals(this.m_bibStyle, c.m_bibStyle) && //
           EComparison.equals(this.m_fonts, c.m_fonts) && //
+          EComparison.equals(this.m_highest, c.m_highest) && //
+          EComparison.equals(this.m_lowest, c.m_lowest) && //
       super.equals(o));
     }
     return false;
