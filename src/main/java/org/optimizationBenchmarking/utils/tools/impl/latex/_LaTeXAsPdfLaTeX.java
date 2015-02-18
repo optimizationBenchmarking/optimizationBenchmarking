@@ -1,16 +1,12 @@
 package org.optimizationBenchmarking.utils.tools.impl.latex;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.io.IFileType;
-import org.optimizationBenchmarking.utils.io.paths.PathUtils;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
@@ -22,8 +18,10 @@ final class _LaTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
   /** the executable */
   private final Path m_executable;
 
-  /** the command line argument */
-  private final String m_arg;
+  /** can we halt on error? */
+  private final String m_haltArg;
+  /** the format argument */
+  private final String m_formatArg;
 
   /** the error */
   private final Throwable m_error;
@@ -33,72 +31,40 @@ final class _LaTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
     super();
 
     final Path exec;
-    final ExternalProcessBuilder builder;
-    final int ret;
-    final String argStart;
     Throwable error;
-    String arg, line;
+    String[] args;
+    String arg1, arg2;
 
     error = null;
-    arg = null;
+    arg1 = arg2 = null;
     this.m_executable = exec = _LaTeX._LaTexPathLoader.PATH;
 
     if (exec != null) {
       try {
-        builder = ProcessExecutor.getInstance().use();
-
-        builder.setDirectory(PathUtils.getTempDir());
-        builder.setExecutable(exec);
-        builder.addStringArgument("-help"); //$NON-NLS-1$
-        builder.setMergeStdOutAndStdErr(true);
-        builder.setStdIn(EProcessStream.IGNORE);
-        builder.setStdOut(EProcessStream.AS_STREAM);
-        argStart = "output-format="; //$NON-NLS-1$
-
-        try (final ExternalProcess ep = builder.create()) {
-          try (final InputStreamReader isr = new InputStreamReader(
-              ep.getStdOut())) {
-            try (final BufferedReader br = new BufferedReader(isr)) {
-              whiler: while ((line = br.readLine()) != null) {
-                if ((line = TextUtils.prepare(line)) != null) {
-                  arg = _LaTeXToolChainComponent._getArg(argStart, line);
-                  if (arg != null) {
-                    arg += "pdf"; //$NON-NLS-1$
-                    break whiler;
-                  }
-                }
-              }
-            }
-          }
-
-          ret = ep.waitFor();
-          if (ret != 0) {
-            throw new IllegalStateException("LaTeX binary '" + exec + //$NON-NLS-1$
-                "' returned " + ret + //$NON-NLS-1$
-                " when asked for '-help'.");//$NON-NLS-1$
-          }
-
-          if (arg == null) {
-            throw new IllegalStateException("LaTeX binary '" + //$NON-NLS-1$
-                exec + "' does not offer option '" + argStart + //$NON-NLS-1$
-                "' when asked via '-help'.");//$NON-NLS-1$
-          }
+        args = _LaTeXToolChainComponent._getArgs(exec, "-help", //$NON-NLS-1$
+            "output-format=", //$NON-NLS-1$
+            "halt-on-error"); //$NON-NLS-1$
+        if ((arg1 = args[0]) == null) {
+          throw new IllegalStateException(
+              "LaTeX binary '" + exec//$NON-NLS-1$
+                  + "' does not offer option 'output-format' when asked via '-help'.");//$NON-NLS-1$
         }
-
+        arg2 = args[1];
       } catch (final Throwable err) {
         error = err;
-        arg = null;
+        arg1 = arg2 = null;
       }
     }
 
-    this.m_arg = arg;
+    this.m_formatArg = ((arg1 != null) ? (arg1 + "pdf") : null);//$NON-NLS-1$
+    this.m_haltArg = arg2;
     this.m_error = error;
   }
 
   /** {@inheritDoc} */
   @Override
   final boolean _canUse() {
-    return ((this.m_executable != null) && (this.m_arg != null) && (this.m_error == null));
+    return ((this.m_executable != null) && (this.m_formatArg != null) && (this.m_error == null));
   }
 
   /** {@inheritDoc} */
@@ -115,7 +81,7 @@ final class _LaTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
           "LaTeX cannot be used as PdfLaTeX compiler because... (see causing error).",//$NON-NLS-1$
           this.m_error);
     }
-    if (this.m_arg == null) {
+    if (this.m_formatArg == null) {
       throw new UnsupportedOperationException(//
           "LaTeX cannot be used as PdfLaTeX compiler because no corresponding option was detected.");//$NON-NLS-1$
     }
@@ -143,7 +109,10 @@ final class _LaTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
     builder = ProcessExecutor.getInstance().use();
     builder.setDirectory(job._getDirectory());
     builder.setExecutable(exec);
-    builder.addStringArgument(this.m_arg);
+    builder.addStringArgument(this.m_formatArg);
+    if (this.m_haltArg != null) {
+      builder.addStringArgument(this.m_haltArg);
+    }
     builder.addPathArgument(tex);
     builder.setLogger(logger);
     builder.setStdErr(EProcessStream.REDIRECT_TO_LOGGER);

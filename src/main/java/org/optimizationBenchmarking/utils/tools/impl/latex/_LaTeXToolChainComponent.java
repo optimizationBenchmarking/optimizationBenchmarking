@@ -1,12 +1,21 @@
 package org.optimizationBenchmarking.utils.tools.impl.latex;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.EmptyUtils;
 import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
+import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
+import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 
 /** A component of a tool chain */
 abstract class _LaTeXToolChainComponent {
@@ -132,41 +141,92 @@ abstract class _LaTeXToolChainComponent {
   }
 
   /**
-   * get the argument fitting to a given pattern
+   * Try to find the command line arguments of a given process.
    * 
-   * @param pattern
-   *          the pattern
-   * @param line
-   *          the line
-   * @return the argument, or {@code null}
+   * @param executable
+   *          the executable
+   * @param helpOption
+   *          the option to get help
+   * @param patterns
+   *          the patterns to search
+   * @return the discovered arguments, will have same length as
+   *         {@code patterns}
+   * @throws IOException
+   *           if something goes wrong
    */
-  static final String _getArg(final String pattern, final String line) {
-    final int patternLength, lineLength;
-    int i, j;
+  static final String[] _getArgs(final Path executable,
+      final String helpOption, final String... patterns)
+      throws IOException {
+    final ExternalProcessBuilder builder;
+    final String[] retval;
+    String pattern;
+    int remaining, index, patternLength, lineLength, i, j, ret;
+    String line;
 
-    if ((pattern == null) || (line == null)) {
-      return null;
+    if ((patterns == null) || ((remaining = patterns.length) <= 0)) {
+      return EmptyUtils.EMPTY_STRINGS;
     }
 
-    if ((patternLength = pattern.length()) >= (lineLength = line.length())) {
-      return null;
-    }
+    builder = ProcessExecutor.getInstance().use();
+    builder.setDirectory(PathUtils.getTempDir());
+    builder.setExecutable(executable);
+    builder.addStringArgument(helpOption);
+    builder.setMergeStdOutAndStdErr(true);
+    builder.setStdIn(EProcessStream.IGNORE);
+    builder.setStdOut(EProcessStream.AS_STREAM);
 
-    for (i = 0; i < lineLength; i++) {
-      if (line.charAt(i) != '-') {
-        break;
+    retval = new String[remaining];
+
+    try (final ExternalProcess ep = builder.create()) {
+      try (final InputStreamReader isr = new InputStreamReader(
+          ep.getStdOut())) {
+        try (final BufferedReader br = new BufferedReader(isr)) {
+          mainLoop: while ((line = br.readLine()) != null) {
+            if ((line = TextUtils.prepare(line)) != null) {
+              patternLoop: for (index = retval.length; (--index) >= 0;) {
+                if (retval[index] != null) {
+                  continue;
+                }
+
+                pattern = patterns[index];
+
+                if ((patternLength = pattern.length()) >= (lineLength = line
+                    .length())) {
+                  continue patternLoop;
+                }
+
+                inner: for (i = 0; i < lineLength; i++) {
+                  if (line.charAt(i) != '-') {
+                    break inner;
+                  }
+                }
+
+                if ((i + patternLength) > lineLength) {
+                  continue patternLoop;
+                }
+
+                j = (i + patternLength);
+                if (pattern.equalsIgnoreCase(line.substring(i, j))) {
+                  retval[index] = line.substring(0, j);
+                  if ((--remaining) <= 0) {
+                    break mainLoop;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      ret = ep.waitFor();
+      if (ret != 0) {
+        throw new IOException("Binary '" + //$NON-NLS-1$ 
+            executable + "' returned " + ret + //$NON-NLS-1$
+            " when asked for '" + helpOption + //$NON-NLS-1$
+            '\'' + '.');
       }
     }
 
-    if ((i + patternLength) > lineLength) {
-      return null;
-    }
-
-    j = (i + patternLength);
-    if (pattern.equalsIgnoreCase(line.substring(i, j))) {
-      return line.substring(0, j);
-    }
-
-    return null;
+    return retval;
   }
 }

@@ -1,17 +1,15 @@
 package examples.org.optimizationBenchmarking.utils.tools.impl.latex;
 
-import java.nio.file.Path;
-import java.util.Collection;
-import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
-import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeXJobBuilder;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
+
+import examples.org.optimizationBenchmarking.FinishedPrinter;
 
 /**
  * <p>
@@ -84,7 +82,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * optional</li>
  * </ul>
  */
-public final class LaTeXCompiler implements IFileProducerListener {
+public final class LaTeXCompiler {
 
   /**
    * The main routine
@@ -114,7 +112,7 @@ public final class LaTeXCompiler implements IFileProducerListener {
 
     builder = LaTeX.getInstance().use();
     builder.configure(root);
-    builder.setFileProducerListener(new LaTeXCompiler());
+    builder.setFileProducerListener(new FinishedPrinter());
     job = builder.create();
 
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
@@ -132,20 +130,7 @@ public final class LaTeXCompiler implements IFileProducerListener {
 
   /** create */
   private LaTeXCompiler() {
-    super();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void onFilesFinalized(
-      final Collection<Entry<Path, IFileType>> result) {
-    final Logger logger;
-
-    logger = Configuration.getRoot().getLogger(Configuration.PARAM_LOGGER,
-        null);
-    if ((logger != null) && (logger.isLoggable(Level.INFO))) {
-      logger.info("Files created: " + result);//$NON-NLS-1$
-    }
+    ErrorUtils.doNotCall();
   }
 
 }

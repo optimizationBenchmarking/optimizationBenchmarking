@@ -1,0 +1,63 @@
+\documentclass{article}%
+%
+%
+\gdef\printFont{\fontname\font}%
+%
+\begin{document}%
+%
+\title{A Test Document to Detect the Page Size and Fonts of the ``article'' Document Class}%
+\author{Thomas Weise}%
+%
+\maketitle%
+%
+%
+\section{Size}%
+%
+\begin{itemize}%
+\item text height: \the\textheight%
+\item text width: \the\textwidth%
+\item column width: \the\columnwidth%
+\end{itemize}%
+%
+\section{Fonts}%
+%
+\begin{itemize}%
+%
+\item normal text: \printFont%
+\item \emph{emphasized text: \printFont}%
+%
+\item \textit{italic text: \printFont}%
+\item \textbf{bold text: \printFont}%
+\item \texttt{monospaced text: \printFont}%
+\item \textrm{roman text: \printFont}%
+\item \textsf{sans-serif text: \printFont}%
+\item \underline{underlined text: \printFont}%
+%
+%
+\item \textit{\textbf{italic bold text: \printFont}}%
+\item \textit{\texttt{italic monospaced text: \printFont}}%
+\item \textit{\textrm{italic roman text: \printFont}}%
+\item \textit{\textsf{italic sans-serif text: \printFont}}%
+\item \textit{\underline{italic underlined text: \printFont}}%
+%
+\item \textbf{\texttt{bold monospaced text: \printFont}}%
+\item \textbf{\textrm{bold roman text: \printFont}}%
+\item \textbf{\textsf{bold sans-serif text: \printFont}}%
+\item \textbf{\underline{bold underlined text: \printFont}}%
+%
+\item \texttt{\underline{monospace underlined text: \printFont}}%
+\item \textrm{\underline{roman underlined text: \printFont}}%
+\item \textsf{\underline{sans-serif underlined text: \printFont}}%
+%
+\item \textit{\textbf{\texttt{italic bold monospaced text: \printFont}}}%
+\item \textit{\textbf{\textrm{italic bold roman text: \printFont}}}%
+\item \textit{\textbf{\textsf{italic bold sans-serif text: \printFont}}}%
+\item \textit{\textbf{\underline{italic bold underlined text: \printFont}}}%
+%
+\item \textit{\textbf{\texttt{\underline{italic bold monospaced underlined text: \printFont}}}}%
+\item \textit{\textbf{\textrm{\underline{italic bold roman underlined  text: \printFont}}}}%
+\item \textit{\textbf{\textsf{\underline{italic bold sans-serif underlined text: \printFont}}}}%
+
+%
+\end{itemize}%
+\end{document}%

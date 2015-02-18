@@ -23,11 +23,25 @@ final class _PdfLaTeX extends _LaTeXToolChainComponent {
   /** the executable */
   private final Path m_executable;
 
+  /** can we halt on error? */
+  private final String m_haltArg;
+
   /** create */
   _PdfLaTeX() {
     super();
 
+    String arg;
+
     this.m_executable = _PdfLaTeXPathLoader.PATH;
+    arg = null;
+    try {
+      arg = _LaTeXToolChainComponent._getArgs(this.m_executable, "-help", //$NON-NLS-1$
+          "halt-on-error")[0]; //$NON-NLS-1$
+    } catch (final Throwable t) {
+      arg = null;
+    }
+    this.m_haltArg = arg;
+
   }
 
   /** {@inheritDoc} */
@@ -68,6 +82,9 @@ final class _PdfLaTeX extends _LaTeXToolChainComponent {
     builder = ProcessExecutor.getInstance().use();
     builder.setDirectory(job._getDirectory());
     builder.setExecutable(exec);
+    if (this.m_haltArg != null) {
+      builder.addStringArgument(this.m_haltArg);
+    }
     builder.addPathArgument(tex);
     builder.setLogger(logger);
     builder.setStdErr(EProcessStream.REDIRECT_TO_LOGGER);
