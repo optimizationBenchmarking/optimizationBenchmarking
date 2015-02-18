@@ -22,7 +22,7 @@ public final class ConfigurationXMLConstants {
   static final String ELEMENT_CONFIGURATION_ROOT = "configuration"; //$NON-NLS-1$
   /** the namespace */
   public static final URI NAMESPACE_URI = URI
-      .create(
+      .create(//
           "http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd").normalize(); //$NON-NLS-1$
   /** the namespace string */
   public static final String NAMESPACE = ConfigurationXMLConstants.NAMESPACE_URI
@@ -35,5 +35,4 @@ public final class ConfigurationXMLConstants {
   private ConfigurationXMLConstants() {
     ErrorUtils.doNotCall();
   }
-
 }

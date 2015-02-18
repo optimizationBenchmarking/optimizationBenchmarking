@@ -2,9 +2,12 @@ package org.optimizationBenchmarking.utils.config;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Properties;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.TextOutputTool;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -17,6 +20,24 @@ public final class ConfigurationPropertiesOutput extends
   /** create */
   ConfigurationPropertiesOutput() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void file(final IOJob job, final Configuration data,
+      final Path file, final StreamEncoding<?, ?> encoding)
+      throws Throwable {
+    super.file(job, data, file, encoding);
+    if (Files.exists(file)) {
+      this.addFile(job, file, EConfigurationFileType.CONFIG_PROPERTIES);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final String getDefaultPlainOutputFileName() {
+    return ("config." + //$NON-NLS-1$
+    EConfigurationFileType.CONFIG_PROPERTIES.getDefaultSuffix());
   }
 
   /**

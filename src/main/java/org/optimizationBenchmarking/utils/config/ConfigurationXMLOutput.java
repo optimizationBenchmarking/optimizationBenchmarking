@@ -1,7 +1,10 @@
 package org.optimizationBenchmarking.utils.config;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map.Entry;
 
+import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLOutputTool;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
@@ -67,6 +70,24 @@ public final class ConfigurationXMLOutput extends
   @Override
   public final String toString() {
     return "Configuration XML Output"; //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void file(final IOJob job, final Configuration data,
+      final Path file, final StreamEncoding<?, ?> encoding)
+      throws Throwable {
+    super.file(job, data, file, encoding);
+    if (Files.exists(file)) {
+      this.addFile(job, file, EConfigurationFileType.CONFIG_XML);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final String getDefaultPlainOutputFileName() {
+    return ("config." + //$NON-NLS-1$
+    EConfigurationFileType.CONFIG_XML.getDefaultSuffix());
   }
 
   /** the loader */
