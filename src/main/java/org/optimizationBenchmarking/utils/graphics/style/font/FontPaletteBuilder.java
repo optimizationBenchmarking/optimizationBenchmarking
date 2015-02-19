@@ -1,13 +1,10 @@
 package org.optimizationBenchmarking.utils.graphics.style.font;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.graphics.style.PaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -117,6 +114,12 @@ public class FontPaletteBuilder extends
     return new FontStyleBuilder(this, id, idStr);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final FontStyleBuilder add() {
+    return ((FontStyleBuilder) (super.add()));
+  }
+
   /**
    * Set the default font style
    * 
@@ -124,7 +127,7 @@ public class FontPaletteBuilder extends
    */
   public synchronized final FontStyleBuilder setDefaultFont() {
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-    return this.__build(0, "fontDefault"); //$NON-NLS-1$
+    return this.__build(0, FontPaletteXML.ELEMENT_DEFAULT_FONT);
   }
 
   /**
@@ -134,7 +137,7 @@ public class FontPaletteBuilder extends
    */
   public synchronized final FontStyleBuilder setEmphFont() {
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-    return this.__build(1, "fontEmph"); //$NON-NLS-1$
+    return this.__build(1, FontPaletteXML.ELEMENT_EMPHASIZED_FONT);
   }
 
   /**
@@ -144,16 +147,17 @@ public class FontPaletteBuilder extends
    */
   public synchronized final FontStyleBuilder setCodeFont() {
     this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-    return this.__build(2, "fontCode"); //$NON-NLS-1$
+    return this.__build(2, FontPaletteXML.ELEMENT_CODE_FONT);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final PaletteElementBuilder<FontStyle> createElementBuilder() {
+  protected final FontStyleBuilder createElementBuilder() {
     this.fsmFlagsAssertTrue(FontPaletteBuilder.FLAG_HAS_DEFAULT
         | FontPaletteBuilder.FLAG_HAS_EMPH
         | FontPaletteBuilder.FLAG_HAS_CODE);
-    return this.__build(3, ("font" + Integer.toHexString(this.m_count++))); //$NON-NLS-1$
+    return this.__build(3, (FontPaletteXML.ELEMENT_FONT + //
+        Integer.toHexString(this.m_count++)));
   }
 
   /**
@@ -214,50 +218,4 @@ public class FontPaletteBuilder extends
       }
     }
   }
-
-  /** {@inheritDoc} */
-  @Override
-  protected synchronized final void processHeader(
-      final BufferedReader reader) throws IOException {
-    String s;
-
-    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-
-    super.processHeader(reader);
-
-    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    this.fsmFlagsAssertFalse(PaletteBuilder.FLAG_HAS_ELEMENTS);
-
-    while ((s = reader.readLine()) != null) {
-      s = TextUtils.prepare(s);
-      if ((s != null) && (s.charAt(0) != '#')) {
-        try (final FontStyleBuilder ssb = this.setDefaultFont()) {
-          ssb.fromStrings(this.iterate(s));
-        }
-        break;
-      }
-    }
-
-    while ((s = reader.readLine()) != null) {
-      s = TextUtils.prepare(s);
-      if ((s != null) && (s.charAt(0) != '#')) {
-        try (final FontStyleBuilder ssb = this.setEmphFont()) {
-          ssb.fromStrings(this.iterate(s));
-        }
-        break;
-      }
-    }
-
-    while ((s = reader.readLine()) != null) {
-      s = TextUtils.prepare(s);
-      if ((s != null) && (s.charAt(0) != '#')) {
-        try (final FontStyleBuilder ssb = this.setCodeFont()) {
-          ssb.fromStrings(this.iterate(s));
-        }
-        break;
-      }
-    }
-  }
-
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.optimizationBenchmarking.org/formats/graphics/color/colorPalette.1.0.xsd"
+	targetNamespace="http://www.optimizationBenchmarking.org/formats/graphics/color/colorPalette.1.0.xsd"
+	elementFormDefault="qualified">
+
+	<annotation>
+		<documentation>The XML Schema for the color palettes, version 1.0.
+		</documentation>
+	</annotation>
+
+	<simpleType name="rgbType">
+		<restriction base="token">
+			<pattern value='[0-9a-f]{6}' />
+		</restriction>
+	</simpleType>
+
+	<complexType name="colorType">
+		<attribute name="name" type="token" use="required" />
+		<attribute name="rgb" type="tns:rgbType" use="required" />
+	</complexType>
+
+	<element name="colorPalette">
+		<complexType>
+			<sequence>
+				<element name="color" type="tns:colorType" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

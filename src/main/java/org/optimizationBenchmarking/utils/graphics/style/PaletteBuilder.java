@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.graphics.style;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,10 +25,8 @@ import org.optimizationBenchmarking.utils.text.tokenizers.SeparatorBasedStringIt
 public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
     extends BuilderFSM<PT> {
 
-  /** do we process a header */
-  private static final int FLAG_HAS_PROCESSED_HEADER = (FSM.FLAG_NOTHING + 1);
   /** do we have elements? */
-  protected static final int FLAG_HAS_ELEMENTS = (PaletteBuilder.FLAG_HAS_PROCESSED_HEADER << 1);
+  protected static final int FLAG_HAS_ELEMENTS = (FSM.FLAG_NOTHING + 1);
 
   /** the elements */
   private ArrayList<ET> m_elements;
@@ -55,19 +51,11 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
   @Override
   protected void fsmFlagsAppendName(final int flagValue,
       final int flagIndex, final MemoryTextOutput append) {
-    switch (flagValue) {
-      case FLAG_HAS_PROCESSED_HEADER: {
-        append.append("hasProcessedHeader"); //$NON-NLS-1$
-        return;
-      }
-      case FLAG_HAS_ELEMENTS: {
-        append.append("hasElements"); //$NON-NLS-1$
-        return;
-      }
-      default: {
-        super.fsmFlagsAppendName(flagValue, flagIndex, append);
-      }
+    if (flagValue == PaletteBuilder.FLAG_HAS_ELEMENTS) {
+      append.append("hasElements"); //$NON-NLS-1$
+      return;
     }
+    super.fsmFlagsAppendName(flagValue, flagIndex, append);
   }
 
   /**
@@ -157,23 +145,6 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
   public synchronized PaletteElementBuilder<ET> add() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     return this.createElementBuilder();
-  }
-
-  /**
-   * Process any potential header information directly. This method is
-   * called by {@link PaletteInputDriver}.
-   * 
-   * @param reader
-   *          the reader to process
-   * @throws IOException
-   *           if something goes wrong
-   */
-  @SuppressWarnings("unused")
-  protected synchronized void processHeader(final BufferedReader reader)
-      throws IOException {
-    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        PaletteBuilder.FLAG_HAS_PROCESSED_HEADER,
-        PaletteBuilder.FLAG_HAS_PROCESSED_HEADER, FSM.STATE_NOTHING);
   }
 
   /** {@inheritDoc} */

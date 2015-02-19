@@ -19,6 +19,12 @@ public class ColorPaletteBuilder extends
 
   /** {@inheritDoc} */
   @Override
+  public final synchronized ColorStyleBuilder add() {
+    return ((ColorStyleBuilder) (super.add()));
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected final PaletteElementBuilder<ColorStyle> createElementBuilder() {
     return new ColorStyleBuilder(this);
   }

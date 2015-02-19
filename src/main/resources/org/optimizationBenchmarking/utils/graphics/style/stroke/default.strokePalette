@@ -1,7 +1,9 @@
-# stroke name, thickness, dash-definition
-normal,1
-thin,0
-thick,2.5
-dashed,1,10,10
-dotted,1,1,5
-dash-dotted,1,10,6,1,6
+<?xml version="1.0" encoding="UTF-8"?>
+<strokePalette xmlns="http://www.optimizationBenchmarking.org/formats/graphics/stroke/strokePalette.1.0.xsd">
+<defaultStroke name="normal" thickness="1" />
+<thinStroke name="thin" thickness="0" />
+<thickStroke name="thick" thickness="2.5" />
+<stroke name="dashed" thickness="1" dash="10 10" />
+<stroke name="dotted" thickness="1" dash="1 5" />
+<stroke name="dash-dotted" thickness="1" dash="10 6 1 6" />
+</strokePalette>

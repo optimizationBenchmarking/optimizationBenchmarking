@@ -1,11 +1,56 @@
-#font family, bold?, italic?, underlined?, size in pt, face choices
-SANS_SERIF,false,false,false,12,Arial,Comic Sans MS,Helvetica
-SANS_SERIF,false,true,false,13,Comic,Comic Sans MS,Helvetica,Arial
-MONOSPACED,true,false,false,12,Courier,Terminal
-SANS_SERIF,true,false,true,11,Helvetica,Comic,Arial
-SERIF,true,true,true,11,Times New Roman,Computer Modern,cmr,cmr11
-SERIF,true,false,true,13,cmr,Computer Modern,Modern,cmr13
-SANS_SERIF,true,false,true,8,Calibri
-Dialog,true,false,true,8,Cambria
-SERIF,false,true,true,12,Wide Latin
-SANS_SERIF,false,true,true,12,Vivaldi
+<?xml version="1.0" encoding="UTF-8"?>
+<fontPalette xmlns="http://www.optimizationBenchmarking.org/formats/graphics/font/fontPalette.1.0.xsd">
+
+  <defaultFont family="sansSerif" size="12">
+    <face>Arial</face>
+    <face>Comic Sans MS</face>
+    <face>Helvetica</face>
+  </defaultFont>
+
+  <emphasizedFont family="sansSerif" italic="true" size="13">
+    <face>Comic</face>
+    <face>Comic Sans MS</face>
+    <face>Helvetica</face>
+    <face>Arial</face>
+  </emphasizedFont>
+
+  <codeFont family="monospaced" bold="true" size="12">
+    <face>Courier</face>
+    <face>Terminal</face>
+  </codeFont>
+  
+  <font family="sansSerif" bold="true" underlined="true" size="11">
+    <face>Helvectica</face>
+    <face>Comic</face>
+    <face>Arial</face>
+  </font>
+  
+  <font family="serif" bold="true" italic="true" underlined="true" size="11">
+    <face>Times New Roman</face>
+    <face>Computer Modern</face>
+    <face>cmr</face>
+    <face>cmr11</face>
+  </font>
+  
+  <font family="serif" bold="true" underlined="true" size="13">
+    <face>cmr13</face>
+    <face>Computer Modern</face>
+    <face>Modern</face>
+  </font>
+  
+  <font family="sansSerif" bold="true" underlined="true" size="8">
+    <face>Calibri</face>
+  </font>
+    
+  <font family="serif" italic="true" underlined="true" size="9">
+    <face>Cambria</face>
+  </font>
+    
+  <font family="serif" italic="true" bold="true" size="12">
+    <face>Wide Latin</face>
+  </font>
+  
+  <font family="sansSerif" italic="true" underlined="true" size="12">
+    <face>Vivaldi</face>
+  </font>
+</fontPalette>

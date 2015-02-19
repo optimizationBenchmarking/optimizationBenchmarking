@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.graphics.style.stroke;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 
 /** the default stroke palette */
 public final class DefaultStrokePalette extends StrokePalette {
@@ -81,7 +80,7 @@ public final class DefaultStrokePalette extends StrokePalette {
       Palette<StrokeStyle> pal;
       pal = null;
       try (final __DefaultStrokePaletteBuilder cspb = new __DefaultStrokePaletteBuilder()) {
-        PaletteInputDriver
+        StrokePaletteXMLInput
             .getInstance()
             .use()
             .setDestination(cspb)

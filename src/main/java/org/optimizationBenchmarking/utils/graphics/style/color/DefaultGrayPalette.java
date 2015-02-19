@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 
 /** the default gray palette */
 public final class DefaultGrayPalette extends ColorPalette {
@@ -77,7 +76,7 @@ public final class DefaultGrayPalette extends ColorPalette {
 
       pal = null;
       try (final __DefaultGrayPaletteBuilder cspb = new __DefaultGrayPaletteBuilder()) {
-        PaletteInputDriver
+        ColorPaletteXMLInput
             .getInstance()
             .use()
             .setDestination(cspb)

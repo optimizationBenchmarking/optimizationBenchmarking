@@ -5,7 +5,7 @@ import java.net.URI;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 
 /**
- * the internal class for the XML constants of the configuration XML format
+ * The class for the XML constants of the configuration XML format.
  */
 public final class ConfigurationXMLConstants {
   /** the configuration parameter name attribute */

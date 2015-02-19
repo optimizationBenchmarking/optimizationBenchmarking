@@ -1,13 +1,10 @@
 package org.optimizationBenchmarking.utils.graphics.style.stroke;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.graphics.style.PaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -61,6 +58,12 @@ public class StrokePaletteBuilder extends
         super.fsmFlagsAppendName(flagValue, flagIndex, append);
       }
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final StrokeStyleBuilder add() {
+    return ((StrokeStyleBuilder) (super.add()));
   }
 
   /**
@@ -210,46 +213,6 @@ public class StrokePaletteBuilder extends
       }
       default: {
         throw new IllegalArgumentException(child.toString());
-      }
-    }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected synchronized final void processHeader(
-      final BufferedReader reader) throws IOException {
-    String s;
-
-    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    super.processHeader(reader);
-
-    def: while ((s = reader.readLine()) != null) {
-      s = TextUtils.prepare(s);
-      if ((s != null) && (s.charAt(0) != '#')) {
-        try (final StrokeStyleBuilder ssb = this.setDefaultStroke()) {
-          ssb.fromStrings(this.iterate(s));
-        }
-        break def;
-      }
-    }
-
-    thin: while ((s = reader.readLine()) != null) {
-      s = TextUtils.prepare(s);
-      if ((s != null) && (s.charAt(0) != '#')) {
-        try (final StrokeStyleBuilder ssb = this.setThinStroke()) {
-          ssb.fromStrings(this.iterate(s));
-        }
-        break thin;
-      }
-    }
-
-    thick: while ((s = reader.readLine()) != null) {
-      s = TextUtils.prepare(s);
-      if ((s != null) && (s.charAt(0) != '#')) {
-        try (final StrokeStyleBuilder ssb = this.setThickStroke()) {
-          ssb.fromStrings(this.iterate(s));
-        }
-        break thick;
       }
     }
   }

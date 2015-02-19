@@ -33,9 +33,9 @@ import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
+import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteXMLInput;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
@@ -596,7 +596,7 @@ public final class LaTeXDriver extends DocumentDriver {
       p = null;
       error = null;
       try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-        PaletteInputDriver
+        FontPaletteXMLInput
             .getInstance()
             .use()
             .setDestination(tb)

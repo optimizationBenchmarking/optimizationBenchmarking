@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.optimizationBenchmarking.org/formats/graphics/stroke/strokePalette.1.0.xsd"
+	targetNamespace="http://www.optimizationBenchmarking.org/formats/graphics/stroke/strokePalette.1.0.xsd"
+	elementFormDefault="qualified">
+
+	<annotation>
+		<documentation>The XML Schema for the stroke palettes, version 1.0.
+		</documentation>
+	</annotation>
+
+	<simpleType name="dashType">
+		<list itemType="float" />
+	</simpleType>
+
+	<complexType name="strokeType">
+		<attribute name="name" type="token" use="required" />
+		<attribute name="thickness" type="float" use="required" />
+		<attribute name="dash" type="tns:dashType" use="optional" />
+	</complexType>
+
+	<element name="strokePalette">
+		<complexType>
+			<sequence>
+				<element name="defaultStroke" type="tns:strokeType"
+					minOccurs="1" maxOccurs="1" />
+				<element name="thinStroke" type="tns:strokeType" minOccurs="1"
+					maxOccurs="1" />
+				<element name="thickStroke" type="tns:strokeType" minOccurs="1"
+					maxOccurs="1" />
+				<element name="stroke" type="tns:strokeType" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

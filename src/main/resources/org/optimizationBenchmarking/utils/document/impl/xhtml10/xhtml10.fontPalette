@@ -1,11 +1,90 @@
-#font family, bold?, italic?, underlined?, size in pt, face choices
-SERIF,false,false,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
-SERIF,false,true,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
-MONOSPACED,false,false,false,11,Consolas,Courier New,Courier,Terminal,Liberation Mono,Nimbus Mono
+<?xml version="1.0" encoding="UTF-8"?>
+<fontPalette
+	xmlns="http://www.optimizationBenchmarking.org/formats/graphics/font/fontPalette.1.0.xsd">
 
-SERIF,true,false,false,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
-SERIF,false,false,true,11,Times New Roman,Times Roman,Times,cmr11,Computer Modern,Nimbus Roman,Georgia,Liberation Serif
-SANS_SERIF,false,false,false,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
-SANS_SERIF,false,true,false,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
-SANS_SERIF,true,false,false,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
-SANS_SERIF,false,false,true,11,Arial,Helvetica,Liberation Sans,Nimbus Sans,Arial Unicode MS
+	<defaultFont family="serif" size="11">
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>cmr11</face>
+		<face>Computer Modern</face>
+		<face>Nimbus Roman</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</defaultFont>
+
+	<emphasizedFont family="serif" italic="true" size="11">
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>cmr11</face>
+		<face>Computer Modern</face>
+		<face>Nimbus Roman</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</emphasizedFont>
+
+	<codeFont family="monospaced" underlined="true" size="11">
+		<face>Consolas</face>
+		<face>Courier New</face>
+		<face>Courier</face>
+		<face>Terminal</face>
+		<face>Liberation Mono</face>
+		<face>Nimbus Mono</face>
+	</codeFont>
+
+	<font family="serif" bold="true" size="11">
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>cmr11</face>
+		<face>Computer Modern</face>
+		<face>Nimbus Roman</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</font>
+
+	<font family="serif" size="11">
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>cmr11</face>
+		<face>Computer Modern</face>
+		<face>Nimbus Roman</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</font>
+
+	<font family="sansSerif" size="11">
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Nimbus Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+	<font family="sansSerif" italic="true" underlined="true" size="11">
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Nimbus Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+	<font family="sansSerif" bold="true" size="11">
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Nimbus Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+	<font family="sansSerif" underlined="true" size="11">
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Nimbus Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+</fontPalette>

@@ -6,9 +6,9 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
+import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteXMLInput;
 
 /** a set of example font palettes */
 public final class ExampleFontPalettes {
@@ -29,7 +29,7 @@ public final class ExampleFontPalettes {
     all = new LinkedHashSet<>();
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
 
-      PaletteInputDriver
+      FontPaletteXMLInput
           .getInstance()
           .use()
           .setDestination(tb)
@@ -43,11 +43,25 @@ public final class ExampleFontPalettes {
     }
 
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-      PaletteInputDriver
+      FontPaletteXMLInput
           .getInstance()
           .use()
           .setDestination(tb)
           .addResource(XHTML10Driver.class, "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
+      palette = tb.getResult();
+      if ((palette != null) && (!(palette.isEmpty()))) {
+        all.add(palette);
+      }
+    } catch (final Throwable tt) {
+      tt.printStackTrace();
+    }
+
+    try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
+      FontPaletteXMLInput
+          .getInstance()
+          .use()
+          .setDestination(tb)
+          .addResource(LaTeXDriver.class, "latex.fontPalette").create().call(); //$NON-NLS-1$
       palette = tb.getResult();
       if ((palette != null) && (!(palette.isEmpty()))) {
         all.add(palette);

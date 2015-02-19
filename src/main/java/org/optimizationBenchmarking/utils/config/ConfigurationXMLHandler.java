@@ -4,10 +4,10 @@ import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/** a handler for configuration xml data */
+/** A stack-able XML handler for configuration XML data */
 public class ConfigurationXMLHandler extends DelegatingHandler {
 
-  /** the destination configuration */
+  /** the destination configuration builder */
   private final ConfigurationBuilder m_dest;
 
   /**
@@ -16,7 +16,7 @@ public class ConfigurationXMLHandler extends DelegatingHandler {
    * @param owner
    *          the owning handler, or {@code null} if not used
    * @param dest
-   *          the configuration instance to load the data into
+   *          the configuration builder to load the data into
    */
   public ConfigurationXMLHandler(final DelegatingHandler owner,
       final ConfigurationBuilder dest) {

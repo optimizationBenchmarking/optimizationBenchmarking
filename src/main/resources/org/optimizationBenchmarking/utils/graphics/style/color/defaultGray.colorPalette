@@ -1,255 +1,257 @@
-# rgb value, color name
-808080,gray128
-404040,gray64
-bfbfbf,gray191
-202020,gray32
-9f9f9f,gray159
-606060,gray96
-dfdfdf,gray223
-101010,gray16
-8f8f8f,gray143
-505050,gray80
-cfcfcf,gray207
-303030,gray48
-afafaf,gray175
-707070,gray112
-efefef,gray239
-080808,gray8
-878787,gray135
-484848,gray72
-c7c7c7,gray199
-282828,gray40
-a7a7a7,gray167
-686868,gray104
-e7e7e7,gray231
-181818,gray24
-979797,gray151
-585858,gray88
-d7d7d7,gray215
-383838,gray56
-b7b7b7,gray183
-787878,gray120
-f7f7f7,gray247
-040404,gray4
-838383,gray131
-444444,gray68
-c3c3c3,gray195
-242424,gray36
-a3a3a3,gray163
-646464,gray100
-e3e3e3,gray227
-141414,gray20
-939393,gray147
-545454,gray84
-d3d3d3,gray211
-343434,gray52
-b3b3b3,gray179
-747474,gray116
-f3f3f3,gray243
-0c0c0c,gray12
-8b8b8b,gray139
-4c4c4c,gray76
-cbcbcb,gray203
-2c2c2c,gray44
-ababab,gray171
-6c6c6c,gray108
-ebebeb,gray235
-1c1c1c,gray28
-9b9b9b,gray155
-5c5c5c,gray92
-dbdbdb,gray219
-3c3c3c,gray60
-bbbbbb,gray187
-7c7c7c,gray124
-fbfbfb,gray251
-020202,gray2
-818181,gray129
-424242,gray66
-c1c1c1,gray193
-222222,gray34
-a1a1a1,gray161
-626262,gray98
-e1e1e1,gray225
-121212,gray18
-919191,gray145
-525252,gray82
-d1d1d1,gray209
-323232,gray50
-b1b1b1,gray177
-727272,gray114
-f1f1f1,gray241
-0a0a0a,gray10
-898989,gray137
-4a4a4a,gray74
-c9c9c9,gray201
-2a2a2a,gray42
-a9a9a9,gray169
-6a6a6a,gray106
-e9e9e9,gray233
-1a1a1a,gray26
-999999,gray153
-5a5a5a,gray90
-d9d9d9,gray217
-3a3a3a,gray58
-b9b9b9,gray185
-7a7a7a,gray122
-f9f9f9,gray249
-060606,gray6
-858585,gray133
-464646,gray70
-c5c5c5,gray197
-262626,gray38
-a5a5a5,gray165
-666666,gray102
-e5e5e5,gray229
-161616,gray22
-959595,gray149
-565656,gray86
-d5d5d5,gray213
-363636,gray54
-b5b5b5,gray181
-767676,gray118
-f5f5f5,gray245
-0e0e0e,gray14
-8d8d8d,gray141
-4e4e4e,gray78
-cdcdcd,gray205
-2e2e2e,gray46
-adadad,gray173
-6e6e6e,gray110
-ededed,gray237
-1e1e1e,gray30
-9d9d9d,gray157
-5e5e5e,gray94
-dddddd,gray221
-3e3e3e,gray62
-bdbdbd,gray189
-7e7e7e,gray126
-fdfdfd,gray253
-010101,gray1
-828282,gray130
-414141,gray65
-c0c0c0,gray192
-212121,gray33
-a0a0a0,gray160
-616161,gray97
-e0e0e0,gray224
-111111,gray17
-909090,gray144
-515151,gray81
-d0d0d0,gray208
-313131,gray49
-b0b0b0,gray176
-717171,gray113
-f0f0f0,gray240
-090909,gray9
-888888,gray136
-494949,gray73
-c8c8c8,gray200
-292929,gray41
-a8a8a8,gray168
-696969,gray105
-e8e8e8,gray232
-191919,gray25
-989898,gray152
-595959,gray89
-d8d8d8,gray216
-393939,gray57
-b8b8b8,gray184
-797979,gray121
-f8f8f8,gray248
-050505,gray5
-848484,gray132
-454545,gray69
-c4c4c4,gray196
-252525,gray37
-a4a4a4,gray164
-656565,gray101
-e4e4e4,gray228
-151515,gray21
-949494,gray148
-555555,gray85
-d4d4d4,gray212
-353535,gray53
-b4b4b4,gray180
-757575,gray117
-f4f4f4,gray244
-0d0d0d,gray13
-8c8c8c,gray140
-4d4d4d,gray77
-cccccc,gray204
-2d2d2d,gray45
-acacac,gray172
-6d6d6d,gray109
-ececec,gray236
-1d1d1d,gray29
-9c9c9c,gray156
-5d5d5d,gray93
-dcdcdc,gray220
-3d3d3d,gray61
-bcbcbc,gray188
-7d7d7d,gray125
-fcfcfc,gray252
-030303,gray3
-868686,gray134
-434343,gray67
-c2c2c2,gray194
-232323,gray35
-a2a2a2,gray162
-636363,gray99
-e2e2e2,gray226
-131313,gray19
-929292,gray146
-535353,gray83
-d2d2d2,gray210
-333333,gray51
-b2b2b2,gray178
-737373,gray115
-f2f2f2,gray242
-0b0b0b,gray11
-8a8a8a,gray138
-4b4b4b,gray75
-cacaca,gray202
-2b2b2b,gray43
-aaaaaa,gray170
-6b6b6b,gray107
-eaeaea,gray234
-1b1b1b,gray27
-9a9a9a,gray154
-5b5b5b,gray91
-dadada,gray218
-3b3b3b,gray59
-bababa,gray186
-7b7b7b,gray123
-fafafa,gray250
-070707,gray7
-8e8e8e,gray142
-474747,gray71
-c6c6c6,gray198
-272727,gray39
-a6a6a6,gray166
-676767,gray103
-e6e6e6,gray230
-171717,gray23
-969696,gray150
-575757,gray87
-d6d6d6,gray214
-373737,gray55
-b6b6b6,gray182
-777777,gray119
-f6f6f6,gray246
-0f0f0f,gray15
-9e9e9e,gray158
-4f4f4f,gray79
-cecece,gray206
-2f2f2f,gray47
-aeaeae,gray174
-6f6f6f,gray111
-eeeeee,gray238
-1f1f1f,gray31
-bebebe,gray190
-5f5f5f,gray95
-dedede,gray222
-3f3f3f,gray63
-fefefe,gray254
-7f7f7f,gray127
+<?xml version="1.0" encoding="UTF-8"?>
+<colorPalette xmlns="http://www.optimizationBenchmarking.org/formats/graphics/color/colorPalette.1.0.xsd">
+<color name="gray128" rgb="808080"/> 
+<color name="gray64" rgb="404040"/> 
+<color name="gray191" rgb="bfbfbf"/> 
+<color name="gray32" rgb="202020"/> 
+<color name="gray159" rgb="9f9f9f"/> 
+<color name="gray96" rgb="606060"/> 
+<color name="gray223" rgb="dfdfdf"/> 
+<color name="gray16" rgb="101010"/> 
+<color name="gray143" rgb="8f8f8f"/> 
+<color name="gray80" rgb="505050"/> 
+<color name="gray207" rgb="cfcfcf"/> 
+<color name="gray48" rgb="303030"/> 
+<color name="gray175" rgb="afafaf"/> 
+<color name="gray112" rgb="707070"/> 
+<color name="gray239" rgb="efefef"/> 
+<color name="gray8" rgb="080808"/> 
+<color name="gray135" rgb="878787"/> 
+<color name="gray72" rgb="484848"/> 
+<color name="gray199" rgb="c7c7c7"/> 
+<color name="gray40" rgb="282828"/> 
+<color name="gray167" rgb="a7a7a7"/> 
+<color name="gray104" rgb="686868"/> 
+<color name="gray231" rgb="e7e7e7"/> 
+<color name="gray24" rgb="181818"/> 
+<color name="gray151" rgb="979797"/> 
+<color name="gray88" rgb="585858"/> 
+<color name="gray215" rgb="d7d7d7"/> 
+<color name="gray56" rgb="383838"/> 
+<color name="gray183" rgb="b7b7b7"/> 
+<color name="gray120" rgb="787878"/> 
+<color name="gray247" rgb="f7f7f7"/> 
+<color name="gray4" rgb="040404"/> 
+<color name="gray131" rgb="838383"/> 
+<color name="gray68" rgb="444444"/> 
+<color name="gray195" rgb="c3c3c3"/> 
+<color name="gray36" rgb="242424"/> 
+<color name="gray163" rgb="a3a3a3"/> 
+<color name="gray100" rgb="646464"/> 
+<color name="gray227" rgb="e3e3e3"/> 
+<color name="gray20" rgb="141414"/> 
+<color name="gray147" rgb="939393"/> 
+<color name="gray84" rgb="545454"/> 
+<color name="gray211" rgb="d3d3d3"/> 
+<color name="gray52" rgb="343434"/> 
+<color name="gray179" rgb="b3b3b3"/> 
+<color name="gray116" rgb="747474"/> 
+<color name="gray243" rgb="f3f3f3"/> 
+<color name="gray12" rgb="0c0c0c"/> 
+<color name="gray139" rgb="8b8b8b"/> 
+<color name="gray76" rgb="4c4c4c"/> 
+<color name="gray203" rgb="cbcbcb"/> 
+<color name="gray44" rgb="2c2c2c"/> 
+<color name="gray171" rgb="ababab"/> 
+<color name="gray108" rgb="6c6c6c"/> 
+<color name="gray235" rgb="ebebeb"/> 
+<color name="gray28" rgb="1c1c1c"/> 
+<color name="gray155" rgb="9b9b9b"/> 
+<color name="gray92" rgb="5c5c5c"/> 
+<color name="gray219" rgb="dbdbdb"/> 
+<color name="gray60" rgb="3c3c3c"/> 
+<color name="gray187" rgb="bbbbbb"/> 
+<color name="gray124" rgb="7c7c7c"/> 
+<color name="gray251" rgb="fbfbfb"/> 
+<color name="gray2" rgb="020202"/> 
+<color name="gray129" rgb="818181"/> 
+<color name="gray66" rgb="424242"/> 
+<color name="gray193" rgb="c1c1c1"/> 
+<color name="gray34" rgb="222222"/> 
+<color name="gray161" rgb="a1a1a1"/> 
+<color name="gray98" rgb="626262"/> 
+<color name="gray225" rgb="e1e1e1"/> 
+<color name="gray18" rgb="121212"/> 
+<color name="gray145" rgb="919191"/> 
+<color name="gray82" rgb="525252"/> 
+<color name="gray209" rgb="d1d1d1"/> 
+<color name="gray50" rgb="323232"/> 
+<color name="gray177" rgb="b1b1b1"/> 
+<color name="gray114" rgb="727272"/> 
+<color name="gray241" rgb="f1f1f1"/> 
+<color name="gray10" rgb="0a0a0a"/> 
+<color name="gray137" rgb="898989"/> 
+<color name="gray74" rgb="4a4a4a"/> 
+<color name="gray201" rgb="c9c9c9"/> 
+<color name="gray42" rgb="2a2a2a"/> 
+<color name="gray169" rgb="a9a9a9"/> 
+<color name="gray106" rgb="6a6a6a"/> 
+<color name="gray233" rgb="e9e9e9"/> 
+<color name="gray26" rgb="1a1a1a"/> 
+<color name="gray153" rgb="999999"/> 
+<color name="gray90" rgb="5a5a5a"/> 
+<color name="gray217" rgb="d9d9d9"/> 
+<color name="gray58" rgb="3a3a3a"/> 
+<color name="gray185" rgb="b9b9b9"/> 
+<color name="gray122" rgb="7a7a7a"/> 
+<color name="gray249" rgb="f9f9f9"/> 
+<color name="gray6" rgb="060606"/> 
+<color name="gray133" rgb="858585"/> 
+<color name="gray70" rgb="464646"/> 
+<color name="gray197" rgb="c5c5c5"/> 
+<color name="gray38" rgb="262626"/> 
+<color name="gray165" rgb="a5a5a5"/> 
+<color name="gray102" rgb="666666"/> 
+<color name="gray229" rgb="e5e5e5"/> 
+<color name="gray22" rgb="161616"/> 
+<color name="gray149" rgb="959595"/> 
+<color name="gray86" rgb="565656"/> 
+<color name="gray213" rgb="d5d5d5"/> 
+<color name="gray54" rgb="363636"/> 
+<color name="gray181" rgb="b5b5b5"/> 
+<color name="gray118" rgb="767676"/> 
+<color name="gray245" rgb="f5f5f5"/> 
+<color name="gray14" rgb="0e0e0e"/> 
+<color name="gray141" rgb="8d8d8d"/> 
+<color name="gray78" rgb="4e4e4e"/> 
+<color name="gray205" rgb="cdcdcd"/> 
+<color name="gray46" rgb="2e2e2e"/> 
+<color name="gray173" rgb="adadad"/> 
+<color name="gray110" rgb="6e6e6e"/> 
+<color name="gray237" rgb="ededed"/> 
+<color name="gray30" rgb="1e1e1e"/> 
+<color name="gray157" rgb="9d9d9d"/> 
+<color name="gray94" rgb="5e5e5e"/> 
+<color name="gray221" rgb="dddddd"/> 
+<color name="gray62" rgb="3e3e3e"/> 
+<color name="gray189" rgb="bdbdbd"/> 
+<color name="gray126" rgb="7e7e7e"/> 
+<color name="gray253" rgb="fdfdfd"/> 
+<color name="gray1" rgb="010101"/> 
+<color name="gray130" rgb="828282"/> 
+<color name="gray65" rgb="414141"/> 
+<color name="gray192" rgb="c0c0c0"/> 
+<color name="gray33" rgb="212121"/> 
+<color name="gray160" rgb="a0a0a0"/> 
+<color name="gray97" rgb="616161"/> 
+<color name="gray224" rgb="e0e0e0"/> 
+<color name="gray17" rgb="111111"/> 
+<color name="gray144" rgb="909090"/> 
+<color name="gray81" rgb="515151"/> 
+<color name="gray208" rgb="d0d0d0"/> 
+<color name="gray49" rgb="313131"/> 
+<color name="gray176" rgb="b0b0b0"/> 
+<color name="gray113" rgb="717171"/> 
+<color name="gray240" rgb="f0f0f0"/> 
+<color name="gray9" rgb="090909"/> 
+<color name="gray136" rgb="888888"/> 
+<color name="gray73" rgb="494949"/> 
+<color name="gray200" rgb="c8c8c8"/> 
+<color name="gray41" rgb="292929"/> 
+<color name="gray168" rgb="a8a8a8"/> 
+<color name="gray105" rgb="696969"/> 
+<color name="gray232" rgb="e8e8e8"/> 
+<color name="gray25" rgb="191919"/> 
+<color name="gray152" rgb="989898"/> 
+<color name="gray89" rgb="595959"/> 
+<color name="gray216" rgb="d8d8d8"/> 
+<color name="gray57" rgb="393939"/> 
+<color name="gray184" rgb="b8b8b8"/> 
+<color name="gray121" rgb="797979"/> 
+<color name="gray248" rgb="f8f8f8"/> 
+<color name="gray5" rgb="050505"/> 
+<color name="gray132" rgb="848484"/> 
+<color name="gray69" rgb="454545"/> 
+<color name="gray196" rgb="c4c4c4"/> 
+<color name="gray37" rgb="252525"/> 
+<color name="gray164" rgb="a4a4a4"/> 
+<color name="gray101" rgb="656565"/> 
+<color name="gray228" rgb="e4e4e4"/> 
+<color name="gray21" rgb="151515"/> 
+<color name="gray148" rgb="949494"/> 
+<color name="gray85" rgb="555555"/> 
+<color name="gray212" rgb="d4d4d4"/> 
+<color name="gray53" rgb="353535"/> 
+<color name="gray180" rgb="b4b4b4"/> 
+<color name="gray117" rgb="757575"/> 
+<color name="gray244" rgb="f4f4f4"/> 
+<color name="gray13" rgb="0d0d0d"/> 
+<color name="gray140" rgb="8c8c8c"/> 
+<color name="gray77" rgb="4d4d4d"/> 
+<color name="gray204" rgb="cccccc"/> 
+<color name="gray45" rgb="2d2d2d"/> 
+<color name="gray172" rgb="acacac"/> 
+<color name="gray109" rgb="6d6d6d"/> 
+<color name="gray236" rgb="ececec"/> 
+<color name="gray29" rgb="1d1d1d"/> 
+<color name="gray156" rgb="9c9c9c"/> 
+<color name="gray93" rgb="5d5d5d"/> 
+<color name="gray220" rgb="dcdcdc"/> 
+<color name="gray61" rgb="3d3d3d"/> 
+<color name="gray188" rgb="bcbcbc"/> 
+<color name="gray125" rgb="7d7d7d"/> 
+<color name="gray252" rgb="fcfcfc"/> 
+<color name="gray3" rgb="030303"/> 
+<color name="gray134" rgb="868686"/> 
+<color name="gray67" rgb="434343"/> 
+<color name="gray194" rgb="c2c2c2"/> 
+<color name="gray35" rgb="232323"/> 
+<color name="gray162" rgb="a2a2a2"/> 
+<color name="gray99" rgb="636363"/> 
+<color name="gray226" rgb="e2e2e2"/> 
+<color name="gray19" rgb="131313"/> 
+<color name="gray146" rgb="929292"/> 
+<color name="gray83" rgb="535353"/> 
+<color name="gray210" rgb="d2d2d2"/> 
+<color name="gray51" rgb="333333"/> 
+<color name="gray178" rgb="b2b2b2"/> 
+<color name="gray115" rgb="737373"/> 
+<color name="gray242" rgb="f2f2f2"/> 
+<color name="gray11" rgb="0b0b0b"/> 
+<color name="gray138" rgb="8a8a8a"/> 
+<color name="gray75" rgb="4b4b4b"/> 
+<color name="gray202" rgb="cacaca"/> 
+<color name="gray43" rgb="2b2b2b"/> 
+<color name="gray170" rgb="aaaaaa"/> 
+<color name="gray107" rgb="6b6b6b"/> 
+<color name="gray234" rgb="eaeaea"/> 
+<color name="gray27" rgb="1b1b1b"/> 
+<color name="gray154" rgb="9a9a9a"/> 
+<color name="gray91" rgb="5b5b5b"/> 
+<color name="gray218" rgb="dadada"/> 
+<color name="gray59" rgb="3b3b3b"/> 
+<color name="gray186" rgb="bababa"/> 
+<color name="gray123" rgb="7b7b7b"/> 
+<color name="gray250" rgb="fafafa"/> 
+<color name="gray7" rgb="070707"/> 
+<color name="gray142" rgb="8e8e8e"/> 
+<color name="gray71" rgb="474747"/> 
+<color name="gray198" rgb="c6c6c6"/> 
+<color name="gray39" rgb="272727"/> 
+<color name="gray166" rgb="a6a6a6"/> 
+<color name="gray103" rgb="676767"/> 
+<color name="gray230" rgb="e6e6e6"/> 
+<color name="gray23" rgb="171717"/> 
+<color name="gray150" rgb="969696"/> 
+<color name="gray87" rgb="575757"/> 
+<color name="gray214" rgb="d6d6d6"/> 
+<color name="gray55" rgb="373737"/> 
+<color name="gray182" rgb="b6b6b6"/> 
+<color name="gray119" rgb="777777"/> 
+<color name="gray246" rgb="f6f6f6"/> 
+<color name="gray15" rgb="0f0f0f"/> 
+<color name="gray158" rgb="9e9e9e"/> 
+<color name="gray79" rgb="4f4f4f"/> 
+<color name="gray206" rgb="cecece"/> 
+<color name="gray47" rgb="2f2f2f"/> 
+<color name="gray174" rgb="aeaeae"/> 
+<color name="gray111" rgb="6f6f6f"/> 
+<color name="gray238" rgb="eeeeee"/> 
+<color name="gray31" rgb="1f1f1f"/> 
+<color name="gray190" rgb="bebebe"/> 
+<color name="gray95" rgb="5f5f5f"/> 
+<color name="gray222" rgb="dedede"/> 
+<color name="gray63" rgb="3f3f3f"/> 
+<color name="gray254" rgb="fefefe"/> 
+<color name="gray127" rgb="7f7f7f"/> 
+</colorPalette>

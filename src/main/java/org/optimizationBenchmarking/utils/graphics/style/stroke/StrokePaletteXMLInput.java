@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.config;
+package org.optimizationBenchmarking.utils.graphics.style.stroke;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParserFactory;
@@ -9,12 +9,12 @@ import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 
-/** the configuration xml input */
-public final class ConfigurationXMLInput extends
-    XMLInputTool<ConfigurationBuilder> {
+/** the stroke palette xml input driver */
+public final class StrokePaletteXMLInput extends
+    XMLInputTool<StrokePaletteBuilder> {
 
   /** create */
-  ConfigurationXMLInput() {
+  StrokePaletteXMLInput() {
     super();
   }
 
@@ -31,8 +31,7 @@ public final class ConfigurationXMLInput extends
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       schema = sf.newSchema(//
-          ConfigurationXMLConstants.class
-              .getResource("configuration.1.0.xsd")); //$NON-NLS-1$
+          StrokePaletteXML.class.getResource("strokePalette.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
       rec = a;
     } finally {
@@ -58,29 +57,29 @@ public final class ConfigurationXMLInput extends
 
   /** {@inheritDoc} */
   @Override
-  protected final ConfigurationXMLHandler wrapDestination(
-      final ConfigurationBuilder dataDestination, final IOJob job) {
-    return new ConfigurationXMLHandler(null, dataDestination);
+  protected final StrokePaletteXMLHandler wrapDestination(
+      final StrokePaletteBuilder dataDestination, final IOJob job) {
+    return new StrokePaletteXMLHandler(null, dataDestination);
   }
 
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Configuration XML Input"; //$NON-NLS-1$
+    return "Stroke Palette XML Input"; //$NON-NLS-1$
   }
 
   /**
-   * get the instance of the {@link ConfigurationXMLInput}
+   * get the instance of the {@link StrokePaletteXMLInput}
    * 
-   * @return the instance of the {@link ConfigurationXMLInput}
+   * @return the instance of the {@link StrokePaletteXMLInput}
    */
-  public static final ConfigurationXMLInput getInstance() {
-    return __ConfigurationXMLInputLoader.INSTANCE;
+  public static final StrokePaletteXMLInput getInstance() {
+    return __StrokePaletteXMLInputLoader.INSTANCE;
   }
 
   /** the loader */
-  private static final class __ConfigurationXMLInputLoader {
-    /** the configuration xml */
-    static final ConfigurationXMLInput INSTANCE = new ConfigurationXMLInput();
+  private static final class __StrokePaletteXMLInputLoader {
+    /** the stroke palette xml */
+    static final StrokePaletteXMLInput INSTANCE = new StrokePaletteXMLInput();
   }
 }

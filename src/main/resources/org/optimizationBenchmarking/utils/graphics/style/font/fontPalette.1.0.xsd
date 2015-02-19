@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.optimizationBenchmarking.org/formats/graphics/font/fontPalette.1.0.xsd"
+	targetNamespace="http://www.optimizationBenchmarking.org/formats/graphics/font/fontPalette.1.0.xsd"
+	elementFormDefault="qualified">
+
+	<annotation>
+		<documentation>The XML Schema for the font palettes, version 1.0.
+		</documentation>
+	</annotation>
+
+	<complexType name="fontType">
+		<sequence>
+			<element name="face" type="token" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+
+		<attribute name="family" use="required">
+			<simpleType>
+				<restriction base="token">
+					<enumeration value="serif" />
+					<enumeration value="sansSerif" />
+					<enumeration value="monospaced" />
+				</restriction>
+			</simpleType>
+		</attribute>
+
+		<attribute name="bold" type="boolean" use="optional" />
+		<attribute name="italic" type="boolean" use="optional" />
+		<attribute name="underlined" type="boolean" use="optional" />
+		<attribute name="size" type="unsignedByte" use="required" />
+	</complexType>
+
+	<element name="fontPalette">
+		<complexType>
+			<sequence>
+				<element name="defaultFont" type="tns:fontType" minOccurs="1"
+					maxOccurs="1" />
+				<element name="emphasizedFont" type="tns:fontType"
+					minOccurs="1" maxOccurs="1" />
+				<element name="codeFont" type="tns:fontType" minOccurs="1"
+					maxOccurs="1" />
+				<element name="font" type="tns:fontType" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

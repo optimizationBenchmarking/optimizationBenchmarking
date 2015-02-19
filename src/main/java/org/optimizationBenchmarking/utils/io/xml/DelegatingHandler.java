@@ -526,7 +526,7 @@ public class DelegatingHandler extends DefaultHandler {
    * @throws SAXException
    *           see {@link #characters(char[], int, int)}
    */
-  protected void delegateCharacters(final char ch[], final int start,
+  protected void delegateCharacters(final char[] ch, final int start,
       final int length) throws SAXException {
     final DelegatingHandler del;
 
@@ -547,14 +547,14 @@ public class DelegatingHandler extends DefaultHandler {
    * @throws SAXException
    *           see {@link #characters(char[], int, int)}
    */
-  protected void doCharacters(final char ch[], final int start,
+  protected void doCharacters(final char[] ch, final int start,
       final int length) throws SAXException {
     super.characters(ch, start, length);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void characters(final char ch[], final int start, final int length)
+  public void characters(final char[] ch, final int start, final int length)
       throws SAXException {
     if (this.m_delegate != null) {
       this.delegateCharacters(ch, start, length);
@@ -575,7 +575,7 @@ public class DelegatingHandler extends DefaultHandler {
    * @throws SAXException
    *           see {@link #ignorableWhitespace(char[], int, int)}
    */
-  protected void delegateIgnorableWhitespace(final char ch[],
+  protected void delegateIgnorableWhitespace(final char[] ch,
       final int start, final int length) throws SAXException {
     final DelegatingHandler del;
 
@@ -596,14 +596,14 @@ public class DelegatingHandler extends DefaultHandler {
    * @throws SAXException
    *           see {@link #ignorableWhitespace(char[], int, int)}
    */
-  protected void doIgnorableWhitespace(final char ch[], final int start,
+  protected void doIgnorableWhitespace(final char[] ch, final int start,
       final int length) throws SAXException {
     super.ignorableWhitespace(ch, start, length);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void ignorableWhitespace(final char ch[], final int start,
+  public void ignorableWhitespace(final char[] ch, final int start,
       final int length) throws SAXException {
     if (this.m_delegate != null) {
       this.delegateIgnorableWhitespace(ch, start, length);

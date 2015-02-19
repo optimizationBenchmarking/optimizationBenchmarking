@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 
 /** the default color palette */
 public final class DefaultColorPalette extends ColorPalette {
@@ -77,7 +76,7 @@ public final class DefaultColorPalette extends ColorPalette {
 
       pal = null;
       try (final __DefaultColorPaletteBuilder cspb = new __DefaultColorPaletteBuilder()) {
-        PaletteInputDriver
+        ColorPaletteXMLInput
             .getInstance()
             .use()
             .setDestination(cspb)

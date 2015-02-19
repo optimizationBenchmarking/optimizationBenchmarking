@@ -1,15 +1,17 @@
-# rgb value, color name
-ff0000,red
-0000ff,blue
-008000,green
-800080,purple
-008080,teal
-808000,olive
-ff00ff,fuchsia
-800000,maroon
-000080,navy
-00ff00,lime
-ffff00,yellow
-c0c0c0,silver
-00ffff,aqua
-808080,gray
+<?xml version="1.0" encoding="UTF-8"?>
+<colorPalette xmlns="http://www.optimizationBenchmarking.org/formats/graphics/color/colorPalette.1.0.xsd">
+<color name="red" rgb="ff0000"/> 
+<color name="blue" rgb="0000ff"/> 
+<color name="green" rgb="008000"/> 
+<color name="purple" rgb="800080"/> 
+<color name="teal" rgb="008080"/> 
+<color name="olive" rgb="808000"/> 
+<color name="fuchsia" rgb="ff00ff"/> 
+<color name="maroon" rgb="800000"/> 
+<color name="navy" rgb="000080"/> 
+<color name="lime" rgb="00ff00"/> 
+<color name="yellow" rgb="ffff00"/> 
+<color name="silver" rgb="c0c0c0"/> 
+<color name="aqua" rgb="00ffff"/> 
+<color name="gray" rgb="808080"/> 
+</colorPalette>

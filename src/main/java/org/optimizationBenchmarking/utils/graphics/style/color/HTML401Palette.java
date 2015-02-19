@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteInputDriver;
 
 /**
  * a palette based on the <a
@@ -83,7 +82,7 @@ public final class HTML401Palette extends ColorPalette {
 
       pal = null;
       try (final __DefaultHTML401PaletteBuilder cspb = new __DefaultHTML401PaletteBuilder()) {
-        PaletteInputDriver
+        ColorPaletteXMLInput
             .getInstance()
             .use()
             .setDestination(cspb)
