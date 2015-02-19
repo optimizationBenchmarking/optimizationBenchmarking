@@ -580,6 +580,39 @@ public final class Configuration implements Serializable, ITextable {
     return HashUtils.combineHashes(HashUtils.hashCode(this.m_owner), h);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    synchronized (this.m_data) {
+      textOut.append(this.m_data);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    synchronized (this.m_data) {
+      return this.m_data.toString();
+    }
+  }
+
+  /**
+   * Get the globally used logger
+   * 
+   * @return the logger
+   */
+  public static final Logger getGlobalLogger() {
+    Logger logger;
+    Configuration config;
+
+    logger = Logger.getGlobal();
+    config = Configuration.getRoot();
+    if (config != null) {
+      return config.getLogger(Configuration.PARAM_LOGGER, logger);
+    }
+    return logger;
+  }
+
   /**
    * Get the root configuration
    * 
@@ -620,21 +653,5 @@ public final class Configuration implements Serializable, ITextable {
     }
     throw new IllegalStateException(//
         "The root configuration can only be setup at most once."); //$NON-NLS-1$
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void toText(final ITextOutput textOut) {
-    synchronized (this.m_data) {
-      textOut.append(this.m_data);
-    }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String toString() {
-    synchronized (this.m_data) {
-      return this.m_data.toString();
-    }
   }
 }

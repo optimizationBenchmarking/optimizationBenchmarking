@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
@@ -30,7 +31,13 @@ final class _PdfLaTeX extends _LaTeXToolChainComponent {
   _PdfLaTeX() {
     super();
 
+    final Logger logger;
     String arg;
+
+    logger = Configuration.getGlobalLogger();
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config("Now trying to find PdfLaTeX executable.");//$NON-NLS-1$
+    }
 
     this.m_executable = _PdfLaTeXPathLoader.PATH;
     arg = null;
@@ -42,6 +49,12 @@ final class _PdfLaTeX extends _LaTeXToolChainComponent {
     }
     this.m_haltArg = arg;
 
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config((this.m_executable != null) ? //
+      ("PdfLaTeX executable '" + this.m_executable + //$NON-NLS-1$
+      "' found.")//$NON-NLS-1$
+          : "No PdfLaTeX executable found.");//$NON-NLS-1$
+    }
   }
 
   /** {@inheritDoc} */

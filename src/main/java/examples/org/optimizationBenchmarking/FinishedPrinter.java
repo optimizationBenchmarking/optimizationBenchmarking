@@ -47,7 +47,6 @@ public final class FinishedPrinter implements IFileProducerListener {
     final String string;
     final int length;
     final Logger logger;
-    final Configuration config;
     MemoryTextOutput message;
 
     message = new MemoryTextOutput(1024);
@@ -74,13 +73,7 @@ public final class FinishedPrinter implements IFileProducerListener {
     string = message.toString();
     message = null;
 
-    config = Configuration.getRoot();
-    if (config != null) {
-      logger = config.getLogger(Configuration.PARAM_LOGGER,
-          Logger.getGlobal());
-    } else {
-      logger = Logger.getGlobal();
-    }
+    logger = Configuration.getGlobalLogger();
 
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info(string);

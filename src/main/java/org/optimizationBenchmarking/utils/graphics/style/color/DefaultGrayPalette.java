@@ -1,7 +1,9 @@
 package org.optimizationBenchmarking.utils.graphics.style.color;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
 
@@ -72,18 +74,26 @@ public final class DefaultGrayPalette extends ColorPalette {
     static final DefaultGrayPalette INSTANCE;
 
     static {
+      final Logger logger;
       Palette<ColorStyle> pal;
 
       pal = null;
+      logger = Configuration.getGlobalLogger();
       try (final __DefaultGrayPaletteBuilder cspb = new __DefaultGrayPaletteBuilder()) {
         ColorPaletteXMLInput
             .getInstance()
             .use()
+            .setLogger(logger)
             .setDestination(cspb)
             .addResource(DefaultGrayPalette.class,
                 "defaultGray.colorPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
+        ErrorUtils
+            .logError(
+                logger,
+                "Error while loading the default gray palette. This palette will not be available.", //$NON-NLS-1$
+                t, true);
         ErrorUtils.throwAsRuntimeException(t);
       }
 

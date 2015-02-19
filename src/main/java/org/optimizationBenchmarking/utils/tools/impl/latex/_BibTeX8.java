@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
@@ -26,10 +27,23 @@ final class _BibTeX8 extends _LaTeXToolChainComponent {
   _BibTeX8() {
     super();
 
+    final Logger logger;
+
+    logger = Configuration.getGlobalLogger();
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config("Now trying to find BibTeX8 executable.");//$NON-NLS-1$
+    }
+
     this.m_executable = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "bibtex8" //$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
         IsFilePredicate.INSTANCE, null);
+
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config((this.m_executable != null) ? //
+      ("BibTeX8 executable '" + this.m_executable + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
+          "No BibTeX8 executable found.");//$NON-NLS-1$
+    }
   }
 
   /** {@inheritDoc} */

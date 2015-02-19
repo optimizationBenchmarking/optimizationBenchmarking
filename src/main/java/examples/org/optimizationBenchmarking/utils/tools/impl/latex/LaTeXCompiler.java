@@ -101,7 +101,7 @@ public final class LaTeXCompiler {
     Configuration.setup(args);
     root = Configuration.getRoot();
 
-    logger = root.getLogger(Configuration.PARAM_LOGGER, null);
+    logger = Configuration.getGlobalLogger();
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info(//
           "Now beginning to build LaTeX job. This entails searching for executables and may take a while."); //$NON-NLS-1$

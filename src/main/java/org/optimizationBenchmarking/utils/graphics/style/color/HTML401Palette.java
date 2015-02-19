@@ -1,7 +1,9 @@
 package org.optimizationBenchmarking.utils.graphics.style.color;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
 
@@ -78,17 +80,25 @@ public final class HTML401Palette extends ColorPalette {
     static final HTML401Palette INSTANCE;
 
     static {
+      final Logger logger;
       Palette<ColorStyle> pal;
 
       pal = null;
+      logger = Configuration.getGlobalLogger();
       try (final __DefaultHTML401PaletteBuilder cspb = new __DefaultHTML401PaletteBuilder()) {
         ColorPaletteXMLInput
             .getInstance()
             .use()
+            .setLogger(logger)
             .setDestination(cspb)
             .addResource(HTML401Palette.class, "html401.colorPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
+        ErrorUtils
+            .logError(
+                logger,
+                "Error while loading the HTML 4.01 color palette. This palette will not be available.", //$NON-NLS-1$
+                t, true);
         ErrorUtils.throwAsRuntimeException(t);
       }
 

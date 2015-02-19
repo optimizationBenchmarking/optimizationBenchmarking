@@ -38,7 +38,7 @@ public final class ExampleMaker {
 
     dest = root.getPath("dest", PathUtils.getTempDir()); //$NON-NLS-1$
 
-    logger = root.getLogger(Configuration.PARAM_LOGGER, null);
+    logger = Configuration.getGlobalLogger();
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info(//
           "Now beginning to build static LaTeX examples to" + //$NON-NLS-1$

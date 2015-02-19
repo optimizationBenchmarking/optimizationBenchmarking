@@ -1,8 +1,10 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
 import org.optimizationBenchmarking.utils.document.impl.abstr.ComplexText;
@@ -30,6 +32,7 @@ import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
@@ -589,22 +592,30 @@ public final class LaTeXDriver extends DocumentDriver {
     static final UnsupportedOperationException ERROR;
 
     static {
+      final Logger logger;
       FontPalette p;
       Throwable error;
       String msg;
 
       p = null;
       error = null;
+      logger = Configuration.getGlobalLogger();
       try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
         FontPaletteXMLInput
             .getInstance()
             .use()
+            .setLogger(logger)
             .setDestination(tb)
             .addResource(LaTeXDriver.class, "latex.fontPalette").create().call(); //$NON-NLS-1$
         p = tb.getResult();
       } catch (final Throwable tt) {
         error = tt;
         p = null;
+        ErrorUtils
+            .logError(
+                logger,
+                "Error while loading the default font palette for the LaTeX Document Driver. This will creating LaTeX documents using this palette impossible.", //$NON-NLS-1$
+                error, true);
       }
 
       if (p != null) {

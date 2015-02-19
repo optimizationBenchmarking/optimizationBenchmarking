@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
@@ -26,7 +27,14 @@ final class _BibTeX extends _LaTeXToolChainComponent {
   _BibTeX() {
     super();
 
+    final Logger logger;
     Path path;
+
+    logger = Configuration.getGlobalLogger();
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config("Now trying to find BibTeX executable.");//$NON-NLS-1$
+    }
+
     path = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "bibtex",//$NON-NLS-1$
             "bibtex.original" //$NON-NLS-1$
@@ -39,6 +47,12 @@ final class _BibTeX extends _LaTeXToolChainComponent {
           IsFilePredicate.INSTANCE, null);
     }
     this.m_executable = path;
+
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config((path != null) ? //
+      ("BibTeX executable '" + path + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
+          "No BibTeX executable found.");//$NON-NLS-1$
+    }
   }
 
   /** {@inheritDoc} */

@@ -1,9 +1,11 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
@@ -35,6 +37,7 @@ import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
@@ -858,20 +861,28 @@ public final class XHTML10Driver extends DocumentDriver {
     static final UnsupportedOperationException ERROR;
 
     static {
+      final Logger logger;
       FontPalette p;
       Throwable error;
       String s;
 
       p = null;
       error = null;
+      logger = Configuration.getGlobalLogger();
       try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
         FontPaletteXMLInput
             .getInstance()
             .use()
+            .setLogger(logger)
             .setDestination(tb)
             .addResource(XHTML10Driver.class, "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
         p = tb.getResult();
       } catch (final Throwable tt) {
+        ErrorUtils
+            .logError(
+                logger,
+                "Error while loading the font palette for the XHTML 1.0 Driver. This will make creating XHTML 1.0 documents impossible.",//$NON-NLS-1$ 
+                tt, true);
         error = tt;
         p = null;
       }

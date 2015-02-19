@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
@@ -27,6 +28,13 @@ final class _GhostScript extends _LaTeXToolChainComponent {
     super();
 
     Path path;
+    final Logger logger;
+
+    logger = Configuration.getGlobalLogger();
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config("Now trying to find dvips executable.");//$NON-NLS-1$
+    }
+
     path = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "gswin64c",//$NON-NLS-1$
             "gs"//$NON-NLS-1$
@@ -53,6 +61,13 @@ final class _GhostScript extends _LaTeXToolChainComponent {
     }
 
     this.m_executable = path;
+
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config((this.m_executable != null) ? //
+      ("GhostScript executable '" + this.m_executable + //$NON-NLS-1$
+      "' found.") //$NON-NLS-1$
+          : "No GhostScript executable found.");//$NON-NLS-1$
+    }
   }
 
   /** {@inheritDoc} */

@@ -72,12 +72,8 @@ public final class RunR implements Runnable {
 
     random = new Random();
 
-    try (final IMathEngine r = R
-        .getInstance()
-        .use()
-        .setLogger(
-            Configuration.getRoot().getLogger(Configuration.PARAM_LOGGER,
-                null)).create()) {
+    try (final IMathEngine r = R.getInstance().use()
+        .setLogger(Configuration.getGlobalLogger()).create()) {
       id = ((r.toString() + ':') + ' ');
 
       input = new DoubleMatrix2D(new double[][] { { 1, 2, 3 },

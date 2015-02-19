@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.graphics.style.stroke;
 
+import java.util.logging.Logger;
+
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
 
@@ -77,17 +80,26 @@ public final class DefaultStrokePalette extends StrokePalette {
     static final DefaultStrokePalette INSTANCE;
 
     static {
+      final Logger logger;
       Palette<StrokeStyle> pal;
       pal = null;
+
+      logger = Configuration.getGlobalLogger();
       try (final __DefaultStrokePaletteBuilder cspb = new __DefaultStrokePaletteBuilder()) {
         StrokePaletteXMLInput
             .getInstance()
             .use()
+            .setLogger(logger)
             .setDestination(cspb)
             .addResource(DefaultStrokePalette.class,
                 "default.strokePalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
+        ErrorUtils
+            .logError(
+                logger, //
+                "Error while loading the default stroke palette. This palette will not be available.",//$NON-NLS-1$
+                t, true);
         ErrorUtils.throwAsRuntimeException(t);
       }
 

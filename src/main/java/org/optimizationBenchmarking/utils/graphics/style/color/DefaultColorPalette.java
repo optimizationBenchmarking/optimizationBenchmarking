@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.graphics.style.color;
 
 import java.util.ArrayList;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
 
@@ -79,6 +80,7 @@ public final class DefaultColorPalette extends ColorPalette {
         ColorPaletteXMLInput
             .getInstance()
             .use()
+            .setLogger(Configuration.getGlobalLogger())
             .setDestination(cspb)
             .addResource(DefaultColorPalette.class,
                 "defaultColor.colorPalette").create().call(); //$NON-NLS-1$

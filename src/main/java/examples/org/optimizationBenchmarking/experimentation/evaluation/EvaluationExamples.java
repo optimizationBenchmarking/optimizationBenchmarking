@@ -79,8 +79,7 @@ public final class EvaluationExamples {
     Configuration.setup(args);
     root = Configuration.getRoot();
 
-    logger = root
-        .getLogger(Configuration.PARAM_LOGGER, Logger.getGlobal());
+    logger = Configuration.getGlobalLogger();
 
     for (final Class<? extends ExperimentSetCreator> source : EvaluationExamples.DATA_EXAMPLES) {
 

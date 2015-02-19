@@ -32,8 +32,7 @@ public class Main {
     Configuration.setup(args);
     config = Configuration.getRoot();
 
-    logger = config.getLogger(Configuration.PARAM_LOGGER,
-        Logger.getGlobal());
+    logger = Configuration.getGlobalLogger();
     try {
 
       if (logger != null) {

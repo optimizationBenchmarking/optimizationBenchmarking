@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
@@ -26,7 +27,15 @@ final class _Ps2Pdf extends _LaTeXToolChainComponent {
   _Ps2Pdf() {
     super();
 
+    final Logger logger;
     Path path;
+
+    logger = Configuration.getGlobalLogger();
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config(//
+          "Now trying to find ps2pdf executable.");//$NON-NLS-1$
+    }
+
     path = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "pspdf",//$NON-NLS-1$
             "ps2pdf",//$NON-NLS-1$
@@ -53,6 +62,13 @@ final class _Ps2Pdf extends _LaTeXToolChainComponent {
     }
 
     this.m_executable = path;
+
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config((this.m_executable != null) ? //
+      ("Ps2pdf executable '" + this.m_executable//$NON-NLS-1$
+      + "' found.") : //$NON-NLS-1$
+          "No ps2pdf executable found.");//$NON-NLS-1$
+    }
   }
 
   /** {@inheritDoc} */

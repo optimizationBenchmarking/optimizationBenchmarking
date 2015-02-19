@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
@@ -30,6 +31,7 @@ final class _LaTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
   _LaTeXAsPdfLaTeX() {
     super();
 
+    final Logger logger;
     final Path exec;
     Throwable error;
     String[] args;
@@ -37,6 +39,13 @@ final class _LaTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
 
     error = null;
     arg1 = arg2 = null;
+
+    logger = Configuration.getGlobalLogger();
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config(//
+          "Now trying to find LaTeX executable which can be used as PdfLaTeX.");//$NON-NLS-1$
+    }
+
     this.m_executable = exec = _LaTeX._LaTexPathLoader.PATH;
 
     if (exec != null) {
@@ -59,6 +68,13 @@ final class _LaTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
     this.m_formatArg = ((arg1 != null) ? (arg1 + "pdf") : null);//$NON-NLS-1$
     this.m_haltArg = arg2;
     this.m_error = error;
+
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config((this.m_executable != null) ? //
+      ("LaTeX executable '" + this.m_executable + //$NON-NLS-1$
+      "' which can be used as PdfLaTeX found.") //$NON-NLS-1$
+          : "No LaTeX executable which can be used as PdfLaTeX found.");//$NON-NLS-1$
+    }
   }
 
   /** {@inheritDoc} */

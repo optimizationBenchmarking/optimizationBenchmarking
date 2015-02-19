@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicate;
@@ -25,6 +26,12 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
   /** create */
   _Dvi2Ps() {
     super();
+    final Logger logger;
+
+    logger = Configuration.getGlobalLogger();
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config("Now trying to find dvips executable.");//$NON-NLS-1$
+    }
 
     this.m_executable = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "dvips",//$NON-NLS-1$
@@ -32,6 +39,12 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
             "dvitops"//$NON-NLS-1$
         ), CanExecutePredicate.INSTANCE),//
         IsFilePredicate.INSTANCE, null);
+
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config((this.m_executable != null) ? //
+      ("Dvips executable '" + this.m_executable + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
+          "No dvips executable found.");//$NON-NLS-1$
+    }
   }
 
   /** {@inheritDoc} */
