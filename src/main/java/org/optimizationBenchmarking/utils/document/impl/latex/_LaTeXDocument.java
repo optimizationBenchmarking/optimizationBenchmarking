@@ -64,8 +64,36 @@ final class _LaTeXDocument extends Document {
   final LaTeXDocumentClass m_class;
   /** the path to the setup package */
   private final Path m_setupPackagePath;
-  /** do we have a figure series? */
+
+  /**
+   * {@code true} if we have at least one figure in the document,
+   * {@code false} otherwise
+   */
+  private boolean m_hasFigure;
+  /**
+   * {@code true} if we have at least one figure series in the document
+   * (and {@link #m_hasFigure} is also {@code true}), {@code false}
+   * otherwise
+   */
   private boolean m_hasFigureSeries;
+  /**
+   * {@code true} if we have at least one table in the document,
+   * {@code false} otherwise
+   */
+  private boolean m_hasTable;
+  /**
+   * {@code true} if we have at least one cell spanning multiple rows in a
+   * table in the document (and {@link #m_hasTable} is also {@code true}),
+   * {@code false} otherwise
+   */
+  private boolean m_hasMultiRowCell;
+  /**
+   * {@code true} if we have at least one cell spanning multiple columns in
+   * a table in the document (and {@link #m_hasTable} is also {@code true}
+   * ), {@code false} otherwise
+   */
+  private boolean m_hasMultiColCell;
+
   /** the figure series package path */
   private Path m_figureSeriesPackagePath;
 
@@ -296,6 +324,35 @@ final class _LaTeXDocument extends Document {
   /** register that there is a figure series in the document */
   final void _registerFigureSeries() {
     this.m_hasFigureSeries = true;
+    this.m_hasFigure = true;
+  }
+
+  /** register that there is a figure in the document */
+  final void _registerFigure() {
+    this.m_hasFigure = true;
+  }
+
+  /** register that there is a table in the document */
+  final void _registerTable() {
+    this.m_hasTable = true;
+  }
+
+  /**
+   * register that there is a cell which spans multiple rows in a table in
+   * the document
+   */
+  final void _registerMultiRowCell() {
+    this.m_hasTable = true;
+    this.m_hasMultiRowCell = true;
+  }
+
+  /**
+   * register that there is a cell which spans multiple columns in a table
+   * in the document
+   */
+  final void _registerMultiColCell() {
+    this.m_hasTable = true;
+    this.m_hasMultiColCell = true;
   }
 
   /** {@inheritDoc} */
@@ -346,15 +403,26 @@ final class _LaTeXDocument extends Document {
 
           // adding default packages
 
-          _LaTeXDocument.__requirePackage(out, "color"); //$NON-NLS-1$
-          _LaTeXDocument.__requirePackage(out, "xcolor"); //$NON-NLS-1$
+          if (this.m_hasTable || (!(this.m_colorNames.isEmpty()))) {
+            _LaTeXDocument.__requirePackage(out, "color"); //$NON-NLS-1$
+            _LaTeXDocument.__requirePackage(out, "xcolor"); //$NON-NLS-1$
+          }
+
           _LaTeXDocument.__requirePackage(out, "caption3"); //$NON-NLS-1$
-          _LaTeXDocument.__requirePackage(out, "colortbl"); //$NON-NLS-1$          
-          _LaTeXDocument.__requirePackage(out, "multicol"); //$NON-NLS-1$
-          _LaTeXDocument.__requirePackage(out, "multirow"); //$NON-NLS-1$
-          _LaTeXDocument.__requirePackage(out, "graphicx"); //$NON-NLS-1$          
-          _LaTeXDocument.__requirePackage(out, "hyperref"); //$NON-NLS-1$
-          _LaTeXDocument.__requirePackage(out, "breakurl"); //$NON-NLS-1$
+
+          if (this.m_hasTable) {
+            _LaTeXDocument.__requirePackage(out, "colortbl"); //$NON-NLS-1$
+            if (this.m_hasMultiColCell) {
+              _LaTeXDocument.__requirePackage(out, "multicol"); //$NON-NLS-1$
+            }
+            if (this.m_hasMultiRowCell) {
+              _LaTeXDocument.__requirePackage(out, "multirow"); //$NON-NLS-1$
+            }
+          }
+
+          if (this.m_hasFigure) {
+            _LaTeXDocument.__requirePackage(out, "graphicx"); //$NON-NLS-1$
+          }
 
           // figure series
           if (this.m_hasFigureSeries
@@ -369,6 +437,9 @@ final class _LaTeXDocument extends Document {
                     this.m_figureSeriesPackagePath, true));
             LaTeXDriver._endLine(out);
           }
+
+          _LaTeXDocument.__requirePackage(out, "hyperref"); //$NON-NLS-1$
+          _LaTeXDocument.__requirePackage(out, "breakurl"); //$NON-NLS-1$
 
           // now add the colors
           for (final IStyle style : usedStyles) {
