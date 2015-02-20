@@ -64,12 +64,28 @@
 		<face>Liberation Serif</face>
 	</font>
 
+  <font family="serif" underlined="true" size="10">
+    <face>cmr10</face>
+    <face>cmr11</face>
+    <face>cmr9</face>
+    <face>cmr12</face>
+    <face>Computer Modern Roman</face>
+    <face>Century Old Style</face>
+    <face>Times New Roman</face>
+    <face>Times Roman</face>
+    <face>Times</face>
+    <face>Computer Modern</face>
+    <face>Nimbus Roman</face>
+    <face>Georgia</face>
+    <face>Liberation Serif</face>
+  </font>
+
 	<font family="sansSerif" size="10">
 		<face>cmss10</face>
 		<face>cmss11</face>
 		<face>cmss9</face>
 		<face>cmss12</face>
-		<face>Computer Modern Sans Serif (CMSS)</face>
+		<face>Computer Modern Sans Serif</face>
 		<face>Arial</face>
 		<face>Helvetica</face>
 		<face>Liberation Sans</face>
@@ -82,6 +98,7 @@
 		<face>cmbxti11</face>
 		<face>cmbxti9</face>
 		<face>cmbxti12</face>
+    <face>Computer Modern Roman</face>
 		<face>Times New Roman</face>
 		<face>Times Roman</face>
 		<face>Times</face>
@@ -90,70 +107,104 @@
 		<face>Georgia</face>
 		<face>Liberation Serif</face>
 	</font>
+  
+  <font family="sansSerif" italic="true" size="10">
+    <face>cmssi10</face>
+    <face>cmssi11</face>
+    <face>cmssi9</face>
+    <face>cmssi12</face>
+    <face>Computer Modern Sans Serif</face>
+    <face>Arial</face>
+    <face>Helvetica</face>
+    <face>Liberation Sans</face>
+    <face>Nimbus Sans</face>
+    <face>Arial Unicode MS</face>
+  </font>
 
 	<font family="sansSerif" bold="true" size="10">
 		<face>cmssbx10</face>
 		<face>cmssbx11</face>
 		<face>cmssbx9</face>
 		<face>cmssbx12</face>
+    <face>Computer Modern Sans Serif</face>
 		<face>Arial</face>
 		<face>Helvetica</face>
 		<face>Liberation Sans</face>
 		<face>Nimbus Sans</face>
 		<face>Arial Unicode MS</face>
 	</font>
+
+  <font family="sansSerif" underlined="true" size="10">
+    <face>cmss10</face>
+    <face>cmss11</face>
+    <face>cmss9</face>
+    <face>cmss12</face>
+    <face>Computer Modern Sans Serif</face>
+    <face>Arial</face>
+    <face>Helvetica</face>
+    <face>Liberation Sans</face>
+    <face>Nimbus Sans</face>
+    <face>Arial Unicode MS</face>
+  </font>
+
+  <font family="serif" bold="true" italic="true" underlined="true"
+    size="10">
+    <face>cmbxti10</face>
+    <face>cmbxti11</face>
+    <face>cmbxti9</face>
+    <face>cmbxti12</face>
+    <face>Computer Modern Roman</face>
+    <face>Times New Roman</face>
+    <face>Times Roman</face>
+    <face>Times</face>
+    <face>Computer Modern</face>
+    <face>Nimbus Roman</face>
+    <face>Georgia</face>
+    <face>Liberation Serif</face>
+  </font>
+
+  <font family="serif" bold="true" underlined="true" size="10">
+    <face>cmr10</face>
+    <face>cmbx11</face>
+    <face>cmbx9</face>
+    <face>cmbx12</face>
+    <face>Times New Roman</face>
+    <face>Times Roman</face>
+    <face>Times</face>
+    <face>Computer Modern</face>
+    <face>Nimbus Roman</face>
+    <face>Georgia</face>
+    <face>Liberation Serif</face>
+  </font>
+
+<!--
+  This font is printed as sans-serif bold instead of sans-serif
+  bold italic. We thus omit it.
+  <font family="sansSerif" bold="true" italic="true" size="10">
+    <face>cmssbx10</face>
+    <face>cmssbx11</face>
+    <face>cmssbx9</face>
+    <face>cmssbx12</face>
+    <face>Computer Modern Sans Serif</face>
+    <face>Arial</face>
+    <face>Helvetica</face>
+    <face>Liberation Sans</face>
+    <face>Nimbus Sans</face>
+    <face>Arial Unicode MS</face>
+  </font>
+-->
 
 	<font family="sansSerif" italic="true" underlined="true" size="10">
-		<face>cmssi10</face>
-		<face>cmssi11</face>
-		<face>cmssi9</face>
-		<face>cmssi12</face>
-		<face>Arial</face>
-		<face>Helvetica</face>
-		<face>Liberation Sans</face>
-		<face>Nimbus Sans</face>
-		<face>Arial Unicode MS</face>
-	</font>
-
-	<font family="serif" bold="true" underlined="true" size="10">
-		<face>cmr10</face>
-		<face>cmbx11</face>
-		<face>cmbx9</face>
-		<face>cmbx12</face>
-		<face>Times New Roman</face>
-		<face>Times Roman</face>
-		<face>Times</face>
-		<face>Computer Modern</face>
-		<face>Nimbus Roman</face>
-		<face>Georgia</face>
-		<face>Liberation Serif</face>
-	</font>
-
-	<font family="sansSerif" underlined="true" size="10">
-		<face>cmss10</face>
-		<face>cmss11</face>
-		<face>cmss9</face>
-		<face>cmss12</face>
-		<face>Arial</face>
-		<face>Helvetica</face>
-		<face>Liberation Sans</face>
-		<face>Nimbus Sans</face>
-		<face>Arial Unicode MS</face>
-	</font>
-
-	<font family="serif" bold="true" italic="true" underlined="true"
-		size="10">
-		<face>cmbxti10</face>
-		<face>cmbxti11</face>
-		<face>cmbxti9</face>
-		<face>cmbxti12</face>
-		<face>Times New Roman</face>
-		<face>Times Roman</face>
-		<face>Times</face>
-		<face>Computer Modern</face>
-		<face>Nimbus Roman</face>
-		<face>Georgia</face>
-		<face>Liberation Serif</face>
+    <face>cmssi10</face>
+    <face>cmssi11</face>
+    <face>cmssi9</face>
+    <face>cmssi12</face>
+    <face>Computer Modern Sans Serif</face>
+    <face>Arial</face>
+    <face>Helvetica</face>
+    <face>Liberation Sans</face>
+    <face>Nimbus Sans</face>
+    <face>Arial Unicode MS</face>
 	</font>
 
 	<font family="sansSerif" bold="true" underlined="true" size="10">
@@ -161,30 +212,37 @@
 		<face>cmssbx11</face>
 		<face>cmssbx9</face>
 		<face>cmssbx12</face>
+    <face>Computer Modern Sans Serif</face>
 		<face>Arial</face>
 		<face>Helvetica</face>
 		<face>Liberation Sans</face>
 		<face>Nimbus Sans</face>
 		<face>Arial Unicode MS</face>
 	</font>
+	
+	<!-- Bold monospaced text is often printed as monospaced text.
+	     So we omit it here. -->
 
-	<font family="sansSerif" italic="true" size="10">
-		<face>cmssi10</face>
-		<face>cmssi11</face>
-		<face>cmssi9</face>
-		<face>cmssi12</face>
-		<face>Arial</face>
-		<face>Helvetica</face>
-		<face>Liberation Sans</face>
-		<face>Nimbus Sans</face>
-		<face>Arial Unicode MS</face>
-	</font>
+  <font family="monospaced" italic="true" size="10">
+    <face>cmitt10</face>
+    <face>cmitt11</face>
+    <face>cmitt9</face>
+    <face>cmitt12</face>
+    <face>Computer Modern Typewriter</face>
+    <face>Courier New</face>
+    <face>Courier</face>
+    <face>Consolas</face>
+    <face>Terminal</face>
+    <face>Liberation Mono</face>
+    <face>Nimbus Mono</face>
+  </font>
 
 	<font family="monospaced" italic="true" underlined="true" size="10">
 		<face>cmitt10</face>
 		<face>cmitt11</face>
 		<face>cmitt9</face>
 		<face>cmitt12</face>
+    <face>Computer Modern Typewriter</face>
 		<face>Courier New</face>
 		<face>Courier</face>
 		<face>Consolas</face>
@@ -192,17 +250,5 @@
 		<face>Liberation Mono</face>
 		<face>Nimbus Mono</face>
 	</font>
-
-	<font family="monospaced" italic="true" size="10">
-		<face>cmitt10</face>
-		<face>cmitt11</face>
-		<face>cmitt9</face>
-		<face>cmitt12</face>
-		<face>Courier New</face>
-		<face>Courier</face>
-		<face>Consolas</face>
-		<face>Terminal</face>
-		<face>Liberation Mono</face>
-		<face>Nimbus Mono</face>
-	</font>
+	
 </fontPalette>

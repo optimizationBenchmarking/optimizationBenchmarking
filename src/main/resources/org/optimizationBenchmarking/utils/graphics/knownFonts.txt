@@ -16,10 +16,12 @@ r cambria
 s calibri
 r century
 s century gothic
+r century old style
 rb cmb
 rib cmbsy
 rb cmbx
 rbi cmbxsl
+rib cmbxti
 s cmcsc
 si cmff
 mib cmitt
@@ -46,6 +48,9 @@ s comic
 s comic sans
 s comic sans ms
 r computer modern
+r computer modern roman
+s computer modern sans serif
+m computer modern typewriter
 m consolas
 sb cooper black
 m courier
