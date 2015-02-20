@@ -280,10 +280,10 @@ public final class FileProducerSupport extends FileCollector implements
    * onFilesFinalized} method of the specified listener, if such a listener
    * was passed in the constructor.
    */
-  @SuppressWarnings({ "unchecked", "rawtypes", "resource" })
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public final void close() {
-    final FileProducerSupport support;
+    final FileCollector support;
     final IFileProducerListener listener;
     final LinkedHashMap<Path, IFileType> files;
     final ArrayListView<ImmutableAssociation<Path, IFileType>> output;
@@ -310,8 +310,8 @@ public final class FileProducerSupport extends FileCollector implements
       return;
     }
 
-    if (listener instanceof FileProducerSupport) {
-      support = ((FileProducerSupport) listener);
+    if (listener instanceof FileCollector) {
+      support = ((FileCollector) listener);
       if (single != null) {
         support.addFile(single);
         return;
