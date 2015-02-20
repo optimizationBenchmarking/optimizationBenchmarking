@@ -185,7 +185,7 @@ public abstract class Text extends DocumentPart implements IText {
 
   /** {@inheritDoc} */
   @Override
-  public final synchronized void flush() {
+  public synchronized void flush() {
     this.m_encoded.flush();
   }
 

@@ -624,6 +624,21 @@ public final class LaTeXDriver extends DocumentDriver {
         "LaTeX driver does not support graphic format " + format); //$NON-NLS-1$
   }
 
+  /**
+   * Encode a text output to be used for code. TODO: This will not work
+   * with special characters. A better method needs to be found.
+   * 
+   * @param raw
+   *          the raw text output
+   * @param encoded
+   *          the encoded text output
+   * @return the encoded text output
+   */
+  final ITextOutput _encodeCode(final ITextOutput raw,
+      final ITextOutput encoded) {
+    return raw;
+  }
+
   /** the loader for the default LaTeX driver */
   private static final class __LaTeXDriverLoader {
     /** the shared instance */
