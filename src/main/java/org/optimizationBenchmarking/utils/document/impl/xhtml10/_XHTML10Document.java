@@ -158,7 +158,8 @@ final class _XHTML10Document extends Document {
 
     super.onOpen();
 
-    this.addFile(this.getDocumentPath(), EDocumentFormat.XHTML_1_0);
+    this.getFileCollector().addFile(this.getDocumentPath(),
+        EDocumentFormat.XHTML_1_0);
 
     out = this.getTextOutput();
     out.append(_XHTML10Document.XML_HEADER_BEGIN);
@@ -255,7 +256,7 @@ final class _XHTML10Document extends Document {
           ErrorUtils.throwAsRuntimeException(t);
         }
 
-        this.addFile(path, EWebFileTypes.CSS);
+        this.getFileCollector().addFile(path, EWebFileTypes.CSS);
       }
     } finally {
       super.postProcess(usedStyles, paths);

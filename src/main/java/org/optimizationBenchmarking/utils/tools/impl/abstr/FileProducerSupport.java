@@ -72,8 +72,8 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * producing tools are combined to create an output document.
  * </p>
  */
-public final class FileProducerSupport implements Closeable,
-    IFileProducerListener {
+public final class FileProducerSupport extends FileCollector implements
+    Closeable {
 
   /**
    * the map of files if more than one was produced (otherwise,
@@ -129,6 +129,7 @@ public final class FileProducerSupport implements Closeable,
    *           if either {@code path} or {@code type} are null or otherwise
    *           invalid
    */
+  @Override
   public final void addFile(final Path path, final IFileType type) {
     final Path normalized;
     final IFileType old;
@@ -192,6 +193,7 @@ public final class FileProducerSupport implements Closeable,
    * @param p
    *          the path to add
    */
+  @Override
   public final void addFile(final Map.Entry<Path, IFileType> p) {
     if (p == null) {
       throw new IllegalArgumentException(//
@@ -206,6 +208,7 @@ public final class FileProducerSupport implements Closeable,
    * @param ps
    *          the paths to add
    */
+  @Override
   public final void addFiles(final Iterable<Map.Entry<Path, IFileType>> ps) {
     if (ps == null) {
       throw new IllegalArgumentException(//

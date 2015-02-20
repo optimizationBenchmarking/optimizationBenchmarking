@@ -30,7 +30,7 @@ public class XHTML10ConfigurationBuilder extends
   }
 
   /**
-   * the XHTML 1.0 document configuration builder
+   * create the XHTML 1.0 document configuration builder
    * 
    * @param driver
    *          the driver to use

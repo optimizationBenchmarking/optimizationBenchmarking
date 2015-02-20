@@ -255,7 +255,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
       empty = true;
       this.m_figureFiles = ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
     } else {
-      this.m_doc.addFiles(result);
+      this.getFileCollector().addFiles(result);
 
       list = new Map.Entry[size];
       i = 0;

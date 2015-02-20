@@ -6,7 +6,6 @@ import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +35,7 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.numbers.AlphabeticNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.FileCollector;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.FileProducerSupport;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
@@ -101,7 +101,7 @@ public class Document extends DocumentElement implements IDocument {
   final Logger m_logger;
 
   /** the paths */
-  private FileProducerSupport m_paths;
+  FileProducerSupport m_paths;
 
   /** a citations builder */
   BibliographyBuilder m_citations;
@@ -171,6 +171,12 @@ public class Document extends DocumentElement implements IDocument {
 
     this.m_counters = new int[ELabelType.INSTANCES.size()];
     this.m_mto = new MemoryTextOutput(16);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final FileCollector getFileCollector() {
+    return this.m_paths;
   }
 
   /**
@@ -331,39 +337,6 @@ public class Document extends DocumentElement implements IDocument {
     return new BufferedWriter(new OutputStreamWriter(stream));
   }
 
-  /**
-   * Add a file to this document
-   * 
-   * @param path
-   *          the path to the file
-   * @param type
-   *          the file type
-   */
-  protected final void addFile(final Path path, final IFileType type) {
-    this.m_paths.addFile(path, type);
-  }
-
-  /**
-   * Add a path into the internal path list
-   * 
-   * @param p
-   *          the path to add
-   */
-  protected final void addFile(final Map.Entry<Path, IFileType> p) {
-    this.m_paths.addFile(p);
-  }
-
-  /**
-   * Add a set of paths into the internal path list
-   * 
-   * @param ps
-   *          the paths to add
-   */
-  protected final void addFiles(
-      final Iterable<Map.Entry<Path, IFileType>> ps) {
-    this.m_paths.addFiles(ps);
-  }
-
   /** {@inheritDoc} */
   @Override
   public final Path getDocumentPath() {
@@ -506,10 +479,9 @@ public class Document extends DocumentElement implements IDocument {
   /**
    * Post-process the generated files. Here, e.g., a LaTeX document could
    * be compiled to postscript or pdf. During this process, new files may
-   * be generated and added to the overall outcome via
-   * {@link #addFiles(Iterable)} or {@link #addFile(java.util.Map.Entry)}
-   * (this will not change the value of {@code paths} passed into this
-   * method).
+   * be generated and added to the overall outcome via the methods provided
+   * by {@link #getFileCollector()} (this will not change the value of
+   * {@code paths} passed into this method).
    * 
    * @param usedStyles
    *          the set of used styles

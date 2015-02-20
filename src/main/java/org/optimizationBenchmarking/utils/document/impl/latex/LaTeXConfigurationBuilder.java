@@ -23,7 +23,7 @@ public class LaTeXConfigurationBuilder extends
   }
 
   /**
-   * the XHTML 1.0 document configuration builder
+   * create the LaTeX document configuration builder
    * 
    * @param driver
    *          the driver to use

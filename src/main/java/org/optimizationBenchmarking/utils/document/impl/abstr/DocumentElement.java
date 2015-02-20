@@ -8,6 +8,7 @@ import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.FileCollector;
 
 /**
  * The base object for the document API.
@@ -116,6 +117,17 @@ public abstract class DocumentElement extends HierarchicalText implements
     this.fsmStateAssertAndSet(FSM.STATE_NOTHING,
         DocumentElement.STATE_ALIFE);
   }
+
+  /**
+   * Obtain an instance of
+   * {@link org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener}
+   * which forwards all produced files to the main file collection of the
+   * document-
+   * 
+   * @return a file producer listener which appends all received
+   *         notifications to the document
+   */
+  protected abstract FileCollector getFileCollector();
 
   /**
    * Notify the document that a given style has been used.

@@ -40,6 +40,7 @@ import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteXMLInput;
 import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 
@@ -51,6 +52,44 @@ public final class LaTeXDriver extends DocumentDriver {
   /** Create a new LaTeX driver */
   LaTeXDriver() {
     super();
+  }
+
+  /**
+   * Write a comment and end the line.
+   * 
+   * @param comment
+   *          the comment
+   * @param out
+   *          the text output
+   */
+  static final void _commentLine(final String comment,
+      final ITextOutput out) {
+    out.append('%');
+    out.append(' ');
+    out.append(comment);
+    LaTeXDriver._endLine(out);
+  }
+
+  /**
+   * End the line
+   * 
+   * @param out
+   *          the text output
+   */
+  static final void _endLine(final ITextOutput out) {
+    out.append('%');
+    out.appendLineBreak();
+  }
+
+  /**
+   * End a command line
+   * 
+   * @param out
+   *          the text output
+   */
+  static final void _endCommandLine(final ITextOutput out) {
+    out.append('}');
+    LaTeXDriver._endLine(out);
   }
 
   /**
