@@ -26,4 +26,12 @@ final class _LaTeXTable extends Table {
     super(owner, useLabel, spansAllColumns, index, definition);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onOpen() {
+    super.onOpen();
+
+    ((_LaTeXDocument) (this.getDocument()))._registerTable();
+  }
 }

@@ -40,7 +40,9 @@ import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteXMLInput;
 import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransformer;
 import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 
@@ -547,6 +549,13 @@ public final class LaTeXDriver extends DocumentDriver {
   @Override
   public final IGraphicDriver getDefaultGraphicDriver() {
     return LaTeXDriver.defaultGraphicDriver();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final ITextOutput encode(final ITextOutput raw) {
+    return LaTeXCharTransformer.getInstance().transform(raw,
+        TextUtils.DEFAULT_NORMALIZER_FORM);
   }
 
   /** {@inheritDoc} */

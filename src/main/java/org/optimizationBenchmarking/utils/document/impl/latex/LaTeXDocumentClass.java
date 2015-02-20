@@ -1,8 +1,5 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
-import java.nio.file.Path;
-import java.util.Map;
-
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
@@ -10,7 +7,6 @@ import org.optimizationBenchmarking.utils.graphics.EPaperSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -292,14 +288,111 @@ public class LaTeXDocumentClass extends PageDimension {
   }
 
   /**
-   * Initialize: copy all the necessary resources into a given folder
+   * Get the command that begins the summary
    * 
-   * @param folder
-   *          the folder to copy
-   * @return a list of path entries describing the elements stored in the
-   *         folder, or {@code null} if no additional files were created
+   * @return the command that begins the summary
    */
-  public Map.Entry<Path, IFileType>[] initialize(final Path folder) {
-    return null;
+  protected String getSummaryBegin() {
+    return "\\begin{summary}"; //$NON-NLS-1$
   }
+
+  /**
+   * Get the command that ends the summary
+   * 
+   * @return the command that ends the summary
+   */
+  protected String getSummaryEnd() {
+    return "\\end{summary}";//$NON-NLS-1$
+  }
+
+  /**
+   * Get the command that begins the title
+   * 
+   * @return the command that begins the title
+   */
+  protected String getTitleBegin() {
+    return "\\begin{title}"; //$NON-NLS-1$
+  }
+
+  /**
+   * Get the command that ends the title
+   * 
+   * @return the command that ends the title
+   */
+  protected String getTitleEnd() {
+    return "\\end{title}";//$NON-NLS-1$
+  }
+
+  /**
+   * Get the command that begins the authors
+   * 
+   * @return the command that begins the authors
+   */
+  protected String getAuthorsBegin() {
+    return "\\author{"; //$NON-NLS-1$
+  }
+
+  /**
+   * Get the command that ends the authors
+   * 
+   * @return the command that ends the authors
+   */
+  protected String getAuthorsEnd() {
+    return "}";//$NON-NLS-1$
+  }
+
+  /**
+   * Get the command that begins an author
+   * 
+   * @return the command that begins an author
+   */
+  protected String getAuthorBegin() {
+    return ""; //$NON-NLS-1$
+  }
+
+  /**
+   * Get the command that ends an author
+   * 
+   * @return the command that ends an author
+   */
+  protected String getAuthorEnd() {
+    return "";//$NON-NLS-1$
+  }
+
+  /**
+   * Get the command that separates two authors
+   * 
+   * @return the command that separates two authors
+   */
+  protected String getAuthorSeparator() {
+    return " \\and "; //$NON-NLS-1$
+  }
+
+  /**
+   * Get the command that begins the date
+   * 
+   * @return the command that begins the date
+   */
+  protected String getDateBegin() {
+    return "\\date{"; //$NON-NLS-1$
+  }
+
+  /**
+   * Get the command that ends the date
+   * 
+   * @return the command that ends the date
+   */
+  protected String getDateEnd() {
+    return "}";//$NON-NLS-1$
+  }
+
+  /**
+   * Get the command that makes the title
+   * 
+   * @return the command that makes the title
+   */
+  protected String getMakeTitle() {
+    return "\\maketitle";//$NON-NLS-1$
+  }
+
 }

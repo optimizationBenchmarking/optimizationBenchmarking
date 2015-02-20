@@ -26,4 +26,12 @@ final class _LaTeXFigureSeries extends FigureSeries {
     super(owner, useLabel, size, path, index);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onOpen() {
+    super.onOpen();
+
+    ((_LaTeXDocument) (this.getDocument()))._registerFigureSeries();
+  }
 }

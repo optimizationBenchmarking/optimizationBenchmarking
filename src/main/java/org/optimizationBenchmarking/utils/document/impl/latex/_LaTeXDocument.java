@@ -94,6 +94,12 @@ final class _LaTeXDocument extends Document {
    */
   private boolean m_hasMultiColCell;
 
+  /**
+   * {@code true} if we have at least one code block in the document,
+   * {@code false} otherwise
+   */
+  private boolean m_hasCode;
+
   /** the figure series package path */
   private Path m_figureSeriesPackagePath;
 
@@ -355,6 +361,11 @@ final class _LaTeXDocument extends Document {
     this.m_hasMultiColCell = true;
   }
 
+  /** register that there is a code block in the document */
+  final void _registerCode() {
+    this.m_hasCode = true;
+  }
+
   /** {@inheritDoc} */
   @Override
   protected final void doOnClose() {
@@ -436,6 +447,10 @@ final class _LaTeXDocument extends Document {
                 this._pathRelativeToDocument(//
                     this.m_figureSeriesPackagePath, true));
             LaTeXDriver._endLine(out);
+          }
+
+          if (this.m_hasCode) {
+            _LaTeXDocument.__requirePackage(out, "listings"); //$NON-NLS-1$
           }
 
           _LaTeXDocument.__requirePackage(out, "hyperref"); //$NON-NLS-1$

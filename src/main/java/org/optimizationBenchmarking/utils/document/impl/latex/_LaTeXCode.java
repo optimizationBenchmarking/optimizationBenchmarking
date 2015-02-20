@@ -22,4 +22,12 @@ final class _LaTeXCode extends Code {
     super(owner, useLabel, spansAllColumns, index);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onOpen() {
+    super.onOpen();
+
+    ((_LaTeXDocument) (this.getDocument()))._registerCode();
+  }
 }

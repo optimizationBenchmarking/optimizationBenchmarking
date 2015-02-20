@@ -15,4 +15,14 @@ final class _LaTeXInlineCode extends InlineCode {
     super(owner);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onOpen() {
+    super.onOpen();
+
+    ((_LaTeXDocument) (this.getDocument()))._registerCode();
+    // TODO: must collect body and use separator which does not occur in
+    // it!
+  }
 }

@@ -22,4 +22,24 @@ final class _LaTeXTableBodyCell extends TableBodyCell {
     super(owner, cols, rows, def);
     this.open();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onOpen() {
+    boolean b;
+
+    super.onOpen();
+
+    if (this.hasIrregularDefinition()) {
+      b = false;
+      if (this.getRowSpan() > 1) {
+        b = true;
+        ((_LaTeXDocument) (this.getDocument()))._registerMultiRowCell();
+      }
+      if ((!b) || (this.getColumnSpan() > 1)) {
+        ((_LaTeXDocument) (this.getDocument()))._registerMultiColCell();
+      }
+    }
+
+  }
 }
