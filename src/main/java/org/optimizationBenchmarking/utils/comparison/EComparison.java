@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.comparison;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+
 /**
  * A set of comparisons that return {@code true} if they match and
  * {@code false} if they don't. These comparisons also serve as result
@@ -705,6 +707,10 @@ public enum EComparison {
     }
 
   };
+
+  /** an array set view of the comparison instances */
+  public static final ArraySetView<EComparison> INSTANCES = new ArraySetView<>(
+      EComparison.values());
 
   /** a comparison constant */
   final int m_cmp;

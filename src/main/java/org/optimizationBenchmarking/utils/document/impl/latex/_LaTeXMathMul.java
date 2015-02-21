@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.MathMul;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** an mathematical mul function in a LaTeX document */
 final class _LaTeXMathMul extends MathMul {
@@ -14,5 +15,23 @@ final class _LaTeXMathMul extends MathMul {
    */
   _LaTeXMathMul(final BasicMath owner) {
     super(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void render(final ITextOutput out, final char[][] data,
+      final int size) {
+    int i;
+
+    out.append('{');
+    for (i = 0; i < size; i++) {
+      if (i > 0) {
+        out.append('*');
+      }
+      out.append('{');
+      out.append(data[i]);
+      out.append('}');
+    }
+    out.append('}');
   }
 }

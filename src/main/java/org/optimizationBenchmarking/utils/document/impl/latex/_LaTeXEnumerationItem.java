@@ -19,12 +19,9 @@ final class _LaTeXEnumerationItem extends EnumerationItem {
   /** {@inheritDoc} */
   @Override
   protected synchronized final void onOpen() {
-    final ITextOutput out;
-
     super.onOpen();
 
-    out = this.getTextOutput();
-    out.append(LaTeXDriver.ITEM);
+    this.getTextOutput().append(LaTeXDriver.ITEM);
   }
 
   /** {@inheritDoc} */

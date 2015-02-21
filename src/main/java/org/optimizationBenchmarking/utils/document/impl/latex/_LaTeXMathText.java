@@ -2,9 +2,14 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.MathText;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** an mathematical text element of a section in a LaTeX document */
 final class _LaTeXMathText extends MathText {
+  /** the begin math name */
+  private static final char[] TEXT_BEGIN = { '{', '\\', 't', 'e', 'x',
+      't', 'n', 'o', 'r', 'm', 'a', 'l', '{', };
+
   /**
    * create the mathematical in-braces element
    * 
@@ -16,4 +21,22 @@ final class _LaTeXMathText extends MathText {
     this.open();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onOpen() {
+
+    super.onOpen();
+    this.getTextOutput().append(_LaTeXMathText.TEXT_BEGIN);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onClose() {
+    final ITextOutput out;
+
+    out = this.getTextOutput();
+    out.append('}');
+    out.append('}');
+    super.onClose();
+  }
 }

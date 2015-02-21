@@ -12,7 +12,7 @@ final class _XHTML10MathCompare extends MathCompare {
   private static final char[][] SIGNS;
 
   static {
-    SIGNS = new char[EComparison.NOT_EQUAL.ordinal() + 1][];
+    SIGNS = new char[EComparison.INSTANCES.size()][];
 
     _XHTML10MathCompare.SIGNS[EComparison.LESS.ordinal()] = new char[] {
         '&', 'l', 't', ';' };

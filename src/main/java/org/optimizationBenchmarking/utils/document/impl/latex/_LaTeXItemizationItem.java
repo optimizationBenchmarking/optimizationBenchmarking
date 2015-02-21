@@ -18,6 +18,14 @@ final class _LaTeXItemizationItem extends ItemizationItem {
 
   /** {@inheritDoc} */
   @Override
+  protected synchronized final void onOpen() {
+    super.onOpen();
+
+    this.getTextOutput().append(LaTeXDriver.ITEM);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void appendLineBreak() {
     final ITextOutput textOut;
 
@@ -25,5 +33,12 @@ final class _LaTeXItemizationItem extends ItemizationItem {
     textOut = this.getTextOutput();
     textOut.appendLineBreak();
     textOut.appendLineBreak();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onClose() {
+    LaTeXDriver._endLine(this.getTextOutput());
+    super.onClose();
   }
 }
