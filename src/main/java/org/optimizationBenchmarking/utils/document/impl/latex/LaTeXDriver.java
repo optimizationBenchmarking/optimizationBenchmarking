@@ -65,6 +65,10 @@ public final class LaTeXDriver extends DocumentDriver {
   static final char[] CENTER_END = { '\\', 'e', 'n', 'd', '{', 'c', 'e',
       'n', 't', 'e', 'r', '}' };
 
+  /** the caption */
+  static final char[] CAPTION_BEGIN = { '\\', 'c', 'a', 'p', 't', 'i',
+      'o', 'n', '{' };
+
   /** Create a new LaTeX driver */
   LaTeXDriver() {
     super();

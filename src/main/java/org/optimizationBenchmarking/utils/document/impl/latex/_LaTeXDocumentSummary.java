@@ -37,6 +37,13 @@ final class _LaTeXDocumentSummary extends DocumentSummary {
 
   /** {@inheritDoc} */
   @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(' ');
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected synchronized final void onClose() {
     final ITextOutput out;
     final String s;
