@@ -7,8 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /** an mathematical text element of a section in a LaTeX document */
 final class _LaTeXMathText extends MathText {
   /** the begin math name */
-  private static final char[] TEXT_BEGIN = { '{', '\\', 't', 'e', 'x',
-      't', 'n', 'o', 'r', 'm', 'a', 'l', '{', };
+  private static final char[] TEXT_BEGIN = _LaTeXStyledText.TEXT_NORMAL_BEGIN;
 
   /**
    * create the mathematical in-braces element

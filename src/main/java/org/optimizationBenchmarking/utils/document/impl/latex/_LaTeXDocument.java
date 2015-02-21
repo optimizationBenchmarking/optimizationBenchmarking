@@ -113,6 +113,12 @@ final class _LaTeXDocument extends Document {
    */
   private boolean m_hasCode;
 
+  /**
+   * {@code true} if we have at least one text super- or sub-script in the
+   * document, {@code false} otherwise
+   */
+  private boolean m_hasTextSubOrSuperScript;
+
   /** the figure series package path */
   private Path m_figureSeriesPackagePath;
 
@@ -426,6 +432,11 @@ final class _LaTeXDocument extends Document {
     this.m_hasMultiRowCell = true;
   }
 
+  /** register that there is a text sub- or superscript in the document */
+  final void _registerTextSubOrSuperScript() {
+    this.m_hasTextSubOrSuperScript = true;
+  }
+
   /**
    * register that there is a cell which spans multiple columns in a table
    * in the document
@@ -520,6 +531,10 @@ final class _LaTeXDocument extends Document {
 
           if (this.m_hasCode) {
             _LaTeXDocument.__requirePackage(out, "listings"); //$NON-NLS-1$
+          }
+
+          if (this.m_hasTextSubOrSuperScript) {
+            _LaTeXDocument.__requirePackage(out, "fixltx2e"); //$NON-NLS-1$
           }
 
           _LaTeXDocument.__requirePackage(out, "hyperref"); //$NON-NLS-1$

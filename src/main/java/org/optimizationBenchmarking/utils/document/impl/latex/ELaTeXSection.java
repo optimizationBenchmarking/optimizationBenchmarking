@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+
 /** The LaTeX sections */
 public enum ELaTeXSection {
 
@@ -18,4 +20,7 @@ public enum ELaTeXSection {
   /** the sub-paragraph */
   SUBPARAGRAPH;
 
+  /** the instances */
+  public static final ArraySetView<ELaTeXSection> INSTANCES = new ArraySetView<>(
+      ELaTeXSection.values());
 }

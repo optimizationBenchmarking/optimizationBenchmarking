@@ -213,7 +213,8 @@ public class LaTeXDocumentClass extends PageDimension {
   }
 
   /**
-   * Get the highest supported section type
+   * Get the highest supported section type, e.g.,
+   * {@link ELaTeXSection#PART}
    * 
    * @return the highest supported section type
    */
@@ -222,7 +223,8 @@ public class LaTeXDocumentClass extends PageDimension {
   }
 
   /**
-   * Get the lowest supported section type
+   * Get the lowest supported section type, e.g.,
+   * {@link ELaTeXSection#SUBSECTION}
    * 
    * @return the lowest supported section type
    */

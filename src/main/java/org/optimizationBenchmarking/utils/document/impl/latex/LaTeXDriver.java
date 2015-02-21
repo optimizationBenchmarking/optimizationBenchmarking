@@ -57,6 +57,9 @@ public final class LaTeXDriver extends DocumentDriver {
 
   /** the label command */
   private static final char[] LABEL = { '\\', 'l', 'a', 'b', 'e', 'l', '{' };
+  /** the enforced referencable command */
+  private static final char[] PHANTOMSECTION = { '{', '\\', 'p', 'h', 'a',
+      'n', 't', 'o', 'm', 's', 'e', 'c', 't', 'i', 'o', 'n', '}' };
 
   /** begin the center environment */
   static final char[] CENTER_BEGIN = { '\\', 'b', 'e', 'g', 'i', 'n', '{',
@@ -83,6 +86,21 @@ public final class LaTeXDriver extends DocumentDriver {
    *          the text output
    */
   static final void _label(final Label label, final ITextOutput out) {
+    LaTeXDriver._label(label, out, false);
+  }
+
+  /**
+   * Put a label
+   * 
+   * @param label
+   *          the label
+   * @param out
+   *          the text output
+   * @param enforce
+   *          should we enforce the label location?
+   */
+  static final void _label(final Label label, final ITextOutput out,
+      final boolean enforce) {
     final String id;
 
     if (label == null) {
@@ -91,6 +109,9 @@ public final class LaTeXDriver extends DocumentDriver {
     id = label.getLabelMark();
     if (id == null) {
       return;
+    }
+    if (enforce) {
+      out.append(LaTeXDriver.PHANTOMSECTION);
     }
     out.append(LaTeXDriver.LABEL);
     out.append(id);
