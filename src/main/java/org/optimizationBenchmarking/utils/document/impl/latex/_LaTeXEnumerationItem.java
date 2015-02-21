@@ -29,6 +29,17 @@ final class _LaTeXEnumerationItem extends EnumerationItem {
 
   /** {@inheritDoc} */
   @Override
+  public synchronized final void appendLineBreak() {
+    final ITextOutput textOut;
+
+    this.assertNoChildren();
+    textOut = this.getTextOutput();
+    textOut.appendLineBreak();
+    textOut.appendLineBreak();
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected synchronized final void onClose() {
     LaTeXDriver._endLine(this.getTextOutput());
     super.onClose();

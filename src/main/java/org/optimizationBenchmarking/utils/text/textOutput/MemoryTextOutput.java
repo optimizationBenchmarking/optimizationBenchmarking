@@ -74,6 +74,38 @@ public class MemoryTextOutput extends AbstractTextOutput implements
     this.m_data = new char[size];
   }
 
+  /**
+   * Find the last occurrence of the given character
+   * 
+   * @param ch
+   *          the character
+   * @return the last occurrence of {@code ch} in this text, or {@code -1}
+   *         if it is not found
+   */
+  public final int lastIndexOf(final char ch) {
+    int i;
+
+    for (i = this.m_size; (--i) >= 0;) {
+      if (this.m_data[i] == ch) {
+        return i;
+      }
+    }
+
+    return (-1);
+  }
+
+  /**
+   * Check whether this text output contains the character {@code ch}
+   * 
+   * @param ch
+   *          the character to find
+   * @return {@code true} if it is contained in this text ouput,
+   *         {@code false} otherwise
+   */
+  public final boolean contains(final char ch) {
+    return (this.lastIndexOf(ch) >= 0);
+  }
+
   /** {@inheritDoc} */
   @Override
   public final MemoryTextOutput append(final CharSequence csq) {

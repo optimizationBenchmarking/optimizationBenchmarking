@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 /** A text class for in-line code */
-public class InlineCode extends PlainText {
+public class InlineCode extends Text {
 
   /**
    * Create an in-line code text.
@@ -9,7 +9,7 @@ public class InlineCode extends PlainText {
    * @param owner
    *          the owning FSM
    */
-  protected InlineCode(final PlainText owner) {
+  protected InlineCode(final ComplexText owner) {
     super(owner);
   }
 }

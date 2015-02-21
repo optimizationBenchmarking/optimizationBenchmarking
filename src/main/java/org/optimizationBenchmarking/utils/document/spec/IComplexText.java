@@ -53,7 +53,7 @@ public interface IComplexText extends IPlainText {
    * 
    * @return the in-line code context
    */
-  public abstract IPlainText inlineCode();
+  public abstract IText inlineCode();
 
   /**
    * Obtain an in-line emphasize text destination

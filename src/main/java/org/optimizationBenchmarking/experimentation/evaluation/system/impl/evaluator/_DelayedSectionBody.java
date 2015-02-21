@@ -15,6 +15,7 @@ import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.ITable;
+import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
@@ -81,7 +82,7 @@ final class _DelayedSectionBody implements ISectionBody {
 
   /** {@inheritDoc} */
   @Override
-  public final IPlainText inlineCode() {
+  public final IText inlineCode() {
     return this.m_real.inlineCode();
   }
 

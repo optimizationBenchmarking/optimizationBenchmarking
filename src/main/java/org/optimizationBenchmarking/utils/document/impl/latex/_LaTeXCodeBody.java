@@ -157,7 +157,7 @@ final class _LaTeXCodeBody extends CodeBody {
   @Override
   public synchronized final void appendNonBreakingSpace() {
     this.assertNoChildren();
-    this.m_codeOut.appendNonBreakingSpace();
+    this.m_codeOut.append(' ');
   }
 
   /** {@inheritDoc} */

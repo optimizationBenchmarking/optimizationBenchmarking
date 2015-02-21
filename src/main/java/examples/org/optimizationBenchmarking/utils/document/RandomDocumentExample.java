@@ -717,7 +717,7 @@ public class RandomDocumentExample extends DocumentExample {
               out.append(' ');
               this.m_termination
                   ._done(_ERandomDocumentExampleElements.INLINE_CODE);
-              try (final IPlainText t = ((IComplexText) out).inlineCode()) {
+              try (final IText t = ((IComplexText) out).inlineCode()) {
                 try {
                   t.append("Inline Code: "); //$NON-NLS-1$
                   LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);

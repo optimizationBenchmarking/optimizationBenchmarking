@@ -40,6 +40,12 @@ final class _LaTeXTableBodyCell extends TableBodyCell {
         ((_LaTeXDocument) (this.getDocument()))._registerMultiColCell();
       }
     }
+  }
 
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final void appendLineBreak() {
+    this.assertNoChildren();
+    this.getTextOutput().append(' ');
   }
 }
