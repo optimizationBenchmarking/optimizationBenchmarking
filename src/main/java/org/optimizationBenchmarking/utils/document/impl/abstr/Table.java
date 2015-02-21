@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.ITable;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * The base class for tables
  */
 public class Table extends ComplexObject implements ITable,
-    Iterable<TableCellDef> {
+    Iterable<ETableCellDef> {
 
   /** the state when the caption has been created */
   private static final int STATE_CAPTION_CREATED = (DocumentElement.STATE_MAX_ELEMENT + 1);
@@ -81,7 +81,7 @@ public class Table extends ComplexObject implements ITable,
   private final boolean m_spansAllColumns;
 
   /** the table cells */
-  final TableCellDef[] m_cells;
+  final ETableCellDef[] m_cells;
 
   /** the blocked columns */
   final int[] m_blocked;
@@ -105,10 +105,10 @@ public class Table extends ComplexObject implements ITable,
    */
   protected Table(final SectionBody owner, final ILabel useLabel,
       final boolean spansAllColumns, final int index,
-      final TableCellDef[] definition) {
+      final ETableCellDef[] definition) {
     super(owner, useLabel, index);
 
-    final TableCellDef[] cells;
+    final ETableCellDef[] cells;
     int i, cc;
 
     cells = definition.clone();
@@ -121,8 +121,8 @@ public class Table extends ComplexObject implements ITable,
     this.m_cellToDef = new int[cc];
 
     i = cc = 0;
-    for (final TableCellDef d : cells) {
-      if (d != TableCellDef.VERTICAL_SEPARATOR) {
+    for (final ETableCellDef d : cells) {
+      if (d != ETableCellDef.VERTICAL_SEPARATOR) {
         this.m_cellToDef[i++] = cc;
       }
       cc++;
@@ -142,7 +142,7 @@ public class Table extends ComplexObject implements ITable,
    *          the table definition
    * @return the number of cells
    */
-  static final int _checkDef(final TableCellDef[] def) {
+  static final int _checkDef(final ETableCellDef[] def) {
     int cells;
 
     if (def == null) {
@@ -151,13 +151,13 @@ public class Table extends ComplexObject implements ITable,
     }
 
     cells = 0;
-    for (final TableCellDef d : def) {
+    for (final ETableCellDef d : def) {
       if (d == null) {
         throw new IllegalArgumentException(//
             "No cell definition element can be null, but one of " + //$NON-NLS-1$
                 def + " is."); //$NON-NLS-1$
       }
-      if (d != TableCellDef.VERTICAL_SEPARATOR) {
+      if (d != ETableCellDef.VERTICAL_SEPARATOR) {
         cells++;
       }
     }
@@ -370,7 +370,7 @@ public class Table extends ComplexObject implements ITable,
    * @return the cell definition
    */
   @Override
-  public final ArrayIterator<TableCellDef> iterator() {
+  public final ArrayIterator<ETableCellDef> iterator() {
     return new ArrayIterator<>(this.m_cells);
   }
 }

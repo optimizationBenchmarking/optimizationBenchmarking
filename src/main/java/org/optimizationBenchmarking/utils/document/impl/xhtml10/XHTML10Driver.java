@@ -35,8 +35,8 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
@@ -290,7 +290,7 @@ public final class XHTML10Driver extends DocumentDriver {
   @Override
   protected final _XHTML10Table createTable(final SectionBody owner,
       final ILabel useLabel, final boolean spansAllColumns,
-      final int index, final TableCellDef... cells) {
+      final int index, final ETableCellDef... cells) {
     return new _XHTML10Table(((_XHTML10SectionBody) owner), useLabel,
         spansAllColumns, index, cells);
   }
@@ -589,7 +589,7 @@ public final class XHTML10Driver extends DocumentDriver {
   @Override
   protected final _XHTML10TableBodyCell createTableBodyCell(
       final TableBodyRow owner, final int rowSpan, final int colSpan,
-      final TableCellDef[] def) {
+      final ETableCellDef[] def) {
     return new _XHTML10TableBodyCell(((_XHTML10TableBodyRow) owner),
         rowSpan, colSpan, def);
   }
@@ -598,7 +598,7 @@ public final class XHTML10Driver extends DocumentDriver {
   @Override
   protected final _XHTML10TableHeaderCell createTableHeaderCell(
       final TableHeaderRow owner, final int rowSpan, final int colSpan,
-      final TableCellDef[] def) {
+      final ETableCellDef[] def) {
     return new _XHTML10TableHeaderCell(((_XHTML10TableHeaderRow) owner),
         rowSpan, colSpan, def);
   }
@@ -607,7 +607,7 @@ public final class XHTML10Driver extends DocumentDriver {
   @Override
   protected final _XHTML10TableFooterCell createTableFooterCell(
       final TableFooterRow owner, final int rowSpan, final int colSpan,
-      final TableCellDef[] def) {
+      final ETableCellDef[] def) {
     return new _XHTML10TableFooterCell(((_XHTML10TableFooterRow) owner),
         rowSpan, colSpan, def);
   }

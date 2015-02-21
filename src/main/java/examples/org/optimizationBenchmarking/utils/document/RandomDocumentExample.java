@@ -27,6 +27,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfigurat
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ICode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
@@ -48,7 +49,6 @@ import org.optimizationBenchmarking.utils.document.spec.ITable;
 import org.optimizationBenchmarking.utils.document.spec.ITableRow;
 import org.optimizationBenchmarking.utils.document.spec.ITableSection;
 import org.optimizationBenchmarking.utils.document.spec.IText;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
@@ -96,11 +96,6 @@ import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExamp
  * </p>
  */
 public class RandomDocumentExample extends DocumentExample {
-
-  /** the table cell defs */
-  private static final TableCellDef[] CELLS = { TableCellDef.CENTER,
-      TableCellDef.RIGHT, TableCellDef.LEFT,
-      TableCellDef.VERTICAL_SEPARATOR };
 
   /** the comparison */
   private static final EComparison[] COMP = EComparison.values();
@@ -743,12 +738,11 @@ public class RandomDocumentExample extends DocumentExample {
               break;
             }
             case SUPERSCRIPT: {
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.SUPERSCRIPT);
+              this.m_termination._done(//
+                  _ERandomDocumentExampleElements.SUPERSCRIPT);
               out.append(" Super: "); //$NON-NLS-1$
               try (final IPlainText t = ((IComplexText) out).superscript()) {
                 try {
-
                   LoremIpsum.appendLoremIpsum(t, this.m_rand, 2);
                 } catch (final Throwable tt) {
                   error = ErrorUtils.aggregateError(error, tt);
@@ -1509,9 +1503,9 @@ public class RandomDocumentExample extends DocumentExample {
    *          the section body
    */
   private final void __createTable(final ISectionBody sb) {
-    final ArrayList<TableCellDef> def, pureDef;
-    final TableCellDef[] pureDefs;
-    TableCellDef d;
+    final ArrayList<ETableCellDef> def, pureDef;
+    final ETableCellDef[] pureDefs;
+    ETableCellDef d;
     int min;
 
     this.m_termination._done(_ERandomDocumentExampleElements.TABLE);
@@ -1521,20 +1515,20 @@ public class RandomDocumentExample extends DocumentExample {
     min = (this.m_rand.nextInt(3) + 1);
 
     do {
-      d = RandomDocumentExample.CELLS[this.m_rand
-          .nextInt(RandomDocumentExample.CELLS.length)];
+      d = ETableCellDef.INSTANCES.get(this.m_rand
+          .nextInt(ETableCellDef.INSTANCES.size()));
       def.add(d);
-      if (d != TableCellDef.VERTICAL_SEPARATOR) {
+      if (d != ETableCellDef.VERTICAL_SEPARATOR) {
         pureDef.add(d);
       }
     } while ((pureDef.size() < min)
         || (((this.m_termination._continue()) && this.m_rand.nextBoolean())));
-    pureDefs = pureDef.toArray(new TableCellDef[pureDef.size()]);
+    pureDefs = pureDef.toArray(new ETableCellDef[pureDef.size()]);
 
     try (final ITable tab = sb.table(
         this.m_termination._getLabel(this.m_rand, ELabelType.TABLE),
         this.m_rand.nextBoolean(),
-        def.toArray(new TableCellDef[def.size()]))) {
+        def.toArray(new ETableCellDef[def.size()]))) {
       this.__useLabel(tab);
       try (final IPlainText cap = tab.caption()) {
         LoremIpsum.appendLoremIpsum(cap, this.m_rand,
@@ -1565,10 +1559,10 @@ public class RandomDocumentExample extends DocumentExample {
    *          the maximum number of rows
    */
   private final void __makeTableSection(final ITableSection sec,
-      final TableCellDef[] cells, final int minRows, final int maxRows) {
+      final ETableCellDef[] cells, final int minRows, final int maxRows) {
     int rows, neededRows, i, maxX, maxY;
     int[] blocked;
-    TableCellDef d;
+    ETableCellDef d;
 
     neededRows = minRows;
 
@@ -1610,9 +1604,9 @@ public class RandomDocumentExample extends DocumentExample {
               }
             } else {
               do {
-                d = RandomDocumentExample.CELLS[this.m_rand
-                    .nextInt(RandomDocumentExample.CELLS.length)];
-              } while (d == TableCellDef.VERTICAL_SEPARATOR);
+                d = ETableCellDef.INSTANCES.get(this.m_rand
+                    .nextInt(ETableCellDef.INSTANCES.size()));
+              } while (d == ETableCellDef.VERTICAL_SEPARATOR);
               try (final IPlainText cell = row.cell((maxX - i),
                   (maxY - rows), d)) {
                 if (this.m_rand.nextBoolean()) {

@@ -23,8 +23,8 @@ public class LaTeXConfiguration extends DocumentConfiguration {
   public LaTeXConfiguration(final LaTeXConfigurationBuilder builder) {
     super(builder);
 
-    LaTeXConfiguration._checkDocumentClass(this.m_documentClass = builder
-        .getDocumentClass());
+    LaTeXConfiguration._checkDocumentClass(//
+        this.m_documentClass = builder.getDocumentClass());
   }
 
   /**
@@ -53,7 +53,7 @@ public class LaTeXConfiguration extends DocumentConfiguration {
   @Override
   public int hashCode() {
     return HashUtils.combineHashes(super.hashCode(),
-        HashUtils.hashCode(this.m_documentClass));
+        HashUtils.hashCode(this.getDocumentClass()));
   }
 
   /** {@inheritDoc} */
@@ -65,13 +65,13 @@ public class LaTeXConfiguration extends DocumentConfiguration {
     }
     if (o instanceof LaTeXConfiguration) {
       if (super.equals(o)) {
-        return (EComparison.equals(this.m_documentClass,
-            ((LaTeXConfiguration) o).m_documentClass));
+        return (EComparison.equals(this.getDocumentClass(),
+            ((LaTeXConfiguration) o).getDocumentClass()));
       }
     } else {
       if (o instanceof LaTeXConfigurationBuilder) {
         if (super.equals(o)) {
-          return (EComparison.equals(this.m_documentClass,
+          return (EComparison.equals(this.getDocumentClass(),
               ((LaTeXConfigurationBuilder) o).getDocumentClass()));
         }
       }

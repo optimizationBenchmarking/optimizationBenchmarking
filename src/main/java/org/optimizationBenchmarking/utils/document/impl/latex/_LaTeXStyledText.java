@@ -14,8 +14,7 @@ final class _LaTeXStyledText extends StyledText {
   static final char[] TEXT_NORMAL_BEGIN = { '{', '\\', 't', 'e', 'x', 't',
       'n', 'o', 'r', 'm', 'a', 'l', '{', };
   /** the begin emphasize */
-  private static final char[] EMPH_BEGIN = { '{', '\\', 'e', 'm', 'p',
-      'h', '{', };
+  static final char[] EMPH_BEGIN = { '{', '\\', 'e', 'm', 'p', 'h', '{', };
   /** the begin code */
   private static final char[] CODE_BEGIN = { '{', '\\', 't', 'e', 'x',
       't', 't', 't', '{', };

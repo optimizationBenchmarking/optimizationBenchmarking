@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderCell;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a header cell of a table in a XHTML document */
@@ -24,7 +24,7 @@ final class _XHTML10TableHeaderCell extends TableHeaderCell {
    *          the cell definition
    */
   _XHTML10TableHeaderCell(final _XHTML10TableHeaderRow owner,
-      final int cols, final int rows, final TableCellDef[] def) {
+      final int cols, final int rows, final ETableCellDef[] def) {
     super(owner, cols, rows, def);
     this.open();
   }

@@ -2,8 +2,8 @@ package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.Table;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableBody;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -58,7 +58,7 @@ final class _XHTML10Table extends Table {
    */
   _XHTML10Table(final _XHTML10SectionBody owner, final ILabel useLabel,
       final boolean spansAllColumns, final int index,
-      final TableCellDef[] definition) {
+      final ETableCellDef[] definition) {
     super(owner, useLabel, spansAllColumns, index, definition);
     this.open();
   }

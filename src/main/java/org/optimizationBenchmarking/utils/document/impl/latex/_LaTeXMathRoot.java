@@ -18,6 +18,7 @@ final class _LaTeXMathRoot extends MathRoot {
    */
   _LaTeXMathRoot(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

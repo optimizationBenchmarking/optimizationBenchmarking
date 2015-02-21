@@ -20,7 +20,7 @@ public interface ISectionBody extends IStructuredText, ISectionContainer {
    * @return the table object
    */
   public abstract ITable table(final ILabel useLabel,
-      final boolean spansAllColumns, final TableCellDef... cells);
+      final boolean spansAllColumns, final ETableCellDef... cells);
 
   /**
    * Create a figure in this block of text.

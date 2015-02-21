@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableBodyCell;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableCell;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a body cell of a table in a XHTML document */
@@ -38,7 +38,7 @@ final class _XHTML10TableBodyCell extends TableBodyCell {
    *          the cell definition
    */
   _XHTML10TableBodyCell(final _XHTML10TableBodyRow owner, final int cols,
-      final int rows, final TableCellDef[] def) {
+      final int rows, final ETableCellDef[] def) {
     super(owner, cols, rows, def);
     this.open();
   }
@@ -61,16 +61,16 @@ final class _XHTML10TableBodyCell extends TableBodyCell {
   static final void _cellMode(final ITextOutput out, final TableCell cell) {
     int i;
 
-    looper: for (final TableCellDef d : cell) {
-      if (d == TableCellDef.LEFT) {
+    looper: for (final ETableCellDef d : cell) {
+      if (d == ETableCellDef.LEFT) {
         out.append(_XHTML10TableBodyCell.TAB_CLASS_L);
         break looper;
       }
-      if (d == TableCellDef.RIGHT) {
+      if (d == ETableCellDef.RIGHT) {
         out.append(_XHTML10TableBodyCell.TAB_CLASS_R);
         break looper;
       }
-      if (d == TableCellDef.CENTER) {
+      if (d == ETableCellDef.CENTER) {
         out.append(_XHTML10TableBodyCell.TAB_CLASS_C);
         break looper;
       }

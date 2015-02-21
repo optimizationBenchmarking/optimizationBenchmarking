@@ -1,14 +1,13 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
-import org.optimizationBenchmarking.utils.document.impl.abstr.Subscript;
-import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
+import org.optimizationBenchmarking.utils.document.impl.abstr.Emphasize;
+import org.optimizationBenchmarking.utils.document.impl.abstr.PlainText;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
-/** an subscript element of a section in a LaTeX document */
-final class _LaTeXSubscript extends Subscript {
-  /** the subscript command in text */
-  private static final char[] TEXT_SUBSCRIPT = { '{', '\\', 't', 'e', 'x',
-      't', 's', 'u', 'b', 's', 'c', 'r', 'i', 'p', 't', '{', };
+/** an emphasize element of in a LaTeX document */
+final class _LaTeXEmphasize extends Emphasize {
+  /** the emph command in text */
+  private static final char[] EMPH_BEGIN = _LaTeXStyledText.EMPH_BEGIN;
 
   /**
    * create the subscript element
@@ -16,7 +15,7 @@ final class _LaTeXSubscript extends Subscript {
    * @param owner
    *          the owner
    */
-  _LaTeXSubscript(final Text owner) {
+  _LaTeXEmphasize(final PlainText owner) {
     super(owner);
     this.open();
   }
@@ -24,8 +23,13 @@ final class _LaTeXSubscript extends Subscript {
   /** {@inheritDoc} */
   @Override
   public synchronized final void appendLineBreak() {
+    final ITextOutput out;
+
     this.assertNoChildren();
-    this.getTextOutput().append(' ');
+
+    out = this.getTextOutput();
+    out.appendLineBreak();
+    out.appendLineBreak();
   }
 
   /** {@inheritDoc} */
@@ -33,9 +37,7 @@ final class _LaTeXSubscript extends Subscript {
   protected synchronized final void onOpen() {
     super.onOpen();
 
-    ((_LaTeXDocument) (this.getDocument()))
-        ._registerTextSubOrSuperScript();
-    this.getTextOutput().append(_LaTeXSubscript.TEXT_SUBSCRIPT);
+    this.getTextOutput().append(_LaTeXEmphasize.EMPH_BEGIN);
   }
 
   /** {@inheritDoc} */

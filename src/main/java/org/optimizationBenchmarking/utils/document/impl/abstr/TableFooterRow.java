@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /**
@@ -26,7 +26,7 @@ public class TableFooterRow extends TableRow {
   /** {@inheritDoc} */
   @Override
   final TableFooterCell createCell(final int rowSpan, final int colSpan,
-      final TableCellDef[] def) {
+      final ETableCellDef[] def) {
     return this.m_driver
         .createTableFooterCell(this, rowSpan, colSpan, def);
   }
@@ -34,14 +34,14 @@ public class TableFooterRow extends TableRow {
   /** {@inheritDoc} */
   @Override
   public synchronized final TableFooterCell cell(final int rowSpan,
-      final int colSpan, final TableCellDef... definition) {
+      final int colSpan, final ETableCellDef... definition) {
     return ((TableFooterCell) (super.cell(rowSpan, colSpan, definition)));
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized final TableCell cell() {
-    return this.cell(1, 1, ((TableCellDef[]) null));
+    return this.cell(1, 1, ((ETableCellDef[]) null));
   }
 
   /** {@inheritDoc} */

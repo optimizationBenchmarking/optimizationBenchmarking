@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableBodyCell;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 
 /** a body cell of a table in a LaTeX document */
 final class _LaTeXTableBodyCell extends TableBodyCell {
@@ -18,7 +18,7 @@ final class _LaTeXTableBodyCell extends TableBodyCell {
    *          the cell definition
    */
   _LaTeXTableBodyCell(final _LaTeXTableBodyRow owner, final int cols,
-      final int rows, final TableCellDef[] def) {
+      final int rows, final ETableCellDef[] def) {
     super(owner, cols, rows, def);
     this.open();
   }
@@ -26,20 +26,16 @@ final class _LaTeXTableBodyCell extends TableBodyCell {
   /** {@inheritDoc} */
   @Override
   protected synchronized final void onOpen() {
-    boolean b;
-
     super.onOpen();
+    ((_LaTeXDocument) (this.getDocument()))._registerCell(//
+        _LaTeXTable._beginCell(this, this.getTextOutput()));
+  }
 
-    if (this.hasIrregularDefinition()) {
-      b = false;
-      if (this.getRowSpan() > 1) {
-        b = true;
-        ((_LaTeXDocument) (this.getDocument()))._registerMultiRowCell();
-      }
-      if ((!b) || (this.getColumnSpan() > 1)) {
-        ((_LaTeXDocument) (this.getDocument()))._registerMultiColCell();
-      }
-    }
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onClose() {
+    _LaTeXTable._endCell(this, this.getTextOutput());
+    super.onClose();
   }
 
   /** {@inheritDoc} */

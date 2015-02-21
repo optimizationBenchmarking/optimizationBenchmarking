@@ -15,6 +15,7 @@ final class _LaTeXMathDivInline extends MathDivInline {
    */
   _LaTeXMathDivInline(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

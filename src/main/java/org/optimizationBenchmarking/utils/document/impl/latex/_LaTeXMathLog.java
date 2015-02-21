@@ -18,6 +18,7 @@ final class _LaTeXMathLog extends MathLog {
    */
   _LaTeXMathLog(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

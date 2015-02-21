@@ -5,9 +5,9 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
@@ -332,7 +332,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
    */
   protected Table createTable(final SectionBody owner,
       final ILabel useLabel, final boolean spansAllColumns,
-      final int index, final TableCellDef... cells) {
+      final int index, final ETableCellDef... cells) {
     return new Table(owner, useLabel, spansAllColumns, index, cells);
   }
 
@@ -865,7 +865,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
    * @return the body cell
    */
   protected TableBodyCell createTableBodyCell(final TableBodyRow owner,
-      final int rowSpan, final int colSpan, final TableCellDef[] def) {
+      final int rowSpan, final int colSpan, final ETableCellDef[] def) {
     return new TableBodyCell(owner, rowSpan, colSpan, def);
   }
 
@@ -884,7 +884,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
    */
   protected TableHeaderCell createTableHeaderCell(
       final TableHeaderRow owner, final int rowSpan, final int colSpan,
-      final TableCellDef[] def) {
+      final ETableCellDef[] def) {
     return new TableHeaderCell(owner, rowSpan, colSpan, def);
   }
 
@@ -903,7 +903,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
    */
   protected TableFooterCell createTableFooterCell(
       final TableFooterRow owner, final int rowSpan, final int colSpan,
-      final TableCellDef[] def) {
+      final ETableCellDef[] def) {
     return new TableFooterCell(owner, rowSpan, colSpan, def);
   }
 

@@ -4,7 +4,10 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthor;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDate;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentHeader;
+import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentSummary;
+import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** the LaTeX document header */
 final class _LaTeXDocumentHeader extends DocumentHeader {
@@ -12,6 +15,9 @@ final class _LaTeXDocumentHeader extends DocumentHeader {
   /** start the document */
   private static final char[] DOCUMENT_BEGIN = { '\\', 'b', 'e', 'g', 'i',
       'n', '{', 'd', 'o', 'c', 'u', 'm', 'e', 'n', 't', '}' };
+
+  /** the summary */
+  private char[] m_summary;
 
   /**
    * Create a document header.
@@ -22,6 +28,23 @@ final class _LaTeXDocumentHeader extends DocumentHeader {
   _LaTeXDocumentHeader(final _LaTeXDocument owner) {
     super(owner);
     this.open();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final boolean mustChildBeBuffered(final HierarchicalText child) {
+    return (child instanceof DocumentSummary);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void processBufferedOutputFromChild(
+      final HierarchicalText child, final MemoryTextOutput out) {
+    if (child instanceof DocumentSummary) {
+      this.m_summary = out.toChars();
+    } else {
+      super.processBufferedOutputFromChild(child, out);
+    }
   }
 
   /** {@inheritDoc} */
@@ -143,6 +166,7 @@ final class _LaTeXDocumentHeader extends DocumentHeader {
   protected synchronized final void onClose() {
     final ITextOutput out;
     final String s;
+    final char[] summary;
 
     out = this.getTextOutput();
 
@@ -152,6 +176,13 @@ final class _LaTeXDocumentHeader extends DocumentHeader {
     if ((s != null) && (!(s.isEmpty()))) {
       out.append(s);
       LaTeXDriver._endLine(out);
+    }
+
+    LaTeXDriver._endLine(out);
+    summary = this.m_summary;
+    this.m_summary = null;
+    if ((summary != null) && (summary.length > 0)) {
+      out.append(summary);
     }
 
     super.onClose();

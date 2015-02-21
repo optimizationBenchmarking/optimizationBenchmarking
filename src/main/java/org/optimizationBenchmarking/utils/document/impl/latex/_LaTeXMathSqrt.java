@@ -17,6 +17,7 @@ final class _LaTeXMathSqrt extends MathSqrt {
    */
   _LaTeXMathSqrt(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

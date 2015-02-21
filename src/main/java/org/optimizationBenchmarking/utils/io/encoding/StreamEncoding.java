@@ -54,6 +54,111 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   public static final StreamEncoding<BufferedReader, BufferedWriter> TEXT = //
   new _UnknownTextEncoding();
 
+  /** the <a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a> encoding */
+  private static final TextEncoding ASCII;
+  /**
+   * the <a href="http://en.wikipedia.org/wiki/Windows-1252">Windows
+   * Codepage 1252</a> Encoding
+   */
+  private static final TextEncoding WINDOWS_1252;
+
+  /** the big 5 encoding */
+  private static final TextEncoding BIG_5;
+
+  /** the <a href="http://en.wikipedia.org/wiki/GBK">GBK</a> encoding */
+  private static final TextEncoding GBK;
+  /**
+   * the <a href="http://en.wikipedia.org/wiki/GB_2312">GB 2312</a>
+   * encoding
+   */
+  private static final TextEncoding GB2312;
+  /**
+   * the <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a> encoding
+   */
+  private static final TextEncoding UTF_8;
+
+  /**
+   * the the <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a>
+   * Little Endian encoding
+   */
+  private static final TextEncoding UTF_16_LE;
+
+  /**
+   * the the <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a> Big
+   * Endian encoding
+   */
+  private static final TextEncoding UTF_16_BE;
+
+  /**
+   * the <a
+   * href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a>
+   * encoding
+   */
+  private static final TextEncoding ISO_8859_1;
+
+  /**
+   * the <a href="http://en.wikipedia.org/wiki/GB18030">GB18030</a>
+   * encoding
+   */
+  private static final TextEncoding GB18030;
+
+  static {
+    ASCII = new TextEncoding("ASCII", false); //$NON-NLS-1$
+    StreamEncoding.ASCII._register("us-ascii", //$NON-NLS-1$
+        "us ascii", //$NON-NLS-1$
+        "us_ascii"); //$NON-NLS-1$
+
+    WINDOWS_1252 = new TextEncoding("Cp1252", false); //$NON-NLS-1$
+    StreamEncoding.WINDOWS_1252._register("cp1252", //$NON-NLS-1$
+        "windows1252", //$NON-NLS-1$
+        "windows-1252"); //$NON-NLS-1$
+
+    BIG_5 = new TextEncoding("Big5", false); //$NON-NLS-1$
+    StreamEncoding.BIG_5._register("big-5", //$NON-NLS-1$
+        "big 5"); //$NON-NLS-1$
+
+    /** the <a href="http://en.wikipedia.org/wiki/GBK">GBK</a> encoding */
+    GBK = new TextEncoding(//
+        "GBK", true); //$NON-NLS-1$
+
+    GB2312 = new TextEncoding("GB2312", false); //$NON-NLS-1$
+    StreamEncoding.GB2312._register("euc_cn", //$NON-NLS-1$
+        "euc cn", //$NON-NLS-1$
+        "euccn", //$NON-NLS-1$
+        "euc-cn"); //$NON-NLS-1$
+
+    UTF_8 = new TextEncoding("UTF-8", false); //$NON-NLS-1$
+    StreamEncoding.UTF_8._register("utf8", //$NON-NLS-1$
+        "unicode", //$NON-NLS-1$
+        StreamEncoding._DEFAULT, "iso/iec 10646-1:2000", //$NON-NLS-1$
+        "iso/iec 10646-1:1993", //$NON-NLS-1$
+        "iso/iec 10646-1", //$NON-NLS-1$
+        "iso 10646-1"); //$NON-NLS-1$
+
+    UTF_16_BE = new TextEncoding("UTF-16BE", false); //$NON-NLS-1$
+    StreamEncoding.UTF_16_BE._register("unicodebig"); //$NON-NLS-1$
+
+    UTF_16_LE = new TextEncoding("UTF-16LE", false); //$NON-NLS-1$
+    StreamEncoding.UTF_16_LE._register("unicodelittle"); //$NON-NLS-1$
+
+    ISO_8859_1 = new TextEncoding("ISO-8859-1", false); //$NON-NLS-1$
+    StreamEncoding.ISO_8859_1._register("iso 8859-1", //$NON-NLS-1$
+        "8859-1", //$NON-NLS-1$
+        "iso_8859-1:1987", //$NON-NLS-1$
+        "iso_8859-1", //$NON-NLS-1$
+        "iso-tr-100", //$NON-NLS-1$
+        "csisolatin1", //$NON-NLS-1$
+        "latin1", //$NON-NLS-1$
+        "l1", //$NON-NLS-1$
+        "ibm819", //$NON-NLS-1$
+        "cp819", //$NON-NLS-1$
+        "iso/iec 8859-1"); //$NON-NLS-1$
+
+    GB18030 = new TextEncoding("GB18030", false); //$NON-NLS-1$
+    StreamEncoding.GB18030._register("GB 18030", //$NON-NLS-1$
+        "GB-18030"); //$NON-NLS-1$
+  }
+
   /**
    * Get the <a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a> text
    * encoding
@@ -62,7 +167,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *         text encoding
    */
   public static final TextEncoding getASCII() {
-    return __ASCII.ASCII;
+    return StreamEncoding.ASCII;
   }
 
   /**
@@ -74,7 +179,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *         Codepage 1252</a> encoding
    */
   public static final TextEncoding getWindows1252() {
-    return __WINDOWS_1252.WINDOWS_1252;
+    return StreamEncoding.WINDOWS_1252;
   }
 
   /**
@@ -85,7 +190,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *         encoding
    */
   public static final TextEncoding getBig5() {
-    return __BIG_5.BIG_5;
+    return StreamEncoding.BIG_5;
   }
 
   /**
@@ -95,7 +200,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *         encoding
    */
   public static final TextEncoding getGBK() {
-    return __GBK.GBK;
+    return StreamEncoding.GBK;
   }
 
   /**
@@ -106,7 +211,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *         encoding
    */
   public static final TextEncoding getGB2312() {
-    return __GB2312.GB2312;
+    return StreamEncoding.GB2312;
   }
 
   /**
@@ -117,7 +222,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *         encoding
    */
   public static final TextEncoding getUTF8() {
-    return __UTF_8.UTF_8;
+    return StreamEncoding.UTF_8;
   }
 
   /**
@@ -128,7 +233,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *         Big Endian encoding
    */
   public static final TextEncoding getUTF16BigEndian() {
-    return __UTF_16_BE.UTF_16_BE;
+    return StreamEncoding.UTF_16_BE;
   }
 
   /**
@@ -139,7 +244,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *         Little Endian encoding
    */
   public static final TextEncoding getUTF16LittleEndian() {
-    return __UTF_16_LE.UTF_16_LE;
+    return StreamEncoding.UTF_16_LE;
   }
 
   /**
@@ -150,7 +255,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *         encoding
    */
   public static final TextEncoding getGB18030() {
-    return __GB18030.GB18030;
+    return StreamEncoding.GB18030;
   }
 
   /**
@@ -163,7 +268,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    *         -1</a> encoding
    */
   public static final TextEncoding getISO8859_1() {
-    return __ISO_8859_1.ISO_8859_1;
+    return StreamEncoding.ISO_8859_1;
   }
 
   /**
@@ -713,179 +818,4 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
     return null;
   }
 
-  /** the <a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a> encoding */
-  private static final class __ASCII {
-
-    /** the <a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a> encoding */
-    static final TextEncoding ASCII;
-
-    static {
-      ASCII = new TextEncoding("ASCII", false); //$NON-NLS-1$
-      __ASCII.ASCII._register("us-ascii", //$NON-NLS-1$
-          "us ascii", //$NON-NLS-1$
-          "us_ascii"); //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * the <a href="http://en.wikipedia.org/wiki/Windows-1252">Windows
-   * Codepage 1252</a> encoding
-   */
-  private static final class __WINDOWS_1252 {
-
-    /**
-     * the <a href="http://en.wikipedia.org/wiki/Windows-1252">Windows
-     * Codepage 1252</a> Encoding
-     */
-    static final TextEncoding WINDOWS_1252;
-
-    static {
-      WINDOWS_1252 = new TextEncoding("Cp1252", false); //$NON-NLS-1$
-      __WINDOWS_1252.WINDOWS_1252._register("cp1252", //$NON-NLS-1$
-          "windows1252", //$NON-NLS-1$
-          "windows-1252"); //$NON-NLS-1$
-    }
-  }
-
-  /** the <a href="http://en.wikipedia.org/wiki/Big-5">Big-5</a> encoding */
-  private static final class __BIG_5 {
-
-    /** the big 5 encoding */
-    static final TextEncoding BIG_5;
-
-    static {
-      BIG_5 = new TextEncoding("Big5", false); //$NON-NLS-1$
-
-      __BIG_5.BIG_5._register("big-5", //$NON-NLS-1$
-          "big 5"); //$NON-NLS-1$
-    }
-  }
-
-  /** the <a href="http://en.wikipedia.org/wiki/GBK">GBK</a> encoding */
-  private static final class __GBK {
-
-    /** the <a href="http://en.wikipedia.org/wiki/GBK">GBK</a> encoding */
-    static final TextEncoding GBK = new TextEncoding(//
-        "GBK", true); //$NON-NLS-1$
-  }
-
-  /**
-   * the <a href="http://en.wikipedia.org/wiki/GB_2312">GB 2312</a>
-   * encoding
-   */
-  private static final class __GB2312 {
-    /**
-     * the <a href="http://en.wikipedia.org/wiki/GB_2312">GB 2312</a>
-     * encoding
-     */
-    static final TextEncoding GB2312;
-    static {
-      GB2312 = new TextEncoding("GB2312", false); //$NON-NLS-1$
-
-      __GB2312.GB2312._register("euc_cn", //$NON-NLS-1$
-          "euc cn", //$NON-NLS-1$
-          "euccn", //$NON-NLS-1$
-          "euc-cn"); //$NON-NLS-1$
-    }
-  }
-
-  /** the <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a> encoding */
-  private static final class __UTF_8 {
-    /**
-     * the <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a> encoding
-     */
-    static final TextEncoding UTF_8;
-    static {
-      UTF_8 = new TextEncoding("UTF-8", false); //$NON-NLS-1$
-      __UTF_8.UTF_8._register("utf8", //$NON-NLS-1$
-          "unicode", //$NON-NLS-1$
-          StreamEncoding._DEFAULT, "iso/iec 10646-1:2000", //$NON-NLS-1$
-          "iso/iec 10646-1:1993", //$NON-NLS-1$
-          "iso/iec 10646-1", //$NON-NLS-1$
-          "iso 10646-1"); //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * the <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a> Big
-   * Endian encoding
-   */
-  private static final class __UTF_16_BE {
-
-    /**
-     * the the <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a> Big
-     * Endian encoding
-     */
-    static final TextEncoding UTF_16_BE;
-    static {
-      UTF_16_BE = new TextEncoding("UTF-16BE", false); //$NON-NLS-1$
-      __UTF_16_BE.UTF_16_BE._register("unicodebig"); //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * the <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a> Little
-   * Endian encoding
-   */
-  private static final class __UTF_16_LE {
-
-    /**
-     * the the <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a>
-     * Little Endian encoding
-     */
-    static final TextEncoding UTF_16_LE;
-    static {
-      UTF_16_LE = new TextEncoding("UTF-16LE", false); //$NON-NLS-1$
-      __UTF_16_LE.UTF_16_LE._register("unicodelittle"); //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * the <a
-   * href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a>
-   * encoding
-   */
-  private static final class __ISO_8859_1 {
-    /**
-     * the <a
-     * href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a>
-     * encoding
-     */
-    static final TextEncoding ISO_8859_1;
-
-    static {
-      ISO_8859_1 = new TextEncoding("ISO-8859-1", false); //$NON-NLS-1$
-
-      __ISO_8859_1.ISO_8859_1._register("iso 8859-1", //$NON-NLS-1$
-          "8859-1", //$NON-NLS-1$
-          "iso_8859-1:1987", //$NON-NLS-1$
-          "iso_8859-1", //$NON-NLS-1$
-          "iso-tr-100", //$NON-NLS-1$
-          "csisolatin1", //$NON-NLS-1$
-          "latin1", //$NON-NLS-1$
-          "l1", //$NON-NLS-1$
-          "ibm819", //$NON-NLS-1$
-          "cp819", //$NON-NLS-1$
-          "iso/iec 8859-1"); //$NON-NLS-1$
-
-    }
-  }
-
-  /**
-   * the <a href="http://en.wikipedia.org/wiki/GB18030">GB18030</a>
-   * encoding
-   */
-  private static final class __GB18030 {
-    /**
-     * the <a href="http://en.wikipedia.org/wiki/GB18030">GB18030</a>
-     * encoding
-     */
-    static final TextEncoding GB18030;
-
-    static {
-      GB18030 = new TextEncoding("GB18030", false); //$NON-NLS-1$
-      __GB18030.GB18030._register("GB 18030", //$NON-NLS-1$
-          "GB-18030"); //$NON-NLS-1$
-    }
-  }
 }

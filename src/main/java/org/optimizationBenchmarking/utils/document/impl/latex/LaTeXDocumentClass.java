@@ -62,6 +62,9 @@ public class LaTeXDocumentClass extends PageDimension {
       ELaTeXSection.SUBPARAGRAPH// lowest supported section type
   );
 
+  /** the default document class */
+  public static final LaTeXDocumentClass DEFAULT = LaTeXDocumentClass.ARTICLE;
+
   /** the class to use */
   private final String m_class;
 
@@ -295,7 +298,7 @@ public class LaTeXDocumentClass extends PageDimension {
    * @return the command that begins the summary
    */
   protected String getSummaryBegin() {
-    return "\\begin{summary}"; //$NON-NLS-1$
+    return "\\begin{abstract}"; //$NON-NLS-1$
   }
 
   /**
@@ -304,7 +307,7 @@ public class LaTeXDocumentClass extends PageDimension {
    * @return the command that ends the summary
    */
   protected String getSummaryEnd() {
-    return "\\end{summary}";//$NON-NLS-1$
+    return "\\end{abstract}";//$NON-NLS-1$
   }
 
   /**
@@ -313,7 +316,7 @@ public class LaTeXDocumentClass extends PageDimension {
    * @return the command that begins the title
    */
   protected String getTitleBegin() {
-    return "\\begin{title}"; //$NON-NLS-1$
+    return "\\title{"; //$NON-NLS-1$
   }
 
   /**
@@ -322,7 +325,7 @@ public class LaTeXDocumentClass extends PageDimension {
    * @return the command that ends the title
    */
   protected String getTitleEnd() {
-    return "\\end{title}";//$NON-NLS-1$
+    return "}";//$NON-NLS-1$
   }
 
   /**

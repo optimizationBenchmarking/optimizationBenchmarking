@@ -15,6 +15,7 @@ final class _LaTeXMathPow extends MathPow {
    */
   _LaTeXMathPow(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

@@ -1,9 +1,9 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 
 /**
  * A section body.
@@ -56,7 +56,7 @@ public class SectionBody extends StructuredText implements ISectionBody {
   /** {@inheritDoc} */
   @Override
   public synchronized final Table table(final ILabel useLabel,
-      final boolean spansAllColumns, final TableCellDef... cells) {
+      final boolean spansAllColumns, final ETableCellDef... cells) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     return this.m_driver.createTable(this, useLabel, spansAllColumns,
         (++this.m_tableCount), cells);

@@ -85,7 +85,8 @@ public class LaTeXConfigurationBuilder extends
    * @return the document class
    */
   public final LaTeXDocumentClass getDocumentClass() {
-    return this.m_documentClass;
+    return ((this.m_documentClass != null) ? this.m_documentClass
+        : LaTeXDocumentClass.DEFAULT);
   }
 
   /**
@@ -103,7 +104,7 @@ public class LaTeXConfigurationBuilder extends
   @Override
   public int hashCode() {
     return HashUtils.combineHashes(super.hashCode(),
-        HashUtils.hashCode(this.m_documentClass));
+        HashUtils.hashCode(this.getDocumentClass()));
   }
 
   /** {@inheritDoc} */
@@ -115,14 +116,14 @@ public class LaTeXConfigurationBuilder extends
     }
     if (o instanceof LaTeXConfiguration) {
       if (super.equals(o)) {
-        return (EComparison.equals(this.m_documentClass,
+        return (EComparison.equals(this.getDocumentClass(),
             ((LaTeXConfiguration) o).getDocumentClass()));
       }
     } else {
       if (o instanceof LaTeXConfigurationBuilder) {
         if (super.equals(o)) {
-          return (EComparison.equals(this.m_documentClass,
-              ((LaTeXConfigurationBuilder) o).m_documentClass));
+          return (EComparison.equals(this.getDocumentClass(),
+              ((LaTeXConfigurationBuilder) o).getDocumentClass()));
         }
       }
     }

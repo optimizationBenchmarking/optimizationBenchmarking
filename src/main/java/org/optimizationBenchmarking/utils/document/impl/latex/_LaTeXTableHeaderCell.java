@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderCell;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 
 /** a header cell of a table in a LaTeX document */
 final class _LaTeXTableHeaderCell extends TableHeaderCell {
@@ -18,9 +18,24 @@ final class _LaTeXTableHeaderCell extends TableHeaderCell {
    *          the cell definition
    */
   _LaTeXTableHeaderCell(final _LaTeXTableHeaderRow owner, final int cols,
-      final int rows, final TableCellDef[] def) {
+      final int rows, final ETableCellDef[] def) {
     super(owner, cols, rows, def);
     this.open();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onOpen() {
+    super.onOpen();
+    ((_LaTeXDocument) (this.getDocument()))._registerCell(//
+        _LaTeXTable._beginCell(this, this.getTextOutput()));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onClose() {
+    _LaTeXTable._endCell(this, this.getTextOutput());
+    super.onClose();
   }
 
   /** {@inheritDoc} */

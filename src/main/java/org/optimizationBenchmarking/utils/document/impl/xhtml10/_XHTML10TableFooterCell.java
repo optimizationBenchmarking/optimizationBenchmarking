@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooterCell;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a footer cell of a table in a XHTML document */
@@ -19,7 +19,7 @@ final class _XHTML10TableFooterCell extends TableFooterCell {
    *          the cell definition
    */
   _XHTML10TableFooterCell(final _XHTML10TableFooterRow owner,
-      final int cols, final int rows, final TableCellDef[] def) {
+      final int cols, final int rows, final ETableCellDef[] def) {
     super(owner, cols, rows, def);
     this.open();
   }

@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ITableRow;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 
 /**
@@ -88,12 +88,12 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
    * @return the cell
    */
   abstract TableCell createCell(final int rowSpan, final int colSpan,
-      final TableCellDef[] def);
+      final ETableCellDef[] def);
 
   /** {@inheritDoc} */
   @Override
   public synchronized TableCell cell(final int rowSpan, final int colSpan,
-      final TableCellDef... definition) {
+      final ETableCellDef... definition) {
     this.fsmStateAssert(DocumentElement.STATE_ALIFE);
     return this.createCell(rowSpan, colSpan,//
         (((definition == null) || (definition.length <= 0)) ? null
@@ -103,7 +103,7 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
   /** {@inheritDoc} */
   @Override
   public synchronized TableCell cell() {
-    return this.cell(1, 1, ((TableCellDef[]) null));
+    return this.cell(1, 1, ((ETableCellDef[]) null));
   }
 
   /** {@inheritDoc} */

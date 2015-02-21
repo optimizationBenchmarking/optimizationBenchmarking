@@ -29,10 +29,11 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooter;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooterRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
+import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
@@ -274,7 +275,7 @@ public final class LaTeXDriver extends DocumentDriver {
   @Override
   protected final _LaTeXTable createTable(final SectionBody owner,
       final ILabel useLabel, final boolean spansAllColumns,
-      final int index, final TableCellDef... cells) {
+      final int index, final ETableCellDef... cells) {
     return new _LaTeXTable(((_LaTeXSectionBody) owner), useLabel,
         spansAllColumns, index, cells);
   }
@@ -564,7 +565,7 @@ public final class LaTeXDriver extends DocumentDriver {
   @Override
   protected final _LaTeXTableBodyCell createTableBodyCell(
       final TableBodyRow owner, final int rowSpan, final int colSpan,
-      final TableCellDef[] def) {
+      final ETableCellDef[] def) {
     return new _LaTeXTableBodyCell(((_LaTeXTableBodyRow) owner), rowSpan,
         colSpan, def);
   }
@@ -573,7 +574,7 @@ public final class LaTeXDriver extends DocumentDriver {
   @Override
   protected final _LaTeXTableHeaderCell createTableHeaderCell(
       final TableHeaderRow owner, final int rowSpan, final int colSpan,
-      final TableCellDef[] def) {
+      final ETableCellDef[] def) {
     return new _LaTeXTableHeaderCell(((_LaTeXTableHeaderRow) owner),
         rowSpan, colSpan, def);
   }
@@ -582,9 +583,27 @@ public final class LaTeXDriver extends DocumentDriver {
   @Override
   protected final _LaTeXTableFooterCell createTableFooterCell(
       final TableFooterRow owner, final int rowSpan, final int colSpan,
-      final TableCellDef[] def) {
+      final ETableCellDef[] def) {
     return new _LaTeXTableFooterCell(((_LaTeXTableFooterRow) owner),
         rowSpan, colSpan, def);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXSuperscript createSuperscript(final Text owner) {
+    return new _LaTeXSuperscript(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXSubscript createSubscript(final Text owner) {
+    return new _LaTeXSubscript(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXEmphasize createEmphasize(final ComplexText owner) {
+    return new _LaTeXEmphasize(owner);
   }
 
   /** {@inheritDoc} */
@@ -677,8 +696,8 @@ public final class LaTeXDriver extends DocumentDriver {
     final EGraphicFormat format;
 
     format = driver.getFileType();
-    if (_LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[format
-        .ordinal()]) {
+    if (_LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[//
+    format.ordinal()]) {
       return;
     }
 
@@ -796,6 +815,7 @@ public final class LaTeXDriver extends DocumentDriver {
           try {
             driver = format.getDefaultDriver();
             driver.checkCanUse();
+            break;
           } catch (final Throwable t) {
             driver = null;
             if (error == null) {

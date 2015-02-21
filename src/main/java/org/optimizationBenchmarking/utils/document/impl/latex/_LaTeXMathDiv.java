@@ -18,6 +18,7 @@ final class _LaTeXMathDiv extends MathDiv {
    */
   _LaTeXMathDiv(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

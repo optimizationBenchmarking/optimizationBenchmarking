@@ -41,6 +41,7 @@ final class _LaTeXMathCompare extends MathCompare {
    */
   _LaTeXMathCompare(final BasicMath owner, final EComparison cmp) {
     super(owner, cmp);
+    this.open();
   }
 
   /** {@inheritDoc} */

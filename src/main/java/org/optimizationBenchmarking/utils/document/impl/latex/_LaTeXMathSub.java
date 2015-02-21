@@ -15,6 +15,7 @@ final class _LaTeXMathSub extends MathSub {
    */
   _LaTeXMathSub(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

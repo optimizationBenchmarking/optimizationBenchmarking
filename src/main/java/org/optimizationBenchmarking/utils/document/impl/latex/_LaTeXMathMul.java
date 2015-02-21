@@ -15,6 +15,7 @@ final class _LaTeXMathMul extends MathMul {
    */
   _LaTeXMathMul(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

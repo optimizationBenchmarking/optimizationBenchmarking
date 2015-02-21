@@ -46,7 +46,7 @@ I can also quote the title of a publication, such as <t:cite mode="title"><bib:b
 <t:ul>
 <t:li>The first item of the un-ordered list.</t:li>
 <t:li>The second item of the un-ordered list.</t:li>
-<t:li>Let's reference all sections we have far:<t:nbsp/><t:ref sequenceMode="and"><t:label>section1Label</t:label><t:label>section1.1Label</t:label><t:label>section2Label</t:label></t:ref></t:li>
+<t:li>Let's reference all sections we have so far:<t:nbsp/><t:ref sequenceMode="and"><t:label>section1Label</t:label><t:label>section1.1Label</t:label><t:label>section2Label</t:label></t:ref></t:li>
 <t:li>And have another sub-list:
 <t:ul><t:li>With one,</t:li><t:li>two, and</t:li><t:li>three items.</t:li></t:ul></t:li>
 </t:ul>

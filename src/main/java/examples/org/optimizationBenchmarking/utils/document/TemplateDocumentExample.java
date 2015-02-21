@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfigurat
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
-import org.optimizationBenchmarking.utils.document.spec.IPlainText;
+import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLHandler;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLInput;
 import org.optimizationBenchmarking.utils.document.template.IDocumentCallback;
@@ -118,7 +118,7 @@ public class TemplateDocumentExample extends DocumentExample {
 
   /** an internal callback */
   private static final class __PrintMapCallback implements
-      IDocumentCallback<IPlainText> {
+      IDocumentCallback<IText> {
     /** create */
     __PrintMapCallback() {
       super();
@@ -126,7 +126,7 @@ public class TemplateDocumentExample extends DocumentExample {
 
     /** {@inheritDoc} */
     @Override
-    public final void callback(final IPlainText element,
+    public final void callback(final IText element,
         final Map<Object, Object> properties) {
       element.append(//
           "This is a callback invocation printing the properties map: "); //$NON-NLS-1$

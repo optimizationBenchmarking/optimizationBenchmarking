@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 
 /** A cell in a table body */
 public class TableBodyCell extends TableCell {
@@ -17,7 +17,7 @@ public class TableBodyCell extends TableCell {
    *          the cell definition
    */
   protected TableBodyCell(final TableBodyRow owner, final int cols,
-      final int rows, final TableCellDef[] def) {
+      final int rows, final ETableCellDef[] def) {
     super(owner, cols, rows, def);
   }
 

@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 
 /**
  * A cell in a table footer
@@ -20,7 +20,7 @@ public class TableFooterCell extends TableCell {
    *          the cell definition
    */
   protected TableFooterCell(final TableFooterRow owner, final int cols,
-      final int rows, final TableCellDef[] def) {
+      final int rows, final ETableCellDef[] def) {
     super(owner, cols, rows, def);
   }
 

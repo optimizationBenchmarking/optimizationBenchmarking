@@ -3,13 +3,13 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 
 /**
  * A table cell
  */
 public class TableCell extends ComplexText implements
-    Iterable<TableCellDef> {
+    Iterable<ETableCellDef> {
 
   /** the start column (inclusive) */
   private final int m_startCol;
@@ -22,7 +22,7 @@ public class TableCell extends ComplexText implements
   private final int m_endRow;
 
   /** the table cell definition */
-  private final TableCellDef[] m_def;
+  private final ETableCellDef[] m_def;
 
   /** the definition offset */
   private final int m_ofs;
@@ -47,7 +47,7 @@ public class TableCell extends ComplexText implements
    */
   @SuppressWarnings("resource")
   TableCell(final TableRow owner, final int cols, final int rows,
-      final TableCellDef[] def) {
+      final ETableCellDef[] def) {
     super(owner);
 
     final TableSection ts;
@@ -209,7 +209,7 @@ public class TableCell extends ComplexText implements
    * @return an iterator over the table cell definition elements
    */
   @Override
-  public final ArrayIterator<TableCellDef> iterator() {
+  public final ArrayIterator<ETableCellDef> iterator() {
     return new ArrayIterator<>(this.m_def, (this.m_ofs + this.m_size),
         this.m_ofs);
   }

@@ -16,7 +16,7 @@ public interface ITableRow extends IDocumentElement {
    *         to
    */
   public abstract IComplexText cell(final int rowSpan, final int colSpan,
-      final TableCellDef... definition);
+      final ETableCellDef... definition);
 
   /**
    * Create a cell

@@ -75,7 +75,7 @@ final class _LaTeXSection extends Section {
     ofs = (clazz.getHighestSectionType().ordinal() + this.getDepth());
 
     out = this.getTextOutput();
-    this.m_emulated = (ofs <= clazz.getLowestSectionType().ordinal());
+    this.m_emulated = (ofs > clazz.getLowestSectionType().ordinal());
 
     if (this.m_emulated) {
       out.append(_LaTeXSection.SECTION_EMULATOR_A);

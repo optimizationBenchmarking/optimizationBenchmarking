@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 
 /**
  * A cell in a table header
@@ -19,7 +19,7 @@ public class TableHeaderCell extends TableCell {
    *          the cell definition
    */
   protected TableHeaderCell(final TableHeaderRow owner, final int cols,
-      final int rows, final TableCellDef[] def) {
+      final int rows, final ETableCellDef[] def) {
     super(owner, cols, rows, def);
   }
 

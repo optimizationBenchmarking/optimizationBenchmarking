@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ICode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IEquation;
@@ -16,7 +17,6 @@ import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.ITable;
 import org.optimizationBenchmarking.utils.document.spec.IText;
-import org.optimizationBenchmarking.utils.document.spec.TableCellDef;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -246,7 +246,7 @@ final class _DelayedSectionBody implements ISectionBody {
   /** {@inheritDoc} */
   @Override
   public final ITable table(final ILabel useLabel,
-      final boolean spansAllColumns, final TableCellDef... cells) {
+      final boolean spansAllColumns, final ETableCellDef... cells) {
     return this.m_real.table(useLabel, spansAllColumns, cells);
   }
 

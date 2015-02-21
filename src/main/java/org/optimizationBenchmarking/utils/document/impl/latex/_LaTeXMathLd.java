@@ -18,6 +18,7 @@ final class _LaTeXMathLd extends MathLd {
    */
   _LaTeXMathLd(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

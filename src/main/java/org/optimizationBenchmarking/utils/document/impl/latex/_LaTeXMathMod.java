@@ -17,6 +17,7 @@ final class _LaTeXMathMod extends MathMod {
    */
   _LaTeXMathMod(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

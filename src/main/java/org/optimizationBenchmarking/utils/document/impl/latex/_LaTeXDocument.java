@@ -133,7 +133,6 @@ final class _LaTeXDocument extends Document {
    */
   _LaTeXDocument(final LaTeXDocumentBuilder builder) {
     super(LaTeXDriver.getInstance(), builder);
-    this.open();
 
     this.m_compile = builder.shouldCompile();
     LaTeXConfiguration._checkDocumentClass(//
@@ -145,6 +144,8 @@ final class _LaTeXDocument extends Document {
             ELaTeXFileType.STY.getDefaultSuffix()));
 
     this.m_colorNames = new HashMap<>();
+
+    this.open();
   }
 
   /**
@@ -426,24 +427,23 @@ final class _LaTeXDocument extends Document {
   /**
    * register that there is a cell which spans multiple rows in a table in
    * the document
+   * 
+   * @param mode
+   *          the table mode
    */
-  final void _registerMultiRowCell() {
+  final void _registerCell(final int mode) {
     this.m_hasTable = true;
-    this.m_hasMultiRowCell = true;
+    if ((mode & _LaTeXTable.MODE_MULTI_COL) != 0) {
+      this.m_hasMultiColCell = true;
+    }
+    if ((mode & _LaTeXTable.MODE_MULTI_ROW) != 0) {
+      this.m_hasMultiRowCell = true;
+    }
   }
 
   /** register that there is a text sub- or superscript in the document */
   final void _registerTextSubOrSuperScript() {
     this.m_hasTextSubOrSuperScript = true;
-  }
-
-  /**
-   * register that there is a cell which spans multiple columns in a table
-   * in the document
-   */
-  final void _registerMultiColCell() {
-    this.m_hasTable = true;
-    this.m_hasMultiColCell = true;
   }
 
   /** register that there is a code block in the document */
@@ -487,6 +487,7 @@ final class _LaTeXDocument extends Document {
    */
   private final void __buildSetupPackage(final Set<IStyle> usedStyles) {
     final AbstractTextOutput out;
+    final boolean hasColors;
     String html;
     ColorStyle color;
     int i;
@@ -499,7 +500,8 @@ final class _LaTeXDocument extends Document {
 
           // adding default packages
 
-          if (this.m_hasTable || (!(this.m_colorNames.isEmpty()))) {
+          hasColors = (!(this.m_colorNames.isEmpty()));
+          if (this.m_hasTable || hasColors) {
             _LaTeXDocument.__requirePackage(out, "color"); //$NON-NLS-1$
             _LaTeXDocument.__requirePackage(out, "xcolor"); //$NON-NLS-1$
           }
@@ -507,7 +509,6 @@ final class _LaTeXDocument extends Document {
           _LaTeXDocument.__requirePackage(out, "caption3"); //$NON-NLS-1$
 
           if (this.m_hasTable) {
-            _LaTeXDocument.__requirePackage(out, "colortbl"); //$NON-NLS-1$
             if (this.m_hasMultiColCell) {
               _LaTeXDocument.__requirePackage(out, "multicol"); //$NON-NLS-1$
             }
@@ -541,18 +542,21 @@ final class _LaTeXDocument extends Document {
           _LaTeXDocument.__requirePackage(out, "breakurl"); //$NON-NLS-1$
 
           // now add the colors
-          for (final IStyle style : usedStyles) {
-            if ((style != null) && (style instanceof ColorStyle)) {
-              color = ((ColorStyle) style);
-              out.append("\\definecolor{");//$NON-NLS-1$
-              out.append(this._colorName(color));
-              out.append("}{HTML}{"); //$NON-NLS-1$
-              html = Integer.toHexString(color.getRGB()).toUpperCase();
-              for (i = html.length(); i < 6; i++) {
-                out.append('0');
+          if (hasColors) {
+            for (final IStyle style : usedStyles) {
+              if ((style != null) && (style instanceof ColorStyle)) {
+                color = ((ColorStyle) style);
+                out.append("\\definecolor{");//$NON-NLS-1$
+                out.append(this._colorName(color));
+                out.append("}{HTML}{"); //$NON-NLS-1$
+                html = Integer.toHexString(color.getRGB() & 0xffffff)
+                    .toUpperCase();
+                for (i = html.length(); i < 6; i++) {
+                  out.append('0');
+                }
+                out.append(html);
+                LaTeXDriver._endCommandLine(out);
               }
-              out.append(html);
-              LaTeXDriver._endCommandLine(out);
             }
           }
 

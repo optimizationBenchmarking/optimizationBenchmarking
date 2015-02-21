@@ -15,6 +15,7 @@ final class _LaTeXMathAdd extends MathAdd {
    */
   _LaTeXMathAdd(final BasicMath owner) {
     super(owner);
+    this.open();
   }
 
   /** {@inheritDoc} */

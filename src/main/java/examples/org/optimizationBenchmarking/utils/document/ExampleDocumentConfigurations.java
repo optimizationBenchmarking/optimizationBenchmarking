@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
+import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfigurationBuilder;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Configuration;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10ConfigurationBuilder;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
@@ -67,6 +68,7 @@ public final class ExampleDocumentConfigurations {
 
     all = new LinkedHashSet<>();
 
+    ExampleDocumentConfigurations.__addLaTeX(all);
     ExampleDocumentConfigurations.__addXHTML10(all);
 
     return ExampleDocumentConfigurations.__makeUnique(all,
@@ -198,6 +200,20 @@ public final class ExampleDocumentConfigurations {
         }
       }
     }
+  }
+
+  /**
+   * add the LaTeX drivers
+   * 
+   * @param add
+   *          the collection to add to
+   */
+  private static final void __addLaTeX(
+      final Collection<DocumentConfiguration> add) {
+    LaTeXConfigurationBuilder latex;
+
+    latex = new LaTeXConfigurationBuilder();
+    add.add(latex.immutable());
   }
 
   /**
