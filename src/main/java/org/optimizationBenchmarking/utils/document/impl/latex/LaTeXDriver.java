@@ -16,6 +16,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.Enumeration;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Figure;
 import org.optimizationBenchmarking.utils.document.impl.abstr.FigureSeries;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Itemization;
+import org.optimizationBenchmarking.utils.document.impl.abstr.Label;
 import org.optimizationBenchmarking.utils.document.impl.abstr.PlainText;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Section;
 import org.optimizationBenchmarking.utils.document.impl.abstr.SectionBody;
@@ -51,9 +52,45 @@ import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
  */
 public final class LaTeXDriver extends DocumentDriver {
 
+  /** the item command */
+  static final char[] ITEM = { '\\', 'i', 't', 'e', 'm', ' ' };
+
+  /** the label command */
+  private static final char[] LABEL = { '\\', 'l', 'a', 'b', 'e', 'l', '{' };
+
+  /** begin the center environment */
+  static final char[] CENTER_BEGIN = { '\\', 'b', 'e', 'g', 'i', 'n', '{',
+      'c', 'e', 'n', 't', 'e', 'r', '}' };
+  /** end the center environment */
+  static final char[] CENTER_END = { '\\', 'e', 'n', 'd', '{', 'c', 'e',
+      'n', 't', 'e', 'r', '}' };
+
   /** Create a new LaTeX driver */
   LaTeXDriver() {
     super();
+  }
+
+  /**
+   * Put a label
+   * 
+   * @param label
+   *          the label
+   * @param out
+   *          the text output
+   */
+  static final void _label(final Label label, final ITextOutput out) {
+    final String id;
+
+    if (label == null) {
+      return;
+    }
+    id = label.getLabelMark();
+    if (id == null) {
+      return;
+    }
+    out.append(LaTeXDriver.LABEL);
+    out.append(id);
+    LaTeXDriver._endCommandLine(out);
   }
 
   /**

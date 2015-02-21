@@ -38,11 +38,22 @@ public enum ELength implements IUnit {
    * according to <a href="
    * http://en.wikipedia.org/wiki/PostScript">PostScript</a> definition
    */
-  POINT("point", "pt", "point (postscript)"), //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+  POINT("point", "pt", "point (postscript)"), //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$  
+  /**
+   * <a href="http://www.giss.nasa.gov/tools/latex/ltx-86.html">Scaled
+   * Point</a>
+   */
+  SCALED_POINT("scaled point", "sp"), //$NON-NLS-1$//$NON-NLS-2$
+  /**
+   * <a href="http://www.giss.nasa.gov/tools/latex/ltx-86.html">Big
+   * point</a>
+   */
+  BIG_POINT("big point", "bp"), //$NON-NLS-1$//$NON-NLS-2$
+
   /** European/didot point */
-  POINT_EUROPEAN_DIDOT("point (Didot)", null, "point (European/Didot)"), //$NON-NLS-1$//$NON-NLS-2$
+  DIDOT("did\u00f4t", "dd", "point (European/Did\u00f4t)"), //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
   /** European/didot cicero */
-  CICERO_EUROPEAN_DIDOT("cicero", null, "cicero (Europan/Didot)"), //$NON-NLS-1$//$NON-NLS-2$
+  CICERO("c\u00eecero", "cc", "c\u00eecero (Europan/Didot)"), //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
   // /** pica */
   //  PICA("pica"), //$NON-NLS-1$
   /** postscript-pica */
@@ -159,6 +170,14 @@ public enum ELength implements IUnit {
   public static final ELength YD = YARD;
   /** the points */
   public static final ELength PT = POINT;
+  /** the scaled points */
+  public static final ELength SP = SCALED_POINT;
+  /** the big points */
+  public static final ELength BP = BIG_POINT;
+  /** the didot */
+  public static final ELength DD = DIDOT;
+  /** the cicero */
+  public static final ELength CC = CICERO;
   /** the astronomical unit */
   public static final ELength AU = ASTRONOMICAL_UNIT;
   /** the light year */
@@ -202,7 +221,7 @@ public enum ELength implements IUnit {
     comp.setFactor(ELength.ELL, ELength.FOOT, Rational.valueOf(375L, 100L));
     comp.setFactor(ELength.FOOT, ELength.INCH, 12L);
     comp.setFactor(ELength.FOOT, ELength.LINE, 144L);
-    comp.setFactor(ELength.FOOT, ELength.BARLEYCORN, 36l);
+    comp.setFactor(ELength.FOOT, ELength.BARLEYCORN, 36L);
     comp.setFactor(ELength.SPAN, ELength.NAIL, 4L);
     comp.setFactor(ELength.YARD, ELength.SPAN, 4L);
     comp.setFactor(ELength.FOOT, ELength.PALM, 4L);
@@ -213,9 +232,13 @@ public enum ELength implements IUnit {
 
     comp.setFactor(ELength.PICA, ELength.PIXEL, 16l);
     comp.setFactor(ELength.PICA, ELength.TWIP, 240L);
-    comp.setFactor(ELength.CICERO_EUROPEAN_DIDOT,
-        ELength.POINT_EUROPEAN_DIDOT, 12L);
+    comp.setFactor(ELength.CICERO, ELength.DIDOT, 12L);
     comp.setFactor(ELength.PICA, ELength.POINT, 12L);
+
+    comp.setFactor(ELength.POINT, ELength.SCALED_POINT, 65536L);
+    comp.setFactor(ELength.INCH, ELength.BIG_POINT, 72L);
+    // comp.setFactor(ELength.DIDOT, ELength.POINT,
+    // Rational.valueOf(1238L, 1157L));
 
     comp.setFactor(ELength.LIGHT_YEAR, ELength.PARSEC,
         Rational.valueOf(306601394L, 1000000000L));
@@ -246,7 +269,7 @@ public enum ELength implements IUnit {
     comp.setFactor(ELength.YARD, ELength.METER,
         Rational.valueOf(9144L, 10000L));
     //
-    comp.setFactor(ELength.POINT_EUROPEAN_DIDOT, ELength.MILLIMETER,
+    comp.setFactor(ELength.DIDOT, ELength.MILLIMETER,
         Rational.valueOf(376L, 1000L));
     comp.setFactor(ELength.INCH, ELength.POINT, 72);
     //

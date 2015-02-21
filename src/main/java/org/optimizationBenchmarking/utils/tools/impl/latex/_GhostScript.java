@@ -32,7 +32,7 @@ final class _GhostScript extends _LaTeXToolChainComponent {
 
     logger = Configuration.getGlobalLogger();
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
-      logger.config("Now trying to find dvips executable.");//$NON-NLS-1$
+      logger.config("Now trying to find GhostScript executable.");//$NON-NLS-1$
     }
 
     path = PathUtils.findFirstInPath(new AndPredicate<>(
@@ -86,7 +86,7 @@ final class _GhostScript extends _LaTeXToolChainComponent {
 
     if ((exec = this.m_executable) == null) {
       throw new UnsupportedOperationException(
-          "No GhostScript binary detected."); //$NON-NLS-1$
+          "No GhostScript executable detected."); //$NON-NLS-1$
     }
 
     logger = job._getLogger();
@@ -113,14 +113,36 @@ final class _GhostScript extends _LaTeXToolChainComponent {
     builder.setDirectory(job._getDirectory());
     builder.setExecutable(exec);
     builder.addStringArgument("-q"); //$NON-NLS-1$
+    builder.addStringArgument("-dEmbedAllFonts=true"); //$NON-NLS-1$
+    builder.addStringArgument("-dSubsetFonts=true"); //$NON-NLS-1$
+    builder.addStringArgument("-dCompressFonts=true"); //$NON-NLS-1$
+    builder.addStringArgument("-dOptimize=true"); //$NON-NLS-1$
+    builder.addStringArgument("-dPreserveCopyPage=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dPreserveEPSInfo=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dPreserveHalftoneInfo=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dPreserveOPIComments=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dPreserveOverprintSettings=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dPreserveSeparation=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dPreserveDeviceN=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dMaxBitmap=2147483647"); //$NON-NLS-1$
+    builder.addStringArgument("-dDownsampleMonoImages=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dDownsampleGrayImages=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dDownsampleColorImages=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dFastWebView=false"); //$NON-NLS-1$
     builder.addStringArgument("-dNOPAUSE"); //$NON-NLS-1$
+    builder.addStringArgument("-dQUIET"); //$NON-NLS-1$
     builder.addStringArgument("-dBATCH"); //$NON-NLS-1$
+    builder.addStringArgument("-dSAFER"); //$NON-NLS-1$
     builder.addStringArgument("-sDEVICE=pdfwrite"); //$NON-NLS-1$
+    builder.addStringArgument("-dAutoRotatePages=/PageByPage"); //$NON-NLS-1$
+
     builder.addStringArgument("-sOutputFile=" + //$NON-NLS-1$
         PathUtils.getPhysicalPath(pdf, false));
+    builder.addStringArgument("-f"); //$NON-NLS-1$
     builder.addPathArgument(ps);
     builder.addStringArgument("-c"); //$NON-NLS-1$
-    builder.addStringArgument("quit"); //$NON-NLS-1$
+    builder.addStringArgument(//
+        ".setpdfwrite <</NeverEmbed [ ]>> setdistillerparams"); //$NON-NLS-1$
 
     builder.setLogger(logger);
     builder.setStdErr(EProcessStream.REDIRECT_TO_LOGGER);

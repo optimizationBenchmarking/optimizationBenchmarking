@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * <p>
- * A number appender which appends the numbers to the directly output, but
+ * A number appender which appends the numbers directly to the output, but
  * tries to simplify {@code double} numbers via some heuristic:
  * </p>
  * <ol>

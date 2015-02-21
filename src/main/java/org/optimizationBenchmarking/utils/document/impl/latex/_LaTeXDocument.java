@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,12 +17,16 @@ import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.math.units.ELength;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -51,6 +56,14 @@ final class _LaTeXDocument extends Document {
   /** end the input */
   private static final char[] INPUT_END = { '\\', 'e', 'n', 'd', 'i', 'n',
       'p', 'u', 't' };
+  /** the first part of the include graphics call */
+  private static final char[] INCLUDE_GRAPHICS_1 = { '\\', 'i', 'n', 'c',
+      'l', 'u', 'd', 'e', 'g', 'r', 'a', 'p', 'h', 'i', 'c', 's', '[',
+      'k', 'e', 'e', 'p', 'a', 's', 'p', 'e', 'c', 't', 'r', 'a', 't',
+      'i', 'o', ',', 'w', 'i', 'd', 't', 'h', '=' };
+  /** the second part of the include graphics call */
+  private static final char[] INCLUDE_GRAPHICS_2 = { ',', 'h', 'e', 'i',
+      'g', 'h', 't', '=' };
 
   /** the required separator */
   private static final String REQUIRED_SEPARATOR = "/"; //$NON-NLS-1$
@@ -327,6 +340,67 @@ final class _LaTeXDocument extends Document {
     return rel;
   }
 
+  /**
+   * Write an include graphics command to a text output
+   * 
+   * @param size
+   *          the size of the graphic
+   * @param files
+   *          the graphic files (there should be exactly 1)
+   * @param out
+   *          the destination to write to
+   */
+  final void _includeGraphics(final PhysicalDimension size,
+      final ArrayListView<Map.Entry<Path, EGraphicFormat>> files,
+      final ITextOutput out) {
+    final String shrt;
+    double width, height;
+    ELength length;
+
+    if (files.isEmpty()) {
+      LaTeXDriver
+          ._commentLine(//
+              "No graphic created. This is odd (maybe see the log for details).", //$NON-NLS-1$
+              out);
+      return;
+    }
+
+    width = size.getWidth();
+    height = size.getHeight();
+    length = size.getUnit();
+    switch (length) {
+      case POINT:
+      case INCH:
+      case MILLIMETER:
+      case CENTIMETER:
+      case PICA:
+      case DIDOT:
+      case CICERO:
+      case SCALED_POINT:
+      case BIG_POINT: {
+        break;
+      }
+      default: {
+        width = length.convertTo(width, ELength.POINT);
+        height = length.convertTo(height, ELength.POINT);
+        length = ELength.POINT;
+      }
+    }
+
+    out.append(_LaTeXDocument.INCLUDE_GRAPHICS_1);
+    SimpleNumberAppender.INSTANCE.appendTo(width, ETextCase.IN_SENTENCE,
+        out);
+    out.append(shrt = length.getShortcut());
+    out.append(_LaTeXDocument.INCLUDE_GRAPHICS_2);
+    SimpleNumberAppender.INSTANCE.appendTo(height, ETextCase.IN_SENTENCE,
+        out);
+    out.append(shrt);
+    out.append(']');
+    out.append('{');
+    out.append(this._pathRelativeToDocument(files.get(0).getKey(), false));
+    LaTeXDriver._endCommandLine(out);
+  }
+
   /** register that there is a figure series in the document */
   final void _registerFigureSeries() {
     this.m_hasFigureSeries = true;
@@ -438,11 +512,6 @@ final class _LaTeXDocument extends Document {
           // figure series
           if (this.m_hasFigureSeries
               && (this.m_figureSeriesPackagePath != null)) {
-
-            LaTeXDriver
-                ._commentLine(//
-                    "We have at least one figure series, so we use the figureSeries package.",//$NON-NLS-1$
-                    out);
             _LaTeXDocument.__requirePackage(out,
                 this._pathRelativeToDocument(//
                     this.m_figureSeriesPackagePath, true));

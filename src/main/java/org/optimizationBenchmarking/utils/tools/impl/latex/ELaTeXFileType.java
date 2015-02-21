@@ -215,6 +215,28 @@ public enum ELaTeXFileType implements IFileType {
     }
   },
 
+  /** the outline post script file type */
+  OUT_PS(true, false, false) {
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getDefaultSuffix() {
+      return "out.ps";//$NON-NLS-1$
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getMIMEType() {
+      return "application/postscript";//$NON-NLS-1$
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getName() {
+      return "PostScript Outline";//$NON-NLS-1$
+    }
+  },
+
   /** the PDF file type */
   PDF(false, false, false) {
 
@@ -301,7 +323,52 @@ public enum ELaTeXFileType implements IFileType {
     public final String getName() {
       return "LaTeX Output File";//$NON-NLS-1$
     }
-  };
+  },
+
+  /** the thumbnal file type */
+  THM(true, false, false) {
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getDefaultSuffix() {
+      return "thm";//$NON-NLS-1$
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getMIMEType() {
+      return null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getName() {
+      return "Thumbnail File";//$NON-NLS-1$
+    }
+  },
+
+  /** the index file type */
+  IDX(true, true, false) {
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getDefaultSuffix() {
+      return "idx";//$NON-NLS-1$
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getMIMEType() {
+      return null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getName() {
+      return "LaTeX Index File";//$NON-NLS-1$
+    }
+  },
+  ;
 
   /** A set view of all the instances */
   public static final ArraySetView<ELaTeXFileType> INSTANCES = //

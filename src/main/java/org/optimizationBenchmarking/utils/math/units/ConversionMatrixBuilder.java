@@ -37,7 +37,15 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
   }
 
   /**
-   * Set a conversion factor between two elements.
+   * Set a conversion factor between two elements. Setting the factor for
+   * <code>from={@link org.optimizationBenchmarking.utils.math.units.ELength#METER}</code>
+   * and
+   * <code>to={@link org.optimizationBenchmarking.utils.math.units.ELength#MILLIMETER}</code>
+   * to <code>1000</code> means that
+   * <code>1 {@link org.optimizationBenchmarking.utils.math.units.ELength#M}</code>
+   * equals
+   * <code>1000 {@link org.optimizationBenchmarking.utils.math.units.ELength#MM}</code>
+   * .
    * 
    * @param from
    *          the source unit
@@ -209,7 +217,15 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
   }
 
   /**
-   * Set a conversion factor between two elements.
+   * Set a conversion factor between two elements. Setting the factor for
+   * <code>from={@link org.optimizationBenchmarking.utils.math.units.ELength#METER}</code>
+   * and
+   * <code>to={@link org.optimizationBenchmarking.utils.math.units.ELength#MILLIMETER}</code>
+   * to <code>1000</code> means that
+   * <code>1 {@link org.optimizationBenchmarking.utils.math.units.ELength#M}</code>
+   * equals
+   * <code>1000 {@link org.optimizationBenchmarking.utils.math.units.ELength#MM}</code>
+   * .
    * 
    * @param from
    *          the source unit
@@ -225,7 +241,15 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
   }
 
   /**
-   * Set a conversion factor between two elements.
+   * Set a conversion factor between two elements. Setting the factor for
+   * <code>from={@link org.optimizationBenchmarking.utils.math.units.ELength#METER}</code>
+   * and
+   * <code>to={@link org.optimizationBenchmarking.utils.math.units.ELength#MILLIMETER}</code>
+   * to <code>1000</code> means that
+   * <code>1 {@link org.optimizationBenchmarking.utils.math.units.ELength#M}</code>
+   * equals
+   * <code>1000 {@link org.optimizationBenchmarking.utils.math.units.ELength#MM}</code>
+   * .
    * 
    * @param from
    *          the source unit
@@ -241,7 +265,15 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
   }
 
   /**
-   * Set a conversion factor between two elements.
+   * Set a conversion factor between two elements. Setting the factor for
+   * <code>from={@link org.optimizationBenchmarking.utils.math.units.ELength#METER}</code>
+   * and
+   * <code>to={@link org.optimizationBenchmarking.utils.math.units.ELength#MILLIMETER}</code>
+   * to <code>1000</code> means that
+   * <code>1 {@link org.optimizationBenchmarking.utils.math.units.ELength#M}</code>
+   * equals
+   * <code>1000 {@link org.optimizationBenchmarking.utils.math.units.ELength#MM}</code>
+   * .
    * 
    * @param from
    *          the source unit
@@ -257,7 +289,15 @@ public class ConversionMatrixBuilder<E extends Enum<E>> extends FSM {
   }
 
   /**
-   * Set a conversion factor between two elements.
+   * Set a conversion factor between two elements. Setting the factor for
+   * <code>from={@link org.optimizationBenchmarking.utils.math.units.ELength#METER}</code>
+   * and
+   * <code>to={@link org.optimizationBenchmarking.utils.math.units.ELength#MILLIMETER}</code>
+   * to <code>1000</code> means that
+   * <code>1 {@link org.optimizationBenchmarking.utils.math.units.ELength#M}</code>
+   * equals
+   * <code>1000 {@link org.optimizationBenchmarking.utils.math.units.ELength#MM}</code>
+   * .
    * 
    * @param from
    *          the source unit
