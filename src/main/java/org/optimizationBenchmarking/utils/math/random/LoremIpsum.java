@@ -413,8 +413,8 @@ public final class LoremIpsum {
         sentencePartLength++;
 
       } while (((++count) < maxLength) && //
-          (sentencePartLength < 10) && //
-          ((sentencePartLength <= 3) || (rand.nextInt(10) > 0)));
+          (sentencePartLength < 8) && //
+          ((sentencePartLength <= 3) || (rand.nextInt(12) > 0)));
 
       // end the sentence
       switch (rand.nextInt(12)) {
@@ -444,7 +444,7 @@ public final class LoremIpsum {
           lastSentenceEnd = '.';
         }
       }
-    } while ((count < maxLength) && (rand.nextInt(4) > 0));
+    } while ((count < maxLength) && (rand.nextInt(3) > 0));
   }
 
   /**

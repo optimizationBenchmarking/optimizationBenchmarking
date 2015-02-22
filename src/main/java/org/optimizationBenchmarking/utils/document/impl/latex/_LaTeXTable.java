@@ -41,9 +41,11 @@ final class _LaTeXTable extends Table {
   /** the multi-col */
   private static final char[] MULTI_COLUMN = { '\\', 'm', 'u', 'l', 't',
       'i', 'c', 'o', 'l', 'u', 'm', 'n', '{' };
-  /** the multi-row */
-  private static final char[] MULTI_ROW = { '\\', 'm', 'u', 'l', 't', 'i',
-      'r', 'o', 'w', '{' };
+  /** the first part of a multi-row */
+  private static final char[] MULTI_ROW_1 = { '\\', 'm', 'u', 'l', 't',
+      'i', 'r', 'o', 'w', '{' };
+  /** the second part of a multi-row */
+  private static final char[] MULTI_ROW_2 = { '}', '{', '*', '}', '{', };
 
   /** does this table span all columns */
   private boolean m_pageWide;
@@ -87,8 +89,8 @@ final class _LaTeXTable extends Table {
 
     this.m_pageWide = (this.spansAllColumns() && //
     (doc.m_class.getColumnCount() > 1));
-    out.append(this.m_pageWide ? _LaTeXTable.TABLE_A_BEGIN
-        : _LaTeXTable.TABLE_B_BEGIN);
+    out.append(this.m_pageWide ? _LaTeXTable.TABLE_B_BEGIN
+        : _LaTeXTable.TABLE_A_BEGIN);
     LaTeXDriver._endLine(out);
 
     out.append(LaTeXDriver.CENTER_BEGIN);
@@ -152,8 +154,8 @@ final class _LaTeXTable extends Table {
     LaTeXDriver._endLine(out);
     out.append(LaTeXDriver.CENTER_END);
     LaTeXDriver._endLine(out);
-    out.append(this.m_pageWide ? _LaTeXTable.TABLE_A_END
-        : _LaTeXTable.TABLE_B_END);
+    out.append(this.m_pageWide ? _LaTeXTable.TABLE_B_END
+        : _LaTeXTable.TABLE_A_END);
     LaTeXDriver._endLine(out);
     LaTeXDriver._endLine(out);
 
@@ -173,7 +175,6 @@ final class _LaTeXTable extends Table {
   static final int _beginCell(final TableCell cell, final ITextOutput out) {
     final int cols, rows;
     int mode;
-    String s;
 
     if (cell.getStartColumn() > 0) {
       out.append('&');
@@ -186,8 +187,7 @@ final class _LaTeXTable extends Table {
 
       if ((cols > 1) || ((cols <= 1) && (rows <= 1))) {
         out.append(_LaTeXTable.MULTI_COLUMN);
-        s = String.valueOf(cols);
-        out.append(s);
+        out.append(cols);
         out.append('}');
         out.append('{');
         _LaTeXTable._appendCellDef(cell, out);
@@ -196,11 +196,9 @@ final class _LaTeXTable extends Table {
         mode |= _LaTeXTable.MODE_MULTI_COL;
       }
       if (rows > 1) {
-        out.append(_LaTeXTable.MULTI_ROW);
-        s = String.valueOf(rows);
-        out.append(s);
-        out.append('}');
-        out.append('{');
+        out.append(_LaTeXTable.MULTI_ROW_1);
+        out.append(rows);
+        out.append(_LaTeXTable.MULTI_ROW_2);
         mode |= _LaTeXTable.MODE_MULTI_ROW;
       }
     }

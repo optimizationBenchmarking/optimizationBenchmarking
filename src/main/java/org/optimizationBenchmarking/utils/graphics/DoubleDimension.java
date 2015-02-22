@@ -13,8 +13,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 public class DoubleDimension extends Dimension2D implements ITextable {
 
   /** the empty dimension */
-  public static final PhysicalDimension EMPTY = new PhysicalDimension(0d,
-      0d, ELength.POINT);
+  public static final PhysicalDimension EMPTY_DIMENSION = new PhysicalDimension(
+      0d, 0d, ELength.POINT);
 
   /** the width */
   final double m_width;

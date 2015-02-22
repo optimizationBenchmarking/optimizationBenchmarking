@@ -65,8 +65,13 @@ final class _LaTeXSubFigure extends SubFigure {
   @Override
   protected final void onFigureClose(final PhysicalDimension size,
       final ArrayListView<Map.Entry<Path, EGraphicFormat>> files) {
+    final ITextOutput out;
 
-    LaTeXDriver._endCommandLine(this.getTextOutput());
+    out = this.getTextOutput();
+    ((_LaTeXDocument) (this.getDocument()))._includeGraphics(size, files,
+        out);
+    LaTeXDriver._endCommandLine(out);
+
     super.onFigureClose(size, files);
   }
 }

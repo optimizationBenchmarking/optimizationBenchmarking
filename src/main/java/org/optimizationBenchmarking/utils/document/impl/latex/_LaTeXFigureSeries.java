@@ -56,6 +56,7 @@ final class _LaTeXFigureSeries extends FigureSeries {
 
     out = this.getTextOutput();
     LaTeXDriver._endCommandLine(out);
+    LaTeXDriver._endCommandLine(out);
     LaTeXDriver._endLine(out);
 
     super.onClose();

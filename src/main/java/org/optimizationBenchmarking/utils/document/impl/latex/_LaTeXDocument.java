@@ -499,6 +499,8 @@ final class _LaTeXDocument extends Document {
           out = AbstractTextOutput.wrap(bw);
 
           // adding default packages
+          _LaTeXDocument.__requirePackage(out, "fontenc",//$NON-NLS-1$ 
+              "T1"); //$NON-NLS-1$
 
           hasColors = (!(this.m_colorNames.isEmpty()));
           if (this.m_hasTable || hasColors) {

@@ -7,6 +7,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
+import org.optimizationBenchmarking.utils.parsers.LoggerParser;
 
 /**
  * The base class for document examples.
@@ -37,6 +38,8 @@ public abstract class DocumentExample implements Runnable {
     Logger ret, c;
     Handler[] hh;
 
+    ret = LoggerParser.INSTANCE.parseObject("\"global\";ALL");//$NON-NLS-1$
+
     f = new Filter() {
       @Override
       public final boolean isLoggable(final LogRecord record) {
@@ -44,7 +47,6 @@ public abstract class DocumentExample implements Runnable {
       }
     };
 
-    ret = Logger.getGlobal();
     for (c = ret; c != null; c = c.getParent()) {
       c.setLevel(Level.ALL);
       c.setFilter(f);

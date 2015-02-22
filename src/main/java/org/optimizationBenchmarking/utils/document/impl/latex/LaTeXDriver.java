@@ -3,6 +3,8 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
+import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
@@ -30,7 +32,9 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooterRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeader;
 import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
+import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
@@ -42,6 +46,8 @@ import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteXMLInput;
 import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.text.ESequenceMode;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransformer;
@@ -72,6 +78,9 @@ public final class LaTeXDriver extends DocumentDriver {
   /** the caption */
   static final char[] CAPTION_BEGIN = { '\\', 'c', 'a', 'p', 't', 'i',
       'o', 'n', '{' };
+
+  /** the citation begin */
+  static final char[] CITE_BEGIN = { '{', '\\', 'c', 'i', 't', 'e', '{' };
 
   /** Create a new LaTeX driver */
   LaTeXDriver() {
@@ -718,6 +727,48 @@ public final class LaTeXDriver extends DocumentDriver {
   final ITextOutput _encodeCode(final ITextOutput raw,
       final ITextOutput encoded) {
     return raw;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXCitationItem createCitationItem(
+      final BibRecord item, final ECitationMode mode) {
+    return new _LaTeXCitationItem(item, mode);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void cite(final Bibliography bib,
+      final ECitationMode citationMode, final ETextCase textCase,
+      final ESequenceMode sequenceMode, final ComplexText complexText,
+      final ITextOutput raw) {
+    boolean b;
+
+    if ((bib.size() == 1)
+        || ((sequenceMode == ESequenceMode.COMMA) && (citationMode == ECitationMode.ID))) {
+      raw.append(LaTeXDriver.CITE_BEGIN);
+      b = false;
+      for (final BibRecord rec : bib) {
+        if (b) {
+          raw.append(',');
+        } else {
+          b = true;
+        }
+        raw.append(rec.getKey());
+      }
+      raw.append('}');
+      raw.append('}');
+    }
+
+    super.cite(bib, citationMode, textCase, sequenceMode,//
+        complexText, raw);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXLabel createLabel(final Document owner,
+      final ELabelType type, final String mark, final String refText) {
+    return new _LaTeXLabel(((_LaTeXDocument) owner), type, mark, refText);
   }
 
   /** the loader for the default LaTeX driver */

@@ -72,7 +72,7 @@ final class _LaTeXDocumentFooter extends DocumentFooter {
     }
 
     try {
-      driver.use().setPath(path).setLogger(logger)
+      driver.use().setPath(path).setLogger(logger).setSource(bib)
           .setFileProducerListener(this.getFileCollector()).create()
           .call();
     } catch (final Throwable error) {

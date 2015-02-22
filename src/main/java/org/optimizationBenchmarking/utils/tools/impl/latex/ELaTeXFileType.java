@@ -127,6 +127,28 @@ public enum ELaTeXFileType implements IFileType {
     }
   },
 
+  /** the LaTeX style/package file type */
+  DEF(false, false, true) {
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getDefaultSuffix() {
+      return "def";//$NON-NLS-1$
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getMIMEType() {
+      return null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getName() {
+      return "LaTeX Definition File";//$NON-NLS-1$
+    }
+  },
+
   /** the aux file type */
   AUX(true, true, false) {
 

@@ -6,7 +6,9 @@ import java.util.LinkedHashSet;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
+import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfiguration;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfigurationBuilder;
+import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDocumentClass;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Configuration;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10ConfigurationBuilder;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
@@ -16,6 +18,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
+import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 
 import examples.org.optimizationBenchmarking.utils.graphics.ExampleFontPalettes;
 import examples.org.optimizationBenchmarking.utils.graphics.ExampleGraphicConfigurations;
@@ -37,8 +40,10 @@ public final class ExampleDocumentConfigurations {
   private static final int LEVEL_GRAPHIC_DRIVER = (ExampleDocumentConfigurations.LEVEL_DOCUMENT_DRIVER + 1);
   /** the chart driver mode */
   private static final int LEVEL_CHART_DRIVER = (ExampleDocumentConfigurations.LEVEL_GRAPHIC_DRIVER + 1);
+  /** the document class */
+  private static final int LEVEL_DOCUMENT_CLASS = (ExampleDocumentConfigurations.LEVEL_CHART_DRIVER + 1);
   /** the fonts mode */
-  private static final int LEVEL_FONTS = (ExampleDocumentConfigurations.LEVEL_CHART_DRIVER + 1);
+  private static final int LEVEL_FONTS = (ExampleDocumentConfigurations.LEVEL_DOCUMENT_CLASS + 1);
   /** the color model */
   private static final int LEVEL_COLOR_MODEL = (ExampleDocumentConfigurations.LEVEL_FONTS + 1);
   /** the dpi level */
@@ -101,6 +106,12 @@ public final class ExampleDocumentConfigurations {
       case LEVEL_CHART_DRIVER: {
         return config.getChartDriver();
       }
+      case LEVEL_DOCUMENT_CLASS: {
+        if (config instanceof LaTeXConfiguration) {
+          return ((LaTeXConfiguration) config).getDocumentClass();
+        }
+        return null;
+      }
       case LEVEL_QUALITY: {
         graph = config.getGraphicDriver();
         if (graph != null) {
@@ -147,11 +158,19 @@ public final class ExampleDocumentConfigurations {
         if (config instanceof XHTML10Configuration) {
           return ((XHTML10Configuration) config).getFontPalette();
         }
+        if (config instanceof LaTeXConfiguration) {
+          return ((LaTeXConfiguration) config).getDocumentClass()
+              .getFontPalette();
+        }
         return null;
       }
       case LEVEL_PAGE_SIZE: {
         if (config instanceof XHTML10Configuration) {
           return ((XHTML10Configuration) config).getScreenSize();
+        }
+        if (config instanceof LaTeXConfiguration) {
+          return ((LaTeXConfiguration) config).getDocumentClass()
+              .getPaperSize();
         }
         return null;
       }
@@ -214,6 +233,34 @@ public final class ExampleDocumentConfigurations {
 
     latex = new LaTeXConfigurationBuilder();
     add.add(latex.immutable());
+
+    outer: for (final GraphicConfiguration graphicConfig : ExampleGraphicConfigurations.CONFIGURATIONS) {
+
+      if (!(LaTeX.getAllSupportedGraphicFormats().contains(//
+          graphicConfig.getGraphicDriver().getFileType()))) {
+        continue;
+      }
+
+      latex = new LaTeXConfigurationBuilder();
+      try {
+        latex.assign(graphicConfig);
+      } catch (final IllegalArgumentException notSupported) {
+        continue outer;
+      }
+      add.add(latex.immutable());
+
+      for (final IChartDriver chartDriver : ExampleChartDrivers.DRIVERS) {
+        latex.setChartDriver(chartDriver);
+        add.add(latex.immutable());
+
+        for (final LaTeXDocumentClass clazz : new LaTeXDocumentClass[] {
+            LaTeXDocumentClass.ARTICLE, LaTeXDocumentClass.REPORT,
+            LaTeXDocumentClass.BOOK }) {
+          latex.setDocumentClass(clazz);
+          add.add(latex.immutable());
+        }
+      }
+    }
   }
 
   /**

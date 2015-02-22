@@ -221,7 +221,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
         DocumentElement.STATE_DEAD);
     try {
       this.onFigureClose(((this.m_figureSize != null) ? this.m_figureSize
-          : DoubleDimension.EMPTY),
+          : DoubleDimension.EMPTY_DIMENSION),
           ((this.m_figureFiles != null) ? this.m_figureFiles
               : ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW))));
     } finally {

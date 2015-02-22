@@ -1,6 +1,10 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import java.util.Arrays;
+
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
+import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -14,6 +18,7 @@ import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerTool;
 
@@ -181,20 +186,6 @@ public abstract class DocumentDriver extends DocumentProducerTool
    */
   protected InlineMath createInlineMath(final ComplexText owner) {
     return new InlineMath(owner);
-  }
-
-  /**
-   * Create the bibliographic record
-   * 
-   * @param item
-   *          the bibliographic record
-   * @param mode
-   *          the citation mode
-   * @return the citation item
-   */
-  protected CitationItem createCitationItem(final BibRecord item,
-      final ECitationMode mode) {
-    return new CitationItem(item, mode);
   }
 
   /**
@@ -925,4 +916,269 @@ public abstract class DocumentDriver extends DocumentProducerTool
   protected void checkGraphicDriver(final IGraphicDriver driver) {
     //
   }
+
+  /**
+   * Create the bibliographic record
+   * 
+   * @param item
+   *          the bibliographic record
+   * @param mode
+   *          the citation mode
+   * @return the citation item
+   */
+  protected CitationItem createCitationItem(final BibRecord item,
+      final ECitationMode mode) {
+    return new CitationItem(item, mode);
+  }
+
+  /**
+   * This method is called to prepend a space to a citation. You can do
+   * citations without having a space in front of them. This method will
+   * choose the appropriate space, if one is needed.
+   * 
+   * @param citationMode
+   *          the citation mode
+   * @param textCase
+   *          the text case
+   * @param complexText
+   *          the calling complex text
+   * @param raw
+   *          the raw text output
+   */
+  protected void prependSpaceToCitation(final ECitationMode citationMode,
+      final ETextCase textCase, final ComplexText complexText,
+      final ITextOutput raw) {
+
+    if ((textCase == ETextCase.IN_SENTENCE)
+        || (textCase == ETextCase.IN_TITLE)) {
+      if (citationMode == ECitationMode.ID) {
+        complexText.appendNonBreakingSpace();
+      } else {
+        raw.append(' ');
+      }
+    }
+  }
+
+  /**
+   * Check a bibliography citation mode
+   * 
+   * @param citationMode
+   *          the citation mode
+   * @param textCase
+   *          the text case
+   * @param sequenceMode
+   *          the sequence mode
+   */
+  static void _checkCitationSetup(final ECitationMode citationMode,
+      final ETextCase textCase, final ESequenceMode sequenceMode) {
+    if (citationMode == null) {
+      throw new IllegalArgumentException("Citation mode must not be null."); //$NON-NLS-1$
+    }
+    if (textCase == null) {
+      throw new IllegalArgumentException(
+          "Text case for citations must not be null."); //$NON-NLS-1$
+    }
+    if (sequenceMode == null) {
+      throw new IllegalArgumentException(
+          "Sequence mode for citations must not be null."); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * check the citations
+   * 
+   * @param bib
+   *          the citations
+   */
+  static final void _checkCitations(final Bibliography bib) {
+    if ((bib == null) || (bib.isEmpty())) {
+      throw new IllegalArgumentException(//
+          "Citations must not be null or empty."); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * This method is called whenever a sub-bibliography has been created via
+   * the cite method of a complex text. It is called immediately after
+   * corresponding the
+   * {@link org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder}
+   * has been closed.
+   * 
+   * @param bib
+   *          the bibliography
+   * @param citationMode
+   *          the citation mode
+   * @param textCase
+   *          the text case
+   * @param sequenceMode
+   *          the sequence mode
+   * @param complexText
+   *          the calling complex text
+   * @param raw
+   *          the raw text output
+   */
+  protected void cite(final Bibliography bib,
+      final ECitationMode citationMode, final ETextCase textCase,
+      final ESequenceMode sequenceMode, final ComplexText complexText,
+      final ITextOutput raw) {
+    final int len;
+    final CitationItem[] references;
+    int i;
+
+    DocumentDriver._checkCitationSetup(citationMode, textCase,
+        sequenceMode);
+    DocumentDriver._checkCitations(bib);
+
+    len = bib.size();
+    references = new CitationItem[len];
+    for (i = 0; i < len; i++) {
+      references[i] = this.createCitationItem(bib.get(i), citationMode);
+    }
+
+    sequenceMode.appendSequence(textCase, new ArrayListView<>(references),
+        true, complexText);
+  }
+
+  /**
+   * This method is called to prepend a space to a reference. You can do
+   * references without having a space in front of them. This method will
+   * choose the appropriate space, if one is needed.
+   * 
+   * @param textCase
+   *          the text case
+   * @param complexText
+   *          the calling complex text
+   * @param raw
+   *          the raw text output
+   */
+  protected void prependSpaceToReference(final ETextCase textCase,
+      final ComplexText complexText, final ITextOutput raw) {
+    if ((textCase == ETextCase.IN_SENTENCE)
+        || (textCase == ETextCase.IN_TITLE)) {
+      raw.append(' ');
+    }
+  }
+
+  /**
+   * Do the actual referencing work
+   * 
+   * @param textCase
+   *          the text case
+   * @param sequenceMode
+   *          the sequence mode
+   * @param runs
+   *          the runs
+   * @param complexText
+   *          the complex text
+   * @param raw
+   *          the raw output
+   */
+  protected void referenceRuns(final ETextCase textCase,
+      final ESequenceMode sequenceMode, final ReferenceRun[] runs,
+      final ComplexText complexText, final ITextOutput raw) {
+    if (runs.length > 0) {
+      ESequenceMode.AND.appendNestedSequence(textCase,
+          new ArrayListView<>(runs), true, 1, complexText);
+    } else {
+      runs[0].toSequence(true, true, textCase, complexText);
+    }
+  }
+
+  /**
+   * Check the reference setup
+   * 
+   * @param textCase
+   *          the text case
+   * @param sequenceMode
+   *          the sequence mode
+   * @param labels
+   *          the labels
+   */
+  static final void _checkReferenceSetup(final ETextCase textCase,
+      final ESequenceMode sequenceMode, final ILabel[] labels) {
+    if (textCase == null) {
+      throw new IllegalArgumentException(
+          "Text case for references must not be null."); //$NON-NLS-1$
+    }
+    if (sequenceMode == null) {
+      throw new IllegalArgumentException(
+          "Sequence mode for references must not be null."); //$NON-NLS-1$
+    }
+    if ((labels == null) || (labels.length <= 0)) {
+      throw new IllegalArgumentException(//
+          "Labels must not be null or empty."); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * Reference a sequence of elements
+   * 
+   * @param textCase
+   *          the text case
+   * @param sequenceMode
+   *          the sequence mode
+   * @param labels
+   *          the labels
+   * @param complexText
+   *          the complex text
+   * @param raw
+   *          the raw output
+   */
+  protected void reference(final ETextCase textCase,
+      final ESequenceMode sequenceMode, final ILabel[] labels,
+      final ComplexText complexText, final ITextOutput raw) {
+    final int len;
+    int i, j, start, count;
+    Label a;
+    String curType, newType;
+    ReferenceRun[] runs;
+    Label[] cpy;
+
+    DocumentDriver._checkReferenceSetup(textCase, sequenceMode, labels);
+
+    curType = null;
+    start = 0;
+    count = 0;
+    len = labels.length;
+    runs = new ReferenceRun[len];
+
+    // check the labels and identify runs of the same types (or type names)
+    for (i = 0; i < len; i++) {
+      a = ((Label) (labels[i]));
+      if (a == null) {
+        throw new IllegalArgumentException(//
+            "Label must not be null."); //$NON-NLS-1$
+      }
+      for (j = i; (--j) >= 0;) {
+        if (a.equals(labels[j])) {
+          throw new IllegalArgumentException(//
+              "The same label must not appear twice in a reference, but '" //$NON-NLS-1$
+                  + a + "' does."); //$NON-NLS-1$
+        }
+      }
+
+      newType = a.getType().getName();
+      if (newType.equals(curType)) {
+        continue;
+      }
+      if (i > 0) {
+        cpy = new Label[i - start];
+        System.arraycopy(labels, start, cpy, 0, cpy.length);
+        runs[count++] = this
+            .createReferenceRun(curType, sequenceMode, cpy);
+        start = i;
+      }
+      curType = newType;
+    }
+
+    cpy = new Label[i - start];
+    System.arraycopy(labels, start, cpy, 0, cpy.length);
+    runs[count++] = this.createReferenceRun(curType, sequenceMode, cpy);
+
+    this.referenceRuns(textCase,
+        sequenceMode,//
+        ((count < runs.length) ? (Arrays.copyOf(runs, count)) : runs),
+        complexText, raw);
+  }
+
 }

@@ -60,7 +60,19 @@ public class LaTeXDocumentClass extends PageDimension {
       LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE,// fonts
       ELaTeXSection.CHAPTER,// highest supported section type
       ELaTeXSection.SUBPARAGRAPH// lowest supported section type
-  );
+  ) {
+    /** {@inheritDoc} */
+    @Override
+    protected final String getSummaryBegin() {
+      return "\\section*{Preface}"; //$NON-NLS-1$
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected final String getSummaryEnd() {
+      return null;
+    }
+  };
 
   /** the default document class */
   public static final LaTeXDocumentClass DEFAULT = LaTeXDocumentClass.ARTICLE;
@@ -352,7 +364,7 @@ public class LaTeXDocumentClass extends PageDimension {
    * @return the command that begins an author
    */
   protected String getAuthorBegin() {
-    return ""; //$NON-NLS-1$
+    return null;
   }
 
   /**
@@ -361,7 +373,7 @@ public class LaTeXDocumentClass extends PageDimension {
    * @return the command that ends an author
    */
   protected String getAuthorEnd() {
-    return "";//$NON-NLS-1$
+    return null;
   }
 
   /**

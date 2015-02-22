@@ -1,11 +1,8 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import java.util.Arrays;
-
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.IBibliographyConsumer;
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
@@ -73,29 +70,6 @@ public class ComplexText extends PlainText implements IComplexText {
     return this.m_driver.createInlineMath(this);
   }
 
-  /**
-   * Check a bibliography
-   * 
-   * @param citationMode
-   *          the citation mode
-   * @param textCase
-   *          the text case
-   * @param sequenceMode
-   *          the sequence mode
-   */
-  private static void __checkBib(final ECitationMode citationMode,
-      final ETextCase textCase, final ESequenceMode sequenceMode) {
-    if (citationMode == null) {
-      throw new IllegalArgumentException("Citation mode must not be null."); //$NON-NLS-1$
-    }
-    if (textCase == null) {
-      throw new IllegalArgumentException("Text case must not be null."); //$NON-NLS-1$
-    }
-    if (sequenceMode == null) {
-      throw new IllegalArgumentException("Sequence mode must not be null."); //$NON-NLS-1$
-    }
-  }
-
   /** {@inheritDoc} */
   @Override
   public synchronized final BibliographyBuilder cite(
@@ -105,7 +79,8 @@ public class ComplexText extends PlainText implements IComplexText {
 
     this.assertNoChildren();
 
-    ComplexText.__checkBib(citationMode, textCase, sequenceMode);
+    DocumentDriver._checkCitationSetup(citationMode, textCase,
+        sequenceMode);
 
     bb = this.m_doc.m_citations;
     if (bb == null) {
@@ -122,9 +97,8 @@ public class ComplexText extends PlainText implements IComplexText {
    * {@link #cite(ECitationMode, ETextCase, ESequenceMode)}. It is called
    * immediately after corresponding the
    * {@link org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder}
-   * has been closed. The standard implementation defers control to
-   * {@link #doCite(CitationItem[], ECitationMode, ETextCase, ESequenceMode, ITextOutput, ITextOutput)}
-   * .
+   * has been closed. The standard implementation defers control to the
+   * cite method of the driver.
    * 
    * @param bib
    *          the bibliography
@@ -135,153 +109,36 @@ public class ComplexText extends PlainText implements IComplexText {
    * @param sequenceMode
    *          the sequence mode
    * @see #cite(ECitationMode, ETextCase, ESequenceMode)
-   * @see #doCite(CitationItem[], ECitationMode, ETextCase, ESequenceMode,
-   *      ITextOutput, ITextOutput)
    */
-  protected synchronized void doCite(final Bibliography bib,
+  final synchronized void _doCite(final Bibliography bib,
       final ECitationMode citationMode, final ETextCase textCase,
       final ESequenceMode sequenceMode) {
-    final int len;
-    final CitationItem[] ci;
-    int i;
+    final ITextOutput out;
 
     this.assertNoChildren();
+    DocumentDriver._checkCitationSetup(citationMode, textCase,
+        sequenceMode);
+    DocumentDriver._checkCitations(bib);
 
-    ComplexText.__checkBib(citationMode, textCase, sequenceMode);
-
-    if ((bib == null) || ((len = bib.size()) <= 0)) {
-      throw new IllegalArgumentException(//
-          "References must not be null or empty."); //$NON-NLS-1$
-    }
-
-    ci = new CitationItem[len];
-    for (i = 0; i < len; i++) {
-      ci[i] = this.m_driver.createCitationItem(bib.get(i), citationMode);
-
-    }
-
-    this.doCite(ci, citationMode, textCase, sequenceMode,
-        this.getTextOutput(), this.m_encoded);
-  }
-
-  /**
-   * Do the work of {@link #cite(ECitationMode, ETextCase, ESequenceMode)}
-   * in a protected environment. You need to override either this method or
-   * {@link #doCite(Bibliography, ECitationMode, ETextCase, ESequenceMode)}
-   * to do the stuff, maybe by delegating the citation rendering to a new
-   * sub-class of
-   * {@link org.optimizationBenchmarking.utils.document.impl.abstr.CitationItem}
-   * for each item.
-   * 
-   * @param citationMode
-   *          the citation mode
-   * @param textCase
-   *          the text case
-   * @param sequenceMode
-   *          the sequence mode
-   * @param references
-   *          the references
-   * @param raw
-   *          the raw text output
-   * @param encoded
-   *          the encoded text output
-   * @see #doCite(Bibliography, ECitationMode, ETextCase, ESequenceMode)
-   * @see #cite(ECitationMode, ETextCase, ESequenceMode)
-   */
-  protected void doCite(final CitationItem[] references,
-      final ECitationMode citationMode, final ETextCase textCase,
-      final ESequenceMode sequenceMode, final ITextOutput raw,
-      final ITextOutput encoded) {
-
-    ComplexText.__checkBib(citationMode, textCase, sequenceMode);
-    if ((references == null) || (references.length <= 0)) {
-      throw new IllegalArgumentException(
-          "References must not be null or empty."); //$NON-NLS-1$
-    }
-
-    sequenceMode.appendSequence(textCase, new ArrayListView<>(references),
-        true, this);
-  }
-
-  /**
-   * Do the actual referencing work
-   * 
-   * @param textCase
-   *          the text case
-   * @param sequenceMode
-   *          the sequence mode
-   * @param runs
-   *          the runs
-   */
-  protected void doReference(final ETextCase textCase,
-      final ESequenceMode sequenceMode, final ReferenceRun[] runs) {
-    if (runs.length > 0) {
-      ESequenceMode.AND.appendNestedSequence(textCase,
-          new ArrayListView<>(runs), true, 1, this);
-    } else {
-      runs[0].toSequence(true, true, textCase, this);
-    }
+    out = this.getTextOutput();
+    this.m_driver
+        .prependSpaceToCitation(citationMode, textCase, this, out);
+    this.m_driver.cite(bib, citationMode, textCase, sequenceMode, this,
+        out);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized void reference(final ETextCase textCase,
       final ESequenceMode sequenceMode, final ILabel... labels) {
-    final int len;
-    int i, j, start, count;
-    Label a;
-    String curType, newType;
-    ReferenceRun[] runs;
-    Label[] cpy;
+    final ITextOutput out;
 
     this.assertNoChildren();
+    DocumentDriver._checkReferenceSetup(textCase, sequenceMode, labels);
 
-    if ((labels == null) || ((len = labels.length) <= 0)) {
-      throw new IllegalArgumentException(//
-          "Labels must not be null or empty."); //$NON-NLS-1$
-    }
-
-    curType = null;
-    start = 0;
-    count = 0;
-    runs = new ReferenceRun[len];
-
-    // check the labels and identify runs of the same types (or type names)
-    for (i = 0; i < len; i++) {
-      a = ((Label) (labels[i]));
-      if (a == null) {
-        throw new IllegalArgumentException(//
-            "Label must not be null."); //$NON-NLS-1$
-      }
-      for (j = i; (--j) >= 0;) {
-        if (a.equals(labels[j])) {
-          throw new IllegalArgumentException(//
-              "The same label must not appear twice in a reference, but '" //$NON-NLS-1$
-                  + a + "' does."); //$NON-NLS-1$
-        }
-      }
-
-      newType = a.getType().getName();
-      if (newType.equals(curType)) {
-        continue;
-      }
-      if (i > 0) {
-        cpy = new Label[i - start];
-        System.arraycopy(labels, start, cpy, 0, cpy.length);
-        runs[count++] = this.m_driver.createReferenceRun(curType,
-            sequenceMode, cpy);
-        start = i;
-      }
-      curType = newType;
-    }
-
-    cpy = new Label[i - start];
-    System.arraycopy(labels, start, cpy, 0, cpy.length);
-    runs[count++] = this.m_driver.createReferenceRun(curType,
-        sequenceMode, cpy);
-
-    this.doReference(textCase, sequenceMode,//
-        ((count < runs.length) ? (Arrays.copyOf(runs, count)) : runs));
+    out = this.getTextOutput();
+    this.m_driver.prependSpaceToReference(textCase, this, out);
+    this.m_driver.reference(textCase, sequenceMode, labels, this, out);
   }
 
   /** the bibliography consumer */
@@ -318,7 +175,7 @@ public class ComplexText extends PlainText implements IComplexText {
     /** {@inheritDoc} */
     @Override
     public final void consumeBibliography(final Bibliography bib) {
-      ComplexText.this.doCite(bib, this.m_citationMode, this.m_textCase,
+      ComplexText.this._doCite(bib, this.m_citationMode, this.m_textCase,
           this.m_sequenceMode);
     }
 

@@ -540,7 +540,7 @@ public class RandomDocumentExample extends DocumentExample {
               }
               default: {
                 try {
-                  this.__text(body, 0, needsNewLine);
+                  this.__text(body, 0, needsNewLine, true);
                   needsText = false;
                   needsNewLine = hasText = true;
                   break;
@@ -585,9 +585,11 @@ public class RandomDocumentExample extends DocumentExample {
    *          the depth
    * @param needsNewLine
    *          needs a new line?
+   * @param canLineBreak
+   *          can we have a line break?
    */
   private final void __text(final ITextOutput out, final int depth,
-      final boolean needsNewLine) {
+      final boolean needsNewLine, final boolean canLineBreak) {
     boolean first, must, needs;
     IStyle s;
     ArrayList<ILabel> labels;
@@ -595,7 +597,7 @@ public class RandomDocumentExample extends DocumentExample {
     Throwable error;
 
     first = true;
-    must = needsNewLine;
+    must = (needsNewLine & (!canLineBreak));
     needs = false;
     labels = null;
     error = null;
@@ -605,12 +607,12 @@ public class RandomDocumentExample extends DocumentExample {
       main: do {
         spacer: {
           if (first) {
-            if ((depth <= 0) && must) {
+            if ((depth <= 0) && must && (!canLineBreak)) {
               out.appendLineBreak();
             }
             break spacer;
           }
-          if (this.m_rand.nextBoolean()) {
+          if ((!canLineBreak) || this.m_rand.nextBoolean()) {
             out.append(' ');
           } else {
             out.appendLineBreak();
@@ -629,11 +631,12 @@ public class RandomDocumentExample extends DocumentExample {
                       : RandomDocumentExample.SIMPLE_TEXT)) {
             case IN_BRACES: {
               out.append(' ');
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.IN_BRACES);
+              this.m_termination._done(//
+                  _ERandomDocumentExampleElements.IN_BRACES);
               try (final IPlainText t = ((IPlainText) out).inBraces()) {
                 try {
-                  this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+                  this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
+                      canLineBreak);
                 } catch (final Throwable tt) {
                   error = ErrorUtils.aggregateError(error, tt);
                   break main;
@@ -643,11 +646,12 @@ public class RandomDocumentExample extends DocumentExample {
             }
             case IN_QUOTES: {
               out.append(' ');
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.IN_QUOTES);
+              this.m_termination._done(//
+                  _ERandomDocumentExampleElements.IN_QUOTES);
               try (final IPlainText t = ((IPlainText) out).inQuotes()) {
                 try {
-                  this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+                  this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
+                      canLineBreak);
                 } catch (final Throwable tt) {
                   error = ErrorUtils.aggregateError(error, tt);
                   break main;
@@ -657,8 +661,8 @@ public class RandomDocumentExample extends DocumentExample {
             }
             case WITH_FONT: {
               out.append(' ');
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.WITH_FONT);
+              this.m_termination._done(//
+                  _ERandomDocumentExampleElements.WITH_FONT);
               try (final IPlainText t = ((IComplexText) out)
                   .style((s = this.m_fonts[this.m_rand
                       .nextInt(this.m_fonts.length)]))) {
@@ -666,7 +670,8 @@ public class RandomDocumentExample extends DocumentExample {
                   t.append("In ");//$NON-NLS-1$
                   s.appendDescription(ETextCase.IN_SENTENCE, t, false);
                   t.append(" font: "); //$NON-NLS-1$
-                  this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+                  this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
+                      false);
                 } catch (final Throwable tt) {
                   error = ErrorUtils.aggregateError(error, tt);
                   break main;
@@ -676,8 +681,8 @@ public class RandomDocumentExample extends DocumentExample {
             }
             case WITH_COLOR: {
               out.append(' ');
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.WITH_COLOR);
+              this.m_termination._done(//
+                  _ERandomDocumentExampleElements.WITH_COLOR);
               try (final IPlainText t = ((IComplexText) out)
                   .style((s = this.m_colors[this.m_rand
                       .nextInt(this.m_colors.length)]))) {
@@ -685,7 +690,8 @@ public class RandomDocumentExample extends DocumentExample {
                   t.append("In ");//$NON-NLS-1$
                   s.appendDescription(ETextCase.IN_SENTENCE, t, false);
                   t.append(" color: "); //$NON-NLS-1$
-                  this.__text(t, (depth + 1), this.m_rand.nextBoolean());
+                  this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
+                      canLineBreak);
                 } catch (final Throwable tt) {
                   error = ErrorUtils.aggregateError(error, tt);
                   break main;
@@ -753,8 +759,8 @@ public class RandomDocumentExample extends DocumentExample {
             }
 
             case INLINE_MATH: {
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.INLINE_MATH);
+              this.m_termination._done(//
+                  _ERandomDocumentExampleElements.INLINE_MATH);
               out.append(" Inline equation: ");//$NON-NLS-1$
               try {
                 this.__createInlineMath(((IComplexText) out));
@@ -766,8 +772,8 @@ public class RandomDocumentExample extends DocumentExample {
             }
 
             case REFERENCE: {
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.REFERENCE);
+              this.m_termination._done(//
+                  _ERandomDocumentExampleElements.REFERENCE);
               try {
                 if (labels == null) {
                   labels = new ArrayList<>();
@@ -784,7 +790,7 @@ public class RandomDocumentExample extends DocumentExample {
                 } while (this.m_rand.nextBoolean());
 
                 if (labels.size() > 0) {
-                  out.append(" And here we reference ");//$NON-NLS-1$
+                  out.append(" And here we reference");//$NON-NLS-1$
 
                   ((IComplexText) out)
                       .reference(
@@ -803,8 +809,8 @@ public class RandomDocumentExample extends DocumentExample {
             }
 
             case CITATION: {
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.CITATION);
+              this.m_termination._done(//
+                  _ERandomDocumentExampleElements.CITATION);
               try {
                 out.append(" And here we cite ");//$NON-NLS-1$
 
@@ -880,7 +886,7 @@ public class RandomDocumentExample extends DocumentExample {
       do {
         try (final IStructuredText item = list.item()) {
           if (this.m_rand.nextInt(10) <= 0) {
-            this.__text(item, 0, false);
+            this.__text(item, 0, false, true);
           } else {
             LoremIpsum.appendLoremIpsum(item, this.m_rand);
           }
