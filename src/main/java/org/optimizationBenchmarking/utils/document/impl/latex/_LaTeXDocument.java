@@ -23,6 +23,7 @@ import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
+import org.optimizationBenchmarking.utils.io.FileType;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.units.ELength;
@@ -31,6 +32,8 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.FileCollector;
 import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeXJob;
@@ -125,9 +128,6 @@ final class _LaTeXDocument extends Document {
   /** do we have underlined text? */
   private boolean m_hasUnderlined;
 
-  /** the figure series package path */
-  private Path m_figureSeriesPackagePath;
-
   /**
    * Create a document.
    * 
@@ -165,6 +165,157 @@ final class _LaTeXDocument extends Document {
   final String _colorName(final ColorStyle style) {
     this.m_hasColors = true;
     return (style.getID() + "Color"); //$NON-NLS-1$
+  }
+
+  /**
+   * Require a set of resources
+   * 
+   * @param clazz
+   *          the class
+   * @param resources
+   *          the resources
+   * @param license
+   *          the license text
+   * @return the stored paths: An array of the same length as
+   *         {@code resources} with {@code null} for any element not copied
+   *         and a path for the copied elements
+   */
+  @SuppressWarnings("resource")
+  final Path[] _requireResources(final Class<?> clazz,
+      final String[] resources, final String license) {
+    final Logger logger;
+    final MemoryTextOutput mto;
+    final int initLength;
+    final FileCollector collector;
+    final Path[] ret;
+    IFileType type;
+    Path path;
+    String ending, resource;
+    InputStream is;
+    int index;
+
+    if (resources == null) {
+      throw new IllegalArgumentException(//
+          "Paths supplied to requireResource cannot be null."); //$NON-NLS-1$
+    }
+
+    logger = this.getLogger();
+    ret = new Path[resources.length];
+
+    mto = new MemoryTextOutput();
+    mto.append(//
+    "The following license, terms, and conditions apply to "); //$NON-NLS-1$
+    initLength = mto.length();
+    collector = this.getFileCollector();
+    try {
+      path = null;
+      for (index = 0; index < resources.length; index++) {
+        resource = resources[index];
+        try {
+          path = PathUtils.createPathInside(this.getDocumentFolder(),
+              resource);
+          if (Files.exists(path)) {
+            if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
+              logger.warning(//
+                  ((((((("Resource '" //$NON-NLS-1$
+                      + resource) + "' from class ") + //$NON-NLS-1$
+                      TextUtils.className(clazz)) + //
+                      " seems to already exist in the document folder as file '")//$NON-NLS-1$
+                      + path) + "' of document") + this) + //$NON-NLS-1$
+                      ". This may cause problems when compiling the document.");//$NON-NLS-1$
+            }
+            continue;
+          }
+          try {
+
+            is = clazz.getResourceAsStream(resource);
+            if (is != null) {
+              try {
+                Files.copy(is, path);
+
+                if (mto.length() > initLength) {
+                  mto.append(',');
+                  mto.append(' ');
+                  mto.append(resource);
+                  mto.append(" (stored as file '"); //$NON-NLS-1$
+                  mto.append(path);
+                  mto.append('\'');
+                  mto.append(')');
+                }
+
+                ending = PathUtils.getFileExtension(path);
+                if (ending != null) {
+                  findType: {
+                    for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
+                      if (format.getDefaultSuffix().equalsIgnoreCase(
+                          ending)) {
+                        type = format;
+                        break findType;
+                      }
+                    }
+                    for (final ELaTeXFileType format : ELaTeXFileType.INSTANCES) {
+                      if (format.getDefaultSuffix().equalsIgnoreCase(
+                          ending)) {
+                        type = format;
+                        break findType;
+                      }
+                    }
+                    type = new FileType(ending, null, null);
+                  }
+
+                  collector.addFile(path, type);
+                }
+
+                ret[index] = path;
+              } finally {
+                is.close();
+              }
+            } else {
+              if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
+                logger
+                    .warning(((((("Resource '" //$NON-NLS-1$
+                        + resource) + "' from class ") + //$NON-NLS-1$
+                        TextUtils.className(clazz)) + //
+                        " is missing and thus could not be copied to document ")//$NON-NLS-1$ 
+                        + this)
+                        + //
+                        ". This may make compiling the document impossible.");//$NON-NLS-1$
+              }
+            }
+          } catch (final Throwable error2) {
+            ErrorUtils.logError(logger,
+                (((((((("An error occured while copying resource '" //$NON-NLS-1$
+                + resource) + "' from class ") + //$NON-NLS-1$
+                TextUtils.className(clazz)) + " to document ") + this) + //$NON-NLS-1$
+                " under path '") + path) + //$NON-NLS-1$
+                "'. This may make compiling the document impossible."),//$NON-NLS-1$ 
+                error2, true);
+          }
+        } catch (final Throwable error) {
+          ErrorUtils
+              .logError(
+                  logger,
+                  (((((("An error occured while creating destination path for resource '" //$NON-NLS-1$
+                  + resource) + "' from class ") + //$NON-NLS-1$
+                  TextUtils.className(clazz)) + " to document ") + this) + //$NON-NLS-1$
+                  ". This may make compiling the document impossible."),//$NON-NLS-1$ 
+                  error, true);
+        }
+      }
+    } finally {
+      if ((mto.length() > initLength) && (logger != null)
+          && (logger.isLoggable(Level.INFO))) {
+        mto.append(':');
+        mto.append(' ');
+        mto.append('\'');
+        mto.append(license);
+        mto.append('\'');
+        mto.append('.');
+        logger.info(mto.toString());
+      }
+    }
+
+    return ret;
   }
 
   /**
@@ -513,13 +664,7 @@ final class _LaTeXDocument extends Document {
           }
 
           // figure series
-          if (this.m_hasFigureSeries
-              && (this.m_figureSeriesPackagePath != null)) {
-            _LaTeXDocument.__requirePackage(out,
-                this._pathRelativeToDocument(//
-                    this.m_figureSeriesPackagePath, true));
-            LaTeXDriver._endLine(out);
-          }
+          this.__finalizeFigureSeries();
 
           if (this.m_hasCode) {
             this.__include("listings.def", out);//$NON-NLS-1$
@@ -571,13 +716,16 @@ final class _LaTeXDocument extends Document {
           out.append(_LaTeXDocument.INPUT_END);
           LaTeXDriver._endLine(out);
           out.flush();
+
+          this.getFileCollector().addFile(this.m_setupPackagePath,
+              ELaTeXFileType.STY);
         }
       }
     } catch (final IOException ioError) {
       ErrorUtils
           .logError(this.getLogger(),
               (((("Error when creating setup package '" + //$NON-NLS-1$
-              this.m_figureSeriesPackagePath) + " for document ") + this) + //$NON-NLS-1$
+              this.m_setupPackagePath) + " for document ") + this) + //$NON-NLS-1$
               " this is a problem, as compiling the document is now impossible.")//$NON-NLS-1$
               , ioError, true);
       ErrorUtils.throwAsRuntimeException(ioError);
@@ -586,35 +734,21 @@ final class _LaTeXDocument extends Document {
 
   /** finalize the figure series */
   private final void __finalizeFigureSeries() {
-    final Path path;
-    boolean success;
-
-    this.m_figureSeriesPackagePath = null;
+    final ITextOutput out;
+    final Path[] paths;
 
     if (this.m_hasFigureSeries) {
-      success = false;
+      paths = this
+          ._requireResources(
+              _LaTeXDocument.class,
+              new String[] { _LaTeXDocument.FIGURE_SERIES_PACKAGE },
+              "The figureSeries Package is under LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version. It is author-maintained by Thomas Weise. Copyright (c) 2014, 2015 Thomas Weise."); //$NON-NLS-1$
 
-      path = PathUtils.createPathInside(this.getDocumentFolder(),
-          _LaTeXDocument.FIGURE_SERIES_PACKAGE);
-
-      try (final InputStream is = _LaTeXDocument.class
-          .getResourceAsStream(_LaTeXDocument.FIGURE_SERIES_PACKAGE)) {
-        Files.copy(is, path);
-        success = true;
-      } catch (final IOException ioError) {
-        ErrorUtils
-            .logError(
-                this.getLogger(),
-                Level.WARNING,
-                ((((("Error when copying package '" + _LaTeXDocument.FIGURE_SERIES_PACKAGE) + //$NON-NLS-1$
-                "' to file '") + path) + //$NON-NLS-1$
-                "'. Maybe the file already exists? Either way, there could be problems when compiling the document ") //$NON-NLS-1$
-                + this) + '.', ioError, true);
-      }
-
-      if (success || Files.exists(path)) {
-        this.m_figureSeriesPackagePath = path;
-        this.getFileCollector().addFile(path, ELaTeXFileType.STY);
+      if (paths[0] != null) {
+        out = this.getTextOutput();
+        _LaTeXDocument.__requirePackage(out, this._pathRelativeToDocument(//
+            paths[0], true));
+        LaTeXDriver._endLine(out);
       }
     }
   }
