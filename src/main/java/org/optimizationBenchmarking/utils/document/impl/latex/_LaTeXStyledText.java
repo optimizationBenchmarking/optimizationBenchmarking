@@ -37,8 +37,9 @@ final class _LaTeXStyledText extends StyledText {
   private static final char[] TEXTRM_BEGIN = { '{', '\\', 't', 'e', 'x',
       't', 'r', 'm', '{', };
   /** the begin textit */
-  private static final char[] TEXTUL_BEGIN = { '{', '\\', 'u', 'n', 'd',
-      'e', 'r', 'l', 'i', 'n', 'e', '{', };
+  private static final char[] TEXTUL_BEGIN = { '{', '\\', 'u',//
+      // 'n', 'd', 'e', 'r',
+      'l', 'i', 'n', 'e', '{', };
   /** the begin text type writer */
   private static final char[] TEXTTT_BEGIN = _LaTeXStyledText.CODE_BEGIN;
 
@@ -112,9 +113,6 @@ final class _LaTeXStyledText extends StyledText {
     if (font.isBold()) {
       out.append(_LaTeXStyledText.TEXTBF_BEGIN);
     }
-    if (font.isUnderlined()) {
-      out.append(_LaTeXStyledText.TEXTUL_BEGIN);
-    }
 
     got = font.getFamily();
     if (got != this.getDocument().getStyles().getDefaultFont().getFamily()) {
@@ -133,6 +131,11 @@ final class _LaTeXStyledText extends StyledText {
         }
       }
     }
+
+    if (font.isUnderlined()) {
+      ((_LaTeXDocument) (this.getDocument()))._registerUnderlined();
+      out.append(_LaTeXStyledText.TEXTUL_BEGIN);
+    }
   }
 
   /** {@inheritDoc} */
@@ -149,10 +152,6 @@ final class _LaTeXStyledText extends StyledText {
       out.append('}');
       out.append('}');
     }
-    if (font.isUnderlined()) {
-      out.append('}');
-      out.append('}');
-    }
 
     got = font.getFamily();
     if (got != this.getDocument().getStyles().getDefaultFont().getFamily()) {
@@ -165,6 +164,11 @@ final class _LaTeXStyledText extends StyledText {
           break;
         }
       }
+    }
+
+    if (font.isUnderlined()) {
+      out.append('}');
+      out.append('}');
     }
   }
 

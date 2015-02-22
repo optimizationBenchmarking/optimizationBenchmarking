@@ -758,10 +758,10 @@ public final class LaTeXDriver extends DocumentDriver {
       }
       raw.append('}');
       raw.append('}');
+    } else {
+      super.cite(bib, citationMode, textCase, sequenceMode,//
+          complexText, raw);
     }
-
-    super.cite(bib, citationMode, textCase, sequenceMode,//
-        complexText, raw);
   }
 
   /** {@inheritDoc} */

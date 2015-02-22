@@ -230,6 +230,28 @@ public class CitationItem implements ISequenceable {
       }
 
       this.renderID(rec.getID(), rec.getKey(), tc, out, raw);
+    } else {
+      this.dontRenderID(rec.getID(), rec.getKey(), tc, out, raw);
     }
+  }
+
+  /**
+   * this method is called if the ID is not to be rendered
+   * 
+   * @param index
+   *          the index
+   * @param id
+   *          the id
+   * @param textCase
+   *          the text case
+   * @param out
+   *          the output destination
+   * @param raw
+   *          the raw text output
+   */
+  protected void dontRenderID(final int index, final String id,
+      final ETextCase textCase, final ComplexText out,
+      final ITextOutput raw) {
+    //
   }
 }

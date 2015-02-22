@@ -122,6 +122,9 @@ final class _LaTeXDocument extends Document {
   /** do we have colors? */
   private boolean m_hasColors;
 
+  /** do we have underlined text? */
+  private boolean m_hasUnderlined;
+
   /** the figure series package path */
   private Path m_figureSeriesPackagePath;
 
@@ -393,6 +396,11 @@ final class _LaTeXDocument extends Document {
     this.m_hasCode = true;
   }
 
+  /** register that there is an underlined text document */
+  final void _registerUnderlined() {
+    this.m_hasUnderlined = true;
+  }
+
   /** {@inheritDoc} */
   @Override
   protected final void doOnClose() {
@@ -459,6 +467,7 @@ final class _LaTeXDocument extends Document {
               + this + " impossible.",//$NON-NLS-1$ 
           error, true);
     }
+    LaTeXDriver._endLine(dest);
   }
 
   /**
@@ -519,10 +528,20 @@ final class _LaTeXDocument extends Document {
             _LaTeXDocument.__requirePackage(out, "fixltx2e"); //$NON-NLS-1$
           }
 
+          if (this.m_hasUnderlined) {
+            _LaTeXDocument.__requirePackage(out, "ulem",//$NON-NLS-1$ 
+                "normalem"); //$NON-NLS-1$
+          }
+
           this.__include("hyperref.def", out);//$NON-NLS-1$
 
           // now add the colors
           if (this.m_hasColors) {
+            LaTeXDriver._endLine(out);
+            LaTeXDriver._commentLine(//
+                "Here we define the colors used in the documents.",//$NON-NLS-1$ 
+                out);
+
             for (final IStyle style : usedStyles) {
               if ((style != null) && (style instanceof ColorStyle)) {
                 color = ((ColorStyle) style);
@@ -538,6 +557,11 @@ final class _LaTeXDocument extends Document {
                 LaTeXDriver._endCommandLine(out);
               }
             }
+
+            LaTeXDriver._commentLine(//
+                "End of color definitions.",//$NON-NLS-1$ 
+                out);
+            LaTeXDriver._endLine(out);
           }
 
           LaTeXDriver._endLine(out);

@@ -13,6 +13,10 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 final class _LaTeXCitationItem extends CitationItem {
 
+  /** the no-citation begin */
+  static final char[] NOCITE_BEGIN = { '{', '\\', 'n', 'o', 'c', 'i', 't',
+      'e', '{' };
+
   /**
    * Create the bibliographic record
    * 
@@ -48,6 +52,18 @@ final class _LaTeXCitationItem extends CitationItem {
       final ITextOutput raw) {
 
     raw.append(LaTeXDriver.CITE_BEGIN);
+    raw.append(id);
+    raw.append('}');
+    raw.append('}');
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void dontRenderID(final int index, final String id,
+      final ETextCase textCase, final ComplexText out,
+      final ITextOutput raw) {
+
+    raw.append(_LaTeXCitationItem.NOCITE_BEGIN);
     raw.append(id);
     raw.append('}');
     raw.append('}');

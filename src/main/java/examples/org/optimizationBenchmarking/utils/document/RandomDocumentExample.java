@@ -619,7 +619,11 @@ public class RandomDocumentExample extends DocumentExample {
         }
         first = false;
 
-        LoremIpsum.appendLoremIpsum(out, this.m_rand);
+        if (canLineBreak) {
+          LoremIpsum.appendLoremIpsum(out, this.m_rand);
+        } else {
+          LoremIpsum.appendLoremIpsum(out, this.m_rand, 4);
+        }
 
         if ((out instanceof IPlainText) && (depth < 10)) {
 
@@ -843,9 +847,15 @@ public class RandomDocumentExample extends DocumentExample {
         if (needs && (this.m_rand.nextBoolean())) {
           try {
             out.append(' ');
-            LoremIpsum.appendLoremIpsum(out, this.m_rand);
-            this.m_termination
-                ._done(_ERandomDocumentExampleElements.NORMAL_TEXT);
+
+            if (canLineBreak) {
+              LoremIpsum.appendLoremIpsum(out, this.m_rand);
+            } else {
+              LoremIpsum.appendLoremIpsum(out, this.m_rand, 4);
+            }
+
+            this.m_termination._done(//
+                _ERandomDocumentExampleElements.NORMAL_TEXT);
           } catch (final Throwable tt) {
             error = ErrorUtils.aggregateError(error, tt);
             break main;
@@ -2040,21 +2050,21 @@ public class RandomDocumentExample extends DocumentExample {
 
         case 3: {
           try (final IMath nm = math.add()) {
-            this.__fillMath(nm, 2, 20, (depth - 1));
+            this.__fillMath(nm, 2, 3, (depth - 1));
           }
           break;
         }
 
         case 4: {
           try (final IMath nm = math.sub()) {
-            this.__fillMath(nm, 2, 20, (depth - 1));
+            this.__fillMath(nm, 2, 3, (depth - 1));
           }
           break;
         }
 
         case 5: {
           try (final IMath nm = math.mul()) {
-            this.__fillMath(nm, 2, 20, (depth - 1));
+            this.__fillMath(nm, 2, 3, (depth - 1));
           }
           break;
         }
@@ -2187,8 +2197,8 @@ public class RandomDocumentExample extends DocumentExample {
 
       args++;
     } while ((args < minArgs)
-        || (((args < maxArgs) && (this.m_termination._continue()) && this.m_rand
-            .nextBoolean())));
+        || (((args < maxArgs) && (this.m_termination._continue()) && //
+        (this.m_rand.nextInt(3) <= 0))));
 
   }
 }
