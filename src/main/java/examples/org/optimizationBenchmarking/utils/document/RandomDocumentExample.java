@@ -815,7 +815,7 @@ public class RandomDocumentExample extends DocumentExample {
               this.m_termination._done(//
                   _ERandomDocumentExampleElements.CITATION);
               try {
-                out.append(" And here we cite ");//$NON-NLS-1$
+                out.append(" And here we cite");//$NON-NLS-1$
 
                 try (BibliographyBuilder bb = ((IComplexText) out).cite(
                     RandomDocumentExample.CITES[this.m_rand

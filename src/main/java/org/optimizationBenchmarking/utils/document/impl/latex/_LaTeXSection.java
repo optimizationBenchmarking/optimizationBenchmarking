@@ -75,6 +75,8 @@ final class _LaTeXSection extends Section {
     ofs = (clazz.getHighestSectionType().ordinal() + this.getDepth());
 
     out = this.getTextOutput();
+    LaTeXDriver._endLine(out);
+
     this.m_emulated = (ofs > clazz.getLowestSectionType().ordinal());
 
     if (this.m_emulated) {
