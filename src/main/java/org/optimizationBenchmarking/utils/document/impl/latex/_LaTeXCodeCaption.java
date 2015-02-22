@@ -43,6 +43,7 @@ final class _LaTeXCodeCaption extends CodeCaption {
     out = this.getTextOutput();
     out.append('}');
     out.append(']');
+    out.appendLineBreak();
 
     super.onClose();
   }

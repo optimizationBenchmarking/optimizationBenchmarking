@@ -879,8 +879,9 @@ public class RandomDocumentExample extends DocumentExample {
 
     this.m_termination._done(type);
 
-    try (final IList list = ((_ERandomDocumentExampleElements.ENUM == type) ? sb
-        .enumeration() : sb.itemization())) {
+    try (final IList list = ((_ERandomDocumentExampleElements.ENUM == type)//
+    ? sb.enumeration()
+        : sb.itemization())) {
       ic = 0;
       do {
         try (final IStructuredText item = list.item()) {
@@ -889,8 +890,7 @@ public class RandomDocumentExample extends DocumentExample {
           } else {
             LoremIpsum.appendLoremIpsum(item, this.m_rand);
           }
-          if ((listDepth <= 4)
-              && (this.m_rand.nextInt(listDepth + 5) <= 0)) {
+          if ((listDepth < 3) && (this.m_rand.nextInt(listDepth + 5) <= 0)) {
             this.__createList(item, (listDepth + 1), this.m_rand
                 .nextBoolean() ? _ERandomDocumentExampleElements.ENUM
                 : _ERandomDocumentExampleElements.ITEMIZE);

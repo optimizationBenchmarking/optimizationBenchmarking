@@ -1,0 +1,4 @@
+% We load the hyperref package to enable hyperlinks
+% and clickable references and citations in the document.
+\RequirePackage{hyperref}%
+\RequirePackage{breakurl}%

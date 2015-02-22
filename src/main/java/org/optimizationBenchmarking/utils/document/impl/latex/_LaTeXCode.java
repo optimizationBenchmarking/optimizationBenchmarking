@@ -22,7 +22,7 @@ final class _LaTeXCode extends Code {
 
   /** the listing end */
   private static final char[] END_LISTING = { '\\', 'e', 'n', 'd', '{',
-      'l', 's', 't', 'l', 'i', 's', 't', 'i', 'n', 'g', '}', '[', };
+      'l', 's', 't', 'l', 'i', 's', 't', 'i', 'n', 'g', '}', };
 
   /**
    * create the code

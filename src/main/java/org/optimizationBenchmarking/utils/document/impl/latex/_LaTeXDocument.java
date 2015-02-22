@@ -1,8 +1,10 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
@@ -487,6 +489,46 @@ final class _LaTeXDocument extends Document {
   }
 
   /**
+   * Require a resource
+   * 
+   * @param resource
+   *          the resource
+   * @param dest
+   *          the destination
+   */
+  private final void __include(final String resource,
+      final ITextOutput dest) {
+    String s;
+
+    LaTeXDriver._endLine(dest);
+    try (final InputStream is = _LaTeXDocument.class
+        .getResourceAsStream(resource)) {
+      try (final InputStreamReader isr = new InputStreamReader(is)) {
+        try (final BufferedReader br = new BufferedReader(isr)) {
+          while ((s = br.readLine()) != null) {
+            s = TextUtils.prepare(s);
+            if (s != null) {
+              dest.append(s);
+              if (s.charAt(s.length() - 1) == '%') {
+                dest.appendLineBreak();
+                continue;
+              }
+            }
+            LaTeXDriver._endLine(dest);
+          }
+        }
+      }
+    } catch (final Throwable error) {
+      ErrorUtils.logError(this.getLogger(),//
+          "Error when loading resource '" //$NON-NLS-1$
+              + resource + //
+              "' - this will maybe make compiling LaTeX document " //$NON-NLS-1$
+              + this + " impossible.",//$NON-NLS-1$ 
+          error, true);
+    }
+  }
+
+  /**
    * build the setup package
    * 
    * @param usedStyles
@@ -506,13 +548,12 @@ final class _LaTeXDocument extends Document {
           out = AbstractTextOutput.wrap(bw);
 
           // adding default packages
-          _LaTeXDocument.__requirePackage(out, "fontenc",//$NON-NLS-1$ 
-              "T1"); //$NON-NLS-1$
+
+          this.__include("fonts.def", out);//$NON-NLS-1$
 
           hasColors = (!(this.m_colorNames.isEmpty()));
-          if (this.m_hasTable || hasColors) {
-            _LaTeXDocument.__requirePackage(out, "color"); //$NON-NLS-1$
-            _LaTeXDocument.__requirePackage(out, "xcolor"); //$NON-NLS-1$
+          if (this.m_hasTable || hasColors || this.m_hasCode) {
+            this.__include("colors.def", out);//$NON-NLS-1$
           }
 
           _LaTeXDocument.__requirePackage(out, "caption3"); //$NON-NLS-1$
@@ -540,15 +581,14 @@ final class _LaTeXDocument extends Document {
           }
 
           if (this.m_hasCode) {
-            _LaTeXDocument.__requirePackage(out, "listings"); //$NON-NLS-1$
+            this.__include("listings.def", out);//$NON-NLS-1$
           }
 
           if (this.m_hasTextSubOrSuperScript) {
             _LaTeXDocument.__requirePackage(out, "fixltx2e"); //$NON-NLS-1$
           }
 
-          _LaTeXDocument.__requirePackage(out, "hyperref"); //$NON-NLS-1$
-          _LaTeXDocument.__requirePackage(out, "breakurl"); //$NON-NLS-1$
+          this.__include("hyperref.def", out);//$NON-NLS-1$
 
           // now add the colors
           if (hasColors) {

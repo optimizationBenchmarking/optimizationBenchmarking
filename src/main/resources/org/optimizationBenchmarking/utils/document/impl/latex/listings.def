@@ -1,0 +1,35 @@
+%
+% The listings package is responsible both for inline listings
+% as well as floating listings.
+%
+\RequirePackage{listings}%
+%
+\lstset{emptylines=1}%
+\lstset{basicstyle=\small\ttfamily}%
+\lstset{commentstyle=\normalfont}%
+\lstset{tabsize=2}%
+\lstset{numbers=left}%
+\lstset{numberstyle=\tiny}%
+\lstset{breaklines=true}%
+\lstset{columns=flexible}%
+%
+\definecolor{listingsBackgroundColor}{HTML}{DCDCFF}%
+\definecolor{listingsShadowColor}{HTML}{C0C0E0}%
+\lstset{fillcolor=\color{listingsBackgroundColor}}%
+\lstset{backgroundcolor=\color{listingsBackgroundColor}}%
+\lstset{rulesepcolor=\color{listingsShadowColor}}%
+\lstset{frame=shadowbox}%
+%
+\lstdefinelanguage{listingsBasicLanguage}{%
+morekeywords={%
+boolean,break,byte,case,char,%
+const,continue,default,do,double,else,false,%
+float,for,goto,if,int,label,long,null,return,%
+short,switch,to,downto,true,until,void,while},%
+morecomment=[l]//,%
+morecomment=[s]{/*}{*/},%
+morestring=[b]",%
+morestring=[b]',%
+}[keywords,comments,strings]%
+%
+\lstset{language=listingsBasicLanguage}%
