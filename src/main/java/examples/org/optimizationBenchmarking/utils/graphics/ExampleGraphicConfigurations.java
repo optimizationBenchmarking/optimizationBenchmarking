@@ -138,6 +138,13 @@ public final class ExampleGraphicConfigurations extends HashObject {
       examples.add(builder.immutable());
       builder.setQuality(1d);
       examples.add(builder.immutable());
+
+      builder.setDotsPerInch(32);
+      builder.setColorModel(EColorModel.RGB_15_BIT);
+      builder.setQuality(0d);
+      examples.add(builder.immutable());
+      builder.setQuality(1d);
+      examples.add(builder.immutable());
     }
 
     d = ImageIOGIFGraphicDriver.getInstance();

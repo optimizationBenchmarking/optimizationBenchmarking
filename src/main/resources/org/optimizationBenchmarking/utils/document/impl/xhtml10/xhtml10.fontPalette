@@ -24,7 +24,7 @@
 		<face>Liberation Serif</face>
 	</emphasizedFont>
 
-	<codeFont family="monospaced" underlined="true" size="11">
+	<codeFont family="monospaced" size="11">
 		<face>Consolas</face>
 		<face>Courier New</face>
 		<face>Courier</face>

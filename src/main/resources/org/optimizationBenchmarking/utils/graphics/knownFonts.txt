@@ -4,6 +4,7 @@
 #   m -> mono-spaced
 #   b -> bold
 #   i -> italic
+#   u -> underlined
 s arial
 sb arial black
 s arial unicode

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
 import org.optimizationBenchmarking.utils.hash.HashObject;
@@ -441,7 +442,7 @@ public class FontProperties extends HashObject {
           break;
         }
         default: {
-          throw new IllegalArgumentException("Illegal flag:" //$NON-NLS-1$
+          throw new IllegalArgumentException("Illegal flag: " //$NON-NLS-1$
               + data.charAt(i));
         }
       }
@@ -476,6 +477,9 @@ public class FontProperties extends HashObject {
           }
         }
       } catch (final Throwable ioe) {
+        ErrorUtils.logError(Configuration.getGlobalLogger(),//
+            "Error when reading list of known fonts.", //$NON-NLS-1$
+            ioe, true);
         ErrorUtils.throwAsRuntimeException(ioe);
       }
 
