@@ -67,8 +67,7 @@ public class TemplateDocumentExample extends DocumentExample {
     i = 0;
     for (final DocumentConfiguration config : ExampleDocumentConfigurations.ALL_CONFIGURATIONS) {//
       de = new TemplateDocumentExample(config.createDocument(
-          dir.resolve((("template/" + config.toString()) + '_') + (++i)),//$NON-NLS-1$ 
-          "report",//$NON-NLS-1$
+          dir.resolve((config.toString() + '_') + (++i)), "report",//$NON-NLS-1$
           new FinishedPrinter(config.getDocumentDriver()), log));
 
       de.run();

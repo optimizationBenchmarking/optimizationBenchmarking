@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
+import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
@@ -146,6 +147,12 @@ final class _LaTeXDocument extends Document {
     this.m_colorNames = new HashMap<>();
 
     this.open();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final PhysicalDimension getSize(final EFigureSize size) {
+    return size.approximateSize(this.m_class);
   }
 
   /**

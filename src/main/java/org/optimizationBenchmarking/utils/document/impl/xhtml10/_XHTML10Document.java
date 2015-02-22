@@ -14,9 +14,11 @@ import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
-import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentBuilder;
+import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
+import org.optimizationBenchmarking.utils.graphics.PageDimension;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
@@ -138,14 +140,18 @@ final class _XHTML10Document extends Document {
       '-', 'd', 'e', 'c', 'o', 'r', 'a', 't', 'i', 'o', 'n', ':', 'i',
       'n', 'h', 'e', 'r', 'i', 't', ';' };
 
+  /** the page size */
+  private final PageDimension m_pageSize;
+
   /**
    * Create a document.
    * 
    * @param builder
    *          the document builder
    */
-  _XHTML10Document(final DocumentBuilder builder) {
+  _XHTML10Document(final XHTML10DocumentBuilder builder) {
     super(XHTML10Driver.getInstance(), builder);
+    this.m_pageSize = builder.getScreenSize();
     this.open();
   }
 
@@ -192,6 +198,12 @@ final class _XHTML10Document extends Document {
     out.append(_XHTML10Document.PRINT_CSS_LINK);
     out.append(_XHTML10Document.CSS_PRINT);
     out.append(XHTML10Driver.EMPTY_ATTRIB_TAG_END);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final PhysicalDimension getSize(final EFigureSize size) {
+    return size.approximateSize(this.m_pageSize);
   }
 
   /** {@inheritDoc} */

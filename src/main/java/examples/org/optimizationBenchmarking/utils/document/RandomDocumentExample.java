@@ -239,8 +239,7 @@ public class RandomDocumentExample extends DocumentExample {
     for (final DocumentConfiguration config : ExampleDocumentConfigurations.ALL_CONFIGURATIONS) {//
       rand.setSeed(seed);
       de = new RandomDocumentExample(config.createDocument(
-          dir.resolve((("random/" + config.toString()) + '_') + (++i)),//$NON-NLS-1$ 
-          "report",//$NON-NLS-1$
+          dir.resolve((config.toString() + '_') + (++i)), "report",//$NON-NLS-1$
           new FinishedPrinter(config.getDocumentDriver()), log), rand,
           System.out);
 
