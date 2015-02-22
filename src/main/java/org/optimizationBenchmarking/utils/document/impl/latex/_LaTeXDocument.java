@@ -215,6 +215,7 @@ final class _LaTeXDocument extends Document {
           path = PathUtils.createPathInside(this.getDocumentFolder(),
               resource);
           if (Files.exists(path)) {
+            ret[index] = path;
             if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
               logger.warning(//
                   ((((((("Resource '" //$NON-NLS-1$
@@ -239,12 +240,12 @@ final class _LaTeXDocument extends Document {
               if (mto.length() > initLength) {
                 mto.append(',');
                 mto.append(' ');
-                mto.append(resource);
-                mto.append(" (stored as file '"); //$NON-NLS-1$
-                mto.append(path);
-                mto.append('\'');
-                mto.append(')');
               }
+              mto.append(resource);
+              mto.append(" (stored as file '"); //$NON-NLS-1$
+              mto.append(path);
+              mto.append('\'');
+              mto.append(')');
 
               ending = PathUtils.getFileExtension(path);
               if (ending != null) {
@@ -574,7 +575,6 @@ final class _LaTeXDocument extends Document {
   protected final void postProcess(final Set<IStyle> usedStyles,
       final ArrayListView<ImmutableAssociation<Path, IFileType>> paths) {
 
-    this.__finalizeFigureSeries();
     this.__buildSetupPackage(usedStyles);
     this.__compile(paths);
   }
@@ -663,7 +663,7 @@ final class _LaTeXDocument extends Document {
           }
 
           // figure series
-          this.__finalizeFigureSeries();
+          this.__finalizeFigureSeries(out);
 
           if (this.m_hasCode) {
             this.__include("listings.def", out);//$NON-NLS-1$
@@ -731,9 +731,13 @@ final class _LaTeXDocument extends Document {
     }
   }
 
-  /** finalize the figure series */
-  private final void __finalizeFigureSeries() {
-    final ITextOutput out;
+  /**
+   * finalize the figure series
+   * 
+   * @param out
+   *          the text output to the setup package
+   */
+  private final void __finalizeFigureSeries(final ITextOutput out) {
     final Path[] paths;
 
     if (this.m_hasFigureSeries) {
@@ -744,7 +748,6 @@ final class _LaTeXDocument extends Document {
               "The figureSeries Package is under LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version. It is author-maintained by Thomas Weise. Copyright (c) 2014, 2015 Thomas Weise."); //$NON-NLS-1$
 
       if (paths[0] != null) {
-        out = this.getTextOutput();
         _LaTeXDocument.__requirePackage(out, this._pathRelativeToDocument(//
             paths[0], true));
         LaTeXDriver._endLine(out);
