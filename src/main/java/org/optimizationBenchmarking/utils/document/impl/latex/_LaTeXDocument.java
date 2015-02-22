@@ -499,6 +499,7 @@ final class _LaTeXDocument extends Document {
           _LaTeXDocument.__requirePackage(out, "caption3"); //$NON-NLS-1$
 
           if (this.m_hasTable) {
+            this.__include("tables.def", out);//$NON-NLS-1$
             if (this.m_hasMultiColCell) {
               _LaTeXDocument.__requirePackage(out, "multicol"); //$NON-NLS-1$
             }

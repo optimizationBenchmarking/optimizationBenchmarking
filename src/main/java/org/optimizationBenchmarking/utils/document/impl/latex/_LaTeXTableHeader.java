@@ -40,4 +40,16 @@ final class _LaTeXTableHeader extends TableHeader {
     LaTeXDriver._endLine(out);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  protected synchronized final void onClose() {
+    final ITextOutput out;
+
+    if (this.getRowCount() > 0) {
+      out = this.getTextOutput();
+      out.append(_LaTeXTable.HLINE);
+      LaTeXDriver._endLine(out);
+    }
+    super.onClose();
+  }
 }

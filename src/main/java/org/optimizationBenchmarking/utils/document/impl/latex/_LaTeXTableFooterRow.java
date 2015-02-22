@@ -25,7 +25,7 @@ final class _LaTeXTableFooterRow extends TableFooterRow {
 
     out = this.getTextOutput();
 
-    out.append(_LaTeXTable.HLINE);
+    out.append(_LaTeXTableHeaderRow.ROW_COLOR);
     LaTeXDriver._endLine(out);
   }
 

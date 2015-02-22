@@ -1,0 +1,7 @@
+%
+% The packages and definitions for tables.
+%
+\RequirePackage{colortbl}%
+\definecolor{tableHeaderFooterBackgroundColor}{HTML}{DCFFDC}%
+\definecolor{tableBodyEvenRowBackgroundColor}{HTML}{DDDDDD}%
+%

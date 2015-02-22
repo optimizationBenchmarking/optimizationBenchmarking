@@ -33,6 +33,9 @@ public class TableCell extends ComplexText implements
   /** does the table cell has an own, irregular definition? */
   private final boolean m_hasIrregularDefinition;
 
+  /** the skipped cells */
+  private final int m_skipped;
+
   /**
    * Create the table cell
    * 
@@ -100,6 +103,7 @@ public class TableCell extends ComplexText implements
     this.m_endRow = r;
     r--;
     Arrays.fill(blocked, sc, end, r);
+    this.m_skipped = (sc - owner.m_nextCol);
     owner.m_nextCol = end;
 
     if ((def != null) && (def.length > 0)) {
@@ -133,6 +137,16 @@ public class TableCell extends ComplexText implements
   @Override
   protected TableRow getOwner() {
     return ((TableRow) (super.getOwner()));
+  }
+
+  /**
+   * Get the number of columns skipped before this cell begins. These
+   * columns may be occupied by multi-row cells coming from above.
+   * 
+   * @return the number of skipped columns
+   */
+  public final int getSkippedColumns() {
+    return this.m_skipped;
   }
 
   /**

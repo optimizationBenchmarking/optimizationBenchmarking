@@ -5,6 +5,13 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a row of a body of a table in a LaTeX document */
 final class _LaTeXTableBodyRow extends TableBodyRow {
+
+  /** the row color */
+  private static final char[] ROW_COLOR = { '\\', 'r', 'o', 'w', 'c', 'o',
+      'l', 'o', 'r', '{', 't', 'a', 'b', 'l', 'e', 'B', 'o', 'd', 'y',
+      'E', 'v', 'e', 'n', 'R', 'o', 'w', 'B', 'a', 'c', 'k', 'g', 'r',
+      'o', 'u', 'n', 'd', 'C', 'o', 'l', 'o', 'r', '}', };
+
   /**
    * Create a row of a body of a table
    * 
@@ -19,13 +26,15 @@ final class _LaTeXTableBodyRow extends TableBodyRow {
   /** {@inheritDoc} */
   @Override
   protected synchronized final void onOpen() {
-    // final ITextOutput out;
+    final ITextOutput out;
 
     super.onOpen();
 
-    // out = this.getTextOutput();
-
-    // TODO: color even rows
+    if ((this.getIndex() & 1) == 0) {
+      out = this.getTextOutput();
+      out.append(_LaTeXTableBodyRow.ROW_COLOR);
+      LaTeXDriver._endLine(out);
+    }
   }
 
   /** {@inheritDoc} */

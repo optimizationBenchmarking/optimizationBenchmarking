@@ -6,7 +6,20 @@ import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
-/** a table in a LaTeX document */
+/**
+ * <p>
+ * A table in a LaTeX document.
+ * </p>
+ * <p>
+ * TODO: Multi-row cells will not work properly. They should be rendered at
+ * the bottom with negative rowspan, but are rendered at the top with
+ * positive rowspan. See <a href=
+ * "http://texblog.org/2014/05/19/coloring-multi-row-tables-in-latex/"
+ * >here</a> and <a href=
+ * "http://tex.stackexchange.com/questions/200075/table-white-spacing-with-rowcolor-multicolumn-and-multirow"
+ * >here</a>.
+ * </p>
+ */
 final class _LaTeXTable extends Table {
 
   /** a normal cell */
@@ -146,8 +159,6 @@ final class _LaTeXTable extends Table {
 
     out = this.getTextOutput();
 
-    out.append(_LaTeXTable.HLINE);
-    LaTeXDriver._endLine(out);
     out.append(_LaTeXTable.TABULAR_END);
     LaTeXDriver._endLine(out);
     out.append(_LaTeXTable.SMALL_END);
