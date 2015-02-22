@@ -31,33 +31,43 @@ public abstract class DocumentExample implements Runnable {
   /**
    * get the logger
    * 
-   * @return the logger
+   * @return the logger to use
    */
   static final Logger _getLogger() {
-    final Filter f;
-    Logger ret, c;
-    Handler[] hh;
+    return __LoggerLoader.LOGGER;
+  }
 
-    ret = LoggerParser.INSTANCE.parseObject("\"global\";ALL");//$NON-NLS-1$
+  /** the logger loader */
+  private static final class __LoggerLoader {
 
-    f = new Filter() {
-      @Override
-      public final boolean isLoggable(final LogRecord record) {
-        return (!(record.getSourceClassName().startsWith("sun."))); //$NON-NLS-1$
-      }
-    };
+    /** the logger */
+    static final Logger LOGGER;
 
-    for (c = ret; c != null; c = c.getParent()) {
-      c.setLevel(Level.ALL);
-      c.setFilter(f);
-      hh = c.getHandlers();
-      if (hh != null) {
-        for (final Handler h : hh) {
-          h.setFilter(f);
-          h.setLevel(Level.ALL);
+    static {
+      final Filter f;
+      Logger c;
+      Handler[] hh;
+
+      LOGGER = LoggerParser.INSTANCE.parseString("\"global\";ALL");//$NON-NLS-1$
+
+      f = new Filter() {
+        @Override
+        public final boolean isLoggable(final LogRecord record) {
+          return (!(record.getSourceClassName().startsWith("sun."))); //$NON-NLS-1$
+        }
+      };
+
+      for (c = __LoggerLoader.LOGGER; c != null; c = c.getParent()) {
+        c.setLevel(Level.ALL);
+        c.setFilter(f);
+        hh = c.getHandlers();
+        if (hh != null) {
+          for (final Handler h : hh) {
+            h.setFilter(f);
+            h.setLevel(Level.ALL);
+          }
         }
       }
     }
-    return ret;
   }
 }

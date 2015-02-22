@@ -266,6 +266,9 @@ public class GraphicConfiguration implements ITextable {
     if (this.m_quality >= 0d) {
       builder.setQuality(this.m_quality);
     }
+    if (logger != null) {
+      builder.setLogger(logger);
+    }
     return builder.create();
   }
 

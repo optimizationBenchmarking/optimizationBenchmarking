@@ -236,6 +236,9 @@ public class DocumentConfiguration extends GraphicConfiguration {
     if (listener != null) {
       builder.setFileProducerListener(listener);
     }
+    if (logger != null) {
+      builder.setLogger(logger);
+    }
 
     return builder.create();
   }
