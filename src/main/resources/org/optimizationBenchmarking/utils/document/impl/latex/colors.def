@@ -1,4 +1,6 @@
+%
 % We load the color and xcolor package to allow the
 % definition of named colors.
 \RequirePackage{color}%
 \RequirePackage{xcolor}%
+%

@@ -291,7 +291,7 @@
 <color name="wine" rgb="722f37"/> 
 <color name="bubblegum" rgb="ff6cb5"/> 
 <color name="fluro green" rgb="0aff02"/> 
-<color name="yellow green" rgb="c0fb2d"/> 
+<color name="yellow-ish green" rgb="c0fb2d"/> 
 <color name="blue (RYB)" rgb="0247fe"/> 
 <color name="pink raspberry" rgb="980036"/> 
 <color name="robin's egg" rgb="6dedfd"/> 
@@ -353,7 +353,7 @@
 <color name="neon red" rgb="ff073a"/> 
 <color name="yellow ochre" rgb="cb9d06"/> 
 <color name="pansy" rgb="7700ff"/> 
-<color name="lightgreen" rgb="76ff7b"/> 
+<color name="light green" rgb="76ff7b"/> 
 <color name="sunflower" rgb="ffc512"/> 
 <color name="blue violet" rgb="5d06e9"/> 
 <color name="pale aqua" rgb="b8ffeb"/> 
@@ -370,7 +370,7 @@
 <color name="fluorescent green" rgb="08ff08"/> 
 <color name="mango" rgb="ffa62b"/> 
 <color name="emerald green" rgb="028f1e"/> 
-<color name="light light green" rgb="c8ffb0"/> 
+<color name="light light-ish green" rgb="c8ffb0"/> 
 <color name="algae green" rgb="21c36f"/> 
 <color name="folly" rgb="ff004f"/> 
 <color name="mustard" rgb="ffdb58"/> 
@@ -523,7 +523,7 @@
 <color name="rich electric blue" rgb="0892d0"/> 
 <color name="orangey brown" rgb="b16002"/> 
 <color name="dark tangerine" rgb="ffa812"/> 
-<color name="light green" rgb="90ee90"/> 
+<color name="quite light green" rgb="90ee90"/> 
 <color name="deep yellow-green" rgb="57d200"/> 
 <color name="picton blue" rgb="45b1e8"/> 
 <color name="glitter" rgb="e6e8fa"/> 
@@ -641,7 +641,7 @@
 <color name="light kobi" rgb="f5d3e6"/> 
 <color name="saddle brown" rgb="8b4513"/> 
 <color name="sienna" rgb="a0522d"/> 
-<color name="golden rod" rgb="f9bc08"/> 
+<color name="gold-ish rod" rgb="f9bc08"/> 
 <color name="pink purple" rgb="db4bda"/> 
 <color name="solid pink" rgb="893843"/> 
 <color name="light perfume" rgb="ebe3fc"/> 
@@ -733,7 +733,7 @@
 <color name="light froly" rgb="fbbbc4"/> 
 <color name="warm pink" rgb="fb5581"/> 
 <color name="dark orchid" rgb="9932cc"/> 
-<color name="bubble gum" rgb="ffc1cc"/> 
+<color name="bubblegum-ish" rgb="ffc1cc"/> 
 <color name="roast coffee" rgb="704241"/> 
 <color name="burnt orange" rgb="cc5500"/> 
 <color name="orchid mist" rgb="c3a6b1"/> 
@@ -758,7 +758,7 @@
 <color name="light medium apricot" rgb="f7cdb9"/> 
 <color name="deep periwinkle" rgb="8080ff"/> 
 <color name="rich carmine" rgb="d70040"/> 
-<color name="orangered" rgb="fe420f"/> 
+<color name="orange red-ish" rgb="fe420f"/> 
 <color name="lavender mist" rgb="e6e6fa"/> 
 <color name="brilliant azure" rgb="3399ff"/> 
 <color name="poop" rgb="7f5e00"/> 
@@ -922,7 +922,7 @@
 <color name="murky green" rgb="6c7a0e"/> 
 <color name="light limerick" rgb="d2e543"/> 
 <color name="French raspberry" rgb="c72c48"/> 
-<color name="aqua marine" rgb="2ee8bb"/> 
+<color name="aquamarine like" rgb="2ee8bb"/> 
 <color name="eminence" rgb="6c3082"/> 
 <color name="meat brown" rgb="e5b73b"/> 
 <color name="bahia" rgb="a5cb0c"/> 
@@ -1140,7 +1140,7 @@
 <color name="green-cyan" rgb="009966"/> 
 <color name="purpley blue" rgb="5f34e7"/> 
 <color name="medium electric blue" rgb="035096"/> 
-<color name="medium aquamarine" rgb="66ddaa"/> 
+<color name="medium aquamarine-ish" rgb="66ddaa"/> 
 <color name="screamin' green" rgb="76ff7a"/> 
 <color name="blue indigo" rgb="485470"/> 
 <color name="light sky blue" rgb="87cefa"/> 
@@ -1180,7 +1180,7 @@
 <color name="Columbia blue" rgb="c4d8e2"/> 
 <color name="French blue" rgb="0072bb"/> 
 <color name="frog green" rgb="58bc08"/> 
-<color name="light blue" rgb="add8e6"/> 
+<color name="quite light blue" rgb="add8e6"/> 
 <color name="green-blue" rgb="1164b4"/> 
 <color name="area 51" rgb="3c8043"/> 
 <color name="light blue gray" rgb="b7c9e2"/> 
@@ -1217,7 +1217,7 @@
 <color name="chocolate (web)" rgb="d2691e"/> 
 <color name="dusk blue" rgb="26538d"/> 
 <color name="mid blue" rgb="276ab3"/> 
-<color name="bubble gum pink" rgb="ff69af"/> 
+<color name="bubblegum pink-ish" rgb="ff69af"/> 
 <color name="beaver" rgb="9f8170"/> 
 <color name="quinacridone magenta" rgb="8e3a59"/> 
 <color name="vomit" rgb="a2a415"/> 
@@ -1311,7 +1311,7 @@
 <color name="deep pink-orange" rgb="ff7077"/> 
 <color name="tulip" rgb="ff878d"/> 
 <color name="plum" rgb="8e4585"/> 
-<color name="bluegreen" rgb="017a79"/> 
+<color name="blue-ish green" rgb="017a79"/> 
 <color name="faded orange" rgb="f0944d"/> 
 <color name="perrywinkle" rgb="8f8ce7"/> 
 <color name="tickle me pink" rgb="fc89ac"/> 
@@ -1408,7 +1408,7 @@
 <color name="lighter purple" rgb="a55af4"/> 
 <color name="red-purple" rgb="e40078"/> 
 <color name="Celadon blue" rgb="007ba7"/> 
-<color name="greenblue" rgb="23c48b"/> 
+<color name="greenblue-ish" rgb="23c48b"/> 
 <color name="outer space" rgb="414a4c"/> 
 <color name="blue yonder" rgb="5072a7"/> 
 <color name="light moody blue" rgb="c1bbec"/> 
@@ -1529,13 +1529,13 @@
 <color name="dark khaki" rgb="bdb76b"/> 
 <color name="Tufts blue" rgb="417dc1"/> 
 <color name="lilac" rgb="c8a2c8"/> 
-<color name="dark terra cotta" rgb="cc4e5c"/> 
+<color name="dark terracotta" rgb="cc4e5c"/> 
 <color name="celestial blue" rgb="4997d0"/> 
 <color name="copper rust light" rgb="cd9999"/> 
 <color name="little boy blue" rgb="6ca0dc"/> 
 <color name="clay brown" rgb="b2713d"/> 
 <color name="United Nations Blue" rgb="5b92e5"/> 
-<color name="terra cotta" rgb="e2725b"/> 
+<color name="terracotta-ish" rgb="e2725b"/> 
 <color name="fandango pink" rgb="de5285"/> 
 <color name="dull brown" rgb="876e4b"/> 
 <color name="wild orchid" rgb="d470a2"/> 
@@ -1659,7 +1659,7 @@
 <color name="amaranth cerise" rgb="cd2682"/> 
 <color name="light hibiscus" rgb="df84b5"/> 
 <color name="keppel" rgb="3ab09e"/> 
-<color name="medium aqua marine" rgb="66cdaa"/> 
+<color name="medium aquamarine-like" rgb="66cdaa"/> 
 <color name="Laurel green" rgb="a9ba9d"/> 
 <color name="cinereous" rgb="98817b"/> 
 <color name="light mauve" rgb="c292a1"/> 
@@ -2017,7 +2017,7 @@
 <color name="generic purple" rgb="660099"/> 
 <color name="up maroon" rgb="7b1113"/> 
 <color name="very pale blue" rgb="d6fffe"/> 
-<color name="darkgreen" rgb="054907"/> 
+<color name="quite dark green" rgb="054907"/> 
 <color name="blue (pigment)" rgb="333399"/> 
 <color name="maroon (HTML/CSS)" rgb="800000"/> 
 <color name="taupe" rgb="483c32"/> 
@@ -2092,7 +2092,7 @@
 <color name="mandarin red" rgb="0f3f00"/> 
 <color name="cherrywood" rgb="651a14"/> 
 <color name="deep koamaru" rgb="333366"/> 
-<color name="dark blue gray" rgb="1f3b4d"/> 
+<color name="dark blueish gray" rgb="1f3b4d"/> 
 <color name="Air Force blue (USAF)" rgb="00308f"/> 
 <color name="bubbles" rgb="e7feff"/> 
 <color name="onyx" rgb="353839"/> 
@@ -2105,7 +2105,7 @@
 <color name="dark gray" rgb="363737"/> 
 <color name="faded yellow" rgb="feff7f"/> 
 <color name="Pullman green" rgb="3b331c"/> 
-<color name="egg shell" rgb="fffcc4"/> 
+<color name="egg shell-ish" rgb="fffcc4"/> 
 <color name="grape purple" rgb="5d1451"/> 
 <color name="black rose" rgb="67032d"/> 
 <color name="banana" rgb="ffff7e"/> 
@@ -2204,7 +2204,7 @@
 <color name="dark mardi gras" rgb="350036"/> 
 <color name="licorice" rgb="1a1110"/> 
 <color name="dark indigo" rgb="1f0954"/> 
-<color name="darkblue" rgb="030764"/> 
+<color name="quite dark blue" rgb="030764"/> 
 <color name="navy blue" rgb="001146"/> 
 <color name="very dark purple" rgb="2a0134"/> 
 <color name="midnight purple" rgb="280137"/> 

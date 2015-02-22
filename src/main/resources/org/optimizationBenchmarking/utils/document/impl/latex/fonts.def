@@ -1,4 +1,5 @@
-% We load the fontenc package to make sure that all required
-% special characters are available (some are not available
-% with encoding OT1
+%
+% We load the fontenc package to make sure that all required special
+% characters are available (some are not available with encoding OT1.
 \RequirePackage[T1]{fontenc}%
+%

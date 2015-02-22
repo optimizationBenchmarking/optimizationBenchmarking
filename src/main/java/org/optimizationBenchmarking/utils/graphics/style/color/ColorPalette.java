@@ -31,6 +31,36 @@ public class ColorPalette extends Palette<ColorStyle> {
    */
   ColorPalette(final ColorStyle[] data) {
     super(data);
+
+    final String black, white;
+    String name;
+    int i, j;
+
+    black = ColorPalette.BLACK.getID();
+    white = ColorPalette.WHITE.getID();
+    for (i = data.length; (--i) > 0;) {
+      name = data[i].getID();
+
+      if (name.equalsIgnoreCase(black) || //
+          name.equalsIgnoreCase(white)) {
+        throw new IllegalArgumentException(//
+            "The ID of the " + i + //$NON-NLS-1$
+                "th color is '" + name + //$NON-NLS-1$
+                "' which is not permitted."); //$NON-NLS-1$
+      }
+
+      for (j = i; (--j) >= 0;) {
+        if (name.equalsIgnoreCase(data[j].getID())) {
+          throw new IllegalArgumentException(//
+              "No two colors in a palette can have the same ID, but ID '"//$NON-NLS-1$ 
+                  + name + "' of the " + i + //$NON-NLS-1$
+                  "th color equals ID '" + //$NON-NLS-1$
+                  data[j].getID() + "' of the " + j //$NON-NLS-1$
+                  + "th color.");//$NON-NLS-1$
+        }
+      }
+    }
+
   }
 
   /**

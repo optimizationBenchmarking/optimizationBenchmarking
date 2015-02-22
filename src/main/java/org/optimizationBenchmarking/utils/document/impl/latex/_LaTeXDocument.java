@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -32,8 +31,6 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
-import org.optimizationBenchmarking.utils.text.transformations.NormalCharTransformer;
 import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeXJob;
@@ -122,11 +119,11 @@ final class _LaTeXDocument extends Document {
    */
   private boolean m_hasTextSubOrSuperScript;
 
+  /** do we have colors? */
+  private boolean m_hasColors;
+
   /** the figure series package path */
   private Path m_figureSeriesPackagePath;
-
-  /** the color names */
-  private final HashMap<Object, String> m_colorNames;
 
   /**
    * Create a document.
@@ -146,8 +143,6 @@ final class _LaTeXDocument extends Document {
             ((PathUtils.getFileNameWithoutExtension(this.getDocumentPath()) + "-setup.") + //$NON-NLS-1$
             ELaTeXFileType.STY.getDefaultSuffix()));
 
-    this.m_colorNames = new HashMap<>();
-
     this.open();
   }
 
@@ -164,71 +159,9 @@ final class _LaTeXDocument extends Document {
    *          the style
    * @return the name
    */
-  @SuppressWarnings("incomplete-switch")
   final String _colorName(final ColorStyle style) {
-    String ret, ret2;
-    MemoryTextOutput mto;
-    int i, j, length;
-    boolean needsSwitch;
-
-    synchronized (this.m_colorNames) {
-      ret = this.m_colorNames.get(style);
-      if (ret != null) {
-        return ret;
-      }
-
-      mto = new MemoryTextOutput();
-      ret = style.getID();
-      length = ret.length();
-
-      // first turn things like "Navy blue" into "NavyBlue"
-      needsSwitch = false;
-      for (i = j = 0; j < length; j++) {
-        switch (ret.charAt(j)) {
-          case '-':
-          case ' ': {
-            needsSwitch = true;
-            if (i < j) {
-              if (mto.length() > 0) {
-                mto.append(Character.toUpperCase(ret.charAt(i)));
-                mto.append(ret, (i + 1), j);
-                i = (j + 1);
-              }
-            }
-          }
-        }
-      }
-
-      if (needsSwitch) {
-        if (i < j) {
-          if (mto.length() > 0) {
-            mto.append(Character.toUpperCase(ret.charAt(i)));
-            mto.append(ret, (i + 1), j);
-            i = (j + 1);
-          }
-        }
-        ret = mto.toString();
-      }
-      mto = null;
-
-      // now deal with special characters and make result unique
-      ret = NormalCharTransformer.getInstance().transform(ret,
-          TextUtils.DEFAULT_NORMALIZER_FORM);
-      ret += "Color"; //$NON-NLS-1$
-
-      for (i = 0;; i++) {
-        if (i > 0) {
-          ret2 = (ret + i);
-        } else {
-          ret2 = ret;
-        }
-        if (this.m_colorNames.get(ret2) == null) {
-          this.m_colorNames.put(ret2, ret2);
-          this.m_colorNames.put(style, ret2);
-          return ret2;
-        }
-      }
-    }
+    this.m_hasColors = true;
+    return (style.getID() + "Color"); //$NON-NLS-1$
   }
 
   /**
@@ -536,7 +469,6 @@ final class _LaTeXDocument extends Document {
    */
   private final void __buildSetupPackage(final Set<IStyle> usedStyles) {
     final AbstractTextOutput out;
-    final boolean hasColors;
     String html;
     ColorStyle color;
     int i;
@@ -551,8 +483,7 @@ final class _LaTeXDocument extends Document {
 
           this.__include("fonts.def", out);//$NON-NLS-1$
 
-          hasColors = (!(this.m_colorNames.isEmpty()));
-          if (this.m_hasTable || hasColors || this.m_hasCode) {
+          if (this.m_hasTable || this.m_hasColors || this.m_hasCode) {
             this.__include("colors.def", out);//$NON-NLS-1$
           }
 
@@ -591,7 +522,7 @@ final class _LaTeXDocument extends Document {
           this.__include("hyperref.def", out);//$NON-NLS-1$
 
           // now add the colors
-          if (hasColors) {
+          if (this.m_hasColors) {
             for (final IStyle style : usedStyles) {
               if ((style != null) && (style instanceof ColorStyle)) {
                 color = ((ColorStyle) style);
