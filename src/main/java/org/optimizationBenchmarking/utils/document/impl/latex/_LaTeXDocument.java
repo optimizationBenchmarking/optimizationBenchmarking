@@ -232,44 +232,43 @@ final class _LaTeXDocument extends Document {
             if (is != null) {
               try {
                 Files.copy(is, path);
-
-                if (mto.length() > initLength) {
-                  mto.append(',');
-                  mto.append(' ');
-                  mto.append(resource);
-                  mto.append(" (stored as file '"); //$NON-NLS-1$
-                  mto.append(path);
-                  mto.append('\'');
-                  mto.append(')');
-                }
-
-                ending = PathUtils.getFileExtension(path);
-                if (ending != null) {
-                  findType: {
-                    for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
-                      if (format.getDefaultSuffix().equalsIgnoreCase(
-                          ending)) {
-                        type = format;
-                        break findType;
-                      }
-                    }
-                    for (final ELaTeXFileType format : ELaTeXFileType.INSTANCES) {
-                      if (format.getDefaultSuffix().equalsIgnoreCase(
-                          ending)) {
-                        type = format;
-                        break findType;
-                      }
-                    }
-                    type = new FileType(ending, null, null);
-                  }
-
-                  collector.addFile(path, type);
-                }
-
-                ret[index] = path;
               } finally {
                 is.close();
               }
+
+              if (mto.length() > initLength) {
+                mto.append(',');
+                mto.append(' ');
+                mto.append(resource);
+                mto.append(" (stored as file '"); //$NON-NLS-1$
+                mto.append(path);
+                mto.append('\'');
+                mto.append(')');
+              }
+
+              ending = PathUtils.getFileExtension(path);
+              if (ending != null) {
+                findType: {
+                  for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
+                    if (ending.equalsIgnoreCase(format.getDefaultSuffix())) {
+                      type = format;
+                      break findType;
+                    }
+                  }
+                  for (final ELaTeXFileType format : ELaTeXFileType.INSTANCES) {
+                    if (ending.equalsIgnoreCase(format.getDefaultSuffix())) {
+                      type = format;
+                      break findType;
+                    }
+                  }
+                  type = new FileType(ending, null, null);
+                }
+
+                collector.addFile(path, type);
+              }
+
+              ret[index] = path;
+
             } else {
               if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
                 logger
