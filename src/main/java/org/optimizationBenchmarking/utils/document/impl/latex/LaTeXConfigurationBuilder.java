@@ -86,7 +86,7 @@ public class LaTeXConfigurationBuilder extends
    */
   public final LaTeXDocumentClass getDocumentClass() {
     return ((this.m_documentClass != null) ? this.m_documentClass
-        : LaTeXDocumentClass.DEFAULT);
+        : LaTeXDocumentClass.getDefaultDocumentClass());
   }
 
   /**

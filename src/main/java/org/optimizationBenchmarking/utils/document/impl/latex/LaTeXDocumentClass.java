@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.Article;
 import org.optimizationBenchmarking.utils.graphics.EPaperSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
@@ -13,69 +14,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A document class for LaTeX documents */
 public class LaTeXDocumentClass extends PageDimension {
-
-  /** the article document class */
-  public static final LaTeXDocumentClass ARTICLE = new LaTeXDocumentClass(
-      "article", //class //$NON-NLS-1$
-      null,// parameters
-      EPaperSize.LETTER,// paper size
-      "unsrt",// bibtex style //$NON-NLS-1$
-      345d,// width
-      550d,// height
-      1,// column count
-      345d,// column width
-      ELength.PT,// length unit
-      LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE,// fonts
-      ELaTeXSection.SECTION,// highest supported section type
-      ELaTeXSection.SUBPARAGRAPH// lowest supported section type
-  );
-
-  /** the report document class */
-  public static final LaTeXDocumentClass REPORT = new LaTeXDocumentClass(
-      "report", //class //$NON-NLS-1$
-      null,// parameters
-      EPaperSize.LETTER,// paper size
-      "unsrt",// bibtex style //$NON-NLS-1$
-      345d,// width
-      550d,// height
-      1,// column count
-      345d,// column width
-      ELength.PT,// length unit
-      LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE,// fonts
-      ELaTeXSection.CHAPTER,// highest supported section type
-      ELaTeXSection.SUBPARAGRAPH// lowest supported section type
-  );
-
-  /** the report document class */
-  public static final LaTeXDocumentClass BOOK = new LaTeXDocumentClass(
-      "book", //class //$NON-NLS-1$
-      null,// parameters
-      EPaperSize.LETTER,// paper size
-      "unsrt",// bibtex style //$NON-NLS-1$
-      345d,// width
-      550d,// height
-      1,// column count
-      345d,// column width
-      ELength.PT,// length unit
-      LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE,// fonts
-      ELaTeXSection.CHAPTER,// highest supported section type
-      ELaTeXSection.SUBPARAGRAPH// lowest supported section type
-  ) {
-    /** {@inheritDoc} */
-    @Override
-    protected final String getSummaryBegin() {
-      return "\\section*{Preface}"; //$NON-NLS-1$
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected final String getSummaryEnd() {
-      return null;
-    }
-  };
-
-  /** the default document class */
-  public static final LaTeXDocumentClass DEFAULT = LaTeXDocumentClass.ARTICLE;
 
   /** the class to use */
   private final String m_class;
@@ -412,4 +350,12 @@ public class LaTeXDocumentClass extends PageDimension {
     return "\\maketitle";//$NON-NLS-1$
   }
 
+  /**
+   * Get the default document class
+   * 
+   * @return the default document class
+   */
+  public static final LaTeXDocumentClass getDefaultDocumentClass() {
+    return Article.getInstance();
+  }
 }

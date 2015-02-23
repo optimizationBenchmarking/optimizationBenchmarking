@@ -9,6 +9,9 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfigurat
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfiguration;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfigurationBuilder;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDocumentClass;
+import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.Article;
+import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.Book;
+import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.Report;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Configuration;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10ConfigurationBuilder;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
@@ -61,7 +64,7 @@ public final class ExampleDocumentConfigurations {
   /** a subset of {@link #ALL_CONFIGURATIONS} which is rather diverse */
   public static final ArrayListView<DocumentConfiguration> FEW_DIVERSE_CONFIGURATIONS = ExampleDocumentConfigurations
       .__makeUnique(ExampleDocumentConfigurations.ALL_CONFIGURATIONS,
-          ExampleDocumentConfigurations.LEVEL_CHART_DRIVER);
+          ExampleDocumentConfigurations.LEVEL_DOCUMENT_CLASS);
 
   /**
    * make the configurations
@@ -254,8 +257,9 @@ public final class ExampleDocumentConfigurations {
         add.add(latex.immutable());
 
         for (final LaTeXDocumentClass clazz : new LaTeXDocumentClass[] {
-            LaTeXDocumentClass.ARTICLE, LaTeXDocumentClass.REPORT,
-            LaTeXDocumentClass.BOOK }) {
+            LaTeXDocumentClass.getDefaultDocumentClass(),
+            Article.getInstance(), Report.getInstance(),
+            Book.getInstance() }) {
           latex.setDocumentClass(clazz);
           add.add(latex.immutable());
         }
