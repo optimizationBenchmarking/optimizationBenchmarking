@@ -42,9 +42,6 @@ import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeXJobBuilder;
 /** the LaTeX document */
 final class _LaTeXDocument extends Document {
 
-  /** the figure seris package */
-  private static final String FIGURE_SERIES_PACKAGE = "figureSeries.sty"; //$NON-NLS-1$
-
   /** the default document class */
   private static final char[] DOCUMENT_CLASS = { '\\', 'd', 'o', 'c', 'u',
       'm', 'e', 'n', 't', 'c', 'l', 'a', 's', 's', };
@@ -329,7 +326,7 @@ final class _LaTeXDocument extends Document {
    *          the package options
    */
   private static final void __requirePackage(final ITextOutput textOut,
-      final String packageName, final String... options) {
+      final String packageName, final String[] options) {
     char prefix;
 
     textOut.append(_LaTeXDocument.REQUIRE_PACKAGE);
@@ -347,6 +344,35 @@ final class _LaTeXDocument extends Document {
     textOut.append('{');
     textOut.append(packageName);
     LaTeXDriver._endCommandLine(textOut);
+  }
+
+  /**
+   * load the package and require it
+   * 
+   * @param textOut
+   *          the text output device
+   * @param fullPackageName
+   *          the full package name
+   * @param options
+   *          the options
+   * @param license
+   *          the license
+   */
+  private final void __loadPackageAndRequire(final ITextOutput textOut,
+      final String fullPackageName, final String[] options,
+      final String license) {
+    final Path[] paths;
+    final Path path;
+
+    paths = this._requireResources(_LaTeXDocument.class,
+        new String[] { fullPackageName }, license);
+    if ((paths != null) && (paths.length >= 1)) {
+      path = paths[0];
+      if (path != null) {
+        _LaTeXDocument.__requirePackage(textOut,
+            this._pathRelativeToDocument(path, true), options);
+      }
+    }
   }
 
   /** {@inheritDoc} */
@@ -384,7 +410,7 @@ final class _LaTeXDocument extends Document {
         + PathUtils.getFileNameWithoutExtension(//
             this.m_setupPackagePath)) + '\'') + '.'), out);
     _LaTeXDocument.__requirePackage(out,
-        this._pathRelativeToDocument(this.m_setupPackagePath, true));
+        this._pathRelativeToDocument(this.m_setupPackagePath, true), null);
     LaTeXDriver._endLine(out);
     LaTeXDriver._endLine(out);
   }
@@ -646,39 +672,52 @@ final class _LaTeXDocument extends Document {
             this.__include("colors.def", out);//$NON-NLS-1$
           }
 
-          _LaTeXDocument.__requirePackage(out, "caption3"); //$NON-NLS-1$
+          _LaTeXDocument.__requirePackage(out, "caption3", null); //$NON-NLS-1$
 
           if (this.m_hasTable) {
             this.__include("tables.def", out);//$NON-NLS-1$
             if (this.m_hasMultiColCell) {
-              _LaTeXDocument.__requirePackage(out, "multicol"); //$NON-NLS-1$
+              _LaTeXDocument.__requirePackage(out, "multicol", null); //$NON-NLS-1$
             }
             if (this.m_hasMultiRowCell) {
-              _LaTeXDocument.__requirePackage(out, "multirow"); //$NON-NLS-1$
+              _LaTeXDocument.__requirePackage(out, "multirow", null); //$NON-NLS-1$
             }
           }
 
           if (this.m_hasFigure) {
-            _LaTeXDocument.__requirePackage(out, "graphicx"); //$NON-NLS-1$
+            _LaTeXDocument.__requirePackage(out, "graphicx", null); //$NON-NLS-1$
           }
 
           // figure series
-          this.__finalizeFigureSeries(out);
+          if (this.m_hasFigureSeries) {
+            this.__loadPackageAndRequire(
+                out,
+                "figureSeries.sty", //$NON-NLS-1$
+                null,
+                "The figureSeries Package is under LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version. It is author-maintained by Thomas Weise. Copyright (c) 2014, 2015 Thomas Weise."); //$NON-NLS-1$
+          }
 
           if (this.m_hasCode) {
             this.__include("listings.def", out);//$NON-NLS-1$
           }
 
           if (this.m_hasTextSubOrSuperScript) {
-            _LaTeXDocument.__requirePackage(out, "fixltx2e"); //$NON-NLS-1$
+            _LaTeXDocument.__requirePackage(out, "fixltx2e", null); //$NON-NLS-1$
           }
 
           if (this.m_hasUnderlined) {
-            _LaTeXDocument.__requirePackage(out, "ulem",//$NON-NLS-1$ 
-                "normalem"); //$NON-NLS-1$
+            this.__loadPackageAndRequire(out,
+                "ulem.sty",//$NON-NLS-1$ 
+                new String[] { "normalem" }, //$NON-NLS-1$
+                "Copyright (c) 1989-2011 by Donald Arseneau (Vancouver, Canada; asnd@triumf.ca)\nThis software may be freely transmitted, reproduced, or modified for any purpose provided that this copyright notice is left intact. (Small excerpts may be taken and used without any restriction.)"//$NON-NLS-1$
+            );
           }
 
-          this.__include("hyperref.def", out);//$NON-NLS-1$
+          _LaTeXDocument.__requirePackage(out, "hyperref", //$NON-NLS-1$
+              new String[] { "hidelinks=true" });//$NON-NLS-1$
+          if (this.getGraphicFormat() == EGraphicFormat.EPS) {
+            _LaTeXDocument.__requirePackage(out, "breakurl", null); //$NON-NLS-1$
+          }
 
           // now add the colors
           if (this.m_hasColors) {
@@ -728,30 +767,6 @@ final class _LaTeXDocument extends Document {
               " this is a problem, as compiling the document is now impossible.")//$NON-NLS-1$
               , ioError, true);
       ErrorUtils.throwAsRuntimeException(ioError);
-    }
-  }
-
-  /**
-   * finalize the figure series
-   * 
-   * @param out
-   *          the text output to the setup package
-   */
-  private final void __finalizeFigureSeries(final ITextOutput out) {
-    final Path[] paths;
-
-    if (this.m_hasFigureSeries) {
-      paths = this
-          ._requireResources(
-              _LaTeXDocument.class,
-              new String[] { _LaTeXDocument.FIGURE_SERIES_PACKAGE },
-              "The figureSeries Package is under LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version. It is author-maintained by Thomas Weise. Copyright (c) 2014, 2015 Thomas Weise."); //$NON-NLS-1$
-
-      if (paths[0] != null) {
-        _LaTeXDocument.__requirePackage(out, this._pathRelativeToDocument(//
-            paths[0], true));
-        LaTeXDriver._endLine(out);
-      }
     }
   }
 

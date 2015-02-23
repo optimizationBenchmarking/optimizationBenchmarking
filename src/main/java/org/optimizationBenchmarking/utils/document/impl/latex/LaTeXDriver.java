@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -48,7 +49,6 @@ import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteXMLInpu
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransformer;
 import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
@@ -645,7 +645,7 @@ public final class LaTeXDriver extends DocumentDriver {
   @Override
   protected final ITextOutput encode(final ITextOutput raw) {
     return LaTeXCharTransformer.getInstance().transform(raw,
-        TextUtils.DEFAULT_NORMALIZER_FORM);
+        Normalizer.Form.NFC);
   }
 
   /** {@inheritDoc} */

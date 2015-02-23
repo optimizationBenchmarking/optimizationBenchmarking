@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -47,7 +48,6 @@ import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteXMLInput;
 import org.optimizationBenchmarking.utils.io.IFileType;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.XMLCharTransformer;
 
@@ -163,7 +163,7 @@ public final class XHTML10Driver extends DocumentDriver {
    */
   static final ITextOutput _encode(final ITextOutput raw) {
     return XMLCharTransformer.getInstance().transform(raw,
-        TextUtils.DEFAULT_NORMALIZER_FORM);
+        Normalizer.Form.NFC);
   }
 
   /** {@inheritDoc} */

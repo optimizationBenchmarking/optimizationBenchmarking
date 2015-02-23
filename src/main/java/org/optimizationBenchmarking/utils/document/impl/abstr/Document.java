@@ -24,8 +24,10 @@ import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartBuilder;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartSelector;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
@@ -653,6 +655,24 @@ public class Document extends DocumentElement implements IDocument {
       final Logger logger) {
     return this.m_graphicConfig.createGraphic(basePath, name,
         this.getSize(size), listener, logger);
+  }
+
+  /**
+   * Get the graphic format used by this document
+   * 
+   * @return the graphic format used by this document
+   */
+  protected EGraphicFormat getGraphicFormat() {
+    final IGraphicDriver driver;
+    final EGraphicFormat format;
+    driver = this.m_graphicConfig.getGraphicDriver();
+    if (driver != null) {
+      format = driver.getFileType();
+      if (format != null) {
+        return format;
+      }
+    }
+    return EGraphicFormat.NULL;
   }
 
   /**

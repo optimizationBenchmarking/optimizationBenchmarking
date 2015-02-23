@@ -1,6 +1,0 @@
-%
-% We load the hyperref package to enable hyperlinks
-% and clickable references and citations in the document.
-\RequirePackage[hidelinks=true]{hyperref}%
-\RequirePackage{breakurl}%
-%
