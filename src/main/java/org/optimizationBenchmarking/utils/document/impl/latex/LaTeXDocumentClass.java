@@ -351,6 +351,57 @@ public class LaTeXDocumentClass extends PageDimension {
   }
 
   /**
+   * Initialize a LaTeX document. This mainly means to copy resources to it
+   * via {@link #requireResources(LaTeXDocument, String[], String)} and to
+   * load packages via
+   * {@link #requirePackage(ITextOutput, String, String[])}.
+   * 
+   * @param doc
+   *          the document to initialize
+   * @param setupPackage
+   *          the text output device of the setup package
+   * @see #requireResources(LaTeXDocument, String[], String)
+   * @see #requirePackage(ITextOutput, String, String[])
+   */
+  protected void setup(final LaTeXDocument doc,
+      final ITextOutput setupPackage) {
+    //
+  }
+
+  /**
+   * Require that a set of resources (located together with this class)
+   * should be copied to the location of the LaTeX document {@code doc}.
+   * 
+   * @param doc
+   *          the document to which the resources should be co-located
+   * @param resources
+   *          the list of resources
+   * @param license
+   *          the license under which the resources are distributed
+   * @see #setup(LaTeXDocument, ITextOutput)
+   */
+  protected final void requireResources(final LaTeXDocument doc,
+      final String[] resources, final String license) {
+    doc._requireResources(this.getClass(), resources, license);
+  }
+
+  /**
+   * Require a package.
+   * 
+   * @param setupPackage
+   *          the text output to write to
+   * @param packageName
+   *          the package name
+   * @param options
+   *          the package options
+   * @see #setup(LaTeXDocument, ITextOutput)
+   */
+  protected final void requirePackage(final ITextOutput setupPackage,
+      final String packageName, final String[] options) {
+    LaTeXDocument._requirePackage(setupPackage, packageName, options);
+  }
+
+  /**
    * Get the default document class
    * 
    * @return the default document class

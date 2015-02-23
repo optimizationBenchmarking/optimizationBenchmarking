@@ -69,7 +69,7 @@ final class _LaTeXCode extends Code {
       out.append(label.getLabelMark());
     }
 
-    ((_LaTeXDocument) (this.getDocument()))._registerCode();
+    ((LaTeXDocument) (this.getDocument()))._registerCode();
   }
 
   /** {@inheritDoc} */

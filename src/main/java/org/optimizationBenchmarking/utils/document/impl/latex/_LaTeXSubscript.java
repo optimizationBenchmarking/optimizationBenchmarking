@@ -33,8 +33,7 @@ final class _LaTeXSubscript extends Subscript {
   protected synchronized final void onOpen() {
     super.onOpen();
 
-    ((_LaTeXDocument) (this.getDocument()))
-        ._registerTextSubOrSuperScript();
+    ((LaTeXDocument) (this.getDocument()))._registerTextSubOrSuperScript();
     this.getTextOutput().append(_LaTeXSubscript.TEXT_SUBSCRIPT);
   }
 

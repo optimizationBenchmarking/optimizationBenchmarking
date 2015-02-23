@@ -22,7 +22,7 @@ final class _LaTeXLabel extends Label {
    * @param refText
    *          the reference text
    */
-  protected _LaTeXLabel(final _LaTeXDocument owner, final ELabelType type,
+  protected _LaTeXLabel(final LaTeXDocument owner, final ELabelType type,
       final String mark, final String refText) {
     super(owner, type, mark, refText);
   }

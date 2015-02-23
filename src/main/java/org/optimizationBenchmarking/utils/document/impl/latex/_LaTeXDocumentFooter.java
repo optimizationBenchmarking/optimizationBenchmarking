@@ -29,7 +29,7 @@ final class _LaTeXDocumentFooter extends DocumentFooter {
    * @param owner
    *          the owning document
    */
-  _LaTeXDocumentFooter(final _LaTeXDocument owner) {
+  _LaTeXDocumentFooter(final LaTeXDocument owner) {
     super(owner);
     this.open();
   }
@@ -38,7 +38,7 @@ final class _LaTeXDocumentFooter extends DocumentFooter {
   @SuppressWarnings("resource")
   @Override
   protected final void processCitations(final Bibliography bib) {
-    final _LaTeXDocument doc;
+    final LaTeXDocument doc;
     final Logger logger;
     final Path path;
     final BibTeXOutput driver;
@@ -50,7 +50,7 @@ final class _LaTeXDocumentFooter extends DocumentFooter {
       return;
     }
 
-    doc = ((_LaTeXDocument) (this.getDocument()));
+    doc = ((LaTeXDocument) (this.getDocument()));
     path = PathUtils.createPathInside(doc.getDocumentFolder(),//
         ((PathUtils.getFileNameWithoutExtension(doc.getDocumentPath()) + //
         "-bibliography.") + ELaTeXFileType.BIB.getDefaultSuffix())); //$NON-NLS-1$

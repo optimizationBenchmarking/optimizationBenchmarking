@@ -89,11 +89,11 @@ final class _LaTeXTable extends Table {
   @Override
   protected synchronized final void onOpen() {
     final ITextOutput out;
-    final _LaTeXDocument doc;
+    final LaTeXDocument doc;
 
     super.onOpen();
 
-    doc = ((_LaTeXDocument) (this.getDocument()));
+    doc = ((LaTeXDocument) (this.getDocument()));
     doc._registerTable();
 
     out = this.getTextOutput();

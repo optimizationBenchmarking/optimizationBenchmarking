@@ -178,7 +178,7 @@ final class _LaTeXInlineCode extends InlineCode {
   protected synchronized final void onOpen() {
     super.onOpen();
 
-    ((_LaTeXDocument) (this.getDocument()))._registerCode();
+    ((LaTeXDocument) (this.getDocument()))._registerCode();
     this.getTextOutput().append(_LaTeXInlineCode.BEGIN_INLINE_LISTING);
   }
 

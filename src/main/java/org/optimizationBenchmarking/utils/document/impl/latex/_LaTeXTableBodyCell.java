@@ -27,7 +27,7 @@ final class _LaTeXTableBodyCell extends TableBodyCell {
   @Override
   protected synchronized final void onOpen() {
     super.onOpen();
-    ((_LaTeXDocument) (this.getDocument()))._registerCell(//
+    ((LaTeXDocument) (this.getDocument()))._registerCell(//
         _LaTeXTable._beginCell(this, this.getTextOutput()));
   }
 

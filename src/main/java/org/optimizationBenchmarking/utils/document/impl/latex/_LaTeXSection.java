@@ -71,7 +71,7 @@ final class _LaTeXSection extends Section {
 
     super.onOpen();
 
-    clazz = ((_LaTeXDocument) (this.getDocument())).m_class;
+    clazz = ((LaTeXDocument) (this.getDocument())).m_class;
     ofs = (clazz.getHighestSectionType().ordinal() + this.getDepth());
 
     out = this.getTextOutput();

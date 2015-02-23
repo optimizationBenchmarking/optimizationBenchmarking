@@ -68,7 +68,7 @@ final class _LaTeXSubFigure extends SubFigure {
     final ITextOutput out;
 
     out = this.getTextOutput();
-    ((_LaTeXDocument) (this.getDocument()))._includeGraphics(size, files,
+    ((LaTeXDocument) (this.getDocument()))._includeGraphics(size, files,
         out);
     LaTeXDriver._endCommandLine(out);
 

@@ -25,7 +25,7 @@ final class _LaTeXDocumentHeader extends DocumentHeader {
    * @param owner
    *          the owning document
    */
-  _LaTeXDocumentHeader(final _LaTeXDocument owner) {
+  _LaTeXDocumentHeader(final LaTeXDocument owner) {
     super(owner);
     this.open();
   }
@@ -80,7 +80,7 @@ final class _LaTeXDocumentHeader extends DocumentHeader {
     out = this.getTextOutput();
     LaTeXDriver._endLine(out);
 
-    clazz = ((_LaTeXDocument) (this.getDocument())).m_class;
+    clazz = ((LaTeXDocument) (this.getDocument())).m_class;
 
     s = clazz.getAuthorsBegin();
     if ((s != null) && (!(s.isEmpty()))) {
@@ -146,7 +146,7 @@ final class _LaTeXDocumentHeader extends DocumentHeader {
     out = this.getTextOutput();
     LaTeXDriver._endLine(out);
 
-    clazz = ((_LaTeXDocument) (this.getDocument())).m_class;
+    clazz = ((LaTeXDocument) (this.getDocument())).m_class;
 
     s = clazz.getDateBegin();
     if ((s != null) && (!(s.isEmpty()))) {
@@ -172,7 +172,7 @@ final class _LaTeXDocumentHeader extends DocumentHeader {
 
     LaTeXDriver._endLine(out);
 
-    s = ((_LaTeXDocument) (this.getDocument())).m_class.getMakeTitle();
+    s = ((LaTeXDocument) (this.getDocument())).m_class.getMakeTitle();
     if ((s != null) && (!(s.isEmpty()))) {
       out.append(s);
       LaTeXDriver._endLine(out);

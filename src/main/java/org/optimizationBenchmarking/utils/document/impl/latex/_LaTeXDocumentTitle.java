@@ -28,7 +28,7 @@ final class _LaTeXDocumentTitle extends DocumentTitle {
     out = this.getTextOutput();
     LaTeXDriver._endLine(out);
 
-    s = ((_LaTeXDocument) (this.getDocument())).m_class.getTitleBegin();
+    s = ((LaTeXDocument) (this.getDocument())).m_class.getTitleBegin();
     if ((s != null) && (!(s.isEmpty()))) {
       out.append(s);
     }
@@ -52,7 +52,7 @@ final class _LaTeXDocumentTitle extends DocumentTitle {
     out = this.getTextOutput();
     LaTeXDriver._endLine(out);
 
-    s = ((_LaTeXDocument) (this.getDocument())).m_class.getTitleEnd();
+    s = ((LaTeXDocument) (this.getDocument())).m_class.getTitleEnd();
     if ((s != null) && (!(s.isEmpty()))) {
       out.append(s);
     }

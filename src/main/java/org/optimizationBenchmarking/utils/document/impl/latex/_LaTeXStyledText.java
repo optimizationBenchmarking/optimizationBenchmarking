@@ -72,7 +72,7 @@ final class _LaTeXStyledText extends StyledText {
   protected final void beginColor(final ColorStyle color,
       final ITextOutput out) {
     out.append(_LaTeXStyledText.COLOR_BEGIN);
-    out.append(((_LaTeXDocument) (this.getDocument()))._colorName(color));
+    out.append(((LaTeXDocument) (this.getDocument()))._colorName(color));
     out.append('}');
     out.append('{');
   }
@@ -133,7 +133,7 @@ final class _LaTeXStyledText extends StyledText {
     }
 
     if (font.isUnderlined()) {
-      ((_LaTeXDocument) (this.getDocument()))._registerUnderlined();
+      ((LaTeXDocument) (this.getDocument()))._registerUnderlined();
       out.append(_LaTeXStyledText.TEXTUL_BEGIN);
     }
   }

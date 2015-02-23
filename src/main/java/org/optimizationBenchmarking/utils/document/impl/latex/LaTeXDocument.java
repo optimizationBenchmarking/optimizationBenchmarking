@@ -40,7 +40,7 @@ import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeXJob;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeXJobBuilder;
 
 /** the LaTeX document */
-final class _LaTeXDocument extends Document {
+public final class LaTeXDocument extends Document {
 
   /** the default document class */
   private static final char[] DOCUMENT_CLASS = { '\\', 'd', 'o', 'c', 'u',
@@ -131,7 +131,7 @@ final class _LaTeXDocument extends Document {
    * @param builder
    *          the document builder
    */
-  _LaTeXDocument(final LaTeXDocumentBuilder builder) {
+  LaTeXDocument(final LaTeXDocumentBuilder builder) {
     super(LaTeXDriver.getInstance(), builder);
 
     this.m_compile = builder.shouldCompile();
@@ -325,11 +325,11 @@ final class _LaTeXDocument extends Document {
    * @param options
    *          the package options
    */
-  private static final void __requirePackage(final ITextOutput textOut,
+  static final void _requirePackage(final ITextOutput textOut,
       final String packageName, final String[] options) {
     char prefix;
 
-    textOut.append(_LaTeXDocument.REQUIRE_PACKAGE);
+    textOut.append(LaTeXDocument.REQUIRE_PACKAGE);
 
     if ((options != null) && (options.length > 0)) {
       prefix = '[';
@@ -364,12 +364,12 @@ final class _LaTeXDocument extends Document {
     final Path[] paths;
     final Path path;
 
-    paths = this._requireResources(_LaTeXDocument.class,
+    paths = this._requireResources(LaTeXDocument.class,
         new String[] { fullPackageName }, license);
     if ((paths != null) && (paths.length >= 1)) {
       path = paths[0];
       if (path != null) {
-        _LaTeXDocument.__requirePackage(textOut,
+        LaTeXDocument._requirePackage(textOut,
             this._pathRelativeToDocument(path, true), options);
       }
     }
@@ -389,7 +389,7 @@ final class _LaTeXDocument extends Document {
 
     out = this.getTextOutput();
 
-    out.append(_LaTeXDocument.DOCUMENT_CLASS);
+    out.append(LaTeXDocument.DOCUMENT_CLASS);
     parameters = this.m_class.getDocumentClassParameters();
     if ((parameters != null) && (!(parameters.isEmpty()))) {
       ch = '[';
@@ -409,7 +409,7 @@ final class _LaTeXDocument extends Document {
         "All required packages and allocates colors etc. are found in package '" //$NON-NLS-1$
         + PathUtils.getFileNameWithoutExtension(//
             this.m_setupPackagePath)) + '\'') + '.'), out);
-    _LaTeXDocument.__requirePackage(out,
+    LaTeXDocument._requirePackage(out,
         this._pathRelativeToDocument(this.m_setupPackagePath, true), null);
     LaTeXDriver._endLine(out);
     LaTeXDriver._endLine(out);
@@ -448,8 +448,8 @@ final class _LaTeXDocument extends Document {
     }
 
     sep = folder.getFileSystem().getSeparator();
-    if (!(_LaTeXDocument.REQUIRED_SEPARATOR.equals(sep))) {
-      rel = rel.replace(sep, _LaTeXDocument.REQUIRED_SEPARATOR);
+    if (!(LaTeXDocument.REQUIRED_SEPARATOR.equals(sep))) {
+      rel = rel.replace(sep, LaTeXDocument.REQUIRED_SEPARATOR);
     }
 
     if (omitExtension) {
@@ -516,11 +516,11 @@ final class _LaTeXDocument extends Document {
       }
     }
 
-    out.append(_LaTeXDocument.INCLUDE_GRAPHICS_1);
+    out.append(LaTeXDocument.INCLUDE_GRAPHICS_1);
     SimpleNumberAppender.INSTANCE.appendTo(width, ETextCase.IN_SENTENCE,
         out);
     out.append(shrt = length.getShortcut());
-    out.append(_LaTeXDocument.INCLUDE_GRAPHICS_2);
+    out.append(LaTeXDocument.INCLUDE_GRAPHICS_2);
     SimpleNumberAppender.INSTANCE.appendTo(height, ETextCase.IN_SENTENCE,
         out);
     out.append(shrt);
@@ -588,9 +588,9 @@ final class _LaTeXDocument extends Document {
     LaTeXDriver._endLine(out);
     LaTeXDriver._commentLine("That's all, folks.", out); //$NON-NLS-1$
     LaTeXDriver._endLine(out);
-    out.append(_LaTeXDocument.DOCUMENT_END);
+    out.append(LaTeXDocument.DOCUMENT_END);
     LaTeXDriver._endLine(out);
-    out.append(_LaTeXDocument.INPUT_END);
+    out.append(LaTeXDocument.INPUT_END);
     LaTeXDriver._endLine(out);
 
     super.doOnClose();
@@ -618,7 +618,7 @@ final class _LaTeXDocument extends Document {
     String s;
 
     LaTeXDriver._endLine(dest);
-    try (final InputStream is = _LaTeXDocument.class
+    try (final InputStream is = LaTeXDocument.class
         .getResourceAsStream(resource)) {
       try (final InputStreamReader isr = new InputStreamReader(is)) {
         try (final BufferedReader br = new BufferedReader(isr)) {
@@ -672,20 +672,20 @@ final class _LaTeXDocument extends Document {
             this.__include("colors.def", out);//$NON-NLS-1$
           }
 
-          _LaTeXDocument.__requirePackage(out, "caption3", null); //$NON-NLS-1$
+          LaTeXDocument._requirePackage(out, "caption3", null); //$NON-NLS-1$
 
           if (this.m_hasTable) {
             this.__include("tables.def", out);//$NON-NLS-1$
             if (this.m_hasMultiColCell) {
-              _LaTeXDocument.__requirePackage(out, "multicol", null); //$NON-NLS-1$
+              LaTeXDocument._requirePackage(out, "multicol", null); //$NON-NLS-1$
             }
             if (this.m_hasMultiRowCell) {
-              _LaTeXDocument.__requirePackage(out, "multirow", null); //$NON-NLS-1$
+              LaTeXDocument._requirePackage(out, "multirow", null); //$NON-NLS-1$
             }
           }
 
           if (this.m_hasFigure) {
-            _LaTeXDocument.__requirePackage(out, "graphicx", null); //$NON-NLS-1$
+            LaTeXDocument._requirePackage(out, "graphicx", null); //$NON-NLS-1$
           }
 
           // figure series
@@ -702,7 +702,7 @@ final class _LaTeXDocument extends Document {
           }
 
           if (this.m_hasTextSubOrSuperScript) {
-            _LaTeXDocument.__requirePackage(out, "fixltx2e", null); //$NON-NLS-1$
+            LaTeXDocument._requirePackage(out, "fixltx2e", null); //$NON-NLS-1$
           }
 
           if (this.m_hasUnderlined) {
@@ -713,10 +713,10 @@ final class _LaTeXDocument extends Document {
             );
           }
 
-          _LaTeXDocument.__requirePackage(out, "hyperref", //$NON-NLS-1$
+          LaTeXDocument._requirePackage(out, "hyperref", //$NON-NLS-1$
               new String[] { "hidelinks=true" });//$NON-NLS-1$
           if (this.getGraphicFormat() == EGraphicFormat.EPS) {
-            _LaTeXDocument.__requirePackage(out, "breakurl", null); //$NON-NLS-1$
+            LaTeXDocument._requirePackage(out, "breakurl", null); //$NON-NLS-1$
           }
 
           // now add the colors
@@ -749,9 +749,12 @@ final class _LaTeXDocument extends Document {
           }
 
           LaTeXDriver._endLine(out);
+          this.m_class.setup(this, out);
+
+          LaTeXDriver._endLine(out);
           LaTeXDriver._endLine(out);
 
-          out.append(_LaTeXDocument.INPUT_END);
+          out.append(LaTeXDocument.INPUT_END);
           LaTeXDriver._endLine(out);
           out.flush();
 

@@ -10,7 +10,7 @@ final class _LaTeXDocumentBody extends DocumentBody {
    * @param owner
    *          the owning document
    */
-  _LaTeXDocumentBody(final _LaTeXDocument owner) {
+  _LaTeXDocumentBody(final LaTeXDocument owner) {
     super(owner);
     this.open();
   }

@@ -34,8 +34,7 @@ final class _LaTeXSuperscript extends Superscript {
   protected synchronized final void onOpen() {
     super.onOpen();
 
-    ((_LaTeXDocument) (this.getDocument()))
-        ._registerTextSubOrSuperScript();
+    ((LaTeXDocument) (this.getDocument()))._registerTextSubOrSuperScript();
     this.getTextOutput().append(_LaTeXSuperscript.TEXT_SUPERSCRIPT);
   }
 

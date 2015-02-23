@@ -28,7 +28,7 @@ final class _LaTeXDocumentSummary extends DocumentSummary {
     out = this.getTextOutput();
     LaTeXDriver._endLine(out);
 
-    s = ((_LaTeXDocument) (this.getDocument())).m_class.getSummaryBegin();
+    s = ((LaTeXDocument) (this.getDocument())).m_class.getSummaryBegin();
     if ((s != null) && (!(s.isEmpty()))) {
       out.append(s);
     }
@@ -51,7 +51,7 @@ final class _LaTeXDocumentSummary extends DocumentSummary {
     out = this.getTextOutput();
     LaTeXDriver._endLine(out);
 
-    s = ((_LaTeXDocument) (this.getDocument())).m_class.getSummaryEnd();
+    s = ((LaTeXDocument) (this.getDocument())).m_class.getSummaryEnd();
     if ((s != null) && (!(s.isEmpty()))) {
       out.append(s);
     }

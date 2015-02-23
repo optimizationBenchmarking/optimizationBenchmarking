@@ -41,7 +41,7 @@ final class _LaTeXFigureSeries extends FigureSeries {
 
     super.onOpen();
 
-    ((_LaTeXDocument) (this.getDocument()))._registerFigureSeries();
+    ((LaTeXDocument) (this.getDocument()))._registerFigureSeries();
 
     out = this.getTextOutput();
     LaTeXDriver._endLine(out);

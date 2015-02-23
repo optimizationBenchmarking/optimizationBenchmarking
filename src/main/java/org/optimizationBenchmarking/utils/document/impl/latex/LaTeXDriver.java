@@ -185,21 +185,21 @@ public final class LaTeXDriver extends DocumentDriver {
   @Override
   protected final _LaTeXDocumentHeader createDocumentHeader(
       final Document owner) {
-    return new _LaTeXDocumentHeader((_LaTeXDocument) owner);
+    return new _LaTeXDocumentHeader((LaTeXDocument) owner);
   }
 
   /** {@inheritDoc} */
   @Override
   protected final _LaTeXDocumentBody createDocumentBody(
       final Document owner) {
-    return new _LaTeXDocumentBody((_LaTeXDocument) owner);
+    return new _LaTeXDocumentBody((LaTeXDocument) owner);
   }
 
   /** {@inheritDoc} */
   @Override
   protected final _LaTeXDocumentFooter createDocumentFooter(
       final Document owner) {
-    return new _LaTeXDocumentFooter((_LaTeXDocument) owner);
+    return new _LaTeXDocumentFooter((LaTeXDocument) owner);
   }
 
   /** {@inheritDoc} */
@@ -768,7 +768,7 @@ public final class LaTeXDriver extends DocumentDriver {
   @Override
   protected final _LaTeXLabel createLabel(final Document owner,
       final ELabelType type, final String mark, final String refText) {
-    return new _LaTeXLabel(((_LaTeXDocument) owner), type, mark, refText);
+    return new _LaTeXLabel(((LaTeXDocument) owner), type, mark, refText);
   }
 
   /** the loader for the default LaTeX driver */

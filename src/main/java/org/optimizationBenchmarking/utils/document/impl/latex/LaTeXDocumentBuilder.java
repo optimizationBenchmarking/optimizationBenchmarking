@@ -88,7 +88,7 @@ public final class LaTeXDocumentBuilder extends DocumentBuilder {
   /** {@inheritDoc} */
   @Override
   protected final Document doCreateDocument() {
-    return new _LaTeXDocument(this);
+    return new LaTeXDocument(this);
   }
 
 }

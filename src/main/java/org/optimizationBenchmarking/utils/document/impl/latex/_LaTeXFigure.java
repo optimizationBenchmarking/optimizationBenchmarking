@@ -58,11 +58,11 @@ final class _LaTeXFigure extends Figure {
   @Override
   protected synchronized final void onOpen() {
     final ITextOutput out;
-    final _LaTeXDocument doc;
+    final LaTeXDocument doc;
 
     super.onOpen();
 
-    doc = ((_LaTeXDocument) (this.getDocument()));
+    doc = ((LaTeXDocument) (this.getDocument()));
     doc._registerFigure();
 
     out = this.getTextOutput();
@@ -89,7 +89,7 @@ final class _LaTeXFigure extends Figure {
 
     out = this.getTextOutput();
 
-    ((_LaTeXDocument) (this.getDocument()))._includeGraphics(size, files,
+    ((LaTeXDocument) (this.getDocument()))._includeGraphics(size, files,
         out);
 
     out.append(LaTeXDriver.CENTER_END);
