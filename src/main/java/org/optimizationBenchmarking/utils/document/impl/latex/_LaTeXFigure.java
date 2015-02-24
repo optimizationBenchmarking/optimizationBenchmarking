@@ -5,11 +5,14 @@ import java.util.Map;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Figure;
+import org.optimizationBenchmarking.utils.document.impl.abstr.FigureCaption;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** a figure in a LaTeX document */
 final class _LaTeXFigure extends Figure {
@@ -32,6 +35,9 @@ final class _LaTeXFigure extends Figure {
   /** are we using the page wide version? */
   private boolean m_pageWide;
 
+  /** the caption */
+  private char[] m_caption;
+
   /**
    * Create a new figure
    * 
@@ -51,6 +57,23 @@ final class _LaTeXFigure extends Figure {
       final int index) {
     super(owner, useLabel, size, path, index);
     this.open();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final boolean mustChildBeBuffered(final HierarchicalText child) {
+    return (child instanceof FigureCaption);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void processBufferedOutputFromChild(
+      final HierarchicalText child, final MemoryTextOutput out) {
+    if (child instanceof FigureCaption) {
+      this.m_caption = out.toChars();
+    } else {
+      super.processBufferedOutputFromChild(child, out);
+    }
   }
 
   /** {@inheritDoc} */
@@ -91,6 +114,9 @@ final class _LaTeXFigure extends Figure {
 
     ((LaTeXDocument) (this.getDocument()))._includeGraphics(size, files,
         out);
+
+    out.append(this.m_caption);
+    this.m_caption = null;
 
     out.append(LaTeXDriver.CENTER_END);
     LaTeXDriver._endLine(out);
