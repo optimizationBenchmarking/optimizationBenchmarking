@@ -221,25 +221,25 @@ public class FontProperties extends HashObject {
         for (final __FontFlags f : __FontFlags.FLAGS) {
           switch (cmpMode) {
             case 0: {
-              if (name.equals(str)) {
+              if (f.m_name.equals(str)) {
                 return f;
               }
               break;
             }
             case 1: {
-              if (name.startsWith(str)) {
+              if (f.m_name.startsWith(str)) {
                 return f;
               }
               break;
             }
             case 2: {
-              if (name.endsWith(str)) {
+              if (f.m_name.endsWith(str)) {
                 return f;
               }
               break;
             }
             default: {
-              if (name.contains(str)) {
+              if (f.m_name.contains(str)) {
                 return f;
               }
               break;

@@ -583,10 +583,10 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
     // two full dates
     BibTeXOutput.__put(BibTeXOutput.YEAR, buf);
-    raw.append(buf);
+    raw.append(buf, 0, (buf.length - 1));
     BibTeXOutput.__fullDate(start, raw);
     raw.append(" # {--} # "); //$NON-NLS-1$
-    BibTeXOutput.__fullDate(start, raw);
+    BibTeXOutput.__fullDate(end, raw);
     raw.append(',');
     raw.appendLineBreak();
   }
@@ -612,11 +612,12 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
       if (day > 0) {
         raw.append(" # {~"); //$NON-NLS-1$
         raw.append(day);
-        raw.append(", }"); //$NON-NLS-1$
+        raw.append(", } "); //$NON-NLS-1$
       } else {
-        raw.append(" # {~}"); //$NON-NLS-1$
+        raw.append(" # {~} "); //$NON-NLS-1$
       }
       raw.append('#');
+      raw.append(' ');
     } else {
       q = date.getQuarter();
       if (q != null) {

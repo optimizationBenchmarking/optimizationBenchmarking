@@ -50,7 +50,7 @@ final class _LaTeXSubFigure extends SubFigure {
     LaTeXDriver._endLine(out);
 
     index = this.getIndex();
-    if ((((index - 1) % this.getOwner().getSize().getNX()) == 0)) {
+    if ((((index - 1) % this.getOwner().getFiguresPerRow()) == 0)) {
       if (index > 1) {
         LaTeXDriver._endCommandLine(out);
       }

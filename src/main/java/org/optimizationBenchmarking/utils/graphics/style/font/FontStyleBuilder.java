@@ -9,6 +9,8 @@ import java.util.LinkedHashSet;
 import java.util.Locale;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteBuilder;
@@ -293,6 +295,46 @@ public final class FontStyleBuilder extends
   }
 
   /**
+   * Check whether a given font name is allowed
+   * 
+   * @param name
+   *          the name
+   * @return {@code true} if the font name is allowed, {@code false}
+   *         otherwise
+   */
+  private static final boolean __isAllowed(final String name) {
+    final int length;
+    int forbiddenLength;
+
+    if (name == null) {
+      return false;
+    }
+
+    length = name.length();
+    forbiddenLength = Font.DIALOG.length();
+    if (length >= forbiddenLength) {
+      if (name.startsWith(Font.DIALOG)) {
+        if ((name.length() == forbiddenLength)
+            || (name.charAt(forbiddenLength) == '.')) {
+          return false;
+        }
+
+        forbiddenLength = Font.DIALOG_INPUT.length();
+        if (length >= forbiddenLength) {
+          if (name.startsWith(Font.DIALOG_INPUT)) {
+            if ((name.length() == forbiddenLength)
+                || (name.charAt(forbiddenLength) == '.')) {
+              return false;
+            }
+          }
+        }
+      }
+    }
+
+    return true;
+  }
+
+  /**
    * Does a font fit to a given name choice?
    * 
    * @param font
@@ -302,36 +344,71 @@ public final class FontStyleBuilder extends
    * @return {@code true} if the font fits, {@code false} otherwise
    */
   private static final boolean __matches(final Font font, final String name) {
-    final int ml;
-    String s;
-    int l;
+    final int nameLength;
+    String family, fontName, shorter;
+    int fontNameLength;
 
-    ml = name.length();
-    s = font.getFontName(Locale.US);
-    l = s.length();
-    if (l <= ml) {
-      if (s.substring(0, ml).equalsIgnoreCase(name)) {
-        return true;
-      }
-    }
+    family = font.getFamily();
+    if (FontStyleBuilder.__isAllowed(family)) {
 
-    s = font.getFontName();
-    l = s.length();
-    if (l <= ml) {
-      if (s.substring(0, ml).equalsIgnoreCase(name)) {
-        return true;
-      }
-    }
+      nameLength = name.length();
+      fontName = font.getFontName(Locale.US);
+      if (FontStyleBuilder.__isAllowed(fontName)) {
+        fontNameLength = fontName.length();
+        if (fontNameLength >= nameLength) {
 
-    s = font.getName();
-    l = s.length();
-    if (l <= ml) {
-      if (s.substring(0, ml).equalsIgnoreCase(name)) {
-        return true;
+          shorter = ((fontNameLength > nameLength)//
+          ? fontName.substring(0, nameLength)//
+              : fontName);
+          if (shorter.equalsIgnoreCase(name)) {
+            return true;
+          }
+        }
+
+        fontName = font.getFontName();
+        if (FontStyleBuilder.__isAllowed(fontName)) {
+          fontNameLength = fontName.length();
+          if (fontNameLength >= nameLength) {
+            shorter = ((fontNameLength > nameLength)//
+            ? fontName.substring(0, nameLength)//
+                : fontName);
+            if (shorter.equalsIgnoreCase(name)) {
+              return true;
+            }
+          }
+
+          fontName = font.getName();
+          if (FontStyleBuilder.__isAllowed(fontName)) {
+            fontNameLength = fontName.length();
+            if (fontNameLength >= nameLength) {
+              shorter = ((fontNameLength > nameLength)//
+              ? fontName.substring(0, nameLength)//
+                  : fontName);
+              if (shorter.equalsIgnoreCase(name)) {
+                return true;
+              }
+            }
+          }
+        }
       }
     }
 
     return false;
+  }
+
+  /**
+   * Add a face choice to the set of choices
+   * 
+   * @param choices
+   *          the set of face choice
+   * @param choice
+   *          the choice
+   */
+  private static final void __addFaceChoice(
+      final LinkedHashSet<String> choices, final String choice) {
+    if (FontStyleBuilder.__isAllowed(choice)) {
+      choices.add(choice);
+    }
   }
 
   /**
@@ -348,7 +425,7 @@ public final class FontStyleBuilder extends
     final ArrayList<Font> lst;
     int style, goalStyle, i, mask;
     String used;
-    Font f, g;
+    Font font, derivedFont;
     EFontFamily fam1, fam2;
     HashMap<TextAttribute, Object> map;
     final LinkedHashSet<String> faceChoices, choices;
@@ -369,58 +446,63 @@ public final class FontStyleBuilder extends
     }
 
     // try to find a font fitting to the choices we have
-    f = null;
+    font = null;
     used = null;
     faceChoices = this.m_faceChoices;
     this.m_faceChoices = null;
     finder: {
-      for (final String s : faceChoices) {
+      for (final String faceChoice : faceChoices) {
         try {
           // some fonts are already bold or italic by default
-          prop = FontProperties.getFontProperties(s);
+          prop = FontProperties.getFontProperties(faceChoice);
           mask = ((prop != null) ? prop.getStyle() : Font.PLAIN);
           // so we do not need to set those features
           goalStyle = (style & (~mask));
-          f = new Font(s, goalStyle, this.m_size);
-          if (FontStyleBuilder.__matches(f, s)) {
+          font = new Font(faceChoice, goalStyle, this.m_size);
+          if (FontStyleBuilder.__matches(font, faceChoice)) {
             break finder;
           }
-        } catch (final Throwable t) {
-          // odd, but let's ignore any error here
+        } catch (final Throwable error) {
+          ErrorUtils
+              .logError(
+                  Configuration.getGlobalLogger(),
+                  "Strange but ignorable error during the creation of a font style detected.", //$NON-NLS-1$
+                  error, false);
         }
       }
 
       mask = Font.PLAIN;
       goalStyle = style;
-      f = new Font(this.m_family.getFontFamilyName(), style, this.m_size);
+      font = new Font(this.m_family.getFontFamilyName(), style,
+          this.m_size);
     }
 
     lst = new ArrayList<>();
-    lst.add(f);
+    lst.add(font);
 
     // now we try to derive a font fitting exactly to the specifications
-    if (f.getSize() != this.m_size) {
+    if (font.getSize() != this.m_size) {
       // adapt size
-      g = f.deriveFont(this.m_size);
-      if (g != f) {
-        f = g;
-        lst.add(f);
+      derivedFont = font.deriveFont(this.m_size);
+      if (derivedFont != font) {
+        font = derivedFont;
+        lst.add(font);
       }
     }
 
     // adapt style
-    if (goalStyle != f.getStyle()) {
-      g = f.deriveFont(goalStyle);
-      if (g != f) {
-        f = g;
-        lst.add(f);
+    if (goalStyle != font.getStyle()) {
+      derivedFont = font.deriveFont(goalStyle);
+      if (derivedFont != font) {
+        font = derivedFont;
+        lst.add(font);
       }
     }
 
     // adapt rest: underline, kerning, ligantures
     map = ((HashMap) (FontStyleBuilder.FONT_ATTRIBUTES.clone()));
 
-    if (this.m_size != f.getSize()) {
+    if (this.m_size != font.getSize()) {
       map.put(TextAttribute.SIZE, Integer.valueOf(this.m_size));
     }
 
@@ -431,7 +513,7 @@ public final class FontStyleBuilder extends
     }
 
     set = ((goalStyle & Font.BOLD) != 0);
-    if (set != f.isBold()) {
+    if (set != font.isBold()) {
       if (set) {
         map.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
       } else {
@@ -440,7 +522,7 @@ public final class FontStyleBuilder extends
     }
 
     set = ((goalStyle & Font.ITALIC) != 0);
-    if (set != f.isItalic()) {
+    if (set != font.isItalic()) {
       if (set) {
         map.put(TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE);
       } else {
@@ -448,42 +530,42 @@ public final class FontStyleBuilder extends
       }
     }
 
-    g = f.deriveFont(map);
-    if (g != f) {
-      f = g;
-      lst.add(f);
+    derivedFont = font.deriveFont(map);
+    if (derivedFont != font) {
+      font = derivedFont;
+      lst.add(font);
     }
 
     // now let us update the choices list to represent the setting
     choices = new LinkedHashSet<>(faceChoices.size() + 3
         + (6 * lst.size()));
     for (i = lst.size(); (--i) >= 0;) {
-      g = lst.get(i);
-      choices.add(g.getFontName(Locale.US));
-      choices.add(g.getFontName());
-      choices.add(g.getName());
-      choices.add(g.getPSName());
-      choices.add(g.getFamily(Locale.US));
-      choices.add(g.getFamily());
+      derivedFont = lst.get(i);
+      FontStyleBuilder.__addFaceChoice(choices,
+          derivedFont.getFontName(Locale.US));
+      FontStyleBuilder.__addFaceChoice(choices, derivedFont.getFontName());
+      FontStyleBuilder.__addFaceChoice(choices, derivedFont.getName());
+      FontStyleBuilder.__addFaceChoice(choices, derivedFont.getPSName());
+      FontStyleBuilder.__addFaceChoice(choices,
+          derivedFont.getFamily(Locale.US));
+      FontStyleBuilder.__addFaceChoice(choices, derivedFont.getFamily());
     }
-    if (used != null) {
-      choices.add(used);
-    }
+    FontStyleBuilder.__addFaceChoice(choices, used);
     choices.addAll(faceChoices);
 
     fam1 = this.m_family;
     fam2 = null;
     if ((fam1 == null) || (fam1 == EFontFamily.DIALOG)
         || (fam1 == EFontFamily.DIALOG_INPUT)) {
-      prop = FontProperties.getFontProperties(f, true);
+      prop = FontProperties.getFontProperties(font, true);
       if (prop != null) {
         fam2 = prop.getFamily();
       }
     }
 
-    choices.add(fam1.getFontFamilyName());
+    FontStyleBuilder.__addFaceChoice(choices, fam1.getFontFamilyName());
     if ((fam2 != fam1) && (fam2 != null)) {
-      choices.add(fam2.getFontFamilyName());
+      FontStyleBuilder.__addFaceChoice(choices, fam2.getFontFamilyName());
     }
 
     // generate id
@@ -510,7 +592,7 @@ public final class FontStyleBuilder extends
 
     // ok, now we have everything
     return new FontStyle(((fam2 != null) ? fam2 : fam1), this.m_size,
-        this.m_italic, this.m_bold, this.m_underlined, f,
+        this.m_italic, this.m_bold, this.m_underlined, font,
         new ArrayListView<>(choices.toArray(new String[choices.size()])),
         this.m_id);
   }

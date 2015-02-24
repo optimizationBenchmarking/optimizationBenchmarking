@@ -74,10 +74,7 @@ final class _XHTML10FigureSeries extends FigureSeries {
       final int index) {
     super(owner, useLabel, size, path, index);
 
-    final int nx;
-
-    nx = size.getNX();
-    this.m_subFigs = new _XHTML10SubFigureDesc[nx];
+    this.m_subFigs = new _XHTML10SubFigureDesc[this.getFiguresPerRow()];
     this.open();
   }
 
@@ -124,7 +121,7 @@ final class _XHTML10FigureSeries extends FigureSeries {
       out.append(_XHTML10Table.TD_END);
     }
 
-    e = this.getSize().getNX();
+    e = this.m_subFigs.length;
     for (; i < e; i++) {
       out.append(_XHTML10FigureSeries.SUBFIGURE_TD_BODY_EMPTY);
     }

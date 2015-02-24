@@ -718,19 +718,21 @@ public class RandomDocumentExample extends DocumentExample {
               break;
             }
             case INLINE_CODE: {
-              out.append(' ');
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.INLINE_CODE);
-              try (final IText t = ((IComplexText) out).inlineCode()) {
-                try {
-                  t.append("Inline Code: "); //$NON-NLS-1$
-                  LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);
-                } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
-                  break main;
+              if (canLineBreak) {
+                out.append(' ');
+                this.m_termination
+                    ._done(_ERandomDocumentExampleElements.INLINE_CODE);
+                try (final IText t = ((IComplexText) out).inlineCode()) {
+                  try {
+                    t.append("Inline Code: "); //$NON-NLS-1$
+                    LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);
+                  } catch (final Throwable tt) {
+                    error = ErrorUtils.aggregateError(error, tt);
+                    break main;
+                  }
                 }
+                break;
               }
-              break;
             }
             case SUBSCRIPT: {
               this.m_termination

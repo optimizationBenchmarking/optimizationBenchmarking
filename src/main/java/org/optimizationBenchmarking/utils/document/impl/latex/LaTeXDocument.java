@@ -148,8 +148,30 @@ public final class LaTeXDocument extends Document {
 
   /** {@inheritDoc} */
   @Override
-  protected final PhysicalDimension getSize(final EFigureSize size) {
+  protected final PhysicalDimension getFigureSize(final EFigureSize size) {
     return size.approximateSize(this.m_class);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final int getFiguresPerRow(final EFigureSize size) {
+    PhysicalDimension dim;
+    int perRowCalc, perRowExpected;
+
+    dim = this.getFigureSize(size);
+
+    perRowCalc = (int) (this.m_class.getUnit().convertTo(
+        this.m_class.getWidth(), ELength.POINT) / //
+    dim.getUnit().convertTo(dim.getWidth(), ELength.POINT));
+    perRowExpected = size.getNX();
+    if (size.spansAllColumns()) {
+      perRowExpected *= this.m_class.getColumnCount();
+    }
+
+    return (Math.max(1,//
+        Math.max((perRowExpected - 1),//
+            Math.min((perRowExpected + 1), perRowCalc))));
+
   }
 
   /**

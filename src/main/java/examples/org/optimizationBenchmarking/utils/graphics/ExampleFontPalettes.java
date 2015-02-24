@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver;
+import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEFontPalette;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
@@ -75,6 +76,10 @@ public final class ExampleFontPalettes {
       all.add(palette);
     }
     palette = LaTeXDriver.defaultFontPalette();
+    if ((palette != null) && (!(palette.isEmpty()))) {
+      all.add(palette);
+    }
+    palette = IEEEFontPalette.getIEEEFontPalette();
     if ((palette != null) && (!(palette.isEmpty()))) {
       all.add(palette);
     }

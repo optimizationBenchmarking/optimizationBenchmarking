@@ -619,9 +619,20 @@ public class Document extends DocumentElement implements IDocument {
    *          the size
    * @return the translated size
    */
-  protected PhysicalDimension getSize(final EFigureSize size) {
+  protected PhysicalDimension getFigureSize(final EFigureSize size) {
     return size.approximateSize(new PageDimension(EScreenSize.DEFAULT
         .getPageSize(EScreenSize.DEFAULT_SCREEN_DPI)));
+  }
+
+  /**
+   * Get the figures per row
+   * 
+   * @param size
+   *          the figure size
+   * @return the number of figures of this size that fit into one row
+   */
+  protected int getFiguresPerRow(final EFigureSize size) {
+    return ((size != null) ? (size.getNX()) : 1);
   }
 
   /**
@@ -654,7 +665,7 @@ public class Document extends DocumentElement implements IDocument {
       final EFigureSize size, final IFileProducerListener listener,
       final Logger logger) {
     return this.m_graphicConfig.createGraphic(basePath, name,
-        this.getSize(size), listener, logger);
+        this.getFigureSize(size), listener, logger);
   }
 
   /**

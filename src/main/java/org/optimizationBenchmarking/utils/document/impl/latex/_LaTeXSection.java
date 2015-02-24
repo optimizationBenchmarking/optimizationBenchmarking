@@ -43,6 +43,10 @@ final class _LaTeXSection extends Section {
       'u', 't', '\\', '\\', '\\', 'n', 'o', 'i', 'n', 'd', 'e', 'n', 't',
       '\\', 't', 'e', 'x', 't', 'b', 'f', '{' };
 
+  /** start the section emulation */
+  private static final char[] APPENDIX = { 'A', 'p', 'p', 'e', 'n', 'd',
+      'i', 'x', ':', '~' };
+
   /** is the section emulated? */
   boolean m_emulated;
 
@@ -66,13 +70,14 @@ final class _LaTeXSection extends Section {
   @Override
   protected synchronized final void onOpen() {
     final LaTeXDocumentClass clazz;
-    final int ofs;
+    final int ofs, highest;
     final ITextOutput out;
 
     super.onOpen();
 
     clazz = ((LaTeXDocument) (this.getDocument())).m_class;
-    ofs = (clazz.getHighestSectionType().ordinal() + this.getDepth());
+    highest = clazz.getHighestSectionType().ordinal();
+    ofs = (highest + this.getDepth());
 
     out = this.getTextOutput();
     LaTeXDriver._endLine(out);
@@ -83,6 +88,10 @@ final class _LaTeXSection extends Section {
       out.append(_LaTeXSection.SECTION_EMULATOR_A);
     } else {
       out.append(_LaTeXSection.SECTIONS[ofs]);
+    }
+
+    if (this.isAppendix() && (highest == ofs)) {
+      out.append(_LaTeXSection.APPENDIX);
     }
   }
 }

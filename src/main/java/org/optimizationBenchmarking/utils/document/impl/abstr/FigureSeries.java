@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
- * The base class for figure series TODO: deal with child figures?
+ * The base class for figure series
  */
 public class FigureSeries extends ComplexObject implements IFigureSeries {
 
@@ -45,6 +45,9 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
   /** the folder to contain the sub-figures */
   final Path m_folder;
 
+  /** the number of figures per row */
+  private final int m_figuresPerRow;
+
   /**
    * Create a figure series
    * 
@@ -72,6 +75,17 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
     this.m_folder = PathUtils.normalize(this.m_doc.m_basePath.resolve(
         BasicFigure.GRAPHICS_OFFSET).resolve(
         (path == null) ? this.m_globalID : path));
+    this.m_figuresPerRow = Math.max(1, this.getDocument()
+        .getFiguresPerRow(size));
+  }
+
+  /**
+   * Get the number of figures per row
+   * 
+   * @return the number of figures per row
+   */
+  public final int getFiguresPerRow() {
+    return this.m_figuresPerRow;
   }
 
   /** {@inheritDoc} */

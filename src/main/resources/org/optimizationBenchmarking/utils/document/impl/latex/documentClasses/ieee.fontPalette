@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fontPalette
+	xmlns="http://www.optimizationBenchmarking.org/formats/graphics/font/fontPalette.1.0.xsd">
+
+	<defaultFont family="serif" size="10">
+		<face>ptmr7t</face>
+		<face>NimbusRomNo9L-Regu</face>
+		<face>NimbusRomNo9L Regular</face>
+		<face>NimbusRomNo9L</face>
+    <face>Nimbus Roman No9 L Medium</face>
+    <face>Nimbus Roman No9 L Regular</face>
+    <face>Nimbus Roman No 9L</face>
+    <face>Nimbus Roman No9 L</face>
+    <face>Nimbus Roman</face>
+		<face>cmr10</face>
+		<face>cmr11</face>
+		<face>cmr9</face>
+		<face>cmr12</face>
+		<face>Computer Modern Roman</face>
+		<face>Century Old Style</face>
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>Computer Modern</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</defaultFont>
+
+	<emphasizedFont family="serif" italic="true" size="10">
+		<face>ptmri7t</face>
+		<face>NimbusRomNo9L-ReguItal</face>
+		<face>NimbusRomNo9L Italic</face>
+		<face>ptmr7t</face>
+		<face>NimbusRomNo9L-Regu</face>
+		<face>NimbusRomNo9L Regular</face>
+		<face>NimbusRomNo9L</face>
+    <face>Nimbus Roman No9 L Medium</face>
+    <face>Nimbus Roman No9 L Regular</face>
+    <face>Nimbus Roman No 9L</face>
+    <face>Nimbus Roman No9 L</face>
+    <face>Nimbus Roman</face>
+		<face>cmti10</face>
+		<face>cmti11</face>
+		<face>cmti9</face>
+		<face>cmti12</face>
+		<face>Computer Modern Roman</face>
+		<face>Century Old Style</face>
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>Computer Modern</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</emphasizedFont>
+
+	<codeFont family="monospaced" size="10">
+		<face>pcrr7t</face>
+		<face>NimbusMonL-Regu</face>
+		<face>NimbusMonL Regular</face>
+		<face>NimbusMonL</face>
+		<face>Nimbus Mono L Regular</face>
+		<face>Nimbus Mono L</face>
+		<face>Nimbus Mono</face>
+		<face>cmtt10</face>
+		<face>cmtt11</face>
+		<face>cmtt9</face>
+		<face>cmtt12</face>
+		<face>Computer Modern Typewriter</face>
+		<face>Courier New</face>
+		<face>Courier</face>
+		<face>Consolas</face>
+		<face>Terminal</face>
+		<face>Liberation Mono</face>
+	</codeFont>
+
+	<font family="serif" bold="true" size="10">
+		<face>ptmb7t</face>
+		<face>NimbusRomNo9L-Medi</face>
+		<face>ptmr7t</face>
+		<face>NimbusRomNo9L-Regu</face>
+		<face>NimbusRomNo9L Regular</face>
+		<face>NimbusRomNo9L</face>
+    <face>Nimbus Roman No9 L Medium</face>
+    <face>Nimbus Roman No9 L Regular</face>
+    <face>Nimbus Roman No 9L</face>
+    <face>Nimbus Roman No9 L</face>
+    <face>Nimbus Roman</face>
+		<face>cmbx10</face>
+		<face>cmbx11</face>
+		<face>cmbx9</face>
+		<face>cmbx12</face>
+		<face>Computer Modern Roman</face>
+		<face>Century Old Style</face>
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>Computer Modern</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</font>
+
+	<font family="serif" underlined="true" size="10">
+		<face>ptmr7t</face>
+		<face>NimbusRomNo9L-Regu</face>
+		<face>NimbusRomNo9L Regular</face>
+		<face>NimbusRomNo9L</face>
+    <face>Nimbus Roman No9 L Medium</face>
+    <face>Nimbus Roman No9 L Regular</face>
+    <face>Nimbus Roman No 9L</face>
+    <face>Nimbus Roman No9 L</face>
+    <face>Nimbus Roman</face>
+		<face>cmr10</face>
+		<face>cmr11</face>
+		<face>cmr9</face>
+		<face>cmr12</face>
+		<face>Computer Modern Roman</face>
+		<face>Century Old Style</face>
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>Computer Modern</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</font>
+
+	<font family="sansSerif" size="10">
+		<face>phvr7t</face>
+		<face>NimbusSanL-Regu</face>
+		<face>NimbusSanL Regular</face>
+		<face>NimbusSanL</face>
+		<face>Nimbus Sans L Regular</face>
+		<face>Nimbus Sans L</face>
+		<face>Nimbus Sans</face>
+		<face>cmss10</face>
+		<face>cmss11</face>
+		<face>cmss9</face>
+		<face>cmss12</face>
+		<face>Computer Modern Sans Serif</face>
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+	<font family="serif" bold="true" italic="true" size="10">
+		<face>ptmbi7t</face>
+		<face>NimbusRomNo9L-MediItal</face>
+		<face>ptmb7t</face>
+		<face>NimbusRomNo9L-Medi</face>
+		<face>ptmri7t</face>
+		<face>NimbusRomNo9L-ReguItal</face>
+		<face>NimbusRomNo9L Italic</face>
+		<face>ptmr7t</face>
+		<face>NimbusRomNo9L-Regu</face>
+		<face>NimbusRomNo9L Regular</face>
+		<face>NimbusRomNo9L</face>
+    <face>Nimbus Roman No9 L Medium</face>
+    <face>Nimbus Roman No9 L Regular</face>
+    <face>Nimbus Roman No 9L</face>
+    <face>Nimbus Roman No9 L</face>
+    <face>Nimbus Roman</face>
+		<face>cmbxti10</face>
+		<face>cmbxti11</face>
+		<face>cmbxti9</face>
+		<face>cmbxti12</face>
+		<face>Computer Modern Roman</face>
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>Computer Modern</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</font>
+
+	<font family="sansSerif" italic="true" size="10">
+		<face>phvro7t</face>
+		<face>NimbusSanL-ReguItal</face>
+		<face>phvr7t</face>
+		<face>NimbusSanL-Regu</face>
+		<face>NimbusSanL Regular</face>
+		<face>NimbusSanL</face>
+    <face>Nimbus Sans L Regular</face>
+    <face>Nimbus Sans L</face>
+		<face>Nimbus Sans</face>
+		<face>cmssi10</face>
+		<face>cmssi11</face>
+		<face>cmssi9</face>
+		<face>cmssi12</face>
+		<face>Computer Modern Sans Serif</face>
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+	<font family="sansSerif" bold="true" size="10">
+		<face>phvb7t</face>
+		<face>NimbusSanL-Bold</face>
+		<face>phvr7t</face>
+		<face>NimbusSanL-Regu</face>
+		<face>NimbusSanL Regular</face>
+		<face>NimbusSanL</face>
+    <face>Nimbus Sans L Regular</face>
+    <face>Nimbus Sans L</face>
+		<face>Nimbus Sans</face>
+		<face>cmssbx10</face>
+		<face>cmssbx11</face>
+		<face>cmssbx9</face>
+		<face>cmssbx12</face>
+		<face>Computer Modern Sans Serif</face>
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+	<font family="sansSerif" underlined="true" size="10">
+		<face>phvr7t</face>
+		<face>NimbusSanL-Regu</face>
+		<face>NimbusSanL Regular</face>
+    <face>Nimbus Sans L</face>
+		<face>Nimbus Sans</face>
+		<face>cmss10</face>
+		<face>cmss11</face>
+		<face>cmss9</face>
+		<face>cmss12</face>
+		<face>Computer Modern Sans Serif</face>
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+	<font family="serif" bold="true" underlined="true" size="10">
+		<face>ptmb7t</face>
+		<face>NimbusRomNo9L-Medi</face>
+		<face>ptmr7t</face>
+		<face>NimbusRomNo9L-Regu</face>
+		<face>NimbusRomNo9L Regular</face>
+		<face>NimbusRomNo9L</face>
+    <face>Nimbus Roman No9 L Medium</face>
+    <face>Nimbus Roman No9 L Regular</face>
+    <face>Nimbus Roman No 9L</face>
+    <face>Nimbus Roman No9 L</face>
+    <face>Nimbus Roman</face>
+		<face>cmbx10</face>
+		<face>cmbx11</face>
+		<face>cmbx9</face>
+		<face>cmbx12</face>
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>Computer Modern</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</font>
+
+
+	<font family="serif" italic="true" underlined="true" size="10">
+		<face>ptmri7t</face>
+		<face>NimbusRomNo9L-ReguItal</face>
+		<face>NimbusRomNo9L Italic</face>
+		<face>ptmr7t</face>
+		<face>NimbusRomNo9L-Regu</face>
+		<face>NimbusRomNo9L Regular</face>
+		<face>NimbusRomNo9L</face>
+    <face>Nimbus Roman No9 L Medium</face>
+    <face>Nimbus Roman No9 L Regular</face>
+    <face>Nimbus Roman No 9L</face>
+    <face>Nimbus Roman No9 L</face>
+    <face>Nimbus Roman</face>
+		<face>cmti10</face>
+		<face>cmti11</face>
+		<face>cmti9</face>
+		<face>cmti12</face>
+		<face>Computer Modern Roman</face>
+		<face>Century Old Style</face>
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>Computer Modern</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</font>
+
+	<font family="serif" bold="true" italic="true" underlined="true"
+		size="10">
+		<face>ptmbi7t</face>
+		<face>NimbusRomNo9L-MediItal</face>
+		<face>ptmb7t</face>
+		<face>NimbusRomNo9L-Medi</face>
+		<face>ptmr7t</face>
+		<face>NimbusRomNo9L-Regu</face>
+		<face>NimbusRomNo9L Regular</face>
+		<face>NimbusRomNo9L</face>
+    <face>Nimbus Roman No9 L Medium</face>
+    <face>Nimbus Roman No9 L Regular</face>
+    <face>Nimbus Roman No 9L</face>
+    <face>Nimbus Roman No9 L</face>
+    <face>Nimbus Roman</face>
+		<face>cmbxti10</face>
+		<face>cmbxti11</face>
+		<face>cmbxti9</face>
+		<face>cmbxti12</face>
+		<face>Computer Modern Roman</face>
+		<face>Times New Roman</face>
+		<face>Times Roman</face>
+		<face>Times</face>
+		<face>Computer Modern</face>
+		<face>Georgia</face>
+		<face>Liberation Serif</face>
+	</font>
+
+
+	<font family="sansSerif" bold="true" italic="true" size="10">
+		<face>phvbo7t</face>
+		<face>NimbusSanL-BoldItal</face>
+		<face>phvb7t</face>
+		<face>NimbusSanL-Bold</face>
+		<face>phvro7t</face>
+		<face>NimbusSanL-ReguItal</face>
+		<face>phvr7t</face>
+		<face>NimbusSanL-Regu</face>
+		<face>NimbusSanL Regular</face>
+		<face>NimbusSanL</face>
+    <face>Nimbus Sans L Regular</face>
+    <face>Nimbus Sans L</face>
+		<face>Nimbus Sans</face>
+		<face>Computer Modern Sans Serif</face>
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Nimbus Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+	<font family="sansSerif" italic="true" underlined="true" size="10">
+		<face>phvro7t</face>
+		<face>NimbusSanL-ReguItal</face>
+		<face>phvr7t</face>
+		<face>NimbusSanL-Regu</face>
+		<face>NimbusSanL Regular</face>
+		<face>NimbusSanL</face>
+    <face>Nimbus Sans L Regular</face>
+    <face>Nimbus Sans L</face>
+		<face>Nimbus Sans</face>
+		<face>cmssi10</face>
+		<face>cmssi11</face>
+		<face>cmssi9</face>
+		<face>cmssi12</face>
+		<face>Computer Modern Sans Serif</face>
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+	<font family="sansSerif" bold="true" underlined="true" size="10">
+		<face>phvb7t</face>
+		<face>NimbusSanL-Bold</face>
+		<face>phvr7t</face>
+		<face>NimbusSanL-Regu</face>
+		<face>NimbusSanL Regular</face>
+		<face>NimbusSanL</face>
+    <face>Nimbus Sans L Regular</face>
+    <face>Nimbus Sans L</face>
+		<face>Nimbus Sans</face>
+		<face>cmssbx10</face>
+		<face>cmssbx11</face>
+		<face>cmssbx9</face>
+		<face>cmssbx12</face>
+		<face>Computer Modern Sans Serif</face>
+		<face>Arial</face>
+		<face>Helvetica</face>
+		<face>Liberation Sans</face>
+		<face>Arial Unicode MS</face>
+	</font>
+
+
+	<font family="monospaced" bold="true" size="10">
+		<face>pcrb7t</face>
+		<face>NimbusMonL-Bold</face>
+		<face>pcrr7t</face>
+		<face>NimbusMonL-Regu</face>
+		<face>NimbusMonL Regular</face>
+		<face>NimbusMonL</face>
+    <face>Nimbus Mono L Regular</face>
+    <face>Nimbus Mono L</face>
+		<face>Nimbus Mono</face>
+		<face>cmitt10</face>
+		<face>cmitt11</face>
+		<face>cmitt9</face>
+		<face>cmitt12</face>
+		<face>Computer Modern Typewriter</face>
+		<face>Courier New</face>
+		<face>Courier</face>
+		<face>Consolas</face>
+		<face>Terminal</face>
+		<face>Liberation Mono</face>
+	</font>
+
+	<font family="monospaced" italic="true" size="10">
+		<face>pcrbo7t</face>
+		<face>NimbusMonL-ReguObli</face>
+		<face>pcrr7t</face>
+		<face>NimbusMonL-Regu</face>
+		<face>NimbusMonL Regular</face>
+		<face>NimbusMonL</face>
+    <face>Nimbus Mono L Regular</face>
+    <face>Nimbus Mono L</face>
+		<face>Nimbus Mono</face>
+		<face>cmitt10</face>
+		<face>cmitt11</face>
+		<face>cmitt9</face>
+		<face>cmitt12</face>
+		<face>Computer Modern Typewriter</face>
+		<face>Courier New</face>
+		<face>Courier</face>
+		<face>Consolas</face>
+		<face>Terminal</face>
+		<face>Liberation Mono</face>
+	</font>
+
+	<font family="monospaced" bold="true" italic="true" size="10">
+		<face>pcrbo7t</face>
+		<face>NimbusMonL-BoldObli</face>
+		<face>pcrb7t</face>
+		<face>NimbusMonL-Bold</face>
+		<face>pcrbo7t</face>
+		<face>NimbusMonL-ReguObli</face>
+		<face>pcrr7t</face>
+		<face>NimbusMonL-Regu</face>
+		<face>NimbusMonL Regular</face>
+		<face>NimbusMonL</face>
+    <face>Nimbus Mono L Regular</face>
+    <face>Nimbus Mono L</face>
+		<face>Nimbus Mono</face>
+		<face>cmitt10</face>
+		<face>cmitt11</face>
+		<face>cmitt9</face>
+		<face>cmitt12</face>
+		<face>Computer Modern Typewriter</face>
+		<face>Courier New</face>
+		<face>Courier</face>
+		<face>Consolas</face>
+		<face>Terminal</face>
+		<face>Liberation Mono</face>
+	</font>
+
+	<font family="monospaced" bold="true" underlined="true" size="10">
+		<face>pcrb7t</face>
+		<face>NimbusMonL-Bold</face>
+		<face>pcrr7t</face>
+		<face>NimbusMonL-Regu</face>
+		<face>NimbusMonL Regular</face>
+		<face>NimbusMonL</face>
+    <face>Nimbus Mono L Regular</face>
+    <face>Nimbus Mono L</face>
+		<face>Nimbus Mono</face>
+		<face>cmitt10</face>
+		<face>cmitt11</face>
+		<face>cmitt9</face>
+		<face>cmitt12</face>
+		<face>Computer Modern Typewriter</face>
+		<face>Courier New</face>
+		<face>Courier</face>
+		<face>Consolas</face>
+		<face>Terminal</face>
+		<face>Liberation Mono</face>
+	</font>
+
+	<font family="monospaced" italic="true" underlined="true" size="10">
+		<face>pcrbo7t</face>
+		<face>NimbusMonL-ReguObli</face>
+		<face>pcrr7t</face>
+		<face>NimbusMonL-Regu</face>
+		<face>NimbusMonL Regular</face>
+		<face>NimbusMonL</face>
+    <face>Nimbus Mono L Regular</face>
+    <face>Nimbus Mono L</face>
+		<face>Nimbus Mono</face>
+		<face>cmitt10</face>
+		<face>cmitt11</face>
+		<face>cmitt9</face>
+		<face>cmitt12</face>
+		<face>Computer Modern Typewriter</face>
+		<face>Courier New</face>
+		<face>Courier</face>
+		<face>Consolas</face>
+		<face>Terminal</face>
+		<face>Liberation Mono</face>
+	</font>
+
+	<font family="monospaced" bold="true" italic="true" underlined="true"
+		size="10">
+		<face>pcrbo7t</face>
+		<face>NimbusMonL-BoldObli</face>
+		<face>pcrb7t</face>
+		<face>NimbusMonL-Bold</face>
+		<face>pcrbo7t</face>
+		<face>NimbusMonL-ReguObli</face>
+		<face>pcrr7t</face>
+		<face>NimbusMonL-Regu</face>
+		<face>NimbusMonL Regular</face>
+		<face>NimbusMonL</face>
+    <face>Nimbus Mono L Regular</face>
+    <face>Nimbus Mono L</face>
+		<face>Nimbus Mono</face>
+		<face>cmitt10</face>
+		<face>cmitt11</face>
+		<face>cmitt9</face>
+		<face>cmitt12</face>
+		<face>Computer Modern Typewriter</face>
+		<face>Courier New</face>
+		<face>Courier</face>
+		<face>Consolas</face>
+		<face>Terminal</face>
+		<face>Liberation Mono</face>
+	</font>
+</fontPalette>

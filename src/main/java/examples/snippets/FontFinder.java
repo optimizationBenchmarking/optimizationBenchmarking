@@ -103,8 +103,8 @@ public final class FontFinder {
     String ff, lc;
     int size, style, found;
 
-    System.out
-        .println("Now checking which fonts can be accessed by Java."); //$NON-NLS-1$
+    System.out.println(//
+        "Now checking which fonts can be accessed by Java."); //$NON-NLS-1$
 
     found = 0;
     outer: for (final String font : fonts) {

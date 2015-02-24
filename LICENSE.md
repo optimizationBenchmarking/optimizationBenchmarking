@@ -21,26 +21,54 @@ make sure that the project is sufficiently stand-alone and can execute
 without the need to download external resources. 
 
 * LaTeX Package "figureSeries"
-  - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), either version 1.3 of this
-    license or (at your option) any later version.
-  - Copyright: Copyright (C) 2014, 2015 Dr. Thomas Weise
-  - Author: Dr. Thomas Weise
-  - Version: 0.9.2
-  - Files: [figureSeries.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/figureSeries.sty)
-  - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
-  - Status: freely available in the internet
-  - Source: [http://github.com/thomasWeise/figureSeries](http://github.com/thomasWeise/figureSeries)
+    - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), either version 1.3 of this
+      license or (at your option) any later version.
+    - Copyright: Copyright (C) 2014, 2015 Dr. Thomas Weise
+    - Author: Dr. Thomas Weise
+    - Version: 0.9.2
+    - File: [figureSeries.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/figureSeries.sty)
+    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
+    - Status: freely available in the internet
+    - Source: [http://github.com/thomasWeise/figureSeries](http://github.com/thomasWeise/figureSeries)
   
 * LaTeX Package "ulem"
- - License: "This software may be freely transmitted, reproduced, or modified for any purpose provided that this copyright notice is left intact. (Small excerpts may be taken and used without any restriction.)"
- - Copyright: Copyright (c) 1989-2011 by Donald Arseneau (Vancouver, Canada; asnd@triumf.ca)
- - Author: Donald Arseneau
- - Files: [ulem.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/ulem.sty)
- - Version: 2012-05-18
- - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
- - Status: freely available in the internet
- - Source: [http://www.ctan.org/tex-archive/macros/latex/contrib/ulem/](http://www.ctan.org/tex-archive/macros/latex/contrib/ulem/)
+   - License: "This software may be freely transmitted, reproduced, or modified for any purpose provided that this copyright notice is left intact. (Small excerpts may be taken and used without any restriction.)"
+   - Copyright: Copyright (c) 1989-2011 by Donald Arseneau (Vancouver, Canada; asnd@triumf.ca)
+   - Author: Donald Arseneau
+   - File: [ulem.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/ulem.sty)
+   - Version: 2012-05-18
+   - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
+   - Status: freely available in the internet
+   - Source: [http://www.ctan.org/tex-archive/macros/latex/contrib/ulem/](http://www.ctan.org/tex-archive/macros/latex/contrib/ulem/)
 
+* LaTeX Document Class "IEEEtran"
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), version 1.3
+   - Copyright:
+     + Copyright (c) 1993-2000 by Gerry Murray, Silvano Balemi, Jon Dixon, Peter N"uchter, Juergen von Hagen and
+     + Copyright (c) 2001-2014 by Michael Shell
+   - Current maintainer (V1.3 to V1.8a): Michael Shell
+   - File: [IEEEtran.cls](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/IEEEtran.cls)
+   - Version: 2014/09/17 version V1.8a
+   - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
+   - Status: freely available in the internet
+   - Sources:
+       + [http://www.michaelshell.org/tex/ieeetran/](http://www.michaelshell.org/tex/ieeetran/)
+       + [http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/](http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/)
+       + [http://www.ieee.org/](http://www.ieee.org/)
+   
+* LaTeX Bibliography Style "IEEEtran"
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), version 1.3
+   - Copyright: Copyright (c) 2003-2008 Michael Shell
+   - Author: Michael Shell
+   - File: [IEEEtran.bst](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/IEEEtran.bst)
+   - Version: Version 1.13 (2008/09/30)
+   - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
+   - Status: freely available in the internet
+   - Sources:
+       + [http://www.michaelshell.org/tex/ieeetran/](http://www.michaelshell.org/tex/ieeetran/)
+       + [http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/](http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/)
+       + [http://www.ieee.org/](http://www.ieee.org/)
+ 
 Questions and Problems
 ----------------------
 If you have any questions about *the project*, want to contribute

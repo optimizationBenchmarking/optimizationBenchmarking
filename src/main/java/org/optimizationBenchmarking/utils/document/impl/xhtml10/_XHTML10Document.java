@@ -202,7 +202,7 @@ final class _XHTML10Document extends Document {
 
   /** {@inheritDoc} */
   @Override
-  protected final PhysicalDimension getSize(final EFigureSize size) {
+  protected final PhysicalDimension getFigureSize(final EFigureSize size) {
     return size.approximateSize(this.m_pageSize);
   }
 

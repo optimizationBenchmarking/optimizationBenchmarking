@@ -79,8 +79,51 @@ s lucida sans
 m monospaced
 m monospace
 m nimbus mono
+m nimbus mono l
 r nimbus roman
 s nimbus sans
+r nimbus roman no 9l
+r nimbus roman no9 l
+r nimbus roman no9 l medium
+r nimbus roman no9 l regular
+m nimbusmonL
+m nimbus mono l
+m nimbus mono l regular
+mb nimbusmonL-bold
+mbi nimbusmonL-boldobli
+m nimbusmonL
+m nimbusmonL regular
+m nimbusmonL-regu
+mi nimbusmonL-reguobli
+r nimbusromno9l
+rb nimbusromno9l-medi
+rbi nimbusromno9l-mediital
+r nimbusromno9l regular
+r nimbusromno9l-regu
+ri nimbusromno9l-reguital
+ri nimbusromno9l italic
+s nimbussanl
+s nimbus sans l
+s nimbus sans l regular
+sb nimbussanl-bold
+si nimbussanl-ital
+sbi nimbussanl-boldital
+s nimbussanl
+s nimbussanl-regu
+s nimbussanl regular
+si nimbussanl-reguital
+m pcrr7t
+mb pcrb7t
+mbi pcrbo7t
+mi pcrro7t
+rb ptmb7t
+rib ptmbi7t
+r ptmr7t
+ri ptmri7t
+s phvr7t
+sb phvb7t
+si phvro7t
+sbi phvbo7t
 s sans serif
 r serif
 m terminal
