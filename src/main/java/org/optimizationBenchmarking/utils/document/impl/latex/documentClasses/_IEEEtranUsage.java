@@ -28,7 +28,7 @@ abstract class _IEEEtranUsage extends LaTeXDocumentClass {
         2,// column count
         252d,// column width
         ELength.PT,// length unit
-        IEEEFontPalette.getIEEEFontPalette(),// fonts
+        IEEEtranFontPalette.getInstance(),// fonts
         ELaTeXSection.SECTION,// highest supported section type
         ELaTeXSection.PARAGRAPH// lowest supported section type
     );

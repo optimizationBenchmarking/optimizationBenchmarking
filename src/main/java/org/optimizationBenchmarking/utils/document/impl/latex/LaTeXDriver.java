@@ -2,12 +2,10 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
 import org.optimizationBenchmarking.utils.document.impl.abstr.ComplexText;
@@ -39,13 +37,9 @@ import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteXMLInput;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -631,8 +625,7 @@ public final class LaTeXDriver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   public final boolean canUse() {
-    return (__LaTeXDefaultGraphicDriverLoader.INSTANCE != null)
-        && (_LaTeXDefaultFontPaletteLoader.INSTANCE != null);
+    return true;
   }
 
   /** {@inheritDoc} */
@@ -651,34 +644,7 @@ public final class LaTeXDriver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   public final void checkCanUse() {
-    UnsupportedOperationException errorA, errorB, error;
-
-    if (__LaTeXDefaultGraphicDriverLoader.INSTANCE == null) {
-      errorA = __LaTeXDefaultGraphicDriverLoader.ERROR;
-    } else {
-      errorA = null;
-    }
-    if (_LaTeXDefaultFontPaletteLoader.INSTANCE == null) {
-      errorB = _LaTeXDefaultFontPaletteLoader.ERROR;
-    } else {
-      errorB = null;
-    }
-
-    if (errorA != null) {
-      if (errorB != null) {
-        error = new UnsupportedOperationException(//
-            "Cannot use LaTeX Document Driver"); //$NON-NLS-1$
-        error.addSuppressed(errorA);
-        error.addSuppressed(errorB);
-        throw error;
-      }
-      throw errorA;
-    }
-    if (errorB != null) {
-      throw errorB;
-    }
-
-    super.checkCanUse();
+    //
   }
 
   /**
@@ -687,16 +653,10 @@ public final class LaTeXDriver extends DocumentDriver {
    * @return the default graphic driver for LaTeX documents
    */
   public static final IGraphicDriver defaultGraphicDriver() {
+    if (__LaTeXDefaultGraphicDriverLoader.INSTANCE == null) {
+      throw __LaTeXDefaultGraphicDriverLoader.ERROR;
+    }
     return __LaTeXDefaultGraphicDriverLoader.INSTANCE;
-  }
-
-  /**
-   * obtain the default font palette
-   * 
-   * @return the default font palette
-   */
-  public static final FontPalette defaultFontPalette() {
-    return _LaTeXDefaultFontPaletteLoader.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -775,55 +735,6 @@ public final class LaTeXDriver extends DocumentDriver {
   private static final class __LaTeXDriverLoader {
     /** the shared instance */
     static final LaTeXDriver INSTANCE = new LaTeXDriver();
-  }
-
-  /** the default font palette */
-  static final class _LaTeXDefaultFontPaletteLoader {
-
-    /** the internal font palette */
-    static final FontPalette INSTANCE;
-
-    /** the error */
-    static final UnsupportedOperationException ERROR;
-
-    static {
-      final Logger logger;
-      FontPalette p;
-      Throwable error;
-      String msg;
-
-      p = null;
-      error = null;
-      logger = Configuration.getGlobalLogger();
-      try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-        FontPaletteXMLInput
-            .getInstance()
-            .use()
-            .setLogger(logger)
-            .setDestination(tb)
-            .addResource(LaTeXDriver.class, "latex.fontPalette").create().call(); //$NON-NLS-1$
-        p = tb.getResult();
-      } catch (final Throwable tt) {
-        error = tt;
-        p = null;
-        ErrorUtils
-            .logError(
-                logger,
-                "Error while loading the default font palette for the LaTeX Document Driver. This will creating LaTeX documents using this palette impossible.", //$NON-NLS-1$
-                error, true);
-      }
-
-      if (p != null) {
-        INSTANCE = p;
-        ERROR = null;
-      } else {
-        INSTANCE = null;
-        msg = "Could not load default font palette."; //$NON-NLS-1$
-        ERROR = ((error != null) ? new UnsupportedOperationException(msg,
-            error) : new UnsupportedOperationException(msg));
-      }
-    }
-
   }
 
   /** the loader for the supported graphics formats */

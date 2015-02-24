@@ -2,11 +2,9 @@ package org.optimizationBenchmarking.utils.document.impl.xhtml10;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
@@ -38,15 +36,11 @@ import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
-import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteXMLInput;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.XMLCharTransformer;
@@ -622,41 +616,13 @@ public final class XHTML10Driver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   public final boolean canUse() {
-    return (__XHTML10DefaultGraphicDriverLoader.INSTANCE != null)
-        && (__XHTML10DefaultFontPaletteLoader.INSTANCE != null);
+    return true;
   }
 
   /** {@inheritDoc} */
   @Override
   public final void checkCanUse() {
-    UnsupportedOperationException errorA, errorB, error;
-
-    if (__XHTML10DefaultGraphicDriverLoader.INSTANCE == null) {
-      errorA = __XHTML10DefaultGraphicDriverLoader.ERROR;
-    } else {
-      errorA = null;
-    }
-    if (__XHTML10DefaultFontPaletteLoader.INSTANCE == null) {
-      errorB = __XHTML10DefaultFontPaletteLoader.ERROR;
-    } else {
-      errorB = null;
-    }
-
-    if (errorA != null) {
-      if (errorB != null) {
-        error = new UnsupportedOperationException(//
-            "Cannot use XHTML 1.0 Document Driver"); //$NON-NLS-1$
-        error.addSuppressed(errorA);
-        error.addSuppressed(errorB);
-        throw error;
-      }
-      throw errorA;
-    }
-    if (errorB != null) {
-      throw errorB;
-    }
-
-    super.checkCanUse();
+    //
   }
 
   /** {@inheritDoc} */
@@ -724,15 +690,6 @@ public final class XHTML10Driver extends DocumentDriver {
   }
 
   /**
-   * Get the default palette of the XHTML 1.0 driver
-   * 
-   * @return the default palette of the XHTML 1.0 driver
-   */
-  public static final FontPalette defaultFontPalette() {
-    return __XHTML10DefaultFontPaletteLoader.INSTANCE;
-  }
-
-  /**
    * Get the default page dimension for XHTML 1.0 documents
    * 
    * @return the default page dimension for XHTML 1.0 documents
@@ -747,6 +704,9 @@ public final class XHTML10Driver extends DocumentDriver {
    * @return the default graphic driver for XHTML 1.0 documents
    */
   public static final IGraphicDriver defaultGraphicDriver() {
+    if (__XHTML10DefaultGraphicDriverLoader.INSTANCE == null) {
+      throw __XHTML10DefaultGraphicDriverLoader.ERROR;
+    }
     return __XHTML10DefaultGraphicDriverLoader.INSTANCE;
   }
 
@@ -849,53 +809,5 @@ public final class XHTML10Driver extends DocumentDriver {
     /** the default page dimension */
     static final PageDimension INSTANCE = XHTML10ConfigurationBuilder
         ._pageDimension(EScreenSize.DEFAULT.getPageSize());
-  }
-
-  /** the default font palette */
-  private static final class __XHTML10DefaultFontPaletteLoader {
-
-    /** the default font palette */
-    static final FontPalette INSTANCE;
-
-    /** the error */
-    static final UnsupportedOperationException ERROR;
-
-    static {
-      final Logger logger;
-      FontPalette p;
-      Throwable error;
-      String s;
-
-      p = null;
-      error = null;
-      logger = Configuration.getGlobalLogger();
-      try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
-        FontPaletteXMLInput
-            .getInstance()
-            .use()
-            .setLogger(logger)
-            .setDestination(tb)
-            .addResource(XHTML10Driver.class, "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
-        p = tb.getResult();
-      } catch (final Throwable tt) {
-        ErrorUtils
-            .logError(
-                logger,
-                "Error while loading the font palette for the XHTML 1.0 Driver. This will make creating XHTML 1.0 documents impossible.",//$NON-NLS-1$ 
-                tt, true);
-        error = tt;
-        p = null;
-      }
-
-      if (p != null) {
-        INSTANCE = p;
-        ERROR = null;
-      } else {
-        s = "Could not load font palette."; //$NON-NLS-1$
-        ERROR = ((error != null) ? new UnsupportedOperationException(s,
-            error) : new UnsupportedOperationException(s));
-        INSTANCE = null;
-      }
-    }
   }
 }

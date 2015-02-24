@@ -99,10 +99,7 @@ public class LaTeXDocumentClass extends PageDimension {
     }
 
     if (fonts == null) {
-      if (LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE == null) {
-        throw LaTeXDriver._LaTeXDefaultFontPaletteLoader.ERROR;
-      }
-      this.m_fonts = LaTeXDriver._LaTeXDefaultFontPaletteLoader.INSTANCE;
+      this.m_fonts = LaTeXDefaultFontPalette.getInstance();
     } else {
       this.m_fonts = fonts;
     }

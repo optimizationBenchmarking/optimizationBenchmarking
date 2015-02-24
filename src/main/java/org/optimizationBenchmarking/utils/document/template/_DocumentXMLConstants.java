@@ -57,8 +57,8 @@ final class _DocumentXMLConstants {
     VAL_TEXT_CASE = new String[ETextCase.INSTANCES.size()];
     _DocumentXMLConstants.VAL_TEXT_CASE[ETextCase.AT_SENTENCE_START
         .ordinal()] = "atSentenceStart";//$NON-NLS-1$
-    _DocumentXMLConstants.VAL_TEXT_CASE[ETextCase.IN_SENTENCE.ordinal()] = "atTitleStart";//$NON-NLS-1$
-    _DocumentXMLConstants.VAL_TEXT_CASE[ETextCase.AT_TITLE_START.ordinal()] = "inSentence";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_TEXT_CASE[ETextCase.IN_SENTENCE.ordinal()] = "inSentence";//$NON-NLS-1$
+    _DocumentXMLConstants.VAL_TEXT_CASE[ETextCase.AT_TITLE_START.ordinal()] = "atTitleStart";//$NON-NLS-1$
     _DocumentXMLConstants.VAL_TEXT_CASE[ETextCase.IN_TITLE.ordinal()] = "inTitle";//$NON-NLS-1$
   }
 

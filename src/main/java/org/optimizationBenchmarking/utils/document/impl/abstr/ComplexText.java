@@ -121,8 +121,8 @@ public class ComplexText extends PlainText implements IComplexText {
     DocumentDriver._checkCitations(bib);
 
     out = this.getTextOutput();
-    this.m_driver
-        .prependSpaceToCitation(citationMode, textCase, this, out);
+    this.m_driver.prependSpaceToCitation(//
+        citationMode, textCase, this, out);
     this.m_driver.cite(bib, citationMode, textCase, sequenceMode, this,
         out);
   }

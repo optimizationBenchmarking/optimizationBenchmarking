@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
@@ -126,8 +127,11 @@ public final class FontStyle extends FontProperties implements IStyle {
   /** {@inheritDoc} */
   @Override
   protected final int calcHashCode() {
-    return HashUtils.combineHashes(HashUtils.hashCode(this.m_flags),//
-        HashUtils.hashCode(this.m_size));
+    return HashUtils.combineHashes(//
+        HashUtils.hashCode(this.m_flags),//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.m_size),//
+            HashUtils.hashCode(this.m_font)));
   }
 
   /** {@inheritDoc} */
@@ -144,7 +148,8 @@ public final class FontStyle extends FontProperties implements IStyle {
     if (o instanceof FontStyle) {
       t = ((FontStyle) o);
       return ((this.m_flags == t.m_flags) && //
-      (this.m_size == t.m_size));
+          (this.m_size == t.m_size) && //
+      (EComparison.equals(this.m_font, t.m_font)));
     }
     return false;
   }

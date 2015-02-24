@@ -34,7 +34,7 @@ public class FontPalette extends Palette<FontStyle> {
    * @param data
    *          the palette data
    */
-  FontPalette(final FontStyle def, final FontStyle emph,
+  protected FontPalette(final FontStyle def, final FontStyle emph,
       final FontStyle code, final FontStyle[] data) {
     super(data);
 

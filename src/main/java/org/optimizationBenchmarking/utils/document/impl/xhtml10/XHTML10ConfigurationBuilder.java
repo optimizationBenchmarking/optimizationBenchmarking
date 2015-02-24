@@ -151,7 +151,8 @@ public class XHTML10ConfigurationBuilder extends
   public final FontPalette getFontPalette() {
     final FontPalette fonts;
     fonts = this.m_fonts;
-    return ((fonts != null) ? fonts : XHTML10Driver.defaultFontPalette());
+    return ((fonts != null) ? fonts : XHTML10DefaultFontPalette
+        .getInstance());
   }
 
   /**

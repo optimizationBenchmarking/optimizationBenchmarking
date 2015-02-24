@@ -1,8 +1,8 @@
 package org.optimizationBenchmarking.utils.document.impl.latex.documentClasses;
 
 import org.optimizationBenchmarking.utils.document.impl.latex.ELaTeXSection;
+import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDocumentClass;
-import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver;
 import org.optimizationBenchmarking.utils.graphics.EPaperSize;
 import org.optimizationBenchmarking.utils.math.units.ELength;
 
@@ -23,7 +23,7 @@ public final class Book extends LaTeXDocumentClass {
         1,// column count
         345d,// column width
         ELength.PT,// length unit
-        LaTeXDriver.defaultFontPalette(),// fonts
+        LaTeXDefaultFontPalette.getInstance(),// fonts
         ELaTeXSection.CHAPTER,// highest supported section type
         ELaTeXSection.SUBPARAGRAPH// lowest supported section type
     );

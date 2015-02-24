@@ -949,7 +949,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
       final ETextCase textCase, final ComplexText complexText,
       final ITextOutput raw) {
 
-    if ((textCase == ETextCase.IN_SENTENCE)
+    if ((textCase == null) || (textCase == ETextCase.IN_SENTENCE)
         || (textCase == ETextCase.IN_TITLE)) {
       if (citationMode == ECitationMode.ID) {
         complexText.appendNonBreakingSpace();
@@ -1053,7 +1053,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
    */
   protected void prependSpaceToReference(final ETextCase textCase,
       final ComplexText complexText, final ITextOutput raw) {
-    if ((textCase == ETextCase.IN_SENTENCE)
+    if ((textCase == null) || (textCase == ETextCase.IN_SENTENCE)
         || (textCase == ETextCase.IN_TITLE)) {
       raw.append(' ');
     }

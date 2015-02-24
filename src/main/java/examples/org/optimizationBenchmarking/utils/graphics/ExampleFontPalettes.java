@@ -3,8 +3,11 @@ package examples.org.optimizationBenchmarking.utils.graphics;
 import java.util.LinkedHashSet;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver;
-import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEFontPalette;
+import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette;
+import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.SigAlternateFontPalette;
+import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10DefaultFontPalette;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
@@ -71,17 +74,40 @@ public final class ExampleFontPalettes {
       tt.printStackTrace();
     }
 
-    palette = XHTML10Driver.defaultFontPalette();
-    if ((palette != null) && (!(palette.isEmpty()))) {
-      all.add(palette);
+    try {
+      palette = XHTML10DefaultFontPalette.getInstance();
+      if ((palette != null) && (!(palette.isEmpty()))) {
+        all.add(palette);
+      }
+    } catch (final Throwable ignore) {
+      /** ignore **/
     }
-    palette = LaTeXDriver.defaultFontPalette();
-    if ((palette != null) && (!(palette.isEmpty()))) {
-      all.add(palette);
+
+    try {
+      palette = LaTeXDefaultFontPalette.getInstance();
+      if ((palette != null) && (!(palette.isEmpty()))) {
+        all.add(palette);
+      }
+    } catch (final Throwable ignore) {
+      /** ignore **/
     }
-    palette = IEEEFontPalette.getIEEEFontPalette();
-    if ((palette != null) && (!(palette.isEmpty()))) {
-      all.add(palette);
+
+    try {
+      palette = IEEEtranFontPalette.getInstance();
+      if ((palette != null) && (!(palette.isEmpty()))) {
+        all.add(palette);
+      }
+    } catch (final Throwable ignore) {
+      /** ignore **/
+    }
+
+    try {
+      palette = SigAlternateFontPalette.getInstance();
+      if ((palette != null) && (!(palette.isEmpty()))) {
+        all.add(palette);
+      }
+    } catch (final Throwable ignore) {
+      /** ignore **/
     }
 
     return ArrayListView.collectionToView(all, false);

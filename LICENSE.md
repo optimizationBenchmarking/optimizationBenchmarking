@@ -69,6 +69,24 @@ without the need to download external resources.
        + [http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/](http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/)
        + [http://www.ieee.org/](http://www.ieee.org/)
  
+* LaTeX Document Class "sig-alternate"
+    - License: ?
+    - Copyright: the Authors / ACM (?)
+        + Bugs/comments/suggestions/technicalities to Gerry Murray -- [murray@hq.acm.org](mailto:murray@hq.acm.org)
+        + Questions on the style, SIGS policies, etc. to Adrienne Griscti [griscti@acm.org](mailto:griscti@acm.org)
+    - Author:
+        + Gerald Murray - May 23rd 2012
+        + G.K.M. Tobin August-October 1999
+        + adapted from ARTICLE document style by Ken Traub, Olin Shivers, also using elements of esub2acm.cls
+        + ARTICLE DOCUMENT STYLE -- Released 16 March 1988, for LaTeX version 2.09, Copyright (C) 1988 by Leslie Lamport
+    - File: [sig-alternate.cls](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/sig-alternate.cls)
+    - Version: v2.5, Wednesday 23rd. May 2012
+    - Status: freely available in the internet
+    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)   
+    - Sources:
+        + [http://www.acm.org/sigs/publications/sig-alternate-v1.1](http://www.acm.org/sigs/publications/sig-alternate-v1.1)
+        + [http://www.acm.org/sigs/publications/proceedings-templates](http://www.acm.org/sigs/publications/proceedings-templates)
+ 
 Questions and Problems
 ----------------------
 If you have any questions about *the project*, want to contribute

@@ -5,6 +5,15 @@
 #   b -> bold
 #   i -> italic
 #   u -> underlined
+rb aebx
+rbi aebxti
+mi aeitt
+r aer
+s aess
+sb aessbx
+si aessi
+ri aeti
+m aett
 s arial
 sb arial black
 s arial unicode
