@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /** The {@code sig-alternate} document class */
 public final class SigAlternate extends LaTeXDocumentClass {
 
-  /** the {@code alternate} document class */
+  /** the {@code sig-alternate} document class */
   private static final SigAlternate INSTANCE = new SigAlternate();
 
   /** create */

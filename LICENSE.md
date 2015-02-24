@@ -30,10 +30,10 @@ without the need to download external resources.
     - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
     - Status: freely available in the internet
     - Source: [http://github.com/thomasWeise/figureSeries](http://github.com/thomasWeise/figureSeries)
-  
+
 * LaTeX Package "ulem"
    - License: "This software may be freely transmitted, reproduced, or modified for any purpose provided that this copyright notice is left intact. (Small excerpts may be taken and used without any restriction.)"
-   - Copyright: Copyright (c) 1989-2011 by Donald Arseneau (Vancouver, Canada; asnd@triumf.ca)
+   - Copyright: Copyright (c) 1989-2011 by Donald Arseneau (Vancouver, Canada; [asnd@triumf.ca](mailto:asnd@triumf.ca))
    - Author: Donald Arseneau
    - File: [ulem.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/ulem.sty)
    - Version: 2012-05-18
@@ -55,7 +55,7 @@ without the need to download external resources.
        + [http://www.michaelshell.org/tex/ieeetran/](http://www.michaelshell.org/tex/ieeetran/)
        + [http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/](http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/)
        + [http://www.ieee.org/](http://www.ieee.org/)
-   
+
 * LaTeX Bibliography Style "IEEEtran"
    - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), version 1.3
    - Copyright: Copyright (c) 2003-2008 Michael Shell
@@ -68,7 +68,7 @@ without the need to download external resources.
        + [http://www.michaelshell.org/tex/ieeetran/](http://www.michaelshell.org/tex/ieeetran/)
        + [http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/](http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/)
        + [http://www.ieee.org/](http://www.ieee.org/)
- 
+
 * LaTeX Document Class "sig-alternate"
     - License: ?
     - Copyright: the Authors / ACM (?)
@@ -86,7 +86,69 @@ without the need to download external resources.
     - Sources:
         + [http://www.acm.org/sigs/publications/sig-alternate-v1.1](http://www.acm.org/sigs/publications/sig-alternate-v1.1)
         + [http://www.acm.org/sigs/publications/proceedings-templates](http://www.acm.org/sigs/publications/proceedings-templates)
- 
+
+* LaTeX Document Class "llncs"
+    - License: ?
+    - Copyright: the Authors / Springer Verlag (?)
+    - Author: ?
+    - File: [llncs.cls](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/llncs.cls)
+    - Version: LLNCS DOCUMENT CLASS -- version 2.18 (27-Sep-2013)
+    - Status: freely available in the internet
+    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)   
+    - Sources:
+        + [http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0](http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0)
+        + [ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip](ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip)
+
+* LaTeX Bibliography Style "splncs03"
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt)
+   - Copyright: Maurizio "Titto" Patrignani of Dipartimento di Informatica e Automazione Universita' Roma Tre, Springer Verlag, Copyright 1994-2007 Patrick W Daly
+   - Author: Maurizio "Titto" Patrignani of, Dipartimento di Informatica e Automazione Universita' Roma Tre
+   - File: [splncs03.bst](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/splncs03.bst)
+   - Version: This was file `titto-lncs-02.bst' produced on Wed Apr 1, 2009
+   - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
+   - Status: freely available in the internet
+   - Sources:
+        + [http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0](http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0)
+        + [ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip](ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip)
+
+* LaTeX Package "sprmindx"
+   - License: ?
+   - Copyright: the Author(s), Springer Verlag
+   - Author: ?
+   - File: [sprmindx.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/sprmindx.sty)
+   - Version: ?
+   - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
+   - Status: freely available in the internet
+   - Sources:
+        + [http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0](http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0)
+        + [ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip](ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip)
+
+* LaTeX Package "aliascnt"
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), version 1.3c
+   - Copyright: Copyright (C) 2006, 2009 by Heiko Oberdiek [<heiko.oberdiek at googlemail.com>](mailto:heiko.oberdiek@googlemail.com)
+   - Author: Heiko Oberdiek
+   - File: [aliascnt.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/aliascnt.sty)
+   - Version: 2009/09/08 v1.3
+   - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
+   - Status: freely available in the internet
+   - Sources:
+        + [http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0](http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0)
+        + [ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip](ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip)
+        + [http://ctan.org/pkg/aliascnt](http://ctan.org/pkg/aliascnt)
+
+* LaTeX Package "remreset"
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt)
+   - Copyright: Copyright 1997 David Carlisle
+   - Author: David Carlisle
+   - File: [remreset.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/remreset.sty)
+   - Version: 1997/09/28 David Carlisle
+   - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
+   - Status: freely available in the internet
+   - Sources:
+        + [http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0](http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0)
+        + [ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip](ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip)
+        + [http://ctan.org/pkg/remreset](http://ctan.org/pkg/remreset)
+
 Questions and Problems
 ----------------------
 If you have any questions about *the project*, want to contribute
