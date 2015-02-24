@@ -69,10 +69,10 @@ public class LaTeXDocumentClass extends PageDimension {
    *          {@link ELaTeXSection#SUBSECTION}
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public LaTeXDocumentClass(final String clazz,
-      final ArrayListView<String> params, final EPaperSize paperSize,
-      final String bibStyle, final double width, final double height,
-      final int columnCount, final double columnWidth, final ELength unit,
+  public LaTeXDocumentClass(final String clazz, final String[] params,
+      final EPaperSize paperSize, final String bibStyle,
+      final double width, final double height, final int columnCount,
+      final double columnWidth, final ELength unit,
       final FontPalette fonts, final ELaTeXSection highestSection,
       final ELaTeXSection lowestSection) {
     super(width, height, columnCount, columnWidth, unit);
@@ -92,10 +92,10 @@ public class LaTeXDocumentClass extends PageDimension {
           "Paper size cannot be null."); //$NON-NLS-1$
     }
     this.m_paperSize = paperSize;
-    if ((params == null) || (params.isEmpty())) {
+    if ((params == null) || (params.length <= 0)) {
       this.m_classParams = ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
     } else {
-      this.m_classParams = params;
+      this.m_classParams = new ArrayListView(params.clone());
     }
 
     if (fonts == null) {

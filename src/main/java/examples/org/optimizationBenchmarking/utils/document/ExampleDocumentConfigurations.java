@@ -12,6 +12,7 @@ import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDocumentClass
 import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.Article;
 import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.Book;
 import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtran;
+import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranConference;
 import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.Report;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Configuration;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10ConfigurationBuilder;
@@ -260,7 +261,8 @@ public final class ExampleDocumentConfigurations {
         for (final LaTeXDocumentClass clazz : new LaTeXDocumentClass[] {
             LaTeXDocumentClass.getDefaultDocumentClass(),
             Article.getInstance(), Report.getInstance(),
-            Book.getInstance(), IEEEtran.getInstance() }) {
+            Book.getInstance(), IEEEtran.getInstance(),
+            IEEEtranConference.getInstance() }) {
           latex.setDocumentClass(clazz);
           add.add(latex.immutable());
         }

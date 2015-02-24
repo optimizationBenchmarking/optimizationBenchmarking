@@ -39,9 +39,6 @@ import examples.org.optimizationBenchmarking.utils.document.ExampleDocumentConfi
  */
 public final class EvaluationExamples {
 
-  /** the document configurations */
-  public static final ArrayListView<DocumentConfiguration> DOCUMENT_CONFIGURATIONS = ExampleDocumentConfigurations.FEW_DIVERSE_CONFIGURATIONS;
-
   /** the evaluator configurations */
   public static final ArrayListView<String> EVALUATOR_CONFIGURATIONS = new ArrayListView<>(
       new String[] { "simple.xml" //$NON-NLS-1$
@@ -90,7 +87,7 @@ public final class EvaluationExamples {
         logger.info("Now processing configuration " + config + //$NON-NLS-1$
             " for example data set " + source);//$NON-NLS-1$
 
-        for (final DocumentConfiguration dest : EvaluationExamples.DOCUMENT_CONFIGURATIONS) {
+        for (final DocumentConfiguration dest : ExampleDocumentConfigurations.FEW_DIVERSE_CONFIGURATIONS) {
           logger.info("Now processing document setup " + dest + //$NON-NLS-1$
               " for configuration " + config + //$NON-NLS-1$
               " for example data set " + source);//$NON-NLS-1$
