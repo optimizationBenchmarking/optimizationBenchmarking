@@ -238,7 +238,8 @@ public interface IMath extends IDocumentElement {
   public abstract IMathName name();
 
   /**
-   * Write a number
+   * Write a number. The text written to the returned context is rendered
+   * in a numerical style.
    * 
    * @return the mathematical number
    */

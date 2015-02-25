@@ -46,13 +46,9 @@
 		<attribute ref="tns:textCase" use="optional" />
 	</attributeGroup>
 
-	<element name="call">
-		<complexType>
-			<attribute name="f" type="token" use="required" />
-		</complexType>
-	</element>
+	<attribute name="label" type="token" />
 
-	<complexType name="plainText" mixed="true">
+	<complexType name="text" mixed="true">
 		<choice>
 
 			<element name="value" minOccurs="0" maxOccurs="unbounded">
@@ -62,13 +58,13 @@
 				</complexType>
 			</element>
 
-			<element ref="tns:call" />
-
-			<element name="nbsp" minOccurs="0" maxOccurs="unbounded">
-				<complexType />
+			<element name="call" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<attribute name="f" type="token" use="required" />
+				</complexType>
 			</element>
 
-			<element name="br" minOccurs="0" maxOccurs="unbounded">
+			<element name="nbsp" minOccurs="0" maxOccurs="unbounded">
 				<complexType />
 			</element>
 
@@ -131,25 +127,29 @@
 					</simpleContent>
 				</complexType>
 			</element>
-
-			<element name="quote" minOccurs="0" maxOccurs="unbounded">
-				<complexType>
-					<complexContent>
-						<extension base="tns:plainText">
-						</extension>
-					</complexContent>
-				</complexType>
-			</element>
-
-			<element name="brace" minOccurs="0" maxOccurs="unbounded">
-				<complexType>
-					<complexContent>
-						<extension base="tns:plainText">
-						</extension>
-					</complexContent>
-				</complexType>
-			</element>
 		</choice>
+	</complexType>
+
+
+
+	<complexType name="plainText" mixed="true">
+		<complexContent>
+			<extension base="tns:text">
+				<choice>
+
+					<element name="br" minOccurs="0" maxOccurs="unbounded">
+						<complexType />
+					</element>
+
+
+					<element name="quote" type="tns:plainText" minOccurs="0"
+						maxOccurs="unbounded" />
+
+					<element name="brace" type="tns:plainText" minOccurs="0"
+						maxOccurs="unbounded" />
+				</choice>
+			</extension>
+		</complexContent>
 	</complexType>
 
 	<element name="ref">
@@ -162,46 +162,24 @@
 		</complexType>
 	</element>
 
+	<element name="sub" type="tns:plainText" />
+
+	<element name="sup" type="tns:plainText" />
+
 	<complexType name="complexText" mixed="true">
 		<complexContent>
 			<extension base="tns:plainText">
 				<choice>
 
-					<element name="code" minOccurs="0" maxOccurs="unbounded">
-						<complexType>
-							<complexContent>
-								<extension base="tns:plainText">
-								</extension>
-							</complexContent>
-						</complexType>
-					</element>
+					<element name="code" type="tns:plainText" minOccurs="0"
+						maxOccurs="unbounded" />
 
-					<element name="em" minOccurs="0" maxOccurs="unbounded">
-						<complexType>
-							<complexContent>
-								<extension base="tns:plainText">
-								</extension>
-							</complexContent>
-						</complexType>
-					</element>
+					<element name="em" type="tns:plainText" minOccurs="0"
+						maxOccurs="unbounded" />
 
-					<element name="sub" minOccurs="0" maxOccurs="unbounded">
-						<complexType>
-							<complexContent>
-								<extension base="tns:plainText">
-								</extension>
-							</complexContent>
-						</complexType>
-					</element>
+					<element ref="tns:sub" minOccurs="0" maxOccurs="unbounded" />
 
-					<element name="sup" minOccurs="0" maxOccurs="unbounded">
-						<complexType>
-							<complexContent>
-								<extension base="tns:plainText">
-								</extension>
-							</complexContent>
-						</complexType>
-					</element>
+					<element ref="tns:sup" minOccurs="0" maxOccurs="unbounded" />
 
 					<element name="cite" minOccurs="0" maxOccurs="unbounded">
 						<complexType>
@@ -224,6 +202,10 @@
 							</complexContent>
 						</complexType>
 					</element>
+
+
+					<element name="inlineMath" type="tns:math" minOccurs="0"
+						maxOccurs="unbounded" />
 
 				</choice>
 			</extension>
@@ -258,16 +240,77 @@
 		</complexContent>
 	</complexType>
 
+	<complexType name="math" mixed="false">
+		<choice>
+			<element name="text" type="tns:complexText" minOccurs="0"
+				maxOccurs="unbounded" />
+
+			<element name="name" minOccurs="0" maxOccurs="unbounded">
+				<complexType mixed="true">
+					<complexContent>
+						<extension base="tns:text">
+							<choice>
+								<element ref="tns:sub" minOccurs="0" maxOccurs="unbounded" />
+								<element ref="tns:sup" minOccurs="0" maxOccurs="unbounded" />
+							</choice>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+
+			<element name="number" type="tns:text" minOccurs="0"
+				maxOccurs="unbounded" />
+
+			<element name="add" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="abs" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="cos" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="div" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="divInline" type="tns:math" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="facorial" type="tns:math" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="brace" type="tns:math" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="ld" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="lg" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="ln" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="log" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="mod" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="mul" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="negate" type="tns:math" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="pow" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="root" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="sin" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="sqrt" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="subt" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+			<element name="tan" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+		</choice>
+	</complexType>
+
 
 	<element name="section">
 		<complexType>
 			<sequence>
 				<element name="title" type="tns:complexText" minOccurs="1"
 					maxOccurs="1" />
-				<element name="body" type="tns:structuredText" minOccurs="1"
-					maxOccurs="1" />
+
+				<element name="body" minOccurs="1" maxOccurs="1">
+					<complexType mixed="true">
+						<complexContent>
+							<extension base="tns:structuredText">
+								<choice>
+									<element name="equation" type="tns:math" minOccurs="0"
+										maxOccurs="unbounded" />
+								</choice>
+								<attribute ref="tns:label" use="optional" />
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+
 			</sequence>
-			<attribute name="label" type="token" use="optional" />
+			<attribute ref="tns:label" use="optional" />
 		</complexType>
 	</element>
 

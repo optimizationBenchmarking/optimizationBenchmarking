@@ -150,6 +150,56 @@ public enum DocumentXML implements IFileType {
   /** the element for list items */
   static final String ELEMENT_LI = "li"; //$NON-NLS-1$
 
+  /** the element for inlineMath */
+  static final String ELEMENT_INLINE_MATH = "inlineMath"; //$NON-NLS-1$
+  /** the element for math equation */
+  static final String ELEMENT_EQUATION = "equation"; //$NON-NLS-1$
+
+  /** the element for math text */
+  static final String ELEMENT_MATH_TEXT = "text"; //$NON-NLS-1$
+  /** the element for math names */
+  static final String ELEMENT_MATH_NAME = "name"; //$NON-NLS-1$
+  /** the element for math number */
+  static final String ELEMENT_MATH_NUMBER = "number"; //$NON-NLS-1$
+  /** the element for math abs */
+  static final String ELEMENT_MATH_ABS = "abs"; //$NON-NLS-1$
+  /** the element for math add */
+  static final String ELEMENT_MATH_ADD = "add"; //$NON-NLS-1$
+  /** the element for math cos */
+  static final String ELEMENT_MATH_COS = "cos"; //$NON-NLS-1$
+  /** the element for math div */
+  static final String ELEMENT_MATH_DIV = "div"; //$NON-NLS-1$
+  /** the element for math div-inline */
+  static final String ELEMENT_MATH_DIV_INLINE = "divInline"; //$NON-NLS-1$
+  /** the element for math factorial */
+  static final String ELEMENT_MATH_FACTORIAL = "factorial"; //$NON-NLS-1$
+  /** the element for math ld */
+  static final String ELEMENT_MATH_LD = "ld"; //$NON-NLS-1$
+  /** the element for math lg */
+  static final String ELEMENT_MATH_LG = "lg"; //$NON-NLS-1$
+  /** the element for math ln */
+  static final String ELEMENT_MATH_LN = "ln"; //$NON-NLS-1$
+  /** the element for math log */
+  static final String ELEMENT_MATH_LOG = "log"; //$NON-NLS-1$
+  /** the element for math mod */
+  static final String ELEMENT_MATH_MOD = "mod"; //$NON-NLS-1$
+  /** the element for math mul */
+  static final String ELEMENT_MATH_MUL = "mul"; //$NON-NLS-1$
+  /** the element for math negate */
+  static final String ELEMENT_MATH_NEGATE = "negate"; //$NON-NLS-1$
+  /** the element for math pow */
+  static final String ELEMENT_MATH_POW = "pow"; //$NON-NLS-1$
+  /** the element for math root */
+  static final String ELEMENT_MATH_ROOT = "root"; //$NON-NLS-1$
+  /** the element for math sin */
+  static final String ELEMENT_MATH_SIN = "sin"; //$NON-NLS-1$
+  /** the element for math sqrt */
+  static final String ELEMENT_MATH_SQRT = "sqrt"; //$NON-NLS-1$
+  /** the element for math sub */
+  static final String ELEMENT_MATH_SUB = "subt"; //$NON-NLS-1$
+  /** the element for math tan */
+  static final String ELEMENT_MATH_TAN = "tan"; //$NON-NLS-1$
+
   /**
    * Get the text case
    * 

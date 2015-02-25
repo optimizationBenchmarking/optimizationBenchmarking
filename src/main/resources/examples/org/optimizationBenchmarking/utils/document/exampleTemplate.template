@@ -13,7 +13,7 @@ This is a template!
 <body>
 At first, let me present some raw values: The value of <code>Integer#MAX_VALUE</code> is <int>Integer#MAX_VALUE</int>,
 &#x3c0; has the value <double>&#x3c0;</double>,
-0.99999999999999999999999999999999 is <double>0.99999999999999999999999999999999</double>,
+0.9999999999999999 is <double>0.99999999999999999999999999999999</double>,
 	and <code>Long#MAX_VALUE</code> is <long>Long#MAX_VALUE</long>.<br/>
 	
 Now some formatted numbers:
@@ -52,6 +52,18 @@ I can also quote the title of a publication, such as<cite mode="title"><bib:book
 </ul>
 </li>
 </ol> 
+</body>
+</section>
+
+<section>
+<title>Maths</title>
+<body>
+We can also do equations:
+<equation><pow>
+<brace><add><sqrt><number>3</number></sqrt><name>xx</name></add></brace>
+<number><double>&#x3c0;</double></number></pow>
+</equation>
+However, inline formulas such as <inlineMath><div><lg><name>&#x3b1;</name></lg><abs><number><long>345</long></number></abs></div></inlineMath> are also possible.
 </body>
 </section>
 

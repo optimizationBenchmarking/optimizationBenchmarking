@@ -12,8 +12,11 @@ import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentElement;
+import org.optimizationBenchmarking.utils.document.spec.IEquation;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.IList;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IMathName;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
@@ -276,6 +279,123 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           return;
         }
 
+        case DocumentXML.ELEMENT_EQUATION: {
+          this.__startEquation(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_INLINE_MATH: {
+          this.__startInlineMath(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_ABS: {
+          this.__startMathAbs(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_ADD: {
+          this.__startMathAdd(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_COS: {
+          this.__startMathCos(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_DIV: {
+          this.__startMathDiv(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_DIV_INLINE: {
+          this.__startMathDivInline(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_FACTORIAL: {
+          this.__startMathFactorial(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_LD: {
+          this.__startMathLd(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_LG: {
+          this.__startMathLg(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_LN: {
+          this.__startMathLn(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_LOG: {
+          this.__startMathLog(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_MOD: {
+          this.__startMathMod(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_MUL: {
+          this.__startMathMul(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_NEGATE: {
+          this.__startMathNegate(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_POW: {
+          this.__startMathPow(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_ROOT: {
+          this.__startMathRoot(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_SIN: {
+          this.__startMathSin(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_SQRT: {
+          this.__startMathSqrt(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_SUB: {
+          this.__startMathSub(attributes);
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_TAN: {
+          this.__startMathTan(attributes);
+          return;
+        }
+        case DocumentXML.ELEMENT_MATH_NUMBER: {
+          this.__startMathNumber(attributes);
+          return;
+        }
+        case DocumentXML.ELEMENT_MATH_NAME: {
+          this.__startMathName(attributes);
+          return;
+        }
+        case DocumentXML.ELEMENT_MATH_TEXT: {
+          this.__startMathText(attributes);
+          return;
+        }
+
         default: {
           throw new IllegalArgumentException(//
               "Unknown element with local name '" //$NON-NLS-1$
@@ -408,6 +528,123 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           this.__endItem();
           return;
         }
+
+        case DocumentXML.ELEMENT_EQUATION: {
+          this.__endEquation();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_INLINE_MATH: {
+          this.__endInlineMath();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_ABS: {
+          this.__endMathAbs();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_ADD: {
+          this.__endMathAdd();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_COS: {
+          this.__endMathCos();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_DIV: {
+          this.__endMathDiv();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_DIV_INLINE: {
+          this.__endMathDivInline();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_FACTORIAL: {
+          this.__endMathFactorial();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_LD: {
+          this.__endMathLd();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_LG: {
+          this.__endMathLg();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_LN: {
+          this.__endMathLn();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_LOG: {
+          this.__endMathLog();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_MOD: {
+          this.__endMathMod();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_MUL: {
+          this.__endMathMul();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_NEGATE: {
+          this.__endMathNegate();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_POW: {
+          this.__endMathPow();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_ROOT: {
+          this.__endMathRoot();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_SIN: {
+          this.__endMathSin();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_SQRT: {
+          this.__endMathSqrt();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_SUB: {
+          this.__endMathSub();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_TAN: {
+          this.__endMathTan();
+          return;
+        }
+        case DocumentXML.ELEMENT_MATH_NUMBER: {
+          this.__endMathNumber();
+          return;
+        }
+        case DocumentXML.ELEMENT_MATH_NAME: {
+          this.__endMathName();
+          return;
+        }
+        case DocumentXML.ELEMENT_MATH_TEXT: {
+          this.__endMathText();
+          return;
+        }
       }
     }
   }
@@ -439,9 +676,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           throw new IllegalArgumentException(//
               "Label name must not be null or empty."); //$NON-NLS-1$
         }
-        synchronized (this.m_properties) {
-          object = this.m_properties.get(string);
-        }
+        object = this.m_properties.get(string);
         if (object == null) {
           throw new IllegalArgumentException("Label '" + //$NON-NLS-1$
               string + "' undefined."); //$NON-NLS-1$
@@ -452,9 +687,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
                   + string + "' points to an instance of " //$NON-NLS-1$
                   + TextUtils.className(object.getClass()));
         }
-        synchronized (this.m_labels) {
-          this.m_labels.add((ILabel) object);
-        }
+        this.m_labels.add((ILabel) object);
         return;
       }
 
@@ -612,9 +845,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
               DocumentXML.ELEMENT_VALUE + //
               "' cannot be null or an empty string.");//$NON-NLS-1$
     }
-    synchronized (this.m_properties) {
-      object = this.m_properties.get(value);
-    }
+    object = this.m_properties.get(value);
 
     this.__formatObject(object,
         this.__requireCurrentElement(ITextOutput.class));
@@ -639,15 +870,13 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           "Required element class cannot be null."); //$NON-NLS-1$
     }
 
-    synchronized (this.m_elementStack) {
-      size = this.m_elementStack.size();
-      if (size <= 0) {
-        throw new IllegalStateException(//
-            "There must be at least one document element on the stack, i.e., a 'current' element."); //$NON-NLS-1$
-      }
-
-      element = this.m_elementStack.get(size - 1);
+    size = this.m_elementStack.size();
+    if (size <= 0) {
+      throw new IllegalStateException(//
+          "There must be at least one document element on the stack, i.e., a 'current' element."); //$NON-NLS-1$
     }
+
+    element = this.m_elementStack.get(size - 1);
 
     if (element == null) {
       throw new IllegalStateException(//
@@ -676,9 +905,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
       throw new IllegalArgumentException(
           "Cannot push null element to element stack."); //$NON-NLS-1$
     }
-    synchronized (this.m_elementStack) {
-      this.m_elementStack.add(element);
-    }
+
+    this.m_elementStack.add(element);
   }
 
   /**
@@ -698,15 +926,13 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           "Required element class cannot be null."); //$NON-NLS-1$
     }
 
-    synchronized (this.m_elementStack) {
-      size = this.m_elementStack.size();
-      if (size <= 0) {
-        throw new IllegalStateException(//
-            "There must be at least one document element to pop on the stack, i.e., a 'current' element."); //$NON-NLS-1$
-      }
-
-      element = this.m_elementStack.remove(size - 1);
+    size = this.m_elementStack.size();
+    if (size <= 0) {
+      throw new IllegalStateException(//
+          "There must be at least one document element to pop on the stack, i.e., a 'current' element."); //$NON-NLS-1$
     }
+
+    element = this.m_elementStack.remove(size - 1);
 
     if (element == null) {
       throw new IllegalStateException(//
@@ -774,19 +1000,17 @@ public final class DocumentXMLHandler extends DelegatingHandler {
               + "', i.e., the callback function must be defined.");//$NON-NLS-1$
     }
 
-    synchronized (this.m_properties) {
-      callback = ((IDocumentCallback) (this.m_properties.get(callbackKey)));
+    callback = ((IDocumentCallback) (this.m_properties.get(callbackKey)));
 
-      if (callback == null) {
-        throw new IllegalArgumentException(//
-            "The callback function '" + callbackKey + //$NON-NLS-1$
-                "' is undefined.");//$NON-NLS-1$
-      }
-
-      callback.callback(
-          this.__requireCurrentElement(callback.getElementClass()),
-          this.m_properties);
+    if (callback == null) {
+      throw new IllegalArgumentException(//
+          "The callback function '" + callbackKey + //$NON-NLS-1$
+              "' is undefined.");//$NON-NLS-1$
     }
+
+    callback.callback(
+        this.__requireCurrentElement(callback.getElementClass()),
+        this.m_properties);
   }
 
   /**
@@ -823,9 +1047,22 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    *          the attributes
    * @see #__endBraces()
    */
+  @SuppressWarnings("resource")
   private final void __startBraces(final Attributes attributes) {
-    this.__pushElement(//
-    this.__requireCurrentElement(IPlainText.class).inBraces());
+    final IDocumentElement element;
+
+    element = this.__requireCurrentElement(IDocumentElement.class);
+    if (element instanceof IPlainText) {
+      this.__pushElement(((IPlainText) element).inBraces());
+    } else {
+      if (element instanceof IMath) {
+        this.__pushElement(((IMath) element).inBraces());
+      } else {
+        throw new IllegalStateException(//
+            "Only instances of IPlainText or IMath can contain braces elements, but the current element is an instance of " //$NON-NLS-1$
+                + TextUtils.className(element.getClass()));
+      }
+    }
   }
 
   /**
@@ -836,7 +1073,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    * @see #__startBraces(Attributes)
    */
   private final void __endBraces() {
-    this.__popElement(IPlainText.class);
+    this.__popElement(IDocumentElement.class);
   }
 
   /**
@@ -898,9 +1135,22 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    *          the attributes
    * @see #__endSuper()
    */
+  @SuppressWarnings("resource")
   private final void __startSuper(final Attributes attributes) {
-    this.__pushElement(//
-    this.__requireCurrentElement(IComplexText.class).superscript());
+    final IText element;
+
+    element = this.__requireCurrentElement(IComplexText.class);
+    if (element instanceof IComplexText) {
+      this.__pushElement(((IComplexText) element).superscript());
+    } else {
+      if (element instanceof IMathName) {
+        this.__pushElement(((IMathName) element).superscript());
+      } else {
+        throw new IllegalStateException(//
+            "Only IMathName or IComplexText can contain superscript elements, but the current element is an instance of " //$NON-NLS-1$
+                + TextUtils.className(element.getClass()));
+      }
+    }
   }
 
   /**
@@ -911,7 +1161,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    * @see #__startSuper(Attributes)
    */
   private final void __endSuper() {
-    this.__popElement(IPlainText.class);
+    this.__popElement(IText.class);
   }
 
   /**
@@ -923,9 +1173,22 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    *          the attributes
    * @see #__endSub()
    */
+  @SuppressWarnings("resource")
   private final void __startSub(final Attributes attributes) {
-    this.__pushElement(//
-    this.__requireCurrentElement(IComplexText.class).subscript());
+    final IText element;
+
+    element = this.__requireCurrentElement(IComplexText.class);
+    if (element instanceof IComplexText) {
+      this.__pushElement(((IComplexText) element).subscript());
+    } else {
+      if (element instanceof IMathName) {
+        this.__pushElement(((IMathName) element).subscript());
+      } else {
+        throw new IllegalStateException(//
+            "Only IMathName or IComplexText can contain subscript elements, but the current element is an instance of " //$NON-NLS-1$
+                + TextUtils.className(element.getClass()));
+      }
+    }
   }
 
   /**
@@ -936,7 +1199,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    * @see #__startSub(Attributes)
    */
   private final void __endSub() {
-    this.__popElement(IPlainText.class);
+    this.__popElement(IText.class);
   }
 
   /**
@@ -994,13 +1257,13 @@ public final class DocumentXMLHandler extends DelegatingHandler {
 
     label = null;
     if (prop != null) {
-      synchronized (this.m_properties) {
-        obj = this.m_properties.get(prop);
-      }
+
+      obj = this.m_properties.get(prop);
+
       if (obj != null) {
         if (!(obj instanceof ILabel)) {
           throw new IllegalArgumentException(//
-              "The label attribute must point to a property which is either null or an instance of ILabel, but the value of '" //$NON-NLS-1$
+              "The label attribute of section must point to a property which is either null or an instance of ILabel, but the value of '" //$NON-NLS-1$
                   + prop + //
                   "' is an instance of "//$NON-NLS-1$ 
                   + TextUtils.className(prop.getClass()));
@@ -1124,15 +1387,14 @@ public final class DocumentXMLHandler extends DelegatingHandler {
       throw new IllegalStateException(//
           "Labels must not be null at end of reference tag."); //$NON-NLS-1$
     }
-    synchronized (this.m_labels) {
-      size = this.m_labels.size();
-      if (size <= 0) {
-        throw new IllegalArgumentException(//
-            "At least one label must be defined in reference tag."); //$NON-NLS-1$
-      }
-      array = this.m_labels.toArray(new ILabel[size]);
-      this.m_labels = null;
+
+    size = this.m_labels.size();
+    if (size <= 0) {
+      throw new IllegalArgumentException(//
+          "At least one label must be defined in reference tag."); //$NON-NLS-1$
     }
+    array = this.m_labels.toArray(new ILabel[size]);
+    this.m_labels = null;
 
     this.__requireCurrentElement(IComplexText.class).reference(textCase,
         seqMode, array);
@@ -1231,9 +1493,9 @@ public final class DocumentXMLHandler extends DelegatingHandler {
     s = DelegatingHandler.getAttributeNormalized(atts,
         DocumentXML.NAMESPACE, DocumentXML.ATTR_FORMAT_PROPERTY);
     if (s != null) {
-      synchronized (this.m_properties) {
-        this.m_formatFormatter = this.m_properties.get(s);
-      }
+
+      this.m_formatFormatter = this.m_properties.get(s);
+
       if (this.m_formatFormatter == null) {
         throw new IllegalArgumentException(//
             "Formatter property '" + //$NON-NLS-1$
@@ -1575,4 +1837,637 @@ public final class DocumentXMLHandler extends DelegatingHandler {
 
     dest.append(object);
   }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_EQUATION}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endEquation()
+   */
+  @SuppressWarnings("resource")
+  private final void __startEquation(final Attributes attributes) {
+    ILabel label;
+    IEquation sec;
+    String prop;
+    Object obj;
+
+    prop = DelegatingHandler.getAttributeNormalized(attributes,
+        DocumentXML.NAMESPACE, DocumentXML.ATTR_LABEL);
+
+    label = null;
+    if (prop != null) {
+
+      obj = this.m_properties.get(prop);
+
+      if (obj != null) {
+        if (!(obj instanceof ILabel)) {
+          throw new IllegalArgumentException(//
+              "The label attribute of equation must point to a property which is either null or an instance of ILabel, but the value of '" //$NON-NLS-1$
+                  + prop + //
+                  "' is an instance of "//$NON-NLS-1$ 
+                  + TextUtils.className(prop.getClass()));
+        }
+        label = ((ILabel) (obj));
+      } else {
+        label = ELabelType.AUTO;
+      }
+    }
+
+    sec = this.__requireCurrentElement(ISectionBody.class).equation(label);
+    this.__pushElement(sec);
+
+    if (prop != null) {
+      this.m_properties.put(prop, sec.getLabel());
+    }
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_EQUATION}
+   * tag
+   * 
+   * @see #__startEquation(Attributes)
+   */
+  private final void __endEquation() {
+    this.__popElement(IEquation.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_INLINE_MATH}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endInlineMath()
+   */
+  private final void __startInlineMath(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IComplexText.class).inlineMath());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_INLINE_MATH}
+   * tag
+   * 
+   * @see #__startInlineMath(Attributes)
+   */
+  private final void __endInlineMath() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_ABS}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathAbs()
+   */
+  private final void __startMathAbs(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).abs());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_ABS}
+   * tag
+   * 
+   * @see #__startMathAbs(Attributes)
+   */
+  private final void __endMathAbs() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_ABS}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathAdd()
+   */
+  private final void __startMathAdd(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).add());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_ABS}
+   * tag
+   * 
+   * @see #__startMathAdd(Attributes)
+   */
+  private final void __endMathAdd() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_COS}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathCos()
+   */
+  private final void __startMathCos(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).cos());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_COS}
+   * tag
+   * 
+   * @see #__startMathCos(Attributes)
+   */
+  private final void __endMathCos() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_DIV}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathDiv()
+   */
+  private final void __startMathDiv(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).div());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_DIV}
+   * tag
+   * 
+   * @see #__startMathDiv(Attributes)
+   */
+  private final void __endMathDiv() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_DIV_INLINE}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathDivInline()
+   */
+  private final void __startMathDivInline(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).divInline());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_DIV_INLINE}
+   * tag
+   * 
+   * @see #__startMathDivInline(Attributes)
+   */
+  private final void __endMathDivInline() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_FACTORIAL}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathFactorial()
+   */
+  private final void __startMathFactorial(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).factorial());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_FACTORIAL}
+   * tag
+   * 
+   * @see #__startMathFactorial(Attributes)
+   */
+  private final void __endMathFactorial() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_LD}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathLd()
+   */
+  private final void __startMathLd(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).ld());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_LD}
+   * tag
+   * 
+   * @see #__startMathLd(Attributes)
+   */
+  private final void __endMathLd() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_LG}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathLg()
+   */
+  private final void __startMathLg(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).lg());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_LG}
+   * tag
+   * 
+   * @see #__startMathLg(Attributes)
+   */
+  private final void __endMathLg() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_LN}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathLn()
+   */
+  private final void __startMathLn(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).ln());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_LN}
+   * tag
+   * 
+   * @see #__startMathLn(Attributes)
+   */
+  private final void __endMathLn() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_LOG}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathLog()
+   */
+  private final void __startMathLog(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).log());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_LOG}
+   * tag
+   * 
+   * @see #__startMathLog(Attributes)
+   */
+  private final void __endMathLog() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_MOD}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathMod()
+   */
+  private final void __startMathMod(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).mod());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_MOD}
+   * tag
+   * 
+   * @see #__startMathMod(Attributes)
+   */
+  private final void __endMathMod() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_MUL}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathMul()
+   */
+  private final void __startMathMul(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).mul());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_MUL}
+   * tag
+   * 
+   * @see #__startMathMul(Attributes)
+   */
+  private final void __endMathMul() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_NEGATE}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathNegate()
+   */
+  private final void __startMathNegate(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).negate());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_NEGATE}
+   * tag
+   * 
+   * @see #__startMathNegate(Attributes)
+   */
+  private final void __endMathNegate() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_POW}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathPow()
+   */
+  private final void __startMathPow(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).pow());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_POW}
+   * tag
+   * 
+   * @see #__startMathPow(Attributes)
+   */
+  private final void __endMathPow() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_ROOT}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathRoot()
+   */
+  private final void __startMathRoot(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).root());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_ROOT}
+   * tag
+   * 
+   * @see #__startMathRoot(Attributes)
+   */
+  private final void __endMathRoot() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_SIN}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathSin()
+   */
+  private final void __startMathSin(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).sin());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_SIN}
+   * tag
+   * 
+   * @see #__startMathSin(Attributes)
+   */
+  private final void __endMathSin() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_SQRT}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathSqrt()
+   */
+  private final void __startMathSqrt(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).sqrt());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_SQRT}
+   * tag
+   * 
+   * @see #__startMathSqrt(Attributes)
+   */
+  private final void __endMathSqrt() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_SUB}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathSub()
+   */
+  private final void __startMathSub(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).sub());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_SUB}
+   * tag
+   * 
+   * @see #__startMathSub(Attributes)
+   */
+  private final void __endMathSub() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_TAN}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathTan()
+   */
+  private final void __startMathTan(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).tan());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_TAN}
+   * tag
+   * 
+   * @see #__startMathTan(Attributes)
+   */
+  private final void __endMathTan() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_NAME}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathName()
+   */
+  private final void __startMathName(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).name());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_NAME}
+   * tag
+   * 
+   * @see #__startMathName(Attributes)
+   */
+  private final void __endMathName() {
+    this.__popElement(IMathName.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_NUMBER}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathNumber()
+   */
+  private final void __startMathNumber(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).number());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_NUMBER}
+   * tag
+   * 
+   * @see #__startMathNumber(Attributes)
+   */
+  private final void __endMathNumber() {
+    this.__popElement(IText.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_TEXT}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathText()
+   */
+  private final void __startMathText(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).text());
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_TEXT}
+   * tag
+   * 
+   * @see #__startMathText(Attributes)
+   */
+  private final void __endMathText() {
+    this.__popElement(IComplexText.class);
+  }
+
 }
