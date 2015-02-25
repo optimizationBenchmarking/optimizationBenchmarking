@@ -22,11 +22,11 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
-import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
+import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
 import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ICode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
@@ -98,7 +98,7 @@ import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExamp
 public class RandomDocumentExample extends DocumentExample {
 
   /** the comparison */
-  private static final EComparison[] COMP = EComparison.values();
+  private static final EMathComparison[] COMP = EMathComparison.values();
   /** the modes */
   private static final ECitationMode[] CITES = ECitationMode.values();
   /** the sequence modes */

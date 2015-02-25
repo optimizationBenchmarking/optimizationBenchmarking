@@ -4,7 +4,6 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
-import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
@@ -34,6 +33,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.Text;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
+import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
 import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
@@ -427,7 +427,7 @@ public final class XHTML10Driver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   protected final _XHTML10MathCompare createMathCompare(
-      final BasicMath owner, final EComparison comp) {
+      final BasicMath owner, final EMathComparison comp) {
     return new _XHTML10MathCompare(owner, comp);
   }
 

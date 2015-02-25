@@ -5,10 +5,10 @@ import java.util.Arrays;
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
+import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
 import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
@@ -579,7 +579,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
    * @return the function
    */
   protected MathCompare createMathCompare(final BasicMath owner,
-      final EComparison comp) {
+      final EMathComparison comp) {
     return new MathCompare(owner, comp);
   }
 

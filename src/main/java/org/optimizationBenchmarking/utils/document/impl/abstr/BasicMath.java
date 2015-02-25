@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 
 /** A mathematics output class */
@@ -152,7 +152,7 @@ public abstract class BasicMath extends DocumentPart implements IMath {
 
   /** {@inheritDoc} */
   @Override
-  public synchronized final MathCompare compare(final EComparison cmp) {
+  public synchronized final MathCompare compare(final EMathComparison cmp) {
     this.__nextIndex();
     return this.m_driver.createMathCompare(this, cmp);
   }

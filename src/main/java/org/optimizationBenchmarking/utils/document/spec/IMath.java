@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
-import org.optimizationBenchmarking.utils.comparison.EComparison;
-
 /**
  * A mathematics output device. The difference the the normal
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
@@ -161,7 +159,7 @@ public interface IMath extends IDocumentElement {
    * @return {@link org.optimizationBenchmarking.utils.document.spec.IMath}
    *         for comparisons
    */
-  public abstract IMath compare(final EComparison cmp);
+  public abstract IMath compare(final EMathComparison cmp);
 
   /**
    * An {@link org.optimizationBenchmarking.utils.document.spec.IMath}
