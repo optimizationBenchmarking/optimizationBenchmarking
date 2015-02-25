@@ -19,9 +19,16 @@ public interface IDocumentCallback<T extends IDocumentElement> {
    * @param element
    *          the element
    * @param properties
-   *          the properties
+   *          a modifiable map of properties
    */
   public abstract void callback(final T element,
       final Map<Object, Object> properties);
+
+  /**
+   * Get the required element type to be passed to the callback routine
+   * 
+   * @return the required element type to be passed to the callback routine
+   */
+  public abstract Class<T> getElementClass();
 
 }

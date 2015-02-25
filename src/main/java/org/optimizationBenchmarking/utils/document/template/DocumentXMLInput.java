@@ -45,8 +45,7 @@ public final class DocumentXMLInput extends
       sf.setResourceResolver(new _LSResourceResolver(sf
           .getResourceResolver()));
       schema = sf.newSchema(//
-          _DocumentXMLConstants.class
-              .getResource("documentTemplate.1.0.xsd")); //$NON-NLS-1$
+          DocumentXML.class.getResource("documentTemplate.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
       rec = a;
     } finally {

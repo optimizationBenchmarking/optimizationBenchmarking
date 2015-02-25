@@ -91,8 +91,8 @@ public class TemplateDocumentExample extends DocumentExample {
     properties.put("printMap", new __PrintMapCallback());//$NON-NLS-1$
 
     try (final IDocumentHeader head = this.m_doc.header()) {
-      RandomDocumentExample._createRandomHeader(head, this.m_doc
-          .getClass().getSimpleName(), new Random());
+      RandomDocumentExample._createRandomHeader(head,//
+          this.m_doc.getClass().getSimpleName(), new Random());
     }
 
     try (final IDocumentBody body = this.m_doc.body()) {
@@ -102,7 +102,8 @@ public class TemplateDocumentExample extends DocumentExample {
             .getInstance()
             .use()
             .setDestination(new DocumentXMLHandler(body, properties))
-            .addResource(TemplateDocumentExample.class, "template.xml").create().call(); //$NON-NLS-1$
+            .addResource(TemplateDocumentExample.class,
+                "exampleTemplate.template").create().call(); //$NON-NLS-1$
       } catch (final IOException ioe) {
         ErrorUtils.throwAsRuntimeException(ioe);
       }
@@ -130,6 +131,12 @@ public class TemplateDocumentExample extends DocumentExample {
       element.append(//
           "This is a callback invocation printing the properties map: "); //$NON-NLS-1$
       element.append(properties);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final Class<IText> getElementClass() {
+      return IText.class;
     }
   }
 }
