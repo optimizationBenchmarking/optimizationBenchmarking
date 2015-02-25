@@ -46,6 +46,8 @@
 		<attribute ref="tns:textCase" use="optional" />
 	</attributeGroup>
 
+
+
 	<attribute name="label" type="token" />
 
 	<complexType name="text" mixed="true">
@@ -263,6 +265,59 @@
 
 			<element name="add" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
 			<element name="abs" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
+
+			<element name="cmp" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<complexContent>
+						<extension base="tns:math">
+							<attribute name="op" use="required">
+								<simpleType>
+									<restriction base="token">
+										<enumeration value="lll" />
+										<enumeration value="ll" />
+										<enumeration value="l" />
+										<enumeration value="le" />
+										<enumeration value="ge" />
+										<enumeration value="g" />
+										<enumeration value="gg" />
+										<enumeration value="ggg" />
+										<enumeration value="e" />
+										<enumeration value="equiv" />
+										<enumeration value="approx" />
+										<enumeration value="approxe" />
+										<enumeration value="prop" />
+										<enumeration value="ne" />
+										<enumeration value="nequiv" />
+										<enumeration value="napprox" />
+										<enumeration value="napproxe" />
+										<enumeration value="nprop" />
+										<enumeration value="in" />
+										<enumeration value="nin" />
+										<enumeration value="subset" />
+										<enumeration value="nsubset" />
+										<enumeration value="subsete" />
+										<enumeration value="nsubsete" />
+										<enumeration value="def" />
+										<enumeration value="estim" />
+										<enumeration value="pred" />
+										<enumeration value="npred" />
+										<enumeration value="prede" />
+										<enumeration value="npred" />
+										<enumeration value="succ" />
+										<enumeration value="nsucc" />
+										<enumeration value="succe" />
+										<enumeration value="nsucce" />
+										<enumeration value="sim" />
+										<enumeration value="nsim" />
+									</restriction>
+								</simpleType>
+							</attribute>
+						</extension>
+					</complexContent>
+				</complexType>
+			</element>
+
+
 			<element name="cos" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
 			<element name="div" type="tns:math" minOccurs="0" maxOccurs="unbounded" />
 			<element name="divInline" type="tns:math" minOccurs="0"

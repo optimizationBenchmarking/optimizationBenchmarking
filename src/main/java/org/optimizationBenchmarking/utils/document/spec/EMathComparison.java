@@ -35,7 +35,7 @@ public enum EMathComparison {
   NOT_EQUAL,
   /** not equivalent */
   NOT_EQUIVALENT,
-  /** not approximately equal */
+  /** not approximately */
   NOT_APPROXIMATELY,
   /** not approximately equal */
   NOT_APPROXIMATELY_EQUAL,
@@ -65,13 +65,13 @@ public enum EMathComparison {
   PRECEDES_OR_EQUAL,
   /** not precedes or equal */
   NOT_PRECEDES_OR_EQUAL,
-  /** precedes */
+  /** succeeds */
   SUCCEEDS,
-  /** not follows */
+  /** not succeeds */
   NOT_SUCCEEDS,
-  /** precedes or equal */
+  /** succeeds or equal */
   SUCCEEDS_OR_EQUAL,
-  /** not follows */
+  /** not succeeds */
   NOT_SUCCEEDS_OR_EQUAL,
   /** similar */
   SIMILAR,

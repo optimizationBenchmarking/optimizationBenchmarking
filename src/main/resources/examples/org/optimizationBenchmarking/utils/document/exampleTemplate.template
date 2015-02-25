@@ -59,11 +59,15 @@ I can also quote the title of a publication, such as<cite mode="title"><bib:book
 <title>Maths</title>
 <body>
 We can also do equations:
-<equation><pow>
-<brace><add><sqrt><number>3</number></sqrt><name>xx</name></add></brace>
+<equation>
+<cmp op="nprop"><pow><brace><add><sqrt><number>3</number></sqrt><name>xx</name></add></brace>
 <number><double>&#x3c0;</double></number></pow>
+<log><number><int>Byte#MAX_VALUE</int></number><name>X</name></log>
+</cmp>
 </equation>
-However, inline formulas such as <inlineMath><div><lg><name>&#x3b1;</name></lg><abs><number><long>345</long></number></abs></div></inlineMath> are also possible.
+However, inline formulas such as
+ <inlineMath><cmp op="napproxe"><div><lg><name>&#x3b1;</name></lg><abs><number><long>345</long></number></abs></div><number><int>Integer#MAX_VALUE</int></number></cmp></inlineMath> 
+ are also possible.
 </body>
 </section>
 

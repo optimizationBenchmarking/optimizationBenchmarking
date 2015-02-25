@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
+import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -135,7 +136,7 @@ public enum DocumentXML implements IFileType {
   static final String ELEMENT_SECTION_TITLE = "title"; //$NON-NLS-1$$
   /** the section body element */
   static final String ELEMENT_SECTION_BODY = "body"; //$NON-NLS-1$$
-  /** the section label input attribute */
+  /** the section or equation label input attribute */
   static final String ATTR_LABEL = "label"; //$NON-NLS-1$$
 
   /** the reference element */
@@ -165,6 +166,10 @@ public enum DocumentXML implements IFileType {
   static final String ELEMENT_MATH_ABS = "abs"; //$NON-NLS-1$
   /** the element for math add */
   static final String ELEMENT_MATH_ADD = "add"; //$NON-NLS-1$
+  /** the element for math comparison */
+  static final String ELEMENT_MATH_COMP = "cmp"; //$NON-NLS-1$
+  /** the mathematics comparison operator */
+  static final String ATTR_MATH_COMP_OP = "op"; //$NON-NLS-1$$
   /** the element for math cos */
   static final String ELEMENT_MATH_COS = "cos"; //$NON-NLS-1$
   /** the element for math div */
@@ -199,6 +204,99 @@ public enum DocumentXML implements IFileType {
   static final String ELEMENT_MATH_SUB = "subt"; //$NON-NLS-1$
   /** the element for math tan */
   static final String ELEMENT_MATH_TAN = "tan"; //$NON-NLS-1$
+
+  /** the comparison operators */
+  private static final String[] VAL_COMP_OP;
+  /** the comparison operators */
+  private static final String[] VAL_COMP_OP2;
+
+  static {
+    VAL_COMP_OP = new String[EMathComparison.INSTANCES.size()];
+
+    DocumentXML.VAL_COMP_OP[EMathComparison.VERY_MUCH_LESS.ordinal()] = "lll"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.MUCH_LESS.ordinal()] = "ll"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.LESS.ordinal()] = "l"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.LESS_OR_EQUAL.ordinal()] = "le"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.GREATER_OR_EQUAL.ordinal()] = "ge"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.GREATER.ordinal()] = "g"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.MUCH_GREATER.ordinal()] = "gg"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.VERY_MUCH_GREATER.ordinal()] = "ggg"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.EQUAL.ordinal()] = "e"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.EQUIVALENT.ordinal()] = "equiv"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.APPROXIMATELY.ordinal()] = "approx"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.APPROXIMATELY_EQUAL.ordinal()] = "approxe"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.PROPROTIONAL_TO.ordinal()] = "prop"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_EQUAL.ordinal()] = "ne"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_EQUIVALENT.ordinal()] = "nequiv"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_APPROXIMATELY.ordinal()] = "napprox"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_APPROXIMATELY_EQUAL
+        .ordinal()] = "napproxe"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_PROPROTIONAL_TO.ordinal()] = "nprop"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.ELEMENT_OF.ordinal()] = "in"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_ELEMENT_OF.ordinal()] = "nin"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.SUBSET_OF.ordinal()] = "subset"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_SUBSET_OF.ordinal()] = "nsubset"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.SUBSET_OF_OR_EQUAL.ordinal()] = "subsete"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_SUBSET_OF_OR_EQUAL
+        .ordinal()] = "nsubsete"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.DEFINED_AS.ordinal()] = "def"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.APPROXIMATED_AS.ordinal()] = "estim"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.PRECEDES.ordinal()] = "pred"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_PRECEDES.ordinal()] = "npred"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.PRECEDES_OR_EQUAL.ordinal()] = "prede"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_PRECEDES_OR_EQUAL
+        .ordinal()] = "npred"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.SUCCEEDS.ordinal()] = "succ"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_SUCCEEDS.ordinal()] = "nsucc"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.SUCCEEDS_OR_EQUAL.ordinal()] = "succe"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_SUCCEEDS_OR_EQUAL
+        .ordinal()] = "nsucce"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.SIMILAR.ordinal()] = "sim"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_SIMILAR.ordinal()] = "nsim"; //$NON-NLS-1$
+
+    VAL_COMP_OP2 = new String[EMathComparison.INSTANCES.size()];
+
+    DocumentXML.VAL_COMP_OP2[EMathComparison.VERY_MUCH_LESS.ordinal()] = "\u22d8"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.MUCH_LESS.ordinal()] = "\u226a"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.LESS.ordinal()] = "<"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.LESS_OR_EQUAL.ordinal()] = "\u2264"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.GREATER_OR_EQUAL.ordinal()] = "\u2265"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.GREATER.ordinal()] = ">"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.MUCH_GREATER.ordinal()] = "\u226b"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.VERY_MUCH_GREATER.ordinal()] = "\u22d9"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.EQUAL.ordinal()] = "="; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.EQUIVALENT.ordinal()] = "\u2261"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.APPROXIMATELY.ordinal()] = "\u2248"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.APPROXIMATELY_EQUAL.ordinal()] = "\u224a"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.PROPROTIONAL_TO.ordinal()] = "\u221d"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_EQUAL.ordinal()] = "\u2260"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_EQUIVALENT.ordinal()] = "\u2262"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_APPROXIMATELY.ordinal()] = "\u2249"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_APPROXIMATELY_EQUAL
+        .ordinal()] = "\u2247"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_PROPROTIONAL_TO.ordinal()] = "\u00ac\u221d"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.ELEMENT_OF.ordinal()] = "\u2208"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_ELEMENT_OF.ordinal()] = "\u2209"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.SUBSET_OF.ordinal()] = "\u2282"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUBSET_OF.ordinal()] = "\u2284"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.SUBSET_OF_OR_EQUAL.ordinal()] = "\u2286"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUBSET_OF_OR_EQUAL
+        .ordinal()] = "\u2288"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.DEFINED_AS.ordinal()] = "\u225c"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.APPROXIMATED_AS.ordinal()] = "\u2259"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.PRECEDES.ordinal()] = "\u227a"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_PRECEDES.ordinal()] = "\u2280"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.PRECEDES_OR_EQUAL.ordinal()] = "\u227c"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_PRECEDES_OR_EQUAL
+        .ordinal()] = "\u22e0"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.SUCCEEDS.ordinal()] = "\u227b"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUCCEEDS.ordinal()] = "\u2281"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.SUCCEEDS_OR_EQUAL.ordinal()] = "\u227d"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUCCEEDS_OR_EQUAL
+        .ordinal()] = "\u22e1"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.SIMILAR.ordinal()] = "\u223c"; //$NON-NLS-1$
+    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SIMILAR.ordinal()] = "\u2242"; //$NON-NLS-1$
+  }
 
   /**
    * Get the text case
@@ -285,6 +383,37 @@ public enum DocumentXML implements IFileType {
         "Citation mode '" + string + //$NON-NLS-1$
             "' is unknown. Valid values are " + //$NON-NLS-1$
             Arrays.toString(DocumentXML.VAL_CITATION_MODE) + '.');
+  }
+
+  /**
+   * Get the comparison operator
+   * 
+   * @param string
+   *          the name of the comparison operator
+   * @return the parsed comparison operator
+   */
+  static final EMathComparison _parseComparisonOperator(final String string) {
+    int i;
+
+    if (string == null) {
+      throw new IllegalArgumentException(//
+          "Comparison operator attribute required, i.e., cannot be null."); //$NON-NLS-1$
+    }
+
+    for (i = DocumentXML.VAL_COMP_OP.length; (--i) >= 0;) {
+      if (DocumentXML.VAL_COMP_OP[i].equalsIgnoreCase(string)) {
+        return EMathComparison.INSTANCES.get(i);
+      }
+      if (DocumentXML.VAL_COMP_OP2[i].equalsIgnoreCase(string)) {
+        return EMathComparison.INSTANCES.get(i);
+      }
+    }
+
+    throw new IllegalArgumentException(//
+        "Comparison operator '" + string + //$NON-NLS-1$
+            "' is unknown. Valid values are " + //$NON-NLS-1$
+            Arrays.toString(DocumentXML.VAL_COMP_OP) + " and " + //$NON-NLS-1$
+            Arrays.toString(DocumentXML.VAL_COMP_OP2) + +'.');
   }
 
   /** {@inheritDoc} */

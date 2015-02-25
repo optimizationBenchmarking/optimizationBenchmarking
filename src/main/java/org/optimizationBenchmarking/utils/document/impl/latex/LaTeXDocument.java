@@ -125,6 +125,9 @@ public final class LaTeXDocument extends Document {
   /** do we have underlined text? */
   private boolean m_hasUnderlined;
 
+  /** do we need the ams-symbols package? */
+  private boolean m_needsAMSSymb;
+
   /**
    * Create a document.
    * 
@@ -568,6 +571,11 @@ public final class LaTeXDocument extends Document {
     this.m_hasTable = true;
   }
 
+  /** register that we need the amssymb package */
+  final void _registerNeedsAMSSymb() {
+    this.m_needsAMSSymb = true;
+  }
+
   /**
    * register that there is a cell which spans multiple rows in a table in
    * the document
@@ -688,26 +696,58 @@ public final class LaTeXDocument extends Document {
 
           // adding default packages
 
+          LaTeXDriver
+              ._commentLine(//
+                  "This is the setup package for document " + //$NON-NLS-1$
+                      PathUtils.getName(this.getDocumentPath()) + //
+                      ", it loads all required packages and provides the definitions needed to compile this document.",//$NON-NLS-1$
+                  out);
+
           this.__include("fonts.def", out);//$NON-NLS-1$
 
           if (this.m_hasTable || this.m_hasColors || this.m_hasCode) {
             this.__include("colors.def", out);//$NON-NLS-1$
           }
 
-          LaTeXDocument._requirePackage(out, "caption3", null); //$NON-NLS-1$
+          if (this.m_hasFigure || this.m_hasTable) {
+            LaTeXDriver
+                ._commentLine(//
+                    "We need caption3 to properly render figure or table captions.",//$NON-NLS-1$
+                    out);
+            LaTeXDocument._requirePackage(out, "caption3", null); //$NON-NLS-1$
+          }
 
           if (this.m_hasTable) {
             this.__include("tables.def", out);//$NON-NLS-1$
             if (this.m_hasMultiColCell) {
+              LaTeXDriver
+                  ._commentLine(
+                      "We need multicol since we have at least one table with at least one cell which spans multiple columns.",//$NON-NLS-1$
+                      out);
               LaTeXDocument._requirePackage(out, "multicol", null); //$NON-NLS-1$
             }
             if (this.m_hasMultiRowCell) {
+              LaTeXDriver
+                  ._commentLine(
+                      "We need multicol since we have at least one table with at least one cell which spans multiple rows.",//$NON-NLS-1$
+                      out);
               LaTeXDocument._requirePackage(out, "multirow", null); //$NON-NLS-1$
             }
           }
 
           if (this.m_hasFigure) {
+            LaTeXDriver._commentLine(
+                "We need graphicx to render the figures.",//$NON-NLS-1$
+                out);
             LaTeXDocument._requirePackage(out, "graphicx", null); //$NON-NLS-1$
+          }
+
+          if (this.m_needsAMSSymb) {
+            LaTeXDriver
+                ._commentLine(
+                    "We need amssymb to render some of the mathematical symbols.",//$NON-NLS-1$
+                    out);
+            LaTeXDocument._requirePackage(out, "amssymb", null); //$NON-NLS-1$
           }
 
           // figure series
@@ -728,6 +768,10 @@ public final class LaTeXDocument extends Document {
           }
 
           if (this.m_hasUnderlined) {
+            LaTeXDriver
+                ._commentLine(
+                    "We need the ulem package to deal with long, underlined text. Ulem allows it to break over several lines.",//$NON-NLS-1$
+                    out);
             this.__loadPackageAndRequire(out,
                 "ulem.sty",//$NON-NLS-1$ 
                 new String[] { "normalem" }, //$NON-NLS-1$
@@ -735,6 +779,10 @@ public final class LaTeXDocument extends Document {
             );
           }
 
+          LaTeXDriver
+              ._commentLine(
+                  "We need hyperref to allow for clickable references and links.",//$NON-NLS-1$
+                  out);
           LaTeXDocument._requirePackage(out, "hyperref", //$NON-NLS-1$
               new String[] { "hidelinks=true" });//$NON-NLS-1$
           if (this.getGraphicFormat() == EGraphicFormat.EPS) {

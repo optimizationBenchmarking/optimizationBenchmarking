@@ -299,6 +299,11 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           return;
         }
 
+        case DocumentXML.ELEMENT_MATH_COMP: {
+          this.__startMathComp(attributes);
+          return;
+        }
+
         case DocumentXML.ELEMENT_MATH_COS: {
           this.__startMathCos(attributes);
           return;
@@ -546,6 +551,11 @@ public final class DocumentXMLHandler extends DelegatingHandler {
 
         case DocumentXML.ELEMENT_MATH_ADD: {
           this.__endMathAdd();
+          return;
+        }
+
+        case DocumentXML.ELEMENT_MATH_COMP: {
+          this.__endMathComp();
           return;
         }
 
@@ -1967,6 +1977,34 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    * @see #__startMathAdd(Attributes)
    */
   private final void __endMathAdd() {
+    this.__popElement(IMath.class);
+  }
+
+  /**
+   * start the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_COMP}
+   * tag
+   * 
+   * @param attributes
+   *          the attributes
+   * @see #__endMathComp()
+   */
+  private final void __startMathComp(final Attributes attributes) {
+    this.__pushElement(//
+    this.__requireCurrentElement(IMath.class).compare(
+        DocumentXML._parseComparisonOperator(DelegatingHandler
+            .getAttributeNormalized(attributes, DocumentXML.NAMESPACE,
+                DocumentXML.ATTR_MATH_COMP_OP))));
+  }
+
+  /**
+   * end the
+   * {@value org.optimizationBenchmarking.utils.document.template.DocumentXML#ELEMENT_MATH_COMP}
+   * tag
+   * 
+   * @see #__startMathComp(Attributes)
+   */
+  private final void __endMathComp() {
     this.__popElement(IMath.class);
   }
 
