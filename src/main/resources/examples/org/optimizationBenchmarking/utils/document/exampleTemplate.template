@@ -68,6 +68,8 @@ We can also do equations:
 However, inline formulas such as
  <inlineMath><cmp op="napproxe"><div><lg><name>&#x3b1;</name></lg><abs><number><long>345</long></number></abs></div><number><int>Integer#MAX_VALUE</int></number></cmp></inlineMath> 
  are also possible.
+ <br/>
+We can cite papers from variables in Java classes:<cite mode="id"><bib:fromJava instance="examples.org.optimizationBenchmarking.utils.document.TemplateDocumentExample#STATIC_BIB_ENTRY"/></cite> 
 </body>
 </section>
 

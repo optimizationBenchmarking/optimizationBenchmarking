@@ -10,6 +10,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.bibliography.data.BibArticleBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
+import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
@@ -27,16 +33,6 @@ import examples.org.optimizationBenchmarking.FinishedPrinter;
  * A template-based document creation example.
  */
 public class TemplateDocumentExample extends DocumentExample {
-
-  /**
-   * create
-   * 
-   * @param doc
-   *          the document
-   */
-  public TemplateDocumentExample(final IDocument doc) {
-    super(doc);
-  }
 
   /**
    * run the example: there are problems with the pdf output
@@ -77,6 +73,43 @@ public class TemplateDocumentExample extends DocumentExample {
       System.out.print("Finished creating documents to folder ");//$NON-NLS-1$
       System.out.print(dir);
     }
+  }
+
+  /** the singleton bib record */
+  public static final BibRecord STATIC_BIB_ENTRY;
+
+  static {
+    try (final BibliographyBuilder local = new BibliographyBuilder()) {
+      try (final BibArticleBuilder bab = local.article()) {
+        try (final BibDateBuilder d = bab.date()) {
+          d.fromNow();
+        }
+        bab.setTitle("A very important article");//$NON-NLS-1$
+        bab.setJournal("The journal of important things");//$NON-NLS-1$
+        bab.setStartPage("1");//$NON-NLS-1$
+        bab.setEndPage("10");//$NON-NLS-1$
+        bab.setVolume("4");//$NON-NLS-1$
+        bab.setNumber("33");//$NON-NLS-1$
+        try (final BibAuthorsBuilder aa = bab.setAuthors()) {
+          try (final BibAuthorBuilder a = aa.author()) {
+            a.setFamilyName("Funnyman");//$NON-NLS-1$
+            a.setPersonalName("Jake");//$NON-NLS-1$
+          }
+        }
+      }
+
+      STATIC_BIB_ENTRY = local.getResult().get(0);
+    }
+  }
+
+  /**
+   * create
+   * 
+   * @param doc
+   *          the document
+   */
+  public TemplateDocumentExample(final IDocument doc) {
+    super(doc);
   }
 
   /** {@inheritDoc} */

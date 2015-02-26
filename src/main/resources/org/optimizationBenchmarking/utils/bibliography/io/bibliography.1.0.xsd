@@ -239,6 +239,12 @@
 		</complexType>
 	</element>
 
+	<element name="fromJava">
+		<complexType>
+			<attribute name="instance" type="token" use="required" />
+		</complexType>
+	</element>
+
 	<complexType name="bibliographyType">
 		<choice>
 			<element ref="tns:article" minOccurs="1" maxOccurs="unbounded" />
@@ -249,6 +255,7 @@
 			<element ref="tns:techReport" minOccurs="1" maxOccurs="unbounded" />
 			<element ref="tns:thesis" minOccurs="1" maxOccurs="unbounded" />
 			<element ref="tns:website" minOccurs="1" maxOccurs="unbounded" />
+			<element ref="tns:fromJava" minOccurs="1" maxOccurs="unbounded" />
 		</choice>
 	</complexType>
 

@@ -837,8 +837,7 @@ public final class ReflectionUtils {
    * 
    * @param identifier
    *          the identifier, of form
-   *          {@code packageA.packageB.className#constantName} or
-   *          {@code packageA.packageB.className.constantName}
+   *          {@code packageA.packageB.className#constantName}
    * @param base
    *          the base class, i.e., the return type
    * @return the value of the constant

@@ -157,6 +157,12 @@ public enum BibliographyXML implements IFileType {
   /** the bibliography element */
   static final String ELEMENT_BIBLIOGRAPHY = "bibliography"; //$NON-NLS-1$
 
+  /** a from-java object */
+  static final String ELEMENT_FROM_JAVA = "fromJava";//$NON-NLS-1$
+
+  /** the instance */
+  static final String ATTR_INSTANCE = "instance";//$NON-NLS-1$
+
   /** the month values */
   static final String[] VAL_MONTHS;
 

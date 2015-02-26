@@ -13,6 +13,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibInCollectionBuild
 import org.optimizationBenchmarking.utils.bibliography.data.BibInProceedingsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibOrganizationBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibProceedingsBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecordBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecordWithPublisherBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibTechReportBuilder;
@@ -24,6 +25,8 @@ import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -49,7 +52,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("resource")
+  @SuppressWarnings({ "resource", "rawtypes", "unchecked" })
   @Override
   protected final void doStartElement(final String uri,
       final String localName, final String qName,
@@ -66,6 +69,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
     final BibDateBuilder bdb;
     final BibAuthorBuilder bppb;
     final BibOrganizationBuilder bob;
+    final Object reflect;
     int i;
     String s;
 
@@ -76,6 +80,32 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
       }
 
       bfsm = this.m_builders.get(this.m_builders.size() - 1);
+
+      if (BibliographyXML.ELEMENT_FROM_JAVA.equalsIgnoreCase(localName)) {
+        s = DelegatingHandler.getAttributeNormalized(attributes,
+            BibliographyXML.NAMESPACE, BibliographyXML.ATTR_INSTANCE);
+        try {
+          reflect = ReflectionUtils.getInstanceByName(Object.class, s);
+        } catch (final Throwable t) {
+          throw new IllegalArgumentException(//
+              ((("Error when trying to load singleton bibliogrphy entry '" //$NON-NLS-1$
+              + s) + '\'') + '.'), t);
+        }
+
+        if (reflect instanceof BibRecord) {
+          ((BibliographyBuilder) (bfsm)).add((BibRecord) reflect);
+          return;
+        }
+
+        if (reflect instanceof Iterable) {
+          ((BibliographyBuilder) (bfsm)).addAll((Iterable) reflect);
+          return;
+        }
+
+        throw new IllegalStateException(//
+            "Can use only load bibliography records or iterables of them (such as bibliographies) from Java, but found instance of " + //$NON-NLS-1$
+                TextUtils.className(reflect.getClass()));
+      }
 
       if (BibliographyXML.ELEMENT_ARTICLE.equalsIgnoreCase(localName)) {
         this.m_builders.add(//
