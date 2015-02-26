@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -14,7 +15,6 @@ import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.graphics.DoubleDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
-import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 
+import org.optimizationBenchmarking.utils.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfiguration;
@@ -20,16 +21,15 @@ import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Configura
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10ConfigurationBuilder;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
-import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 
+import examples.org.optimizationBenchmarking.utils.chart.ExampleChartDrivers;
 import examples.org.optimizationBenchmarking.utils.graphics.ExampleFontPalettes;
 import examples.org.optimizationBenchmarking.utils.graphics.ExampleGraphicConfigurations;
-import examples.org.optimizationBenchmarking.utils.graphics.chart.ExampleChartDrivers;
 
 /** A set of example document configurations */
 public final class ExampleDocumentConfigurations {

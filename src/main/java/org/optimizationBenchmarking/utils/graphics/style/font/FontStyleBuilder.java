@@ -56,7 +56,7 @@ public final class FontStyleBuilder extends
   private volatile int m_size;
 
   /** the name and face choices */
-  private LinkedHashSet<String> m_faceChoices;
+  private LinkedHashSet<_FaceChoice> m_faceChoices;
 
   /** the choice state */
   final int m_choice;
@@ -239,19 +239,42 @@ public final class FontStyleBuilder extends
    * behind it. The last face choice will be the {@link #getFamily() font
    * family}.
    * 
-   * @param s
-   *          the string
+   * @param name
+   *          the face choice name
    * @return {@code true} if the face choice was new and addable,
    *         {@code false} if it was already stored OR if it was an empty
    *         or {@code null} string
    */
-  public synchronized final boolean addFaceChoice(final String s) {
+  public final boolean addFaceChoice(final String name) {
+    return this.addFaceChoice(name, null);
+  }
+
+  /**
+   * Add a font face choice. Generally, the builder maintains an ordered
+   * list of face choices. During the {@link #compile() compilation}, it
+   * will process this list one by one and try to load the corresponding
+   * font faces, until it succeeds. The font actually loaded will then
+   * become the first face choice of the {@link FontStyle font style}. The
+   * other choices added with {@link #addFaceChoice(String)} are added
+   * behind it. The last face choice will be the {@link #getFamily() font
+   * family}.
+   * 
+   * @param name
+   *          the face choice name
+   * @param resource
+   *          a resource from which the face choice may be loaded
+   * @return {@code true} if the face choice was new and addable,
+   *         {@code false} if it was already stored OR if it was an empty
+   *         or {@code null} string
+   */
+  public synchronized final boolean addFaceChoice(final String name,
+      final String resource) {
     final String t;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    t = this.normalize(s);
+    t = this.normalize(name);
     if (t != null) {
-      return this.m_faceChoices.add(t);
+      return this.m_faceChoices.add(new _FaceChoice(name, resource));
     }
     return false;
   }
@@ -423,12 +446,13 @@ public final class FontStyleBuilder extends
   @Override
   protected final FontStyle compile() {
     final ArrayList<Font> lst;
+    final LinkedHashSet<_FaceChoice> faceChoices;
+    final LinkedHashSet<String> choices;
     int style, goalStyle, i, mask;
     String used;
     Font font, derivedFont;
     EFontFamily fam1, fam2;
     HashMap<TextAttribute, Object> map;
-    final LinkedHashSet<String> faceChoices, choices;
     MemoryTextOutput idb;
     FontProperties prop;
     boolean set;
@@ -451,15 +475,19 @@ public final class FontStyleBuilder extends
     faceChoices = this.m_faceChoices;
     this.m_faceChoices = null;
     finder: {
-      for (final String faceChoice : faceChoices) {
+      for (final _FaceChoice faceChoice : faceChoices) {
         try {
           // some fonts are already bold or italic by default
-          prop = FontProperties.getFontProperties(faceChoice);
+          prop = FontProperties.getFontProperties(faceChoice.m_name);
           mask = ((prop != null) ? prop.getStyle() : Font.PLAIN);
           // so we do not need to set those features
           goalStyle = (style & (~mask));
-          font = new Font(faceChoice, goalStyle, this.m_size);
-          if (FontStyleBuilder.__matches(font, faceChoice)) {
+          font = new Font(faceChoice.m_name, goalStyle, this.m_size);
+          if (FontStyleBuilder.__matches(font, faceChoice.m_name)) {
+            if (faceChoice.m_resource != null) {
+              // TODO
+            }
+
             break finder;
           }
         } catch (final Throwable error) {
@@ -551,7 +579,9 @@ public final class FontStyleBuilder extends
       FontStyleBuilder.__addFaceChoice(choices, derivedFont.getFamily());
     }
     FontStyleBuilder.__addFaceChoice(choices, used);
-    choices.addAll(faceChoices);
+    for (final _FaceChoice faceChoice : faceChoices) {
+      choices.add(faceChoice.m_name);
+    }
 
     fam1 = this.m_family;
     fam2 = null;

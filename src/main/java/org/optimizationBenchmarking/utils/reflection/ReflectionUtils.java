@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.reflection;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -313,6 +314,34 @@ public final class ReflectionUtils {
   }
 
   /**
+   * the internal find-class method
+   * 
+   * @param clazzName
+   *          the class name
+   * @return the class
+   * @throws LinkageError
+   *           on linkage error
+   * @throws ClassCastException
+   *           on class cast error
+   * @throws ClassNotFoundException
+   *           if the class has not been found
+   */
+  private static final Class<?> __findClassInternal(final String clazzName)
+      throws LinkageError, ClassCastException, ClassNotFoundException {
+    try {
+      return Class.forName(clazzName);
+    } catch (LinkageError | ClassCastException except) {
+      throw except;
+    } catch (final ClassNotFoundException except) {
+      try {
+        return Class.forName("java.lang." + clazzName); //$NON-NLS-1$
+      } catch (final Throwable t) {
+        throw except;
+      }
+    }
+  }
+
+  /**
    * Find a class of the given {@code name} which must be a sub-class of
    * {@code base}. We first consider {@code name} as fully-qualified class
    * name. If no class of that name exists, we search in package
@@ -356,17 +385,7 @@ public final class ReflectionUtils {
           name) + '\'') + '.');
     }
 
-    try {
-      found = Class.forName(clazzName);
-    } catch (LinkageError | ClassCastException except) {
-      throw except;
-    } catch (final ClassNotFoundException except) {
-      try {
-        found = Class.forName("java.lang." + clazzName); //$NON-NLS-1$
-      } catch (final Throwable t) {
-        throw except;
-      }
-    }
+    found = ReflectionUtils.__findClassInternal(clazzName);
 
     if (found == null) {
       throw new ClassNotFoundException(//
@@ -848,7 +867,8 @@ public final class ReflectionUtils {
    */
   public static final <T> T getInstanceByName(final Class<T> base,
       final String identifier) throws ReflectiveOperationException {
-    final String idString, className, fieldName;
+    final String idString, fieldName;
+    String className;
     Class<? extends Object> container;
     Throwable cause;
     final int index;
@@ -856,8 +876,8 @@ public final class ReflectionUtils {
     idString = TextUtils.prepare(identifier);
     if (idString == null) {
       throw new IllegalArgumentException(//
-          "Class+constant identifier must not be null or empty, but is '" + //$NON-NLS-1$
-              identifier + '\'');
+          "Class+constant identifier must not be null or empty, but is '"//$NON-NLS-1$ 
+              + identifier + '\'');
     }
 
     index = idString.lastIndexOf('#');
@@ -869,9 +889,16 @@ public final class ReflectionUtils {
       fieldName = idString.substring(index + 1);
     }
 
+    className = TextUtils.prepare(className);
+    if (className == null) {
+      throw new IllegalArgumentException(//
+          "Class name to get an instance from within must neither be null, empty, or consisting only of white spaces, but identifier '"//$NON-NLS-1$
+              + identifier + "' provides such a name.");//$NON-NLS-1$
+    }
+
     cause = null;
     try {
-      container = ReflectionUtils.findClass(className, Object.class);
+      container = ReflectionUtils.__findClassInternal(className);
     } catch (final Throwable t) {
       cause = t;
       container = null;
@@ -884,6 +911,68 @@ public final class ReflectionUtils {
     }
 
     return ReflectionUtils.getInstance(base, container, fieldName);
+  }
+
+  /**
+   * Get a resource as stream. {@code resource} identifies a class and a
+   * resource file according to the schema {@code className#resourceFile}.
+   * 
+   * @param resource
+   *          the resource
+   * @return the stream, or {@code null} if the resource file does not
+   *         exist
+   * @throws IllegalArgumentException
+   *           if the class identified by the {@code resource} does not
+   *           exist
+   */
+  public final InputStream getResourceAsStream(final String resource) {
+    final String string, clazzName, file;
+    final int index;
+    final Class<?> clazz;
+
+    if (resource == null) {
+      throw new IllegalArgumentException(//
+          "Resource name must not be null.");//$NON-NLS-1$
+    }
+
+    string = TextUtils.prepare(resource);
+    if (string == null) {
+      throw new IllegalArgumentException(//
+          "Resource name must not be empty or consisting only of white space, but '"//$NON-NLS-1$
+              + resource + "' is.");//$NON-NLS-1$
+    }
+
+    index = resource.indexOf('#');
+    if (index < 0) {
+      throw new IllegalArgumentException(//
+          "Resource name must contain a '#', but '"//$NON-NLS-1$
+              + resource + "' does not.");//$NON-NLS-1$
+    }
+
+    clazzName = TextUtils.prepare(resource.substring(0, index));
+    if (clazzName == null) {
+      throw new IllegalArgumentException(//
+          "Name of class hosting a resource must not be empty or consisting only of white space, but '"//$NON-NLS-1$
+              + resource + "' has such a class name.");//$NON-NLS-1$
+    }
+
+    file = TextUtils.prepare(resource.substring(index + 1));
+    if (file == null) {
+      throw new IllegalArgumentException(//
+          "Name of resource file must not be empty or consisting only of white space, but '"//$NON-NLS-1$
+              + resource + "' has such a resource name.");//$NON-NLS-1$
+    }
+
+    try {
+      clazz = ReflectionUtils.__findClassInternal(clazzName);
+    } catch (final Throwable t) {
+      throw new IllegalArgumentException(((((((//
+          "Cannot load class '") + clazzName) + //$NON-NLS-1$
+          "' needed to access resource '") + resource)//$NON-NLS-1$
+          + '\'') + '.'), t);
+    }
+
+    return clazz.getResourceAsStream(file);
   }
 
   /** the forbidden constructor */

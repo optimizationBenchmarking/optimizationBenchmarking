@@ -300,8 +300,7 @@ public final class LaTeXDocument extends Document {
                         TextUtils.className(clazz)) + //
                         " is missing and thus could not be copied to document ")//$NON-NLS-1$ 
                         + this)
-                        + //
-                        ". This may make compiling the document impossible.");//$NON-NLS-1$
+                        + ". This may make compiling the document impossible.");//$NON-NLS-1$
               }
             }
           } catch (final Throwable error2) {

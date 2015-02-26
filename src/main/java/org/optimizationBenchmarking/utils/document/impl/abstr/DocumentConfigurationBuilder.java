@@ -1,10 +1,10 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import org.optimizationBenchmarking.utils.chart.impl.EChartFormat;
+import org.optimizationBenchmarking.utils.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
-import org.optimizationBenchmarking.utils.graphics.chart.impl.EChartFormat;
-import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfigurationBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;

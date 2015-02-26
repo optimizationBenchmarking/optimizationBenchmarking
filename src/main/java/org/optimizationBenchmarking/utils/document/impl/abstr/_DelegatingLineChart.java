@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
-import org.optimizationBenchmarking.utils.graphics.chart.impl.abstr.DelegatingLineChart;
-import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
+import org.optimizationBenchmarking.utils.chart.impl.abstr.DelegatingLineChart;
+import org.optimizationBenchmarking.utils.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 
 /** the delegating line chart */

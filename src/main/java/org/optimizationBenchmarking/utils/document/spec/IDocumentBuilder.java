@@ -3,8 +3,8 @@ package org.optimizationBenchmarking.utils.document.spec;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.config.Configuration;
-import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.tools.spec.IDocumentProducerJobBuilder;
@@ -96,7 +96,7 @@ public interface IDocumentBuilder extends IDocumentProducerJobBuilder {
 
   /**
    * Set the chart driver for creating
-   * {@link org.optimizationBenchmarking.utils.graphics.chart.spec.IChartDriver#use()
+   * {@link org.optimizationBenchmarking.utils.chart.spec.IChartDriver#use()
    * charts}.
    * 
    * @param driver

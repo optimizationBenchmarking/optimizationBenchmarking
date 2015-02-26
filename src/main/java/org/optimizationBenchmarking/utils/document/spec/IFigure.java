@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
-import org.optimizationBenchmarking.utils.graphics.chart.spec.IChartSelector;
-import org.optimizationBenchmarking.utils.graphics.chart.spec.ILineChart;
+import org.optimizationBenchmarking.utils.chart.spec.IChartSelector;
+import org.optimizationBenchmarking.utils.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 
 /**
@@ -20,7 +20,7 @@ public interface IFigure extends IDocumentElement, ILabeledObject,
   /**
    * Use the figure to directly paint a raw graphic. If you choose to paint
    * a graphic directly, you cannot paint a
-   * {@link org.optimizationBenchmarking.utils.graphics.chart.spec.IChartSelector
+   * {@link org.optimizationBenchmarking.utils.chart.spec.IChartSelector
    * chart}.
    * 
    * @return the figure body to paint on

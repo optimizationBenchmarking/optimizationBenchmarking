@@ -6,8 +6,6 @@ import java.nio.file.Paths;
 
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 
-import examples.org.optimizationBenchmarking.utils.graphics.chart.LineChartExample;
-
 /**
  * A quick wrapper to invoke all graphics examples.
  */
@@ -45,10 +43,6 @@ public class AllExamples {
     StrokePaletteExample.main(//
         new String[] { PathUtils.getPhysicalPath(//
             dir.resolve("strokePalette"), false) }); //$NON-NLS-1$
-
-    LineChartExample.main(//
-        new String[] { PathUtils.getPhysicalPath(//
-            dir.resolve("lineChart"), false) }); //$NON-NLS-1$
   }
 
 }
