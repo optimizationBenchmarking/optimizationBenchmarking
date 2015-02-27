@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.graphics.style;
+package org.optimizationBenchmarking.utils.graphics;
 
 import java.awt.Font;
 

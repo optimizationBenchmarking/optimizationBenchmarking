@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.graphics.style.font;
 import java.awt.Graphics2D;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
+import org.optimizationBenchmarking.utils.graphics.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 

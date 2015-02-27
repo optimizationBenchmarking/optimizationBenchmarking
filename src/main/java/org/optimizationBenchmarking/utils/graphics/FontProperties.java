@@ -11,7 +11,6 @@ import java.util.Locale;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
-import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
 import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;

@@ -5,8 +5,9 @@ import java.awt.Graphics2D;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.graphics.EFontFamily;
+import org.optimizationBenchmarking.utils.graphics.EFontType;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
-import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleApplication;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
@@ -60,6 +61,12 @@ public final class FontStyle extends FontProperties implements IStyle {
   /** the font id */
   private final String m_id;
 
+  /** the resource the font was loaded from */
+  private final String m_resource;
+
+  /** the font type */
+  private final EFontType m_type;
+
   /** the palette */
   FontPalette m_palette;
 
@@ -80,13 +87,18 @@ public final class FontStyle extends FontProperties implements IStyle {
    *          the font
    * @param faceChoices
    *          the face choices
+   * @param resource
+   *          the resource the font was loaded from
+   * @param type
+   *          the font type
    * @param id
    *          the font id
    */
   FontStyle(final EFontFamily family, final int size,
       final boolean isItalic, final boolean isBold,
       final boolean isUnderlined, final Font font,
-      final ArrayListView<String> faceChoices, final String id) {
+      final ArrayListView<String> faceChoices, final String resource,
+      final EFontType type, final String id) {
     super(
         //
         (isItalic ? FontProperties.FONT_FLAG_ITALIC : 0)
@@ -122,6 +134,29 @@ public final class FontStyle extends FontProperties implements IStyle {
     this.m_size = size;
     this.m_font = font;
     this.m_faceChoices = faceChoices;
+    this.m_resource = resource;
+    this.m_type = type;
+  }
+
+  /**
+   * Returns a string identifying the resource the font was loaded from, or
+   * {@code null} if the font was not obtained from any resource but is
+   * system native
+   * 
+   * @return the resource identifier
+   */
+  public final String getResourceName() {
+    return this.m_resource;
+  }
+
+  /**
+   * Get the type of the font resource which was loaded, or {@code null} if
+   * the font was not obtained from any resource but is system native
+   * 
+   * @return the font type
+   */
+  public final EFontType getResourceType() {
+    return this.m_type;
   }
 
   /** {@inheritDoc} */

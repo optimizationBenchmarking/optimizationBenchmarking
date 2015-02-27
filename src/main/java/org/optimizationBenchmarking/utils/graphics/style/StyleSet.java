@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.List;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.graphics.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;

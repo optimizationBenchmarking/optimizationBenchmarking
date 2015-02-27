@@ -925,7 +925,7 @@ public final class ReflectionUtils {
    *           if the class identified by the {@code resource} does not
    *           exist
    */
-  public final InputStream getResourceAsStream(final String resource) {
+  public static final InputStream getResourceAsStream(final String resource) {
     final String string, clazzName, file;
     final int index;
     final Class<?> clazz;

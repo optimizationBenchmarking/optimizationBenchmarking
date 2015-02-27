@@ -11,7 +11,23 @@
 
 	<complexType name="fontType">
 		<sequence>
-			<element name="face" type="token" minOccurs="1" maxOccurs="unbounded" />
+			<element name="face" minOccurs="1" maxOccurs="unbounded">
+				<complexType>
+					<simpleContent>
+						<extension base="token">
+							<attribute name="resource" type="token" use="optional" />
+							<attribute name="type">
+								<simpleType>
+									<restriction base="token">
+										<enumeration value="trueType" />
+										<enumeration value="type1" />
+									</restriction>
+								</simpleType>
+							</attribute>
+						</extension>
+					</simpleContent>
+				</complexType>
+			</element>
 		</sequence>
 
 		<attribute name="family" use="required">

@@ -2,7 +2,8 @@ package org.optimizationBenchmarking.utils.graphics.style.font;
 
 import java.net.URI;
 
-import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
+import org.optimizationBenchmarking.utils.graphics.EFontFamily;
+import org.optimizationBenchmarking.utils.graphics.EFontType;
 import org.optimizationBenchmarking.utils.io.IFileType;
 
 /**
@@ -48,17 +49,83 @@ public enum FontPaletteXML implements IFileType {
   /** the font palette root element */
   static final String ELEMENT_FONT_PALETTE = "fontPalette"; //$NON-NLS-1$
 
+  /** a resource providing the font */
+  static final String ATTRIBUTE_RESOURCE = "resource";//$NON-NLS-1$
+  /** the font type */
+  static final String ATTRIBUTE_TYPE = "type";//$NON-NLS-1$
+
   /** the font families */
-  static final String[] FONT_FAMILY_NAMES = {//
+  private static final String[] FONT_FAMILY_NAMES = {//
   "serif", //$NON-NLS-1$
       "sansSerif",//$NON-NLS-1$
       "monospaced"//$NON-NLS-1$
   };
+
   /** the font family values */
-  static final EFontFamily[] FONT_FAMILY_VALUES = { //
+  private static final EFontFamily[] FONT_FAMILY_VALUES = { //
   EFontFamily.SERIF,//
       EFontFamily.SANS_SERIF,//
       EFontFamily.MONOSPACED };
+
+  /** the font types */
+  private static final String[] FONT_TYPE_NAMES = {//
+  "trueType", //$NON-NLS-1$
+      "type1",//$NON-NLS-1$
+  };
+
+  /** the font type values */
+  private static final EFontType[] FONT_TYPE_VALUES = { //
+  EFontType.TRUE_TYPE,//
+      EFontType.TYPE_1 };
+
+  /**
+   * Parse the font family
+   * 
+   * @param string
+   *          the font family string
+   * @return the font family
+   */
+  static final EFontFamily _parseFontFamily(final String string) {
+    int i;
+
+    if (string == null) {
+      throw new IllegalArgumentException(//
+          "Must specify font family."); //$NON-NLS-1$
+    }
+
+    for (i = FontPaletteXML.FONT_FAMILY_NAMES.length; (--i) >= 0;) {
+      if (FontPaletteXML.FONT_FAMILY_NAMES[i].equalsIgnoreCase(string)) {
+        return FontPaletteXML.FONT_FAMILY_VALUES[i];
+      }
+    }
+
+    throw new IllegalArgumentException(//
+        "Unknown font family: " + string); //$NON-NLS-1$
+  }
+
+  /**
+   * Parse the font type
+   * 
+   * @param string
+   *          the font type string
+   * @return the font type, or {@code null} if no type was specified
+   */
+  static final EFontType _parseFontType(final String string) {
+    int i;
+
+    if (string == null) {
+      return null;
+    }
+
+    for (i = FontPaletteXML.FONT_TYPE_NAMES.length; (--i) >= 0;) {
+      if (FontPaletteXML.FONT_TYPE_NAMES[i].equalsIgnoreCase(string)) {
+        return FontPaletteXML.FONT_TYPE_VALUES[i];
+      }
+    }
+
+    throw new IllegalArgumentException(//
+        "Unknown font type: " + string); //$NON-NLS-1$
+  }
 
   /** {@inheritDoc} */
   @Override

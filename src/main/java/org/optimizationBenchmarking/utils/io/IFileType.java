@@ -11,10 +11,14 @@ public interface IFileType {
   public abstract String getDefaultSuffix();
 
   /**
-   * Get the mime type, or {@code null} if no mime type is defined for this
-   * kind of file
+   * Get the <a
+   * href="http://www.iana.org/assignments/media-types/media-types.xhtml"
+   * >MIME</a> type, or {@code null} if no mime type is defined for this
+   * kind of file.
    * 
-   * @return the mime type
+   * @return the <a
+   *         href="http://www.iana.org/assignments/media-types/media-types.xhtml"
+   *         >MIME</a> type
    */
   public abstract String getMIMEType();
 

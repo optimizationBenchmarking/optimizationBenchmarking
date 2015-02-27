@@ -3,12 +3,11 @@
 	xmlns="http://www.optimizationBenchmarking.org/formats/graphics/font/fontPalette.1.0.xsd">
 
 	<defaultFont family="serif" size="10">
+    <face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9L.pfb" type="type1">Nimbus Roman No9 L Regular</face>
 		<face>ptmr7t</face>
 		<face>NimbusRomNo9L-Regu</face>
 		<face>NimbusRomNo9L Regular</face>
 		<face>NimbusRomNo9L</face>
-    <face>Nimbus Roman No9 L Medium</face>
-    <face>Nimbus Roman No9 L Regular</face>
     <face>Nimbus Roman No 9L</face>
     <face>Nimbus Roman No9 L</face>
     <face>Nimbus Roman</face>
@@ -27,15 +26,15 @@
 	</defaultFont>
 
 	<emphasizedFont family="serif" italic="true" size="10">
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9LItalic.pfb" type="type1">Nimbus Roman No9 L Regular Italic</face>
 		<face>ptmri7t</face>
 		<face>NimbusRomNo9L-ReguItal</face>
 		<face>NimbusRomNo9L Italic</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9L.pfb" type="type1">Nimbus Roman No9 L Regular</face>
 		<face>ptmr7t</face>
 		<face>NimbusRomNo9L-Regu</face>
 		<face>NimbusRomNo9L Regular</face>
 		<face>NimbusRomNo9L</face>
-    <face>Nimbus Roman No9 L Medium</face>
-    <face>Nimbus Roman No9 L Regular</face>
     <face>Nimbus Roman No 9L</face>
     <face>Nimbus Roman No9 L</face>
     <face>Nimbus Roman</face>
@@ -54,11 +53,11 @@
 	</emphasizedFont>
 
 	<codeFont family="monospaced" size="10">
+    <face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusMonoL.pfb" type="type1">Nimbus Mono L Regular</face>
 		<face>pcrr7t</face>
 		<face>NimbusMonL-Regu</face>
 		<face>NimbusMonL Regular</face>
 		<face>NimbusMonL</face>
-		<face>Nimbus Mono L Regular</face>
 		<face>Nimbus Mono L</face>
 		<face>Nimbus Mono</face>
 		<face>cmtt10</face>
@@ -74,14 +73,14 @@
 	</codeFont>
 
 	<font family="serif" bold="true" size="10">
+    <face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9LBold.pfb" type="type1">Nimbus Roman No9 L Medium</face>
 		<face>ptmb7t</face>
 		<face>NimbusRomNo9L-Medi</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9L.pfb" type="type1">Nimbus Roman No9 L Regular</face>
 		<face>ptmr7t</face>
 		<face>NimbusRomNo9L-Regu</face>
 		<face>NimbusRomNo9L Regular</face>
-		<face>NimbusRomNo9L</face>
-    <face>Nimbus Roman No9 L Medium</face>
-    <face>Nimbus Roman No9 L Regular</face>
+		<face>NimbusRomNo9L</face>    
     <face>Nimbus Roman No 9L</face>
     <face>Nimbus Roman No9 L</face>
     <face>Nimbus Roman</face>
@@ -100,12 +99,11 @@
 	</font>
 
 	<font family="serif" underlined="true" size="10">
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9L.pfb" type="type1">Nimbus Roman No9 L Regular</face>
 		<face>ptmr7t</face>
 		<face>NimbusRomNo9L-Regu</face>
 		<face>NimbusRomNo9L Regular</face>
-		<face>NimbusRomNo9L</face>
-    <face>Nimbus Roman No9 L Medium</face>
-    <face>Nimbus Roman No9 L Regular</face>
+		<face>NimbusRomNo9L</face>    
     <face>Nimbus Roman No 9L</face>
     <face>Nimbus Roman No9 L</face>
     <face>Nimbus Roman</face>
@@ -124,11 +122,11 @@
 	</font>
 
 	<font family="sansSerif" size="10">
+    <face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9L.pfb" type="type1">Nimbus Sans L Regular</face>
 		<face>phvr7t</face>
 		<face>NimbusSanL-Regu</face>
 		<face>NimbusSanL Regular</face>
 		<face>NimbusSanL</face>
-		<face>Nimbus Sans L Regular</face>
 		<face>Nimbus Sans L</face>
 		<face>Nimbus Sans</face>
 		<face>cmss10</face>
@@ -143,19 +141,21 @@
 	</font>
 
 	<font family="serif" bold="true" italic="true" size="10">
+	  <face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9LBoldItalic.pfb" type="type1">Nimbus Roman No9 L Medium Italic</face>
 		<face>ptmbi7t</face>
 		<face>NimbusRomNo9L-MediItal</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9LBold.pfb" type="type1">Nimbus Roman No9 L Medium</face>
 		<face>ptmb7t</face>
 		<face>NimbusRomNo9L-Medi</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9LItalic.pfb" type="type1">Nimbus Roman No9 L Regular Italic</face>
 		<face>ptmri7t</face>
 		<face>NimbusRomNo9L-ReguItal</face>
 		<face>NimbusRomNo9L Italic</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9L.pfb" type="type1">Nimbus Roman No9 L Regular</face>
 		<face>ptmr7t</face>
 		<face>NimbusRomNo9L-Regu</face>
 		<face>NimbusRomNo9L Regular</face>
 		<face>NimbusRomNo9L</face>
-    <face>Nimbus Roman No9 L Medium</face>
-    <face>Nimbus Roman No9 L Regular</face>
     <face>Nimbus Roman No 9L</face>
     <face>Nimbus Roman No9 L</face>
     <face>Nimbus Roman</face>
@@ -173,13 +173,14 @@
 	</font>
 
 	<font family="sansSerif" italic="true" size="10">
+	  <face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9LItalic.pfb" type="type1">Nimbus Sans L Regular Italic</face>
 		<face>phvro7t</face>
 		<face>NimbusSanL-ReguItal</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9L.pfb" type="type1">Nimbus Sans L Regular</face>
 		<face>phvr7t</face>
 		<face>NimbusSanL-Regu</face>
 		<face>NimbusSanL Regular</face>
 		<face>NimbusSanL</face>
-    <face>Nimbus Sans L Regular</face>
     <face>Nimbus Sans L</face>
 		<face>Nimbus Sans</face>
 		<face>cmssi10</face>
@@ -194,13 +195,14 @@
 	</font>
 
 	<font family="sansSerif" bold="true" size="10">
+    <face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9LBold.pfb" type="type1">Nimbus Sans L Bold</face>
 		<face>phvb7t</face>
 		<face>NimbusSanL-Bold</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9L.pfb" type="type1">Nimbus Sans L Regular</face>
 		<face>phvr7t</face>
 		<face>NimbusSanL-Regu</face>
 		<face>NimbusSanL Regular</face>
 		<face>NimbusSanL</face>
-    <face>Nimbus Sans L Regular</face>
     <face>Nimbus Sans L</face>
 		<face>Nimbus Sans</face>
 		<face>cmssbx10</face>
@@ -215,6 +217,7 @@
 	</font>
 
 	<font family="sansSerif" underlined="true" size="10">
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9L.pfb" type="type1">Nimbus Sans L Regular</face>
 		<face>phvr7t</face>
 		<face>NimbusSanL-Regu</face>
 		<face>NimbusSanL Regular</face>
@@ -232,14 +235,14 @@
 	</font>
 
 	<font family="serif" bold="true" underlined="true" size="10">
+	  <face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9LBold.pfb" type="type1">Nimbus Roman No9 L Medium</face>
 		<face>ptmb7t</face>
 		<face>NimbusRomNo9L-Medi</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9L.pfb" type="type1">Nimbus Roman No9 L Regular</face>
 		<face>ptmr7t</face>
 		<face>NimbusRomNo9L-Regu</face>
 		<face>NimbusRomNo9L Regular</face>
 		<face>NimbusRomNo9L</face>
-    <face>Nimbus Roman No9 L Medium</face>
-    <face>Nimbus Roman No9 L Regular</face>
     <face>Nimbus Roman No 9L</face>
     <face>Nimbus Roman No9 L</face>
     <face>Nimbus Roman</face>
@@ -258,15 +261,15 @@
 
 
 	<font family="serif" italic="true" underlined="true" size="10">
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9LItalic.pfb" type="type1">Nimbus Roman No9 L Regular Italic</face>
 		<face>ptmri7t</face>
 		<face>NimbusRomNo9L-ReguItal</face>
 		<face>NimbusRomNo9L Italic</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9L.pfb" type="type1">Nimbus Roman No9 L Regular</face>
 		<face>ptmr7t</face>
 		<face>NimbusRomNo9L-Regu</face>
 		<face>NimbusRomNo9L Regular</face>
 		<face>NimbusRomNo9L</face>
-    <face>Nimbus Roman No9 L Medium</face>
-    <face>Nimbus Roman No9 L Regular</face>
     <face>Nimbus Roman No 9L</face>
     <face>Nimbus Roman No9 L</face>
     <face>Nimbus Roman</face>
@@ -286,16 +289,17 @@
 
 	<font family="serif" bold="true" italic="true" underlined="true"
 		size="10">
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9LBoldItalic.pfb" type="type1">Nimbus Roman No9 L Medium Italic</face>
 		<face>ptmbi7t</face>
 		<face>NimbusRomNo9L-MediItal</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9LBold.pfb" type="type1">Nimbus Roman No9 L Medium</face>
 		<face>ptmb7t</face>
 		<face>NimbusRomNo9L-Medi</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusRomanNo9L.pfb" type="type1">Nimbus Roman No9 L Regular</face>
 		<face>ptmr7t</face>
 		<face>NimbusRomNo9L-Regu</face>
 		<face>NimbusRomNo9L Regular</face>
 		<face>NimbusRomNo9L</face>
-    <face>Nimbus Roman No9 L Medium</face>
-    <face>Nimbus Roman No9 L Regular</face>
     <face>Nimbus Roman No 9L</face>
     <face>Nimbus Roman No9 L</face>
     <face>Nimbus Roman</face>
@@ -314,17 +318,20 @@
 
 
 	<font family="sansSerif" bold="true" italic="true" size="10">
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9LBoldItalic.pfb" type="type1">Nimbus Sans L Bold Italic</face>
 		<face>phvbo7t</face>
 		<face>NimbusSanL-BoldItal</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9LBold.pfb" type="type1">Nimbus Sans L Bold</face>
 		<face>phvb7t</face>
 		<face>NimbusSanL-Bold</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9LItalic.pfb" type="type1">Nimbus Sans L Regular Italic</face>
 		<face>phvro7t</face>
 		<face>NimbusSanL-ReguItal</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9L.pfb" type="type1">Nimbus Sans L Regular</face>
 		<face>phvr7t</face>
 		<face>NimbusSanL-Regu</face>
 		<face>NimbusSanL Regular</face>
 		<face>NimbusSanL</face>
-    <face>Nimbus Sans L Regular</face>
     <face>Nimbus Sans L</face>
 		<face>Nimbus Sans</face>
 		<face>Computer Modern Sans Serif</face>
@@ -336,13 +343,14 @@
 	</font>
 
 	<font family="sansSerif" italic="true" underlined="true" size="10">
+	  <face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9LItalic.pfb" type="type1">Nimbus Sans L Regular Italic</face>
 		<face>phvro7t</face>
 		<face>NimbusSanL-ReguItal</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9L.pfb" type="type1">Nimbus Sans L Regular</face>
 		<face>phvr7t</face>
 		<face>NimbusSanL-Regu</face>
 		<face>NimbusSanL Regular</face>
 		<face>NimbusSanL</face>
-    <face>Nimbus Sans L Regular</face>
     <face>Nimbus Sans L</face>
 		<face>Nimbus Sans</face>
 		<face>cmssi10</face>
@@ -357,13 +365,14 @@
 	</font>
 
 	<font family="sansSerif" bold="true" underlined="true" size="10">
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9LBold.pfb" type="type1">Nimbus Sans L Bold</face>
 		<face>phvb7t</face>
 		<face>NimbusSanL-Bold</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusSansNo9L.pfb" type="type1">Nimbus Sans L Regular</face>
 		<face>phvr7t</face>
 		<face>NimbusSanL-Regu</face>
 		<face>NimbusSanL Regular</face>
 		<face>NimbusSanL</face>
-    <face>Nimbus Sans L Regular</face>
     <face>Nimbus Sans L</face>
 		<face>Nimbus Sans</face>
 		<face>cmssbx10</face>
@@ -381,11 +390,11 @@
 	<font family="monospaced" bold="true" size="10">
 		<face>pcrb7t</face>
 		<face>NimbusMonL-Bold</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusMonoL.pfb" type="type1">Nimbus Mono L Regular</face>
 		<face>pcrr7t</face>
 		<face>NimbusMonL-Regu</face>
 		<face>NimbusMonL Regular</face>
-		<face>NimbusMonL</face>
-    <face>Nimbus Mono L Regular</face>
+		<face>NimbusMonL</face>    
     <face>Nimbus Mono L</face>
 		<face>Nimbus Mono</face>
 		<face>cmitt10</face>
@@ -403,11 +412,11 @@
 	<font family="monospaced" italic="true" size="10">
 		<face>pcrbo7t</face>
 		<face>NimbusMonL-ReguObli</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusMonoL.pfb" type="type1">Nimbus Mono L Regular</face>
 		<face>pcrr7t</face>
 		<face>NimbusMonL-Regu</face>
 		<face>NimbusMonL Regular</face>
-		<face>NimbusMonL</face>
-    <face>Nimbus Mono L Regular</face>
+		<face>NimbusMonL</face>    
     <face>Nimbus Mono L</face>
 		<face>Nimbus Mono</face>
 		<face>cmitt10</face>
@@ -429,11 +438,11 @@
 		<face>NimbusMonL-Bold</face>
 		<face>pcrbo7t</face>
 		<face>NimbusMonL-ReguObli</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusMonoL.pfb" type="type1">Nimbus Mono L Regular</face>
 		<face>pcrr7t</face>
 		<face>NimbusMonL-Regu</face>
 		<face>NimbusMonL Regular</face>
-		<face>NimbusMonL</face>
-    <face>Nimbus Mono L Regular</face>
+		<face>NimbusMonL</face>    
     <face>Nimbus Mono L</face>
 		<face>Nimbus Mono</face>
 		<face>cmitt10</face>
@@ -451,11 +460,11 @@
 	<font family="monospaced" bold="true" underlined="true" size="10">
 		<face>pcrb7t</face>
 		<face>NimbusMonL-Bold</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusMonoL.pfb" type="type1">Nimbus Mono L Regular</face>
 		<face>pcrr7t</face>
 		<face>NimbusMonL-Regu</face>
 		<face>NimbusMonL Regular</face>
-		<face>NimbusMonL</face>
-    <face>Nimbus Mono L Regular</face>
+		<face>NimbusMonL</face>    
     <face>Nimbus Mono L</face>
 		<face>Nimbus Mono</face>
 		<face>cmitt10</face>
@@ -473,11 +482,11 @@
 	<font family="monospaced" italic="true" underlined="true" size="10">
 		<face>pcrbo7t</face>
 		<face>NimbusMonL-ReguObli</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusMonoL.pfb" type="type1">Nimbus Mono L Regular</face>
 		<face>pcrr7t</face>
 		<face>NimbusMonL-Regu</face>
 		<face>NimbusMonL Regular</face>
-		<face>NimbusMonL</face>
-    <face>Nimbus Mono L Regular</face>
+		<face>NimbusMonL</face>    
     <face>Nimbus Mono L</face>
 		<face>Nimbus Mono</face>
 		<face>cmitt10</face>
@@ -500,11 +509,11 @@
 		<face>NimbusMonL-Bold</face>
 		<face>pcrbo7t</face>
 		<face>NimbusMonL-ReguObli</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtranFontPalette#nimbusMonoL.pfb" type="type1">Nimbus Mono L Regular</face>
 		<face>pcrr7t</face>
 		<face>NimbusMonL-Regu</face>
 		<face>NimbusMonL Regular</face>
-		<face>NimbusMonL</face>
-    <face>Nimbus Mono L Regular</face>
+		<face>NimbusMonL</face>    
     <face>Nimbus Mono L</face>
 		<face>Nimbus Mono</face>
 		<face>cmitt10</face>

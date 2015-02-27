@@ -149,6 +149,30 @@ without the need to download external resources.
         + [ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip](ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip)
         + [http://ctan.org/pkg/remreset](http://ctan.org/pkg/remreset)
 
+* Nimbus Font Package ([Nimbus Roman No9 L](http://en.wikipedia.org/wiki/Nimbus_Roman), [Nimbus Mono L](http://en.wikipedia.org/wiki/Nimbus_Mono_L), and [Nimbus Sans L](http://en.wikipedia.org/wiki/Nimbus_Sans_L#Nimbus_Sans_L))
+    - License: [GNU General Public License version 2.0 (GPLv2)](http://www.gnu.org/licenses/gpl-2.0.html)
+    - Copyright: Valek Filippov, [giles](http://sourceforge.net/u/giles/profile/) and [ralph](http://sourceforge.net/u/raph/profile/) of the [SourceForge](http://sourceforge.net) project [Ghostscript fonts](http://sourceforge.net/projects/gs-fonts/) and [URW++](http://www.urwpp.de/)
+    - Author: Valek Filippov, [giles](http://sourceforge.net/u/giles/profile/) and [ralph](http://sourceforge.net/u/raph/profile/) of the [SourceForge](http://sourceforge.net) project [Ghostscript fonts](http://sourceforge.net/projects/gs-fonts/) and [URW++](http://www.urwpp.de/)
+    - Files:
+        + [nimbusMonoL.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusMonoL.pfb)
+        + [nimbusMonoLBold.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusMonoLBold.pfb)
+        + [nimbusMonoLBoldItalic.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusMonoLBoldItalic.pfb)
+        + [nimbusMonoLItalic.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusMonoLItalic.pfb)
+        + [nimbusRomanNo9L.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusRomanNo9L.pfb)
+        + [nimbusRomanNo9LBold.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusRomanNo9LBold.pfb)
+        + [nimbusRomanNo9LBoldItalic.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusRomanNo9LBoldItalic.pfb)
+        + [nimbusRomanNo9LItalic.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusRomanNo9LItalic.pfb)
+        + [nimbusSansL.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusSansL.pfb)
+        + [nimbusSansLBold.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusSansLBold.pfb)
+        + [nimbusSansLBoldItalic.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusSansLBoldItalic.pfb)
+        + [nimbusSansLItalic.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusSansLItalic.pfb)
+    - Version:
+        + Release 1.0.7pre22 of Valek Filippov's improved versions of the URW type 1 font collection
+        + 2004-01-19 (modified time of [Ghostscript fonts](http://sourceforge.net/projects/gs-fonts/))        
+    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
+    - Status: freely available in the internet
+    - Source: [http://sourceforge.net/projects/gs-fonts/](http://sourceforge.net/projects/gs-fonts/)
+
 Questions and Problems
 ----------------------
 If you have any questions about *the project*, want to contribute

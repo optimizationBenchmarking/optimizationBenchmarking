@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.graphics.style.font;
 
-import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
+import org.optimizationBenchmarking.utils.graphics.EFontType;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
 import org.optimizationBenchmarking.utils.parsers.IntParser;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -21,6 +21,12 @@ public class FontPaletteXMLHandler extends DelegatingHandler {
 
   /** the font face */
   private boolean m_inFace;
+
+  /** the resource */
+  private String m_resource;
+
+  /** the type */
+  private EFontType m_type;
 
   /**
    * Create
@@ -43,13 +49,17 @@ public class FontPaletteXMLHandler extends DelegatingHandler {
       final String localName, final String qName,
       final Attributes attributes) throws SAXException {
     String attr;
-    int i;
 
     this.m_inFace = false;
     if ((uri == null) || (FontPaletteXML.NAMESPACE.equalsIgnoreCase(uri))) {
 
       if (FontPaletteXML.ELEMENT_FONT_FACE.equalsIgnoreCase(localName)) {
         this.m_inFace = true;
+        this.m_resource = DelegatingHandler.getAttribute(attributes,
+            FontPaletteXML.NAMESPACE, FontPaletteXML.ATTRIBUTE_RESOURCE);
+        this.m_type = FontPaletteXML._parseFontType(DelegatingHandler
+            .getAttribute(attributes, FontPaletteXML.NAMESPACE,
+                FontPaletteXML.ATTRIBUTE_TYPE));
         this.m_faceChoice.clear();
         return;
       }
@@ -103,21 +113,10 @@ public class FontPaletteXMLHandler extends DelegatingHandler {
         this.m_builder.setSize(IntParser.INSTANCE.parseInt(attr));
       }
 
-      fontFamilySet: {
-        attr = DelegatingHandler
-            .getAttribute(attributes, FontPaletteXML.NAMESPACE,
-                FontPaletteXML.ATTRIBUTE_FONT_FAMILY);
-        if (attr != null) {
-          for (i = FontPaletteXML.FONT_FAMILY_NAMES.length; (--i) >= 0;) {
-            if (FontPaletteXML.FONT_FAMILY_NAMES[i].equalsIgnoreCase(attr)) {
-              this.m_builder.setFontFamily(//
-                  FontPaletteXML.FONT_FAMILY_VALUES[i]);
-              break fontFamilySet;
-            }
-          }
-        }
-        this.m_builder.setFontFamily(EFontFamily.DIALOG);
-      }
+      this.m_builder.setFontFamily(FontPaletteXML
+          ._parseFontFamily(DelegatingHandler.getAttribute(attributes,
+              FontPaletteXML.NAMESPACE,
+              FontPaletteXML.ATTRIBUTE_FONT_FAMILY)));
     }
   }
 
@@ -135,7 +134,8 @@ public class FontPaletteXMLHandler extends DelegatingHandler {
       }
 
       if (FontPaletteXML.ELEMENT_FONT_FACE.equalsIgnoreCase(localName)) {
-        this.m_builder.addFaceChoice(this.m_faceChoice.toString());
+        this.m_builder.addFaceChoice(this.m_faceChoice.toString(),
+            this.m_resource, this.m_type);
         this.m_faceChoice.clear();
         return;
       }

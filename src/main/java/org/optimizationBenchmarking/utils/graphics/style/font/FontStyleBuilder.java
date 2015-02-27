@@ -1,7 +1,9 @@
 package org.optimizationBenchmarking.utils.graphics.style.font;
 
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.font.TextAttribute;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,13 +13,15 @@ import java.util.Locale;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.graphics.EFontFamily;
+import org.optimizationBenchmarking.utils.graphics.EFontType;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
-import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.parsers.BooleanParser;
 import org.optimizationBenchmarking.utils.parsers.IntParser;
+import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.NormalCharTransformer;
@@ -246,7 +250,7 @@ public final class FontStyleBuilder extends
    *         or {@code null} string
    */
   public final boolean addFaceChoice(final String name) {
-    return this.addFaceChoice(name, null);
+    return this.addFaceChoice(name, null, null);
   }
 
   /**
@@ -263,20 +267,18 @@ public final class FontStyleBuilder extends
    *          the face choice name
    * @param resource
    *          a resource from which the face choice may be loaded
+   * @param type
+   *          the font type
    * @return {@code true} if the face choice was new and addable,
    *         {@code false} if it was already stored OR if it was an empty
    *         or {@code null} string
    */
   public synchronized final boolean addFaceChoice(final String name,
-      final String resource) {
-    final String t;
+      final String resource, final EFontType type) {
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    t = this.normalize(name);
-    if (t != null) {
-      return this.m_faceChoices.add(new _FaceChoice(name, resource));
-    }
-    return false;
+    return this.m_faceChoices.add(new _FaceChoice(this.normalize(name),
+        resource, type));
   }
 
   /**
@@ -442,14 +444,16 @@ public final class FontStyleBuilder extends
    * 
    * @return the font style
    */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings({ "rawtypes", "unchecked", "resource" })
   @Override
   protected final FontStyle compile() {
     final ArrayList<Font> lst;
     final LinkedHashSet<_FaceChoice> faceChoices;
     final LinkedHashSet<String> choices;
+    EFontType type;
+    InputStream is;
     int style, goalStyle, i, mask;
-    String used;
+    String used, resource, chosenName;
     Font font, derivedFont;
     EFontFamily fam1, fam2;
     HashMap<TextAttribute, Object> map;
@@ -474,6 +478,9 @@ public final class FontStyleBuilder extends
     used = null;
     faceChoices = this.m_faceChoices;
     this.m_faceChoices = null;
+    resource = null;
+    chosenName = null;
+    type = null;
     finder: {
       for (final _FaceChoice faceChoice : faceChoices) {
         try {
@@ -484,18 +491,48 @@ public final class FontStyleBuilder extends
           goalStyle = (style & (~mask));
           font = new Font(faceChoice.m_name, goalStyle, this.m_size);
           if (FontStyleBuilder.__matches(font, faceChoice.m_name)) {
-            if (faceChoice.m_resource != null) {
-              // TODO
-            }
-
+            chosenName = faceChoice.m_name;
             break finder;
           }
+
+          // was a resource specified?
+          if (faceChoice.m_resource != null) {
+            is = ReflectionUtils
+                .getResourceAsStream(faceChoice.m_resource);
+            if (is != null) {
+              try {
+                font = Font.createFont(
+                    faceChoice.m_type.getJavaFontType(), is);
+                if (font != null) {
+                  try {
+                    GraphicsEnvironment.getLocalGraphicsEnvironment()
+                        .registerFont(font);
+                  } catch (final Throwable ignore) {
+                    ErrorUtils.logError(Configuration.getGlobalLogger(),
+                        "Ignorable error during the attempt to register font '"//$NON-NLS-1$ 
+                            + font + //
+                            "' with the local graphics environment.", //$NON-NLS-1$
+                        ignore, false);
+                  }
+                  if (FontStyleBuilder.__matches(font, faceChoice.m_name)) {
+                    chosenName = faceChoice.m_name;
+                    resource = faceChoice.m_resource;
+                    type = faceChoice.m_type;
+                    break finder;
+                  }
+                }
+              } finally {
+                is.close();
+              }
+            }
+          }
+
         } catch (final Throwable error) {
           ErrorUtils
               .logError(
                   Configuration.getGlobalLogger(),
                   "Strange but ignorable error during the creation of a font style detected.", //$NON-NLS-1$
-                  error, false);
+                  error, true);
         }
       }
 
@@ -504,6 +541,8 @@ public final class FontStyleBuilder extends
       font = new Font(this.m_family.getFontFamilyName(), style,
           this.m_size);
     }
+
+    // OK, by now we have obtained a font
 
     lst = new ArrayList<>();
     lst.add(font);
@@ -565,8 +604,9 @@ public final class FontStyleBuilder extends
     }
 
     // now let us update the choices list to represent the setting
-    choices = new LinkedHashSet<>(faceChoices.size() + 3
+    choices = new LinkedHashSet<>(faceChoices.size() + 4
         + (6 * lst.size()));
+    choices.add(chosenName);
     for (i = lst.size(); (--i) >= 0;) {
       derivedFont = lst.get(i);
       FontStyleBuilder.__addFaceChoice(choices,
@@ -624,7 +664,7 @@ public final class FontStyleBuilder extends
     return new FontStyle(((fam2 != null) ? fam2 : fam1), this.m_size,
         this.m_italic, this.m_bold, this.m_underlined, font,
         new ArrayListView<>(choices.toArray(new String[choices.size()])),
-        this.m_id);
+        resource, type, this.m_id);
   }
 
   /** {@inheritDoc} */

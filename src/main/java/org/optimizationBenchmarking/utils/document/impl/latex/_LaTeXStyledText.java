@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.ComplexText;
 import org.optimizationBenchmarking.utils.document.impl.abstr.StyledText;
-import org.optimizationBenchmarking.utils.graphics.style.EFontFamily;
+import org.optimizationBenchmarking.utils.graphics.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;

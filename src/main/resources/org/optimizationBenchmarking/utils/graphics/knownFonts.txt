@@ -93,8 +93,10 @@ r nimbus roman
 s nimbus sans
 r nimbus roman no 9l
 r nimbus roman no9 l
-r nimbus roman no9 l medium
+rb nimbus roman no9 l medium
+rbi nimbus roman no9 l medium italic
 r nimbus roman no9 l regular
+ri nimbus roman no9 l regular italic
 m nimbusmonL
 m nimbus mono l
 m nimbus mono l regular
@@ -113,7 +115,10 @@ ri nimbusromno9l-reguital
 ri nimbusromno9l italic
 s nimbussanl
 s nimbus sans l
+sb nimbus sans l bold
+sbi nimbus sans l bold italic
 s nimbus sans l regular
+si nimbus sans l regular italic
 sb nimbussanl-bold
 si nimbussanl-ital
 sbi nimbussanl-boldital
