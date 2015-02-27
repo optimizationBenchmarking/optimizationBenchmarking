@@ -598,7 +598,7 @@ public final class FontStyleBuilder extends
     }
 
     derivedFont = font.deriveFont(map);
-    if (derivedFont != font) {
+    if ((derivedFont != font) && (!(derivedFont.equals(font)))) {
       font = derivedFont;
       lst.add(font);
     }

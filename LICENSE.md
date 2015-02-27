@@ -3,14 +3,14 @@ License of the Optimization Benchmarking Project
 
 The *Optimization Benchmarking Project* (from now on referred to
 as *the project*) is licensed under the
-[GNU General Public License Version 3](http://www.gnu.org/licenses/gpl-3.0-standalone.html), 29 June 2007.
+[GNU General Public License Version 3](http://www.gnu.org/meta/licenses/gpl-3.0-standalone.html), 29 June 2007.
 This license applies to all of the software and all other parts of
 *the project*, except for the exceptions listed under point
 "Exceptions" below.
 
 The text of the GNU General Public License Version 3 is provided in the
-file "[gpl.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/master/gpl.txt)" and can be found online at
-[http://www.gnu.org/licenses/gpl-3.0.txt](http://www.gnu.org/licenses/gpl-3.0.txt).
+file "[meta/licenses/gpl-3.0.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/gpl-3.0.txt)" and can be found online at
+[http://www.gnu.org/meta/licenses/gpl-3.0.txt](http://www.gnu.org/meta/licenses/gpl-3.0.txt).
 
 Exceptions
 ----------
@@ -18,11 +18,13 @@ Some versions of other, freely available components are included in the
 sources of *the project*. For these components, other licensing terms
 and copyright apply. The reason why these components are included is to
 make sure that the project is sufficiently stand-alone and can execute
-without the need to download external resources. 
+without the need to download external resources.
+
+The licenses used for some of these elements are given in the folder
+"[licenses](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/licenses)"
 
 * LaTeX Package "figureSeries"
-    - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), either version 1.3 of this
-      license or (at your option) any later version.
+    - License: [LaTeX Project Public License](http://www.latex-project.org/lppl-1.3.txt), either version 1.3 of this license (see file "[meta/licenses/lppl-1.3.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lppl-1.3.txt)") or (at your option) any later version.
     - Copyright: Copyright (C) 2014, 2015 Dr. Thomas Weise
     - Author: Dr. Thomas Weise
     - Version: 0.9.2
@@ -42,7 +44,7 @@ without the need to download external resources.
    - Source: [http://www.ctan.org/tex-archive/macros/latex/contrib/ulem/](http://www.ctan.org/tex-archive/macros/latex/contrib/ulem/)
 
 * LaTeX Document Class "IEEEtran"
-   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), version 1.3
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl-1.3.txt), version 1.3 (see file "[meta/licenses/lppl-1.3.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lppl-1.3.txt)")
    - Copyright:
      + Copyright (c) 1993-2000 by Gerry Murray, Silvano Balemi, Jon Dixon, Peter N"uchter, Juergen von Hagen and
      + Copyright (c) 2001-2014 by Michael Shell
@@ -57,7 +59,7 @@ without the need to download external resources.
        + [http://www.ieee.org/](http://www.ieee.org/)
 
 * LaTeX Bibliography Style "IEEEtran"
-   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), version 1.3
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl-1.3.txt), version 1.3 (see file "[meta/licenses/lppl-1.3.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lppl-1.3.txt)")
    - Copyright: Copyright (c) 2003-2008 Michael Shell
    - Author: Michael Shell
    - File: [IEEEtran.bst](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/IEEEtran.bst)
@@ -100,7 +102,7 @@ without the need to download external resources.
         + [ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip](ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip)
 
 * LaTeX Bibliography Style "splncs03"
-   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt)
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl-1.3.txt) (see file "[meta/licenses/lppl-1.3.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lppl-1.3.txt)")
    - Copyright: Maurizio "Titto" Patrignani of Dipartimento di Informatica e Automazione Universita' Roma Tre, Springer Verlag, Copyright 1994-2007 Patrick W Daly
    - Author: Maurizio "Titto" Patrignani of, Dipartimento di Informatica e Automazione Universita' Roma Tre
    - File: [splncs03.bst](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/splncs03.bst)
@@ -124,7 +126,7 @@ without the need to download external resources.
         + [ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip](ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip)
 
 * LaTeX Package "aliascnt"
-   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), version 1.3c
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl-1.3.txt), version 1.3c (see file "[meta/licenses/lppl-1.3.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lppl-1.3.txt)")
    - Copyright: Copyright (C) 2006, 2009 by Heiko Oberdiek [<heiko.oberdiek at googlemail.com>](mailto:heiko.oberdiek@googlemail.com)
    - Author: Heiko Oberdiek
    - File: [aliascnt.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/aliascnt.sty)
@@ -137,7 +139,7 @@ without the need to download external resources.
         + [http://ctan.org/pkg/aliascnt](http://ctan.org/pkg/aliascnt)
 
 * LaTeX Package "remreset"
-   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl.txt)
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl-1.3.txt) (see file "[meta/licenses/lppl-1.3.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lppl-1.3.txt)")
    - Copyright: Copyright 1997 David Carlisle
    - Author: David Carlisle
    - File: [remreset.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/remreset.sty)
@@ -150,7 +152,7 @@ without the need to download external resources.
         + [http://ctan.org/pkg/remreset](http://ctan.org/pkg/remreset)
 
 * Nimbus Font Package ([Nimbus Roman No9 L](http://en.wikipedia.org/wiki/Nimbus_Roman), [Nimbus Mono L](http://en.wikipedia.org/wiki/Nimbus_Mono_L), and [Nimbus Sans L](http://en.wikipedia.org/wiki/Nimbus_Sans_L#Nimbus_Sans_L))
-    - License: [GNU General Public License version 2.0 (GPLv2)](http://www.gnu.org/licenses/gpl-2.0.html)
+    - License: [GNU General Public License version 2.0 (GPLv2)](http://www.gnu.org/meta/licenses/gpl-2.0.html) (see file "[meta/licenses/gpl-2.0.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/gpl-2.0.txt)")
     - Copyright: Valek Filippov, [giles](http://sourceforge.net/u/giles/profile/) and [ralph](http://sourceforge.net/u/raph/profile/) of the [SourceForge](http://sourceforge.net) project [Ghostscript fonts](http://sourceforge.net/projects/gs-fonts/) and [URW++](http://www.urwpp.de/)
     - Author: Valek Filippov, [giles](http://sourceforge.net/u/giles/profile/) and [ralph](http://sourceforge.net/u/raph/profile/) of the [SourceForge](http://sourceforge.net) project [Ghostscript fonts](http://sourceforge.net/projects/gs-fonts/) and [URW++](http://www.urwpp.de/)
     - Files:
@@ -172,6 +174,31 @@ without the need to download external resources.
     - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
     - Status: freely available in the internet
     - Source: [http://sourceforge.net/projects/gs-fonts/](http://sourceforge.net/projects/gs-fonts/)
+
+* [Computer Modern](http://en.wikipedia.org/wiki/Computer_Modern) Font Package for Sizes 9 and 10
+    - License: [SIL Open Font Li­cense (ofl)](http://www.ctan.org/license/ofl) (see file "[meta/licenses/ofl.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/ofl.txt)")
+    - Copyright: [The Amer­i­can Math­e­mat­i­cal So­ci­ety](http://www.ctan.org/author/ams)
+    - Author: [Donald Ervin Knuth](http://en.wikipedia.org/wiki/Donald_Knuth), see [here](http://en.wikipedia.org/wiki/Computer_Modern)
+    - Files:
+      + [computerModernRoman9.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernRoman9.pfb)
+      + [computerModernRoman10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernRoman10.pfb)
+      + [computerModernRomanBold9.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernRomanBold9.pfb)
+      + [computerModernRomanBold10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernRomanBold10.pfb)
+      + [computerModernRomanItalic9.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernRomanItalic9.pfb)
+      + [computerModernRomanItalic10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernRomanItalic10.pfb)
+      + [computerModernRomanBoldItalic10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernRomanBoldItalic10.pfb)
+      + [computerModernSansSerif9.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernSansSerif9.pfb)
+      + [computerModernSansSerif10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernSansSerif10.pfb)
+      + [computerModernSansSerifBold10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernSansSerifBold10.pfb)
+      + [computerModernSansSerifItalic9.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernSansSerifItalic9.pfb)
+      + [computerModernSansSerifItalic10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernSansSerifItalic10.pfb)
+      + [computerModernTypewriter9.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernTypewriter9.pfb)
+      + [computerModernTypewriter10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernTypewriter10.pfb)
+      + [computerModernTypewriterItalic10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernTypewriterItalic10.pfb)      
+    - Version: amsfonts 3.04 [2013/01/14]
+    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
+    - Status: freely available in the internet
+    - Source: [http://www.ctan.org/tex-archive/fonts/amsfonts/](http://www.ctan.org/tex-archive/fonts/amsfonts/)
 
 Questions and Problems
 ----------------------

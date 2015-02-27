@@ -4,8 +4,8 @@
 
 	<defaultFont family="serif" size="9">
 		<face>aer9</face>
-		<face>cmr9</face>
-		<face>cmr10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman9.pfb" type="type1">cmr9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman10.pfb" type="type1">cmr10</face>
 		<face>cmr8</face>
 		<face>cmr11</face>
 		<face>Computer Modern Roman</face>
@@ -21,13 +21,13 @@
 
 	<emphasizedFont family="serif" italic="true" size="9">
 		<face>aeti9</face>
-		<face>cmti9</face>
-		<face>cmti10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanItalic9.pfb" type="type1">cmti9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanItalic10.pfb" type="type1">cmti10</face>
 		<face>cmti8</face>
 		<face>cmti11</face>
 		<face>aer9</face>
-		<face>cmr9</face>
-		<face>cmr10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman9.pfb" type="type1">cmr9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman10.pfb" type="type1">cmr10</face>
 		<face>cmr8</face>
 		<face>cmr11</face>
 		<face>Computer Modern Roman</face>
@@ -43,8 +43,8 @@
 
 	<codeFont family="monospaced" size="9">
 		<face>aett9</face>
-		<face>cmtt9</face>
-		<face>cmtt10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernTypewriter9.pfb" type="type1">cmtt9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernTypewriter10.pfb" type="type1">cmtt10</face>
 		<face>cmtt8</face>
 		<face>cmtt11</face>
 		<face>Computer Modern Typewriter</face>
@@ -58,13 +58,13 @@
 
 	<font family="serif" bold="true" size="9">
 		<face>aebx9</face>
-		<face>cmbx9</face>
-		<face>cmbx10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanBold9.pfb" type="type1">cmbx9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanBold10.pfb" type="type1">cmbx10</face>
 		<face>cmbx8</face>
 		<face>cmbx11</face>
 		<face>aer9</face>
-		<face>cmr9</face>
-		<face>cmr10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman9.pfb" type="type1">cmr9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman10.pfb" type="type1">cmr10</face>
 		<face>cmr8</face>
 		<face>cmr11</face>
 		<face>Computer Modern Roman</face>
@@ -80,8 +80,8 @@
 
 	<font family="serif" underlined="true" size="9">
 		<face>aer9</face>
-		<face>cmr9</face>
-		<face>cmr10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman9.pfb" type="type1">cmr9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman10.pfb" type="type1">cmr10</face>
 		<face>cmr8</face>
 		<face>cmr11</face>
 		<face>Computer Modern Roman</face>
@@ -98,7 +98,7 @@
 	<font family="sansSerif" size="9">
 		<face>aess9</face>
 		<face>cmss9</face>
-		<face>cmss10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerif10.pfb" type="type1">cmss10</face>
 		<face>cmss8</face>
 		<face>cmss11</face>
 		<face>Computer Modern Sans Serif</face>
@@ -113,22 +113,22 @@
 		<face>aebxti9</face>
 		<face>aebxti10</face>
 		<face>cmbxti9</face>
-		<face>cmbxti10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanBoldItalic10.pfb" type="type1">cmbxti10</face>
 		<face>cmbxti8</face>
 		<face>cmbxti11</face>
 		<face>aebx9</face>
-		<face>cmbx9</face>
-		<face>cmbx10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanBold9.pfb" type="type1">cmbx9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanBold10.pfb" type="type1">cmbx10</face>
 		<face>cmbx8</face>
 		<face>cmbx11</face>
 		<face>aeti9</face>
-		<face>cmti9</face>
-		<face>cmti10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanItalic9.pfb" type="type1">cmti9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanItalic10.pfb" type="type1">cmti10</face>
 		<face>cmti8</face>
 		<face>cmti11</face>
 		<face>aer9</face>
-		<face>cmr9</face>
-		<face>cmr10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman9.pfb" type="type1">cmr9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman10.pfb" type="type1">cmr10</face>
 		<face>cmr8</face>
 		<face>cmr11</face>
 		<face>Computer Modern Roman</face>
@@ -143,13 +143,13 @@
 
 	<font family="sansSerif" italic="true" size="9">
 		<face>aessi9</face>
-		<face>cmssi9</face>
-		<face>cmssi10</face>
-		<face>cmssi9</face>
-		<face>cmssi10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerifItalic9.pfb" type="type1">cmssi9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerifItalic10.pfb" type="type1">cmssi10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerifItalic9.pfb" type="type1">cmssi9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerifItalic10.pfb" type="type1">cmssi10</face>
 		<face>aess9</face>
 		<face>cmss9</face>
-		<face>cmss10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerif10.pfb" type="type1">cmss10</face>
 		<face>cmss8</face>
 		<face>cmss11</face>
 		<face>Computer Modern Sans Serif</face>
@@ -164,12 +164,12 @@
 		<face>aessbx9</face>
 		<face>aessbx10</face>
 		<face>cmssbx9</face>
-		<face>cmssbx10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerifBold10.pfb" type="type1">cmssbx10</face>
 		<face>cmssbx11</face>
 		<face>cmssbx8</face>
 		<face>aess9</face>
 		<face>cmss9</face>
-		<face>cmss10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerif10.pfb" type="type1">cmss10</face>
 		<face>cmss8</face>
 		<face>cmss11</face>
 		<face>Computer Modern Sans Serif</face>
@@ -183,7 +183,7 @@
 	<font family="sansSerif" underlined="true" size="9">
 		<face>aess9</face>
 		<face>cmss9</face>
-		<face>cmss10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerif10.pfb" type="type1">cmss10</face>
 		<face>cmss8</face>
 		<face>cmss11</face>
 		<face>Computer Modern Sans Serif</face>
@@ -196,13 +196,13 @@
 
 	<font family="serif" bold="true" underlined="true" size="9">
 		<face>aebx9</face>
-		<face>cmbx9</face>
-		<face>cmbx10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanBold9.pfb" type="type1">cmbx9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanBold10.pfb" type="type1">cmbx10</face>
 		<face>cmbx8</face>
 		<face>cmbx11</face>
 		<face>aer9</face>
-		<face>cmr9</face>
-		<face>cmr10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman9.pfb" type="type1">cmr9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman10.pfb" type="type1">cmr10</face>
 		<face>cmr8</face>
 		<face>cmr11</face>
 		<face>Computer Modern Roman</face>
@@ -217,13 +217,13 @@
 
 	<font family="serif" italic="true" underlined="true" size="9">
 		<face>aeti9</face>
-		<face>cmti9</face>
-		<face>cmti10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanItalic9.pfb" type="type1">cmti9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanItalic10.pfb" type="type1">cmti10</face>
 		<face>cmti8</face>
 		<face>cmti11</face>
 		<face>aer9</face>
-		<face>cmr9</face>
-		<face>cmr10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman9.pfb" type="type1">cmr9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman10.pfb" type="type1">cmr10</face>
 		<face>cmr8</face>
 		<face>cmr11</face>
 		<face>Computer Modern Roman</face>
@@ -242,22 +242,22 @@
 		<face>aebxti9</face>
 		<face>aebxti10</face>
 		<face>cmbxti9</face>
-		<face>cmbxti10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanBoldItalic10.pfb" type="type1">cmbxti10</face>
 		<face>cmbxti8</face>
 		<face>cmbxti11</face>
 		<face>aebx9</face>
-		<face>cmbx9</face>
-		<face>cmbx10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanBold9.pfb" type="type1">cmbx9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanBold10.pfb" type="type1">cmbx10</face>
 		<face>cmbx8</face>
 		<face>cmbx11</face>
 		<face>aeti9</face>
-		<face>cmti9</face>
-		<face>cmti10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanItalic9.pfb" type="type1">cmti9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRomanItalic10.pfb" type="type1">cmti10</face>
 		<face>cmti8</face>
 		<face>cmti11</face>
 		<face>aer9</face>
-		<face>cmr9</face>
-		<face>cmr10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman9.pfb" type="type1">cmr9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernRoman10.pfb" type="type1">cmr10</face>
 		<face>cmr8</face>
 		<face>cmr11</face>
 		<face>Computer Modern Roman</face>
@@ -276,13 +276,13 @@
 
 	<font family="sansSerif" italic="true" underlined="true" size="9">
 		<face>aessi9</face>
-		<face>cmssi9</face>
-		<face>cmssi10</face>
-		<face>cmssi9</face>
-		<face>cmssi10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerifItalic9.pfb" type="type1">cmssi9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerifItalic10.pfb" type="type1">cmssi10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerifItalic9.pfb" type="type1">cmssi9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerifItalic10.pfb" type="type1">cmssi10</face>
 		<face>aess9</face>
 		<face>cmss9</face>
-		<face>cmss10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerif10.pfb" type="type1">cmss10</face>
 		<face>cmss8</face>
 		<face>cmss11</face>
 		<face>Computer Modern Sans Serif</face>
@@ -297,12 +297,12 @@
 		<face>aessbx9</face>
 		<face>aessbx10</face>
 		<face>cmssbx9</face>
-		<face>cmssbx10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerifBold10.pfb" type="type1">cmssbx10</face>
 		<face>cmssbx11</face>
 		<face>cmssbx8</face>
 		<face>aess9</face>
 		<face>cmss9</face>
-		<face>cmss10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernSansSerif10.pfb" type="type1">cmss10</face>
 		<face>cmss8</face>
 		<face>cmss11</face>
 		<face>Computer Modern Sans Serif</face>
@@ -320,12 +320,12 @@
 		<face>aeitt9</face>
 		<face>aeitt10</face>
 		<face>cmitt9</face>
-		<face>cmitt10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernTypewriterItalic10.pfb" type="type1">cmitt10</face>
 		<face>cmitt8</face>
-		<face>cmitt10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernTypewriterItalic10.pfb" type="type1">cmitt10</face>
 		<face>aett9</face>
-		<face>cmtt9</face>
-		<face>cmtt10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernTypewriter9.pfb" type="type1">cmtt9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernTypewriter10.pfb" type="type1">cmtt10</face>
 		<face>cmtt8</face>
 		<face>cmtt11</face>
 		<face>Computer Modern Typewriter</face>
@@ -341,12 +341,12 @@
 		<face>aeitt9</face>
 		<face>aeitt10</face>
 		<face>cmitt9</face>
-		<face>cmitt10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernTypewriterItalic10.pfb" type="type1">cmitt10</face>
 		<face>cmitt8</face>
-		<face>cmitt10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernTypewriterItalic10.pfb" type="type1">cmitt10</face>
 		<face>aett9</face>
-		<face>cmtt9</face>
-		<face>cmtt10</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernTypewriter9.pfb" type="type1">cmtt9</face>
+		<face resource="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDefaultFontPalette#computerModernTypewriter10.pfb" type="type1">cmtt10</face>
 		<face>cmtt8</face>
 		<face>cmtt11</face>
 		<face>Computer Modern Typewriter</face>
