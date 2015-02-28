@@ -235,8 +235,8 @@ ff {\"{y}}
 107 {\'{c}}
 108 {\^{C}}
 109 {\^{c}}
-10a {\.{C}}
-10b {\.{c}}
+10a {\capitaldotaccent{C}}
+10b {\lowerdotaccent{c}}
 10c {\v{C}}
 10d {\v{c}}
 10e {\v{D}}
@@ -244,8 +244,8 @@ ff {\"{y}}
 111 {\dj}
 112 {\={E}}
 113 {\={e}}
-116 {\.{E}}
-117 {\.{e}}
+116 {\capitaldotaccent{E}}
+117 {\lowerdotaccent{e}}
 114 {\u{E}}
 115 {\u{e}}
 118 {\k{E}}
@@ -256,8 +256,8 @@ ff {\"{y}}
 11d {\^{g}}
 11e {\u{G}}
 11f {\u{g}}
-120 {\.{G}}
-121 {\.{g}}
+120 {\capitaldotaccent{G}}
+121 {\lowerdotaccent{g}}
 124 {\^{H}}
 125 {\^{h}}
 126 {\B{H}}
@@ -270,7 +270,7 @@ ff {\"{y}}
 12d {\u{\i}}
 12e {\k{I}}
 12f {\k{i}}
-130 {\.{I}}
+130 {\capitaldotaccent{I}}
 131 {\i}
 134 {\^{J}}
 135 {\^{\j}}
@@ -332,8 +332,8 @@ ff {\"{y}}
 178 {\"{Y}}
 179 {\'{Z}}
 17a {\'{z}}
-17b {\.{Z}}
-17c {\.{z}}
+17b {\capitaldotaccent{Z}}
+17c {\lowerdotaccent{z}}
 17d {\v{Z}}
 17e {\v{z}}
 187 {\m{C}}

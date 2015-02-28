@@ -6,9 +6,24 @@ import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
+ * <p>
  * The character transformation class that translates unicode characters to
  * their <a href="http://en.wikipedia.org/wiki/LaTeX">LaTeX</a>
  * representation.
+ * </p>
+ * <p>
+ * Warning: There is a big problem with BibTeX and characters with dot
+ * accents (like "c" with a "." above). The correct way to get that would
+ * be <code>{\.{c}}</code>. However, some BibTex styles&nbsp;[<a href=
+ * "http://compgroups.net/comp.text.tex/problem-with-i-accent-in-bibtex/1921379"
+ * >1</a>] eat away all dots, leaving us with <code>{\{c}}</code>, which
+ * explodes. We therefore <em>require</em> that
+ * </p>
+ * <ol>
+ * <li>package {@code textcomp} is loaded <em>and</em></li>
+ * <li>the following definition is added to the LaTeX document header:
+ * <code>\gdef\lowerdotaccent#1{\.{#1}}%</code></li>
+ * </ol>
  */
 public final class LaTeXCharTransformer extends LookupCharTransformer {
 
