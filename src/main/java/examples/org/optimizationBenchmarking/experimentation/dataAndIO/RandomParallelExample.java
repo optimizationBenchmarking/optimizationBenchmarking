@@ -11,7 +11,6 @@ import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Assert;
 import org.optimizationBenchmarking.experimentation.data.DimensionSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentContext;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
@@ -58,7 +57,9 @@ public class RandomParallelExample extends RandomExample {
     try {
       fjp.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
     } catch (final Throwable t) {
-      Assert.fail("Failed to join the fork-join pool."); //$NON-NLS-1$
+      throw new RuntimeException(//
+          "Failed to join the fork-join pool.", //$NON-NLS-1$
+          t);
     }
   }
 

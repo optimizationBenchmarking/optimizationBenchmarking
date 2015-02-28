@@ -62,12 +62,12 @@
 			<artifactId>commons-math3</artifactId>
 			<version>${commonsMathVersion}</version>
 		</dependency>
-		
-    <dependency>
-      <groupId>org.freehep</groupId>
-      <artifactId>freehep-graphics2d</artifactId>
-      <version>2.1.1</version>
-    </dependency>
+
+		<dependency>
+			<groupId>org.freehep</groupId>
+			<artifactId>freehep-graphics2d</artifactId>
+			<version>2.1.1</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.freehep</groupId>
@@ -75,23 +75,23 @@
 			<version>2.1.1</version>
 		</dependency>
 
-    <dependency>
-      <groupId>org.freehep</groupId>
-      <artifactId>freehep-graphicsio-pdf</artifactId>
-      <version>2.1.1</version>
-    </dependency>
+		<dependency>
+			<groupId>org.freehep</groupId>
+			<artifactId>freehep-graphicsio-pdf</artifactId>
+			<version>2.1.1</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.freehep</groupId>
-      <artifactId>freehep-graphicsio-svg</artifactId>
-      <version>2.1.1</version>
-    </dependency>
+		<dependency>
+			<groupId>org.freehep</groupId>
+			<artifactId>freehep-graphicsio-svg</artifactId>
+			<version>2.1.1</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.freehep</groupId>
-      <artifactId>freehep-graphicsio-emf</artifactId>
-      <version>2.1.1</version>
-    </dependency>
+		<dependency>
+			<groupId>org.freehep</groupId>
+			<artifactId>freehep-graphicsio-emf</artifactId>
+			<version>2.1.1</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.freehep</groupId>
@@ -105,23 +105,23 @@
 			<version>2.1.1</version>
 		</dependency>
 
-    <dependency>
-      <groupId>org.jfree</groupId>
-      <artifactId>jfreechart</artifactId>
-      <version>1.0.19</version>
-    </dependency>
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.19</version>
+		</dependency>
 
-    <dependency>
-      <groupId>org.jfree</groupId>
-      <artifactId>jcommon</artifactId>
-      <version>1.0.23</version>
-    </dependency>
-    
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jcommon</artifactId>
+			<version>1.0.23</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
 		<plugins>
-		
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -177,26 +177,41 @@
 				</configuration>
 			</plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.18</version>
-        <configuration>
-          <reuseForks>false</reuseForks>
-          <forkCount>1</forkCount>
-          <forkedProcessTimeoutInSeconds>1209600</forkedProcessTimeoutInSeconds>
-          <enableAssertions>true</enableAssertions>
-          <failIfNoTests>true</failIfNoTests>
-          <trimStackTrace>false</trimStackTrace>
-        </configuration>
-      </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18</version>
+				<configuration>
+					<reuseForks>false</reuseForks>
+					<forkCount>1</forkCount>
+					<forkedProcessTimeoutInSeconds>1209600</forkedProcessTimeoutInSeconds>
+					<enableAssertions>true</enableAssertions>
+					<failIfNoTests>true</failIfNoTests>
+					<trimStackTrace>false</trimStackTrace>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+						<nonFilteredFileExtension>pfb</nonFilteredFileExtension>
+						<nonFilteredFileExtension>zip</nonFilteredFileExtension>
+						<nonFilteredFileExtension>sty</nonFilteredFileExtension>
+						<nonFilteredFileExtension>cls</nonFilteredFileExtension>
+						<nonFilteredFileExtension>bst</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
 
 	<reporting>
 		<plugins>
-		
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
