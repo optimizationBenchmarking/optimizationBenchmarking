@@ -37,6 +37,10 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * fonts available on the underlying computing system.
  * </p>
  * <p>
+ * Additionally to these face choices, there may be a resource from which
+ * the font is loaded.
+ * </p>
+ * <p>
  * {@link FontStyle Font styles} allow to keep fonts between different
  * documents and image systems identical, i.e., help to ensure that the
  * {@link org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#EPS
@@ -384,7 +388,7 @@ public final class FontStyle extends FontProperties implements IStyle {
     final EFontFamily f;
 
     f = this.getFamily();
-    if (family == f) {
+    if (family != f) {
       if (((f == EFontFamily.SANS_SERIF) || (f == EFontFamily.SERIF)) && //
           ((family == EFontFamily.SANS_SERIF) || (family == EFontFamily.SERIF))) {
         dist = 500;

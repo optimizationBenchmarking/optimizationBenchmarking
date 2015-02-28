@@ -320,7 +320,10 @@ public final class FontStyleBuilder extends
   }
 
   /**
-   * Check whether a given font name is allowed
+   * Check whether a given font name is allowed. Only fonts with actual
+   * font families are allowed, logical font families are forbidden. They
+   * are only the last resort during the {@linkplain #compile() compilation
+   * process}.
    * 
    * @param name
    *          the name
@@ -328,35 +331,27 @@ public final class FontStyleBuilder extends
    *         otherwise
    */
   private static final boolean __isAllowed(final String name) {
-    final int length;
-    int forbiddenLength;
+    final int index;
 
     if (name == null) {
       return false;
     }
 
-    length = name.length();
-    forbiddenLength = Font.DIALOG.length();
-    if (length >= forbiddenLength) {
-      if (name.startsWith(Font.DIALOG)) {
-        if ((name.length() == forbiddenLength)
-            || (name.charAt(forbiddenLength) == '.')) {
-          return false;
-        }
+    index = name.indexOf('.');
 
-        forbiddenLength = Font.DIALOG_INPUT.length();
-        if (length >= forbiddenLength) {
-          if (name.startsWith(Font.DIALOG_INPUT)) {
-            if ((name.length() == forbiddenLength)
-                || (name.charAt(forbiddenLength) == '.')) {
-              return false;
-            }
-          }
-        }
+    switch ((index >= 0) ? name.substring(0, index) : name) {
+      case Font.DIALOG:
+      case Font.DIALOG_INPUT:
+      case Font.MONOSPACED:
+      case Font.SANS_SERIF:
+      case Font.SERIF: {
+        return false;
+      }
+
+      default: {
+        return true;
       }
     }
-
-    return true;
   }
 
   /**
