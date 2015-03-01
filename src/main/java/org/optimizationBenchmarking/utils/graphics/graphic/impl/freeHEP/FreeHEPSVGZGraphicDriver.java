@@ -113,7 +113,10 @@ public class FreeHEPSVGZGraphicDriver extends AbstractGraphicDriver {
     try {
       stream = PathUtils.openOutputStream(path);
     } catch (final Throwable thro) {
-      ErrorUtils.throwAsRuntimeException(thro);
+      ErrorUtils.throwRuntimeException((((//
+          "Error while opening OutputStream '") //$NON-NLS-1$
+          + path) + "' for FreeHEPSVGZGraphic."), //$NON-NLS-1$
+          thro);
       return null; // we'll never get here
     }
     synchronized (org.freehep.graphicsio.svg.SVGGraphics2D.class) {

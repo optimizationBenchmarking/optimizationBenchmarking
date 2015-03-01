@@ -191,7 +191,7 @@ public class DebugBufferedReader extends BufferedReader {
           ioe.printStackTrace(this.m_debug);
           this.m_debug.flush();
         }
-        ErrorUtils.throwAsRuntimeException(ioe);
+        ErrorUtils.throwRuntimeException(null, ioe);
       }
     }
     return false;

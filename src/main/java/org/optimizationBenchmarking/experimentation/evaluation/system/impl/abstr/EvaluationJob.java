@@ -50,6 +50,7 @@ public abstract class EvaluationJob<M extends ConfiguredModule> extends
   public final void run() {
     final Logger logger;
     final Level level;
+    final String msg;
 
     if ((logger = this.getLogger()) != null) {
       if (logger.isLoggable(level = this._level())) {
@@ -63,9 +64,10 @@ public abstract class EvaluationJob<M extends ConfiguredModule> extends
     try {
       this.execute();
     } catch (final Throwable throwable) {
-      ErrorUtils.logError(logger, ("Severe error during execution of "//$NON-NLS-1$ 
-          + this.toString()), throwable, false);
-      ErrorUtils.throwAsRuntimeException(throwable);
+      msg = ("Severe error during execution of "//$NON-NLS-1$ 
+      + this.toString());
+      ErrorUtils.logError(logger, msg, throwable, false);
+      ErrorUtils.throwRuntimeException(msg, throwable);
     }
 
     if ((logger != null) && (logger.isLoggable(level))) {

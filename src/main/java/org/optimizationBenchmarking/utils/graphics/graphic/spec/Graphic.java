@@ -139,7 +139,9 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     try {
       at.invert();
     } catch (final Throwable t) {
-      ErrorUtils.throwAsRuntimeException(t);
+      ErrorUtils.throwRuntimeException(((//
+          "Error while inverting transform ") + at),//$NON-NLS-1$
+          t);
     }
 
     r = this.getDeviceConfiguration().getBounds();
@@ -196,6 +198,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
   @Override
   public synchronized final void close() {
     final ArrayListView v;
+    final String msg;
     String s;
 
     if (this.m_closed) {
@@ -227,9 +230,10 @@ public abstract class Graphic extends Graphics2D implements Closeable,
       if (s == null) {
         s = this.__name();
       }
-      ErrorUtils.logError(this.m_log, ("Error when closing " //$NON-NLS-1$
-          + s), t, false);
-      ErrorUtils.throwAsRuntimeException(t);
+      msg = ("Error when closing " //$NON-NLS-1$
+      + s);
+      ErrorUtils.logError(this.m_log, msg, t, false);
+      ErrorUtils.throwRuntimeException(msg, t);
     }
 
     if ((this.m_log != null) && (this.m_log.isLoggable(Level.FINEST))) {

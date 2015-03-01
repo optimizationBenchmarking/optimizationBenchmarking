@@ -32,6 +32,7 @@ final class _DiscardInputStream extends _WorkerThread {
   /** {@inheritDoc} */
   @Override
   public final void run() {
+    final String msg;
     byte[] buffer;
     try {
       buffer = new byte[4096];
@@ -42,10 +43,9 @@ final class _DiscardInputStream extends _WorkerThread {
       }
       buffer = null;
     } catch (final Throwable t) {
-      ErrorUtils.logError(this.m_log,
-          "Error during discarding input stream (by skipping).", //$NON-NLS-1$
-          t, true);
-      ErrorUtils.throwAsRuntimeException(t);
+      msg = "Error during discarding input stream (by skipping).";//$NON-NLS-1$
+      ErrorUtils.logError(this.m_log, msg, t, true);
+      ErrorUtils.throwRuntimeException(msg, t);
     }
   }
 }

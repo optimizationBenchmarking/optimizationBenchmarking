@@ -109,7 +109,10 @@ public class SimpleLSInput extends InputSource implements LSInput {
       try {
         r.close();
       } catch (final Throwable t) {
-        ErrorUtils.throwAsRuntimeException(t);
+        ErrorUtils
+            .throwRuntimeException(//
+                "Error while closing old character stream of SimpleLSInput in order to set a new one.", //$NON-NLS-1$
+                t);
       } finally {
         super.setCharacterStream(null);
       }
@@ -144,7 +147,10 @@ public class SimpleLSInput extends InputSource implements LSInput {
       try {
         is.close();
       } catch (final Throwable t) {
-        ErrorUtils.throwAsRuntimeException(t);
+        ErrorUtils
+            .throwRuntimeException(//
+                "Error while closing byte stream of SimpleLSInput in order to set a new one.", //$NON-NLS-1$
+                t);
       } finally {
         super.setByteStream(null);
       }

@@ -41,6 +41,7 @@ final class _InputStreamToBuffer extends _WorkerThread {
   /** {@inheritDoc} */
   @Override
   public final void run() {
+    final String msg;
     byte[] buffer;
     int s;
 
@@ -68,12 +69,9 @@ final class _InputStreamToBuffer extends _WorkerThread {
         this.m_source.close();
       }
     } catch (final Throwable t) {
-      ErrorUtils
-          .logError(
-              this.m_log,
-              "Error during shoveling bytes from external process to byte buffer.", //$NON-NLS-1$
-              t, true);
-      ErrorUtils.throwAsRuntimeException(t);
+      msg = "Error during shoveling bytes from external process to byte buffer.";//$NON-NLS-1$
+      ErrorUtils.logError(this.m_log, msg, t, true);
+      ErrorUtils.throwRuntimeException(msg, t);
     }
   }
 }

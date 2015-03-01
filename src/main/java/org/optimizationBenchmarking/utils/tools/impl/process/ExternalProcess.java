@@ -64,7 +64,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
   private final String m_name;
 
   /** an error caught somewhere */
-  private Throwable m_error;
+  private Object m_error;
 
   /**
    * create
@@ -145,10 +145,11 @@ public final class ExternalProcess extends ToolJob implements Closeable {
    */
   private final int __close(final boolean kill) throws IOException {
     final Logger logger;
-    Throwable error;
+    Object error;
     boolean shouldMessage, shouldKill;
     int returnValue;
 
+    logger = this.getLogger();
     error = null;
     shouldMessage = false;
     returnValue = (-1);
@@ -165,7 +166,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
               // ingore
             } catch (final Throwable tt) {
               shouldKill = true;
-              error = ErrorUtils.aggregateError(error, tt);
+              error = ErrorUtils.aggregateError(tt, error);
+              ErrorUtils
+                  .logError(
+                      logger,//
+                      ("Error while calling 'waitFor' during shutting down process " + this.m_name), //$NON-NLS-1$
+                      tt, false);
               break waiter;
             }
           }
@@ -176,7 +182,10 @@ public final class ExternalProcess extends ToolJob implements Closeable {
           shouldMessage = true;
         }
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
+        ErrorUtils.logError(logger,//
+            ("Error while shutting down process " + this.m_name), //$NON-NLS-1$
+            t, false);
       } finally {
         this.m_process = null;
       }
@@ -188,7 +197,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
       try {
         this.m_stdout.close();
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
+        ErrorUtils
+            .logError(
+                logger,//
+                ("Error while closing stdout during shutting down process " + this.m_name), //$NON-NLS-1$
+                t, false);
       } finally {
         this.m_stdout = null;
       }
@@ -198,7 +212,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
       try {
         this.m_stdoutBuffer.close();
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
+        ErrorUtils
+            .logError(
+                logger,//
+                ("Error while closing stdout buffer during shutting down process " + this.m_name), //$NON-NLS-1$
+                t, false);
       } finally {
         this.m_stdoutBuffer = null;
       }
@@ -217,7 +236,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
               // ingore
             } catch (final Throwable tt) {
               shouldKill = true;
-              error = ErrorUtils.aggregateError(error, tt);
+              error = ErrorUtils.aggregateError(tt, error);
+              ErrorUtils
+                  .logError(
+                      logger,//
+                      ("Error while waiting for stdout worker shutting down process " + this.m_name), //$NON-NLS-1$
+                      tt, false);
               break waiter;
             }
           }
@@ -227,7 +251,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
           this.m_stdoutWorker.m_mode = 2;
         }
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
+        ErrorUtils
+            .logError(
+                logger,//
+                ("Error while closing stdout worker during shutting down process " + this.m_name), //$NON-NLS-1$
+                t, false);
       } finally {
         this.m_stdoutWorker = null;
       }
@@ -239,7 +268,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
       try {
         this.m_stderr.close();
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
+        ErrorUtils
+            .logError(
+                logger,//
+                ("Error while closing stderr during shutting down process " + this.m_name), //$NON-NLS-1$
+                t, false);
       } finally {
         this.m_stderr = null;
       }
@@ -249,7 +283,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
       try {
         this.m_stderrBuffer.close();
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
+        ErrorUtils
+            .logError(
+                logger,//
+                ("Error while closing stderr buffer during shutting down process " + this.m_name), //$NON-NLS-1$
+                t, false);
       } finally {
         this.m_stderrBuffer = null;
       }
@@ -268,7 +307,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
               // ingore
             } catch (final Throwable tt) {
               shouldKill = true;
-              error = ErrorUtils.aggregateError(error, tt);
+              error = ErrorUtils.aggregateError(tt, error);
+              ErrorUtils
+                  .logError(
+                      logger,//
+                      ("Error while waiting for stderr worker during shutting down process " + this.m_name), //$NON-NLS-1$
+                      tt, false);
               break waiter;
             }
           }
@@ -278,7 +322,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
           this.m_stderrWorker.m_mode = 2;
         }
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
+        ErrorUtils
+            .logError(
+                logger,//
+                ("Error while closing stderr worker during shutting down process " + this.m_name), //$NON-NLS-1$
+                t, false);
       } finally {
         this.m_stderrWorker = null;
       }
@@ -290,7 +339,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
       try {
         this.m_stdin.close();
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
+        ErrorUtils
+            .logError(
+                logger,//
+                ("Error while closing stdin during shutting down process " + this.m_name), //$NON-NLS-1$
+                t, false);
       } finally {
         this.m_stdin = null;
       }
@@ -300,7 +354,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
       try {
         this.m_stdinBuffer.close();
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
+        ErrorUtils
+            .logError(
+                logger,//
+                ("Error while closing stdin buffer during shutting down process " + this.m_name), //$NON-NLS-1$
+                t, false);
       } finally {
         this.m_stdinBuffer = null;
       }
@@ -319,7 +378,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
               // ingore
             } catch (final Throwable tt) {
               shouldKill = true;
-              error = ErrorUtils.aggregateError(error, tt);
+              error = ErrorUtils.aggregateError(tt, error);
+              ErrorUtils
+                  .logError(
+                      logger,//
+                      ("Error while waiting for stdin worker during shutting down process " + this.m_name), //$NON-NLS-1$
+                      tt, false);
               break waiter;
             }
           }
@@ -329,7 +393,12 @@ public final class ExternalProcess extends ToolJob implements Closeable {
           this.m_stdinWorker.m_mode = 2;
         }
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
+        ErrorUtils
+            .logError(
+                logger,//
+                ("Error while closing stdin worker during shutting down process " + this.m_name), //$NON-NLS-1$
+                t, false);
       } finally {
         this.m_stdinWorker = null;
       }
@@ -337,17 +406,20 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
     // </kill stdin>
 
-    logger = this.getLogger();
     error = ErrorUtils.aggregateError(error, this.m_error);
     if (error != null) {
       if ((logger != null) && (logger.isLoggable(Level.SEVERE))) {
+
         logger.log(Level.SEVERE,
             ((kill ? "Error while forcefully killing " : //$NON-NLS-1$
                 "Error while gracefully shutting down ")//$NON-NLS-1$
-            + this.m_name), error);
+            + this.m_name),//
+            ((error instanceof Throwable) ? ((Throwable) error) : null));
       }
       if (kill) {
-        ErrorUtils.throwAsIOException(error);
+        ErrorUtils.throwIOException((//
+            "Error while forcefully killing external process "//$NON-NLS-1$
+            + this.m_name), error);
       } else {
         this.m_error = error;
       }
@@ -415,11 +487,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
    */
   synchronized final void _addError(final Throwable t) {
     if (t != null) {
-      if (this.m_error != null) {
-        this.m_error = t;
-      } else {
-        this.m_error.addSuppressed(t);
-      }
+      this.m_error = ErrorUtils.aggregateError(t, this.m_error);
     }
   }
 

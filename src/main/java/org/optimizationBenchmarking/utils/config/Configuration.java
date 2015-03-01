@@ -245,7 +245,9 @@ public final class Configuration implements Serializable, ITextable {
       }
       return retVal;
     } catch (final Exception tt) {
-      ErrorUtils.throwAsRuntimeException(tt);
+      ErrorUtils.throwRuntimeException(//
+          ("Error while trying to obtain key '" + key + '\''), //$NON-NLS-1$
+          tt);
     }
     return null;
   }

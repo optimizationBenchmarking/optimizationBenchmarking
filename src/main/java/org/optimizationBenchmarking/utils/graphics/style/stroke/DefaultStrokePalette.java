@@ -81,6 +81,7 @@ public final class DefaultStrokePalette extends StrokePalette {
 
     static {
       final Logger logger;
+      final String msg;
       Palette<StrokeStyle> pal;
       pal = null;
 
@@ -95,12 +96,9 @@ public final class DefaultStrokePalette extends StrokePalette {
                 "default.strokePalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
-        ErrorUtils
-            .logError(
-                logger, //
-                "Error while loading the default stroke palette. This palette will not be available.",//$NON-NLS-1$
-                t, true);
-        ErrorUtils.throwAsRuntimeException(t);
+        msg = "Error while loading the default stroke palette. This palette will not be available.";//$NON-NLS-1$
+        ErrorUtils.logError(logger, msg, t, true);
+        ErrorUtils.throwRuntimeException(msg, t);
       }
 
       INSTANCE = ((DefaultStrokePalette) pal);

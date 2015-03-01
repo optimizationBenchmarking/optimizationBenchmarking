@@ -365,18 +365,27 @@ public final class FontStyleBuilder extends
    */
   private static final boolean __matches(final Font font, final String name) {
     final int nameLength;
-    String family, fontName, shorter;
+    String fontName, shorter;
     int fontNameLength;
 
-    family = font.getFamily();
-    if (FontStyleBuilder.__isAllowed(family)) {
+    nameLength = name.length();
+    fontName = font.getFontName(Locale.US);
+    if (FontStyleBuilder.__isAllowed(fontName)) {
+      fontNameLength = fontName.length();
+      if (fontNameLength >= nameLength) {
 
-      nameLength = name.length();
-      fontName = font.getFontName(Locale.US);
+        shorter = ((fontNameLength > nameLength)//
+        ? fontName.substring(0, nameLength)//
+            : fontName);
+        if (shorter.equalsIgnoreCase(name)) {
+          return true;
+        }
+      }
+
+      fontName = font.getFontName();
       if (FontStyleBuilder.__isAllowed(fontName)) {
         fontNameLength = fontName.length();
         if (fontNameLength >= nameLength) {
-
           shorter = ((fontNameLength > nameLength)//
           ? fontName.substring(0, nameLength)//
               : fontName);
@@ -385,7 +394,7 @@ public final class FontStyleBuilder extends
           }
         }
 
-        fontName = font.getFontName();
+        fontName = font.getName();
         if (FontStyleBuilder.__isAllowed(fontName)) {
           fontNameLength = fontName.length();
           if (fontNameLength >= nameLength) {
@@ -394,19 +403,6 @@ public final class FontStyleBuilder extends
                 : fontName);
             if (shorter.equalsIgnoreCase(name)) {
               return true;
-            }
-          }
-
-          fontName = font.getName();
-          if (FontStyleBuilder.__isAllowed(fontName)) {
-            fontNameLength = fontName.length();
-            if (fontNameLength >= nameLength) {
-              shorter = ((fontNameLength > nameLength)//
-              ? fontName.substring(0, nameLength)//
-                  : fontName);
-              if (shorter.equalsIgnoreCase(name)) {
-                return true;
-              }
             }
           }
         }
@@ -485,43 +481,50 @@ public final class FontStyleBuilder extends
           // so we do not need to set those features
           goalStyle = (style & (~mask));
           font = new Font(faceChoice.m_name, goalStyle, this.m_size);
-          if (FontStyleBuilder.__matches(font, faceChoice.m_name)) {
-            chosenName = faceChoice.m_name;
-            break finder;
-          }
-
-          // was a resource specified?
-          if (faceChoice.m_resource != null) {
-            is = ReflectionUtils
-                .getResourceAsStream(faceChoice.m_resource);
-            if (is != null) {
-              try {
-                font = Font.createFont(
-                    faceChoice.m_type.getJavaFontType(), is);
-                if (font != null) {
-                  try {
-                    GraphicsEnvironment.getLocalGraphicsEnvironment()
-                        .registerFont(font);
-                  } catch (final Throwable ignore) {
-                    ErrorUtils.logError(Configuration.getGlobalLogger(),
-                        "Ignorable error during the attempt to register font '"//$NON-NLS-1$ 
-                            + font + //
-                            "' with the local graphics environment.", //$NON-NLS-1$
-                        ignore, false);
+          if (FontStyleBuilder.__isAllowed(font.getFamily())) {
+            // If the font is physical and not logical, we check if it
+            // matches.
+            if (FontStyleBuilder.__matches(font, faceChoice.m_name)) {
+              chosenName = faceChoice.m_name;
+              break finder;
+            }
+          } else {
+            // The font was purely logical, so we could not load it from
+            // the system.
+            // We check whether a resource for loading the font was
+            // specified and if so, try loading it from there.
+            if (faceChoice.m_resource != null) {
+              is = ReflectionUtils.getResourceAsStream(//
+                  faceChoice.m_resource);
+              if (is != null) {
+                try {
+                  font = Font.createFont(
+                      faceChoice.m_type.getJavaFontType(), is);
+                  if (font != null) {
+                    try {
+                      GraphicsEnvironment.getLocalGraphicsEnvironment()
+                          .registerFont(font);
+                    } catch (final Throwable ignore) {
+                      ErrorUtils.logError(Configuration.getGlobalLogger(),
+                          "Ignorable error during the attempt to register font '"//$NON-NLS-1$ 
+                              + font + //
+                              "' with the local graphics environment.", //$NON-NLS-1$
+                          ignore, false);
+                    }
+                    if (FontStyleBuilder
+                        .__matches(font, faceChoice.m_name)) {
+                      chosenName = faceChoice.m_name;
+                      resource = faceChoice.m_resource;
+                      type = faceChoice.m_type;
+                      break finder;
+                    }
                   }
-                  if (FontStyleBuilder.__matches(font, faceChoice.m_name)) {
-                    chosenName = faceChoice.m_name;
-                    resource = faceChoice.m_resource;
-                    type = faceChoice.m_type;
-                    break finder;
-                  }
+                } finally {
+                  is.close();
                 }
-              } finally {
-                is.close();
               }
             }
           }
-
         } catch (final Throwable error) {
           ErrorUtils
               .logError(

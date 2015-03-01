@@ -312,8 +312,8 @@ public class FontProperties extends HashObject {
           if (fp == null) {
             fp = FontProperties.getFontProperties(font.getFamily());
             if (fp == null) {
-              fp = FontProperties.getFontProperties(font
-                  .getFamily(Locale.US));
+              fp = FontProperties.getFontProperties(//
+                  font.getFamily(Locale.US));
             }
           }
         }
@@ -351,9 +351,11 @@ public class FontProperties extends HashObject {
       }
       case Font.DIALOG: {
         style |= FontProperties.FONT_FLAG_DIALOG;
+        break;
       }
       case Font.DIALOG_INPUT: {
         style |= FontProperties.FONT_FLAG_DIALOG_INPUT;
+        break;
       }
     }
 
@@ -460,6 +462,7 @@ public class FontProperties extends HashObject {
     // load the flags of the known fonts
     static {
       ArrayList<__FontFlags> al;
+      final String msg;
       String s;
 
       al = new ArrayList<>();
@@ -476,10 +479,10 @@ public class FontProperties extends HashObject {
           }
         }
       } catch (final Throwable ioe) {
+        msg = "Error when reading list of known fonts."; //$NON-NLS-1$
         ErrorUtils.logError(Configuration.getGlobalLogger(),//
-            "Error when reading list of known fonts.", //$NON-NLS-1$
-            ioe, true);
-        ErrorUtils.throwAsRuntimeException(ioe);
+            msg, ioe, true);
+        ErrorUtils.throwRuntimeException(msg, ioe);
       }
 
       FLAGS = al.toArray(new __FontFlags[al.size()]);

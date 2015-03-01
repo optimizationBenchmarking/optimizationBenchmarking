@@ -44,7 +44,10 @@ public class XMLDOMSerialization extends SerializationMethod {
       a = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       b = TransformerFactory.newInstance().newTransformer();
     } catch (final Throwable t) {
-      ErrorUtils.throwAsRuntimeException(t);
+      ErrorUtils
+          .throwRuntimeException(//
+              "Error while trying to obtain XML DOM transformer or document builder.",//$NON-NLS-1$
+              t);
     }
     this.m_builder = a;
     this.m_transformer = b;

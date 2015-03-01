@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
@@ -332,7 +331,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
         useFile = file.getAbsoluteFile();
       } catch (final Throwable t2) {
         useFile = file;
-        convert = ErrorUtils.aggregateError(convert, t2);
+        convert.addSuppressed(t2);
       }
     }
 
@@ -348,7 +347,11 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
         try {
           path = file.toPath();
         } catch (final Throwable t4) {
-          reason = ErrorUtils.aggregateError(t4, reason);
+          if (reason != null) {
+            reason.addSuppressed(t4);
+          } else {
+            reason = t4;
+          }
           path = null;
         }
       }

@@ -26,6 +26,7 @@ final class _ConfigurationLoader implements
   @Override
   public final Configuration run() {
     final _ConfigMap cm;
+    final String msg;
     String q;
     char a, b;
     Object o;
@@ -60,11 +61,11 @@ final class _ConfigurationLoader implements
 
         cb._configure(this.m_args);
       } catch (final Throwable tt) {
+        msg = "Severe error during setup."; //$NON-NLS-1$
         ErrorUtils.logError(
             cb.m_data.getLogger(Configuration.PARAM_LOGGER, null),//
-            "Severe error during setup.", //$NON-NLS-1$
-            tt, false);
-        ErrorUtils.throwAsRuntimeException(tt);
+            msg, tt, false);
+        ErrorUtils.throwRuntimeException(msg, tt);
       }
       return cb.compile();
     }

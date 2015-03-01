@@ -259,7 +259,7 @@ public final class PathUtils {
   public static final OutputStream openOutputStream(final Path path)
       throws IOException {
     OutputStream stream;
-    Throwable error;
+    Object error;
     Path parent;
 
     PathUtils.__pathNotNull(path);
@@ -268,7 +268,7 @@ public final class PathUtils {
     try {
       parent = path.getParent();
     } catch (final Throwable t1) {
-      error = t1;
+      error = ErrorUtils.aggregateError(t1, error);
       parent = null;
     }
 
@@ -276,7 +276,7 @@ public final class PathUtils {
       try {
         Files.createDirectories(parent);
       } catch (final Throwable t2) {
-        error = ErrorUtils.aggregateError(error, t2);
+        error = ErrorUtils.aggregateError(t2, error);
       }
     }
 
@@ -287,7 +287,10 @@ public final class PathUtils {
           StandardOpenOption.WRITE);
     } catch (final Throwable t3) {
       stream = null;
-      ErrorUtils.throwAsIOException(t3, error);
+      ErrorUtils.throwIOException(//
+          (("Error while trying to open an OutputStream to path '" //$NON-NLS-1$
+          + path) + '\''), //
+          ErrorUtils.aggregateError(t3, error));
     }
 
     if (stream == null) {
@@ -319,7 +322,9 @@ public final class PathUtils {
       stream = PathUtils.getFileSystemProvider(path).newInputStream(path,
           StandardOpenOption.READ);
     } catch (final Throwable t3) {
-      ErrorUtils.throwAsIOException(t3);
+      ErrorUtils.throwIOException((((//
+          "Error while trying to open InputStream for path '") + //$NON-NLS-1$
+          path) + '\''), t3);
       stream = null;
     }
 

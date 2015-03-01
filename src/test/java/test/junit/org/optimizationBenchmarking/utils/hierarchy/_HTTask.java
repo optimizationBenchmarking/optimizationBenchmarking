@@ -159,7 +159,9 @@ final class _HTTask extends RecursiveAction {
               y.get();
             }
           } catch (final Throwable t) {
-            ErrorUtils.throwAsRuntimeException(t);
+            ErrorUtils.throwRuntimeException(//
+                "Error while waiting for hierarchical task to end.", //$NON-NLS-1$
+                t);
           }
         }
 

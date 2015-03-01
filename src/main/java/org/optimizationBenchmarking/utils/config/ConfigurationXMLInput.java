@@ -22,7 +22,7 @@ public final class ConfigurationXMLInput extends
   @Override
   protected final void configureSAXParserFactory(final SAXParserFactory spf)
       throws Throwable {
-    Throwable rec;
+    Object rec;
     SchemaFactory sf;
     Schema schema;
 
@@ -34,7 +34,7 @@ public final class ConfigurationXMLInput extends
           ConfigurationXMLConstants.class
               .getResource("configuration.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
-      rec = a;
+      rec = ErrorUtils.aggregateError(a, rec);
     } finally {
       sf = null;
     }
@@ -48,11 +48,13 @@ public final class ConfigurationXMLInput extends
         spf.setValidating(false);
       }
     } catch (final Throwable b) {
-      rec = ErrorUtils.aggregateError(rec, b);
+      rec = ErrorUtils.aggregateError(b, rec);
     }
 
     if (rec != null) {
-      ErrorUtils.throwAsIOException(rec);
+      ErrorUtils.throwIOException(//
+          "Error while loading the XML Schema for ConfigurationXML.", //$NON-NLS-1$
+          rec);
     }
   }
 

@@ -138,7 +138,9 @@ public class TemplateDocumentExample extends DocumentExample {
             .addResource(TemplateDocumentExample.class,
                 "exampleTemplate.template").create().call(); //$NON-NLS-1$
       } catch (final IOException ioe) {
-        ErrorUtils.throwAsRuntimeException(ioe);
+        ErrorUtils.throwRuntimeException(//
+            "Error while executing document template.",//$NON-NLS-1$
+            ioe);
       }
     }
 

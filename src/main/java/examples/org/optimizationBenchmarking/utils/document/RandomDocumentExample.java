@@ -379,7 +379,7 @@ public class RandomDocumentExample extends DocumentExample {
    */
   final void _createSection(final ISectionContainer sc,
       final int sectionDepth) {
-    Throwable error;
+    Object error;
     boolean hasSection, hasText, needsText, needsNewLine;
     _ERandomDocumentExampleElements cur, last;
     ArrayList<Future<Void>> ra;
@@ -458,7 +458,7 @@ public class RandomDocumentExample extends DocumentExample {
                   try {
                     st.compute();
                   } catch (final Throwable tt) {
-                    error = ErrorUtils.aggregateError(error, tt);
+                    error = ErrorUtils.aggregateError(tt, error);
                     break main;
                   }
                 }
@@ -472,7 +472,7 @@ public class RandomDocumentExample extends DocumentExample {
                   needsText = true;
                   break;
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -483,7 +483,7 @@ public class RandomDocumentExample extends DocumentExample {
                   needsText = true;
                   break;
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -493,7 +493,7 @@ public class RandomDocumentExample extends DocumentExample {
                   needsText = needsNewLine = true;
                   break;
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -503,7 +503,7 @@ public class RandomDocumentExample extends DocumentExample {
                   needsText = needsNewLine = true;
                   break;
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -513,7 +513,7 @@ public class RandomDocumentExample extends DocumentExample {
                   needsText = needsNewLine = true;
                   break;
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -523,7 +523,7 @@ public class RandomDocumentExample extends DocumentExample {
                   needsText = needsNewLine = false;
                   break;
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -533,7 +533,7 @@ public class RandomDocumentExample extends DocumentExample {
                   needsText = needsNewLine = true;
                   break;
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -544,7 +544,7 @@ public class RandomDocumentExample extends DocumentExample {
                   needsNewLine = hasText = true;
                   break;
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -559,7 +559,7 @@ public class RandomDocumentExample extends DocumentExample {
                 try {
                   f.get();
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break looper;
                 }
               }
@@ -568,10 +568,12 @@ public class RandomDocumentExample extends DocumentExample {
         }
       }
     } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
+      error = ErrorUtils.aggregateError(t, error);
     }
     if (error != null) {
-      ErrorUtils.throwAsRuntimeException(error);
+      ErrorUtils.throwRuntimeException(//
+          "Error while building a section of the example document", //$NON-NLS-1$
+          error);
     }
   }
 
@@ -593,7 +595,7 @@ public class RandomDocumentExample extends DocumentExample {
     IStyle s;
     ArrayList<ILabel> labels;
     ILabel l;
-    Throwable error;
+    Object error;
 
     first = true;
     must = (needsNewLine & (!canLineBreak));
@@ -641,7 +643,7 @@ public class RandomDocumentExample extends DocumentExample {
                   this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
                       canLineBreak);
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -656,7 +658,7 @@ public class RandomDocumentExample extends DocumentExample {
                   this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
                       canLineBreak);
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -676,7 +678,7 @@ public class RandomDocumentExample extends DocumentExample {
                   this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
                       false);
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -696,7 +698,7 @@ public class RandomDocumentExample extends DocumentExample {
                   this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
                       canLineBreak);
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -711,7 +713,7 @@ public class RandomDocumentExample extends DocumentExample {
                   t.append("Something Emphasized: "); //$NON-NLS-1$
                   LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -727,7 +729,7 @@ public class RandomDocumentExample extends DocumentExample {
                     t.append("Inline Code: "); //$NON-NLS-1$
                     LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);
                   } catch (final Throwable tt) {
-                    error = ErrorUtils.aggregateError(error, tt);
+                    error = ErrorUtils.aggregateError(tt, error);
                     break main;
                   }
                 }
@@ -742,7 +744,7 @@ public class RandomDocumentExample extends DocumentExample {
                 try {
                   LoremIpsum.appendLoremIpsum(t, this.m_rand, 2);
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -756,7 +758,7 @@ public class RandomDocumentExample extends DocumentExample {
                 try {
                   LoremIpsum.appendLoremIpsum(t, this.m_rand, 2);
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -770,7 +772,7 @@ public class RandomDocumentExample extends DocumentExample {
               try {
                 this.__createInlineMath(((IComplexText) out));
               } catch (final Throwable tt) {
-                error = ErrorUtils.aggregateError(error, tt);
+                error = ErrorUtils.aggregateError(tt, error);
                 break main;
               }
               break;
@@ -807,7 +809,7 @@ public class RandomDocumentExample extends DocumentExample {
                   out.append('.');
                 }
               } catch (final Throwable tt) {
-                error = ErrorUtils.aggregateError(error, tt);
+                error = ErrorUtils.aggregateError(tt, error);
                 break main;
               }
               break;
@@ -833,7 +835,7 @@ public class RandomDocumentExample extends DocumentExample {
                 }
                 out.append('.');
               } catch (final Throwable tt) {
-                error = ErrorUtils.aggregateError(error, tt);
+                error = ErrorUtils.aggregateError(tt, error);
                 break main;
               }
               break;
@@ -859,7 +861,7 @@ public class RandomDocumentExample extends DocumentExample {
             this.m_termination._done(//
                 _ERandomDocumentExampleElements.NORMAL_TEXT);
           } catch (final Throwable tt) {
-            error = ErrorUtils.aggregateError(error, tt);
+            error = ErrorUtils.aggregateError(tt, error);
             break main;
           }
         }
@@ -868,10 +870,12 @@ public class RandomDocumentExample extends DocumentExample {
       } while ((this.m_termination._continue())
           && ((this.m_rand.nextInt(depth + 2) <= 0)));
     } catch (final Throwable a) {
-      error = ErrorUtils.aggregateError(error, a);
+      error = ErrorUtils.aggregateError(a, error);
     }
     if (error != null) {
-      ErrorUtils.throwAsRuntimeException(error);
+      ErrorUtils.throwRuntimeException(//
+          "Error while adding text to example document.", //$NON-NLS-1$
+          error);
     }
   }
 
@@ -1019,7 +1023,7 @@ public class RandomDocumentExample extends DocumentExample {
   /** {@inheritDoc} */
   @Override
   public final void run() {
-    Throwable error;
+    Object error;
     long end;
 
     error = null;
@@ -1043,19 +1047,19 @@ public class RandomDocumentExample extends DocumentExample {
           try {
             this.__loadStyles();
           } catch (final Throwable tt) {
-            error = ErrorUtils.aggregateError(error, tt);
+            error = ErrorUtils.aggregateError(tt, error);
             break main;
           }
           try {
             this.__createBib();
           } catch (final Throwable tt) {
-            error = ErrorUtils.aggregateError(error, tt);
+            error = ErrorUtils.aggregateError(tt, error);
             break main;
           }
           try {
             this.__preAllocateLabels();
           } catch (final Throwable tt) {
-            error = ErrorUtils.aggregateError(error, tt);
+            error = ErrorUtils.aggregateError(tt, error);
             break main;
           }
 
@@ -1063,7 +1067,7 @@ public class RandomDocumentExample extends DocumentExample {
             try {
               this.__createHeader(header);
             } catch (final Throwable tt) {
-              error = ErrorUtils.aggregateError(error, tt);
+              error = ErrorUtils.aggregateError(tt, error);
               break main;
             }
           } finally {
@@ -1079,7 +1083,7 @@ public class RandomDocumentExample extends DocumentExample {
                   this.m_termination = null;
                 }
               } catch (final Throwable tt) {
-                error = ErrorUtils.aggregateError(error, tt);
+                error = ErrorUtils.aggregateError(tt, error);
                 break main;
               }
             } finally {
@@ -1096,7 +1100,7 @@ public class RandomDocumentExample extends DocumentExample {
                     this.m_termination = null;
                   }
                 } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(error, tt);
+                  error = ErrorUtils.aggregateError(tt, error);
                   break main;
                 }
               }
@@ -1107,7 +1111,7 @@ public class RandomDocumentExample extends DocumentExample {
             try {
               this.m_doc.close();
             } catch (final Throwable tt) {
-              error = ErrorUtils.aggregateError(error, tt);
+              error = ErrorUtils.aggregateError(tt, error);
               break main;
             }
           } finally {
@@ -1120,12 +1124,15 @@ public class RandomDocumentExample extends DocumentExample {
           }
         }
       } catch (final Throwable ttt) {
-        error = ErrorUtils.aggregateError(error, ttt);
+        error = ErrorUtils.aggregateError(ttt, error);
       }
     }
 
     if (error != null) {
-      ErrorUtils.throwAsRuntimeException(error);
+      ErrorUtils
+          .throwRuntimeException(//
+              "Error while creating the global structure of the example document.",//$NON-NLS-1$
+              error);
     }
   }
 

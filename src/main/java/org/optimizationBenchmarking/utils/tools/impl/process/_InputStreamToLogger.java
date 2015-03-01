@@ -51,6 +51,7 @@ final class _InputStreamToLogger extends _WorkerThread {
   public final void run() {
     final Logger logger;
     final Level level;
+    final String msg;
     MemoryTextOutput mto;
     String line;
     boolean hasText, run;
@@ -118,10 +119,9 @@ final class _InputStreamToLogger extends _WorkerThread {
         this.m_source.close();
       }
     } catch (final Throwable t) {
-      ErrorUtils.logError(logger,
-          "Error during shoveling text from external process to Logger.", //$NON-NLS-1$
-          t, true);
-      ErrorUtils.throwAsRuntimeException(t);
+      msg = "Error during shoveling text from external process to Logger.";//$NON-NLS-1$
+      ErrorUtils.logError(logger, msg, t, true);
+      ErrorUtils.throwRuntimeException(msg, t);
     }
   }
 }

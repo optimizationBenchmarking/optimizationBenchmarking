@@ -44,7 +44,10 @@ class _AppendableWrappedTextOutputBase<A extends Appendable> extends
     try {
       this.m_out.append(csq);
     } catch (final IOException ioe) {
-      ErrorUtils.throwAsRuntimeException(ioe);
+      ErrorUtils
+          .throwRuntimeException(//
+              "Error while trying to append CharSequence to _AppendableWrappedTextOutput.", //$NON-NLS-1$
+              ioe);
     }
     return this;
   }
@@ -56,7 +59,10 @@ class _AppendableWrappedTextOutputBase<A extends Appendable> extends
     try {
       this.m_out.append(csq, start, end);
     } catch (final IOException ioe) {
-      ErrorUtils.throwAsRuntimeException(ioe);
+      ErrorUtils
+          .throwRuntimeException(//
+              "Error while trying to append part of a CharSequence to _AppendableWrappedTextOutput.", //$NON-NLS-1$
+              ioe);
     }
     return this;
   }
@@ -67,7 +73,10 @@ class _AppendableWrappedTextOutputBase<A extends Appendable> extends
     try {
       this.m_out.append(c);
     } catch (final IOException ioe) {
-      ErrorUtils.throwAsRuntimeException(ioe);
+      ErrorUtils
+          .throwRuntimeException(//
+              "Error while trying to append char to _AppendableWrappedTextOutput.", //$NON-NLS-1$
+              ioe);
     }
     return this;
   }
@@ -79,7 +88,9 @@ class _AppendableWrappedTextOutputBase<A extends Appendable> extends
       try {
         ((Flushable) (this.m_out)).flush();
       } catch (final IOException ioe) {
-        ErrorUtils.throwAsRuntimeException(ioe);
+        ErrorUtils.throwRuntimeException(//
+            "Error while trying to flush _AppendableWrappedTextOutput.", //$NON-NLS-1$
+            ioe);
       }
     }
   }

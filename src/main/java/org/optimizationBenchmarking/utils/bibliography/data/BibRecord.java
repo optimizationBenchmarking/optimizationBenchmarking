@@ -145,7 +145,10 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
     try {
       r = ((BibRecord) (super.clone()));
     } catch (final CloneNotSupportedException cnse) {
-      ErrorUtils.throwAsRuntimeException(cnse);
+      ErrorUtils
+          .throwRuntimeException(//
+              "Error while cloning bibliographic record: This should never happen.", //$NON-NLS-1$
+              cnse);
       return null; // can never be reached
     }
 

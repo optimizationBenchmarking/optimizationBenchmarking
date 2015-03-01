@@ -277,6 +277,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    * @return the experiment set
    */
   private final ExperimentSet __loadData(final Logger logger) {
+    final String msg;
     ExperimentSet data;
     MemoryTextOutput text;
 
@@ -288,12 +289,9 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       data = this._takeInput().getExperimentSet();
     } catch (final Exception ex) {
       data = null;
-      ErrorUtils
-          .logError(
-              logger,
-              "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
-              ex, false);
-      ErrorUtils.throwAsRuntimeException(ex);
+      msg = "Unrecoverable error during the process of obtaining the input data."; //$NON-NLS-1$
+      ErrorUtils.logError(logger, msg, ex, false);
+      ErrorUtils.throwRuntimeException(msg, ex);
       return null;// will never be reached
     }
 

@@ -28,7 +28,10 @@ final class _BufferedWriterWrappedTextOutput extends
     try {
       this.m_out.newLine();
     } catch (final IOException ioe) {
-      ErrorUtils.throwAsRuntimeException(ioe);
+      ErrorUtils
+          .throwRuntimeException(//
+              "Error while trying to append line break to _AppendableWriterWrappedTextOutput.", //$NON-NLS-1$
+              ioe);
     }
   }
 }

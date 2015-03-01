@@ -291,7 +291,9 @@ final class _CharFloat implements Cloneable {
       r.m_data = this.m_data.clone();
       return r;
     } catch (final CloneNotSupportedException cnse) {
-      ErrorUtils.throwAsRuntimeException(cnse);
+      ErrorUtils.throwRuntimeException(//
+          "Error while cloning _CharFloat. This should never happen.", //$NON-NLS-1$
+          cnse);
       return null;
     }
   }

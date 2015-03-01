@@ -62,7 +62,10 @@ public final class ConfigurationPropertiesOutput extends
     try (final Writer writer = TextOutputWriter.wrap(textOut)) {
       pr.store(writer, null);
     } catch (final IOException ioe) {
-      ErrorUtils.throwAsRuntimeException(ioe);
+      ErrorUtils
+          .throwRuntimeException(//
+              "Error while trying to store configuration data to ITextOutput.", //$NON-NLS-1$
+              ioe);
     }
   }
 

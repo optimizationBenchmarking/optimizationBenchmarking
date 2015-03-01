@@ -138,6 +138,7 @@ public class LineChart extends AxisChart implements ILineChart {
   /** {@inheritDoc} */
   @Override
   protected synchronized void onClose() {
+    final String msg;
     Logger logger;
     Graphic graphic;
     CompiledLineChart chart;
@@ -168,10 +169,10 @@ public class LineChart extends AxisChart implements ILineChart {
       this.m_lines = null;
       this.m_driver.renderLineChart(chart, graphic, logger);
     } catch (final Throwable error) {
-      ErrorUtils.logError(logger,
-          ("Unrecoverable error during rendering of compiled line chart #" //$NON-NLS-1$
-          + this._id()), error, true);
-      ErrorUtils.throwAsRuntimeException(error);
+      msg = ("Unrecoverable error during rendering of compiled line chart #" //$NON-NLS-1$
+      + this._id());
+      ErrorUtils.logError(logger, msg, error, true);
+      ErrorUtils.throwRuntimeException(msg, error);
     } finally {
       this.m_lines = null;
       this.m_xAxis = null;

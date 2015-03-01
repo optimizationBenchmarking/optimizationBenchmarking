@@ -60,7 +60,9 @@ public class BufferedWriterTextOutputTest extends
       try {
         this.flush();
       } catch (final Throwable tt) {
-        ErrorUtils.throwAsRuntimeException(tt);
+        ErrorUtils.throwRuntimeException(//
+            "Error while flushing BufferedWriterTextOutput.", //$NON-NLS-1$
+            tt);
       }
       return this.m_sw.toString();
     }

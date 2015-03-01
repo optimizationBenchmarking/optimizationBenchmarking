@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.error;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,143 +9,125 @@ import java.util.logging.Logger;
 public final class ErrorUtils {
 
   /**
-   * Throw an {@link java.lang.RuntimeException} error if an
-   * {@code unrecoverable} error took place. In this case, if there also
-   * was a {@code recoverable}
+   * Aggregate two errors or aggregation handles
    * 
-   * @param unrecoverable
-   *          the error
-   * @param recoverable
-   *          the recoverable error
-   * @throws RuntimeException
-   *           if there was an error
+   * @param aggregationHandleOrError1
+   *          the first error or aggregation handle
+   * @param aggregationHandleOrError2
+   *          the second error or aggregation handle
+   * @return the aggregation handle
    */
-  public static final void throwAsRuntimeException(
-      final Throwable unrecoverable, final Throwable recoverable)
-      throws RuntimeException {
-    Throwable a, b;
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public static final Object aggregateError(
+      final Object aggregationHandleOrError1,
+      final Object aggregationHandleOrError2) {
+    final ArrayList<Throwable> useHandle;
 
-    a = unrecoverable;
-    b = recoverable;
-    if (a == null) {
-      a = b;
-      b = null;
+    if (aggregationHandleOrError1 == null) {
+      return aggregationHandleOrError2;
     }
-    if (a == null) {
-      throw new IllegalArgumentException(//
-          "A null error has been encountered?"); //$NON-NLS-1$      
-    }
-    if (b != null) {
-      a.addSuppressed(b);
+    if (aggregationHandleOrError2 == null) {
+      return aggregationHandleOrError1;
     }
 
-    if (a instanceof RuntimeException) {
-      throw ((RuntimeException) a);
+    if (aggregationHandleOrError1 instanceof Throwable) {
+      if (aggregationHandleOrError2 instanceof ArrayList) {
+        useHandle = ((ArrayList) (aggregationHandleOrError2));
+        useHandle.add((Throwable) aggregationHandleOrError1);
+        return useHandle;
+      }
+      useHandle = new ArrayList<>();
+      useHandle.add((Throwable) aggregationHandleOrError1);
+      useHandle.add((Throwable) aggregationHandleOrError2);
+      return useHandle;
     }
-    throw new RuntimeException(//
-        "An unrecoverable error was detected and is re-thrown as RuntimeException.", //$NON-NLS-1$
-        a);
+
+    useHandle = ((ArrayList) aggregationHandleOrError1);
+    if (aggregationHandleOrError2 instanceof ArrayList) {
+      useHandle.addAll((ArrayList) aggregationHandleOrError2);
+    } else {
+      useHandle.add((Throwable) aggregationHandleOrError2);
+    }
+    return useHandle;
   }
 
   /**
-   * Throw an {@link java.lang.RuntimeException} error if an
-   * {@code unrecoverable} error took place.
+   * Throw an aggregated error as {@link java.lang.RuntimeException}
    * 
-   * @param unrecoverable
-   *          the error
+   * @param message
+   *          the error message
+   * @param aggregationHandle
    * @throws RuntimeException
-   *           if there was an error
+   *           will <em>always</em> be thrown
    */
-  public static final void throwAsRuntimeException(
-      final Throwable unrecoverable) throws RuntimeException {
-    ErrorUtils.throwAsRuntimeException(unrecoverable, null);
+  @SuppressWarnings("unchecked")
+  public static final void throwRuntimeException(final String message,
+      final Object aggregationHandle) throws RuntimeException {
+    final RuntimeException re;
+
+    if (aggregationHandle instanceof Throwable) {
+      if (message != null) {
+        throw new RuntimeException(message,
+            ((Throwable) aggregationHandle));
+      }
+      if (aggregationHandle instanceof RuntimeException) {
+        throw ((RuntimeException) aggregationHandle);
+      }
+      throw new RuntimeException(((Throwable) aggregationHandle));
+    }
+
+    if (message != null) {
+      re = new RuntimeException(message);
+    } else {
+      re = new RuntimeException();
+    }
+
+    if (aggregationHandle instanceof ArrayList) {
+      for (final Throwable t : ((ArrayList<Throwable>) aggregationHandle)) {
+        re.addSuppressed(t);
+      }
+    }
+
+    throw re;
   }
 
   /**
-   * Throw an {@link java.io.IOException} error if an {@code unrecoverable}
-   * error took place. If an {@link java.lang.RuntimeException} took place,
-   * do not throw it as {@link java.io.IOException}, but again directly as
-   * {@link java.lang.RuntimeException}. In this case, if there also was a
-   * {@code recoverable} error, throw that as suppressed error.
+   * Throw an aggregated error as {@link java.io.IOException}
    * 
-   * @param unrecoverable
-   *          the error
-   * @param recoverable
-   *          the recoverable error
-   * @throws RuntimeException
-   *           if there was an unrecoverable
-   *           {@link java.lang.RuntimeException} or the input exception
-   *           was already a {@link java.lang.RuntimeException}
+   * @param message
+   *          the error message
+   * @param aggregationHandle
    * @throws IOException
-   *           if there was an {@link java.io.IOException}
+   *           will <em>always</em> be thrown
    */
-  public static final void throwAsIOException(
-      final Throwable unrecoverable, final Throwable recoverable)
-      throws RuntimeException, IOException {
+  @SuppressWarnings("unchecked")
+  public static final void throwIOException(final String message,
+      final Object aggregationHandle) throws IOException {
+    final IOException re;
 
-    Throwable a, b;
-
-    a = unrecoverable;
-    b = recoverable;
-    if (a == null) {
-      a = b;
-      b = null;
-    }
-    if (a == null) {
-      throw new IllegalArgumentException(//
-          "A null error has been encountered?"); //$NON-NLS-1$      
-    }
-    if (b != null) {
-      a.addSuppressed(b);
+    if (aggregationHandle instanceof Throwable) {
+      if (message != null) {
+        throw new IOException(message, ((Throwable) aggregationHandle));
+      }
+      if (aggregationHandle instanceof IOException) {
+        throw ((IOException) aggregationHandle);
+      }
+      throw new IOException(((Throwable) aggregationHandle));
     }
 
-    if (a instanceof RuntimeException) {
-      throw ((RuntimeException) a);
+    if (message != null) {
+      re = new IOException(message);
+    } else {
+      re = new IOException();
     }
-    if (a instanceof IOException) {
-      throw ((IOException) a);
-    }
-    throw new IOException(//
-        "An unrecoverable error was detected and is re-thrown as IOException.", //$NON-NLS-1$
-        a);
-  }
 
-  /**
-   * Throw an {@link java.io.IOException} error if an {@code unrecoverable}
-   * error took place. In this case, if there also was a
-   * {@code recoverable}
-   * 
-   * @param unrecoverable
-   *          the error
-   * @throws RuntimeException
-   *           if there was an unrecoverable RuntimeException
-   * @throws IOException
-   *           if there was an io exception
-   */
-  public static final void throwAsIOException(final Throwable unrecoverable)
-      throws RuntimeException, IOException {
-    ErrorUtils.throwAsIOException(unrecoverable, null);
-  }
+    if (aggregationHandle instanceof ArrayList) {
+      for (final Throwable t : ((ArrayList<Throwable>) aggregationHandle)) {
+        re.addSuppressed(t);
+      }
+    }
 
-  /**
-   * ScalarAggregate two {@link java.lang.Throwable throwables}
-   * 
-   * @param oldError
-   *          the error which was caught first, or {@code null}
-   * @param newError
-   *          the error which was caught second, or {@code null}
-   * @return an error that represents both errors and can be thrown
-   */
-  public static final Throwable aggregateError(final Throwable oldError,
-      final Throwable newError) {
-    if (oldError == null) {
-      return newError;
-    }
-    if (newError == null) {
-      return oldError;
-    }
-    oldError.addSuppressed(newError);
-    return oldError;
+    throw re;
   }
 
   /**

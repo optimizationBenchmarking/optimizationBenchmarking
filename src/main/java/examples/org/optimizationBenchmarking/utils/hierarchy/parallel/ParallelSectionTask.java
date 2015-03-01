@@ -75,7 +75,9 @@ public class ParallelSectionTask extends RecursiveAction {
           y.get();
         }
       } catch (final Throwable tx) {
-        ErrorUtils.throwAsRuntimeException(tx);
+        ErrorUtils.throwRuntimeException(//
+            "Error while waiting for parallel section task.",//$NON-NLS-1$
+            tx);
       }
 
       this.m_root.appendLineBreak();

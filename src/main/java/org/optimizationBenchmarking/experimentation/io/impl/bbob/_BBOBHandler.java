@@ -288,7 +288,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
     char ch;
     boolean td;
     String name;
-    Throwable error, subError;
+    Object error;
 
     if (this.m_logger.canLog(IOJob.FINER_LOG_LEVEL)) {
       this.m_logger.log(IOJob.FINER_LOG_LEVEL,
@@ -296,7 +296,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
               " for function id " + fid); //$NON-NLS-1$
     }
 
-    error = subError = null;
+    error = null;
 
     try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
 
@@ -359,8 +359,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
                               "Problem in folder " + dir,//$NON-NLS-1$
                               ttt);
                         }
-                        subError = ErrorUtils
-                            .aggregateError(subError, ttt);
+                        error = ErrorUtils.aggregateError(ttt, error);
                       }
                     }
                   }
@@ -386,13 +385,19 @@ final class _BBOBHandler implements Comparator<Number[]> {
           }
         }
       } catch (final Throwable a) {
-        error = ErrorUtils.aggregateError(error, a);
+        error = ErrorUtils.aggregateError(a, error);
       }
     }
 
     if (error != null) {
-      this.m_logger.handleError(error,
-          "Unrecoverable error in folder " + dir);//$NON-NLS-1$
+      try {
+        ErrorUtils.throwIOException(//
+            ("Error while processing folder " + dir), //$NON-NLS-1$
+            error);
+      } catch (final Throwable t) {
+        this.m_logger.handleError(t,
+            "Unrecoverable error in folder " + dir);//$NON-NLS-1$
+      }
     }
 
     if (this.m_logger.canLog(IOJob.FINER_LOG_LEVEL)) {
@@ -416,11 +421,10 @@ final class _BBOBHandler implements Comparator<Number[]> {
     BasicFileAttributes attr;
     int dataFolderCount, dim;
     String name;
-    Throwable error, subError;
+    Object error;
     int i;
 
     error = null;
-    subError = null;
     if (this.m_logger.canLog(IOJob.FINER_LOG_LEVEL)) {
       this.m_logger.log(IOJob.FINER_LOG_LEVEL, ("Now entering folder '" //$NON-NLS-1$
           + dir) + '\'');
@@ -466,11 +470,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
                         "Problem with folder " + f); //$NON-NLS-1$l
                   }
 
-                  if (subError == null) {
-                    subError = a;
-                  } else {
-                    subError.addSuppressed(a);
-                  }
+                  error = ErrorUtils.aggregateError(a, error);
                 }
               }
             }
@@ -497,7 +497,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
         }
       }
     } catch (final Throwable a) {
-      error = ErrorUtils.aggregateError(error, a);
+      error = ErrorUtils.aggregateError(a, error);
     }
 
     if (this.m_logger.canLog(IOJob.FINER_LOG_LEVEL)) {
@@ -506,7 +506,9 @@ final class _BBOBHandler implements Comparator<Number[]> {
     }
 
     if (error != null) {
-      ErrorUtils.throwAsIOException(error, subError);
+      ErrorUtils.throwIOException(//
+          ("Error in directory " + dir),//$NON-NLS-1$
+          error);
     }
   }
 

@@ -75,6 +75,7 @@ public final class DefaultColorPalette extends ColorPalette {
 
     static {
       final Logger logger;
+      final String msg;
       Palette<ColorStyle> pal;
 
       pal = null;
@@ -89,12 +90,10 @@ public final class DefaultColorPalette extends ColorPalette {
                 "defaultColor.colorPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
-        ErrorUtils
-            .logError(
-                logger,//
-                "Error while loading the default color palette. This will have severe (as in 'deadly') implications on graphics or documents depending on it.", //$NON-NLS-1$
-                t, true);
-        ErrorUtils.throwAsRuntimeException(t);
+        msg = "Error while loading the default color palette. This will have severe (as in 'deadly') implications on graphics or documents depending on it.";//$NON-NLS-1$
+        ErrorUtils.logError(logger,//
+            msg, t, true);
+        ErrorUtils.throwRuntimeException(msg, t);
       }
 
       INSTANCE = ((DefaultColorPalette) pal);

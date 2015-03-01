@@ -333,7 +333,9 @@ public class Document extends DocumentElement implements IDocument {
     try {
       stream = PathUtils.openOutputStream(docPath);
     } catch (final Throwable thro) {
-      ErrorUtils.throwAsRuntimeException(thro);
+      ErrorUtils.throwRuntimeException(((//
+          "Error while trying to open the Document OutputStream to path '" //$NON-NLS-1$
+          + docPath) + '\''), thro);
       return null; // we'll never get here
     }
     return new BufferedWriter(new OutputStreamWriter(stream));
@@ -534,7 +536,7 @@ public class Document extends DocumentElement implements IDocument {
   @Override
   protected final synchronized void onClose() {
     Logger log;
-    Throwable error;
+    Object error;
     Set<IStyle> styles;
 
     this.fsmStateAssertAndSet(Document.STATE_FOOTER_CLOSED,
@@ -545,12 +547,20 @@ public class Document extends DocumentElement implements IDocument {
     try {
       this.doOnClose();
     } catch (final Throwable t) {
-      error = t;
+      error = ErrorUtils.aggregateError(t, error);
+      ErrorUtils.logError(this.m_logger,//
+          ("Error during 'doOnClose' called during finalization of" //$NON-NLS-1$
+          + this.__name()), t, true);
     } finally {
       try {
         this.m_writer.close();
       } catch (final Throwable tt) {
-        error = ErrorUtils.aggregateError(error, tt);
+        error = ErrorUtils.aggregateError(tt, error);
+        ErrorUtils
+            .logError(
+                this.m_logger,//
+                ("Error during 'close()' of the underlying writer called during finalization of" //$NON-NLS-1$
+                + this.__name()), tt, true);
       } finally {
 
         log = this.m_logger;
@@ -572,19 +582,32 @@ public class Document extends DocumentElement implements IDocument {
           }
 
         } catch (final Throwable ttt) {
-          error = ErrorUtils.aggregateError(error, ttt);
+          ErrorUtils.logError(this.m_logger,//
+              ("Error during 'postProcess' called during finalization of" //$NON-NLS-1$
+              + this.__name()), ttt, true);
+          error = ErrorUtils.aggregateError(ttt, error);
         } finally {
           styles.clear();
           styles = null;
           try {
             super.onClose();
           } catch (final Throwable tttt) {
-            error = ErrorUtils.aggregateError(error, tttt);
+            error = ErrorUtils.aggregateError(tttt, error);
+            ErrorUtils
+                .logError(
+                    this.m_logger,//
+                    ("Error during 'super.close()' called during finalization of" //$NON-NLS-1$
+                    + this.__name()), tttt, true);
           } finally {
             try {
               this.m_paths.close();
             } catch (final Throwable ttttt) {
-              error = ErrorUtils.aggregateError(error, ttttt);
+              error = ErrorUtils.aggregateError(ttttt, error);
+              ErrorUtils
+                  .logError(
+                      this.m_logger,//
+                      ("Error during closing the FileProducerSupport (probably caused by the invoked handler routine) during finalization of" //$NON-NLS-1$
+                      + this.__name()), ttttt, true);
             } finally {
               this.m_paths = null;
             }
@@ -593,10 +616,9 @@ public class Document extends DocumentElement implements IDocument {
       }
     }
     if (error != null) {
-      ErrorUtils.logError(this.m_logger,//
-          ("Error during finalization of" //$NON-NLS-1$
-          + this.__name()), error, true);
-      ErrorUtils.throwAsRuntimeException(error);
+      ErrorUtils.throwRuntimeException(//
+          "Error during finalization of" + this.__name(), //$NON-NLS-1$          
+          error);
     }
   }
 

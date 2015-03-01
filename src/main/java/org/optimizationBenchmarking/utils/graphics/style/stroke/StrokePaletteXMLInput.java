@@ -22,7 +22,7 @@ public final class StrokePaletteXMLInput extends
   @Override
   protected final void configureSAXParserFactory(final SAXParserFactory spf)
       throws Throwable {
-    Throwable rec;
+    Object rec;
     SchemaFactory sf;
     Schema schema;
 
@@ -33,7 +33,7 @@ public final class StrokePaletteXMLInput extends
       schema = sf.newSchema(//
           StrokePaletteXML.class.getResource("strokePalette.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
-      rec = a;
+      rec = ErrorUtils.aggregateError(a, rec);
     } finally {
       sf = null;
     }
@@ -47,11 +47,14 @@ public final class StrokePaletteXMLInput extends
         spf.setValidating(false);
       }
     } catch (final Throwable b) {
-      rec = ErrorUtils.aggregateError(rec, b);
+      rec = ErrorUtils.aggregateError(b, rec);
     }
 
     if (rec != null) {
-      ErrorUtils.throwAsIOException(rec);
+      ErrorUtils
+          .throwIOException(//
+              "Error during loading of XML Schema for the stroke palette xml.", //$NON-NLS-1$
+              rec);
     }
   }
 

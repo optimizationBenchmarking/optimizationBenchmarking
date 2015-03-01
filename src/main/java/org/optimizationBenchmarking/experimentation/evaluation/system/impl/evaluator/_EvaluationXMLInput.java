@@ -43,7 +43,7 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
   @Override
   protected final void configureSAXParserFactory(final SAXParserFactory spf)
       throws Throwable {
-    Throwable rec;
+    Object rec;
     SchemaFactory sf;
     Schema schema;
 
@@ -57,7 +57,7 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
           _EvaluationXMLConstants.class
               .getResource("evaluationConfiguration.1.0.xsd")); //$NON-NLS-1$
     } catch (final Throwable a) {
-      rec = a;
+      rec = ErrorUtils.aggregateError(a, rec);
     } finally {
       sf = null;
     }
@@ -71,11 +71,14 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
         spf.setValidating(false);
       }
     } catch (final Throwable b) {
-      rec = ErrorUtils.aggregateError(rec, b);
+      rec = ErrorUtils.aggregateError(b, rec);
     }
 
     if (rec != null) {
-      ErrorUtils.throwAsIOException(rec);
+      ErrorUtils
+          .throwIOException(//
+              "Error while loading XML Schema for evaluation configuration XML.", //$NON-NLS-1$
+              rec);
     }
   }
 

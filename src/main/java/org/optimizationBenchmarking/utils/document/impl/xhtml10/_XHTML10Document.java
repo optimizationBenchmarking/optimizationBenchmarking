@@ -265,7 +265,10 @@ final class _XHTML10Document extends Document {
             }
           }
         } catch (final Throwable t) {
-          ErrorUtils.throwAsRuntimeException(t);
+          ErrorUtils
+              .throwRuntimeException(//
+                  "Error while building Cascading Style Sheet (CSS) for XHTML 1.0 Document.", //$NON-NLS-1$
+                  t);
         }
 
         this.getFileCollector().addFile(path, EWebFileTypes.CSS);

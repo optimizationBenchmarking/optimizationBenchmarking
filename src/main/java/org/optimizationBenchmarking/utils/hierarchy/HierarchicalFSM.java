@@ -583,7 +583,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
   /** flush all closed children */
   private final void __flush() {
     HierarchicalFSM child;
-    Throwable error;
+    Object error;
 
     this.__assertState(HierarchicalFSM.STATE_OPENED);
     error = null;
@@ -609,7 +609,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
           child.m_hstate = HierarchicalFSM.STATE_CLOSED;
           this.__assertState(HierarchicalFSM.STATE_AFTER_AFTER_CHILD_CLOSED_OWNER);
         } catch (final RuntimeException a) {
-          error = ErrorUtils.aggregateError(error, a);
+          error = ErrorUtils.aggregateError(a, error);
         }
 
         this.m_childQueue = child.m_next;
@@ -619,7 +619,10 @@ public class HierarchicalFSM extends FSM implements Closeable {
     this.m_hstate = HierarchicalFSM.STATE_OPENED;
 
     if (error != null) {
-      ErrorUtils.throwAsRuntimeException(error);
+      ErrorUtils
+          .throwRuntimeException(//
+              "Error(s) during flushing the closed children of hierarchical finite state machine " //$NON-NLS-1$
+                  + this, error);
     }
   }
 

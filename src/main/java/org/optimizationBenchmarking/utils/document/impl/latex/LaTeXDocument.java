@@ -683,6 +683,7 @@ public final class LaTeXDocument extends Document {
    */
   private final void __buildSetupPackage(final Set<IStyle> usedStyles) {
     final AbstractTextOutput out;
+    final String msg;
     String html;
     ColorStyle color;
     int i;
@@ -832,13 +833,11 @@ public final class LaTeXDocument extends Document {
         }
       }
     } catch (final IOException ioError) {
-      ErrorUtils
-          .logError(this.getLogger(),
-              (((("Error when creating setup package '" + //$NON-NLS-1$
-              this.m_setupPackagePath) + " for document ") + this) + //$NON-NLS-1$
-              " this is a problem, as compiling the document is now impossible.")//$NON-NLS-1$
-              , ioError, true);
-      ErrorUtils.throwAsRuntimeException(ioError);
+      msg = (((("Error when creating setup package '" + //$NON-NLS-1$
+      this.m_setupPackagePath) + " for document ") + this) + //$NON-NLS-1$
+      " this is a problem, as compiling the document is now impossible.");//$NON-NLS-1$
+      ErrorUtils.logError(this.getLogger(), msg, ioError, true);
+      ErrorUtils.throwRuntimeException(msg, ioError);
     }
   }
 

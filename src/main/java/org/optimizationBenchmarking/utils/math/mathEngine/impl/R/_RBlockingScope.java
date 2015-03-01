@@ -42,7 +42,7 @@ abstract class _RBlockingScope extends _RScope {
   /** {@inheritDoc} */
   @Override
   protected synchronized void onClose() {
-    Throwable error;
+    Object error;
 
     error = null;
     try {
@@ -52,7 +52,7 @@ abstract class _RBlockingScope extends _RScope {
             try {
               PathUtils.delete(p);
             } catch (final Throwable t) {
-              error = ErrorUtils.aggregateError(error, t);
+              error = ErrorUtils.aggregateError(t, error);
             }
           }
         } finally {
@@ -63,12 +63,18 @@ abstract class _RBlockingScope extends _RScope {
       try {
         super.onClose();
       } catch (final Throwable t) {
-        error = ErrorUtils.aggregateError(error, t);
+        error = ErrorUtils.aggregateError(t, error);
       }
     }
 
     if (error != null) {
-      this.m_engine._handleError(error);
+      try {
+        ErrorUtils.throwIOException(//
+            "Error while closing blocking scope of R engine.", //$NON-NLS-1$
+            error);
+      } catch (final Throwable t) {
+        this.m_engine._handleError(t);
+      }
     }
   }
 }

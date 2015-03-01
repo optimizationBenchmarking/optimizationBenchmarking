@@ -112,12 +112,9 @@ public final class SigAlternateFontPalette extends FontPalette {
       } catch (final Throwable t) {
         error = t;
         pal = null;
-        ErrorUtils
-            .logError(
-                logger,
-                "Error while loading the sig-alternate font palette. This will make creating LaTeX documents depending on the sig-alternate document class impossible.",//$NON-NLS-1$
-                error, true);
-        ErrorUtils.throwAsRuntimeException(t);
+        msg = "Error while loading the sig-alternate font palette. This will make creating LaTeX documents depending on the sig-alternate document class impossible.";//$NON-NLS-1$
+        ErrorUtils.logError(logger, msg, error, true);
+        ErrorUtils.throwRuntimeException(msg, t);
       }
 
       if (pal != null) {

@@ -81,6 +81,7 @@ public final class HTML401Palette extends ColorPalette {
 
     static {
       final Logger logger;
+      final String msg;
       Palette<ColorStyle> pal;
 
       pal = null;
@@ -94,12 +95,9 @@ public final class HTML401Palette extends ColorPalette {
             .addResource(HTML401Palette.class, "html401.colorPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
-        ErrorUtils
-            .logError(
-                logger,
-                "Error while loading the HTML 4.01 color palette. This palette will not be available.", //$NON-NLS-1$
-                t, true);
-        ErrorUtils.throwAsRuntimeException(t);
+        msg = "Error while loading the HTML 4.01 color palette. This palette will not be available.";//$NON-NLS-1$
+        ErrorUtils.logError(logger, msg, t, true);
+        ErrorUtils.throwRuntimeException(msg, t);
       }
 
       INSTANCE = ((HTML401Palette) pal);

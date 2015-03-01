@@ -118,25 +118,28 @@ public final class REngine extends MathEngine {
    *          the throwable
    */
   final void _handleError(final Throwable t) {
-    ErrorUtils.logError(this.getLogger(),
-        ("Error during communication with R in engine " + //$NON-NLS-1$ 
-        this.hashCode()), t, true);
-    ErrorUtils.throwAsRuntimeException(t);
+    final String msg;
+
+    msg = ("Error during communication with R in engine " + //$NON-NLS-1$ 
+    this.hashCode());
+    ErrorUtils.logError(this.getLogger(), msg, t, true);
+    ErrorUtils.throwRuntimeException(msg, t);
   }
 
   /** {@inheritDoc} */
   @Override
   protected void doClose() throws IOException {
     final Logger logger;
-    Throwable error;
+    Object error;
 
     error = null;
+    logger = this.getLogger();
     try {
       this.m_out.write("q();"); //$NON-NLS-1$
       this.m_out.newLine();
       this.m_out.flush();
     } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
+      error = ErrorUtils.aggregateError(t, error);
     }
     try {
       try {
@@ -145,33 +148,50 @@ public final class REngine extends MathEngine {
         this.m_process.close();
       }
     } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
+      error = ErrorUtils.aggregateError(t, error);
+      ErrorUtils
+          .logError(
+              logger,//
+              ("Error while waiting for termination of external R process in R engine "//$NON-NLS-1$
+              + this.m_id), t, true);
     }
 
     try {
       this.m_out.close();
     } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
+      error = ErrorUtils.aggregateError(t, error);
+      ErrorUtils
+          .logError(
+              logger,//
+              ("Error while closing output stream to external R process in R engine "//$NON-NLS-1$
+              + this.m_id), t, true);
     }
 
     try {
       this.m_in.close();
     } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
+      error = ErrorUtils.aggregateError(t, error);
+      ErrorUtils
+          .logError(
+              logger,//
+              ("Error while closing input stream reading from external R process in R engine "//$NON-NLS-1$
+              + this.m_id), t, true);
     }
 
     try {
       this.m_temp.close();
     } catch (final Throwable t) {
-      error = ErrorUtils.aggregateError(error, t);
+      error = ErrorUtils.aggregateError(t, error);
+      ErrorUtils
+          .logError(
+              logger,//
+              ("Error while deleting folder of temporary files needed to communicate with external R process in R engine "//$NON-NLS-1$
+              + this.m_id), t, true);
     }
 
-    logger = this.getLogger();
     if (error != null) {
-      ErrorUtils.logError(logger,//
-          ("Error during shutdown of "//$NON-NLS-1$
-          + this.m_id), error, true);
-      ErrorUtils.throwAsIOException(error);
+      ErrorUtils.throwIOException(("Error during shutdown of "//$NON-NLS-1$
+          + this.m_id), error);
     }
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info(this.m_id + " shut down gracefully.");//$NON-NLS-1$

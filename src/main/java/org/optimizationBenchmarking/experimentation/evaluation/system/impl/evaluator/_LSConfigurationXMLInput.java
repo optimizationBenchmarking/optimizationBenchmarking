@@ -35,7 +35,10 @@ final class _LSConfigurationXMLInput extends SimpleLSInput {
         return ConfigurationXMLConstants.NAMESPACE_URI.toURL()
             .openStream();
       } catch (final Throwable ttt) {
-        ErrorUtils.throwAsRuntimeException(ttt);
+        ErrorUtils
+            .throwRuntimeException(//
+                "Error while creating input stream to Configuration XML Schema.", //$NON-NLS-1$
+                ErrorUtils.aggregateError(tt, ttt));
         return null;
       }
     }
