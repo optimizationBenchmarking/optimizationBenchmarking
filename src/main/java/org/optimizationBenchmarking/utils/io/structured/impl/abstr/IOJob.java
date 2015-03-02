@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
@@ -166,8 +167,8 @@ public class IOJob extends ToolJob {
       " (but this information may not be reliable).");//$NON-NLS-1$
     }
 
-    ErrorUtils.logError(this.getLogger(), msg, throwable, true);
-    ErrorUtils.throwIOException(msg, throwable);
+    ErrorUtils.logError(this.getLogger(), msg, throwable, true,
+        RethrowMode.THROW_AS_IO_EXCEPTION);
   }
 
   /**

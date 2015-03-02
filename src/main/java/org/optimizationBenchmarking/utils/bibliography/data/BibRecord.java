@@ -4,7 +4,7 @@ import java.net.URI;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.ELabelType;
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -145,10 +145,10 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
     try {
       r = ((BibRecord) (super.clone()));
     } catch (final CloneNotSupportedException cnse) {
-      ErrorUtils
-          .throwRuntimeException(//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+          .rethrow(//
               "Error while cloning bibliographic record: This should never happen.", //$NON-NLS-1$
-              cnse);
+              true, cnse);
       return null; // can never be reached
     }
 

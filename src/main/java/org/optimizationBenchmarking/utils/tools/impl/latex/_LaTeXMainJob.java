@@ -12,6 +12,7 @@ import org.optimizationBenchmarking.utils.collections.BasicCollection;
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.paths.FileChangeDetector;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
@@ -303,8 +304,9 @@ final class _LaTeXMainJob extends LaTeXJob {
         this.__cleanUp();
       }
     } catch (final Throwable error) {
-      ErrorUtils.logError(logger, ("Error during compilation of" + //$NON-NLS-1$
-          document + '.'), error, true);
+      ErrorUtils.logError(logger, Level.WARNING,//
+          ("Error during compilation of" + //$NON-NLS-1$
+              document + '.'), error, true, RethrowMode.DONT_RETHROW);
     }
 
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
@@ -331,7 +333,7 @@ final class _LaTeXMainJob extends LaTeXJob {
             ErrorUtils.logError(this.getLogger(), Level.WARNING,
                 (((("Error when trying to delete file '" + //$NON-NLS-1$ 
                 path) + "' of type ") + type) + '.'),//$NON-NLS-1$
-                ignoreable, true);
+                ignoreable, true, RethrowMode.DONT_RETHROW);
           }
         }
       }

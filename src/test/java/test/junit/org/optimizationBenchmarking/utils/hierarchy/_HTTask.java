@@ -7,7 +7,7 @@ import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Ignore;
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 
@@ -159,9 +159,9 @@ final class _HTTask extends RecursiveAction {
               y.get();
             }
           } catch (final Throwable t) {
-            ErrorUtils.throwRuntimeException(//
+            RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
                 "Error while waiting for hierarchical task to end.", //$NON-NLS-1$
-                t);
+                true, t);
           }
         }
 

@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.collections.maps;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -114,9 +114,9 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
     try {
       return super.clone();
     } catch (final CloneNotSupportedException t) {
-      ErrorUtils.throwRuntimeException(//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while cloning BasicMapEntry.", //$NON-NLS-1$
-          t);
+          true, t);
       return null;// we will never get here
     }
   }

@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXML;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.xml.SimpleLSInput;
 
 /** the local ls input implementation */
@@ -34,10 +35,10 @@ final class _LSBibInput extends SimpleLSInput {
       try {
         return BibliographyXML.NAMESPACE_URI.toURL().openStream();
       } catch (final Throwable ttt) {
-        ErrorUtils
-            .throwRuntimeException(//
+        RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+            .rethrow(//
                 "Error while opening input stream to bibliography XML Schema.", //$NON-NLS-1$
-                ErrorUtils.aggregateError(tt, ttt));
+                true, ErrorUtils.aggregateError(tt, ttt));
         return null;
       }
     }

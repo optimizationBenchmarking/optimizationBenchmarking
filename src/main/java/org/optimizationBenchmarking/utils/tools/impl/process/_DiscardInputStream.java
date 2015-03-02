@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 
 /**
  * A thread shoveling data from an {@link java.io.InputStream} to the
@@ -32,8 +33,8 @@ final class _DiscardInputStream extends _WorkerThread {
   /** {@inheritDoc} */
   @Override
   public final void run() {
-    final String msg;
     byte[] buffer;
+
     try {
       buffer = new byte[4096];
       while (this.m_mode < 2) {
@@ -43,9 +44,9 @@ final class _DiscardInputStream extends _WorkerThread {
       }
       buffer = null;
     } catch (final Throwable t) {
-      msg = "Error during discarding input stream (by skipping).";//$NON-NLS-1$
-      ErrorUtils.logError(this.m_log, msg, t, true);
-      ErrorUtils.throwRuntimeException(msg, t);
+      ErrorUtils.logError(this.m_log,
+          "Error during discarding input stream (by skipping).",//$NON-NLS-1$
+          t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
     }
   }
 }

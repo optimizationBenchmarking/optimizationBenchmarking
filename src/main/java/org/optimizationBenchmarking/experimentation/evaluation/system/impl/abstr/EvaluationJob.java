@@ -9,6 +9,7 @@ import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
@@ -50,7 +51,6 @@ public abstract class EvaluationJob<M extends ConfiguredModule> extends
   public final void run() {
     final Logger logger;
     final Level level;
-    final String msg;
 
     if ((logger = this.getLogger()) != null) {
       if (logger.isLoggable(level = this._level())) {
@@ -64,10 +64,10 @@ public abstract class EvaluationJob<M extends ConfiguredModule> extends
     try {
       this.execute();
     } catch (final Throwable throwable) {
-      msg = ("Severe error during execution of "//$NON-NLS-1$ 
-      + this.toString());
-      ErrorUtils.logError(logger, msg, throwable, false);
-      ErrorUtils.throwRuntimeException(msg, throwable);
+      ErrorUtils.logError(logger,
+          ("Severe error during execution of "//$NON-NLS-1$ 
+          + this.toString()), throwable, false,
+          RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
     }
 
     if ((logger != null) && (logger.isLoggable(level))) {

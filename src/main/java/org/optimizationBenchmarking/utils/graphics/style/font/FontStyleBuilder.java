@@ -13,6 +13,7 @@ import java.util.Locale;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.EFontType;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
@@ -509,7 +510,7 @@ public final class FontStyleBuilder extends
                           "Ignorable error during the attempt to register font '"//$NON-NLS-1$ 
                               + font + //
                               "' with the local graphics environment.", //$NON-NLS-1$
-                          ignore, false);
+                          ignore, false, RethrowMode.DONT_RETHROW);
                     }
                     if (FontStyleBuilder
                         .__matches(font, faceChoice.m_name)) {
@@ -530,7 +531,7 @@ public final class FontStyleBuilder extends
               .logError(
                   Configuration.getGlobalLogger(),
                   "Strange but ignorable error during the creation of a font style detected.", //$NON-NLS-1$
-                  error, true);
+                  error, true, RethrowMode.DONT_RETHROW);
         }
       }
 

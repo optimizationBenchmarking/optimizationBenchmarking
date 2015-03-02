@@ -6,6 +6,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 import org.xml.sax.helpers.DefaultHandler;
@@ -75,10 +76,10 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
     }
 
     if (rec != null) {
-      ErrorUtils
-          .throwIOException(//
+      RethrowMode.THROW_AS_IO_EXCEPTION
+          .rethrow(//
               "Error while loading XML Schema for evaluation configuration XML.", //$NON-NLS-1$
-              rec);
+              true, rec);
     }
   }
 

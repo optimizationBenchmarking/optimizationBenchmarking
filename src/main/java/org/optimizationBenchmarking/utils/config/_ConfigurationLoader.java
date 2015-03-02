@@ -4,6 +4,7 @@ import java.security.PrivilegedAction;
 
 import org.optimizationBenchmarking.utils.EmptyUtils;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 
 /** the configuration loader */
 final class _ConfigurationLoader implements
@@ -26,7 +27,6 @@ final class _ConfigurationLoader implements
   @Override
   public final Configuration run() {
     final _ConfigMap cm;
-    final String msg;
     String q;
     char a, b;
     Object o;
@@ -61,11 +61,10 @@ final class _ConfigurationLoader implements
 
         cb._configure(this.m_args);
       } catch (final Throwable tt) {
-        msg = "Severe error during setup."; //$NON-NLS-1$
         ErrorUtils.logError(
             cb.m_data.getLogger(Configuration.PARAM_LOGGER, null),//
-            msg, tt, false);
-        ErrorUtils.throwRuntimeException(msg, tt);
+            "Severe error during setup.", //$NON-NLS-1$
+            tt, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
       }
       return cb.compile();
     }

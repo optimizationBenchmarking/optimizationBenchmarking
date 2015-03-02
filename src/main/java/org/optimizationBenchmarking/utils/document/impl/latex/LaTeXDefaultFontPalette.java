@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPalette;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontPaletteBuilder;
@@ -109,9 +110,15 @@ public final class LaTeXDefaultFontPalette extends FontPalette {
       } catch (final Throwable t) {
         error = t;
         pal = null;
-        msg = "Error while loading the default font palette for the LaTeX Document Driver. This will creating LaTeX documents using this palette impossible.";//$NON-NLS-1$
-        ErrorUtils.logError(logger, msg, error, true);
-        ErrorUtils.throwRuntimeException(msg, t);
+        try {
+          ErrorUtils
+              .logError(
+                  logger, //
+                  "Error while loading the default font palette for the LaTeX Document Driver. This will creating LaTeX documents using this palette impossible.",//$NON-NLS-1$ error, true);
+                  error, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+        } catch (final Throwable a) {
+          error = a;
+        }
       }
 
       if (pal != null) {

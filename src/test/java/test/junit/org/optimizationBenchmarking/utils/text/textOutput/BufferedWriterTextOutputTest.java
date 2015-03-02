@@ -3,7 +3,7 @@ package test.junit.org.optimizationBenchmarking.utils.text.textOutput;
 import java.io.BufferedWriter;
 import java.io.StringWriter;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -60,9 +60,9 @@ public class BufferedWriterTextOutputTest extends
       try {
         this.flush();
       } catch (final Throwable tt) {
-        ErrorUtils.throwRuntimeException(//
+        RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
             "Error while flushing BufferedWriterTextOutput.", //$NON-NLS-1$
-            tt);
+            true, tt);
       }
       return this.m_sw.toString();
     }

@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.TextOutputTool;
@@ -62,10 +61,9 @@ public final class ConfigurationPropertiesOutput extends
     try (final Writer writer = TextOutputWriter.wrap(textOut)) {
       pr.store(writer, null);
     } catch (final IOException ioe) {
-      ErrorUtils
-          .throwRuntimeException(//
-              "Error while trying to store configuration data to ITextOutput.", //$NON-NLS-1$
-              ioe);
+      throw new IOException(//
+          "Error while trying to store configuration data to ITextOutput.",//$NON-NLS-1$
+          ioe);
     }
   }
 

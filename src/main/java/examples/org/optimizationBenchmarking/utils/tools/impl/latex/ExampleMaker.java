@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 
@@ -49,7 +50,7 @@ public final class ExampleMaker {
       Files.createDirectories(dest);
     } catch (final Throwable t) {
       ErrorUtils.logError(logger, "Error creating destination directory.",//$NON-NLS-1$ 
-          t, false);
+          t, false, RethrowMode.DONT_RETHROW);
     }
 
     ExampleMaker.__makeExample(logger, "test-article.tex", dest); //$NON-NLS-1$
@@ -91,7 +92,7 @@ public final class ExampleMaker {
         Files.copy(is, dest, StandardCopyOption.REPLACE_EXISTING);
       } catch (final IOException ioe) {
         ErrorUtils.logError(logger, "Error when copying resource.", //$NON-NLS-1$
-            ioe, false);
+            ioe, false, RethrowMode.DONT_RETHROW);
         return;
       }
 
@@ -101,7 +102,7 @@ public final class ExampleMaker {
             .setMainFile(dest).setLogger(logger).create().call();
       } catch (final IOException ioe) {
         ErrorUtils.logError(logger, "Error when compiling document.", //$NON-NLS-1$
-            ioe, false);
+            ioe, false, RethrowMode.DONT_RETHROW);
         return;
       }
     } finally {

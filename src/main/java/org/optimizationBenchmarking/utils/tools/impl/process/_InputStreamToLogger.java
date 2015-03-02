@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -51,7 +52,6 @@ final class _InputStreamToLogger extends _WorkerThread {
   public final void run() {
     final Logger logger;
     final Level level;
-    final String msg;
     MemoryTextOutput mto;
     String line;
     boolean hasText, run;
@@ -119,9 +119,9 @@ final class _InputStreamToLogger extends _WorkerThread {
         this.m_source.close();
       }
     } catch (final Throwable t) {
-      msg = "Error during shoveling text from external process to Logger.";//$NON-NLS-1$
-      ErrorUtils.logError(logger, msg, t, true);
-      ErrorUtils.throwRuntimeException(msg, t);
+      ErrorUtils.logError(logger,//
+          "Error during shoveling text from external process to Logger.",//$NON-NLS-1$
+          t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
     }
   }
 }

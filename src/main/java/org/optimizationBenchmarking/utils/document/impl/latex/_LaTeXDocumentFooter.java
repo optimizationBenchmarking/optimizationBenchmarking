@@ -9,6 +9,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.io.BibTeXOutput;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentFooter;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
@@ -77,12 +78,12 @@ final class _LaTeXDocumentFooter extends DocumentFooter {
           .call();
     } catch (final Throwable error) {
       ErrorUtils
-          .logError(
-              logger,//
+          .logError(logger,
+              Level.WARNING,//
               "Error during BibTeX output of citations to '"//$NON-NLS-1$
                   + path + //
                   "'. This will lead to undefined references in the final document.",//$NON-NLS-1$
-              error, true);
+              error, true, RethrowMode.DONT_RETHROW);
       return;
     }
 

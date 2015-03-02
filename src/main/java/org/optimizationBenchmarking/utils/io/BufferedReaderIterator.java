@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** an iterator interface for the {@link java.io.BufferedReader} class */
@@ -49,10 +49,10 @@ public class BufferedReaderIterator extends BasicIterator<String> {
         try {
           s = this.m_reader.readLine();
         } catch (final IOException ioe) {
-          ErrorUtils
-              .throwRuntimeException(//
+          RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+              .rethrow(//
                   "Error while invoking readLine() in order to get the next line from a BufferedReader to iterate over via a BufferedReaderIterator.", //$NON-NLS-1$
-                  ioe);
+                  true, ioe);
           return false;
         }
 

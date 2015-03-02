@@ -19,6 +19,7 @@ import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
 import org.optimizationBenchmarking.experimentation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.data.RunContext;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
 import org.optimizationBenchmarking.utils.parsers.IntParser;
@@ -391,12 +392,13 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
     if (error != null) {
       try {
-        ErrorUtils.throwIOException(//
+        RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
             ("Error while processing folder " + dir), //$NON-NLS-1$
-            error);
+            true, error);
       } catch (final Throwable t) {
         this.m_logger.handleError(t,
-            "Unrecoverable error in folder " + dir);//$NON-NLS-1$
+            "BBOBHandler encountered unrecoverable error in folder " //$NON-NLS-1$
+                + dir);
       }
     }
 
@@ -506,9 +508,9 @@ final class _BBOBHandler implements Comparator<Number[]> {
     }
 
     if (error != null) {
-      ErrorUtils.throwIOException(//
-          ("Error in directory " + dir),//$NON-NLS-1$
-          error);
+      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
+          ("Error while applying BBOBHandler to directory " + dir),//$NON-NLS-1$
+          true, error);
     }
   }
 

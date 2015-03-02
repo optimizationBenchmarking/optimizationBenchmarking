@@ -10,6 +10,7 @@ import javax.tools.JavaFileObject;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
@@ -54,7 +55,6 @@ public final class JavaCompilerJob extends ToolJob implements
     final _ClassFileManager fileManager;
     final ClassLoader result;
     final Logger logger;
-    final String msg;
     MemoryTextOutput memory;
     int i;
 
@@ -127,9 +127,9 @@ public final class JavaCompilerJob extends ToolJob implements
         return result;
       }
     } catch (final Throwable t) {
-      msg = "Unrecoverable error during on-the-fly compilation.";//$NON-NLS-1$
-      ErrorUtils.logError(logger, msg, t, false);
-      ErrorUtils.throwRuntimeException(msg, t);
+      ErrorUtils.logError(logger,
+          "Unrecoverable error during on-the-fly compilation.",//$NON-NLS-1$
+          t, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
       return null;// will never be reached
     }
   }

@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.encoding.TextEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
@@ -117,13 +118,10 @@ public final class REngine extends MathEngine {
    * @param t
    *          the throwable
    */
-  final void _handleError(final Throwable t) {
-    final String msg;
-
-    msg = ("Error during communication with R in engine " + //$NON-NLS-1$ 
-    this.hashCode());
-    ErrorUtils.logError(this.getLogger(), msg, t, true);
-    ErrorUtils.throwRuntimeException(msg, t);
+  final void _handleError(final Object t) {
+    ErrorUtils.logError(this.getLogger(),
+        ("Error during communication with R in engine " + //$NON-NLS-1$ 
+        this.hashCode()), t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
   }
 
   /** {@inheritDoc} */
@@ -149,49 +147,29 @@ public final class REngine extends MathEngine {
       }
     } catch (final Throwable t) {
       error = ErrorUtils.aggregateError(t, error);
-      ErrorUtils
-          .logError(
-              logger,//
-              ("Error while waiting for termination of external R process in R engine "//$NON-NLS-1$
-              + this.m_id), t, true);
     }
 
     try {
       this.m_out.close();
     } catch (final Throwable t) {
       error = ErrorUtils.aggregateError(t, error);
-      ErrorUtils
-          .logError(
-              logger,//
-              ("Error while closing output stream to external R process in R engine "//$NON-NLS-1$
-              + this.m_id), t, true);
     }
 
     try {
       this.m_in.close();
     } catch (final Throwable t) {
       error = ErrorUtils.aggregateError(t, error);
-      ErrorUtils
-          .logError(
-              logger,//
-              ("Error while closing input stream reading from external R process in R engine "//$NON-NLS-1$
-              + this.m_id), t, true);
     }
 
     try {
       this.m_temp.close();
     } catch (final Throwable t) {
       error = ErrorUtils.aggregateError(t, error);
-      ErrorUtils
-          .logError(
-              logger,//
-              ("Error while deleting folder of temporary files needed to communicate with external R process in R engine "//$NON-NLS-1$
-              + this.m_id), t, true);
     }
 
     if (error != null) {
-      ErrorUtils.throwIOException(("Error during shutdown of "//$NON-NLS-1$
-          + this.m_id), error);
+      ErrorUtils.logError(logger, ("Error during shutdown of "//$NON-NLS-1$
+          + this.m_id), error, true, RethrowMode.THROW_AS_IO_EXCEPTION);
     }
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info(this.m_id + " shut down gracefully.");//$NON-NLS-1$

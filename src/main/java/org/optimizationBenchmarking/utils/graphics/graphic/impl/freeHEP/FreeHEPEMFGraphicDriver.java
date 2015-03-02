@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Map;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
@@ -171,10 +171,10 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
     try {
       stream = PathUtils.openOutputStream(path);
     } catch (final Throwable thro) {
-      ErrorUtils.throwRuntimeException((((//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((((//
           "Error while opening OutputStream '") //$NON-NLS-1$
           + path) + "' for FreeHEPEMFGraphic."), //$NON-NLS-1$
-          thro);
+          true, thro);
       return null; // we'll never get here
     }
     synchronized (org.freehep.graphicsio.emf.EMFGraphics2D.class) {

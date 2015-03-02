@@ -10,7 +10,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -44,10 +44,10 @@ public class XMLDOMSerialization extends SerializationMethod {
       a = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       b = TransformerFactory.newInstance().newTransformer();
     } catch (final Throwable t) {
-      ErrorUtils
-          .throwRuntimeException(//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+          .rethrow(//
               "Error while trying to obtain XML DOM transformer or document builder.",//$NON-NLS-1$
-              t);
+              true, t);
     }
     this.m_builder = a;
     this.m_transformer = b;

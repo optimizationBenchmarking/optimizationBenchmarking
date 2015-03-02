@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 
 /**
  * A buffered reader which writes all the stuff you read to another stream.
@@ -180,18 +180,19 @@ public class DebugBufferedReader extends BufferedReader {
   /** {@inheritDoc} */
   @Override
   public final boolean markSupported() {
+    final String msg;
     try {
       return this.m_source.markSupported();
     } catch (final Throwable tt) {
+      msg = "Error when checking whether whether marking is supported.";//$NON-NLS-1$
       try {
-        throw new IOException(
-            "Error when checking whether whether marking is supported.", tt);//$NON-NLS-1$                   
+        throw new IOException(msg, tt);
       } catch (final IOException ioe) {
         synchronized (this.m_debug) {
           ioe.printStackTrace(this.m_debug);
           this.m_debug.flush();
         }
-        ErrorUtils.throwRuntimeException(null, ioe);
+        RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(msg, true, tt);
       }
     }
     return false;

@@ -6,6 +6,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 
@@ -52,9 +53,9 @@ public final class ConfigurationXMLInput extends
     }
 
     if (rec != null) {
-      ErrorUtils.throwIOException(//
+      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
           "Error while loading the XML Schema for ConfigurationXML.", //$NON-NLS-1$
-          rec);
+          true, rec);
     }
   }
 

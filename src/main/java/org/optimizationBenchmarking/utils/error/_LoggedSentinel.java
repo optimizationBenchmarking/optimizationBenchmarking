@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.error;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -24,18 +25,26 @@ final class _LoggedSentinel extends Throwable {
   /** the logger */
   private final Logger m_logger;
 
+  /** the log level */
+  private final Level m_level;
+
   /**
    * create the logged sentinel
    * 
    * @param logger
    *          the logger
+   * @param level
+   *          the log level
    * @param message
    */
-  private _LoggedSentinel(final Logger logger, final String message) {
+  private _LoggedSentinel(final Logger logger, final Level level,
+      final String message) {
     super(((((("This error has been logged to logger '" + //$NON-NLS-1$
         _LoggedSentinel.__loggerName(logger)) + "' with message '") + //$NON-NLS-1$
-        message) + '\'') + '.'), null, false, false);
+        message) + "' at level ") + level),//$NON-NLS-1$
+        null, false, false);
     this.m_logger = logger;
+    this.m_level = level;
   }
 
   /**
@@ -46,12 +55,15 @@ final class _LoggedSentinel extends Throwable {
    *          the logger
    * @param error
    *          the {@link java.lang.Throwable}
+   * @param level
+   *          the log level
    * @return {@code true} if {@code t} is an indicator that something was
    *         logged to logger
    */
   static final boolean _hasBeenLogged(final Throwable error,
-      final Logger logger) {
+      final Logger logger, final Level level) {
     final Throwable[] suppressed;
+    _LoggedSentinel sentinel;
 
     if (error == null) {
       return false;
@@ -60,10 +72,15 @@ final class _LoggedSentinel extends Throwable {
     if (suppressed == null) {
       return false;
     }
+
     for (final Throwable t : suppressed) {
-      if ((t != null) && (t instanceof _LoggedSentinel)
-          && (((_LoggedSentinel) t).m_logger == logger)) {
-        return true;
+      if ((t != null) && (t instanceof _LoggedSentinel)) {
+        sentinel = ((_LoggedSentinel) t);
+        if (sentinel.m_logger == logger) {
+          if (sentinel.m_level.intValue() >= level.intValue()) {
+            return true;
+          }
+        }
       }
     }
     return false;
@@ -78,11 +95,13 @@ final class _LoggedSentinel extends Throwable {
    *          the message under which the error was logged
    * @param logger
    *          the logger
+   * @param level
+   *          the log level
    */
   static final void _markAsLogged(final Throwable error,
-      final String message, final Logger logger) {
+      final String message, final Logger logger, final Level level) {
     if (error != null) {
-      error.addSuppressed(new _LoggedSentinel(logger, message));
+      error.addSuppressed(new _LoggedSentinel(logger, level, message));
     }
   }
 

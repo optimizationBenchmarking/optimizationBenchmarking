@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.style.Palette;
 
 /**
@@ -81,7 +82,6 @@ public final class HTML401Palette extends ColorPalette {
 
     static {
       final Logger logger;
-      final String msg;
       Palette<ColorStyle> pal;
 
       pal = null;
@@ -95,9 +95,11 @@ public final class HTML401Palette extends ColorPalette {
             .addResource(HTML401Palette.class, "html401.colorPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
-        msg = "Error while loading the HTML 4.01 color palette. This palette will not be available.";//$NON-NLS-1$
-        ErrorUtils.logError(logger, msg, t, true);
-        ErrorUtils.throwRuntimeException(msg, t);
+        ErrorUtils
+            .logError(
+                logger,
+                "Error while loading the HTML 4.01 color palette. This palette will not be available.",//$NON-NLS-1$
+                t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
       }
 
       INSTANCE = ((HTML401Palette) pal);

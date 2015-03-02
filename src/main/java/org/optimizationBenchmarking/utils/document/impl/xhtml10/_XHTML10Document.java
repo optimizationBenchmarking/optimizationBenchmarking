@@ -16,6 +16,7 @@ import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
@@ -266,9 +267,10 @@ final class _XHTML10Document extends Document {
           }
         } catch (final Throwable t) {
           ErrorUtils
-              .throwRuntimeException(//
-                  "Error while building Cascading Style Sheet (CSS) for XHTML 1.0 Document.", //$NON-NLS-1$
-                  t);
+              .logError(
+                  this.getLogger(),//
+                  "Error while building Cascading Style Sheet (CSS) for XHTML 1.0 Document. This will make the document look odd.", //$NON-NLS-1$
+                  t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
         }
 
         this.getFileCollector().addFile(path, EWebFileTypes.CSS);

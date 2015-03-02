@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer;
 
 /**
@@ -40,7 +41,6 @@ final class _BufferToOutputStream extends _WorkerThread {
   /** {@inheritDoc} */
   @Override
   public final void run() {
-    final String msg;
     byte[] buffer;
     int s;
 
@@ -66,9 +66,11 @@ final class _BufferToOutputStream extends _WorkerThread {
         }
       }
     } catch (final Throwable t) {
-      msg = "Error during shoveling bytes from byte buffer to external process."; //$NON-NLS-1$
-      ErrorUtils.logError(this.m_log, msg, t, true);
-      ErrorUtils.throwRuntimeException(msg, t);
+      ErrorUtils
+          .logError(
+              this.m_log,
+              "Error during shoveling bytes from byte buffer to external process.", //$NON-NLS-1$
+              t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
     }
   }
 }

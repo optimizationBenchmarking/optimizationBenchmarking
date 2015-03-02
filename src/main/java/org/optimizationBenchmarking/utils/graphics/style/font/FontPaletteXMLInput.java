@@ -6,6 +6,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 
@@ -51,9 +52,9 @@ public final class FontPaletteXMLInput extends
     }
 
     if (rec != null) {
-      ErrorUtils.throwIOException(//
+      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
           "Error during loading of the font palette XML Schema.", //$NON-NLS-1$
-          rec);
+          true, rec);
     }
   }
 

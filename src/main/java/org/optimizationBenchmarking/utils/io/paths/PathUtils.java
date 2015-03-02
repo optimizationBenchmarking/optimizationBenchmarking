@@ -24,6 +24,7 @@ import java.util.LinkedHashSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.parsers.ListParser;
 import org.optimizationBenchmarking.utils.parsers.PathParser;
 import org.optimizationBenchmarking.utils.predicates.IPredicate;
@@ -287,9 +288,9 @@ public final class PathUtils {
           StandardOpenOption.WRITE);
     } catch (final Throwable t3) {
       stream = null;
-      ErrorUtils.throwIOException(//
+      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
           (("Error while trying to open an OutputStream to path '" //$NON-NLS-1$
-          + path) + '\''), //
+          + path) + '\''), true, //
           ErrorUtils.aggregateError(t3, error));
     }
 
@@ -322,9 +323,9 @@ public final class PathUtils {
       stream = PathUtils.getFileSystemProvider(path).newInputStream(path,
           StandardOpenOption.READ);
     } catch (final Throwable t3) {
-      ErrorUtils.throwIOException((((//
+      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow((((//
           "Error while trying to open InputStream for path '") + //$NON-NLS-1$
-          path) + '\''), t3);
+          path) + '\''), true, t3);
       stream = null;
     }
 

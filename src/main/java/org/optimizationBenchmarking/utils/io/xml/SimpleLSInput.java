@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.encoding.TextEncoding;
 import org.w3c.dom.ls.LSInput;
@@ -109,10 +109,10 @@ public class SimpleLSInput extends InputSource implements LSInput {
       try {
         r.close();
       } catch (final Throwable t) {
-        ErrorUtils
-            .throwRuntimeException(//
+        RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+            .rethrow(//
                 "Error while closing old character stream of SimpleLSInput in order to set a new one.", //$NON-NLS-1$
-                t);
+                true, t);
       } finally {
         super.setCharacterStream(null);
       }
@@ -147,10 +147,10 @@ public class SimpleLSInput extends InputSource implements LSInput {
       try {
         is.close();
       } catch (final Throwable t) {
-        ErrorUtils
-            .throwRuntimeException(//
+        RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+            .rethrow(//
                 "Error while closing byte stream of SimpleLSInput in order to set a new one.", //$NON-NLS-1$
-                t);
+                true, t);
       } finally {
         super.setByteStream(null);
       }

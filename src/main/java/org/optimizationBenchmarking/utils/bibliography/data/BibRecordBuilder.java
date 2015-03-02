@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 import java.net.URI;
 import java.net.URL;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
@@ -192,10 +192,10 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     try {
       u = url.toURI();
     } catch (final Throwable t) {
-      ErrorUtils
-          .throwRuntimeException(//
-              "Error while converting document URL to URI for bibliograpy record.", //$NON-NLS-1$
-              t);
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
+          "Error while converting document URL '" //$NON-NLS-1$
+              + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
+          true, t);
       return;
     }
 
@@ -214,10 +214,10 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     try {
       u = URI.create(url);
     } catch (final Throwable t) {
-      ErrorUtils
-          .throwRuntimeException(//
-              "Error while converting document URL string to URI for bibliograpy record.", //$NON-NLS-1$
-              t);
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
+          "Error while converting document URL string '"//$NON-NLS-1$
+              + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
+          true, t);
       return;
     }
 

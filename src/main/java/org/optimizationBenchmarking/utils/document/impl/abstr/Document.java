@@ -21,6 +21,7 @@ import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.EScreenSize;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
@@ -333,10 +334,9 @@ public class Document extends DocumentElement implements IDocument {
     try {
       stream = PathUtils.openOutputStream(docPath);
     } catch (final Throwable thro) {
-      ErrorUtils.throwRuntimeException(((//
+      throw new RuntimeException(((//
           "Error while trying to open the Document OutputStream to path '" //$NON-NLS-1$
           + docPath) + '\''), thro);
-      return null; // we'll never get here
     }
     return new BufferedWriter(new OutputStreamWriter(stream));
   }
@@ -548,19 +548,11 @@ public class Document extends DocumentElement implements IDocument {
       this.doOnClose();
     } catch (final Throwable t) {
       error = ErrorUtils.aggregateError(t, error);
-      ErrorUtils.logError(this.m_logger,//
-          ("Error during 'doOnClose' called during finalization of" //$NON-NLS-1$
-          + this.__name()), t, true);
     } finally {
       try {
         this.m_writer.close();
       } catch (final Throwable tt) {
         error = ErrorUtils.aggregateError(tt, error);
-        ErrorUtils
-            .logError(
-                this.m_logger,//
-                ("Error during 'close()' of the underlying writer called during finalization of" //$NON-NLS-1$
-                + this.__name()), tt, true);
       } finally {
 
         log = this.m_logger;
@@ -582,9 +574,6 @@ public class Document extends DocumentElement implements IDocument {
           }
 
         } catch (final Throwable ttt) {
-          ErrorUtils.logError(this.m_logger,//
-              ("Error during 'postProcess' called during finalization of" //$NON-NLS-1$
-              + this.__name()), ttt, true);
           error = ErrorUtils.aggregateError(ttt, error);
         } finally {
           styles.clear();
@@ -593,21 +582,11 @@ public class Document extends DocumentElement implements IDocument {
             super.onClose();
           } catch (final Throwable tttt) {
             error = ErrorUtils.aggregateError(tttt, error);
-            ErrorUtils
-                .logError(
-                    this.m_logger,//
-                    ("Error during 'super.close()' called during finalization of" //$NON-NLS-1$
-                    + this.__name()), tttt, true);
           } finally {
             try {
               this.m_paths.close();
             } catch (final Throwable ttttt) {
               error = ErrorUtils.aggregateError(ttttt, error);
-              ErrorUtils
-                  .logError(
-                      this.m_logger,//
-                      ("Error during closing the FileProducerSupport (probably caused by the invoked handler routine) during finalization of" //$NON-NLS-1$
-                      + this.__name()), ttttt, true);
             } finally {
               this.m_paths = null;
             }
@@ -616,9 +595,9 @@ public class Document extends DocumentElement implements IDocument {
       }
     }
     if (error != null) {
-      ErrorUtils.throwRuntimeException(//
-          "Error during finalization of" + this.__name(), //$NON-NLS-1$          
-          error);
+      ErrorUtils.logError(log,//
+          ("Error during finalization of" + this.__name()), //$NON-NLS-1$          
+          error, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
     }
   }
 

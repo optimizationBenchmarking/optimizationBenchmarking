@@ -6,6 +6,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 
@@ -51,10 +52,10 @@ public final class StrokePaletteXMLInput extends
     }
 
     if (rec != null) {
-      ErrorUtils
-          .throwIOException(//
+      RethrowMode.THROW_AS_IO_EXCEPTION
+          .rethrow(//
               "Error during loading of XML Schema for the stroke palette xml.", //$NON-NLS-1$
-              rec);
+              true, rec);
     }
   }
 

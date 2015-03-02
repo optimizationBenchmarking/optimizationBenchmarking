@@ -16,6 +16,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExpe
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetStatistic;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentStatistic;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -258,8 +259,8 @@ final class _ModulesBuilder {
           .logError(
               logger,
               "Unrecoverable error during compiliation of module list. Maybe there are unresolved dependencies.", //$NON-NLS-1$
-              re, false);
-      throw re;
+              re, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+      return null; // never reached
     }
 
     _ModulesBuilder._checkModules(modules, mto);
@@ -371,8 +372,8 @@ final class _ModulesBuilder {
           .logError(
               logger,
               "Unrecoverable during module configuration process. Maybe you did not specify modules that can actually compute a statistic over the provided data.", //$NON-NLS-1$
-              re, false);
-      throw re;
+              re, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+      return null;// never reached
     }
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
@@ -563,8 +564,8 @@ final class _ModulesBuilder {
     } catch (final RuntimeException re) {
       ErrorUtils.logError(logger, //
           "Unrecoverable error while building array of module wrappers.",//$NON-NLS-1$
-          re, false);
-      throw re;
+          re, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+      return null;// never reached
     }
 
     return res;
@@ -866,8 +867,8 @@ final class _ModulesBuilder {
           .logError(
               logger,
               "Unrecoverable error while building module hierarchy and wrappers.",//$NON-NLS-1$
-              re, false);
-      throw re;
+              re, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+      return null;// never reached
     }
 
     return new _Modules(logger, desc, experimentStatistics,

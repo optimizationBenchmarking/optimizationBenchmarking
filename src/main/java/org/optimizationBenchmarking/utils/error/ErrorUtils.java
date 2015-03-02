@@ -1,27 +1,67 @@
 package org.optimizationBenchmarking.utils.error;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** Some utilities to deal with errors */
 public final class ErrorUtils {
 
   /**
-   * Aggregate two errors or aggregation handles
+   * Turn a non-{@code null} object into an instance of
+   * {@link java.lang.Throwable}.
+   * 
+   * @param object
+   *          the object
+   * @return the {@link java.lang.Throwable}
+   */
+  static final Throwable _throwable(final Object object) {
+
+    if (object instanceof Throwable) {
+      return ((Throwable) object);
+    }
+
+    return new IllegalArgumentException(
+        (((("Can only aggregate errors or aggregation handles, but tried to aggregate an instance of " + //$NON-NLS-1$
+        TextUtils.className(object.getClass())) + " with String representation '") + object.toString()) + //$NON-NLS-1$
+        '\'') + '.');
+  }
+
+  /**
+   * <p>
+   * Aggregate errors (instances of {@link java.lang.Throwable} or
+   * aggregation handles. The goal of this method is to collect several
+   * exceptions that may, together, lead to the failure of one routine. The
+   * collected errors can then be thrown together, as new error if
+   * necessary. The return value is an "error aggregation handle" which
+   * must be used instead of both {@code aggregationHandleOrError1} and
+   * {@code aggregationHandleOrError2}.
+   * </p>
+   * <p>
+   * The resulting handles can be processed by the
+   * {@link #logError(Logger, Level, String, Object, boolean, RethrowMode)}
+   * -family of functions as well as by the instances of
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode}.
    * 
    * @param aggregationHandleOrError1
-   *          the first error or aggregation handle
+   *          the first error or aggregation handle, or {@code null} if no
+   *          error was aggregated in this parameter
    * @param aggregationHandleOrError2
-   *          the second error or aggregation handle
-   * @return the aggregation handle
+   *          the second error or aggregation handle, or {@code null} if no
+   *          error was aggregated in this parameter
+   * @return the aggregation handle, or {@code null} if both
+   *         {@code aggregationHandleOrError1} and
+   *         {@code aggregationHandleOrError2} were {@code null}
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public static final Object aggregateError(
       final Object aggregationHandleOrError1,
       final Object aggregationHandleOrError2) {
     final ArrayList<Throwable> useHandle;
+    final Collection<Throwable> col;
 
     if (aggregationHandleOrError1 == null) {
       return aggregationHandleOrError2;
@@ -30,104 +70,31 @@ public final class ErrorUtils {
       return aggregationHandleOrError1;
     }
 
-    if (aggregationHandleOrError1 instanceof Throwable) {
-      if (aggregationHandleOrError2 instanceof ArrayList) {
-        useHandle = ((ArrayList) (aggregationHandleOrError2));
-        useHandle.add((Throwable) aggregationHandleOrError1);
-        return useHandle;
+    if (aggregationHandleOrError1 instanceof Collection) {
+      if (aggregationHandleOrError2 instanceof Iterable) {
+        col = ((Collection) aggregationHandleOrError1);
+        for (final Object t : ((Iterable) aggregationHandleOrError2)) {
+          if (t != null) {
+            col.add(ErrorUtils._throwable(t));
+          }
+        }
+      } else {
+        ((Collection) aggregationHandleOrError1).add(//
+            ErrorUtils._throwable(aggregationHandleOrError2));
       }
-      useHandle = new ArrayList<>();
-      useHandle.add((Throwable) aggregationHandleOrError1);
-      useHandle.add((Throwable) aggregationHandleOrError2);
-      return useHandle;
+      return aggregationHandleOrError1;
     }
 
-    useHandle = ((ArrayList) aggregationHandleOrError1);
-    if (aggregationHandleOrError2 instanceof ArrayList) {
-      useHandle.addAll((ArrayList) aggregationHandleOrError2);
-    } else {
-      useHandle.add((Throwable) aggregationHandleOrError2);
+    if (aggregationHandleOrError2 instanceof Collection) {
+      ((Collection) aggregationHandleOrError2).add(//
+          ErrorUtils._throwable(aggregationHandleOrError1));
+      return aggregationHandleOrError2;
     }
+
+    useHandle = new ArrayList<>();
+    useHandle.add(ErrorUtils._throwable(aggregationHandleOrError1));
+    useHandle.add(ErrorUtils._throwable(aggregationHandleOrError2));
     return useHandle;
-  }
-
-  /**
-   * Throw an aggregated error as {@link java.lang.RuntimeException}
-   * 
-   * @param message
-   *          the error message
-   * @param aggregationHandle
-   * @throws RuntimeException
-   *           will <em>always</em> be thrown
-   */
-  @SuppressWarnings("unchecked")
-  public static final void throwRuntimeException(final String message,
-      final Object aggregationHandle) throws RuntimeException {
-    final RuntimeException re;
-
-    if (aggregationHandle instanceof Throwable) {
-      if (message != null) {
-        throw new RuntimeException(message,
-            ((Throwable) aggregationHandle));
-      }
-      if (aggregationHandle instanceof RuntimeException) {
-        throw ((RuntimeException) aggregationHandle);
-      }
-      throw new RuntimeException(((Throwable) aggregationHandle));
-    }
-
-    if (message != null) {
-      re = new RuntimeException(message);
-    } else {
-      re = new RuntimeException();
-    }
-
-    if (aggregationHandle instanceof ArrayList) {
-      for (final Throwable t : ((ArrayList<Throwable>) aggregationHandle)) {
-        re.addSuppressed(t);
-      }
-    }
-
-    throw re;
-  }
-
-  /**
-   * Throw an aggregated error as {@link java.io.IOException}
-   * 
-   * @param message
-   *          the error message
-   * @param aggregationHandle
-   * @throws IOException
-   *           will <em>always</em> be thrown
-   */
-  @SuppressWarnings("unchecked")
-  public static final void throwIOException(final String message,
-      final Object aggregationHandle) throws IOException {
-    final IOException re;
-
-    if (aggregationHandle instanceof Throwable) {
-      if (message != null) {
-        throw new IOException(message, ((Throwable) aggregationHandle));
-      }
-      if (aggregationHandle instanceof IOException) {
-        throw ((IOException) aggregationHandle);
-      }
-      throw new IOException(((Throwable) aggregationHandle));
-    }
-
-    if (message != null) {
-      re = new IOException(message);
-    } else {
-      re = new IOException();
-    }
-
-    if (aggregationHandle instanceof ArrayList) {
-      for (final Throwable t : ((ArrayList<Throwable>) aggregationHandle)) {
-        re.addSuppressed(t);
-      }
-    }
-
-    throw re;
   }
 
   /**
@@ -141,12 +108,13 @@ public final class ErrorUtils {
 
   /**
    * <p>
-   * Log the {@link java.lang.Throwable error} to a
+   * Log a {@link java.lang.Throwable error} or
+   * {@link #aggregateError(Object, Object) aggregation handle} to a
    * {@link java.util.logging.Logger} with message {@code message}, if
    * <ol>
    * <li>the logger is not {@code null},</li>
    * <li>the logger {@link java.util.logging.Logger#isLoggable(Level) can
-   * log} the log level {@link java.util.logging.Level#SEVERE}, and</li>
+   * log} the specified log {@link java.util.logging.Level level}, and</li>
    * <li>either
    * <ul>
    * <li>the error has not yet been logged to the {@code logger} before or</li>
@@ -155,10 +123,24 @@ public final class ErrorUtils {
    * </li>
    * </ol>
    * <p>
-   * Additionally, {@code message} will be stored in {@code error}. If the
-   * same {@code error} is logged to the same {@code logger} again (with
-   * {@code forceLog==true}) or to another logger, {@code message} will be
-   * listed as well.
+   * Afterwards, depending on the chosen
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode
+   * rethrowMode}, throw the error again (e.g., as
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_IO_EXCEPTION
+   * IOException} or
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_RUNTIME_EXCEPTION
+   * RuntimeException}, or
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#DONT_RETHROW
+   * discard} it.
+   * </p>
+   * <p>
+   * Additionally, {@code message} will be stored in the generated error.
+   * If the error is logged to the same logger and with
+   * {@code forceLog=false} via
+   * {@link #logError(Logger, Level, String, Object, boolean, RethrowMode)}
+   * , it will not be logged. If the same error is logged to the same
+   * {@code logger} again (with {@code forceLog==true}) or to another
+   * logger, {@code message} will be listed as well.
    * </p>
    * <p>
    * This central error logging routine makes sure that the same error is
@@ -180,21 +162,34 @@ public final class ErrorUtils {
    *          the logger to log to
    * @param message
    *          the message
-   * @param error
-   *          the error
+   * @param errorOrAggregationHandle
+   *          the error or aggregation handle: either an instance of
+   *          {@link java.lang.Throwable} or a handle created via
+   *          {@link #aggregateError(Object, Object)}
    * @param forceLog
    *          force logging: always log if the logger is not {@code null}
-   *          and can log the log level
-   *          {@link java.util.logging.Level#SEVERE} is supported
+   *          and can log the log the specified {@code level}
+   * @param rethrowMode
+   *          the
+   *          {@link org.optimizationBenchmarking.utils.error.RethrowMode
+   *          rethrow mode}
+   * @param <T>
+   *          the error type which may be thrown
+   * @throws T
+   *           the error
    */
-  public static final void logError(final Logger logger,
-      final String message, final Throwable error, final boolean forceLog) {
-    ErrorUtils.logError(logger, Level.SEVERE, message, error, forceLog);
+  public static final <T extends Throwable> void logError(
+      final Logger logger, final String message,
+      final Object errorOrAggregationHandle, final boolean forceLog,
+      final RethrowMode<?, T> rethrowMode) throws T {
+    ErrorUtils.logError(logger, Level.SEVERE, message,
+        errorOrAggregationHandle, forceLog, rethrowMode);
   }
 
   /**
    * <p>
-   * Log the {@link java.lang.Throwable error} to a
+   * Log a {@link java.lang.Throwable error} or
+   * {@link #aggregateError(Object, Object) aggregation handle} to a
    * {@link java.util.logging.Logger} with message {@code message}, if
    * <ol>
    * <li>the logger is not {@code null},</li>
@@ -208,10 +203,24 @@ public final class ErrorUtils {
    * </li>
    * </ol>
    * <p>
-   * Additionally, {@code message} will be stored in {@code error}. If the
-   * same {@code error} is logged to the same {@code logger} again (with
-   * {@code forceLog==true}) or to another logger, {@code message} will be
-   * listed as well.
+   * Afterwards, depending on the chosen
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode
+   * rethrowMode}, throw the error again (e.g., as
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_IO_EXCEPTION
+   * IOException} or
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_RUNTIME_EXCEPTION
+   * RuntimeException}, or
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#DONT_RETHROW
+   * discard} it.
+   * </p>
+   * <p>
+   * Additionally, {@code message} will be stored in the generated error.
+   * If the error is logged to the same logger and with
+   * {@code forceLog=false} via
+   * {@link #logError(Logger, Level, String, Object, boolean, RethrowMode)}
+   * , it will not be logged. If the same error is logged to the same
+   * {@code logger} again (with {@code forceLog==true}) or to another
+   * logger, {@code message} will be listed as well.
    * </p>
    * <p>
    * This central error logging routine makes sure that the same error is
@@ -236,25 +245,44 @@ public final class ErrorUtils {
    *          level ({@link java.util.logging.Level#SEVERE})
    * @param message
    *          the message
-   * @param error
-   *          the error
+   * @param errorOrAggregationHandle
+   *          the error or aggregation handle: either an instance of
+   *          {@link java.lang.Throwable} or a handle created via
+   *          {@link #aggregateError(Object, Object)}
    * @param forceLog
    *          force logging: always log if the logger is not {@code null}
    *          and can log the log the specified {@code level}
+   * @param rethrowMode
+   *          the
+   *          {@link org.optimizationBenchmarking.utils.error.RethrowMode
+   *          rethrow mode}
+   * @param <T>
+   *          the error type which may be thrown
+   * @param <G>
+   *          the internal re-throw type
+   * @throws T
+   *           the error
    */
-  public static final void logError(final Logger logger,
-      final Level level, final String message, final Throwable error,
-      final boolean forceLog) {
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public static final <G extends Throwable, T extends Throwable> void logError(
+      final Logger logger, final Level level, final String message,
+      final Object errorOrAggregationHandle, final boolean forceLog,
+      final RethrowMode<G, T> rethrowMode) throws T {
     final boolean isLogged;
+    final RethrowMode<G, T> mode;
+    final G error;
     final String msg;
     final Level useLevel;
 
     useLevel = ((level != null) ? level : Level.SEVERE);
+    mode = ((rethrowMode != null) ? rethrowMode
+        : ((RethrowMode) (RethrowMode.DONT_RETHROW)));
+    error = mode._handleToError(message, false, errorOrAggregationHandle);
 
     // If a logger is provided, then we try to log the error and the
     // message.
     if ((logger != null) && (logger.isLoggable(useLevel))) {
-      isLogged = _LoggedSentinel._hasBeenLogged(error, logger);
+      isLogged = _LoggedSentinel._hasBeenLogged(error, logger, useLevel);
       if (forceLog || (!isLogged)) {
 
         if (message != null) {
@@ -270,9 +298,11 @@ public final class ErrorUtils {
               "Error when logging error message '"//$NON-NLS-1$ 
               + msg) + '\'') + '.');
         } finally {
-          _LoggedSentinel._markAsLogged(error, msg, logger);
+          _LoggedSentinel._markAsLogged(error, msg, logger, useLevel);
         }
       }
     }
+
+    mode._rethrow(error);
   }
 }

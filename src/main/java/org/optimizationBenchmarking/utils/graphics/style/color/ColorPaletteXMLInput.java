@@ -6,6 +6,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 
@@ -51,10 +52,10 @@ public final class ColorPaletteXMLInput extends
     }
 
     if (rec != null) {
-      ErrorUtils
-          .throwIOException(//
+      RethrowMode.THROW_AS_IO_EXCEPTION
+          .rethrow(//
               "Error during loading of the XML Schema for the color style palette XML.", //$NON-NLS-1$
-              rec);
+              true, rec);
     }
   }
 

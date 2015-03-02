@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.hierarchy;
 import java.io.Closeable;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -619,10 +620,10 @@ public class HierarchicalFSM extends FSM implements Closeable {
     this.m_hstate = HierarchicalFSM.STATE_OPENED;
 
     if (error != null) {
-      ErrorUtils
-          .throwRuntimeException(//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+          .rethrow(//
               "Error(s) during flushing the closed children of hierarchical finite state machine " //$NON-NLS-1$
-                  + this, error);
+                  + this, true, error);
     }
   }
 

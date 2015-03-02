@@ -19,6 +19,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
@@ -304,23 +305,24 @@ public final class LaTeXDocument extends Document {
               }
             }
           } catch (final Throwable error2) {
-            ErrorUtils.logError(logger,
+            ErrorUtils.logError(logger, Level.WARNING,
                 (((((((("An error occured while copying resource '" //$NON-NLS-1$
                 + resource) + "' from class ") + //$NON-NLS-1$
                 TextUtils.className(clazz)) + " to document ") + this) + //$NON-NLS-1$
                 " under path '") + path) + //$NON-NLS-1$
                 "'. This may make compiling the document impossible."),//$NON-NLS-1$ 
-                error2, true);
+                error2, true, RethrowMode.DONT_RETHROW);
           }
         } catch (final Throwable error) {
           ErrorUtils
               .logError(
                   logger,
+                  Level.WARNING,
                   (((((("An error occured while creating destination path for resource '" //$NON-NLS-1$
                   + resource) + "' from class ") + //$NON-NLS-1$
                   TextUtils.className(clazz)) + " to document ") + this) + //$NON-NLS-1$
                   ". This may make compiling the document impossible."),//$NON-NLS-1$ 
-                  error, true);
+                  error, true, RethrowMode.DONT_RETHROW);
         }
       }
     } finally {
@@ -665,12 +667,12 @@ public final class LaTeXDocument extends Document {
         }
       }
     } catch (final Throwable error) {
-      ErrorUtils.logError(this.getLogger(),//
+      ErrorUtils.logError(this.getLogger(), Level.WARNING,//
           "Error when loading resource '" //$NON-NLS-1$
               + resource + //
               "' - this will maybe make compiling LaTeX document " //$NON-NLS-1$
               + this + " impossible.",//$NON-NLS-1$ 
-          error, true);
+          error, true, RethrowMode.DONT_RETHROW);
     }
     LaTeXDriver._endLine(dest);
   }
@@ -683,7 +685,6 @@ public final class LaTeXDocument extends Document {
    */
   private final void __buildSetupPackage(final Set<IStyle> usedStyles) {
     final AbstractTextOutput out;
-    final String msg;
     String html;
     ColorStyle color;
     int i;
@@ -833,11 +834,12 @@ public final class LaTeXDocument extends Document {
         }
       }
     } catch (final IOException ioError) {
-      msg = (((("Error when creating setup package '" + //$NON-NLS-1$
-      this.m_setupPackagePath) + " for document ") + this) + //$NON-NLS-1$
-      " this is a problem, as compiling the document is now impossible.");//$NON-NLS-1$
-      ErrorUtils.logError(this.getLogger(), msg, ioError, true);
-      ErrorUtils.throwRuntimeException(msg, ioError);
+      ErrorUtils
+          .logError(this.getLogger(), Level.WARNING,
+              (((("Error when creating setup package '" + //$NON-NLS-1$
+              this.m_setupPackagePath) + " for document ") + this) + //$NON-NLS-1$
+              " this is a problem, as compiling the document is now impossible."),//$NON-NLS-1$
+              ioError, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
     }
   }
 
@@ -915,7 +917,7 @@ public final class LaTeXDocument extends Document {
               (("An error occured when trying to compile document '"//$NON-NLS-1$
               + this.toString()) + //
               " but we will ignore this error, as it just means that we did not get a PDF.")//$NON-NLS-1$
-              , error, true);
+              , error, true, RethrowMode.DONT_RETHROW);
     }
   }
 }

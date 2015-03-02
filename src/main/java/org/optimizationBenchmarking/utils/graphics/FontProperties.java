@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -462,7 +463,6 @@ public class FontProperties extends HashObject {
     // load the flags of the known fonts
     static {
       ArrayList<__FontFlags> al;
-      final String msg;
       String s;
 
       al = new ArrayList<>();
@@ -479,10 +479,9 @@ public class FontProperties extends HashObject {
           }
         }
       } catch (final Throwable ioe) {
-        msg = "Error when reading list of known fonts."; //$NON-NLS-1$
         ErrorUtils.logError(Configuration.getGlobalLogger(),//
-            msg, ioe, true);
-        ErrorUtils.throwRuntimeException(msg, ioe);
+            "Error when reading list of known fonts.", //$NON-NLS-1$
+            ioe, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
       }
 
       FLAGS = al.toArray(new __FontFlags[al.size()]);

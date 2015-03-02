@@ -24,7 +24,7 @@ import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLHandler;
 import org.optimizationBenchmarking.utils.document.template.DocumentXMLInput;
 import org.optimizationBenchmarking.utils.document.template.IDocumentCallback;
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 
 import examples.org.optimizationBenchmarking.FinishedPrinter;
@@ -138,9 +138,9 @@ public class TemplateDocumentExample extends DocumentExample {
             .addResource(TemplateDocumentExample.class,
                 "exampleTemplate.template").create().call(); //$NON-NLS-1$
       } catch (final IOException ioe) {
-        ErrorUtils.throwRuntimeException(//
+        RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
             "Error while executing document template.",//$NON-NLS-1$
-            ioe);
+            true, ioe);
       }
     }
 

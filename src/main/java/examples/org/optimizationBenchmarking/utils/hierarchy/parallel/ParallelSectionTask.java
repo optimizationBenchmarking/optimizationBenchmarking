@@ -6,7 +6,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalTextOutput;
 import org.optimizationBenchmarking.utils.math.random.LoremIpsum;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -75,9 +75,9 @@ public class ParallelSectionTask extends RecursiveAction {
           y.get();
         }
       } catch (final Throwable tx) {
-        ErrorUtils.throwRuntimeException(//
+        RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
             "Error while waiting for parallel section task.",//$NON-NLS-1$
-            tx);
+            true, tx);
       }
 
       this.m_root.appendLineBreak();

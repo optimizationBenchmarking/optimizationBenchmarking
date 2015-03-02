@@ -32,6 +32,7 @@ import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
@@ -139,9 +140,9 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     try {
       at.invert();
     } catch (final Throwable t) {
-      ErrorUtils.throwRuntimeException(((//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(((//
           "Error while inverting transform ") + at),//$NON-NLS-1$
-          t);
+          true, t);
     }
 
     r = this.getDeviceConfiguration().getBounds();
@@ -198,7 +199,6 @@ public abstract class Graphic extends Graphics2D implements Closeable,
   @Override
   public synchronized final void close() {
     final ArrayListView v;
-    final String msg;
     String s;
 
     if (this.m_closed) {
@@ -230,10 +230,9 @@ public abstract class Graphic extends Graphics2D implements Closeable,
       if (s == null) {
         s = this.__name();
       }
-      msg = ("Error when closing " //$NON-NLS-1$
-      + s);
-      ErrorUtils.logError(this.m_log, msg, t, false);
-      ErrorUtils.throwRuntimeException(msg, t);
+
+      ErrorUtils.logError(this.m_log, ("Error when closing " //$NON-NLS-1$
+          + s), t, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
     }
 
     if ((this.m_log != null) && (this.m_log.isLoggable(Level.FINEST))) {

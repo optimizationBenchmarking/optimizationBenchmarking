@@ -11,6 +11,7 @@ import javax.xml.validation.SchemaFactory;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentXMLInput;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -70,10 +71,10 @@ public final class EDIInput extends ExperimentXMLInput {
     }
 
     if (rec != null) {
-      ErrorUtils
-          .throwIOException(//
+      RethrowMode.THROW_AS_IO_EXCEPTION
+          .rethrow(//
               "Error while loading XML Schema for Experiment Data Interchange (EDI).",//$NON-NLS-1$
-              rec);
+              true, rec);
     }
   }
 

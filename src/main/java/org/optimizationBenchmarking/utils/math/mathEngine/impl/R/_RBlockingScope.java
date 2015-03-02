@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 
 /**
@@ -69,9 +70,9 @@ abstract class _RBlockingScope extends _RScope {
 
     if (error != null) {
       try {
-        ErrorUtils.throwIOException(//
+        RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
             "Error while closing blocking scope of R engine.", //$NON-NLS-1$
-            error);
+            true, error);
       } catch (final Throwable t) {
         this.m_engine._handleError(t);
       }

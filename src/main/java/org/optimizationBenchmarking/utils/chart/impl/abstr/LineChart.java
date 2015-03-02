@@ -10,6 +10,7 @@ import org.optimizationBenchmarking.utils.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.chart.spec.ILineChart;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
@@ -138,7 +139,6 @@ public class LineChart extends AxisChart implements ILineChart {
   /** {@inheritDoc} */
   @Override
   protected synchronized void onClose() {
-    final String msg;
     Logger logger;
     Graphic graphic;
     CompiledLineChart chart;
@@ -169,10 +169,11 @@ public class LineChart extends AxisChart implements ILineChart {
       this.m_lines = null;
       this.m_driver.renderLineChart(chart, graphic, logger);
     } catch (final Throwable error) {
-      msg = ("Unrecoverable error during rendering of compiled line chart #" //$NON-NLS-1$
-      + this._id());
-      ErrorUtils.logError(logger, msg, error, true);
-      ErrorUtils.throwRuntimeException(msg, error);
+      ErrorUtils.logError(
+          logger,
+          ("Unrecoverable error during rendering of compiled line chart #" //$NON-NLS-1$
+          + this._id()), error, true,
+          RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
     } finally {
       this.m_lines = null;
       this.m_xAxis = null;

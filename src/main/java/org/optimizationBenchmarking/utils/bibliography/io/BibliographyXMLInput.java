@@ -7,6 +7,7 @@ import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 import org.xml.sax.helpers.DefaultHandler;
@@ -64,9 +65,9 @@ public final class BibliographyXMLInput extends
     }
 
     if (rec != null) {
-      ErrorUtils.throwIOException(//
+      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
           "Error during loading the XML Schema for BibliographyXML.", //$NON-NLS-1$
-          rec);//
+          true, rec);//
     }
   }
 

@@ -17,7 +17,7 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageOutputStream;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicProxy;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
@@ -209,9 +209,9 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
         super.onClose();
       }
     } catch (final Throwable tt) {
-      ErrorUtils.throwRuntimeException((//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((//
           "Error while finalizing " + //$NON-NLS-1$
-          this.getClass().getSimpleName()), tt);
+          this.getClass().getSimpleName()), true, tt);
     }
   }
 }

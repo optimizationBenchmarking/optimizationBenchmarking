@@ -33,6 +33,7 @@ import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.spec.IInputJobBuilder;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -139,8 +140,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     } catch (final RuntimeException re) {
       ErrorUtils.logError(logger,
           "Unrecoverable error while parsing the authors parameter.", //$NON-NLS-1$
-          re, false);
-      throw re;
+          re, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
     }
   }
 
@@ -277,7 +277,6 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    * @return the experiment set
    */
   private final ExperimentSet __loadData(final Logger logger) {
-    final String msg;
     ExperimentSet data;
     MemoryTextOutput text;
 
@@ -289,9 +288,11 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       data = this._takeInput().getExperimentSet();
     } catch (final Exception ex) {
       data = null;
-      msg = "Unrecoverable error during the process of obtaining the input data."; //$NON-NLS-1$
-      ErrorUtils.logError(logger, msg, ex, false);
-      ErrorUtils.throwRuntimeException(msg, ex);
+      ErrorUtils
+          .logError(
+              logger,//
+              "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
+              ex, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
       return null;// will never be reached
     }
 
@@ -558,8 +559,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
           .logError(
               logger,
               "Unrecoverable error during the process of allocating the output document.", //$NON-NLS-1$
-              error, false);
-      throw new RuntimeException(error);// this will never be reached
+              error, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
     }
 
     if (doc == null) {

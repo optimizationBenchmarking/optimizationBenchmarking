@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.parsers.BooleanParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedByteParser;
@@ -244,10 +244,10 @@ public final class Configuration implements Serializable, ITextable {
         parser.parseObject(retVal);
       }
       return retVal;
-    } catch (final Exception tt) {
-      ErrorUtils.throwRuntimeException(//
+    } catch (final Throwable tt) {
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
           ("Error while trying to obtain key '" + key + '\''), //$NON-NLS-1$
-          tt);
+          true, tt);
     }
     return null;
   }

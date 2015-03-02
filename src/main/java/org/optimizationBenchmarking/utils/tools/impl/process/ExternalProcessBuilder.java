@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.NullInputStream;
 import org.optimizationBenchmarking.utils.io.NullOutputStream;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
@@ -426,8 +427,9 @@ public final class ExternalProcessBuilder extends
     try {
       process = this.m_pb.start();
     } catch (final IOException ioe) {
-      ErrorUtils.logError(log, ("Error when starting " + name), ioe, true); //$NON-NLS-1$
-      throw ioe;
+      ErrorUtils.logError(log, ("Error when starting " + name), ioe, true,//$NON-NLS-1$
+          RethrowMode.THROW_AS_IO_EXCEPTION);
+      return null; // never reached
     }
 
     external = new ExternalProcess(process, log, name);

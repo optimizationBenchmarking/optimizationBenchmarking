@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.text.textOutput;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 
 /**
  * A version of the text output wrapped around an
@@ -28,10 +28,11 @@ final class _BufferedWriterWrappedTextOutput extends
     try {
       this.m_out.newLine();
     } catch (final IOException ioe) {
-      ErrorUtils
-          .throwRuntimeException(//
-              "Error while trying to append line break to _AppendableWriterWrappedTextOutput.", //$NON-NLS-1$
-              ioe);
+
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+          .rethrow(//
+              "Error while trying to append line break to _BufferedWriterWrappedTextOutput.", //$NON-NLS-1$
+              true, ioe);
     }
   }
 }

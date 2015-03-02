@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.text.numbers;
 
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 
 /** a floating point number encoded as a character string */
 final class _CharFloat implements Cloneable {
@@ -291,9 +291,9 @@ final class _CharFloat implements Cloneable {
       r.m_data = this.m_data.clone();
       return r;
     } catch (final CloneNotSupportedException cnse) {
-      ErrorUtils.throwRuntimeException(//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while cloning _CharFloat. This should never happen.", //$NON-NLS-1$
-          cnse);
+          true, cnse);
       return null;
     }
   }

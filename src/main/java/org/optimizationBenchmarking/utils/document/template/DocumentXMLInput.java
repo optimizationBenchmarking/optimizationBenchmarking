@@ -6,6 +6,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 import org.xml.sax.helpers.DefaultHandler;
@@ -65,10 +66,10 @@ public final class DocumentXMLInput extends
     }
 
     if (rec != null) {
-      ErrorUtils
-          .throwIOException(//
+      RethrowMode.THROW_AS_IO_EXCEPTION
+          .rethrow(//
               "Error during loading of XML Schema for DocumentXML (the template language of the Document API).", //$NON-NLS-1$
-              rec);
+              true, rec);
     }
   }
 

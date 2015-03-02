@@ -51,6 +51,7 @@ import org.optimizationBenchmarking.utils.document.spec.ITableRow;
 import org.optimizationBenchmarking.utils.document.spec.ITableSection;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.IStyle;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
@@ -571,9 +572,9 @@ public class RandomDocumentExample extends DocumentExample {
       error = ErrorUtils.aggregateError(t, error);
     }
     if (error != null) {
-      ErrorUtils.throwRuntimeException(//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while building a section of the example document", //$NON-NLS-1$
-          error);
+          true, error);
     }
   }
 
@@ -873,9 +874,9 @@ public class RandomDocumentExample extends DocumentExample {
       error = ErrorUtils.aggregateError(a, error);
     }
     if (error != null) {
-      ErrorUtils.throwRuntimeException(//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while adding text to example document.", //$NON-NLS-1$
-          error);
+          true, error);
     }
   }
 
@@ -1129,10 +1130,10 @@ public class RandomDocumentExample extends DocumentExample {
     }
 
     if (error != null) {
-      ErrorUtils
-          .throwRuntimeException(//
+      RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+          .rethrow(//
               "Error while creating the global structure of the example document.",//$NON-NLS-1$
-              error);
+              true, error);
     }
   }
 
