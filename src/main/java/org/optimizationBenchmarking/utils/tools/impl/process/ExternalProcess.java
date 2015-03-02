@@ -343,7 +343,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
     if (error != null) {
       if (kill) {
         ErrorUtils.logError(logger, "Error while forcefully killing ",//$NON-NLS-1$
-            error, true, RethrowMode.THROW_AS_IO_EXCEPTION);
+            error, true, RethrowMode.AS_IO_EXCEPTION);
       }
 
       ErrorUtils.logError(logger, "Error while gracefully shutting down ",//$NON-NLS-1$

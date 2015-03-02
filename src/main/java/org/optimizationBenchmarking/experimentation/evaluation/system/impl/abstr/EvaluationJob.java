@@ -67,7 +67,7 @@ public abstract class EvaluationJob<M extends ConfiguredModule> extends
       ErrorUtils.logError(logger,
           ("Severe error during execution of "//$NON-NLS-1$ 
           + this.toString()), throwable, false,
-          RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+          RethrowMode.AS_RUNTIME_EXCEPTION);
     }
 
     if ((logger != null) && (logger.isLoggable(level))) {

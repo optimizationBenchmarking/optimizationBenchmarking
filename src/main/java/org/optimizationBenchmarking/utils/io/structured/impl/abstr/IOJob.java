@@ -168,7 +168,7 @@ public class IOJob extends ToolJob {
     }
 
     ErrorUtils.logError(this.getLogger(), msg, throwable, true,
-        RethrowMode.THROW_AS_IO_EXCEPTION);
+        RethrowMode.AS_IO_EXCEPTION);
   }
 
   /**

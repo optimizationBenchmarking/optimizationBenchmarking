@@ -36,7 +36,7 @@ final class _LSConfigurationXMLInput extends SimpleLSInput {
         return ConfigurationXMLConstants.NAMESPACE_URI.toURL()
             .openStream();
       } catch (final Throwable ttt) {
-        RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+        RethrowMode.AS_RUNTIME_EXCEPTION
             .rethrow(//
                 "Error while creating input stream to Configuration XML Schema.", //$NON-NLS-1$
                 true, ErrorUtils.aggregateError(tt, ttt));

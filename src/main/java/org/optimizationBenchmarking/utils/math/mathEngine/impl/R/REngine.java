@@ -121,7 +121,7 @@ public final class REngine extends MathEngine {
   final void _handleError(final Object t) {
     ErrorUtils.logError(this.getLogger(),
         ("Error during communication with R in engine " + //$NON-NLS-1$ 
-        this.hashCode()), t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+        this.hashCode()), t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
   }
 
   /** {@inheritDoc} */
@@ -169,7 +169,7 @@ public final class REngine extends MathEngine {
 
     if (error != null) {
       ErrorUtils.logError(logger, ("Error during shutdown of "//$NON-NLS-1$
-          + this.m_id), error, true, RethrowMode.THROW_AS_IO_EXCEPTION);
+          + this.m_id), error, true, RethrowMode.AS_IO_EXCEPTION);
     }
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info(this.m_id + " shut down gracefully.");//$NON-NLS-1$

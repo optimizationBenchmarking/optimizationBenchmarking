@@ -192,7 +192,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     try {
       u = url.toURI();
     } catch (final Throwable t) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while converting document URL '" //$NON-NLS-1$
               + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
           true, t);
@@ -214,7 +214,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     try {
       u = URI.create(url);
     } catch (final Throwable t) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while converting document URL string '"//$NON-NLS-1$
               + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
           true, t);

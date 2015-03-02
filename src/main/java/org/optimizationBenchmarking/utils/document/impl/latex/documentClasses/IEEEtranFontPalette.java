@@ -113,7 +113,7 @@ public final class IEEEtranFontPalette extends FontPalette {
               .logError(
                   logger,
                   "Error while loading the IEEEtran font palette. This will make creating LaTeX documents depending on the IEEEtran document class impossible.",//$NON-NLS-1$
-                  error, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+                  error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
         } catch (final Throwable a) {
           error = a;
         }

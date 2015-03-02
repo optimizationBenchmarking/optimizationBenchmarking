@@ -52,7 +52,7 @@ public final class ColorPaletteXMLInput extends
     }
 
     if (rec != null) {
-      RethrowMode.THROW_AS_IO_EXCEPTION
+      RethrowMode.AS_IO_EXCEPTION
           .rethrow(//
               "Error during loading of the XML Schema for the color style palette XML.", //$NON-NLS-1$
               true, rec);

@@ -572,7 +572,7 @@ public class RandomDocumentExample extends DocumentExample {
       error = ErrorUtils.aggregateError(t, error);
     }
     if (error != null) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while building a section of the example document", //$NON-NLS-1$
           true, error);
     }
@@ -874,7 +874,7 @@ public class RandomDocumentExample extends DocumentExample {
       error = ErrorUtils.aggregateError(a, error);
     }
     if (error != null) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while adding text to example document.", //$NON-NLS-1$
           true, error);
     }
@@ -1130,7 +1130,7 @@ public class RandomDocumentExample extends DocumentExample {
     }
 
     if (error != null) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+      RethrowMode.AS_RUNTIME_EXCEPTION
           .rethrow(//
               "Error while creating the global structure of the example document.",//$NON-NLS-1$
               true, error);

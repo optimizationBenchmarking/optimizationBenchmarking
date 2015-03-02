@@ -114,7 +114,7 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
     try {
       return super.clone();
     } catch (final CloneNotSupportedException t) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while cloning BasicMapEntry.", //$NON-NLS-1$
           true, t);
       return null;// we will never get here

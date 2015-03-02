@@ -64,7 +64,7 @@ final class _ConfigurationLoader implements
         ErrorUtils.logError(
             cb.m_data.getLogger(Configuration.PARAM_LOGGER, null),//
             "Severe error during setup.", //$NON-NLS-1$
-            tt, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+            tt, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       }
       return cb.compile();
     }

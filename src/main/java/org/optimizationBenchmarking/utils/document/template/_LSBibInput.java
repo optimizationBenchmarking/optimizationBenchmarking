@@ -35,7 +35,7 @@ final class _LSBibInput extends SimpleLSInput {
       try {
         return BibliographyXML.NAMESPACE_URI.toURL().openStream();
       } catch (final Throwable ttt) {
-        RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+        RethrowMode.AS_RUNTIME_EXCEPTION
             .rethrow(//
                 "Error while opening input stream to bibliography XML Schema.", //$NON-NLS-1$
                 true, ErrorUtils.aggregateError(tt, ttt));

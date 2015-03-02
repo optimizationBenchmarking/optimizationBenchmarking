@@ -65,7 +65,7 @@ public final class BibliographyXMLInput extends
     }
 
     if (rec != null) {
-      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
+      RethrowMode.AS_IO_EXCEPTION.rethrow(//
           "Error during loading the XML Schema for BibliographyXML.", //$NON-NLS-1$
           true, rec);//
     }

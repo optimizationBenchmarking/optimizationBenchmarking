@@ -71,7 +71,7 @@ public final class EDIInput extends ExperimentXMLInput {
     }
 
     if (rec != null) {
-      RethrowMode.THROW_AS_IO_EXCEPTION
+      RethrowMode.AS_IO_EXCEPTION
           .rethrow(//
               "Error while loading XML Schema for Experiment Data Interchange (EDI).",//$NON-NLS-1$
               true, rec);

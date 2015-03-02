@@ -32,7 +32,7 @@ class _WriterWrappedTextOutputBase<W extends Writer> extends
     try {
       this.m_out.append(csq);
     } catch (final IOException ioe) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow((//
           "Error while trying to append CharSequence to " //$NON-NLS-1$
           + TextUtils.className(this.getClass())), true, ioe);
     }
@@ -45,7 +45,7 @@ class _WriterWrappedTextOutputBase<W extends Writer> extends
     try {
       this.m_out.write(chars);
     } catch (final IOException ioe) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow((//
           "Error while trying to append char[] to " //$NON-NLS-1$
           + TextUtils.className(this.getClass())), true, ioe);
     }
@@ -57,7 +57,7 @@ class _WriterWrappedTextOutputBase<W extends Writer> extends
     try {
       this.m_out.write(s);
     } catch (final IOException ioe) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow((//
           "Error while trying to append String to " //$NON-NLS-1$
           + TextUtils.className(this.getClass())), true, ioe);
     }
@@ -70,7 +70,7 @@ class _WriterWrappedTextOutputBase<W extends Writer> extends
     try {
       this.m_out.append(csq, start, end);
     } catch (final IOException ioe) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow((//
           "Error while trying to append part of CharSequence to " //$NON-NLS-1$
           + TextUtils.className(this.getClass())), true, ioe);
     }
@@ -83,7 +83,7 @@ class _WriterWrappedTextOutputBase<W extends Writer> extends
     try {
       this.m_out.write(c);
     } catch (final IOException ioe) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow((//
           "Error while trying to append char to " //$NON-NLS-1$
           + TextUtils.className(this.getClass())), true, ioe);
     }
@@ -96,7 +96,7 @@ class _WriterWrappedTextOutputBase<W extends Writer> extends
     try {
       this.m_out.flush();
     } catch (final IOException ioe) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow((//
           "Error while trying to flush " //$NON-NLS-1$
           + TextUtils.className(this.getClass())), true, ioe);
     }
@@ -109,7 +109,7 @@ class _WriterWrappedTextOutputBase<W extends Writer> extends
     try {
       this.m_out.write(chars, start, (end - start));
     } catch (final IOException ioe) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow((//
           "Error while trying to append part of char[] to " //$NON-NLS-1$
           + TextUtils.className(this.getClass())), true, ioe);
     }
@@ -121,7 +121,7 @@ class _WriterWrappedTextOutputBase<W extends Writer> extends
     try {
       this.m_out.write(s, start, (end - start));
     } catch (final IOException ioe) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow((//
           "Error while trying to append part of String to " //$NON-NLS-1$
           + TextUtils.className(this.getClass())), true, ioe);
     }

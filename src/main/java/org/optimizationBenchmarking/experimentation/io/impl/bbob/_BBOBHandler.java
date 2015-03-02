@@ -392,7 +392,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
 
     if (error != null) {
       try {
-        RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
+        RethrowMode.AS_IO_EXCEPTION.rethrow(//
             ("Error while processing folder " + dir), //$NON-NLS-1$
             true, error);
       } catch (final Throwable t) {
@@ -508,7 +508,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
     }
 
     if (error != null) {
-      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
+      RethrowMode.AS_IO_EXCEPTION.rethrow(//
           ("Error while applying BBOBHandler to directory " + dir),//$NON-NLS-1$
           true, error);
     }

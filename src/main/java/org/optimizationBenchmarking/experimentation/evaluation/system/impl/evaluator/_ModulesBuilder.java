@@ -259,7 +259,7 @@ final class _ModulesBuilder {
           .logError(
               logger,
               "Unrecoverable error during compiliation of module list. Maybe there are unresolved dependencies.", //$NON-NLS-1$
-              re, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+              re, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       return null; // never reached
     }
 
@@ -372,7 +372,7 @@ final class _ModulesBuilder {
           .logError(
               logger,
               "Unrecoverable during module configuration process. Maybe you did not specify modules that can actually compute a statistic over the provided data.", //$NON-NLS-1$
-              re, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+              re, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       return null;// never reached
     }
 
@@ -564,7 +564,7 @@ final class _ModulesBuilder {
     } catch (final RuntimeException re) {
       ErrorUtils.logError(logger, //
           "Unrecoverable error while building array of module wrappers.",//$NON-NLS-1$
-          re, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+          re, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       return null;// never reached
     }
 
@@ -867,7 +867,7 @@ final class _ModulesBuilder {
           .logError(
               logger,
               "Unrecoverable error while building module hierarchy and wrappers.",//$NON-NLS-1$
-              re, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+              re, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       return null;// never reached
     }
 

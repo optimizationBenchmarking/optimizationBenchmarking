@@ -115,7 +115,7 @@ public final class LaTeXDefaultFontPalette extends FontPalette {
               .logError(
                   logger, //
                   "Error while loading the default font palette for the LaTeX Document Driver. This will creating LaTeX documents using this palette impossible.",//$NON-NLS-1$ error, true);
-                  error, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+                  error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
         } catch (final Throwable a) {
           error = a;
         }

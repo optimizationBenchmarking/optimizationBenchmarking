@@ -839,7 +839,7 @@ public final class LaTeXDocument extends Document {
               (((("Error when creating setup package '" + //$NON-NLS-1$
               this.m_setupPackagePath) + " for document ") + this) + //$NON-NLS-1$
               " this is a problem, as compiling the document is now impossible."),//$NON-NLS-1$
-              ioError, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+              ioError, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
 

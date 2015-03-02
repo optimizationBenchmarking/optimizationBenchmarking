@@ -29,7 +29,7 @@ final class _BufferedWriterWrappedTextOutput extends
       this.m_out.newLine();
     } catch (final IOException ioe) {
 
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+      RethrowMode.AS_RUNTIME_EXCEPTION
           .rethrow(//
               "Error while trying to append line break to _BufferedWriterWrappedTextOutput.", //$NON-NLS-1$
               true, ioe);

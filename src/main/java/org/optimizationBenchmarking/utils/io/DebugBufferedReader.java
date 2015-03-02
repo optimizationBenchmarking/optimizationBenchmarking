@@ -192,7 +192,7 @@ public class DebugBufferedReader extends BufferedReader {
           ioe.printStackTrace(this.m_debug);
           this.m_debug.flush();
         }
-        RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(msg, true, tt);
+        RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(msg, true, tt);
       }
     }
     return false;

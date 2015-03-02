@@ -160,7 +160,7 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
     try {
       stream = PathUtils.openOutputStream(path);
     } catch (final Throwable thro) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow((((//
           "Error while opening OutputStream '") //$NON-NLS-1$
           + path) + "' for FreeHEPSVGGraphic."), //$NON-NLS-1$
           true, thro);

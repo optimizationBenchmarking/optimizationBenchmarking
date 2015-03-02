@@ -94,7 +94,7 @@ public final class DefaultColorPalette extends ColorPalette {
             .logError(
                 logger,//
                 "Error while loading the default color palette. This will have severe (as in 'deadly') implications on graphics or documents depending on it.",//$NON-NLS-1$, 
-                t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+                t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
 
       }
 

@@ -100,7 +100,7 @@ public final class DefaultStrokePalette extends StrokePalette {
             .logError(
                 logger,
                 "Error while loading the default stroke palette. This palette will not be available.",//$NON-NLS-1$
-                t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+                t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
       }
 
       INSTANCE = ((DefaultStrokePalette) pal);

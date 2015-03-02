@@ -62,7 +62,7 @@ public class ErrorTest {
           .logError(
               log2,
               "Fourth attemt to log error to second logger, now with forceLog set to false but rethrow mode set to IOException.", //$NON-NLS-1$
-              error, false, RethrowMode.THROW_AS_IO_EXCEPTION);
+              error, false, RethrowMode.AS_IO_EXCEPTION);
     } catch (final Throwable t) {
       try {
         ErrorUtils
@@ -70,7 +70,7 @@ public class ErrorTest {
                 log2,
                 "Attemt to log caught error to second logger, now with forceLog set to false but rethrow mode set to RuntimeException.", //$NON-NLS-1$
                 ErrorUtils.aggregateError(error, t), false,
-                RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+                RethrowMode.AS_RUNTIME_EXCEPTION);
       } catch (final Throwable tt) {
         ErrorUtils
             .logError(

@@ -53,7 +53,7 @@ public final class ConfigurationXMLInput extends
     }
 
     if (rec != null) {
-      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
+      RethrowMode.AS_IO_EXCEPTION.rethrow(//
           "Error while loading the XML Schema for ConfigurationXML.", //$NON-NLS-1$
           true, rec);
     }

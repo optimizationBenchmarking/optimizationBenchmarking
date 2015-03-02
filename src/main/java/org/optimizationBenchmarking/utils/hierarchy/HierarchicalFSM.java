@@ -620,7 +620,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
     this.m_hstate = HierarchicalFSM.STATE_OPENED;
 
     if (error != null) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION
+      RethrowMode.AS_RUNTIME_EXCEPTION
           .rethrow(//
               "Error(s) during flushing the closed children of hierarchical finite state machine " //$NON-NLS-1$
                   + this, true, error);

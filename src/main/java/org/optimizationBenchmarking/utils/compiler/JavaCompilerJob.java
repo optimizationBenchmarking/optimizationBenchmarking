@@ -129,7 +129,7 @@ public final class JavaCompilerJob extends ToolJob implements
     } catch (final Throwable t) {
       ErrorUtils.logError(logger,
           "Unrecoverable error during on-the-fly compilation.",//$NON-NLS-1$
-          t, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+          t, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       return null;// will never be reached
     }
   }

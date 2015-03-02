@@ -46,7 +46,7 @@ final class _DiscardInputStream extends _WorkerThread {
     } catch (final Throwable t) {
       ErrorUtils.logError(this.m_log,
           "Error during discarding input stream (by skipping).",//$NON-NLS-1$
-          t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+          t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
 }

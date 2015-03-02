@@ -140,7 +140,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     try {
       at.invert();
     } catch (final Throwable t) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(((//
           "Error while inverting transform ") + at),//$NON-NLS-1$
           true, t);
     }
@@ -232,7 +232,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
       }
 
       ErrorUtils.logError(this.m_log, ("Error when closing " //$NON-NLS-1$
-          + s), t, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+          + s), t, false, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
 
     if ((this.m_log != null) && (this.m_log.isLoggable(Level.FINEST))) {

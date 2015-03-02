@@ -288,7 +288,7 @@ public final class PathUtils {
           StandardOpenOption.WRITE);
     } catch (final Throwable t3) {
       stream = null;
-      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
+      RethrowMode.AS_IO_EXCEPTION.rethrow(//
           (("Error while trying to open an OutputStream to path '" //$NON-NLS-1$
           + path) + '\''), true, //
           ErrorUtils.aggregateError(t3, error));
@@ -323,7 +323,7 @@ public final class PathUtils {
       stream = PathUtils.getFileSystemProvider(path).newInputStream(path,
           StandardOpenOption.READ);
     } catch (final Throwable t3) {
-      RethrowMode.THROW_AS_IO_EXCEPTION.rethrow((((//
+      RethrowMode.AS_IO_EXCEPTION.rethrow((((//
           "Error while trying to open InputStream for path '") + //$NON-NLS-1$
           path) + '\''), true, t3);
       stream = null;

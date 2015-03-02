@@ -169,11 +169,9 @@ public class LineChart extends AxisChart implements ILineChart {
       this.m_lines = null;
       this.m_driver.renderLineChart(chart, graphic, logger);
     } catch (final Throwable error) {
-      ErrorUtils.logError(
-          logger,
+      ErrorUtils.logError(logger,
           ("Unrecoverable error during rendering of compiled line chart #" //$NON-NLS-1$
-          + this._id()), error, true,
-          RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+          + this._id()), error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     } finally {
       this.m_lines = null;
       this.m_xAxis = null;

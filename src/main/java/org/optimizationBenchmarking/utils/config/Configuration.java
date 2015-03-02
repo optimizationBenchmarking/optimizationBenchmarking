@@ -245,7 +245,7 @@ public final class Configuration implements Serializable, ITextable {
       }
       return retVal;
     } catch (final Throwable tt) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow(//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           ("Error while trying to obtain key '" + key + '\''), //$NON-NLS-1$
           true, tt);
     }

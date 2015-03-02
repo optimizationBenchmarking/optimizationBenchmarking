@@ -481,7 +481,7 @@ public class FontProperties extends HashObject {
       } catch (final Throwable ioe) {
         ErrorUtils.logError(Configuration.getGlobalLogger(),//
             "Error when reading list of known fonts.", //$NON-NLS-1$
-            ioe, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+            ioe, true, RethrowMode.AS_RUNTIME_EXCEPTION);
       }
 
       FLAGS = al.toArray(new __FontFlags[al.size()]);

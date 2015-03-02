@@ -270,7 +270,7 @@ final class _XHTML10Document extends Document {
               .logError(
                   this.getLogger(),//
                   "Error while building Cascading Style Sheet (CSS) for XHTML 1.0 Document. This will make the document look odd.", //$NON-NLS-1$
-                  t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+                  t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
         }
 
         this.getFileCollector().addFile(path, EWebFileTypes.CSS);

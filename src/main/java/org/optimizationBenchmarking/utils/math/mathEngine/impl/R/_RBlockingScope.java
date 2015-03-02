@@ -70,7 +70,7 @@ abstract class _RBlockingScope extends _RScope {
 
     if (error != null) {
       try {
-        RethrowMode.THROW_AS_IO_EXCEPTION.rethrow(//
+        RethrowMode.AS_IO_EXCEPTION.rethrow(//
             "Error while closing blocking scope of R engine.", //$NON-NLS-1$
             true, error);
       } catch (final Throwable t) {

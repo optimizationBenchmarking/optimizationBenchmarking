@@ -121,7 +121,7 @@ final class _InputStreamToLogger extends _WorkerThread {
     } catch (final Throwable t) {
       ErrorUtils.logError(logger,//
           "Error during shoveling text from external process to Logger.",//$NON-NLS-1$
-          t, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+          t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
 }

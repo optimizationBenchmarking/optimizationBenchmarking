@@ -4,290 +4,94 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * The rethrow modes.
+ * <p>
+ * A {@link RethrowMode} allows us to "cast" a {@link java.lang.Throwable}
+ * to an arbitrary sub-class such as {@link java.lang.RuntimeException} or
+ * {@link java.io.IOException} and to {@code throw} this new error. There
+ * are three use-cases for this functionality:
+ * </p>
+ * <ol>
+ * <li>Methods which are not allowed to throw a certain type of exception
+ * but call other methods which might do exactly that. One example are
+ * implementations of an API which are not supposed to generate
+ * {@link java.io.IOException}s, but use Java's IO. The methods of our
+ * interface
+ * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput},
+ * for instance, do not throw {@link java.io.IOException}s, as they may be
+ * implemented by working on memory buffers and since otherwise, we would
+ * need a lot of {@code try...catch} code around them in the many places we
+ * use them. However, we also implement this interface as wrapper around
+ * {@link java.io.Writer}s, for instance (see
+ * {@link org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput#wrap(Appendable)}
+ * . These implementations call methods which may cause
+ * {@link java.io.IOException}s but are not allow to throw such exceptions,
+ * so they can simply throw them as {@link #AS_RUNTIME_EXCEPTION
+ * RuntimeException}s.</li>
+ * <li>The second use case is in our advanced
+ * {@link org.optimizationBenchmarking.utils.error.ErrorUtils#logError(java.util.logging.Logger, java.util.logging.Level, String, Object, boolean, RethrowMode)}
+ * error logging provided by class
+ * {@link org.optimizationBenchmarking.utils.error.ErrorUtils}. We can log
+ * an exception to a given {@link java.util.logging.Logger} and then either
+ * {@link #DONT_RETHROW discard it} or directly re-throw it.</li>
+ * <li>Finally, {@link RethrowMode}s are the <em>only</em> way to convert
+ * {@link org.optimizationBenchmarking.utils.error.ErrorUtils#aggregateError(Object, Object)
+ * error aggregation handles} back to exceptions. These handles allow us to
+ * gather one or many errors which together may have caused a process to
+ * fail and (with a {@link RethrowMode}) throw them as one single
+ * exception. This provides additional semantic clarity to whoever is
+ * reading the error logs or receiving the errors: She can clearly see that
+ * a given set of errors belongs together, has together contributed to the
+ * failure of one single process, and she can see the sequence and order of
+ * these errors. Otherwise, there may be multiple entries in an error log
+ * or, if the errors are {@link java.lang.Throwable#printStackTrace()}ed to
+ * different streams, maybe even a corrupted or unclear sequence.</li>
+ * </ol>
  * 
- * @param <G>
- *          the type of generated error
  * @param <T>
  *          the error thrown
  */
-public abstract class RethrowMode<G extends Throwable, T extends Throwable>
-    implements Serializable {
-
-  /** the synthetic message */
-  static final String SYNTHETIC_RUNTIME_EXCEPTION_MSG = //
-  "This is a synthetic RuntimeException generated to wrap one or multiple real exceptions. See the causing and suppressed errors to find the real cause."; //$NON-NLS-1$
+public abstract class RethrowMode<T extends Throwable> implements
+    Serializable {
 
   /**
    * This re-throw mode will consume the error and not re-throw it.
    */
-  public static final RethrowMode<Throwable, RuntimeException> DONT_RETHROW = //
-  new RethrowMode<Throwable, RuntimeException>() {
-
-    /** the serial version uid */
-    private static final long serialVersionUID = 1L;
-
-    /** {@inheritDoc} */
-    @SuppressWarnings("rawtypes")
-    @Override
-    final Throwable _handleToError(final String message,
-        final boolean enforceMessage, final Object handle) {
-      final String useMessage;
-      Throwable re;
-
-      useMessage = ((message != null) ? //
-      (message + ' ' + SYNTHETIC_RUNTIME_EXCEPTION_MSG)
-          : SYNTHETIC_RUNTIME_EXCEPTION_MSG);
-
-      if (handle == null) {
-        // No error handle is provided: generate a new, vanilla
-        // RuntimeException
-        return new RuntimeException(useMessage);
-      }
-
-      if (handle instanceof Throwable) {
-        // OK, handle represents a singular error.
-
-        // If handle either no message is provided or the same message as
-        // stored in handle, we can directly return it.
-        re = ((Throwable) handle);
-
-        if ((message == null) || (!enforceMessage)) {
-          return re;
-        }
-
-        if (message.equals(re.getMessage())) {
-          return re;
-        }
-
-        if (message.equals(re.getLocalizedMessage())) {
-          return re;
-        }
-
-        // handle is a Throwable, but either not a RuntimeException or a
-        // different message is given, so we use handle as cause.
-        return new RuntimeException(useMessage, ((Throwable) handle));
-      }
-
-      // If handle is a collection of errors, we
-      re = new RuntimeException(useMessage);
-
-      if (handle instanceof Iterable) {
-        for (final Object t : ((Iterable) handle)) {
-          if (t != null) {
-            re.addSuppressed(ErrorUtils._throwable(t));
-          }
-        }
-      }
-
-      return re;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    final void _rethrow(final Throwable error) {
-      // do nothing
-    }
-
-    /**
-     * read-resolve
-     * 
-     * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#DONT_RETHROW}
-     */
-    private final Object readResolve() {
-      return RethrowMode.DONT_RETHROW;
-    }
-
-    /**
-     * write-replace
-     * 
-     * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#DONT_RETHROW}
-     */
-    private final Object writeReplace() {
-      return RethrowMode.DONT_RETHROW;
-    }
-  };
+  public static final RethrowMode<RuntimeException> DONT_RETHROW = //
+  new _RethrowModeDontRethrow();
 
   /**
    * This re-throw mode will throw the error as
    * {@link java.lang.RuntimeException}.
    */
-  public static final RethrowMode<RuntimeException, RuntimeException> THROW_AS_RUNTIME_EXCEPTION = //
-  new RethrowMode<RuntimeException, RuntimeException>() {
-
-    /** the serial version uid */
-    private static final long serialVersionUID = 1L;
-
-    /** {@inheritDoc} */
-    @SuppressWarnings("rawtypes")
-    @Override
-    final RuntimeException _handleToError(final String message,
-        final boolean enforceMessage, final Object handle) {
-      final String useMessage;
-      RuntimeException re;
-
-      useMessage = ((message != null) ? //
-      (message + ' ' + SYNTHETIC_RUNTIME_EXCEPTION_MSG)
-          : SYNTHETIC_RUNTIME_EXCEPTION_MSG);
-
-      if (handle == null) {
-        // No error handle is provided: generate a new, vanilla
-        // RuntimeException
-        return new RuntimeException(useMessage);
-      }
-
-      if (handle instanceof Throwable) {
-        // OK, handle represents a singular error.
-
-        if (handle instanceof RuntimeException) {
-          // If handle is a RuntimeException and either no message is
-          // provided or the same message as stored in handle, we can
-          // directly return it.
-          re = ((RuntimeException) handle);
-
-          if ((message == null) || (!enforceMessage)) {
-            return re;
-          }
-
-          if (message.equals(re.getMessage())) {
-            return re;
-          }
-
-          if (message.equals(re.getLocalizedMessage())) {
-            return re;
-          }
-        }
-
-        // handle is a Throwable, but either not a RuntimeException or a
-        // different message is given, so we use handle as cause.
-        return new RuntimeException(useMessage, ((Throwable) handle));
-      }
-
-      // If handle is a collection of errors, we
-      re = new RuntimeException(useMessage);
-
-      if (handle instanceof Iterable) {
-        for (final Object t : ((Iterable) handle)) {
-          if (t != null) {
-            re.addSuppressed(ErrorUtils._throwable(t));
-          }
-        }
-      }
-
-      return re;
-    }
-
-    /**
-     * read-resolve
-     * 
-     * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_RUNTIME_EXCEPTION}
-     */
-    private final Object readResolve() {
-      return RethrowMode.THROW_AS_RUNTIME_EXCEPTION;
-    }
-
-    /**
-     * write-replace
-     * 
-     * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_RUNTIME_EXCEPTION}
-     */
-    private final Object writeReplace() {
-      return RethrowMode.THROW_AS_RUNTIME_EXCEPTION;
-    }
-  };
+  public static final RethrowMode<RuntimeException> AS_RUNTIME_EXCEPTION = //
+  new _RethrowModeRethrowAsRuntimeException();
 
   /**
    * This re-throw mode will throw the error as {@link java.io.IOException}
    * .
    */
-  public static final RethrowMode<IOException, IOException> THROW_AS_IO_EXCEPTION = new RethrowMode<IOException, IOException>() {
+  public static final RethrowMode<IOException> AS_IO_EXCEPTION = //
+  new _RethrowModeRethrowAsIOException();
 
-    /** the serial version uid */
-    private static final long serialVersionUID = 1L;
-    /** the synthetic message */
-    private static final String SYNTHETIC_MSG = //
-    "This is a synthetic IOException generated to wrap one or multiple real exceptions. See the causing and suppressed errors to find the real cause."; //$NON-NLS-1$
-
-    /** {@inheritDoc} */
-    @SuppressWarnings("rawtypes")
-    @Override
-    final IOException _handleToError(final String message,
-        final boolean enforceMessage, final Object handle) {
-      final String useMessage;
-      IOException re;
-
-      useMessage = ((message != null) ? //
-      (message + ' ' + SYNTHETIC_MSG)
-          : SYNTHETIC_MSG);
-
-      if (handle == null) {
-        // No error handle is provided: generate a new, vanilla
-        // IOException
-        return new IOException(useMessage);
-      }
-
-      if (handle instanceof Throwable) {
-        // OK, handle represents a singular error.
-
-        if (handle instanceof IOException) {
-          // If handle is a IOException and either no message is
-          // provided or the same message as stored in handle, we can
-          // directly return it.
-          re = ((IOException) handle);
-
-          if ((message == null) || (!enforceMessage)) {
-            return re;
-          }
-
-          if (message.equals(re.getMessage())) {
-            return re;
-          }
-
-          if (message.equals(re.getLocalizedMessage())) {
-            return re;
-          }
-        }
-
-        // handle is a Throwable, but either not a IOException or a
-        // different message is given, so we use handle as cause.
-        return new IOException(useMessage, ((Throwable) handle));
-      }
-
-      // If handle is a collection of errors, we
-      re = new IOException(useMessage);
-
-      if (handle instanceof Iterable) {
-        for (final Object t : ((Iterable) handle)) {
-          if (t != null) {
-            re.addSuppressed(ErrorUtils._throwable(t));
-          }
-        }
-      }
-
-      return re;
-    }
-
-    /**
-     * read-resolve
-     * 
-     * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_IO_EXCEPTION}
-     */
-    private final Object readResolve() {
-      return RethrowMode.THROW_AS_IO_EXCEPTION;
-    }
-
-    /**
-     * write-replace
-     * 
-     * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_IO_EXCEPTION}
-     */
-    private final Object writeReplace() {
-      return RethrowMode.THROW_AS_IO_EXCEPTION;
-    }
-  };
+  /**
+   * This re-throw mode will throw the error as {@link java.lang.Throwable}
+   * .
+   */
+  public static final RethrowMode<Throwable> AS_THROWABLE = //
+  new _RethrowModeRethrowAsThrowable();
+  /**
+   * This re-throw mode will throw the error as
+   * {@link java.lang.UnsupportedOperationException} .
+   */
+  public static final RethrowMode<UnsupportedOperationException> AS_UNSUPPORTED_OPERATION_EXCEPTION = //
+  new _RethrowModeRethrowAsUnsupportedOperationException();
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
+
+  /** the synthetic message */
+  static final String SYNTHETIC_RUNTIME_EXCEPTION_MSG = //
+  "This is a synthetic instance of java.lang.RuntimeException generated to wrap one or multiple real exceptions. See the causing and suppressed errors to find the real cause."; //$NON-NLS-1$
 
   /** create a new rethrow mode */
   RethrowMode() {
@@ -308,7 +112,7 @@ public abstract class RethrowMode<G extends Throwable, T extends Throwable>
    *          {@link org.optimizationBenchmarking.utils.error.ErrorUtils#aggregateError(Object, Object)}
    * @return the error
    */
-  abstract G _handleToError(final String message,
+  abstract Throwable _handleToError(final String message,
       final boolean enforceMessage, final Object handle);
 
   /**
@@ -342,7 +146,7 @@ public abstract class RethrowMode<G extends Throwable, T extends Throwable>
    *           and here it's thrown
    */
   @SuppressWarnings("unchecked")
-  void _rethrow(final G error) throws T {
+  void _rethrow(final Throwable error) throws T {
     if (error != null) {
       throw ((T) error);
     }

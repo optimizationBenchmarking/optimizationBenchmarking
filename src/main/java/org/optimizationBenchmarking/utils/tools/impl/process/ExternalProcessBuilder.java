@@ -428,7 +428,7 @@ public final class ExternalProcessBuilder extends
       process = this.m_pb.start();
     } catch (final IOException ioe) {
       ErrorUtils.logError(log, ("Error when starting " + name), ioe, true,//$NON-NLS-1$
-          RethrowMode.THROW_AS_IO_EXCEPTION);
+          RethrowMode.AS_IO_EXCEPTION);
       return null; // never reached
     }
 

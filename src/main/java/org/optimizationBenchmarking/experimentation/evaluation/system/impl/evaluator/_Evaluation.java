@@ -140,7 +140,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     } catch (final RuntimeException re) {
       ErrorUtils.logError(logger,
           "Unrecoverable error while parsing the authors parameter.", //$NON-NLS-1$
-          re, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+          re, false, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
 
@@ -292,7 +292,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
           .logError(
               logger,//
               "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
-              ex, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+              ex, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       return null;// will never be reached
     }
 
@@ -559,7 +559,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
           .logError(
               logger,
               "Unrecoverable error during the process of allocating the output document.", //$NON-NLS-1$
-              error, false, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+              error, false, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
 
     if (doc == null) {

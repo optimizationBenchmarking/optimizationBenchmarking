@@ -66,7 +66,7 @@ public final class DocumentXMLInput extends
     }
 
     if (rec != null) {
-      RethrowMode.THROW_AS_IO_EXCEPTION
+      RethrowMode.AS_IO_EXCEPTION
           .rethrow(//
               "Error during loading of XML Schema for DocumentXML (the template language of the Document API).", //$NON-NLS-1$
               true, rec);

@@ -209,7 +209,7 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
         super.onClose();
       }
     } catch (final Throwable tt) {
-      RethrowMode.THROW_AS_RUNTIME_EXCEPTION.rethrow((//
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow((//
           "Error while finalizing " + //$NON-NLS-1$
           this.getClass().getSimpleName()), true, tt);
     }

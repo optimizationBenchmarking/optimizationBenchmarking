@@ -597,7 +597,7 @@ public class Document extends DocumentElement implements IDocument {
     if (error != null) {
       ErrorUtils.logError(log,//
           ("Error during finalization of" + this.__name()), //$NON-NLS-1$          
-          error, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+          error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
 

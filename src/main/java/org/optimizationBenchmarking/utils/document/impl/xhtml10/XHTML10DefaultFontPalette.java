@@ -115,7 +115,7 @@ public final class XHTML10DefaultFontPalette extends FontPalette {
               .logError(
                   logger,//
                   "Error while loading the default font palette for the XHTML 1.0 Document Driver. This will creating XHTML 1.0 documents using this palette impossible.",//$NON-NLS-1$
-                  error, true, RethrowMode.THROW_AS_RUNTIME_EXCEPTION);
+                  error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
         } catch (final Throwable a) {
           error = a;
         }

@@ -35,23 +35,39 @@ public final class ErrorUtils {
    * Aggregate errors (instances of {@link java.lang.Throwable} or
    * aggregation handles. The goal of this method is to collect several
    * exceptions that may, together, lead to the failure of one routine. The
-   * collected errors can then be thrown together, as new error if
-   * necessary. The return value is an "error aggregation handle" which
-   * must be used instead of both {@code aggregationHandleOrError1} and
-   * {@code aggregationHandleOrError2}.
+   * collected errors can then be
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#rethrow(String, boolean, Object)
+   * thrown together}, as new error if necessary, via a certain
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode} or logged
+   * to a {@link java.util.logging.Logger} via the
+   * {@link #logError(Logger, Level, String, Object, boolean, RethrowMode)}
+   * -family of methods.
+   * </p>
+   * <p>
+   * The return value is an "error aggregation handle" which must be used
+   * instead of both {@code aggregationHandleOrError1} and
+   * {@code aggregationHandleOrError2} in all future error processing
+   * routines.
    * </p>
    * <p>
    * The resulting handles can be processed by the
    * {@link #logError(Logger, Level, String, Object, boolean, RethrowMode)}
    * -family of functions as well as by the instances of
    * {@link org.optimizationBenchmarking.utils.error.RethrowMode}.
+   * </p>
    * 
    * @param aggregationHandleOrError1
-   *          the first error or aggregation handle, or {@code null} if no
-   *          error was aggregated in this parameter
+   *          The first error (instance of {@link java.lang.Throwable}) or
+   *          aggregation handle, or {@code null} if no error was
+   *          aggregated in this parameter. The general contract is that
+   *          this error (list) was caused before the one in
+   *          {@code aggregationHandleOrError2}.
    * @param aggregationHandleOrError2
-   *          the second error or aggregation handle, or {@code null} if no
-   *          error was aggregated in this parameter
+   *          The second error (instance of {@link java.lang.Throwable}) or
+   *          aggregation handle, or {@code null} if no error was
+   *          aggregated in this parameter. The general contract is that
+   *          this error (list) was caused after the one in
+   *          {@code aggregationHandleOrError1}.
    * @return the aggregation handle, or {@code null} if both
    *         {@code aggregationHandleOrError1} and
    *         {@code aggregationHandleOrError2} were {@code null}
@@ -126,9 +142,9 @@ public final class ErrorUtils {
    * Afterwards, depending on the chosen
    * {@link org.optimizationBenchmarking.utils.error.RethrowMode
    * rethrowMode}, throw the error again (e.g., as
-   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_IO_EXCEPTION
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_IO_EXCEPTION
    * IOException} or
-   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_RUNTIME_EXCEPTION
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_RUNTIME_EXCEPTION
    * RuntimeException}, or
    * {@link org.optimizationBenchmarking.utils.error.RethrowMode#DONT_RETHROW
    * discard} it.
@@ -181,7 +197,7 @@ public final class ErrorUtils {
   public static final <T extends Throwable> void logError(
       final Logger logger, final String message,
       final Object errorOrAggregationHandle, final boolean forceLog,
-      final RethrowMode<?, T> rethrowMode) throws T {
+      final RethrowMode<T> rethrowMode) throws T {
     ErrorUtils.logError(logger, Level.SEVERE, message,
         errorOrAggregationHandle, forceLog, rethrowMode);
   }
@@ -206,9 +222,9 @@ public final class ErrorUtils {
    * Afterwards, depending on the chosen
    * {@link org.optimizationBenchmarking.utils.error.RethrowMode
    * rethrowMode}, throw the error again (e.g., as
-   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_IO_EXCEPTION
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_IO_EXCEPTION
    * IOException} or
-   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#THROW_AS_RUNTIME_EXCEPTION
+   * {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_RUNTIME_EXCEPTION
    * RuntimeException}, or
    * {@link org.optimizationBenchmarking.utils.error.RethrowMode#DONT_RETHROW
    * discard} it.
@@ -258,19 +274,17 @@ public final class ErrorUtils {
    *          rethrow mode}
    * @param <T>
    *          the error type which may be thrown
-   * @param <G>
-   *          the internal re-throw type
    * @throws T
    *           the error
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  public static final <G extends Throwable, T extends Throwable> void logError(
+  public static final <T extends Throwable> void logError(
       final Logger logger, final Level level, final String message,
       final Object errorOrAggregationHandle, final boolean forceLog,
-      final RethrowMode<G, T> rethrowMode) throws T {
+      final RethrowMode<T> rethrowMode) throws T {
     final boolean isLogged;
-    final RethrowMode<G, T> mode;
-    final G error;
+    final RethrowMode<T> mode;
+    final Throwable error;
     final String msg;
     final Level useLevel;
 
