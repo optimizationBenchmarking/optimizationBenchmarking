@@ -36,9 +36,10 @@ public interface IStyle {
       final ITextOutput dest, final boolean omitDefaults);
 
   /**
-   * Obtain a globally unique ID for this style
+   * Obtain the ID of this style. This id is unique within the owning
+   * palette.
    * 
-   * @return a globally unique ID for this style
+   * @return a unique ID for this style
    */
   public abstract String getID();
 

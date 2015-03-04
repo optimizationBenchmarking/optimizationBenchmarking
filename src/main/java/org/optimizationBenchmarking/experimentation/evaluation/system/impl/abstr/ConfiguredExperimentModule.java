@@ -23,7 +23,7 @@ public abstract class ConfiguredExperimentModule extends ConfiguredModule
   }
 
   /**
-   * create the configured experiment module
+   * create the configured experiment set module
    * 
    * @param setup
    *          the setup
@@ -35,8 +35,8 @@ public abstract class ConfiguredExperimentModule extends ConfiguredModule
 
   /** {@inheritDoc} */
   @Override
-  public Runnable createMainJob(final Experiment data,
+  public void process(final Experiment data,
       final ISectionContainer sectionContainer) {
-    return null;
+    //
   }
 }

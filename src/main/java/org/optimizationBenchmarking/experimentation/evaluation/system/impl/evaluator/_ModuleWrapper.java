@@ -48,11 +48,7 @@ final class _ModuleWrapper extends _PseudoModule {
   /** {@inheritDoc} */
   @Override
   final void _doInitJobs(final ExperimentSet data, final IDocument document) {
-    final Runnable job;
-    job = this.m_module.createInitJob(data, document);
-    if (job != null) {
-      job.run();
-    }
+    this.m_module.initialize(data, document);
     super._doInitJobs(data, document);
   }
 
@@ -60,11 +56,7 @@ final class _ModuleWrapper extends _PseudoModule {
   @Override
   final void _doSummaryJobs(final ExperimentSet data,
       final IPlainText summary) {
-    final Runnable job;
-    job = this.m_module.createSummaryJob(data, summary);
-    if (job != null) {
-      job.run();
-    }
+    this.m_module.summary(data, summary);
     super._doSummaryJobs(data, summary);
   }
 
@@ -78,16 +70,12 @@ final class _ModuleWrapper extends _PseudoModule {
    */
   private final void __do(final DataSet<?> data,
       final ISectionContainer dest) {
-    final Runnable job;
 
     if (data instanceof ExperimentSet) {
 
       if (this.m_module instanceof IConfiguredExperimentSetModule) {
-        job = ((IConfiguredExperimentSetModule) (this.m_module))
-            .createMainJob(((ExperimentSet) data), dest);
-        if (job != null) {
-          job.run();
-        }
+        ((IConfiguredExperimentSetModule) (this.m_module)).process(
+            ((ExperimentSet) data), dest);
         return;
       }
 
@@ -100,11 +88,8 @@ final class _ModuleWrapper extends _PseudoModule {
     if (data instanceof Experiment) {
 
       if (this.m_module instanceof IConfiguredExperimentModule) {
-        job = ((IConfiguredExperimentModule) (this.m_module))
-            .createMainJob(((Experiment) data), dest);
-        if (job != null) {
-          job.run();
-        }
+        ((IConfiguredExperimentModule) (this.m_module)).process(
+            ((Experiment) data), dest);
         return;
       }
 

@@ -10,7 +10,9 @@ import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
-/** The base class to derive configured modules. */
+/**
+ * The base class to derive configured modules.
+ */
 public abstract class ConfiguredModule extends ToolJob implements
     IConfiguredModule {
 
@@ -43,22 +45,20 @@ public abstract class ConfiguredModule extends ToolJob implements
 
   /** {@inheritDoc} */
   @Override
-  public Runnable createInitJob(final ExperimentSet data,
-      final IDocument document) {
-    return null;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public Runnable createSummaryJob(final ExperimentSet data,
-      final IPlainText summary) {
-    return null;
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public String toString() {
     return TextUtils.className(this.getClass());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void initialize(final ExperimentSet data, final IDocument document) {
+    //
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void summary(final ExperimentSet data, final IPlainText summary) {
+    //
   }
 
   /**

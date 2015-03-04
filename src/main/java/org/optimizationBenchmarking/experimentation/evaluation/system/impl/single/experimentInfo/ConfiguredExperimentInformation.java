@@ -2,6 +2,9 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.sing
 
 import org.optimizationBenchmarking.experimentation.data.Experiment;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.ConfiguredExperimentModule;
+import org.optimizationBenchmarking.utils.document.spec.IPlainText;
+import org.optimizationBenchmarking.utils.document.spec.ISection;
+import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 
 /** A fixed configuration of the experiment information module. */
@@ -21,8 +24,19 @@ public class ConfiguredExperimentInformation extends
 
   /** {@inheritDoc} */
   @Override
-  public ExperimentInformationMainJob createMainJob(final Experiment data,
+  public void process(final Experiment data,
       final ISectionContainer sectionContainer) {
-    return new ExperimentInformationMainJob(this, data, sectionContainer);
+
+    try (final ISection section = sectionContainer.section(null)) {
+      try (final IPlainText title = section.title()) {
+        title.append("Basic Information"); //$NON-NLS-1$
+      }
+
+      try (final ISectionBody body = section.body()) {
+        body.append(data.getName());
+        // body.append(' ');
+        // body.append(this.m_experiment.getDescription());
+      }
+    }
   }
 }

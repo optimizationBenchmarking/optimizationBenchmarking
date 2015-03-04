@@ -35,8 +35,8 @@ public abstract class ConfiguredExperimentSetModule extends
 
   /** {@inheritDoc} */
   @Override
-  public Runnable createMainJob(final ExperimentSet data,
+  public void process(final ExperimentSet data,
       final ISectionContainer sectionContainer) {
-    return null;
+    //
   }
 }

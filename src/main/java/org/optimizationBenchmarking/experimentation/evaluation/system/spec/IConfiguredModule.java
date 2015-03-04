@@ -35,30 +35,27 @@ public interface IConfiguredModule extends IToolJob {
       final IConfiguredModule module);
 
   /**
-   * Create the job to be executed when the document is initialized, before
-   * any computation is performed. This job can, for instance, allocate
-   * labels in the document.
+   * Initialize the document before any computation is performed. In this
+   * method you can, for instance, allocate labels in the document.
    * 
    * @param data
    *          the data
    * @param document
    *          the document
-   * @return the job, or {@code null} if no initialization is necessary.
    */
-  public abstract Runnable createInitJob(final ExperimentSet data,
+  public abstract void initialize(final ExperimentSet data,
       final IDocument document);
 
   /**
-   * Create a job which adds text into the summary.
+   * Adds text into the document summary (i.e, the abstract), if any. This
+   * happens before any calculation takes place.
    * 
    * @param data
    *          the data
    * @param summary
    *          the summary
-   * @return the job, or {@code null} if no text needs to be added to the
-   *         summary
    */
-  public abstract Runnable createSummaryJob(final ExperimentSet data,
+  public abstract void summary(final ExperimentSet data,
       final IPlainText summary);
 
 }

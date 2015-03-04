@@ -185,9 +185,9 @@ class _PseudoModule {
 
     if ((this.m_logger != null)
         && (this.m_logger.isLoggable(Level.FINEST))) {
-      this.m_logger
-          .finest("Beginning to execute main jobs of sub-modules of " + //$NON-NLS-1$
-              this._getName());
+      this.m_logger.finest(//
+          "Beginning to execute main jobs of sub-modules of " //$NON-NLS-1$
+              + this._getName());
     }
 
     if ((children = this.m_children) == null) {
