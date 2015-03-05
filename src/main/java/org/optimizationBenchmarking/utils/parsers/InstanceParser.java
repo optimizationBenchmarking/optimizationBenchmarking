@@ -1,21 +1,22 @@
-package org.optimizationBenchmarking.utils.config;
+package org.optimizationBenchmarking.utils.parsers;
 
-import org.optimizationBenchmarking.utils.parsers.Parser;
-import org.optimizationBenchmarking.utils.parsers.StringParser;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
- * parse a constant
+ * Get an instance from a string.
  * 
  * @param <T>
  *          the instance type
  */
-final class _InstanceParser<T> extends Parser<T> {
+public final class InstanceParser<T> extends Parser<T> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** the base class */
   private final Class<T> m_base;
+
+  /** the package prefixes */
+  private final String[] m_prefixes;
 
   /**
    * create
@@ -23,8 +24,10 @@ final class _InstanceParser<T> extends Parser<T> {
    * @param baseClass
    *          the base class of the instance to return, used to check type
    *          consistency
+   * @param prefixes
+   *          the package prefixes
    */
-  _InstanceParser(final Class<T> baseClass) {
+  public InstanceParser(final Class<T> baseClass, final String[] prefixes) {
     super();
 
     if (baseClass == null) {
@@ -32,6 +35,7 @@ final class _InstanceParser<T> extends Parser<T> {
           "A base class must be provided."); //$NON-NLS-1$
     }
     this.m_base = baseClass;
+    this.m_prefixes = prefixes;
   }
 
   /** {@inheritDoc} */
@@ -40,7 +44,7 @@ final class _InstanceParser<T> extends Parser<T> {
     final T fieldValue;
 
     fieldValue = ReflectionUtils.getInstanceByName(this.m_base,
-        StringParser.INSTANCE.parseString(string));
+        StringParser.INSTANCE.parseString(string), this.m_prefixes);
     this.validate(fieldValue);
     return fieldValue;
   }

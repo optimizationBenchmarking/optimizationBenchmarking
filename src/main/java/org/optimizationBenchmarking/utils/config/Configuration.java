@@ -18,6 +18,7 @@ import org.optimizationBenchmarking.utils.parsers.BoundedIntParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedShortParser;
 import org.optimizationBenchmarking.utils.parsers.ClassParser;
+import org.optimizationBenchmarking.utils.parsers.InstanceParser;
 import org.optimizationBenchmarking.utils.parsers.ListParser;
 import org.optimizationBenchmarking.utils.parsers.LoggerParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
@@ -302,7 +303,8 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final <T> T getInstance(final String key,
       final Class<T> baseClass, final T defInstance) {
-    return this.get(key, new _InstanceParser<>(baseClass), defInstance);
+    return this.get(key, new InstanceParser<>(baseClass, null),
+        defInstance);
   }
 
   /**

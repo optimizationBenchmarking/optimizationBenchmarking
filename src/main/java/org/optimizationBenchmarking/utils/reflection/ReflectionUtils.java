@@ -14,6 +14,7 @@ import java.math.BigInteger;
 import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.regex.Pattern;
 
 import org.optimizationBenchmarking.utils.EmptyUtils;
@@ -40,6 +41,11 @@ public final class ReflectionUtils {
    */
   private static final int REQUIRED_MODIFIERS_FOR_ACCESS = (Modifier.PUBLIC
       | Modifier.FINAL | Modifier.STATIC);
+
+  /** The default package name prefixes */
+  private static final String[] DEFAULT_PACKAGE_PREFIXES = new String[] {//
+  "java.lang."//$NON-NLS-1$
+  };
 
   /**
    * Make sure that a class is loaded. This method can be used as some kind
@@ -318,6 +324,10 @@ public final class ReflectionUtils {
    * 
    * @param clazzName
    *          the class name
+   * @param prefixes
+   *          a list of the allowed class name or package prefixes,
+   *          searched if the {@code clazzName} cannot be found as is,
+   *          usually of the form "{@code package.subpackage.}"
    * @return the class
    * @throws LinkageError
    *           on linkage error
@@ -326,19 +336,30 @@ public final class ReflectionUtils {
    * @throws ClassNotFoundException
    *           if the class has not been found
    */
-  private static final Class<?> __findClassInternal(final String clazzName)
+  private static final Class<?> __findClassInternal(
+      final String clazzName, final String[] prefixes)
       throws LinkageError, ClassCastException, ClassNotFoundException {
+    ClassNotFoundException error;
+
     try {
       return Class.forName(clazzName);
     } catch (LinkageError | ClassCastException except) {
       throw except;
     } catch (final ClassNotFoundException except) {
-      try {
-        return Class.forName("java.lang." + clazzName); //$NON-NLS-1$
-      } catch (final Throwable t) {
-        throw except;
+      error = except;
+      for (final String prefix : ((prefixes != null) ? prefixes
+          : ReflectionUtils.DEFAULT_PACKAGE_PREFIXES)) {
+        try {
+          return Class.forName(prefix + clazzName);
+        } catch (LinkageError | ClassCastException except2) {
+          throw except;
+        } catch (final ClassNotFoundException except2) {
+          error.addSuppressed(except2);
+        }
       }
     }
+
+    throw error;
   }
 
   /**
@@ -365,9 +386,45 @@ public final class ReflectionUtils {
    * @throws ClassCastException
    *           if the class is not of type {@code C}
    */
-  @SuppressWarnings("unchecked")
   public static final <C> Class<? extends C> findClass(final String name,
       final Class<C> base) throws LinkageError,
+      ExceptionInInitializerError, ClassNotFoundException,
+      ClassCastException {
+    return ReflectionUtils.findClass(name, base,
+        ReflectionUtils.DEFAULT_PACKAGE_PREFIXES);
+  }
+
+  /**
+   * Find a class of the given {@code name} which must be a sub-class of
+   * {@code base}. We first consider {@code name} as fully-qualified class
+   * name. If no class of that name exists, we search in package
+   * {@code java.lang}.
+   * 
+   * @param name
+   *          the class name
+   * @param base
+   *          the base class
+   * @param prefixes
+   *          a list of the allowed class name or package prefixes,
+   *          searched if the {@code clazzName} cannot be found as is,
+   *          usually of the form "{@code package.subpackage.}"
+   * @param <C>
+   *          the class type
+   * @return the discovered class
+   * @throws IllegalArgumentException
+   *           if the class name {@code clazz} or {@code base} are invalid
+   * @throws LinkageError
+   *           if linkage fails
+   * @throws ExceptionInInitializerError
+   *           if class initialization fails
+   * @throws ClassNotFoundException
+   *           if the class was not found
+   * @throws ClassCastException
+   *           if the class is not of type {@code C}
+   */
+  @SuppressWarnings("unchecked")
+  public static final <C> Class<? extends C> findClass(final String name,
+      final Class<C> base, final String[] prefixes) throws LinkageError,
       ExceptionInInitializerError, ClassNotFoundException,
       ClassCastException {
     final String clazzName;
@@ -385,7 +442,7 @@ public final class ReflectionUtils {
           name) + '\'') + '.');
     }
 
-    found = ReflectionUtils.__findClassInternal(clazzName);
+    found = ReflectionUtils.__findClassInternal(clazzName, prefixes);
 
     if (found == null) {
       throw new ClassNotFoundException(//
@@ -867,6 +924,31 @@ public final class ReflectionUtils {
    */
   public static final <T> T getInstanceByName(final Class<T> base,
       final String identifier) throws ReflectiveOperationException {
+    return ReflectionUtils.getInstanceByName(base, identifier,
+        ReflectionUtils.DEFAULT_PACKAGE_PREFIXES);
+  }
+
+  /**
+   * Get an instance by a identifier string
+   * 
+   * @param identifier
+   *          the identifier, of form
+   *          {@code packageA.packageB.className#constantName}
+   * @param base
+   *          the base class, i.e., the return type
+   * @param prefixes
+   *          a list of the allowed class name or package prefixes,
+   *          searched if the {@code clazzName} cannot be found as is,
+   *          usually of the form "{@code package.subpackage.}"
+   * @return the value of the constant
+   * @param <T>
+   *          the return type
+   * @throws ReflectiveOperationException
+   *           if the reflective operation fails
+   */
+  public static final <T> T getInstanceByName(final Class<T> base,
+      final String identifier, final String[] prefixes)
+      throws ReflectiveOperationException {
     final String idString, fieldName;
     String className;
     Class<? extends Object> container;
@@ -898,7 +980,7 @@ public final class ReflectionUtils {
 
     cause = null;
     try {
-      container = ReflectionUtils.__findClassInternal(className);
+      container = ReflectionUtils.__findClassInternal(className, prefixes);
     } catch (final Throwable t) {
       cause = t;
       container = null;
@@ -926,6 +1008,28 @@ public final class ReflectionUtils {
    *           exist
    */
   public static final InputStream getResourceAsStream(final String resource) {
+    return ReflectionUtils.getResourceAsStream(resource,
+        ReflectionUtils.DEFAULT_PACKAGE_PREFIXES);
+  }
+
+  /**
+   * Get a resource as stream. {@code resource} identifies a class and a
+   * resource file according to the schema {@code className#resourceFile}.
+   * 
+   * @param resource
+   *          the resource
+   * @param prefixes
+   *          a list of the allowed class name or package prefixes,
+   *          searched if the {@code clazzName} cannot be found as is,
+   *          usually of the form "{@code package.subpackage.}"
+   * @return the stream, or {@code null} if the resource file does not
+   *         exist
+   * @throws IllegalArgumentException
+   *           if the class identified by the {@code resource} does not
+   *           exist
+   */
+  public static final InputStream getResourceAsStream(
+      final String resource, final String[] prefixes) {
     final String string, clazzName, file;
     final int index;
     final Class<?> clazz;
@@ -964,7 +1068,7 @@ public final class ReflectionUtils {
     }
 
     try {
-      clazz = ReflectionUtils.__findClassInternal(clazzName);
+      clazz = ReflectionUtils.__findClassInternal(clazzName, prefixes);
     } catch (final Throwable t) {
       throw new IllegalArgumentException(((((((//
           "Cannot load class '") + clazzName) + //$NON-NLS-1$
@@ -973,6 +1077,51 @@ public final class ReflectionUtils {
     }
 
     return clazz.getResourceAsStream(file);
+  }
+
+  /**
+   * Add the default package search path to a list of package prefixes as
+   * used by {@link #getInstanceByName(Class, String, String[])},
+   * {@link #getResourceAsStream(String, String[])}, and
+   * {@link #findClass(String, Class, String[])}.
+   * 
+   * @param list
+   *          the list to add the package name to, should normally be an
+   *          instance of {@link java.util.LinkedHashSet}
+   */
+  public static final void addDefaultPackagePath(
+      final Collection<String> list) {
+    for (final String str : ReflectionUtils.DEFAULT_PACKAGE_PREFIXES) {
+      list.add(str);
+    }
+  }
+
+  /**
+   * Add the package of a given class to a list of package prefixes as used
+   * by {@link #getInstanceByName(Class, String, String[])},
+   * {@link #getResourceAsStream(String, String[])}, and
+   * {@link #findClass(String, Class, String[])}.
+   * 
+   * @param clazz
+   *          the class
+   * @param list
+   *          the list to add the package name to, should normally be an
+   *          instance of {@link java.util.LinkedHashSet}
+   */
+  public static final void addPackageOfClassToPrefixList(
+      final Class<?> clazz, final Collection<String> list) {
+    final String string;
+    final int index;
+
+    if (clazz != null) {
+      string = clazz.getCanonicalName();
+      if (string != null) {
+        index = string.indexOf('.');
+        if ((index > 0) && (index < (string.length() - 1))) {
+          list.add(string.substring(0, (index + 1)));
+        }
+      }
+    }
   }
 
   /** the forbidden constructor */

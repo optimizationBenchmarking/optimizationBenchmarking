@@ -1,5 +1,12 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
+import java.util.LinkedHashSet;
+
+import org.optimizationBenchmarking.experimentation.evaluation.system.impl.Modules;
+import org.optimizationBenchmarking.experimentation.evaluation.system.impl.all.ExperimentSetModules;
+import org.optimizationBenchmarking.experimentation.evaluation.system.impl.appendix.AppendixModules;
+import org.optimizationBenchmarking.experimentation.evaluation.system.impl.description.DescriptionModules;
+import org.optimizationBenchmarking.experimentation.evaluation.system.impl.single.ExperimentModules;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationModule;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
@@ -24,6 +31,27 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
 
   /** the XML processing is done */
   private static final int STATE_DONE = (_EvaluationXMLHandler.STATE_IN_MODULE + 1);
+
+  /** the search path for modules */
+  private static final String[] MODULE_SEARCH_PATH;
+
+  static {
+    final LinkedHashSet<String> paths;
+
+    paths = new LinkedHashSet<>();
+
+    ReflectionUtils.addPackageOfClassToPrefixList(Modules.class, paths);
+    ReflectionUtils.addPackageOfClassToPrefixList(ExperimentModules.class,
+        paths);
+    ReflectionUtils.addPackageOfClassToPrefixList(
+        ExperimentSetModules.class, paths);
+    ReflectionUtils.addPackageOfClassToPrefixList(
+        DescriptionModules.class, paths);
+    ReflectionUtils.addPackageOfClassToPrefixList(AppendixModules.class,
+        paths);
+
+    MODULE_SEARCH_PATH = paths.toArray(new String[paths.size()]);
+  }
 
   /** the destination setup */
   private final _EvaluationSetup m_dest;
@@ -207,7 +235,8 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
           case STATE_IN_MODULE: {
             try {
               module = ReflectionUtils.getInstanceByName(
-                  IEvaluationModule.class, this.m_module);
+                  IEvaluationModule.class, this.m_module,
+                  _EvaluationXMLHandler.MODULE_SEARCH_PATH);
             } catch (final ReflectiveOperationException roe) {
               throw new IllegalArgumentException(
                   (("Could not load module '" + this.m_module) + //$NON-NLS-1$
