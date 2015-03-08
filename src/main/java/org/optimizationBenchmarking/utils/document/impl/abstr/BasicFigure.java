@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.chart.spec.ILineChart;
+import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -333,7 +333,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override
-  public synchronized final ILineChart lineChart() {
+  public synchronized final ILineChart2D lineChart2D() {
     final Graphic g;
 
     this.fsmStateAssertAndSet(BasicFigure.STATE_CAPTION_CLOSED,
@@ -341,7 +341,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
     g = this.__graphic();
     return new _DelegatingLineChart(g, this.m_doc.createChart(g)
-        .lineChart());
+        .lineChart2D());
   }
 
   /**

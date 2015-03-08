@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.chart.impl.abstr.DelegatingLineChart;
-import org.optimizationBenchmarking.utils.chart.spec.ILineChart;
+import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 
 /** the delegating line chart */
@@ -18,7 +18,8 @@ final class _DelegatingLineChart extends DelegatingLineChart {
    * @param chart
    *          the chart
    */
-  public _DelegatingLineChart(final Graphic graphic, final ILineChart chart) {
+  public _DelegatingLineChart(final Graphic graphic,
+      final ILineChart2D chart) {
     super(chart);
     this.m_graphic = graphic;
   }

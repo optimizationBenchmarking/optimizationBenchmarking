@@ -7,8 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.chart.spec.IAxis;
+import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.CompoundAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
@@ -323,41 +323,53 @@ final class Axis extends TitledElement implements IAxis {
    */
   @SuppressWarnings("resource")
   final CompiledAxis _getAxis() {
-    final HierarchicalFSM owner;
-    final AxisChart cb;
+    final ChartDriver driver;
+    final Chart chart;
+    final StyleSet styles;
     Font titleFont, tickFont;
     Stroke axisStroke, gridLineStroke;
     Color axisColor, gridLineColor;
 
-    titleFont = this.m_titleFont;
-    tickFont = this.m_tickFont;
-    axisStroke = this.m_axisStroke;
+    chart = this.getOwner();
+    styles = chart.m_styleSet;
+    driver = chart.m_driver;
+
+    if (this.m_title != null) {
+      titleFont = this.m_titleFont;
+      if (titleFont == null) {
+        titleFont = driver.getDefaultAxisTitleFont(styles);
+      } else {
+        titleFont = driver.scaleAxisTitleFont(titleFont);
+      }
+    } else {
+      titleFont = null;
+    }
+
     axisColor = this.m_axisColor;
+    if (axisColor == null) {
+      axisColor = driver.getDefaultAxisColor(styles);
+    }
+
+    axisStroke = this.m_axisStroke;
+    if (axisStroke == null) {
+      axisStroke = driver.getDefaultAxisStroke(styles);
+    }
+
+    tickFont = this.m_tickFont;
+    if (tickFont == null) {
+      tickFont = driver.getDefaultAxisTickFont(styles);
+    } else {
+      tickFont = driver.scaleAxisTickFont(tickFont);
+    }
+
     gridLineStroke = this.m_gridLineStroke;
+    if (gridLineStroke == null) {
+      gridLineStroke = driver.getDefaultGridLineStroke(styles);
+    }
+
     gridLineColor = this.m_gridLineColor;
-
-    owner = this.getOwner();
-    if (owner instanceof AxisChart) {
-      cb = ((AxisChart) owner);
-
-      if ((titleFont == null) && (this.m_title != null)) {
-        titleFont = cb._getDefaultAxisTitleFont();
-      }
-      if (tickFont == null) {
-        tickFont = cb._getDefaultAxisTickFont();
-      }
-      if (axisStroke == null) {
-        axisStroke = cb._getDefaultAxisStroke();
-      }
-      if (axisColor == null) {
-        axisColor = cb._getDefaultAxisColor();
-      }
-      if (gridLineStroke == null) {
-        gridLineStroke = cb._getDefaultGridLineStroke();
-      }
-      if (gridLineColor == null) {
-        gridLineColor = cb._getDefaultGridLineColor();
-      }
+    if (gridLineColor == null) {
+      gridLineColor = driver.getDefaultGridLineColor(styles);
     }
 
     return new CompiledAxis(

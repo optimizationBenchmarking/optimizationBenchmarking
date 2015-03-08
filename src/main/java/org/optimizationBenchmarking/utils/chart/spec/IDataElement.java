@@ -7,16 +7,7 @@ import java.awt.Stroke;
 public interface IDataElement extends ITitledElement {
 
   /**
-   * set the title of the data element
-   * 
-   * @param title
-   *          the title
-   */
-  @Override
-  public abstract void setTitle(final String title);
-
-  /**
-   * set the color of the data element
+   * Set the color of the data element.
    * 
    * @param color
    *          the color
@@ -24,7 +15,8 @@ public interface IDataElement extends ITitledElement {
   public abstract void setColor(final Color color);
 
   /**
-   * set the stroke of the data element
+   * Set the stroke of the data element. If you do not set a stroke, a
+   * default stroke will be used.
    * 
    * @param stroke
    *          the stroke

@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /** A line chart. */
-public class CompiledLineChart extends CompiledTitledElement {
+public class CompiledLineChart2D extends CompiledTitledElement {
 
   /** the legend mode */
   private final ELegendMode m_legendMode;
@@ -34,7 +34,7 @@ public class CompiledLineChart extends CompiledTitledElement {
    * @param lines
    *          the lines
    */
-  protected CompiledLineChart(final String title, final Font titleFont,
+  protected CompiledLineChart2D(final String title, final Font titleFont,
       final ELegendMode legendMode, final CompiledAxis x,
       final CompiledAxis y, final ArrayListView<CompiledLine2D> lines) {
     super(title, titleFont);

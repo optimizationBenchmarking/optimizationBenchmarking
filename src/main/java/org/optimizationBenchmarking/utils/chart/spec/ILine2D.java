@@ -4,7 +4,7 @@ package org.optimizationBenchmarking.utils.chart.spec;
 public interface ILine2D extends IDataSeries2D {
 
   /**
-   * set the type of the line
+   * Set the type of the line.
    * 
    * @param type
    *          the type to set

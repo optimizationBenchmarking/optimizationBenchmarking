@@ -8,27 +8,17 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggreg
 
 /** The interface for defining an axis */
 public interface IAxis extends ITitledElement {
-  /**
-   * set the title of the axis
-   * 
-   * @param title
-   *          the title
-   */
-  @Override
-  public abstract void setTitle(final String title);
 
   /**
-   * set the title font of the axis (can only be used after
-   * {@link #setTitle(String)})
-   * 
-   * @param titleFont
-   *          the title font
-   */
-  @Override
-  public abstract void setTitleFont(final Font titleFont);
-
-  /**
-   * Set the font to be used for the ticks of the axis
+   * Set the font to be used for the ticks of the axis. Depending on the
+   * chart implementation, this font may be scaled to a smaller (or maybe
+   * even larger) size to create a more overall pleasing visual expression.
+   * Thus, you can directly use fonts from a
+   * {@link org.optimizationBenchmarking.utils.graphics.style.font.FontPalette}
+   * which would potentially be too large or too small to look good and
+   * expect the underlying
+   * {@link org.optimizationBenchmarking.utils.chart.spec.IChartDriver
+   * chart driver} implementation to resize them appropriately.
    * 
    * @param tickFont
    *          the font to be used for the ticks of the axis
@@ -36,7 +26,8 @@ public interface IAxis extends ITitledElement {
   public abstract void setTickFont(final Font tickFont);
 
   /**
-   * Set the stroke to be used for the axis
+   * Set the stroke to be used for the axis. If you do not set a stroke, a
+   * default stroke will be used.
    * 
    * @param axisStroke
    *          the stroke to be used for the axis
@@ -44,7 +35,8 @@ public interface IAxis extends ITitledElement {
   public abstract void setAxisStroke(final Stroke axisStroke);
 
   /**
-   * Set the color to be used for the axis
+   * Set the color to be used for the axis. If you do not set a color, a
+   * default color will be used.
    * 
    * @param axisColor
    *          the color to be used for the axis
@@ -52,7 +44,8 @@ public interface IAxis extends ITitledElement {
   public abstract void setAxisColor(final Color axisColor);
 
   /**
-   * Set the stroke to be used for the grid lines
+   * Set the stroke to be used for the grid lines. If you do not set a
+   * stroke, a default stroke will be used.
    * 
    * @param gridLineStroke
    *          the stroke to be used for the grid lines
@@ -60,7 +53,8 @@ public interface IAxis extends ITitledElement {
   public abstract void setGridLineStroke(final Stroke gridLineStroke);
 
   /**
-   * Set the color to be used for the grid lines
+   * Set the color to be used for the grid lines. If you do not set a
+   * color, a default color will be used.
    * 
    * @param gridLineColor
    *          the color to be used for the grid lines

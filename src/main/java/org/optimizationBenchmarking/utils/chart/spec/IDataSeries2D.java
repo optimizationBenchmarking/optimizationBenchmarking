@@ -6,18 +6,9 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 public interface IDataSeries2D extends IDataSeries {
 
   /**
-   * Set the data of the data series. This matrix must be an
-   * <code>{@link org.optimizationBenchmarking.utils.math.matrix.IMatrix#m() m}&times;2</code>
-   * -matrix, i.e., one with two columns.
-   * 
-   * @param matrix
-   *          the matrix to take the data from
-   */
-  @Override
-  public abstract void setData(final IMatrix matrix);
-
-  /**
-   * Set a starting point of the 2D series (line)
+   * Set a starting point of the 2D series (line). If you do not set a
+   * starting point, the start will be taken from the
+   * {@link #setData(IMatrix) data matrix}.
    * 
    * @param x
    *          the {@code x}-coordinate of the starting point
@@ -27,7 +18,9 @@ public interface IDataSeries2D extends IDataSeries {
   public abstract void setStart(final double x, final double y);
 
   /**
-   * Set an end point for the 2D series (line)
+   * Set an end point for the 2D series (line). If you do not set a ending
+   * point, the end will be taken from the {@link #setData(IMatrix) data
+   * matrix}.
    * 
    * @param x
    *          the {@code x}-coordinate of the end point

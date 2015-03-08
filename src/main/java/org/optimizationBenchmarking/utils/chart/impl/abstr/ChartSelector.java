@@ -91,7 +91,7 @@ public class ChartSelector extends ToolJob implements IChartSelector {
 
   /** {@inheritDoc} */
   @Override
-  public final LineChart lineChart() {
-    return new LineChart(this);
+  public final LineChart2D lineChart2D() {
+    return new LineChart2D(this);
   }
 }

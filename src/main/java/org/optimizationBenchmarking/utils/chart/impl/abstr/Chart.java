@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.chart.impl.abstr;
 
-import java.awt.Font;
-import java.awt.Stroke;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,12 +22,6 @@ public class Chart extends TitledElement {
   /** the logger */
   private final Logger m_logger;
 
-  /** the title font */
-  private transient volatile Font m_defaultChartTitleFont;
-  /** the data title font */
-  private transient volatile Font m_defaultDataTitleFont;
-  /** the default data stroke */
-  private transient volatile Stroke m_defaultDataStroke;
   /** the id */
   private transient volatile String m_id;
 
@@ -91,46 +83,6 @@ public class Chart extends TitledElement {
   @Override
   protected final Logger getLogger() {
     return this.m_logger;
-  }
-
-  /**
-   * Get a font to be used for line titles
-   * 
-   * @return the line title font
-   */
-  synchronized final Font _getDefaultDataTitleFont() {
-    if (this.m_defaultDataTitleFont == null) {
-      this.m_defaultDataTitleFont = this.m_driver
-          .createDefaultDataTitleFont(this.m_styleSet);
-    }
-    return this.m_defaultDataTitleFont;
-  }
-
-  /**
-   * Get a font to be used for chart titles
-   * 
-   * @return the chart title font
-   */
-  synchronized final Font _getDefaultChartTitleFont() {
-
-    if (this.m_defaultChartTitleFont == null) {
-      this.m_defaultChartTitleFont = this.m_driver
-          .createDefaultChartTitleFont(this.m_styleSet);
-    }
-    return this.m_defaultChartTitleFont;
-  }
-
-  /**
-   * Get the stroke to be used for lines
-   * 
-   * @return the line stroke
-   */
-  synchronized final Stroke _getDefaultDataStroke() {
-    if (this.m_defaultDataStroke == null) {
-      this.m_defaultDataStroke = this.m_driver
-          .createDefaultDataStroke(this.m_styleSet);
-    }
-    return this.m_defaultDataStroke;
   }
 
   /** {@inheritDoc} */

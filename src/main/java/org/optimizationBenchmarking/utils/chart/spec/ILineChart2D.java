@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.chart.spec;
 
 /** The interface for line charts */
-public interface ILineChart extends IChart {
+public interface ILineChart2D extends IChart {
 
   /**
    * define the {@code x}-axis

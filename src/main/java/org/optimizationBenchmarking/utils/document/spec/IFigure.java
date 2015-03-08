@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
 import org.optimizationBenchmarking.utils.chart.spec.IChartSelector;
-import org.optimizationBenchmarking.utils.chart.spec.ILineChart;
+import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 
 /**
@@ -34,5 +34,5 @@ public interface IFigure extends IDocumentElement, ILabeledObject,
    * @return the line chart
    */
   @Override
-  public abstract ILineChart lineChart();
+  public abstract ILineChart2D lineChart2D();
 }

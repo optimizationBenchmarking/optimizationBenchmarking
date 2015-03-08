@@ -6,13 +6,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.chart.spec.IAxis;
 import org.optimizationBenchmarking.utils.chart.spec.ILine2D;
-import org.optimizationBenchmarking.utils.chart.spec.ILineChart;
+import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
 
 /** A delegating wrapper for line charts */
-public class DelegatingLineChart implements ILineChart {
+public class DelegatingLineChart implements ILineChart2D {
 
   /** the chart to delegate to */
-  private final ILineChart m_chart;
+  private final ILineChart2D m_chart;
 
   /** are we alife */
   private final AtomicBoolean m_alive;
@@ -23,7 +23,7 @@ public class DelegatingLineChart implements ILineChart {
    * @param chart
    *          the chart
    */
-  public DelegatingLineChart(final ILineChart chart) {
+  public DelegatingLineChart(final ILineChart2D chart) {
     super();
     if (chart == null) {
       throw new IllegalArgumentException(//

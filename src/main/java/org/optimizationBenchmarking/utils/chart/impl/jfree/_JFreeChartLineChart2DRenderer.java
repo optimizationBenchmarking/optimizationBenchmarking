@@ -31,7 +31,7 @@ import org.jfree.ui.VerticalAlignment;
 import org.jfree.util.UnitType;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledAxis;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledLine2D;
-import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledLineChart;
+import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledLineChart2D;
 import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
@@ -85,7 +85,7 @@ final class _JFreeChartLineChart2DRenderer {
    * @param chart
    *          the chart to paint
    */
-  _JFreeChartLineChart2DRenderer(final CompiledLineChart chart) {
+  _JFreeChartLineChart2DRenderer(final CompiledLineChart2D chart) {
     super();
 
     final _JFreeChartXYLineAndShapeRenderer renderer;

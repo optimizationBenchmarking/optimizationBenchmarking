@@ -5,8 +5,8 @@ import java.awt.Stroke;
 
 import org.optimizationBenchmarking.utils.chart.spec.ELineType;
 import org.optimizationBenchmarking.utils.chart.spec.ILine2D;
+import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -62,9 +62,10 @@ public class Line2D extends DataSeries2D implements ILine2D {
   @SuppressWarnings("resource")
   @Override
   protected synchronized final void onClose() {
-    final HierarchicalFSM owner;
-    final Chart cb;
-    final Font titleFont;
+    final Chart owner;
+    final ChartDriver driver;
+    final StyleSet styles;
+    Font titleFont;
     Stroke stroke;
 
     this.fsmFlagsAssertTrue(DataSeries.FLAG_HAS_COLOR);
@@ -72,25 +73,31 @@ public class Line2D extends DataSeries2D implements ILine2D {
     super.onClose();
 
     owner = this.getOwner();
-    if (owner instanceof Chart) {
-      cb = ((Chart) owner);
-      if (this.m_title != null) {
-        titleFont = ((this.m_titleFont != null) ? this.m_titleFont : //
-            cb._getDefaultDataTitleFont());
-      } else {
-        titleFont = null;
-      }
-      stroke = this.m_stroke;
-      if (stroke == null) {
-        stroke = cb._getDefaultDataStroke();
-      }
+    driver = owner.m_driver;
+    styles = owner.m_styleSet;
 
-      if (owner instanceof LineChart) {
-        ((LineChart) owner)._addLine(new CompiledLine2D(this.m_id,
-            this.m_title, titleFont, this.m_color, stroke, this.m_data,
-            this.m_hasStart, this.m_startX, this.m_startY, this.m_hasEnd,
-            this.m_endX, this.m_endY, this.m_type));
+    if (this.m_title != null) {
+      titleFont = this.m_titleFont;
+      if (titleFont == null) {
+        titleFont = driver.getDefaultDataTitleFont(styles);
+      } else {
+        titleFont = driver.scaleDataTitleFont(titleFont);
       }
+    } else {
+      titleFont = null;
+    }
+
+    stroke = this.m_stroke;
+    if (stroke == null) {
+      stroke = driver.getDefaultDataStroke(styles);
+    }
+
+    if (owner instanceof LineChart2D) {
+      ((LineChart2D) owner)._addLine(new CompiledLine2D(this.m_id,
+          this.m_title, titleFont, this.m_color, stroke, this.m_data,
+          this.m_hasStart, this.m_startX, this.m_startY, this.m_hasEnd,
+          this.m_endX, this.m_endY, this.m_type));
     }
   }
+
 }

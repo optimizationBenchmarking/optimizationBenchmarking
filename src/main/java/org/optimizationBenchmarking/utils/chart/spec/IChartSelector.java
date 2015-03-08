@@ -8,13 +8,13 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
 public interface IChartSelector extends IToolJob {
 
   /**
-   * Create a line chart to be painted on the given graphic object. The
-   * chart will <em>not</em> close the graphic object once its paining has
-   * completed. The chart will fill the complete graphic, i.e., set its
-   * extent to
+   * Create a two-dimensional line chart to be painted on the given graphic
+   * object. The chart will <em>not</em> close the graphic object once its
+   * paining has completed. The chart will fill the complete graphic, i.e.,
+   * set its extent to
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic#getBounds()}
    * 
    * @return the line chart
    */
-  public abstract ILineChart lineChart();
+  public abstract ILineChart2D lineChart2D();
 }

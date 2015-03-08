@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.chart.impl.abstr;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,7 +8,7 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.chart.spec.IAxis;
 import org.optimizationBenchmarking.utils.chart.spec.ILine2D;
-import org.optimizationBenchmarking.utils.chart.spec.ILineChart;
+import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
@@ -18,16 +19,16 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** the line chart */
-public class LineChart extends AxisChart implements ILineChart {
+public class LineChart2D extends AxisChart implements ILineChart2D {
 
   /** the x-axis type has been set */
   static final int FLAG_HAS_X_AXIS = (TitledElement.FLAG_TITLED_ELEMENT_BUILDER_MAX << 1);
   /** the y-axis type has been set */
-  static final int FLAG_HAS_Y_AXIS = (LineChart.FLAG_HAS_X_AXIS << 1);
+  static final int FLAG_HAS_Y_AXIS = (LineChart2D.FLAG_HAS_X_AXIS << 1);
   /** the show legend has been set */
-  static final int FLAG_HAS_LEGEND_MODE = (LineChart.FLAG_HAS_Y_AXIS << 1);
+  static final int FLAG_HAS_LEGEND_MODE = (LineChart2D.FLAG_HAS_Y_AXIS << 1);
   /** at least one line has been added */
-  static final int FLAG_HAS_LINE = (LineChart.FLAG_HAS_LEGEND_MODE << 1);
+  static final int FLAG_HAS_LINE = (LineChart2D.FLAG_HAS_LEGEND_MODE << 1);
 
   /** the id counter */
   private volatile int m_idCounter;
@@ -48,7 +49,7 @@ public class LineChart extends AxisChart implements ILineChart {
    * @param selector
    *          the selector
    */
-  protected LineChart(final ChartSelector selector) {
+  protected LineChart2D(final ChartSelector selector) {
     this(selector.getGraphic(), selector.getStyleSet(),//
         selector._getLogger(), selector.getChartDriver());
   }
@@ -65,7 +66,7 @@ public class LineChart extends AxisChart implements ILineChart {
    * @param driver
    *          the chart driver
    */
-  protected LineChart(final Graphic graphic, final StyleSet styles,
+  protected LineChart2D(final Graphic graphic, final StyleSet styles,
       final Logger logger, final ChartDriver driver) {
     super(graphic, styles, logger, driver);
 
@@ -103,8 +104,8 @@ public class LineChart extends AxisChart implements ILineChart {
   synchronized final void _addLine(final CompiledLine2D line) {
     this.fsmStateAssert(ChartElement.STATE_ALIVE);
     this.fsmFlagsAssertAndUpdate(
-        (LineChart.FLAG_HAS_X_AXIS | LineChart.FLAG_HAS_Y_AXIS),
-        FSM.FLAG_NOTHING, LineChart.FLAG_HAS_LINE, FSM.FLAG_NOTHING);
+        (LineChart2D.FLAG_HAS_X_AXIS | LineChart2D.FLAG_HAS_Y_AXIS),
+        FSM.FLAG_NOTHING, LineChart2D.FLAG_HAS_LINE, FSM.FLAG_NOTHING);
 
     if (line != null) {
       this.m_xAxis._registerData(line.m_data);
@@ -120,13 +121,13 @@ public class LineChart extends AxisChart implements ILineChart {
 
     if (child == this.m_xAxis) {
       this.fsmFlagsAssertAndUpdate(FSM.STATE_NOTHING,
-          LineChart.FLAG_HAS_X_AXIS, LineChart.FLAG_HAS_X_AXIS,
+          LineChart2D.FLAG_HAS_X_AXIS, LineChart2D.FLAG_HAS_X_AXIS,
           FSM.FLAG_NOTHING);
       return;
     }
     if (child == this.m_yAxis) {
       this.fsmFlagsAssertAndUpdate(FSM.STATE_NOTHING,
-          LineChart.FLAG_HAS_Y_AXIS, LineChart.FLAG_HAS_Y_AXIS,
+          LineChart2D.FLAG_HAS_Y_AXIS, LineChart2D.FLAG_HAS_Y_AXIS,
           FSM.FLAG_NOTHING);
       return;
     }
@@ -141,12 +142,13 @@ public class LineChart extends AxisChart implements ILineChart {
   protected synchronized void onClose() {
     Logger logger;
     Graphic graphic;
-    CompiledLineChart chart;
+    CompiledLineChart2D chart;
+    Font titleFont;
 
     this.fsmStateAssertAndSet(ChartElement.STATE_ALIVE,
         ChartElement.STATE_DEAD);
-    this.fsmFlagsAssertTrue(LineChart.FLAG_HAS_X_AXIS
-        | LineChart.FLAG_HAS_Y_AXIS | LineChart.FLAG_HAS_LINE);
+    this.fsmFlagsAssertTrue(LineChart2D.FLAG_HAS_X_AXIS
+        | LineChart2D.FLAG_HAS_Y_AXIS | LineChart2D.FLAG_HAS_LINE);
 
     graphic = this.m_graphic;
     logger = this.getLogger();
@@ -154,11 +156,22 @@ public class LineChart extends AxisChart implements ILineChart {
       if ((logger != null) && (logger.isLoggable(Level.FINEST))) {
         logger.finest("Now compiling " + this._id()); //$NON-NLS-1$
       }
-      chart = new CompiledLineChart(
-          this.m_title,
-          (((this.m_titleFont != null) || (this.m_title == null)) ? this.m_titleFont
-              : this._getDefaultChartTitleFont()), this.m_legendMode,
-          this.m_xAxis._getAxis(), this.m_yAxis._getAxis(),
+
+      if (this.m_title != null) {
+        titleFont = this.m_titleFont;
+        if (titleFont == null) {
+          titleFont = this.m_driver
+              .getDefaultChartTitleFont(this.m_styleSet);
+        } else {
+          titleFont = this.m_driver.scaleTitleFont(this.m_titleFont);
+        }
+      } else {
+        titleFont = null;
+      }
+
+      chart = new CompiledLineChart2D(this.m_title, titleFont,
+          this.m_legendMode, this.m_xAxis._getAxis(),
+          this.m_yAxis._getAxis(),
           new ArrayListView<>(this.m_lines
               .toArray(new CompiledLine2D[this.m_lines.size()])));
       if ((logger != null) && (logger.isLoggable(Level.FINEST))) {
@@ -167,7 +180,7 @@ public class LineChart extends AxisChart implements ILineChart {
       this.m_xAxis = null;
       this.m_yAxis = null;
       this.m_lines = null;
-      this.m_driver.renderLineChart(chart, graphic, logger);
+      this.m_driver.renderLineChart2D(chart, graphic, logger);
     } catch (final Throwable error) {
       ErrorUtils.logError(logger,
           ("Unrecoverable error during rendering of compiled line chart #" //$NON-NLS-1$
@@ -187,8 +200,8 @@ public class LineChart extends AxisChart implements ILineChart {
   @Override
   public synchronized final IAxis xAxis() {
     this.fsmStateAssert(ChartElement.STATE_ALIVE);
-    this.fsmFlagsAssertFalse(LineChart.FLAG_HAS_LINE
-        | LineChart.FLAG_HAS_X_AXIS);
+    this.fsmFlagsAssertFalse(LineChart2D.FLAG_HAS_LINE
+        | LineChart2D.FLAG_HAS_X_AXIS);
     if (this.m_xAxis != null) {
       throw new IllegalStateException(//
           "X-axis is already under construction."); //$NON-NLS-1$
@@ -200,8 +213,8 @@ public class LineChart extends AxisChart implements ILineChart {
   @Override
   public synchronized final IAxis yAxis() {
     this.fsmStateAssert(ChartElement.STATE_ALIVE);
-    this.fsmFlagsAssertFalse(LineChart.FLAG_HAS_LINE
-        | LineChart.FLAG_HAS_Y_AXIS);
+    this.fsmFlagsAssertFalse(LineChart2D.FLAG_HAS_LINE
+        | LineChart2D.FLAG_HAS_Y_AXIS);
     if (this.m_yAxis != null) {
       throw new IllegalStateException(//
           "Y-axis is already under construction."); //$NON-NLS-1$
@@ -213,8 +226,8 @@ public class LineChart extends AxisChart implements ILineChart {
   @Override
   public synchronized final ILine2D line() {
     this.fsmStateAssert(ChartElement.STATE_ALIVE);
-    this.fsmFlagsAssertTrue(LineChart.FLAG_HAS_X_AXIS
-        | LineChart.FLAG_HAS_Y_AXIS);
+    this.fsmFlagsAssertTrue(LineChart2D.FLAG_HAS_X_AXIS
+        | LineChart2D.FLAG_HAS_Y_AXIS);
     return new Line2D(this, (++this.m_idCounter));
   }
 
@@ -223,8 +236,8 @@ public class LineChart extends AxisChart implements ILineChart {
   public final void setLegendMode(final ELegendMode legendMode) {
     this.fsmStateAssert(ChartElement.STATE_ALIVE);
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        LineChart.FLAG_HAS_LEGEND_MODE, LineChart.FLAG_HAS_LEGEND_MODE,
-        FSM.FLAG_NOTHING);
+        LineChart2D.FLAG_HAS_LEGEND_MODE,
+        LineChart2D.FLAG_HAS_LEGEND_MODE, FSM.FLAG_NOTHING);
     if (legendMode == null) {
       throw new IllegalArgumentException(//
           "Cannot set legend mode to null, if you don't want to specify it, don't set it in the first place."); //$NON-NLS-1$

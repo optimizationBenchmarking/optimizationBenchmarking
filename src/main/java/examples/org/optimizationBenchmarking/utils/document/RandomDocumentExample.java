@@ -22,7 +22,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
-import org.optimizationBenchmarking.utils.chart.spec.ILineChart;
+import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -67,7 +67,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 import examples.org.optimizationBenchmarking.FinishedPrinter;
 import examples.org.optimizationBenchmarking.utils.bibliography.data.RandomBibliography;
-import examples.org.optimizationBenchmarking.utils.chart.LineChartExample;
+import examples.org.optimizationBenchmarking.utils.chart.LineChart2DExample;
 
 /**
  * <p>
@@ -1811,8 +1811,8 @@ public class RandomDocumentExample extends DocumentExample {
       }
 
       default: {
-        try (final ILineChart lineChart = fig.lineChart()) {
-          LineChartExample.randomLineChart(this.m_rand, lineChart,
+        try (final ILineChart2D lineChart = fig.lineChart2D()) {
+          LineChart2DExample.randomLineChart2D(this.m_rand, lineChart,
               this.m_doc.getStyles());
           break;
         }
