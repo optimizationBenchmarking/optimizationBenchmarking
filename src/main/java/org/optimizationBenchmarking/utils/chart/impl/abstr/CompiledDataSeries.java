@@ -7,16 +7,7 @@ import java.awt.Stroke;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** The base class for data series elements */
-public class CompiledDataSeries extends CompiledTitledElement {
-
-  /** the id of this data series */
-  private final int m_id;
-
-  /** the color of this element */
-  private final Color m_color;
-
-  /** the stroke of this element */
-  private final Stroke m_stroke;
+public class CompiledDataSeries extends CompiledDataElement {
 
   /** the data matrix */
   final IMatrix m_data;
@@ -40,18 +31,9 @@ public class CompiledDataSeries extends CompiledTitledElement {
   protected CompiledDataSeries(final int id, final String title,
       final Font titleFont, final Color color, final Stroke stroke,
       final IMatrix data) {
-    super(title, titleFont);
+    super(id, title, titleFont, color, stroke);
 
     CompiledDataSeries._checkMatrix(data);
-    if (stroke == null) {
-      throw new IllegalArgumentException("Stroke must not be null."); //$NON-NLS-1$
-    }
-    if (color == null) {
-      throw new IllegalArgumentException("Color must not be null."); //$NON-NLS-1$
-    }
-    this.m_id = id;
-    this.m_color = color;
-    this.m_stroke = stroke;
     this.m_data = data;
   }
 
@@ -69,38 +51,11 @@ public class CompiledDataSeries extends CompiledTitledElement {
   }
 
   /**
-   * Get the color associated with this data series
-   * 
-   * @return the color associated with this data series
-   */
-  public final Color getColor() {
-    return this.m_color;
-  }
-
-  /**
-   * Get the stroke associated with this data series
-   * 
-   * @return the stroke associated with this data series
-   */
-  public final Stroke getStroke() {
-    return this.m_stroke;
-  }
-
-  /**
    * Get the data associated with this data series
    * 
    * @return the data associated with this data series
    */
   public final IMatrix getData() {
     return this.m_data;
-  }
-
-  /**
-   * Get the id of this data series
-   * 
-   * @return the unique identifier of this data series
-   */
-  public final int getID() {
-    return this.m_id;
   }
 }

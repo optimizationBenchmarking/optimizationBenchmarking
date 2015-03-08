@@ -50,7 +50,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
   }
 
   /**
-   * render a compiled line chart
+   * render a compiled 2D line chart
    * 
    * @param chart
    *          the chart to be rendered.
@@ -62,6 +62,19 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
   protected abstract void renderLineChart2D(
       final CompiledLineChart2D chart, final Graphic graphic,
       final Logger logger);
+
+  /**
+   * render a compiled pie chart
+   * 
+   * @param chart
+   *          the chart to be rendered.
+   * @param graphic
+   *          the graphic output interface
+   * @param logger
+   *          a logger for logging info, or {@code null} if none is needed
+   */
+  protected abstract void renderPieChart(final CompiledPieChart chart,
+      final Graphic graphic, final Logger logger);
 
   /**
    * Scale a font with the base font scale

@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.chart.impl.abstr.ChartDriver;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledLineChart2D;
+import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledPieChart;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
@@ -108,6 +109,13 @@ public final class JFreeChartDriver extends ChartDriver {
   protected final void renderLineChart2D(final CompiledLineChart2D chart,
       final Graphic graphic, final Logger logger) {
     new _JFreeChartLineChart2DRenderer(chart)._render(graphic);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void renderPieChart(final CompiledPieChart chart,
+      final Graphic graphic, final Logger logger) {
+    throw new UnsupportedOperationException();
   }
 
   /** {@inheritDoc} */

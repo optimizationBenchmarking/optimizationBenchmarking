@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.chart.spec.IAxis;
 import org.optimizationBenchmarking.utils.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
@@ -18,17 +17,15 @@ import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
-/** the line chart */
+/** The builder for two-dimensional line charts. */
 public class LineChart2D extends AxisChart implements ILineChart2D {
 
   /** the x-axis type has been set */
-  static final int FLAG_HAS_X_AXIS = (TitledElement.FLAG_TITLED_ELEMENT_BUILDER_MAX << 1);
+  private static final int FLAG_HAS_X_AXIS = (Chart.FLAG_CHART_BUILDER_MAX << 1);
   /** the y-axis type has been set */
-  static final int FLAG_HAS_Y_AXIS = (LineChart2D.FLAG_HAS_X_AXIS << 1);
-  /** the show legend has been set */
-  static final int FLAG_HAS_LEGEND_MODE = (LineChart2D.FLAG_HAS_Y_AXIS << 1);
+  private static final int FLAG_HAS_Y_AXIS = (LineChart2D.FLAG_HAS_X_AXIS << 1);
   /** at least one line has been added */
-  static final int FLAG_HAS_LINE = (LineChart2D.FLAG_HAS_LEGEND_MODE << 1);
+  private static final int FLAG_HAS_LINE = (LineChart2D.FLAG_HAS_Y_AXIS << 1);
 
   /** the id counter */
   private volatile int m_idCounter;
@@ -36,8 +33,6 @@ public class LineChart2D extends AxisChart implements ILineChart2D {
   /** the lines */
   private ArrayList<CompiledLine2D> m_lines;
 
-  /** the legend mode */
-  private ELegendMode m_legendMode;
   /** the internal x-axis builder */
   private Axis m_xAxis;
   /** the internal y-axis builder */
@@ -71,7 +66,6 @@ public class LineChart2D extends AxisChart implements ILineChart2D {
     super(graphic, styles, logger, driver);
 
     this.m_lines = new ArrayList<>();
-    this.m_legendMode = ELegendMode.SHOW_COMPLETE_LEGEND;
 
     this.open();
   }
@@ -85,8 +79,6 @@ public class LineChart2D extends AxisChart implements ILineChart2D {
         append.append("xAxisSet");break;} //$NON-NLS-1$      
       case FLAG_HAS_Y_AXIS: {
         append.append("yAxisSet");break;} //$NON-NLS-1$
-      case FLAG_HAS_LEGEND_MODE: {
-        append.append("legendModeSet");break;} //$NON-NLS-1$
       case FLAG_HAS_LINE: {
         append.append("hasLine");break;} //$NON-NLS-1$
       default: {
@@ -182,9 +174,11 @@ public class LineChart2D extends AxisChart implements ILineChart2D {
       this.m_lines = null;
       this.m_driver.renderLineChart2D(chart, graphic, logger);
     } catch (final Throwable error) {
-      ErrorUtils.logError(logger,
-          ("Unrecoverable error during rendering of compiled line chart #" //$NON-NLS-1$
-          + this._id()), error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+      ErrorUtils
+          .logError(
+              logger,
+              ("Unrecoverable error during rendering of compiled 2D line chart #" //$NON-NLS-1$
+              + this._id()), error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     } finally {
       this.m_lines = null;
       this.m_xAxis = null;
@@ -231,17 +225,4 @@ public class LineChart2D extends AxisChart implements ILineChart2D {
     return new Line2D(this, (++this.m_idCounter));
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final void setLegendMode(final ELegendMode legendMode) {
-    this.fsmStateAssert(ChartElement.STATE_ALIVE);
-    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        LineChart2D.FLAG_HAS_LEGEND_MODE,
-        LineChart2D.FLAG_HAS_LEGEND_MODE, FSM.FLAG_NOTHING);
-    if (legendMode == null) {
-      throw new IllegalArgumentException(//
-          "Cannot set legend mode to null, if you don't want to specify it, don't set it in the first place."); //$NON-NLS-1$
-    }
-    this.m_legendMode = legendMode;
-  }
 }

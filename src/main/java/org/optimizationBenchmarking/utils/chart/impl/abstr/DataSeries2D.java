@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  */
 public class DataSeries2D extends DataSeries implements IDataSeries2D {
   /** the start has been set */
-  static final int FLAG_HAS_START = (DataSeries.FLAG_HAS_DATA << 1);
+  static final int FLAG_HAS_START = (DataElement.FLAG_HAS_DATA << 1);
   /** the end has been set */
   static final int FLAG_HAS_END = (DataSeries2D.FLAG_HAS_START << 1);
 
@@ -29,7 +29,7 @@ public class DataSeries2D extends DataSeries implements IDataSeries2D {
   double m_endY;
 
   /**
-   * create the chart item
+   * create the 2-dimensional data
    * 
    * @param owner
    *          the owner

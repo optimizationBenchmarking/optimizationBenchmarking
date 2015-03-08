@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.chart.impl.abstr;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
@@ -59,44 +60,16 @@ public class Line2D extends DataSeries2D implements ILine2D {
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("resource")
   @Override
-  protected synchronized final void onClose() {
-    final Chart owner;
-    final ChartDriver driver;
-    final StyleSet styles;
-    Font titleFont;
-    Stroke stroke;
-
-    this.fsmFlagsAssertTrue(DataSeries.FLAG_HAS_COLOR);
-
-    super.onClose();
-
-    owner = this.getOwner();
-    driver = owner.m_driver;
-    styles = owner.m_styleSet;
-
-    if (this.m_title != null) {
-      titleFont = this.m_titleFont;
-      if (titleFont == null) {
-        titleFont = driver.getDefaultDataTitleFont(styles);
-      } else {
-        titleFont = driver.scaleDataTitleFont(titleFont);
-      }
-    } else {
-      titleFont = null;
-    }
-
-    stroke = this.m_stroke;
-    if (stroke == null) {
-      stroke = driver.getDefaultDataStroke(styles);
-    }
-
+  protected final void process(final Chart owner,
+      final ChartDriver driver, final StyleSet styles, final int id,
+      final String title, final Font titleFont, final Color color,
+      final Stroke stroke) {
     if (owner instanceof LineChart2D) {
-      ((LineChart2D) owner)._addLine(new CompiledLine2D(this.m_id,
-          this.m_title, titleFont, this.m_color, stroke, this.m_data,
-          this.m_hasStart, this.m_startX, this.m_startY, this.m_hasEnd,
-          this.m_endX, this.m_endY, this.m_type));
+      ((LineChart2D) owner)._addLine(new CompiledLine2D(id, title,
+          titleFont, color, stroke, this.m_data, this.m_hasStart,
+          this.m_startX, this.m_startY, this.m_hasEnd, this.m_endX,
+          this.m_endY, this.m_type));
     }
   }
 
