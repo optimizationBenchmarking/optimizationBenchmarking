@@ -115,7 +115,7 @@ public final class JFreeChartDriver extends ChartDriver {
   @Override
   protected final void renderPieChart(final CompiledPieChart chart,
       final Graphic graphic, final Logger logger) {
-    throw new UnsupportedOperationException();
+    new _JFreeChartPieChartRenderer(chart)._render(graphic);
   }
 
   /** {@inheritDoc} */

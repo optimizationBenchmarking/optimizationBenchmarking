@@ -6,7 +6,7 @@ import java.awt.Stroke;
 
 import org.jfree.chart.plot.DrawingSupplier;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledLine2D;
+import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledDataElement;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
@@ -14,14 +14,14 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * This internal class tries to avoid a problem with
  * {@link org.jfree.chart.renderer.xy.XYLineAndShapeRenderer}.
  * {@link org.jfree.chart.renderer.xy.XYLineAndShapeRenderer
- * XYLineAndShapeRenderer} iterates over the lines in a data set. It paints
- * them only if they are within the clip bounds of the drawing window. Only
- * when it paints them, it will use methods such as
+ * XYLineAndShapeRenderer} iterates over the dataElements in a data set. It
+ * paints them only if they are within the clip bounds of the drawing
+ * window. Only when it paints them, it will use methods such as
  * {@link org.jfree.chart.plot.DefaultDrawingSupplier#getNextPaint()
  * getNextPaint} of the {@link org.jfree.chart.plot.DefaultDrawingSupplier
- * DefaultDrawingSupplier}. This, in turn, may lead to lines being painted
- * with the wrong color if the lines before them are outside of the limits
- * of the figure&hellip;
+ * DefaultDrawingSupplier}. This, in turn, may lead to dataElements being
+ * painted with the wrong color if the dataElements before them are outside
+ * of the limits of the figure&hellip;
  * </p>
  */
 final class _JFreeChartXYLineAndShapeRenderer extends
@@ -34,19 +34,19 @@ final class _JFreeChartXYLineAndShapeRenderer extends
   /** the color index */
   private volatile int m_paintIndex;
 
-  /** the lines */
-  private final ArrayListView<CompiledLine2D> m_lines;
+  /** the dataElements */
+  private final ArrayListView<CompiledDataElement> m_dataElements;
 
   /**
    * create
    * 
-   * @param lines
-   *          the lines
+   * @param dataElements
+   *          the dataElements
    */
   _JFreeChartXYLineAndShapeRenderer(
-      final ArrayListView<CompiledLine2D> lines) {
+      final ArrayListView<CompiledDataElement> dataElements) {
     super();
-    this.m_lines = lines;
+    this.m_dataElements = dataElements;
   }
 
   /**
@@ -60,7 +60,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
    */
   @Override
   public final Paint getItemPaint(final int row, final int column) {
-    return this.m_lines.get(row).getColor();
+    return this.m_dataElements.get(row).getColor();
   }
 
   /**
@@ -72,7 +72,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
    */
   @Override
   public final Paint getSeriesPaint(final int series) {
-    return this.m_lines.get(series).getColor();
+    return this.m_dataElements.get(series).getColor();
   }
 
   /**
@@ -86,7 +86,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
    */
   @Override
   public final Stroke getItemStroke(final int row, final int column) {
-    return this.m_lines.get(row).getStroke();
+    return this.m_dataElements.get(row).getStroke();
   }
 
   /**
@@ -98,7 +98,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
    */
   @Override
   public final Stroke getSeriesStroke(final int series) {
-    return this.m_lines.get(series).getStroke();
+    return this.m_dataElements.get(series).getStroke();
   }
 
   /** {@inheritDoc} */
@@ -122,13 +122,13 @@ final class _JFreeChartXYLineAndShapeRenderer extends
   /** {@inheritDoc} */
   @Override
   public final Paint lookupSeriesPaint(final int series) {
-    return this.m_lines.get(series).getColor();
+    return this.m_dataElements.get(series).getColor();
   }
 
   /** {@inheritDoc} */
   @Override
   public final Stroke lookupSeriesStroke(final int series) {
-    return this.m_lines.get(series).getStroke();
+    return this.m_dataElements.get(series).getStroke();
   }
 
   /** {@inheritDoc} */

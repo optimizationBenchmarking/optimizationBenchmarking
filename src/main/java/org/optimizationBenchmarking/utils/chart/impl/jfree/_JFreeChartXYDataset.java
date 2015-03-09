@@ -1,29 +1,17 @@
 package org.optimizationBenchmarking.utils.chart.impl.jfree;
 
 import org.jfree.data.DomainOrder;
-import org.jfree.data.general.DatasetChangeListener;
-import org.jfree.data.general.DatasetGroup;
 import org.jfree.data.xy.XYDataset;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledLine2D;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** a 2D line for jfreechart */
-final class _JFreeChartLines2D implements XYDataset {
-
-  /** the maximum allowed coordinate */
-  private static final double MAX_COORD = (1e20);
-  /** the minimum allowed coordinate */
-  private static final double MIN_COORD = (-_JFreeChartLines2D.MAX_COORD);
-
-  /** the internally shared group */
-  private static final DatasetGroup GROUP = new DatasetGroup();
+final class _JFreeChartXYDataset extends
+    _JFreeChartDataset<CompiledLine2D> implements XYDataset {
 
   /** the shortcut to the data matrices */
   private final IMatrix[] m_matrices;
-  /** the keys */
-  private final String[] m_keys;
   /** the type switch */
   private final int[] m_typeSwitches;
   /** the domain order */
@@ -35,27 +23,20 @@ final class _JFreeChartLines2D implements XYDataset {
    * @param lines
    *          the lines
    */
-  _JFreeChartLines2D(final ArrayListView<CompiledLine2D> lines) {
-    super();
+  _JFreeChartXYDataset(final ArrayListView<CompiledLine2D> lines) {
+    super(lines);
 
     final int size;
     CompiledLine2D line;
     int i;
-    String key;
 
     size = lines.size();
     this.m_matrices = new IMatrix[size];
-    this.m_keys = new String[size];
     this.m_typeSwitches = new int[size];
 
     for (i = size; (--i) >= 0;) {
       line = lines.get(i);
       this.m_matrices[i] = line.getData();
-      key = line.getTitle();
-      if (key == null) {
-        key = Integer.toString(line.getID());
-      }
-      this.m_keys[i] = key;
 
       switch (line.getType()) {
         case STAIRS_KEEP_LEFT: {
@@ -74,69 +55,6 @@ final class _JFreeChartLines2D implements XYDataset {
 
     this.m_order = null;
 
-  }
-
-  /**
-   * format a double
-   * 
-   * @param d
-   *          the double
-   * @return the formatted double
-   */
-  private static final double _f(final double d) {
-    return ((d <= _JFreeChartLines2D.MIN_COORD) ? _JFreeChartLines2D.MIN_COORD
-        : ((d >= _JFreeChartLines2D.MAX_COORD) ? _JFreeChartLines2D.MAX_COORD
-            : d));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final int getSeriesCount() {
-    return this.m_matrices.length;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final Comparable getSeriesKey(final int series) {
-    return this.m_keys[series];
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final int indexOf(final Comparable seriesKey) {
-    int i;
-
-    for (i = this.m_keys.length; (--i) >= 0;) {
-      if (EComparison.equals(seriesKey, this.m_keys[i])) {
-        return i;
-      }
-    }
-    return (-1);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void addChangeListener(final DatasetChangeListener listener) {
-    // do nothing, since there won't be any changes
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void removeChangeListener(
-      final DatasetChangeListener listener) {
-    // do nothing, since there won't be any changes
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final DatasetGroup getGroup() {
-    return _JFreeChartLines2D.GROUP;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void setGroup(final DatasetGroup group) {
-    throw new UnsupportedOperationException();
   }
 
   /** {@inheritDoc} */
@@ -225,7 +143,7 @@ final class _JFreeChartLines2D implements XYDataset {
       }
     }
 
-    return _JFreeChartLines2D
+    return _JFreeChartDataset
         ._f(this.m_matrices[series].getDouble(idx, 0));
   }
 
@@ -254,7 +172,7 @@ final class _JFreeChartLines2D implements XYDataset {
       }
     }
 
-    return _JFreeChartLines2D
+    return _JFreeChartDataset
         ._f(this.m_matrices[series].getDouble(idx, 1));
   }
 

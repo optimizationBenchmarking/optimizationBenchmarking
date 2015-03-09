@@ -8,8 +8,8 @@ import org.optimizationBenchmarking.utils.chart.spec.IAxis;
 import org.optimizationBenchmarking.utils.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
 
-/** A delegating wrapper for line charts */
-public class DelegatingLineChart implements ILineChart2D {
+/** A delegating wrapper for 2D-line charts */
+public class DelegatingLineChart2D implements ILineChart2D {
 
   /** the chart to delegate to */
   private final ILineChart2D m_chart;
@@ -18,16 +18,16 @@ public class DelegatingLineChart implements ILineChart2D {
   private final AtomicBoolean m_alive;
 
   /**
-   * the line chart
+   * create the delegating 2D line chart
    * 
    * @param chart
    *          the chart
    */
-  public DelegatingLineChart(final ILineChart2D chart) {
+  public DelegatingLineChart2D(final ILineChart2D chart) {
     super();
     if (chart == null) {
       throw new IllegalArgumentException(//
-          "Chart to delegate to cannot be null."); //$NON-NLS-1$
+          "LineChart2D to delegate to cannot be null."); //$NON-NLS-1$
     }
     this.m_alive = new AtomicBoolean(true);
     this.m_chart = chart;

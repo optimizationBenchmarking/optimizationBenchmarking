@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
+import org.optimizationBenchmarking.utils.chart.spec.IPieChart;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -340,8 +341,21 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
         BasicFigure.STATE_GRAPHIC_CREATED);
 
     g = this.__graphic();
-    return new _DelegatingLineChart(g, this.m_doc.createChart(g)
+    return new _DelegatingLineChart2D(g, this.m_doc.createChart(g)
         .lineChart2D());
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("resource")
+  @Override
+  public synchronized final IPieChart pieChart() {
+    final Graphic g;
+
+    this.fsmStateAssertAndSet(BasicFigure.STATE_CAPTION_CLOSED,
+        BasicFigure.STATE_GRAPHIC_CREATED);
+
+    g = this.__graphic();
+    return new _DelegatingPieChart(g, this.m_doc.createChart(g).pieChart());
   }
 
   /**
