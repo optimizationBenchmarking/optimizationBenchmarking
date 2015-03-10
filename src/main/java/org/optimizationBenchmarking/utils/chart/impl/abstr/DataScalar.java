@@ -24,6 +24,7 @@ public class DataScalar extends DataElement implements IDataScalar {
    */
   protected DataScalar(final Chart owner, final int id) {
     super(owner, id);
+    this.open();
   }
 
   /** {@inheritDoc} */

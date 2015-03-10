@@ -22,7 +22,6 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
-import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -67,7 +66,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 import examples.org.optimizationBenchmarking.FinishedPrinter;
 import examples.org.optimizationBenchmarking.utils.bibliography.data.RandomBibliography;
-import examples.org.optimizationBenchmarking.utils.chart.LineChart2DExample;
+import examples.org.optimizationBenchmarking.utils.chart.AllChartExamples;
 
 /**
  * <p>
@@ -623,7 +622,8 @@ public class RandomDocumentExample extends DocumentExample {
         first = false;
 
         if (canLineBreak) {
-          LoremIpsum.appendLoremIpsum(out, this.m_rand);
+          LoremIpsum.appendLoremIpsum(out, this.m_rand, ((depth > 0) ? 8
+              : 64));
         } else {
           LoremIpsum.appendLoremIpsum(out, this.m_rand, 4);
         }
@@ -854,7 +854,8 @@ public class RandomDocumentExample extends DocumentExample {
             out.append(' ');
 
             if (canLineBreak) {
-              LoremIpsum.appendLoremIpsum(out, this.m_rand);
+              LoremIpsum.appendLoremIpsum(out, this.m_rand,
+                  ((depth > 0) ? 8 : 64));
             } else {
               LoremIpsum.appendLoremIpsum(out, this.m_rand, 4);
             }
@@ -905,7 +906,7 @@ public class RandomDocumentExample extends DocumentExample {
           if (this.m_rand.nextInt(10) <= 0) {
             this.__text(item, 0, false, true);
           } else {
-            LoremIpsum.appendLoremIpsum(item, this.m_rand);
+            LoremIpsum.appendLoremIpsum(item, this.m_rand, 32);
           }
           if ((listDepth < 3) && (this.m_rand.nextInt(listDepth + 5) <= 0)) {
             this.__createList(item, (listDepth + 1), this.m_rand
@@ -1790,6 +1791,8 @@ public class RandomDocumentExample extends DocumentExample {
    *          the figure size
    */
   private final void __fillFigure(final IFigure fig, final EFigureSize v) {
+    final int size, chosen;
+
     this.__useLabel(fig);
 
     try (final IPlainText cap = fig.caption()) {
@@ -1802,20 +1805,14 @@ public class RandomDocumentExample extends DocumentExample {
       LoremIpsum.appendLoremIpsum(cap, this.m_rand, 20);
     }
 
-    switch (this.m_rand.nextInt(2)) {
-      case 0: {
-        try (final Graphic g = fig.graphic()) {
-          this.__randomGraphic(g);
-        }
-        break;
-      }
-
-      default: {
-        try (final ILineChart2D lineChart = fig.lineChart2D()) {
-          LineChart2DExample.randomLineChart2D(this.m_rand, lineChart,
-              this.m_doc.getStyles());
-          break;
-        }
+    size = AllChartExamples.ALL_CHART_EXAMPLES.size();
+    chosen = this.m_rand.nextInt(size + 1);
+    if (chosen < size) {
+      AllChartExamples.ALL_CHART_EXAMPLES.get(chosen).perform(fig,
+          this.m_doc.getStyles(), this.m_rand);
+    } else {
+      try (final Graphic g = fig.graphic()) {
+        this.__randomGraphic(g);
       }
     }
   }
@@ -1830,6 +1827,7 @@ public class RandomDocumentExample extends DocumentExample {
     final Rectangle2D r;
     final ArrayList<AffineTransform> at;
     int k, e, i, limit;
+    double z;
     Point2D a, b;
     double[][] d;
     MemoryTextOutput mo;
@@ -1843,7 +1841,7 @@ public class RandomDocumentExample extends DocumentExample {
 
     r = g.getBounds();
     k = 0;
-    limit = 1000;
+    limit = 100;
     do {
       switch (this.m_rand.nextInt(15)) {
         case 0: {
@@ -1873,19 +1871,27 @@ public class RandomDocumentExample extends DocumentExample {
             try {
               switch (this.m_rand.nextInt(3)) {
                 case 0: {
-                  g.shear((-1d + (2d * this.m_rand.nextDouble())),
-                      (-1d + (2d * this.m_rand.nextDouble())));
+                  z = (0.1d * Math.round(-10d
+                      + (20d * this.m_rand.nextDouble())));
+                  if ((z > (-0.1d)) && (z < 0.1d)) {
+                    if (z < 0d) {
+                      z = (-0.1d);
+                    } else {
+                      z = 0.1d;
+                    }
+                  }
+                  g.shear(z, z);
                   break;
                 }
                 case 1: {
-                  g.rotate(Math.PI
-                      * (-1d + (2d * this.m_rand.nextDouble())));
+                  g.rotate(0.1d + (0.1d * Math.round(20d * Math.PI
+                      * this.m_rand.nextDouble())));
                   break;
                 }
                 default: {
-                  g.scale(//
-                      (1d + ((this.m_rand.nextDouble() * 0.1d) - 0.05d)),//
-                      (1d + ((this.m_rand.nextDouble() * 0.1d) - 0.05d)));
+                  z = (0.1d * Math.round(10d + //
+                      (this.m_rand.nextDouble() - 0.5d)));
+                  g.scale(z, z);
                 }
               }
               at.add(g.getTransform());

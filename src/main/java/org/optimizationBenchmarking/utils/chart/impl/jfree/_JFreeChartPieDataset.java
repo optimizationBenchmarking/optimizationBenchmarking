@@ -25,7 +25,7 @@ final class _JFreeChartPieDataset extends
 
     idx = this.getIndex(key);
 
-    if (idx > 0) {
+    if (idx >= 0) {
       return _JFreeChartPieDataset.__value(this.m_data.get(idx).getData());
     }
 

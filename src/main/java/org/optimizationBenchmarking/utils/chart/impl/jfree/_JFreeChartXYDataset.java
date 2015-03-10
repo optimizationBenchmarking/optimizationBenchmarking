@@ -120,60 +120,86 @@ final class _JFreeChartXYDataset extends
   /** {@inheritDoc} */
   @Override
   public final Number getX(final int series, final int item) {
+    final IMatrix matrix;
+
+    matrix = this.m_matrices[series];
+    if (matrix.isIntegerMatrix()) {
+      return Long.valueOf(//
+          matrix.getLong(this.__getXIndex(series, item), 0));
+    }
     return Double.valueOf(this.getXValue(series, item));
+  }
+
+  /**
+   * get the index along the x-axis
+   * 
+   * @param series
+   *          the series
+   * @param item
+   *          the item
+   * @return the index
+   */
+  private final int __getXIndex(final int series, final int item) {
+    switch (this.m_typeSwitches[series]) {
+      case 1: {
+        return ((item + 1) >>> 1);
+      }
+      case 2: {
+        return (item >>> 1);
+      }
+      default: {
+        return item;
+      }
+    }
+  }
+
+  /**
+   * get the index along the y-axis
+   * 
+   * @param series
+   *          the series
+   * @param item
+   *          the item
+   * @return the index
+   */
+  private final int __getYIndex(final int series, final int item) {
+    switch (this.m_typeSwitches[series]) {
+      case 1: {
+        return (item >>> 1);
+      }
+      case 2: {
+        return ((item + 1) >>> 1);
+      }
+      default: {
+        return item;
+      }
+    }
   }
 
   /** {@inheritDoc} */
   @Override
   public final double getXValue(final int series, final int item) {
-    final int idx;
-
-    switch (this.m_typeSwitches[series]) {
-      case 1: {
-        idx = ((item + 1) >>> 1);
-        break;
-      }
-      case 2: {
-        idx = (item >>> 1);
-        break;
-      }
-      default: {
-        idx = item;
-        break;
-      }
-    }
-
-    return _JFreeChartDataset
-        ._f(this.m_matrices[series].getDouble(idx, 0));
+    return _JFreeChartDataset._f(this.m_matrices[series].getDouble(
+        this.__getXIndex(series, item), 0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final Number getY(final int series, final int item) {
+    final IMatrix matrix;
+
+    matrix = this.m_matrices[series];
+    if (matrix.isIntegerMatrix()) {
+      return Long.valueOf(//
+          matrix.getLong(this.__getYIndex(series, item), 1));
+    }
     return Double.valueOf(this.getYValue(series, item));
   }
 
   @Override
   public final double getYValue(final int series, final int item) {
-    final int idx;
-
-    switch (this.m_typeSwitches[series]) {
-      case 1: {
-        idx = (item >>> 1);
-        break;
-      }
-      case 2: {
-        idx = ((item + 1) >>> 1);
-        break;
-      }
-      default: {
-        idx = item;
-        break;
-      }
-    }
-
-    return _JFreeChartDataset
-        ._f(this.m_matrices[series].getDouble(idx, 1));
+    return _JFreeChartDataset._f(this.m_matrices[series].getDouble(
+        this.__getYIndex(series, item), 1));
   }
 
 }

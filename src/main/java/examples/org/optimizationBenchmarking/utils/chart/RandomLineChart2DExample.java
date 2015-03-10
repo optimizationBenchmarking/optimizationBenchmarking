@@ -2,50 +2,35 @@ package examples.org.optimizationBenchmarking.utils.chart;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
-import org.optimizationBenchmarking.utils.chart.spec.ELineType;
 import org.optimizationBenchmarking.utils.chart.spec.IAxis;
-import org.optimizationBenchmarking.utils.chart.spec.IChartDriver;
+import org.optimizationBenchmarking.utils.chart.spec.IChartSelector;
 import org.optimizationBenchmarking.utils.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
-import org.optimizationBenchmarking.utils.chart.spec.ITitledElement;
-import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
-import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
-import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix2D;
-import org.optimizationBenchmarking.utils.math.random.LoremIpsum;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.MaximumAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.MinimumAggregate;
-import org.optimizationBenchmarking.utils.math.units.ELength;
-
-import examples.org.optimizationBenchmarking.FinishedPrinter;
-import examples.org.optimizationBenchmarking.utils.graphics.ColorPaletteExample;
-import examples.org.optimizationBenchmarking.utils.graphics.ExampleFontPalettes;
-import examples.org.optimizationBenchmarking.utils.graphics.ExampleGraphicConfigurations;
-import examples.org.optimizationBenchmarking.utils.graphics.StrokePaletteExample;
 
 /**
- * An example for rendering line charts.
+ * A random example for rendering 2D line charts.
  */
-public class LineChart2DExample {
+public class RandomLineChart2DExample extends ChartExample {
 
-  /** get the legend modes */
-  private static final ELegendMode[] LEGEND_MODES = ELegendMode.values();
-  /** the line types */
-  private static final ELineType[] LINE_TYPES = ELineType.values();
+  /** the globally shared instance */
+  public static final RandomLineChart2DExample INSTANCE = new RandomLineChart2DExample();
 
   /** the maximum value */
   private static final double MAX_VAL = (0.1d * Double.MAX_VALUE);
   /** the minimum value */
-  private static final double MIN_VAL = (-LineChart2DExample.MAX_VAL);
+  private static final double MIN_VAL = (-RandomLineChart2DExample.MAX_VAL);
+
+  /** create */
+  private RandomLineChart2DExample() {
+    super();
+  }
 
   /**
    * run the example: there are problems with the different output
@@ -56,173 +41,46 @@ public class LineChart2DExample {
    *           if i/o fails
    */
   public static final void main(final String[] args) throws IOException {
-    final Path dir;
-    final Random rand;
-    final PhysicalDimension size;
-    long seed;
-    Path sub;
-    int z, example;
-
-    if ((args != null) && (args.length > 0)) {
-      dir = Paths.get(args[0]);
-    } else {
-      dir = Files.createTempDirectory("graphics"); //$NON-NLS-1$
-    }
-
-    rand = new Random();
-
-    size = new PhysicalDimension((10 + rand.nextInt(12)),
-        (6 + rand.nextInt(8)), ELength.CM);
-
-    for (example = 1; example <= 9; example++) {
-      seed = rand.nextLong();
-      sub = dir.resolve("example_" + example); //$NON-NLS-1$
-      z = 0;
-      for (final GraphicConfiguration d : ExampleGraphicConfigurations.CONFIGURATIONS) {
-        for (final IChartDriver c : ExampleChartDrivers.DRIVERS) {
-          try (final Graphic g = d
-              .createGraphic(
-                  sub,//
-                  ((((((((LineChart2DExample.class.getSimpleName() + '_') + example) + '_') + (++z)) + '_') + d
-                      .toString()) + '_') + c.getClass().getSimpleName()),//
-                  size, new FinishedPrinter(c, d), Logger.getGlobal())) {
-            rand.setSeed(seed);
-            LineChart2DExample.randomLineChart2D(rand, g,
-                LineChart2DExample.randomStyleSet(rand), c);
-          }
-        }
-      }
-    }
+    RandomLineChart2DExample.INSTANCE.run(args);
   }
 
-  /**
-   * Create a random style set
-   * 
-   * @param rand
-   *          the random number generator
-   * @return the style set
-   */
-  public static final StyleSet randomStyleSet(final Random rand) {
-    return new StyleSet(ExampleFontPalettes.PALETTES.get(rand
-        .nextInt(ExampleFontPalettes.PALETTES.size())),//
-        ColorPaletteExample.PALETTES.get(rand
-            .nextInt(ColorPaletteExample.PALETTES.size())),//
-        StrokePaletteExample.PALETTES.get(rand
-            .nextInt(StrokePaletteExample.PALETTES.size())));//
-  }
-
-  /**
-   * Render a random line chart to a given graphic
-   * 
-   * @param rand
-   *          the random number generator
-   * @param graphic
-   *          the graphic
-   * @param styles
-   *          the styles
-   * @param driver
-   *          the chart driver to use
-   */
-  public static final void randomLineChart2D(final Random rand,
-      final Graphic graphic, final StyleSet styles,
-      final IChartDriver driver) {
-
-    try (final ILineChart2D chart = driver.use().setGraphic(graphic)
-        .setStyleSet(styles).setLogger(Logger.getGlobal()).create()
-        .lineChart2D()) {
-      LineChart2DExample.randomLineChart2D(rand, chart, styles);
-    }
-  }
-
-  /**
-   * Render a random line chart to a given graphic
-   * 
-   * @param rand
-   *          the random number generator
-   * @param styles
-   *          the styles
-   * @param chart
-   *          the chart
-   */
-  public static final void randomLineChart2D(final Random rand,
-      final ILineChart2D chart, final StyleSet styles) {
+  /** {@inheritDoc} */
+  @Override
+  public void perform(final IChartSelector selector,
+      final StyleSet styles, final Random random) {
     final double minX, maxX, minY, maxY;
     double a, b, c;
 
-    LineChart2DExample.__title(chart, rand, styles, null, 8);
-    chart.setLegendMode(LineChart2DExample.LEGEND_MODES[rand
-        .nextInt(LineChart2DExample.LEGEND_MODES.length)]);
+    try (final ILineChart2D chart = selector.lineChart2D()) {
 
-    c = Math.exp(rand.nextGaussian() * 4);
-    a = ((rand.nextDouble() - 0.5d) * c);
-    b = ((rand.nextDouble() - 0.5d) * c);
-    minX = Math.min(a, b);
-    maxX = Math.max(a, b);
+      ChartExample.setTitle(chart, null, random, styles);
+      chart.setLegendMode(ChartExample.randomLegendMode(random));
 
-    c = Math.exp(rand.nextGaussian() * 4);
-    a = ((rand.nextDouble() - 0.5d) * c);
-    b = ((rand.nextDouble() - 0.5d) * c);
-    minY = Math.min(a, b);
-    maxY = Math.max(a, b);
+      c = Math.exp(random.nextGaussian() * 4);
+      a = ((random.nextDouble() - 0.5d) * c);
+      b = ((random.nextDouble() - 0.5d) * c);
+      minX = Math.min(a, b);
+      maxX = Math.max(a, b);
 
-    try (final IAxis axis = chart.xAxis()) {
-      LineChart2DExample.__axis(axis, rand, styles, minX, maxX);
-    }
-    try (final IAxis axis = chart.yAxis()) {
-      LineChart2DExample.__axis(axis, rand, styles, minY, maxY);
-    }
+      c = Math.exp(random.nextGaussian() * 4);
+      a = ((random.nextDouble() - 0.5d) * c);
+      b = ((random.nextDouble() - 0.5d) * c);
+      minY = Math.min(a, b);
+      maxY = Math.max(a, b);
 
-    do {
-      try (final ILine2D line = chart.line()) {
-        LineChart2DExample.__line(line, rand, styles, minX, maxX, minY,
-            maxY);
+      try (final IAxis axis = chart.xAxis()) {
+        RandomLineChart2DExample.__axis(axis, random, styles, minX, maxX);
       }
-    } while (rand.nextInt(4) > 0);
-  }
-
-  /**
-   * Set the title of a titled element
-   * 
-   * @param element
-   *          the element
-   * @param styles
-   *          the style set
-   * @param rand
-   *          the random number generator
-   * @param use
-   *          a string to use
-   * @param maxLength
-   *          the maximum length of the title
-   */
-  private static final void __title(final ITitledElement element,
-      final Random rand, final StyleSet styles, final String use,
-      final int maxLength) {
-    final String t;
-
-    if (rand.nextBoolean()) {
-      if (use != null) {
-        t = use;
-      } else {
-        t = LoremIpsum.loremIpsum(rand, maxLength);
+      try (final IAxis axis = chart.yAxis()) {
+        RandomLineChart2DExample.__axis(axis, random, styles, minY, maxY);
       }
-      element.setTitle(t);
-      switch (rand.nextInt(6)) {
-        case 0: {
-          element.setTitleFont(styles.getCodeFont().getFont());
-          break;
+
+      do {
+        try (final ILine2D line = chart.line()) {
+          RandomLineChart2DExample.__line(line, random, styles, minX,
+              maxX, minY, maxY);
         }
-        case 1: {
-          element.setTitleFont(styles.getEmphFont().getFont());
-          break;
-        }
-        case 2: {
-          element.setTitleFont(styles.getDefaultFont().getFont());
-          break;
-        }
-        default: {
-          /** */
-        }
-      }
+      } while (random.nextInt(4) > 0);
     }
   }
 
@@ -246,10 +104,10 @@ public class LineChart2DExample {
 
     c = null;
     if (rand.nextInt(20) <= 0) {
-      c = LineChart2DExample.__randomColor(styles, rand);
+      c = ChartExample.randomColor(styles, rand);
     }
-    LineChart2DExample.__title(axis, rand, styles,
-        ((c != null) ? c.toString() : null), 3);
+    ChartExample.setTitle(axis, ((c != null) ? c.toString() : null), rand,
+        styles);
 
     switch (rand.nextInt(30)) {
       case 0: {
@@ -270,7 +128,7 @@ public class LineChart2DExample {
     }
 
     if (rand.nextInt(20) <= 0) {
-      axis.setGridLineColor(LineChart2DExample.__randomColor(styles, rand));
+      axis.setGridLineColor(ChartExample.randomColor(styles, rand));
     }
 
     switch (rand.nextInt(30)) {
@@ -324,21 +182,6 @@ public class LineChart2DExample {
   }
 
   /**
-   * create a random color
-   * 
-   * @param styles
-   *          the styles
-   * @param rand
-   *          the random number generator
-   * @return the color
-   */
-  private static final Color __randomColor(final StyleSet styles,
-      final Random rand) {
-    return styles.getMostSimilarColor(//
-        (rand.nextInt() & 0x7f7f7f) | 0x070707);
-  }
-
-  /**
    * Setup the line
    * 
    * @param line
@@ -364,8 +207,8 @@ public class LineChart2DExample {
     final double[][] data;
     int i;
 
-    c = LineChart2DExample.__randomColor(styles, rand);
-    LineChart2DExample.__title(line, rand, styles, c.toString(), 3);
+    c = ChartExample.randomColor(styles, rand);
+    ChartExample.setTitle(line, c.toString(), rand, styles);
     line.setColor(c);
 
     switch (rand.nextInt(10)) {
@@ -397,13 +240,12 @@ public class LineChart2DExample {
               : Double.POSITIVE_INFINITY));
     }
 
-    line.setType(LineChart2DExample.LINE_TYPES[rand
-        .nextInt(LineChart2DExample.LINE_TYPES.length)]);
+    line.setType(ChartExample.randomLineType(rand));
 
     x = new double[rand.nextInt(1000) + 2];
     y = new double[x.length];
-    LineChart2DExample.__fill(x, minX, maxX, rand, false);
-    LineChart2DExample.__fill(y, minY, maxY, rand, true);
+    RandomLineChart2DExample.__fill(x, minX, maxX, rand, false);
+    RandomLineChart2DExample.__fill(y, minY, maxY, rand, true);
     data = new double[x.length][2];
     for (i = x.length; (--i) >= 0;) {
       data[i][0] = x[i];
@@ -462,12 +304,12 @@ public class LineChart2DExample {
         }
 
         if ((realMin != realMin)
-            || (realMin <= LineChart2DExample.MIN_VAL)) {
-          realMin = LineChart2DExample.MIN_VAL;
+            || (realMin <= RandomLineChart2DExample.MIN_VAL)) {
+          realMin = RandomLineChart2DExample.MIN_VAL;
         }
         if ((realMax != realMax)
-            || (realMax >= LineChart2DExample.MAX_VAL)) {
-          realMax = LineChart2DExample.MAX_VAL;
+            || (realMax >= RandomLineChart2DExample.MAX_VAL)) {
+          realMax = RandomLineChart2DExample.MAX_VAL;
         }
         if (realMin > realMax) {
           temp = realMin;
@@ -537,11 +379,11 @@ public class LineChart2DExample {
 
     if (canReverse) {
       if (rand.nextBoolean()) {
-        LineChart2DExample.__revert(data, 0, (data.length - 1));
+        RandomLineChart2DExample.__revert(data, 0, (data.length - 1));
       }
 
       while (rand.nextInt(7) > 0) {
-        LineChart2DExample.__revert(data, rand.nextInt(data.length),
+        RandomLineChart2DExample.__revert(data, rand.nextInt(data.length),
             rand.nextInt(data.length));
       }
     }
@@ -577,4 +419,5 @@ public class LineChart2DExample {
       jj--;
     }
   }
+
 }
