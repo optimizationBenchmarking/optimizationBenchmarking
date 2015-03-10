@@ -41,6 +41,7 @@ public class SimplePieChartExample extends ChartExample {
       final StyleSet styles, final Random random) {
     final ELegendMode mode;
     final boolean dataMode;
+    final int count;
 
     try (final IPieChart chart = selector.pieChart()) {
       mode = ChartExample.randomLegendMode(random);
@@ -49,6 +50,7 @@ public class SimplePieChartExample extends ChartExample {
       chart.setLegendMode(mode);
 
       dataMode = random.nextBoolean();
+      count = random.nextInt(6);
 
       SimplePieChartExample.__slice(chart,
           styles.getMostSimilarColor(Color.red),//
@@ -58,25 +60,30 @@ public class SimplePieChartExample extends ChartExample {
           styles.getMostSimilarColor(Color.blue),//
           "blue", dataMode, random);//$NON-NLS-1$
 
-      if (random.nextBoolean()) {
+      if (count > 0) {
         SimplePieChartExample.__slice(chart,
             styles.getMostSimilarColor(Color.green),//
             "green", dataMode, random);//$NON-NLS-1$
 
-        if (random.nextBoolean()) {
+        if (count > 1) {
           SimplePieChartExample.__slice(chart,
               styles.getMostSimilarColor(Color.orange),//
               "orange", dataMode, random);//$NON-NLS-1$
 
-          if (random.nextBoolean()) {
+          if (count > 2) {
             SimplePieChartExample.__slice(chart,
                 styles.getMostSimilarColor(Color.CYAN),//
                 "cyan", dataMode, random);//$NON-NLS-1$
 
-            if (random.nextBoolean()) {
+            if (count > 3) {
               SimplePieChartExample.__slice(chart,
                   styles.getMostSimilarColor(Color.MAGENTA),//
                   "magenta", dataMode, random);//$NON-NLS-1$
+              if (count > 3) {
+                SimplePieChartExample.__slice(chart,
+                    styles.getMostSimilarColor(Color.PINK),//
+                    "pink", dataMode, random);//$NON-NLS-1$
+              }
 
             }
           }

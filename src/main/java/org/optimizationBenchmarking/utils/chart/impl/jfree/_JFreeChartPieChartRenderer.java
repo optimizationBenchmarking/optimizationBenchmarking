@@ -5,9 +5,12 @@ import java.util.Locale;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.PieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.ui.VerticalAlignment;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledDataScalar;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledPieChart;
+import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
@@ -31,6 +34,7 @@ final class _JFreeChartPieChartRenderer
     final _JFreeChartPieDataset data;
     final ArrayListView<CompiledDataScalar> elements;
     final int size;
+    final PieSectionLabelGenerator generator;
     Color color;
     int index;
     CompiledDataScalar element;
@@ -56,6 +60,31 @@ final class _JFreeChartPieChartRenderer
       this.m_plot.setSectionOutlineStroke(key, element.getStroke());
       this.m_plot.setSectionOutlinesVisible(true);
     }
+
+    if (this.m_legendMode.isLegendShown()) {
+      this.m_plot.setLabelBackgroundPaint(Color.WHITE);
+      this.m_plot.setLabelShadowPaint(Color.WHITE);
+      if (this.m_legendMode == ELegendMode.CHART_IS_LEGEND) {
+        this.m_plot.setLabelGenerator(//
+            new _JFreeChartPieNullLabelGenerator());
+      } else {
+        this.m_plot.setLabelGenerator(//
+            new _JFreeChartPieNumberLabelGenerator());
+      }
+      this.m_plot.setLegendLabelGenerator(//
+          new _JFreeChartPieTitleLabelGenerator());
+    } else {
+      this.m_plot.setLabelLinksVisible(false);
+      generator = new _JFreeChartPieNullLabelGenerator();
+      this.m_plot.setLabelGenerator(generator);
+      this.m_plot.setLegendLabelGenerator(generator);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final VerticalAlignment _getLegendVerticalAlignment() {
+    return VerticalAlignment.BOTTOM;
   }
 
   /** {@inheritDoc} */

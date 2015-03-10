@@ -170,7 +170,7 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
   }
 
   /**
-   * paint this chart as legend
+   * paint the plot as legend
    * 
    * @param graphics
    *          the graphics
@@ -187,8 +187,40 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
     }
 
     legend.setVisible(false);
-
     this._paintNormal(graphics, bounds);
+    this._paintLegend(legend, graphics, bounds,
+        this._getLegendVerticalAlignment());
+  }
+
+  /**
+   * Get the vertical alignment for legends
+   * 
+   * @return the vertical alignment for legends
+   */
+  VerticalAlignment _getLegendVerticalAlignment() {
+    return VerticalAlignment.TOP;
+  }
+
+  /**
+   * Calculate bounds for a legend from a bounding rectangle
+   * 
+   * @param bounds
+   *          the bounds
+   * @return the legend bounds
+   */
+  static final Rectangle2D _createLegendBounds(final Rectangle2D bounds) {
+    double minX, minY, width, height;
+
+    minX = bounds.getMinX();
+    minY = bounds.getMinY();
+    width = (bounds.getMaxX() - minX);
+    height = (bounds.getMaxY() - minY);
+
+    return new Rectangle2D.Double(//
+        minX + (0.05d * width), //
+        minY + (0.05d * height),//
+        (width * 0.9d), //
+        (height * 0.9d));
   }
 
   /**
@@ -243,36 +275,44 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
    *          the graphics
    * @param bounds
    *          the bounds
+   * @param verticalAlignment
+   *          the vertical alignment
    */
-  static final void _paintLegend(final LegendTitle legend,
-      final Graphics2D graphics, final Rectangle2D bounds) {
-    final Rectangle2D titleArea;
-    final BlockParams p;
-    final double ww, hh;
+  final void _paintLegend(final LegendTitle legend,
+      final Graphics2D graphics, final Rectangle2D bounds,
+      final VerticalAlignment verticalAlignment) {
+    final Rectangle2D titleArea, inner;
+    final BlockParams blockParams;
+    final double width, height;
     final RectangleConstraint constraint;
     final Size2D size;
 
-    p = new BlockParams();
-    p.setGenerateEntities(false);
+    legend.setVisible(true);
+    legend.setBackgroundPaint(this.m_plot.getBackgroundPaint());
 
-    ww = bounds.getWidth();
-    if (ww <= 0.0d) {
+    inner = _JFreeChartRenderer._createLegendBounds(bounds);
+
+    blockParams = new BlockParams();
+    blockParams.setGenerateEntities(false);
+
+    width = inner.getWidth();
+    if (width <= 0.0d) {
       return;
     }
-    hh = bounds.getHeight();
-    if (hh <= 0.0d) {
+    height = inner.getHeight();
+    if (height <= 0.0d) {
       return;
     }
 
-    constraint = new RectangleConstraint(ww, new Range(0.0, ww),
-        LengthConstraintType.RANGE, hh, new Range(0.0, hh),
+    constraint = new RectangleConstraint(width, new Range(0.0, width),
+        LengthConstraintType.RANGE, height, new Range(0.0, height),
         LengthConstraintType.RANGE);
 
     size = legend.arrange(graphics, constraint);
-    titleArea = _JFreeChartRenderer._createAlignedRectangle2D(size,
-        bounds, legend.getHorizontalAlignment(), VerticalAlignment.TOP);
+    titleArea = _JFreeChartRenderer._createAlignedRectangle2D(size, inner,
+        legend.getHorizontalAlignment(), verticalAlignment);
     legend.setMargin(_JFreeChartRenderer.LEGEND_MARGIN);
     legend.setPadding(_JFreeChartRenderer.CHART_INSETS);
-    legend.draw(graphics, titleArea, p);
+    legend.draw(graphics, titleArea, blockParams);
   }
 }

@@ -17,6 +17,7 @@ import org.jfree.chart.plot.SeriesRenderingOrder;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.title.LegendTitle;
+import org.jfree.ui.VerticalAlignment;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledAxis;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledLine2D;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledLineChart2D;
@@ -185,8 +186,6 @@ final class _JFreeChartLineChart2DRenderer extends
     final LegendTitle legend;
     final _JFreeChartXYItemRenderer render;
     final XYItemRenderer old;
-    Rectangle2D r;
-    double w, h;
 
     legend = this.m_chart.getLegend();
     if ((legend == null) || (!(legend.isVisible()))) {
@@ -201,18 +200,12 @@ final class _JFreeChartLineChart2DRenderer extends
       this.m_plot.setRenderer(render);
       this.m_plot.setRenderer(0, render);
       this._paintNormal(graphics, bounds);
-      legend.setVisible(true);
 
-      legend.setBackgroundPaint(this.m_plot.getBackgroundPaint());
-      w = (render.m_maxX - render.m_minX);
-      h = (render.m_maxY - render.m_minY);
-      r = new Rectangle2D.Double(//
-          render.m_minX + (0.05d * w), //
-          render.m_minY + (0.05d * h),//
-          w * 0.9d, //
-          h * 0.9d);
-
-      _JFreeChartRenderer._paintLegend(legend, graphics, r);
+      this._paintLegend(legend, graphics, //
+          new Rectangle2D.Double(render.m_minX, render.m_minY,//
+              (render.m_maxX - render.m_minX),//
+              (render.m_maxY - render.m_minY)),//
+          VerticalAlignment.TOP);
     } finally {
       this.m_plot.setRenderer(old);
     }

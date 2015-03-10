@@ -45,6 +45,7 @@ public class SimpleLineChart2DExample extends ChartExample {
   public void perform(final IChartSelector selector,
       final StyleSet styles, final Random random) {
     final ELegendMode mode;
+    final int count;
 
     try (final ILineChart2D chart = selector.lineChart2D()) {
       mode = ChartExample.randomLegendMode(random);
@@ -63,6 +64,7 @@ public class SimpleLineChart2DExample extends ChartExample {
         axis.setMinimumAggregate(Minimum.INSTANCE.createAggregate());
       }
 
+      count = random.nextInt(6);
       SimpleLineChart2DExample.__line(chart,
           styles.getMostSimilarColor(Color.red),//
           "red", 0, random);//$NON-NLS-1$
@@ -71,25 +73,30 @@ public class SimpleLineChart2DExample extends ChartExample {
           styles.getMostSimilarColor(Color.blue),//
           "blue", 1, random);//$NON-NLS-1$
 
-      if (random.nextBoolean()) {
+      if (count > 0) {
         SimpleLineChart2DExample.__line(chart,
             styles.getMostSimilarColor(Color.green),//
             "green", 2, random);//$NON-NLS-1$
 
-        if (random.nextBoolean()) {
+        if (count > 1) {
           SimpleLineChart2DExample.__line(chart,
               styles.getMostSimilarColor(Color.orange),//
               "orange", 3, random);//$NON-NLS-1$
 
-          if (random.nextBoolean()) {
+          if (count > 2) {
             SimpleLineChart2DExample.__line(chart,
                 styles.getMostSimilarColor(Color.CYAN),//
                 "cyan", 4, random);//$NON-NLS-1$
 
-            if (random.nextBoolean()) {
+            if (count > 3) {
               SimpleLineChart2DExample.__line(chart,
                   styles.getMostSimilarColor(Color.MAGENTA),//
                   "magenta", 5, random);//$NON-NLS-1$
+              if (count > 4) {
+                SimpleLineChart2DExample.__line(chart,
+                    styles.getMostSimilarColor(Color.PINK),//
+                    "pink", 6, random);//$NON-NLS-1$
+              }
             }
           }
         }
