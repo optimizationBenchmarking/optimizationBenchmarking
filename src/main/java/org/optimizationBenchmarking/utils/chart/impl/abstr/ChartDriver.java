@@ -87,7 +87,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
    */
   public synchronized final Font scaleFont(final Font font,
       final float scale) {
-    final float oldSize;
+    final float oldSize, newSize;
     final int size;
     final __FontKey goalKey, goalKey2;
     Font found, derived;
@@ -119,13 +119,16 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
       return font;
     }
 
-    if (Math.abs(derived.getSize2D() - goalSize) >= //
-    Math.abs(oldSize - goalSize)) {
+    newSize = derived.getSize2D();
+    if (newSize == oldSize) {
       derived = font;
+    } else {
+      if (Math.abs(newSize - goalSize) > Math.abs(oldSize - goalSize)) {
+        derived = font;
+      }
     }
 
     size = derived.getSize();
-
     if (size != goalSize) {
       goalKey2 = new __FontKey(font, size);
       found = this.m_scaled.get(goalKey2);

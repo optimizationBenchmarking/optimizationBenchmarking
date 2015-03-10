@@ -54,35 +54,35 @@ public class SimplePieChartExample extends ChartExample {
 
       SimplePieChartExample.__slice(chart,
           styles.getMostSimilarColor(Color.red),//
-          "red", dataMode, random);//$NON-NLS-1$
+          "red", dataMode, random, styles);//$NON-NLS-1$
 
       SimplePieChartExample.__slice(chart,
           styles.getMostSimilarColor(Color.blue),//
-          "blue", dataMode, random);//$NON-NLS-1$
+          "blue", dataMode, random, styles);//$NON-NLS-1$
 
       if (count > 0) {
         SimplePieChartExample.__slice(chart,
             styles.getMostSimilarColor(Color.green),//
-            "green", dataMode, random);//$NON-NLS-1$
+            "green", dataMode, random, styles);//$NON-NLS-1$
 
         if (count > 1) {
           SimplePieChartExample.__slice(chart,
               styles.getMostSimilarColor(Color.orange),//
-              "orange", dataMode, random);//$NON-NLS-1$
+              "orange", dataMode, random, styles);//$NON-NLS-1$
 
           if (count > 2) {
             SimplePieChartExample.__slice(chart,
                 styles.getMostSimilarColor(Color.CYAN),//
-                "cyan", dataMode, random);//$NON-NLS-1$
+                "cyan", dataMode, random, styles);//$NON-NLS-1$
 
             if (count > 3) {
               SimplePieChartExample.__slice(chart,
                   styles.getMostSimilarColor(Color.MAGENTA),//
-                  "magenta", dataMode, random);//$NON-NLS-1$
+                  "magenta", dataMode, random, styles);//$NON-NLS-1$
               if (count > 3) {
                 SimplePieChartExample.__slice(chart,
                     styles.getMostSimilarColor(Color.PINK),//
-                    "pink", dataMode, random);//$NON-NLS-1$
+                    "pink", dataMode, random, styles);//$NON-NLS-1$
               }
 
             }
@@ -105,10 +105,12 @@ public class SimplePieChartExample extends ChartExample {
    *          the random number generator
    * @param dataMode
    *          the data mode
+   * @param styles
+   *          the style set
    */
   private static final void __slice(final IPieChart chart,
       final Color color, final String name, final boolean dataMode,
-      final Random rand) {
+      final Random rand, final StyleSet styles) {
     String name2;
 
     try (final IDataScalar dest = chart.slice()) {
@@ -120,7 +122,7 @@ public class SimplePieChartExample extends ChartExample {
       } else {
         name2 = ((((name + ' ') + '(') + name2) + ')');
       }
-      dest.setTitle(name2);
+      ChartExample.setTitle(dest, name2, rand, styles);
 
       if (dataMode) {
         dest.setData(rand.nextInt(100));

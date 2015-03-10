@@ -1834,10 +1834,11 @@ public class RandomDocumentExample extends DocumentExample {
     FontStyle fs;
 
     at = new ArrayList<>();
+    at.add(g.getTransform());
+
     e = 500;
     mo = new MemoryTextOutput();
     fs = null;
-    at.add(g.getTransform());
 
     r = g.getBounds();
     k = 0;
@@ -1867,40 +1868,42 @@ public class RandomDocumentExample extends DocumentExample {
           }
         }
         case 3: {
-          trans: for (;;) {
-            try {
-              switch (this.m_rand.nextInt(3)) {
-                case 0: {
-                  z = (0.1d * Math.round(-10d
-                      + (20d * this.m_rand.nextDouble())));
-                  if ((z > (-0.1d)) && (z < 0.1d)) {
-                    if (z < 0d) {
-                      z = (-0.1d);
-                    } else {
-                      z = 0.1d;
+          if (at.size() < 3) {
+            trans: for (;;) {
+              try {
+                switch (this.m_rand.nextInt(3)) {
+                  case 0: {
+                    z = (0.1d * Math.round(-10d
+                        + (20d * this.m_rand.nextDouble())));
+                    if ((z > (-0.1d)) && (z < 0.1d)) {
+                      if (z < 0d) {
+                        z = (-0.1d);
+                      } else {
+                        z = 0.1d;
+                      }
                     }
+                    g.shear(z, z);
+                    break;
                   }
-                  g.shear(z, z);
-                  break;
+                  case 1: {
+                    g.rotate(0.1d + (0.1d * Math.round(20d * Math.PI
+                        * this.m_rand.nextDouble())));
+                    break;
+                  }
+                  default: {
+                    z = (0.1d * Math.round(10d + //
+                        (this.m_rand.nextDouble() - 0.5d)));
+                    g.scale(z, z);
+                  }
                 }
-                case 1: {
-                  g.rotate(0.1d + (0.1d * Math.round(20d * Math.PI
-                      * this.m_rand.nextDouble())));
-                  break;
-                }
-                default: {
-                  z = (0.1d * Math.round(10d + //
-                      (this.m_rand.nextDouble() - 0.5d)));
-                  g.scale(z, z);
-                }
+                at.add(g.getTransform());
+                break trans;
+              } catch (final Throwable tt) {
+                //
               }
-              at.add(g.getTransform());
-              break trans;
-            } catch (final Throwable tt) {
-              //
             }
+            break;
           }
-          break;
         }
         case 4: {
           if (at.size() > 1) {
