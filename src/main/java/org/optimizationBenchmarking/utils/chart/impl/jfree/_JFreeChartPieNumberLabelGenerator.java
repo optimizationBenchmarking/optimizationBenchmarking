@@ -1,32 +1,28 @@
 package org.optimizationBenchmarking.utils.chart.impl.jfree;
 
-import java.awt.font.TextAttribute;
-import java.text.AttributedString;
-
-import org.jfree.chart.labels.PieSectionLabelGenerator;
-import org.jfree.data.general.PieDataset;
+import org.jfree.chart.plot.PiePlot;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledDataElement;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledDataScalar;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 
 /** the pie label generator */
-final class _JFreeChartPieNumberLabelGenerator implements
-    PieSectionLabelGenerator {
-
-  /** create */
-  _JFreeChartPieNumberLabelGenerator() {
-    super();
-  }
+final class _JFreeChartPieNumberLabelGenerator extends
+    _JFreeChartPieLabelGenerator {
 
   /**
-   * Get the string representation of the element
+   * create*
    * 
-   * @param element
-   *          the compiled element
-   * @return the string
+   * @param plot
+   *          the plot
    */
-  private static final String __string(final CompiledDataElement element) {
+  _JFreeChartPieNumberLabelGenerator(final PiePlot plot) {
+    super(plot);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final String _getTitle(final CompiledDataElement element) {
     final Number number;
 
     if (element != null) {
@@ -51,54 +47,6 @@ final class _JFreeChartPieNumberLabelGenerator implements
       }
       return element.getTitle();
     }
-    return null;
-  }
-
-  /** {@inheritDoc} */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  @Override
-  public final String generateSectionLabel(final PieDataset dataset,
-      final Comparable key) {
-    _JFreeChartDataset<CompiledDataElement> data;
-    int idx;
-
-    if (dataset instanceof _JFreeChartDataset) {
-      data = ((_JFreeChartDataset) dataset);
-      idx = data.indexOf(key);
-      if (idx >= 0) {
-        return _JFreeChartPieNumberLabelGenerator.__string(data.m_data
-            .get(idx));
-      }
-    }
-
-    return null;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  public final AttributedString generateAttributedSectionLabel(
-      final PieDataset dataset, final Comparable key) {
-    _JFreeChartDataset<CompiledDataElement> data;
-    CompiledDataElement element;
-    AttributedString string;
-    String title;
-    int idx;
-
-    if (dataset instanceof _JFreeChartDataset) {
-      data = ((_JFreeChartDataset) dataset);
-      idx = data.indexOf(key);
-      if (idx >= 0) {
-        element = data.m_data.get(idx);
-        title = _JFreeChartPieNumberLabelGenerator.__string(element);
-        if (title != null) {
-          string = new AttributedString(title);
-          string.addAttribute(TextAttribute.FONT, element.getTitleFont());
-          return string;
-        }
-      }
-    }
-
     return null;
   }
 

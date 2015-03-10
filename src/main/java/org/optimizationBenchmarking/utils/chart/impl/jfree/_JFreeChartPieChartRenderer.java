@@ -1,12 +1,12 @@
 package org.optimizationBenchmarking.utils.chart.impl.jfree;
 
 import java.awt.Color;
-import java.util.Locale;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.PieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.VerticalAlignment;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledDataScalar;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledPieChart;
@@ -69,10 +69,10 @@ final class _JFreeChartPieChartRenderer
             new _JFreeChartPieNullLabelGenerator());
       } else {
         this.m_plot.setLabelGenerator(//
-            new _JFreeChartPieNumberLabelGenerator());
+            new _JFreeChartPieNumberLabelGenerator(this.m_plot));
       }
       this.m_plot.setLegendLabelGenerator(//
-          new _JFreeChartPieTitleLabelGenerator());
+          new _JFreeChartPieLabelGenerator(this.m_plot));
     } else {
       this.m_plot.setLabelLinksVisible(false);
       generator = new _JFreeChartPieNullLabelGenerator();
@@ -97,7 +97,19 @@ final class _JFreeChartPieChartRenderer
   @Override
   final JFreeChart _createChart(final CompiledPieChart chart,
       final _JFreeChartPieDataset dataset) {
-    return ChartFactory.createPieChart3D(null, this.m_dataset,
-        this.m_legendMode.isLegendShown(), false, Locale.US);
+
+    _JFreeChartPiePlot3D plot;
+    JFreeChart result;
+
+    plot = new _JFreeChartPiePlot3D(dataset);
+    plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
+
+    result = new JFreeChart(null, JFreeChart.DEFAULT_TITLE_FONT, plot,
+        this.m_legendMode.isLegendShown());
+    ChartFactory.getChartTheme().apply(result);
+    return result;
+
+    // return ChartFactory.createPieChart3D(null, this.m_dataset,
+    // this.m_legendMode.isLegendShown(), false, Locale.US);
   }
 }

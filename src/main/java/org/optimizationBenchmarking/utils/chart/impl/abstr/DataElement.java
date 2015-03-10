@@ -150,6 +150,7 @@ public class DataElement extends TitledElement implements IDataElement {
     final Chart owner;
     final ChartDriver driver;
     final StyleSet styles;
+    final Logger logger;
     Font titleFont;
     Stroke stroke;
 
@@ -177,8 +178,6 @@ public class DataElement extends TitledElement implements IDataElement {
 
     this.process(owner, driver, styles, this.m_id, this.m_title,
         titleFont, this.m_color, stroke);
-
-    final Logger logger;
 
     logger = this.getLogger();
     if ((logger != null) && (logger.isLoggable(Level.FINEST))) {

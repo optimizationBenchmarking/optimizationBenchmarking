@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.text.textOutput;
 
+import java.text.CharacterIterator;
+
 import org.optimizationBenchmarking.utils.text.CharArrayCharSequence;
 import org.optimizationBenchmarking.utils.text.ITextable;
 
@@ -44,12 +46,12 @@ public class MemoryTextOutput extends AbstractTextOutput implements
       999999, 9999999, 99999999, 999999999, Integer.MAX_VALUE };
 
   /** the minimum long */
-  private static final char[] LONG_MIN_VAL = Long.toString(Long.MIN_VALUE)
-      .toCharArray();
+  private static final char[] LONG_MIN_VAL = //
+  Long.toString(Long.MIN_VALUE).toCharArray();
 
   /** the minimum int */
-  private static final char[] INT_MIN_VAL = Integer.toString(
-      Integer.MIN_VALUE).toCharArray();
+  private static final char[] INT_MIN_VAL = //
+  Integer.toString(Integer.MIN_VALUE).toCharArray();
 
   /** the data */
   private char[] m_data;
@@ -410,6 +412,35 @@ public class MemoryTextOutput extends AbstractTextOutput implements
     ch = new char[s];
     System.arraycopy(this.m_data, 0, ch, 0, s);
     return ch;
+  }
+
+  /**
+   * append a character iterator
+   * 
+   * @param iterator
+   *          the iterator
+   */
+  public final void append(final CharacterIterator iterator) {
+    final char[] dest;
+    final int end;
+    int index, offset;
+
+    if (iterator == null) {
+      throw new IllegalArgumentException(
+          "Character iterator cannot be null."); //$NON-NLS-1$
+    }
+
+    index = iterator.getBeginIndex();
+    end = iterator.getEndIndex();
+
+    if (index < end) {
+      offset = this._add(end - index);
+      dest = this.m_data;
+      while (index < end) {
+        iterator.setIndex(index++);
+        dest[offset++] = iterator.current();
+      }
+    }
   }
 
   /** clear the contents of this text output */

@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.chart.impl.jfree;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -49,6 +50,9 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
   /** the empty shape */
   static final Shape EMPTY_SHAPE = new java.awt.geom.Line2D.Float(0f, 0f,
       0f, 0f);
+
+  /** the basic, useless stroke */
+  static final BasicStroke BASIC_STROKE = new BasicStroke();
 
   /** the line shape */
   static final Shape LINE_SHAPE = new java.awt.geom.Line2D.Float(0f, 0f,
