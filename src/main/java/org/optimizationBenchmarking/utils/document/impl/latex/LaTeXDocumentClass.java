@@ -399,6 +399,29 @@ public class LaTeXDocumentClass extends PageDimension {
   }
 
   /**
+   * Write a comment and end the line.
+   * 
+   * @param comment
+   *          the comment
+   * @param out
+   *          the text output
+   */
+  protected static final void commentLine(final String comment,
+      final ITextOutput out) {
+    LaTeXDriver._commentLine(comment, out);
+  }
+
+  /**
+   * End the line
+   * 
+   * @param out
+   *          the text output
+   */
+  protected static final void endLine(final ITextOutput out) {
+    LaTeXDriver._endLine(out);
+  }
+
+  /**
    * Get the default document class
    * 
    * @return the default document class
