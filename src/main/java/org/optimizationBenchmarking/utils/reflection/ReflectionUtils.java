@@ -693,7 +693,7 @@ public final class ReflectionUtils {
    * <li>If {@code name} is neither {@code null} nor an empty string nor
    * only consists just of white space, we store a
    * {@link java.lang.String#trim() trimmed} version of this name in the
-   * local variable {@code useName}. for
+   * local variable {@code useName}.
    * <ol>
    * <li>A field with name {@code useName} is looked for. If the field is
    * not {@code public static final} or has a wrong type, we fail with an

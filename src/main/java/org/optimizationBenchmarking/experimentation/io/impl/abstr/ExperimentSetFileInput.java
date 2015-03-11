@@ -1,17 +1,17 @@
 package org.optimizationBenchmarking.experimentation.io.impl.abstr;
 
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.io.spec.IExperimentInput;
+import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.FileInputTool;
 
 /**
  * A file-based experiment input tool.
  */
-public class ExperimentFileInput extends
-    FileInputTool<ExperimentSetContext> implements IExperimentInput {
+public class ExperimentSetFileInput extends
+    FileInputTool<ExperimentSetContext> implements IExperimentSetInput {
 
   /** create */
-  protected ExperimentFileInput() {
+  protected ExperimentSetFileInput() {
     super();
   }
 

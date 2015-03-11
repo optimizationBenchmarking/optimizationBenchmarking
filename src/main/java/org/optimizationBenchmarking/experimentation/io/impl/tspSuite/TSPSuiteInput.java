@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.experimentation.data.EDimensionType;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.InstanceContext;
 import org.optimizationBenchmarking.experimentation.data.RunContext;
-import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentFileInput;
+import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetFileInput;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
@@ -30,7 +30,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * the {@link org.optimizationBenchmarking.experimentation.data experiment
  * data structures}.
  */
-public class TSPSuiteInput extends ExperimentFileInput {
+public class TSPSuiteInput extends ExperimentSetFileInput {
   /** the string indicating the begin of a comment: {@value} */
   private static final String COMMENT_START = "//"; //$NON-NLS-1$
   /**

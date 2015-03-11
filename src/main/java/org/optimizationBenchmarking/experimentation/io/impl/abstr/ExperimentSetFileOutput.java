@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.io.impl.abstr;
 
-import org.optimizationBenchmarking.experimentation.io.spec.IExperimentOutput;
+import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetOutput;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.FileOutputTool;
 
 /**
@@ -9,11 +9,11 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.FileOutputToo
  * @param <T>
  *          the experiment data type supported for output
  */
-public class ExperimentFileOutput<T> extends FileOutputTool<T> implements
-    IExperimentOutput<T> {
+public class ExperimentSetFileOutput<T> extends FileOutputTool<T>
+    implements IExperimentSetOutput<T> {
 
   /** create */
-  protected ExperimentFileOutput() {
+  protected ExperimentSetFileOutput() {
     super();
   }
 

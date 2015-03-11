@@ -3,7 +3,6 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,10 +17,8 @@ import org.optimizationBenchmarking.experimentation.data.Run;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.DocumentDriverOutput;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.StructuredIOInput;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluation;
-import org.optimizationBenchmarking.experimentation.io.impl.ExperimentSetInputDrivers;
-import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInput;
-import org.optimizationBenchmarking.experimentation.io.impl.tspSuite.TSPSuiteInput;
-import org.optimizationBenchmarking.experimentation.io.spec.IExperimentInput;
+import org.optimizationBenchmarking.experimentation.io.impl.ExperimentSetInputParser;
+import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput;
 import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
@@ -30,9 +27,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.config.Configuration;
-import org.optimizationBenchmarking.utils.document.impl.DocumentFormats;
-import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver;
-import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
+import org.optimizationBenchmarking.utils.document.impl.DocumentDriverParser;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
@@ -42,8 +37,6 @@ import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.spec.IInputJobBuilder;
-import org.optimizationBenchmarking.utils.parsers.InstanceParser;
-import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.numbers.InTextNumberAppender;
@@ -51,34 +44,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** The evaluation job */
 final class _Evaluation extends _EvaluationSetup implements IEvaluation {
-
-  /** the input driver paths */
-  private static final InstanceParser<IExperimentInput> INPUT_DRIVER_PARSER;
-  /** the output driver paths */
-  private static final InstanceParser<IDocumentDriver> OUTPUT_DRIVER_PARSER;
-
-  static {
-    final LinkedHashSet<String> paths;
-
-    paths = new LinkedHashSet<>();
-    ReflectionUtils.addPackageOfClassToPrefixList(
-        ExperimentSetInputDrivers.class, paths);
-    ReflectionUtils.addPackageOfClassToPrefixList(EDIInput.class, paths);
-    ReflectionUtils.addPackageOfClassToPrefixList(TSPSuiteInput.class,
-        paths);
-    INPUT_DRIVER_PARSER = new InstanceParser<>(IExperimentInput.class,
-        paths.toArray(new String[paths.size()]));
-
-    paths.clear();
-    ReflectionUtils.addPackageOfClassToPrefixList(DocumentFormats.class,
-        paths);
-    ReflectionUtils.addPackageOfClassToPrefixList(//
-        LaTeXDriver.class, paths);
-    ReflectionUtils.addPackageOfClassToPrefixList(//
-        XHTML10Driver.class, paths);
-    OUTPUT_DRIVER_PARSER = new InstanceParser<>(IDocumentDriver.class,
-        paths.toArray(new String[paths.size()]));
-  }
 
   /**
    * create the evaluation job
@@ -191,11 +156,11 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    */
   private final void __configureInput(final Configuration config,
       final Logger logger) {
-    final IExperimentInput input;
+    final IExperimentSetInput input;
     final IInputJobBuilder<ExperimentSetContext> builder;
 
     input = config.get(Evaluator.PARAM_INPUT_DRIVER,
-        _Evaluation.INPUT_DRIVER_PARSER, null);
+        ExperimentSetInputParser.getInstance(), null);
     if (input != null) {
 
       if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
@@ -235,7 +200,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     final IDocumentBuilder builder;
 
     output = config.get(Evaluator.PARAM_OUTPUT_DRIVER,
-        _Evaluation.OUTPUT_DRIVER_PARSER, null);
+        DocumentDriverParser.getInstance(), null);
     if (output != null) {
 
       if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {

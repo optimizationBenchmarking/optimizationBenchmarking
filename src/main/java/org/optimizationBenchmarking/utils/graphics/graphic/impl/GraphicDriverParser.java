@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr;
+package org.optimizationBenchmarking.utils.graphics.graphic.impl;
 
 import java.util.LinkedHashSet;
 

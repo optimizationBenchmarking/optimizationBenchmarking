@@ -9,7 +9,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentXMLInput;
+import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetXMLInput;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
@@ -21,7 +21,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * {@link org.optimizationBenchmarking.experimentation.data experiment data
  * structures}.
  */
-public final class EDIInput extends ExperimentXMLInput {
+public final class EDIInput extends ExperimentSetXMLInput {
 
   /** create */
   EDIInput() {

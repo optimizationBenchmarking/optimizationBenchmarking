@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.EDimensionType;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.InstanceContext;
-import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentFileInput;
+import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetFileInput;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
@@ -26,7 +26,7 @@ import org.optimizationBenchmarking.utils.parsers.BoundedIntParser;
  * only rely on the methods of the file input tool.
  * </p>
  */
-public class BBOBInput extends ExperimentFileInput {
+public class BBOBInput extends ExperimentSetFileInput {
 
   /** the dimensions */
   private static final String FEATURE_DIMENSION = "dim"; //$NON-NLS-1$

@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.experimentation.data.InstanceSet;
 import org.optimizationBenchmarking.experimentation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.data.ParameterValue;
 import org.optimizationBenchmarking.experimentation.data.Run;
-import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentXMLOutput;
+import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetXMLOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
@@ -37,7 +37,7 @@ import org.optimizationBenchmarking.utils.text.numbers.XMLNumberAppender;
  * {@link org.optimizationBenchmarking.experimentation.data experiment data
  * structures}.
  */
-public final class EDIOutput extends ExperimentXMLOutput<Object> {
+public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
   /** create */
   EDIOutput() {

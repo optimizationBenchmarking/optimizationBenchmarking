@@ -12,6 +12,6 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IOutputTool;
  * @param <T>
  *          the experiment data item type which can be stored
  */
-public interface IExperimentOutput<T> extends IOutputTool<T> {
+public interface IExperimentSetOutput<T> extends IOutputTool<T> {
   //
 }
