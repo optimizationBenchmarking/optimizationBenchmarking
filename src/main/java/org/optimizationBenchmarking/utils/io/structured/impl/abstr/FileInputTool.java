@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -99,19 +100,26 @@ public class FileInputTool<S> extends IOTool<S> implements
   @Override
   void _handle(final IOJob job, final S data, final _Location location)
       throws Throwable {
+    final Logger logger;
     Class<?> clazz;
+
+    logger = job.getLogger();
 
     if (location.m_location1 instanceof InputStream) {
       if (location.m_archiveType == null) {
         this._checkRawStreams();
       }
-      if (job.canLog()) {
-        job.log("Beginning input from InputStream."); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            "Beginning input from InputStream."); //$NON-NLS-1$
       }
       this._stream(job, data, ((InputStream) (location.m_location1)),
           location.m_encoding, location.m_archiveType);
-      if (job.canLog()) {
-        job.log("Finished input from InputStream."); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            "Finished input from InputStream."); //$NON-NLS-1$
       }
       return;
     }
@@ -120,13 +128,17 @@ public class FileInputTool<S> extends IOTool<S> implements
       if (location.m_archiveType == null) {
         this._checkRawStreams();
       }
-      if (job.canLog()) {
-        job.log("Beginning input from URL " + location.m_location1); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            "Beginning input from URL " + location.m_location1); //$NON-NLS-1$
       }
       this.__url(job, data, ((URL) (location.m_location1)),
           location.m_encoding, location.m_archiveType);
-      if (job.canLog()) {
-        job.log("Finished input from URL " + location.m_location1); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            "Finished input from URL " + location.m_location1); //$NON-NLS-1$
       }
       return;
     }
@@ -135,13 +147,17 @@ public class FileInputTool<S> extends IOTool<S> implements
       if (location.m_archiveType == null) {
         this._checkRawStreams();
       }
-      if (job.canLog()) {
-        job.log("Beginning input from URI " + location.m_location1); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            "Beginning input from URI " + location.m_location1); //$NON-NLS-1$
       }
       this.__uri(job, data, ((URI) (location.m_location1)),
           location.m_encoding, location.m_archiveType);
-      if (job.canLog()) {
-        job.log("Finished input from URI " + location.m_location1); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            "Finished input from URI " + location.m_location1); //$NON-NLS-1$
       }
       return;
     }
@@ -151,16 +167,22 @@ public class FileInputTool<S> extends IOTool<S> implements
       if (location.m_archiveType == null) {
         this._checkRawStreams();
       }
-      if (job.canLog()) {
-        job.log("Beginning input from resource '" + //$NON-NLS-1$
-            location.m_location2 + "' of class " + location.m_location1); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            "Beginning input from resource '" + //$NON-NLS-1$
+                location.m_location2
+                + "' of class " + location.m_location1); //$NON-NLS-1$
       }
       this.__resource(job, data, ((Class<?>) (location.m_location1)),
           ((String) (location.m_location2)), location.m_encoding,
           location.m_archiveType);
-      if (job.canLog()) {
-        job.log("Finished input from resource '" + //$NON-NLS-1$
-            location.m_location2 + "' of class " + location.m_location1); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            "Finished input from resource '" + //$NON-NLS-1$
+                location.m_location2
+                + "' of class " + location.m_location1); //$NON-NLS-1$
       }
       return;
     }
@@ -174,15 +196,19 @@ public class FileInputTool<S> extends IOTool<S> implements
           if (location.m_archiveType == null) {
             this._checkRawStreams();
           }
-          if (job.canLog()) {
-            job.log("Beginning input from URL specified as String: " + //$NON-NLS-1$
-                location.m_location1);
+          if ((logger != null)
+              && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+            logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+                "Beginning input from URL specified as String: " + //$NON-NLS-1$
+                    location.m_location1);
           }
           this.__url(job, data, new URL((String) (location.m_location1)),
               location.m_encoding, location.m_archiveType);
-          if (job.canLog()) {
-            job.log("Finished input from URL specified as String: " + //$NON-NLS-1$
-                location.m_location1);
+          if ((logger != null)
+              && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+            logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+                "Finished input from URL specified as String: " + //$NON-NLS-1$
+                    location.m_location1);
           }
           return;
         }
@@ -191,15 +217,19 @@ public class FileInputTool<S> extends IOTool<S> implements
           if (location.m_archiveType == null) {
             this._checkRawStreams();
           }
-          if (job.canLog()) {
-            job.log("Beginning input from URI specified as String: " + //$NON-NLS-1$
-                location.m_location1);
+          if ((logger != null)
+              && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+            logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+                "Beginning input from URI specified as String: " + //$NON-NLS-1$
+                    location.m_location1);
           }
           this.__uri(job, data, new URI((String) (location.m_location1)),
               location.m_encoding, location.m_archiveType);
-          if (job.canLog()) {
-            job.log("Finished input from URI specified as String: " + //$NON-NLS-1$
-                location.m_location1);
+          if ((logger != null)
+              && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+            logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+                "Finished input from URI specified as String: " + //$NON-NLS-1$
+                    location.m_location1);
           }
           return;
         }
@@ -209,17 +239,21 @@ public class FileInputTool<S> extends IOTool<S> implements
         if (location.m_archiveType == null) {
           this._checkRawStreams();
         }
-        if (job.canLog()) {
-          job.log("Beginning input from Resource specified as String: " + //$NON-NLS-1$
-              location.m_location1 + ':' + location.m_location2);
+        if ((logger != null)
+            && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+          logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+              "Beginning input from Resource specified as String: " + //$NON-NLS-1$
+                  location.m_location1 + ':' + location.m_location2);
         }
         this.__resource(job, data,
             Class.forName((String) (location.m_location1)),
             ((String) (location.m_location2)), location.m_encoding,
             location.m_archiveType);
-        if (job.canLog()) {
-          job.log("Finished input from Resource specified as String: " + //$NON-NLS-1$
-              location.m_location1 + ':' + location.m_location2);
+        if ((logger != null)
+            && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+          logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+              "Finished input from Resource specified as String: " + //$NON-NLS-1$
+                  location.m_location1 + ':' + location.m_location2);
         }
         return;
       }
@@ -248,18 +282,22 @@ public class FileInputTool<S> extends IOTool<S> implements
       final InputStream stream, final StreamEncoding<?, ?> encoding,
       final EArchiveType type) throws Throwable {
     final Path path;
+    final Logger logger;
+
+    logger = job.getLogger();
     try (final TempDir temp = new TempDir()) {
       path = temp.getPath();
-      if (job.canLog(IOJob.FINE_LOG_LEVEL)) {
-        job.log(IOJob.FINE_LOG_LEVEL,
+
+      if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+        logger.log(IOTool.FINE_LOG_LEVEL,//
             ((("Begin decompressing " + type.getName() + //$NON-NLS-1$
                 " to temporary folder '" //$NON-NLS-1$
             + path) + '\'') + '.'));
       }
       type.decompressStreamToFolder(stream, path,
           this.getArchiveFallbackFileName());
-      if (job.canLog(IOJob.FINE_LOG_LEVEL)) {
-        job.log(IOJob.FINE_LOG_LEVEL,
+      if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+        logger.log(IOTool.FINE_LOG_LEVEL,//
             ((("Finished decompressing to temporary folder '" //$NON-NLS-1$
             + path) + '\'') + '.'));
       }
@@ -292,14 +330,18 @@ public class FileInputTool<S> extends IOTool<S> implements
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
       throws Throwable {
     final Object oldCur;
+    final Logger logger;
 
     oldCur = job.m_current;
+    logger = job.getLogger();
     try {
       job.m_current = path;
 
       if (archiveType != null) {
-        if (job.canLog()) {
-          job.log("Decompressing path '" + path + '\''); //$NON-NLS-1$
+        if ((logger != null)
+            && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+          logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+              (("Decompressing path '" + path) + '\'')); //$NON-NLS-1$
         }
         try (final InputStream stream = PathUtils.openInputStream(path)) {
           this.__loadArchive(job, data, stream, encoding, archiveType);
@@ -470,6 +512,7 @@ public class FileInputTool<S> extends IOTool<S> implements
       final InputStream stream, final StreamEncoding<?, ?> encoding,
       final EArchiveType archiveType) throws Throwable {
     final Class<?> clazz;
+    final Logger logger;
 
     if (archiveType != null) {
       this.__loadArchive(job, data, stream, encoding, archiveType);
@@ -479,9 +522,10 @@ public class FileInputTool<S> extends IOTool<S> implements
           && (encoding != StreamEncoding.BINARY)
           && ((clazz = encoding.getInputClass()) != null)
           && InputStream.class.isAssignableFrom(clazz)) {
-        if (job.canLog(IOJob.FINE_LOG_LEVEL)) {
-          job.log(IOJob.FINE_LOG_LEVEL,
-              "Using byte stream encoding " + encoding.name()); //$NON-NLS-1$
+        logger = job.getLogger();
+        if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+          logger.log(IOTool.FINE_LOG_LEVEL,//
+              ("Using byte stream encoding " + encoding.name())); //$NON-NLS-1$
         }
         try (final InputStream input = ((InputStream) (encoding
             .wrapInputStream(stream)))) {

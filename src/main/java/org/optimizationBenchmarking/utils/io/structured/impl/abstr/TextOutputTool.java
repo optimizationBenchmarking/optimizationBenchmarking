@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.spec.ITextOutputJobBuilder;
@@ -29,25 +30,35 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
   @Override
   void _handle(final IOJob job, final S data, final _Location location)
       throws Throwable {
+    final Logger logger;
 
+    logger = job.getLogger();
     if (location.m_location1 instanceof ITextOutput) {
-      if (job.canLog()) {
-        job.log("Beginning output to ITextOutput."); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            ("Beginning output to ITextOutput.")); //$NON-NLS-1$
       }
       this.text(job, data, ((ITextOutput) (location.m_location1)));
-      if (job.canLog()) {
-        job.log("Finished output to ITextOutput."); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            ("Finished output to ITextOutput.")); //$NON-NLS-1$
       }
       return;
     }
 
     if (location.m_location1 instanceof Writer) {
-      if (job.canLog()) {
-        job.log("Beginning output to Writer."); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            ("Beginning output to Writer.")); //$NON-NLS-1$
       }
       this.__writer(job, data, ((Writer) (location.m_location1)));
-      if (job.canLog()) {
-        job.log("Finished output to Writer."); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            ("Finished output to Writer.")); //$NON-NLS-1$
       }
       return;
     }
@@ -99,6 +110,7 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
   protected void stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding)
       throws Throwable {
+    final Logger logger;
     Class<?> clazz;
 
     if ((encoding != null) && (encoding != StreamEncoding.UNKNOWN)
@@ -106,9 +118,12 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
         && (encoding != StreamEncoding.BINARY)
         && ((clazz = encoding.getOutputClass()) != null)
         && (Writer.class.isAssignableFrom(clazz))) {
-      if (job.canLog(IOJob.FINE_LOG_LEVEL)) {
-        job.log(IOJob.FINE_LOG_LEVEL,
-            "Using text encoding " + encoding.name()); //$NON-NLS-1$
+
+      logger = job.getLogger();
+      if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+        logger.log(IOTool.FINE_LOG_LEVEL,//
+            ("Using text encoding " //$NON-NLS-1$
+            + encoding.name()));
       }
       try (final Writer writer = ((Writer) (encoding
           .wrapOutputStream(stream)))) {

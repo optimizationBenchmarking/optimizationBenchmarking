@@ -14,9 +14,10 @@ import examples.org.optimizationBenchmarking.utils.io.xml.performance.exampleDoc
 import examples.org.optimizationBenchmarking.utils.io.xml.performance.exampleDoc.ExampleNamespace;
 
 /**
- * XML serialization using the {@link javax.xml.stream.XMLStreamWriter}
- * approach: Documents are written in a serial fashion, similar to the way
- * our {@link org.optimizationBenchmarking.utils.io.xml API} does it.
+ * XMLFileType serialization using the
+ * {@link javax.xml.stream.XMLStreamWriter} approach: Documents are written
+ * in a serial fashion, similar to the way our
+ * {@link org.optimizationBenchmarking.utils.io.xml API} does it.
  */
 public class XMLStreamWriterSerialization extends SerializationMethod {
 

@@ -20,8 +20,8 @@ import test.junit.InstanceTest;
  * the test of the
  * {@link org.optimizationBenchmarking.utils.text.transformations.LookupCharTransformer
  * character transformation facility} which is employed in the LaTeX text
- * generation modules or in the XML text normalization tools, amongst
- * others.
+ * generation modules or in the XMLFileType text normalization tools,
+ * amongst others.
  */
 @Ignore
 public abstract class CharTransformerTest extends

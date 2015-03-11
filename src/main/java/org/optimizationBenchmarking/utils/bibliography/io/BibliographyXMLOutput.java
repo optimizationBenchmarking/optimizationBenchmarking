@@ -137,7 +137,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
     }
 
     throw new IllegalArgumentException(
-        '\'' + (o + "' cannot be serialized to bibliography XML.")); //$NON-NLS-1$
+        '\'' + (o + "' cannot be serialized to bibliography XMLFileType.")); //$NON-NLS-1$
   }
 
   /**
@@ -709,23 +709,24 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Bibliography XML Output"; //$NON-NLS-1$
+    return "Bibliography XMLFileType Output"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
   @Override
   protected final String getDefaultPlainOutputFileName() {
     return ("bibliography." + //$NON-NLS-1$ 
-    BibliographyXML.BIBXML.getDefaultSuffix());
+    BibliographyXML.BIBLIOGRAPHY_XML.getDefaultSuffix());
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void file(final IOJob job, final Object data, final Path file,
-      final StreamEncoding<?, ?> encoding) throws Throwable {
+  protected final void file(final IOJob job, final Object data,
+      final Path file, final StreamEncoding<?, ?> encoding)
+      throws Throwable {
     super.file(job, data, file, encoding);
     if (Files.exists(file)) {
-      this.addFile(job, file, BibliographyXML.BIBXML);
+      this.addFile(job, file, BibliographyXML.BIBLIOGRAPHY_XML);
     }
   }
 

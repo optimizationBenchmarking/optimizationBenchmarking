@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.impl.singl
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationModule;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
-import org.optimizationBenchmarking.utils.config.ConfigurationXMLConstants;
+import org.optimizationBenchmarking.utils.config.ConfigurationXML;
 import org.optimizationBenchmarking.utils.config.ConfigurationXMLHandler;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
@@ -29,7 +29,7 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
   /** the module is being configured */
   private static final int STATE_IN_MODULE = (_EvaluationXMLHandler.STATE_IN_EVALUATION + 1);
 
-  /** the XML processing is done */
+  /** the XMLFileType processing is done */
   private static final int STATE_DONE = (_EvaluationXMLHandler.STATE_IN_MODULE + 1);
 
   /** the search path for modules */
@@ -85,11 +85,9 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
   protected void doStartElement(final String uri, final String localName,
       final String qName, final Attributes attributes) throws SAXException {
 
-    if ((uri == null)
-        || (_EvaluationXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+    if ((uri == null) || (EvaluationXML.NAMESPACE.equalsIgnoreCase(uri))) {
 
-      if (_EvaluationXMLConstants.ELEMENT_EVALUATION
-          .equalsIgnoreCase(localName)) {
+      if (EvaluationXML.ELEMENT_EVALUATION.equalsIgnoreCase(localName)) {
 
         switch (this.m_state) {
           case STATE_NOTHING: {
@@ -112,13 +110,12 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
           }
           default: {
             throw new IllegalStateException(//
-                "Inconsistent evaluation XML."); //$NON-NLS-1$
+                "Inconsistent evaluation XMLFileType."); //$NON-NLS-1$
           }
         }
       }
 
-      if (_EvaluationXMLConstants.ELEMENT_MODULE
-          .equalsIgnoreCase(localName)) {
+      if (EvaluationXML.ELEMENT_MODULE.equalsIgnoreCase(localName)) {
         switch (this.m_state) {
           case STATE_NOTHING: {
             throw new IllegalStateException(//
@@ -126,8 +123,8 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
           }
           case STATE_IN_EVALUATION: {
             this.m_module = DelegatingHandler.getAttributeNormalized(
-                attributes, _EvaluationXMLConstants.NAMESPACE,
-                _EvaluationXMLConstants.ATTRIBUTE_CLASS);
+                attributes, EvaluationXML.NAMESPACE,
+                EvaluationXML.ATTRIBUTE_CLASS);
             if (this.m_module == null) {
               throw new IllegalStateException(//
                   "Module definition must have class attribute.");//$NON-NLS-1$
@@ -146,14 +143,15 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
           }
           default: {
             throw new IllegalStateException(//
-                "Inconsistent evaluation XML."); //$NON-NLS-1$
+                "Inconsistent evaluation XMLFileType."); //$NON-NLS-1$
           }
         }
       }
     }
 
     if ((uri == null)
-        || (ConfigurationXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+        || (ConfigurationXML.CONFIG_XML.getNamespace()
+            .equalsIgnoreCase(uri))) {
       switch (this.m_state) {
         case STATE_NOTHING: {
           throw new IllegalStateException(//
@@ -173,7 +171,7 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
         }
         default: {
           throw new IllegalStateException(//
-              "Inconsistent evaluation XML."); //$NON-NLS-1$
+              "Inconsistent evaluation XMLFileType."); //$NON-NLS-1$
         }
       }
     }
@@ -186,11 +184,9 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
     IEvaluationModule module;
     Configuration config;
 
-    if ((uri == null)
-        || (_EvaluationXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+    if ((uri == null) || (EvaluationXML.NAMESPACE.equalsIgnoreCase(uri))) {
 
-      if (_EvaluationXMLConstants.ELEMENT_EVALUATION
-          .equalsIgnoreCase(localName)) {
+      if (EvaluationXML.ELEMENT_EVALUATION.equalsIgnoreCase(localName)) {
 
         switch (this.m_state) {
           case STATE_NOTHING: {
@@ -214,13 +210,12 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
           }
           default: {
             throw new IllegalStateException(//
-                "Inconsistent evaluation XML."); //$NON-NLS-1$
+                "Inconsistent evaluation XMLFileType."); //$NON-NLS-1$
           }
         }
       }
 
-      if (_EvaluationXMLConstants.ELEMENT_MODULE
-          .equalsIgnoreCase(localName)) {
+      if (EvaluationXML.ELEMENT_MODULE.equalsIgnoreCase(localName)) {
 
         switch (this.m_state) {
           case STATE_NOTHING: {
@@ -240,7 +235,7 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
             } catch (final ReflectiveOperationException roe) {
               throw new IllegalArgumentException(
                   (("Could not load module '" + this.m_module) + //$NON-NLS-1$
-                  "' defined in evaluation configuration XML file."), //$NON-NLS-1$
+                  "' defined in evaluation configuration XMLFileType file."), //$NON-NLS-1$
                   roe);
             }
             this.m_module = null;
@@ -263,7 +258,7 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
           }
           default: {
             throw new IllegalStateException(//
-                "Inconsistent evaluation XML."); //$NON-NLS-1$
+                "Inconsistent evaluation XMLFileType."); //$NON-NLS-1$
           }
         }
       }

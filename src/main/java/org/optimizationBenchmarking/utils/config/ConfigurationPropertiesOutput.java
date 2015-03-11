@@ -28,7 +28,8 @@ public final class ConfigurationPropertiesOutput extends
       throws Throwable {
     super.file(job, data, file, encoding);
     if (Files.exists(file)) {
-      this.addFile(job, file, EConfigurationFileType.CONFIG_PROPERTIES);
+      this.addFile(job, file,
+          ConfigurationPropertiesFileType.CONFIG_PROPERTIES);
     }
   }
 
@@ -36,7 +37,7 @@ public final class ConfigurationPropertiesOutput extends
   @Override
   protected final String getDefaultPlainOutputFileName() {
     return ("config." + //$NON-NLS-1$
-    EConfigurationFileType.CONFIG_PROPERTIES.getDefaultSuffix());
+    ConfigurationPropertiesFileType.CONFIG_PROPERTIES.getDefaultSuffix());
   }
 
   /**

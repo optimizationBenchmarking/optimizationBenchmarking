@@ -22,13 +22,13 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
   /** {@inheritDoc} */
   @Override
   protected final String getSourcesParameterSuffix() {
-    return _EvaluationXMLConstants.PARAM_EVALUATION_SUFFIX;
+    return EvaluationXML.PARAM_EVALUATION_SUFFIX;
   }
 
   /** {@inheritDoc} */
   @Override
   protected String getParameterPrefix() {
-    return _EvaluationXMLConstants.PARAM_EVALUATION_PREFIX;
+    return EvaluationXML.PARAM_EVALUATION_PREFIX;
   }
 
   /**
@@ -54,9 +54,8 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       sf.setResourceResolver(new _LSResourceResolver(sf
           .getResourceResolver()));
-      schema = sf.newSchema(//
-          _EvaluationXMLConstants.class
-              .getResource("evaluationConfiguration.1.0.xsd")); //$NON-NLS-1$
+      schema = sf
+          .newSchema(EvaluationXML.EVALUATION_XML.getSchemaSource());
     } catch (final Throwable a) {
       rec = ErrorUtils.aggregateError(a, rec);
     } finally {
@@ -78,7 +77,7 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
           .rethrow(//
-              "Error while loading XML Schema for evaluation configuration XML.", //$NON-NLS-1$
+              "Error while loading XMLFileType Schema for evaluation configuration XMLFileType.", //$NON-NLS-1$
               true, rec);
     }
   }

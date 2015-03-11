@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
@@ -77,6 +79,15 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /** the job counter */
   final AtomicLong m_jobCounter;
+
+  /** the default log level */
+  public static final Level DEFAULT_LOG_LEVEL = Level.FINE;
+
+  /** the finer log level */
+  public static final Level FINE_LOG_LEVEL = Level.FINER;
+
+  /** the even finer log level */
+  public static final Level FINER_LOG_LEVEL = Level.FINEST;
 
   /** create the tool */
   IOTool() {
@@ -167,37 +178,47 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
     final MemoryTextOutput text;
     final Class<?> clazz;
     final boolean in;
+    final Logger logger;
 
     in = (this instanceof FileInputTool);
 
+    logger = job.getLogger();
     if (location.m_location1 instanceof Path) {
-      if (job.canLog()) {
-        job.log((in ? "Beginning input from Path '" : //$NON-NLS-1$
-            "Beginning output to Path '")//$NON-NLS-1$
-            + location.m_location1 + '\'');
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            (in ? "Beginning input from Path '" : //$NON-NLS-1$
+                "Beginning output to Path '")//$NON-NLS-1$
+                + location.m_location1 + '\'');
       }
       this.__pathPath(job, data, ((Path) (location.m_location1)),
           location.m_encoding, location.m_archiveType);
-      if (job.canLog()) {
-        job.log((in ? "Finished input from Path '" : //$NON-NLS-1$
-            "Finished output to Path '")//$NON-NLS-1$
-            + location.m_location1 + '\'');
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            (in ? "Finished input from Path '" : //$NON-NLS-1$
+                "Finished output to Path '")//$NON-NLS-1$
+                + location.m_location1 + '\'');
       }
       return;
     }
 
     if (location.m_location1 instanceof File) {
-      if (job.canLog()) {
-        job.log((in ? "Beginning input from File '" : //$NON-NLS-1$
-            "Beginning output to File '")//$NON-NLS-1$
-            + location.m_location1 + '\'');
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            (in ? "Beginning input from File '" : //$NON-NLS-1$
+                "Beginning output to File '")//$NON-NLS-1$
+                + location.m_location1 + '\'');
       }
       this.__fileFile(job, data, ((File) (location.m_location1)),
           location.m_encoding, location.m_archiveType);
-      if (job.canLog()) {
-        job.log((in ? "Finished input from File '" : //$NON-NLS-1$
-            "Finished output to File '")//$NON-NLS-1$
-            + location.m_location1 + '\'');
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            (in ? "Finished input from File '" : //$NON-NLS-1$
+                "Finished output to File '")//$NON-NLS-1$
+                + location.m_location1 + '\'');
       }
       return;
     }
@@ -207,32 +228,40 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
         clazz = ((Class<?>) (location.m_location2));
 
         if (Path.class.isAssignableFrom(clazz)) {
-          if (job.canLog()) {
-            job.log((in ? "Beginning input from Path identified by String '" : //$NON-NLS-1$
-                "Beginning output to Path identified by String '")//$NON-NLS-1$
-                + location.m_location1 + '\'');
+          if ((logger != null)
+              && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+            logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+                (in ? "Beginning input from Path identified by String '" : //$NON-NLS-1$
+                    "Beginning output to Path identified by String '")//$NON-NLS-1$
+                    + location.m_location1 + '\'');
           }
           this.__pathString(job, data, ((String) (location.m_location1)),
               location.m_encoding, location.m_archiveType);
-          if (job.canLog()) {
-            job.log((in ? "Finished input from Path identified by String '" : //$NON-NLS-1$
-                "Finished output to Path identified by String '")//$NON-NLS-1$
-                + location.m_location1 + '\'');
+          if ((logger != null)
+              && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+            logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+                (in ? "Finished input from Path identified by String '" : //$NON-NLS-1$
+                    "Finished output to Path identified by String '")//$NON-NLS-1$
+                    + location.m_location1 + '\'');
           }
         }
 
         if (File.class.isAssignableFrom(clazz)) {
-          if (job.canLog()) {
-            job.log((in ? "Beginning input from File identified by String '" : //$NON-NLS-1$
-                "Beginning output to File identified by String '")//$NON-NLS-1$
-                + location.m_location1 + '\'');
+          if ((logger != null)
+              && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+            logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+                (in ? "Beginning input from File identified by String '" : //$NON-NLS-1$
+                    "Beginning output to File identified by String '")//$NON-NLS-1$
+                    + location.m_location1 + '\'');
           }
           this.__fileString(job, data, ((String) (location.m_location1)),
               location.m_encoding, location.m_archiveType);
-          if (job.canLog()) {
-            job.log((in ? "Finished input from File identified by String '" : //$NON-NLS-1$
-                "Finished output to File identified by String '")//$NON-NLS-1$
-                + location.m_location1 + '\'');
+          if ((logger != null)
+              && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+            logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+                (in ? "Finished input from File identified by String '" : //$NON-NLS-1$
+                    "Finished output to File identified by String '")//$NON-NLS-1$
+                    + location.m_location1 + '\'');
           }
         }
 
@@ -449,6 +478,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
       final Path path, final StreamEncoding<?, ?> encoding,
       final EArchiveType archiveType) throws Throwable {
     final boolean input;
+    final Logger logger;
     BasicFileAttributes attributes;
 
     if (path == null) {
@@ -469,11 +499,13 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
       }
     }
 
-    if (job.canLog()) {
-      job.log((input ? //
-      "Reading input from Path '" : //$NON-NLS-1$
-          "Writing output ot Path '") + //$NON-NLS-1$
-          path + "' with attributes " + attributes);//$NON-NLS-1$
+    logger = job.getLogger();
+    if ((logger != null) && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+      logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+          (input ? //
+          "Reading input from Path '" : //$NON-NLS-1$
+              "Writing output ot Path '") + //$NON-NLS-1$
+              path + "' with attributes " + attributes);//$NON-NLS-1$
     }
     this._path(job, data, path, attributes, encoding, archiveType);
   }

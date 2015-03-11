@@ -46,7 +46,7 @@ public final class DocumentXMLInput extends
       sf.setResourceResolver(new _LSResourceResolver(sf
           .getResourceResolver()));
       schema = sf.newSchema(//
-          DocumentXML.class.getResource("documentTemplate.1.0.xsd")); //$NON-NLS-1$
+          DocumentXML.DOCUMENT_XML.getSchemaSource());
     } catch (final Throwable a) {
       rec = ErrorUtils.aggregateError(a, rec);
     } finally {
@@ -68,7 +68,7 @@ public final class DocumentXMLInput extends
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
           .rethrow(//
-              "Error during loading of XML Schema for DocumentXML (the template language of the Document API).", //$NON-NLS-1$
+              "Error during loading of XMLFileType Schema for DocumentXML (the template language of the Document API).", //$NON-NLS-1$
               true, rec);
     }
   }
@@ -83,7 +83,7 @@ public final class DocumentXMLInput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Document Template XML Input"; //$NON-NLS-1$
+    return "Document Template XMLFileType Input"; //$NON-NLS-1$
   }
 
   /** the loader for lazy initialization */

@@ -32,9 +32,9 @@ public class GraphicConfigurationBuilder extends GraphicConfiguration
     this._innerConfigure(config);
 
     oldDriver = this.m_driver;
-    newDriver = config.getInstance(
+    newDriver = config.get(
         GraphicConfigurationBuilder.PARAM_GRAPHIC_DRIVER,
-        IGraphicDriver.class, oldDriver);
+        GraphicDriverParser.getInstance(), oldDriver);
     if ((oldDriver != null) || (newDriver != null)) {
       this.setGraphicDriver(newDriver);
     }

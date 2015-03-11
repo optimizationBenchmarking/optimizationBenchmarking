@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.experimentation.io.spec.IExperimentInput;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 
 /**
- * An XML-based experiment input tool.
+ * An XMLFileType-based experiment input tool.
  */
 public class ExperimentXMLInput extends XMLInputTool<ExperimentSetContext>
     implements IExperimentInput {

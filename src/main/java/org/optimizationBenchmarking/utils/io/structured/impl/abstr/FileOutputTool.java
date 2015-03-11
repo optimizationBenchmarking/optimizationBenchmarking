@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.IFileType;
@@ -46,18 +47,25 @@ public class FileOutputTool<S> extends IOTool<S> implements
   @Override
   void _handle(final IOJob job, final S data, final _Location location)
       throws Throwable {
+    final Logger logger;
 
     if (location.m_location1 instanceof OutputStream) {
       if (location.m_archiveType == null) {
         this._checkRawStreams();
       }
-      if (job.canLog()) {
-        job.log("Beginning output to OutputStream."); //$NON-NLS-1$
+
+      logger = job.getLogger();
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            "Beginning output to OutputStream."); //$NON-NLS-1$
       }
       this._stream(job, data, ((OutputStream) (location.m_location1)),
           location.m_encoding, location.m_archiveType);
-      if (job.canLog()) {
-        job.log("Finished output to OutputStream."); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            "Finished output to OutputStream."); //$NON-NLS-1$
       }
       return;
     }
@@ -114,6 +122,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
     final Path file, tempDir;
     final _OutputJob outJob;
     final Object oldCur;
+    final Logger logger;
 
     oldCur = job.m_current;
     try {
@@ -124,9 +133,15 @@ public class FileOutputTool<S> extends IOTool<S> implements
           file = PathUtils.createPathInside(path, (this
               .getDefaultArchiveName() + '.' + archiveType
               .getDefaultSuffix()));
-          job.log("Path '" + path + //$NON-NLS-1$
-              "' identifies a directory, creating archive file '" //$NON-NLS-1$
-              + file + "' for output.");//$NON-NLS-1$
+
+          logger = job.getLogger();
+          if ((logger != null)
+              && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+            logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+                (((("Path '" + path) + //$NON-NLS-1$
+                "' identifies a directory, creating archive file '")//$NON-NLS-1$
+                + file) + "' for output."));//$NON-NLS-1$
+          }
         } else {
           file = path;
         }

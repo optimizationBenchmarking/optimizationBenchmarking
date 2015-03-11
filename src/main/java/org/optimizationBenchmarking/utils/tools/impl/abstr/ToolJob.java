@@ -27,7 +27,7 @@ public abstract class ToolJob implements IToolJob {
    * 
    * @return the logger of this job
    */
-  protected final Logger getLogger() {
+  protected Logger getLogger() {
     return this.m_logger;
   }
 

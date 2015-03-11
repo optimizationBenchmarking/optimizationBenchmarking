@@ -4,7 +4,6 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
-import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Code;
 import org.optimizationBenchmarking.utils.document.impl.abstr.ComplexText;
@@ -133,7 +132,7 @@ public final class XHTML10Driver extends DocumentDriver {
   /** {@inheritDoc} */
   @Override
   public final IFileType getFileType() {
-    return EDocumentFormat.XHTML_1_0;
+    return XHTML.XHTML_1_0;
   }
 
   /** {@inheritDoc} */

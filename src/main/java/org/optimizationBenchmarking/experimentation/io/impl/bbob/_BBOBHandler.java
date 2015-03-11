@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.ExperimentContext;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
@@ -21,6 +22,7 @@ import org.optimizationBenchmarking.experimentation.data.RunContext;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
 import org.optimizationBenchmarking.utils.parsers.IntParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -36,21 +38,25 @@ final class _BBOBHandler implements Comparator<Number[]> {
   /** the hierarchical fsm stack */
   private final ExperimentSetContext m_esc;
 
+  /** the job */
+  private final IOJob m_job;
+
   /** the logger */
-  private final IOJob m_logger;
+  private final Logger m_logger;
 
   /**
    * create
    * 
-   * @param logger
-   *          the logger
+   * @param job
+   *          the calling job
    * @param esb
    *          the experiment set builder to use
    */
-  _BBOBHandler(final IOJob logger, final ExperimentSetContext esb) {
+  _BBOBHandler(final IOJob job, final ExperimentSetContext esb) {
     super();
     this.m_esc = esb;
-    this.m_logger = logger;
+    this.m_job = job;
+    this.m_logger = job.getLogger();
   }
 
   /**
@@ -161,7 +167,8 @@ final class _BBOBHandler implements Comparator<Number[]> {
                 }
                 if (d <= 0d) {
                   if (d < 0d) {
-                    if ((this.m_logger.canLog(Level.WARNING))) {
+                    if ((this.m_logger != null)
+                        && (this.m_logger.isLoggable(Level.WARNING))) {
                       this.m_logger.log(Level.WARNING,//
                           "Correction of negative objective value " + d + //$NON-NLS-1$
                               " to 0 in file " + f); //$NON-NLS-1$
@@ -181,7 +188,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
         }
       }
     } catch (final Throwable t) {
-      this.m_logger.handleError(t, ("Error in file: " + f)); //$NON-NLS-1$
+      this.m_job.handleError(t, ("Error in file: " + f)); //$NON-NLS-1$
     }
   }
 
@@ -207,8 +214,9 @@ final class _BBOBHandler implements Comparator<Number[]> {
     Integer lastI, curI;
     Double lastD, curD;
 
-    if (this.m_logger.canLog(IOJob.FINER_LOG_LEVEL)) {
-      this.m_logger.log(IOJob.FINER_LOG_LEVEL,
+    if ((this.m_logger != null) && //
+        (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+      this.m_logger.log(IOTool.FINER_LOG_LEVEL,
           "Starting to load data from file combo " + //$NON-NLS-1$l
               tdat + " / " + dat); //$NON-NLS-1$
     }
@@ -260,8 +268,9 @@ final class _BBOBHandler implements Comparator<Number[]> {
           + " / ") + dat), t); //$NON-NLS-1$
     }
 
-    if (this.m_logger.canLog(IOJob.FINER_LOG_LEVEL)) {
-      this.m_logger.log(IOJob.FINER_LOG_LEVEL,
+    if ((this.m_logger != null) && //
+        (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+      this.m_logger.log(IOTool.FINER_LOG_LEVEL,
           "Finished loading data from file combo " + //$NON-NLS-1$
               tdat + " / " + dat); //$NON-NLS-1$
     }
@@ -291,8 +300,9 @@ final class _BBOBHandler implements Comparator<Number[]> {
     String name;
     Object error;
 
-    if (this.m_logger.canLog(IOJob.FINER_LOG_LEVEL)) {
-      this.m_logger.log(IOJob.FINER_LOG_LEVEL,
+    if ((this.m_logger != null) && //
+        (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+      this.m_logger.log(IOTool.FINER_LOG_LEVEL,
           "Begin handling data folder " + dir + //$NON-NLS-1$
               " for function id " + fid); //$NON-NLS-1$
     }
@@ -355,7 +365,8 @@ final class _BBOBHandler implements Comparator<Number[]> {
                         throw new IllegalStateException("Dimension " + b + //$NON-NLS-1$
                             " is invalid in folder " + f); //$NON-NLS-1$
                       } catch (final Throwable ttt) {
-                        if (this.m_logger.canLog(Level.WARNING)) {
+                        if ((this.m_logger != null) && //
+                            (this.m_logger.isLoggable(Level.WARNING))) {
                           this.m_logger.log(Level.WARNING,
                               "Problem in folder " + dir,//$NON-NLS-1$
                               ttt);
@@ -396,14 +407,15 @@ final class _BBOBHandler implements Comparator<Number[]> {
             ("Error while processing folder " + dir), //$NON-NLS-1$
             true, error);
       } catch (final Throwable t) {
-        this.m_logger.handleError(t,
+        this.m_job.handleError(t,
             "BBOBHandler encountered unrecoverable error in folder " //$NON-NLS-1$
                 + dir);
       }
     }
 
-    if (this.m_logger.canLog(IOJob.FINER_LOG_LEVEL)) {
-      this.m_logger.log(IOJob.FINER_LOG_LEVEL,
+    if ((this.m_logger != null) && //
+        (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+      this.m_logger.log(IOTool.FINER_LOG_LEVEL,
           "Finished handling data folder " + dir + //$NON-NLS-1$
               " for function id " + fid); //$NON-NLS-1$
     }
@@ -427,8 +439,9 @@ final class _BBOBHandler implements Comparator<Number[]> {
     int i;
 
     error = null;
-    if (this.m_logger.canLog(IOJob.FINER_LOG_LEVEL)) {
-      this.m_logger.log(IOJob.FINER_LOG_LEVEL, ("Now entering folder '" //$NON-NLS-1$
+    if ((this.m_logger != null) && //
+        (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+      this.m_logger.log(IOTool.FINER_LOG_LEVEL, ("Now entering folder '" //$NON-NLS-1$
           + dir) + '\'');
     }
 
@@ -467,7 +480,8 @@ final class _BBOBHandler implements Comparator<Number[]> {
                           " of folder " + f); //$NON-NLS-1$
                 } catch (final Throwable a) {
 
-                  if (this.m_logger.canLog(Level.WARNING)) {
+                  if ((this.m_logger != null) && //
+                      (this.m_logger.isLoggable(Level.WARNING))) {
                     this.m_logger.log(Level.WARNING,
                         "Problem with folder " + f); //$NON-NLS-1$l
                   }
@@ -502,8 +516,9 @@ final class _BBOBHandler implements Comparator<Number[]> {
       error = ErrorUtils.aggregateError(a, error);
     }
 
-    if (this.m_logger.canLog(IOJob.FINER_LOG_LEVEL)) {
-      this.m_logger.log(IOJob.FINER_LOG_LEVEL, ("Now leaving folder '" //$NON-NLS-1$
+    if ((this.m_logger != null) && //
+        (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+      this.m_logger.log(IOTool.FINER_LOG_LEVEL, ("Now leaving folder '" //$NON-NLS-1$
           + dir) + '\'');
     }
 

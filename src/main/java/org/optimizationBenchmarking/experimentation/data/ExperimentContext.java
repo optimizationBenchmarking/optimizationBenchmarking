@@ -278,4 +278,18 @@ public final class ExperimentContext extends
     this.fsmStateAssert(_FSM.STATE_OPEN);
     return new InstanceRunsContext(this, this.m_props);
   }
+
+  /**
+   * Does an instance of the given name exist? This method may come in
+   * handy when parsing a directory structure of experiments and wanting to
+   * check whether a directory name may represent a set of runs for a
+   * problem instance or not.
+   * 
+   * @param name
+   *          the instance name
+   * @return the instance
+   */
+  public final boolean doesInstanceExist(final String name) {
+    return (this._getInstanceSet().find(name) != null);
+  }
 }

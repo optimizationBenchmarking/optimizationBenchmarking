@@ -1,32 +1,31 @@
 package org.optimizationBenchmarking.utils.bibliography.io;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 
 import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.bibliography.data.EBibQuarter;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
-import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
+import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
 
 /**
  * the string constants for the bibliography xml format of
  * optimizationBenchmarking
  */
-public enum BibliographyXML implements IFileType {
+public enum BibliographyXML implements IXMLFileType {
 
   /** the instance */
-  BIBXML;
+  BIBLIOGRAPHY_XML;
 
   /** the namespace uri */
-  public static final URI NAMESPACE_URI = URI.create(//
+  static final URI NAMESPACE_URI = URI.create(//
       "http://www.optimizationBenchmarking.org/formats/bibliography/bibliography.1.0.xsd"); //$NON-NLS-1$
 
   /** the namespace uri as string */
-  public static final String NAMESPACE = BibliographyXML.NAMESPACE_URI
-      .toString();
-
-  /** the schema name */
-  public static final String SCHEMA = BibliographyXML.NAMESPACE
-      .substring(BibliographyXML.NAMESPACE.lastIndexOf('/') + 1);
+  static final String NAMESPACE = //
+  BibliographyXML.NAMESPACE_URI.toString();
 
   /** the person element */
   static final String ELEMENT_PERSON = "person"; //$NON-NLS-1$
@@ -206,18 +205,43 @@ public enum BibliographyXML implements IFileType {
   /** {@inheritDoc} */
   @Override
   public final String getDefaultSuffix() {
-    return "xml"; //$NON-NLS-1$
+    return XMLFileType.XML.getDefaultSuffix();
   }
 
   /** {@inheritDoc} */
   @Override
   public final String getMIMEType() {
-    return null;
+    return XMLFileType.XML.getMIMEType();
   }
 
   /** {@inheritDoc} */
   @Override
   public final String getName() {
-    return "Bibliography XML"; //$NON-NLS-1$
+    return "Bibliography XML File"; //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final URI getNamespaceURI() {
+    return BibliographyXML.NAMESPACE_URI;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getNamespace() {
+    return BibliographyXML.NAMESPACE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final URL getSchemaSource() throws IOException {
+    final URL u;
+    u = this.getClass().getResource(//
+        BibliographyXML.NAMESPACE.substring(BibliographyXML.NAMESPACE
+            .lastIndexOf('/') + 1));
+    if (u != null) {
+      return u;
+    }
+    return BibliographyXML.NAMESPACE_URI.toURL();
   }
 }

@@ -30,7 +30,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.config.Configuration;
-import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
+import org.optimizationBenchmarking.utils.document.impl.DocumentFormats;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
@@ -70,7 +70,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
         paths.toArray(new String[paths.size()]));
 
     paths.clear();
-    ReflectionUtils.addPackageOfClassToPrefixList(EDocumentFormat.class,
+    ReflectionUtils.addPackageOfClassToPrefixList(DocumentFormats.class,
         paths);
     ReflectionUtils.addPackageOfClassToPrefixList(//
         LaTeXDriver.class, paths);
@@ -277,14 +277,14 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     if (input.areSourcesDefined(config)) {
       if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
         logger.config(//
-            "Configuring evaluation process and module hierarchy from XML.");//$NON-NLS-1$
+            "Configuring evaluation process and module hierarchy from XMLFileType.");//$NON-NLS-1$
       }
 
       builder = input.use();
 
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
-            "Job builder for XML-based evaluation configuration created and will now be configured."); //$NON-NLS-1$
+            "Job builder for XMLFileType-based evaluation configuration created and will now be configured."); //$NON-NLS-1$
       }
 
       builder.configure(config);
@@ -293,7 +293,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
 
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
-            "Job builder for XML-based evaluation configuration has been configured."); //$NON-NLS-1$
+            "Job builder for XMLFileType-based evaluation configuration has been configured."); //$NON-NLS-1$
       }
 
       try {

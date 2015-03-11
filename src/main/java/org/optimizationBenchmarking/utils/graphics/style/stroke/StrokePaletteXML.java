@@ -1,28 +1,27 @@
 package org.optimizationBenchmarking.utils.graphics.style.stroke;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 
-import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
+import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
 
 /**
- * The internal class for the XML constants of the stroke palette XML
- * format.
+ * The internal class for the constants of the stroke palette file format.
  */
-public enum StrokePaletteXML implements IFileType {
+public enum StrokePaletteXML implements IXMLFileType {
 
   /** the stroke palette file type */
   STROKE_PALETTE_XML;
 
   /** the namespace */
-  public static final URI NAMESPACE_URI = URI
+  static final URI NAMESPACE_URI = URI
       .create(//
           "http://www.optimizationBenchmarking.org/formats/graphics/stroke/strokePalette.1.0.xsd").normalize(); //$NON-NLS-1$
   /** the namespace string */
-  public static final String NAMESPACE = StrokePaletteXML.NAMESPACE_URI
+  static final String NAMESPACE = StrokePaletteXML.NAMESPACE_URI
       .toString();
-  /** the schema name */
-  public static final String SCHEMA = StrokePaletteXML.NAMESPACE
-      .substring(StrokePaletteXML.NAMESPACE.lastIndexOf('/') + 1);
 
   /** the stroke attribute name */
   static final String ATTRIBUTE_NAME = "name"; //$NON-NLS-1$
@@ -51,7 +50,7 @@ public enum StrokePaletteXML implements IFileType {
   /** {@inheritDoc} */
   @Override
   public final String getMIMEType() {
-    return null;
+    return XMLFileType.XML.getMIMEType();
   }
 
   /** {@inheritDoc} */
@@ -60,4 +59,28 @@ public enum StrokePaletteXML implements IFileType {
     return "Stroke Palette File"; //$NON-NLS-1$
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final URI getNamespaceURI() {
+    return StrokePaletteXML.NAMESPACE_URI;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getNamespace() {
+    return StrokePaletteXML.NAMESPACE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final URL getSchemaSource() throws IOException {
+    final URL u;
+    u = this.getClass().getResource(//
+        StrokePaletteXML.NAMESPACE.substring(StrokePaletteXML.NAMESPACE
+            .lastIndexOf('/') + 1));
+    if (u != null) {
+      return u;
+    }
+    return StrokePaletteXML.NAMESPACE_URI.toURL();
+  }
 }

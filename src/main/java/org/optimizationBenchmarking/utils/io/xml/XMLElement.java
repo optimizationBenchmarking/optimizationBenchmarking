@@ -373,8 +373,9 @@ public final class XMLElement extends XMLBase {
    * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    * with which text can directly be written to the underlying stream,
    * without any prior encoding. Only characters must be written that
-   * cannot lead to problems with the XML specification. In particular, do
-   * not write stuff such as <code>&amp;</code> or <code>&lt;</code>.
+   * cannot lead to problems with the XMLFileType specification. In
+   * particular, do not write stuff such as <code>&amp;</code> or
+   * <code>&lt;</code>.
    * 
    * @return the raw text output destination
    * @see #textEncoded()
@@ -454,11 +455,11 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Write an attribute value to this element without performing
-   * XML-encoding. This method is faster than
+   * XMLFileType-encoding. This method is faster than
    * {@link #attributeEncoded(URI, String, String)}, but can only be
    * applied if it is absolutely clear that the contents of {@code value}
-   * will not violate the XML specification, in particular, do not contain
-   * stuff such as {@code "}.
+   * will not violate the XMLFileType specification, in particular, do not
+   * contain stuff such as {@code "}.
    * 
    * @param namespaceURI
    *          the namespace of the attribute

@@ -24,7 +24,7 @@ public final class XMLDocument extends XMLBase {
   private static final char[] CLOSE = { '"', '?', '>' };
 
   /**
-   * Create the hierarchical XML writer
+   * Create the hierarchical XMLFileType writer
    * 
    * @param owner
    *          the owning hierarchical fsm
@@ -37,7 +37,7 @@ public final class XMLDocument extends XMLBase {
   }
 
   /**
-   * Create the hierarchical XML writer
+   * Create the hierarchical XMLFileType writer
    * 
    * @param out
    *          the {@link java.lang.Appendable}

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.spec.ITextInputJobBuilder;
@@ -35,14 +36,20 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
   @Override
   void _handle(final IOJob job, final S data, final _Location location)
       throws Throwable {
+    final Logger logger;
 
     if (location.m_location1 instanceof Reader) {
-      if (job.canLog()) {
-        job.log("Beginning input from Reader."); //$NON-NLS-1$
+      logger = job.getLogger();
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            ("Beginning input from Reader.")); //$NON-NLS-1$
       }
       this.__reader(job, data, ((Reader) (location.m_location1)));
-      if (job.canLog()) {
-        job.log("Finished input from Reader."); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            ("Finished input from Reader.")); //$NON-NLS-1$
       }
       return;
     }
@@ -78,15 +85,20 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
   protected void stream(final IOJob job, final S data,
       final InputStream stream, final StreamEncoding<?, ?> encoding)
       throws Throwable {
+    final Logger logger;
     final Class<?> clazz;
+
     if ((encoding != null) && (encoding != StreamEncoding.UNKNOWN)
         && (encoding != StreamEncoding.TEXT)
         && (encoding != StreamEncoding.BINARY)
         && ((clazz = encoding.getInputClass()) != null)
         && (Reader.class.isAssignableFrom(clazz))) {
-      if (job.canLog(IOJob.FINE_LOG_LEVEL)) {
-        job.log(IOJob.FINE_LOG_LEVEL,
-            "Using text encoding " + encoding.name()); //$NON-NLS-1$
+
+      logger = job.getLogger();
+      if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+        logger.log(IOTool.FINE_LOG_LEVEL,//
+            ("Using text encoding " + //$NON-NLS-1$ 
+            encoding.name()));
       }
       try (final Reader reader = ((Reader) (encoding
           .wrapInputStream(stream)))) {

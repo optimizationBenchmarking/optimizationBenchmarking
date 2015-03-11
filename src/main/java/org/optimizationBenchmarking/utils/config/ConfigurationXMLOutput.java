@@ -33,33 +33,27 @@ public final class ConfigurationXMLOutput extends
   protected void xml(final IOJob job, final Configuration data,
       final XMLBase xmlBase) throws Throwable {
     try (XMLElement root = xmlBase.element()) {
-      root.namespaceSetPrefix(ConfigurationXMLConstants.NAMESPACE_URI,
-          "cfg"); //$NON-NLS-1$
-      root.name(ConfigurationXMLConstants.NAMESPACE_URI,
-          ConfigurationXMLConstants.ELEMENT_CONFIGURATION_ROOT);
+      root.namespaceSetPrefix(ConfigurationXML.NAMESPACE_URI, "cfg"); //$NON-NLS-1$
+      root.name(ConfigurationXML.NAMESPACE_URI,
+          ConfigurationXML.ELEMENT_CONFIGURATION_ROOT);
 
       synchronized (data.m_data) {
 
-        root.attributeRaw(
-            ConfigurationXMLConstants.NAMESPACE_URI,
-            ConfigurationXMLConstants.ATTRIBUTE_CONFIGURATION_VERSION,
-            ConfigurationXMLConstants.ATTRIBUTE_VALUE_CONFIGURATION_VERSION);
+        root.attributeRaw(ConfigurationXML.NAMESPACE_URI,
+            ConfigurationXML.ATTRIBUTE_CONFIGURATION_VERSION,
+            ConfigurationXML.ATTRIBUTE_VALUE_CONFIGURATION_VERSION);
 
         for (final Entry<String, Object> e : data.m_data.entries()) {
           try (final XMLElement param = root.element()) {
-            param.name(ConfigurationXMLConstants.NAMESPACE_URI,
-                ConfigurationXMLConstants.ELEMENT_CONFIGURATION_PARAMETER);
+            param.name(ConfigurationXML.NAMESPACE_URI,
+                ConfigurationXML.ELEMENT_CONFIGURATION_PARAMETER);
 
-            param
-                .attributeEncoded(
-                    ConfigurationXMLConstants.NAMESPACE_URI,
-                    ConfigurationXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME,
-                    e.getKey());
-            param
-                .attributeEncoded(
-                    ConfigurationXMLConstants.NAMESPACE_URI,
-                    ConfigurationXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE,
-                    String.valueOf(e.getValue()));
+            param.attributeEncoded(ConfigurationXML.NAMESPACE_URI,
+                ConfigurationXML.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME,
+                e.getKey());
+            param.attributeEncoded(ConfigurationXML.NAMESPACE_URI,
+                ConfigurationXML.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE,
+                String.valueOf(e.getValue()));
           }
         }
       }
@@ -69,7 +63,7 @@ public final class ConfigurationXMLOutput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Configuration XML Output"; //$NON-NLS-1$
+    return "Configuration XMLFileType Output"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
@@ -79,7 +73,7 @@ public final class ConfigurationXMLOutput extends
       throws Throwable {
     super.file(job, data, file, encoding);
     if (Files.exists(file)) {
-      this.addFile(job, file, EConfigurationFileType.CONFIG_XML);
+      this.addFile(job, file, ConfigurationXML.CONFIG_XML);
     }
   }
 
@@ -87,7 +81,7 @@ public final class ConfigurationXMLOutput extends
   @Override
   protected final String getDefaultPlainOutputFileName() {
     return ("config." + //$NON-NLS-1$
-    EConfigurationFileType.CONFIG_XML.getDefaultSuffix());
+    ConfigurationXML.CONFIG_XML.getDefaultSuffix());
   }
 
   /** the loader */

@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
-import org.optimizationBenchmarking.utils.config.ConfigurationXMLConstants;
+import org.optimizationBenchmarking.utils.config.ConfigurationXML;
 import org.optimizationBenchmarking.utils.io.xml.SimpleLSResourceResolver;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
@@ -24,7 +24,8 @@ final class _LSResourceResolver extends SimpleLSResourceResolver {
       final String namespaceURI, final String publicId,
       final String systemId, final String baseURI) {
 
-    if (ConfigurationXMLConstants.NAMESPACE.equalsIgnoreCase(namespaceURI)) {
+    if (ConfigurationXML.CONFIG_XML.getNamespace().equalsIgnoreCase(
+        namespaceURI)) {
       return new _LSConfigurationXMLInput(publicId, systemId, baseURI);
     }
 

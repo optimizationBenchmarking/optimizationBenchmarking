@@ -7,8 +7,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * <p>
- * A character transformer that transforms unicode characters to XML
- * entities.
+ * A character transformer that transforms unicode characters to
+ * XMLFileType entities.
  * </p>
  */
 public final class XMLCharTransformer extends CharTransformer {
@@ -19,9 +19,9 @@ public final class XMLCharTransformer extends CharTransformer {
   }
 
   /**
-   * Get the instance of the XML character transformer
+   * Get the instance of the XMLFileType character transformer
    * 
-   * @return the instance of the XML character transformer
+   * @return the instance of the XMLFileType character transformer
    */
   public static final XMLCharTransformer getInstance() {
     return __XMLCharTransformerLoader.INSTANCE;

@@ -57,9 +57,15 @@ abstract class _IOJob extends IOJob implements IIOJob {
   /** {@inheritDoc} */
   @Override
   public final Void call() throws IOException {
+    final Logger logger;
+
     try {
-      if (this.canLog()) {
-        this.log("Begin of I/O"); //$NON-NLS-1$
+      logger = this.getLogger();
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            (("Begin of " + //$NON-NLS-1$
+            this.m_tool.toString()) + " I/O.")); //$NON-NLS-1$
       }
 
       this.m_token = this.m_tool.createToken(this, this.m_data);
@@ -69,8 +75,11 @@ abstract class _IOJob extends IOJob implements IIOJob {
       this.m_token = null;
       this._last();
 
-      if (this.canLog()) {
-        this.log("End of I/O"); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            (("End of " + this.m_tool.toString()) + //$NON-NLS-1$
+            " I/O")); //$NON-NLS-1$
       }
     } catch (final Throwable error) {
       this.handleError(error, null);

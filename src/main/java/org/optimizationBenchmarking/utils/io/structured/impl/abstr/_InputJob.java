@@ -41,11 +41,19 @@ final class _InputJob extends _IOJob {
   final void _doCall() throws Throwable {
     final FileInputTool tool;
     final _Location[] sources;
+    final Logger logger;
 
     sources = this.m_sources;
-    if ((sources.length > 0) && (this.canLog())) {
-      this.log("Begin loading data from " + sources.length + //$NON-NLS-1$
-          " sources.");//$NON-NLS-1$
+    if (sources.length <= 0) {
+      logger = null;
+    } else {
+      logger = this.getLogger();
+    }
+
+    if ((logger != null) && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+      logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+          ("Begin loading data from " + sources.length + //$NON-NLS-1$
+          " sources."));//$NON-NLS-1$
     }
 
     tool = ((FileInputTool) (this.m_tool));
@@ -57,9 +65,10 @@ final class _InputJob extends _IOJob {
     this.m_currentSource = null;
     this.m_id = null;
 
-    if ((sources.length > 0) && (this.canLog())) {
-      this.log("Finished loading data from " + sources.length + //$NON-NLS-1$
-          " sources.");//$NON-NLS-1$
+    if ((logger != null) && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+      logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+          ("Finished loading data from " + sources.length + //$NON-NLS-1$
+          " sources."));//$NON-NLS-1$
     }
   }
 

@@ -44,8 +44,8 @@ public final class BibliographyXMLInput extends
     schema = null;
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-      schema = sf.newSchema(//
-          BibliographyXML.class.getResource(BibliographyXML.SCHEMA));
+      schema = sf.newSchema(BibliographyXML.BIBLIOGRAPHY_XML
+          .getSchemaSource());
     } catch (final Throwable a) {
       rec = ErrorUtils.aggregateError(a, rec);
     } finally {
@@ -65,9 +65,10 @@ public final class BibliographyXMLInput extends
     }
 
     if (rec != null) {
-      RethrowMode.AS_IO_EXCEPTION.rethrow(//
-          "Error during loading the XML Schema for BibliographyXML.", //$NON-NLS-1$
-          true, rec);//
+      RethrowMode.AS_IO_EXCEPTION
+          .rethrow(//
+              "Error during loading the XMLFileType Schema for BibliographyXML.", //$NON-NLS-1$
+              true, rec);//
     }
   }
 
@@ -81,7 +82,7 @@ public final class BibliographyXMLInput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Bibliography XML Input"; //$NON-NLS-1$
+    return "Bibliography XMLFileType Input"; //$NON-NLS-1$
   }
 
   /** the loader */

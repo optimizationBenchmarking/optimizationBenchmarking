@@ -31,9 +31,7 @@ public final class ConfigurationXMLInput extends
     schema = null;
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-      schema = sf.newSchema(//
-          ConfigurationXMLConstants.class
-              .getResource("configuration.1.0.xsd")); //$NON-NLS-1$
+      schema = sf.newSchema(ConfigurationXML.CONFIG_XML.getSchemaSource());
     } catch (final Throwable a) {
       rec = ErrorUtils.aggregateError(a, rec);
     } finally {
@@ -53,9 +51,10 @@ public final class ConfigurationXMLInput extends
     }
 
     if (rec != null) {
-      RethrowMode.AS_IO_EXCEPTION.rethrow(//
-          "Error while loading the XML Schema for ConfigurationXML.", //$NON-NLS-1$
-          true, rec);
+      RethrowMode.AS_IO_EXCEPTION
+          .rethrow(//
+              "Error while loading the XMLFileType Schema for ConfigurationXML.", //$NON-NLS-1$
+              true, rec);
     }
   }
 
@@ -69,7 +68,7 @@ public final class ConfigurationXMLInput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Configuration XML Input"; //$NON-NLS-1$
+    return "Configuration XMLFileType Input"; //$NON-NLS-1$
   }
 
   /**

@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IXMLInputJobBuilder
 import org.xml.sax.InputSource;
 
 /**
- * The class for building XML input jobs
+ * The class for building XMLFileType input jobs
  * 
  * @param <DT>
  *          the source data type

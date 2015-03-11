@@ -12,7 +12,6 @@ import java.util.Set;
 
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.document.impl.EDocumentFormat;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
@@ -57,12 +56,10 @@ final class _XHTML10Document extends Document {
       's', 't', 'r', 'i', 'c', 't', '.', 'd', 't', 'd', '"', '>' };
 
   /** the doc type, charset must follow */
-  private static final char[] HTML_BEGIN = { '<', 'h', 't', 'm', 'l', ' ',
-      'x', 'm', 'l', 'n', 's', '=', '"', 'h', 't', 't', 'p', ':', '/',
-      '/', 'w', 'w', 'w', '.', 'w', '3', '.', 'o', 'r', 'g', '/', '1',
-      '9', '9', '9', '/', 'x', 'h', 't', 'm', 'l', '"', ' ', 'l', 'a',
-      'n', 'g', '=', '"', 'e', 'n', '"', ' ', 'x', 'm', 'l', ':', 'l',
-      'a', 'n', 'g', '=', '"', 'e', 'n', '"', '>' };
+  private static final char[] HTML_BEGIN = //
+  (("<html xmlns=\"" + XHTML.XHTML_1_0.getNamespace()) + //$NON-NLS-1$
+  "\" lang=\"en\" xml:lang=\"en\">").toCharArray(); //$NON-NLS-1$
+
   /** the head begin */
   private static final char[] HEAD_BEGIN = { '<', 'h', 'e', 'a', 'd', '>' };
 
@@ -166,7 +163,7 @@ final class _XHTML10Document extends Document {
     super.onOpen();
 
     this.getFileCollector().addFile(this.getDocumentPath(),
-        EDocumentFormat.XHTML_1_0);
+        XHTML.XHTML_1_0);
 
     out = this.getTextOutput();
     out.append(_XHTML10Document.XML_HEADER_BEGIN);

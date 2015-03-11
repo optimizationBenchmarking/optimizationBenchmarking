@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
  * @param <T>
  *          the instance type
  */
-public final class InstanceParser<T> extends Parser<T> {
+public class InstanceParser<T> extends Parser<T> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -40,7 +40,7 @@ public final class InstanceParser<T> extends Parser<T> {
 
   /** {@inheritDoc} */
   @Override
-  public final T parseString(final String string) throws Exception {
+  public T parseString(final String string) throws Exception {
     final T fieldValue;
 
     fieldValue = ReflectionUtils.getInstanceByName(this.m_base,
@@ -51,7 +51,7 @@ public final class InstanceParser<T> extends Parser<T> {
 
   /** {@inheritDoc} */
   @Override
-  public final T parseObject(final Object o) throws Exception {
+  public T parseObject(final Object o) throws Exception {
     final Class<T> base;
     final T obj;
 

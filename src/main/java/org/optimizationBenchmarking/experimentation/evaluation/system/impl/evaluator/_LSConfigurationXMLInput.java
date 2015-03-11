@@ -2,8 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.io.InputStream;
 
-import org.optimizationBenchmarking.utils.config.ConfigurationXMLConstants;
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.config.ConfigurationXML;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.xml.SimpleLSInput;
 
@@ -29,19 +28,13 @@ final class _LSConfigurationXMLInput extends SimpleLSInput {
   @Override
   protected final InputStream createInputStream() {
     try {
-      return ConfigurationXMLConstants.class
-          .getResourceAsStream(ConfigurationXMLConstants.SCHEMA);
+      return ConfigurationXML.CONFIG_XML.getSchemaSource().openStream();
     } catch (final Throwable tt) {
-      try {
-        return ConfigurationXMLConstants.NAMESPACE_URI.toURL()
-            .openStream();
-      } catch (final Throwable ttt) {
-        RethrowMode.AS_RUNTIME_EXCEPTION
-            .rethrow(//
-                "Error while creating input stream to Configuration XML Schema.", //$NON-NLS-1$
-                true, ErrorUtils.aggregateError(tt, ttt));
-        return null;
-      }
+      RethrowMode.AS_RUNTIME_EXCEPTION
+          .rethrow(//
+              "Error while creating input stream to Configuration XMLFileType Schema.", //$NON-NLS-1$
+              true, tt);
+      return null;
     }
   }
 

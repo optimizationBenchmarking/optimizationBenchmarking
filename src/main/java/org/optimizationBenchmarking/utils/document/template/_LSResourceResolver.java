@@ -24,7 +24,8 @@ final class _LSResourceResolver extends SimpleLSResourceResolver {
       final String namespaceURI, final String publicId,
       final String systemId, final String baseURI) {
 
-    if (BibliographyXML.NAMESPACE.equalsIgnoreCase(namespaceURI)) {
+    if (BibliographyXML.BIBLIOGRAPHY_XML.getNamespace().equalsIgnoreCase(
+        namespaceURI)) {
       return new _LSBibInput(publicId, systemId, baseURI);
     }
 

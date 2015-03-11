@@ -5,6 +5,7 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
@@ -57,6 +58,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
   @Override
   public final FileVisitResult preVisitDirectory(final Path dir,
       final BasicFileAttributes attrs) throws IOException {
+    final Logger logger;
     boolean enter;
 
     try {
@@ -69,17 +71,21 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
           + dir) + '\'') + '.'));
     }
 
+    logger = this.m_log.getLogger();
+
     if (enter) {
-      if (this.m_log.canLog(IOJob.FINE_LOG_LEVEL)) {
-        this.m_log.log(IOJob.FINE_LOG_LEVEL, ("Now entering directory '" + //$NON-NLS-1$
-            dir + '\'') + '.');
+      if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+        logger.log(IOTool.FINE_LOG_LEVEL,//
+            (("Now entering directory '" + //$NON-NLS-1$
+                dir + '\'') + '.'));
       }
       return FileVisitResult.CONTINUE;
     }
 
-    if (this.m_log.canLog(IOJob.FINE_LOG_LEVEL)) {
-      this.m_log.log(IOJob.FINE_LOG_LEVEL, ("Skipping directory '" + //$NON-NLS-1$
-          dir + '\'') + '.');
+    if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+      logger.log(IOTool.FINE_LOG_LEVEL,//
+          ("Skipping directory '" + //$NON-NLS-1$
+              dir + '\'') + '.');
     }
 
     return FileVisitResult.SKIP_SUBTREE;
@@ -89,6 +95,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
   @Override
   public final FileVisitResult visitFile(final Path file,
       final BasicFileAttributes attrs) throws IOException {
+    final Logger logger;
     boolean load;
 
     if (this.m_archiveType != null) {
@@ -105,10 +112,13 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
       }
     }
 
+    logger = this.m_log.getLogger();
+
     if (load) {
-      if (this.m_log.canLog(IOJob.FINER_LOG_LEVEL)) {
-        this.m_log.log(IOJob.FINER_LOG_LEVEL, "Begin loading file '" + //$NON-NLS-1$
-            file + '\'' + '.');
+      if ((logger != null) && (logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+        logger.log(IOTool.FINER_LOG_LEVEL,//
+            ((("Begin loading file '" + //$NON-NLS-1$
+            file) + '\'') + '.'));
       }
 
       try {
@@ -120,14 +130,16 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
             '\'') + '.'));
       }
 
-      if (this.m_log.canLog(IOJob.FINER_LOG_LEVEL)) {
-        this.m_log.log(IOJob.FINER_LOG_LEVEL, "Finished loading file '" + //$NON-NLS-1$
-            file + '\'' + '.');
+      if ((logger != null) && (logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+        logger.log(IOTool.FINER_LOG_LEVEL,//
+            ((("Finished loading file '" + //$NON-NLS-1$
+            file) + '\'') + '.'));
       }
     } else {
-      if (this.m_log.canLog(IOJob.FINER_LOG_LEVEL)) {
-        this.m_log.log(IOJob.FINER_LOG_LEVEL, "Skipping file '" + //$NON-NLS-1$
-            file + '\'' + '.');
+      if ((logger != null) && (logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+        logger.log(IOTool.FINER_LOG_LEVEL,//
+            ((("Skipping file '" + //$NON-NLS-1$
+            file) + '\'') + '.'));
       }
     }
 
@@ -148,6 +160,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
   @Override
   public final FileVisitResult postVisitDirectory(final Path dir,
       final IOException exc) throws IOException {
+    final Logger logger;
 
     try {
       this.m_tool.leaveDirectory(this.m_log, this.m_data, dir);
@@ -157,9 +170,12 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
           + dir) + '\'') + '.'));
     }
 
-    if (this.m_log.canLog(IOJob.FINE_LOG_LEVEL)) {
-      this.m_log.log(IOJob.FINE_LOG_LEVEL, ("Now leaving directory '" + //$NON-NLS-1$
-          dir + '\'') + '.');
+    logger = this.m_log.getLogger();
+
+    if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+      logger.log(IOTool.FINE_LOG_LEVEL,//
+          (("Now leaving directory '" + //$NON-NLS-1$
+              dir + '\'') + '.'));
     }
 
     return FileVisitResult.CONTINUE;

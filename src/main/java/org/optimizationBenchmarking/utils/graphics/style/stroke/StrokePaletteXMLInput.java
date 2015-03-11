@@ -31,8 +31,8 @@ public final class StrokePaletteXMLInput extends
     schema = null;
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-      schema = sf.newSchema(//
-          StrokePaletteXML.class.getResource("strokePalette.1.0.xsd")); //$NON-NLS-1$
+      schema = sf.newSchema(StrokePaletteXML.STROKE_PALETTE_XML
+          .getSchemaSource());
     } catch (final Throwable a) {
       rec = ErrorUtils.aggregateError(a, rec);
     } finally {
@@ -54,7 +54,7 @@ public final class StrokePaletteXMLInput extends
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
           .rethrow(//
-              "Error during loading of XML Schema for the stroke palette xml.", //$NON-NLS-1$
+              "Error during loading of XMLFileType Schema for the stroke palette xml.", //$NON-NLS-1$
               true, rec);
     }
   }
@@ -69,7 +69,7 @@ public final class StrokePaletteXMLInput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Stroke Palette XML Input"; //$NON-NLS-1$
+    return "Stroke Palette XMLFileType Input"; //$NON-NLS-1$
   }
 
   /**

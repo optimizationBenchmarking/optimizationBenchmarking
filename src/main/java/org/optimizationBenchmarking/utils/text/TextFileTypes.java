@@ -1,34 +1,13 @@
-package org.optimizationBenchmarking.utils.config;
+package org.optimizationBenchmarking.utils.text;
 
 import org.optimizationBenchmarking.utils.io.IFileType;
 
-/**
- * the internal class for the XML constants of the configuration XML format
- */
-public enum EConfigurationFileType implements IFileType {
+/** The text file type */
+public enum TextFileTypes implements IFileType {
 
-  /** the configuration xml file type */
-  CONFIG_XML {
-    /** {@inheritDoc} */
-    @Override
-    public final String getDefaultSuffix() {
-      return "xml"; //$NON-NLS-1$
-    }
+  /** the text file type instance */
+  TXT {
 
-    /** {@inheritDoc} */
-    @Override
-    public final String getMIMEType() {
-      return null;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final String getName() {
-      return "Configuration XML File"; //$NON-NLS-1$
-    }
-  },
-  /** the configuration xml file type */
-  CONFIG_PROPERTIES {
     /** {@inheritDoc} */
     @Override
     public final String getDefaultSuffix() {
@@ -38,13 +17,36 @@ public enum EConfigurationFileType implements IFileType {
     /** {@inheritDoc} */
     @Override
     public final String getMIMEType() {
-      return null;
+      return "text/plain"; //$NON-NLS-1$
     }
 
     /** {@inheritDoc} */
     @Override
     public final String getName() {
-      return "Configuration Properties File"; //$NON-NLS-1$
+      return "Text File"; //$NON-NLS-1$
     }
-  };
+  },
+
+  /** the csv file type instance */
+  CSV {
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getDefaultSuffix() {
+      return "csv"; //$NON-NLS-1$
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getMIMEType() {
+      return "text/csv"; //$NON-NLS-1$
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final String getName() {
+      return "Comma Separated Values"; //$NON-NLS-1$
+    }
+  },
+
 }

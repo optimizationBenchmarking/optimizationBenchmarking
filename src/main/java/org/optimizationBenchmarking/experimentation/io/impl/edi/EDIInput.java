@@ -49,9 +49,7 @@ public final class EDIInput extends ExperimentXMLInput {
     schema = null;
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-      schema = sf.newSchema(//
-          _EDIConstants.class
-              .getResource("experimentDataInterchange.1.0.xsd")); //$NON-NLS-1$
+      schema = sf.newSchema(EDI.EDI_XML.getSchemaSource());
     } catch (final Throwable a) {
       rec = ErrorUtils.aggregateError(a, rec);
     } finally {
@@ -73,7 +71,7 @@ public final class EDIInput extends ExperimentXMLInput {
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
           .rethrow(//
-              "Error while loading XML Schema for Experiment Data Interchange (EDI).",//$NON-NLS-1$
+              "Error while loading XMLFileType Schema for Experiment Data Interchange (EDI).",//$NON-NLS-1$
               true, rec);
     }
   }
@@ -99,9 +97,16 @@ public final class EDIInput extends ExperimentXMLInput {
       lm2 = (n.charAt(--len));
       lm3 = (n.charAt(--len));
 
-      return ((lm3 == '.') && (//
-      (((lm2 == 'x') || (lm2 == 'X')) && ((lm1 == 'm') || (lm1 == 'M')) && ((lm0 == 'l') || (lm0 == 'L'))) || //
-      (((lm2 == 'e') || (lm2 == 'E')) && ((lm1 == 'd') || (lm1 == 'D')) && ((lm0 == 'i') || (lm0 == 'I')))));
+      return (((lm3 == '.') && (//
+      (((lm2 == 'x') || (lm2 == 'X'))//
+          && ((lm1 == 'm') || (lm1 == 'M'))//
+      && ((lm0 == 'l') || (lm0 == 'L'))) || //
+      (((lm2 == 'e') || (lm2 == 'E'))//
+          && ((lm1 == 'd') || (lm1 == 'D'))//
+      && ((lm0 == 'i') || (lm0 == 'I'))))) || //
+      ((lm2 == EDI.SUFFIX_CHARS[0])//
+          && (lm1 == EDI.SUFFIX_CHARS[1])//
+      && (lm0 == EDI.SUFFIX_CHARS[2])));
     }
 
     return false;

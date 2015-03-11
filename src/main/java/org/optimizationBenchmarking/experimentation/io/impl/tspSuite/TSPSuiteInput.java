@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.DimensionContext;
 import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
@@ -18,6 +19,7 @@ import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentFile
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
 import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -1579,9 +1581,12 @@ public class TSPSuiteInput extends ExperimentFileInput {
   protected void file(final IOJob job, final ExperimentSetContext data,
       final Path path, final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding) throws Throwable {
+    final Logger logger;
 
-    if (job.canLog(IOJob.FINER_LOG_LEVEL)) {
-      job.log(IOJob.FINER_LOG_LEVEL, (("Beginning to load run from file '" //$NON-NLS-1$
+    logger = job.getLogger();
+    if ((logger != null) && (logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+      logger.log(IOTool.FINER_LOG_LEVEL,//
+          (("Beginning to load run from file '" //$NON-NLS-1$
           + path) + '\''));
     }
 
@@ -1600,9 +1605,9 @@ public class TSPSuiteInput extends ExperimentFileInput {
         }
       }
     }
-
-    if (job.canLog(IOJob.FINER_LOG_LEVEL)) {
-      job.log(IOJob.FINER_LOG_LEVEL, (("Finished loading run from file '" //$NON-NLS-1$
+    if ((logger != null) && (logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
+      logger.log(IOTool.FINER_LOG_LEVEL,//
+          (("Finished loading run from file '" //$NON-NLS-1$
           + path) + '\''));
     }
   }

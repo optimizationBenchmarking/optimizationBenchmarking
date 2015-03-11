@@ -1,11 +1,13 @@
 package org.optimizationBenchmarking.utils.document.template;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
-import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 
@@ -13,18 +15,17 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
  * the string constants for the document xml format of
  * optimizationBenchmarking
  */
-public enum DocumentXML implements IFileType {
+public enum DocumentXML implements IXMLFileType {
 
-  /** the document XML file type */
+  /** the document XMLFileType file type */
   DOCUMENT_XML;
 
   /** the namespace uri */
-  public static final URI NAMESPACE_URI = URI.create(//
+  static final URI NAMESPACE_URI = URI.create(//
       "http://www.optimizationBenchmarking.org/formats/documentTemplate/documentTemplate.1.0.xsd"); //$NON-NLS-1$
 
   /** the namespace uri as string */
-  public static final String NAMESPACE = DocumentXML.NAMESPACE_URI
-      .toString();
+  static final String NAMESPACE = DocumentXML.NAMESPACE_URI.toString();
 
   /** the template element */
   static final String ELEMENT_TEMPLATE = "template"; //$NON-NLS-1$
@@ -432,5 +433,30 @@ public enum DocumentXML implements IFileType {
   @Override
   public final String getName() {
     return "Document (Part) Template";//$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final URI getNamespaceURI() {
+    return DocumentXML.NAMESPACE_URI;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getNamespace() {
+    return DocumentXML.NAMESPACE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final URL getSchemaSource() throws IOException {
+    final URL u;
+    u = this.getClass().getResource(//
+        DocumentXML.NAMESPACE.substring(DocumentXML.NAMESPACE
+            .lastIndexOf('/') + 1));
+    if (u != null) {
+      return u;
+    }
+    return DocumentXML.NAMESPACE_URI.toURL();
   }
 }

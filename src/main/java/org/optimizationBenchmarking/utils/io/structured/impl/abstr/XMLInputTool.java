@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.SAXParserFactory;
 
@@ -16,7 +17,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * A tool for reading XML input
+ * A tool for reading XMLFileType input
  * 
  * @param <S>
  *          the source type
@@ -87,13 +88,20 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
   @Override
   void _handle(final IOJob job, final S data, final _Location location)
       throws Throwable {
+    final Logger logger;
+
     if (location.m_location1 instanceof InputSource) {
-      if (job.canLog()) {
-        job.log("Beginning input from InputSource."); //$NON-NLS-1$
+      logger = job.getLogger();
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            ("Beginning input from InputSource.")); //$NON-NLS-1$
       }
       this.__xml(job, data, ((InputSource) (location.m_location1)));
-      if (job.canLog()) {
-        job.log("Finished input from InputSource."); //$NON-NLS-1$
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            ("Finished input from InputSource.")); //$NON-NLS-1$
       }
       return;
     }
@@ -101,7 +109,7 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
   }
 
   /**
-   * Read the data from an XML document
+   * Read the data from an XMLFileType document
    * 
    * @param job
    *          the job where logging info can be written
@@ -175,7 +183,7 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
       throw new UnsupportedOperationException(//
           "Cannot use tool '" + //$NON-NLS-1$
               TextUtils.className(this.getClass())
-              + " due to error in XML parser initialization.",//$NON-NLS-1$
+              + " due to error in XMLFileType parser initialization.",//$NON-NLS-1$
           this.m_cause);
     }
     super.checkCanUse();

@@ -1,28 +1,27 @@
 package org.optimizationBenchmarking.utils.graphics.style.color;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 
-import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
+import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
 
 /**
- * The internal class for the XML constants of the color palette XML
+ * The internal class for the constants of the color palette file type
  * format.
  */
-public enum ColorPaletteXML implements IFileType {
+public enum ColorPaletteXML implements IXMLFileType {
 
   /** the color palette file type */
   COLOR_PALETTE_XML;
 
   /** the namespace */
-  public static final URI NAMESPACE_URI = URI
+  static final URI NAMESPACE_URI = URI
       .create(//
           "http://www.optimizationBenchmarking.org/formats/graphics/color/colorPalette.1.0.xsd").normalize(); //$NON-NLS-1$
   /** the namespace string */
-  public static final String NAMESPACE = ColorPaletteXML.NAMESPACE_URI
-      .toString();
-  /** the schema name */
-  public static final String SCHEMA = ColorPaletteXML.NAMESPACE
-      .substring(ColorPaletteXML.NAMESPACE.lastIndexOf('/') + 1);
+  static final String NAMESPACE = ColorPaletteXML.NAMESPACE_URI.toString();
 
   /** the color attribute name */
   static final String ATTRIBUTE_NAME = "name"; //$NON-NLS-1$
@@ -43,7 +42,7 @@ public enum ColorPaletteXML implements IFileType {
   /** {@inheritDoc} */
   @Override
   public final String getMIMEType() {
-    return null;
+    return XMLFileType.XML.getMIMEType();
   }
 
   /** {@inheritDoc} */
@@ -52,4 +51,28 @@ public enum ColorPaletteXML implements IFileType {
     return "Color Palette File"; //$NON-NLS-1$
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final URI getNamespaceURI() {
+    return ColorPaletteXML.NAMESPACE_URI;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getNamespace() {
+    return ColorPaletteXML.NAMESPACE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final URL getSchemaSource() throws IOException {
+    final URL u;
+    u = this.getClass().getResource(//
+        ColorPaletteXML.NAMESPACE.substring(ColorPaletteXML.NAMESPACE
+            .lastIndexOf('/') + 1));
+    if (u != null) {
+      return u;
+    }
+    return ColorPaletteXML.NAMESPACE_URI.toURL();
+  }
 }

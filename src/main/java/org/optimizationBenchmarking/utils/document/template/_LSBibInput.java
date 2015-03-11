@@ -3,7 +3,6 @@ package org.optimizationBenchmarking.utils.document.template;
 import java.io.InputStream;
 
 import org.optimizationBenchmarking.utils.bibliography.io.BibliographyXML;
-import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.xml.SimpleLSInput;
 
@@ -29,18 +28,14 @@ final class _LSBibInput extends SimpleLSInput {
   @Override
   protected final InputStream createInputStream() {
     try {
-      return BibliographyXML.class
-          .getResourceAsStream(BibliographyXML.SCHEMA);
+      return BibliographyXML.BIBLIOGRAPHY_XML.getSchemaSource()
+          .openStream();
     } catch (final Throwable tt) {
-      try {
-        return BibliographyXML.NAMESPACE_URI.toURL().openStream();
-      } catch (final Throwable ttt) {
-        RethrowMode.AS_RUNTIME_EXCEPTION
-            .rethrow(//
-                "Error while opening input stream to bibliography XML Schema.", //$NON-NLS-1$
-                true, ErrorUtils.aggregateError(tt, ttt));
-        return null;
-      }
+      RethrowMode.AS_RUNTIME_EXCEPTION
+          .rethrow(//
+              "Error while opening input stream to bibliography XMLFileType Schema.", //$NON-NLS-1$
+              true, tt);
+      return null;
     }
   }
 

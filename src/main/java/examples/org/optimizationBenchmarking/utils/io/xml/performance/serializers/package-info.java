@@ -1,9 +1,9 @@
 /**
- * A base class for XML output and its implementations for the different
- * methods for serializing XML data to a {@link java.io.Writer} that we
- * want to benchmark, including our
- * {@link org.optimizationBenchmarking.utils.io.xml hierarchical XML API}
- * in
+ * A base class for XMLFileType output and its implementations for the
+ * different methods for serializing XMLFileType data to a
+ * {@link java.io.Writer} that we want to benchmark, including our
+ * {@link org.optimizationBenchmarking.utils.io.xml hierarchical
+ * XMLFileType API} in
  * {@link examples.org.optimizationBenchmarking.utils.io.xml.performance.serializers.XMLAPISerialSerialization
  * serial},
  * {@link examples.org.optimizationBenchmarking.utils.io.xml.performance.serializers.XMLAPIParallelSerialization

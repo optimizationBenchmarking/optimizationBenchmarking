@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.io.impl.edi;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.DimensionContext;
 import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
@@ -13,6 +14,7 @@ import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
 import org.optimizationBenchmarking.experimentation.data.RunContext;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
 import org.optimizationBenchmarking.utils.parsers.LongParser;
@@ -39,8 +41,10 @@ final class _EDIContentHandler extends DelegatingHandler {
   /** are we inside a point */
   private int m_inPoint;
 
+  /** the job */
+  private final IOJob m_job;
   /** the logger */
-  private final IOJob m_logger;
+  private final Logger m_logger;
 
   /**
    * create
@@ -49,16 +53,17 @@ final class _EDIContentHandler extends DelegatingHandler {
    *          the owning handler
    * @param esb
    *          the experiment set builder
-   * @param logger
-   *          the logger
+   * @param job
+   *          the job
    */
   public _EDIContentHandler(final DelegatingHandler owner,
-      final ExperimentSetContext esb, final IOJob logger) {
+      final ExperimentSetContext esb, final IOJob job) {
     super(owner);
     this.m_stack = new ArrayList<>();
     this.m_stack.add(esb);
     this.m_sb = new MemoryTextOutput();
-    this.m_logger = logger;
+    this.m_job = job;
+    this.m_logger = job.getLogger();
   }
 
   /** {@inheritDoc} */
@@ -66,8 +71,10 @@ final class _EDIContentHandler extends DelegatingHandler {
   public final void doWarning(final SAXParseException e)
       throws SAXException {
 
-    if (this.m_logger.canLog(Level.WARNING)) {
-      this.m_logger.log(Level.WARNING, "Warning during XML parsing.", //$NON-NLS-1$
+    if ((this.m_logger != null) && //
+        (this.m_logger.isLoggable(Level.WARNING))) {
+      this.m_logger.log(Level.WARNING,
+          "Warning during XMLFileType parsing.", //$NON-NLS-1$
           e);
     }
 
@@ -77,7 +84,7 @@ final class _EDIContentHandler extends DelegatingHandler {
   @Override
   public final void doError(final SAXParseException e) throws SAXException {
     try {
-      this.m_logger.handleError(e, "Error during XML parsing."); //$NON-NLS-1$
+      this.m_job.handleError(e, "Error during XMLFileType parsing."); //$NON-NLS-1$
     } catch (final Exception ioe) {
       throw new SAXException(ioe);
     }
@@ -88,7 +95,7 @@ final class _EDIContentHandler extends DelegatingHandler {
   public final void doFatalError(final SAXParseException e)
       throws SAXException {
     try {
-      this.m_logger.handleError(e, "Fatal error during XML parsing."); //$NON-NLS-1$
+      this.m_job.handleError(e, "Fatal error during XMLFileType parsing."); //$NON-NLS-1$
     } catch (final Exception ioe) {
       throw new SAXException(ioe);
     }
@@ -109,22 +116,22 @@ final class _EDIContentHandler extends DelegatingHandler {
     stack = this.m_stack;
     c = ((InstanceContext) (stack.get(stack.size() - 1)));
 
-    dim = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_DIMENSION);
+    dim = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_DIMENSION);
     if (dim != null) {
 
-      lb = DelegatingHandler.getAttributeNormalized(atts,
-          _EDIConstants.NAMESPACE, _EDIConstants.A_FLOAT_LOWER_BOUND);
+      lb = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+          EDI.ATTRIBUTE_FLOAT_LOWER_BOUND);
       if (lb == null) {
-        lb = DelegatingHandler.getAttributeNormalized(atts,
-            _EDIConstants.NAMESPACE, _EDIConstants.A_INTEGER_LOWER_BOUND);
+        lb = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_INTEGER_LOWER_BOUND);
       }
 
-      ub = DelegatingHandler.getAttributeNormalized(atts,
-          _EDIConstants.NAMESPACE, _EDIConstants.A_FLOAT_UPPER_BOUND);
+      ub = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+          EDI.ATTRIBUTE_FLOAT_UPPER_BOUND);
       if (ub == null) {
-        ub = DelegatingHandler.getAttributeNormalized(atts,
-            _EDIConstants.NAMESPACE, _EDIConstants.A_INTEGER_UPPER_BOUND);
+        ub = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_INTEGER_UPPER_BOUND);
       }
 
       if ((lb != null) || (ub != null)) {
@@ -163,37 +170,38 @@ final class _EDIContentHandler extends DelegatingHandler {
       stack.add(d);
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_NAME);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_NAME);
     d.setName(s);
 
-    if (this.m_logger.canLog(IOJob.FINE_LOG_LEVEL)) {
-      this.m_logger.log(IOJob.FINE_LOG_LEVEL,
+    if ((this.m_logger != null) && //
+        (this.m_logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+      this.m_logger.log(IOTool.FINE_LOG_LEVEL,
           ("Begin of dimension '" + s + '\'')); //$NON-NLS-1$
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_DESCRIPTION);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_DESCRIPTION);
     if (s != null) {
       d.setDescription(s);
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_DIMENSION_TYPE);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_DIMENSION_TYPE);
     findDT: {
-      for (i = _EDIConstants.AV_DIMENSION_TYPE.length; (--i) >= 0;) {
-        if (_EDIConstants.AV_DIMENSION_TYPE[i].equalsIgnoreCase(s)) {
+      for (i = EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE.length; (--i) >= 0;) {
+        if (EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[i].equalsIgnoreCase(s)) {
           d.setType(EDimensionType.INSTANCES.get(i));
           break findDT;
         }
       }
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_DIMENSION_DIRECTION);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_DIMENSION_DIRECTION);
     findDD: {
-      for (i = _EDIConstants.AV_DIMENSION_DIRECTION.length; (--i) >= 0;) {
-        if (_EDIConstants.AV_DIMENSION_DIRECTION[i].equalsIgnoreCase(s)) {
+      for (i = EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION.length; (--i) >= 0;) {
+        if (EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION[i].equalsIgnoreCase(s)) {
           d.setDirection(EDimensionDirection.INSTANCES.get(i));
           break findDD;
         }
@@ -201,24 +209,24 @@ final class _EDIContentHandler extends DelegatingHandler {
     }
 
     pt = null;
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_DIMENSION_DATA_TYPE);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_DIMENSION_DATA_TYPE);
     findPT: {
-      for (i = _EDIConstants.AV_DIMENSION_DATA_TYPE.length; (--i) >= 0;) {
-        if (_EDIConstants.AV_DIMENSION_DATA_TYPE[i].equalsIgnoreCase(s)) {
+      for (i = EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE.length; (--i) >= 0;) {
+        if (EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[i].equalsIgnoreCase(s)) {
           pt = EPrimitiveType.TYPES.get(i);
           break findPT;
         }
       }
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_INTEGER_LOWER_BOUND);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_INTEGER_LOWER_BOUND);
     if (s != null) {
       lb = LongParser.INSTANCE.parseString(s);
     } else {
-      s = DelegatingHandler.getAttributeNormalized(atts,
-          _EDIConstants.NAMESPACE, _EDIConstants.A_FLOAT_LOWER_BOUND);
+      s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+          EDI.ATTRIBUTE_FLOAT_LOWER_BOUND);
       if (s != null) {
         lb = DoubleParser.INSTANCE.parseString(s);
       } else {
@@ -226,13 +234,13 @@ final class _EDIContentHandler extends DelegatingHandler {
       }
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_INTEGER_UPPER_BOUND);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_INTEGER_UPPER_BOUND);
     if (s != null) {
       ub = LongParser.INSTANCE.parseString(s);
     } else {
-      s = DelegatingHandler.getAttributeNormalized(atts,
-          _EDIConstants.NAMESPACE, _EDIConstants.A_FLOAT_UPPER_BOUND);
+      s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+          EDI.ATTRIBUTE_FLOAT_UPPER_BOUND);
       if (s != null) {
         ub = DoubleParser.INSTANCE.parseString(s);
       } else {
@@ -327,17 +335,18 @@ final class _EDIContentHandler extends DelegatingHandler {
       stack.add(d);
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_NAME);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_NAME);
     d.setName(s);
 
-    if (this.m_logger.canLog(IOJob.FINE_LOG_LEVEL)) {
-      this.m_logger.log(IOJob.FINE_LOG_LEVEL,
+    if ((this.m_logger != null) && //
+        (this.m_logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+      this.m_logger.log(IOTool.FINE_LOG_LEVEL,
           ("Begin of experiment '" + s + '\'')); //$NON-NLS-1$
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_DESCRIPTION);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_DESCRIPTION);
     if (s != null) {
       d.setDescription(s);
     }
@@ -375,15 +384,14 @@ final class _EDIContentHandler extends DelegatingHandler {
 
     d.setFeatureValue(
     //
-        DelegatingHandler.getAttributeNormalized(atts,
-            _EDIConstants.NAMESPACE, _EDIConstants.A_NAME),//
-        DelegatingHandler.getAttributeNormalized(atts,
-            _EDIConstants.NAMESPACE, _EDIConstants.A_FEATURE_DESCRIPTION),//
-        DelegatingHandler.getAttributeNormalized(atts,
-            _EDIConstants.NAMESPACE, _EDIConstants.A_FEATURE_VALUE),//
-        DelegatingHandler.getAttributeNormalized(atts,
-            _EDIConstants.NAMESPACE,
-            _EDIConstants.A_FEATURE_VALUE_DESCRIPTION));
+        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_NAME),//
+        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_FEATURE_DESCRIPTION),//
+        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_FEATURE_VALUE),//
+        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_FEATURE_VALUE_DESCRIPTION));
   }
 
   /**
@@ -409,17 +417,18 @@ final class _EDIContentHandler extends DelegatingHandler {
       stack.add(d);
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_NAME);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_NAME);
     d.setName(s);
 
-    if (this.m_logger.canLog(IOJob.FINE_LOG_LEVEL)) {
-      this.m_logger.log(IOJob.FINE_LOG_LEVEL,
+    if ((this.m_logger != null) && //
+        (this.m_logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+      this.m_logger.log(IOTool.FINE_LOG_LEVEL,
           ("Begin of instance '" + s + '\'')); //$NON-NLS-1$
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_DESCRIPTION);
+    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+        EDI.ATTRIBUTE_DESCRIPTION);
     if (s != null) {
       d.setDescription(s);
     }
@@ -456,7 +465,7 @@ final class _EDIContentHandler extends DelegatingHandler {
     d = c.createInstanceRuns();
     stack.add(d);
     d.setInstance(DelegatingHandler.getAttributeNormalized(atts,
-        _EDIConstants.NAMESPACE, _EDIConstants.A_INSTANCE));
+        EDI.NAMESPACE, EDI.ATTRIBUTE_INSTANCE));
   }
 
   /** end the instance runs */
@@ -544,16 +553,14 @@ final class _EDIContentHandler extends DelegatingHandler {
 
     d.setParameterValue(
     //
-        DelegatingHandler.getAttributeNormalized(atts,
-            _EDIConstants.NAMESPACE, _EDIConstants.A_NAME),//
-        DelegatingHandler
-            .getAttributeNormalized(atts, _EDIConstants.NAMESPACE,
-                _EDIConstants.A_PARAMETER_DESCRIPTION),//
-        DelegatingHandler.getAttributeNormalized(atts,
-            _EDIConstants.NAMESPACE, _EDIConstants.A_PARAMETER_VALUE),//
-        DelegatingHandler.getAttributeNormalized(atts,
-            _EDIConstants.NAMESPACE,
-            _EDIConstants.A_PARAMETER_VALUE_DESCRIPTION));
+        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_NAME),//
+        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_PARAMETER_DESCRIPTION),//
+        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_PARAMETER_VALUE),//
+        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_PARAMETER_VALUE_DESCRIPTION));
   }
 
   /** {@inheritDoc} */
@@ -562,56 +569,57 @@ final class _EDIContentHandler extends DelegatingHandler {
       final String localName, final String qName,
       final Attributes attributes) throws SAXException {
 
-    if ((this.m_logger.canLog(IOJob.FINER_LOG_LEVEL))) {
-      this.m_logger.log(IOJob.FINER_LOG_LEVEL, ("Start of element <" + //$NON-NLS-1$
+    if (((this.m_logger != null) && //
+    (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL)))) {
+      this.m_logger.log(IOTool.FINER_LOG_LEVEL, ("Start of element <" + //$NON-NLS-1$
           uri + ':' + localName + '>'));
     }
 
-    if ((uri == null) || _EDIConstants.NAMESPACE.equalsIgnoreCase(uri)) {
+    if ((uri == null) || EDI.NAMESPACE.equalsIgnoreCase(uri)) {
 
-      if (_EDIConstants.E_BOUNDS.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_BOUNDS.equalsIgnoreCase(localName)) {
         this.__startBounds(attributes);
         return;
       }
-      if (_EDIConstants.E_DIMENSION.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_DIMENSION.equalsIgnoreCase(localName)) {
         this.__startDimension(attributes);
         return;
       }
 
-      if (_EDIConstants.E_EXPERIMENT.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_EXPERIMENT.equalsIgnoreCase(localName)) {
         this.__startExperiment(attributes);
         return;
       }
 
-      if (_EDIConstants.E_FEATURE.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_FEATURE.equalsIgnoreCase(localName)) {
         this.__startFeature(attributes);
         return;
       }
-      if (_EDIConstants.E_FLOAT.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_FLOAT.equalsIgnoreCase(localName)) {
         this.__startVal();
         return;
       }
-      if (_EDIConstants.E_INSTANCE.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_INSTANCE.equalsIgnoreCase(localName)) {
         this.__startInstance(attributes);
         return;
       }
-      if (_EDIConstants.E_INSTANCE_RUNS.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_INSTANCE_RUNS.equalsIgnoreCase(localName)) {
         this.__startInstanceRuns(attributes);
         return;
       }
-      if (_EDIConstants.E_INT.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_INT.equalsIgnoreCase(localName)) {
         this.__startVal();
         return;
       }
-      if (_EDIConstants.E_PARAMETER.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_PARAMETER.equalsIgnoreCase(localName)) {
         this.__startParameter(attributes);
         return;
       }
-      if (_EDIConstants.E_POINT.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_POINT.equalsIgnoreCase(localName)) {
         this.__startPoint();
         return;
       }
-      if (_EDIConstants.E_RUN.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_RUN.equalsIgnoreCase(localName)) {
         this.__startRun();
         return;
       }
@@ -623,43 +631,44 @@ final class _EDIContentHandler extends DelegatingHandler {
   protected final void doEndElement(final String uri,
       final String localName, final String qName) throws SAXException {
 
-    if ((this.m_logger.canLog(IOJob.FINER_LOG_LEVEL))) {
-      this.m_logger.log(IOJob.FINER_LOG_LEVEL, ("End of element </" + //$NON-NLS-1$
+    if (((this.m_logger != null) && //
+    (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL)))) {
+      this.m_logger.log(IOTool.FINER_LOG_LEVEL, ("End of element </" + //$NON-NLS-1$
           uri + ':' + localName + '>'));
     }
 
-    if ((uri == null) || _EDIConstants.NAMESPACE.equalsIgnoreCase(uri)) {
+    if ((uri == null) || EDI.NAMESPACE.equalsIgnoreCase(uri)) {
 
-      if (_EDIConstants.E_DIMENSION.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_DIMENSION.equalsIgnoreCase(localName)) {
         this.__endDimension();
       }
 
-      if (_EDIConstants.E_EXPERIMENT.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_EXPERIMENT.equalsIgnoreCase(localName)) {
         this.__endExperiment();
         return;
       }
 
-      if (_EDIConstants.E_INSTANCE.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_INSTANCE.equalsIgnoreCase(localName)) {
         this.__endInstance();
         return;
       }
 
-      if (_EDIConstants.E_INSTANCE_RUNS.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_INSTANCE_RUNS.equalsIgnoreCase(localName)) {
         this.__endInstanceRuns();
         return;
       }
 
-      if (_EDIConstants.E_POINT.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_POINT.equalsIgnoreCase(localName)) {
         this.__endPoint();
         return;
       }
 
-      if (_EDIConstants.E_RUN.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_RUN.equalsIgnoreCase(localName)) {
         this.__endRun();
         return;
       }
 
-      if (_EDIConstants.E_EXPERIMENT_DATA.equalsIgnoreCase(localName)) {
+      if (EDI.ELEMENT_EXPERIMENT_DATA.equalsIgnoreCase(localName)) {
         this.close();
         return;
       }

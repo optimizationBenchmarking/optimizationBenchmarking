@@ -1,29 +1,28 @@
 package org.optimizationBenchmarking.utils.graphics.style.font;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 
 import org.optimizationBenchmarking.utils.graphics.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.EFontType;
-import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
+import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
 
 /**
- * The internal class for the XML constants of the font palette XML format.
+ * The internal class for the constants of the font palette file format.
  */
-public enum FontPaletteXML implements IFileType {
+public enum FontPaletteXML implements IXMLFileType {
 
   /** the font palette file type */
   FONT_PALETTE_XML;
 
   /** the namespace */
-  public static final URI NAMESPACE_URI = URI
+  static final URI NAMESPACE_URI = URI
       .create(//
           "http://www.optimizationBenchmarking.org/formats/graphics/font/fontPalette.1.0.xsd").normalize(); //$NON-NLS-1$
   /** the namespace string */
-  public static final String NAMESPACE = FontPaletteXML.NAMESPACE_URI
-      .toString();
-  /** the schema name */
-  public static final String SCHEMA = FontPaletteXML.NAMESPACE
-      .substring(FontPaletteXML.NAMESPACE.lastIndexOf('/') + 1);
+  static final String NAMESPACE = FontPaletteXML.NAMESPACE_URI.toString();
 
   /** the font family name attribute */
   static final String ATTRIBUTE_FONT_FAMILY = "family"; //$NON-NLS-1$
@@ -136,7 +135,7 @@ public enum FontPaletteXML implements IFileType {
   /** {@inheritDoc} */
   @Override
   public final String getMIMEType() {
-    return null;
+    return XMLFileType.XML.getMIMEType();
   }
 
   /** {@inheritDoc} */
@@ -145,4 +144,28 @@ public enum FontPaletteXML implements IFileType {
     return "Font Palette File"; //$NON-NLS-1$
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final URI getNamespaceURI() {
+    return FontPaletteXML.NAMESPACE_URI;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getNamespace() {
+    return FontPaletteXML.NAMESPACE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final URL getSchemaSource() throws IOException {
+    final URL u;
+    u = this.getClass().getResource(//
+        FontPaletteXML.NAMESPACE.substring(FontPaletteXML.NAMESPACE
+            .lastIndexOf('/') + 1));
+    if (u != null) {
+      return u;
+    }
+    return FontPaletteXML.NAMESPACE_URI.toURL();
+  }
 }

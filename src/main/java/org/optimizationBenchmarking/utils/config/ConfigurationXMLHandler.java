@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/** A stack-able XML handler for configuration XML data */
+/** A stack-able XMLFileType handler for configuration XMLFileType data */
 public class ConfigurationXMLHandler extends DelegatingHandler {
 
   /** the destination configuration builder */
@@ -30,21 +30,17 @@ public class ConfigurationXMLHandler extends DelegatingHandler {
       final String qName, final Attributes attributes) throws SAXException {
     String a, b;
     if ((uri == null)
-        || (ConfigurationXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
+        || (ConfigurationXML.NAMESPACE.equalsIgnoreCase(uri))) {
 
-      if (ConfigurationXMLConstants.ELEMENT_CONFIGURATION_PARAMETER
+      if (ConfigurationXML.ELEMENT_CONFIGURATION_PARAMETER
           .equalsIgnoreCase(localName)) {
 
-        a = DelegatingHandler
-            .getAttribute(
-                attributes,
-                ConfigurationXMLConstants.NAMESPACE,
-                ConfigurationXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME);
-        b = DelegatingHandler
-            .getAttribute(
-                attributes,
-                ConfigurationXMLConstants.NAMESPACE,
-                ConfigurationXMLConstants.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE);
+        a = DelegatingHandler.getAttribute(attributes,
+            ConfigurationXML.NAMESPACE,
+            ConfigurationXML.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME);
+        b = DelegatingHandler.getAttribute(attributes,
+            ConfigurationXML.NAMESPACE,
+            ConfigurationXML.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE);
 
         this.m_dest.put(a, b);
       }
@@ -56,8 +52,8 @@ public class ConfigurationXMLHandler extends DelegatingHandler {
   protected void doEndElement(final String uri, final String localName,
       final String qName) throws SAXException {
     if ((uri == null)
-        || (ConfigurationXMLConstants.NAMESPACE.equalsIgnoreCase(uri))) {
-      if (ConfigurationXMLConstants.ELEMENT_CONFIGURATION_ROOT
+        || (ConfigurationXML.NAMESPACE.equalsIgnoreCase(uri))) {
+      if (ConfigurationXML.ELEMENT_CONFIGURATION_ROOT
           .equalsIgnoreCase(localName)) {
         this.close();
       }

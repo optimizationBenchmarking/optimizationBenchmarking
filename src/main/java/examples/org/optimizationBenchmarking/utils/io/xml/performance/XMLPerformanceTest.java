@@ -20,13 +20,14 @@ import examples.org.optimizationBenchmarking.utils.io.xml.performance.serializer
 /**
  * <p>
  * A performance test of our
- * {@link org.optimizationBenchmarking.utils.io.xml XML API}. We compare
- * the performance of our {@link org.optimizationBenchmarking.utils.io.xml
- * XML API}-based serialization both in
+ * {@link org.optimizationBenchmarking.utils.io.xml XMLFileType API}. We
+ * compare the performance of our
+ * {@link org.optimizationBenchmarking.utils.io.xml XMLFileType API}-based
+ * serialization both in
  * {@link examples.org.optimizationBenchmarking.utils.io.xml.performance.serializers.XMLAPISerialSerialization
  * serial} and
  * {@link examples.org.optimizationBenchmarking.utils.io.xml.performance.serializers.XMLAPIParallelSerialization
- * parallel} fashion with serial XML output using Java's
+ * parallel} fashion with serial XMLFileType output using Java's
  * {@link examples.org.optimizationBenchmarking.utils.io.xml.performance.serializers.XMLDOMSerialization
  * DOM} and
  * {@link examples.org.optimizationBenchmarking.utils.io.xml.performance.serializers.XMLStreamWriterSerialization

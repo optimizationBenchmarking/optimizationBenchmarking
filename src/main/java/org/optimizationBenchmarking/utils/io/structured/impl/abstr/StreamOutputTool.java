@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
@@ -50,10 +51,12 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
     final Path file;
     final _OutputJob outJob;
     final Object oldCur, oldCur2;
+    final Logger logger;
 
     oldCur = job.m_current;
     try {
       job.m_current = path;
+      logger = job.getLogger();
 
       if ((attributes != null) && (attributes.isDirectory())) {
         file = PathUtils.createPathInside(
@@ -62,9 +65,13 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
             (this.getArchiveFallbackFileName() + '.' + archiveType
                 .getDefaultSuffix()) : //
                 this.getDefaultPlainOutputFileName()));
-        job.log("Path '" + path + //$NON-NLS-1$
-            "' identifies a directory, creating file '" //$NON-NLS-1$
-            + file + "' for output.");//$NON-NLS-1$
+        if ((logger != null)
+            && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+          logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+              (((("Path '" + path) + //$NON-NLS-1$
+              "' identifies a directory, creating file '") //$NON-NLS-1$
+              + file) + "' for output."));//$NON-NLS-1$
+        }
       } else {
         file = path;
       }
@@ -143,14 +150,18 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
   final void _stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding,
       final EArchiveType archiveType) throws Throwable {
+    final Logger logger;
     String name;
 
     if (archiveType != null) {
       name = this.getDefaultPlainOutputFileName();
-      if (job.canLog()) {
-        job.log("Creating " + archiveType.getName() + //$NON-NLS-1$
-            " output with file '" + name //$NON-NLS-1$
-            + "' as the data (and only) file in the compressed stream."); //$NON-NLS-1$
+      logger = job.getLogger();
+      if ((logger != null)
+          && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
+        logger.log(IOTool.DEFAULT_LOG_LEVEL,//
+            (((("Creating " + archiveType.getName()) + //$NON-NLS-1$
+            " output with file '") + name)//$NON-NLS-1$
+            + "' as the data (and only) file in the compressed stream.")); //$NON-NLS-1$
       }
       try (final OutputStream output = archiveType.compressStream(stream,
           this.getArchiveFallbackFileName())) {
@@ -177,6 +188,7 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
   private final void __stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding)
       throws Throwable {
+    final Logger logger;
     Class<?> clazz;
 
     if ((encoding != null) && (encoding != StreamEncoding.UNKNOWN)
@@ -184,9 +196,12 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
         && (encoding != StreamEncoding.BINARY)
         && ((clazz = encoding.getOutputClass()) != null)
         && OutputStream.class.isAssignableFrom(clazz)) {
-      if (job.canLog(IOJob.FINE_LOG_LEVEL)) {
-        job.log(IOJob.FINE_LOG_LEVEL,
-            "Using byte stream encoding " + encoding.name()); //$NON-NLS-1$
+
+      logger = job.getLogger();
+      if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
+        logger.log(IOTool.FINE_LOG_LEVEL,//
+            ("Using byte stream encoding " + //$NON-NLS-1$
+            encoding.name()));
       }
       try (OutputStream encoded = ((OutputStream) (encoding
           .wrapOutputStream(stream)))) {

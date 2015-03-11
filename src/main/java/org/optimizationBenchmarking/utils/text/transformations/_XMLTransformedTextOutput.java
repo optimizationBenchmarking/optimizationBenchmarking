@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * <p>
  * An implementation of
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
- * that transforms the input text to XML entities where necessary.
+ * that transforms the input text to XMLFileType entities where necessary.
  * </p>
  */
 class _XMLTransformedTextOutput extends _TransformedTextOutput {

@@ -13,15 +13,6 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 /** The base class for I/O jobs */
 public class IOJob extends ToolJob {
 
-  /** the even finer log level */
-  public static final Level FINER_LOG_LEVEL = Level.FINEST;
-
-  /** the finer log level */
-  public static final Level FINE_LOG_LEVEL = Level.FINER;
-
-  /** the default log level */
-  public static final Level DEFAULT_LOG_LEVEL = Level.FINE;
-
   /** the long id */
   long m_lid;
 
@@ -52,6 +43,12 @@ public class IOJob extends ToolJob {
     this.m_tool = tool;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final Logger getLogger() {
+    return super.getLogger();
+  }
+
   /**
    * append this job's id
    * 
@@ -79,62 +76,6 @@ public class IOJob extends ToolJob {
     final Logger logger;
     logger = this.getLogger();
     return ((logger != null) && (logger.isLoggable(level)));
-  }
-
-  /**
-   * Can we log at the default log level?
-   * 
-   * @return {@code true} if we can log at the default log level,
-   *         {@code false} otherwise
-   */
-  public final boolean canLog() {
-    return this.canLog(IOJob.DEFAULT_LOG_LEVEL);
-  }
-
-  /**
-   * Log a given message at a given level
-   * 
-   * @param level
-   *          the level
-   * @param message
-   *          the message
-   */
-  public final void log(final Level level, final String message) {
-    final Logger logger;
-
-    logger = this.getLogger();
-    if (logger != null) {
-      logger.log(level, (this._id() + message));
-    }
-  }
-
-  /**
-   * Log a given message at a given level
-   * 
-   * @param level
-   *          the level
-   * @param message
-   *          the message
-   * @param information
-   *          an information object
-   */
-  public final void log(final Level level, final String message,
-      final Object information) {
-    final Logger logger;
-    logger = this.getLogger();
-    if (logger != null) {
-      logger.log(level, (this._id() + message), information);
-    }
-  }
-
-  /**
-   * Log a given message at the default log level
-   * 
-   * @param message
-   *          the message
-   */
-  public final void log(final String message) {
-    this.log(IOJob.DEFAULT_LOG_LEVEL, message);
   }
 
   /**
