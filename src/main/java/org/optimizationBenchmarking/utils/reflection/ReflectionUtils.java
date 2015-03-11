@@ -1116,7 +1116,7 @@ public final class ReflectionUtils {
     if (clazz != null) {
       string = clazz.getCanonicalName();
       if (string != null) {
-        index = string.indexOf('.');
+        index = string.lastIndexOf('.');
         if ((index > 0) && (index < (string.length() - 1))) {
           list.add(string.substring(0, (index + 1)));
         }

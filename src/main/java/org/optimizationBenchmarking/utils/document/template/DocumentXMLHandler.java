@@ -2,8 +2,11 @@ package org.optimizationBenchmarking.utils.document.template;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
 
@@ -37,6 +40,7 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.numbers.NumberAppender;
+import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.xml.sax.Attributes;
@@ -44,6 +48,28 @@ import org.xml.sax.SAXException;
 
 /** a handler for bibliography xml data */
 public final class DocumentXMLHandler extends DelegatingHandler {
+
+  /** the number format prefixes */
+  private static final String[] NUMBER_FORMAT_PREFIXES;
+
+  static {
+    final LinkedHashSet<String> paths;
+
+    paths = new LinkedHashSet<>();
+    ReflectionUtils.addPackageOfClassToPrefixList(NumberFormat.class,
+        paths);
+    ReflectionUtils.addPackageOfClassToPrefixList(DecimalFormat.class,
+        paths);
+    ReflectionUtils.addPackageOfClassToPrefixList(NumberAppender.class,
+        paths);
+    ReflectionUtils.addPackageOfClassToPrefixList(
+        SimpleNumberAppender.class, paths);
+    ReflectionUtils.addPackageOfClassToPrefixList(
+        DecimalFormatSymbols.class, paths);
+    ReflectionUtils.addPackageOfClassToPrefixList(Formatter.class, paths);
+
+    NUMBER_FORMAT_PREFIXES = paths.toArray(new String[paths.size()]);
+  }
 
   /**
    * The stack document elements: the element on the top of the stack can
@@ -1519,8 +1545,9 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         this.m_formatFormatter = this.m_cache.get(s);
         if (this.m_formatFormatter == null) {
           try {
-            this.m_formatFormatter = ReflectionUtils.getInstanceByName(
-                Object.class, s);
+            this.m_formatFormatter = ReflectionUtils
+                .getInstanceByName(Object.class, s,
+                    DocumentXMLHandler.NUMBER_FORMAT_PREFIXES);
           } catch (final ReflectiveOperationException y) {
             throw new RuntimeException(//
                 "Error while trying to obtain formatter '" + s //$NON-NLS-1$

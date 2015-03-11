@@ -2,13 +2,8 @@ package org.optimizationBenchmarking.experimentation.data;
 
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
-import org.optimizationBenchmarking.utils.parsers.ClassParser;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
-import org.optimizationBenchmarking.utils.parsers.LongParser;
 import org.optimizationBenchmarking.utils.parsers.NumberParser;
-import org.optimizationBenchmarking.utils.parsers.StrictDoubleParser;
-import org.optimizationBenchmarking.utils.parsers.StrictLongParser;
-import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.parsers.NumberParserParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -123,37 +118,19 @@ public final class DimensionContext extends _NamedContext<Dimension> {
    * @param parserDesc
    *          the parser constant
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
   public final void setParser(final String parserDesc) {
-    final NumberParser<?> parser;
-    final int idx1, idx2;
-
-    idx1 = parserDesc.indexOf(':');
-    if ((idx1 > 0) && (idx1 < (parserDesc.length() - 2))) {
-      idx2 = parserDesc.indexOf(':', (idx1 + 1));
-      if ((idx2 > 0) && (idx2 < (parserDesc.length() - 1))) {
-        this.setParser(//
-            parserDesc.substring(0, idx1),//
-            parserDesc.substring(idx1 + 1, idx2),//
-            parserDesc.substring(idx2 + 1));//
-        return;
-      }
-    }
-
+    final NumberParser<Number> parser;
     try {
-      if (parserDesc.indexOf('#') > 0) {
-        parser = ReflectionUtils.getInstanceByName(NumberParser.class,
-            parserDesc);
-      } else {
-        parser = ((NumberParser) ((new ClassParser(NumberParser.class)
-            .parseString(parserDesc)).newInstance()));
+      parser = NumberParserParser.getInstance().parseString(parserDesc);
+      if (parser == null) {
+        throw new IllegalArgumentException(//
+            "Parser description parses to null parser.");//$NON-NLS-1$
       }
-
-    } catch (final Throwable t) {
-      throw new RuntimeException(((("Invalid parser definition: '" + //$NON-NLS-1$
-          parserDesc) + '\'') + '.'), t);
+    } catch (final Throwable error) {
+      throw new IllegalArgumentException(((//
+          "Invalid parser description '" + //$NON-NLS-1$
+          parserDesc) + '\''), error);
     }
-
     this.setParser(parser);
   }
 
@@ -196,71 +173,22 @@ public final class DimensionContext extends _NamedContext<Dimension> {
    * @param upperBound
    *          the upper boundary
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
   public final void setParser(final String parserClass,
       final String lowerBound, final String upperBound) {
-    Number lower, upper;
-    Class<? extends NumberParser<?>> c;
-    RuntimeException re;
-
+    final NumberParser<Number> parser;
     try {
-      lower = StrictLongParser.STRICT_INSTANCE.parseString(lowerBound);
-    } catch (final Throwable t1) {
-      try {
-        lower = StrictDoubleParser.STRICT_INSTANCE.parseString(lowerBound);
-      } catch (final Throwable t2) {
-        try {
-          lower = LongParser.INSTANCE.parseString(lowerBound);
-        } catch (final Throwable t3) {
-          try {
-            lower = DoubleParser.INSTANCE.parseString(lowerBound);
-          } catch (final Throwable t4) {
-            re = new RuntimeException(//
-                "String '" + lowerBound + //$NON-NLS-1$
-                    "' is not a number."); //$NON-NLS-1$
-            re.addSuppressed(t1);
-            re.addSuppressed(t2);
-            re.addSuppressed(t3);
-            re.addSuppressed(t4);
-            throw re;
-          }
-        }
+      parser = NumberParserParser.getInstance().parse(parserClass,
+          lowerBound, upperBound);
+      if (parser == null) {
+        throw new IllegalArgumentException(//
+            "Parser description parses to null parser.");//$NON-NLS-1$
       }
+    } catch (final Throwable error) {
+      throw new IllegalArgumentException((((((//
+          "Invalid parser description '" + //$NON-NLS-1$
+          parserClass) + ':') + lowerBound) + ':') + upperBound), error);
     }
-
-    try {
-      upper = StrictLongParser.STRICT_INSTANCE.parseString(upperBound);
-    } catch (final Throwable t1) {
-      try {
-        upper = StrictDoubleParser.STRICT_INSTANCE.parseString(upperBound);
-      } catch (final Throwable t2) {
-        try {
-          upper = LongParser.INSTANCE.parseString(upperBound);
-        } catch (final Throwable t3) {
-          try {
-            upper = DoubleParser.INSTANCE.parseString(upperBound);
-          } catch (final Throwable t4) {
-            re = new RuntimeException(//
-                "String '" + upperBound + //$NON-NLS-1$
-                    "' is not a number."); //$NON-NLS-1$
-            re.addSuppressed(t1);
-            re.addSuppressed(t2);
-            re.addSuppressed(t3);
-            re.addSuppressed(t4);
-            throw re;
-          }
-        }
-      }
-    }
-
-    try {
-      c = new ClassParser(NumberParser.class).parseString(parserClass);
-    } catch (final Throwable t) {
-      throw new RuntimeException((("Invalid parser class '" + //$NON-NLS-1$
-          parserClass) + '\'') + '.');
-    }
-
-    this.setParser(c, lower, upper);
+    this.setParser(parser);
   }
 
   /**
