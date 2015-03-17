@@ -322,7 +322,7 @@ public class CollectionTest<ET, T extends Collection<ET>> extends
     if (!(this.isModifiable())) {
       return;
     }
-    this.__testAddAndIteratorRemove(4, new Random());
+    this.__testAddAndIteratorRemove(2, new Random());
   }
 
   /**
@@ -406,7 +406,7 @@ public class CollectionTest<ET, T extends Collection<ET>> extends
       return;
     }
 
-    this.__testAddAllAndItertorRemove(4, new Random());
+    this.__testAddAllAndItertorRemove(2, new Random());
   }
 
   /** {@inheritDoc} */

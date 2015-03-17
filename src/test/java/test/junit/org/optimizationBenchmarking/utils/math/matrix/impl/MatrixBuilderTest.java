@@ -32,7 +32,7 @@ public class MatrixBuilderTest extends TestBase {
     short shortVal;
 
     rand = new Random();
-    for (testIt = 1; testIt <= 50000; testIt++) {
+    for (testIt = 1; testIt <= 500; testIt++) {
 
       data = new long[rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))]//
       [rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))];
@@ -128,7 +128,7 @@ public class MatrixBuilderTest extends TestBase {
     long longVal, long2;
 
     rand = new Random();
-    for (testIt = 1; testIt <= 30000; testIt++) {
+    for (testIt = 1; testIt <= 500; testIt++) {
 
       data = new double[rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))]//
       [rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))];
@@ -253,7 +253,7 @@ public class MatrixBuilderTest extends TestBase {
     long longVal, long2;
 
     rand = new Random();
-    for (testIt = 1; testIt <= 30000; testIt++) {
+    for (testIt = 1; testIt <= 500; testIt++) {
 
       data = new double[rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))]//
       [rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))];

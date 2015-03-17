@@ -277,7 +277,7 @@ public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
     if (!(this.isModifiable())) {
       return;
     }
-    this.__testPutRemove(4, 0, new Random());
+    this.__testPutRemove(2, 0, new Random());
   }
 
   /** test add and remove */

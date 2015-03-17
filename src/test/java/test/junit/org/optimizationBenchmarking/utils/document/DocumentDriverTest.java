@@ -61,7 +61,7 @@ public class DocumentDriverTest extends
     try (final TempDir td = new TempDir()) {
       try (final IDocument doc = config.createDocument(td.getPath(),
           "document", null, null)) { //$NON-NLS-1$
-        ex = new RandomDocumentExample(doc, r, null, 75_000L);
+        ex = new RandomDocumentExample(doc, r, null, 60_000L);
         if (service != null) {
           f = service.submit(ex);
           f.get();
@@ -115,13 +115,7 @@ public class DocumentDriverTest extends
    */
   @Test(timeout = 3600000)
   public void testSerialDocumentCreation() throws Throwable {
-    final Random r;
-    int i;
-
-    r = new Random();
-    for (i = 1; i <= 3; i++) {
-      this.__doRandomTest(null, r);
-    }
+    this.__doRandomTest(null, new Random());
     this.__doTemplateTest(null);
   }
 
@@ -145,14 +139,11 @@ public class DocumentDriverTest extends
       final Random r) throws IOException, InterruptedException,
       ExecutionException {
     final ForkJoinPool p;
-    int i;
 
     p = new ForkJoinPool(proc,
         ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, fifo);
 
-    for (i = 1; i <= 3; i++) {
-      this.__doRandomTest(p, r);
-    }
+    this.__doRandomTest(p, new Random());
     this.__doTemplateTest(p);
 
     p.shutdown();
@@ -223,181 +214,5 @@ public class DocumentDriverTest extends
   @Test(timeout = 3600000)
   public void testParallelDocumentCreation_3_default() throws Throwable {
     this.__doParallelTest(3, false, new Random());
-  }
-
-  /**
-   * Test the fifo parallel generation of documents with 4 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_4_fifo() throws Throwable {
-    this.__doParallelTest(4, true, new Random());
-  }
-
-  /**
-   * Test the default parallel generation of documents with 4 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_4_default() throws Throwable {
-    this.__doParallelTest(4, false, new Random());
-  }
-
-  /**
-   * Test the fifo parallel generation of documents with 5 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_5_fifo() throws Throwable {
-    this.__doParallelTest(5, true, new Random());
-  }
-
-  /**
-   * Test the default parallel generation of documents with 5 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_5_default() throws Throwable {
-    this.__doParallelTest(5, false, new Random());
-  }
-
-  /**
-   * Test the fifo parallel generation of documents with 6 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_6_fifo() throws Throwable {
-    this.__doParallelTest(6, true, new Random());
-  }
-
-  /**
-   * Test the default parallel generation of documents with 2 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_6_default() throws Throwable {
-    this.__doParallelTest(6, false, new Random());
-  }
-
-  /**
-   * Test the fifo parallel generation of documents with 7 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_7_fifo() throws Throwable {
-    this.__doParallelTest(7, true, new Random());
-  }
-
-  /**
-   * Test the default parallel generation of documents with 7 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_7_default() throws Throwable {
-    this.__doParallelTest(7, false, new Random());
-  }
-
-  /**
-   * Test the fifo parallel generation of documents with 8 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_8_fifo() throws Throwable {
-    this.__doParallelTest(8, true, new Random());
-  }
-
-  /**
-   * Test the default parallel generation of documents with 8 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_8_default() throws Throwable {
-    this.__doParallelTest(8, false, new Random());
-  }
-
-  /**
-   * Test the fifo parallel generation of documents with 10 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_10_fifo() throws Throwable {
-    this.__doParallelTest(10, true, new Random());
-  }
-
-  /**
-   * Test the default parallel generation of documents with 10 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_10_default() throws Throwable {
-    this.__doParallelTest(10, false, new Random());
-  }
-
-  /**
-   * Test the fifo parallel generation of documents with 15 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_15_fifo() throws Throwable {
-    this.__doParallelTest(15, true, new Random());
-  }
-
-  /**
-   * Test the default parallel generation of documents with 15 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_15_default() throws Throwable {
-    this.__doParallelTest(15, false, new Random());
-  }
-
-  /**
-   * Test the fifo parallel generation of documents with 20 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_20_fifo() throws Throwable {
-    this.__doParallelTest(20, true, new Random());
-  }
-
-  /**
-   * Test the default parallel generation of documents with 20 processors
-   * 
-   * @throws Throwable
-   *           if something goes wrong
-   */
-  @Test(timeout = 3600000)
-  public void testParallelDocumentCreation_20_default() throws Throwable {
-    this.__doParallelTest(20, false, new Random());
   }
 }

@@ -74,7 +74,7 @@ public abstract class ProducerConsumerBufferTest<T> extends TestBase {
     Thread a, b;
 
     r = new Random();
-    for (i = 0; i < 600; i++) {
+    for (i = 0; i < 30; i++) {
 
       switch (r.nextInt(3)) {
         case 0: {

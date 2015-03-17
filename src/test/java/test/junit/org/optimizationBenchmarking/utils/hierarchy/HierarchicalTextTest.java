@@ -30,7 +30,7 @@ public class HierarchicalTextTest extends _HierarchicalTest {
     ForkJoinPool fjp;
 
     r = new Random();
-    et = (System.currentTimeMillis() + 1200000);
+    et = (System.currentTimeMillis() + 10000);
 
     sb = new StringBuilder();
 

@@ -107,7 +107,7 @@ final class _HTTask extends RecursiveAction {
 
           if (delay <= 1) {
             try {
-              Thread.sleep(r.nextInt(100));
+              Thread.sleep(r.nextInt(20));
             } catch (final InterruptedException ie) {
               //
             }
@@ -117,7 +117,7 @@ final class _HTTask extends RecursiveAction {
             break mainLoop;
           }
 
-          if (this.m_depth < 1000) {
+          if (this.m_depth < 100) {
             if (l == null) {
               l = new ArrayList<>();
             }
@@ -138,7 +138,7 @@ final class _HTTask extends RecursiveAction {
 
           if (delay <= 1) {
             try {
-              Thread.sleep(r.nextInt(100));
+              Thread.sleep(r.nextInt(20));
             } catch (final InterruptedException ie) {
               //
             }

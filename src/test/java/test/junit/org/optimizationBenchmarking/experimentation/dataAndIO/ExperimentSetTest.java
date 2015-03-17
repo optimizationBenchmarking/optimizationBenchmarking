@@ -3,8 +3,10 @@ package test.junit.org.optimizationBenchmarking.experimentation.dataAndIO;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -24,6 +26,7 @@ import org.optimizationBenchmarking.experimentation.data.ParameterValue;
 import org.optimizationBenchmarking.experimentation.data.Run;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInput;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIOutput;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 import test.junit.InstanceTest;
@@ -88,9 +91,40 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    */
   @Test(timeout = 24000000)
   public final void testExperimentRunsMatrix() {
+    ArrayListView<InstanceRuns> irSet;
+    ArrayListView<Run> rSet;
+    final Random rand;
+    final HashSet<InstanceRuns> irChoice;
+    final HashSet<Run> rChoice;
+
+    rand = new Random();
+    irChoice = new HashSet<>();
+    rChoice = new HashSet<>();
+
     for (final Experiment es : this.getInstance().getData()) {
-      for (final InstanceRuns ir : es.getData()) {
-        for (final Run r : ir.getData()) {
+      irSet = es.getData();
+      if (irSet.isEmpty()) {
+        continue;
+      }
+      irChoice.clear();
+      irChoice.add(irSet.get(0));
+      irChoice.add(irSet.get(irSet.size() - 1));
+      while ((irChoice.size() < irSet.size()) && (irChoice.size() < 4)) {
+        irChoice.add(irSet.get(rand.nextInt(irSet.size())));
+      }
+
+      for (final InstanceRuns ir : irChoice) {
+        rSet = ir.getData();
+        if (irSet.isEmpty()) {
+          continue;
+        }
+        rChoice.clear();
+        rChoice.add(rSet.get(0));
+        rChoice.add(rSet.get(rSet.size() - 1));
+        while ((rChoice.size() < rSet.size()) && (rChoice.size() < 4)) {
+          rChoice.add(rSet.get(rand.nextInt(rSet.size())));
+        }
+        for (final Run r : rChoice) {
           new _MatrixTest<>(null, r, false).validateInstance();
         }
       }
@@ -102,9 +136,40 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    */
   @Test(timeout = 134000000)
   public final void testExperimentRunsList() {
+    ArrayListView<InstanceRuns> irSet;
+    ArrayListView<Run> rSet;
+    final Random rand;
+    final HashSet<InstanceRuns> irChoice;
+    final HashSet<Run> rChoice;
+
+    rand = new Random();
+    irChoice = new HashSet<>();
+    rChoice = new HashSet<>();
+
     for (final Experiment es : this.getInstance().getData()) {
-      for (final InstanceRuns ir : es.getData()) {
-        for (final Run r : ir.getData()) {
+      irSet = es.getData();
+      if (irSet.isEmpty()) {
+        continue;
+      }
+      irChoice.clear();
+      irChoice.add(irSet.get(0));
+      irChoice.add(irSet.get(irSet.size() - 1));
+      while ((irChoice.size() < irSet.size()) && (irChoice.size() < 4)) {
+        irChoice.add(irSet.get(rand.nextInt(irSet.size())));
+      }
+
+      for (final InstanceRuns ir : irChoice) {
+        rSet = ir.getData();
+        if (irSet.isEmpty()) {
+          continue;
+        }
+        rChoice.clear();
+        rChoice.add(rSet.get(0));
+        rChoice.add(rSet.get(rSet.size() - 1));
+        while ((rChoice.size() < rSet.size()) && (rChoice.size() < 4)) {
+          rChoice.add(rSet.get(rand.nextInt(rSet.size())));
+        }
+        for (final Run r : rChoice) {
           new ArraySetViewTestBase<>(null, r.getData(),//
               false).validateInstance();
         }

@@ -52,8 +52,8 @@ final class _MatrixTest<MT extends IMatrix> extends MatrixTest<MT> {
       return new _MatrixTest(this, ((IMatrix) instance), isSingleton);
     }
 
-    return super
-        .createTestForInstance(instance, isSingleton, isModifiable);
+    return super.createTestForInstance(instance, isSingleton, //
+        isModifiable);
 
   }
 }

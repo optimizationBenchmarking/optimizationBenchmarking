@@ -1,7 +1,5 @@
 package test.junit.org.optimizationBenchmarking.utils.hierarchy;
 
-import java.util.Random;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -127,66 +125,6 @@ public abstract class _HierarchicalTest extends TestBase {
     this._testMultiThreaded(10, 1, true);
   }
 
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_20_RandomDelay_FIFO() {
-    this._testMultiThreaded(20, 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_30_RandomDelay_FIFO() {
-    this._testMultiThreaded(30, 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_40_RandomDelay_FIFO() {
-    this._testMultiThreaded(40, 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_1_100_RandomDelay_FIFO() {
-    this._testMultiThreaded((new Random().nextInt(100) + 1), 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_100_200_RandomDelay_FIFO() {
-    this._testMultiThreaded((new Random().nextInt(100) + 100), 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_1_20_RandomDelay_FIFO() {
-    this._testMultiThreaded((new Random().nextInt(20) + 1), 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_1_50_RandomDelay_FIFO() {
-    this._testMultiThreaded((new Random().nextInt(50) + 1), 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_20_40_RandomDelay_FIFO() {
-    this._testMultiThreaded((new Random().nextInt(20) + 20), 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_50_100_RandomDelay_FIFO() {
-    this._testMultiThreaded((new Random().nextInt(50) + 50), 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_200_400_RandomDelay_FIFO() {
-    this._testMultiThreaded((new Random().nextInt(200) + 200), 1, true);
-  }
-
   /** test the API single-threaded without delay default-style */
   @Test(timeout = 3600000)
   public void testSingleThreadDelay_Default() {
@@ -283,63 +221,4 @@ public abstract class _HierarchicalTest extends TestBase {
     this._testMultiThreaded(10, 1, false);
   }
 
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_20_RandomDelay_Default() {
-    this._testMultiThreaded(20, 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_30_RandomDelay_Default() {
-    this._testMultiThreaded(30, 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_40_RandomDelay_Default() {
-    this._testMultiThreaded(40, 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_1_100_RandomDelay_Default() {
-    this._testMultiThreaded((new Random().nextInt(100) + 1), 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_100_200_RandomDelay_Default() {
-    this._testMultiThreaded((new Random().nextInt(100) + 100), 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_1_20_RandomDelay_Default() {
-    this._testMultiThreaded((new Random().nextInt(20) + 1), 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_1_50_RandomDelay_Default() {
-    this._testMultiThreaded((new Random().nextInt(50) + 1), 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_20_40_RandomDelay_Default() {
-    this._testMultiThreaded((new Random().nextInt(20) + 20), 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_50_100_RandomDelay_Default() {
-    this._testMultiThreaded((new Random().nextInt(50) + 50), 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThreadRandom_200_400_RandomDelay_Default() {
-    this._testMultiThreaded((new Random().nextInt(200) + 200), 1, false);
-  }
 }

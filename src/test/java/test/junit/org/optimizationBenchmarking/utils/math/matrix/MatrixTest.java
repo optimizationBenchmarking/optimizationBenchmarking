@@ -50,7 +50,7 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
     boolean b;
 
     old = null;
-    for (z = 100; (--z) >= 0;) {
+    for (z = 30; (--z) >= 0;) {
       matrix = this.getInstance();
 
       Assert.assertNotNull(matrix);
@@ -197,7 +197,7 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
     int m, n, i, j, z;
 
     old = null;
-    for (z = 30; (--z) >= 0;) {
+    for (z = 10; (--z) >= 0;) {
       a = this.getInstance();
       Assert.assertNotNull(a);
       if (a == old) {
@@ -479,7 +479,7 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
     int m, n, i, j, z;
 
     old = null;
-    for (z = 30; (--z) >= 0;) {
+    for (z = 10; (--z) >= 0;) {
       cur = this.getInstance();
       Assert.assertNotNull(cur);
       if (cur == old) {

@@ -82,7 +82,7 @@ public class MemoryTextOutputTest extends TextOutputTest<MemoryTextOutput> {
         ETextCase.IN_SENTENCE, mto);
     mto.clear();
 
-    for (i = (-10000000); i <= 10000000; i++) {
+    for (i = (-100000); i <= 100000; i++) {
       AlphabeticNumberAppender.LOWER_CASE_INSTANCE.appendTo(i,
           ETextCase.IN_SENTENCE, mto);
       Assert.assertTrue(set.add(mto.toString()));
@@ -124,7 +124,7 @@ public class MemoryTextOutputTest extends TextOutputTest<MemoryTextOutput> {
     Assert.assertTrue(set.add(mto.toString()));
     mto.clear();
 
-    for (i = (-10000000L); i <= 10000000L; i++) {
+    for (i = (-100000L); i <= 100000L; i++) {
       AlphabeticNumberAppender.LOWER_CASE_INSTANCE.appendTo(i,
           ETextCase.IN_SENTENCE, mto);
       Assert.assertTrue(set.add(mto.toString()));

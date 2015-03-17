@@ -236,7 +236,7 @@ public abstract class TextOutputTest<R> extends TestBase {
     int i;
 
     r = new Random();
-    for (i = 100; (--i) >= 0;) {
+    for (i = 10; (--i) >= 0;) {
       this.__testRun(r);
     }
   }
@@ -365,14 +365,14 @@ public abstract class TextOutputTest<R> extends TestBase {
     for (final boolean useFullLength : new boolean[] { true, false }) {
       for (int appendType = 4; appendType >= 0; appendType--) {
 
-        for (size = 1; size < 384; size++) {
+        for (size = 1; size < 128; size++) {
 
           root = this.createRootObject();
           textOut = this.wrap(root);
           sb = new StringBuilder();
 
           add = new char[size];
-          for (i = 1; i < 2048; i++) {
+          for (i = 1; i < 256; i++) {
 
             len = (useFullLength ? size : (1 + rand.nextInt(size)));
 
