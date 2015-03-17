@@ -1,0 +1,7 @@
+# The optimizationBenchmarking.org tool suite is a Java Project
+language: java
+
+# By default, it runs under Java 7
+jdk:
+  - oraclejdk7
+  - openjdk7
