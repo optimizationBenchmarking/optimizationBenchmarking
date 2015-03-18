@@ -11,3 +11,8 @@ notifications:
   email:
     on_success: never
     on_failure: always
+    
+# Cache Maven dependencies to speed up builds.
+cache:
+  directories:
+  - $HOME/.m2
