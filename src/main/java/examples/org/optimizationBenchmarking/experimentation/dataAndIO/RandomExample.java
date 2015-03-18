@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.DataPoint;
@@ -44,11 +45,12 @@ public class RandomExample extends ExperimentSetCreator {
       LongParser.INSTANCE, FloatParser.INSTANCE, DoubleParser.INSTANCE };
 
   /** the name counter */
-  long m_v;
+  final AtomicLong m_v;
 
   /** create */
   public RandomExample() {
     super();
+    this.m_v = new AtomicLong();
   }
 
   /** {@inheritDoc} */
@@ -58,7 +60,7 @@ public class RandomExample extends ExperimentSetCreator {
     final Random r;
 
     r = new Random();
-    this.m_v = r.nextLong();
+    this.m_v.set(r.nextLong());
 
     try (final ExperimentSetContext esb = new ExperimentSetContext(
         Logger.getGlobal())) {
@@ -103,11 +105,11 @@ public class RandomExample extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
 
-      dc.setName(RandomUtils
-          .longToString(RandomExample.NAMING, this.m_v++));
+      dc.setName(RandomUtils.longToString(RandomExample.NAMING,
+          this.m_v.incrementAndGet()));
       if (r.nextBoolean()) {
         dc.setDescription(RandomUtils.longToString(RandomExample.NAMING,
-            this.m_v++));
+            this.m_v.incrementAndGet()));
       }
       dc.setParser(RandomExample.PARSERS[r
           .nextInt(RandomExample.PARSERS.length)]);
@@ -133,8 +135,8 @@ public class RandomExample extends ExperimentSetCreator {
     features = new HashMap<>();
     do {
       features.put(
-          RandomUtils.longToString(RandomExample.NAMING, this.m_v++),
-          Integer.valueOf(r.nextInt(11)));
+          RandomUtils.longToString(RandomExample.NAMING,
+              this.m_v.incrementAndGet()), Integer.valueOf(r.nextInt(11)));
     } while (r.nextInt(4) > 0);
 
     return features.entrySet().toArray(new Map.Entry[features.size()]);
@@ -252,11 +254,11 @@ public class RandomExample extends ExperimentSetCreator {
       final Map.Entry<String, Integer>[] features, final Random r) {
 
     try (final InstanceContext ic = isc.createInstance()) {
-      ic.setName(RandomUtils
-          .longToString(RandomExample.NAMING, this.m_v++));
+      ic.setName(RandomUtils.longToString(RandomExample.NAMING,
+          this.m_v.incrementAndGet()));
       if (r.nextBoolean()) {
         ic.setDescription(RandomUtils.longToString(RandomExample.NAMING,
-            this.m_v++));
+            this.m_v.incrementAndGet()));
       }
 
       for (final Map.Entry<String, Object> e : this.__createValues(
@@ -878,11 +880,11 @@ public class RandomExample extends ExperimentSetCreator {
     }
 
     try (final ExperimentContext ec = isc.createExperiment()) {
-      ec.setName(RandomUtils
-          .longToString(RandomExample.NAMING, this.m_v++));
+      ec.setName(RandomUtils.longToString(RandomExample.NAMING,
+          this.m_v.incrementAndGet()));
       if (r.nextBoolean()) {
         ec.setDescription(RandomUtils.longToString(RandomExample.NAMING,
-            this.m_v++));
+            this.m_v.incrementAndGet()));
       }
 
       for (final Map.Entry<String, Object> e : config.entrySet()) {

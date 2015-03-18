@@ -26,7 +26,7 @@ public final class Example2Random extends RandomExample {
     do {
       try (DimensionContext dc = dsc.createDimension()) {
         dc.setName(RandomUtils.longToString(RandomExample.NAMING,
-            this.m_v++));
+            this.m_v.incrementAndGet()));
         dc.setParser(LongParser.INSTANCE);
         dc.setType(EDimensionType.ITERATION_FE);
         dc.setDirection(EDimensionDirection.INCREASING_STRICTLY);
@@ -34,7 +34,7 @@ public final class Example2Random extends RandomExample {
 
       try (DimensionContext dc = dsc.createDimension()) {
         dc.setName(RandomUtils.longToString(RandomExample.NAMING,
-            this.m_v++));
+            this.m_v.incrementAndGet()));
         dc.setParser(LongParser.INSTANCE);
         dc.setType(EDimensionType.ITERATION_SUB_FE);
         dc.setDirection(EDimensionDirection.DECREASING);
@@ -42,7 +42,7 @@ public final class Example2Random extends RandomExample {
 
       try (DimensionContext dc = dsc.createDimension()) {
         dc.setName(RandomUtils.longToString(RandomExample.NAMING,
-            this.m_v++));
+            this.m_v.incrementAndGet()));
         dc.setParser(LongParser.INSTANCE);
         dc.setType(EDimensionType.RUNTIME_CPU);
         dc.setDirection(EDimensionDirection.INCREASING);
@@ -50,7 +50,7 @@ public final class Example2Random extends RandomExample {
 
       try (DimensionContext dc = dsc.createDimension()) {
         dc.setName(RandomUtils.longToString(RandomExample.NAMING,
-            this.m_v++));
+            this.m_v.incrementAndGet()));
         dc.setParser(DoubleParser.INSTANCE);
         dc.setType(EDimensionType.RUNTIME_NORMALIZED);
         dc.setDirection(EDimensionDirection.INCREASING);
@@ -58,7 +58,7 @@ public final class Example2Random extends RandomExample {
 
       try (DimensionContext dc = dsc.createDimension()) {
         dc.setName(RandomUtils.longToString(RandomExample.NAMING,
-            this.m_v++));
+            this.m_v.incrementAndGet()));
         dc.setParser(LongParser.INSTANCE);
         dc.setType(EDimensionType.QUALITY_PROBLEM_DEPENDENT);
         dc.setDirection(EDimensionDirection.DECREASING);
@@ -66,7 +66,7 @@ public final class Example2Random extends RandomExample {
 
       try (DimensionContext dc = dsc.createDimension()) {
         dc.setName(RandomUtils.longToString(RandomExample.NAMING,
-            this.m_v++));
+            this.m_v.incrementAndGet()));
         dc.setParser(DoubleParser.INSTANCE);
         dc.setType(EDimensionType.QUALITY_PROBLEM_INDEPENDENT);
         dc.setDirection(EDimensionDirection.INCREASING);
