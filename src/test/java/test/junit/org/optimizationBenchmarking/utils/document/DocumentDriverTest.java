@@ -13,9 +13,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
+import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
 
 import test.junit.InstanceTest;
+import test.junit.org.optimizationBenchmarking.utils.tools.ToolTest;
 import examples.org.optimizationBenchmarking.utils.document.RandomDocumentExample;
 import examples.org.optimizationBenchmarking.utils.document.TemplateDocumentExample;
 
@@ -214,5 +216,44 @@ public class DocumentDriverTest extends
   @Test(timeout = 3600000)
   public void testParallelDocumentCreation_3_default() throws Throwable {
     this.__doParallelTest(3, false, new Random());
+  }
+
+  /**
+   * Get the document driver
+   * 
+   * @return the document driver
+   */
+  final IDocumentDriver _getDocumentDriver() {
+    return this.getInstance().getDocumentDriver();
+  }
+
+  /**
+   * Test whether the document driver can correctly be used as tool.
+   */
+  @Test(timeout = 3600000)
+  public void testDocumentDriverAsTool() {
+    new ToolTest<IDocumentDriver>() {
+      @Override
+      protected IDocumentDriver getInstance() {
+        return DocumentDriverTest.this._getDocumentDriver();
+      }
+    }.validateInstance();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void validateInstance() {
+    super.validateInstance();
+    this.testDocumentDriverAsTool();
+    try {
+      this.testParallelDocumentCreation_1_default();
+      this.testParallelDocumentCreation_1_fifo();
+      this.testParallelDocumentCreation_2_default();
+      this.testParallelDocumentCreation_2_fifo();
+      this.testParallelDocumentCreation_3_default();
+      this.testParallelDocumentCreation_3_fifo();
+    } catch (final Throwable t) {
+      throw new RuntimeException(t);
+    }
   }
 }

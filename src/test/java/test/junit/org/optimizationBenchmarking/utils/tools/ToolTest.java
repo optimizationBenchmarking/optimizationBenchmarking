@@ -49,4 +49,14 @@ public abstract class ToolTest<T extends ITool> extends InstanceTest<T> {
   public void testToolCanCreateToolJobBuilder() {
     Assert.assertNotNull(this.getInstance().use());
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public void validateInstance() {
+    super.validateInstance();
+
+    this.testToolCanUse();
+    this.testToolCheckCanUse();
+    this.testToolCanCreateToolJobBuilder();
+  }
 }

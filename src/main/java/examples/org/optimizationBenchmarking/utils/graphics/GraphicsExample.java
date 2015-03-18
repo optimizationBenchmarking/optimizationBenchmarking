@@ -57,7 +57,7 @@ public final class GraphicsExample {
                   .toString())), GraphicsExample.SIZE,
               new FinishedPrinter(driver), Logger.getGlobal())) {
         for (int i = 1; i < 50; i++) {
-          GraphicsExample.__paint(g);
+          GraphicsExample.paint(g);
           GraphicsExample.__paintComponent(g);
           g.translate(-75, -25);
           g.scale(0.55d, 0.5d);
@@ -104,7 +104,7 @@ public final class GraphicsExample {
    * @param g
    *          the graphic
    */
-  private static final void __paint(final Graphic g) {
+  public static final void paint(final Graphic g) {
     final Rectangle2D bounds;
     int i;
     Rectangle2D r;
