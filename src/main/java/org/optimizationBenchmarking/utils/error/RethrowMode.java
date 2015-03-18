@@ -86,6 +86,13 @@ public abstract class RethrowMode<T extends Throwable> implements
   public static final RethrowMode<UnsupportedOperationException> AS_UNSUPPORTED_OPERATION_EXCEPTION = //
   new _RethrowModeRethrowAsUnsupportedOperationException();
 
+  /**
+   * This re-throw mode will throw the error as
+   * {@link java.lang.IllegalStateException} .
+   */
+  public static final RethrowMode<IllegalStateException> AS_ILLEGAL_STATE_EXCEPTION = //
+  new _RethrowModeRethrowAsIllegalStateException();
+
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

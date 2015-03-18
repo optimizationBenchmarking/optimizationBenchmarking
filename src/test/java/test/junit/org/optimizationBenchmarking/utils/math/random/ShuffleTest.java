@@ -27,11 +27,11 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 75; arrayLength++) {
       arrayA = new byte[arrayLength];
       arrayB = new byte[arrayLength];
 
-      for (arrayIndex = 0; arrayIndex < 10; arrayIndex++) {
+      for (arrayIndex = 0; arrayIndex < 5; arrayIndex++) {
         rand.nextBytes(arrayA);
 
         for (startIndex = 0; startIndex < arrayLength; startIndex++) {
@@ -72,11 +72,11 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 75; arrayLength++) {
       arrayA = new short[arrayLength];
       arrayB = new short[arrayLength];
 
-      for (arrayIndex = 0; arrayIndex < 10; arrayIndex++) {
+      for (arrayIndex = 0; arrayIndex < 5; arrayIndex++) {
         for (count = arrayLength; (--count) >= 0;) {
           arrayA[count] = ((short) ((rand.nextInt() & 0xffff)));
         }
@@ -119,11 +119,11 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 75; arrayLength++) {
       arrayA = new int[arrayLength];
       arrayB = new int[arrayLength];
 
-      for (arrayIndex = 0; arrayIndex < 10; arrayIndex++) {
+      for (arrayIndex = 0; arrayIndex < 5; arrayIndex++) {
         for (count = arrayLength; (--count) >= 0;) {
           arrayA[count] = rand.nextInt();
         }
@@ -166,11 +166,11 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 75; arrayLength++) {
       arrayA = new long[arrayLength];
       arrayB = new long[arrayLength];
 
-      for (arrayIndex = 0; arrayIndex < 10; arrayIndex++) {
+      for (arrayIndex = 0; arrayIndex < 5; arrayIndex++) {
         for (count = arrayLength; (--count) >= 0;) {
           arrayA[count] = rand.nextLong();
         }
@@ -213,11 +213,11 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 75; arrayLength++) {
       arrayA = new float[arrayLength];
       arrayB = new float[arrayLength];
 
-      for (arrayIndex = 0; arrayIndex < 10; arrayIndex++) {
+      for (arrayIndex = 0; arrayIndex < 5; arrayIndex++) {
         for (count = arrayLength; (--count) >= 0;) {
           arrayA[count] = rand.nextFloat();
         }
@@ -260,11 +260,11 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 75; arrayLength++) {
       arrayA = new double[arrayLength];
       arrayB = new double[arrayLength];
 
-      for (arrayIndex = 0; arrayIndex < 10; arrayIndex++) {
+      for (arrayIndex = 0; arrayIndex < 5; arrayIndex++) {
         for (count = arrayLength; (--count) >= 0;) {
           arrayA[count] = rand.nextDouble();
         }
@@ -307,11 +307,11 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 75; arrayLength++) {
       arrayA = new char[arrayLength];
       arrayB = new char[arrayLength];
 
-      for (arrayIndex = 0; arrayIndex < 10; arrayIndex++) {
+      for (arrayIndex = 0; arrayIndex < 5; arrayIndex++) {
         for (count = arrayLength; (--count) >= 0;) {
           arrayA[count] = ((char) (rand.nextInt() & 0xffff));
         }
@@ -354,11 +354,11 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 75; arrayLength++) {
       arrayA = new boolean[arrayLength];
       arrayB = new boolean[arrayLength];
 
-      for (arrayIndex = 0; arrayIndex < 10; arrayIndex++) {
+      for (arrayIndex = 0; arrayIndex < 5; arrayIndex++) {
         for (count = arrayLength; (--count) >= 0;) {
           arrayA[count] = rand.nextBoolean();
         }
@@ -401,11 +401,11 @@ public class ShuffleTest {
 
     rand = new Random();
 
-    for (arrayLength = 0; arrayLength <= 300; arrayLength++) {
+    for (arrayLength = 0; arrayLength <= 75; arrayLength++) {
       arrayA = new Object[arrayLength];
       arrayB = new Object[arrayLength];
 
-      for (arrayIndex = 0; arrayIndex < 10; arrayIndex++) {
+      for (arrayIndex = 0; arrayIndex < 5; arrayIndex++) {
         for (count = arrayLength; (--count) >= 0;) {
           arrayA[count] = RandomUtils.longToObject(rand.nextLong(), true);
         }

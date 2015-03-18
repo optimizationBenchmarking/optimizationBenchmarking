@@ -439,11 +439,9 @@ public class ConfigurationTest extends TestBase {
               cfg.get(ConfigurationTest.__makeKey(key, random), p, null));
           Assert.assertSame(value2,
               cfg.get(ConfigurationTest.__makeKey(key, random), p, value));
-          Assert
-              .assertSame(
-                  value2,//
-                  cfg.get(ConfigurationTest.__makeKey(key, random), p,
-                      value2));
+          Assert.assertSame(value2,//
+              cfg.get(ConfigurationTest.__makeKey(key, random), //
+                  p, value2));
         }
 
         try {

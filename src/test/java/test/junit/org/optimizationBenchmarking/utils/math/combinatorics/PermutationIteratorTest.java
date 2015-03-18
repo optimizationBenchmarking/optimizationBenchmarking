@@ -125,16 +125,4 @@ public class PermutationIteratorTest {
     PermutationIteratorTest.__doTest(10);
   }
 
-  /** test the amount of created unique permutations of length 11 */
-  @Test(timeout = 11600000)
-  public void testCreatedUniqueOfLength11() {
-    PermutationIteratorTest.__doTest(11);
-  }
-
-  /** test the amount of created unique permutations of length 12 */
-  @Test(timeout = 11600000)
-  public void testCreatedUniqueOfLength12() {
-    PermutationIteratorTest.__doTest(12);
-  }
-
 }

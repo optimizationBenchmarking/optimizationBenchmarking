@@ -91,6 +91,12 @@ public final class ProcessExecutor extends Tool {
     return new ExternalProcessBuilder();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "External Process Executor"; //$NON-NLS-1$
+  }
+
   /**
    * Get the instance of the process executor
    * 

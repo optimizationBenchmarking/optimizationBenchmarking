@@ -320,7 +320,7 @@ public class RandomExample extends ExperimentSetCreator {
       lst = null;
     }
 
-    maxTrials = 10000;
+    maxTrials = 1000;
 
     for (final Dimension d : dims) {
       if (lst == null) {
@@ -707,7 +707,7 @@ public class RandomExample extends ExperimentSetCreator {
 
     j = 0;
 
-    inner: for (j = 5000; (--j) >= 0;) {
+    inner: for (j = 1000; (--j) >= 0;) {
       k = dps.size();
       if ((k > 1) && (r.nextBoolean())) {
         k = r.nextInt(k - 1);
@@ -944,7 +944,7 @@ public class RandomExample extends ExperimentSetCreator {
     z = 100;
     do {
       this._createExperimentOuter(isc, dims, is, params, configs, r);
-    } while ((r.nextInt(5) > 0) && ((--z) >= 0));
+    } while ((r.nextInt(4) > 0) && ((--z) >= 0));
   }
 
   /**

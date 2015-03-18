@@ -26,7 +26,7 @@ public class RationalTest {
     Rational rat;
 
     r = new Random();
-    for (i = 100000; (--i) >= 0;) {
+    for (i = 10000; (--i) >= 0;) {
       do {
         switch (r.nextInt(3)) {
           case 0: {
@@ -142,8 +142,8 @@ public class RationalTest {
   public void testRationalCreateDeterministic() {
     int i, j;
 
-    for (i = (-10000); i <= 10000; i++) {
-      for (j = (-10000); j <= 10000; j++) {
+    for (i = (-1000); i <= 1000; i++) {
+      for (j = (-1000); j <= 1000; j++) {
         Assert.assertEquals(//
             (((double) i) / ((double) j)), Rational.valueOf(i, j)
                 .doubleValue(), 1e-9);
@@ -164,7 +164,7 @@ public class RationalTest {
     max = ((1L << 56l) - 1L);
 
     r = new Random();
-    for (i = 10000000; (--i) >= 0;) {
+    for (i = 1000000; (--i) >= 0;) {
 
       do {
         a = (r.nextLong() & max);

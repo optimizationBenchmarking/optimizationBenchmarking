@@ -85,7 +85,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
         Assert.assertEquals(l, this.parseLong(s));
       }
 
-      for (long ll = -10000L; ll <= 10000L; ll++) {
+      for (long ll = -1000L; ll <= 1000L; ll++) {
         m.clear();
         n.appendTo(ll, c, m);
         Assert.assertEquals(n.toString(ll, c), s = m.toString());
@@ -125,7 +125,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
         Assert.assertEquals(this.parseLong(s), i);
       }
 
-      for (int l = -10000; l <= 10000; l++) {
+      for (int l = -1000; l <= 1000; l++) {
         m.clear();
         n.appendTo(l, c, m);
         Assert.assertEquals(n.toString(l, c), s = m.toString());
@@ -185,7 +185,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
         Assert.assertTrue(v != v);
       }
 
-      for (double l = -1000; l <= 1000; l++) {
+      for (double l = -100; l <= 100; l++) {
         if (l >= 0) {
           m.clear();
           v = Math.sqrt(l);
@@ -257,7 +257,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
 
     ap = this.getInstance();
     r = new Random();
-    for (i = 1; i <= 100000; i++) {
+    for (i = 1; i <= 1000; i++) {
       a = NumberAppenderTest.__makeDouble(r);
       b = Double.parseDouble(ap.toString(a, ETextCase.IN_SENTENCE));
       Assert.assertEquals(a, b, 1e-15d);
