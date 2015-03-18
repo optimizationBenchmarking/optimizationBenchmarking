@@ -5,12 +5,6 @@ language: java
 jdk:
   - oraclejdk7
   - openjdk7
-  
-# Build notifications: If the build fails, send an email.
-notifications:
-  email:
-    on_success: never
-    on_failure: always
     
 # Cache Maven dependencies to speed up builds.
 cache:

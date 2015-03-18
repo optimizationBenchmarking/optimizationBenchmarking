@@ -316,6 +316,9 @@ final class _XHTML10Document extends Document {
     bw.write(_XHTML10Document.FONT_FAMILY);
     first = true;
     for (final String s : fs.getFaceChoices()) {
+      if (s == null) {
+        continue;
+      }
       if (first) {
         first = false;
       } else {

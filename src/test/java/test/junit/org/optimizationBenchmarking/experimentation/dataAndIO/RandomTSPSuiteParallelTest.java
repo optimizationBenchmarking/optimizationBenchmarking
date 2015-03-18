@@ -5,7 +5,7 @@ import org.junit.experimental.categories.Category;
 import test.junit.CategorySlowTests;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.RandomTSPSuiteParallelExample;
 
-/** A class for creating in parallel sets */
+/** A class for creating in parallel sets according to the TSP Suite format */
 @Category(CategorySlowTests.class)
 public class RandomTSPSuiteParallelTest extends ExperimentSetTest {
 

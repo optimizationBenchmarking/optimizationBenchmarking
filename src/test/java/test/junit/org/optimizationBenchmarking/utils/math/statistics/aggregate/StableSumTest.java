@@ -16,8 +16,8 @@ public class StableSumTest {
   public void testSumUpLongs() {
     final StableSum ss;
     final Random rand;
-    long sum, val, tmp;
-    double d;
+    long sum, val, tmp, longVal;
+    double doubleVal;
     int i;
 
     ss = new StableSum();
@@ -37,18 +37,21 @@ public class StableSumTest {
           }
           case 1: {
             val = rand.nextInt();
+            break;
           }
           default: {
             val = rand.nextLong();
+            break;
           }
         }
         tmp = SaturatingAdd.INSTANCE.computeAsLong(sum, val);
-      } while ((tmp - val) != sum);
+      } while (((tmp - val) != sum) || ((val + sum) != tmp));
       sum = tmp;
 
-      d = val;
-      if ((((long) d) == val) && (rand.nextBoolean())) {
-        ss.append(d);
+      doubleVal = val;
+      longVal = ((long) doubleVal);
+      if ((doubleVal == val) && (longVal == val) && (rand.nextBoolean())) {
+        ss.append(doubleVal);
       } else {
         ss.append(val);
       }

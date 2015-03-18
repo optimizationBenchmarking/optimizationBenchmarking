@@ -423,8 +423,10 @@ public final class FontStyleBuilder extends
    */
   private static final void __addFaceChoice(
       final LinkedHashSet<String> choices, final String choice) {
-    if (FontStyleBuilder.__isAllowed(choice)) {
-      choices.add(choice);
+    final String name;
+    name = TextUtils.prepare(choice);
+    if (FontStyleBuilder.__isAllowed(name)) {
+      choices.add(name);
     }
   }
 
@@ -658,6 +660,9 @@ public final class FontStyleBuilder extends
       this.m_id = NormalCharTransformer.getInstance().transform(
           idb.toString(), TextUtils.DEFAULT_NORMALIZER_FORM);
     }
+
+    choices.remove(null);// just to be sure
+    choices.remove(""); //just to be sure //$NON-NLS-1$
 
     // ok, now we have everything
     return new FontStyle(((fam2 != null) ? fam2 : fam1), this.m_size,
