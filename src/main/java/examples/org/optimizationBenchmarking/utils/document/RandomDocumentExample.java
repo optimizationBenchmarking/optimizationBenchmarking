@@ -1868,7 +1868,7 @@ public class RandomDocumentExample extends DocumentExample {
           }
         }
         case 3: {
-          if (at.size() < 3) {
+          if (at.size() < 5) {
             trans: for (;;) {
               try {
                 switch (this.m_rand.nextInt(3)) {
@@ -1896,8 +1896,13 @@ public class RandomDocumentExample extends DocumentExample {
                     g.scale(z, z);
                   }
                 }
-                at.add(g.getTransform());
-                break trans;
+                try {
+                  ((AffineTransform) (g.getTransform().clone())).invert();
+                  at.add(g.getTransform());
+                  break trans;
+                } catch (final Throwable t) {
+                  g.setTransform(at.get(at.size() - 1));
+                }
               } catch (final Throwable tt) {
                 //
               }

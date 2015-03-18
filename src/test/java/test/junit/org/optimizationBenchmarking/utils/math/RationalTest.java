@@ -113,8 +113,8 @@ public class RationalTest {
           u = 0d;
         }
 
-        for (c = (-100); c <= 100; c++) {
-          for (d = (-100); d <= 100; d++) {
+        for (c = (-30); c <= 30; c++) {
+          for (d = (-30); d <= 30; d++) {
             y = Rational.valueOf(c, d);
 
             v = (c / ((double) d));
@@ -142,8 +142,8 @@ public class RationalTest {
   public void testRationalCreateDeterministic() {
     int i, j;
 
-    for (i = (-1000); i <= 1000; i++) {
-      for (j = (-1000); j <= 1000; j++) {
+    for (i = (-100); i <= 100; i++) {
+      for (j = (-100); j <= 100; j++) {
         Assert.assertEquals(//
             (((double) i) / ((double) j)), Rational.valueOf(i, j)
                 .doubleValue(), 1e-9);
@@ -164,7 +164,7 @@ public class RationalTest {
     max = ((1L << 56l) - 1L);
 
     r = new Random();
-    for (i = 1000000; (--i) >= 0;) {
+    for (i = 10000; (--i) >= 0;) {
 
       do {
         a = (r.nextLong() & max);

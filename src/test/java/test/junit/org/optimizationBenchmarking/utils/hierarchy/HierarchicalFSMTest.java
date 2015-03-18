@@ -29,7 +29,7 @@ public class HierarchicalFSMTest extends _HierarchicalTest {
     ForkJoinPool fjp;
 
     r = new Random();
-    et = (System.currentTimeMillis() + 10000);
+    et = (System.currentTimeMillis() + 5000L);
 
     for (;;) {
       ct = System.currentTimeMillis();
