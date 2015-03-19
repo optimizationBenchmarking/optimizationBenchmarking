@@ -317,7 +317,14 @@ public final class StableSum extends ScalarAggregate {
         if (lvalue == value) {// ok, the double value is actually a long
           if (lvalue != 0L) {
             this.append(lvalue);
+            return;// and we are done
           }
+
+          if (state == BasicNumber.STATE_EMPTY) {
+            this.m_long = 0L;
+            this.m_state = BasicNumber.STATE_INTEGER;
+          }
+
           return;// and we are done
         }
       }

@@ -14,86 +14,92 @@ public class StableSumTest {
   /** test the summation of longs */
   @Test(timeout = 3600000)
   public void testSumUpLongs() {
-    final StableSum ss;
     final Random rand;
+    StableSum ss;
     long sum, valueToAdd, testResult, longVal;
     double doubleVal;
-    int i;
-
-    ss = new StableSum();
-    Assert.assertFalse(ss.getState() != BasicNumber.STATE_EMPTY);
-    Assert.assertFalse(ss.isInteger());
-    Assert.assertFalse(ss.isReal());
+    int i, j;
 
     rand = new Random();
 
-    sum = 0l;
-    for (i = 0; i <= 200000000; i++) {
+    for (j = 0; j < 100; j++) {
+      ss = new StableSum();
+      Assert.assertFalse(ss.getState() != BasicNumber.STATE_EMPTY);
+      Assert.assertFalse(ss.isInteger());
+      Assert.assertFalse(ss.isReal());
 
-      innerLoop: for (;;) {
-        switch (rand.nextInt(7)) {
-          case 0: {
-            valueToAdd = (rand.nextInt(11) - 5);
-            break;
-          }
-          case 1: {
-            valueToAdd = rand.nextInt();
-            break;
-          }
-          case 2: {
-            valueToAdd = (Long.MAX_VALUE - rand.nextInt(100000));
-            break;
-          }
-          case 3: {
-            valueToAdd = (Long.MIN_VALUE + rand.nextInt(100000));
-            break;
-          }
-          default: {
-            valueToAdd = rand.nextLong();
-            break;
-          }
-        }
+      sum = 0l;
+      for (i = 0; i <= 2000000; i++) {
 
-        testResult = (sum + valueToAdd);
-        if (valueToAdd < 0L) {
-          if (testResult < sum) {
-            break innerLoop;
+        innerLoop: for (;;) {
+          switch (rand.nextInt(7)) {
+            case 0: {
+              valueToAdd = (rand.nextInt(11) - 5);
+              break;
+            }
+            case 1: {
+              valueToAdd = (rand.nextInt(100001) - 50000);
+              break;
+            }
+            case 2: {
+              valueToAdd = rand.nextInt();
+              break;
+            }
+            case 3: {
+              valueToAdd = (Long.MAX_VALUE - rand.nextInt(100000));
+              break;
+            }
+            case 4: {
+              valueToAdd = (Long.MIN_VALUE + rand.nextInt(100000));
+              break;
+            }
+            default: {
+              valueToAdd = rand.nextLong();
+              break;
+            }
           }
-        } else {
-          if (valueToAdd == 0L) {
-            if (testResult == sum) {
+
+          testResult = (sum + valueToAdd);
+          if (valueToAdd < 0L) {
+            if (testResult < sum) {
               break innerLoop;
             }
           } else {
-            if (testResult > sum) {
-              break innerLoop;
+            if (valueToAdd == 0L) {
+              if (testResult == sum) {
+                break innerLoop;
+              }
+            } else {
+              if (testResult > sum) {
+                break innerLoop;
+              }
             }
           }
+
+          Assert.assertNotEquals(testResult,
+              SaturatingAdd.INSTANCE.computeAsLong(sum, valueToAdd));
         }
 
-        Assert.assertNotEquals(testResult,
+        Assert.assertEquals(testResult,
             SaturatingAdd.INSTANCE.computeAsLong(sum, valueToAdd));
+
+        sum = testResult;
+
+        doubleVal = valueToAdd;
+        longVal = ((long) doubleVal);
+        if ((doubleVal == valueToAdd) && (longVal == valueToAdd)
+            && (rand.nextBoolean())) {
+          ss.append(doubleVal);
+        } else {
+          ss.append(valueToAdd);
+        }
+
+        Assert.assertTrue(ss.isInteger());
+        Assert.assertTrue(ss.isReal());
+        Assert.assertTrue(ss.getState() != BasicNumber.STATE_EMPTY);
+        Assert.assertEquals(ss.longValue(), sum);
+        Assert.assertEquals(sum, ss.doubleValue(), 0d);
       }
-
-      Assert.assertEquals(testResult,
-          SaturatingAdd.INSTANCE.computeAsLong(sum, valueToAdd));
-
-      sum = testResult;
-
-      doubleVal = valueToAdd;
-      longVal = ((long) doubleVal);
-      if ((doubleVal == valueToAdd) && (longVal == valueToAdd)
-          && (rand.nextBoolean())) {
-        ss.append(doubleVal);
-      } else {
-        ss.append(valueToAdd);
-      }
-
-      Assert.assertTrue(ss.isInteger());
-      Assert.assertTrue(ss.isReal());
-      Assert.assertTrue(ss.getState() != BasicNumber.STATE_EMPTY);
-      Assert.assertEquals(ss.longValue(), sum);
-      Assert.assertEquals(sum, ss.doubleValue(), 0d);
     }
   }
 
