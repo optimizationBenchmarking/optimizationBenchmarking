@@ -188,7 +188,6 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
       g.startExport();
       g.setClip(0, 0, dim.width, dim.height);
     }
-    GraphicUtils.setDefaultRenderingHints(g);
 
     return new _FreeHEPEPSGraphic(g, builder.getLogger(),
         builder.getFileProducerListener(), path, dim.width, dim.height);

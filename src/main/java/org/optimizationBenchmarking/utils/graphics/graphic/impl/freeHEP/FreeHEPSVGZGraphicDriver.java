@@ -126,7 +126,6 @@ public class FreeHEPSVGZGraphicDriver extends AbstractGraphicDriver {
       GraphicUtils.setDefaultRenderingHints(g);
       g.startExport();
     }
-    GraphicUtils.setDefaultRenderingHints(g);
 
     return new _FreeHEPSVGGraphic(g, builder.getLogger(),
         builder.getFileProducerListener(), path, dim.width, dim.height,

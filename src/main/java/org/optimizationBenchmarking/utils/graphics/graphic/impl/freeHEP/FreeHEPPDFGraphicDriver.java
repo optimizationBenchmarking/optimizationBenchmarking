@@ -213,7 +213,6 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
           g.startExport();
           g.setClip(0, 0, dim.width, dim.height);
         }
-        GraphicUtils.setDefaultRenderingHints(g);
       } finally {
         FreeHEPPDFGraphicDriver.s_messWith
             .setSize(FreeHEPPDFGraphicDriver.s_correctDim);
