@@ -101,30 +101,6 @@ public abstract class _HierarchicalTest extends TestBase {
     this._testMultiThreaded(6, 1, true);
   }
 
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_7_RandomDelay_FIFO() {
-    this._testMultiThreaded(7, 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_8_RandomDelay_FIFO() {
-    this._testMultiThreaded(8, 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_9_RandomDelay_FIFO() {
-    this._testMultiThreaded(9, 1, true);
-  }
-
-  /** test the API multi-threaded fifo-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_10_RandomDelay_FIFO() {
-    this._testMultiThreaded(10, 1, true);
-  }
-
   /** test the API single-threaded without delay default-style */
   @Test(timeout = 3600000)
   public void testSingleThreadDelay_Default() {
@@ -195,30 +171,6 @@ public abstract class _HierarchicalTest extends TestBase {
   @Test(timeout = 3600000)
   public void testMultiThread_6_RandomDelay_Default() {
     this._testMultiThreaded(6, 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_7_RandomDelay_Default() {
-    this._testMultiThreaded(7, 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_8_RandomDelay_Default() {
-    this._testMultiThreaded(8, 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_9_RandomDelay_Default() {
-    this._testMultiThreaded(9, 1, false);
-  }
-
-  /** test the API multi-threaded default-style */
-  @Test(timeout = 3600000)
-  public void testMultiThread_10_RandomDelay_Default() {
-    this._testMultiThreaded(10, 1, false);
   }
 
 }

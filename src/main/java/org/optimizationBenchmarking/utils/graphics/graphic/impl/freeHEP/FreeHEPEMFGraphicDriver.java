@@ -181,6 +181,7 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
       g = new org.freehep.graphicsio.emf.EMFGraphics2D(stream, dim);
       g.setProperties(up);
       GraphicUtils.setDefaultRenderingHints(g);
+      g.setDeviceIndependent(true);
       g.startExport();
       g.setClip(0, 0, dim.width, dim.height);
     }

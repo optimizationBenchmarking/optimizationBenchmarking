@@ -90,6 +90,11 @@ final class _HTTask extends RecursiveAction {
     _HTTask x;
     final int delay;
     int nextDelay;
+
+    if (this.m_owner.m_done) {
+      return;
+    }
+
     try {
       l = null;
       r = ThreadLocalRandom.current();

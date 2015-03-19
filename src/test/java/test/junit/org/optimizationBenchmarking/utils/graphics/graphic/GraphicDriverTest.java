@@ -1,5 +1,6 @@
 package test.junit.org.optimizationBenchmarking.utils.graphics.graphic;
 
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,7 +53,11 @@ public abstract class GraphicDriverTest extends ToolTest<IGraphicDriver> {
       builder.setFileProducerListener(listener);
 
       try (final Graphic graph = builder.create()) {
-        GraphicsExample.paint(graph);
+        try {
+          GraphicsExample.paint(graph);
+        } catch (final HeadlessException hex) {
+          // this may happend
+        }
       }
 
       Assert.assertNotNull(listener.m_path);
