@@ -38,7 +38,8 @@ public abstract class MathematicalFunctionTest extends TestBase {
   }
 
   /**
-   * Is this operator commutative?
+   * Is this operator commutative? Example: {@code a*b = b*a}, i.e.,
+   * multiplication is commutative. Division is not, as {@code a/b != b/a}.
    * 
    * @return {@code true} if it is, {@code false} if not
    */
@@ -50,8 +51,8 @@ public abstract class MathematicalFunctionTest extends TestBase {
    * Test the {@code double}-based computation based on the test cases
    */
   @Test(timeout = 3600000)
-  public final void testTestCasesAllDouble() {
-    final MathematicalFunction function;
+  public void testTestCasesAllDouble() {
+    MathematicalFunction function;
     double[] params;
     int length;
     int[] perm;
@@ -85,8 +86,8 @@ public abstract class MathematicalFunctionTest extends TestBase {
    * Test the {@code float}-based computation based on the test cases
    */
   @Test(timeout = 3600000)
-  public final void testTestCasesAllFloat() {
-    final MathematicalFunction function;
+  public void testTestCasesAllFloat() {
+    MathematicalFunction function;
     float[] params;
     int length;
     int[] perm;
@@ -121,8 +122,8 @@ public abstract class MathematicalFunctionTest extends TestBase {
    * Test the {@code long}-based computation based on the test cases
    */
   @Test(timeout = 3600000)
-  public final void testTestCasesAllLong() {
-    final MathematicalFunction function;
+  public void testTestCasesAllLong() {
+    MathematicalFunction function;
     long[] params;
     int length;
     int[] perm;
@@ -156,8 +157,8 @@ public abstract class MathematicalFunctionTest extends TestBase {
    * Test the {@code int}-based computation based on the test cases
    */
   @Test(timeout = 3600000)
-  public final void testTestCasesAllInt() {
-    final MathematicalFunction function;
+  public void testTestCasesAllInt() {
+    MathematicalFunction function;
     int[] params;
     int length;
     int[] perm;
@@ -192,8 +193,8 @@ public abstract class MathematicalFunctionTest extends TestBase {
    * Test the {@code short}-based computation based on the test cases
    */
   @Test(timeout = 3600000)
-  public final void testTestCasesAllShort() {
-    final MathematicalFunction function;
+  public void testTestCasesAllShort() {
+    MathematicalFunction function;
     short[] params;
     int length;
     int[] perm;
@@ -227,8 +228,8 @@ public abstract class MathematicalFunctionTest extends TestBase {
    * Test the {@code byte}-based computation based on the test cases
    */
   @Test(timeout = 3600000)
-  public final void testTestCasesAllByte() {
-    final MathematicalFunction function;
+  public void testTestCasesAllByte() {
+    MathematicalFunction function;
     byte[] params;
     int length;
     int[] perm;
@@ -263,8 +264,8 @@ public abstract class MathematicalFunctionTest extends TestBase {
    * {@code double}-based result
    */
   @Test(timeout = 3600000)
-  public final void testTestCasesInLongOutDouble() {
-    final MathematicalFunction function;
+  public void testTestCasesInLongOutDouble() {
+    MathematicalFunction function;
     long[] params;
     int length;
     int[] perm;
@@ -299,8 +300,8 @@ public abstract class MathematicalFunctionTest extends TestBase {
    * {@code double}-based result
    */
   @Test(timeout = 3600000)
-  public final void testTestCasesInIntOutDouble() {
-    final MathematicalFunction function;
+  public void testTestCasesInIntOutDouble() {
+    MathematicalFunction function;
     int[] params;
     int length;
     int[] perm;

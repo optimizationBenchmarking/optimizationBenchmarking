@@ -77,6 +77,19 @@ public final class SaturatingSub extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public final double computeAsDouble(final long x0, final long x1) {
+    switch (SaturatingSub.getOverflowType(x0, x1)) {
+      case 0: {
+        return (x0 - x1);
+      }
+      default: {
+        return (((double) x0) - ((double) x1));
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final float computeAsFloat(final float x0, final float x1) {
     return (x0 + x1);
   }

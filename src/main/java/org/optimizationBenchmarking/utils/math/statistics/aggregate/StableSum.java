@@ -204,7 +204,7 @@ public final class StableSum extends ScalarAggregate {
   @Override
   public final void append(final long value) {
     final int state;
-    long s;
+    long newSum;
 
     // if the sum is empty, we can take the long value directly
     state = this.m_state;
@@ -225,15 +225,15 @@ public final class StableSum extends ScalarAggregate {
     // we currently use long arithmetic, which means we can try to do
     // absolutely exact calculations
     if (state == BasicNumber.STATE_INTEGER) {
-      s = (this.m_long + value);
+      newSum = (this.m_long + value);
       if (value < 0L) {
-        if (s < this.m_long) {
-          this.m_long = s;
+        if (newSum < this.m_long) {
+          this.m_long = newSum;
           return;
         }
-      } else {
-        if (s > this.m_long) {
-          this.m_long = s;
+      } else { // value > 0L
+        if (newSum > this.m_long) {
+          this.m_long = newSum;
           return;
         }
       }
