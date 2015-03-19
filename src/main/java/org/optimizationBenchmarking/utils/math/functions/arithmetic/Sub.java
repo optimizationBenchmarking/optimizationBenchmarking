@@ -95,7 +95,7 @@ public final class Sub extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Sub.INSTANCE;
   }
 
   /**
@@ -107,6 +107,6 @@ public final class Sub extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Sub.INSTANCE;
   }
 }

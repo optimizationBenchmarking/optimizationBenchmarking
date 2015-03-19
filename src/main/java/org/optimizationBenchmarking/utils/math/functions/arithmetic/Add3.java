@@ -495,7 +495,7 @@ public final class Add3 extends TernaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Add3.INSTANCE;
   }
 
   /**
@@ -507,6 +507,6 @@ public final class Add3 extends TernaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Add3.INSTANCE;
   }
 }

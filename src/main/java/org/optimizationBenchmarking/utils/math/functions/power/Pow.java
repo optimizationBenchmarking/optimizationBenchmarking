@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * The pow function: raise {@code x1} to the power {@code x2}
@@ -162,7 +161,7 @@ public final class Pow extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Pow.INSTANCE;
   }
 
   /**
@@ -174,6 +173,6 @@ public final class Pow extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Pow.INSTANCE;
   }
 }

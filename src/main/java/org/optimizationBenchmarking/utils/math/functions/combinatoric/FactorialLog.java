@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.combinatoric;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /** The logarithm of the factorial function */
 public final class FactorialLog extends UnaryFunction {
@@ -128,7 +127,7 @@ public final class FactorialLog extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return FactorialLog.INSTANCE;
   }
 
   /**
@@ -140,6 +139,6 @@ public final class FactorialLog extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return FactorialLog.INSTANCE;
   }
 }

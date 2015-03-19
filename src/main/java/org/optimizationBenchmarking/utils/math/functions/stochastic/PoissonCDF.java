@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.stochastic;
 
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 import org.optimizationBenchmarking.utils.math.functions.special.GammaRegularizedQ;
 
 /**
@@ -61,7 +60,7 @@ public final class PoissonCDF extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return PoissonCDF.INSTANCE;
   }
 
   /**
@@ -73,6 +72,6 @@ public final class PoissonCDF extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return PoissonCDF.INSTANCE;
   }
 }

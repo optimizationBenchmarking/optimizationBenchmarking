@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.combinatoric;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /** The factorial function */
 public final class Factorial extends UnaryFunction {
@@ -295,7 +294,7 @@ public final class Factorial extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Factorial.INSTANCE;
   }
 
   /**
@@ -307,6 +306,6 @@ public final class Factorial extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Factorial.INSTANCE;
   }
 }

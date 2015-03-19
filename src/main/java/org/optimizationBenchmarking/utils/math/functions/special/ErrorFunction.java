@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.special;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * <p>
@@ -45,7 +44,7 @@ public final class ErrorFunction extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return ErrorFunction.INSTANCE;
   }
 
   /**
@@ -57,6 +56,6 @@ public final class ErrorFunction extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return ErrorFunction.INSTANCE;
   }
 }

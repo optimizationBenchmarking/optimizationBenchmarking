@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.hyperbolic;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /** The atanh function */
 public final class ATanh extends UnaryFunction {
@@ -41,7 +40,7 @@ public final class ATanh extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return ATanh.INSTANCE;
   }
 
   /**
@@ -53,6 +52,6 @@ public final class ATanh extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return ATanh.INSTANCE;
   }
 }

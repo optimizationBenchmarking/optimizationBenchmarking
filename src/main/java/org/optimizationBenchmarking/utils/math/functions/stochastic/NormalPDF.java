@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.math.functions.stochastic;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * The probability density function (<a
@@ -46,7 +45,7 @@ public final class NormalPDF extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return NormalPDF.INSTANCE;
   }
 
   /**
@@ -58,6 +57,6 @@ public final class NormalPDF extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return NormalPDF.INSTANCE;
   }
 }

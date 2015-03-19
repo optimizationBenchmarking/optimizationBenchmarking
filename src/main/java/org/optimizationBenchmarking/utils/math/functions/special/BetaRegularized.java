@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.math.functions.special;
 
 import org.optimizationBenchmarking.utils.math.MathConstants;
 import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * <p>
@@ -62,7 +61,7 @@ public final class BetaRegularized extends TernaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return BetaRegularized.INSTANCE;
   }
 
   /**
@@ -74,6 +73,6 @@ public final class BetaRegularized extends TernaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return BetaRegularized.INSTANCE;
   }
 }

@@ -112,7 +112,7 @@ public final class SaturatingSub extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return SaturatingSub.INSTANCE;
   }
 
   /**
@@ -124,6 +124,6 @@ public final class SaturatingSub extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return SaturatingSub.INSTANCE;
   }
 }

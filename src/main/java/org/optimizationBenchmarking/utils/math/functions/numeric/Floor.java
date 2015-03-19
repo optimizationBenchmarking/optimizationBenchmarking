@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.numeric;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * The floor function
@@ -67,7 +66,7 @@ public final class Floor extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Floor.INSTANCE;
   }
 
   /**
@@ -79,6 +78,6 @@ public final class Floor extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Floor.INSTANCE;
   }
 }

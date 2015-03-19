@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.math.functions.logic;
 
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
-
 /**
  * The logical or.
  */
@@ -42,7 +40,7 @@ public final class LOr extends BinaryBooleanFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return LOr.INSTANCE;
   }
 
   /**
@@ -54,6 +52,6 @@ public final class LOr extends BinaryBooleanFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return LOr.INSTANCE;
   }
 }

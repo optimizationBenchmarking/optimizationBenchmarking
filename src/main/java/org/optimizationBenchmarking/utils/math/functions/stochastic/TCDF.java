@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.math.functions.stochastic;
 
 import org.apache.commons.math3.distribution.TDistribution;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * The cumulative distribution function (<a
@@ -94,7 +93,7 @@ public final class TCDF extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return TCDF.INSTANCE;
   }
 
   /**
@@ -106,6 +105,6 @@ public final class TCDF extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return TCDF.INSTANCE;
   }
 }

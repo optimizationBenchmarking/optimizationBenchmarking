@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * The ln function
@@ -73,7 +72,7 @@ public final class Lg extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Lg.INSTANCE;
   }
 
   /**
@@ -85,6 +84,6 @@ public final class Lg extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Lg.INSTANCE;
   }
 }

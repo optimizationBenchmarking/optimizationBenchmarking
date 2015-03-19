@@ -58,8 +58,8 @@ final class _BinaryToUnaryA extends ChainedBinary {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0) {
-    return this.m_f
-        .computeAsDouble(this.m_a, this.m_b.computeAsDouble(x0));
+    return this.m_f.computeAsDouble(//
+        this.m_a, this.m_b.computeAsDouble(x0));
   }
 
   /** {@inheritDoc} */

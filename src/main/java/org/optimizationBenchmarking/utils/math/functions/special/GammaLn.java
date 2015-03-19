@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.special;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * <p>
@@ -39,7 +38,7 @@ public final class GammaLn extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return GammaLn.INSTANCE;
   }
 
   /**
@@ -51,6 +50,6 @@ public final class GammaLn extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return GammaLn.INSTANCE;
   }
 }

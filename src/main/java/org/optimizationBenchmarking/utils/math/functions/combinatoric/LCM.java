@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.combinatoric;
 
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * The lcm (least common multiple) function
@@ -87,7 +86,7 @@ public final class LCM extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return LCM.INSTANCE;
   }
 
   /**
@@ -99,6 +98,6 @@ public final class LCM extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return LCM.INSTANCE;
   }
 }

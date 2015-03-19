@@ -66,7 +66,7 @@ public final class Max extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Max.INSTANCE;
   }
 
   /**
@@ -78,6 +78,6 @@ public final class Max extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Max.INSTANCE;
   }
 }

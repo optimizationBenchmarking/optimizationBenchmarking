@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * The log function computes the logarithm of {@code x2} to the base
@@ -48,7 +47,7 @@ public final class Log extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Log.INSTANCE;
   }
 
   /**
@@ -60,6 +59,6 @@ public final class Log extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Log.INSTANCE;
   }
 }

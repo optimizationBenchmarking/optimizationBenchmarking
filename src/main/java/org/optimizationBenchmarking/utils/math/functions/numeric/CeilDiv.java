@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.numeric;
 
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * A method for rounding up the result of a division.
@@ -133,7 +132,7 @@ public final class CeilDiv extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return CeilDiv.INSTANCE;
   }
 
   /**
@@ -145,6 +144,6 @@ public final class CeilDiv extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return CeilDiv.INSTANCE;
   }
 }

@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.special;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * <p>
@@ -59,7 +58,7 @@ public final class BesselJ1 extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return BesselJ1.INSTANCE;
   }
 
   /**
@@ -71,6 +70,6 @@ public final class BesselJ1 extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return BesselJ1.INSTANCE;
   }
 }

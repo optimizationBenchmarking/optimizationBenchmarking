@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.combinatoric;
 
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * The gcd function
@@ -122,7 +121,7 @@ public final class GCD extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return GCD.INSTANCE;
   }
 
   /**
@@ -134,6 +133,6 @@ public final class GCD extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return GCD.INSTANCE;
   }
 }

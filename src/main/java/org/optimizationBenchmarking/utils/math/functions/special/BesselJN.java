@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.special;
 
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * <p>
@@ -121,7 +120,7 @@ public final class BesselJN extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return BesselJN.INSTANCE;
   }
 
   /**
@@ -133,6 +132,6 @@ public final class BesselJN extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return BesselJN.INSTANCE;
   }
 }

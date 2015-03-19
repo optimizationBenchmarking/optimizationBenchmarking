@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /** The sqrt(1-x*x) function */
 public final class Sqrt1z extends UnaryFunction {
@@ -35,7 +34,7 @@ public final class Sqrt1z extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Sqrt1z.INSTANCE;
   }
 
   /**
@@ -47,6 +46,6 @@ public final class Sqrt1z extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Sqrt1z.INSTANCE;
   }
 }

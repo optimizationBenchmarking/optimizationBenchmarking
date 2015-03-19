@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.trigonometric;
 
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /** The hypot function */
 public final class Hypot extends BinaryFunction {
@@ -35,7 +34,7 @@ public final class Hypot extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Hypot.INSTANCE;
   }
 
   /**
@@ -47,6 +46,6 @@ public final class Hypot extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Hypot.INSTANCE;
   }
 }

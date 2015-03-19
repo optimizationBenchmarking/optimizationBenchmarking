@@ -4,35 +4,6 @@ import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 
 /**
  * A binary boolean function
- * 
- * @author <em><a href="http://www.it-weise.de/">Thomas Weise</a></em>,
- *         Email:&nbsp;<a
- *         href="mailto:tweise@ustc.edu.cn">tweise@ustc.edu.cn</a>,
- *         Tel.:&nbsp;<a href="tel:+86 187 551 228 41">+86 187 551 228
- *         41</a>; <a href="http://www.ustc.edu.cn/">University of Science
- *         and Technology of China (USTC)</a>
- *         [&#x4E2D;&#x56FD;&#x79D1;&#x5B66
- *         ;&#x6280;&#x672F;&#x5927;&#x5B66;], (<a href=
- *         "https://en.wikipedia.org/wiki/University_of_Science_and_Technology_of_China"
- *         >wikipedia</a>); <a href="http://cs.ustc.edu.cn/">School of
- *         Computer Science and Technology (SCST)</a>
- *         [&#x8BA1;&#x7B97;&#x673A;&#x79D1;&#
- *         x5B66;&#x4E0E;&#x6280;&#x672F;&#x5B66;&#x9662;]; <a
- *         href="http://ubri.ustc.edu.cn/">USTC-Birmingham Joint Research
- *         Institute in Intelligent Computation and Its Applications
- *         (UBRI)</a>; West Campus [&#x897F;&#x533A;]; Crossroad of
- *         Huangshan Road and Feixi Road
- *         [&#x9EC4;&#x5C71;&#x8DEF;/&#x80A5;&#x897F;&#x8DEF
- *         ;&#x5341;&#x5B57;&#x8DEF;&#x53E3;]; <a
- *         href="https://en.wikipedia.org/wiki/Hefei">Hefei</a>
- *         [&#x5408;&#x80A5;&#x5E02;] 230027; <a
- *         href="https://en.wikipedia.org/wiki/Anhui">Anhui</a>
- *         [&#x5B89;&#x5FBD;&#x7701;]; <a
- *         href="https://en.wikipedia.org/wiki/People%27s_Republic_of_China"
- *         >China</a> [&#x4E2D;&#x56FD;]
- * @version 
- *          version:0.9.8/file:2013-08-12T06:19:03_101+0800/build:2014-02-22
- *          T09: 28:19_300+0800/platform:Java_1.7
  */
 public abstract class BinaryBooleanFunction extends BinaryFunction {
   /** the serial version uid */

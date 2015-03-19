@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.math.functions.combinatoric;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 import org.optimizationBenchmarking.utils.math.functions.special.Beta;
 import org.optimizationBenchmarking.utils.math.functions.special.GammaLn;
 
@@ -175,7 +174,7 @@ public final class BinomialCoefficient extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return BinomialCoefficient.INSTANCE;
   }
 
   /**
@@ -187,6 +186,6 @@ public final class BinomialCoefficient extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return BinomialCoefficient.INSTANCE;
   }
 }

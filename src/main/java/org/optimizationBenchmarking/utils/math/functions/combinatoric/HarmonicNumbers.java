@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.combinatoric;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /** The harmonic number */
 public final class HarmonicNumbers extends UnaryFunction {
@@ -73,7 +72,7 @@ public final class HarmonicNumbers extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return HarmonicNumbers.INSTANCE;
   }
 
   /**
@@ -85,6 +84,6 @@ public final class HarmonicNumbers extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return HarmonicNumbers.INSTANCE;
   }
 }

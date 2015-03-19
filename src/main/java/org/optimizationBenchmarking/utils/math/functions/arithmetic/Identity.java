@@ -72,7 +72,7 @@ public final class Identity extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return Identity.INSTANCE;
   }
 
   /**
@@ -84,6 +84,6 @@ public final class Identity extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return Identity.INSTANCE;
   }
 }

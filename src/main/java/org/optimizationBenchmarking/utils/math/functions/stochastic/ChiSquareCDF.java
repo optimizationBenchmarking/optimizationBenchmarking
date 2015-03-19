@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.math.functions.stochastic;
 
 import org.apache.commons.math3.distribution.GammaDistribution;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * The cumulative distribution function (<a
@@ -86,7 +85,7 @@ public final class ChiSquareCDF extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return ChiSquareCDF.INSTANCE;
   }
 
   /**
@@ -98,6 +97,6 @@ public final class ChiSquareCDF extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return ChiSquareCDF.INSTANCE;
   }
 }

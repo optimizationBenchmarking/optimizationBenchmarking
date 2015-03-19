@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.stochastic;
 
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 
 /**
  * The probability density function (<a
@@ -62,7 +61,7 @@ public final class TPDF extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Absolute.INSTANCE;
+    return TPDF.INSTANCE;
   }
 
   /**
@@ -74,6 +73,6 @@ public final class TPDF extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Absolute.INSTANCE;
+    return TPDF.INSTANCE;
   }
 }
