@@ -5,16 +5,16 @@ import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 /**
  * The binary xor.
  */
-public final class BXOr extends BinaryFunction {
+public final class BXor extends BinaryFunction {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** the globally shared instance */
-  public static final BXOr INSTANCE = new BXOr();
+  public static final BXor INSTANCE = new BXor();
 
   /** the forbidden constructor */
-  private BXOr() {
+  private BXor() {
     super();
   }
 
@@ -66,7 +66,7 @@ public final class BXOr extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return BXOr.INSTANCE;
+    return BXor.INSTANCE;
   }
 
   /**
@@ -78,6 +78,6 @@ public final class BXOr extends BinaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return BXOr.INSTANCE;
+    return BXor.INSTANCE;
   }
 }

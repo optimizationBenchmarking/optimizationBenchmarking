@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** The main entry point for evaluation. */
-public class Main {
+public final class Main {
 
   /**
    * The main method.

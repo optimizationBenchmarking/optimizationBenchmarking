@@ -1,0 +1,51 @@
+<!-- The following reporting plugins have been configured. However, it turns 
+	out that currently I do not have the time to check their results. Also, due 
+	to the nature of this software (e.g., needs to compile some code on the fly 
+	and load it, needs some tricks to increase performance), it violates quite 
+	some rules. I turned them off for now to not waste runtime for no good reason. 
+	Instead, I will rely on the (very few) unit tests to find potential problems 
+	and increase these tests in future. I will keep their configuration here 
+	for future reference, just in case. -->
+<reporting>
+	<plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-checkstyle-plugin</artifactId>
+			<version>2.12.1</version>
+			<configuration>
+				<configLocation>/meta/config/build/checkstyle.xml</configLocation>
+			</configuration>
+			<reportSets>
+				<reportSet>
+					<reports>
+						<report>checkstyle</report>
+					</reports>
+				</reportSet>
+			</reportSets>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-pmd-plugin</artifactId>
+			<version>3.2</version>
+			<configuration>
+				<rulesets>
+					<ruleset>meta/config/build/pmdRules.xml</ruleset>
+				</rulesets>
+			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jxr-plugin</artifactId>
+			<version>2.3</version>
+		</plugin>
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>findbugs-maven-plugin</artifactId>
+			<version>2.5.5</version>
+			<configuration>
+				<effort>Max</effort>
+				<threshold>Low</threshold>
+			</configuration>
+		</plugin>
+	</plugins>
+</reporting>
