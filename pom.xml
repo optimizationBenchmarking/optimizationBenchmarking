@@ -14,6 +14,22 @@
 		<name>optimizationBenchmarking.org</name>
 	</organization>
 
+	<developers>
+		<developer>
+			<id>tweise</id>
+			<name>Thomas Weise</name>
+			<email>tweise@ustc.edu.cn</email>
+			<url>http://www.it-weise.de/</url>
+			<organization>University of Science and Technology of China (USTC)</organization>
+			<organizationUrl>http://www.ustc.edu.cn/</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>China Time Zone</timezone>
+		</developer>
+	</developers>
+
 	<properties>
 		<encoding>UTF-8</encoding>
 		<project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
@@ -122,6 +138,13 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
 		<plugins>
 
 			<plugin>
@@ -205,6 +228,11 @@
 						<nonFilteredFileExtension>sty</nonFilteredFileExtension>
 						<nonFilteredFileExtension>cls</nonFilteredFileExtension>
 						<nonFilteredFileExtension>bst</nonFilteredFileExtension>
+						<nonFilteredFileExtension>png</nonFilteredFileExtension>
+						<nonFilteredFileExtension>jpg</nonFilteredFileExtension>
+						<nonFilteredFileExtension>jpeg</nonFilteredFileExtension>
+						<nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+						<nonFilteredFileExtension>eps</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 				</configuration>
 			</plugin>

@@ -4,12 +4,12 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEval
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluator;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfigurationBuilder;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
-import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
+import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolSuite;
 
 /**
  * The evaluator main component.
  */
-public final class Evaluator extends Tool implements IEvaluator {
+public final class Evaluator extends ToolSuite implements IEvaluator {
 
   /** the parameter for parallel execution */
   public static final String PARAM_PARALLEL = "parallel"; //$NON-NLS-1$
@@ -29,12 +29,6 @@ public final class Evaluator extends Tool implements IEvaluator {
   /** create */
   Evaluator() {
     super();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String toString() {
-    return "Evaluator"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

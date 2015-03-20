@@ -13,6 +13,9 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 /** The main entry point for evaluation. */
 public final class Main {
 
+  /** should we execute quietly? */
+  public static final String PARAM_QUIET = "quiet"; //$NON-NLS-1$
+
   /**
    * The main method.
    * 
@@ -24,6 +27,7 @@ public final class Main {
     final int processors;
     final Logger logger;
     final ForkJoinPool pool;
+    final boolean printInfo;
     Configuration config;
     Evaluator evaluator;
     IEvaluationBuilder builder;
@@ -31,6 +35,34 @@ public final class Main {
 
     Configuration.setup(args);
     config = Configuration.getRoot();
+
+    evaluator = Evaluator.getInstance();
+
+    printInfo = (!(config.getBoolean(Main.PARAM_QUIET, false)));
+    if (printInfo) {
+      synchronized (System.out) {
+        synchronized (System.err) {
+          System.out.print("Welcome to the "); //$NON-NLS-1$
+          System.out.println(evaluator.getProjectName());
+          System.out.print("  version: "); //$NON-NLS-1$
+          System.out.println(evaluator.getProjectVersion());
+          System.out.print("  url: "); //$NON-NLS-1$
+          System.out.println(evaluator.getProjectURL());
+          System.out.print("  for JDK version: "); //$NON-NLS-1$
+          System.out.println(evaluator.getProjectJDK());
+          System.out.print("  contact: "); //$NON-NLS-1$
+          System.out.print(evaluator.getContactName());
+          System.out.print(' ');
+          System.out.print('(');
+          System.out.print(evaluator.getContactEmail());
+          System.out.print(',');
+          System.out.print(' ');
+          System.out.print(evaluator.getContactURL());
+          System.out.println(')');
+          System.out.println();
+        }
+      }
+    }
 
     logger = Configuration.getGlobalLogger();
     try {
@@ -47,7 +79,6 @@ public final class Main {
         }
       }
 
-      evaluator = Evaluator.getInstance();
       builder = evaluator.use();
       evaluator = null;
 
@@ -157,6 +188,15 @@ public final class Main {
             error);
       } else {
         error.printStackTrace();
+      }
+    }
+
+    if (printInfo) {
+      synchronized (System.out) {
+        synchronized (System.err) {
+          System.out.println();
+          System.out.println("...goodbye.");//$NON-NLS-1$
+        }
       }
     }
   }
