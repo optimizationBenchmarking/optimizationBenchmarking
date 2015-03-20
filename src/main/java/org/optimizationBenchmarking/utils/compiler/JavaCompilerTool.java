@@ -109,6 +109,12 @@ public class JavaCompilerTool extends Tool {
     return new JavaCompilerJobBuilder();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "Java Compiler"; //$NON-NLS-1$
+  }
+
   /**
    * Get the globally shared instance of the java compiler tool
    * 
