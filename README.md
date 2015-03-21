@@ -1,7 +1,8 @@
-optimizationBenchmarking
-========================
+# [optimizationBenchmarking](http://optimizationbenchmarking.github.io/optimizationBenchmarking/)
 
-The main repository of the optimizationBenchmarking.org tool suite.
+[![Build Status](https://img.shields.io/travis/optimizationBenchmarking/optimizationBenchmarking/master.svg)](https://travis-ci.org/optimizationBenchmarking/optimizationBenchmarking/)
+
+This is the main repository of the optimizationBenchmarking.org tool suite.
 The optimizationBenchmarking.org tool suite supports researchers in
 evaluating and comparing the performance of (anytime) optimization
 algorithms, such as
