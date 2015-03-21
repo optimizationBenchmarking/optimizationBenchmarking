@@ -5,8 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.DimensionContext;
-import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
-import org.optimizationBenchmarking.experimentation.data.EDimensionType;
 import org.optimizationBenchmarking.experimentation.data.ExperimentContext;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.InstanceContext;
@@ -158,7 +156,6 @@ final class _EDIContentHandler extends DelegatingHandler {
     final HierarchicalFSM fsm;
     EPrimitiveType pt;
     String s;
-    int i;
     final Number lb, ub;
 
     stack = this.m_stack;
@@ -186,39 +183,16 @@ final class _EDIContentHandler extends DelegatingHandler {
       d.setDescription(s);
     }
 
-    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
-        EDI.ATTRIBUTE_DIMENSION_TYPE);
-    findDT: {
-      for (i = EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE.length; (--i) >= 0;) {
-        if (EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[i].equalsIgnoreCase(s)) {
-          d.setType(EDimensionType.INSTANCES.get(i));
-          break findDT;
-        }
-      }
-    }
+    d.setType(EDI._parseDimensionType(//
+        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_DIMENSION_TYPE)));
 
-    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
-        EDI.ATTRIBUTE_DIMENSION_DIRECTION);
-    findDD: {
-      for (i = EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION.length; (--i) >= 0;) {
-        if (EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION[i].equalsIgnoreCase(s)) {
-          d.setDirection(EDimensionDirection.INSTANCES.get(i));
-          break findDD;
-        }
-      }
-    }
+    d.setDirection(EDI._parseDimensionDirection(//
+        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_DIMENSION_DIRECTION)));
 
-    pt = null;
-    s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
-        EDI.ATTRIBUTE_DIMENSION_DATA_TYPE);
-    findPT: {
-      for (i = EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE.length; (--i) >= 0;) {
-        if (EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[i].equalsIgnoreCase(s)) {
-          pt = EPrimitiveType.TYPES.get(i);
-          break findPT;
-        }
-      }
-    }
+    pt = EDI._parseDataType(DelegatingHandler.getAttributeNormalized(atts,
+        EDI.NAMESPACE, EDI.ATTRIBUTE_DIMENSION_DATA_TYPE));
 
     s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
         EDI.ATTRIBUTE_INTEGER_LOWER_BOUND);

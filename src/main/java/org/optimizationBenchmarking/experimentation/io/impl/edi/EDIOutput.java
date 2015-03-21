@@ -231,18 +231,15 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
           dim.attributeRaw(EDI.NAMESPACE_URI,
               EDI.ATTRIBUTE_DIMENSION_TYPE,
-              EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[d.getDimensionType()
-                  .ordinal()]);
+              EDI._getDimensionTypeName(d.getDimensionType()));
 
           dim.attributeRaw(EDI.NAMESPACE_URI,
               EDI.ATTRIBUTE_DIMENSION_DIRECTION,
-              EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION[d.getDirection()
-                  .ordinal()]);
+              EDI._getDimensionDirectionName(d.getDirection()));
 
           t = d.getDataType();
           dim.attributeRaw(EDI.NAMESPACE_URI,
-              EDI.ATTRIBUTE_DIMENSION_DATA_TYPE,
-              EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[t.ordinal()]);
+              EDI.ATTRIBUTE_DIMENSION_DATA_TYPE, EDI._getDataTypeName(t));
 
           p = d.getParser();
           switch (t) {

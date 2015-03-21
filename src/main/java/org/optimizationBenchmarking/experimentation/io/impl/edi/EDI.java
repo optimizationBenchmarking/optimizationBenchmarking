@@ -9,6 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.EDimensionType;
 import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
 import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** an internal class with EDI constants */
 public enum EDI implements IXMLFileType {
@@ -93,11 +94,11 @@ public enum EDI implements IXMLFileType {
   static final String ELEMENT_RUN = "run"; //$NON-NLS-1$
 
   /** the dimension data type values */
-  static final String[] ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE;
+  private static final String[] ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE;
   /** the dimension direction values */
-  static final String[] ATTRIBUTE_VALUE_DIMENSION_DIRECTION;
+  private static final String[] ATTRIBUTE_VALUE_DIMENSION_DIRECTION;
   /** the dimension type values */
-  static final String[] ATTRIBUTE_VALUE_DIMENSION_TYPE;
+  private static final String[] ATTRIBUTE_VALUE_DIMENSION_TYPE;
 
   static {
     ATTRIBUTE_VALUE_DIMENSION_TYPE = new String[EDimensionType.INSTANCES
@@ -190,4 +191,157 @@ public enum EDI implements IXMLFileType {
     }
     return EDI.NAMESPACE_URI.toURL();
   }
+
+  /**
+   * Get the name of a dimension type
+   * 
+   * @param type
+   *          the dimension type
+   * @return the string representation of the dimension type
+   * @see #_parseDimensionType(String)
+   */
+  static final String _getDimensionTypeName(final EDimensionType type) {
+    if (type == null) {
+      throw new IllegalArgumentException(
+          "Dimension type must not be null."); //$NON-NLS-1$
+    }
+    return ATTRIBUTE_VALUE_DIMENSION_TYPE[type.ordinal()];
+  }
+
+  /**
+   * Parse a string to obtain a dimension type
+   * 
+   * @param string
+   *          the string
+   * @return the dimension type
+   * @see #_getDimensionTypeName(EDimensionType)
+   */
+  static final EDimensionType _parseDimensionType(final String string) {
+    final String text;
+    int i;
+
+    if (string == null) {
+      throw new IllegalArgumentException(//
+          "Dimension type name must not be null."); //$NON-NLS-1$
+    }
+
+    text = TextUtils.prepare(string);
+    if (text == null) {
+      throw new IllegalArgumentException(((//
+          "Dimension type name must not be empty or just consisting of white space, but is '" //$NON-NLS-1$
+          + string) + '\'') + '.');
+    }
+
+    for (i = ATTRIBUTE_VALUE_DIMENSION_TYPE.length; (--i) >= 0;) {
+      if (ATTRIBUTE_VALUE_DIMENSION_TYPE[i].equalsIgnoreCase(text)) {
+        return EDimensionType.INSTANCES.get(i);
+      }
+    }
+
+    throw new IllegalArgumentException(('\'' + string)
+        + "' is not a valid dimension type identifier."); //$NON-NLS-1$    
+  }
+
+  /**
+   * Get the name of a dimension direction
+   * 
+   * @param direction
+   *          the dimension direction
+   * @return the string representation of the dimension direction
+   * @see #_parseDimensionDirection(String)
+   */
+  static final String _getDimensionDirectionName(
+      final EDimensionDirection direction) {
+    if (direction == null) {
+      throw new IllegalArgumentException(
+          "Dimension direction must not be null."); //$NON-NLS-1$
+    }
+    return ATTRIBUTE_VALUE_DIMENSION_DIRECTION[direction.ordinal()];
+  }
+
+  /**
+   * Parse a string to obtain a dimension direction
+   * 
+   * @param string
+   *          the string
+   * @return the dimension direction
+   * @see #_getDimensionDirectionName(EDimensionDirection)
+   */
+  static final EDimensionDirection _parseDimensionDirection(
+      final String string) {
+    final String text;
+    int i;
+
+    if (string == null) {
+      throw new IllegalArgumentException(//
+          "Dimension direction name must not be null."); //$NON-NLS-1$
+    }
+
+    text = TextUtils.prepare(string);
+    if (text == null) {
+      throw new IllegalArgumentException(((//
+          "Dimension direction name must not be empty or just consisting of white space, but is '" //$NON-NLS-1$
+          + string) + '\'') + '.');
+    }
+
+    for (i = ATTRIBUTE_VALUE_DIMENSION_DIRECTION.length; (--i) >= 0;) {
+      if (ATTRIBUTE_VALUE_DIMENSION_DIRECTION[i].equalsIgnoreCase(text)) {
+        return EDimensionDirection.INSTANCES.get(i);
+      }
+    }
+
+    throw new IllegalArgumentException(('\'' + string)
+        + "' is not a valid dimension direction identifier."); //$NON-NLS-1$   
+  }
+
+  /**
+   * Get the name of a data type
+   * 
+   * @param dataType
+   *          the data type
+   * @return the string representation of the data type
+   */
+  static final String _getDataTypeName(final EPrimitiveType dataType) {
+    if (dataType == null) {
+      throw new IllegalArgumentException("Data type must not be null."); //$NON-NLS-1$
+    }
+    return ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[dataType.ordinal()];
+  }
+
+  /**
+   * Parse a string to obtain a data type
+   * 
+   * @param string
+   *          the string
+   * @return the data type
+   * @see #_getDataTypeName(EPrimitiveType)
+   */
+  static final EPrimitiveType _parseDataType(final String string) {
+    final String text;
+    String cur;
+    int i;
+
+    if (string == null) {
+      throw new IllegalArgumentException(//
+          "Data type name must not be null."); //$NON-NLS-1$
+    }
+
+    text = TextUtils.prepare(string);
+    if (text == null) {
+      throw new IllegalArgumentException(((//
+          "Data type name must not be empty or just consisting of white space, but is '" //$NON-NLS-1$
+          + string) + '\'') + '.');
+    }
+
+    for (i = ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE.length; (--i) >= 0;) {
+      cur = ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[i];
+      if ((cur != null) && cur.equalsIgnoreCase(text)) {
+        return EPrimitiveType.TYPES.get(i);
+      }
+    }
+
+    throw new IllegalArgumentException(('\'' + string)
+        + "' is not a valid data type identifier."); //$NON-NLS-1$
+  }
+
 }
