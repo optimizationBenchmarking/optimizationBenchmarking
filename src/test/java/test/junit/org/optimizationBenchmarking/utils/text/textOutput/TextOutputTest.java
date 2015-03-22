@@ -239,6 +239,7 @@ public abstract class TextOutputTest<R> extends TestBase {
     for (i = 10; (--i) >= 0;) {
       this.__testRun(r);
     }
+    System.gc();
   }
 
   /** test if sequences are written correctly */
@@ -353,14 +354,15 @@ public abstract class TextOutputTest<R> extends TestBase {
   @Test(timeout = 10000000)
   public void testGrow() {
     final Random rand;
+    final StringBuilder sb;
     R root;
     ITextOutput textOut;
-    StringBuilder sb;
     int size, i, j, len;
     char[] add;
     String s;
 
     rand = new Random();
+    sb = new StringBuilder();
 
     for (final boolean useFullLength : new boolean[] { true, false }) {
       for (int appendType = 4; appendType >= 0; appendType--) {
@@ -369,7 +371,7 @@ public abstract class TextOutputTest<R> extends TestBase {
 
           root = this.createRootObject();
           textOut = this.wrap(root);
-          sb = new StringBuilder();
+          sb.setLength(0);
 
           add = new char[size];
           for (i = 1; i < 256; i++) {
@@ -414,7 +416,11 @@ public abstract class TextOutputTest<R> extends TestBase {
             Assert.assertEquals(sb.toString(), this.getString(root));
           }
 
+          root = null;
+          textOut = null;
         }
+
+        System.gc();
       }
     }
   }
