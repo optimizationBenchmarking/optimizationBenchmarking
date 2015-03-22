@@ -22,9 +22,9 @@ public class StableSumTest {
 
     rand = new Random();
 
-    for (j = 0; j < 100; j++) {
+    for (j = 0; j < 10; j++) {
       ss = new StableSum();
-      Assert.assertFalse(ss.getState() != BasicNumber.STATE_EMPTY);
+      Assert.assertEquals(ss.getState(), BasicNumber.STATE_EMPTY);
       Assert.assertFalse(ss.isInteger());
       Assert.assertFalse(ss.isReal());
 
@@ -96,7 +96,7 @@ public class StableSumTest {
 
         Assert.assertTrue(ss.isInteger());
         Assert.assertTrue(ss.isReal());
-        Assert.assertTrue(ss.getState() != BasicNumber.STATE_EMPTY);
+        Assert.assertNotEquals(ss.getState(), BasicNumber.STATE_EMPTY);
         Assert.assertEquals(ss.longValue(), sum);
         Assert.assertEquals(sum, ss.doubleValue(), 0d);
       }
@@ -119,7 +119,7 @@ public class StableSumTest {
     Assert.assertFalse(ss.isReal());
     s = 0d;
 
-    for (i = 0; i < 100000000; i++) {
+    for (i = 0; i < 10000000; i++) {
       val = rand.nextDouble();
       os = s;
       s += val;
