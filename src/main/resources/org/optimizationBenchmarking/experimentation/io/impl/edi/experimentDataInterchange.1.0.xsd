@@ -5,108 +5,221 @@
 	elementFormDefault="qualified">
 
 	<annotation>
-		<documentation>The XML Schema for the Experiment Data Interchange data
-			format, version 1.0.
+		<documentation>
+			The XML Schema for the Experiment Data Interchange data
+			format, version
+			1.0.
 		</documentation>
 	</annotation>
 
 
+	<element name="dimension">
+		<annotation>
+			<documentation>
+				The dimension element defines on measurable dimension.
+				A dimension
+				has a name, e.g., "FEs" (common abbreviation for
+				"Function Evaluations"
+				used in optimization) or "Runtime". It can
+				have a descriptive text as well. In order to ease processing,
+				a
+				dimension also has a dimension type, a direction, and a data type.
+			</documentation>
+		</annotation>
+
+		<complexType>
+
+			<attribute name="name" type="token" use="required" />
+			<attribute name="description" type="normalizedString" use="optional" />
+
+			<attribute name="dimensionType" use="required">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="iterationAlgorithmStep" />
+						<enumeration value="iterationFE" />
+						<enumeration value="iterationSubFE" />
+						<enumeration value="runtimeCPU" />
+						<enumeration value="runtimeNormalized" />
+						<enumeration value="qualityProblemDependent" />
+						<enumeration value="qualityProblemIndependent" />
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="direction" use="required">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="decreasing" />
+						<enumeration value="decreasingStrictly" />
+						<enumeration value="increasing" />
+						<enumeration value="increasingStrictly" />
+					</restriction>
+				</simpleType>
+			</attribute>
+			<attribute name="dataType" use="required">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="byte" />
+						<enumeration value="short" />
+						<enumeration value="int" />
+						<enumeration value="long" />
+						<enumeration value="float" />
+						<enumeration value="double" />
+					</restriction>
+				</simpleType>
+			</attribute>
+
+			<attribute name="iLowerBound" type="long" use="optional" />
+			<attribute name="iUpperBound" type="long" use="optional" />
+			<attribute name="fLowerBound" type="double" use="optional" />
+			<attribute name="fUpperBound" type="double" use="optional" />
+		</complexType>
+	</element>
+
+
 	<element name="dimensions">
+		<annotation>
+			<documentation>
+				An ordered list of dimension specifications.
+			</documentation>
+		</annotation>
+
 		<complexType>
 			<sequence>
-				<element name="dimension" minOccurs="1" maxOccurs="unbounded">
+				<element ref="tns:dimension" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="instance">
+		<annotation>
+			<documentation>
+				The instance element describes a specific instance of
+				a benchmark
+				problem. Such an instance has a name and may have a
+				description.
+				Usually, benchmark problem instances also have features,
+				such
+				as the scale (e.g., the number of cities in a Traveling Salesman
+				Problem).
+				We then try to relate the performance of an algorithm on a
+				specific instance to the features of this instance.
+			</documentation>
+		</annotation>
+
+		<complexType>
+			<sequence>
+				<element name="feature" minOccurs="1" maxOccurs="unbounded">
 					<complexType>
-
 						<attribute name="name" type="token" use="required" />
-						<attribute name="description" type="normalizedString"
+						<attribute name="featureDescription" type="normalizedString"
 							use="optional" />
+						<attribute name="value" type="token" use="required" />
+						<attribute name="valueDescription" type="normalizedString"
+							use="optional" />
+					</complexType>
+				</element>
 
-						<attribute name="dimensionType" use="required">
-							<simpleType>
-								<restriction base="string">
-									<enumeration value="iterationAlgorithmStep" />
-									<enumeration value="iterationFE" />
-									<enumeration value="iterationSubFE" />
-									<enumeration value="runtimeCPU" />
-									<enumeration value="runtimeNormalized" />
-									<enumeration value="qualityProblemDependent" />
-									<enumeration value="qualityProblemIndependent" />
-								</restriction>
-							</simpleType>
-						</attribute>
-						<attribute name="direction" use="required">
-							<simpleType>
-								<restriction base="string">
-									<enumeration value="decreasing" />
-									<enumeration value="decreasingStrictly" />
-									<enumeration value="increasing" />
-									<enumeration value="increasingStrictly" />
-								</restriction>
-							</simpleType>
-						</attribute>
-						<attribute name="dataType" use="required">
-							<simpleType>
-								<restriction base="string">
-									<enumeration value="byte" />
-									<enumeration value="short" />
-									<enumeration value="int" />
-									<enumeration value="long" />
-									<enumeration value="float" />
-									<enumeration value="double" />
-								</restriction>
-							</simpleType>
-						</attribute>
-
+				<element name="bounds" minOccurs="0" maxOccurs="unbounded">
+					<complexType>
+						<attribute name="dimension" type="token" use="required" />
 						<attribute name="iLowerBound" type="long" use="optional" />
 						<attribute name="iUpperBound" type="long" use="optional" />
 						<attribute name="fLowerBound" type="double" use="optional" />
 						<attribute name="fUpperBound" type="double" use="optional" />
 					</complexType>
 				</element>
+
 			</sequence>
 
+			<attribute name="name" type="token" use="required" />
+			<attribute name="description" type="normalizedString" use="optional" />
 		</complexType>
 	</element>
 
+
 	<element name="instances">
+		<annotation>
+			<documentation>
+				The set of benchmark instances.
+			</documentation>
+		</annotation>
+
 		<complexType>
 			<sequence>
-				<element name="instance" minOccurs="1" maxOccurs="unbounded">
-					<complexType>
-						<sequence>
-							<element name="feature" minOccurs="1" maxOccurs="unbounded">
-								<complexType>
-									<attribute name="name" type="token" use="required" />
-									<attribute name="featureDescription" type="normalizedString"
-										use="optional" />
-									<attribute name="value" type="token" use="required" />
-									<attribute name="valueDescription" type="normalizedString"
-										use="optional" />
-								</complexType>
-							</element>
-
-							<element name="bounds" minOccurs="0" maxOccurs="unbounded">
-								<complexType>
-									<attribute name="dimension" type="token" use="required" />
-									<attribute name="iLowerBound" type="long" use="optional" />
-									<attribute name="iUpperBound" type="long" use="optional" />
-									<attribute name="fLowerBound" type="double" use="optional" />
-									<attribute name="fUpperBound" type="double" use="optional" />
-								</complexType>
-							</element>
-
-						</sequence>
-
-						<attribute name="name" type="token" use="required" />
-						<attribute name="description" type="normalizedString"
-							use="optional" />
-					</complexType>
-				</element>
+				<element ref="tns:instance" minOccurs="1" maxOccurs="unbounded" />
 			</sequence>
+		</complexType>
+	</element>
+
+
+	<element name="p">
+		<annotation>
+			<documentation>
+				A measured log point. A log point consists of one
+				measured value
+				per dimension. A value may either be a floating point
+				number (of type
+				double)
+				or an integer number (of type long).
+			</documentation>
+		</annotation>
+
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element name="f" type="double" />
+				<element name="i" type="long" />
+			</choice>
+		</complexType>
+	</element>
+
+	<element name="run">
+		<annotation>
+			<documentation>
+				A run is one independent application of an algorithm
+				to a
+				benchmark instance. Its data is an ordered list of measured log
+				points.
+			</documentation>
+		</annotation>
+
+		<complexType>
+			<sequence>
+				<element ref="tns:p" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="instanceRuns">
+		<annotation>
+			<documentation>
+				The instance runs are a collection of runs for a given
+				benchmark problem instance.
+			</documentation>
+		</annotation>
+
+		<complexType>
+			<sequence>
+				<element ref="tns:run" minOccurs="0" maxOccurs="unbounded" />
+			</sequence>
+			<attribute name="instance" type="token" use="required" />
 		</complexType>
 	</element>
 
 	<element name="experiment">
+		<annotation>
+			<documentation>
+				An experiment holds the whole data of an algorithm
+				applied to
+				a set of benchmark instances. As such, it has a name and a
+				description. The algorithm can also have a specific configuration,
+				denoted as parameter settings, such as
+				the population size in an
+				Evolutionary Algorithm or the
+				stating temperature in a Simulated
+				Annealing algorithm.
+			</documentation>
+		</annotation>
+
 		<complexType>
 			<sequence>
 				<element name="parameter" minOccurs="0" maxOccurs="unbounded">
@@ -117,27 +230,7 @@
 						<attribute name="valueDescription" type="normalizedString" />
 					</complexType>
 				</element>
-				<element name="instanceRuns" minOccurs="1" maxOccurs="unbounded">
-					<complexType>
-						<sequence>
-							<element name="run" minOccurs="1" maxOccurs="unbounded">
-								<complexType>
-									<sequence>
-										<element name="p" minOccurs="1" maxOccurs="unbounded">
-											<complexType>
-												<choice minOccurs="0" maxOccurs="unbounded">
-													<element name="f" type="double" />
-													<element name="i" type="long" />
-												</choice>
-											</complexType>
-										</element>
-									</sequence>
-								</complexType>
-							</element>
-						</sequence>
-						<attribute name="instance" type="token" use="required" />
-					</complexType>
-				</element>
+				<element ref="tns:instanceRuns" minOccurs="0" maxOccurs="unbounded" />
 			</sequence>
 
 			<attribute name="name" type="token" use="required" />
@@ -146,6 +239,12 @@
 	</element>
 
 	<element name="experiments">
+		<annotation>
+			<documentation>
+				Multiple experiments can be stored together in one EDI stream.
+			</documentation>
+		</annotation>
+
 		<complexType>
 			<sequence>
 				<element ref="tns:experiment" minOccurs="1" maxOccurs="unbounded" />
@@ -154,6 +253,14 @@
 	</element>
 
 	<element name="experimentData">
+		<annotation>
+			<documentation>
+				The canonical description of a set of experiments contains
+				the specification measurement dimensions, the specification
+				of the problem instances, as well as the data of the experiments.
+			</documentation>
+		</annotation>
+
 		<complexType>
 			<sequence>
 				<element ref="tns:dimensions" minOccurs="0" maxOccurs="1" />

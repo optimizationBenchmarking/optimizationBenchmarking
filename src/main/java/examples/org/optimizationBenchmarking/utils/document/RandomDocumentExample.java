@@ -17,6 +17,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
@@ -1668,6 +1669,7 @@ public class RandomDocumentExample extends DocumentExample {
         RandomUtils.longToString(null, this.__nextFigure()))) {
       this.__fillFigure(fig, v);
     }
+    MemoryUtils.quickGC();
   }
 
   /**
@@ -1705,6 +1707,7 @@ public class RandomDocumentExample extends DocumentExample {
             null, this.__nextFigure()))) {
           this.__fillFigure(fig, null);
         }
+        MemoryUtils.quickGC();
       }
     }
   }
