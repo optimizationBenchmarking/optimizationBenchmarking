@@ -73,7 +73,7 @@ public abstract class TextOutputTest<R> extends TestBase {
     t = this.wrap(root);
     sb = new StringBuilder();
 
-    for (i = 10000; i >= 0; i--) {
+    for (i = 1000; i >= 0; i--) {
       TextOutputTest.__appendRandomObject(r, sb, t);
       t.flush();
       Assert.assertEquals(this.getString(root), sb.toString());

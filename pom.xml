@@ -223,7 +223,7 @@
 					<enableAssertions>true</enableAssertions>
 					<failIfNoTests>true</failIfNoTests>
 					<trimStackTrace>false</trimStackTrace>
-					<excludedGroups>test.junit.CategorySlowTests,test.junit.CategoryMemoryIntenseTests</excludedGroups>
+					<excludedGroups>test.junit.CategorySlowTests</excludedGroups>
 				</configuration>
 			</plugin>
 

@@ -1,16 +1,12 @@
 package test.junit.org.optimizationBenchmarking.utils.text.textOutput;
 
-import org.junit.experimental.categories.Category;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-
-import test.junit.CategoryMemoryIntenseTests;
 
 /**
  * A test of an internal wrapper class of
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
  */
-@Category(CategoryMemoryIntenseTests.class)
 public class StringBufferTextOutputTest extends
     TextOutputTest<StringBuffer> {
 
