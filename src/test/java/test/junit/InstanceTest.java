@@ -7,6 +7,7 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Random;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class InstanceTest<T> extends TestBase {
   private static final Object VISITED = new Object();
 
   /** the owner */
-  private final InstanceTest<T> m_owner;
+  private InstanceTest<T> m_owner;
 
   /** will the {@link #getInstance()} return singletons? */
   private final boolean m_isSingleton;
@@ -33,7 +34,7 @@ public class InstanceTest<T> extends TestBase {
   private final boolean m_isModifiable;
 
   /** an instance */
-  private final T m_instance;
+  private T m_instance;
 
   /** the constructor */
   protected InstanceTest() {
@@ -500,5 +501,14 @@ public class InstanceTest<T> extends TestBase {
 
     this.testSerializationAndDeserializationEquals();
     this.testCloneEquals();
+  }
+
+  /** {@inheritDoc} */
+  @AfterClass
+  @Override
+  public void afterClass() {
+    this.m_instance = null;
+    this.m_owner = null;
+    super.afterClass();
   }
 }

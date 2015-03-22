@@ -5,8 +5,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Ignore;
+import org.optimizationBenchmarking.utils.MemoryUtils;
 
 /** the base class for tests */
 @Ignore
@@ -55,5 +57,15 @@ public class TestBase {
     }
 
     return o2;
+  }
+
+  /**
+   * Executed after the test suite: Perform a quick GC run. This is bad
+   * practice, but may help us make the builds pass in low-memory
+   * environments.
+   */
+  @AfterClass
+  public void afterClass() {
+    MemoryUtils.quickGC();
   }
 }
