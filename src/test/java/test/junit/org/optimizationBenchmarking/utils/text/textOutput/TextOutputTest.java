@@ -6,6 +6,7 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.math.random.LoremIpsum;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
@@ -239,7 +240,7 @@ public abstract class TextOutputTest<R> extends TestBase {
     for (i = 10; (--i) >= 0;) {
       this.__testRun(r);
     }
-    System.gc();
+    MemoryUtils.fullGC();
   }
 
   /** test if sequences are written correctly */
@@ -420,7 +421,7 @@ public abstract class TextOutputTest<R> extends TestBase {
           textOut = null;
         }
 
-        System.gc();
+        MemoryUtils.fullGC();
       }
     }
   }
