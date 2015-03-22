@@ -5,8 +5,11 @@ import java.io.PrintStream;
 
 import org.junit.Assert;
 import org.junit.Ignore;
+import org.junit.experimental.categories.Category;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+
+import test.junit.CategoryMemoryIntenseTests;
 
 /**
  * A test of an internal wrapper class of
@@ -14,6 +17,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * This test currently is not working, the reason seems to be an encoding
  * issue. Therefore, it is currently {@link org.junit.Ignore ignored}.
  */
+@Category(CategoryMemoryIntenseTests.class)
 @Ignore
 public class PrintStreamTextOutputTest extends
     TextOutputTest<ByteArrayOutputStream> {
