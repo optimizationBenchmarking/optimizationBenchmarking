@@ -205,7 +205,7 @@ public enum EDI implements IXMLFileType {
       throw new IllegalArgumentException(
           "Dimension type must not be null."); //$NON-NLS-1$
     }
-    return ATTRIBUTE_VALUE_DIMENSION_TYPE[type.ordinal()];
+    return EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[type.ordinal()];
   }
 
   /**
@@ -232,8 +232,8 @@ public enum EDI implements IXMLFileType {
           + string) + '\'') + '.');
     }
 
-    for (i = ATTRIBUTE_VALUE_DIMENSION_TYPE.length; (--i) >= 0;) {
-      if (ATTRIBUTE_VALUE_DIMENSION_TYPE[i].equalsIgnoreCase(text)) {
+    for (i = EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE.length; (--i) >= 0;) {
+      if (EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[i].equalsIgnoreCase(text)) {
         return EDimensionType.INSTANCES.get(i);
       }
     }
@@ -256,7 +256,7 @@ public enum EDI implements IXMLFileType {
       throw new IllegalArgumentException(
           "Dimension direction must not be null."); //$NON-NLS-1$
     }
-    return ATTRIBUTE_VALUE_DIMENSION_DIRECTION[direction.ordinal()];
+    return EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION[direction.ordinal()];
   }
 
   /**
@@ -284,8 +284,9 @@ public enum EDI implements IXMLFileType {
           + string) + '\'') + '.');
     }
 
-    for (i = ATTRIBUTE_VALUE_DIMENSION_DIRECTION.length; (--i) >= 0;) {
-      if (ATTRIBUTE_VALUE_DIMENSION_DIRECTION[i].equalsIgnoreCase(text)) {
+    for (i = EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION.length; (--i) >= 0;) {
+      if (EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION[i]
+          .equalsIgnoreCase(text)) {
         return EDimensionDirection.INSTANCES.get(i);
       }
     }
@@ -305,7 +306,7 @@ public enum EDI implements IXMLFileType {
     if (dataType == null) {
       throw new IllegalArgumentException("Data type must not be null."); //$NON-NLS-1$
     }
-    return ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[dataType.ordinal()];
+    return EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[dataType.ordinal()];
   }
 
   /**
@@ -333,8 +334,8 @@ public enum EDI implements IXMLFileType {
           + string) + '\'') + '.');
     }
 
-    for (i = ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE.length; (--i) >= 0;) {
-      cur = ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[i];
+    for (i = EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE.length; (--i) >= 0;) {
+      cur = EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[i];
       if ((cur != null) && cur.equalsIgnoreCase(text)) {
         return EPrimitiveType.TYPES.get(i);
       }
