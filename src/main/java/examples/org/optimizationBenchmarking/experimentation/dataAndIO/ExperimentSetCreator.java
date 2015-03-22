@@ -2,6 +2,7 @@ package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
+import org.optimizationBenchmarking.utils.MemoryUtils;
 
 /** A class for creating experiment sets */
 public abstract class ExperimentSetCreator implements IEvaluationInput,
@@ -36,6 +37,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
       throws Exception {
     if (this.m_inst == null) {
       this.m_inst = this.buildExperimentSet();
+      MemoryUtils.quickGC();
     }
     return this.m_inst;
   }
