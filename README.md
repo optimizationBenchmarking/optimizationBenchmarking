@@ -1,6 +1,7 @@
 # [optimizationBenchmarking](http://optimizationbenchmarking.github.io/optimizationBenchmarking/)
 
-[![Build Status](https://img.shields.io/travis/optimizationBenchmarking/optimizationBenchmarking/master.svg)](https://travis-ci.org/optimizationBenchmarking/optimizationBenchmarking/)
+[![Travis Build Status](https://img.shields.io/travis/optimizationBenchmarking/optimizationBenchmarking/master.svg)](https://travis-ci.org/optimizationBenchmarking/optimizationBenchmarking/)
+[![Codeship Build Status](https://img.shields.io/codeship/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05.svg)](https://codeship.com/projects/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05/status?branch=master)
 
 This is the main repository of the optimizationBenchmarking.org tool suite.
 The optimizationBenchmarking.org tool suite supports researchers in
