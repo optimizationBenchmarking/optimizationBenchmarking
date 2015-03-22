@@ -18,7 +18,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-/** the internal content handler */
+/** the internal content handler for EDI */
 final class _EDIContentHandler extends DelegatingHandler {
 
   /** the hierarchical fsm stack */
