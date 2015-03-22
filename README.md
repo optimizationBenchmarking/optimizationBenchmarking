@@ -1,8 +1,16 @@
 # [optimizationBenchmarking](http://optimizationbenchmarking.github.io/optimizationBenchmarking/)
 
-[![Travis Build Status](https://img.shields.io/travis/optimizationBenchmarking/optimizationBenchmarking/master.svg)](https://travis-ci.org/optimizationBenchmarking/optimizationBenchmarking/)
-[![Codeship Build Status](https://img.shields.io/codeship/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05.svg)](https://codeship.com/projects/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05/status?branch=master)
-[![circleci Build Status](https://img.shields.io/circleci/project/optimizationBenchmarking/optimizationBenchmarking.svg)](https://circleci.com/gh/optimizationBenchmarking/optimizationBenchmarking)
+<table border="1" style="border-collapse:collapse"><tr>
+<td><a href="https://travis-ci.org/optimizationBenchmarking/optimizationBenchmarking">Travis CI Build</a></td>
+<td><a href="https://codeship.com/projects/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05/status?branch=master">Codeship Build</a></td>
+<td><a href="https://circleci.com/gh/optimizationBenchmarking/optimizationBenchmarking">CircleCI Build</a></td></tr>
+<tr><td>
+<a href="https://travis-ci.org/optimizationBenchmarking/optimizationBenchmarking/"><img alt="Travis CI Build Status" src="https://img.shields.io/travis/optimizationBenchmarking/optimizationBenchmarking/master.svg" /></a>
+</td><td>
+<a href="https://codeship.com/projects/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05/status?branch=master"><img alt="Codeship Build Status" src="https://img.shields.io/codeship/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05.svg"/></a>
+</td><td>
+<a href="https://circleci.com/gh/optimizationBenchmarking/optimizationBenchmarking"><img alt="CircleCI Build Status" src="https://img.shields.io/circleci/project/optimizationBenchmarking/optimizationBenchmarking.svg" /></a>
+</td></tr></table>
 
 This is the main repository of the optimizationBenchmarking.org tool suite.
 The optimizationBenchmarking.org tool suite supports researchers in
