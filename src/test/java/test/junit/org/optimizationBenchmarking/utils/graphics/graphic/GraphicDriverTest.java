@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
@@ -64,6 +65,8 @@ public abstract class GraphicDriverTest extends ToolTest<IGraphicDriver> {
       Assert.assertTrue(Files.exists(listener.m_path));
       Assert.assertTrue(Files.isRegularFile(listener.m_path));
     }
+
+    MemoryUtils.quickGC();
   }
 
   /** {@inheritDoc} */
