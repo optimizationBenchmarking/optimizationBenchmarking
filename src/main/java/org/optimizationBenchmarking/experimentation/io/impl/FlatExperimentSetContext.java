@@ -43,7 +43,7 @@ public class FlatExperimentSetContext {
   private static final int MODE_RUN = (FlatExperimentSetContext.MODE_RUNS + 1);
 
   /** the mode names */
-  private static final String[] MODE_NAMES = new String[FlatExperimentSetContext.MODE_RUNS + 1];
+  private static final String[] MODE_NAMES = new String[FlatExperimentSetContext.MODE_RUN + 1];
 
   static {
     FlatExperimentSetContext.MODE_NAMES[FlatExperimentSetContext.MODE_EXPERIMENT_SET] = "the root experiment set"; //$NON-NLS-1$

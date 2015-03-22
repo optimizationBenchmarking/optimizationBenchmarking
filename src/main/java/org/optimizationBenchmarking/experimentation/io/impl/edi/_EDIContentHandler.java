@@ -1,16 +1,10 @@
 package org.optimizationBenchmarking.experimentation.io.impl.edi;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.DimensionContext;
-import org.optimizationBenchmarking.experimentation.data.ExperimentContext;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.data.InstanceContext;
-import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
-import org.optimizationBenchmarking.experimentation.data.RunContext;
-import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.experimentation.io.impl.FlatExperimentSetContext;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
@@ -28,13 +22,10 @@ import org.xml.sax.SAXParseException;
 final class _EDIContentHandler extends DelegatingHandler {
 
   /** the hierarchical fsm stack */
-  private final ArrayList<HierarchicalFSM> m_stack;
+  private final FlatExperimentSetContext m_context;
 
   /** the internal string builder */
   private final MemoryTextOutput m_sb;
-
-  /** the id counter */
-  private volatile int m_id;
 
   /** are we inside a point */
   private int m_inPoint;
@@ -57,8 +48,7 @@ final class _EDIContentHandler extends DelegatingHandler {
   public _EDIContentHandler(final DelegatingHandler owner,
       final ExperimentSetContext esb, final IOJob job) {
     super(owner);
-    this.m_stack = new ArrayList<>();
-    this.m_stack.add(esb);
+    this.m_context = new FlatExperimentSetContext(esb);
     this.m_sb = new MemoryTextOutput();
     this.m_job = job;
     this.m_logger = job.getLogger();
@@ -107,12 +97,7 @@ final class _EDIContentHandler extends DelegatingHandler {
    */
   private final void __startBounds(final Attributes atts) {
     final String dim;
-    final ArrayList<HierarchicalFSM> stack;
-    final InstanceContext c;
     String lb, ub;
-
-    stack = this.m_stack;
-    c = ((InstanceContext) (stack.get(stack.size() - 1)));
 
     dim = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
         EDI.ATTRIBUTE_DIMENSION);
@@ -134,10 +119,10 @@ final class _EDIContentHandler extends DelegatingHandler {
 
       if ((lb != null) || (ub != null)) {
         if (lb != null) {
-          c.setLowerBound(dim, lb);
+          this.m_context.instanceSetLowerBound(dim, lb);
         }
         if (ub != null) {
-          c.setUpperBound(dim, ub);
+          this.m_context.instanceSetUpperBound(dim, lb);
         }
       }
     }
@@ -149,27 +134,16 @@ final class _EDIContentHandler extends DelegatingHandler {
    * @param atts
    *          the attributes
    */
-  @SuppressWarnings("resource")
   private final void __startDimension(final Attributes atts) {
-    final ArrayList<HierarchicalFSM> stack;
-    final DimensionContext d;
-    final HierarchicalFSM fsm;
     EPrimitiveType pt;
     String s;
     final Number lb, ub;
 
-    stack = this.m_stack;
-    fsm = stack.get(stack.size() - 1);
-    if (fsm instanceof DimensionContext) {
-      d = ((DimensionContext) fsm);
-    } else {
-      d = this.__pop(ExperimentSetContext.class).createDimension();
-      stack.add(d);
-    }
+    this.m_context.dimensionBegin(true);
 
     s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
         EDI.ATTRIBUTE_NAME);
-    d.setName(s);
+    this.m_context.dimensionSetName(s);
 
     if ((this.m_logger != null) && //
         (this.m_logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
@@ -180,14 +154,14 @@ final class _EDIContentHandler extends DelegatingHandler {
     s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
         EDI.ATTRIBUTE_DESCRIPTION);
     if (s != null) {
-      d.setDescription(s);
+      this.m_context.dimensionSetDescription(s);
     }
 
-    d.setType(EDI._parseDimensionType(//
+    this.m_context.dimensionSetType(EDI._parseDimensionType(//
         DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
             EDI.ATTRIBUTE_DIMENSION_TYPE)));
 
-    d.setDirection(EDI._parseDimensionDirection(//
+    this.m_context.dimensionSetDirection(EDI._parseDimensionDirection(//
         DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
             EDI.ATTRIBUTE_DIMENSION_DIRECTION)));
 
@@ -222,68 +196,13 @@ final class _EDIContentHandler extends DelegatingHandler {
       }
     }
 
-    d.setParser(NumberParser.createNumberParser(pt, lb, ub));
-  }
-
-  /**
-   * pop all elements until finding one of the given class, then return
-   * this element
-   * 
-   * @param clazz
-   *          the class
-   * @return the element (unclosed)
-   * @param <T>
-   *          the element type
-   */
-  @SuppressWarnings("resource")
-  private final <T extends HierarchicalFSM> T __pop(final Class<T> clazz) {
-    final ArrayList<HierarchicalFSM> stack;
-    HierarchicalFSM x;
-    int i;
-
-    stack = this.m_stack;
-    for (i = stack.size(); (--i) >= 0;) {
-      x = stack.get(i);
-      if (clazz.isInstance(x)) {
-        return clazz.cast(x);
-      }
-      stack.remove(i);
-      x.close();
-    }
-
-    throw new IllegalStateException("Did not find element of class " + //$NON-NLS-1$
-        TextUtils.className(clazz));
-  }
-
-  /**
-   * close all elements until and including finding one of the given class
-   * 
-   * @param clazz
-   *          the class
-   */
-  @SuppressWarnings("resource")
-  private final void __close(final Class<? extends HierarchicalFSM> clazz) {
-    final ArrayList<HierarchicalFSM> stack;
-    HierarchicalFSM x;
-    int i;
-
-    stack = this.m_stack;
-    for (i = stack.size(); (--i) >= 0;) {
-      x = stack.remove(i);
-      x.close();
-      if (clazz.isInstance(x)) {
-        return;
-      }
-    }
-
-    throw new IllegalStateException(
-        "Could not find and close element of class " + //$NON-NLS-1$
-            TextUtils.className(clazz));
+    this.m_context.dimensionSetParser(NumberParser.createNumberParser(pt,
+        lb, ub));
   }
 
   /** end the dimension */
   private final void __endDimension() {
-    this.__close(DimensionContext.class);
+    this.m_context.dimensionEnd();
   }
 
   /**
@@ -292,26 +211,14 @@ final class _EDIContentHandler extends DelegatingHandler {
    * @param atts
    *          the attributes
    */
-  @SuppressWarnings("resource")
   private final void __startExperiment(final Attributes atts) {
-    final ArrayList<HierarchicalFSM> stack;
-    final ExperimentContext d;
-    final HierarchicalFSM fsm;
     String s;
 
-    stack = this.m_stack;
-    fsm = stack.get(stack.size() - 1);
-
-    if (fsm instanceof ExperimentContext) {
-      d = ((ExperimentContext) fsm);
-    } else {
-      d = this.__pop(ExperimentSetContext.class).createExperiment();
-      stack.add(d);
-    }
+    this.m_context.experimentBegin(true);
 
     s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
         EDI.ATTRIBUTE_NAME);
-    d.setName(s);
+    this.m_context.experimentSetName(s);
 
     if ((this.m_logger != null) && //
         (this.m_logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
@@ -322,7 +229,7 @@ final class _EDIContentHandler extends DelegatingHandler {
     s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
         EDI.ATTRIBUTE_DESCRIPTION);
     if (s != null) {
-      d.setDescription(s);
+      this.m_context.experimentSetDescription(s);
     }
   }
 
@@ -330,7 +237,7 @@ final class _EDIContentHandler extends DelegatingHandler {
    * end the experiment
    */
   private final void __endExperiment() {
-    this.__close(ExperimentContext.class);
+    this.m_context.experimentEnd();
   }
 
   /**
@@ -339,25 +246,8 @@ final class _EDIContentHandler extends DelegatingHandler {
    * @param atts
    *          the attributes
    */
-  @SuppressWarnings("resource")
   private final void __startFeature(final Attributes atts) {
-    final ArrayList<HierarchicalFSM> stack;
-    final InstanceContext d;
-    final HierarchicalFSM fsm;
-
-    stack = this.m_stack;
-    fsm = stack.get(stack.size() - 1);
-
-    if (fsm instanceof InstanceContext) {
-      d = ((InstanceContext) fsm);
-    } else {
-      d = this.__pop(ExperimentSetContext.class).createInstance();
-      stack.add(d);
-      d.setName(String.valueOf(this.m_id++));
-    }
-
-    d.setFeatureValue(
-    //
+    this.m_context.instanceSetFeatureValue(//
         DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
             EDI.ATTRIBUTE_NAME),//
         DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
@@ -374,26 +264,14 @@ final class _EDIContentHandler extends DelegatingHandler {
    * @param atts
    *          the attributes
    */
-  @SuppressWarnings("resource")
   private final void __startInstance(final Attributes atts) {
-    final ArrayList<HierarchicalFSM> stack;
-    final InstanceContext d;
-    final HierarchicalFSM fsm;
     String s;
 
-    stack = this.m_stack;
-    fsm = stack.get(stack.size() - 1);
-
-    if (fsm instanceof InstanceContext) {
-      d = ((InstanceContext) fsm);
-    } else {
-      d = this.__pop(ExperimentSetContext.class).createInstance();
-      stack.add(d);
-    }
+    this.m_context.instanceBegin(true);
 
     s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
         EDI.ATTRIBUTE_NAME);
-    d.setName(s);
+    this.m_context.instanceSetName(s);
 
     if ((this.m_logger != null) && //
         (this.m_logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
@@ -404,13 +282,13 @@ final class _EDIContentHandler extends DelegatingHandler {
     s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
         EDI.ATTRIBUTE_DESCRIPTION);
     if (s != null) {
-      d.setDescription(s);
+      this.m_context.instanceSetDescription(s);
     }
   }
 
   /** end the instance */
   private final void __endInstance() {
-    this.__close(InstanceContext.class);
+    this.m_context.instanceEnd();
   }
 
   /**
@@ -419,61 +297,30 @@ final class _EDIContentHandler extends DelegatingHandler {
    * @param atts
    *          the attributes
    */
-  @SuppressWarnings("resource")
   private final void __startInstanceRuns(final Attributes atts) {
-    final ArrayList<HierarchicalFSM> stack;
-    final ExperimentContext c;
-    final InstanceRunsContext d;
-    final HierarchicalFSM fsm;
-
-    stack = this.m_stack;
-    fsm = stack.get(stack.size() - 1);
-
-    if (fsm instanceof ExperimentContext) {
-      c = ((ExperimentContext) fsm);
-    } else {
-      c = this.__pop(ExperimentSetContext.class).createExperiment();
-      stack.add(c);
-      c.setName(String.valueOf(this.m_id++));
-    }
-    d = c.createInstanceRuns();
-    stack.add(d);
-    d.setInstance(DelegatingHandler.getAttributeNormalized(atts,
-        EDI.NAMESPACE, EDI.ATTRIBUTE_INSTANCE));
+    this.m_context.runsBegin(true);
+    this.m_context.runsSetInstance(DelegatingHandler
+        .getAttributeNormalized(atts, EDI.NAMESPACE,
+            EDI.ATTRIBUTE_INSTANCE));
   }
 
   /** end the instance runs */
   private final void __endInstanceRuns() {
-    this.__close(InstanceRunsContext.class);
+    this.m_context.runsEnd();
   }
 
   /** start a run */
   private final void __startRun() {
-    this.m_stack.add(//
-        this.__pop(InstanceRunsContext.class).createRun());
+    this.m_context.runBegin(true);
   }
 
   /** end the run */
   private final void __endRun() {
-    this.__close(RunContext.class);
+    this.m_context.runEnd();
   }
 
   /** start a point */
-  @SuppressWarnings("resource")
   private final void __startPoint() {
-    final ArrayList<HierarchicalFSM> stack;
-    final HierarchicalFSM fsm;
-
-    stack = this.m_stack;
-    fsm = stack.get(stack.size() - 1);
-
-    checker: {
-      if (fsm instanceof RunContext) {
-        break checker;
-      }
-      stack.add(((InstanceRunsContext) fsm).createRun());
-    }
-
     if ((this.m_inPoint++) == 0) {
       this.m_sb.clear();
     }
@@ -481,13 +328,9 @@ final class _EDIContentHandler extends DelegatingHandler {
 
   /** end the point */
   private final void __endPoint() {
-    final ArrayList<HierarchicalFSM> stack;
     try {
-      if ((--this.m_inPoint) == 0) {
-        stack = this.m_stack;
-        ((RunContext) (stack.get(stack.size() - 1))).addDataPoint(//
-            TextUtils.normalize(this.m_sb.toString()));
-      }
+      this.m_context.runAddDataPoint(TextUtils.normalize(//
+          this.m_sb.toString()));
     } finally {
       this.m_sb.clear();
     }
@@ -508,25 +351,8 @@ final class _EDIContentHandler extends DelegatingHandler {
    * @param atts
    *          the attributes
    */
-  @SuppressWarnings("resource")
   private final void __startParameter(final Attributes atts) {
-    final ArrayList<HierarchicalFSM> stack;
-    final ExperimentContext d;
-    final HierarchicalFSM fsm;
-
-    stack = this.m_stack;
-    fsm = stack.get(stack.size() - 1);
-
-    if (fsm instanceof ExperimentContext) {
-      d = ((ExperimentContext) fsm);
-    } else {
-      d = this.__pop(ExperimentSetContext.class).createExperiment();
-      stack.add(d);
-      d.setName(String.valueOf(this.m_id++));
-    }
-
-    d.setParameterValue(
-    //
+    this.m_context.parameterSetValue(//
         DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
             EDI.ATTRIBUTE_NAME),//
         DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
