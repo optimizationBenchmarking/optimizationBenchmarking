@@ -122,7 +122,7 @@ final class _EDIContentHandler extends DelegatingHandler {
           this.m_context.instanceSetLowerBound(dim, lb);
         }
         if (ub != null) {
-          this.m_context.instanceSetUpperBound(dim, lb);
+          this.m_context.instanceSetUpperBound(dim, ub);
         }
       }
     }
