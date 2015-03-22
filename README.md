@@ -1,6 +1,6 @@
 # [optimizationBenchmarking](http://optimizationbenchmarking.github.io/optimizationBenchmarking/)
 
-<table border="1" style="border-collapse:collapse"><tr>
+<table border="1" style="border-collapse:collapse;margin-left:auto;margin-right:auto"><tr>
 <td><a href="https://travis-ci.org/optimizationBenchmarking/optimizationBenchmarking">Travis CI Build</a></td>
 <td><a href="https://codeship.com/projects/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05/status?branch=master">Codeship Build</a></td>
 <td><a href="https://circleci.com/gh/optimizationBenchmarking/optimizationBenchmarking">CircleCI Build</a></td></tr>
