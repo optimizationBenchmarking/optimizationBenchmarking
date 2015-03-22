@@ -11,6 +11,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.optimizationBenchmarking.utils.MemoryUtils;
 
 /**
  * the base class for tests of instance objects
@@ -25,7 +26,7 @@ public class InstanceTest<T> extends TestBase {
   private static final Object VISITED = new Object();
 
   /** the owner */
-  private InstanceTest<T> m_owner;
+  private final InstanceTest<T> m_owner;
 
   /** will the {@link #getInstance()} return singletons? */
   private final boolean m_isSingleton;
@@ -34,7 +35,7 @@ public class InstanceTest<T> extends TestBase {
   private final boolean m_isModifiable;
 
   /** an instance */
-  private T m_instance;
+  private final T m_instance;
 
   /** the constructor */
   protected InstanceTest() {
@@ -503,12 +504,9 @@ public class InstanceTest<T> extends TestBase {
     this.testCloneEquals();
   }
 
-  /** {@inheritDoc} */
+  /** perform some GC to reduce memory footprint */
   @AfterClass
-  @Override
-  public void afterClass() {
-    this.m_instance = null;
-    this.m_owner = null;
-    super.afterClass();
+  public static void gcAfterClass() {
+    MemoryUtils.quickGC();
   }
 }
