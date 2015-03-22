@@ -1,0 +1,4 @@
+# The optimizationBenchmarking.org tool suite is a Java Project
+machine:
+  java:
+    version: openjdk7
