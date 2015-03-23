@@ -7,11 +7,9 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Random;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.optimizationBenchmarking.utils.MemoryUtils;
 
 /**
  * the base class for tests of instance objects
@@ -502,11 +500,5 @@ public class InstanceTest<T> extends TestBase {
 
     this.testSerializationAndDeserializationEquals();
     this.testCloneEquals();
-  }
-
-  /** perform some GC to reduce memory footprint */
-  @AfterClass
-  public static void gcAfterClass() {
-    MemoryUtils.quickGC();
   }
 }
