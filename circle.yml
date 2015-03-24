@@ -6,6 +6,11 @@ machine:
     JAVA_OPTS: -Xms1536m -Xmx1536m
     MAVEN_OPTS: -Xms1536m -Xmx1536m
     _JAVA_OPTIONS: -Xms1536m -Xmx1536m
+# Here we try to install texlive in order to be able to
+# test the LaTeX tool chains.
+  pre:
+    - sudo apt-get update
+    - sudo apt-get install texlive
     
 # We set a high timeout to prevent the test from being
 # terminated unexpectedly.
@@ -13,10 +18,3 @@ test:
   override:
     - mvn test --fail-at-end:
         timeout: 10000
-        
-# Here we try to install texlive in order to be able to
-# test the LaTeX tool chains.
-machine:
-  pre:
-    - sudo apt-get update
-    - sudo apt-get install texlive
