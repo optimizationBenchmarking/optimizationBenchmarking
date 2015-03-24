@@ -224,6 +224,8 @@
 					<failIfNoTests>true</failIfNoTests>
 					<trimStackTrace>false</trimStackTrace>
 					<excludedGroups>test.junit.CategorySlowTests</excludedGroups>
+					<forkMode>pertest</forkMode>
+					<argLine>-Xms1536m -Xmx1536m</argLine>
 				</configuration>
 			</plugin>
 

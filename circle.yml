@@ -1,8 +1,15 @@
+# We set the environment variable JAVA_OPTS to reduce
+# the memory footprint in order to prevent unexpected
+# test termination.
 machine:
   environment:
-    JAVA_OPTS: -Xms2g -Xmx2g
+    JAVA_OPTS: -Xms1536m -Xmx1536m
+    MAVEN_OPTS: -Xms1536m -Xmx1536m
+    _JAVA_OPTIONS: -Xms1536m -Xmx1536m
     
+# We set a high timeout to prevent the test from being
+# terminated unexpectedly.
 test:
   override:
-    - mvn test:
-        timeout: 1000
+    - mvn test --fail-at-end:
+        timeout: 10000
