@@ -15,5 +15,5 @@ cache:
   
 # install texlive: we can use this to test LaTeX document generation
 install:
-  - sudo apt-get update
-  - sudo apt-get install texlive
+  - sudo apt-get update -y
+  - sudo apt-get install texlive -y
