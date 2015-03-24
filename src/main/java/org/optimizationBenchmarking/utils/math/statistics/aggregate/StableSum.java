@@ -48,6 +48,8 @@ import org.optimizationBenchmarking.utils.math.BasicNumber;
  * <li>Analogously, the case of underflow, i.e., the sum becoming too large
  * negative to be held in a non-infinite {@code double}, is handled.</li>
  * </ol>
+ * </li>
+ * </ol>
  */
 public final class StableSum extends ScalarAggregate {
   /** the serial version uid */

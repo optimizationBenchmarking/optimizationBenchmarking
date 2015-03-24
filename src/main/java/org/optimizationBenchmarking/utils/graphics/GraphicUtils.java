@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.error.ErrorUtils;
 /** a utility class for graphics stuff */
 public final class GraphicUtils {
 
-  /** the default renHashMap<K, V>hints */
+  /** the default rendering hints */
   private static final RenderingHintHolder[] DEFAULT_RENDERING_HINTS;
 
   static {

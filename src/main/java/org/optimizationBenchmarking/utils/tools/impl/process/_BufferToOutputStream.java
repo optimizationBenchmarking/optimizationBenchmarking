@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer;
  * A thread shoveling data from a
  * {@link org.optimizationBenchmarking.utils.parallel.ByteProducerConsumerBuffer
  * buffer} to an {@link java.io.OutputStream} as long as
- * <code>{@link #m_mode}&leq;1</code>. As soon as
+ * <code>{@link #m_mode}&le;1</code>. As soon as
  * <code>{@link #m_mode}==2</code>, it will cease all activity.
  */
 final class _BufferToOutputStream extends _WorkerThread {

@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.error.RethrowMode;
 /**
  * A thread shoveling data from an {@link java.io.InputStream} to the
  * Nirvana, by {@link java.io.InputStream#skip(long) skipping} over it as
- * long as <code>{@link #m_mode}&leq;1</code>. As soon as
+ * long as <code>{@link #m_mode}&le;1</code>. As soon as
  * <code>{@link #m_mode}=2</code>, it will cease all activity.
  */
 final class _DiscardInputStream extends _WorkerThread {

@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * A thread shoveling data from an {@link java.io.InputStream} to a
  * {@link java.util.logging.Logger} as long as
- * <code>{@link #m_mode}<=1</code>. As soon as
+ * <code>{@link #m_mode}&le;1</code>. As soon as
  * <code>{@link #m_mode}=2</code>, all activity is ceased.
  */
 final class _InputStreamToLogger extends _WorkerThread {

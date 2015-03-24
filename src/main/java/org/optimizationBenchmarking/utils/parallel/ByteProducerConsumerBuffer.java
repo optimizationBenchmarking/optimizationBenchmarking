@@ -4,12 +4,15 @@ package org.optimizationBenchmarking.utils.parallel;
  * <p>
  * A producer/consumer buffer backed by a byte array, intended to be used
  * by different threads: A producer
- * {@link #writeToBuffer(byte[], int, int) writes} data into the buffer and
- * a consumer {@link #readFromBuffer(byte[], int, int)} reads the data from
- * the buffer. {@link #writeToBuffer(byte[], int, int) writing} will never
- * block while {@link #readFromBuffer(byte[], int, int) reading} blocks
- * until either data becomes available (has been written) or the buffer is
- * closed.
+ * {@link org.optimizationBenchmarking.utils.parallel.ProducerConsumerBuffer#writeToBuffer(Object, int, int)
+ * writes} data into the buffer and a consumer
+ * {@link org.optimizationBenchmarking.utils.parallel.ProducerConsumerBuffer#readFromBuffer(Object, int, int)}
+ * reads the data from the buffer.
+ * {@link org.optimizationBenchmarking.utils.parallel.ProducerConsumerBuffer#writeToBuffer(Object, int, int)
+ * writing} will never block while
+ * {@link org.optimizationBenchmarking.utils.parallel.ProducerConsumerBuffer#readFromBuffer(Object, int, int)
+ * reading} blocks until either data becomes available (has been written)
+ * or the buffer is closed.
  * </p>
  */
 public final class ByteProducerConsumerBuffer extends

@@ -41,7 +41,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * that object when the graphic context is released.
  * 
  * @param <GT>
- *          the proxy graphics type <@javaAuthorVersion/>
+ *          the proxy graphics type
  */
 public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 

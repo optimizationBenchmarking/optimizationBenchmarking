@@ -18,6 +18,7 @@ public class CompiledChart extends CompiledTitledElement {
    * @param titleFont
    *          the title font, or {@code null} if no specific font is set
    * @param legendMode
+   *          the legend mode
    */
   protected CompiledChart(final String title, final Font titleFont,
       final ELegendMode legendMode) {

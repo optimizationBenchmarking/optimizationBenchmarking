@@ -14,7 +14,6 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * <p>
  * Units of time and corresponding conversion factors according.
  * </p>
- * <@citations/>
  */
 public enum ETime implements IUnit {
 

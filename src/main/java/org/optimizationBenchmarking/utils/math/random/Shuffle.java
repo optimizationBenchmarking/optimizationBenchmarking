@@ -132,10 +132,12 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed.</p>
+   * are uniformly randomly distributed.
+   * </p>
    * <p>
    * This method therefore applies the <a
    * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
@@ -151,9 +153,9 @@ public class Shuffle {
    * @param start
    *          the start index
    * @param count
-   *          the number of elements to be randomized: always &geq; 1
+   *          the number of elements to be randomized: always &ge; 1
    * @param length
-   *          the array length: always &geq; 1
+   *          the array length: always &ge; 1
    * @param random
    *          the random number generator
    */
@@ -307,10 +309,12 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed.</p>
+   * are uniformly randomly distributed.
+   * </p>
    * <p>
    * This method therefore applies the <a
    * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
@@ -326,9 +330,9 @@ public class Shuffle {
    * @param start
    *          the start index
    * @param count
-   *          the number of elements to be randomized: always &geq; 1
+   *          the number of elements to be randomized: always &ge; 1
    * @param length
-   *          the array length: always &geq; 1
+   *          the array length: always &ge; 1
    * @param random
    *          the random number generator
    */
@@ -482,10 +486,12 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed.</p>
+   * are uniformly randomly distributed.
+   * </p>
    * <p>
    * This method therefore applies the <a
    * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
@@ -501,9 +507,9 @@ public class Shuffle {
    * @param start
    *          the start index
    * @param count
-   *          the number of elements to be randomized: always &geq; 1
+   *          the number of elements to be randomized: always &ge; 1
    * @param length
-   *          the array length: always &geq; 1
+   *          the array length: always &ge; 1
    * @param random
    *          the random number generator
    */
@@ -658,10 +664,12 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed.</p>
+   * are uniformly randomly distributed.
+   * </p>
    * <p>
    * This method therefore applies the <a
    * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
@@ -677,9 +685,9 @@ public class Shuffle {
    * @param start
    *          the start index
    * @param count
-   *          the number of elements to be randomized: always &geq; 1
+   *          the number of elements to be randomized: always &ge; 1
    * @param length
-   *          the array length: always &geq; 1
+   *          the array length: always &ge; 1
    * @param random
    *          the random number generator
    */
@@ -833,10 +841,12 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed.</p>
+   * are uniformly randomly distributed.
+   * </p>
    * <p>
    * This method therefore applies the <a
    * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
@@ -852,9 +862,9 @@ public class Shuffle {
    * @param start
    *          the start index
    * @param count
-   *          the number of elements to be randomized: always &geq; 1
+   *          the number of elements to be randomized: always &ge; 1
    * @param length
-   *          the array length: always &geq; 1
+   *          the array length: always &ge; 1
    * @param random
    *          the random number generator
    */
@@ -1009,10 +1019,12 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed.</p>
+   * are uniformly randomly distributed.
+   * </p>
    * <p>
    * This method therefore applies the <a
    * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
@@ -1028,9 +1040,9 @@ public class Shuffle {
    * @param start
    *          the start index
    * @param count
-   *          the number of elements to be randomized: always &geq; 1
+   *          the number of elements to be randomized: always &ge; 1
    * @param length
-   *          the array length: always &geq; 1
+   *          the array length: always &ge; 1
    * @param random
    *          the random number generator
    */
@@ -1187,10 +1199,12 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed.</p>
+   * are uniformly randomly distributed.
+   * </p>
    * <p>
    * This method therefore applies the <a
    * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
@@ -1206,9 +1220,9 @@ public class Shuffle {
    * @param start
    *          the start index
    * @param count
-   *          the number of elements to be randomized: always &geq; 1
+   *          the number of elements to be randomized: always &ge; 1
    * @param length
-   *          the array length: always &geq; 1
+   *          the array length: always &ge; 1
    * @param random
    *          the random number generator
    */
@@ -1362,10 +1376,12 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed.</p>
+   * are uniformly randomly distributed.
+   * </p>
    * <p>
    * This method therefore applies the <a
    * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
@@ -1381,9 +1397,9 @@ public class Shuffle {
    * @param start
    *          the start index
    * @param count
-   *          the number of elements to be randomized: always &geq; 1
+   *          the number of elements to be randomized: always &ge; 1
    * @param length
-   *          the array length: always &geq; 1
+   *          the array length: always &ge; 1
    * @param random
    *          the random number generator
    */
@@ -1539,10 +1555,12 @@ public class Shuffle {
   }
 
   /**
+   * <p>
    * This method does the work of randomly shuffling a sub-sequence of an
    * array or permutation of {@code bytes}. After this procedure, the
    * {@code count} elements of the array beginning at index {@code start}
-   * are uniformly randomly distributed.</p>
+   * are uniformly randomly distributed.
+   * </p>
    * <p>
    * This method therefore applies the <a
    * href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">
@@ -1558,9 +1576,9 @@ public class Shuffle {
    * @param start
    *          the start index
    * @param count
-   *          the number of elements to be randomized: always &geq; 1
+   *          the number of elements to be randomized: always &ge; 1
    * @param length
-   *          the array length: always &geq; 1
+   *          the array length: always &ge; 1
    * @param random
    *          the random number generator
    */

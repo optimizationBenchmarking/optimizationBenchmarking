@@ -154,8 +154,8 @@ public class FontProperties extends HashObject {
    * style features. Examples for this are the LaTeX fonts such as
    * {@code cmbx}, {@code cmti}, etc. Although the documentation of
    * {@link java.awt.Font} states that
-   * <q>The style argument is merged with the specified face's style, not
-   * added or subtracted.</q>, this may not work: The fonts may not be
+   * <em>The style argument is merged with the specified face's style, not
+   * added or subtracted.</em>, this may not work: The fonts may not be
    * annotated as bold while being bold, for instance, resulting in
    * super-bold fonts if loaded in the &quot;bold&quot; way. Other fonts
    * may already be italic, slanted, or oblique, but get italic-ized

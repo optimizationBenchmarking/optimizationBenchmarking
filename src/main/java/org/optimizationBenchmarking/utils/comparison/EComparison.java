@@ -735,8 +735,8 @@ public enum EComparison {
   /**
    * The {@link #toString()} method returns a string which can replace
    * {@code [relation]} in the following sentence {@code "x [relation] y}
-   * in the case that {@link #compare(Object, Object)
-   * <code>compare(X, Y)</code>} returns {@code true}.
+   * in the case that {@link #compare(Object, Object) compare(X, Y)}
+   * returns {@code true}.
    * 
    * @return a string properly representing the comparison relationship
    */

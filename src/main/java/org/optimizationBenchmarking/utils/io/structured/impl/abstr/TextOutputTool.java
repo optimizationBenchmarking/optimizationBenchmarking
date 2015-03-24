@@ -76,6 +76,7 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
    * @param writer
    *          the writer to write to
    * @throws Throwable
+   *           if I/O fails
    */
   private void __writer(final IOJob job, final S data, final Writer writer)
       throws Throwable {
@@ -99,6 +100,7 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
    * @param textOut
    *          the ITextOutput to write to
    * @throws Throwable
+   *           if I/O fails
    */
   protected void text(final IOJob job, final S data,
       final ITextOutput textOut) throws Throwable {

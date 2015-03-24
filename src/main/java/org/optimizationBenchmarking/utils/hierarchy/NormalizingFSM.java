@@ -291,6 +291,8 @@ public class NormalizingFSM extends HierarchicalFSM {
    * @param input
    *          the input object to be normalized
    * @return the normalization result
+   * @param <T>
+   *          the instance class
    */
   protected <T> T normalizeLocal(final T input) {
     return this.__normalize(input, 1, null);
@@ -308,6 +310,8 @@ public class NormalizingFSM extends HierarchicalFSM {
    * @param input
    *          the input object
    * @return the result
+   * @param <T>
+   *          the instance class
    */
   protected <T> T doNormalizePersistently(final T input) {
     return input;

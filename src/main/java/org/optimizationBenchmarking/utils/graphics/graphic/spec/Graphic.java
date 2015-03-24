@@ -996,7 +996,9 @@ public abstract class Graphic extends Graphics2D implements Closeable,
      * Translate the coordinate system
      * 
      * @param x
+     *          the translation along the x-axis
      * @param y
+     *          the translation along the y-axis
      */
     Translated(final double x, final double y) {
       super();

@@ -184,6 +184,7 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
    * @param encoding
    *          the encoding
    * @throws Throwable
+   *           if I/O fails
    */
   private final void __stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding)
@@ -224,6 +225,7 @@ public class StreamOutputTool<S> extends FileOutputTool<S> implements
    * @param encoding
    *          the encoding
    * @throws Throwable
+   *           if I/O fails
    */
   protected void stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding)

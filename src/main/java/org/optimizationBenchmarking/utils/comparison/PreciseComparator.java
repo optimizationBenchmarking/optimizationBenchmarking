@@ -50,7 +50,7 @@ public class PreciseComparator<T> implements Comparator<T> {
    *         SAME} if both values are {@code null},</li>
    *         <li>
    *         {@link org.optimizationBenchmarking.utils.comparison.EComparison#GREATER
-   *         GREATER} if {@code a==null} but {@code b!=null},></li>
+   *         GREATER} if {@code a==null} but {@code b!=null},</li>
    *         <li>
    *         {@link org.optimizationBenchmarking.utils.comparison.EComparison#LESS
    *         LESS} if {@code a!=null} and {@code b==null},</li>

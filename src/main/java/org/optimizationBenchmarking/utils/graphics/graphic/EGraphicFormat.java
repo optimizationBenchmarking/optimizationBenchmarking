@@ -179,7 +179,7 @@ public enum EGraphicFormat implements IFileType {
   ;
 
   /**
-   * The default color model: {@value} . See
+   * The default color model. See
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder#setColorModel(EColorModel)}
    * .
    */

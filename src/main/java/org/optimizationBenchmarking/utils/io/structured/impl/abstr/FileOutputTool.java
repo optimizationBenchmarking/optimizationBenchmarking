@@ -87,6 +87,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
    * @param archiveType
    *          the archive type to use
    * @throws Throwable
+   *           if I/O fails
    */
   void _stream(final IOJob job, final S data, final OutputStream stream,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)

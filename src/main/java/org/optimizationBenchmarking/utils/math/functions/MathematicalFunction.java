@@ -349,7 +349,7 @@ public abstract class MathematicalFunction implements Serializable {
    * 
    * @param index
    *          the index of the parameter with
-   *          <code>0&leq;index&lt;{@link #getMaxArity()}</code>
+   *          <code>0&le;index&lt;{@link #getMaxArity()}</code>
    * @return the inverse function, if it exists, {@code null} otherwise
    */
   public MathematicalFunction invertFor(final int index) {
@@ -373,7 +373,7 @@ public abstract class MathematicalFunction implements Serializable {
    * 
    * @param index
    *          the index of the parameter with
-   *          <code>0&leq;index&lt;{@link #getMaxArity()}</code>
+   *          <code>0&le;index&lt;{@link #getMaxArity()}</code>
    * @return the derivative function, if it exists, {@code null} otherwise
    */
   public MathematicalFunction derivativeFor(final int index) {
@@ -392,7 +392,7 @@ public abstract class MathematicalFunction implements Serializable {
    * 
    * @param index
    *          the index of the parameter with
-   *          <code>0&leq;index&lt;{@link #getMaxArity()}</code>
+   *          <code>0&le;index&lt;{@link #getMaxArity()}</code>
    * @return the integral function, if it exists, {@code null} otherwise
    */
   public MathematicalFunction integrateFor(final int index) {

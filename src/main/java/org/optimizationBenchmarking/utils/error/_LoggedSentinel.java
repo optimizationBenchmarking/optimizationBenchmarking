@@ -36,6 +36,7 @@ final class _LoggedSentinel extends Throwable {
    * @param level
    *          the log level
    * @param message
+   *          the logged message
    */
   private _LoggedSentinel(final Logger logger, final Level level,
       final String message) {

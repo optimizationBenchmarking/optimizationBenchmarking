@@ -68,9 +68,9 @@ public interface IGraphicBuilder extends IDocumentProducerJobBuilder {
    * .
    * </p>
    * <p>
-   * If this parameter is not set, the default value for DPI is used:
-   * {@value org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#DEFAULT_DPI}
-   * .
+   * If this parameter is not set, the
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#DEFAULT_DPI
+   * default value} for DPI is used.
    * </p>
    * 
    * @param dotsPerInch

@@ -1243,7 +1243,7 @@ public final class PathUtils {
       }
     }
 
-    /** {@iheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public final FileVisitResult visitFile(final Path file,
         final BasicFileAttributes attrs) {
@@ -1255,7 +1255,7 @@ public final class PathUtils {
       return FileVisitResult.CONTINUE;
     }
 
-    /** {@iheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public final FileVisitResult visitFileFailed(final Path file,
         final IOException exc) {
@@ -1270,7 +1270,7 @@ public final class PathUtils {
       return FileVisitResult.CONTINUE;
     }
 
-    /** {@iheritDoc} */
+    /** {@inheritDoc} */
     @Override
     public final FileVisitResult postVisitDirectory(final Path dir,
         final IOException exc) {

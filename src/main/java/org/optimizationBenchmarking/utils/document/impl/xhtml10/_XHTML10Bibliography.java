@@ -24,7 +24,9 @@ import org.optimizationBenchmarking.utils.text.charset.QuotationMarks;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
- * The appendr for bibliography. <@javaAuthorVersion/>
+ * This class renders a
+ * {@link org.optimizationBenchmarking.utils.bibliography.data.Bibliography}
+ * to XHTML 1.0.
  */
 final class _XHTML10Bibliography {
 

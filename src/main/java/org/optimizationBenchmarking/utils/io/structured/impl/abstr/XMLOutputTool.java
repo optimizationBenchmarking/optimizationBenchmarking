@@ -56,6 +56,7 @@ public class XMLOutputTool<S> extends TextOutputTool<S> implements
    * @param xmlBase
    *          the XMLBase to write to
    * @throws Throwable
+   *           if I/O fails
    */
   protected void xml(final IOJob job, final S data, final XMLBase xmlBase)
       throws Throwable {

@@ -526,6 +526,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    * @param archiveType
    *          should we compress / expect compression?
    * @throws Throwable
+   *           if I/O fails
    */
   void _path(final IOJob job, final D data, final Path path,
       final BasicFileAttributes attributes,

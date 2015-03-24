@@ -104,6 +104,8 @@ public final class ReflectionUtils {
    * @param instance
    *          the object
    * @return the deep-cloned object
+   * @param <T>
+   *          the class of the object to be cloned
    * @throws IllegalArgumentException
    *           if the object cannot be cloned
    * @throws OutOfMemoryError
@@ -546,6 +548,8 @@ public final class ReflectionUtils {
    * @param field
    *          the field
    * @return the value
+   * @param <T>
+   *          the class of the object to be obtained
    * @throws IllegalArgumentException
    *           the the argument is illegal
    * @throws ReflectiveOperationException
@@ -590,6 +594,8 @@ public final class ReflectionUtils {
    * @param method
    *          the method
    * @return the value
+   * @param <T>
+   *          the class of the object to be obtained
    * @throws IllegalArgumentException
    *           the the argument is illegal
    * @throws ReflectiveOperationException
@@ -643,6 +649,8 @@ public final class ReflectionUtils {
    * @param constructor
    *          the constructor
    * @return the value
+   * @param <T>
+   *          the class of the object to be obtained
    * @throws IllegalArgumentException
    *           the the argument is illegal
    * @throws ReflectiveOperationException

@@ -3,11 +3,11 @@ package org.optimizationBenchmarking.utils.text.transformations;
 /**
  * A class we use to load normalize characters, i.e., to translate all
  * characters to their names. This turns complex unicode character such as
- * &quot;<code>&#x109</code>&quot; to strings such as
- * &quot;LatinSmallLetterCWithCircumflex&quot; and &quot;
- * <code>&#xd7d4;</code>&quot; to &quot;HangulJongseongTikeutThieuth&quot;,
- * i.e., to something which can safely appear in file names, urls, and
- * other identifiers.
+ * hexadecimal code point <code>109</code> to strings such as
+ * &quot;LatinSmallLetterCWithCircumflex&quot; and hexadecimal code point
+ * <code>d7d4</code> to &quot;HangulJongseongTikeutThieuth&quot;, i.e., to
+ * something which can safely appear in file names, urls, and other
+ * identifiers.
  */
 public final class NormalCharTransformer extends LookupCharTransformer {
 

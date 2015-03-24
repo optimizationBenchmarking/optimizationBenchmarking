@@ -30,7 +30,6 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
  * trying to write to a full {@code stdin} buffer.
  * </p>
  * <p>
- * <p>
  * With this we have the ingredients for mayham: Let's say we are waiting
  * for output from the external process, i.e., trying to read its
  * {@code stdout}. However, the process has written much to its

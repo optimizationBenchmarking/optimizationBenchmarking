@@ -145,8 +145,8 @@ public enum EFigureSize {
    * in advance, it is impossible to compute sizes of, e.g., 2*2 figures,
    * so that all of them fit on a page. Instead, we try to leave some space
    * for captions and hope for the best. (This is why this method is called
-   * {@link #approximateSize(PageDimension) <code>approximateSize</code>}
-   * and not <code>getSize</code>).
+   * {@link #approximateSize(PageDimension) approximateSize} and not
+   * <code>getSize</code>).
    * 
    * @param page
    *          the page size dimensions

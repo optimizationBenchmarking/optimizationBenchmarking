@@ -118,6 +118,7 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
    * @param source
    *          the InputSource to read from
    * @throws Throwable
+   *           if I/O fails
    */
   private final void __xml(final IOJob job, final S data,
       final InputSource source) throws Throwable {

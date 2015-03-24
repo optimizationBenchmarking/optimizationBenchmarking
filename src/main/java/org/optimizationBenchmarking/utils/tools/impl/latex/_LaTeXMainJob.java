@@ -44,10 +44,15 @@ final class _LaTeXMainJob extends LaTeXJob {
    * create the main job
    * 
    * @param mainFile
+   *          the main file
    * @param loop
+   *          the main loop: commands to be repeated until nothing changes
    * @param refine
+   *          the commands for finalizing the document
    * @param listener
+   *          the listener
    * @param logger
+   *          the logger
    */
   _LaTeXMainJob(final Path mainFile,
       final _LaTeXToolChainComponent[] loop,

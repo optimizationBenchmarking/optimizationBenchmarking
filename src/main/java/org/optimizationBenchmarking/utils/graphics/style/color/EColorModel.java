@@ -2,7 +2,10 @@ package org.optimizationBenchmarking.utils.graphics.style.color;
 
 import java.awt.image.BufferedImage;
 
-/** the type of image supported by the xhtml driver<@javaAuthorVersion/> */
+/**
+ * This enum holds some constants for the color models which may be
+ * supported by our graphic drivers.
+ */
 public enum EColorModel {
 
   /** 8 bit gray scale */

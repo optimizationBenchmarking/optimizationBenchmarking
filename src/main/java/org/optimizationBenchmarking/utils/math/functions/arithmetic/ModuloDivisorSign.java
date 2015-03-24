@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
  * </p>
  * <h2>References</h2>
  * <ol>
- * <li><div><span id="cite_K1997FA" />Donald Ervin Knuth: <span
+ * <li><div id="cite_K1997FA">Donald Ervin Knuth: <span
  * style="font-style:italic;font-family:cursive;">&ldquo;Fundamental
  * Algorithms,&rdquo;</span> 1997, volume 1 of The Art of Computer
  * Programming (TAOCP), Boston, MA, USA: Addison-Wesley Longman Publishing
