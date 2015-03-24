@@ -11,3 +11,9 @@ jdk:
 cache:
   directories:
   - $HOME/.m2
+  
+  
+# install texlive: we can use this to test LaTeX document generation
+install:
+  - sudo apt-get update
+  - sudo apt-get install texlive

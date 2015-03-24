@@ -100,6 +100,12 @@ public class LaTeX extends FileProducerTool implements
     return new LaTeXJobBuilder();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "LaTeX Tool Chain"; //$NON-NLS-1$
+  }
+
   /**
    * Get the globally shared instance of the LaTeX tool
    * 

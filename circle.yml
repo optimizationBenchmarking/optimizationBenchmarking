@@ -13,3 +13,10 @@ test:
   override:
     - mvn test --fail-at-end:
         timeout: 10000
+        
+# Here we try to install texlive in order to be able to
+# test the LaTeX tool chains.
+dependencies:
+  post:
+    - sudo apt-get update
+    - sudo apt-get install texlive
