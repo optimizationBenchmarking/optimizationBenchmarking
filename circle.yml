@@ -5,4 +5,4 @@ machine:
 test:
   override:
     - mvn test
-       timeout: 1000
+        timeout: 1000
