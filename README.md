@@ -3,6 +3,7 @@
 [![Travis CI Build Status](https://img.shields.io/travis/optimizationBenchmarking/optimizationBenchmarking/master.svg)](https://travis-ci.org/optimizationBenchmarking/optimizationBenchmarking/)
 [![Codeship Build Status](https://img.shields.io/codeship/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05.svg)](https://codeship.com/projects/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05/status?branch=master)
 [![CircleCI Build Status](https://img.shields.io/circleci/project/optimizationBenchmarking/optimizationBenchmarking.svg)](https://circleci.com/gh/optimizationBenchmarking/optimizationBenchmarking)
+[![Semaphore Build Status](https://semaphoreci.com/api/v1/projects/7e98df8c-dc67-416f-a660-cb6f803fc3cf/380468/shields_badge.svg)](https://semaphoreci.com/thomasweise/optimizationbenchmarking)
 
 This is the main repository of the optimizationBenchmarking.org tool suite.
 The optimizationBenchmarking.org tool suite supports researchers in

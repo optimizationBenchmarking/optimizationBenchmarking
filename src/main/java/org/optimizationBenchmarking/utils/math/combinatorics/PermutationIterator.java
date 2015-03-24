@@ -8,13 +8,10 @@ import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
 /**
  * This iterator enumerates all permutations of a given length. It starts
  * with a canonical permutation and enumerates all possible permutations
- * one by one. The implementation here uses <a href=
- * "http://en.wikipedia.org/wiki/Steinhaus-Johnson-Trotter_algorithm#Even.27s_speedup"
- * >Even's Speedup</a><@cite "E1973AC"/> of the <a href=
- * "http://en.wikipedia.org/wiki/Steinhaus-Johnson-Trotter_algorithm"
- * >Steinhaus-Johnson-Trotter Algorithm</a>. Even's Speedup allows us to
- * get the next permutation from the current permutation by performing a
- * single, adjacent swap (i.e., exchanging two neighboring elements).
+ * one by one. This implementation here uses Even's Speedup of the
+ * Steinhaus-Johnson-Trotter Algorithm. Even's Speedup allows us to get the
+ * next permutation from the current permutation by performing a single,
+ * adjacent swap (i.e., exchanging two neighboring elements).
  */
 public final class PermutationIterator extends BasicIterator<int[]> {
 

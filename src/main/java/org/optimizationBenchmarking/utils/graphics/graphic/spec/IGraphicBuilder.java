@@ -109,9 +109,9 @@ public interface IGraphicBuilder extends IDocumentProducerJobBuilder {
    * ignore it.
    * </p>
    * <p>
-   * If this parameter is not set, the default color model is used:
-   * {@value org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#DEFAULT_COLOR_MODEL}
-   * .
+   * If this parameter is not set, the
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#DEFAULT_COLOR_MODEL
+   * default color model} is used.
    * </p>
    * 
    * @param colorModel
