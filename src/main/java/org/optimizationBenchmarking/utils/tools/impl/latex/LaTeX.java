@@ -190,59 +190,58 @@ public class LaTeX extends FileProducerTool implements
     final _LaTeXToolChainComponent[] refine;
     IFileType[] required;
 
-    canDo: {
+    loop = new ArrayList<>();
 
-      loop = new ArrayList<>();
-
-      // bibtex is the only ELaTeXFileType we care about
-      if (types.remove(ELaTeXFileType.BIB)) {
-        bibtex = LaTeX.__bibtex();
-        if (bibtex == null) {
-          break canDo;
-        }
-        loop.add(bibtex);
+    // bibtex is the only ELaTeXFileType we care about
+    if (types.remove(ELaTeXFileType.BIB)) {
+      bibtex = LaTeX.__bibtex();
+      if (bibtex == null) {
+        return null;
       }
-
-      // to others we don't care
-      types.removeAll(ELaTeXFileType.INSTANCES);
-      required = types.toArray(new IFileType[types.size()]);
-      main = LaTeX.__tex(required);
-      required = null;
-
-      if (main == null) {
-        break canDo;
-      }
-
-      switch (main._produces()) {
-        case PDF: {
-          refine = null;
-          break;
-        }
-        case DVI: {
-          refine = LaTeX.__dvi2pdf();
-          if (refine == null) {
-            break canDo;
-          }
-          break;
-        }
-        case PS: {
-          refine = LaTeX.__ps2pdf();
-          if (refine == null) {
-            break canDo;
-          }
-          break;
-        }
-        default: {
-          break canDo;
-        }
-      }
-
-      loop.add(0, main);
-
-      return new _LaTeXToolChainComponent[][] {
-          loop.toArray(new _LaTeXToolChainComponent[loop.size()]), refine };
+      loop.add(bibtex);
     }
-    return null;
+
+    // to others we don't care
+    types.removeAll(ELaTeXFileType.INSTANCES);
+    required = types.toArray(new IFileType[types.size()]);
+    main = LaTeX.__tex(required);
+
+    if (main == null) {
+      return null;
+    }
+
+    required = null;
+    switch (main._produces()) {
+      case PDF: {
+        refine = null;
+        break;
+      }
+
+      case DVI: {
+        refine = LaTeX.__dvi2pdf();
+        if (refine == null) {
+          return null;
+        }
+        break;
+      }
+
+      case PS: {
+        refine = LaTeX.__ps2pdf();
+        if (refine == null) {
+          return null;
+        }
+        break;
+      }
+
+      default: {
+        return null;
+      }
+    }
+
+    loop.add(0, main);
+
+    return new _LaTeXToolChainComponent[][] {
+        loop.toArray(new _LaTeXToolChainComponent[loop.size()]), refine };
   }
 
   /**

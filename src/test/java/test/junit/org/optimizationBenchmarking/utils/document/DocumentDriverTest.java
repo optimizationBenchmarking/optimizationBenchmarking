@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.MemoryUtils;
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
@@ -76,7 +77,7 @@ public abstract class DocumentDriverTest extends
 
     try (final TempDir td = new TempDir()) {
       try (final IDocument doc = config.createDocument(td.getPath(),
-          "document", files, null)) { //$NON-NLS-1$
+          "document", files, Configuration.getGlobalLogger())) { //$NON-NLS-1$
         ex = new RandomDocumentExample(doc, r, null, 60_000L);
         if (service != null) {
           f = service.submit(ex);
