@@ -48,25 +48,18 @@ public class RandomLineChart2DExample extends ChartExample {
   @Override
   public void perform(final IChartSelector selector,
       final StyleSet styles, final Random random) {
-    final double minX, maxX, minY, maxY;
-    double a, b, c;
+    final int minX, maxX, minY, maxY;
 
     try (final ILineChart2D chart = selector.lineChart2D()) {
 
       ChartExample.setTitle(chart, null, random, styles);
       chart.setLegendMode(ChartExample.randomLegendMode(random));
 
-      c = Math.exp(random.nextGaussian() * 4);
-      a = ((random.nextDouble() - 0.5d) * c);
-      b = ((random.nextDouble() - 0.5d) * c);
-      minX = Math.min(a, b);
-      maxX = Math.max(a, b);
+      minX = (random.nextInt(50) - 25);
+      maxX = (minX + 1 + random.nextInt(100));
 
-      c = Math.exp(random.nextGaussian() * 4);
-      a = ((random.nextDouble() - 0.5d) * c);
-      b = ((random.nextDouble() - 0.5d) * c);
-      minY = Math.min(a, b);
-      maxY = Math.max(a, b);
+      minY = (random.nextInt(50) - 25);
+      maxY = (minX + 1 + random.nextInt(100));
 
       try (final IAxis axis = chart.xAxis()) {
         RandomLineChart2DExample.__axis(axis, random, styles, minX, maxX);
