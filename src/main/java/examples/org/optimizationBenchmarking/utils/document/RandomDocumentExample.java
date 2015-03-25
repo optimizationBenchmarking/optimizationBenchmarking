@@ -1,6 +1,5 @@
 package examples.org.optimizationBenchmarking.utils.document;
 
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.PrintStream;
@@ -1828,16 +1827,11 @@ public class RandomDocumentExample extends DocumentExample {
    */
   private final void __randomGraphic(final Graphic g) {
     final Rectangle2D r;
-    final ArrayList<AffineTransform> at;
     int k, e, i, limit;
-    double z;
     Point2D a, b;
     double[][] d;
     MemoryTextOutput mo;
     FontStyle fs;
-
-    at = new ArrayList<>();
-    at.add(g.getTransform());
 
     e = 500;
     mo = new MemoryTextOutput();
@@ -1847,7 +1841,7 @@ public class RandomDocumentExample extends DocumentExample {
     k = 0;
     limit = 100;
     do {
-      switch (this.m_rand.nextInt(15)) {
+      switch (this.m_rand.nextInt(13)) {
         case 0: {
           i = this.m_fonts.length;
           if (i > 0) {
@@ -1871,64 +1865,13 @@ public class RandomDocumentExample extends DocumentExample {
           }
         }
         case 3: {
-          if (at.size() < 5) {
-            trans: for (;;) {
-              try {
-                switch (this.m_rand.nextInt(3)) {
-                  case 0: {
-                    z = (0.1d * Math.round(-10d
-                        + (20d * this.m_rand.nextDouble())));
-                    if ((z > (-0.1d)) && (z < 0.1d)) {
-                      if (z < 0d) {
-                        z = (-0.1d);
-                      } else {
-                        z = 0.1d;
-                      }
-                    }
-                    g.shear(z, z);
-                    break;
-                  }
-                  case 1: {
-                    g.rotate(0.1d + (0.1d * Math.round(20d * Math.PI
-                        * this.m_rand.nextDouble())));
-                    break;
-                  }
-                  default: {
-                    z = (0.1d * Math.round(10d + //
-                        (this.m_rand.nextDouble() - 0.5d)));
-                    g.scale(z, z);
-                  }
-                }
-                try {
-                  ((AffineTransform) (g.getTransform().clone())).invert();
-                  at.add(g.getTransform());
-                  break trans;
-                } catch (final Throwable t) {
-                  g.setTransform(at.get(at.size() - 1));
-                }
-              } catch (final Throwable tt) {
-                //
-              }
-            }
-            break;
-          }
-        }
-        case 4: {
-          if (at.size() > 1) {
-            at.remove(at.size() - 1);
-            g.setTransform(at.get(at.size() - 1));
-          }
-          break;
-        }
-
-        case 5: {
           a = this.__randomPoint(r);
           b = this.__randomPoint(r);
           g.drawLine(a.getX(), a.getY(), b.getX(), b.getY());
           k++;
           break;
         }
-        case 6: {
+        case 4: {
           a = this.__randomPoint(r);
           b = this.__randomPoint(r);
           g.drawRect(a.getX(), a.getY(), (b.getX() - a.getX()),
@@ -1936,7 +1879,7 @@ public class RandomDocumentExample extends DocumentExample {
           k++;
           break;
         }
-        case 7: {
+        case 5: {
           a = this.__randomPoint(r);
           b = this.__randomPoint(r);
           g.fillRect(a.getX(), a.getY(), (b.getX() - a.getX()),
@@ -1944,7 +1887,7 @@ public class RandomDocumentExample extends DocumentExample {
           k++;
           break;
         }
-        case 8: {
+        case 6: {
           a = this.__randomPoint(r);
           b = this.__randomPoint(r);
           g.drawArc(a.getX(), a.getY(), (b.getX() - a.getX()),
@@ -1954,7 +1897,7 @@ public class RandomDocumentExample extends DocumentExample {
           k++;
           break;
         }
-        case 9: {
+        case 7: {
           a = this.__randomPoint(r);
           b = this.__randomPoint(r);
           g.fillArc(a.getX(), a.getY(), (b.getX() - a.getX()),
@@ -1964,19 +1907,19 @@ public class RandomDocumentExample extends DocumentExample {
           k++;
           break;
         }
-        case 10: {
+        case 8: {
           d = this.__randomPolygon(r);
           g.drawPolygon(d[0], d[1], d[0].length);
           k++;
           break;
         }
-        case 11: {
+        case 9: {
           d = this.__randomPolygon(r);
           g.fillPolygon(d[0], d[1], d[0].length);
           k++;
           break;
         }
-        case 12: {
+        case 10: {
           d = this.__randomPolygon(r);
           g.drawPolyline(d[0], d[1], d[0].length);
           k++;

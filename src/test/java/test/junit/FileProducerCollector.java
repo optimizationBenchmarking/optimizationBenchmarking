@@ -2,7 +2,6 @@ package test.junit;
 
 import java.util.Collection;
 
-import org.junit.Assert;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ProducedFileSet;
 
@@ -28,7 +27,10 @@ public final class FileProducerCollector extends ProducedFileSet {
 
     coll = this.getProducedFiles().values();
     for (final IFileType type : types) {
-      Assert.assertTrue(coll.contains(type));
+      if (!(coll.contains(type))) {
+        throw new AssertionError("No file of type '" //$NON-NLS-1$
+            + type + "' found."); //$NON-NLS-1$
+      }
     }
   }
 }
