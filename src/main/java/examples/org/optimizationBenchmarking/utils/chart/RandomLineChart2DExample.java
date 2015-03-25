@@ -59,7 +59,7 @@ public class RandomLineChart2DExample extends ChartExample {
       maxX = (minX + 1 + random.nextInt(100));
 
       minY = (random.nextInt(50) - 25);
-      maxY = (minX + 1 + random.nextInt(100));
+      maxY = (minY + 1 + random.nextInt(100));
 
       try (final IAxis axis = chart.xAxis()) {
         RandomLineChart2DExample.__axis(axis, random, styles, minX, maxX);
