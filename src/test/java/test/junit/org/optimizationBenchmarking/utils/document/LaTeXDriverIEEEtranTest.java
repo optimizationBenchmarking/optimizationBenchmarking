@@ -3,13 +3,15 @@ package test.junit.org.optimizationBenchmarking.utils.document;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfiguration;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfigurationBuilder;
 import org.optimizationBenchmarking.utils.document.impl.latex.documentClasses.IEEEtran;
+import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
 
 /** The LaTeX driver test using the IEEEtran document class */
 public class LaTeXDriverIEEEtranTest extends DocumentDriverTest {
 
   /** create the test */
   public LaTeXDriverIEEEtranTest() {
-    super(__make());
+    super(LaTeXDriverIEEEtranTest.__make());
   }
 
   /**
@@ -23,5 +25,11 @@ public class LaTeXDriverIEEEtranTest extends DocumentDriverTest {
     builder = new LaTeXConfigurationBuilder();
     builder.setDocumentClass(IEEEtran.getInstance());
     return builder.immutable();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final IFileType[] getRequiredTypes() {
+    return new IFileType[] { ELaTeXFileType.TEX };
   }
 }

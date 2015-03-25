@@ -3,13 +3,16 @@ package test.junit.org.optimizationBenchmarking.utils.document;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfiguration;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfigurationBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
+import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 
 /** The LaTeX driver test using EPS figures */
 public class LaTeXDriverEPSTest extends DocumentDriverTest {
 
   /** create the test */
   public LaTeXDriverEPSTest() {
-    super(__make());
+    super(LaTeXDriverEPSTest.__make());
   }
 
   /**
@@ -23,5 +26,15 @@ public class LaTeXDriverEPSTest extends DocumentDriverTest {
     builder = new LaTeXConfigurationBuilder();
     builder.setGraphicDriver(EGraphicFormat.EPS.getDefaultDriver());
     return builder.immutable();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final IFileType[] getRequiredTypes() {
+    if (LaTeX.getInstance().hasToolChainFor(ELaTeXFileType.TEX,
+        ELaTeXFileType.BIB, EGraphicFormat.EPS)) {
+      return new IFileType[] { ELaTeXFileType.TEX, ELaTeXFileType.PDF };
+    }
+    return new IFileType[] { ELaTeXFileType.TEX };
   }
 }

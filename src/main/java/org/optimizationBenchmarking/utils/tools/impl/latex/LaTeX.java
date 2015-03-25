@@ -1,9 +1,11 @@
 package org.optimizationBenchmarking.utils.tools.impl.latex;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.FileProducerTool;
 import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 import org.optimizationBenchmarking.utils.tools.spec.IConfigurableJobTool;
@@ -107,6 +109,174 @@ public class LaTeX extends FileProducerTool implements
   }
 
   /**
+   * Sanitize a file type for checking whether it is acceptable.
+   * 
+   * @param type
+   *          the type
+   * @return the type which can be added
+   */
+  static final IFileType _sanitizeFileType(final IFileType type) {
+
+    if (type == null) {
+      throw new IllegalArgumentException(
+          "A file type for which you require LaTeX tool chain support cannot be null."); //$NON-NLS-1$
+    }
+
+    if (type instanceof EGraphicFormat) {
+      return type;
+    }
+
+    for (final ELaTeXFileType types : ELaTeXFileType.INSTANCES) {
+      if (_LaTeXToolChainComponent._equals(types, type)) {
+        if (types._canRequire()) {
+          return types;
+        }
+        if (types == ELaTeXFileType.PDF) {
+          return EGraphicFormat.PDF;
+        }
+
+        return null;
+      }
+    }
+
+    throw new IllegalArgumentException(
+        (("No LaTeX tool chain can be required to understand type '" //$NON-NLS-1$
+        + type) + '\'') + '.');
+  }
+
+  /**
+   * Is there a tool chain for the given types?
+   * 
+   * @param types
+   *          the types
+   * @return {@code true} if there is a tool chain, {@code false} otherwise
+   */
+  public final boolean hasToolChainFor(final IFileType... types) {
+    final HashSet<IFileType> set;
+    IFileType put;
+
+    if (types == null) {
+      return false;
+    }
+
+    if (!(this.canUse())) {
+      return false;
+    }
+
+    set = new HashSet<>();
+    for (final IFileType type : types) {
+      if (type != null) {
+        put = LaTeX._sanitizeFileType(type);
+        if (put != null) {
+          set.add(put);
+        }
+      }
+    }
+
+    return (LaTeX._findToolChain(set) != null);
+  }
+
+  /**
+   * try to find a tool chain for the given required types
+   * 
+   * @param types
+   *          the types
+   * @return the tool chain (1st element: loop, 2nd element: refine)
+   */
+  static final _LaTeXToolChainComponent[][] _findToolChain(
+      final HashSet<IFileType> types) {
+    final _LaTeXToolChainComponent bibtex, main;
+    final ArrayList<_LaTeXToolChainComponent> loop;
+    final _LaTeXToolChainComponent[] refine;
+    IFileType[] required;
+
+    canDo: {
+
+      loop = new ArrayList<>();
+
+      // bibtex is the only ELaTeXFileType we care about
+      if (types.remove(ELaTeXFileType.BIB)) {
+        bibtex = LaTeX.__bibtex();
+        if (bibtex == null) {
+          break canDo;
+        }
+        loop.add(bibtex);
+      }
+
+      // to others we don't care
+      types.removeAll(ELaTeXFileType.INSTANCES);
+      required = types.toArray(new IFileType[types.size()]);
+      main = LaTeX.__tex(required);
+      required = null;
+
+      if (main == null) {
+        break canDo;
+      }
+
+      switch (main._produces()) {
+        case PDF: {
+          refine = null;
+          break;
+        }
+        case DVI: {
+          refine = LaTeX.__dvi2pdf();
+          if (refine == null) {
+            break canDo;
+          }
+          break;
+        }
+        case PS: {
+          refine = LaTeX.__ps2pdf();
+          if (refine == null) {
+            break canDo;
+          }
+          break;
+        }
+        default: {
+          break canDo;
+        }
+      }
+
+      loop.add(0, main);
+
+      return new _LaTeXToolChainComponent[][] {
+          loop.toArray(new _LaTeXToolChainComponent[loop.size()]), refine };
+    }
+    return null;
+  }
+
+  /**
+   * Get a tool chain able to convert dvi files to pdf, or {@code null} if
+   * none is found
+   * 
+   * @return the tool chain, or {@code null} if none is found
+   */
+  private static final _LaTeXToolChainComponent[] __dvi2pdf() {
+    return __DVI_2_PDF.CHAIN;
+  }
+
+  /**
+   * Get the tool to be used for bibtex, or {@code null} if none is found
+   * 
+   * @return the tool to be used for bibtex, or {@code null} if none is
+   *         found
+   */
+  private static final _LaTeXToolChainComponent __bibtex() {
+    return __BIBTEX.BIBTEX;
+  }
+
+  /**
+   * Get the tool to be used for ps to pdf conversion, or {@code null} if
+   * none is
+   * 
+   * @return the tool to be used for ps to pdf conversion , or {@code null}
+   *         if none is found
+   */
+  private static final _LaTeXToolChainComponent[] __ps2pdf() {
+    return __PS_2_PDF.CHAIN;
+  }
+
+  /**
    * Get the globally shared instance of the LaTeX tool
    * 
    * @return the globally shared instance of the LaTeX tool
@@ -161,4 +331,140 @@ public class LaTeX extends FileProducerTool implements
       }
     }
   }
+
+  /**
+   * Try to find a LaTeX tool chain component for the given file types
+   * 
+   * @param required
+   *          the required file types
+   * @return the tool chain component
+   */
+  private static final _LaTeXToolChainComponent __tex(
+      final IFileType[] required) {
+    _LaTeXToolChainComponent comp;
+
+    mainLoop: for (final _LaTeXToolChainComponentDesc desc : _AllEngines.ALL_ENGINES) {
+      if (desc == null) {
+        continue mainLoop;
+      }
+
+      if (required != null) {
+        for (final IFileType type : required) {
+          if (!(desc._supports(type))) {
+            continue mainLoop;
+          }
+        }
+      }
+
+      comp = desc._getComponent();
+      if (comp == null) {
+        continue mainLoop;
+      }
+      if (!(comp._canUse())) {
+        continue mainLoop;
+      }
+
+      return comp;
+    }
+
+    return null;
+  }
+
+  /** the BibTeX to use */
+  private static final class __BIBTEX {
+    /** the tool chain */
+    static final _LaTeXToolChainComponent BIBTEX;
+
+    static {
+      _LaTeXToolChainComponentDesc desc;
+      _LaTeXToolChainComponent bibtex;
+
+      bibtex = null;
+      desc = _BibTeX._getDescription();
+      if (desc != null) {
+        bibtex = desc._getComponent();
+        if ((bibtex != null) && (!(bibtex._canUse()))) {
+          bibtex = null;
+        }
+      }
+
+      if (bibtex == null) {
+        desc = _BibTeX8._getDescription();
+        if (desc != null) {
+          bibtex = desc._getComponent();
+          if ((bibtex != null) && (!(bibtex._canUse()))) {
+            bibtex = null;
+          }
+        }
+      }
+
+      BIBTEX = bibtex;
+    }
+  }
+
+  /** the dvi to pdf chain */
+  private static final class __DVI_2_PDF {
+
+    /** the tool chain */
+    static final _LaTeXToolChainComponent[] CHAIN;
+
+    static {
+      _LaTeXToolChainComponentDesc desc;
+      _LaTeXToolChainComponent dvi2ps, ps2pdf;
+
+      dvi2ps = null;
+      desc = _Dvi2Ps._getDescription();
+      if (desc != null) {
+        dvi2ps = desc._getComponent();
+        if ((dvi2ps != null) && (!(dvi2ps._canUse()))) {
+          dvi2ps = null;
+        }
+      }
+
+      ps2pdf = null;
+      if (dvi2ps != null) {
+        ps2pdf = __PS_2_PDF.CHAIN[0];
+      }
+
+      if ((dvi2ps != null) && (ps2pdf != null)) {
+        CHAIN = new _LaTeXToolChainComponent[] { dvi2ps, ps2pdf };
+      } else {
+        CHAIN = null;
+      }
+
+    }
+  }
+
+  /** the ps to pdf chain */
+  private static final class __PS_2_PDF {
+
+    /** the tool */
+    static final _LaTeXToolChainComponent[] CHAIN;
+
+    static {
+      _LaTeXToolChainComponentDesc desc;
+      _LaTeXToolChainComponent ps2pdf;
+
+      ps2pdf = null;
+      desc = _GhostScript._getDescription();
+      if (desc != null) {
+        ps2pdf = desc._getComponent();
+        if ((ps2pdf != null) && (!(ps2pdf._canUse()))) {
+          ps2pdf = null;
+        }
+      }
+
+      if (ps2pdf == null) {
+        desc = _Ps2Pdf._getDescription();
+        if (desc != null) {
+          ps2pdf = desc._getComponent();
+          if ((ps2pdf != null) && (!(ps2pdf._canUse()))) {
+            ps2pdf = null;
+          }
+        }
+      }
+      CHAIN = new _LaTeXToolChainComponent[] { ps2pdf };
+    }
+  }
+
 }

@@ -4,28 +4,38 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
+import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
+import org.optimizationBenchmarking.utils.bibliography.io.BibTeXOutput;
+import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
+import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
+import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeXJob;
 import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeXJobBuilder;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
+import test.junit.FileProducerCollector;
 import test.junit.org.optimizationBenchmarking.utils.tools.ToolTest;
+import examples.org.optimizationBenchmarking.utils.bibliography.data.RandomBibliography;
+import examples.org.optimizationBenchmarking.utils.graphics.GraphicsExample;
 
 /** The test of the LaTeX tool chain */
 public class LaTeXTest extends ToolTest<LaTeX> {
+
+  /** the references file */
+  private static final String BIB_FILE = "references"; //$NON-NLS-1$
 
   /** create */
   public LaTeXTest() {
@@ -41,471 +51,453 @@ public class LaTeXTest extends ToolTest<LaTeX> {
   /**
    * create a simple example
    * 
-   * @param temp
-   *          the temp dir
-   * @return the path to the example
+   * @param graphicFormat
+   *          a graphic format to include (or {@code null} if none is
+   *          needed
+   * @param useBib
+   *          should we create a bibliography? a bibliography
    */
-  private final Path __makePlainExample(final TempDir temp) {
+  private final void __test(final EGraphicFormat graphicFormat,
+      final boolean useBib) {
     final Path path;
+    final IGraphicDriver driver;
+    final BibTeXOutput bibOut;
+    final FileProducerCollector listener, all;
+    final LaTeX tool;
+    final LaTeXJobBuilder builder;
+    final LaTeXJob job;
+    final ArrayList<IFileType> required;
+    Path graphic;
+    Bibliography bib;
+    boolean first;
 
-    path = PathUtils.createPathInside(temp.getPath(), "document.tex"); //$NON-NLS-1$
+    try (final TempDir temp = new TempDir()) {
+      path = PathUtils.createPathInside(temp.getPath(), "document.tex"); //$NON-NLS-1$
 
-    try (final OutputStream os = PathUtils.openOutputStream(path)) {
-      try (final OutputStreamWriter fos = new OutputStreamWriter(os)) {
-        try (final BufferedWriter bw = new BufferedWriter(fos)) {
-          bw.write("\\documentclass{article}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\begin{document}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\title{Example Document}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\author{Thomas Weise}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\maketitle%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\begin{abstract}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("This is an example abstract. It is short and useless.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\end{abstract}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\section{Introduction}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\label{Introduction}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("This is the introduction section~\\ref{Introduction}. It is useless too.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\begin{itemize}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\item here is one item.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\item and another one.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\end{itemize}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\end{document}%");//$NON-NLS-1$
-          bw.newLine();
-        }
+      bib = null;
+      if (useBib) {
+        bibOut = BibTeXOutput.getInstance();
+        Assert.assertNotNull(bibOut);
+        Assert.assertTrue(bibOut.canUse());
+        bib = new RandomBibliography().createBibliography();
+
+        bibOut.use()//
+            .setSource(bib)//
+            .setPath(temp.getPath()//
+                .resolve(LaTeXTest.BIB_FILE + '.'//
+                    + ELaTeXFileType.BIB.getDefaultSuffix()))//
+            .create().call();
       }
-    } catch (Throwable tt) {
-      throw new RuntimeException(//
-          "Example LaTeX file generation failed.",//$NON-NLS-1$
-          tt);
-    }
 
-    return path;
+      graphic = null;
+      if (graphicFormat != null) {
+        driver = graphicFormat.getDefaultDriver();
+        Assert.assertNotNull(driver);
+        Assert.assertTrue(driver.canUse());
+
+        listener = new FileProducerCollector();
+        try (final Graphic g = driver.use().setBasePath(temp.getPath())//
+            .setMainDocumentNameSuggestion("graphic")//$NON-NLS-1$
+            .setFileProducerListener(listener)//
+            .setSize(new PhysicalDimension(5, 5, ELength.CM))//
+            .create()) {
+          GraphicsExample.paint(g);
+        }
+
+        for (final Map.Entry<Path, IFileType> e : listener
+            .getProducedFiles().entrySet()) {
+          if (graphicFormat.equals(e.getValue())) {
+            Assert.assertNull(graphic);
+            graphic = e.getKey();
+          }
+        }
+        Assert.assertNotNull(graphic);
+      }
+
+      try (final OutputStream os = PathUtils.openOutputStream(path)) {
+        try (final OutputStreamWriter fos = new OutputStreamWriter(os)) {
+          try (final BufferedWriter bw = new BufferedWriter(fos)) {
+            bw.write("\\documentclass{article}%");//$NON-NLS-1$
+            bw.newLine();
+            if (graphic != null) {
+              bw.write("\\RequirePackage{graphicx}%");//$NON-NLS-1$
+              bw.newLine();
+            }
+
+            bw.write("\\begin{document}%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\title{Example Document}%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\author{Thomas Weise}%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\maketitle%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\begin{abstract}%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("This is an example abstract. It is short and useless.%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\end{abstract}%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\section{Introduction}%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\label{Introduction}%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("This is the introduction section~\\ref{Introduction}. It is useless too.%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\begin{itemize}%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\item here is one item.%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\item and another one.%");//$NON-NLS-1$
+            bw.newLine();
+            bw.write("\\end{itemize}%");//$NON-NLS-1$
+            bw.newLine();
+
+            if (graphic != null) {
+              bw.write("\\begin{figure}%");//$NON-NLS-1$
+              bw.newLine();
+
+              bw.write("\\begin{center}%");//$NON-NLS-1$
+              bw.newLine();
+
+              bw.write("\\caption{This is a figure.}%");//$NON-NLS-1$
+              bw.newLine();
+              bw.write("\\includegraphics{");//$NON-NLS-1$
+              bw.write(temp.getPath().relativize(graphic).toString());
+              bw.write("}%");//$NON-NLS-1$
+
+              bw.newLine();
+              bw.write("\\end{center}%");//$NON-NLS-1$
+
+              bw.newLine();
+              bw.write("\\end{figure}%");//$NON-NLS-1$ 
+
+              bw.newLine();
+            }
+
+            bw.newLine();
+            bw.write(//
+            "blablablabla blablablabla ");//$NON-NLS-1$
+            bw.write(//
+            "blablablabla blablablabla ");//$NON-NLS-1$
+            bw.write(//
+            "blablablabla blablablabla ");//$NON-NLS-1$
+            bw.write(//
+            "blablablabla blablablabla ");//$NON-NLS-1$
+
+            if (bib != null) {
+              bw.write("\\cite{");//$NON-NLS-1$
+              first = true;
+              for (final BibRecord rec : bib) {
+                if (first) {
+                  first = false;
+                } else {
+                  bw.write(',');
+                }
+                bw.write(rec.getKey());
+              }
+              bw.write('}');
+            }
+            bw.write('.');
+            bw.write('%');
+            bw.newLine();
+
+            if (bib != null) {
+              bw.newLine();
+              bw.write("\\bibliographystyle{unsrt}.%");//$NON-NLS-1$
+              bw.newLine();
+              bw.write("\\bibliography{");//$NON-NLS-1$
+              bw.write(LaTeXTest.BIB_FILE);
+              bw.write('}');
+              bw.write('%');
+              bw.newLine();
+            }
+
+            bw.write("\\end{document}%");//$NON-NLS-1$
+            bw.newLine();
+          }
+        }
+
+        tool = this.getInstance();
+        Assert.assertNotNull(tool);
+
+        builder = tool.use();
+        all = new FileProducerCollector();
+        builder.setFileProducerListener(all);
+        builder.setMainFile(path);
+        required = new ArrayList<>();
+        builder.requireFileType(ELaTeXFileType.TEX);
+        required.add(ELaTeXFileType.TEX);
+
+        if (bib != null) {
+          builder.requireFileType(ELaTeXFileType.BIB);
+          required.add(ELaTeXFileType.BIB);
+        }
+
+        if (graphicFormat != null) {
+          builder.requireFileType(graphicFormat);
+          required.add(graphicFormat);
+        }
+
+        job = builder.create();
+        Assert.assertNotNull(job);
+        try {
+          job.call();
+        } catch (final Throwable t) {
+          throw new RuntimeException(//
+              "LaTeX document compilation failed.", //$NON-NLS-1$
+              t);
+        }
+
+        if (this.getInstance().hasToolChainFor(
+            required.toArray(new IFileType[required.size()]))) {
+          all.assertFilesOfType(ELaTeXFileType.PDF);
+        }
+
+      } catch (final Throwable tt) {
+        throw new RuntimeException(//
+            "Example LaTeX file generation failed.",//$NON-NLS-1$
+            tt);
+      }
+
+    } catch (final IOException ioe) {
+      throw new RuntimeException(//
+          "LaTeX test failed.", //$NON-NLS-1$
+          ioe);
+    }
   }
 
   /**
    * test whether we run the tool chain for a simple example
    */
   @Test(timeout = 3600000)
-  public void testCanBuildPlainExample() {
-    final LaTeX tool;
-    final __FileProducerListener listener;
-    final LaTeXJobBuilder builder;
-    final LaTeXJob job;
-
-    tool = this.getInstance();
-    Assert.assertNotNull(tool);
-    try (final TempDir temp = new TempDir()) {
-      builder = tool.use();
-      listener = new __FileProducerListener();
-      builder.setFileProducerListener(listener);
-      builder.setMainFile(this.__makePlainExample(temp));
-      builder.requireFileType(ELaTeXFileType.TEX);
-      job = builder.create();
-      Assert.assertNotNull(job);
-      try {
-        job.call();
-      } catch (Throwable t) {
-        throw new RuntimeException(//
-            "LaTeX document compilation failed.", //$NON-NLS-1$
-            t);
-      }
-      Assert.assertNotNull(listener.m_types);
-
-      if (listener.m_types.size() > 0) {
-        Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
-      }
-
-    } catch (IOException ioe) {
-      throw new RuntimeException(//
-          "LaTeX test failed.", //$NON-NLS-1$
-          ioe);
-    }
-  }
-
-  /**
-   * create an example also using BibTeX
-   * 
-   * @param temp
-   *          the temp dir
-   * @return the path to the example
-   */
-  private final Path __makeBibTeXExample(final TempDir temp) {
-    final Path path;
-
-    path = PathUtils.createPathInside(temp.getPath(), "document.tex"); //$NON-NLS-1$
-
-    try (final OutputStream os = PathUtils.openOutputStream(path)) {
-      try (final OutputStreamWriter fos = new OutputStreamWriter(os)) {
-        try (final BufferedWriter bw = new BufferedWriter(fos)) {
-          bw.write("\\documentclass{article}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\begin{document}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\title{Example Document}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\author{Thomas Weise}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\maketitle%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\begin{abstract}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("This is an example abstract. It is short and useless.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\end{abstract}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\section{Introduction}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\label{Introduction}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("This is the introduction section~\\ref{Introduction}. It is useless too.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\begin{itemize}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\item here is one item.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\item and another one.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\item here we cite paper \\cite{paperA}.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\end{itemize}%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("and here we cite paper \\cite{paperB}.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\bibliographystyle{unsrt}.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\bibliography{references}.%");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("\\end{document}%");//$NON-NLS-1$
-          bw.newLine();
-        }
-      }
-    } catch (Throwable tt) {
-      throw new RuntimeException(//
-          "Example LaTeX file generation failed.",//$NON-NLS-1$
-          tt);
-    }
-
-    try (final OutputStream os = PathUtils.openOutputStream(PathUtils
-        .createPathInside(temp.getPath(), "references.bib"))) {//$NON-NLS-1$
-      try (final OutputStreamWriter fos = new OutputStreamWriter(os)) {
-        try (final BufferedWriter bw = new BufferedWriter(fos)) {
-          bw.write("@inproceedings{paperA,");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("author = {Not Me},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("title = {Some Title},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("booktitle = {Some Book Title},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("year = {2014},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("month = jan,");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("publisher = {A Big Company},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("address = {This Place},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("editor = {Cool Guy},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("pages = {173--245},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("}");//$NON-NLS-1$
-          bw.newLine();
-          bw.newLine();
-          bw.write("@article{paperB,");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("author = {Egon Olsen},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("journal = {Some Journal},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("year = {2014},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("month = jan,");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("volume = {200},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("number = {12},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("pages = {73--145},");//$NON-NLS-1$
-          bw.newLine();
-          bw.write("}");//$NON-NLS-1$
-          bw.newLine();
-        }
-      }
-    } catch (Throwable tt) {
-      throw new RuntimeException(//
-          "Example BibTeX file generation failed.",//$NON-NLS-1$
-          tt);
-    }
-
-    return path;
+  public void testCanBuildPlain() {
+    this.__test(null, false);
   }
 
   /**
    * test whether we run the tool chain for a simple example with BibTeX
    */
   @Test(timeout = 3600000)
-  public void testCanBuildBibTeXExample() {
-    final LaTeX tool;
-    final __FileProducerListener listener;
-    final LaTeXJobBuilder builder;
-    final LaTeXJob job;
-
-    tool = this.getInstance();
-    Assert.assertNotNull(tool);
-    try (final TempDir temp = new TempDir()) {
-      builder = tool.use();
-      listener = new __FileProducerListener();
-      builder.setFileProducerListener(listener);
-      builder.setMainFile(this.__makeBibTeXExample(temp));
-      builder.requireFileType(ELaTeXFileType.TEX);
-      builder.requireFileType(ELaTeXFileType.BIB);
-      job = builder.create();
-      Assert.assertNotNull(job);
-      try {
-        job.call();
-      } catch (Throwable t) {
-        throw new RuntimeException(//
-            "LaTeX document compilation failed.", //$NON-NLS-1$
-            t);
-      }
-      Assert.assertNotNull(listener.m_types);
-
-      if (listener.m_types.size() > 0) {
-        Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
-      }
-
-    } catch (IOException ioe) {
-      throw new RuntimeException(//
-          "LaTeX test failed.", //$NON-NLS-1$
-          ioe);
-    }
+  public void testCanBuildWithBibTeX() {
+    this.__test(null, true);
   }
 
   /**
-   * test whether we run the tool chain for a simple example with BibTeX
-   * and a mock requirement for JPEG images
+   * test whether we run the tool chain for pdf figures
    */
   @Test(timeout = 3600000)
-  public void testCanBuildBibTeXExampleWithMockJPEGRequirement() {
-    final LaTeX tool;
-    final __FileProducerListener listener;
-    final LaTeXJobBuilder builder;
-    final LaTeXJob job;
-
-    tool = this.getInstance();
-    Assert.assertNotNull(tool);
-    try (final TempDir temp = new TempDir()) {
-      builder = tool.use();
-      listener = new __FileProducerListener();
-      builder.setFileProducerListener(listener);
-      builder.setMainFile(this.__makeBibTeXExample(temp));
-      builder.requireFileType(ELaTeXFileType.TEX);
-      builder.requireFileType(ELaTeXFileType.BIB);
-      builder.requireFileType(EGraphicFormat.JPEG);
-      job = builder.create();
-      Assert.assertNotNull(job);
-      try {
-        job.call();
-      } catch (Throwable t) {
-        throw new RuntimeException(//
-            "LaTeX document compilation failed.", //$NON-NLS-1$
-            t);
-      }
-      Assert.assertNotNull(listener.m_types);
-
-      if (listener.m_types.size() > 0) {
-        Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
-      }
-
-    } catch (IOException ioe) {
-      throw new RuntimeException(//
-          "LaTeX test failed.", //$NON-NLS-1$
-          ioe);
-    }
+  public void testCanBuildWithPDF() {
+    this.__test(EGraphicFormat.PDF, false);
   }
 
   /**
-   * test whether we run the tool chain for a simple example with BibTeX
-   * and a mock requirement for PDF images
+   * test whether we run the tool chain for eps figures
    */
   @Test(timeout = 3600000)
-  public void testCanBuildBibTeXExampleWithMockPDFRequirement() {
-    final LaTeX tool;
-    final __FileProducerListener listener;
-    final LaTeXJobBuilder builder;
-    final LaTeXJob job;
-
-    tool = this.getInstance();
-    Assert.assertNotNull(tool);
-    try (final TempDir temp = new TempDir()) {
-      builder = tool.use();
-      listener = new __FileProducerListener();
-      builder.setFileProducerListener(listener);
-      builder.setMainFile(this.__makeBibTeXExample(temp));
-      builder.requireFileType(ELaTeXFileType.TEX);
-      builder.requireFileType(ELaTeXFileType.BIB);
-      builder.requireFileType(EGraphicFormat.PDF);
-      job = builder.create();
-      Assert.assertNotNull(job);
-      try {
-        job.call();
-      } catch (Throwable t) {
-        throw new RuntimeException(//
-            "LaTeX document compilation failed.", //$NON-NLS-1$
-            t);
-      }
-      Assert.assertNotNull(listener.m_types);
-
-      if (listener.m_types.size() > 0) {
-        Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
-      }
-
-    } catch (IOException ioe) {
-      throw new RuntimeException(//
-          "LaTeX test failed.", //$NON-NLS-1$
-          ioe);
-    }
+  public void testCanBuildWithEPS() {
+    this.__test(EGraphicFormat.EPS, false);
   }
 
   /**
-   * test whether we run the tool chain for a simple example with BibTeX
-   * and a mock requirement for EPS images
+   * test whether we run the tool chain for jpeg figures
    */
   @Test(timeout = 3600000)
-  public void testCanBuildBibTeXExampleWithMockEPSRequirement() {
-    final LaTeX tool;
-    final __FileProducerListener listener;
-    final LaTeXJobBuilder builder;
-    final LaTeXJob job;
-
-    tool = this.getInstance();
-    Assert.assertNotNull(tool);
-    try (final TempDir temp = new TempDir()) {
-      builder = tool.use();
-      listener = new __FileProducerListener();
-      builder.setFileProducerListener(listener);
-      builder.setMainFile(this.__makeBibTeXExample(temp));
-      builder.requireFileType(ELaTeXFileType.TEX);
-      builder.requireFileType(ELaTeXFileType.BIB);
-      builder.requireFileType(EGraphicFormat.EPS);
-      job = builder.create();
-      Assert.assertNotNull(job);
-      try {
-        job.call();
-      } catch (Throwable t) {
-        throw new RuntimeException(//
-            "LaTeX document compilation failed.", //$NON-NLS-1$
-            t);
-      }
-      Assert.assertNotNull(listener.m_types);
-
-      if (listener.m_types.size() > 0) {
-        Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
-      }
-
-    } catch (IOException ioe) {
-      throw new RuntimeException(//
-          "LaTeX test failed.", //$NON-NLS-1$
-          ioe);
-    }
+  public void testCanBuildWithJPEG() {
+    this.__test(EGraphicFormat.JPEG, false);
   }
 
   /**
-   * test whether we run the tool chain for a simple example with BibTeX
-   * and a mock requirement for PNG images
+   * test whether we run the tool chain for png figures
    */
   @Test(timeout = 3600000)
-  public void testCanBuildBibTeXExampleWithMockPNGRequirement() {
-    final LaTeX tool;
-    final __FileProducerListener listener;
-    final LaTeXJobBuilder builder;
-    final LaTeXJob job;
-
-    tool = this.getInstance();
-    Assert.assertNotNull(tool);
-    try (final TempDir temp = new TempDir()) {
-      builder = tool.use();
-      listener = new __FileProducerListener();
-      builder.setFileProducerListener(listener);
-      builder.setMainFile(this.__makeBibTeXExample(temp));
-      builder.requireFileType(ELaTeXFileType.TEX);
-      builder.requireFileType(ELaTeXFileType.BIB);
-      builder.requireFileType(EGraphicFormat.PNG);
-      job = builder.create();
-      Assert.assertNotNull(job);
-      try {
-        job.call();
-      } catch (Throwable t) {
-        throw new RuntimeException(//
-            "LaTeX document compilation failed.", //$NON-NLS-1$
-            t);
-      }
-      Assert.assertNotNull(listener.m_types);
-
-      if (listener.m_types.size() > 0) {
-        Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
-      }
-
-    } catch (IOException ioe) {
-      throw new RuntimeException(//
-          "LaTeX test failed.", //$NON-NLS-1$
-          ioe);
-    }
+  public void testCanBuildWithPNG() {
+    this.__test(EGraphicFormat.PNG, false);
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public void validateInstance() {
-    super.validateInstance();
-    this.testCanBuildPlainExample();
-    this.testCanBuildBibTeXExample();
-    this.testCanBuildBibTeXExampleWithMockEPSRequirement();
-    this.testCanBuildBibTeXExampleWithMockJPEGRequirement();
-    this.testCanBuildBibTeXExampleWithMockPDFRequirement();
-    this.testCanBuildBibTeXExampleWithMockPNGRequirement();
-  }
+  //
+  // /**
+  // * test whether we run the tool chain for a simple example with BibTeX
+  // * and a mock requirement for JPEG images
+  // */
+  // @Test(timeout = 3600000)
+  // public void testCanBuildBibTeXExampleWithMockJPEGRequirement() {
+  // final LaTeX tool;
+  // final __FileProducerListener listener;
+  // final LaTeXJobBuilder builder;
+  // final LaTeXJob job;
+  //
+  // tool = this.getInstance();
+  // Assert.assertNotNull(tool);
+  // try (final TempDir temp = new TempDir()) {
+  // builder = tool.use();
+  // listener = new __FileProducerListener();
+  // builder.setFileProducerListener(listener);
+  // builder.setMainFile(this.__makeBibTeXExample(temp));
+  // builder.requireFileType(ELaTeXFileType.TEX);
+  // builder.requireFileType(ELaTeXFileType.BIB);
+  // builder.requireFileType(EGraphicFormat.JPEG);
+  // job = builder.create();
+  // Assert.assertNotNull(job);
+  // try {
+  // job.call();
+  // } catch (Throwable t) {
+  // throw new RuntimeException(//
+  //            "LaTeX document compilation failed.", //$NON-NLS-1$
+  // t);
+  // }
+  // Assert.assertNotNull(listener.m_types);
+  //
+  // if (listener.m_types.size() > 0) {
+  // Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
+  // }
+  //
+  // } catch (IOException ioe) {
+  // throw new RuntimeException(//
+  //          "LaTeX test failed.", //$NON-NLS-1$
+  // ioe);
+  // }
+  // }
+  //
+  // /**
+  // * test whether we run the tool chain for a simple example with BibTeX
+  // * and a mock requirement for PDF images
+  // */
+  // @Test(timeout = 3600000)
+  // public void testCanBuildBibTeXExampleWithMockPDFRequirement() {
+  // final LaTeX tool;
+  // final __FileProducerListener listener;
+  // final LaTeXJobBuilder builder;
+  // final LaTeXJob job;
+  //
+  // tool = this.getInstance();
+  // Assert.assertNotNull(tool);
+  // try (final TempDir temp = new TempDir()) {
+  // builder = tool.use();
+  // listener = new __FileProducerListener();
+  // builder.setFileProducerListener(listener);
+  // builder.setMainFile(this.__makeBibTeXExample(temp));
+  // builder.requireFileType(ELaTeXFileType.TEX);
+  // builder.requireFileType(ELaTeXFileType.BIB);
+  // builder.requireFileType(EGraphicFormat.PDF);
+  // job = builder.create();
+  // Assert.assertNotNull(job);
+  // try {
+  // job.call();
+  // } catch (Throwable t) {
+  // throw new RuntimeException(//
+  //            "LaTeX document compilation failed.", //$NON-NLS-1$
+  // t);
+  // }
+  // Assert.assertNotNull(listener.m_types);
+  //
+  // if (listener.m_types.size() > 0) {
+  // Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
+  // }
+  //
+  // } catch (IOException ioe) {
+  // throw new RuntimeException(//
+  //          "LaTeX test failed.", //$NON-NLS-1$
+  // ioe);
+  // }
+  // }
+  //
+  // /**
+  // * test whether we run the tool chain for a simple example with BibTeX
+  // * and a mock requirement for EPS images
+  // */
+  // @Test(timeout = 3600000)
+  // public void testCanBuildBibTeXExampleWithMockEPSRequirement() {
+  // final LaTeX tool;
+  // final __FileProducerListener listener;
+  // final LaTeXJobBuilder builder;
+  // final LaTeXJob job;
+  //
+  // tool = this.getInstance();
+  // Assert.assertNotNull(tool);
+  // try (final TempDir temp = new TempDir()) {
+  // builder = tool.use();
+  // listener = new __FileProducerListener();
+  // builder.setFileProducerListener(listener);
+  // builder.setMainFile(this.__makeBibTeXExample(temp));
+  // builder.requireFileType(ELaTeXFileType.TEX);
+  // builder.requireFileType(ELaTeXFileType.BIB);
+  // builder.requireFileType(EGraphicFormat.EPS);
+  // job = builder.create();
+  // Assert.assertNotNull(job);
+  // try {
+  // job.call();
+  // } catch (Throwable t) {
+  // throw new RuntimeException(//
+  //            "LaTeX document compilation failed.", //$NON-NLS-1$
+  // t);
+  // }
+  // Assert.assertNotNull(listener.m_types);
+  //
+  // if (listener.m_types.size() > 0) {
+  // Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
+  // }
+  //
+  // } catch (IOException ioe) {
+  // throw new RuntimeException(//
+  //          "LaTeX test failed.", //$NON-NLS-1$
+  // ioe);
+  // }
+  // }
+  //
+  // /**
+  // * test whether we run the tool chain for a simple example with BibTeX
+  // * and a mock requirement for PNG images
+  // */
+  // @Test(timeout = 3600000)
+  // public void testCanBuildBibTeXExampleWithMockPNGRequirement() {
+  // final LaTeX tool;
+  // final __FileProducerListener listener;
+  // final LaTeXJobBuilder builder;
+  // final LaTeXJob job;
+  //
+  // tool = this.getInstance();
+  // Assert.assertNotNull(tool);
+  // try (final TempDir temp = new TempDir()) {
+  // builder = tool.use();
+  // listener = new __FileProducerListener();
+  // builder.setFileProducerListener(listener);
+  // builder.setMainFile(this.__makeBibTeXExample(temp));
+  // builder.requireFileType(ELaTeXFileType.TEX);
+  // builder.requireFileType(ELaTeXFileType.BIB);
+  // builder.requireFileType(EGraphicFormat.PNG);
+  // job = builder.create();
+  // Assert.assertNotNull(job);
+  // try {
+  // job.call();
+  // } catch (Throwable t) {
+  // throw new RuntimeException(//
+  //            "LaTeX document compilation failed.", //$NON-NLS-1$
+  // t);
+  // }
+  // Assert.assertNotNull(listener.m_types);
+  //
+  // if (listener.m_types.size() > 0) {
+  // Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
+  // }
+  //
+  // } catch (IOException ioe) {
+  // throw new RuntimeException(//
+  //          "LaTeX test failed.", //$NON-NLS-1$
+  // ioe);
+  // }
+  // }
+  //
+  // /** {@inheritDoc} */
+  // @Override
+  // public void validateInstance() {
+  // super.validateInstance();
+  // this.testCanBuildPlainExample();
+  // this.testCanBuildBibTeXExample();
+  // this.testCanBuildBibTeXExampleWithMockEPSRequirement();
+  // this.testCanBuildBibTeXExampleWithMockJPEGRequirement();
+  // this.testCanBuildBibTeXExampleWithMockPDFRequirement();
+  // this.testCanBuildBibTeXExampleWithMockPNGRequirement();
+  // }
 
-  /** the listener */
-  private static final class __FileProducerListener implements
-      IFileProducerListener {
-
-    /** the file types */
-    HashSet<IFileType> m_types;
-
-    /** create */
-    __FileProducerListener() {
-      super();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void onFilesFinalized(
-        final Collection<Entry<Path, IFileType>> result) {
-      Assert.assertNotNull(result);
-
-      this.m_types = new HashSet<>();
-      for (Entry<Path, IFileType> entry : result) {
-        Assert.assertNotNull(entry);
-        Assert.assertNotNull(entry.getKey());
-        Assert.assertTrue(Files.exists(entry.getKey()));
-        Assert.assertNotNull(entry.getValue());
-        this.m_types.add(entry.getValue());
-      }
-    }
-  }
 }

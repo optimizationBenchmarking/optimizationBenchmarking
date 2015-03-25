@@ -15,8 +15,10 @@ import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
+import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
 
+import test.junit.FileProducerCollector;
 import test.junit.InstanceTest;
 import test.junit.org.optimizationBenchmarking.utils.tools.ToolTest;
 import examples.org.optimizationBenchmarking.utils.document.RandomDocumentExample;
@@ -24,7 +26,7 @@ import examples.org.optimizationBenchmarking.utils.document.TemplateDocumentExam
 
 /** A test of a document driver */
 @Ignore
-public class DocumentDriverTest extends
+public abstract class DocumentDriverTest extends
     InstanceTest<DocumentConfiguration> {
 
   /**
@@ -36,6 +38,14 @@ public class DocumentDriverTest extends
   public DocumentDriverTest(final DocumentConfiguration config) {
     super(null, config, false, false);
   }
+
+  /**
+   * Get the required file types, i.e., the file types which should be
+   * produced
+   * 
+   * @return the file types which should be produced
+   */
+  protected abstract IFileType[] getRequiredTypes();
 
   /**
    * test the document driver for creating random documents
@@ -56,14 +66,17 @@ public class DocumentDriverTest extends
       ExecutionException {
     final DocumentConfiguration config;
     final RandomDocumentExample ex;
+    final FileProducerCollector files;
     final Future<?> f;
 
     config = this.getInstance();
     Assert.assertNotNull(config);
 
+    files = new FileProducerCollector();
+
     try (final TempDir td = new TempDir()) {
       try (final IDocument doc = config.createDocument(td.getPath(),
-          "document", null, null)) { //$NON-NLS-1$
+          "document", files, null)) { //$NON-NLS-1$
         ex = new RandomDocumentExample(doc, r, null, 60_000L);
         if (service != null) {
           f = service.submit(ex);
@@ -73,6 +86,8 @@ public class DocumentDriverTest extends
         }
       }
     }
+
+    files.assertFilesOfType(this.getRequiredTypes());
 
     MemoryUtils.fullGC();
   }
@@ -94,13 +109,15 @@ public class DocumentDriverTest extends
     final DocumentConfiguration config;
     final TemplateDocumentExample ex;
     final Future<?> f;
+    final FileProducerCollector files;
 
     config = this.getInstance();
     Assert.assertNotNull(config);
+    files = new FileProducerCollector();
 
     try (final TempDir td = new TempDir()) {
       try (final IDocument doc = config.createDocument(td.getPath(),
-          "document", null, null)) { //$NON-NLS-1$
+          "document", files, null)) { //$NON-NLS-1$
         ex = new TemplateDocumentExample(doc);
         if (service != null) {
           f = service.submit(ex);
@@ -110,6 +127,8 @@ public class DocumentDriverTest extends
         }
       }
     }
+
+    files.assertFilesOfType(this.getRequiredTypes());
 
     MemoryUtils.fullGC();
   }

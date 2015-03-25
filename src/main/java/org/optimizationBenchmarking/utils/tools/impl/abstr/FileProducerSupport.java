@@ -5,13 +5,11 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.io.IFileType;
-import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
@@ -72,7 +70,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * producing tools are combined to create an output document.
  * </p>
  */
-public final class FileProducerSupport extends FileCollector implements
+public final class FileProducerSupport extends _FileSet implements
     Closeable {
 
   /**
@@ -110,115 +108,38 @@ public final class FileProducerSupport extends FileCollector implements
     this.m_listener = listener;
   }
 
-  /**
-   * Add a file to this listener support's internal list. The file is
-   * defined as a {@link java.nio.file.Path path} and an associated
-   * {@link org.optimizationBenchmarking.utils.io.IFileType file type},
-   * neither of which can be null. Adding two equal paths will result in an
-   * {@link IllegalStateException}.
-   * 
-   * @param path
-   *          the path to the file
-   * @param type
-   *          the file type
-   * @throws IllegalStateException
-   *           if the {@code path} is already associated to a {@code type}
-   *           or if the file producer support has already been
-   *           {@link #close() closed}
-   * @throws IllegalArgumentException
-   *           if either {@code path} or {@code type} are null or otherwise
-   *           invalid
-   */
+  /** {@inheritDoc} */
   @Override
-  public final void addFile(final Path path, final IFileType type) {
-    final Path normalized;
-    final IFileType old;
-
-    if (path == null) {
-      throw new IllegalArgumentException(//
-          "Cannot add null path of type " + type); //$NON-NLS-1$
-    }
-
-    if (type == null) {
-      throw new IllegalArgumentException(//
-          "Path '" + path + //$NON-NLS-1$
-              "' cannot have null type."); //$NON-NLS-1$
-    }
-
-    normalized = PathUtils.normalize(path);
-    if (normalized == null) {
-      throw new IllegalArgumentException(//
-          "Path '" + path + //$NON-NLS-1$
-              "' of type " + type + //$NON-NLS-1$
-              " normalizes to null."); //$NON-NLS-1$
-    }
-
-    synchronized (this) {
-      if (this.m_closed) {
-        throw new IllegalStateException("Cannot add path '" + //$NON-NLS-1$
-            normalized + " of type " + type + //$NON-NLS-1$
-            ", because file producer support already closed.");//$NON-NLS-1$
+  final IFileType _getPathType(final Path path) {
+    if (this.m_files == null) {
+      if (this.m_single == null) {
+        return null;
       }
-
-      if (this.m_files == null) {
-        if (this.m_single == null) {
-          this.m_single = new ImmutableAssociation<>(normalized, type);
-          return;
-        }
-
-        this.m_files = new LinkedHashMap<>();
-        this.m_files.put(this.m_single.getKey(), this.m_single.getValue());
-        this.m_single = null;
+      if (this.m_single.getKey().equals(path)) {
+        return this.m_single.getValue();
       }
-      this.m_output = null;
+      return null;
+    }
+    return this.m_files.get(path);
+  }
 
-      old = this.m_files.get(normalized);
-      if (old == null) {
-        this.m_files.put(normalized, type);
+  /** {@inheritDoc} */
+  @Override
+  final void _addFile(final Path path, final IFileType type) {
+    this.m_output = null;
+
+    if (this.m_files == null) {
+      if (this.m_single == null) {
+        this.m_single = new ImmutableAssociation<>(path, type);
         return;
       }
+
+      this.m_files = new LinkedHashMap<>();
+      this.m_files.put(this.m_single.getKey(), this.m_single.getValue());
+      this.m_single = null;
     }
 
-    throw new IllegalStateException(((((("Path '" + normalized) + //$NON-NLS-1$
-        "' is already associated with type ") + old) //$NON-NLS-1$
-        + " and cannot be associated a second time (to type ") + //$NON-NLS-1$ 
-        type + '\'') + '.');
-  }
-
-  /**
-   * Add a {@link java.nio.file.Path file}/
-   * {@link org.optimizationBenchmarking.utils.io.IFileType file type}
-   * -association to this listener support.
-   * 
-   * @param p
-   *          the path to add
-   */
-  @Override
-  public final void addFile(final Map.Entry<Path, IFileType> p) {
-    if (p == null) {
-      throw new IllegalArgumentException(//
-          "Cannot add null path entry."); //$NON-NLS-1$
-    }
-    this.addFile(p.getKey(), p.getValue());
-  }
-
-  /**
-   * Add a set of paths into the internal path list.
-   * 
-   * @param ps
-   *          the paths to add
-   */
-  @Override
-  public final void addFiles(final Iterable<Map.Entry<Path, IFileType>> ps) {
-    if (ps == null) {
-      throw new IllegalArgumentException(//
-          "Cannot add the elements of a null iterable.");//$NON-NLS-1$
-    }
-    synchronized (this) {
-      for (final Map.Entry<Path, IFileType> p : ps) {
-        this.addFile(p);
-      }
-    }
+    this.m_files.put(path, type);
   }
 
   /**
@@ -346,12 +267,5 @@ public final class FileProducerSupport extends FileCollector implements
 
     listener.onFilesFinalized(//
         (ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void onFilesFinalized(
-      final Collection<Entry<Path, IFileType>> result) {
-    this.addFiles(result);
   }
 }

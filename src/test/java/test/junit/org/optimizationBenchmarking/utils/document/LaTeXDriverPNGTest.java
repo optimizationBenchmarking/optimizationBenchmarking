@@ -3,13 +3,16 @@ package test.junit.org.optimizationBenchmarking.utils.document;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfiguration;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXConfigurationBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
+import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
+import org.optimizationBenchmarking.utils.tools.impl.latex.LaTeX;
 
-/** The LaTeX driver test using PNG figures*/
+/** The LaTeX driver test using PNG figures */
 public class LaTeXDriverPNGTest extends DocumentDriverTest {
 
   /** create the test */
   public LaTeXDriverPNGTest() {
-    super(__make());
+    super(LaTeXDriverPNGTest.__make());
   }
 
   /**
@@ -23,5 +26,15 @@ public class LaTeXDriverPNGTest extends DocumentDriverTest {
     builder = new LaTeXConfigurationBuilder();
     builder.setGraphicDriver(EGraphicFormat.PNG.getDefaultDriver());
     return builder.immutable();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final IFileType[] getRequiredTypes() {
+    if (LaTeX.getInstance().hasToolChainFor(ELaTeXFileType.TEX,
+        ELaTeXFileType.BIB, EGraphicFormat.PNG)) {
+      return new IFileType[] { ELaTeXFileType.TEX, ELaTeXFileType.PDF };
+    }
+    return new IFileType[] { ELaTeXFileType.TEX };
   }
 }
