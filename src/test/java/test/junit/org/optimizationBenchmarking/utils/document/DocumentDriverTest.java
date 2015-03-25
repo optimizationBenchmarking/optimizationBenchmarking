@@ -12,7 +12,6 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.MemoryUtils;
-import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
@@ -66,29 +65,40 @@ public abstract class DocumentDriverTest extends
       final Random r) throws IOException, InterruptedException,
       ExecutionException {
     final DocumentConfiguration config;
-    final RandomDocumentExample ex;
-    final FileProducerCollector files;
-    final Future<?> f;
+    RandomDocumentExample example;
+    FileProducerCollector files;
+    Future<?> future;
 
     config = this.getInstance();
     Assert.assertNotNull(config);
+    try {
+      files = new FileProducerCollector();
 
-    files = new FileProducerCollector();
-
-    try (final TempDir td = new TempDir()) {
-      try (final IDocument doc = config.createDocument(td.getPath(),
-          "document", files, Configuration.getGlobalLogger())) { //$NON-NLS-1$
-        ex = new RandomDocumentExample(doc, r, null, 60_000L);
-        if (service != null) {
-          f = service.submit(ex);
-          f.get();
-        } else {
-          ex.run();
+      try (final TempDir td = new TempDir()) {
+        try (final IDocument doc = config.createDocument(td.getPath(),
+            "document", files, null)) { //$NON-NLS-1$
+          example = new RandomDocumentExample(doc, r, null, 60_000L);
+          try {
+            if (service != null) {
+              try {
+                future = service.submit(example);
+                future.get();
+              } finally {
+                future = null;
+              }
+            } else {
+              example.run();
+            }
+          } finally {
+            example = null;
+          }
         }
       }
-    }
 
-    files.assertFilesOfType(this.getRequiredTypes());
+      files.assertFilesOfType(this.getRequiredTypes());
+    } finally {
+      files = null;
+    }
 
     MemoryUtils.fullGC();
   }
@@ -108,28 +118,40 @@ public abstract class DocumentDriverTest extends
   private final void __doTemplateTest(final ExecutorService service)
       throws IOException, InterruptedException, ExecutionException {
     final DocumentConfiguration config;
-    final TemplateDocumentExample ex;
-    final Future<?> f;
-    final FileProducerCollector files;
+    TemplateDocumentExample example;
+    Future<?> future;
+    FileProducerCollector files;
 
     config = this.getInstance();
     Assert.assertNotNull(config);
-    files = new FileProducerCollector();
+    try {
+      files = new FileProducerCollector();
 
-    try (final TempDir td = new TempDir()) {
-      try (final IDocument doc = config.createDocument(td.getPath(),
-          "document", files, null)) { //$NON-NLS-1$
-        ex = new TemplateDocumentExample(doc);
-        if (service != null) {
-          f = service.submit(ex);
-          f.get();
-        } else {
-          ex.run();
+      try (final TempDir td = new TempDir()) {
+        try (final IDocument doc = config.createDocument(td.getPath(),
+            "document", files, null)) { //$NON-NLS-1$
+          try {
+            example = new TemplateDocumentExample(doc);
+            if (service != null) {
+              try {
+                future = service.submit(example);
+                future.get();
+              } finally {
+                future = null;
+              }
+            } else {
+              example.run();
+            }
+          } finally {
+            example = null;
+          }
         }
       }
-    }
 
-    files.assertFilesOfType(this.getRequiredTypes());
+      files.assertFilesOfType(this.getRequiredTypes());
+    } finally {
+      files = null;
+    }
 
     MemoryUtils.fullGC();
   }

@@ -267,9 +267,8 @@ final class _LaTeXMainJob extends LaTeXJob {
             }
             if (rounds > 25) {
               if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
-                logger
-                    .warning((((//
-                        "We have done " + rounds) + //$NON-NLS-1$
+                logger.warning(//
+                    ((("We have done " + rounds) + //$NON-NLS-1$
                         " of compilation for") + //$NON-NLS-1$
                         document)
                         + ". This looks like an endless loop. Maybe you store volatile information like the time in your aux file? Better we stop now even though there still were changes, i.e., we risk to have some undefined labels or references in the final document rather than looping forever.");//$NON-NLS-1$
