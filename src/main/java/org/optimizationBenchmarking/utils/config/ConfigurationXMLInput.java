@@ -51,10 +51,9 @@ public final class ConfigurationXMLInput extends
     }
 
     if (rec != null) {
-      RethrowMode.AS_IO_EXCEPTION
-          .rethrow(//
-              "Error while loading the XMLFileType Schema for ConfigurationXML.", //$NON-NLS-1$
-              true, rec);
+      RethrowMode.AS_IO_EXCEPTION.rethrow(//
+          "Error while loading the XML Schema for ConfigurationXML.", //$NON-NLS-1$
+          true, rec);
     }
   }
 

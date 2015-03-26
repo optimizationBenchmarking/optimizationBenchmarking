@@ -53,7 +53,7 @@ public final class FontPaletteXMLInput extends
 
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION.rethrow(//
-          "Error during loading of the font palette XMLFileType Schema.", //$NON-NLS-1$
+          "Error during loading of the font palette XML Schema.", //$NON-NLS-1$
           true, rec);
     }
   }

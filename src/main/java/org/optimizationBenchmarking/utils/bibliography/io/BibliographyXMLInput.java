@@ -65,10 +65,9 @@ public final class BibliographyXMLInput extends
     }
 
     if (rec != null) {
-      RethrowMode.AS_IO_EXCEPTION
-          .rethrow(//
-              "Error during loading the XMLFileType Schema for BibliographyXML.", //$NON-NLS-1$
-              true, rec);//
+      RethrowMode.AS_IO_EXCEPTION.rethrow(//
+          "Error during loading the XML Schema for BibliographyXML.", //$NON-NLS-1$
+          true, rec);//
     }
   }
 

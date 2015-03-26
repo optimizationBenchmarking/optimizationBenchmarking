@@ -54,7 +54,7 @@ public final class ColorPaletteXMLInput extends
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
           .rethrow(//
-              "Error during loading of the XMLFileType Schema for the color style palette XMLFileType.", //$NON-NLS-1$
+              "Error during loading of the XML Schema for the color style palette XMLFileType.", //$NON-NLS-1$
               true, rec);
     }
   }

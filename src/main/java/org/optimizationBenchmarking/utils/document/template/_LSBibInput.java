@@ -31,10 +31,9 @@ final class _LSBibInput extends SimpleLSInput {
       return BibliographyXML.BIBLIOGRAPHY_XML.getSchemaSource()
           .openStream();
     } catch (final Throwable tt) {
-      RethrowMode.AS_RUNTIME_EXCEPTION
-          .rethrow(//
-              "Error while opening input stream to bibliography XMLFileType Schema.", //$NON-NLS-1$
-              true, tt);
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
+          "Error while opening input stream to bibliography XML Schema.", //$NON-NLS-1$
+          true, tt);
       return null;
     }
   }

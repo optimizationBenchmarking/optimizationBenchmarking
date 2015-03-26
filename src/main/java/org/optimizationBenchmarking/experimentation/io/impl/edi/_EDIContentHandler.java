@@ -3,7 +3,6 @@ package org.optimizationBenchmarking.experimentation.io.impl.edi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.impl.FlatExperimentSetContext;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
@@ -46,9 +45,9 @@ final class _EDIContentHandler extends DelegatingHandler {
    *          the job
    */
   public _EDIContentHandler(final DelegatingHandler owner,
-      final ExperimentSetContext esb, final IOJob job) {
+      final FlatExperimentSetContext esb, final IOJob job) {
     super(owner);
-    this.m_context = new FlatExperimentSetContext(esb);
+    this.m_context = esb;
     this.m_sb = new MemoryTextOutput();
     this.m_job = job;
     this.m_logger = job.getLogger();
@@ -62,17 +61,16 @@ final class _EDIContentHandler extends DelegatingHandler {
     if ((this.m_logger != null) && //
         (this.m_logger.isLoggable(Level.WARNING))) {
       this.m_logger.log(Level.WARNING,
-          "Warning during XMLFileType parsing.", //$NON-NLS-1$
+          "Warning during parsing of the EDI file.", //$NON-NLS-1$
           e);
     }
-
   }
 
   /** {@inheritDoc} */
   @Override
   public final void doError(final SAXParseException e) throws SAXException {
     try {
-      this.m_job.handleError(e, "Error during XMLFileType parsing."); //$NON-NLS-1$
+      this.m_job.handleError(e, "Error during parsing of the EDI file."); //$NON-NLS-1$
     } catch (final Exception ioe) {
       throw new SAXException(ioe);
     }
@@ -83,7 +81,8 @@ final class _EDIContentHandler extends DelegatingHandler {
   public final void doFatalError(final SAXParseException e)
       throws SAXException {
     try {
-      this.m_job.handleError(e, "Fatal error during XMLFileType parsing."); //$NON-NLS-1$
+      this.m_job.handleError(e,
+          "Fatal error during parsing of the EDI file."); //$NON-NLS-1$
     } catch (final Exception ioe) {
       throw new SAXException(ioe);
     }
@@ -200,11 +199,6 @@ final class _EDIContentHandler extends DelegatingHandler {
         lb, ub));
   }
 
-  /** end the dimension */
-  private final void __endDimension() {
-    this.m_context.dimensionEnd();
-  }
-
   /**
    * start the experiment
    * 
@@ -231,13 +225,6 @@ final class _EDIContentHandler extends DelegatingHandler {
     if (s != null) {
       this.m_context.experimentSetDescription(s);
     }
-  }
-
-  /**
-   * end the experiment
-   */
-  private final void __endExperiment() {
-    this.m_context.experimentEnd();
   }
 
   /**
@@ -286,11 +273,6 @@ final class _EDIContentHandler extends DelegatingHandler {
     }
   }
 
-  /** end the instance */
-  private final void __endInstance() {
-    this.m_context.instanceEnd();
-  }
-
   /**
    * start the instance runs
    * 
@@ -302,11 +284,6 @@ final class _EDIContentHandler extends DelegatingHandler {
     this.m_context.runsSetInstance(DelegatingHandler
         .getAttributeNormalized(atts, EDI.NAMESPACE,
             EDI.ATTRIBUTE_INSTANCE));
-  }
-
-  /** end the instance runs */
-  private final void __endInstanceRuns() {
-    this.m_context.runsEnd();
   }
 
   /** start a run */
@@ -438,25 +415,6 @@ final class _EDIContentHandler extends DelegatingHandler {
     }
 
     if ((uri == null) || EDI.NAMESPACE.equalsIgnoreCase(uri)) {
-
-      if (EDI.ELEMENT_DIMENSION.equalsIgnoreCase(localName)) {
-        this.__endDimension();
-      }
-
-      if (EDI.ELEMENT_EXPERIMENT.equalsIgnoreCase(localName)) {
-        this.__endExperiment();
-        return;
-      }
-
-      if (EDI.ELEMENT_INSTANCE.equalsIgnoreCase(localName)) {
-        this.__endInstance();
-        return;
-      }
-
-      if (EDI.ELEMENT_INSTANCE_RUNS.equalsIgnoreCase(localName)) {
-        this.__endInstanceRuns();
-        return;
-      }
 
       if (EDI.ELEMENT_POINT.equalsIgnoreCase(localName)) {
         this.__endPoint();

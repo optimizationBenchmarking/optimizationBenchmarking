@@ -32,7 +32,7 @@ final class _LSConfigurationXMLInput extends SimpleLSInput {
     } catch (final Throwable tt) {
       RethrowMode.AS_RUNTIME_EXCEPTION
           .rethrow(//
-              "Error while creating input stream to Configuration XMLFileType Schema.", //$NON-NLS-1$
+              "Error while creating input stream to Configuration XML Schema.", //$NON-NLS-1$
               true, tt);
       return null;
     }

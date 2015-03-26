@@ -54,7 +54,7 @@ public final class StrokePaletteXMLInput extends
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
           .rethrow(//
-              "Error during loading of XMLFileType Schema for the stroke palette xml.", //$NON-NLS-1$
+              "Error during loading of XML Schema for the stroke palette xml.", //$NON-NLS-1$
               true, rec);
     }
   }
