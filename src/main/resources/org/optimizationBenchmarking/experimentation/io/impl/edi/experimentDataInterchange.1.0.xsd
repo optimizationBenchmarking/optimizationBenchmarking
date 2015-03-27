@@ -7,8 +7,7 @@
 	<annotation>
 		<documentation>
 			The XML Schema for the Experiment Data Interchange data
-			format, version
-			1.0.
+			format, version 1.0.
 		</documentation>
 	</annotation>
 
@@ -17,12 +16,9 @@
 		<annotation>
 			<documentation>
 				The dimension element defines on measurable dimension.
-				A dimension
-				has a name, e.g., "FEs" (common abbreviation for
-				"Function Evaluations"
-				used in optimization) or "Runtime". It can
-				have a descriptive text as well. In order to ease processing,
-				a
+				A dimension has a name, e.g., "FEs" (common abbreviation for
+				"Function Evaluations" used in optimization) or "Runtime". It can
+				have a descriptive text as well. In order to ease processing, a
 				dimension also has a dimension type, a direction, and a data type.
 			</documentation>
 		</annotation>
@@ -94,15 +90,12 @@
 		<annotation>
 			<documentation>
 				The instance element describes a specific instance of
-				a benchmark
-				problem. Such an instance has a name and may have a
-				description.
-				Usually, benchmark problem instances also have features,
-				such
-				as the scale (e.g., the number of cities in a Traveling Salesman
-				Problem).
-				We then try to relate the performance of an algorithm on a
-				specific instance to the features of this instance.
+				a benchmark problem. Such an instance has a name and may have a
+				description. Usually, benchmark problem instances also have
+				features, such as the scale (e.g., the number of cities in a
+				Traveling Salesman Problem). We then try to relate the performance
+				of an algorithm on a specific instance to the features of this
+				instance.
 			</documentation>
 		</annotation>
 
@@ -209,13 +202,10 @@
 		<annotation>
 			<documentation>
 				An experiment holds the whole data of an algorithm
-				applied to
-				a set of benchmark instances. As such, it has a name and a
-				description. The algorithm can also have a specific configuration,
-				denoted as parameter settings, such as
-				the population size in an
-				Evolutionary Algorithm or the
-				stating temperature in a Simulated
+				applied to a set of benchmark instances. As such, it has a name and
+				a description. The algorithm can also have a specific configuration,
+				denoted as parameter settings, such as the population size in an
+				Evolutionary Algorithm or the stating temperature in a Simulated
 				Annealing algorithm.
 			</documentation>
 		</annotation>
@@ -241,7 +231,8 @@
 	<element name="experiments">
 		<annotation>
 			<documentation>
-				Multiple experiments can be stored together in one EDI stream.
+				Multiple experiments can be stored together in one EDI
+				stream.
 			</documentation>
 		</annotation>
 
@@ -255,7 +246,8 @@
 	<element name="experimentData">
 		<annotation>
 			<documentation>
-				The canonical description of a set of experiments contains
+				The canonical description of a set of experiments
+				contains
 				the specification measurement dimensions, the specification
 				of the problem instances, as well as the data of the experiments.
 			</documentation>

@@ -129,17 +129,17 @@ public final class CSVEDIInput extends EDIInputToolBase {
     final LinkedHashSet<String> candidates;
 
     candidates = new LinkedHashSet<>();
-    __add(DIMENSIONS_BASE, candidates);
+    CSVEDIInput.__add(CSVEDIInput.DIMENSIONS_BASE, candidates);
     DIMENSIONS_FILE_CANDIDATES = candidates.toArray(new String[candidates
         .size()]);
 
     candidates.clear();
-    __add(INSTANCES_BASE, candidates);
+    CSVEDIInput.__add(CSVEDIInput.INSTANCES_BASE, candidates);
     INSTANCES_FILE_CANDIDATES = candidates.toArray(new String[candidates
         .size()]);
 
     candidates.clear();
-    __add(EXPERIMENT_BASE, candidates);
+    CSVEDIInput.__add(CSVEDIInput.EXPERIMENT_BASE, candidates);
     EXPERIMENT_FILE_CANDIDATES = candidates.toArray(new String[candidates
         .size()]);
   }
@@ -159,12 +159,13 @@ public final class CSVEDIInput extends EDIInputToolBase {
    */
   private static final void __add(final String base,
       final LinkedHashSet<String> dest) {
-    for (String str1 : new String[] { base, base.toUpperCase() }) {
-      for (String str2 : new String[] { EDI.EDI_XML.getDefaultSuffix(),//
+    for (final String str1 : new String[] { base, base.toUpperCase() }) {
+      for (final String str2 : new String[] {
+          EDI.EDI_XML.getDefaultSuffix(),//
           "edi", //$NON-NLS-1$
           "xml", //$NON-NLS-1$
           XMLFileType.XML.getDefaultSuffix() }) {
-        for (String str3 : new String[] { str2, str2.toUpperCase() }) {
+        for (final String str3 : new String[] { str2, str2.toUpperCase() }) {
           dest.add(str1 + '.' + str3);
         }
       }
@@ -279,13 +280,13 @@ public final class CSVEDIInput extends EDIInputToolBase {
 
         // check for a dimension definition file
         if (!(context._hasDimensions())) {
-          dims: for (String name : DIMENSIONS_FILE_CANDIDATES) {
+          dims: for (final String name : CSVEDIInput.DIMENSIONS_FILE_CANDIDATES) {
             candidate = PathUtils.createPathInside(path, name);
             if (candidate != null) {
               try {
                 candidateAttrs = Files.readAttributes(candidate,
                     BasicFileAttributes.class);
-              } catch (Throwable t) {
+              } catch (final Throwable t) {
                 continue dims;
               }
 
@@ -293,7 +294,7 @@ public final class CSVEDIInput extends EDIInputToolBase {
                   && (candidateAttrs.isRegularFile())) {
                 if (context._isNew(candidate, candidateAttrs)) {
                   context._dimensionsFound();
-                  super.file(job, data, path, attributes,
+                  super.file(job, data, candidate, attributes,
                       StreamEncoding.TEXT);
                   break dims;
                 }
@@ -304,13 +305,13 @@ public final class CSVEDIInput extends EDIInputToolBase {
 
         // check for an instances definition file
         if (!(context._hasInstances())) {
-          insts: for (String name : INSTANCES_FILE_CANDIDATES) {
+          insts: for (final String name : CSVEDIInput.INSTANCES_FILE_CANDIDATES) {
             candidate = PathUtils.createPathInside(path, name);
             if (candidate != null) {
               try {
                 candidateAttrs = Files.readAttributes(candidate,
                     BasicFileAttributes.class);
-              } catch (Throwable t) {
+              } catch (final Throwable t) {
                 continue insts;
               }
 
@@ -318,7 +319,7 @@ public final class CSVEDIInput extends EDIInputToolBase {
                   && (candidateAttrs.isRegularFile())) {
                 if (context._isNew(candidate, candidateAttrs)) {
                   context._instancesFound();
-                  super.file(job, data, path, attributes,
+                  super.file(job, data, candidate, attributes,
                       StreamEncoding.TEXT);
                   break insts;
                 }
@@ -328,20 +329,20 @@ public final class CSVEDIInput extends EDIInputToolBase {
         }
 
         // check for an experiment description file
-        exp: for (String name : EXPERIMENT_FILE_CANDIDATES) {
+        exp: for (final String name : CSVEDIInput.EXPERIMENT_FILE_CANDIDATES) {
           candidate = PathUtils.createPathInside(path, name);
           if (candidate != null) {
             try {
               candidateAttrs = Files.readAttributes(candidate,
                   BasicFileAttributes.class);
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
               continue exp;
             }
 
             if ((candidateAttrs != null)
                 && (candidateAttrs.isRegularFile())) {
               if (context._isNew(candidate, candidateAttrs)) {
-                super.file(job, data, path, attributes,
+                super.file(job, data, candidate, attributes,
                     StreamEncoding.TEXT);
                 break exp;
               }
@@ -399,7 +400,7 @@ public final class CSVEDIInput extends EDIInputToolBase {
               continue;
             }
 
-            for (String comment : COMMENTS) {
+            for (final String comment : CSVEDIInput.COMMENTS) {
               idx = line.indexOf(comment);
               if (idx >= 0) {
                 line = line.substring(0, idx);

@@ -4,14 +4,14 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.io.impl.bbob.BBOBInput;
+import org.optimizationBenchmarking.experimentation.io.impl.csvedi.CSVEDIInput;
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 
-/** A class for creating experiment sets */
-public final class BBOBExample extends ExperimentSetCreator {
+/** A class for using some data stored in CSV+EDI format */
+public final class CSVEDIExample extends ExperimentSetCreator {
 
   /** create */
-  public BBOBExample() {
+  public CSVEDIExample() {
     super();
   }
 
@@ -22,12 +22,12 @@ public final class BBOBExample extends ExperimentSetCreator {
     try (final ExperimentSetContext ec = new ExperimentSetContext(
         Logger.getGlobal())) {
 
-      BBOBInput
+      CSVEDIInput
           .getInstance()
           .use()
           .setDestination(ec)
-          .addArchiveResource(BBOBExample.class,
-              "bbobExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$
+          .addArchiveResource(CSVEDIExample.class,
+              "csvEdiExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$
           .create().call();
       return ec.create();
     }
@@ -40,6 +40,6 @@ public final class BBOBExample extends ExperimentSetCreator {
    *          the command line arguments
    */
   public static final void main(final String[] args) {
-    new BBOBExample().run();
+    new CSVEDIExample().run();
   }
 }

@@ -1153,7 +1153,34 @@ public class FlatExperimentSetContext {
    * 
    * @return the set of all instances
    */
+  @SuppressWarnings("incomplete-switch")
   public synchronized final InstanceSet instanceGetAll() {
+
+    switch (this.m_mode) {
+      case MODE_INSTANCE: {
+        try {
+          this.m_instance.close();
+        } catch (final Throwable error) {
+          throw new IllegalStateException(
+              this.__errorLocation(//
+                  "Error while trying to close an instance context in order to obtain the set of all instances.",//$NON-NLS-1$
+                  true), error);
+        } finally {
+          this.m_instance = null;
+          this.m_instanceName = null;
+          this.m_mode = FlatExperimentSetContext.MODE_EXPERIMENT_SET;
+        }
+        break;
+      }
+
+      case MODE_DIMENSION: {
+        throw new IllegalStateException(
+            this.__errorLocation(//
+                "Cannot obtain set of all instances while still creating dimensions: Instances can only be created after dimension creation has finished, and only after the instances have been created, you can obtain them.", //$NON-NLS-1$
+                false));
+      }
+    }
+
     try {
       return this.m_main.getInstanceSet();
     } catch (final Throwable error) {
@@ -1168,13 +1195,41 @@ public class FlatExperimentSetContext {
    * 
    * @return the set of all features
    */
+  @SuppressWarnings("incomplete-switch")
   public synchronized final FeatureSet featureGetAll() {
+
+    switch (this.m_mode) {
+      case MODE_INSTANCE: {
+        try {
+          this.m_instance.close();
+        } catch (final Throwable error) {
+          throw new IllegalStateException(
+              this.__errorLocation(//
+                  "Error while trying to close an instance context in order to obtain the set of all features.",//$NON-NLS-1$
+                  true), error);
+        } finally {
+          this.m_instance = null;
+          this.m_instanceName = null;
+          this.m_mode = FlatExperimentSetContext.MODE_EXPERIMENT_SET;
+        }
+        break;
+      }
+
+      case MODE_DIMENSION: {
+        throw new IllegalStateException(
+            this.__errorLocation(//
+                "Cannot obtain set of all (instance) features while still creating dimensions: Instances can only be created after dimension creation has finished, and only after the instances have been created, you can obtain their features.", //$NON-NLS-1$
+                false));
+      }
+    }
+
     try {
       return this.m_main.getFeatureSet();
     } catch (final Throwable error) {
-      throw new IllegalStateException(this.__errorLocation(//
-          "Error while trying to obtain the set of all features.", //$NON-NLS-1$
-          true), error);
+      throw new IllegalStateException(
+          this.__errorLocation(//
+              "Error while trying to obtain the set of all (instance) features.", //$NON-NLS-1$
+              true), error);
     }
   }
 
