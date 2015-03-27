@@ -620,7 +620,8 @@ public class FileInputTool<S> extends IOTool<S> implements
   protected boolean isFileInDirectoryLoadable(final IOJob job,
       final S data, final Path path, final BasicFileAttributes attributes)
       throws Throwable {
-    return ((attributes != null) && (attributes.isRegularFile()));
+    return ((path != null) && (attributes != null) && //
+    (attributes.isRegularFile()));
   }
 
   /**

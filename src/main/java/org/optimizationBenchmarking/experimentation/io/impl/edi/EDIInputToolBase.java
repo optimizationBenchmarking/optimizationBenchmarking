@@ -60,7 +60,8 @@ public abstract class EDIInputToolBase extends ExperimentSetXMLInput {
   }
 
   /**
-   * Check whether a file may be an EDI file
+   * Check whether a regular file may be an EDI file: Files are considered
+   * to be EDI files if their suffix is either {@code edi} or {@code xml}.
    * 
    * @param job
    *          the IO job
@@ -81,31 +82,27 @@ public abstract class EDIInputToolBase extends ExperimentSetXMLInput {
     final char lm3, lm2, lm1, lm0;
     int len;
 
-    if (super.isFileInDirectoryLoadable(job, data, path, attributes)) {
-      n = path.toString();
-      len = n.length();
-      if (len <= 4) {
-        return false;
-      }
-
-      lm0 = (n.charAt(--len));
-      lm1 = (n.charAt(--len));
-      lm2 = (n.charAt(--len));
-      lm3 = (n.charAt(--len));
-
-      return (((lm3 == '.') && (//
-      (((lm2 == 'x') || (lm2 == 'X'))//
-          && ((lm1 == 'm') || (lm1 == 'M'))//
-      && ((lm0 == 'l') || (lm0 == 'L'))) || //
-      (((lm2 == 'e') || (lm2 == 'E'))//
-          && ((lm1 == 'd') || (lm1 == 'D'))//
-      && ((lm0 == 'i') || (lm0 == 'I'))))) || //
-      ((lm2 == EDI.SUFFIX_CHARS[0])//
-          && (lm1 == EDI.SUFFIX_CHARS[1])//
-      && (lm0 == EDI.SUFFIX_CHARS[2])));
+    n = path.toString();
+    len = n.length();
+    if (len <= 4) {
+      return false;
     }
 
-    return false;
+    lm0 = (n.charAt(--len));
+    lm1 = (n.charAt(--len));
+    lm2 = (n.charAt(--len));
+    lm3 = (n.charAt(--len));
+
+    return (((lm3 == '.') && (//
+    (((lm2 == 'x') || (lm2 == 'X'))//
+        && ((lm1 == 'm') || (lm1 == 'M'))//
+    && ((lm0 == 'l') || (lm0 == 'L'))) || //
+    (((lm2 == 'e') || (lm2 == 'E'))//
+        && ((lm1 == 'd') || (lm1 == 'D'))//
+    && ((lm0 == 'i') || (lm0 == 'I'))))) || //
+    ((lm2 == EDI.SUFFIX_CHARS[0])//
+        && (lm1 == EDI.SUFFIX_CHARS[1])//
+    && (lm0 == EDI.SUFFIX_CHARS[2])));
   }
 
   /** {@inheritDoc} */
@@ -113,7 +110,10 @@ public abstract class EDIInputToolBase extends ExperimentSetXMLInput {
   protected boolean isFileInDirectoryLoadable(final IOJob job,
       final ExperimentSetContext data, final Path path,
       final BasicFileAttributes attributes) throws Throwable {
-    return this.isEDI(job, data, path, attributes);
+    if (super.isFileInDirectoryLoadable(job, data, path, attributes)) {
+      return this.isEDI(job, data, path, attributes);
+    }
+    return false;
   }
 
   /** {@inheritDoc} */

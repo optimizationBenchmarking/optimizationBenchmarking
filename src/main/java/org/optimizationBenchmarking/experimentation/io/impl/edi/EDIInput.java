@@ -13,6 +13,12 @@ public final class EDIInput extends EDIInputToolBase {
     super();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "EDI Experiment Data Input"; //$NON-NLS-1$
+  }
+
   /**
    * get the instance of the {@link EDIInput}
    * 
@@ -20,12 +26,6 @@ public final class EDIInput extends EDIInputToolBase {
    */
   public static final EDIInput getInstance() {
     return __EDIInputLoader.INSTANCE;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String toString() {
-    return "EDI Experiment Data Input"; //$NON-NLS-1$
   }
 
   /** the loader */

@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.io.impl;
 import java.util.LinkedHashSet;
 
 import org.optimizationBenchmarking.experimentation.io.impl.bbob.BBOBInput;
+import org.optimizationBenchmarking.experimentation.io.impl.csvedi.CSVEDIInput;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInput;
 import org.optimizationBenchmarking.experimentation.io.impl.tspSuite.TSPSuiteInput;
 import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput;
@@ -35,6 +36,8 @@ public final class ExperimentSetInputParser extends
     ReflectionUtils.addPackageOfClassToPrefixList(
         ExperimentSetInputParser.class, paths);
     ReflectionUtils.addPackageOfClassToPrefixList(EDIInput.class, paths);
+    ReflectionUtils
+        .addPackageOfClassToPrefixList(CSVEDIInput.class, paths);
     ReflectionUtils.addPackageOfClassToPrefixList(TSPSuiteInput.class,
         paths);
     ReflectionUtils.addPackageOfClassToPrefixList(BBOBInput.class, paths);
@@ -45,8 +48,16 @@ public final class ExperimentSetInputParser extends
   @Override
   public final IExperimentSetInput parseString(final String string)
       throws Exception {
+
     if ("edi".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return EDIInput.getInstance();
+    }
+
+    if ("csvedi".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "csv edi".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "csv-edi".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "csv+edi".equalsIgnoreCase(string)) { //$NON-NLS-1$
+      return CSVEDIInput.getInstance();
     }
 
     if ("tspsuite".equalsIgnoreCase(string) || //$NON-NLS-1$
