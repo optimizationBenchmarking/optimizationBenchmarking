@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.data;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** A parameter. */
-public final class Parameter extends _Property<ParameterValue> {
+public final class Parameter extends Property<ParameterValue> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -53,9 +53,8 @@ public final class Parameter extends _Property<ParameterValue> {
    *          the unspecified value
    */
   Parameter(final String name, final String desc,
-      final EPrimitiveType primitiveType,
-      final _PropertyValue<?>[] values, final ParameterValue unspecified,
-      final ParameterValue general) {
+      final EPrimitiveType primitiveType, final PropertyValue<?>[] values,
+      final ParameterValue unspecified, final ParameterValue general) {
     super(name, desc, primitiveType, values, general);
 
     this.m_unspec = unspecified;

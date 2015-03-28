@@ -202,7 +202,7 @@ class _PropertyFSMSettingBuilder<PST extends _PropertySetting<?, ?>>
     final _PropertySet ps;
 
     ps = this._getPropertySet();
-    return ((PST) (ps.createSetting(new _PropertyMappingIterator(ps,
+    return ((PST) (ps._createSetting(new _PropertyMappingIterator(ps,
         compiled.entrySet().iterator(), true), false, true)));
   }
 }

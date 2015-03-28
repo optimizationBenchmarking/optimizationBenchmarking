@@ -20,9 +20,9 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * @param <PST>
  *          the property set type the property builder type
  */
-abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT extends _Property<?>, PST extends _PropertySet<?, ?, ?>>
+abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT extends Property<?>, PST extends _PropertySet<?, ?, ?>>
     extends _PropertyFSM<_PropertyFSMPropertyRecord, PST, PST, _FSM>
-    implements Comparator<_PropertyValue<?>> {
+    implements Comparator<PropertyValue<?>> {
 
   /**
    * create
@@ -109,8 +109,8 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT e
    * @return the property
    */
   abstract PT _createProperty(final String name, final String desc,
-      final EPrimitiveType primitiveType,
-      final _PropertyValue<?>[] values, final boolean hasUnspecified);
+      final EPrimitiveType primitiveType, final PropertyValue<?>[] values,
+      final boolean hasUnspecified);
 
   /**
    * create the property set
@@ -119,7 +119,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT e
    *          the properties
    * @return the property set
    */
-  abstract PST _createPropertySet(final _Property<?>[] data);
+  abstract PST _createPropertySet(final Property<?>[] data);
 
   /**
    * merge names
@@ -174,7 +174,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT e
     final HashMap<Object, String> descriptions;
     final Object[] values;
     final int refCount;
-    final _PropertyValue<?>[] propertyValues;
+    final PropertyValue<?>[] propertyValues;
     final String n;
     EPrimitiveType type;
     Object propertyValue;
@@ -250,8 +250,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT e
       strict = false;
 
       // but we try to avoid booleans and floats, since loose parsing them
-      // may
-      // lose us fidelity
+      // may lose us fidelity
       primitiveTypes.addAll(EPrimitiveType.TYPES);
       primitiveTypes.remove(EPrimitiveType.BOOLEAN);
       primitiveTypes.remove(EPrimitiveType.FLOAT);
@@ -405,7 +404,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT e
     }
 
     propertyValues = parsed.values().toArray(
-        new _PropertyValue[parsed.size()]);
+        new PropertyValue[parsed.size()]);
     if (propertyValues.length > values.length) {
       throw new IllegalStateException(//
           "Property value set of property '" + //$NON-NLS-1$
@@ -424,8 +423,8 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT e
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public final int compare(final _PropertyValue<?> o1,
-      final _PropertyValue<?> o2) {
+  public final int compare(final PropertyValue<?> o1,
+      final PropertyValue<?> o2) {
     Object v1, v2;
 
     if (o1 == o2) {
@@ -499,7 +498,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends _PropertyValue<?>, PT e
               + map + '.');
     }
 
-    return this._createPropertySet(list.toArray(new _Property[i]));
+    return this._createPropertySet(list.toArray(new Property[i]));
   }
 
   /** {@inheritDoc} */

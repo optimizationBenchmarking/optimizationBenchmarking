@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
  * @param <PT>
  *          the property type
  */
-final class _PropertyMappingIterator<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
+final class _PropertyMappingIterator<PVT extends PropertyValue<?>, PT extends Property<PVT>>
     extends BasicIterator<PVT> {
 
   /** the owner */

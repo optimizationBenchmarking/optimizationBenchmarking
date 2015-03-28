@@ -28,8 +28,8 @@ final class _ParametersBuilder extends
   /** {@inheritDoc} */
   @Override
   final Parameter _createProperty(final String name, final String desc,
-      final EPrimitiveType primitiveType,
-      final _PropertyValue<?>[] values, final boolean hasUnspecified) {
+      final EPrimitiveType primitiveType, final PropertyValue<?>[] values,
+      final boolean hasUnspecified) {
     return new Parameter(
         name,
         desc,
@@ -50,7 +50,7 @@ final class _ParametersBuilder extends
 
   /** {@inheritDoc} */
   @Override
-  final ParameterSet _createPropertySet(final _Property<?>[] data) {
+  final ParameterSet _createPropertySet(final Property<?>[] data) {
     return new ParameterSet(data);
   }
 

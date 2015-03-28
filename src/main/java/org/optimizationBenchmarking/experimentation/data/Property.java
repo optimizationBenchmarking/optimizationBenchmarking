@@ -3,12 +3,16 @@ package org.optimizationBenchmarking.experimentation.data;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /**
- * A property
+ * A property: Properties are the base class for both
+ * {@link org.optimizationBenchmarking.experimentation.data.Feature
+ * instance features} and
+ * {@link org.optimizationBenchmarking.experimentation.data.Parameter
+ * experiment parameters}.
  * 
  * @param <DT>
- *          the data type .
+ *          the data type.
  */
-abstract class _Property<DT extends _PropertyValue<?>> extends
+public abstract class Property<DT extends PropertyValue<?>> extends
     _NamedIDObjectSet<DT> {
 
   /** the serial version uid */
@@ -39,16 +43,16 @@ abstract class _Property<DT extends _PropertyValue<?>> extends
    *          the generalized value
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  _Property(final String name, final String desc,
-      final EPrimitiveType primitiveType,
-      final _PropertyValue<?>[] values, final DT generalized) {
+  Property(final String name, final String desc,
+      final EPrimitiveType primitiveType, final PropertyValue<?>[] values,
+      final DT generalized) {
     super(name, desc, ((DT[]) values), false, true, true);
 
     this.m_type = primitiveType;
     this.m_values = ((DT[]) values);
     this.m_general = generalized;
     generalized.m_id = _PropertyValueGeneralized.ID;
-    ((_PropertyValue) generalized).m_owner = this;
+    ((PropertyValue) generalized).m_owner = this;
   }
 
   /**
@@ -99,7 +103,7 @@ abstract class _Property<DT extends _PropertyValue<?>> extends
     final Comparable cv;
     int low, high, mid, cmp;
     DT midVal;
-    _PropertyValue pt;
+    PropertyValue pt;
     String n1, n2, n;
     Object parsed, val;
 
@@ -119,8 +123,8 @@ abstract class _Property<DT extends _PropertyValue<?>> extends
 
     data = this.m_values;
 
-    if (value instanceof _PropertyValue) {
-      mid = (pt = ((_PropertyValue) value)).m_id;
+    if (value instanceof PropertyValue) {
+      mid = (pt = ((PropertyValue) value)).m_id;
       switch (mid) {
         case _PropertyValueUnspecified.ID: {
           return this.unspecified();

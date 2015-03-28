@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 /**
  * a concrete property value setting
  */
-final class _PropertyValueSet extends AbstractSet<_PropertyValue<?>> {
+final class _PropertyValueSet extends AbstractSet<PropertyValue<?>> {
 
   /** the parameter setting */
   private final _PropertySetting<?, ?> m_ps;
@@ -26,7 +26,7 @@ final class _PropertyValueSet extends AbstractSet<_PropertyValue<?>> {
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public final ArrayIterator<_PropertyValue<?>> iterator() {
+  public final ArrayIterator<PropertyValue<?>> iterator() {
     return ((ArrayIterator) (this.m_ps.iterator()));
   }
 

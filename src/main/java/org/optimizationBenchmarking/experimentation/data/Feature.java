@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.data;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** A feature. */
-public final class Feature extends _Property<FeatureValue> {
+public final class Feature extends Property<FeatureValue> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -24,8 +24,8 @@ public final class Feature extends _Property<FeatureValue> {
    *          the generalized value
    */
   Feature(final String name, final String desc,
-      final EPrimitiveType primitiveType,
-      final _PropertyValue<?>[] values, final FeatureValue general) {
+      final EPrimitiveType primitiveType, final PropertyValue<?>[] values,
+      final FeatureValue general) {
     super(name, desc, primitiveType, values, general);
   }
 

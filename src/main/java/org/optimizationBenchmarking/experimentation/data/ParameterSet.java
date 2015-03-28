@@ -18,14 +18,14 @@ public final class ParameterSet extends
    * @param data
    *          the instances
    */
-  ParameterSet(final _Property<?>[] data) {
+  ParameterSet(final Property<?>[] data) {
     super(data);
     this.m_id = ParameterSet.ID_COUNTER.getAndIncrement();
   }
 
   /** {@inheritDoc} */
   @Override
-  final ParameterSetting _createSetting(final _PropertyValue<?>[] values,
+  final ParameterSetting _createSetting(final PropertyValue<?>[] values,
       final boolean isGeneralized) {
     return new ParameterSetting(values, isGeneralized);
   }

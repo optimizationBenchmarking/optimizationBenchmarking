@@ -15,8 +15,7 @@ public final class ParameterSetting extends
    * @param isGeneral
    *          is this setting generalized?
    */
-  ParameterSetting(final _PropertyValue<?>[] params,
-      final boolean isGeneral) {
+  ParameterSetting(final PropertyValue<?>[] params, final boolean isGeneral) {
     super(params, isGeneral);
   }
 

@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.data;
 /**
  * A parameter value.
  */
-public final class ParameterValue extends _PropertyValue<Parameter> {
+public final class ParameterValue extends PropertyValue<Parameter> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

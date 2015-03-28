@@ -5,12 +5,16 @@ import java.util.Map;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
- * A parameter value.
+ * A property value: Property values are the base class for both
+ * {@link org.optimizationBenchmarking.experimentation.data.FeatureValue
+ * instance feature values} and
+ * {@link org.optimizationBenchmarking.experimentation.data.ParameterValue
+ * experiment parameter values}.
  * 
  * @param <OT>
  *          the owner type
  */
-abstract class _PropertyValue<OT extends _Property<?>> extends
+public abstract class PropertyValue<OT extends Property<?>> extends
     _NamedIDObject implements Map.Entry<OT, Object> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -28,7 +32,7 @@ abstract class _PropertyValue<OT extends _Property<?>> extends
    * @param value
    *          the value
    */
-  _PropertyValue(final String name, final String desc, final Object value) {
+  PropertyValue(final String name, final String desc, final Object value) {
     super(name, desc);
     if (value == null) {
       throw new IllegalArgumentException(//

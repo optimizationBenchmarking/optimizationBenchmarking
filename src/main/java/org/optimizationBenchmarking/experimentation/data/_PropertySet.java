@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
  * @param <PST>
  *          the property setting type
  */
-abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<PVT>, PST extends _PropertySetting<?, ?>>
+abstract class _PropertySet<PVT extends PropertyValue<?>, PT extends Property<PVT>, PST extends _PropertySetting<?, ?>>
     extends _IDObjectSet<PT> {
 
   /** the serial version uid */
@@ -31,7 +31,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    *          the instances
    */
   @SuppressWarnings("unchecked")
-  _PropertySet(final _Property<?>[] data) {
+  _PropertySet(final Property<?>[] data) {
     super(((PT[]) data), false, true, true);
     this.m_properties = ((PT[]) data);
   }
@@ -85,7 +85,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    */
   public final PST createSettingFromValues(
       final Iterable<? extends PVT> values) {
-    return this.createSetting(values.iterator(), true, false);
+    return this._createSetting(values.iterator(), true, false);
   }
 
   /**
@@ -117,7 +117,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    */
   public final PST createSettingFromMapping(
       final Map.Entry<String, Object>[] values) {
-    return this.createSetting(new _PropertyMappingIterator<>(this,
+    return this._createSetting(new _PropertyMappingIterator<>(this,
         new ArrayIterator<>(values), false), true, false);
   }
 
@@ -134,7 +134,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    */
   public final PST createSettingFromMapping(
       final Iterable<Map.Entry<String, Object>> values) {
-    return this.createSetting(
+    return this._createSetting(
         new _PropertyMappingIterator<>(this, values.iterator(), false),
         true, false);
   }
@@ -151,7 +151,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    */
   @SuppressWarnings("unchecked")
   public final PST createSettingFromValues(final PVT... values) {
-    return this.createSetting(new ArrayIterator<>(values), true, false);
+    return this._createSetting(new ArrayIterator<>(values), true, false);
   }
 
   /**
@@ -163,7 +163,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    *          has there been a generalization
    * @return the setting
    */
-  abstract PST _createSetting(_PropertyValue<?>[] values,
+  abstract PST _createSetting(PropertyValue<?>[] values,
       final boolean isGeneralized);
 
   /**
@@ -181,17 +181,17 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
    * @return the parameter setting
    */
   @SuppressWarnings("rawtypes")
-  final PST createSetting(final Iterator<? extends PVT> values,
+  final PST _createSetting(final Iterator<? extends PVT> values,
       final boolean fillGeneral, final boolean allowNullValues) {
-    final _PropertyValue<?>[] ps;
+    final PropertyValue<?>[] ps;
     final PT[] data;
     boolean isGeneral;
-    _Property<?> valueParameter;
-    _PropertyValue<?> v;
+    Property<?> valueParameter;
+    PropertyValue<?> v;
     int valueId, valueParameterId, count;
 
     data = this.m_properties;
-    ps = new _PropertyValue[data.length];
+    ps = new PropertyValue[data.length];
     count = 0;
     isGeneral = false;
     while (values.hasNext()) {
@@ -204,7 +204,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
             "Property value must not be null, but the " + //$NON-NLS-1$
                 count + "th specified value is."); //$NON-NLS-1$
       }
-      valueParameter = ((_Property) (v.m_owner));
+      valueParameter = ((Property) (v.m_owner));
       valueParameterId = valueParameter.m_id;
 
       if ((valueParameterId < 0) && (valueParameterId >= data.length)) {
@@ -276,7 +276,7 @@ abstract class _PropertySet<PVT extends _PropertyValue<?>, PT extends _Property<
     if (count < data.length) {
       isGeneral |= (fillGeneral);
       count = 0;
-      for (final _PropertyValue<?> p : ps) {
+      for (final PropertyValue<?> p : ps) {
         if (p == null) {
           if ((ps[count] = (fillGeneral ? data[count].m_general : //
               data[count].unspecified())) == null) {

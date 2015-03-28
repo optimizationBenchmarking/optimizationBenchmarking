@@ -17,14 +17,14 @@ public final class FeatureSet extends
    * @param data
    *          the instances
    */
-  FeatureSet(final _Property<?>[] data) {
+  FeatureSet(final Property<?>[] data) {
     super(data);
     this.m_id = FeatureSet.ID_COUNTER.getAndIncrement();
   }
 
   /** {@inheritDoc} */
   @Override
-  final FeatureSetting _createSetting(final _PropertyValue<?>[] values,
+  final FeatureSetting _createSetting(final PropertyValue<?>[] values,
       final boolean isGeneralized) {
     return new FeatureSetting(values, isGeneralized);
   }

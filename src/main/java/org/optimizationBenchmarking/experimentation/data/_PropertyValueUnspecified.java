@@ -55,7 +55,7 @@ final class _PropertyValueUnspecified implements Serializable,
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "#unspecified#"; //$NON-NLS-1$
+    return _PropertyValueUnspecified.NAME;
   }
 
   /** {@inheritDoc} */

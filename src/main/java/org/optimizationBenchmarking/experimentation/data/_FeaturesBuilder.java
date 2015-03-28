@@ -28,8 +28,8 @@ final class _FeaturesBuilder extends
   /** {@inheritDoc} */
   @Override
   final Feature _createProperty(final String name, final String desc,
-      final EPrimitiveType primitiveType,
-      final _PropertyValue<?>[] values, final boolean hasUnspecified) {
+      final EPrimitiveType primitiveType, final PropertyValue<?>[] values,
+      final boolean hasUnspecified) {
     if (hasUnspecified) {
       throw new IllegalArgumentException(//
           "Instance features cannot be unspecified."); //$NON-NLS-1$
@@ -47,7 +47,7 @@ final class _FeaturesBuilder extends
 
   /** {@inheritDoc} */
   @Override
-  final FeatureSet _createPropertySet(final _Property<?>[] data) {
+  final FeatureSet _createPropertySet(final Property<?>[] data) {
     return new FeatureSet(data);
   }
 

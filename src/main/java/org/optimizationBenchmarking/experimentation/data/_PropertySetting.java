@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * @param <PVT>
  *          the property value type
  */
-class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
+class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
     extends AbstractMap<PT, Object> implements
     Comparable<_PropertySetting<?, ?>>, Serializable, Iterable<PVT> {
 
@@ -25,7 +25,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
   private static final long serialVersionUID = 1L;
 
   /** the property values */
-  final _PropertyValue<?>[] m_values;
+  final PropertyValue<?>[] m_values;
 
   /** is this setting general? */
   private final boolean m_isGeneral;
@@ -41,8 +41,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
    * @param isGeneral
    *          is this setting generalized?
    */
-  _PropertySetting(final _PropertyValue<?>[] values,
-      final boolean isGeneral) {
+  _PropertySetting(final PropertyValue<?>[] values, final boolean isGeneral) {
     super();
     this.m_values = values;
     this.m_isGeneral = isGeneral;
@@ -81,8 +80,8 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
   @SuppressWarnings("rawtypes")
   public final Object valueOf(final PT property) {
     final int id;
-    final _PropertyValue[] pv;
-    final _PropertyValue v;
+    final PropertyValue[] pv;
+    final PropertyValue v;
 
     return ((((property != null) && //
         ((id = property.m_id) >= 0) && //
@@ -101,7 +100,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
    */
   @SuppressWarnings("rawtypes")
   public final boolean contains(final PVT value) {
-    final _PropertyValue[] pv;
+    final PropertyValue[] pv;
     final _IDObject p;
     final int id;
 
@@ -122,11 +121,11 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
    */
   @SuppressWarnings("rawtypes")
   public final boolean contains(final Object object) {
-    final _PropertyValue[] pv;
+    final PropertyValue[] pv;
     final _IDObject p, paramValue;
     final int id;
 
-    return ((object instanceof _PropertyValue)//
+    return ((object instanceof PropertyValue)//
         && ((p = ((_IDObject) ((paramValue = ((_IDObject) object)).m_owner))) != null)//
         && ((id = p.m_id) >= 0) && (id < (pv = this.m_values).length) && //
     (pv[id] == paramValue));
@@ -143,9 +142,9 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
    */
   @SuppressWarnings("rawtypes")
   public final boolean specifies(final PT property) {
-    final _PropertyValue v;
+    final PropertyValue v;
     final int id;
-    final _PropertyValue[] pv;
+    final PropertyValue[] pv;
     final Object o;
 
     return ((property != null)//
@@ -181,11 +180,11 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
   @Override
   @SuppressWarnings("rawtypes")
   public final boolean containsKey(final Object o) {
-    final _PropertyValue[] pv;
+    final PropertyValue[] pv;
     final int id;
 
-    return ((o instanceof _Property) && //
-        ((id = (((_Property) o).m_id)) >= 0) && //
+    return ((o instanceof Property) && //
+        ((id = (((Property) o).m_id)) >= 0) && //
         (id < (pv = this.m_values).length) && //
     (pv[id].m_owner == o));
   }
@@ -195,10 +194,10 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
   @SuppressWarnings("rawtypes")
   public final Object get(final Object key) {
     final int id;
-    final _PropertyValue[] pv;
-    final _PropertyValue v;
+    final PropertyValue[] pv;
+    final PropertyValue v;
 
-    return ((((key instanceof _Property) && //
+    return ((((key instanceof Property) && //
         ((id = ((Parameter) key).m_id) >= 0) && //
         (id < (pv = this.m_values).length) && //
     ((v = pv[id]).m_owner == key))) ? v.m_value : null);
@@ -232,8 +231,8 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
    */
   @SuppressWarnings("rawtypes")
   public final boolean contains(final _PropertySetting<?, ?> setting) {
-    final _PropertyValue[] vs1, vs2;
-    _PropertyValue v2;
+    final PropertyValue[] vs1, vs2;
+    PropertyValue v2;
     int i;
 
     if (setting == this) {
@@ -249,7 +248,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
       return true;
     }
     i = 0;
-    for (final _PropertyValue v1 : vs1) {
+    for (final PropertyValue v1 : vs1) {
       v2 = vs2[i++];
       if (v1 == v2) {
         continue;
@@ -267,8 +266,8 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
   @Override
   @SuppressWarnings("rawtypes")
   public final int compareTo(final _PropertySetting<?, ?> o) {
-    final _PropertyValue[] vs1, vs2;
-    _PropertyValue v2;
+    final PropertyValue[] vs1, vs2;
+    PropertyValue v2;
     int i;
 
     if (o == this) {
@@ -284,7 +283,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
       return 0;
     }
     i = 0;
-    for (final _PropertyValue v1 : vs1) {
+    for (final PropertyValue v1 : vs1) {
       v2 = vs2[i++];
       if (v1 == v2) {
         continue;
@@ -315,7 +314,7 @@ class _PropertySetting<PVT extends _PropertyValue<?>, PT extends _Property<PVT>>
     final MemoryTextOutput sb;
 
     sb = new MemoryTextOutput();
-    for (final _PropertyValue<?> p : this.m_values) {
+    for (final PropertyValue<?> p : this.m_values) {
       if ((!(p.m_value instanceof _PropertyValueGeneralized)) && //
           (!(p.m_value instanceof _PropertyValueUnspecified))) {
         if (sb.length() > 0) {

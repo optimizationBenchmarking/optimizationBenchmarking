@@ -20,6 +20,7 @@ import java.nio.charset.UnsupportedCharsetException;
 
 import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
 import org.optimizationBenchmarking.utils.hash.HashObject;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
@@ -431,6 +432,12 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
       return e;
     }
     return this;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final int calcHashCode() {
+    return HashUtils.hashCode(this.m_name.toLowerCase());
   }
 
   /** {@inheritDoc} */
