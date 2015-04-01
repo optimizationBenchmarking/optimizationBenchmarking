@@ -90,6 +90,12 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
     this.m_h = h;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  protected final boolean autoConvertCoordinatesToInt() {
+    return false;
+  }
+
   /**
    * format an {@code int}eger for output
    * 

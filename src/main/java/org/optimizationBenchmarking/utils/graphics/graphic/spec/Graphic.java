@@ -165,6 +165,16 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     this.m_listener = listener;
   }
 
+  /**
+   * Allow the automatic conversion to integer data types.
+   * 
+   * @return {@code true} if the graphic should try to convert floating
+   *         point coordinates to {@code int} as often as possible
+   */
+  protected boolean autoConvertCoordinatesToInt() {
+    return true;
+  }
+
   /** check the state of the graphic */
   protected final void checkClosed() {
     if (this.m_state > 1) {
@@ -722,6 +732,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
   public final void setRenderingHint(final Key hintKey,
       final Object hintValue) {
     final Object oldVal;
+
     if (hintKey != null) {
       oldVal = this.getRenderingHint(hintKey);
       if ((oldVal != hintValue)
@@ -992,10 +1003,10 @@ public abstract class Graphic extends Graphics2D implements Closeable,
    */
   protected Graphics doCreate() {
     final Rectangle2D rect;
+
     rect = this.getBounds();
-    return this.doCreate(((int) (rect.getMinX())),
-        ((int) (rect.getMinY())), ((int) (rect.getWidth())),
-        ((int) (rect.getHeight())));
+    return this.doCreate(rect.getMinX(), rect.getMinY(), rect.getWidth(),
+        rect.getHeight());
   }
 
   /** {@inheritDoc} */
@@ -2086,20 +2097,22 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
     this.before(Graphic.BEFORE_3D_RECT | Graphic.BEFORE_OUTLINE);
 
-    c = ((int) width);
-    if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
-        && (width == c)) {
-      d = ((int) height);
-      if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
-          && (height == d)) {
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
-            this.doDraw3DRect(a, b, c, d, raised);
-            return;
+    if (this.autoConvertCoordinatesToInt()) {
+      c = ((int) width);
+      if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
+          && (width == c)) {
+        d = ((int) height);
+        if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
+            && (height == d)) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
+              this.doDraw3DRect(a, b, c, d, raised);
+              return;
+            }
           }
         }
       }
@@ -2161,20 +2174,21 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         if (d == 0) {
           return;
         }
+        if (this.autoConvertCoordinatesToInt()) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
 
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
-            this.before(Graphic.BEFORE_3D_RECT | Graphic.BEFORE_FILL);
-            this.doFill3DRect(a, b, c, d, raised);
-            return;
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
+              this.before(Graphic.BEFORE_3D_RECT | Graphic.BEFORE_FILL);
+              this.doFill3DRect(a, b, c, d, raised);
+              return;
+            }
           }
-        }
 
+        }
       }
     }
 
@@ -2222,13 +2236,16 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     if ((img != null) && (img.getWidth() > 0) && (img.getHeight() > 0)) {
       this.before(Graphic.BEFORE_IMAGE);
 
-      a = ((int) x);
-      if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE) && (x == a)) {
-        b = ((int) y);
-        if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-            && (y == b)) {
-          this.doDrawImage(img, op, a, b);
-          return;
+      if (this.autoConvertCoordinatesToInt()) {
+        a = ((int) x);
+        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+            && (x == a)) {
+          b = ((int) y);
+          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+              && (y == b)) {
+            this.doDrawImage(img, op, a, b);
+            return;
+          }
         }
       }
 
@@ -2269,13 +2286,16 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     if ((str != null) && (str.length() > 0)) {
       this.before(Graphic.BEFORE_TEXT);
 
-      a = ((int) x);
-      if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE) && (x == a)) {
-        b = ((int) y);
-        if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-            && (y == b)) {
-          this.doDrawString(str, a, b);
-          return;
+      if (this.autoConvertCoordinatesToInt()) {
+        a = ((int) x);
+        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+            && (x == a)) {
+          b = ((int) y);
+          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+              && (y == b)) {
+            this.doDrawString(str, a, b);
+            return;
+          }
         }
       }
 
@@ -2327,13 +2347,16 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         && (iterator.getEndIndex() > iterator.getBeginIndex())) {
       this.before(Graphic.BEFORE_TEXT);
 
-      a = ((int) x);
-      if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE) && (x == a)) {
-        b = ((int) y);
-        if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-            && (y == b)) {
-          this.doDrawString(iterator, a, b);
-          return;
+      if (this.autoConvertCoordinatesToInt()) {
+        a = ((int) x);
+        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+            && (x == a)) {
+          b = ((int) y);
+          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+              && (y == b)) {
+            this.doDrawString(iterator, a, b);
+            return;
+          }
         }
       }
 
@@ -2384,13 +2407,16 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     if ((g != null) && (g.getNumGlyphs() > 0)) {
       this.before(Graphic.BEFORE_TEXT);
 
-      a = ((int) x);
-      if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE) && (x == a)) {
-        b = ((int) y);
-        if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-            && (y == b)) {
-          this.doDrawGlyphVector(g, a, b);
-          return;
+      if (this.autoConvertCoordinatesToInt()) {
+        a = ((int) x);
+        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+            && (x == a)) {
+          b = ((int) y);
+          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+              && (y == b)) {
+            this.doDrawGlyphVector(g, a, b);
+            return;
+          }
         }
       }
 
@@ -2448,19 +2474,21 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
     this.before(Graphic.BEFORE_CREATE_GRAPHIC);
 
-    c = ((int) width);
-    if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
-        && (width == c)) {
-      d = ((int) height);
-      if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
-          && (height == d)) {
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
-            return this.doCreate(a, b, c, d);
+    if (this.autoConvertCoordinatesToInt()) {
+      c = ((int) width);
+      if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
+          && (width == c)) {
+        d = ((int) height);
+        if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
+            && (height == d)) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
+              return this.doCreate(a, b, c, d);
+            }
           }
         }
       }
@@ -2510,20 +2538,22 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
       this.before(Graphic.BEFORE_CHANGE_CLIP);
 
-      c = ((int) width);
-      if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
-          && (width == c)) {
-        d = ((int) height);
-        if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
-            && (height == d)) {
-          a = ((int) x);
-          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-              && (x == a)) {
-            b = ((int) y);
-            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-                && (y == b)) {
-              this.doClipRect(a, b, c, d);
-              return;
+      if (this.autoConvertCoordinatesToInt()) {
+        c = ((int) width);
+        if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
+            && (width == c)) {
+          d = ((int) height);
+          if ((height >= Integer.MIN_VALUE)
+              && (height <= Integer.MAX_VALUE) && (height == d)) {
+            a = ((int) x);
+            if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+                && (x == a)) {
+              b = ((int) y);
+              if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                  && (y == b)) {
+                this.doClipRect(a, b, c, d);
+                return;
+              }
             }
           }
         }
@@ -2571,21 +2601,22 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     if ((oldClip == null)
         || (!(new Rectangle2D.Double(x, y, width, height).equals(oldClip)))) {
       this.before(Graphic.BEFORE_CHANGE_CLIP);
-
-      c = ((int) width);
-      if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
-          && (width == c)) {
-        d = ((int) height);
-        if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
-            && (height == d)) {
-          a = ((int) x);
-          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-              && (x == a)) {
-            b = ((int) y);
-            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-                && (y == b)) {
-              this.doSetClip(a, b, c, d);
-              return;
+      if (this.autoConvertCoordinatesToInt()) {
+        c = ((int) width);
+        if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
+            && (width == c)) {
+          d = ((int) height);
+          if ((height >= Integer.MIN_VALUE)
+              && (height <= Integer.MAX_VALUE) && (height == d)) {
+            a = ((int) x);
+            if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+                && (x == a)) {
+              b = ((int) y);
+              if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                  && (y == b)) {
+                this.doSetClip(a, b, c, d);
+                return;
+              }
             }
           }
         }
@@ -2652,25 +2683,26 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         if (d == 0) {
           return;
         }
+        if (this.autoConvertCoordinatesToInt()) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
 
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
 
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
+              e = ((int) dx);
+              if ((dx >= Integer.MIN_VALUE) && (dx <= Integer.MAX_VALUE)
+                  && (dx == e)) {
 
-            e = ((int) dx);
-            if ((dx >= Integer.MIN_VALUE) && (dx <= Integer.MAX_VALUE)
-                && (dx == e)) {
-
-              f = ((int) dy);
-              if ((dy >= Integer.MIN_VALUE) && (dy <= Integer.MAX_VALUE)
-                  && (dy == f)) {
-                this.before(Graphic.BEFORE_COPY_AREA);
-                this.doCopyArea(a, b, c, d, e, f);
-                return;
+                f = ((int) dy);
+                if ((dy >= Integer.MIN_VALUE) && (dy <= Integer.MAX_VALUE)
+                    && (dy == f)) {
+                  this.before(Graphic.BEFORE_COPY_AREA);
+                  this.doCopyArea(a, b, c, d, e, f);
+                  return;
+                }
               }
             }
           }
@@ -2719,23 +2751,25 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
     this.before(Graphic.BEFORE_OUTLINE);
 
-    a = ((int) x1);
-    if ((x1 >= Integer.MIN_VALUE) && (x1 <= Integer.MAX_VALUE)
-        && (x1 == a)) {
+    if (this.autoConvertCoordinatesToInt()) {
+      a = ((int) x1);
+      if ((x1 >= Integer.MIN_VALUE) && (x1 <= Integer.MAX_VALUE)
+          && (x1 == a)) {
 
-      b = ((int) y1);
-      if ((y1 >= Integer.MIN_VALUE) && (y1 <= Integer.MAX_VALUE)
-          && (y1 == b)) {
+        b = ((int) y1);
+        if ((y1 >= Integer.MIN_VALUE) && (y1 <= Integer.MAX_VALUE)
+            && (y1 == b)) {
 
-        c = ((int) x2);
-        if ((x2 >= Integer.MIN_VALUE) && (x2 <= Integer.MAX_VALUE)
-            && (x2 == a)) {
+          c = ((int) x2);
+          if ((x2 >= Integer.MIN_VALUE) && (x2 <= Integer.MAX_VALUE)
+              && (x2 == a)) {
 
-          d = ((int) y2);
-          if ((y2 >= Integer.MIN_VALUE) && (y2 <= Integer.MAX_VALUE)
-              && (y2 == d)) {
-            this.doDrawLine(a, b, c, d);
-            return;
+            d = ((int) y2);
+            if ((y2 >= Integer.MIN_VALUE) && (y2 <= Integer.MAX_VALUE)
+                && (y2 == d)) {
+              this.doDrawLine(a, b, c, d);
+              return;
+            }
           }
         }
       }
@@ -2789,15 +2823,17 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         if (d == 0) {
           return;
         }
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
-            this.before(Graphic.BEFORE_FILL);
-            this.doFillRect(a, b, c, d);
-            return;
+        if (this.autoConvertCoordinatesToInt()) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
+              this.before(Graphic.BEFORE_FILL);
+              this.doFillRect(a, b, c, d);
+              return;
+            }
           }
         }
       }
@@ -2844,38 +2880,44 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
     this.before(Graphic.BEFORE_OUTLINE);
 
-    c = ((int) width);
-    if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
-        && (width == c)) {
-      d = ((int) height);
-      if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
-          && (height == d)) {
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
+    if (this.autoConvertCoordinatesToInt()) {
+      c = ((int) width);
+      if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
+          && (width == c)) {
+        d = ((int) height);
+        if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
+            && (height == d)) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
 
-            if ((c == 0) || (d == 0)) {
-              e = (a + c);
-              if (e == SaturatingAdd.INSTANCE.computeAsInt(a, c)) {
-                f = (b + d);
-                if (f == SaturatingAdd.INSTANCE.computeAsInt(b, d)) {
-                  this.doDrawLine(a, b, e, f);
-                  return;
+              if ((c == 0) || (d == 0)) {
+                e = (a + c);
+                if (e == SaturatingAdd.INSTANCE.computeAsInt(a, c)) {
+                  f = (b + d);
+                  if (f == SaturatingAdd.INSTANCE.computeAsInt(b, d)) {
+                    this.doDrawLine(a, b, e, f);
+                    return;
+                  }
                 }
               }
-            }
 
-            this.doDrawRect(a, b, c, d);
-            return;
+              this.doDrawRect(a, b, c, d);
+              return;
+            }
           }
         }
       }
     }
 
-    this.doDrawRect(x, y, width, height);
+    if ((width == 0d) || (height == 0d)) {
+      this.doDrawLine(x, y, (x + width), (y + height));
+    } else {
+      this.doDrawRect(x, y, width, height);
+    }
   }
 
   /**
@@ -2931,15 +2973,17 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         if (d == 0) {
           return;
         }
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
-            this.before(Graphic.BEFORE_CLEAR);
-            this.doClearRect(a, b, c, d);
-            return;
+        if (this.autoConvertCoordinatesToInt()) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
+              this.before(Graphic.BEFORE_CLEAR);
+              this.doClearRect(a, b, c, d);
+              return;
+            }
           }
         }
       }
@@ -2997,49 +3041,52 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
     this.before(Graphic.BEFORE_OUTLINE);
 
-    c = ((int) width);
-    if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
-        && (width == c)) {
-      d = ((int) height);
-      if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
-          && (height == d)) {
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
+    if (this.autoConvertCoordinatesToInt()) {
+      c = ((int) width);
+      if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
+          && (width == c)) {
+        d = ((int) height);
+        if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
+            && (height == d)) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
 
-            e = ((int) arcWidth);
-            if ((arcWidth >= Integer.MIN_VALUE)
-                && (arcWidth <= Integer.MAX_VALUE) && (arcWidth == e)) {
+              e = ((int) arcWidth);
+              if ((arcWidth >= Integer.MIN_VALUE)
+                  && (arcWidth <= Integer.MAX_VALUE) && (arcWidth == e)) {
 
-              f = ((int) arcHeight);
-              if ((arcHeight >= Integer.MIN_VALUE)
-                  && (arcHeight <= Integer.MAX_VALUE) && (arcHeight == f)) {
+                f = ((int) arcHeight);
+                if ((arcHeight >= Integer.MIN_VALUE)
+                    && (arcHeight <= Integer.MAX_VALUE)
+                    && (arcHeight == f)) {
 
-                if ((c == 0) || (d == 0)) {
-                  g = (a + c);
-                  if (g == SaturatingAdd.INSTANCE.computeAsInt(a, c)) {
-                    h = (b + d);
-                    if (h == SaturatingAdd.INSTANCE.computeAsInt(b, d)) {
-                      this.doDrawLine(a, b, g, h);
-                      return;
+                  if ((c == 0) || (d == 0)) {
+                    g = (a + c);
+                    if (g == SaturatingAdd.INSTANCE.computeAsInt(a, c)) {
+                      h = (b + d);
+                      if (h == SaturatingAdd.INSTANCE.computeAsInt(b, d)) {
+                        this.doDrawLine(a, b, g, h);
+                        return;
+                      }
                     }
+                    this.doDrawRect(a, b, c, d);
+                    return;
                   }
-                  this.doDrawRect(a, b, c, d);
+
+                  if ((f == 0) || (e == 0)) {
+                    this.doDrawRect(a, b, c, d);
+                    return;
+                  }
+
+                  this.doDrawRoundRect(a, b, c, d, e, f);
                   return;
                 }
 
-                if ((f == 0) || (e == 0)) {
-                  this.doDrawRect(a, b, c, d);
-                  return;
-                }
-
-                this.doDrawRoundRect(a, b, c, d, e, f);
-                return;
               }
-
             }
           }
         }
@@ -3113,32 +3160,35 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         if (d == 0) {
           return;
         }
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
+        if (this.autoConvertCoordinatesToInt()) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
 
-            e = ((int) arcWidth);
-            if ((arcWidth >= Integer.MIN_VALUE)
-                && (arcWidth <= Integer.MAX_VALUE) && (arcWidth == e)) {
+              e = ((int) arcWidth);
+              if ((arcWidth >= Integer.MIN_VALUE)
+                  && (arcWidth <= Integer.MAX_VALUE) && (arcWidth == e)) {
 
-              f = ((int) arcHeight);
-              if ((arcHeight >= Integer.MIN_VALUE)
-                  && (arcHeight <= Integer.MAX_VALUE) && (arcHeight == f)) {
+                f = ((int) arcHeight);
+                if ((arcHeight >= Integer.MIN_VALUE)
+                    && (arcHeight <= Integer.MAX_VALUE)
+                    && (arcHeight == f)) {
 
-                this.before(Graphic.BEFORE_FILL);
+                  this.before(Graphic.BEFORE_FILL);
 
-                if ((f == 0) || (e == 0)) {
-                  this.doFillRect(a, b, c, d);
+                  if ((f == 0) || (e == 0)) {
+                    this.doFillRect(a, b, c, d);
+                    return;
+                  }
+
+                  this.doFillRoundRect(a, b, c, d, e, f);
                   return;
                 }
 
-                this.doFillRoundRect(a, b, c, d, e, f);
-                return;
               }
-
             }
           }
         }
@@ -3193,34 +3243,36 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
     this.before(Graphic.BEFORE_OUTLINE);
 
-    c = ((int) width);
-    if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
-        && (width == c)) {
-      d = ((int) height);
-      if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
-          && (height == d)) {
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
+    if (this.autoConvertCoordinatesToInt()) {
+      c = ((int) width);
+      if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
+          && (width == c)) {
+        d = ((int) height);
+        if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
+            && (height == d)) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
 
-            if ((c == 0) || (d == 0)) {
-              g = (a + c);
-              if (g == SaturatingAdd.INSTANCE.computeAsInt(a, c)) {
-                h = (b + d);
-                if (h == SaturatingAdd.INSTANCE.computeAsInt(b, d)) {
-                  this.doDrawLine(a, b, g, h);
-                  return;
+              if ((c == 0) || (d == 0)) {
+                g = (a + c);
+                if (g == SaturatingAdd.INSTANCE.computeAsInt(a, c)) {
+                  h = (b + d);
+                  if (h == SaturatingAdd.INSTANCE.computeAsInt(b, d)) {
+                    this.doDrawLine(a, b, g, h);
+                    return;
+                  }
                 }
+                this.doDrawRect(a, b, c, d);
+                return;
               }
-              this.doDrawRect(a, b, c, d);
+
+              this.doDrawOval(a, b, c, d);
               return;
             }
-
-            this.doDrawOval(a, b, c, d);
-            return;
           }
         }
       }
@@ -3278,14 +3330,16 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         if (d == 0) {
           return;
         }
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
-            this.doFillOval(a, b, c, d);
-            return;
+        if (this.autoConvertCoordinatesToInt()) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
+              this.doFillOval(a, b, c, d);
+              return;
+            }
           }
         }
       }
@@ -3342,42 +3396,44 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
     this.before(Graphic.BEFORE_OUTLINE);
 
-    c = ((int) width);
-    if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
-        && (width == c)) {
-      d = ((int) height);
-      if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
-          && (height == d)) {
-        a = ((int) x);
-        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-            && (x == a)) {
-          b = ((int) y);
-          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-              && (y == b)) {
+    if (this.autoConvertCoordinatesToInt()) {
+      c = ((int) width);
+      if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
+          && (width == c)) {
+        d = ((int) height);
+        if ((height >= Integer.MIN_VALUE) && (height <= Integer.MAX_VALUE)
+            && (height == d)) {
+          a = ((int) x);
+          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+              && (x == a)) {
+            b = ((int) y);
+            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                && (y == b)) {
 
-            f = ((int) arcAngle);
-            if ((arcAngle >= Integer.MIN_VALUE)
-                && (arcAngle <= Integer.MAX_VALUE) && (arcAngle == f)) {
+              f = ((int) arcAngle);
+              if ((arcAngle >= Integer.MIN_VALUE)
+                  && (arcAngle <= Integer.MAX_VALUE) && (arcAngle == f)) {
 
-              if ((c == 0) || (d == 0) || (f == 0)) {
-                g = (a + c);
-                if (g == SaturatingAdd.INSTANCE.computeAsInt(a, c)) {
-                  h = (b + d);
-                  if (h == SaturatingAdd.INSTANCE.computeAsInt(b, d)) {
-                    this.doDrawLine(a, b, g, h);
-                    return;
+                if ((c == 0) || (d == 0) || (f == 0)) {
+                  g = (a + c);
+                  if (g == SaturatingAdd.INSTANCE.computeAsInt(a, c)) {
+                    h = (b + d);
+                    if (h == SaturatingAdd.INSTANCE.computeAsInt(b, d)) {
+                      this.doDrawLine(a, b, g, h);
+                      return;
+                    }
                   }
+                  this.doDrawRect(a, b, c, d);
+                  return;
                 }
-                this.doDrawRect(a, b, c, d);
-                return;
-              }
 
-              e = ((int) startAngle);
-              if ((startAngle >= Integer.MIN_VALUE)
-                  && (startAngle <= Integer.MAX_VALUE)
-                  && (startAngle == e)) {
-                this.doDrawArc(a, b, c, d, e, f);
-                return;
+                e = ((int) startAngle);
+                if ((startAngle >= Integer.MIN_VALUE)
+                    && (startAngle <= Integer.MAX_VALUE)
+                    && (startAngle == e)) {
+                  this.doDrawArc(a, b, c, d, e, f);
+                  return;
+                }
               }
             }
           }
@@ -3448,27 +3504,28 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         if (d == 0) {
           return;
         }
+        if (this.autoConvertCoordinatesToInt()) {
+          f = ((int) arcAngle);
+          if ((arcAngle >= Integer.MIN_VALUE)
+              && (arcAngle <= Integer.MAX_VALUE) && (arcAngle == f)) {
+            if (f == 0) {
+              return;
+            }
 
-        f = ((int) arcAngle);
-        if ((arcAngle >= Integer.MIN_VALUE)
-            && (arcAngle <= Integer.MAX_VALUE) && (arcAngle == f)) {
-          if (f == 0) {
-            return;
-          }
-
-          a = ((int) x);
-          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-              && (x == a)) {
-            b = ((int) y);
-            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-                && (y == b)) {
-              e = ((int) startAngle);
-              if ((startAngle >= Integer.MIN_VALUE)
-                  && (startAngle <= Integer.MAX_VALUE)
-                  && (startAngle == e)) {
-                this.before(Graphic.BEFORE_FILL);
-                this.doFillArc(a, b, c, d, e, f);
-                return;
+            a = ((int) x);
+            if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+                && (x == a)) {
+              b = ((int) y);
+              if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                  && (y == b)) {
+                e = ((int) startAngle);
+                if ((startAngle >= Integer.MIN_VALUE)
+                    && (startAngle <= Integer.MAX_VALUE)
+                    && (startAngle == e)) {
+                  this.before(Graphic.BEFORE_FILL);
+                  this.doFillArc(a, b, c, d, e, f);
+                  return;
+                }
               }
             }
           }
@@ -3676,13 +3733,16 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
     if ((data != null) && (length > 0)) {
       this.before(Graphic.BEFORE_TEXT);
-      a = ((int) x);
-      if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE) && (x == a)) {
-        b = ((int) y);
-        if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-            && (y == b)) {
-          this.doDrawChars(data, offset, length, a, b);
-          return;
+      if (this.autoConvertCoordinatesToInt()) {
+        a = ((int) x);
+        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+            && (x == a)) {
+          b = ((int) y);
+          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+              && (y == b)) {
+            this.doDrawChars(data, offset, length, a, b);
+            return;
+          }
         }
       }
       this.doDrawChars(data, offset, length, x, y);
@@ -3729,12 +3789,15 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     if ((img != null) && (img.getWidth(observer) != 0)
         && (img.getHeight(observer) != 0)) {
       this.before(Graphic.BEFORE_IMAGE);
-      a = ((int) x);
-      if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE) && (x == a)) {
-        b = ((int) y);
-        if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-            && (y == b)) {
-          return this.doDrawImage(img, a, b, observer);
+      if (this.autoConvertCoordinatesToInt()) {
+        a = ((int) x);
+        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+            && (x == a)) {
+          b = ((int) y);
+          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+              && (y == b)) {
+            return this.doDrawImage(img, a, b, observer);
+          }
         }
       }
 
@@ -3845,15 +3908,16 @@ public abstract class Graphic extends Graphics2D implements Closeable,
           if (d == 0) {
             return false;
           }
-
-          a = ((int) x);
-          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-              && (x == a)) {
-            b = ((int) y);
-            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-                && (y == b)) {
-              this.before(Graphic.BEFORE_IMAGE);
-              return this.doDrawImage(img, a, b, c, d, observer);
+          if (this.autoConvertCoordinatesToInt()) {
+            a = ((int) x);
+            if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+                && (x == a)) {
+              b = ((int) y);
+              if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                  && (y == b)) {
+                this.before(Graphic.BEFORE_IMAGE);
+                return this.doDrawImage(img, a, b, c, d, observer);
+              }
             }
           }
         }
@@ -3911,12 +3975,16 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     if ((img != null) && (img.getWidth(observer) != 0)
         && (img.getHeight(observer) != 0)) {
       this.before(Graphic.BEFORE_IMAGE);
-      a = ((int) x);
-      if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE) && (x == a)) {
-        b = ((int) y);
-        if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-            && (y == b)) {
-          return this.doDrawImage(img, a, b, bgcolor, observer);
+
+      if (this.autoConvertCoordinatesToInt()) {
+        a = ((int) x);
+        if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+            && (x == a)) {
+          b = ((int) y);
+          if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+              && (y == b)) {
+            return this.doDrawImage(img, a, b, bgcolor, observer);
+          }
         }
       }
 
@@ -3998,15 +4066,17 @@ public abstract class Graphic extends Graphics2D implements Closeable,
           if (d == 0) {
             return false;
           }
-
-          a = ((int) x);
-          if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
-              && (x == a)) {
-            b = ((int) y);
-            if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
-                && (y == b)) {
-              this.before(Graphic.BEFORE_IMAGE);
-              return this.doDrawImage(img, a, b, c, d, bgcolor, observer);
+          if (this.autoConvertCoordinatesToInt()) {
+            a = ((int) x);
+            if ((x >= Integer.MIN_VALUE) && (x <= Integer.MAX_VALUE)
+                && (x == a)) {
+              b = ((int) y);
+              if ((y >= Integer.MIN_VALUE) && (y <= Integer.MAX_VALUE)
+                  && (y == b)) {
+                this.before(Graphic.BEFORE_IMAGE);
+                return this
+                    .doDrawImage(img, a, b, c, d, bgcolor, observer);
+              }
             }
           }
         }
@@ -4126,23 +4196,24 @@ public abstract class Graphic extends Graphics2D implements Closeable,
               if (b == d) {
                 return false;
               }
+              if (this.autoConvertCoordinatesToInt()) {
+                e = ((int) sx1);
+                if ((sx1 >= Integer.MIN_VALUE)
+                    && (sx1 <= Integer.MAX_VALUE) && (sx1 == e)) {
+                  g = ((int) sx2);
+                  if ((sx2 >= Integer.MIN_VALUE)
+                      && (sx2 <= Integer.MAX_VALUE) && (sx2 == g)) {
+                    f = ((int) sy1);
+                    if ((sy1 >= Integer.MIN_VALUE)
+                        && (sy1 <= Integer.MAX_VALUE) && (sy1 == f)) {
+                      h = ((int) sy2);
+                      if ((sy2 >= Integer.MIN_VALUE)
+                          && (sy2 <= Integer.MAX_VALUE) && (sy2 == h)) {
 
-              e = ((int) sx1);
-              if ((sx1 >= Integer.MIN_VALUE) && (sx1 <= Integer.MAX_VALUE)
-                  && (sx1 == e)) {
-                g = ((int) sx2);
-                if ((sx2 >= Integer.MIN_VALUE)
-                    && (sx2 <= Integer.MAX_VALUE) && (sx2 == g)) {
-                  f = ((int) sy1);
-                  if ((sy1 >= Integer.MIN_VALUE)
-                      && (sy1 <= Integer.MAX_VALUE) && (sy1 == f)) {
-                    h = ((int) sy2);
-                    if ((sy2 >= Integer.MIN_VALUE)
-                        && (sy2 <= Integer.MAX_VALUE) && (sy2 == h)) {
-
-                      this.before(Graphic.BEFORE_IMAGE);
-                      this.doDrawImage(img, a, b, c, d, e, f, g, h,
-                          observer);
+                        this.before(Graphic.BEFORE_IMAGE);
+                        this.doDrawImage(img, a, b, c, d, e, f, g, h,
+                            observer);
+                      }
                     }
                   }
                 }
@@ -4271,23 +4342,24 @@ public abstract class Graphic extends Graphics2D implements Closeable,
               if (b == d) {
                 return false;
               }
+              if (this.autoConvertCoordinatesToInt()) {
+                e = ((int) sx1);
+                if ((sx1 >= Integer.MIN_VALUE)
+                    && (sx1 <= Integer.MAX_VALUE) && (sx1 == e)) {
+                  g = ((int) sx2);
+                  if ((sx2 >= Integer.MIN_VALUE)
+                      && (sx2 <= Integer.MAX_VALUE) && (sx2 == g)) {
+                    f = ((int) sy1);
+                    if ((sy1 >= Integer.MIN_VALUE)
+                        && (sy1 <= Integer.MAX_VALUE) && (sy1 == f)) {
+                      h = ((int) sy2);
+                      if ((sy2 >= Integer.MIN_VALUE)
+                          && (sy2 <= Integer.MAX_VALUE) && (sy2 == h)) {
 
-              e = ((int) sx1);
-              if ((sx1 >= Integer.MIN_VALUE) && (sx1 <= Integer.MAX_VALUE)
-                  && (sx1 == e)) {
-                g = ((int) sx2);
-                if ((sx2 >= Integer.MIN_VALUE)
-                    && (sx2 <= Integer.MAX_VALUE) && (sx2 == g)) {
-                  f = ((int) sy1);
-                  if ((sy1 >= Integer.MIN_VALUE)
-                      && (sy1 <= Integer.MAX_VALUE) && (sy1 == f)) {
-                    h = ((int) sy2);
-                    if ((sy2 >= Integer.MIN_VALUE)
-                        && (sy2 <= Integer.MAX_VALUE) && (sy2 == h)) {
-
-                      this.before(Graphic.BEFORE_IMAGE);
-                      this.doDrawImage(img, a, b, c, d, e, f, g, h,
-                          bgcolor, observer);
+                        this.before(Graphic.BEFORE_IMAGE);
+                        this.doDrawImage(img, a, b, c, d, e, f, g, h,
+                            bgcolor, observer);
+                      }
                     }
                   }
                 }

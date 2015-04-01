@@ -113,7 +113,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
    *          the double value
    * @return the formatted result
    */
-  private static final double __format(final double d) {
+  static final double __format(final double d) {
     if (d <= SimplifyingGraphicProxy.MIN_COORD) {
       return SimplifyingGraphicProxy.MIN_COORD;
     }
@@ -133,10 +133,11 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
   @Override
   protected final void doDrawLine(final double x1, final double y1,
       final double x2, final double y2) {
-    this.m_lineSegments.add(new __LineSegment(SimplifyingGraphicProxy
-        .__format(x1), SimplifyingGraphicProxy.__format(y1),
-        SimplifyingGraphicProxy.__format(x2), SimplifyingGraphicProxy
-            .__format(y2)));
+    this.m_lineSegments.add(new __LineSegment(//
+        SimplifyingGraphicProxy.__format(x1),//
+        SimplifyingGraphicProxy.__format(y1),//
+        SimplifyingGraphicProxy.__format(x2),//
+        SimplifyingGraphicProxy.__format(y2)));
   }
 
   /** {@inheritDoc} */
@@ -314,14 +315,6 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
     cache = this.m_lineSegments;
     work = this.m_lineWork;
-
-    iterator = cache.iterator();
-    while (iterator.hasNext()) {
-      work.add(iterator.next());
-      iterator.remove();
-      this.__flushLineSegments(work);
-      work.clear();
-    }
 
     while (!(cache.isEmpty())) {
       iterator = cache.iterator();
@@ -552,20 +545,22 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
       final double x2, final double y2) {
     int a, b, c, d;
 
-    a = ((int) x1);
-    if ((x1 >= Integer.MIN_VALUE) && (x1 <= Integer.MAX_VALUE)
-        && (a == x1)) {
-      b = ((int) y1);
-      if ((y1 >= Integer.MIN_VALUE) && (y1 <= Integer.MAX_VALUE)
-          && (b == y1)) {
-        c = ((int) x2);
-        if ((x2 >= Integer.MIN_VALUE) && (x2 <= Integer.MAX_VALUE)
-            && (c == x2)) {
-          d = ((int) y2);
-          if ((y2 >= Integer.MIN_VALUE) && (y2 <= Integer.MAX_VALUE)
-              && (d == y2)) {
-            this.flushDrawLine(a, b, c, d);
-            return;
+    if (this.autoConvertCoordinatesToInt()) {
+      a = ((int) x1);
+      if ((x1 >= Integer.MIN_VALUE) && (x1 <= Integer.MAX_VALUE)
+          && (a == x1)) {
+        b = ((int) y1);
+        if ((y1 >= Integer.MIN_VALUE) && (y1 <= Integer.MAX_VALUE)
+            && (b == y1)) {
+          c = ((int) x2);
+          if ((x2 >= Integer.MIN_VALUE) && (x2 <= Integer.MAX_VALUE)
+              && (c == x2)) {
+            d = ((int) y2);
+            if ((y2 >= Integer.MIN_VALUE) && (y2 <= Integer.MAX_VALUE)
+                && (d == y2)) {
+              this.flushDrawLine(a, b, c, d);
+              return;
+            }
           }
         }
       }
@@ -623,7 +618,6 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
       final __LineSegment b, final __LineSegment c, final __LineSegment d) {
     double minX, minY, maxX, maxY, width, height;
     int x, y, w, h;
-    boolean isInt;
 
     minX = maxX = a.x1;
     minY = maxY = a.y1;
@@ -674,24 +668,32 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
       return;
     }
 
-    x = ((int) minX);
-    isInt = ((minX >= Integer.MIN_VALUE) && (minX <= Integer.MAX_VALUE) && (x == minX));
+    if (this.autoConvertCoordinatesToInt()) {
+      x = ((int) minX);
+      if ((minX >= Integer.MIN_VALUE) && (minX <= Integer.MAX_VALUE)
+          && (x == minX)) {
 
-    y = ((int) minY);
-    isInt = ((minY >= Integer.MIN_VALUE) && (minY <= Integer.MAX_VALUE) && (y == minY));
+        y = ((int) minY);
+        if ((minY >= Integer.MIN_VALUE) && (minY <= Integer.MAX_VALUE)
+            && (y == minY)) {
 
-    w = ((int) width);
-    isInt = ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE) && (w == width));
+          w = ((int) width);
+          if ((width >= Integer.MIN_VALUE) && (width <= Integer.MAX_VALUE)
+              && (w == width)) {
 
-    h = ((int) height);
-    isInt = ((height >= Integer.MIN_VALUE)
-        && (height <= Integer.MAX_VALUE) && (h == height));
+            h = ((int) height);
+            if ((height >= Integer.MIN_VALUE)
+                && (height <= Integer.MAX_VALUE) && (h == height)) {
 
-    if (isInt) {
-      this.flushDrawRect(x, y, w, h);
-    } else {
-      this.flushDrawRect(minX, minY, width, height);
+              this.flushDrawRect(x, y, w, h);
+              return;
+            }
+          }
+        }
+      }
     }
+
+    this.flushDrawRect(minX, minY, width, height);
   }
 
   /**
@@ -746,9 +748,16 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
     size = (work.size() + 1);
     polyIntX = this.m_polyIntX;
+
+    canInt = this.autoConvertCoordinatesToInt();
+
     if ((polyIntX == null) || (polyIntX.length < size)) {
-      this.m_polyIntX = polyIntX = new int[size];
-      this.m_polyIntY = polyIntY = new int[size];
+      if (canInt) {
+        this.m_polyIntX = polyIntX = new int[size];
+        this.m_polyIntY = polyIntY = new int[size];
+      } else {
+        polyIntX = polyIntY = null;
+      }
       this.m_polyDoubleX = polyDoubleX = new double[size];
       this.m_polyDoubleY = polyDoubleY = new double[size];
     } else {
@@ -757,7 +766,6 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
       polyDoubleY = this.m_polyDoubleY;
     }
 
-    canInt = true;
     index = 0;
     for (final __LineSegment segment : work) {
       polyDoubleX[index] = doubleX = segment.x1;
@@ -823,7 +831,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
   }
 
   /** a line segment as double */
-  private static final class __LineSegment extends Line2D.Double {
+  static final class __LineSegment extends Line2D.Double {
 
     /** the serial version uid */
     private static final long serialVersionUID = 1L;
