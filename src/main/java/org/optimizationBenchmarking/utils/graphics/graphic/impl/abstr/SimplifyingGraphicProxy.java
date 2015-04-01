@@ -315,6 +315,14 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
     cache = this.m_lineSegments;
     work = this.m_lineWork;
 
+    iterator = cache.iterator();
+    while (iterator.hasNext()) {
+      work.add(iterator.next());
+      iterator.remove();
+      this.__flushLineSegments(work);
+      work.clear();
+    }
+
     while (!(cache.isEmpty())) {
       iterator = cache.iterator();
       if (!(iterator.hasNext())) {

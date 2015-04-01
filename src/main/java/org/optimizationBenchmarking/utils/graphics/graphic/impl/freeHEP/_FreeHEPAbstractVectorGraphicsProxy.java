@@ -975,15 +975,13 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
     this.checkClosed();
     path = new GeneralPath(Path2D.WIND_EVEN_ODD);
     if (nPoints > 0) {
-      path.moveTo(CopyOf_FreeHEPAbstractVectorGraphicsProxy
-          ._f((float) (xPoints[0])),
-          CopyOf_FreeHEPAbstractVectorGraphicsProxy
-              ._f((float) (yPoints[0])));
+      path.moveTo(
+          _FreeHEPAbstractVectorGraphicsProxy._f((float) (xPoints[0])),
+          _FreeHEPAbstractVectorGraphicsProxy._f((float) (yPoints[0])));
       for (int i = 1; i < nPoints; i++) {
-        path.lineTo(CopyOf_FreeHEPAbstractVectorGraphicsProxy
-            ._f((float) (xPoints[i])),
-            CopyOf_FreeHEPAbstractVectorGraphicsProxy
-                ._f((float) (yPoints[i])));
+        path.lineTo(
+            _FreeHEPAbstractVectorGraphicsProxy._f((float) (xPoints[i])),
+            _FreeHEPAbstractVectorGraphicsProxy._f((float) (yPoints[i])));
       }
       if (close) {
         path.closePath();
