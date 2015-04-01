@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Map;
 
+import org.freehep.graphicsio.ps.PSGraphics2D;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
@@ -21,7 +22,12 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 /**
  * A driver which creates <a
  * href="http://en.wikipedia.org/wiki/Encapsulated_PostScript">EPS</a>
- * graphics.
+ * graphics. Unlike for the other FreeHEP graphics classes, we cannot
+ * subclass {@link org.freehep.graphicsio.ps.PSGraphics2D}, as this class,
+ * in its {@link org.freehep.graphicsio.ps.PSGraphics2D#writeHeader()
+ * writeHeader} function has a function {@code writeProlog} which loads a
+ * resource from the class of the current object (the class changes when we
+ * subclass, the resource does not exist...)
  */
 public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
 
@@ -181,7 +187,7 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
     }
     synchronized (org.freehep.graphicsio.ps.PSGraphics2D.class) {
       org.freehep.graphicsio.ps.PSGraphics2D.setClipEnabled(true);
-      g = new org.freehep.graphicsio.ps.PSGraphics2D(stream, dim);
+      g = new PSGraphics2D(stream, dim);
       g.setProperties(up);
       g.setMultiPage(false);
       GraphicUtils.setDefaultRenderingHints(g);
@@ -189,7 +195,7 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
       g.setClip(0, 0, dim.width, dim.height);
     }
 
-    return new _FreeHEPEPSGraphic(g, builder.getLogger(),
+    return new _FreeHEPEPSGraphicWrapper(g, builder.getLogger(),
         builder.getFileProducerListener(), path, dim.width, dim.height);
   }
 

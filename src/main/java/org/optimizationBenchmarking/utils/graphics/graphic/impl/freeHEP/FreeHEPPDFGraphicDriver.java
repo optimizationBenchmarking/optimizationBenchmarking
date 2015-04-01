@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
@@ -166,12 +167,13 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   @Override
   protected final Graphic createGraphic(final GraphicBuilder builder) {
     final org.freehep.util.UserProperties up;
-    final org.freehep.graphicsio.pdf.PDFGraphics2D g;
+    final _FreeHEPPDFGraphic g;
     final double wd, hd;
     final Dimension dim;
     final ELength sizeUnit;
     final Path path;
     final PhysicalDimension size;
+    final Logger logger;
     OutputStream stream;
 
     up = new org.freehep.util.UserProperties();
@@ -201,12 +203,14 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
           true, thro);
       return null; // we'll never get here
     }
+
+    logger = builder.getLogger();
     synchronized (org.freehep.graphicsio.PageConstants.class) {
       FreeHEPPDFGraphicDriver.s_messWith.setSize(dim);
       try {
         synchronized (org.freehep.graphicsio.pdf.PDFGraphics2D.class) {
           org.freehep.graphicsio.pdf.PDFGraphics2D.setClipEnabled(true);
-          g = new org.freehep.graphicsio.pdf.PDFGraphics2D(stream, dim);
+          g = new _FreeHEPPDFGraphic(stream, dim, logger);
           g.setProperties(up);
           g.setMultiPage(false);
           GraphicUtils.setDefaultRenderingHints(g);
@@ -219,7 +223,7 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
       }
     }
 
-    return new _FreeHEPPDFGraphic(g, builder.getLogger(),
+    return new _FreeHEPPDFGraphicWrapper(g, logger,
         builder.getFileProducerListener(), path, dim.width, dim.height);
   }
 

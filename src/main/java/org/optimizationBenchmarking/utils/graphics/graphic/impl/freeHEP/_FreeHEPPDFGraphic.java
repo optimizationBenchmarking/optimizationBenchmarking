@@ -1,68 +1,56 @@
 package org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP;
 
 import java.awt.Dimension;
-import java.nio.file.Path;
+import java.io.OutputStream;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.freehep.graphicsio.PageConstants;
 import org.freehep.graphicsio.pdf.PDFGraphics2D;
-import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
-import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
 
-/**
- * the internal <a
- * href="http://en.wikipedia.org/wiki/Portable_Document_Format">PDF</a>
- * graphic
- */
-final class _FreeHEPPDFGraphic extends
-    _FreeHEPAbstractVectorGraphicsProxy<PDFGraphics2D> {
+/** The internal wrapper for freeHEP PDF graphics */
+final class _FreeHEPPDFGraphic extends PDFGraphics2D {
+
+  /** the logger */
+  private final Logger m_logger;
 
   /**
-   * instantiate
+   * Create the wrapper
    * 
-   * @param graphic
-   *          the graphic to use
-   * @param log
+   * @param _os
+   *          the output stream
+   * @param size
+   *          the size
+   * @param logger
    *          the logger
-   * @param path
-   *          the path under which the contents of the graphic are stored
-   * @param listener
-   *          the object to notify when we are closed, or {@code null} if
-   *          none needs to be notified
-   * @param w
-   *          the width
-   * @param h
-   *          the height
    */
-  _FreeHEPPDFGraphic(final PDFGraphics2D graphic, final Logger log,
-      final IFileProducerListener listener, final Path path, final int w,
-      final int h) {
-    super(graphic, log, listener, path, w, h);
+  _FreeHEPPDFGraphic(final OutputStream _os, final Dimension size,
+      final Logger logger) {
+    super(_os, size);
+    this.m_logger = logger;
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final void doClose() {
-    final Dimension mess;
+  public final void writeComment(final String comment) {
+    // ignore
+  }
 
-    synchronized (PageConstants.class) {
-      mess = FreeHEPPDFGraphicDriver.s_messWith;
-      mess.setSize(this.m_w, this.m_h);
-      try {
-        try {
-          this.m_out.endExport();
-        } finally {
-          super.doClose();
-        }
-      } finally {
-        mess.setSize(FreeHEPPDFGraphicDriver.s_correctDim);
-      }
+  /** {@inheritDoc} */
+  @Override
+  public final void writeError(final Exception exception) {
+    ErrorUtils.logError(this.m_logger,//
+        "Error while creating PDF graphic.", //$NON-NLS-1$
+        exception, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void writeWarning(final String warning) {
+    if ((this.m_logger != null)
+        && (this.m_logger.isLoggable(Level.WARNING))) {
+      this.m_logger.warning(warning);
     }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final EGraphicFormat getGraphicFormat() {
-    return EGraphicFormat.PDF;
   }
 }

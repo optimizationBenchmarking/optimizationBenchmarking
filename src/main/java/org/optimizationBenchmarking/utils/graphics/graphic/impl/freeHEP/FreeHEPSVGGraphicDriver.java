@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
@@ -131,12 +132,13 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
   @Override
   protected final Graphic createGraphic(final GraphicBuilder builder) {
     final org.freehep.util.UserProperties up;
-    final org.freehep.graphicsio.svg.SVGGraphics2D g;
+    final _FreeHEPSVGGraphic g;
     final double wd, hd;
     final Dimension dim;
     final ELength sizeUnit;
     final Path path;
     final PhysicalDimension size;
+    final Logger logger;
     OutputStream stream;
 
     up = new org.freehep.util.UserProperties();
@@ -166,15 +168,17 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
           true, thro);
       return null; // we'll never get here
     }
+
+    logger = builder.getLogger();
     synchronized (org.freehep.graphicsio.svg.SVGGraphics2D.class) {
-      g = new org.freehep.graphicsio.svg.SVGGraphics2D(stream, dim);
+      g = new _FreeHEPSVGGraphic(stream, dim, logger);
       g.setProperties(up);
       g.setClip(0, 0, dim.width, dim.height);
       GraphicUtils.setDefaultRenderingHints(g);
       g.startExport();
     }
 
-    return new _FreeHEPSVGGraphic(g, builder.getLogger(),
+    return new _FreeHEPSVGGraphicWrapper(g, logger,
         builder.getFileProducerListener(), path, dim.width, dim.height,
         this.getFileType());
   }

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
@@ -140,12 +141,13 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
   protected final Graphic createGraphic(final GraphicBuilder builder) {
 
     final org.freehep.util.UserProperties up;
-    final org.freehep.graphicsio.emf.EMFGraphics2D g;
+    final _FreeHEPEMFGraphic g;
     final double wd, hd;
     final Dimension dim;
     final ELength sizeUnit;
     final Path path;
     final PhysicalDimension size;
+    final Logger logger;
 
     OutputStream stream;
 
@@ -177,8 +179,9 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
           true, thro);
       return null; // we'll never get here
     }
+    logger = builder.getLogger();
     synchronized (org.freehep.graphicsio.emf.EMFGraphics2D.class) {
-      g = new org.freehep.graphicsio.emf.EMFGraphics2D(stream, dim);
+      g = new _FreeHEPEMFGraphic(stream, dim, logger);
       g.setProperties(up);
       GraphicUtils.setDefaultRenderingHints(g);
       g.setDeviceIndependent(true);
@@ -186,7 +189,7 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
       g.setClip(0, 0, dim.width, dim.height);
     }
 
-    return new _FreeHEPEMFGraphic(g, builder.getLogger(),
+    return new _FreeHEPEMFGraphicWrapper(g, logger,
         builder.getFileProducerListener(), path, dim.width, dim.height);
   }
 

@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * graphic based on the <a
  * href="http://java.freehep.org/vectorgraphics">FreeHEP</a> library
  */
-final class _FreeHEPEPSGraphic extends
+final class _FreeHEPEPSGraphicWrapper extends
     _FreeHEPAbstractVectorGraphicsProxy<PSGraphics2D> {
 
   /**
@@ -33,7 +33,7 @@ final class _FreeHEPEPSGraphic extends
    * @param h
    *          the height
    */
-  _FreeHEPEPSGraphic(final PSGraphics2D graphic, final Logger log,
+  _FreeHEPEPSGraphicWrapper(final PSGraphics2D graphic, final Logger log,
       final IFileProducerListener listener, final Path path, final int w,
       final int h) {
     super(graphic, log, listener, path, w, h);
