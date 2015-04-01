@@ -998,7 +998,7 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  protected final void doDraw(final Shape s) {
+  protected final void flushDraw(final Shape s) {
     this.m_out.draw(new _ProtectedShape(s));
   }
 

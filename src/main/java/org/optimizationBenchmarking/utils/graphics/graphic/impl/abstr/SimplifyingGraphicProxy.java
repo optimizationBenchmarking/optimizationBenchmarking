@@ -3,7 +3,13 @@ package org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Shape;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,10 +27,12 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * {@link org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicProxy}
  * which tries to simplify the commands passed to the underlying graphic.
  * For instance, if multiple simple lines are drawn on it, it tries to
- * merge them to a poly-line. This costs a significant amount of memory and
- * runtime and is entirely useless if the graphic renders a pixel graphic.
- * However, if the graphic renders to a vector graphic, the result may be
- * much more efficient. The following methods support caching:
+ * merge them to a poly-line. Also, if several points on a line are on the
+ * same straight, this class will try to remove redundant points in the
+ * middle.This costs a significant amount of memory and runtime and is
+ * entirely useless if the graphic renders a pixel graphic. However, if the
+ * graphic renders to a vector graphic, the result may be much more
+ * efficient. The following methods support caching:
  * </p>
  * <ol>
  * <li>{@link #drawLine(double, double, double, double)}</li>
@@ -95,6 +103,13 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
     super(graphic, log, listener, path);
     this.m_lineSegments = new LinkedHashSet<>();
     this.m_lineWork = new ArrayList<>();
+
+    this.m_polyDoubleX = new double[128];
+    this.m_polyDoubleY = new double[128];
+    if (this.autoConvertCoordinatesToInt()) {
+      this.m_polyIntX = new int[128];
+      this.m_polyIntY = new int[128];
+    }
   }
 
   /** {@inheritDoc} */
@@ -299,6 +314,144 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
         this.doDrawLine(x2, y2, x2, y2);
       }
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doDraw(final Shape s) {
+    final Rectangle2D rect;
+    final Line2D line;
+    final Rectangle2D rectangle;
+    final Point2D point;
+    final Polygon poly;
+    final RoundRectangle2D round;
+    final Ellipse2D ellipse;
+    final Arc2D arc;
+    final PathIterator iterator;
+    final ArrayList<__LineSegment> list;
+    final double[] coords;
+    double oldX, oldY, curX, curY, firstX, firstY;
+    boolean first;
+
+    if (s instanceof Line2D) {
+      line = ((Line2D) s);
+      this.doDrawLine(line.getX1(), line.getY1(), line.getX2(),
+          line.getY2());
+      return;
+    }
+
+    if (s instanceof Rectangle2D) {
+      rectangle = ((Rectangle2D) s);
+      this.doDrawRect(rectangle.getX(), rectangle.getY(),
+          rectangle.getWidth(), rectangle.getHeight());
+      return;
+    }
+
+    if (s instanceof Polygon) {
+      poly = ((Polygon) s);
+      this.doDrawPolygon(poly.xpoints, poly.ypoints, poly.npoints);
+      return;
+    }
+
+    if (s instanceof RoundRectangle2D) {
+      round = ((RoundRectangle2D) s);
+      this.doDrawRoundRect(round.getX(), round.getY(), round.getWidth(),
+          round.getHeight(), round.getArcWidth(), round.getArcHeight());
+      return;
+    }
+
+    if (s instanceof Arc2D) {
+      arc = ((Arc2D) s);
+      this.doDrawArc(arc.getX(), arc.getY(), arc.getWidth(),
+          arc.getHeight(), arc.getAngleStart(), arc.getAngleExtent());
+    }
+
+    if (s instanceof Point2D) {
+      point = ((Point2D) s);
+      this.doDrawLine(point.getX(), point.getY(), point.getX(),
+          point.getY());
+      return;
+    }
+
+    if (s instanceof Ellipse2D) {
+      ellipse = ((Ellipse2D) s);
+      if ((ellipse.getWidth() == 0d) || (ellipse.getHeight() == 0d)) {
+        this.doDrawLine(ellipse.getMinX(), ellipse.getMinY(),
+            ellipse.getMaxX(), ellipse.getMaxY());
+        return;
+      }
+    }
+
+    rect = s.getBounds2D();
+    if (rect.isEmpty()) {
+      this.doDrawLine(rect.getMinX(), rect.getMinY(), rect.getMaxX(),
+          rect.getMaxY());
+      return;
+    }
+
+    iterator = s.getPathIterator(null);
+    if (iterator != null) {
+      coords = this.m_polyDoubleX;
+      list = this.m_lineWork;
+      firstX = firstY = curX = curY = 0d;
+      first = true;
+
+      canDo: {
+        while (!(iterator.isDone())) {
+          switch (iterator.currentSegment(coords)) {
+            case PathIterator.SEG_MOVETO: {
+              curX = coords[0];
+              curY = coords[1];
+              if (first) {
+                firstX = curX;
+                firstY = curY;
+                first = false;
+              }
+              break;
+            }
+            case PathIterator.SEG_LINETO: {
+              if (first) {
+                break canDo;
+              }
+              oldX = curX;
+              oldY = curY;
+              curX = coords[0];
+              curY = coords[1];
+              list.add(new __LineSegment(oldX, oldY, curX, curY));
+              break;
+            }
+            case PathIterator.SEG_CLOSE: {
+              if (first) {
+                break canDo;
+              }
+              list.add(new __LineSegment(curX, curY, firstX, firstY));
+              break;
+            }
+            default: {
+              break canDo;
+            }
+          }
+
+          iterator.next();
+        }
+
+        this.m_lineSegments.addAll(list);
+      }
+
+      list.clear();
+    }
+
+    this.flushDraw(s);
+  }
+
+  /**
+   * Actually draw a shape
+   * 
+   * @param s
+   *          the shape
+   */
+  protected void flushDraw(final Shape s) {
+    super.doDraw(s);
   }
 
   /**
@@ -756,11 +909,11 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
     __LineSegment last;
 
     size = (work.size() + 1);
-    polyIntX = this.m_polyIntX;
+    polyDoubleX = this.m_polyDoubleX;
 
     canInt = this.autoConvertCoordinatesToInt();
 
-    if ((polyIntX == null) || (polyIntX.length < size)) {
+    if ((polyDoubleX == null) || (polyDoubleX.length < size)) {
       if (canInt) {
         this.m_polyIntX = polyIntX = new int[size];
         this.m_polyIntY = polyIntY = new int[size];
@@ -771,6 +924,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
       this.m_polyDoubleY = polyDoubleY = new double[size];
     } else {
       polyIntY = this.m_polyIntY;
+      polyIntX = this.m_polyIntX;
       polyDoubleX = this.m_polyDoubleX;
       polyDoubleY = this.m_polyDoubleY;
     }
