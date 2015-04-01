@@ -42,7 +42,7 @@ final class _FreeHEPPDFGraphic extends
 
   /** {@inheritDoc} */
   @Override
-  protected final void onClose() {
+  protected final void doClose() {
     final Dimension mess;
 
     synchronized (PageConstants.class) {
@@ -52,7 +52,7 @@ final class _FreeHEPPDFGraphic extends
         try {
           this.m_out.endExport();
         } finally {
-          super.onClose();
+          super.doClose();
         }
       } finally {
         mess.setSize(FreeHEPPDFGraphicDriver.s_correctDim);

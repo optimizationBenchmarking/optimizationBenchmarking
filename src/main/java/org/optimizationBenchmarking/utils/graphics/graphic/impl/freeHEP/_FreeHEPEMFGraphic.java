@@ -41,11 +41,11 @@ final class _FreeHEPEMFGraphic extends
 
   /** {@inheritDoc} */
   @Override
-  protected final void onClose() {
+  protected final void doClose() {
     try {
       this.m_out.endExport();
     } finally {
-      super.onClose();
+      super.doClose();
     }
   }
 

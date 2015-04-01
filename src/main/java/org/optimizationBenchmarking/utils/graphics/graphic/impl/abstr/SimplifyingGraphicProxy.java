@@ -458,11 +458,20 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
     }
   }
 
+  /** do close */
+  protected void doClose() {
+    //
+  }
+
   /** {@inheritDoc} */
   @Override
-  protected void onClose() {
+  protected final void onClose() {
     try {
-      this.__flushLineCache();
+      try {
+        this.__flushLineCache();
+      } finally {
+        this.doClose();
+      }
     } finally {
       super.onClose();
     }
