@@ -154,75 +154,77 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void draw(final Shape s) {
+  protected final void doDraw(final Shape s) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img,
+  protected final boolean doDrawImage(final Image img,
       final AffineTransform xform, final ImageObserver obs) {
     return false;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawImage(final BufferedImage img,
+  protected final void doDrawImage(final BufferedImage img,
       final BufferedImageOp op, final int x, final int y) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawRenderedImage(final RenderedImage img,
+  protected final void doDrawRenderedImage(final RenderedImage img,
       final AffineTransform xform) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawRenderableImage(final RenderableImage img,
+  protected final void doDrawRenderableImage(final RenderableImage img,
       final AffineTransform xform) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final String str, final int x, final int y) {
+  protected final void doDrawString(final String str, final int x,
+      final int y) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final String str, final float x,
+  protected final void doDrawString(final String str, final float x,
       final float y) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final AttributedCharacterIterator iterator,
-      final int x, final int y) {
+  protected final void doDrawString(
+      final AttributedCharacterIterator iterator, final int x, final int y) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final AttributedCharacterIterator iterator,
+  protected final void doDrawString(
+      final AttributedCharacterIterator iterator, final float x,
+      final float y) {
+    // do nothing
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doDrawGlyphVector(final GlyphVector g,
       final float x, final float y) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawGlyphVector(final GlyphVector g, final float x,
-      final float y) {
-    // do nothing
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void fill(final Shape s) {
+  protected final void doFill(final Shape s) {
     // do nothing
   }
 
@@ -244,25 +246,25 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void setComposite(final Composite comp) {
+  protected final void doSetComposite(final Composite comp) {
     this.m_composite = comp;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void setPaint(final Paint paint) {
+  protected final void doSetPaint(final Paint paint) {
     this.m_paint = paint;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void setStroke(final Stroke s) {
+  protected final void doSetStroke(final Stroke s) {
     this.m_stroke = s;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void setRenderingHint(final Key hintKey,
+  protected final void doSetRenderingHint(final Key hintKey,
       final Object hintValue) {
     this.getRenderingHints().put(hintKey, hintValue);
   }
@@ -275,13 +277,13 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void setRenderingHints(final Map<?, ?> hints) {
+  protected final void doSetRenderingHints(final Map<?, ?> hints) {
     this.getRenderingHints().putAll(hints);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void addRenderingHints(final Map<?, ?> hints) {
+  protected final void doAddRenderingHints(final Map<?, ?> hints) {
     this.getRenderingHints().putAll(hints);
   }
 
@@ -309,50 +311,50 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void translate(final int x, final int y) {
+  protected final void doTranslate(final int x, final int y) {
     this.__gt().translate(x, y);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void translate(final double tx, final double ty) {
+  protected final void doTranslate(final double tx, final double ty) {
     this.__gt().translate(tx, ty);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void rotate(final double theta) {
+  protected final void doRotate(final double theta) {
     this.__gt().rotate(theta);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void rotate(final double theta, final double x,
+  protected final void doRotate(final double theta, final double x,
       final double y) {
     this.__gt().rotate(theta, x, y);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void scale(final double sx, final double sy) {
+  protected final void doScale(final double sx, final double sy) {
     this.__gt().scale(sx, sy);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void shear(final double shx, final double shy) {
+  protected final void doShear(final double shx, final double shy) {
     this.__gt().shear(shx, shy);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void transform(final AffineTransform Tx) {
+  protected final void doTransform(final AffineTransform Tx) {
     this.__gt().concatenate(Tx);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void setTransform(final AffineTransform Tx) {
+  protected final void doSetTransform(final AffineTransform Tx) {
     this.__gt().setTransform(Tx);
   }
 
@@ -379,7 +381,7 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void setBackground(final Color color) {
+  protected final void doSetBackground(final Color color) {
     this.m_bgcolor = color;
   }
 
@@ -400,7 +402,7 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void clip(final Shape s) {
+  protected final void doClip(final Shape s) {
     this.m_clip = s;
   }
 
@@ -412,7 +414,7 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final Graphics create() {
+  protected final Graphics doCreate() {
     return new _NullGraphic(null, null, new Dimension(this.m_bounds.width,
         this.m_bounds.height));
   }
@@ -425,19 +427,19 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void setColor(final Color c) {
+  protected final void doSetColor(final Color c) {
     this.m_paint = this.m_color = c;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void setPaintMode() {
+  protected final void doSetPaintMode() {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void setXORMode(final Color c1) {
+  protected final void doSetXORMode(final Color c1) {
     // do nothing
   }
 
@@ -452,7 +454,7 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void setFont(final Font font) {
+  protected final void doSetFont(final Font font) {
     this.m_font = font;
   }
 
@@ -470,15 +472,15 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void clipRect(final int x, final int y, final int width,
-      final int height) {
+  protected final void doClipRect(final int x, final int y,
+      final int width, final int height) {
     this.m_clip = new Rectangle(x, y, width, height);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void setClip(final int x, final int y, final int width,
-      final int height) {
+  protected final void doSetClip(final int x, final int y,
+      final int width, final int height) {
     this.m_clip = new Rectangle(x, y, width, height);
 
   }
@@ -491,41 +493,41 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void setClip(final Shape clip) {
+  protected final void doSetClip(final Shape clip) {
     this.m_clip = clip;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void copyArea(final int x, final int y, final int width,
-      final int height, final int dx, final int dy) {
+  protected final void doCopyArea(final int x, final int y,
+      final int width, final int height, final int dx, final int dy) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawLine(final int x1, final int y1, final int x2,
-      final int y2) {
+  protected final void doDrawLine(final int x1, final int y1,
+      final int x2, final int y2) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void fillRect(final int x, final int y, final int width,
-      final int height) {
+  protected final void doFillRect(final int x, final int y,
+      final int width, final int height) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void clearRect(final int x, final int y, final int width,
-      final int height) {
+  protected final void doClearRect(final int x, final int y,
+      final int width, final int height) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawRoundRect(final int x, final int y,
+  protected final void doDrawRoundRect(final int x, final int y,
       final int width, final int height, final int arcWidth,
       final int arcHeight) {
     // do nothing
@@ -533,7 +535,7 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void fillRoundRect(final int x, final int y,
+  protected final void doFillRoundRect(final int x, final int y,
       final int width, final int height, final int arcWidth,
       final int arcHeight) {
     // do nothing
@@ -541,64 +543,66 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void drawOval(final int x, final int y, final int width,
-      final int height) {
+  protected final void doDrawOval(final int x, final int y,
+      final int width, final int height) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void fillOval(final int x, final int y, final int width,
-      final int height) {
+  protected final void doFillOval(final int x, final int y,
+      final int width, final int height) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawArc(final int x, final int y, final int width,
-      final int height, final int startAngle, final int arcAngle) {
+  protected final void doDrawArc(final int x, final int y,
+      final int width, final int height, final int startAngle,
+      final int arcAngle) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void fillArc(final int x, final int y, final int width,
-      final int height, final int startAngle, final int arcAngle) {
+  protected final void doFillArc(final int x, final int y,
+      final int width, final int height, final int startAngle,
+      final int arcAngle) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawPolyline(final int[] xPoints, final int[] yPoints,
-      final int nPoints) {
+  protected final void doDrawPolyline(final int[] xPoints,
+      final int[] yPoints, final int nPoints) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawPolygon(final int[] xPoints, final int[] yPoints,
-      final int nPoints) {
+  protected final void doDrawPolygon(final int[] xPoints,
+      final int[] yPoints, final int nPoints) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void fillPolygon(final int[] xPoints, final int[] yPoints,
-      final int nPoints) {
+  protected final void doFillPolygon(final int[] xPoints,
+      final int[] yPoints, final int nPoints) {
     // TODO Auto-generated method stub
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final int x,
+  protected final boolean doDrawImage(final Image img, final int x,
       final int y, final ImageObserver observer) {
     return false; // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final int x,
+  protected final boolean doDrawImage(final Image img, final int x,
       final int y, final int width, final int height,
       final ImageObserver observer) {
     return false; // do nothing
@@ -606,22 +610,23 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final int x,
+  protected final boolean doDrawImage(final Image img, final int x,
       final int y, final Color bgcolor, final ImageObserver observer) {
     // TODO Auto-generated method stub
     return false;
   }
 
+  /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final int x, final int y,
-      final int width, final int height, final Color bgcolor,
+  protected final boolean doDrawImage(final Image img, final int x,
+      final int y, final int width, final int height, final Color bgcolor,
       final ImageObserver observer) {
     return false; // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final int dx1,
+  protected final boolean doDrawImage(final Image img, final int dx1,
       final int dy1, final int dx2, final int dy2, final int sx1,
       final int sy1, final int sx2, final int sy2,
       final ImageObserver observer) {
@@ -630,7 +635,7 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final int dx1,
+  protected final boolean doDrawImage(final Image img, final int dx1,
       final int dy1, final int dx2, final int dy2, final int sx1,
       final int sy1, final int sx2, final int sy2, final Color bgcolor,
       final ImageObserver observer) {
@@ -639,42 +644,43 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void draw3DRect(final double x, final double y,
+  protected final void doDraw3DRect(final double x, final double y,
       final double width, final double height, final boolean raised) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void fill3DRect(final double x, final double y,
+  protected final void doFill3DRect(final double x, final double y,
       final double width, final double height, final boolean raised) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final String str, final double x,
+  protected final void doDrawString(final String str, final double x,
       final double y) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final AttributedCharacterIterator iterator,
+  protected final void doDrawString(
+      final AttributedCharacterIterator iterator, final double x,
+      final double y) {
+    // do nothing
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doDrawGlyphVector(final GlyphVector g,
       final double x, final double y) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawGlyphVector(final GlyphVector g, final double x,
-      final double y) {
-    // do nothing
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final Graphics create(final double x, final double y,
+  protected final Graphics doCreate(final double x, final double y,
       final double width, final double height) {
     _NullGraphic g;
     g = ((_NullGraphic) (this.create()));
@@ -685,21 +691,21 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void clipRect(final double x, final double y,
+  protected final void doClipRect(final double x, final double y,
       final double width, final double height) {
     this.clipRect(((int) x), ((int) y), ((int) width), ((int) height));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void setClip(final double x, final double y,
+  protected final void doSetClip(final double x, final double y,
       final double width, final double height) {
     this.setClip(((int) x), ((int) y), ((int) width), ((int) height));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void copyArea(final double x, final double y,
+  protected final void doCopyArea(final double x, final double y,
       final double width, final double height, final double dx,
       final double dy) {
     // do nothing
@@ -707,35 +713,35 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void drawLine(final double x1, final double y1,
+  protected final void doDrawLine(final double x1, final double y1,
       final double x2, final double y2) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void fillRect(final double x, final double y,
+  protected final void doFillRect(final double x, final double y,
       final double width, final double height) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawRect(final double x, final double y,
+  protected final void doDrawRect(final double x, final double y,
       final double width, final double height) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void clearRect(final double x, final double y,
+  protected final void doClearRect(final double x, final double y,
       final double width, final double height) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawRoundRect(final double x, final double y,
+  protected final void doDrawRoundRect(final double x, final double y,
       final double width, final double height, final double arcWidth,
       final double arcHeight) {
     // do nothing
@@ -743,7 +749,7 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void fillRoundRect(final double x, final double y,
+  protected final void doFillRoundRect(final double x, final double y,
       final double width, final double height, final double arcWidth,
       final double arcHeight) {
     // do nothing
@@ -751,21 +757,21 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void drawOval(final double x, final double y,
+  protected final void doDrawOval(final double x, final double y,
       final double width, final double height) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void fillOval(final double x, final double y,
+  protected final void doFillOval(final double x, final double y,
       final double width, final double height) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawArc(final double x, final double y,
+  protected final void doDrawArc(final double x, final double y,
       final double width, final double height, final double startAngle,
       final double arcAngle) {
     // do nothing
@@ -773,7 +779,7 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void fillArc(final double x, final double y,
+  protected final void doFillArc(final double x, final double y,
       final double width, final double height, final double startAngle,
       final double arcAngle) {
     // do nothing
@@ -788,42 +794,42 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final void drawPolyline(final double xPoints[],
+  protected final void doDrawPolyline(final double xPoints[],
       final double yPoints[], final int nPoints) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawPolygon(final double xPoints[],
+  protected final void doDrawPolygon(final double xPoints[],
       final double yPoints[], final int nPoints) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void fillPolygon(final double xPoints[],
+  protected final void doFillPolygon(final double xPoints[],
       final double yPoints[], final int nPoints) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawChars(final char data[], final int offset,
+  protected final void doDrawChars(final char data[], final int offset,
       final int length, final double x, final double y) {
     // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double x,
+  protected final boolean doDrawImage(final Image img, final double x,
       final double y, final ImageObserver observer) {
     return false;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double x,
+  protected final boolean doDrawImage(final Image img, final double x,
       final double y, final double width, final double height,
       final ImageObserver observer) {
     return false; // do nothing
@@ -831,14 +837,14 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double x,
+  protected final boolean doDrawImage(final Image img, final double x,
       final double y, final Color bgcolor, final ImageObserver observer) {
     return false; // do nothing
   }
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double x,
+  protected final boolean doDrawImage(final Image img, final double x,
       final double y, final double width, final double height,
       final Color bgcolor, final ImageObserver observer) {
     return false; // do nothing
@@ -846,7 +852,7 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double dx1,
+  protected final boolean doDrawImage(final Image img, final double dx1,
       final double dy1, final double dx2, final double dy2,
       final double sx1, final double sy1, final double sx2,
       final double sy2, final ImageObserver observer) {
@@ -855,7 +861,7 @@ final class _NullGraphic extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double dx1,
+  protected final boolean doDrawImage(final Image img, final double dx1,
       final double dy1, final double dx2, final double dy2,
       final double sx1, final double sy1, final double sx2,
       final double sy2, final Color bgcolor, final ImageObserver observer) {

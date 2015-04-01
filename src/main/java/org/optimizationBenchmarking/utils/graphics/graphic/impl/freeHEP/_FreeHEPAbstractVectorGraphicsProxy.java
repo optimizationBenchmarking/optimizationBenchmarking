@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 import org.freehep.graphics2d.AbstractVectorGraphics;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
-import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicProxy;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.SimplifyingGraphicProxy;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
@@ -41,7 +41,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  *          the proxied type
  */
 abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
-    extends GraphicProxy<T> {
+    extends SimplifyingGraphicProxy<T> {
 
   /** the maximum permissible coordinate as integer */
   private static final int MAX_COORD_I = ((((1 << 22) - 3) >> 1) - 3);
@@ -192,18 +192,17 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void setFont(final Font font) {
+  protected final void doSetFont(final Font font) {
     this.m_underlineState = 0;
-    super.setFont(font);
+    super.doSetFont(font);
   }
 
   // new functionality
 
   /** {@inheritDoc} */
   @Override
-  public final Graphics create(final double x, final double y,
+  protected final Graphics doCreate(final double x, final double y,
       final double width, final double height) {
-    this.checkClosed();
     return this.m_out.create(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -212,9 +211,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void clipRect(final double x, final double y,
+  protected final void doClipRect(final double x, final double y,
       final double width, final double height) {
-    this.checkClosed();
     this.m_out.clipRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -223,9 +221,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void setClip(final double x, final double y,
+  protected final void doSetClip(final double x, final double y,
       final double width, final double height) {
-    this.checkClosed();
     this.m_out.setClip(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -234,9 +231,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawLine(final double x1, final double y1,
+  protected final void flushDrawLine(final double x1, final double y1,
       final double x2, final double y2) {
-    this.checkClosed();
     this.m_out.drawLine(_FreeHEPAbstractVectorGraphicsProxy._f(x1),
         _FreeHEPAbstractVectorGraphicsProxy._f(y1),
         _FreeHEPAbstractVectorGraphicsProxy._f(x2),
@@ -245,9 +241,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void fillRect(final double x, final double y,
+  protected final void doFillRect(final double x, final double y,
       final double width, final double height) {
-    this.checkClosed();
     this.m_out.fillRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -256,9 +251,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawRect(final double x, final double y,
+  protected final void flushDrawRect(final double x, final double y,
       final double width, final double height) {
-    this.checkClosed();
     this.m_out.drawRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -267,9 +261,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void clearRect(final double x, final double y,
+  protected final void doClearRect(final double x, final double y,
       final double width, final double height) {
-    this.checkClosed();
     this.m_out.clearRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -278,10 +271,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawRoundRect(final double x, final double y,
+  protected final void doDrawRoundRect(final double x, final double y,
       final double width, final double height, final double arcWidth,
       final double arcHeight) {
-    this.checkClosed();
     this.m_out.drawRoundRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -292,10 +284,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void fillRoundRect(final double x, final double y,
+  protected final void doFillRoundRect(final double x, final double y,
       final double width, final double height, final double arcWidth,
       final double arcHeight) {
-    this.checkClosed();
     this.m_out.fillRoundRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -306,9 +297,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawOval(final double x, final double y,
+  protected final void doDrawOval(final double x, final double y,
       final double width, final double height) {
-    this.checkClosed();
     this.m_out.drawOval(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -317,9 +307,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void fillOval(final double x, final double y,
+  protected final void doFillOval(final double x, final double y,
       final double width, final double height) {
-    this.checkClosed();
     this.m_out.fillOval(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -328,10 +317,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawArc(final double x, final double y,
+  protected final void doDrawArc(final double x, final double y,
       final double width, final double height, final double startAngle,
       final double arcAngle) {
-    this.checkClosed();
     this.m_out.drawArc(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -342,10 +330,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void fillArc(final double x, final double y,
+  protected final void doFillArc(final double x, final double y,
       final double width, final double height, final double startAngle,
       final double arcAngle) {
-    this.checkClosed();
     this.m_out.fillArc(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -356,9 +343,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawPolyline(final double[] xPoints,
+  protected final void flushDrawPolyline(final double[] xPoints,
       final double[] yPoints, final int nPoints) {
-    this.checkClosed();
     this.m_out
         .drawPolyline(
             _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
@@ -368,21 +354,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawPolygon(final double[] xPoints,
+  protected final void doFillPolygon(final double[] xPoints,
       final double[] yPoints, final int nPoints) {
-    this.checkClosed();
-    this.m_out
-        .drawPolygon(
-            _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
-            _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
-            nPoints);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void fillPolygon(final double[] xPoints,
-      final double[] yPoints, final int nPoints) {
-    this.checkClosed();
     this.m_out
         .fillPolygon(
             _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
@@ -392,34 +365,34 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final String str, final int x, final int y) {
-    this.drawString(str,
+  protected final void doDrawString(final String str, final int x,
+      final int y) {
+    this.doDrawString(str,
         ((double) _FreeHEPAbstractVectorGraphicsProxy._f(x)),
         ((double) _FreeHEPAbstractVectorGraphicsProxy._f(y)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final String str, final float x,
+  protected final void doDrawString(final String str, final float x,
       final float y) {
-    this.drawString(str,
+    this.doDrawString(str,
         ((double) _FreeHEPAbstractVectorGraphicsProxy._f(x)),
         ((double) _FreeHEPAbstractVectorGraphicsProxy._f(y)));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawChars(final char data[], final int offset,
+  protected final void doDrawChars(final char data[], final int offset,
       final int length, final double x, final double y) {
-    this.checkClosed();
-    this.drawString(new String(data, offset, length),
+    this.doDrawString(new String(data, offset, length),
         _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final String str, final double x,
+  protected final void doDrawString(final String str, final double x,
       final double y) {
     final Font font;
     final AbstractVectorGraphics graph;
@@ -428,8 +401,6 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
     final Rectangle2D bounds;
     final Stroke old;
     double startX, yCoord;
-
-    this.checkClosed();
 
     graph = this.m_out;
     font = graph.getFont();
@@ -448,27 +419,30 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
       lineMetrics = font.getLineMetrics(str, frc);
       yCoord = (y + lineMetrics.getUnderlineOffset());
       old = this.getStroke();
+      try {
+        this.setStroke(new BasicStroke(
+            lineMetrics.getUnderlineThickness(), BasicStroke.CAP_ROUND,
+            BasicStroke.JOIN_ROUND, 10f));
 
-      graph.setStroke(new BasicStroke(lineMetrics.getUnderlineThickness(),
-          BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 10f));
-
-      graph.drawLine(
-          _FreeHEPAbstractVectorGraphicsProxy._f(startX),
-          _FreeHEPAbstractVectorGraphicsProxy._f(yCoord),
-          _FreeHEPAbstractVectorGraphicsProxy._f(startX
-              + bounds.getWidth()),
-          _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
-
-      this.setStroke(old);
+        graph.drawLine(
+            _FreeHEPAbstractVectorGraphicsProxy._f(startX),
+            _FreeHEPAbstractVectorGraphicsProxy._f(yCoord),
+            _FreeHEPAbstractVectorGraphicsProxy._f(startX
+                + bounds.getWidth()),
+            _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
+      } finally {
+        this.setStroke(old);
+      }
     }
-    this.m_out.drawString(str, _FreeHEPAbstractVectorGraphicsProxy._f(x),
+    graph.drawString(str, _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final AttributedCharacterIterator iterator,
-      final float x, final float y) {
+  protected final void doDrawString(
+      final AttributedCharacterIterator iterator, final float x,
+      final float y) {
     final Font font;
     final AbstractVectorGraphics graph;
     final LineMetrics lineMetrics;
@@ -476,8 +450,6 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
     final Rectangle2D bounds;
     final Stroke old;
     double startX, yCoord;
-
-    this.checkClosed();
 
     graph = this.m_out;
     font = graph.getFont();
@@ -498,28 +470,29 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
           iterator.getBeginIndex(), iterator.getEndIndex(), frc);
       yCoord = (y + lineMetrics.getUnderlineOffset());
       old = this.getStroke();
+      try {
+        this.setStroke(new BasicStroke(
+            lineMetrics.getUnderlineThickness(), BasicStroke.CAP_ROUND,
+            BasicStroke.JOIN_ROUND, 10f));
 
-      graph.setStroke(new BasicStroke(lineMetrics.getUnderlineThickness(),
-          BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 10f));
-
-      graph.drawLine(
-          _FreeHEPAbstractVectorGraphicsProxy._f(startX),
-          _FreeHEPAbstractVectorGraphicsProxy._f(yCoord),
-          _FreeHEPAbstractVectorGraphicsProxy._f(startX
-              + bounds.getWidth()),
-          _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
-
-      this.setStroke(old);
+        graph.drawLine(
+            _FreeHEPAbstractVectorGraphicsProxy._f(startX),
+            _FreeHEPAbstractVectorGraphicsProxy._f(yCoord),
+            _FreeHEPAbstractVectorGraphicsProxy._f(startX
+                + bounds.getWidth()),
+            _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
+      } finally {
+        this.setStroke(old);
+      }
     }
-    this.m_out.drawString(iterator,
-        _FreeHEPAbstractVectorGraphicsProxy._f(x),
+    graph.drawString(iterator, _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final AttributedCharacterIterator iterator,
-      final int x, final int y) {
+  protected final void doDrawString(
+      final AttributedCharacterIterator iterator, final int x, final int y) {
     this.drawString(iterator,
         ((float) _FreeHEPAbstractVectorGraphicsProxy._f(x)),
         ((float) _FreeHEPAbstractVectorGraphicsProxy._f(y)));
@@ -527,17 +500,15 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawChars(final char data[], final int offset,
+  protected final void doDrawChars(final char[] data, final int offset,
       final int length, final int x, final int y) {
-    this.checkClosed();
-    this.m_out.drawChars(data, offset, length, x, y);
+    this.drawChars(data, offset, length, ((double) x), ((double) y));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void draw3DRect(final int x, final int y, final int width,
-      final int height, final boolean raised) {
-    this.checkClosed();
+  protected final void doDraw3DRect(final int x, final int y,
+      final int width, final int height, final boolean raised) {
     this.m_out.draw3DRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -546,9 +517,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void fill3DRect(final int x, final int y, final int width,
-      final int height, final boolean raised) {
-    this.checkClosed();
+  protected final void doFill3DRect(final int x, final int y,
+      final int width, final int height, final boolean raised) {
     this.m_out.fill3DRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -557,9 +527,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawImage(final BufferedImage img,
+  protected final void doDrawImage(final BufferedImage img,
       final BufferedImageOp op, final int x, final int y) {
-    this.checkClosed();
     this.m_out.drawImage(img, op,
         _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y));
@@ -567,32 +536,28 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void translate(final int x, final int y) {
-    this.checkClosed();
+  protected final void doTranslate(final int x, final int y) {
     this.m_out.translate(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void translate(final double tx, final double ty) {
-    this.checkClosed();
+  protected final void doTranslate(final double tx, final double ty) {
     this.m_out.translate(_FreeHEPAbstractVectorGraphicsProxy._f(tx),
         _FreeHEPAbstractVectorGraphicsProxy._f(ty));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void rotate(final double theta) {
-    this.checkClosed();
+  protected final void doRotate(final double theta) {
     this.m_out.rotate(_FreeHEPAbstractVectorGraphicsProxy._f(theta));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void rotate(final double theta, final double x,
+  protected final void doRotate(final double theta, final double x,
       final double y) {
-    this.checkClosed();
     this.m_out.rotate(_FreeHEPAbstractVectorGraphicsProxy._f(theta),
         _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y));
@@ -600,25 +565,22 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void scale(final double sx, final double sy) {
-    this.checkClosed();
+  protected final void doScale(final double sx, final double sy) {
     this.m_out.scale(_FreeHEPAbstractVectorGraphicsProxy._f(sx),
         _FreeHEPAbstractVectorGraphicsProxy._f(sy));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void shear(final double shx, final double shy) {
-    this.checkClosed();
+  protected final void doShear(final double shx, final double shy) {
     this.m_out.shear(_FreeHEPAbstractVectorGraphicsProxy._f(shx),
         _FreeHEPAbstractVectorGraphicsProxy._f(shy));
   }
 
   /** {@inheritDoc} */
   @Override
-  public Graphics create(final int x, final int y, final int width,
-      final int height) {
-    this.checkClosed();
+  protected final Graphics doCreate(final int x, final int y,
+      final int width, final int height) {
     return this.m_out.create(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -627,9 +589,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void clipRect(final int x, final int y, final int width,
-      final int height) {
-    this.checkClosed();
+  protected final void doClipRect(final int x, final int y,
+      final int width, final int height) {
     this.m_out.clipRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -638,9 +599,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void setClip(final int x, final int y, final int width,
-      final int height) {
-    this.checkClosed();
+  protected final void doSetClip(final int x, final int y,
+      final int width, final int height) {
     this.m_out.setClip(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -649,9 +609,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void copyArea(final int x, final int y, final int width,
-      final int height, final int dx, final int dy) {
-    this.checkClosed();
+  protected final void doCopyArea(final int x, final int y,
+      final int width, final int height, final int dx, final int dy) {
     this.m_out.copyArea(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -662,9 +621,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawLine(final int x1, final int y1, final int x2,
-      final int y2) {
-    this.checkClosed();
+  protected final void flushDrawLine(final int x1, final int y1,
+      final int x2, final int y2) {
     this.m_out.drawLine(_FreeHEPAbstractVectorGraphicsProxy._f(x1),
         _FreeHEPAbstractVectorGraphicsProxy._f(y1),
         _FreeHEPAbstractVectorGraphicsProxy._f(x2),
@@ -673,9 +631,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void fillRect(final int x, final int y, final int width,
-      final int height) {
-    this.checkClosed();
+  protected final void doFillRect(final int x, final int y,
+      final int width, final int height) {
     this.m_out.fillRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -684,9 +641,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawRect(final int x, final int y, final int width,
-      final int height) {
-    this.checkClosed();
+  protected final void flushDrawRect(final int x, final int y,
+      final int width, final int height) {
     this.m_out.drawRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -695,9 +651,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void clearRect(final int x, final int y, final int width,
-      final int height) {
-    this.checkClosed();
+  protected final void doClearRect(final int x, final int y,
+      final int width, final int height) {
     this.m_out.clearRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -706,10 +661,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawRoundRect(final int x, final int y,
+  protected final void doDrawRoundRect(final int x, final int y,
       final int width, final int height, final int arcWidth,
       final int arcHeight) {
-    this.checkClosed();
     this.m_out.drawRoundRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -720,10 +674,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void fillRoundRect(final int x, final int y,
+  protected final void doFillRoundRect(final int x, final int y,
       final int width, final int height, final int arcWidth,
       final int arcHeight) {
-    this.checkClosed();
     this.m_out.fillRoundRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -734,9 +687,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawOval(final int x, final int y, final int width,
-      final int height) {
-    this.checkClosed();
+  protected final void doDrawOval(final int x, final int y,
+      final int width, final int height) {
     this.m_out.drawOval(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -745,9 +697,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void fillOval(final int x, final int y, final int width,
-      final int height) {
-    this.checkClosed();
+  protected final void doFillOval(final int x, final int y,
+      final int width, final int height) {
     this.m_out.fillOval(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -756,9 +707,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawArc(final int x, final int y, final int width,
-      final int height, final int startAngle, final int arcAngle) {
-    this.checkClosed();
+  protected final void doDrawArc(final int x, final int y,
+      final int width, final int height, final int startAngle,
+      final int arcAngle) {
     this.m_out.drawArc(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -769,9 +720,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void fillArc(final int x, final int y, final int width,
-      final int height, final int startAngle, final int arcAngle) {
-    this.checkClosed();
+  protected final void doFillArc(final int x, final int y,
+      final int width, final int height, final int startAngle,
+      final int arcAngle) {
     this.m_out.fillArc(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
@@ -782,9 +733,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawPolyline(final int xPoints[], final int yPoints[],
-      final int nPoints) {
-    this.checkClosed();
+  protected final void flushDrawPolyline(final int xPoints[],
+      final int yPoints[], final int nPoints) {
     this.m_out
         .drawPolyline(
             _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
@@ -794,21 +744,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawPolygon(final int xPoints[], final int yPoints[],
-      final int nPoints) {
-    this.checkClosed();
-    this.m_out
-        .drawPolygon(
-            _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
-            _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
-            nPoints);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final boolean drawImage(final Image img, final int x,
+  protected final boolean doDrawImage(final Image img, final int x,
       final int y, final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img,
         _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y), observer);
@@ -816,10 +753,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final int x,
+  protected final boolean doDrawImage(final Image img, final int x,
       final int y, final int width, final int height,
       final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img,
         _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
@@ -829,9 +765,8 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final int x,
+  protected final boolean doDrawImage(final Image img, final int x,
       final int y, final Color bgcolor, final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img,
         _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y), bgcolor, observer);
@@ -839,10 +774,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final int x,
+  protected final boolean doDrawImage(final Image img, final int x,
       final int y, final int width, final int height, final Color bgcolor,
       final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img,
         _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
@@ -852,11 +786,10 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final int dx1,
+  protected final boolean doDrawImage(final Image img, final int dx1,
       final int dy1, final int dx2, final int dy2, final int sx1,
       final int sy1, final int sx2, final int sy2,
       final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img,
         _FreeHEPAbstractVectorGraphicsProxy._f(dx1),
         _FreeHEPAbstractVectorGraphicsProxy._f(dy1),
@@ -870,11 +803,10 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final int dx1,
+  protected final boolean doDrawImage(final Image img, final int dx1,
       final int dy1, final int dx2, final int dy2, final int sx1,
       final int sy1, final int sx2, final int sy2, final Color bgcolor,
       final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img,
         _FreeHEPAbstractVectorGraphicsProxy._f(dx1),
         _FreeHEPAbstractVectorGraphicsProxy._f(dy1),
@@ -901,9 +833,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void draw3DRect(final double x, final double y,
+  protected final void doDraw3DRect(final double x, final double y,
       final double width, final double height, final boolean raised) {
-    super.draw3DRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
+    super.doDraw3DRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
         _FreeHEPAbstractVectorGraphicsProxy._f(height), raised);
@@ -911,10 +843,9 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void fill3DRect(final double x, final double y,
+  protected final void doFill3DRect(final double x, final double y,
       final double width, final double height, final boolean raised) {
-    this.checkClosed();
-    super.fill3DRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
+    super.doFill3DRect(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
         _FreeHEPAbstractVectorGraphicsProxy._f(height), raised);
@@ -922,38 +853,36 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void drawImage(final BufferedImage img,
+  protected final void doDrawImage(final BufferedImage img,
       final BufferedImageOp op, final double x, final double y) {
-    this.checkClosed();
-    super.drawImage(img, op, _FreeHEPAbstractVectorGraphicsProxy._f(x),
+    super.doDrawImage(img, op, _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawString(final AttributedCharacterIterator iterator,
-      final double x, final double y) {
-    this.checkClosed();
-    super.drawString(iterator, _FreeHEPAbstractVectorGraphicsProxy._f(x),
-        _FreeHEPAbstractVectorGraphicsProxy._f(y));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void drawGlyphVector(final GlyphVector g, final double x,
+  protected final void doDrawString(
+      final AttributedCharacterIterator iterator, final double x,
       final double y) {
-    this.checkClosed();
-    super.drawGlyphVector(g, _FreeHEPAbstractVectorGraphicsProxy._f(x),
+    super.doDrawString(iterator,
+        _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void copyArea(final double x, final double y,
+  protected final void doDrawGlyphVector(final GlyphVector g,
+      final double x, final double y) {
+    super.doDrawGlyphVector(g, _FreeHEPAbstractVectorGraphicsProxy._f(x),
+        _FreeHEPAbstractVectorGraphicsProxy._f(y));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doCopyArea(final double x, final double y,
       final double width, final double height, final double dx,
       final double dy) {
-    this.checkClosed();
-    super.copyArea(_FreeHEPAbstractVectorGraphicsProxy._f(x),
+    super.doCopyArea(_FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
         _FreeHEPAbstractVectorGraphicsProxy._f(height),
@@ -963,20 +892,20 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double x,
+  protected final boolean doDrawImage(final Image img, final double x,
       final double y, final ImageObserver observer) {
-    this.checkClosed();
-    return super.drawImage(img, _FreeHEPAbstractVectorGraphicsProxy._f(x),
+    return super.doDrawImage(img,
+        _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y), observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double x,
+  protected final boolean doDrawImage(final Image img, final double x,
       final double y, final double width, final double height,
       final ImageObserver observer) {
-    this.checkClosed();
-    return super.drawImage(img, _FreeHEPAbstractVectorGraphicsProxy._f(x),
+    return super.doDrawImage(img,
+        _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
         _FreeHEPAbstractVectorGraphicsProxy._f(height), observer);
@@ -984,20 +913,20 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double x,
+  protected final boolean doDrawImage(final Image img, final double x,
       final double y, final Color bgcolor, final ImageObserver observer) {
-    this.checkClosed();
-    return super.drawImage(img, _FreeHEPAbstractVectorGraphicsProxy._f(x),
+    return super.doDrawImage(img,
+        _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y), bgcolor, observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double x,
+  protected final boolean doDrawImage(final Image img, final double x,
       final double y, final double width, final double height,
       final Color bgcolor, final ImageObserver observer) {
-    this.checkClosed();
-    return super.drawImage(img, _FreeHEPAbstractVectorGraphicsProxy._f(x),
+    return super.doDrawImage(img,
+        _FreeHEPAbstractVectorGraphicsProxy._f(x),
         _FreeHEPAbstractVectorGraphicsProxy._f(y),
         _FreeHEPAbstractVectorGraphicsProxy._f(width),
         _FreeHEPAbstractVectorGraphicsProxy._f(height), bgcolor, observer);
@@ -1005,12 +934,11 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double dx1,
+  protected final boolean doDrawImage(final Image img, final double dx1,
       final double dy1, final double dx2, final double dy2,
       final double sx1, final double sy1, final double sx2,
       final double sy2, final ImageObserver observer) {
-    this.checkClosed();
-    return super.drawImage(img,
+    return super.doDrawImage(img,
         _FreeHEPAbstractVectorGraphicsProxy._f(dx1),
         _FreeHEPAbstractVectorGraphicsProxy._f(dy1),
         _FreeHEPAbstractVectorGraphicsProxy._f(dx2),
@@ -1023,12 +951,11 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final boolean drawImage(final Image img, final double dx1,
+  protected final boolean doDrawImage(final Image img, final double dx1,
       final double dy1, final double dx2, final double dy2,
       final double sx1, final double sy1, final double sx2,
       final double sy2, final Color bgcolor, final ImageObserver observer) {
-    this.checkClosed();
-    return super.drawImage(img,
+    return super.doDrawImage(img,
         _FreeHEPAbstractVectorGraphicsProxy._f(dx1),
         _FreeHEPAbstractVectorGraphicsProxy._f(dy1),
         _FreeHEPAbstractVectorGraphicsProxy._f(dx2),
@@ -1048,13 +975,15 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
     this.checkClosed();
     path = new GeneralPath(Path2D.WIND_EVEN_ODD);
     if (nPoints > 0) {
-      path.moveTo(
-          _FreeHEPAbstractVectorGraphicsProxy._f((float) (xPoints[0])),
-          _FreeHEPAbstractVectorGraphicsProxy._f((float) (yPoints[0])));
+      path.moveTo(CopyOf_FreeHEPAbstractVectorGraphicsProxy
+          ._f((float) (xPoints[0])),
+          CopyOf_FreeHEPAbstractVectorGraphicsProxy
+              ._f((float) (yPoints[0])));
       for (int i = 1; i < nPoints; i++) {
-        path.lineTo(
-            _FreeHEPAbstractVectorGraphicsProxy._f((float) (xPoints[i])),
-            _FreeHEPAbstractVectorGraphicsProxy._f((float) (yPoints[i])));
+        path.lineTo(CopyOf_FreeHEPAbstractVectorGraphicsProxy
+            ._f((float) (xPoints[i])),
+            CopyOf_FreeHEPAbstractVectorGraphicsProxy
+                ._f((float) (yPoints[i])));
       }
       if (close) {
         path.closePath();
@@ -1065,45 +994,31 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
 
   /** {@inheritDoc} */
   @Override
-  public final void draw(final Shape s) {
-    this.checkClosed();
+  protected final void doDraw(final Shape s) {
     this.m_out.draw(new _ProtectedShape(s));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void fill(final Shape s) {
-    this.checkClosed();
+  protected final void doFill(final Shape s) {
     this.m_out.fill(new _ProtectedShape(s));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void clip(final Shape s) {
-    this.checkClosed();
+  protected final void doClip(final Shape s) {
     this.m_out.clip(new _ProtectedShape(s));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void setClip(final Shape clip) {
-    this.checkClosed();
+  protected final void doSetClip(final Shape clip) {
     this.m_out.setClip(new _ProtectedShape(clip));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void drawPolygon(final Polygon p) {
-    this.checkClosed();
-    this.m_out.drawPolygon(new Polygon(_FreeHEPAbstractVectorGraphicsProxy
-        .__f(p.xpoints, p.npoints), _FreeHEPAbstractVectorGraphicsProxy
-        .__f(p.ypoints, p.npoints), p.npoints));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void fillPolygon(final Polygon p) {
-    this.checkClosed();
+  protected final void doFillPolygon(final Polygon p) {
     this.m_out.fillPolygon(new Polygon(_FreeHEPAbstractVectorGraphicsProxy
         .__f(p.xpoints, p.npoints), _FreeHEPAbstractVectorGraphicsProxy
         .__f(p.ypoints, p.npoints), p.npoints));

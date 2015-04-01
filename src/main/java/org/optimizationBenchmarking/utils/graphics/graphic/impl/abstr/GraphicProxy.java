@@ -82,93 +82,82 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void draw3DRect(final int x, final int y, final int width,
+  protected void doDraw3DRect(final int x, final int y, final int width,
       final int height, final boolean raised) {
-    this.checkClosed();
     this.m_out.draw3DRect(x, y, width, height, raised);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fill3DRect(final int x, final int y, final int width,
+  protected void doFill3DRect(final int x, final int y, final int width,
       final int height, final boolean raised) {
-    this.checkClosed();
     this.m_out.fill3DRect(x, y, width, height, raised);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void draw(final Shape s) {
-    this.checkClosed();
+  protected void doDraw(final Shape s) {
     this.m_out.draw(s);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawImage(final BufferedImage img, final BufferedImageOp op,
-      final int x, final int y) {
-    this.checkClosed();
+  protected void doDrawImage(final BufferedImage img,
+      final BufferedImageOp op, final int x, final int y) {
     this.m_out.drawImage(img, op, x, y);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawRenderedImage(final RenderedImage img,
+  protected void doDrawRenderedImage(final RenderedImage img,
       final AffineTransform xform) {
-    this.checkClosed();
     this.m_out.drawRenderedImage(img, xform);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawRenderableImage(final RenderableImage img,
+  protected void doDrawRenderableImage(final RenderableImage img,
       final AffineTransform xform) {
-    this.checkClosed();
     this.m_out.drawRenderableImage(img, xform);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawString(final String str, final int x, final int y) {
-    this.checkClosed();
+  protected void doDrawString(final String str, final int x, final int y) {
     this.m_out.drawString(str, x, y);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawString(final String str, final float x, final float y) {
-    this.checkClosed();
-    this.m_out.drawString(str, x, y);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public void drawString(final AttributedCharacterIterator iterator,
-      final int x, final int y) {
-    this.checkClosed();
-    this.m_out.drawString(iterator, x, y);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public void drawString(final AttributedCharacterIterator iterator,
-      final float x, final float y) {
-    this.checkClosed();
-    this.m_out.drawString(iterator, x, y);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public void drawGlyphVector(final GlyphVector g, final float x,
+  protected void doDrawString(final String str, final float x,
       final float y) {
-    this.checkClosed();
+    this.m_out.drawString(str, x, y);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void doDrawString(final AttributedCharacterIterator iterator,
+      final int x, final int y) {
+    this.m_out.drawString(iterator, x, y);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void doDrawString(final AttributedCharacterIterator iterator,
+      final float x, final float y) {
+    this.m_out.drawString(iterator, x, y);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void doDrawGlyphVector(final GlyphVector g, final float x,
+      final float y) {
     this.m_out.drawGlyphVector(g, x, y);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fill(final Shape s) {
-    this.checkClosed();
+  protected void doFill(final Shape s) {
     this.m_out.fill(s);
   }
 
@@ -189,29 +178,26 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void setComposite(final Composite comp) {
-    this.checkClosed();
+  protected void doSetComposite(final Composite comp) {
     this.m_out.setComposite(comp);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setPaint(final Paint paint) {
-    this.checkClosed();
+  protected void doSetPaint(final Paint paint) {
     this.m_out.setPaint(paint);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setStroke(final Stroke s) {
-    this.checkClosed();
+  protected void doSetStroke(final Stroke s) {
     this.m_out.setStroke(s);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setRenderingHint(final Key hintKey, final Object hintValue) {
-    this.checkClosed();
+  protected void doSetRenderingHint(final Key hintKey,
+      final Object hintValue) {
     this.m_out.setRenderingHint(hintKey, hintValue);
   }
 
@@ -224,8 +210,7 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void setRenderingHints(final Map<?, ?> hints) {
-    this.checkClosed();
+  protected void doSetRenderingHints(final Map<?, ?> hints) {
     this.m_out.setRenderingHints(hints);
   }
 
@@ -238,57 +223,50 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void translate(final int x, final int y) {
-    this.checkClosed();
+  protected void doTranslate(final int x, final int y) {
     this.m_out.translate(x, y);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void translate(final double tx, final double ty) {
-    this.checkClosed();
+  protected void doTranslate(final double tx, final double ty) {
     this.m_out.translate(tx, ty);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void rotate(final double theta) {
-    this.checkClosed();
+  protected void doRotate(final double theta) {
     this.m_out.rotate(theta);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void rotate(final double theta, final double x, final double y) {
-    this.checkClosed();
+  protected void doRotate(final double theta, final double x,
+      final double y) {
     this.m_out.rotate(theta, x, y);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void scale(final double sx, final double sy) {
-    this.checkClosed();
+  protected void doScale(final double sx, final double sy) {
     this.m_out.scale(sx, sy);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void shear(final double shx, final double shy) {
-    this.checkClosed();
+  protected void doShear(final double shx, final double shy) {
     this.m_out.shear(shx, shy);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void transform(final AffineTransform Tx) {
-    this.checkClosed();
+  protected void doTransform(final AffineTransform Tx) {
     this.m_out.transform(Tx);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setTransform(final AffineTransform Tx) {
-    this.checkClosed();
+  protected void doSetTransform(final AffineTransform Tx) {
     this.m_out.setTransform(Tx);
   }
 
@@ -315,8 +293,7 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void setBackground(final Color color) {
-    this.checkClosed();
+  protected void doSetBackground(final Color color) {
     this.m_out.setBackground(color);
   }
 
@@ -336,8 +313,7 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void clip(final Shape s) {
-    this.checkClosed();
+  protected void doClip(final Shape s) {
     this.m_out.clip(s);
   }
 
@@ -350,16 +326,14 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public Graphics create() {
-    this.checkClosed();
+  protected Graphics doCreate() {
     return this.m_out.create();
   }
 
   /** {@inheritDoc} */
   @Override
-  public Graphics create(final int x, final int y, final int width,
+  protected Graphics doCreate(final int x, final int y, final int width,
       final int height) {
-    this.checkClosed();
     return this.m_out.create(x, y, width, height);
   }
 
@@ -372,22 +346,19 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void setColor(final Color c) {
-    this.checkClosed();
+  protected void doSetColor(final Color c) {
     this.m_out.setColor(c);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setPaintMode() {
-    this.checkClosed();
+  protected void doSetPaintMode() {
     this.m_out.setPaintMode();
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setXORMode(final Color c1) {
-    this.checkClosed();
+  protected void doSetXORMode(final Color c1) {
     this.m_out.setXORMode(c1);
   }
 
@@ -400,8 +371,7 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void setFont(final Font font) {
-    this.checkClosed();
+  protected void doSetFont(final Font font) {
     this.m_out.setFont(font);
   }
 
@@ -428,17 +398,15 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void clipRect(final int x, final int y, final int width,
+  protected void doClipRect(final int x, final int y, final int width,
       final int height) {
-    this.checkClosed();
     this.m_out.clipRect(x, y, width, height);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setClip(final int x, final int y, final int width,
+  protected void doSetClip(final int x, final int y, final int width,
       final int height) {
-    this.checkClosed();
     this.m_out.setClip(x, y, width, height);
   }
 
@@ -451,204 +419,182 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void setClip(final Shape clip) {
-    this.checkClosed();
+  protected void doSetClip(final Shape clip) {
     this.m_out.setClip(clip);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void copyArea(final int x, final int y, final int width,
+  protected void doCopyArea(final int x, final int y, final int width,
       final int height, final int dx, final int dy) {
-    this.checkClosed();
     this.m_out.copyArea(x, y, width, height, dx, dy);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawLine(final int x1, final int y1, final int x2,
+  protected void doDrawLine(final int x1, final int y1, final int x2,
       final int y2) {
-    this.checkClosed();
     this.m_out.drawLine(x1, y1, x2, y2);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillRect(final int x, final int y, final int width,
+  protected void doFillRect(final int x, final int y, final int width,
       final int height) {
-    this.checkClosed();
     this.m_out.fillRect(x, y, width, height);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawRect(final int x, final int y, final int width,
+  protected void doDrawRect(final int x, final int y, final int width,
       final int height) {
-    this.checkClosed();
     this.m_out.drawRect(x, y, width, height);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void clearRect(final int x, final int y, final int width,
+  protected void doClearRect(final int x, final int y, final int width,
       final int height) {
-    this.checkClosed();
     this.m_out.clearRect(x, y, width, height);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawRoundRect(final int x, final int y, final int width,
-      final int height, final int arcWidth, final int arcHeight) {
-    this.checkClosed();
+  protected void doDrawRoundRect(final int x, final int y,
+      final int width, final int height, final int arcWidth,
+      final int arcHeight) {
     this.m_out.drawRoundRect(x, y, width, height, arcWidth, arcHeight);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillRoundRect(final int x, final int y, final int width,
-      final int height, final int arcWidth, final int arcHeight) {
-    this.checkClosed();
+  protected void doFillRoundRect(final int x, final int y,
+      final int width, final int height, final int arcWidth,
+      final int arcHeight) {
     this.m_out.fillRoundRect(x, y, width, height, arcWidth, arcHeight);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawOval(final int x, final int y, final int width,
+  protected void doDrawOval(final int x, final int y, final int width,
       final int height) {
-    this.checkClosed();
     this.m_out.drawOval(x, y, width, height);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillOval(final int x, final int y, final int width,
+  protected void doFillOval(final int x, final int y, final int width,
       final int height) {
-    this.checkClosed();
     this.m_out.fillOval(x, y, width, height);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawArc(final int x, final int y, final int width,
+  protected void doDrawArc(final int x, final int y, final int width,
       final int height, final int startAngle, final int arcAngle) {
-    this.checkClosed();
     this.m_out.drawArc(x, y, width, height, startAngle, arcAngle);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillArc(final int x, final int y, final int width,
+  protected void doFillArc(final int x, final int y, final int width,
       final int height, final int startAngle, final int arcAngle) {
-    this.checkClosed();
     this.m_out.fillArc(x, y, width, height, startAngle, arcAngle);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawPolyline(final int xPoints[], final int yPoints[],
+  protected void doDrawPolyline(final int[] xPoints, final int[] yPoints,
       final int nPoints) {
-    this.checkClosed();
     this.m_out.drawPolyline(xPoints, yPoints, nPoints);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawPolygon(final int xPoints[], final int yPoints[],
+  protected void doDrawPolygon(final int[] xPoints, final int[] yPoints,
       final int nPoints) {
-    this.checkClosed();
     this.m_out.drawPolygon(xPoints, yPoints, nPoints);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawPolygon(final Polygon p) {
-    this.checkClosed();
+  protected void doDrawPolygon(final Polygon p) {
     this.m_out.drawPolygon(p);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillPolygon(final int xPoints[], final int yPoints[],
+  protected void doFillPolygon(final int xPoints[], final int yPoints[],
       final int nPoints) {
-    this.checkClosed();
     this.m_out.fillPolygon(xPoints, yPoints, nPoints);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillPolygon(final Polygon p) {
-    this.checkClosed();
+  protected void doFillPolygon(final Polygon p) {
     this.m_out.fillPolygon(p);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawChars(final char data[], final int offset,
+  protected void doDrawChars(final char data[], final int offset,
       final int length, final int x, final int y) {
-    this.checkClosed();
     this.m_out.drawChars(data, offset, length, x, y);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawBytes(final byte data[], final int offset,
+  protected void doDrawBytes(final byte data[], final int offset,
       final int length, final int x, final int y) {
-    this.checkClosed();
     this.m_out.drawBytes(data, offset, length, x, y);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final int x, final int y,
+  protected boolean doDrawImage(final Image img, final int x, final int y,
       final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img, x, y, observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final int x, final int y,
+  protected boolean doDrawImage(final Image img, final int x, final int y,
       final int width, final int height, final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img, x, y, width, height, observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final int x, final int y,
+  protected boolean doDrawImage(final Image img, final int x, final int y,
       final Color bgcolor, final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img, x, y, bgcolor, observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final int x, final int y,
+  protected boolean doDrawImage(final Image img, final int x, final int y,
       final int width, final int height, final Color bgcolor,
       final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img, x, y, width, height, bgcolor,
         observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final int dx1, final int dy1,
-      final int dx2, final int dy2, final int sx1, final int sy1,
-      final int sx2, final int sy2, final ImageObserver observer) {
-    this.checkClosed();
+  protected boolean doDrawImage(final Image img, final int dx1,
+      final int dy1, final int dx2, final int dy2, final int sx1,
+      final int sy1, final int sx2, final int sy2,
+      final ImageObserver observer) {
     return this.m_out.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2,
         sy2, observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final int dx1, final int dy1,
-      final int dx2, final int dy2, final int sx1, final int sy1,
-      final int sx2, final int sy2, final Color bgcolor,
+  protected boolean doDrawImage(final Image img, final int dx1,
+      final int dy1, final int dx2, final int dy2, final int sx1,
+      final int sy1, final int sx2, final int sy2, final Color bgcolor,
       final ImageObserver observer) {
-    this.checkClosed();
     return this.m_out.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2,
         sy2, bgcolor, observer);
   }
@@ -679,16 +625,14 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final AffineTransform xform,
-      final ImageObserver obs) {
-    this.checkClosed();
+  protected boolean doDrawImage(final Image img,
+      final AffineTransform xform, final ImageObserver obs) {
     return this.m_out.drawImage(img, xform, obs);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void addRenderingHints(final Map<?, ?> hints) {
-    this.checkClosed();
+  protected void doAddRenderingHints(final Map<?, ?> hints) {
     this.m_out.addRenderingHints(hints);
   }
 
@@ -696,103 +640,95 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void draw3DRect(final double x, final double y,
+  protected void doDraw3DRect(final double x, final double y,
       final double width, final double height, final boolean raised) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).draw3DRect(x, y, width, height, raised);
     } else {
-      super.draw3DRect(x, y, width, height, raised);
+      super.doDraw3DRect(x, y, width, height, raised);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fill3DRect(final double x, final double y,
+  protected void doFill3DRect(final double x, final double y,
       final double width, final double height, final boolean raised) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).fill3DRect(x, y, width, height, raised);
     } else {
-      super.fill3DRect(x, y, width, height, raised);
+      super.doFill3DRect(x, y, width, height, raised);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawImage(final BufferedImage img, final BufferedImageOp op,
-      final double x, final double y) {
-    this.checkClosed();
+  protected void doDrawImage(final BufferedImage img,
+      final BufferedImageOp op, final double x, final double y) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawImage(img, op, x, y);
     } else {
-      super.drawImage(img, op, x, y);
+      super.doDrawImage(img, op, x, y);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawString(final String str, final double x, final double y) {
-    this.checkClosed();
+  protected void doDrawString(final String str, final double x,
+      final double y) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawString(str, x, y);
     } else {
-      super.drawString(str, x, y);
+      super.doDrawString(str, x, y);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawString(final AttributedCharacterIterator iterator,
+  protected void doDrawString(final AttributedCharacterIterator iterator,
       final double x, final double y) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawString(iterator, x, y);
     } else {
-      super.drawString(iterator, x, y);
+      super.doDrawString(iterator, x, y);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawGlyphVector(final GlyphVector g, final double x,
+  protected void doDrawGlyphVector(final GlyphVector g, final double x,
       final double y) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawGlyphVector(g, x, y);
     } else {
-      super.drawGlyphVector(g, x, y);
+      super.doDrawGlyphVector(g, x, y);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public Graphics create(final double x, final double y,
+  protected Graphics doCreate(final double x, final double y,
       final double width, final double height) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       return ((Graphic) (this.m_out)).create(x, y, width, height);
     }
-    return super.create(x, y, width, height);
+    return super.doCreate(x, y, width, height);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void clipRect(final double x, final double y, final double width,
-      final double height) {
-    this.checkClosed();
+  protected void doClipRect(final double x, final double y,
+      final double width, final double height) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).clipRect(x, y, width, height);
     } else {
-      super.clipRect(x, y, width, height);
+      super.doClipRect(x, y, width, height);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setClip(final double x, final double y, final double width,
-      final double height) {
-    this.checkClosed();
+  protected void doSetClip(final double x, final double y,
+      final double width, final double height) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).setClip(x, y, width, height);
     } else {
@@ -802,139 +738,131 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void copyArea(final double x, final double y, final double width,
-      final double height, final double dx, final double dy) {
-    this.checkClosed();
+  protected void doCopyArea(final double x, final double y,
+      final double width, final double height, final double dx,
+      final double dy) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).copyArea(x, y, width, height, dx, dy);
     } else {
-      super.copyArea(x, y, width, height, dx, dy);
+      super.doCopyArea(x, y, width, height, dx, dy);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawLine(final double x1, final double y1, final double x2,
-      final double y2) {
-    this.checkClosed();
+  protected void doDrawLine(final double x1, final double y1,
+      final double x2, final double y2) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawLine(x1, y1, x2, y2);
     } else {
-      super.drawLine(x1, y1, x2, y2);
+      super.doDrawLine(x1, y1, x2, y2);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillRect(final double x, final double y, final double width,
-      final double height) {
-    this.checkClosed();
+  protected void doFillRect(final double x, final double y,
+      final double width, final double height) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).fillRect(x, y, width, height);
     } else {
-      super.fillRect(x, y, width, height);
+      super.doFillRect(x, y, width, height);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawRect(final double x, final double y, final double width,
-      final double height) {
-    this.checkClosed();
+  protected void doDrawRect(final double x, final double y,
+      final double width, final double height) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawRect(x, y, width, height);
     } else {
-      super.drawRect(x, y, width, height);
+      super.doDrawRect(x, y, width, height);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void clearRect(final double x, final double y,
+  protected void doClearRect(final double x, final double y,
       final double width, final double height) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).clearRect(x, y, width, height);
     } else {
-      super.clearRect(x, y, width, height);
+      super.doClearRect(x, y, width, height);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawRoundRect(final double x, final double y,
+  protected void doDrawRoundRect(final double x, final double y,
       final double width, final double height, final double arcWidth,
       final double arcHeight) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawRoundRect(x, y, width, height,
           arcWidth, arcHeight);
     } else {
-      super.drawRoundRect(x, y, width, height, arcWidth, arcHeight);
+      super.doDrawRoundRect(x, y, width, height, arcWidth, arcHeight);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillRoundRect(final double x, final double y,
+  protected void doFillRoundRect(final double x, final double y,
       final double width, final double height, final double arcWidth,
       final double arcHeight) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).fillRoundRect(x, y, width, height,
           arcWidth, arcHeight);
     } else {
-      super.fillRoundRect(x, y, width, height, arcWidth, arcHeight);
+      super.doFillRoundRect(x, y, width, height, arcWidth, arcHeight);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawOval(final double x, final double y, final double width,
-      final double height) {
-    this.checkClosed();
+  protected void doDrawOval(final double x, final double y,
+      final double width, final double height) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawOval(x, y, width, height);
     } else {
-      super.drawOval(x, y, width, height);
+      super.doDrawOval(x, y, width, height);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillOval(final double x, final double y, final double width,
-      final double height) {
-    this.checkClosed();
+  protected void doFillOval(final double x, final double y,
+      final double width, final double height) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).fillOval(x, y, width, height);
     } else {
-      super.fillOval(x, y, width, height);
+      super.doFillOval(x, y, width, height);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawArc(final double x, final double y, final double width,
-      final double height, final double startAngle, final double arcAngle) {
-    this.checkClosed();
+  protected void doDrawArc(final double x, final double y,
+      final double width, final double height, final double startAngle,
+      final double arcAngle) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawArc(x, y, width, height, startAngle,
           arcAngle);
     } else {
-      super.drawArc(x, y, width, height, startAngle, arcAngle);
+      super.doDrawArc(x, y, width, height, startAngle, arcAngle);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillArc(final double x, final double y, final double width,
-      final double height, final double startAngle, final double arcAngle) {
-    this.checkClosed();
+  protected void doFillArc(final double x, final double y,
+      final double width, final double height, final double startAngle,
+      final double arcAngle) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).fillArc(x, y, width, height, startAngle,
           arcAngle);
     } else {
-      super.fillArc(x, y, width, height, startAngle, arcAngle);
+      super.doFillArc(x, y, width, height, startAngle, arcAngle);
     }
   }
 
@@ -952,128 +880,118 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /** {@inheritDoc} */
   @Override
-  public void drawPolyline(final double xPoints[], final double yPoints[],
-      final int nPoints) {
-    this.checkClosed();
+  protected void doDrawPolyline(final double[] xPoints,
+      final double[] yPoints, final int nPoints) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawPolyline(xPoints, yPoints, nPoints);
     } else {
-      super.drawPolyline(xPoints, yPoints, nPoints);
+      super.doDrawPolyline(xPoints, yPoints, nPoints);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawPolygon(final double xPoints[], final double yPoints[],
-      final int nPoints) {
-    this.checkClosed();
+  protected void doDrawPolygon(final double xPoints[],
+      final double yPoints[], final int nPoints) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawPolygon(xPoints, yPoints, nPoints);
     } else {
-      super.drawPolygon(xPoints, yPoints, nPoints);
+      super.doDrawPolygon(xPoints, yPoints, nPoints);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void fillPolygon(final double xPoints[], final double yPoints[],
-      final int nPoints) {
-    this.checkClosed();
+  protected void doFillPolygon(final double xPoints[],
+      final double yPoints[], final int nPoints) {
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).fillPolygon(xPoints, yPoints, nPoints);
     } else {
-      super.fillPolygon(xPoints, yPoints, nPoints);
+      super.doFillPolygon(xPoints, yPoints, nPoints);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public void drawChars(final char data[], final int offset,
+  protected void doDrawChars(final char data[], final int offset,
       final int length, final double x, final double y) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       ((Graphic) (this.m_out)).drawChars(data, offset, length, x, y);
     } else {
-      super.drawChars(data, offset, length, x, y);
+      super.doDrawChars(data, offset, length, x, y);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final double x,
+  protected boolean doDrawImage(final Image img, final double x,
       final double y, final ImageObserver observer) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       return ((Graphic) (this.m_out)).drawImage(img, x, y, observer);
     }
-    return super.drawImage(img, x, y, observer);
+    return super.doDrawImage(img, x, y, observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final double x,
+  protected boolean doDrawImage(final Image img, final double x,
       final double y, final double width, final double height,
       final ImageObserver observer) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       return ((Graphic) (this.m_out)).drawImage(img, x, y, width, height,
           observer);
     }
-    return super.drawImage(img, x, y, width, height, observer);
+    return super.doDrawImage(img, x, y, width, height, observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final double x,
+  protected boolean doDrawImage(final Image img, final double x,
       final double y, final Color bgcolor, final ImageObserver observer) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       return ((Graphic) (this.m_out)).drawImage(img, x, y, bgcolor,
           observer);
     }
-    return super.drawImage(img, x, y, bgcolor, observer);
+    return super.doDrawImage(img, x, y, bgcolor, observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final double x,
+  protected boolean doDrawImage(final Image img, final double x,
       final double y, final double width, final double height,
       final Color bgcolor, final ImageObserver observer) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       return ((Graphic) (this.m_out)).drawImage(img, x, y, width, height,
           bgcolor, observer);
     }
-    return super.drawImage(img, x, y, width, height, bgcolor, observer);
+    return super.doDrawImage(img, x, y, width, height, bgcolor, observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final double dx1,
+  protected boolean doDrawImage(final Image img, final double dx1,
       final double dy1, final double dx2, final double dy2,
       final double sx1, final double sy1, final double sx2,
       final double sy2, final ImageObserver observer) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       return ((Graphic) (this.m_out)).drawImage(img, dx1, dy1, dx2, dy2,
           sx1, sy1, sx2, sy2, observer);
     }
-    return super.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2,
+    return super.doDrawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2,
         observer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public boolean drawImage(final Image img, final double dx1,
+  protected boolean doDrawImage(final Image img, final double dx1,
       final double dy1, final double dx2, final double dy2,
       final double sx1, final double sy1, final double sx2,
       final double sy2, final Color bgcolor, final ImageObserver observer) {
-    this.checkClosed();
     if (this.m_out instanceof Graphic) {
       return ((Graphic) (this.m_out)).drawImage(img, dx1, dy1, dx2, dy2,
           sx1, sy1, sx2, sy2, bgcolor, observer);
     }
-    return super.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2,
+    return super.doDrawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2,
         bgcolor, observer);
   }
 
