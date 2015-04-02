@@ -235,17 +235,15 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
   }
 
   /**
-   * Test the run find function
+   * Test the run find function for simple, existing values
    */
   @Test(timeout = 3600000)
-  public final void testExperimentRunsFind() {
+  public final void testExperimentRunsFindExistingValue() {
     ExperimentSet es;
     DimensionSet dims;
-    DataPoint dp, found, cur, first, last;
-    double o, p;
+    DataPoint dp, found, cur;
     ArraySetView<DataPoint> dps;
-    int i, j;
-    long a, b, c;
+    int i, j, index;
 
     es = this.getInstance();
     dims = es.getDimensions();
@@ -257,29 +255,49 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
           dps = run.getData();
 
           // check whether find really turns up the earliest data point
-          // with a
-          // given value
+          // with a given value
           for (final DataPoint x : dps) {
             for (final Dimension dim : dims.getData()) {
+              index = dim.getIndex();
 
               // do we find the right point?
               if (dim.getDataType().isFloat()) {
-                dp = run.find(dim.getIndex(), x.getDouble(dim.getIndex()));
-                Assert.assertTrue(//
-                    x.getDouble(dim.getIndex()) == dp.getDouble(dim
-                        .getIndex()));
+                dp = run.find(index, x.getDouble(index));
+                if (x.getDouble(index) != dp.getDouble(dim.getIndex())) {
+                  Assert.fail(//
+                      "Direct search for floating point value " + //$NON-NLS-1$
+                          x.getDouble(index) + //
+                          " for dimension " + dim + //$NON-NLS-1$
+                          " at index " + index + //$NON-NLS-1$
+                          " returned data point " + dp + //$NON-NLS-1$
+                          " instead of the expected " //$NON-NLS-1$
+                          + x);
+
+                }
               } else {
-                dp = run.find(dim.getIndex(), x.getLong(dim.getIndex()));
-                Assert.assertEquals(x.getLong(dim.getIndex()),
-                    dp.getLong(dim.getIndex()));
+                dp = run.find(index, x.getLong(index));
+                if (x.getLong(index) != dp.getLong(index)) {
+                  Assert.fail(//
+                      "Direct search for long value " + //$NON-NLS-1$
+                          x.getLong(index) + //
+                          " for dimension " + dim + //$NON-NLS-1$
+                          " at index " + index + //$NON-NLS-1$
+                          " returned data point " + dp + //$NON-NLS-1$
+                          " instead of the expected " //$NON-NLS-1$
+                          + x);
+                }
               }
 
               if (dp.compareTo(x) > 0) {
-                Assert.fail("dim " + dim.getIndex() + ": " + //$NON-NLS-1$//$NON-NLS-2$
+                Assert.fail("dim " + dim + //$NON-NLS-1$
+                    " at index "//$NON-NLS-1$
+                    + index + ": " + //$NON-NLS-1$
                     dp + " must come before or at " + x); //$NON-NLS-1$
               }
               if (x.compareTo(dp) < 0) {
-                Assert.fail("dim " + dim.getIndex() + ": " + //$NON-NLS-1$//$NON-NLS-2$
+                Assert.fail("dim " + dim + //$NON-NLS-1$
+                    " at index "//$NON-NLS-1$
+                    + index + ": " + //$NON-NLS-1$
                     x + " must come after or at " + dp); //$NON-NLS-1$
               }
 
@@ -290,14 +308,12 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
               finder: for (i = 0; i < j; i++) {
                 cur = dps.get(i);
                 if (dim.getDataType().isFloat()) {
-                  if (cur.getDouble(dim.getIndex()) == dp.getDouble(dim
-                      .getIndex())) {
+                  if (cur.getDouble(index) == dp.getDouble(dim.getIndex())) {
                     found = cur;
                     break finder;
                   }
                 } else {
-                  if (cur.getLong(dim.getIndex()) == dp.getLong(dim
-                      .getIndex())) {
+                  if (cur.getLong(index) == dp.getLong(dim.getIndex())) {
                     found = cur;
                     break finder;
                   }
@@ -307,30 +323,86 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
               Assert.assertSame(dp, found);
             }
           }
+        }
+      }
+    }
+  }
+
+  /**
+   * Test the run find function for values before the start or after the
+   * end
+   */
+  @Test(timeout = 3600000)
+  public final void testExperimentRunsFindValuesBeforeStartOrAfterEnd() {
+    ExperimentSet es;
+    DimensionSet dims;
+    DataPoint first, last;
+    double o, p;
+    ArraySetView<DataPoint> dps;
+    int index;
+
+    es = this.getInstance();
+    dims = es.getDimensions();
+
+    for (final Experiment e : es.getData()) {
+      for (final InstanceRuns ir : e.getData()) {
+        for (final Run run : ir.getData()) {
+          // begin run
+          dps = run.getData();
 
           // now test values which are not in the list
           first = dps.get(0);
           last = dps.get(dps.size() - 1);
 
           for (final Dimension dim : dims.getData()) {
+            index = dim.getIndex();
+
             if (dim.getDirection().isIncreasing()) {
-              o = ExperimentSetTest
-                  .__less(first.getDouble(dim.getIndex()));
-              p = ExperimentSetTest.__more(last.getDouble(dim.getIndex()));
+              o = ExperimentSetTest.__less(first.getDouble(index));
+              p = ExperimentSetTest.__more(last.getDouble(index));
             } else {
-              o = ExperimentSetTest
-                  .__more(first.getDouble(dim.getIndex()));
-              p = ExperimentSetTest.__less(last.getDouble(dim.getIndex()));
+              o = ExperimentSetTest.__more(first.getDouble(index));
+              p = ExperimentSetTest.__less(last.getDouble(index));
             }
 
             if (dim.getDimensionType().isSolutionQualityMeasure()) {
-              Assert.assertNull(run.find(dim.getIndex(), p));
-              Assert.assertEquals(first, run.find(dim.getIndex(), o));
+              Assert.assertNull(run.find(index, p));
+              Assert.assertEquals(first, run.find(index, o));
             } else {
-              Assert.assertEquals(last, run.find(dim.getIndex(), p));
-              Assert.assertNull(run.find(dim.getIndex(), o));
+              Assert.assertEquals(last, run.find(index, p));
+              Assert.assertNull(run.find(index, o));
             }
           }
+        }
+      }
+    }
+  }
+
+  /**
+   * Test the run find function
+   */
+  @Test(timeout = 3600000)
+  public final void testExperimentRunsFindValuesBetween() {
+    ExperimentSet es;
+    DimensionSet dims;
+    DataPoint first, last;
+    double o, p, q;
+    ArraySetView<DataPoint> dps;
+    int i, index;
+    long a, b, c;
+
+    es = this.getInstance();
+    dims = es.getDimensions();
+
+    for (final Experiment e : es.getData()) {
+      for (final InstanceRuns ir : e.getData()) {
+        for (final Run run : ir.getData()) {
+          // begin run
+          dps = run.getData();
+
+          // now test values which are not in the list
+          first = dps.get(0);
+          last = dps.get(dps.size() - 1);
 
           // now let's test values in-between two points
           for (i = (dps.size() - 1); (--i) > 0;) {
@@ -338,25 +410,48 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
             last = dps.get(i + 1);
 
             for (final Dimension dim : dims.getData()) {
-              a = first.getLong(dim.getIndex());
-              b = last.getLong(dim.getIndex());
-              if (a == b) {
-                continue;
-              }
-              c = ((a + b) / 2L);
-              if ((c <= a) || (c >= b)) {
-                continue;
-              }
 
-              if (dim.getDimensionType().isSolutionQualityMeasure()) {
-                Assert.assertSame(last, run.find(dim.getIndex(), c));
+              index = dim.getIndex();
+
+              if (dim.getDataType().isInteger()) {
+                a = first.getLong(index);
+                b = last.getLong(index);
+                if (a == b) {
+                  continue;
+                }
+                c = ((a + b) / 2L);
+                if ((c <= a) || (c >= b)) {
+                  continue;
+                }
+
+                if (dim.getDimensionType().isSolutionQualityMeasure()) {
+                  Assert.assertSame(last, run.find(index, c));
+                } else {
+                  Assert.assertSame(first, run.find(index, c));
+                }
               } else {
-                Assert.assertSame(first, run.find(dim.getIndex(), c));
-              }
 
+                p = first.getDouble(index);
+                q = last.getDouble(index);
+                if ((p == q) || (p >= Double.MAX_VALUE)
+                    || (p <= (-Double.MAX_VALUE)) || (p != p)
+                    || (q >= Double.POSITIVE_INFINITY)
+                    || (q <= Double.NEGATIVE_INFINITY) || (q != q)) {
+                  continue;
+                }
+                o = ((p + q) * 0.5d);
+                if ((o <= p) || (o >= q)) {
+                  continue;
+                }
+
+                if (dim.getDimensionType().isSolutionQualityMeasure()) {
+                  Assert.assertSame(last, run.find(index, o));
+                } else {
+                  Assert.assertSame(first, run.find(index, o));
+                }
+              }
             }
           }
-
           // end run
         }
       }
@@ -732,7 +827,9 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
     super.validateInstance();
     this.testExperimentRunsMatrix();
     this.testExperimentRunsList();
-    this.testExperimentRunsFind();
+    this.testExperimentRunsFindExistingValue();
+    this.testExperimentRunsFindValuesBeforeStartOrAfterEnd();
+    this.testExperimentRunsFindValuesBetween();
     this.testEDISerializationCanonical();
   }
 }

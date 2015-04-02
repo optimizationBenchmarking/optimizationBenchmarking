@@ -80,8 +80,16 @@ public abstract class PropertyValue<OT extends Property<?>> extends
   /** {@inheritDoc} */
   @Override
   public final Object setValue(final Object value) {
-    throw new UnsupportedOperationException(//
-        "Cannot change the value of a property."); //$NON-NLS-1$
+    final OT owner;
+    owner = this.getOwner();
+    throw new UnsupportedOperationException(((((((((//
+        "Cannot change the value of the " + //$NON-NLS-1$
+        this.getClass().getSimpleName()) + //
+        " with name '") + this.m_name) + //$NON-NLS-1$
+        "' belonging to ") + //$NON-NLS-1$
+        owner.getClass().getSimpleName()) + //
+        " with name '") + //$NON-NLS-1$
+        this.getOwner().getName()) + '\'') + '.');
   }
 
   /** {@inheritDoc} */
