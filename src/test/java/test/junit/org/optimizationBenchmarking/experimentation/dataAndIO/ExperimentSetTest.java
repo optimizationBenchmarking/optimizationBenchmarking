@@ -400,12 +400,8 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
           // begin run
           dps = run.getData();
 
-          // now test values which are not in the list
-          first = dps.get(0);
-          last = dps.get(dps.size() - 1);
-
           // now let's test values in-between two points
-          for (i = (dps.size() - 1); (--i) > 0;) {
+          for (i = (dps.size() - 1); (--i) >= 0;) {
             first = dps.get(i);
             last = dps.get(i + 1);
 
@@ -452,7 +448,6 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
               }
             }
           }
-          // end run
         }
       }
     }
