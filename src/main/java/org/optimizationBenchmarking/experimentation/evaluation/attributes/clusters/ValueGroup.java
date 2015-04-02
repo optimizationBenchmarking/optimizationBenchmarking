@@ -2,17 +2,15 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 
 import java.util.Arrays;
 
-import org.optimizationBenchmarking.experimentation.data.PropertyValue;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /**
- * A group of property values
- * 
- * @param <PVT>
- *          the property value type
+ * A group of values. This class is most likely used to group property
+ * values.
  */
-public class PropertyValueGroup<PVT extends PropertyValue<?>> extends
-    ArraySetView<PVT> implements Comparable<PropertyValueGroup<PVT>> {
+public class ValueGroup extends ArraySetView<Object> implements
+    Comparable<ValueGroup> {
 
   /** the default serial version uid */
   private static final long serialVersionUID = 1L;
@@ -26,7 +24,7 @@ public class PropertyValueGroup<PVT extends PropertyValue<?>> extends
    * @param data
    *          the data
    */
-  PropertyValueGroup(final PVT[] data) {
+  ValueGroup(final Object[] data) {
     super(data);
     if (data.length < 1) {
       throw new IllegalArgumentException(//
@@ -43,14 +41,13 @@ public class PropertyValueGroup<PVT extends PropertyValue<?>> extends
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings("rawtypes")
   public final boolean equals(final Object o) {
-    final PropertyValueGroup pvg;
+    final ValueGroup pvg;
     if (o == this) {
       return true;
     }
-    if (o instanceof PropertyValueGroup) {
-      pvg = ((PropertyValueGroup) o);
+    if (o instanceof ValueGroup) {
+      pvg = ((ValueGroup) o);
       if (pvg.m_hashCode == this.m_hashCode) {
         return Arrays.equals(this.m_data, pvg.m_data);
       }
@@ -60,8 +57,8 @@ public class PropertyValueGroup<PVT extends PropertyValue<?>> extends
 
   /** {@inheritDoc} */
   @Override
-  public final int compareTo(final PropertyValueGroup<PVT> o) {
-    final PVT[] a, b;
+  public final int compareTo(final ValueGroup o) {
+    final Object[] a, b;
     final int length;
     int i, res;
 
@@ -76,7 +73,7 @@ public class PropertyValueGroup<PVT extends PropertyValue<?>> extends
     b = o.m_data;
     length = Math.min(a.length, b.length);
     for (i = 0; i < a.length; i++) {
-      res = a[i].compareTo(b[i]);
+      res = EComparison.compareObjects(a[i], b[i]);
       if (res != 0) {
         return res;
       }

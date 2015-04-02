@@ -2,17 +2,13 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 
 import java.util.Arrays;
 
-import org.optimizationBenchmarking.experimentation.data.PropertyValue;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
- * The groups of a given property value type
- * 
- * @param <PVT>
- *          the property value type
+ * The class value groups provides a set of groups containing all values
+ * from a given domain.
  */
-public class PropertyValueGroups<PVT extends PropertyValue<?>> extends
-    ArraySetView<PropertyValueGroup<PVT>> {
+public class ValueGroups extends ArraySetView<ValueGroup> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -26,7 +22,7 @@ public class PropertyValueGroups<PVT extends PropertyValue<?>> extends
    * @param data
    *          the data
    */
-  PropertyValueGroups(final PropertyValueGroup<PVT>[] data) {
+  ValueGroups(final ValueGroup[] data) {
     super(data);
     this.m_hashCode = super.hashCode();
   }
@@ -39,14 +35,13 @@ public class PropertyValueGroups<PVT extends PropertyValue<?>> extends
 
   /** {@inheritDoc} */
   @Override
-  @SuppressWarnings("rawtypes")
   public final boolean equals(final Object o) {
-    final PropertyValueGroups pvg;
+    final ValueGroups pvg;
     if (o == this) {
       return true;
     }
-    if (o instanceof PropertyValueGroups) {
-      pvg = ((PropertyValueGroups) o);
+    if (o instanceof ValueGroups) {
+      pvg = ((ValueGroups) o);
       if (pvg.m_hashCode == this.m_hashCode) {
         return Arrays.equals(this.m_data, pvg.m_data);
       }

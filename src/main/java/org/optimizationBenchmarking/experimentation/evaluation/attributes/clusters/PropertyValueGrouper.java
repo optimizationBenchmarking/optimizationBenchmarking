@@ -3,20 +3,14 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 import org.optimizationBenchmarking.experimentation.data.Attribute;
 import org.optimizationBenchmarking.experimentation.data.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.Property;
-import org.optimizationBenchmarking.experimentation.data.PropertyValue;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 
 /**
  * An attribute computing groups of property values
- * 
- * @param <PVT>
- *          the property value type
- * @param <GT>
- *          the group type
  */
-public abstract class PropertyValueGrouper<PVT extends PropertyValue<?>, GT extends PropertyValueGroups<PVT>>
-    extends Attribute<Property<PVT>, GT> {
+public abstract class PropertyValueGrouper extends
+    Attribute<Property<?>, ValueGroups> {
 
   /** the group mode */
   private final EGroupMode m_mode;
@@ -118,7 +112,6 @@ public abstract class PropertyValueGrouper<PVT extends PropertyValue<?>, GT exte
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("rawtypes")
   @Override
   public final boolean equals(final Object o) {
     final PropertyValueGrouper grouper;
@@ -133,7 +126,7 @@ public abstract class PropertyValueGrouper<PVT extends PropertyValue<?>, GT exte
           (EComparison.EQUAL.compare(this.m_minElementsPerGroupFraction,//
               grouper.m_minElementsPerGroupFraction)) && //
           (EComparison.EQUAL.compare(this.m_maxElementsPerGroupFraction,//
-              grouper.m_maxElementsPerGroupFraction)) && // /
+              grouper.m_maxElementsPerGroupFraction)) && //
           (this.m_minGroups == grouper.m_minGroups) && //
       (this.m_maxGroups == grouper.m_maxGroups));
     }
@@ -141,36 +134,9 @@ public abstract class PropertyValueGrouper<PVT extends PropertyValue<?>, GT exte
     return false;
   }
 
-  /**
-   * create an array of the given size
-   * 
-   * @param size
-   *          the size
-   * @return the array
-   */
-  abstract PVT[] _createArray(final int size);
-
-  /**
-   * create a property value group from a list of elements
-   * 
-   * @param array
-   *          the group's elements
-   * @return the property value group
-   */
-  abstract PropertyValueGroup<PVT> _createGroup(final PVT[] array);
-
-  /**
-   * create the result type from a list of groups
-   * 
-   * @param groups
-   *          the groups
-   * @return the result
-   */
-  abstract GT _createResult(final PropertyValueGroup<PVT>[] groups);
-
   /** {@inheritDoc} */
   @Override
-  protected GT compute(final Property<PVT> data) {
+  protected ValueGroups compute(final Property<?> data) {
     // TODO Auto-generated method stub
     return null;
   }
