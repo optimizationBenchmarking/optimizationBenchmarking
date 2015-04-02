@@ -350,17 +350,17 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
       return r;
     }
 
-    r = EComparison.compare(this.m_date, o.m_date);
+    r = EComparison.compareObjects(this.m_date, o.m_date);
     if (r != 0) {
       return r;
     }
 
-    r = EComparison.compare(this.m_authors, o.m_authors);
+    r = EComparison.compareObjects(this.m_authors, o.m_authors);
     if (r != 0) {
       return r;
     }
 
-    r = EComparison.compare(this.m_title, o.m_title);
+    r = EComparison.compareObjects(this.m_title, o.m_title);
     if (r != 0) {
       return r;
     }
@@ -377,11 +377,11 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
    */
   int _compareRest(final BibRecord o) {
     int r;
-    r = EComparison.compare(this.m_url, o.m_url);
+    r = EComparison.compareObjects(this.m_url, o.m_url);
     if (r != 0) {
       return r;
     }
-    return EComparison.compare(this.m_doi, o.m_doi);
+    return EComparison.compareObjects(this.m_doi, o.m_doi);
   }
 
   /** {@inheritDoc} */

@@ -546,13 +546,9 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
     int size, index;
     __LineSegment before, after;
     double midX, midY, divA, divB, ulp;
-    boolean found;
 
     size = work.size();
-    found = true;
-    while ((size > 1) && (found)) {
-      found = false;
-
+    if (size > 1) {
       inner: for (index = (size - 1); index > 0; index--) {
         after = work.get(index);
         before = work.get(index - 1);
@@ -605,8 +601,6 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
         before.x2 = after.x2;
         before.y2 = after.y2;
         size--;
-
-        found = true;
       }
     }
   }

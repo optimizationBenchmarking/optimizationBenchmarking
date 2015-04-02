@@ -25,13 +25,13 @@ public abstract class PropertyValueGrouper<PVT extends PropertyValue<?>, GT exte
    * the goal fraction for the minimum number of elements per group,
    * relative to the total number of elements of the property
    */
-  private final double m_minElementsPerGroup;
+  private final double m_minElementsPerGroupFraction;
 
   /**
    * the goal fraction for the maximum number of elements per group,
    * relative to the total number of elements of the property
    */
-  private final double m_maxElementsPerGroup;
+  private final double m_maxElementsPerGroupFraction;
 
   /** the goal fraction for the minimum number of groups */
   private final int m_minGroups;
@@ -44,11 +44,11 @@ public abstract class PropertyValueGrouper<PVT extends PropertyValue<?>, GT exte
    * 
    * @param mode
    *          the group mode
-   * @param minElementsPerGroup
+   * @param minElementsPerGroupFraction
    *          the goal fraction for the minimum number of elements per
    *          group, relative to the total number of elements of the
    *          property; {@code 0} for don't care
-   * @param maxElementsPerGroup
+   * @param maxElementsPerGroupFraction
    *          the goal fraction for the maximum number of elements per
    *          group, relative to the total number of elements of the
    *          property; {@code 1} for don't care
@@ -60,8 +60,9 @@ public abstract class PropertyValueGrouper<PVT extends PropertyValue<?>, GT exte
    *          {@link java.lang.Integer#MAX_VALUE} for don't care
    */
   PropertyValueGrouper(final EGroupMode mode,
-      final double minElementsPerGroup, final double maxElementsPerGroup,
-      final int minGroups, final int maxGroups) {
+      final double minElementsPerGroupFraction,
+      final double maxElementsPerGroupFraction, final int minGroups,
+      final int maxGroups) {
     super(EAttributeType.TEMPORARILY_STORED);
 
     if (mode == null) {
@@ -70,22 +71,23 @@ public abstract class PropertyValueGrouper<PVT extends PropertyValue<?>, GT exte
     }
     this.m_mode = mode;
 
-    if ((minElementsPerGroup < 0d) || (minElementsPerGroup >= 1d)) {
+    if ((minElementsPerGroupFraction < 0d)
+        || (minElementsPerGroupFraction >= 1d)) {
       throw new IllegalArgumentException(//
           "The goal fraction for the minimum elements per group must be from the real interval [0,1), but is " //$NON-NLS-1$
-              + minElementsPerGroup);
+              + minElementsPerGroupFraction);
     }
-    this.m_minElementsPerGroup = minElementsPerGroup;
+    this.m_minElementsPerGroupFraction = minElementsPerGroupFraction;
 
-    if ((maxElementsPerGroup <= minElementsPerGroup)
-        || (maxElementsPerGroup > 1d)) {
+    if ((maxElementsPerGroupFraction <= minElementsPerGroupFraction)
+        || (maxElementsPerGroupFraction > 1d)) {
       throw new IllegalArgumentException(//
           "The goal fraction for the maximum elements per group must be larger than the goal fraction for the minimum elements per group (" + //$NON-NLS-1$
-              minElementsPerGroup + //
+              minElementsPerGroupFraction + //
               ") and <= 1, but is " //$NON-NLS-1$
-              + maxElementsPerGroup);
+              + maxElementsPerGroupFraction);
     }
-    this.m_maxElementsPerGroup = maxElementsPerGroup;
+    this.m_maxElementsPerGroupFraction = maxElementsPerGroupFraction;
 
     if ((minGroups < 0) || (minGroups >= Integer.MAX_VALUE)) {
       throw new IllegalArgumentException(//
@@ -109,8 +111,8 @@ public abstract class PropertyValueGrouper<PVT extends PropertyValue<?>, GT exte
   protected final int calcHashCode() {
     return HashUtils.combineHashes(HashUtils.hashCode(this.m_mode),//
         HashUtils.combineHashes(HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_minElementsPerGroup),//
-            HashUtils.hashCode(this.m_maxElementsPerGroup)),//
+            HashUtils.hashCode(this.m_minElementsPerGroupFraction),//
+            HashUtils.hashCode(this.m_maxElementsPerGroupFraction)),//
             HashUtils.combineHashes(HashUtils.hashCode(this.m_minGroups),
                 HashUtils.hashCode(this.m_maxGroups))));
   }
@@ -128,10 +130,10 @@ public abstract class PropertyValueGrouper<PVT extends PropertyValue<?>, GT exte
     if (o instanceof PropertyValueGrouper) {
       grouper = ((PropertyValueGrouper) o);
       return (EComparison.equals(this.m_mode, grouper.m_mode) && //
-          (EComparison.compareDoubles(this.m_minElementsPerGroup,//
-              grouper.m_minElementsPerGroup) == 0) && //
-          (EComparison.compareDoubles(this.m_maxElementsPerGroup,//
-              grouper.m_maxElementsPerGroup) == 0) && // /
+          (EComparison.EQUAL.compare(this.m_minElementsPerGroupFraction,//
+              grouper.m_minElementsPerGroupFraction)) && //
+          (EComparison.EQUAL.compare(this.m_maxElementsPerGroupFraction,//
+              grouper.m_maxElementsPerGroupFraction)) && // /
           (this.m_minGroups == grouper.m_minGroups) && //
       (this.m_maxGroups == grouper.m_maxGroups));
     }

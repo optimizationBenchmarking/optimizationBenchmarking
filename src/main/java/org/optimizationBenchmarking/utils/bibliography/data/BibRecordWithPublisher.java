@@ -89,7 +89,7 @@ public class BibRecordWithPublisher extends BibRecord {
     if (o instanceof BibRecordWithPublisher) {
       bb = ((BibRecordWithPublisher) o);
 
-      r = EComparison.compare(this.m_publisher, bb.m_publisher);
+      r = EComparison.compareObjects(this.m_publisher, bb.m_publisher);
       if (r != 0) {
         return r;
       }

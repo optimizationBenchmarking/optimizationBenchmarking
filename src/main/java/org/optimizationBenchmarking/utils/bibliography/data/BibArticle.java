@@ -268,32 +268,32 @@ public class BibArticle extends BibRecordWithPublisher {
     if (o instanceof BibArticle) {
       bb = ((BibArticle) o);
 
-      r = EComparison.compare(this.m_journal, bb.m_journal);
+      r = EComparison.compareObjects(this.m_journal, bb.m_journal);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_issn, bb.m_issn);
+      r = EComparison.compareObjects(this.m_issn, bb.m_issn);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_volume, bb.m_volume);
+      r = EComparison.compareObjects(this.m_volume, bb.m_volume);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_number, bb.m_number);
+      r = EComparison.compareObjects(this.m_number, bb.m_number);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_startPage, bb.m_startPage);
+      r = EComparison.compareObjects(this.m_startPage, bb.m_startPage);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_endPage, bb.m_endPage);
+      r = EComparison.compareObjects(this.m_endPage, bb.m_endPage);
       if (r != 0) {
         return r;
       }

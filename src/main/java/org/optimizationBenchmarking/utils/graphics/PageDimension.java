@@ -154,10 +154,10 @@ public class PageDimension extends PhysicalDimension {
       dim = ((PageDimension) o);
 
       return ((this.m_columnCount == dim.m_columnCount)//
-          && (EComparison.compareDoubles(this.m_width, dim.m_width) == 0)//
-          && (EComparison.compareDoubles(this.m_height, dim.m_height) == 0)//
-          && (EComparison.compareDoubles(this.m_columnWidth,
-              dim.m_columnWidth) == 0)//
+          && (EComparison.EQUAL.compare(this.m_width, dim.m_width))//
+          && (EComparison.EQUAL.compare(this.m_height, dim.m_height))//
+          && (EComparison.EQUAL.compare(this.m_columnWidth,
+              dim.m_columnWidth))//
       && EComparison.equals(this.m_unit, dim.m_unit));
     }
     return false;

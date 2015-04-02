@@ -170,12 +170,12 @@ public class BibThesis extends BibBook {
     if (o instanceof BibThesis) {
       bb = ((BibThesis) o);
 
-      r = EComparison.compare(this.m_type, bb.m_type);
+      r = EComparison.compareObjects(this.m_type, bb.m_type);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_school, bb.m_school);
+      r = EComparison.compareObjects(this.m_school, bb.m_school);
       if (r != 0) {
         return r;
       }

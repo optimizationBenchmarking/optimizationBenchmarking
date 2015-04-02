@@ -157,17 +157,17 @@ public class BibTechReport extends BibRecordWithPublisher {
     if (o instanceof BibTechReport) {
       bb = ((BibTechReport) o);
 
-      r = EComparison.compare(this.m_series, bb.m_series);
+      r = EComparison.compareObjects(this.m_series, bb.m_series);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_number, bb.m_number);
+      r = EComparison.compareObjects(this.m_number, bb.m_number);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_issn, bb.m_issn);
+      r = EComparison.compareObjects(this.m_issn, bb.m_issn);
       if (r != 0) {
         return r;
       }

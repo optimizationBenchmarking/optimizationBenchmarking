@@ -232,22 +232,22 @@ public class BibBookRecord extends BibRecordWithPublisher {
     if (o instanceof BibBookRecord) {
       bb = ((BibBookRecord) o);
 
-      r = EComparison.compare(this.m_editors, bb.m_editors);
+      r = EComparison.compareObjects(this.m_editors, bb.m_editors);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_series, bb.m_series);
+      r = EComparison.compareObjects(this.m_series, bb.m_series);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_volume, bb.m_volume);
+      r = EComparison.compareObjects(this.m_volume, bb.m_volume);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_edition, bb.m_edition);
+      r = EComparison.compareObjects(this.m_edition, bb.m_edition);
       if (r != 0) {
         return r;
       }

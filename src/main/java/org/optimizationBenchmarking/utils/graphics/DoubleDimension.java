@@ -122,8 +122,8 @@ public class DoubleDimension extends Dimension2D implements ITextable {
     if (o instanceof Dimension2D) {
       dim = ((Dimension2D) o);
 
-      return ((EComparison.compareDoubles(this.m_height, dim.getHeight()) == 0) && //
-      (EComparison.compareDoubles(this.m_width, dim.getWidth()) == 0));
+      return ((EComparison.EQUAL.compare(this.m_height, dim.getHeight())) && //
+      (EComparison.EQUAL.compare(this.m_width, dim.getWidth())));
     }
 
     return false;

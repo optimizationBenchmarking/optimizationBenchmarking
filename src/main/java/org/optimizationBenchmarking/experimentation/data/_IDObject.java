@@ -141,7 +141,6 @@ abstract class _IDObject extends DataElement implements
         } catch (final Throwable t) {// IGNORE
         }
       }
-
     }
 
     if (s1 instanceof Comparator) {

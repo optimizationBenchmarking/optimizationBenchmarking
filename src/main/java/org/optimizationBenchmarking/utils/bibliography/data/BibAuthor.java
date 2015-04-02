@@ -168,17 +168,17 @@ public class BibAuthor extends _BibElement<BibAuthor> implements
       return 0;
     }
 
-    i = EComparison.compare(this.m_familyName, o.m_familyName);
+    i = EComparison.compareObjects(this.m_familyName, o.m_familyName);
     if (i != 0) {
       return i;
     }
 
-    i = EComparison.compare(this.m_personalName, o.m_personalName);
+    i = EComparison.compareObjects(this.m_personalName, o.m_personalName);
     if (i != 0) {
       return i;
     }
 
-    return EComparison.compare(this.m_originalSpelling,
+    return EComparison.compareObjects(this.m_originalSpelling,
         o.m_originalSpelling);
   }
 

@@ -4,16 +4,12 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
  * A set of comparisons that return {@code true} if they match and
- * {@code false} if they don't. These comparisons also serve as result
- * constants of semantically more complex comparisons, such as those
- * provided by
- * {@link org.optimizationBenchmarking.utils.comparison.PreciseComparator#preciseCompare(Object, Object)
- * PreciseComparator}.
+ * {@code false} if they don't.
  */
 public enum EComparison {
 
   /** less */
-  LESS(-1, "less than") { //$NON-NLS-1$
+  LESS("less than") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -67,11 +63,24 @@ public enum EComparison {
       if (a.equals(b)) {
         return false;
       }
-      try {
-        return (((Comparable) a).compareTo(b) < 0);
-      } catch (final ClassCastException t) {
-        return false;
+
+      if (a instanceof Comparable) {
+        try {
+          return (((Comparable) a).compareTo(b) < 0);
+        } catch (final Throwable error) {
+          // ignore
+        }
       }
+
+      if (b instanceof Comparable) {
+        try {
+          return (((Comparable) b).compareTo(a) > 0);
+        } catch (final Throwable error) {
+          // ignore
+        }
+      }
+
+      return false;
     }
 
     /** {@inheritDoc} */
@@ -88,84 +97,8 @@ public enum EComparison {
 
   },
 
-  /** less or same */
-  LESS_OR_SAME(-1, "less than or the same as") { //$NON-NLS-1$
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final byte a, final byte b) {
-      return (a <= b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final short a, final short b) {
-      return (a <= b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final int a, final int b) {
-      return (a <= b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final long a, final long b) {
-      return (a <= b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final float a, final float b) {
-      return (a <= b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final double a, final double b) {
-      return (a <= b);
-    }
-
-    /** {@inheritDoc} */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
-    public final boolean compare(final Object a, final Object b) {
-      if (a == b) {
-        return true;
-      }
-      if (a == null) {
-        return false;
-      }
-      if (b == null) {
-        return true;
-      }
-      if (a.equals(b)) {
-        return false;
-      }
-      try {
-        return (((Comparable) a).compareTo(b) < 0);
-      } catch (final ClassCastException t) {
-        return false;
-      }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final boolean a, final boolean b) {
-      return ((!a) || b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final char a, final char b) {
-      return (Character.compare(a, b) <= 0);
-    }
-
-  },
-
   /** less or equal */
-  LESS_OR_EQUAL(-1, "less than or equal to") { //$NON-NLS-1$
+  LESS_OR_EQUAL("less than or equal to") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -219,11 +152,24 @@ public enum EComparison {
       if (a.equals(b)) {
         return true;
       }
-      try {
-        return (((Comparable) a).compareTo(b) <= 0);
-      } catch (final ClassCastException t) {
-        return false;
+
+      if (a instanceof Comparable) {
+        try {
+          return (((Comparable) a).compareTo(b) <= 0);
+        } catch (final Throwable error) {
+          // ignore
+        }
       }
+
+      if (b instanceof Comparable) {
+        try {
+          return (((Comparable) b).compareTo(a) >= 0);
+        } catch (final Throwable error) {
+          // ignore
+        }
+      }
+
+      return false;
     }
 
     /** {@inheritDoc} */
@@ -240,66 +186,8 @@ public enum EComparison {
 
   },
 
-  /** are the values identical? */
-  SAME(0, "the same as") { //$NON-NLS-1$
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final byte a, final byte b) {
-      return (a == b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final short a, final short b) {
-      return (a == b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final int a, final int b) {
-      return (a == b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final long a, final long b) {
-      return (a == b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final float a, final float b) {
-      return (a == b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final double a, final double b) {
-      return (a == b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final Object a, final Object b) {
-      return (a == b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final boolean a, final boolean b) {
-      return (a == b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final char a, final char b) {
-      return (Character.compare(a, b) == 0);
-    }
-  },
-
   /** equal */
-  EQUAL(0, "equal to") { //$NON-NLS-1$
+  EQUAL("equal to") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -357,7 +245,7 @@ public enum EComparison {
   },
 
   /** greater or equal */
-  GREATER_OR_EQUAL(1, "greater than or equal to") { //$NON-NLS-1$
+  GREATER_OR_EQUAL("greater than or equal to") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -411,11 +299,24 @@ public enum EComparison {
       if (a.equals(b)) {
         return true;
       }
-      try {
-        return (((Comparable) a).compareTo(b) >= 0);
-      } catch (final ClassCastException t) {
-        return false;
+
+      if (a instanceof Comparable) {
+        try {
+          return (((Comparable) a).compareTo(b) >= 0);
+        } catch (final Throwable error) {
+          // ignore
+        }
       }
+
+      if (b instanceof Comparable) {
+        try {
+          return (((Comparable) b).compareTo(a) <= 0);
+        } catch (final Throwable error) {
+          // ignore
+        }
+      }
+
+      return false;
     }
 
     /** {@inheritDoc} */
@@ -430,85 +331,10 @@ public enum EComparison {
       return (Character.compare(a, b) >= 0);
     }
 
-  },
-
-  /** greater or same */
-  GREATER_OR_SAME(1, "greater than or the same as") { //$NON-NLS-1$
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final byte a, final byte b) {
-      return (a >= b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final short a, final short b) {
-      return (a >= b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final int a, final int b) {
-      return (a >= b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final long a, final long b) {
-      return (a >= b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final float a, final float b) {
-      return (a >= b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final double a, final double b) {
-      return (a >= b);
-    }
-
-    /** {@inheritDoc} */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
-    public final boolean compare(final Object a, final Object b) {
-      if (a == b) {
-        return true;
-      }
-      if (a == null) {
-        return false;
-      }
-      if (b == null) {
-        return true;
-      }
-      if (a.equals(b)) {
-        return false;
-      }
-      try {
-        return (((Comparable) a).compareTo(b) > 0);
-      } catch (final ClassCastException t) {
-        return false;
-      }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final boolean a, final boolean b) {
-      return (a || (!b));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final char a, final char b) {
-      return (Character.compare(a, b) >= 0);
-    }
   },
 
   /** greater */
-  GREATER(1, "greater than") { //$NON-NLS-1$
+  GREATER("greater than") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -562,11 +388,24 @@ public enum EComparison {
       if (a.equals(b)) {
         return false;
       }
-      try {
-        return (((Comparable) a).compareTo(b) > 0);
-      } catch (final ClassCastException t) {
-        return false;
+
+      if (a instanceof Comparable) {
+        try {
+          return (((Comparable) a).compareTo(b) > 0);
+        } catch (final Throwable error) {
+          // ignore
+        }
       }
+
+      if (b instanceof Comparable) {
+        try {
+          return (((Comparable) b).compareTo(a) < 0);
+        } catch (final Throwable error) {
+          // ignore
+        }
+      }
+
+      return false;
     }
 
     /** {@inheritDoc} */
@@ -582,66 +421,8 @@ public enum EComparison {
     }
   },
 
-  /** not same */
-  NOT_SAME(0, "not the same as") { //$NON-NLS-1$
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final byte a, final byte b) {
-      return (a != b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final short a, final short b) {
-      return (a != b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final int a, final int b) {
-      return (a != b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final long a, final long b) {
-      return (a != b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final float a, final float b) {
-      return (a != b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final double a, final double b) {
-      return (a != b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final Object a, final Object b) {
-      return (a != b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final boolean a, final boolean b) {
-      return (a != b);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean compare(final char a, final char b) {
-      return (Character.compare(a, b) != 0);
-    }
-  },
-
   /** not equal */
-  NOT_EQUAL(0, "not equal to") { //$NON-NLS-1$
+  NOT_EQUAL("not equal to") { //$NON-NLS-1$
 
     /** {@inheritDoc} */
     @Override
@@ -712,23 +493,16 @@ public enum EComparison {
   public static final ArraySetView<EComparison> INSTANCES = new ArraySetView<>(
       EComparison.values());
 
-  /** a comparison constant */
-  final int m_cmp;
-
   /** the name */
   private final String m_name;
 
   /**
    * create
    * 
-   * @param cmp
-   *          the comparison result to be returned by
-   *          {@link org.optimizationBenchmarking.utils.comparison.PreciseComparator#preciseCompare(Object, Object)}
    * @param name
    *          the name
    */
-  private EComparison(final int cmp, final String name) {
-    this.m_cmp = cmp;
+  private EComparison(final String name) {
     this.m_name = name;
   }
 
@@ -843,16 +617,6 @@ public enum EComparison {
    * @return {@code true} if the comparison is met, {@code false} otherwise
    */
   public abstract boolean compare(final char a, final char b);
-
-  /**
-   * Get the equivalent result of a {@link java.util.Comparator}, i.e.,
-   * either {@code -1}, {@code 0}, or {@code 1}.
-   * 
-   * @return the equivalent result of a {@link java.util.Comparator}.
-   */
-  public final int getComparisonResult() {
-    return this.m_cmp;
-  }
 
   /**
    * Compare one {@code double} to another one. This method sets
@@ -973,7 +737,7 @@ public enum EComparison {
   }
 
   /**
-   * Compare whether one comparable object is equal another one.
+   * Compare whether two comparable objects
    * 
    * @param a
    *          the first object
@@ -982,7 +746,8 @@ public enum EComparison {
    * @return the comparison result
    */
   @SuppressWarnings("unchecked")
-  public static final int compare(final Comparable a, final Comparable b) {
+  public static final int compareObjects(final Comparable a,
+      final Comparable b) {
     if (a == b) {
       return 0;
     }
@@ -993,5 +758,45 @@ public enum EComparison {
       return (-1);
     }
     return a.compareTo(b);
+  }
+
+  /**
+   * Compare one object to another one
+   * 
+   * @param a
+   *          the first object
+   * @param b
+   *          the second object
+   * @return the comparison result
+   */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  public static final int compareObjects(final Object a, final Object b) {
+    if (a == b) {
+      return 0;
+    }
+    if (a == null) {
+      return 1;
+    }
+    if (b == null) {
+      return (-1);
+    }
+
+    if (a instanceof Comparable) {
+      try {
+        return ((Comparable) a).compareTo(b);
+      } catch (final Throwable error) {
+        // ignore
+      }
+    }
+
+    if (b instanceof Comparable) {
+      try {
+        return (-(((Comparable) b).compareTo(a)));
+      } catch (final Throwable error) {
+        // ignore
+      }
+    }
+
+    return 0;
   }
 }

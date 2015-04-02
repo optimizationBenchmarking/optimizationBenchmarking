@@ -114,7 +114,7 @@ public class FSM {
    *           if this FSM is not in state {@code state}
    */
   protected final int fsmStateAssert(final int state) {
-    return this.fsmStateAssert(EComparison.SAME, state);
+    return this.fsmStateAssert(EComparison.EQUAL, state);
   }
 
   /**
@@ -132,7 +132,7 @@ public class FSM {
    */
   protected final int fsmStateAssertAndSet(final int mustState,
       final int nextState) {
-    return this.fsmStateAssertAndSet(EComparison.SAME, mustState,
+    return this.fsmStateAssertAndSet(EComparison.EQUAL, mustState,
         nextState);
   }
 

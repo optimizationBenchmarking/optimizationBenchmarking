@@ -165,22 +165,22 @@ public class BibInBook extends BibRecord {
     if (o instanceof BibInBook) {
       bb = ((BibInBook) o);
 
-      r = EComparison.compare(this.m_book, bb.m_book);
+      r = EComparison.compareObjects(this.m_book, bb.m_book);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_startPage, bb.m_startPage);
+      r = EComparison.compareObjects(this.m_startPage, bb.m_startPage);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_endPage, bb.m_endPage);
+      r = EComparison.compareObjects(this.m_endPage, bb.m_endPage);
       if (r != 0) {
         return r;
       }
 
-      r = EComparison.compare(this.m_chapter, bb.m_chapter);
+      r = EComparison.compareObjects(this.m_chapter, bb.m_chapter);
       if (r != 0) {
         return r;
       }

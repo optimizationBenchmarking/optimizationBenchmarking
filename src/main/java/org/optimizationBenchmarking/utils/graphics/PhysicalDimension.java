@@ -120,21 +120,21 @@ public class PhysicalDimension extends DoubleDimension {
     l2 = dim.m_unit;
 
     if (l1 == l2) {
-      return ((EComparison.compareDoubles(this.m_width, dim.m_width) == 0)//
-      && (EComparison.compareDoubles(this.m_height, dim.m_height) == 0));
+      return ((EComparison.EQUAL.compare(this.m_width, dim.m_width))//
+      && (EComparison.EQUAL.compare(this.m_height, dim.m_height)));
     }
 
-    return ((EComparison.compareDoubles(//
+    return ((EComparison.EQUAL.compare(//
         ((l1 == ELength.PT) ? this.m_width : //
             (l1.convertTo(this.m_width, ELength.PT))),//
         ((l2 == ELength.PT) ? dim.m_width : //
-            (l2.convertTo(dim.m_width, ELength.PT)))) == 0)//
+            (l2.convertTo(dim.m_width, ELength.PT)))))//
     && //
-    (EComparison.compareDoubles(//
+    (EComparison.EQUAL.compare(//
         ((l1 == ELength.PT) ? this.m_height : //
             (l1.convertTo(this.m_height, ELength.PT))),//
         ((l2 == ELength.PT) ? dim.m_height : //
-            (l2.convertTo(dim.m_height, ELength.PT)))) == 0));
+            (l2.convertTo(dim.m_height, ELength.PT))))));
   }
 
   /** {@inheritDoc} */
@@ -152,8 +152,8 @@ public class PhysicalDimension extends DoubleDimension {
 
     if (o instanceof PhysicalDimension) {
       dim = ((PhysicalDimension) o);
-      return ((EComparison.compareDoubles(this.m_width, dim.m_width) == 0)//
-          && (EComparison.compareDoubles(this.m_height, dim.m_height) == 0)//
+      return ((EComparison.EQUAL.compare(this.m_width, dim.m_width))//
+          && (EComparison.EQUAL.compare(this.m_height, dim.m_height))//
       && EComparison.equals(this.m_unit, dim.m_unit));
     }
 

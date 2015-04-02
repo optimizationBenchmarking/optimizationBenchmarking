@@ -157,15 +157,15 @@ public class BibOrganization extends _BibElement<BibOrganization> {
     if (o == null) {
       return (-1);
     }
-    r = EComparison.compare(this.m_name, o.m_name);
+    r = EComparison.compareObjects(this.m_name, o.m_name);
     if (r != 0) {
       return r;
     }
-    r = EComparison.compare(this.m_address, o.m_address);
+    r = EComparison.compareObjects(this.m_address, o.m_address);
     if (r != 0) {
       return r;
     }
-    return EComparison.compare(this.m_originalSpelling,
+    return EComparison.compareObjects(this.m_originalSpelling,
         o.m_originalSpelling);
   }
 
