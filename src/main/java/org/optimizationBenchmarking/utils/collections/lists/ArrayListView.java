@@ -24,6 +24,9 @@ public class ArrayListView<DT> extends BasicList<DT> {
   /** the data */
   protected final DT[] m_data;
 
+  /** the hash code */
+  private int m_hashCode;
+
   /**
    * instantiate
    * 
@@ -389,9 +392,12 @@ public class ArrayListView<DT> extends BasicList<DT> {
     return false;
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public int hashCode() {
+  /**
+   * Calculate the hash code
+   * 
+   * @return the hash code
+   */
+  protected int calcHashCode() {
     int hashCode;
 
     hashCode = 1;
@@ -399,6 +405,15 @@ public class ArrayListView<DT> extends BasicList<DT> {
       hashCode = ((31 * hashCode) + ((e == null) ? 0 : e.hashCode()));
     }
     return hashCode;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    if (this.m_hashCode == 0) {
+      this.m_hashCode = this.calcHashCode();
+    }
+    return this.m_hashCode;
   }
 
   /**

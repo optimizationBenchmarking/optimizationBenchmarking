@@ -147,6 +147,13 @@ public final class Example1 extends ExperimentSetCreator {
       ic.setFeatureValue("scale", "700"); //$NON-NLS-1$//$NON-NLS-2$
       ic.setFeatureValue("symmetric", "false"); //$NON-NLS-1$//$NON-NLS-2$
     }
+
+    try (InstanceContext ic = isc.createInstance()) {
+      ic.setName("Unused Instance"); //$NON-NLS-1$
+      ic.setUpperBound("dimA", "534500"); //$NON-NLS-1$//$NON-NLS-2$
+      ic.setFeatureValue("scale", "9700"); //$NON-NLS-1$//$NON-NLS-2$
+      ic.setFeatureValue("symmetric", "true"); //$NON-NLS-1$//$NON-NLS-2$
+    }
   }
 
   /**

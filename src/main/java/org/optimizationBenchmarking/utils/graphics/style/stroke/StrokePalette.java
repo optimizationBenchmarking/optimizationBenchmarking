@@ -166,10 +166,14 @@ public class StrokePalette extends Palette<StrokeStyle> {
 
   /** {@inheritDoc} */
   @Override
-  public final int hashCode() {
-    return HashUtils.combineHashes(HashUtils.combineHashes(
-        super.hashCode(), HashUtils.hashCode(this.m_default)), HashUtils
-        .combineHashes(HashUtils.hashCode(this.m_thick),
+  protected final int calcHashCode() {
+    return HashUtils.combineHashes(
+        HashUtils.combineHashes(//
+            super.calcHashCode(), //
+            HashUtils.hashCode(this.m_default)),//
+        HashUtils.combineHashes(
+            //
+            HashUtils.hashCode(this.m_thick),
             HashUtils.hashCode(this.m_thin)));
   }
 

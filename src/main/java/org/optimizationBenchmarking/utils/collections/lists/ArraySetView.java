@@ -140,5 +140,4 @@ public class ArraySetView<DT> extends ArrayListView<DT> implements Set<DT> {
 
     return new ArraySetView<>(Arrays.copyOf(data, s));
   }
-
 }

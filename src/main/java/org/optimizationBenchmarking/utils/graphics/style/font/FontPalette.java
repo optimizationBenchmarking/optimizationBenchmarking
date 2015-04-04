@@ -204,9 +204,9 @@ public class FontPalette extends Palette<FontStyle> {
 
   /** {@inheritDoc} */
   @Override
-  public final int hashCode() {
+  protected final int calcHashCode() {
     return HashUtils.combineHashes(
-        HashUtils.combineHashes(super.hashCode(),
+        HashUtils.combineHashes(super.calcHashCode(),
             HashUtils.hashCode(this.m_default)),
         HashUtils.combineHashes(HashUtils.hashCode(this.m_emph),
             HashUtils.hashCode(this.m_code)));

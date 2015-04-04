@@ -50,6 +50,19 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
     try {
       es = this.getExperimentSet();
 
+      System.out.print("Dimensions: "); //$NON-NLS-1$
+      System.out.println(es.getDimensions().getData());
+
+      System.out.print("Instances: "); //$NON-NLS-1$
+      System.out.println(es.getInstances().getData());
+
+      System.out.print("Features: "); //$NON-NLS-1$
+      System.out.println(es.getFeatures().getData());
+
+      System.out.print("Parameters: "); //$NON-NLS-1$
+      System.out.println(es.getParameters().getData());
+
+      System.out.print("Experiments: "); //$NON-NLS-1$
       System.out.println(es.getData());
 
     } catch (final Throwable error) {
