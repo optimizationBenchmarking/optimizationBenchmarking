@@ -745,7 +745,7 @@ public enum EComparison {
    *          the second object
    * @return the comparison result
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public static final int compareObjects(final Comparable a,
       final Comparable b) {
     if (a == b) {
@@ -758,6 +758,46 @@ public enum EComparison {
       return (-1);
     }
     return a.compareTo(b);
+  }
+
+  /**
+   * Compare two numbers
+   * 
+   * @param a
+   *          the first number
+   * @param b
+   *          the second number
+   * @return the result
+   */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public static final int compareNumbers(final Number a, final Number b) {
+
+    if (a == b) {
+      return 0;
+    }
+    if (a == null) {
+      return 1;
+    }
+    if (b == null) {
+      return (-1);
+    }
+
+    if ((a.getClass() == b.getClass()) && (a instanceof Comparable)) {
+      return ((Comparable) a).compareTo(b);
+    }
+
+    if (((a instanceof Byte) || //
+        (a instanceof Short) || //
+        (a instanceof Integer) || //
+        (a instanceof Long))//
+        && ((b instanceof Byte) || //
+            (b instanceof Short) || //
+            (b instanceof Integer) || //
+        (b instanceof Long))) {
+      return Long.compare(a.longValue(), b.longValue());
+    }
+
+    return compareDoubles(a.doubleValue(), b.doubleValue());
   }
 
   /**
@@ -795,6 +835,10 @@ public enum EComparison {
       } catch (final Throwable error) {
         // ignore
       }
+    }
+
+    if ((a instanceof Number) && (b instanceof Number)) {
+      return compareNumbers(((Number) a), ((Number) b));
     }
 
     return 0;

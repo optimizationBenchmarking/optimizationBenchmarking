@@ -110,9 +110,10 @@ public abstract class PropertyValue<OT extends Property<?>> extends
    * @return {@code true} if and only if
    *         <code>this.{@link #getValue() getValue()}=={@link org.optimizationBenchmarking.experimentation.data._PropertyValueGeneralized#INSTANCE}</code>
    *         , {@code false} otherwise
+   * @see #isGeneralized(Object)
    */
   public final boolean isGeneralized() {
-    return (this.m_value == _PropertyValueGeneralized.INSTANCE);
+    return isGeneralized(this.m_value);
   }
 
   /** {@inheritDoc} */
@@ -121,5 +122,18 @@ public abstract class PropertyValue<OT extends Property<?>> extends
     textOut.append(((OT) (this.m_owner)).getName());
     textOut.append('=');
     textOut.append(this.m_value);
+  }
+
+  /**
+   * Check whether a property value is generalized
+   * 
+   * @param value
+   *          the value
+   * @return {@code true} if the value is generalized, {@code false} if it
+   *         is not
+   * @see #isGeneralized()
+   */
+  public static final boolean isGeneralized(final Object value) {
+    return _PropertyValueGeneralized.INSTANCE.equals(value);
   }
 }
