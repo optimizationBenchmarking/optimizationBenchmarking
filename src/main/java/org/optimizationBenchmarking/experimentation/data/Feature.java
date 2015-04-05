@@ -34,4 +34,46 @@ public final class Feature extends Property<FeatureValue> {
   public final FeatureSet getOwner() {
     return ((FeatureSet) (this.m_owner));
   }
+
+  /**
+   * Get the value of this property for the given
+   * {@link org.optimizationBenchmarking.experimentation.data.Instance}
+   * 
+   * @param instance
+   *          the instance to get the property value of
+   * @return the property value
+   */
+  public final Object get(final Instance instance) {
+    if (instance == null) {
+      throw new IllegalArgumentException(//
+          "Cannot get value of parameter '"//$NON-NLS-1$ 
+              + this.getName() + //
+              "' for null instance."); //$NON-NLS-1$
+    }
+    return instance.getFeatureSetting().get(this);
+  }
+
+  /**
+   * Get the value of this parameter for the given element
+   * 
+   * @param element
+   *          the element to get the parameter value of, must be an
+   *          instance, or else {@link IllegalArgumentException}
+   * @return the property value
+   * @throws IllegalArgumentException
+   *           if {@code element} is not an instance of
+   *           {@link org.optimizationBenchmarking.experimentation.data.Instance}
+   */
+  @Override
+  public final Object get(final DataElement element) {
+    if (element instanceof Instance) {
+      return this.get((Instance) element);
+    }
+    throw new IllegalArgumentException(//
+        "Cannot get value of parameter '" //$NON-NLS-1$
+            + this.getName() + //
+            "' for data element '"//$NON-NLS-1$ 
+            + element + //
+            "' - only instances can have parameter values.");//$NON-NLS-1$
+  }
 }

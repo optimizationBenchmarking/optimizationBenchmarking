@@ -82,4 +82,47 @@ public final class Parameter extends Property<ParameterValue> {
   public final ParameterSet getOwner() {
     return ((ParameterSet) (this.m_owner));
   }
+
+  /**
+   * Get the value of this property for the given
+   * {@link org.optimizationBenchmarking.experimentation.data.Experiment}
+   * 
+   * @param experiment
+   *          the experiment to get the property value of
+   * @return the property value
+   */
+  public final Object get(final Experiment experiment) {
+    if (experiment == null) {
+      throw new IllegalArgumentException(//
+          "Cannot get value of parameter '"//$NON-NLS-1$ 
+              + this.getName() + //
+              "' for null experiment."); //$NON-NLS-1$
+    }
+    return experiment.getParameterSetting().get(this);
+  }
+
+  /**
+   * Get the value of this parameter for the given element
+   * 
+   * @param element
+   *          the element to get the parameter value of, must be an
+   *          experiment, or else {@link IllegalArgumentException}
+   * @return the property value
+   * @throws IllegalArgumentException
+   *           if {@code element} is not an instance of
+   *           {@link org.optimizationBenchmarking.experimentation.data.Experiment}
+   */
+  @Override
+  public final Object get(final DataElement element) {
+    if (element instanceof Experiment) {
+      return this.get((Experiment) element);
+    }
+    throw new IllegalArgumentException(//
+        "Cannot get value of parameter '" //$NON-NLS-1$
+            + this.getName() + //
+            "' for data element '"//$NON-NLS-1$ 
+            + element + //
+            "' - only experiments can have parameter values.");//$NON-NLS-1$
+  }
+
 }

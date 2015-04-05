@@ -676,8 +676,8 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
     Assert.assertEquals(a.getName(), b.getName());
     Assert.assertEquals(a.getDescription(), b.getDescription());
 
-    x = a.parameters().entrySet().iterator();
-    y = b.parameters().entrySet().iterator();
+    x = a.getParameterSetting().entrySet().iterator();
+    y = b.getParameterSetting().entrySet().iterator();
 
     outer: for (;;) {
       z = x.hasNext();
@@ -794,8 +794,8 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
     Assert.assertEquals(a.getName(), b.getName());
     Assert.assertEquals(a.getDescription(), b.getDescription());
 
-    x = a.features().entrySet().iterator();
-    y = b.features().entrySet().iterator();
+    x = a.getFeatureSetting().entrySet().iterator();
+    y = b.getFeatureSetting().entrySet().iterator();
 
     outer: for (;;) {
       z = x.hasNext();

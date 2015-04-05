@@ -630,7 +630,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     if (size == 1) {
       summary.append(" one algorithm"); //$NON-NLS-1$      
       if (param != null) {
-        name = data.get(0).parameters().get(param);
+        name = data.get(0).getParameterSetting().get(param);
         if ((name != null) && (name instanceof String)) {
           summary.append(": ");//$NON-NLS-1$
           summary.append((String) (name));
@@ -643,7 +643,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       if (param != null) {
         names = null;
         for (final Experiment experiment : data) {
-          name = experiment.parameters().get(param);
+          name = experiment.getParameterSetting().get(param);
           if ((name != null) && (name instanceof String)) {
             if (names == null) {
               names = new HashSet<>();
@@ -706,7 +706,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
           param = set.getParameters().find(
               Parameter.PARAMETER_ALGORITHM_NAME);
           if (param != null) {
-            name = data.get(0).parameters().get(param);
+            name = data.get(0).getParameterSetting().get(param);
             if ((name != null) && (name instanceof String)) {
               title.append((String) name);
               break single;

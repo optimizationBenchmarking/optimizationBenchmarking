@@ -96,7 +96,7 @@ public final class Experiment extends _IDObjectSet<InstanceRuns> {
    * 
    * @return the parameter map.
    */
-  public final ParameterSetting parameters() {
+  public final ParameterSetting getParameterSetting() {
     return this.m_parameters;
   }
 

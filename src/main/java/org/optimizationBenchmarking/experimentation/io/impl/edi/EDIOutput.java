@@ -368,7 +368,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
                 EDI.ATTRIBUTE_DESCRIPTION, s);
           }
 
-          for (final FeatureValue fv : i.features()) {
+          for (final FeatureValue fv : i.getFeatureSetting()) {
             try (final XMLElement feat = inst.element()) {
               feat.name(EDI.NAMESPACE_URI, EDI.ELEMENT_FEATURE);
 
@@ -398,8 +398,8 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
           }
 
           for (final Dimension d : dims) {
-            lower = i.lowerBound(d);
-            upper = i.upperBound(d);
+            lower = i.getLowerBound(d);
+            upper = i.getUpperBound(d);
             p = d.getParser();
 
             if (d.getDataType().isInteger()) {
@@ -504,7 +504,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
             EDI.ATTRIBUTE_DESCRIPTION, s);
       }
 
-      for (final ParameterValue fv : e.parameters()) {
+      for (final ParameterValue fv : e.getParameterSetting()) {
         if (fv.isUnspecified()) {
           continue;
         }

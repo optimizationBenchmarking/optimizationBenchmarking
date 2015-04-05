@@ -88,7 +88,7 @@ public final class Instance extends _NamedIDObject {
    * 
    * @return the features of this instance
    */
-  public final FeatureSetting features() {
+  public final FeatureSetting getFeatureSetting() {
     return this.m_features;
   }
 
@@ -101,7 +101,7 @@ public final class Instance extends _NamedIDObject {
    * @return the upper boundary for dimension {@code dim} for this
    *         benchmark instance
    */
-  public final Number upperBound(final Dimension dim) {
+  public final Number getUpperBound(final Dimension dim) {
     return this.m_upper[dim.m_id];
   }
 
@@ -114,7 +114,7 @@ public final class Instance extends _NamedIDObject {
    * @return the lower boundary for dimension {@code dim} for this
    *         benchmark instance
    */
-  public final Number lowerBound(final Dimension dim) {
+  public final Number getLowerBound(final Dimension dim) {
     return this.m_lower[dim.m_id];
   }
 

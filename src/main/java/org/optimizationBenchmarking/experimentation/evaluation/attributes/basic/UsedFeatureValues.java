@@ -37,7 +37,7 @@ public final class UsedFeatureValues extends
       count = 0;
       loop: for (final Instance instance : UsedInstances.getInstance()
           .get(data.getOwner().getOwner())) {
-        if (values.add(instance.features().get(data))) {
+        if (values.add(instance.getFeatureSetting().get(data))) {
           if ((++count) >= goalCount) {
             break loop;
           }

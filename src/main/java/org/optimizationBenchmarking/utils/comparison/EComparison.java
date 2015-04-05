@@ -797,7 +797,7 @@ public enum EComparison {
       return Long.compare(a.longValue(), b.longValue());
     }
 
-    return compareDoubles(a.doubleValue(), b.doubleValue());
+    return EComparison.compareDoubles(a.doubleValue(), b.doubleValue());
   }
 
   /**
@@ -838,7 +838,7 @@ public enum EComparison {
     }
 
     if ((a instanceof Number) && (b instanceof Number)) {
-      return compareNumbers(((Number) a), ((Number) b));
+      return EComparison.compareNumbers(((Number) a), ((Number) b));
     }
 
     return 0;

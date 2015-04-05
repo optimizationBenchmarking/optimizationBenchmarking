@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
- * a concrete parameter setting
+ * a concrete property setting
  * 
  * @param <PT>
  *          the property type

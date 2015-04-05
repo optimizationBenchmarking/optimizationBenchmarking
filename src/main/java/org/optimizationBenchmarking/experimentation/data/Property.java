@@ -206,4 +206,17 @@ public abstract class Property<DT extends PropertyValue<?>> extends
 
     return null;
   }
+
+  /**
+   * Get the value of this property for the given element
+   * 
+   * @param element
+   *          the element to get the property value of
+   * @return the property value
+   * @throws IllegalArgumentException
+   *           if {@code element} is not the kind of type supported by the
+   *           property
+   */
+  public abstract Object get(final DataElement element);
+
 }

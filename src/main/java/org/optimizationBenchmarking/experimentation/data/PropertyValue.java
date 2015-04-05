@@ -113,7 +113,7 @@ public abstract class PropertyValue<OT extends Property<?>> extends
    * @see #isGeneralized(Object)
    */
   public final boolean isGeneralized() {
-    return isGeneralized(this.m_value);
+    return PropertyValue.isGeneralized(this.m_value);
   }
 
   /** {@inheritDoc} */
