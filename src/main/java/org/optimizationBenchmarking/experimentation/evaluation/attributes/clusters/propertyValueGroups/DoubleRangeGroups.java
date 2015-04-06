@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 
 import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.experimentation.data.Property;
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
  * A set of property double range groups.
@@ -10,9 +11,7 @@ import org.optimizationBenchmarking.experimentation.data.Property;
  *          the data element type
  */
 public class DoubleRangeGroups<DT extends DataElement> extends
-    ValueRangeGroups<Number, DT, DoubleRangeGroup<DT>> {
-  /** the serial version uid */
-  private static final long serialVersionUID = 1L;
+    ValueRangeGroups<DT> {
 
   /**
    * create the property value groups
@@ -33,5 +32,12 @@ public class DoubleRangeGroups<DT extends DataElement> extends
       final Object info, final DoubleRangeGroup<DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super(property, mode, info, groups, unspecified);
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @Override
+  public final ArraySetView<? extends DoubleRangeGroup<DT>> getGroups() {
+    return ((ArraySetView) (this.m_data));
   }
 }

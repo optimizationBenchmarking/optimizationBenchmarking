@@ -25,13 +25,12 @@ public final class LongRangeGroup<DT extends DataElement> extends
    * @param data
    *          the data
    */
-  LongRangeGroup(final long lowerBound, final long upperBound,
+  LongRangeGroup(final Long lowerBound, final Long upperBound,
       final boolean isUpperExclusive, final Number[] values,
       final DT[] data) {
-    super(Long.valueOf(lowerBound), Long.valueOf(upperBound),
-        isUpperExclusive, values, data);
+    super(lowerBound, upperBound, isUpperExclusive, values, data);
 
-    if (lowerBound >= upperBound) {
+    if (lowerBound.longValue() >= upperBound.longValue()) {
       throw new IllegalArgumentException(
           "Interval cannot be empty or composed of a single value, but lower bound " //$NON-NLS-1$
               + lowerBound + //
@@ -43,7 +42,7 @@ public final class LongRangeGroup<DT extends DataElement> extends
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public LongRangeGroups<DT> getOwner() {
+  public final LongRangeGroups<DT> getOwner() {
     return ((LongRangeGroups) (this.m_owner));
   }
 

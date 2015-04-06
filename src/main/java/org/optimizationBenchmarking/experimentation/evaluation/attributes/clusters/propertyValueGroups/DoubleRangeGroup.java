@@ -25,24 +25,23 @@ public final class DoubleRangeGroup<DT extends DataElement> extends
    * @param data
    *          the data
    */
-  DoubleRangeGroup(final double lowerBound, final double upperBound,
+  DoubleRangeGroup(final Double lowerBound, final Double upperBound,
       final boolean isUpperExclusive, final Number[] values,
       final DT[] data) {
-    super(Double.valueOf(lowerBound), Double.valueOf(upperBound),
-        isUpperExclusive, values, data);
+    super(lowerBound, upperBound, isUpperExclusive, values, data);
 
-    if (lowerBound >= upperBound) {
+    if (lowerBound.doubleValue() >= upperBound.doubleValue()) {
       throw new IllegalArgumentException(
           "Interval cannot be empty or composed of a single value, but lower bound " //$NON-NLS-1$
               + lowerBound + //
               " is specified and upper bound is "//$NON-NLS-1$ 
               + upperBound);
     }
-    if (lowerBound != lowerBound) {
+    if (Double.isNaN(lowerBound.doubleValue())) {
       throw new IllegalArgumentException(//
           "Lower bound of interval cannot be NaN.");//$NON-NLS-1$
     }
-    if (upperBound != upperBound) {
+    if (Double.isNaN(upperBound.doubleValue())) {
       throw new IllegalArgumentException(//
           "Upper bound of interval cannot be NaN.");//$NON-NLS-1$
     }

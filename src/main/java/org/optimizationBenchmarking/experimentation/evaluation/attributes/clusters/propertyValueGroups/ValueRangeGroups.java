@@ -2,21 +2,16 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 
 import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.experimentation.data.Property;
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
  * A set of property value range groups.
  * 
  * @param <DT>
  *          the data element type
- * @param <VT>
- *          the value type
- * @param <PVG>
- *          the property value group type
  */
-public class ValueRangeGroups<VT, DT extends DataElement, PVG extends ValueRangeGroup<VT, DT>>
-    extends PropertyValueGroups<DT, PVG> {
-  /** the serial version uid */
-  private static final long serialVersionUID = 1L;
+public class ValueRangeGroups<DT extends DataElement> extends
+    PropertyValueGroups<DT> {
 
   /**
    * create the property value groups
@@ -34,8 +29,15 @@ public class ValueRangeGroups<VT, DT extends DataElement, PVG extends ValueRange
    *          unspecified, or {@code null} if no such elements exist
    */
   ValueRangeGroups(final Property<?> property, final EGroupingMode mode,
-      final Object info, final PVG[] groups,
+      final Object info, final ValueRangeGroup<?, DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super(property, mode, info, groups, unspecified);
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @Override
+  public ArraySetView<? extends ValueRangeGroup<?, DT>> getGroups() {
+    return ((ArraySetView) (this.m_data));
   }
 }

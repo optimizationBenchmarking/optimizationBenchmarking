@@ -18,7 +18,7 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
   /** the data elements */
   private final ArraySetView<DT> m_data;
   /** the owning value group set */
-  PropertyValueGroups<DT, ?> m_owner;
+  PropertyValueGroups<DT> m_owner;
 
   /**
    * create the property value group
@@ -33,10 +33,6 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
       throw new IllegalArgumentException(//
           "Data elements belonging to property value group must not be null."); //$NON-NLS-1$
     }
-    if (data.length < 1) {
-      throw new IllegalArgumentException(//
-          "There must be at least one data elements belonging to property value group."); //$NON-NLS-1$
-    }
 
     this.m_data = new ArraySetView<>(data);
   }
@@ -46,7 +42,7 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
    * 
    * @return the owning group set
    */
-  public PropertyValueGroups<DT, ?> getOwner() {
+  public PropertyValueGroups<DT> getOwner() {
     return this.m_owner;
   }
 

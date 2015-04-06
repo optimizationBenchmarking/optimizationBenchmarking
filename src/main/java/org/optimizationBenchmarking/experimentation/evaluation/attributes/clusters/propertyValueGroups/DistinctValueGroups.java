@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 
 import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.experimentation.data.Property;
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
  * A set of distinct property value groups.
@@ -9,20 +10,14 @@ import org.optimizationBenchmarking.experimentation.data.Property;
  * @param <DT>
  *          the data type
  */
-public class DistinctValueGroups<DT extends DataElement> extends
-    PropertyValueGroups<DT, DistinctValueGroup<DT>> {
-  /** the serial version uid */
-  private static final long serialVersionUID = 1L;
+public final class DistinctValueGroups<DT extends DataElement> extends
+    PropertyValueGroups<DT> {
 
   /**
    * create the property value groups
    * 
    * @param property
    *          the property
-   * @param mode
-   *          the grouping mode
-   * @param info
-   *          the grouping info
    * @param groups
    *          the groups
    * @param unspecified
@@ -30,9 +25,15 @@ public class DistinctValueGroups<DT extends DataElement> extends
    *          unspecified, or {@code null} if no such elements exist
    */
   DistinctValueGroups(final Property<?> property,
-      final EGroupingMode mode, final Object info,
       final DistinctValueGroup<DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
-    super(property, mode, info, groups, unspecified);
+    super(property, EGroupingMode.DISTINCT, null, groups, unspecified);
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @Override
+  public final ArraySetView<? extends DistinctValueGroup<DT>> getGroups() {
+    return ((ArraySetView) (this.m_data));
   }
 }

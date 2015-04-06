@@ -368,7 +368,7 @@ public enum EGroupingMode {
     return new _Groups(buffer, minGroups, maxGroups,
         ((power == 2L) ? POWERS_OF_2 : //
             ((power == 10L) ? POWERS_OF_10 : ANY_POWERS)),//
-        Double.valueOf(power));
+        Long.valueOf(power));
   }
 
   /**

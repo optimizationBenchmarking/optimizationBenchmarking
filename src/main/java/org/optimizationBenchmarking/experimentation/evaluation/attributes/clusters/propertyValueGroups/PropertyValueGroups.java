@@ -1,11 +1,10 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import java.util.Arrays;
-
 import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.experimentation.data.Property;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 
 /**
@@ -13,16 +12,15 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  * 
  * @param <DT>
  *          the data element type
- * @param <PVG>
- *          the property value group type
  */
-public class PropertyValueGroups<DT extends DataElement, PVG extends PropertyValueGroup<DT>>
-    extends ArraySetView<PVG> {
-  /** the serial version uid */
-  private static final long serialVersionUID = 1L;
+public class PropertyValueGroups<DT extends DataElement> extends
+    HashObject implements Comparable<PropertyValueGroups<?>> {
 
   /** the property */
   final Property<?> m_property;
+
+  /** the data */
+  final ArraySetView<PropertyValueGroup<DT>> m_data;
 
   /** the grouping mode */
   private final EGroupingMode m_groupingMode;
@@ -56,25 +54,33 @@ public class PropertyValueGroups<DT extends DataElement, PVG extends PropertyVal
       final EGroupingMode mode, final Object info,
       final PropertyValueGroup<DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
-    super((PVG[]) groups);
+    super();
 
-    if (groups.length < 1) {
-      throw new IllegalArgumentException(//
-          "There must be at least one group in the value group set of a property."); //$NON-NLS-1$
-    }
     if (property == null) {
       throw new IllegalArgumentException(//
           "Property must not be null."); //$NON-NLS-1$
     }
+    if (groups == null) {
+      throw new IllegalArgumentException(((//
+          "Property groups must not be null, but are for property '" //$NON-NLS-1$
+          + property.getName()) + '\'') + '.');
+    }
+    if (groups.length < 1) {
+      throw new IllegalArgumentException(((//
+          "Property groups must contain at least one group, but do not for property '" //$NON-NLS-1$
+          + property.getName()) + '\'') + '.');
+    }
     if (mode == null) {
-      throw new IllegalArgumentException(//
-          "Grouping mode must not be null."); //$NON-NLS-1$
+      throw new IllegalArgumentException(((//
+          "Grouping mode must not be null, but is for property '" //$NON-NLS-1$
+          + property.getName()) + '\'') + '.');
     }
 
     for (final PropertyValueGroup p : groups) {
       p.m_owner = this;
     }
 
+    this.m_data = new ArraySetView<>(groups);
     this.m_property = property;
     this.m_groupingMode = mode;
     this.m_groupingInfo = info;
@@ -125,6 +131,15 @@ public class PropertyValueGroups<DT extends DataElement, PVG extends PropertyVal
                 super.calcHashCode())));
   }
 
+  /**
+   * Get the property groups
+   * 
+   * @return the property groups
+   */
+  public ArraySetView<? extends PropertyValueGroup<DT>> getGroups() {
+    return this.m_data;
+  }
+
   /** {@inheritDoc} */
   @Override
   @SuppressWarnings("rawtypes")
@@ -142,8 +157,52 @@ public class PropertyValueGroups<DT extends DataElement, PVG extends PropertyVal
           && EComparison.equals(this.m_groupingMode, x.m_groupingMode)//
           && EComparison.equals(this.m_groupingInfo, x.m_groupingInfo)//
           && EComparison.equals(this.m_unspecified, x.m_unspecified)//
-      && Arrays.equals(this.m_data, x.m_data));
+      && EComparison.equals(this.m_data, x.m_data));
     }
     return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int compareTo(final PropertyValueGroups<?> o) {
+    final int lenA, lenB, minLen;
+    int res, index;
+
+    if (o == this) {
+      return 0;
+    }
+    if (o == null) {
+      return (-1);
+    }
+
+    res = EComparison.compareObjects(this.m_property, o.m_property);
+    if (res != 0) {
+      return res;
+    }
+
+    res = EComparison
+        .compareObjects(this.m_groupingMode, o.m_groupingMode);
+    if (res != 0) {
+      return res;
+    }
+
+    res = EComparison
+        .compareObjects(this.m_groupingInfo, o.m_groupingInfo);
+    if (res != 0) {
+      return res;
+    }
+
+    lenA = this.m_data.size();
+    lenB = o.m_data.size();
+    minLen = Math.min(lenA, lenB);
+    for (index = 0; index < minLen; index++) {
+      res = EComparison.compareObjects(this.m_data.get(index),//
+          o.m_data.get(index));
+      if (res != 0) {
+        return res;
+      }
+    }
+
+    return 0;
   }
 }
