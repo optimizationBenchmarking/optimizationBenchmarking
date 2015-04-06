@@ -123,8 +123,10 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends DataElement>
   /**
    * Get the actual values of the property. For each value {@code v}, it
    * must hold that
-   * <code>{@link #getLowerBound()}&lq;v&lt;{@link #getUpperBound()}</code>
-   * .
+   * <code>{@link #getLowerBound()}&le;v&lt;{@link #getUpperBound()}</code>
+   * (if {@link #isUpperBoundExclusive()} is {@code true} or
+   * <code>{@link #getLowerBound()}&le;v&le;{@link #getUpperBound()}</code>
+   * otherwise.
    * 
    * @return the actual values of the property
    * @see #getLowerBound()
