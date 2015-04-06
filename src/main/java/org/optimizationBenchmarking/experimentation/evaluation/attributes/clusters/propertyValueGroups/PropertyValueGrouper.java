@@ -17,25 +17,55 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  *          the data element type
  */
 public abstract class PropertyValueGrouper<DT extends DataElement> extends
-    Attribute<DT, PropertyValueGroups<?>> {
+    Attribute<DT, PropertyValueGroups<DT, ?>> {
 
   /** the grouping mode to use */
   private final EGroupingMode m_groupingMode;
+
+  /**
+   * the goal minimum of the number of groups &ndash; any number of groups
+   * less than this would not be good
+   */
+  private final int m_minGroups;
+  /**
+   * the goal maximum of the number of groups &ndash; any number of groups
+   * higher than this would not be good
+   */
+  private final int m_maxGroups;
 
   /**
    * create the property value grouper
    * 
    * @param groupingMode
    *          the grouping mode
+   * @param minGroups
+   *          the goal minimum of the number of groups &ndash; any number
+   *          of groups less than this would not be good *
+   * @param maxGroups
+   *          the goal maximum of the number of groups &ndash; any number
+   *          of groups higher than this would not be good
    */
-  PropertyValueGrouper(final EGroupingMode groupingMode) {
+  PropertyValueGrouper(final EGroupingMode groupingMode,
+      final int minGroups, final int maxGroups) {
     super(EAttributeType.TEMPORARILY_STORED);
 
     if (groupingMode == null) {
       throw new IllegalArgumentException(//
           "Grouping mode must not be null."); //$NON-NLS-1$
     }
+    if (minGroups < 0) {
+      throw new IllegalArgumentException(//
+          "The minimum number of groups must be greater or equal to 0, but is " //$NON-NLS-1$
+              + minGroups);
+    }
+    if (maxGroups < minGroups) {//
+      throw new IllegalArgumentException(//
+          "The maximum number of groups must be greater or equal to the minimum number, but is " //$NON-NLS-1$
+              + maxGroups + " while the minimum is " + minGroups);//$NON-NLS-1$
+    }
     this.m_groupingMode = groupingMode;
+    this.m_minGroups = minGroups;
+    this.m_maxGroups = maxGroups;
   }
 
   /** {@inheritDoc} */
@@ -73,12 +103,14 @@ public abstract class PropertyValueGrouper<DT extends DataElement> extends
    *          the data
    * @return the groups
    */
-  final PropertyValueGroups<?> _group(final Property<?> property,
-      final Iterable<?> values, final Iterable<? extends DataElement> data) {
+  final PropertyValueGroups<DT, ?> _group(final Property<?> property,
+      final Iterable<?> values, final Iterable<DT> data) {
+    final _Groups groups;
+    Object[] raw;
+    _Group[] buffer;
     boolean canLong, canDouble;
     int size;
     Object unspecified;
-    Object[] raw;
 
     // first, we need to determine the data types for the grouping
     canLong = canDouble = true;
@@ -115,9 +147,11 @@ public abstract class PropertyValueGrouper<DT extends DataElement> extends
     } else {
       raw = new Object[size];
     }
+    buffer = new _Group[size];
     size = 0;
     for (final Object o : values) {
       if (o != unspecified) {
+        buffer[size] = new _Group();
         raw[size++] = o;
       }
     }
@@ -127,7 +161,24 @@ public abstract class PropertyValueGrouper<DT extends DataElement> extends
       // can be ignored
     }
 
+    if (canLong) {
+      groups = this.m_groupingMode._groupLongs(((Number[]) raw),
+          this.m_minGroups, this.m_maxGroups, buffer);
+    } else {
+      if (canDouble) {
+        groups = this.m_groupingMode._groupDoubles(((Number[]) raw),
+            this.m_minGroups, this.m_maxGroups, buffer);
+      } else {
+        groups = this.m_groupingMode._groupObjects(raw, this.m_minGroups,
+            this.m_maxGroups, buffer);
+      }
+    }
+    buffer = null;
+
     // We can now group stuff
+    if (groups == null) {
+      return null;// Dummy
+    }
     return null;
   }
 }

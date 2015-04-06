@@ -4,13 +4,13 @@ import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.experimentation.data.Property;
 
 /**
- * A set of property double range groups.
+ * A set of distinct property value groups.
  * 
  * @param <DT>
- *          the data element type
+ *          the data type
  */
-public class DoubleRangeGroups<DT extends DataElement> extends
-    ValueRangeGroups<Number, DT, DoubleRangeGroup<DT>> {
+public class DistinctValueGroups<DT extends DataElement> extends
+    PropertyValueGroups<DT, DistinctValueGroup<DT>> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -29,8 +29,9 @@ public class DoubleRangeGroups<DT extends DataElement> extends
    *          a group holding all elements for which the property value was
    *          unspecified, or {@code null} if no such elements exist
    */
-  DoubleRangeGroups(final Property<?> property, final EGroupingMode mode,
-      final Object info, final DoubleRangeGroup<DT>[] groups,
+  DistinctValueGroups(final Property<?> property,
+      final EGroupingMode mode, final Object info,
+      final DistinctValueGroup<DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super(property, mode, info, groups, unspecified);
   }

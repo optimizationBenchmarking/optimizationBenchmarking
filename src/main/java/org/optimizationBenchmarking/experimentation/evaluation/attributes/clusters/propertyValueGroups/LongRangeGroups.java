@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.experimentation.data.Property;
  *          the data element type
  */
 public class LongRangeGroups<DT extends DataElement> extends
-    ValueRangeGroups<Number, LongRangeGroup<DT>> {
+    ValueRangeGroups<Number, DT, LongRangeGroup<DT>> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -25,9 +25,13 @@ public class LongRangeGroups<DT extends DataElement> extends
    *          the grouping info
    * @param groups
    *          the groups
+   * @param unspecified
+   *          a group holding all elements for which the property value was
+   *          unspecified, or {@code null} if no such elements exist
    */
   LongRangeGroups(final Property<?> property, final EGroupingMode mode,
-      final Object info, final LongRangeGroup<DT>[] groups) {
-    super(property, mode, info, groups);
+      final Object info, final LongRangeGroup<DT>[] groups,
+      final UnspecifiedValueGroup<DT> unspecified) {
+    super(property, mode, info, groups, unspecified);
   }
 }

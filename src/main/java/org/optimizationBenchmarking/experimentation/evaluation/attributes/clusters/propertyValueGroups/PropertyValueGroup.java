@@ -18,7 +18,7 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
   /** the data elements */
   private final ArraySetView<DT> m_data;
   /** the owning value group set */
-  PropertyValueGroups<?> m_owner;
+  PropertyValueGroups<DT, ?> m_owner;
 
   /**
    * create the property value group
@@ -46,7 +46,7 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
    * 
    * @return the owning group set
    */
-  public PropertyValueGroups<?> getOwner() {
+  public PropertyValueGroups<DT, ?> getOwner() {
     return this.m_owner;
   }
 
@@ -82,4 +82,13 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
 
     return false;
   }
+
+  /**
+   * Does the group contain the given object?
+   * 
+   * @param o
+   *          the object
+   * @return {@code true} if the group contains it, {@code false} otherwise
+   */
+  public abstract boolean contains(final Object o);
 }

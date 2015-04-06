@@ -49,9 +49,25 @@ public final class DoubleRangeGroup<DT extends DataElement> extends
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public DoubleRangeGroups<?> getOwner() {
+  public DoubleRangeGroups<DT> getOwner() {
     return ((DoubleRangeGroups) (this.m_owner));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean contains(final Object o) {
+    final double num;
+    if (o instanceof Number) {
+      num = ((Number) o).doubleValue();
+      if (num >= this.getLowerBound().doubleValue()) {
+        if (this.isUpperBoundExclusive()) {
+          return (num < this.getUpperBound().doubleValue());
+        }
+        return (num <= this.getUpperBound().doubleValue());
+      }
+    }
+    return false;
   }
 }

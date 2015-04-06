@@ -41,9 +41,25 @@ public final class LongRangeGroup<DT extends DataElement> extends
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public LongRangeGroups<?> getOwner() {
+  public LongRangeGroups<DT> getOwner() {
     return ((LongRangeGroups) (this.m_owner));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean contains(final Object o) {
+    final long num;
+    if (o instanceof Number) {
+      num = ((Number) o).longValue();
+      if (num >= this.getLowerBound().longValue()) {
+        if (this.isUpperBoundExclusive()) {
+          return (num < this.getUpperBound().longValue());
+        }
+        return (num <= this.getUpperBound().longValue());
+      }
+    }
+    return false;
   }
 }

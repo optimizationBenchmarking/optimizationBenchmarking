@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 
 import java.util.Arrays;
 
+import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.experimentation.data.Property;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
@@ -10,10 +11,12 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
 /**
  * A set of property value groups.
  * 
+ * @param <DT>
+ *          the data element type
  * @param <PVG>
  *          the property value group type
  */
-public class PropertyValueGroups<PVG extends PropertyValueGroup<?>>
+public class PropertyValueGroups<DT extends DataElement, PVG extends PropertyValueGroup<DT>>
     extends ArraySetView<PVG> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -28,6 +31,12 @@ public class PropertyValueGroups<PVG extends PropertyValueGroup<?>>
   private final Object m_groupingInfo;
 
   /**
+   * a group holding all elements for which the property value was
+   * unspecified, or {@code null} if no such elements exist
+   */
+  private final UnspecifiedValueGroup<DT> m_unspecified;
+
+  /**
    * create the property value groups
    * 
    * @param groups
@@ -38,10 +47,16 @@ public class PropertyValueGroups<PVG extends PropertyValueGroup<?>>
    *          the grouping info
    * @param property
    *          the property
+   * @param unspecified
+   *          a group holding all elements for which the property value was
+   *          unspecified, or {@code null} if no such elements exist
    */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   PropertyValueGroups(final Property<?> property,
-      final EGroupingMode mode, final Object info, final PVG[] groups) {
-    super(groups);
+      final EGroupingMode mode, final Object info,
+      final PropertyValueGroup<DT>[] groups,
+      final UnspecifiedValueGroup<DT> unspecified) {
+    super((PVG[]) groups);
 
     if (groups.length < 1) {
       throw new IllegalArgumentException(//
@@ -56,13 +71,35 @@ public class PropertyValueGroups<PVG extends PropertyValueGroup<?>>
           "Grouping mode must not be null."); //$NON-NLS-1$
     }
 
-    for (final PVG p : groups) {
+    for (final PropertyValueGroup p : groups) {
       p.m_owner = this;
     }
 
     this.m_property = property;
     this.m_groupingMode = mode;
     this.m_groupingInfo = info;
+    this.m_unspecified = unspecified;
+
+    if (unspecified != null) {
+      unspecified.m_owner = this;
+    }
+  }
+
+  /**
+   * Get the group for which the property value is unspecified. For
+   * {@link org.optimizationBenchmarking.experimentation.data.Feature
+   * features}, this method will always return {@code null}. For
+   * {@link org.optimizationBenchmarking.experimentation.data.Parameter
+   * parameters}, this method might either return {@code null} (in case
+   * that all experiments have this parameter value specified) or a group
+   * with the distinct, unspecified value.
+   * 
+   * @return the distinct value group holding all elements for which the
+   *         property is not specified, or {@code null} if all elements
+   *         have the property value specified
+   */
+  public final UnspecifiedValueGroup<DT> getUnspecifiedGroup() {
+    return this.m_unspecified;
   }
 
   /**
@@ -83,7 +120,9 @@ public class PropertyValueGroups<PVG extends PropertyValueGroup<?>>
             HashUtils.hashCode(this.m_groupingInfo)),//
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.m_property),//
-            super.calcHashCode()));
+            HashUtils.combineHashes(//
+                HashUtils.hashCode(this.m_unspecified),//
+                super.calcHashCode())));
   }
 
   /** {@inheritDoc} */
@@ -102,7 +141,8 @@ public class PropertyValueGroups<PVG extends PropertyValueGroup<?>>
       return (EComparison.equals(this.m_property, x.m_property) //
           && EComparison.equals(this.m_groupingMode, x.m_groupingMode)//
           && EComparison.equals(this.m_groupingInfo, x.m_groupingInfo)//
-      && Arrays.deepEquals(this.m_data, x.m_data));
+          && EComparison.equals(this.m_unspecified, x.m_unspecified)//
+      && Arrays.equals(this.m_data, x.m_data));
     }
     return false;
   }

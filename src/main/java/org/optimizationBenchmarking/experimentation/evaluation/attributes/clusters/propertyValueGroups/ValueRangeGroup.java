@@ -71,9 +71,9 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends DataElement>
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public ValueRangeGroups<?, ?> getOwner() {
+  public ValueRangeGroups<VT, DT, ?> getOwner() {
     return ((ValueRangeGroups) (this.m_owner));
   }
 

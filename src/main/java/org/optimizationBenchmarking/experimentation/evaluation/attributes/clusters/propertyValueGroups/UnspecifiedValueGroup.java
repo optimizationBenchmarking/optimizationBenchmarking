@@ -6,12 +6,12 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 
 /**
- * A group of data elements belonging to a distinct, singular value.
+ * A group of data elements belonging to an unspecified value
  * 
  * @param <DT>
  *          the data set type
  */
-public final class DistinctValueGroup<DT extends DataElement> extends
+public final class UnspecifiedValueGroup<DT extends DataElement> extends
     PropertyValueGroup<DT> {
 
   /** the singular value */
@@ -25,12 +25,16 @@ public final class DistinctValueGroup<DT extends DataElement> extends
    * @param data
    *          the data
    */
-  DistinctValueGroup(final Object value, final DT[] data) {
+  UnspecifiedValueGroup(final Object value, final DT[] data) {
     super(data);
 
     if (value == null) {
       throw new IllegalArgumentException(//
-          "The singular property value cannot be null."); //$NON-NLS-1$
+          "The unspecified property value cannot be null."); //$NON-NLS-1$
+    }
+    if (!(ParameterValue.isUnspecified(value))) {
+      throw new IllegalArgumentException(//
+          "The unspecified property value must actually be unspecified."); //$NON-NLS-1$
     }
     this.m_value = value;
   }
@@ -66,12 +70,5 @@ public final class DistinctValueGroup<DT extends DataElement> extends
   @Override
   public final boolean contains(final Object o) {
     return EComparison.equals(o, this.m_value);
-  }
-
-  /** {@inheritDoc} */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  @Override
-  public final DistinctValueGroups<DT> getOwner() {
-    return ((DistinctValueGroups) (this.m_owner));
   }
 }
