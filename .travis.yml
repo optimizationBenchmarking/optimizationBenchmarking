@@ -17,3 +17,6 @@ cache:
 install:
   - sudo apt-get update -y
   - sudo apt-get install texlive -y
+  
+# custom build step
+script: travis_wait mvn test compile package deploy site
