@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.experimentation.data.ParameterValue;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A group of data elements belonging to a distinct, singular value.
@@ -73,5 +74,12 @@ public final class DistinctValueGroup<DT extends DataElement> extends
   @Override
   public final DistinctValueGroups<DT> getOwner() {
     return ((DistinctValueGroups) (this.m_owner));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append(this.m_value);
+    super.toText(textOut);
   }
 }

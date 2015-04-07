@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A group of data elements belonging to range of values.
@@ -148,5 +149,76 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends DataElement>
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.m_values),//
             super.calcHashCode()));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void toText(final ITextOutput textOut) {
+    textOut.append('[');
+
+    addLower: {
+      if (this.m_lower instanceof Number) {
+        if (this.m_lower instanceof Long) {
+          textOut.append(((Long) this.m_lower).longValue());
+          break addLower;
+        }
+        if (this.m_lower instanceof Double) {
+          textOut.append(((Double) this.m_lower).doubleValue());
+          break addLower;
+        }
+        if (this.m_lower instanceof Integer) {
+          textOut.append(((Integer) this.m_lower).intValue());
+          break addLower;
+        }
+        if (this.m_lower instanceof Short) {
+          textOut.append(((Short) this.m_lower).shortValue());
+          break addLower;
+        }
+        if (this.m_lower instanceof Byte) {
+          textOut.append(((Byte) this.m_lower).byteValue());
+          break addLower;
+        }
+        if (this.m_lower instanceof Float) {
+          textOut.append(((Float) this.m_lower).floatValue());
+          break addLower;
+        }
+      }
+      textOut.append(this.m_lower);
+    }
+
+    textOut.append(',');
+
+    addUpper: {
+      if (this.m_upper instanceof Number) {
+        if (this.m_upper instanceof Long) {
+          textOut.append(((Long) this.m_upper).longValue());
+          break addUpper;
+        }
+        if (this.m_upper instanceof Double) {
+          textOut.append(((Double) this.m_upper).doubleValue());
+          break addUpper;
+        }
+        if (this.m_upper instanceof Integer) {
+          textOut.append(((Integer) this.m_upper).intValue());
+          break addUpper;
+        }
+        if (this.m_upper instanceof Short) {
+          textOut.append(((Short) this.m_upper).shortValue());
+          break addUpper;
+        }
+        if (this.m_upper instanceof Byte) {
+          textOut.append(((Byte) this.m_upper).byteValue());
+          break addUpper;
+        }
+        if (this.m_upper instanceof Float) {
+          textOut.append(((Float) this.m_upper).floatValue());
+          break addUpper;
+        }
+      }
+      textOut.append(this.m_upper);
+    }
+
+    textOut.append(this.m_isUpperExclusive ? ')' : ']');
+    super.toText(textOut);
   }
 }

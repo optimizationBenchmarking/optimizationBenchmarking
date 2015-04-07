@@ -129,18 +129,18 @@ final class _PropertyValueSet<VT> {
                 "Classes cannot be entirely incompatible."); //$NON-NLS-1$
           }
         }
+      }
 
-        if (canInt) {
-          canInt &= ((Byte.class.isAssignableFrom(curClazz)) || //
-              (Short.class.isAssignableFrom(curClazz)) || //
-              (Integer.class.isAssignableFrom(curClazz)) || //
-          (Long.class.isAssignableFrom(curClazz)));
-        }
+      if (canInt) {
+        canInt &= ((Byte.class.isAssignableFrom(curClazz)) || //
+            (Short.class.isAssignableFrom(curClazz)) || //
+            (Integer.class.isAssignableFrom(curClazz)) || //
+        (Long.class.isAssignableFrom(curClazz)));
+      }
 
-        if (canDouble && (!(canInt))) {
-          canDouble &= ((Float.class.isAssignableFrom(curClazz)) || //
-          (Double.class.isAssignableFrom(curClazz)));
-        }
+      if (canDouble && (!(canInt))) {
+        canDouble &= ((Float.class.isAssignableFrom(curClazz)) || //
+        (Double.class.isAssignableFrom(curClazz)));
       }
 
       collected[collectedCount++] = added = new _PropertyValueInstances<>(

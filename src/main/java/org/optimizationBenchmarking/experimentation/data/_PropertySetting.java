@@ -198,7 +198,7 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
     final PropertyValue v;
 
     return ((((key instanceof Property) && //
-        ((id = ((Parameter) key).m_id) >= 0) && //
+        ((id = ((Property) key).m_id) >= 0) && //
         (id < (pv = this.m_values).length) && //
     ((v = pv[id]).m_owner == key))) ? v.m_value : null);
   }

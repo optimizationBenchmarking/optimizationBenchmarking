@@ -351,14 +351,14 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
 
       inner: for (final _PropertyValueInstances inst : values.m_values) {
         num = ((Number) (inst.m_value));
-        if (num.longValue() >= lower.longValue()) {
+        if (num.doubleValue() >= lower.doubleValue()) {
 
           if (group.m_isUpperExclusive) {
-            if (num.longValue() >= upper.longValue()) {
+            if (num.doubleValue() >= upper.doubleValue()) {
               continue inner;
             }
           } else {
-            if (num.longValue() > upper.longValue()) {
+            if (num.doubleValue() > upper.doubleValue()) {
               continue inner;
             }
           }
@@ -372,7 +372,7 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
 
       if ((size = members.size()) <= 0) {
         throw new IllegalStateException((((//
-            "No corresponding elements for long range group [" //$NON-NLS-1$
+            "No corresponding elements for double range group [" //$NON-NLS-1$
             + group.m_lower) + ',') + group.m_upper)
             + (group.m_isUpperExclusive ? ')' : ']'));
       }
@@ -381,7 +381,7 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
 
       if ((size = memberValues.size()) <= 0) {
         throw new IllegalStateException((((//
-            "No corresponding member values for long range group [" //$NON-NLS-1$
+            "No corresponding member values for double range group [" //$NON-NLS-1$
             + group.m_lower) + ',') + group.m_upper)
             + (group.m_isUpperExclusive ? ')' : ']'));
       }

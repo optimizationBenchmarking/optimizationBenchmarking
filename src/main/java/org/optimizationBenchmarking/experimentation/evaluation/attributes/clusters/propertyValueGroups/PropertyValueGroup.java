@@ -2,8 +2,8 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 
 import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A group of values. This class is most likely used to group property
@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  *          the data set type
  */
 public abstract class PropertyValueGroup<DT extends DataElement> extends
-    HashObject {
+    _GroupBase {
 
   /** the data elements */
   private final ArraySetView<DT> m_data;
@@ -47,11 +47,11 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
   }
 
   /**
-   * Obtain the data belonging to this value group
+   * Obtain the data elements belonging to this value group
    * 
-   * @return the data belonging to this value group
+   * @return the data elements belonging to this value group
    */
-  public final ArraySetView<DT> getData() {
+  public final ArraySetView<DT> getElements() {
     return this.m_data;
   }
 
@@ -80,11 +80,27 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
   }
 
   /**
-   * Does the group contain the given object?
+   * Does the group contain the given value object? Or, at least, would it
+   * contain the value potentially? For example, a
+   * {@link org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.LongRangeGroup}
+   * would contain any value in its specified range, even if the value does
+   * not actually exist.
    * 
    * @param o
    *          the object
    * @return {@code true} if the group contains it, {@code false} otherwise
    */
   public abstract boolean contains(final Object o);
+
+  /** {@inheritDoc} */
+  @Override
+  public void toText(final ITextOutput textOut) {
+    final int size;
+    textOut.append(" contains "); //$NON-NLS-1$
+    textOut.append(size = this.m_data.size());
+    textOut.append(" element"); //$NON-NLS-1$
+    if (size != 1) {
+      textOut.append('s');
+    }
+  }
 }

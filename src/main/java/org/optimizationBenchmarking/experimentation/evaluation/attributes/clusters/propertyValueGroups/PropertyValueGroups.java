@@ -4,8 +4,8 @@ import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.experimentation.data.Property;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A set of property value groups.
@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  *          the data element type
  */
 public class PropertyValueGroups<DT extends DataElement> extends
-    HashObject implements Comparable<PropertyValueGroups<?>> {
+    _GroupBase implements Comparable<PropertyValueGroups<?>> {
 
   /** the property */
   final Property<?> m_property;
@@ -204,5 +204,31 @@ public class PropertyValueGroups<DT extends DataElement> extends
     }
 
     return 0;
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("rawtypes")
+  @Override
+  public void toText(final ITextOutput textOut) {
+    boolean first;
+
+    first = true;
+    for (final PropertyValueGroup group : this.m_data) {
+      if (first) {
+        first = false;
+      } else {
+        textOut.append(',');
+        textOut.append(' ');
+      }
+      group.toText(textOut);
+    }
+
+    if (this.m_unspecified != null) {
+      if (!first) {
+        textOut.append(',');
+        textOut.append(' ');
+      }
+      this.m_unspecified.toText(textOut);
+    }
   }
 }

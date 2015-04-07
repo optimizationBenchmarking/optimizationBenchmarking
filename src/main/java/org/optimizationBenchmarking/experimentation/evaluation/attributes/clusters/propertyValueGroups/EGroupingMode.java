@@ -198,9 +198,9 @@ public enum EGroupingMode {
     _Group group;
     boolean exclusive;
 
-    prev = power;
+    next = power;
     do {
-      next = prev;
+      prev = next;
       next *= power;
     } while (next > prev);
 
@@ -243,7 +243,7 @@ public enum EGroupingMode {
         group = buffer[groupIndex++];
         group.m_lower = Long.valueOf(prev);
         group.m_upper = Long.valueOf(next);
-        group.m_isUpperExclusive = true;
+        group.m_isUpperExclusive = exclusive;
         group.m_size = (exclusiveMaxIndex - minIndex);
         if ((exclusiveMaxIndex >= data.length) || //
             (groupIndex >= buffer.length)) {
@@ -304,10 +304,11 @@ public enum EGroupingMode {
     _Group group;
     boolean exclusive;
 
-    pwr = ((long) (Math.log(Double.MAX_VALUE) / Math.log(power)));
-
-    next = (-Math.pow(power, pwr));
+    pwr = (((long) (Math.log(Double.MAX_VALUE) / Math.log(power))) + 1L);
     prev = Double.NEGATIVE_INFINITY;
+    while ((next = (-Math.pow(power, pwr))) <= prev) {
+      pwr--;
+    }
 
     exclusiveMaxIndex = 0;
     groupIndex = 0;
@@ -345,7 +346,7 @@ public enum EGroupingMode {
         group = buffer[groupIndex++];
         group.m_lower = Double.valueOf(prev);
         group.m_upper = Double.valueOf(next);
-        group.m_isUpperExclusive = true;
+        group.m_isUpperExclusive = exclusive;
         group.m_size = (exclusiveMaxIndex - minIndex);
         if ((exclusiveMaxIndex >= data.length) || //
             (groupIndex >= buffer.length)) {
@@ -354,23 +355,28 @@ public enum EGroupingMode {
       }
 
       prev = next;
-      if (prev > 0d) {
+      if (next > 0d) {
         if (next >= Double.POSITIVE_INFINITY) {
           throw new IllegalStateException(//
               "There are double values bigger than POSITIVE_INFINITY??"); //$NON-NLS-1$
         }
-        next = Math.pow(power, (--pwr));
+        next = Math.pow(power, (++pwr));
         if (next >= Double.POSITIVE_INFINITY) {
           exclusive = false;
         }
       } else {
-        if (prev == 0L) {
-          pwr = ((long) (Math.log(Double.MIN_VALUE) / Math.log(power)));
-          if (Math.pow(power, pwr) <= 0d) {
+        if (prev == 0d) {
+          pwr = (((long) (Math.log(Double.MIN_VALUE) / Math.log(power))) - 1L);
+
+          while ((next = Math.pow(power, pwr)) <= 0d) {
             pwr++;
           }
+        } else {
+          next = (-(Math.pow(power, (--pwr))));
+          if (next == 0d) {
+            next = 0d; // deal with -0d -> 0d
+          }
         }
-        next = Math.pow(power, pwr++);
       }
     }
     if (groupIndex < buffer.length) {

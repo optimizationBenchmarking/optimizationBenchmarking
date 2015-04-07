@@ -1,6 +1,9 @@
 package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.Feature;
+import org.optimizationBenchmarking.experimentation.data.Parameter;
+import org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.PropertyValueGrouper;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
 import org.optimizationBenchmarking.utils.MemoryUtils;
 
@@ -64,6 +67,22 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
 
       System.out.print("Experiments: "); //$NON-NLS-1$
       System.out.println(es.getData());
+
+      for (final Feature feature : es.getFeatures().getData()) {
+        System.out.print("Grouped Feature '");//$NON-NLS-1$
+        System.out.print(feature.getName());
+        System.out.print("': ");//$NON-NLS-1$
+        System.out.println(//
+            PropertyValueGrouper.DEFAULT_FEATURE_GROUPER.get(feature));
+      }
+
+      for (final Parameter parameter : es.getParameters().getData()) {
+        System.out.print("Grouped Parameter '");//$NON-NLS-1$
+        System.out.print(parameter.getName());
+        System.out.print("': ");//$NON-NLS-1$
+        System.out.println(//
+            PropertyValueGrouper.DEFAULT_PARAMETER_GROUPER.get(parameter));
+      }
 
     } catch (final Throwable error) {
       error.printStackTrace();
