@@ -15,8 +15,8 @@ cache:
   
 # install texlive: we can use this to test LaTeX document generation
 install:
-  - sudo apt-get update -y
-  - sudo apt-get install texlive -y
+  - sudo apt-get -q -y -f update
+  - sudo apt-get -q -y -f install texlive
   
 # custom build step
-script: mvn test compile package deploy site
+script: mvn -C -B test compile package deploy site
