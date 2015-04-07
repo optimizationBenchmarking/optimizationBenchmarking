@@ -30,25 +30,39 @@ public final class UsedFeatureValues extends
     final Object[] result;
     final int goalCount;
     int count;
+    Object o;
 
     goalCount = data.getData().size();
-    if (goalCount > 0) {
-      values = new HashSet<>();
-      count = 0;
-      loop: for (final Instance instance : UsedInstances.getInstance()
-          .get(data.getOwner().getOwner())) {
-        if (values.add(instance.getFeatureSetting().get(data))) {
-          if ((++count) >= goalCount) {
-            break loop;
-          }
+    if (goalCount <= 0) {
+      throw new IllegalStateException("Feature '"//$NON-NLS-1$
+          + data.getName() + //
+          "' has no possible values.");//$NON-NLS-1$
+    }
+
+    values = new HashSet<>();
+    count = 0;
+    loop: for (final Instance instance : UsedInstances.getInstance().get(
+        data.getOwner().getOwner())) {
+      o = data.get(instance);
+      if (o == null) {
+        throw new IllegalStateException(//
+            "Value of feature '" //$NON-NLS-1$
+                + data.getName() + //
+                "' for instance '" //$NON-NLS-1$
+                + instance.getName() + //
+                "' is null."); //$NON-NLS-1$
+      }
+      if (values.add(o)) {
+        if ((++count) >= goalCount) {
+          break loop;
         }
       }
+    }
 
-      if (count > 0) {
-        result = values.toArray(new Instance[count]);
-        Arrays.sort(result);
-        return new ArraySetView<>(result);
-      }
+    if (count > 0) {
+      result = values.toArray(new Object[count]);
+      Arrays.sort(result);
+      return new ArraySetView<>(result);
     }
     return ArraySetView.EMPTY_SET_VIEW;
   }

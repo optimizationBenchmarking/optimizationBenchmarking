@@ -9,16 +9,16 @@ final class _Groups {
   final double m_score;
 
   /** the mode */
-  final EGroupingMode m_mode;
+  final EGroupingMode m_groupingMode;
 
   /** the grouping-mode based parameter */
-  final Object m_parameter;
+  final Object m_groupingParameter;
 
   /**
    * Create a grouping
    * 
    * @param groups
-   *          the groupsend
+   *          the groups
    * @param minGroups
    *          the anticipated minimum number of groups
    * @param maxGroups
@@ -77,7 +77,7 @@ final class _Groups {
 
     this.m_score = (number + balance);
 
-    this.m_mode = mode;
-    this.m_parameter = parameter;
+    this.m_groupingMode = mode;
+    this.m_groupingParameter = parameter;
   }
 }

@@ -9,32 +9,36 @@ public enum EGroupingMode {
   DISTINCT {
     /** {@inheritDoc} */
     @Override
-    _Groups _groupObjects(final Object[] data, final int minGroups,
-        final int maxGroups, final _Group[] buffer) {
+    _Groups _groupObjects(final _PropertyValueInstances<Object>[] data,
+        final int minGroups, final int maxGroups, final _Group[] buffer) {
       int count;
 
       count = 0;
       for (final _Group group : buffer) {
         group.m_size = 1;
         group.m_isUpperExclusive = false;
-        group.m_lower = group.m_upper = data[count++];
+        group.m_lower = group.m_upper = data[count++].m_value;
       }
 
       return new _Groups(buffer, minGroups, maxGroups, this, null);
     }
 
     /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
     @Override
-    _Groups _groupLongs(final Number[] data, final int minGroups,
-        final int maxGroups, final _Group[] buffer) {
-      return this._groupObjects(data, minGroups, maxGroups, buffer);
+    _Groups _groupLongs(final _PropertyValueInstances<Number>[] data,
+        final int minGroups, final int maxGroups, final _Group[] buffer) {
+      return this._groupObjects(((_PropertyValueInstances[]) data),
+          minGroups, maxGroups, buffer);
     }
 
     /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
     @Override
-    _Groups _groupDoubles(final Number[] data, final int minGroups,
-        final int maxGroups, final _Group[] buffer) {
-      return this._groupObjects(data, minGroups, maxGroups, buffer);
+    _Groups _groupDoubles(final _PropertyValueInstances<Number>[] data,
+        final int minGroups, final int maxGroups, final _Group[] buffer) {
+      return this._groupObjects(((_PropertyValueInstances[]) data),
+          minGroups, maxGroups, buffer);
     }
   },
 
@@ -43,7 +47,8 @@ public enum EGroupingMode {
 
     /** {@inheritDoc} */
     @Override
-    final _Groups _groupLongs(final Number[] data, final int minGroups,
+    final _Groups _groupLongs(
+        final _PropertyValueInstances<Number>[] data, final int minGroups,
         final int maxGroups, final _Group[] buffer) {
       return EGroupingMode._groupLongsByPower(2L, data, minGroups,
           maxGroups, buffer);
@@ -51,7 +56,8 @@ public enum EGroupingMode {
 
     /** {@inheritDoc} */
     @Override
-    final _Groups _groupDoubles(final Number[] data, final int minGroups,
+    final _Groups _groupDoubles(
+        final _PropertyValueInstances<Number>[] data, final int minGroups,
         final int maxGroups, final _Group[] buffer) {
       return EGroupingMode._groupDoublesByPower(2L, data, minGroups,
           maxGroups, buffer);
@@ -63,7 +69,8 @@ public enum EGroupingMode {
 
     /** {@inheritDoc} */
     @Override
-    final _Groups _groupLongs(final Number[] data, final int minGroups,
+    final _Groups _groupLongs(
+        final _PropertyValueInstances<Number>[] data, final int minGroups,
         final int maxGroups, final _Group[] buffer) {
       return EGroupingMode._groupLongsByPower(10L, data, minGroups,
           maxGroups, buffer);
@@ -71,7 +78,8 @@ public enum EGroupingMode {
 
     /** {@inheritDoc} */
     @Override
-    final _Groups _groupDoubles(final Number[] data, final int minGroups,
+    final _Groups _groupDoubles(
+        final _PropertyValueInstances<Number>[] data, final int minGroups,
         final int maxGroups, final _Group[] buffer) {
       return EGroupingMode._groupDoublesByPower(10L, data, minGroups,
           maxGroups, buffer);
@@ -86,7 +94,8 @@ public enum EGroupingMode {
 
     /** {@inheritDoc} */
     @Override
-    final _Groups _groupLongs(final Number[] data, final int minGroups,
+    final _Groups _groupLongs(
+        final _PropertyValueInstances<Number>[] data, final int minGroups,
         final int maxGroups, final _Group[] buffer) {
       _Groups best, current;
 
@@ -103,7 +112,8 @@ public enum EGroupingMode {
 
     /** {@inheritDoc} */
     @Override
-    final _Groups _groupDoubles(final Number[] data, final int minGroups,
+    final _Groups _groupDoubles(
+        final _PropertyValueInstances<Number>[] data, final int minGroups,
         final int maxGroups, final _Group[] buffer) {
       _Groups best, current;
 
@@ -124,15 +134,16 @@ public enum EGroupingMode {
 
     /** {@inheritDoc} */
     @Override
-    final _Groups _groupObjects(final Object[] data, final int minGroups,
+    final _Groups _groupObjects(
+        final _PropertyValueInstances<Object>[] data, final int minGroups,
         final int maxGroups, final _Group[] buffer) {
       return DISTINCT._groupObjects(data, minGroups, maxGroups, buffer);
     }
 
     /** {@inheritDoc} */
     @Override
-    _Groups _groupLongs(final Number[] data, final int minGroups,
-        final int maxGroups, final _Group[] buffer) {
+    _Groups _groupLongs(final _PropertyValueInstances<Number>[] data,
+        final int minGroups, final int maxGroups, final _Group[] buffer) {
       _Groups best, current;
 
       best = DISTINCT._groupLongs(data, minGroups, maxGroups, buffer);
@@ -145,8 +156,8 @@ public enum EGroupingMode {
 
     /** {@inheritDoc} */
     @Override
-    _Groups _groupDoubles(final Number[] data, final int minGroups,
-        final int maxGroups, final _Group[] buffer) {
+    _Groups _groupDoubles(final _PropertyValueInstances<Number>[] data,
+        final int minGroups, final int maxGroups, final _Group[] buffer) {
       _Groups best, current;
 
       best = DISTINCT._groupDoubles(data, minGroups, maxGroups, buffer);
@@ -178,8 +189,9 @@ public enum EGroupingMode {
    *          a multi-purpose buffer
    * @return the objects to group
    */
-  static _Groups _groupLongsByPower(final long power, final Number[] data,
-      final int minGroups, final int maxGroups, final _Group[] buffer) {
+  static _Groups _groupLongsByPower(final long power,
+      final _PropertyValueInstances<Number>[] data, final int minGroups,
+      final int maxGroups, final _Group[] buffer) {
 
     long prev, next, cur;
     int minIndex, exclusiveMaxIndex, groupIndex;
@@ -208,7 +220,7 @@ public enum EGroupingMode {
       minIndex = exclusiveMaxIndex;
 
       inner: for (;;) {
-        cur = data[exclusiveMaxIndex].longValue();
+        cur = data[exclusiveMaxIndex].m_value.longValue();
         if (cur < prev) {
           break inner;
         }
@@ -283,8 +295,8 @@ public enum EGroupingMode {
    * @return the objects to group
    */
   static _Groups _groupDoublesByPower(final long power,
-      final Number[] data, final int minGroups, final int maxGroups,
-      final _Group[] buffer) {
+      final _PropertyValueInstances<Number>[] data, final int minGroups,
+      final int maxGroups, final _Group[] buffer) {
 
     double prev, next, cur;
     long pwr;
@@ -310,7 +322,7 @@ public enum EGroupingMode {
       minIndex = exclusiveMaxIndex;
 
       inner: for (;;) {
-        cur = data[exclusiveMaxIndex].doubleValue();
+        cur = data[exclusiveMaxIndex].m_value.doubleValue();
         if (cur < prev) {
           break inner;
         }
@@ -384,8 +396,8 @@ public enum EGroupingMode {
    *          a multi-purpose buffer
    * @return the objects to group
    */
-  _Groups _groupObjects(final Object[] data, final int minGroups,
-      final int maxGroups, final _Group[] buffer) {
+  _Groups _groupObjects(final _PropertyValueInstances<Object>[] data,
+      final int minGroups, final int maxGroups, final _Group[] buffer) {
     throw new UnsupportedOperationException("Mode " + this + //$NON-NLS-1$
         " can only apply to numbers."); //$NON-NLS-1$
   }
@@ -403,7 +415,8 @@ public enum EGroupingMode {
    *          a multi-purpose buffer
    * @return the objects to group
    */
-  abstract _Groups _groupLongs(final Number[] data, final int minGroups,
+  abstract _Groups _groupLongs(
+      final _PropertyValueInstances<Number>[] data, final int minGroups,
       final int maxGroups, final _Group[] buffer);
 
   /**
@@ -419,7 +432,8 @@ public enum EGroupingMode {
    *          a multi-purpose buffer
    * @return the objects to group
    */
-  abstract _Groups _groupDoubles(final Number[] data, final int minGroups,
+  abstract _Groups _groupDoubles(
+      final _PropertyValueInstances<Number>[] data, final int minGroups,
       final int maxGroups, final _Group[] buffer);
 
 }
