@@ -971,33 +971,43 @@ public final class ReflectionUtils {
     }
 
     index = idString.lastIndexOf('#');
-    if ((index <= 0) || (index >= (idString.length() - 1))) {
-      className = idString;
-      fieldName = null;
-    } else {
-      className = idString.substring(0, index);
-      fieldName = idString.substring(index + 1);
-    }
+    checkClass: {
+      if ((index <= 0) || (index >= (idString.length() - 1))) {
+        if ((base != null) && (base != Enum.class)
+            && (Enum.class.isAssignableFrom(base))) {
+          className = null;
+          fieldName = idString;
+          container = base;
+          break checkClass;
+        }
+        className = idString;
+        fieldName = null;
+      } else {
+        className = idString.substring(0, index);
+        fieldName = idString.substring(index + 1);
+      }
 
-    className = TextUtils.prepare(className);
-    if (className == null) {
-      throw new IllegalArgumentException(//
-          "Class name to get an instance from within must neither be null, empty, or consisting only of white spaces, but identifier '"//$NON-NLS-1$
-              + identifier + "' provides such a name.");//$NON-NLS-1$
-    }
+      className = TextUtils.prepare(className);
+      if (className == null) {
+        throw new IllegalArgumentException(//
+            "Class name to get an instance from within must neither be null, empty, or consisting only of white spaces, but identifier '"//$NON-NLS-1$
+                + identifier + "' provides such a name.");//$NON-NLS-1$
+      }
 
-    cause = null;
-    try {
-      container = ReflectionUtils.__findClassInternal(className, prefixes);
-    } catch (final Throwable t) {
-      cause = t;
-      container = null;
-    }
-    if (container == null) {
-      throw ReflectionUtils.__makeFindInstanceError(base, null, fieldName,
-          ("could not discover class '" + className//$NON-NLS-1$
-              + "' based on string '" + idString + '\''),//$NON-NLS-1$
-          cause);
+      cause = null;
+      try {
+        container = ReflectionUtils.__findClassInternal(className,
+            prefixes);
+      } catch (final Throwable t) {
+        cause = t;
+        container = null;
+      }
+      if (container == null) {
+        throw ReflectionUtils.__makeFindInstanceError(base, null,
+            fieldName, ("could not discover class '" + className//$NON-NLS-1$
+                + "' based on string '" + idString + '\''),//$NON-NLS-1$
+            cause);
+      }
     }
 
     return ReflectionUtils.getInstance(base, container, fieldName);
