@@ -17,6 +17,7 @@ import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.Instance;
 import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
 import org.optimizationBenchmarking.experimentation.data.InstanceSet;
+import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** A class for creating in parallel sets */
 public class RandomParallelExample extends RandomExample {
@@ -136,6 +137,7 @@ public class RandomParallelExample extends RandomExample {
    *          the command line arguments
    */
   public static void main(final String[] args) {
+    Configuration.setup(args);
     new RandomParallelExample().run();
   }
 

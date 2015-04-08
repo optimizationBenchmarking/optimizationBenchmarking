@@ -200,10 +200,10 @@ final class _Groups implements Comparable<_Groups> {
         case DISTINCT: {
           return (-1);
         }
-        case ANY_POWERS: {
+        case POWERS: {
           switch (o.m_groupingMode) {
             case DISTINCT:
-            case ANY_MULTIPLES: {
+            case MULTIPLES: {
               return 1;
             }
             default: {
@@ -211,7 +211,7 @@ final class _Groups implements Comparable<_Groups> {
             }
           }
         }
-        case ANY_MULTIPLES: {
+        case MULTIPLES: {
           switch (o.m_groupingMode) {
             case DISTINCT: {
               return 1;

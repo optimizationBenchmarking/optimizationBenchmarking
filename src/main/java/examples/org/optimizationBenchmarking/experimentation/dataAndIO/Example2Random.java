@@ -6,6 +6,7 @@ import org.optimizationBenchmarking.experimentation.data.DimensionContext;
 import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.EDimensionType;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
 import org.optimizationBenchmarking.utils.parsers.LongParser;
@@ -81,6 +82,7 @@ public final class Example2Random extends RandomExample {
    *          the command line arguments
    */
   public static final void main(final String[] args) {
+    Configuration.setup(args);
     new Example2Random().run();
   }
 }

@@ -12,6 +12,7 @@ import org.optimizationBenchmarking.experimentation.data.InstanceContext;
 import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
 import org.optimizationBenchmarking.experimentation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.data.RunContext;
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.parsers.BoundedFloatParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
@@ -645,6 +646,7 @@ public final class Example1 extends ExperimentSetCreator {
    *          the command line arguments
    */
   public static final void main(final String[] args) {
+    Configuration.setup(args);
     new Example1().run();
   }
 }

@@ -49,7 +49,7 @@ public enum EGroupingMode {
    * Group elements in terms of reasonable powers, including powers of
    * {@code 2}, {@code 10}, etc.
    */
-  ANY_POWERS {
+  POWERS {
 
     /** {@inheritDoc} */
     @Override
@@ -92,7 +92,7 @@ public enum EGroupingMode {
    * Group elements in terms of reasonable multiples, including multipes of
    * {@code 1}, {@code 2}, {@code 10}, etc.
    */
-  ANY_MULTIPLES {
+  MULTIPLES {
 
     /** {@inheritDoc} */
     @Override
@@ -161,12 +161,11 @@ public enum EGroupingMode {
       _Groups best, current;
 
       best = DISTINCT._groupLongs(data, minGroups, maxGroups, buffer);
-      current = ANY_POWERS._groupLongs(data, minGroups, maxGroups, buffer);
+      current = POWERS._groupLongs(data, minGroups, maxGroups, buffer);
       if (current.compareTo(best) < 0) {
         best = current;
       }
-      current = ANY_MULTIPLES._groupLongs(data, minGroups, maxGroups,
-          buffer);
+      current = MULTIPLES._groupLongs(data, minGroups, maxGroups, buffer);
       if ((current != null) && (current.compareTo(best) < 0)) {
         best = current;
       }
@@ -180,13 +179,12 @@ public enum EGroupingMode {
       _Groups best, current;
 
       best = DISTINCT._groupDoubles(data, minGroups, maxGroups, buffer);
-      current = ANY_POWERS._groupDoubles(data, minGroups, maxGroups,
-          buffer);
+      current = POWERS._groupDoubles(data, minGroups, maxGroups, buffer);
       if (current.compareTo(best) < 0) {
         best = current;
       }
-      current = ANY_MULTIPLES._groupDoubles(data, minGroups, maxGroups,
-          buffer);
+      current = MULTIPLES
+          ._groupDoubles(data, minGroups, maxGroups, buffer);
       if ((current != null) && (current.compareTo(best) < 0)) {
         best = current;
       }
@@ -369,7 +367,7 @@ public enum EGroupingMode {
       buffer[groupIndex].m_size = (-1);
     }
 
-    return new _Groups(buffer, minGroups, maxGroups, ANY_POWERS,//
+    return new _Groups(buffer, minGroups, maxGroups, POWERS,//
         Long.valueOf(power));
   }
 
@@ -475,7 +473,7 @@ public enum EGroupingMode {
       buffer[groupIndex].m_size = (-1);
     }
 
-    return new _Groups(buffer, minGroups, maxGroups, ANY_POWERS,
+    return new _Groups(buffer, minGroups, maxGroups, POWERS,
         Long.valueOf(power));
   }
 
@@ -590,7 +588,7 @@ public enum EGroupingMode {
       buffer[groupIndex].m_size = (-1);
     }
 
-    return new _Groups(buffer, minGroups, maxGroups, ANY_MULTIPLES,
+    return new _Groups(buffer, minGroups, maxGroups, MULTIPLES,
         Long.valueOf(range));
   }
 
@@ -707,7 +705,7 @@ public enum EGroupingMode {
       buffer[groupIndex].m_size = (-1);
     }
 
-    return new _Groups(buffer, minGroups, maxGroups, ANY_MULTIPLES,
+    return new _Groups(buffer, minGroups, maxGroups, MULTIPLES,
         Double.valueOf(range));
   }
 }

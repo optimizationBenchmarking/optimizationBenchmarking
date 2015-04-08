@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.impl.csvedi.CSVEDIInput;
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 
 /** A class for using some data stored in CSV+EDI format */
@@ -40,6 +41,7 @@ public final class CSVEDIExample extends ExperimentSetCreator {
    *          the command line arguments
    */
   public static final void main(final String[] args) {
+    Configuration.setup(args);
     new CSVEDIExample().run();
   }
 }

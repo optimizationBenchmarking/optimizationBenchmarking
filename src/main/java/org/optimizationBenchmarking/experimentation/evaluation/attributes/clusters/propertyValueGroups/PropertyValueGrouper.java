@@ -12,7 +12,9 @@ import org.optimizationBenchmarking.experimentation.data.Instance;
 import org.optimizationBenchmarking.experimentation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.data.Property;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * An attribute which can group property values.
@@ -25,18 +27,50 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
 public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataElement>
     extends Attribute<PT, PropertyValueGroups<DT>> {
 
+  /** the default minimum number of anticipated groups */
+  private static final int DEFAULT_MIN_GROUPS = 2;
+  /** the default maximum number of anticipated groups */
+  private static final int DEFAULT_MAX_GROUPS = 10;
+  /** the default grouping mode */
+  private static final EGroupingMode DEFAULT_GROUPING_MODE = EGroupingMode.ANY;
+
+  /** The suffix of the grouping parameter: {@value} */
+  public static final String PARAM_GROUPING_SUFFIX = "Grouping"; //$NON-NLS-1$
+  /** The prefix to be used if no property name is specified: {@value} */
+  public static final String PARAM_ALL_PREFIX = "all";//$NON-NLS-1$
+  /** The parameter suffix defining the minimum number of groups: {@value} */
+  public static final String PARAM_GROUPING_MIN_GROUPS_SUFFIX = //
+  (PropertyValueGrouper.PARAM_GROUPING_SUFFIX + "MinGroups");//$NON-NLS-1$
+  /** The parameter suffix defining the maximum number of groups: {@value} */
+  public static final String PARAM_GROUPING_MAX_GROUPS_SUFFIX = //
+  (PropertyValueGrouper.PARAM_GROUPING_SUFFIX + "MaxGroups");//$NON-NLS-1$
+  /** The parameter suffix defining the grouping mode: {@value} */
+  public static final String PARAM_GROUPING_MODE_SUFFIX = //
+  (PropertyValueGrouper.PARAM_GROUPING_SUFFIX + "Mode");//$NON-NLS-1$
+  /** The parameter suffix defining the grouping parameter: {@value} */
+  public static final String PARAM_GROUPING_PARAMETER_SUFFIX = //
+  (PropertyValueGrouper.PARAM_GROUPING_SUFFIX + "Param");//$NON-NLS-1$
+
   /** The default value grouper for experiment parameters */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  public static final PropertyValueGrouper<Parameter, Experiment> DEFAULT_PARAMETER_GROUPER//
-  = new PropertyValueGrouper(EGroupingMode.ANY, 2, 10);
+  @SuppressWarnings("rawtypes")
+  private static final PropertyValueGrouper DEFAULT_GROUPER//
+  = new PropertyValueGrouper(PropertyValueGrouper.DEFAULT_GROUPING_MODE,
+      null, PropertyValueGrouper.DEFAULT_MIN_GROUPS,
+      PropertyValueGrouper.DEFAULT_MAX_GROUPS);
+
+  /** The default value grouper for experiment parameters */
+  public static final PropertyValueGrouper<Parameter, Experiment>//
+  DEFAULT_PARAMETER_GROUPER = PropertyValueGrouper.DEFAULT_GROUPER;
 
   /** The default value grouper for instance features */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  public static final PropertyValueGrouper<Feature, Instance> DEFAULT_FEATURE_GROUPER //
-  = ((PropertyValueGrouper) (PropertyValueGrouper.DEFAULT_PARAMETER_GROUPER));
+  public static final PropertyValueGrouper<Feature, Instance>//
+  DEFAULT_FEATURE_GROUPER = PropertyValueGrouper.DEFAULT_GROUPER;
 
   /** the grouping mode to use */
   private final EGroupingMode m_groupingMode;
+
+  /** the parameter to be passed to the grouping */
+  private final Object m_groupingParameter;
 
   /**
    * the goal minimum of the number of groups &ndash; any number of groups
@@ -54,15 +88,18 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
    * 
    * @param groupingMode
    *          the grouping mode
+   * @param groupingParameter
+   *          the parameter to be passed to the grouping
    * @param minGroups
    *          the goal minimum of the number of groups &ndash; any number
-   *          of groups less than this would not be good *
+   *          of groups less than this would not be good
    * @param maxGroups
    *          the goal maximum of the number of groups &ndash; any number
    *          of groups higher than this would not be good
    */
   public PropertyValueGrouper(final EGroupingMode groupingMode,
-      final int minGroups, final int maxGroups) {
+      final Object groupingParameter, final int minGroups,
+      final int maxGroups) {
     super(EAttributeType.TEMPORARILY_STORED);
 
     if (groupingMode == null) {
@@ -79,16 +116,90 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
           "The maximum number of groups must be greater or equal to the minimum number, but is " //$NON-NLS-1$
               + maxGroups + " while the minimum is " + minGroups);//$NON-NLS-1$
     }
+
     this.m_groupingMode = groupingMode;
+    this.m_groupingParameter = groupingParameter;
     this.m_minGroups = minGroups;
     this.m_maxGroups = maxGroups;
+  }
+
+  /**
+   * Load a property value grouper from a configuration
+   * 
+   * @param property
+   *          the property
+   * @param config
+   *          the configuration
+   * @return the grouper
+   * @param <DX>
+   *          the element type
+   * @param <PX>
+   *          the property type
+   */
+  public static final <DX extends DataElement, PX extends Property<?>> PropertyValueGrouper<PX, DX> configure(
+      final PX property, final Configuration config) {
+    return PropertyValueGrouper.configure(
+        ((property != null) ? property.getName() : null), config);
+  }
+
+  /**
+   * Load a property value grouper from a configuration
+   * 
+   * @param propertyName
+   *          the property name
+   * @param config
+   *          the configuration
+   * @return the grouper
+   * @param <DX>
+   *          the element type
+   * @param <PX>
+   *          the property type
+   */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public static final <DX extends DataElement, PX extends Property<?>> PropertyValueGrouper<PX, DX> configure(
+      final String propertyName, final Configuration config) {
+    final EGroupingMode mode;
+    final int minGroups, maxGroups;
+    final Object param;
+    String prefix;
+
+    if (config == null) {
+      return PropertyValueGrouper.DEFAULT_GROUPER;
+    }
+
+    prefix = TextUtils.prepare(propertyName);
+    if (prefix == null) {
+      prefix = PropertyValueGrouper.PARAM_ALL_PREFIX;
+    }
+
+    mode = config.getInstance(//
+        (prefix + PropertyValueGrouper.PARAM_GROUPING_MODE_SUFFIX),//
+        EGroupingMode.class, PropertyValueGrouper.DEFAULT_GROUPING_MODE);
+    minGroups = config.getInt(
+        (prefix + PropertyValueGrouper.PARAM_GROUPING_MIN_GROUPS_SUFFIX),
+        0, 10000, PropertyValueGrouper.DEFAULT_MIN_GROUPS);
+    maxGroups = config
+        .getInt(
+            (prefix + PropertyValueGrouper.PARAM_GROUPING_MAX_GROUPS_SUFFIX),
+            minGroups, 10001, Math.max((minGroups + 1),
+                PropertyValueGrouper.DEFAULT_MAX_GROUPS));
+    param = null;
+    if ((mode == PropertyValueGrouper.DEFAULT_GROUPER.m_groupingMode)
+        && (minGroups == PropertyValueGrouper.DEFAULT_GROUPER.m_minGroups)
+        && (maxGroups == PropertyValueGrouper.DEFAULT_GROUPER.m_maxGroups)
+        && (param == PropertyValueGrouper.DEFAULT_GROUPER.m_groupingParameter)) {
+      return PropertyValueGrouper.DEFAULT_GROUPER;
+    }
+    return new PropertyValueGrouper(mode, param, minGroups, maxGroups);
   }
 
   /** {@inheritDoc} */
   @Override
   protected final int calcHashCode() {
     return HashUtils.combineHashes(//
-        HashUtils.hashCode(this.m_groupingMode),//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.m_groupingMode),//
+            HashUtils.hashCode(this.m_groupingParameter)),//
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.m_minGroups),//
             HashUtils.hashCode(this.m_maxGroups)));
@@ -144,8 +255,8 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
         return PropertyValueGrouper.__distinct(groups, set);
       }
 
-      case ANY_POWERS:
-      case ANY_MULTIPLES: {
+      case POWERS:
+      case MULTIPLES: {
         if (set.m_areValuesIntegers) {
           return PropertyValueGrouper.__longRange(groups, set);
         }

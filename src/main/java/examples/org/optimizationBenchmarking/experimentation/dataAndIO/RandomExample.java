@@ -23,6 +23,7 @@ import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
 import org.optimizationBenchmarking.experimentation.data.InstanceSet;
 import org.optimizationBenchmarking.experimentation.data.RunContext;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 import org.optimizationBenchmarking.utils.parsers.ByteParser;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
@@ -956,6 +957,7 @@ public class RandomExample extends ExperimentSetCreator {
    *          the command line arguments
    */
   public static void main(final String[] args) {
+    Configuration.setup(args);
     new RandomExample().run();
   }
 }

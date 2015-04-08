@@ -5,6 +5,7 @@ import java.util.Random;
 import org.optimizationBenchmarking.experimentation.data.DimensionSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.impl.tspSuite.TSPSuiteInput;
+import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** A class for creating in parallel sets */
 public final class RandomTSPSuiteParallelExample extends
@@ -36,6 +37,7 @@ public final class RandomTSPSuiteParallelExample extends
    *          the command line arguments
    */
   public static void main(final String[] args) {
+    Configuration.setup(args);
     new RandomTSPSuiteParallelExample().run();
   }
 }
