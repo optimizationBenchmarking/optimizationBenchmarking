@@ -6,6 +6,7 @@ import org.optimizationBenchmarking.experimentation.data.Parameter;
 import org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.PropertyValueGrouper;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
 import org.optimizationBenchmarking.utils.MemoryUtils;
+import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** A class for creating experiment sets */
 public abstract class ExperimentSetCreator implements IEvaluationInput,
@@ -73,7 +74,8 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
         System.out.print(feature.getName());
         System.out.print("': ");//$NON-NLS-1$
         System.out.println(//
-            PropertyValueGrouper.DEFAULT_FEATURE_GROUPER.get(feature));
+            PropertyValueGrouper.configure(feature,
+                Configuration.getRoot()).get(feature));
       }
 
       for (final Parameter parameter : es.getParameters().getData()) {
@@ -81,7 +83,8 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
         System.out.print(parameter.getName());
         System.out.print("': ");//$NON-NLS-1$
         System.out.println(//
-            PropertyValueGrouper.DEFAULT_PARAMETER_GROUPER.get(parameter));
+            PropertyValueGrouper.configure(parameter,
+                Configuration.getRoot()).get(parameter));
       }
 
     } catch (final Throwable error) {

@@ -211,12 +211,16 @@ public final class Configuration implements Serializable, ITextable {
                     if (value == null) {
                       retVal = _default;
                     } else {
-                      if ((!(value instanceof String))
-                          && clazz.isInstance(value)) {
-                        retVal = clazz.cast(value);
-                      } else {
-                        retVal = parser.parseObject(value);
+                      if (value instanceof String) {
+                        retVal = parser.parseString((String) value);
                         needsCheck = false;
+                      } else {
+                        if (clazz.isInstance(value)) {
+                          retVal = clazz.cast(value);
+                        } else {
+                          retVal = parser.parseObject(value);
+                          needsCheck = false;
+                        }
                       }
                     }
                   } finally {
@@ -246,9 +250,11 @@ public final class Configuration implements Serializable, ITextable {
       }
       return retVal;
     } catch (final Throwable tt) {
-      RethrowMode.AS_ILLEGAL_STATE_EXCEPTION.rethrow(//
-          ("Error while trying to obtain key '" + key + '\''), //$NON-NLS-1$
-          true, tt);
+      RethrowMode.AS_ILLEGAL_STATE_EXCEPTION.rethrow((((((((//
+          "Error while trying to obtain configuration key '" //$NON-NLS-1$ 
+          + key) + "\' with parser '") //$NON-NLS-1$
+          + parser) + "' and default '") //$NON-NLS-1$
+          + _default) + '\'') + '.'), true, tt);
     }
     return null;
   }

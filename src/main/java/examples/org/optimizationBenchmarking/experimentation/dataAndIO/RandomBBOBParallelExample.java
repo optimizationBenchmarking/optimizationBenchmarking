@@ -5,6 +5,7 @@ import java.util.Random;
 import org.optimizationBenchmarking.experimentation.data.DimensionSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.impl.bbob.BBOBInput;
+import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** A class for creating in parallel sets */
 public final class RandomBBOBParallelExample extends RandomParallelExample {
@@ -35,6 +36,7 @@ public final class RandomBBOBParallelExample extends RandomParallelExample {
    *          the command line arguments
    */
   public static void main(final String[] args) {
+    Configuration.setup(args);
     new RandomBBOBParallelExample().run();
   }
 }
