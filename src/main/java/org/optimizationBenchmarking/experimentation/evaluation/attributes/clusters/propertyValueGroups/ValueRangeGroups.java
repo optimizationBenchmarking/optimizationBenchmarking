@@ -29,7 +29,7 @@ public class ValueRangeGroups<DT extends DataElement> extends
    *          unspecified, or {@code null} if no such elements exist
    */
   ValueRangeGroups(final Property<?> property, final EGroupingMode mode,
-      final Object info, final ValueRangeGroup<?, DT>[] groups,
+      final Number info, final ValueRangeGroup<?, DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super(property, mode, info, groups, unspecified);
   }

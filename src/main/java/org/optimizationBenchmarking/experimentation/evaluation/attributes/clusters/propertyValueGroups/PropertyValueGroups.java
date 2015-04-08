@@ -26,7 +26,7 @@ public class PropertyValueGroups<DT extends DataElement> extends
   private final EGroupingMode m_groupingMode;
 
   /** the grouping info */
-  private final Object m_groupingInfo;
+  private final Number m_groupingInfo;
 
   /**
    * a group holding all elements for which the property value was
@@ -51,7 +51,7 @@ public class PropertyValueGroups<DT extends DataElement> extends
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   PropertyValueGroups(final Property<?> property,
-      final EGroupingMode mode, final Object info,
+      final EGroupingMode mode, final Number info,
       final PropertyValueGroup<DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super();

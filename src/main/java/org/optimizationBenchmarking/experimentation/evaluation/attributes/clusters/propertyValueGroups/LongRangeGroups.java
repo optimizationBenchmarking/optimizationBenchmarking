@@ -29,7 +29,7 @@ public final class LongRangeGroups<DT extends DataElement> extends
    *          unspecified, or {@code null} if no such elements exist
    */
   LongRangeGroups(final Property<?> property, final EGroupingMode mode,
-      final Object info, final LongRangeGroup<DT>[] groups,
+      final Number info, final LongRangeGroup<DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super(property, mode, info, groups, unspecified);
   }

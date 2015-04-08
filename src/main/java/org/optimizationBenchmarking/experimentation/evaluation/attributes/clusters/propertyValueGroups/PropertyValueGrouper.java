@@ -213,19 +213,22 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
       minGroups = config.getInt(
           (prefix + //
           PropertyValueGrouper.PARAM_GROUPING_MIN_GROUPS_SUFFIX), 0,
-          10000, allMinGroups);
+          (Math.max(allMinGroups, 10000) + 1), allMinGroups);
     } else {
       minGroups = allMinGroups;
     }
 
     allMaxGroups = config.getInt(
-        PropertyValueGrouper.PARAM_ALL_GROUPING_MAX_GROUPS, 0, 10000,//
+        PropertyValueGrouper.PARAM_ALL_GROUPING_MAX_GROUPS, allMinGroups,
+        (Math.max(allMinGroups, 10000) + 1),//
         PropertyValueGrouper.DEFAULT_MAX_GROUPS);
     if (isSpecial) {
       maxGroups = config.getInt(
           (prefix + //
-          PropertyValueGrouper.PARAM_GROUPING_MAX_GROUPS_SUFFIX), 0,
-          10000, allMaxGroups);
+          PropertyValueGrouper.PARAM_GROUPING_MAX_GROUPS_SUFFIX),
+          Math.max(allMinGroups, minGroups),
+          (Math.max(Math.max(minGroups, allMaxGroups), 10000) + 1),
+          allMaxGroups);
     } else {
       maxGroups = allMaxGroups;
     }
@@ -293,15 +296,17 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
     }
 
     if (set.m_areValuesIntegers) {
-      groups = this.m_groupingMode._groupLongs(set.m_values,
-          this.m_minGroups, this.m_maxGroups, buffer);
+      groups = this.m_groupingMode._groupLongs(this.m_groupingParameter,
+          set.m_values, this.m_minGroups, this.m_maxGroups, buffer);
     } else {
       if (set.m_areValuesDoubles) {
-        groups = this.m_groupingMode._groupDoubles(set.m_values,
-            this.m_minGroups, this.m_maxGroups, buffer);
+        groups = this.m_groupingMode._groupDoubles(
+            this.m_groupingParameter, set.m_values, this.m_minGroups,
+            this.m_maxGroups, buffer);
       } else {
-        groups = this.m_groupingMode._groupObjects(set.m_values,
-            this.m_minGroups, this.m_maxGroups, buffer);
+        groups = this.m_groupingMode._groupObjects(
+            this.m_groupingParameter, set.m_values, this.m_minGroups,
+            this.m_maxGroups, buffer);
       }
     }
 

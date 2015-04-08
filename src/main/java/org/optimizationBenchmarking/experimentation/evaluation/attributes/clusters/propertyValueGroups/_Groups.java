@@ -19,7 +19,7 @@ final class _Groups implements Comparable<_Groups> {
   final EGroupingMode m_groupingMode;
 
   /** the grouping-mode based parameter */
-  final Object m_groupingParameter;
+  final Number m_groupingParameter;
 
   /**
    * Create a grouping
@@ -36,7 +36,7 @@ final class _Groups implements Comparable<_Groups> {
    *          the parameter of the grouping mode
    */
   _Groups(final _Group[] groups, final int minGroups, final int maxGroups,
-      final EGroupingMode mode, final Object parameter) {
+      final EGroupingMode mode, final Number parameter) {
     double balance;
     Object prev, cur;
     int count, discontinuous;

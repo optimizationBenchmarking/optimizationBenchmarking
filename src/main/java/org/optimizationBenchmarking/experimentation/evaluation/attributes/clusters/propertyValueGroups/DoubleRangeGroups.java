@@ -29,7 +29,7 @@ public class DoubleRangeGroups<DT extends DataElement> extends
    *          unspecified, or {@code null} if no such elements exist
    */
   DoubleRangeGroups(final Property<?> property, final EGroupingMode mode,
-      final Object info, final DoubleRangeGroup<DT>[] groups,
+      final Number info, final DoubleRangeGroup<DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super(property, mode, info, groups, unspecified);
   }
