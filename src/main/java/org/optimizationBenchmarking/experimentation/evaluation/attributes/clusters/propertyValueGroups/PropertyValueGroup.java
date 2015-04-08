@@ -96,9 +96,10 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
   @Override
   public void toText(final ITextOutput textOut) {
     final int size;
-    textOut.append(" contains "); //$NON-NLS-1$
+    textOut.append(':');
+    textOut.append(' ');
     textOut.append(size = this.m_data.size());
-    textOut.append(" element"); //$NON-NLS-1$
+    textOut.append(" item"); //$NON-NLS-1$
     if (size != 1) {
       textOut.append('s');
     }

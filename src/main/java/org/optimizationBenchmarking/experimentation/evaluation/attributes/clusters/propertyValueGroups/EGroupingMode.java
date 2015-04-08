@@ -103,7 +103,7 @@ public enum EGroupingMode {
       for (final long power : EGroupingMode.POWER_CHOICES) {
         current = EGroupingMode._groupLongsByPower(power, data, minGroups,
             maxGroups, buffer);
-        if ((best == null) || (best.m_score > current.m_score)) {
+        if ((best == null) || (current.compareTo(best) < 0)) {
           best = current;
         }
       }
@@ -121,7 +121,7 @@ public enum EGroupingMode {
       for (final long power : EGroupingMode.POWER_CHOICES) {
         current = EGroupingMode._groupDoublesByPower(power, data,
             minGroups, maxGroups, buffer);
-        if ((best == null) || (best.m_score > current.m_score)) {
+        if ((best == null) || (current.compareTo(best) < 0)) {
           best = current;
         }
       }
@@ -148,7 +148,7 @@ public enum EGroupingMode {
 
       best = DISTINCT._groupLongs(data, minGroups, maxGroups, buffer);
       current = ANY_POWERS._groupLongs(data, minGroups, maxGroups, buffer);
-      if (current.m_score < best.m_score) {
+      if (current.compareTo(best) < 0) {
         best = current;
       }
       return best;
@@ -163,7 +163,7 @@ public enum EGroupingMode {
       best = DISTINCT._groupDoubles(data, minGroups, maxGroups, buffer);
       current = ANY_POWERS._groupDoubles(data, minGroups, maxGroups,
           buffer);
-      if (current.m_score < best.m_score) {
+      if (current.compareTo(best) < 0) {
         best = current;
       }
       return best;
