@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-/** A parser for bytes */
+/** A parser for {@code byte}s */
 public class ByteParser extends StrictByteParser {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

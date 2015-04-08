@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-/** A parser for a given type */
+/**
+ * A parser for {@code short}s.
+ */
 public class ShortParser extends StrictShortParser {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

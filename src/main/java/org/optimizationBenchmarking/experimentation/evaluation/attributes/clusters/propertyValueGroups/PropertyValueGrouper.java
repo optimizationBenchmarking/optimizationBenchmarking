@@ -14,6 +14,7 @@ import org.optimizationBenchmarking.experimentation.data.Property;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
@@ -36,8 +37,6 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
 
   /** The suffix of the grouping parameter: {@value} */
   public static final String PARAM_GROUPING_SUFFIX = "Grouping"; //$NON-NLS-1$
-  /** The prefix to be used if no property name is specified: {@value} */
-  public static final String PARAM_ALL_PREFIX = "all";//$NON-NLS-1$
   /** The parameter suffix defining the minimum number of groups: {@value} */
   public static final String PARAM_GROUPING_MIN_GROUPS_SUFFIX = //
   (PropertyValueGrouper.PARAM_GROUPING_SUFFIX + "MinGroups");//$NON-NLS-1$
@@ -50,6 +49,30 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
   /** The parameter suffix defining the grouping parameter: {@value} */
   public static final String PARAM_GROUPING_PARAMETER_SUFFIX = //
   (PropertyValueGrouper.PARAM_GROUPING_SUFFIX + "Param");//$NON-NLS-1$
+
+  /** The parameter for all grouping min group numbers */
+  public static final String PARAM_ALL_GROUPING_MIN_GROUPS = //
+  (Character
+      .toLowerCase(PropertyValueGrouper.PARAM_GROUPING_MIN_GROUPS_SUFFIX
+          .charAt(0))//
+  + PropertyValueGrouper.PARAM_GROUPING_MIN_GROUPS_SUFFIX.substring(1));
+  /** The parameter for all grouping max group numbers */
+  public static final String PARAM_ALL_GROUPING_MAX_GROUPS = //
+  (Character
+      .toLowerCase(PropertyValueGrouper.PARAM_GROUPING_MAX_GROUPS_SUFFIX
+          .charAt(0))//
+  + PropertyValueGrouper.PARAM_GROUPING_MAX_GROUPS_SUFFIX.substring(1));
+  /** The parameter for all grouping modes */
+  public static final String PARAM_ALL_GROUPING_MODE = //
+  (Character.toLowerCase(PropertyValueGrouper.PARAM_GROUPING_MODE_SUFFIX
+      .charAt(0))//
+  + PropertyValueGrouper.PARAM_GROUPING_MODE_SUFFIX.substring(1));
+  /** The parameter for all grouping parameters */
+  public static final String PARAM_ALL_GROUPING_PARAMETER = //
+  (Character
+      .toLowerCase(PropertyValueGrouper.PARAM_GROUPING_PARAMETER_SUFFIX
+          .charAt(0))//
+  + PropertyValueGrouper.PARAM_GROUPING_PARAMETER_SUFFIX.substring(1));
 
   /** The default value grouper for experiment parameters */
   @SuppressWarnings("rawtypes")
@@ -70,7 +93,7 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
   private final EGroupingMode m_groupingMode;
 
   /** the parameter to be passed to the grouping */
-  private final Object m_groupingParameter;
+  private final Number m_groupingParameter;
 
   /**
    * the goal minimum of the number of groups &ndash; any number of groups
@@ -98,7 +121,7 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
    *          of groups higher than this would not be good
    */
   public PropertyValueGrouper(final EGroupingMode groupingMode,
-      final Object groupingParameter, final int minGroups,
+      final Number groupingParameter, final int minGroups,
       final int maxGroups) {
     super(EAttributeType.TEMPORARILY_STORED);
 
@@ -158,9 +181,10 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public static final <DX extends DataElement, PX extends Property<?>> PropertyValueGrouper<PX, DX> configure(
       final String propertyName, final Configuration config) {
-    final EGroupingMode mode;
-    final int minGroups, maxGroups;
-    final Object param;
+    final EGroupingMode mode, allMode;
+    final int minGroups, maxGroups, allMinGroups, allMaxGroups;
+    final Number param, allParam;
+    final boolean isSpecial;
     String prefix;
 
     if (config == null) {
@@ -168,22 +192,55 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
     }
 
     prefix = TextUtils.prepare(propertyName);
-    if (prefix == null) {
-      prefix = PropertyValueGrouper.PARAM_ALL_PREFIX;
+    isSpecial = (prefix != null);
+
+    allMode = config.getInstance(
+        PropertyValueGrouper.PARAM_ALL_GROUPING_MODE,//
+        EGroupingMode.class, PropertyValueGrouper.DEFAULT_GROUPING_MODE);
+    if (isSpecial) {
+      mode = config.getInstance((prefix + //
+          PropertyValueGrouper.PARAM_GROUPING_MODE_SUFFIX),//
+          EGroupingMode.class,//
+          allMode);
+    } else {
+      mode = allMode;
     }
 
-    mode = config.getInstance(//
-        (prefix + PropertyValueGrouper.PARAM_GROUPING_MODE_SUFFIX),//
-        EGroupingMode.class, PropertyValueGrouper.DEFAULT_GROUPING_MODE);
-    minGroups = config.getInt(
-        (prefix + PropertyValueGrouper.PARAM_GROUPING_MIN_GROUPS_SUFFIX),
-        0, 10000, PropertyValueGrouper.DEFAULT_MIN_GROUPS);
-    maxGroups = config
-        .getInt(
-            (prefix + PropertyValueGrouper.PARAM_GROUPING_MAX_GROUPS_SUFFIX),
-            minGroups, 10001, Math.max((minGroups + 1),
-                PropertyValueGrouper.DEFAULT_MAX_GROUPS));
-    param = null;
+    allMinGroups = config.getInt(
+        PropertyValueGrouper.PARAM_ALL_GROUPING_MIN_GROUPS, 0, 10000,//
+        PropertyValueGrouper.DEFAULT_MIN_GROUPS);
+    if (isSpecial) {
+      minGroups = config.getInt(
+          (prefix + //
+          PropertyValueGrouper.PARAM_GROUPING_MIN_GROUPS_SUFFIX), 0,
+          10000, allMinGroups);
+    } else {
+      minGroups = allMinGroups;
+    }
+
+    allMaxGroups = config.getInt(
+        PropertyValueGrouper.PARAM_ALL_GROUPING_MAX_GROUPS, 0, 10000,//
+        PropertyValueGrouper.DEFAULT_MAX_GROUPS);
+    if (isSpecial) {
+      maxGroups = config.getInt(
+          (prefix + //
+          PropertyValueGrouper.PARAM_GROUPING_MAX_GROUPS_SUFFIX), 0,
+          10000, allMaxGroups);
+    } else {
+      maxGroups = allMaxGroups;
+    }
+
+    allParam = config.get(
+        PropertyValueGrouper.PARAM_ALL_GROUPING_PARAMETER,
+        AnyNumberParser.INSTANCE, null);
+    if (isSpecial) {
+      param = config.get(
+          (prefix + PropertyValueGrouper.PARAM_GROUPING_PARAMETER_SUFFIX),
+          AnyNumberParser.INSTANCE, allParam);
+    } else {
+      param = allParam;
+    }
+
     if ((mode == PropertyValueGrouper.DEFAULT_GROUPER.m_groupingMode)
         && (minGroups == PropertyValueGrouper.DEFAULT_GROUPER.m_minGroups)
         && (maxGroups == PropertyValueGrouper.DEFAULT_GROUPER.m_maxGroups)

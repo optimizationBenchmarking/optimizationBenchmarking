@@ -2,7 +2,10 @@ package org.optimizationBenchmarking.utils.parsers;
 
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
-/** A parser for a given type */
+/**
+ * A parser for {@code long}s which can also interpret things such as
+ * constants.
+ */
 public class LongParser extends StrictLongParser {
 
   /** the serial version uid */
@@ -44,15 +47,13 @@ public class LongParser extends StrictLongParser {
 
         outer: while ((str = prep.next()) != null) {
           // we now iterate over the prepared strings: step-by-step, we
-          // will
-          // try
+          // will try
           // to process the string by, e.g., trimming it; removing +, -, (,
-          // ),
-          // etc; removing internal white spaces and underscores (to match
-          // Java
-          // 7's new binary syntax) and so on - until we can either parse
-          // it or
-          // have to give up
+          // ), etc; removing internal white spaces and underscores (to
+          // match
+          // Java 7's new binary syntax) and so on - until we can either
+          // parse
+          // it or have to give up
 
           if (str != string) {
             // try again to parse the string directly
@@ -75,8 +76,7 @@ public class LongParser extends StrictLongParser {
                 break checker;
               } catch (final Throwable canBeIgnored) {
                 // we ignore this exception, as we will throw the original
-                // one
-                // on failure
+                // one on failure
               }
             }
           }

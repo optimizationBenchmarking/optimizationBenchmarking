@@ -2,7 +2,10 @@ package org.optimizationBenchmarking.utils.parsers;
 
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
-/** A parser for a given type */
+/**
+ * A parser for {@code int}s which can also interpret things such as
+ * constants.
+ */
 public class IntParser extends StrictIntParser {
 
   /** the serial version uid */

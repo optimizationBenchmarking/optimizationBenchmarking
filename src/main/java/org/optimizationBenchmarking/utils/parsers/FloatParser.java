@@ -1,6 +1,9 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-/** A parser for a given type */
+/**
+ * A parser for {@code float}s which can also interpret things such as
+ * constants.
+ */
 public class FloatParser extends StrictFloatParser {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

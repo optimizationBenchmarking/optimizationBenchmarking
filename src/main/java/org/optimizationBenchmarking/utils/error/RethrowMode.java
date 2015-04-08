@@ -93,6 +93,13 @@ public abstract class RethrowMode<T extends Throwable> implements
   public static final RethrowMode<IllegalStateException> AS_ILLEGAL_STATE_EXCEPTION = //
   new _RethrowModeRethrowAsIllegalStateException();
 
+  /**
+   * This re-throw mode will throw the error as
+   * {@link java.lang.IllegalArgumentException} .
+   */
+  public static final RethrowMode<IllegalArgumentException> AS_ILLEGAL_ARGUMENT_EXCEPTION = //
+  new _RethrowModeRethrowAsIllegalArgumentException();
+
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
