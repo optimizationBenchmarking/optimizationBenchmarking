@@ -144,9 +144,8 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
         return PropertyValueGrouper.__distinct(groups, set);
       }
 
-      case POWERS_OF_2:
-      case POWERS_OF_10:
-      case ANY_POWERS: {
+      case ANY_POWERS:
+      case ANY_MULTIPLES: {
         if (set.m_areValuesIntegers) {
           return PropertyValueGrouper.__longRange(groups, set);
         }

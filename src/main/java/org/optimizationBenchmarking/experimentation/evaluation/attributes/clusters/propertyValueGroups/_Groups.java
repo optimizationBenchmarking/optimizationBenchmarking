@@ -80,8 +80,8 @@ final class _Groups implements Comparable<_Groups> {
     }
 
     balance = Div.INSTANCE.computeAsDouble(sum, count);
-    this.m_balanceScore = (Math.sqrt(Div.INSTANCE.computeAsDouble(sumSqr,
-        count) - (balance * balance)) / balance);
+    this.m_balanceScore = Math.sqrt(Div.INSTANCE.computeAsDouble(sumSqr,
+        count) - (balance * balance));
 
     if ((mode != EGroupingMode.DISTINCT) && (discontinuous > 0)) {
       this.m_discontinuousScore = Div.INSTANCE.computeAsDouble(
@@ -200,9 +200,10 @@ final class _Groups implements Comparable<_Groups> {
         case DISTINCT: {
           return (-1);
         }
-        case POWERS_OF_10: {
+        case ANY_POWERS: {
           switch (o.m_groupingMode) {
-            case DISTINCT: {
+            case DISTINCT:
+            case ANY_MULTIPLES: {
               return 1;
             }
             default: {
@@ -210,10 +211,9 @@ final class _Groups implements Comparable<_Groups> {
             }
           }
         }
-        case POWERS_OF_2: {
+        case ANY_MULTIPLES: {
           switch (o.m_groupingMode) {
-            case DISTINCT:
-            case POWERS_OF_10: {
+            case DISTINCT: {
               return 1;
             }
             default: {

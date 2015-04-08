@@ -154,6 +154,8 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends DataElement>
   /** {@inheritDoc} */
   @Override
   public void toText(final ITextOutput textOut) {
+    final int size;
+
     textOut.append('[');
 
     addLower: {
@@ -220,5 +222,12 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends DataElement>
 
     textOut.append(this.m_isUpperExclusive ? ')' : ']');
     super.toText(textOut);
+
+    textOut.append('/');
+    textOut.append(size = this.m_values.size());
+    textOut.append(" value"); //$NON-NLS-1$
+    if (size != 1) {
+      textOut.append('s');
+    }
   }
 }
