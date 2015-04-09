@@ -104,7 +104,7 @@ public class PropertyValueGroups<DT extends DataElement> extends
 
   /** {@inheritDoc} */
   @Override
-  public DataElement getOwner() {
+  public final Property<?> getOwner() {
     return this.m_property;
   }
 
