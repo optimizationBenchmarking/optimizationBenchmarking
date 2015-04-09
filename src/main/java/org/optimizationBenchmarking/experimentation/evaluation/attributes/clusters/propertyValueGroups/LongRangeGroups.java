@@ -13,6 +13,9 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 public final class LongRangeGroups<DT extends DataElement> extends
     ValueRangeGroups<DT> {
 
+  /** the serial version uid */
+  private static final long serialVersionUID = 1L;
+
   /**
    * create the property value groups
    * 

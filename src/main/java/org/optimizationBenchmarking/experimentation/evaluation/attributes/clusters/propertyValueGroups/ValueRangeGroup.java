@@ -16,6 +16,9 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 public abstract class ValueRangeGroup<VT extends Object, DT extends DataElement>
     extends PropertyValueGroup<DT> {
 
+  /** the serial version uid */
+  private static final long serialVersionUID = 1L;
+
   /** the inclusive lower bound */
   private final VT m_lower;
   /** the inclusive or exclusive upper bound */
@@ -69,6 +72,16 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends DataElement>
     this.m_lower = lowerBound;
     this.m_upper = upperBound;
     this.m_values = new ArraySetView<>(values);
+
+    this.m_hashCode = HashUtils.combineHashes(//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(lowerBound),//
+            HashUtils.combineHashes(//
+                HashUtils.hashCode(upperBound),//
+                HashUtils.hashCode(isUpperExclusive))),//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(values),//
+            this.m_hashCode));
   }
 
   /** {@inheritDoc} */
@@ -135,20 +148,6 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends DataElement>
    */
   public final ArraySetView<VT> getValues() {
     return this.m_values;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected int calcHashCode() {
-    return HashUtils.combineHashes(//
-        HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_lower),//
-            HashUtils.combineHashes(//
-                HashUtils.hashCode(this.m_upper),//
-                HashUtils.hashCode(this.m_isUpperExclusive))),//
-        HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_values),//
-            super.calcHashCode()));
   }
 
   /** {@inheritDoc} */

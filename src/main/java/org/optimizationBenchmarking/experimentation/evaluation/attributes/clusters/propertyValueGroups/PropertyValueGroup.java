@@ -15,6 +15,9 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 public abstract class PropertyValueGroup<DT extends DataElement> extends
     _GroupBase {
 
+  /** the serial version uid */
+  private static final long serialVersionUID = 1L;
+
   /** the data elements */
   private final ArraySetView<DT> m_data;
   /** the owning value group set */
@@ -35,6 +38,7 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
     }
 
     this.m_data = new ArraySetView<>(data);
+    this.m_hashCode = HashUtils.hashCode(this.m_data);
   }
 
   /**
@@ -42,6 +46,7 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
    * 
    * @return the owning group set
    */
+  @Override
   public PropertyValueGroups<DT> getOwner() {
     return this.m_owner;
   }
@@ -53,12 +58,6 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
    */
   public final ArraySetView<DT> getElements() {
     return this.m_data;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected int calcHashCode() {
-    return HashUtils.hashCode(this.m_data);
   }
 
   /** {@inheritDoc} */

@@ -16,6 +16,9 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 public class PropertyValueGroups<DT extends DataElement> extends
     _GroupBase implements Comparable<PropertyValueGroups<?>> {
 
+  /** the serial version uid */
+  private static final long serialVersionUID = 1L;
+
   /** the property */
   final Property<?> m_property;
 
@@ -89,6 +92,20 @@ public class PropertyValueGroups<DT extends DataElement> extends
     if (unspecified != null) {
       unspecified.m_owner = this;
     }
+
+    this.m_hashCode = HashUtils.combineHashes(//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(mode),//
+            HashUtils.hashCode(info)),//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(property),//
+            HashUtils.hashCode(unspecified)));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public DataElement getOwner() {
+    return this.m_property;
   }
 
   /**
@@ -115,20 +132,6 @@ public class PropertyValueGroups<DT extends DataElement> extends
    */
   public final EGroupingMode getGroupingMode() {
     return this.m_groupingMode;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected int calcHashCode() {
-    return HashUtils.combineHashes(//
-        HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_groupingMode),//
-            HashUtils.hashCode(this.m_groupingInfo)),//
-        HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_property),//
-            HashUtils.combineHashes(//
-                HashUtils.hashCode(this.m_unspecified),//
-                super.calcHashCode())));
   }
 
   /**

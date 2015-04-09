@@ -16,7 +16,7 @@ public abstract class DataElement implements Serializable, ITextable {
   private HashMap<Attribute<?, ?>, Object> m_attributes;
 
   /** create */
-  DataElement() {
+  protected DataElement() {
     super();
   }
 

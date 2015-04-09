@@ -11,6 +11,9 @@ import org.optimizationBenchmarking.experimentation.data.DataElement;
 public final class DoubleRangeGroup<DT extends DataElement> extends
     ValueRangeGroup<Number, DT> {
 
+  /** the serial version uid */
+  private static final long serialVersionUID = 1L;
+
   /**
    * create the property value group
    * 

@@ -15,6 +15,9 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 public final class DistinctValueGroup<DT extends DataElement> extends
     PropertyValueGroup<DT> {
 
+  /** the serial version uid */
+  private static final long serialVersionUID = 1L;
+
   /** the singular value */
   private final Object m_value;
 
@@ -34,6 +37,10 @@ public final class DistinctValueGroup<DT extends DataElement> extends
           "The singular property value cannot be null."); //$NON-NLS-1$
     }
     this.m_value = value;
+
+    this.m_hashCode = HashUtils.combineHashes(//
+        super.m_hashCode,//
+        HashUtils.hashCode(this.m_value));
   }
 
   /**
@@ -53,14 +60,6 @@ public final class DistinctValueGroup<DT extends DataElement> extends
    */
   public final boolean isUnspecified() {
     return ParameterValue.isUnspecified(this.m_value);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected int calcHashCode() {
-    return HashUtils.combineHashes(//
-        HashUtils.hashCode(this.m_value),//
-        super.calcHashCode());
   }
 
   /** {@inheritDoc} */
