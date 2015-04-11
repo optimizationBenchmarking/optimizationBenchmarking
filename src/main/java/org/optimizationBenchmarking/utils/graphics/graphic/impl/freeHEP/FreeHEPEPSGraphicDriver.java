@@ -5,8 +5,8 @@ import java.awt.Dimension;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.logging.Logger;
 
-import org.freehep.graphicsio.ps.PSGraphics2D;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
@@ -146,11 +146,12 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
   protected final Graphic createGraphic(final GraphicBuilder builder) {
 
     final org.freehep.util.UserProperties up;
-    final org.freehep.graphicsio.ps.PSGraphics2D g;
+    final _FreeHEPEPSGraphic g;
     final double wd, hd;
     final Dimension dim;
     final ELength sizeUnit;
     final Path path;
+    final Logger logger;
     final PhysicalDimension size;
     OutputStream stream;
 
@@ -185,9 +186,11 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
           true, thro);
       return null; // we'll never get here
     }
+
+    logger = builder.getLogger();
     synchronized (org.freehep.graphicsio.ps.PSGraphics2D.class) {
       org.freehep.graphicsio.ps.PSGraphics2D.setClipEnabled(true);
-      g = new PSGraphics2D(stream, dim);
+      g = new _FreeHEPEPSGraphic(stream, dim, logger);
       g.setProperties(up);
       g.setMultiPage(false);
       GraphicUtils.setDefaultRenderingHints(g);
@@ -195,7 +198,7 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
       g.setClip(0, 0, dim.width, dim.height);
     }
 
-    return new _FreeHEPEPSGraphicWrapper(g, builder.getLogger(),
+    return new _FreeHEPEPSGraphicWrapper(g, logger,
         builder.getFileProducerListener(), path, dim.width, dim.height);
   }
 
