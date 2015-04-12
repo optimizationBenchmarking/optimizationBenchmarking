@@ -1,11 +1,16 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.single.experimentInfo;
 
-import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.ExperimentStatistic;
+import java.util.logging.Logger;
+
+import org.optimizationBenchmarking.experimentation.data.Experiment;
+import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.ExperimentModule;
+import org.optimizationBenchmarking.utils.config.Configuration;
 
 /**
- * The experiment information module.
+ * The experiment information module. This module prints some basic
+ * information about an experiment.
  */
-public class ExperimentInformation extends ExperimentStatistic {
+public final class ExperimentInformation extends ExperimentModule {
 
   /** create the experiment information tool */
   ExperimentInformation() {
@@ -14,20 +19,9 @@ public class ExperimentInformation extends ExperimentStatistic {
 
   /** {@inheritDoc} */
   @Override
-  public boolean canUse() {
-    return true;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public ExperimentInformationSetup use() {
-    return new ExperimentInformationSetup();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public String toString() {
-    return ExperimentInformation.class.getSimpleName();
+  public final _ExperimentInformationJob createJob(final Experiment data,
+      final Configuration config, final Logger logger) {
+    return new _ExperimentInformationJob(data, logger);
   }
 
   /**

@@ -1,37 +1,25 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendix;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IConfiguredExperimentModule;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IConfiguredExperimentSetModule;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IConfiguredModule;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IDescription;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationModule;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationModuleSetup;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentModuleSetup;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetStatistic;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentStatistic;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
-import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
-import org.optimizationBenchmarking.utils.text.TextUtils;
-import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** In this class, we group the code for building modules */
 final class _ModulesBuilder {
 
-  /** a description module */
-  private static final int MODULE_TYPE_DESCRIPTION = 0;
-  /** a single-experiment module */
-  private static final int MODULE_TYPE_SINGLE_EXPERIMENT = (_ModulesBuilder.MODULE_TYPE_DESCRIPTION + 1);
-  /** an experiment set module */
-  private static final int MODULE_TYPE_EXPERIMENT_SET = (_ModulesBuilder.MODULE_TYPE_SINGLE_EXPERIMENT + 1);
-  /** an appendix module */
-  private static final int MODULE_TYPE_APPENDIX = (_ModulesBuilder.MODULE_TYPE_EXPERIMENT_SET + 1);
+  /** the module types */
+  static final String[] MODULE_TYPES;
+
+  static {
+    MODULE_TYPES = new String[_EvaluationSetup.TYPE_COUNT];
+    _ModulesBuilder.MODULE_TYPES[_EvaluationSetup.TYPE_DESCRIPTION] = "description"; //$NON-NLS-1$
+    _ModulesBuilder.MODULE_TYPES[_EvaluationSetup.TYPE_EXPERIMENT] = "experiment"; //$NON-NLS-1$
+    _ModulesBuilder.MODULE_TYPES[_EvaluationSetup.TYPE_EXPERIMENT_SET] = "experiment set"; //$NON-NLS-1$
+    _ModulesBuilder.MODULE_TYPES[_EvaluationSetup.TYPE_APPENDIX] = "appendix"; //$NON-NLS-1$
+  }
 
   /**
    * Build the module hierarchy
@@ -44,531 +32,240 @@ final class _ModulesBuilder {
    *          the logger
    * @return the configured module hierarchy
    */
-  static final _Modules _buildModules(final _EvaluationSetup setup,
+  static final _MainJob _buildModules(final _EvaluationSetup setup,
       final ExperimentSet data, final Logger logger) {
-    ArrayList<_ModuleEntry> allModules;
-    ArrayList<IConfiguredModule>[] allConfiguredModules;
-    _Modules modules;
+    final ArrayList<_ModuleEntry>[] allModules;
+    final _DescriptionJobs descriptionJobs;
+    final _ExperimentJobs experimentJobs;
+    final _ExperimentSetJobs experimentSetJobs;
+    final _AppendixJobs appendixJobs;
+    ArrayList<_ModuleEntry> list, hierarchy;
+    int[][][] orderAndContainment;
+    int i, size, after;
+    boolean hasModules;
 
-    allModules = _ModulesBuilder.__compileModuleList(setup, logger);
-    _ModulesBuilder._checkModules(allModules, null);
-    allConfiguredModules = _ModulesBuilder.__configureModules(allModules,
-        data, logger);
-    allModules = null;
-    _ModulesBuilder.__checkConfigured(allConfiguredModules);
+    // Obtain the (four) lists of modules.
+    allModules = setup._takeModules();
 
-    modules = _ModulesBuilder.__makeModules(allConfiguredModules, logger);
-    allConfiguredModules = null;
-
-    if (modules == null) {
-      throw new IllegalStateException("Root module cannot be null."); //$NON-NLS-1$
+    // Check whether the lists are OK.
+    if (allModules == null) {
+      throw new IllegalArgumentException(//
+          "Module list array cannot be null.");//$NON-NLS-1$
+    }
+    if (allModules.length != _EvaluationSetup.TYPE_COUNT) {
+      throw new IllegalArgumentException(//
+          "Module list array length is " + //$NON-NLS-1$
+              allModules.length + " but should be "//$NON-NLS-1$
+              + _EvaluationSetup.TYPE_COUNT);
     }
 
-    return modules;
-  }
-
-  /**
-   * check whether the modules are OK
-   * 
-   * @param list
-   *          the list of modules
-   * @param textOut
-   *          the destination to write module information to
-   */
-  static final void _checkModules(final ArrayList<_ModuleEntry> list,
-      final MemoryTextOutput textOut) {
-    if ((list == null) || (list.isEmpty())) {
-      throw new IllegalStateException(
-          "There must be at least one module which can be applied to the current data, but no such module was defined."); //$NON-NLS-1$
-    }
-    _ModulesBuilder.__checkModuleList(list, textOut);
-  }
-
-  /**
-   * check the single module
-   * 
-   * @param modules
-   *          the list of modules to check
-   * @param textOut
-   *          the text output destination to write to
-   */
-  private static final void __checkModuleList(final ArrayList<?> modules,
-      final MemoryTextOutput textOut) {
-    int size;
-    _ModuleEntry entry;
-
-    if (modules != null) {
-      size = modules.size();
-    } else {
-      size = 0;
-    }
-
-    if (textOut != null) {
-      switch (size) {
-        case 0: {
-          textOut.append("no modules");//$NON-NLS-1$
-          return;
-        }
-        case 1: {
-          textOut.append("1 module"); //$NON-NLS-1$
-          break;
-        }
-        default: {
-          textOut.append(size);
-          textOut.append(" modules"); //$NON-NLS-1$
-        }
+    // Check whether we have at least one module.
+    hasModules = false;
+    for (i = _EvaluationSetup.TYPE_COUNT; (--i) >= 0;) {
+      list = allModules[i];
+      if (list == null) {
+        throw new IllegalArgumentException(
+            "List of " + _ModulesBuilder.MODULE_TYPES[i] + //$NON-NLS-1$
+                " is null.");//$NON-NLS-1$
       }
-    }
-
-    if (size <= 0) {
-      return;
-    }
-
-    size = 0;
-    for (final Object o : modules) {
-      size++;
-      if (o == null) {
-        throw new IllegalArgumentException("Module at index " //$NON-NLS-1$
-            + size + " is null."); //$NON-NLS-1$        
-      }
-
-      if (textOut != null) {
-        textOut.append((size <= 1) ? ':' : ',');
-        textOut.append(' ');
-      }
-      if (o instanceof _ModuleEntry) {
-        entry = ((_ModuleEntry) o);
-        _EvaluationSetup._checkModuleEntry(entry);
-        if (textOut != null) {
-          textOut.append(TextUtils.className(entry.m_module.getClass()));
-        }
+      if (list.isEmpty()) {
+        allModules[i] = null;
       } else {
-        if (textOut != null) {
-          textOut.append(TextUtils.className(o.getClass()));
-        }
+        hasModules = true;
       }
     }
-  }
-
-  /**
-   * Call this if there is no module for computing statistics
-   */
-  static final void _noStatisticModuleError() {
-    throw new IllegalArgumentException(//
-        "There must be at least one module job which actually calculates a statistic, i.e., works on single experiments or experiment sets. Maybe you only provided experiment set statistics but the experiment set only contained a single experiment? Or maybe you just provided description and appendix modules?"); //$NON-NLS-1$
-  }
-
-  /**
-   * Obtain the complete list of all modules which need to be configured
-   * and executed. This method resolves all module requirements. The other
-   * modules required by one module will be inserted before that module
-   * into the list, unless they already are in the list.
-   * 
-   * @param setup
-   *          the setup
-   * @param logger
-   *          the logger to use
-   * @return the list
-   */
-  private static final ArrayList<_ModuleEntry> __compileModuleList(
-      final _EvaluationSetup setup, final Logger logger) {
-    final MemoryTextOutput mto;
-    final ArrayList<_ModuleEntry> modules;
-    IEvaluationModule module;
-    _ModuleEntry entry;
-    ReflectiveOperationException except;
-    Iterable<Class<? extends IEvaluationModule>> requiredIt;
-    int index;
-    String s;
-    boolean canInc;
-
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer(//
-          "Now beginning to compile module list by resolving dependencies."); //$NON-NLS-1$
+    if (!(hasModules)) {
+      throw new IllegalStateException(//
+          "The list of evaluation modules is empty."); //$NON-NLS-1$
     }
 
-    modules = setup._takeModules();
+    // For each of the four lists, we now build the module hierarchy.
+    for (i = 0; i < _EvaluationSetup.TYPE_COUNT; i++) {
+      list = allModules[i];
+      if (list == null) {
+        // list == null -> list is empty, skip
+        continue;
+      }
+
+      // Obtain the order and containment hierarchies.
+      orderAndContainment = _ModulesBuilder.__computeRelations(list);
+
+      // Build the hierarchy of module entries.
+      size = list.size();
+      allModules[i] = hierarchy = new ArrayList<>(size);
+      _ModulesBuilder.__buildHierarchy(logger, list, hierarchy, null,
+          orderAndContainment[0], orderAndContainment[1],
+          new boolean[size]);
+      orderAndContainment = null;
+      list = null;
+
+      // Check if we lost a module? (should never happen...)
+      after = _ModuleEntry._hierarchySize(hierarchy);
+
+      if (after != size) {
+        throw new IllegalStateException(((((//
+            size + //
+            " modules are expected in the hierarchy of ")//$NON-NLS-1$
+            + _ModulesBuilder.MODULE_TYPES[i]) + //
+            " modules but ") //$NON-NLS-1$
+            + after)
+            + //
+            " were found."); //$NON-NLS-1$
+      }
+    }
+
+    // now let's assemble the _MainJob
 
     try {
-      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-        mto = new MemoryTextOutput();
-        mto.append("Original list of modules contains ");//$NON-NLS-1$
-      } else {
-        mto = null;
-      }
-      _ModulesBuilder._checkModules(modules, mto);
-
-      if ((mto != null) && (logger != null)
-          && (logger.isLoggable(Level.FINER))) {
-        mto.append('.');
-        logger.finer(mto.toString());
-        mto.clear();
-      }
-
-      for (index = 0; index < modules.size();) {
-        canInc = true;
-        entry = modules.get(index);
-
-        _EvaluationSetup._checkModuleEntry(entry);
-
-        requiredIt = entry.m_module.getRequiredModules();
-        if (requiredIt != null) {
-
-          requirements: for (final Class<? extends IEvaluationModule> required : requiredIt) {
-
-            for (final _ModuleEntry have : modules) {
-              if (required.isAssignableFrom(have.m_module.getClass())) {
-                continue requirements;
-              }
-            }
-
-            canInc = false;
-            except = null;
-            module = null;
-            try {
-              module = ReflectionUtils.getInstance(
-                  IEvaluationModule.class, required, null);
-            } catch (final ReflectiveOperationException refError) {
-              except = refError;
-              module = null;
-            }
-
-            if (module == null) {
-              s = ("Could not obtain instance of module class "//$NON-NLS-1$ 
-              + required);
-              if (except != null) {
-                throw new IllegalArgumentException(s, except);
-              }
-              throw new IllegalArgumentException(s);
-            }
-
-            modules.add(
-                index,
-                new _ModuleEntry(module, setup
-                    ._getConfiguration(entry.m_config)));
-          }
-        }
-
-        if (canInc) {
-          index++;
-        }
-      }
-
-    } catch (final RuntimeException re) {
-      ErrorUtils
-          .logError(
-              logger,
-              "Unrecoverable error during compiliation of module list. Maybe there are unresolved dependencies.", //$NON-NLS-1$
-              re, false, RethrowMode.AS_RUNTIME_EXCEPTION);
-      return null; // never reached
-    }
-
-    _ModulesBuilder._checkModules(modules, mto);
-    if ((mto != null) && (logger != null)
-        && (logger.isLoggable(Level.FINER))) {
-      mto.append("Finished compiling list of modules, now contains ");//$NON-NLS-1$      
-      logger.finer(mto.toString());
-    }
-
-    return modules;
-  }
-
-  /**
-   * Configure a compiled list of modules
-   * 
-   * @param entries
-   *          the entries
-   * @param data
-   *          the data
-   * @param logger
-   *          the logger
-   * @return an array of length 4, containing the description modules, the
-   *         single-experiment modules, the experiment-set modules, and the
-   *         appendix modules.
-   */
-  @SuppressWarnings("unchecked")
-  private static final ArrayList<IConfiguredModule>[] __configureModules(
-      final ArrayList<_ModuleEntry> entries, final ExperimentSet data,
-      final Logger logger) {
-    final ArrayList<IConfiguredModule>[] res;
-    final MemoryTextOutput mto;
-    final boolean hasMoreThanOneExperiment;
-    IConfiguredModule configured;
-    IEvaluationModuleSetup setup;
-    int type;
-
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      logger.finer(//
-          "The " + entries.size() + //$NON-NLS-1$
-              " modules will now be configured and divided into description, experiment, experiment set, and appendix modules."); //$NON-NLS-1$
-    }
-
-    res = new ArrayList[4];
-    hasMoreThanOneExperiment = (data.getData().size() > 1);
-    try {
-      for (final _ModuleEntry entry : entries) {
-        _EvaluationSetup._checkModuleEntry(entry);
-        setup = entry.m_module.use();
-        if (setup == null) {
-          throw new IllegalArgumentException(//
-              "Module setup object cannot be null, but use() of module '" //$NON-NLS-1$
-                  + entry.m_module + "' returned null.");//$NON-NLS-1$
-        }
-        if (logger != null) {
-          setup.setLogger(logger);
-        }
-        setup.configure(entry.m_config);
-        configured = setup.create();
-        if (configured == null) {
-          throw new IllegalArgumentException(//
-              "Configured module job cannot be null, but create() of use() of module '" //$NON-NLS-1$
-                  + entry.m_module + "' returned null.");//$NON-NLS-1$
-        }
-
-        if (entry.m_module instanceof IDescription) {
-          type = _ModulesBuilder.MODULE_TYPE_DESCRIPTION;
-        } else {
-          if (entry.m_module instanceof IExperimentStatistic) {
-            type = _ModulesBuilder.MODULE_TYPE_SINGLE_EXPERIMENT;
-          } else {
-            if (entry.m_module instanceof IExperimentSetStatistic) {
-              type = _ModulesBuilder.MODULE_TYPE_EXPERIMENT_SET;
-            } else {
-              if (entry.m_module instanceof IAppendix) {
-                type = _ModulesBuilder.MODULE_TYPE_APPENDIX;
-              } else {
-                if (setup instanceof IExperimentModuleSetup) {
-                  type = _ModulesBuilder.MODULE_TYPE_SINGLE_EXPERIMENT;
-                } else {
-                  if (configured instanceof IConfiguredExperimentModule) {
-                    type = _ModulesBuilder.MODULE_TYPE_SINGLE_EXPERIMENT;
-                  } else {
-                    if (configured instanceof IConfiguredExperimentSetModule) {
-                      type = _ModulesBuilder.MODULE_TYPE_EXPERIMENT_SET;
-                    } else {
-                      throw new IllegalArgumentException(//
-                          "Module job object of module '" //$NON-NLS-1$
-                              + entry.m_module + "' not recognized.");//$NON-NLS-1$
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        if ((type != _ModulesBuilder.MODULE_TYPE_EXPERIMENT_SET)
-            || hasMoreThanOneExperiment) {
-          if (res[type] == null) {
-            res[type] = new ArrayList<>();
-          }
-          res[type].add(configured);
-        }
-      }
-
-      _ModulesBuilder.__checkConfigured(res);
-    } catch (final RuntimeException re) {
-      ErrorUtils
-          .logError(
-              logger,
-              "Unrecoverable during module configuration process. Maybe you did not specify modules that can actually compute a statistic over the provided data.", //$NON-NLS-1$
-              re, false, RethrowMode.AS_RUNTIME_EXCEPTION);
-      return null;// never reached
-    }
-
-    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-      mto = new MemoryTextOutput();
-      mto.append("The "); //$NON-NLS-1$
-      mto.append(entries.size());
-      mto.append(//
-      " modules have been configured. The list of configured description modules contains ");//$NON-NLS-1$
-      _ModulesBuilder.__checkModuleList(
-          res[_ModulesBuilder.MODULE_TYPE_DESCRIPTION], mto);
-      mto.append(//
-      ". The list of configured single-experiment modules contains ");//$NON-NLS-1$
-      _ModulesBuilder.__checkModuleList(
-          res[_ModulesBuilder.MODULE_TYPE_SINGLE_EXPERIMENT], mto);
-      mto.append(//
-      ". The list of configured experiment-set modules contains ");//$NON-NLS-1$
-      _ModulesBuilder.__checkModuleList(
-          res[_ModulesBuilder.MODULE_TYPE_EXPERIMENT_SET], mto);
-      mto.append(//
-      ". The list of configured appendix modules contains ");//$NON-NLS-1$
-      _ModulesBuilder.__checkModuleList(
-          res[_ModulesBuilder.MODULE_TYPE_APPENDIX], mto);
-      mto.append('.');
-      logger.finer(mto.toString());
-    }
-
-    return res;
-  }
-
-  /**
-   * Check the configured elements
-   * 
-   * @param configured
-   *          the configured elements
-   */
-  private static final void __checkConfigured(
-      final ArrayList<IConfiguredModule>[] configured) {
-
-    if (configured == null) {
-      throw new IllegalArgumentException(//
-          "Set of configured modules cannot be null."); //$NON-NLS-1$
-    }
-
-    if (configured.length != 4) {
-      throw new IllegalArgumentException(//
-          "Set of configured modules must have dimension 4 (description modules, single-experiment modules, experiment set modules, appendix modules)."); //$NON-NLS-1$
-    }
-
-    if (((configured[_ModulesBuilder.MODULE_TYPE_SINGLE_EXPERIMENT] == null) || (configured[_ModulesBuilder.MODULE_TYPE_SINGLE_EXPERIMENT]
-        .isEmpty()))
-        && ((configured[_ModulesBuilder.MODULE_TYPE_EXPERIMENT_SET] == null) || (configured[_ModulesBuilder.MODULE_TYPE_EXPERIMENT_SET]
-            .isEmpty()))) {
-      _ModulesBuilder._noStatisticModuleError();
-    }
-  }
-
-  /**
-   * Build the containment hierarchy of a list of modules
-   * 
-   * @param configured
-   *          the configured modules
-   * @param logger
-   *          the logger
-   * @return the containment hierarchy
-   */
-  @SuppressWarnings("incomplete-switch")
-  private static final _ModuleWrapper[] __buildWrappers(
-      final IConfiguredModule[] configured, final Logger logger) {
-    final int length;
-    final int[][] containment, order;
-    final _ModuleWrapper[] res;
-    final boolean[] done;
-    IConfiguredModule a, b;
-    int i, j;
-
-    if ((configured == null) || ((length = configured.length) <= 0)) {
+      descriptionJobs = _ModuleEntry._makeDescriptionJobs(allModules[0],
+          data, logger);
+    } catch (final Throwable error) {
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
+          "Error while assembling description jobs.", //$NON-NLS-1$
+          false, error);
       return null;
     }
+
     try {
-      containment = new int[length][];
-      order = new int[length][];
-
-      // allocate
-      for (i = 0; i < length; i++) {
-        order[i] = new int[i];
-        containment[i] = new int[i];
-      }
-
-      if ((logger != null) && (logger.isLoggable(Level.FINEST))) {
-        logger.finest("Obtaining order and containment preferences."); //$NON-NLS-1$
-      }
-
-      // find the hard-coded relationships
-      for (i = 0; i < length; i++) {
-        a = configured[i];
-        for (j = length; (--j) >= 0;) {
-          if (i == j) {
-            continue;
-          }
-          b = configured[j];
-          switch (a.getRelationship(b)) {
-            case EXECUTE_BEFORE: {
-              if (i < j) {
-                if (order[j][i] < 0) {
-                  _ModulesBuilder.__orderError(a, b);
-                }
-                order[j][i] = 1;
-              } else {
-                if (order[i][j] > 0) {
-                  _ModulesBuilder.__orderError(a, b);
-                }
-                order[i][j] = (-1);
-              }
-              break;
-            }
-            case EXECUTE_AFTER: {
-              if (i < j) {
-                if (order[j][i] > 0) {
-                  _ModulesBuilder.__orderError(a, b);
-                }
-                order[j][i] = (-1);
-              } else {
-                if (order[i][j] < 0) {
-                  _ModulesBuilder.__orderError(a, b);
-                }
-                order[i][j] = 1;
-              }
-              break;
-            }
-
-            case CONTAINS: {
-              if (i < j) {
-                if (containment[j][i] < 0) {
-                  _ModulesBuilder.__containmentError(a, b);
-                }
-                containment[j][i] = 1;
-              } else {
-                if (containment[i][j] > 0) {
-                  _ModulesBuilder.__containmentError(a, b);
-                }
-                containment[i][j] = (-1);
-              }
-              break;
-            }
-            case CONTAINED_IN: {
-              if (i < j) {
-                if (containment[j][i] > 0) {
-                  _ModulesBuilder.__containmentError(a, b);
-                }
-                containment[j][i] = (-1);
-              } else {
-                if (containment[i][j] < 0) {
-                  _ModulesBuilder.__containmentError(a, b);
-                }
-                containment[i][j] = 1;
-              }
-              break;
-            }
-          }
-
-        }
-      }
-
-      if ((logger != null) && (logger.isLoggable(Level.FINEST))) {
-        logger.finest("Computing transitive relationship."); //$NON-NLS-1$
-      }
-
-      // we now have loaded all hard-coded order and containment
-      // hierarchies
-      _ModulesBuilder
-          .__computeTransitiveRelations(order, configured, true);
-      _ModulesBuilder.__computeTransitiveRelations(containment,
-          configured, false);
-
-      done = new boolean[length];
-      if ((logger != null) && (logger.isLoggable(Level.FINEST))) {
-        logger.finest("Building module hierarchy recursively."); //$NON-NLS-1$
-      }
-      res = _ModulesBuilder.__buildHierarchy(logger, configured, -1,
-          containment, order, done);
-
-      for (i = done.length; (--i) >= 0;) {
-        if (!(done[i])) {
-          throw new IllegalStateException("Module '" + configured[i] //$NON-NLS-1$
-              + "' could not be placed into hierarchy?!"); //$NON-NLS-1$
-        }
-      }
-    } catch (final RuntimeException re) {
-      ErrorUtils.logError(logger, //
-          "Unrecoverable error while building array of module wrappers.",//$NON-NLS-1$
-          re, false, RethrowMode.AS_RUNTIME_EXCEPTION);
-      return null;// never reached
+      experimentJobs = _ModuleEntry._makeExperimentJobs(allModules[1],
+          data, logger);
+    } catch (final Throwable error) {
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
+          "Error while assembling experiment jobs.", //$NON-NLS-1$
+          false, error);
+      return null;
     }
 
-    return res;
+    try {
+      experimentSetJobs = _ModuleEntry._makeExperimentSetJobs(
+          allModules[2], data, logger);
+    } catch (final Throwable error) {
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
+          "Error while assembling experiment set jobs.", //$NON-NLS-1$
+          false, error);
+      return null;
+    }
+
+    try {
+      appendixJobs = _ModuleEntry._makeAppendixJobs(allModules[3], data,
+          logger);
+    } catch (final Throwable error) {
+      RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
+          "Error while assembling appendix jobs.", //$NON-NLS-1$
+          false, error);
+      return null;
+    }
+    return new _MainJob(logger, descriptionJobs, experimentJobs,
+        experimentSetJobs, appendixJobs);
+
+  }
+
+  /**
+   * Build the containment and order hierarchy of a list of modules
+   * 
+   * @param entries
+   *          the module entries
+   * @return the order and containment hierarchies
+   */
+  @SuppressWarnings("incomplete-switch")
+  private static final int[][][] __computeRelations(
+      final ArrayList<_ModuleEntry> entries) {
+    final int length;
+    final int[][] containment, order;
+    _ModuleEntry a, b;
+    int i, j;
+
+    if ((entries == null) || ((length = entries.size()) <= 0)) {
+      return null;
+    }
+
+    containment = new int[length][];
+    order = new int[length][];
+
+    // allocate
+    for (i = 0; i < length; i++) {
+      order[i] = new int[i];
+      containment[i] = new int[i];
+    }
+
+    // find the hard-coded relationships
+    for (i = 0; i < length; i++) {
+      a = entries.get(i);
+      for (j = length; (--j) >= 0;) {
+        if (i == j) {
+          continue;
+        }
+        b = entries.get(j);
+        switch (a.m_module.getRelationship(b.m_module)) {
+          case EXECUTE_BEFORE: {
+            if (i < j) {
+              if (order[j][i] < 0) {
+                _ModulesBuilder.__orderError(a, b);
+              }
+              order[j][i] = 1;
+            } else {
+              if (order[i][j] > 0) {
+                _ModulesBuilder.__orderError(a, b);
+              }
+              order[i][j] = (-1);
+            }
+            break;
+          }
+          case EXECUTE_AFTER: {
+            if (i < j) {
+              if (order[j][i] > 0) {
+                _ModulesBuilder.__orderError(a, b);
+              }
+              order[j][i] = (-1);
+            } else {
+              if (order[i][j] < 0) {
+                _ModulesBuilder.__orderError(a, b);
+              }
+              order[i][j] = 1;
+            }
+            break;
+          }
+
+          case CONTAINS: {
+            if (i < j) {
+              if (containment[j][i] < 0) {
+                _ModulesBuilder.__containmentError(a, b);
+              }
+              containment[j][i] = 1;
+            } else {
+              if (containment[i][j] > 0) {
+                _ModulesBuilder.__containmentError(a, b);
+              }
+              containment[i][j] = (-1);
+            }
+            break;
+          }
+          case CONTAINED_IN: {
+            if (i < j) {
+              if (containment[j][i] > 0) {
+                _ModulesBuilder.__containmentError(a, b);
+              }
+              containment[j][i] = (-1);
+            } else {
+              if (containment[i][j] < 0) {
+                _ModulesBuilder.__containmentError(a, b);
+              }
+              containment[i][j] = 1;
+            }
+            break;
+          }
+        }
+
+      }
+    }
+
+    // we now have loaded all hard-coded order and containment
+    // hierarchies
+    _ModulesBuilder.__computeTransitiveRelations(order, entries, true);
+    _ModulesBuilder.__computeTransitiveRelations(containment, entries,
+        false);
+
+    return new int[][][] { order, containment };
   }
 
   /**
@@ -578,6 +275,8 @@ final class _ModulesBuilder {
    *          the logger
    * @param modules
    *          the modules
+   * @param dest
+   *          the destination
    * @param containedIn
    *          the index of the owning element, or {@code -1} for none
    * @param containment
@@ -586,100 +285,103 @@ final class _ModulesBuilder {
    *          the order
    * @param done
    *          the done wrappers
-   * @return the wrapper array
    */
-  @SuppressWarnings("incomplete-switch")
-  private static final _ModuleWrapper[] __buildHierarchy(
-      final Logger logger, final IConfiguredModule[] modules,
-      final int containedIn, final int[][] containment,
-      final int[][] order, final boolean[] done) {
+  private static final void __buildHierarchy(final Logger logger,
+      final ArrayList<_ModuleEntry> modules,
+      final ArrayList<_ModuleEntry> dest, final _ModuleEntry containedIn,
+      final int[][] order, final int[][] containment, final boolean[] done) {
     final int length;
-    ArrayList<_ModuleWrapper> temp;
-    IConfiguredModule cmp;
-    int i, j, k;
+    ArrayList<_ModuleEntry> useDest;
+    _ModuleEntry current;
+    int index, currentID, otherID, destIndex;
 
-    temp = null;
     length = containment.length;
-    find: for (i = 0; i < containment.length; i++) {
+    find: for (index = 0; index < modules.size(); index++) {
+      current = modules.get(index);
+      currentID = current.m_id;
 
-      // the module has already been processed
-      if (done[i]) {
-        continue;
+      if (done[currentID]) {
+        throw new IllegalStateException(//
+            "Module cannot be in module list anymore, but is."); //$NON-NLS-1$
       }
 
       // check if the module is contained inside the expected module
-      if (containedIn >= 0) {
-        if (i == containedIn) {
-          continue;
+      if (containedIn != null) {
+        if ((current == containedIn) || (currentID == containedIn.m_id)) {
+          throw new IllegalStateException(//
+              "Module cannot be in module list anymore, but is."); //$NON-NLS-1$
         }
-        if (i > containedIn) {
-          if (containment[i][containedIn] != 1) {
+        if (currentID > containedIn.m_id) {
+          if (containment[currentID][containedIn.m_id] != 1) {
             continue find;
           }
         } else {
-          if (containment[containedIn][i] != (-1)) {
+          if (containment[containedIn.m_id][currentID] != (-1)) {
             continue find;
           }
         }
       }
 
-      // now check if we are in a deeper hierarchical nesting
-      checkerA: for (j = i; (--j) >= 0;) {
-        switch (containment[i][j]) {
-          case (-1): {
-            continue checkerA;
-          }
-          case 1: {
-            if (!done[j]) {
-              continue find;
-            }
+      // now check if we are in a deeper hierarchical nesting: is the
+      // current module contained in another, not-yet-processed one?
+      for (otherID = currentID; (--otherID) >= 0;) {
+        if (containment[currentID][otherID] == 1) {
+          if (!done[otherID]) {
+            continue find;
           }
         }
       }
 
-      checkerB: for (j = i; (++j) < length;) {
-        switch (containment[j][i]) {
-          case (-1): {
-            if (!done[j]) {
-              continue find;
-            }
-          }
-          case 1: {
-            continue checkerB;
+      for (otherID = currentID; (++otherID) < length;) {
+        if (containment[otherID][currentID] == (-1)) {
+          if (!done[otherID]) {
+            continue find;
           }
         }
       }
 
       // If we get here, then the module is contained in the other module
-      // and can be added to the list.
-      done[i] = true;
+      // (or is another root module) and can be added to the destination
+      // list (after removing it from the source list).
+      done[currentID] = true;
+      modules.remove(index);
 
-      // so let's find out where to insert it
-      if (temp == null) {
-        temp = new ArrayList<>();
-        j = -1;
+      // Get the destination list.
+      if (containedIn == null) {
+        useDest = dest; // use original destination array
       } else {
-        findIndex: for (j = temp.size(); (--j) >= 0;) {
-          cmp = temp.get(j).m_module;
-          inner: for (k = i; (--k) >= 0;) {
-            if (modules[k] == cmp) {
-              break inner;
-            }
-            if (order[i][k] >= 0) {
-              break findIndex;
-            }
+        useDest = containedIn.m_children;
+        if (useDest == null) {
+          // create new destination array if necessary
+          containedIn.m_children = useDest = new ArrayList<>();
+        }
+      }
+
+      // Find the right index: The new element is added behind all
+      // smaller-or-equal elements in the destination list.
+      findIndex: for (destIndex = useDest.size(); (--destIndex) >= 0;) {
+        otherID = dest.get(destIndex).m_id;
+        if (otherID == currentID) {
+          throw new IllegalStateException("Two modules with same ID?"); //$NON-NLS-1$
+        }
+        if (currentID > otherID) {
+          if (order[currentID][otherID] >= 0) {
+            break findIndex;
+          }
+        } else {
+          if (order[otherID][currentID] <= 0) {
+            break findIndex;
           }
         }
       }
 
-      temp.add(
-          (j + 1),
-          new _ModuleWrapper(logger, _ModulesBuilder.__buildHierarchy(
-              logger, modules, i, containment, order, done), modules[i]));
-    }
+      useDest.add((destIndex + 1), current);
 
-    return ((temp == null) ? null : //
-        temp.toArray(new _ModuleWrapper[temp.size()]));
+      // Recurse: Find all elements to be inserted into the current module
+      // record.
+      _ModulesBuilder.__buildHierarchy(logger, modules, null, current,
+          order, containment, done);
+    }
   }
 
   /**
@@ -693,7 +395,7 @@ final class _ModulesBuilder {
    *          are we doing orders (or containments?)
    */
   private static final void __computeTransitiveRelations(
-      final int[][] relations, final IConfiguredModule[] modules,
+      final int[][] relations, final ArrayList<_ModuleEntry> modules,
       final boolean isOrder) {
     final int length;
     int i, j, k, r1, r2, r3;
@@ -714,10 +416,11 @@ final class _ModulesBuilder {
               if (r3 != r1) {
                 if (r3 != 0) {
                   if (isOrder) {
-                    _ModulesBuilder.__orderError(modules[i], modules[k]);
+                    _ModulesBuilder.__orderError(modules.get(i),
+                        modules.get(k));
                   } else {
-                    _ModulesBuilder.__containmentError(modules[i],
-                        modules[k]);
+                    _ModulesBuilder.__containmentError(modules.get(i),
+                        modules.get(k));
                   }
                 } else {
                   relations[i][k] = r2;
@@ -725,7 +428,6 @@ final class _ModulesBuilder {
                 }
               }
             }
-
           }
         }
       }
@@ -741,12 +443,13 @@ final class _ModulesBuilder {
    * @param b
    *          the second module
    */
-  private static final void __orderError(final IConfiguredModule a,
-      final IConfiguredModule b) {
-    throw new IllegalStateException(
-        "The execution order of the modules is inconsistent: Module '" + a //$NON-NLS-1$
-            + "' comes both before and after module '" + b + //$NON-NLS-1$
-            "'.");//$NON-NLS-1$
+  private static final void __orderError(final _ModuleEntry a,
+      final _ModuleEntry b) {
+    throw new IllegalStateException(((((//
+        "The execution order of the modules is inconsistent: Module '" //$NON-NLS-1$
+        + a.m_module) + //
+        "' comes both before and after module '") //$NON-NLS-1$
+        + b.m_module) + '\'') + '.');
   }
 
   /**
@@ -757,122 +460,13 @@ final class _ModulesBuilder {
    * @param b
    *          the second module
    */
-  private static final void __containmentError(final IConfiguredModule a,
-      final IConfiguredModule b) {
-    throw new IllegalStateException(
-        "The containment hierarchy of the modules is inconsistent: Module '" + a //$NON-NLS-1$
-            + "' is both contained inside and also contains module '" + b + //$NON-NLS-1$
-            "'.");//$NON-NLS-1$
-  }
-
-  /**
-   * Build the module hierarchy
-   * 
-   * @param configured
-   *          the configured module sets
-   * @param logger
-   *          the logger
-   * @return the modules object
-   */
-  private static final _Modules __makeModules(
-      final ArrayList<IConfiguredModule>[] configured, final Logger logger) {
-    final _Descriptions desc;
-    final _ExperimentStatistics experimentStatistics;
-    final _ExperimentSetStatistics experimentSetStatistics;
-    final _Appendices appendices;
-    ArrayList<IConfiguredModule> list;
-    int size;
-    _ModuleWrapper[] wrappers;
-
-    try {
-      if (((list = configured[_ModulesBuilder.MODULE_TYPE_DESCRIPTION]) != null)
-          && ((size = list.size()) > 0)) {
-        if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-          logger.finer("Building hierarchy and wrappers for "//$NON-NLS-1$
-              + size + " description modules.");//$NON-NLS-1$
-        }
-
-        wrappers = _ModulesBuilder.__buildWrappers(
-            list.toArray(new IConfiguredModule[size]), logger);
-        configured[_ModulesBuilder.MODULE_TYPE_DESCRIPTION] = null;
-        if ((wrappers == null) || (wrappers.length <= 0)) {
-          throw new IllegalStateException("Description modules lost?");//$NON-NLS-1$
-        }
-        desc = new _Descriptions(logger, wrappers);
-      } else {
-        desc = null;
-      }
-
-      if (((list = configured[_ModulesBuilder.MODULE_TYPE_SINGLE_EXPERIMENT]) != null)
-          && ((size = list.size()) > 0)) {
-        if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-          logger.finer("Building hierarchy and wrappers for "//$NON-NLS-1$
-              + size + " single-experiment modules.");//$NON-NLS-1$
-        }
-
-        wrappers = _ModulesBuilder.__buildWrappers(
-            list.toArray(new IConfiguredModule[size]), logger);
-        configured[_ModulesBuilder.MODULE_TYPE_SINGLE_EXPERIMENT] = null;
-        if ((wrappers == null) || (wrappers.length <= 0)) {
-          throw new IllegalStateException(
-              "Experiment statistic modules lost?");//$NON-NLS-1$
-        }
-        experimentStatistics = new _ExperimentStatistics(logger, wrappers);
-      } else {
-        experimentStatistics = null;
-      }
-
-      if (((list = configured[_ModulesBuilder.MODULE_TYPE_EXPERIMENT_SET]) != null)
-          && ((size = list.size()) > 0)) {
-        if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-          logger.finer("Building hierarchy and wrappers for "//$NON-NLS-1$
-              + size + " experiment set modules.");//$NON-NLS-1$
-        }
-        wrappers = _ModulesBuilder.__buildWrappers(
-            list.toArray(new IConfiguredModule[size]), logger);
-        configured[_ModulesBuilder.MODULE_TYPE_EXPERIMENT_SET] = null;
-        if ((wrappers == null) || (wrappers.length <= 0)) {
-          throw new IllegalStateException(
-              "Experiment set statistic modules lost?");//$NON-NLS-1$
-        }
-        experimentSetStatistics = new _ExperimentSetStatistics(logger,
-            wrappers);
-      } else {
-        experimentSetStatistics = null;
-      }
-
-      if (((list = configured[_ModulesBuilder.MODULE_TYPE_APPENDIX]) != null)
-          && ((size = list.size()) > 0)) {
-        if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-          logger.finer("Building hierarchy and wrappers for "//$NON-NLS-1$
-              + size + " appendix modules.");//$NON-NLS-1$
-        }
-        wrappers = _ModulesBuilder.__buildWrappers(
-            list.toArray(new IConfiguredModule[size]), logger);
-        configured[_ModulesBuilder.MODULE_TYPE_APPENDIX] = null;
-        if ((wrappers == null) || (wrappers.length <= 0)) {
-          throw new IllegalStateException("Appendix modules lost?");//$NON-NLS-1$
-        }
-        appendices = new _Appendices(logger, wrappers);
-      } else {
-        appendices = null;
-      }
-
-      if ((experimentStatistics == null)
-          && (experimentSetStatistics == null)) {
-        _ModulesBuilder._noStatisticModuleError();
-      }
-    } catch (final RuntimeException re) {
-      ErrorUtils
-          .logError(
-              logger,
-              "Unrecoverable error while building module hierarchy and wrappers.",//$NON-NLS-1$
-              re, false, RethrowMode.AS_RUNTIME_EXCEPTION);
-      return null;// never reached
-    }
-
-    return new _Modules(logger, desc, experimentStatistics,
-        experimentSetStatistics, appendices);
+  private static final void __containmentError(final _ModuleEntry a,
+      final _ModuleEntry b) {
+    throw new IllegalStateException(((((//
+        "The execution order of the modules is inconsistent: Module '" //$NON-NLS-1$
+        + a.m_module) + //
+        "' both contains and is contained in module '") //$NON-NLS-1$
+        + b.m_module) + '\'') + '.');
   }
 
   /** the forbidden constructor */

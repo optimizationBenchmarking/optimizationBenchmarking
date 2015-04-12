@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr;
 
+import org.optimizationBenchmarking.experimentation.evaluation.system.spec.EModuleRelationship;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationModule;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
@@ -22,4 +23,21 @@ public abstract class EvaluationModule extends Tool implements
     return ((Iterable) (ArraySetView.EMPTY_SET_VIEW));
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public EModuleRelationship getRelationship(final IEvaluationModule other) {
+    return EModuleRelationship.NONE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean canUse() {
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    return this.getClass().getSimpleName();
+  }
 }

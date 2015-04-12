@@ -1,11 +1,13 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.spec;
 
 /**
- * A statistic module dealing with experiments.
+ * A module which processes single experiments and writes data about them
+ * to the output.
  */
 public interface IExperimentModule extends IEvaluationModule {
 
   /** {@inheritDoc} */
   @Override
-  public abstract IExperimentModuleSetup use();
+  public abstract IExperimentJobBuilder use();
+
 }

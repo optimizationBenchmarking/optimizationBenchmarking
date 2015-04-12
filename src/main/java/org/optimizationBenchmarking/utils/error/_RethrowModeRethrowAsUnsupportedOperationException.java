@@ -37,10 +37,9 @@ final class _RethrowModeRethrowAsUnsupportedOperationException extends
       // OK, handle represents a singular error.
 
       if (handle instanceof UnsupportedOperationException) {
-        // If handle is a UnsupportedOperationException and either no
-        // message is
-        // provided or the same message as stored in handle, we can
-        // directly return it.
+        // If handle is an UnsupportedOperationException and either no
+        // message is provided or the same message as stored in handle, we
+        // can directly return it.
         re = ((UnsupportedOperationException) handle);
 
         if ((message == null) || (!enforceMessage)) {
@@ -56,16 +55,16 @@ final class _RethrowModeRethrowAsUnsupportedOperationException extends
         }
       }
 
-      // handle is a Throwable, but either not a
-      // UnsupportedOperationException or a
-      // different message is given, so we use handle as cause.
+      // handle is a Throwable, but either not an
+      // UnsupportedOperationException or a different message is given, so
+      // we use handle as cause.
       return new UnsupportedOperationException(useMessage,
           ((Throwable) handle));
     }
 
-    // If handle is a collection of errors, we create a
-    // UnsupportedOperationException
-    // and add the errors as suppressed errors.
+    // If handle is a collection of errors, we create an
+    // UnsupportedOperationException and add the errors as suppressed
+    // errors.
     re = new UnsupportedOperationException(useMessage);
 
     if (handle instanceof Iterable) {
@@ -94,6 +93,6 @@ final class _RethrowModeRethrowAsUnsupportedOperationException extends
    * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_UNSUPPORTED_OPERATION_EXCEPTION}
    */
   private final Object writeReplace() {
-    return RethrowMode.AS_RUNTIME_EXCEPTION;
+    return RethrowMode.AS_UNSUPPORTED_OPERATION_EXCEPTION;
   }
 }

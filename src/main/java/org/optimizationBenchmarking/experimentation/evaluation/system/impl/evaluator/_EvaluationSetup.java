@@ -6,15 +6,31 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.DocumentEvaluationOutput;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.ExperimentSetEvaluationInput;
+import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixModule;
+import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IDescriptionModule;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationModule;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationOutput;
+import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentModule;
+import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetModule;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** the data belonging to an evaluation process */
 class _EvaluationSetup {
+
+  /** the module is a description module */
+  static final int TYPE_DESCRIPTION = 0;
+  /** the module is an description module */
+  static final int TYPE_EXPERIMENT = (_EvaluationSetup.TYPE_DESCRIPTION + 1);
+  /** the module is an experiment module */
+  static final int TYPE_EXPERIMENT_SET = (_EvaluationSetup.TYPE_EXPERIMENT + 1);
+  /** the module is an appendix module */
+  static final int TYPE_APPENDIX = (_EvaluationSetup.TYPE_EXPERIMENT_SET + 1);
+  /** the number of module types */
+  static final int TYPE_COUNT = (_EvaluationSetup.TYPE_APPENDIX + 1);
 
   /** the internal synchronization object */
   private final Object m_synch;
@@ -34,8 +50,8 @@ class _EvaluationSetup {
   /** the output document provider */
   private IEvaluationOutput m_output;
 
-  /** the list of requested modules */
-  private ArrayList<_ModuleEntry> m_modules;
+  /** the lists of requested modules */
+  private ArrayList<_ModuleEntry>[] m_modules;
 
   /** the evaluation data input */
   private IEvaluationInput m_input;
@@ -47,9 +63,17 @@ class _EvaluationSetup {
   private Logger m_logger;
 
   /** instantiate */
+  @SuppressWarnings("unchecked")
   _EvaluationSetup() {
     super();
-    this.m_modules = new ArrayList<>();
+
+    int i;
+
+    this.m_modules = new ArrayList[_EvaluationSetup.TYPE_COUNT];
+
+    for (i = _EvaluationSetup.TYPE_COUNT; (--i) >= 0;) {
+      this.m_modules[i] = new ArrayList<>();
+    }
     this.m_synch = this.m_modules;
   }
 
@@ -98,8 +122,10 @@ class _EvaluationSetup {
           this._setAuthors(authors);
         }
 
-        for (final _ModuleEntry entry : copyFrom._getModules()) {
-          this._addModule(entry);
+        for (final ArrayList<_ModuleEntry> list : copyFrom._takeModules()) {
+          for (final _ModuleEntry entry : list) {
+            this._addModule(entry.m_module, entry.m_config);
+          }
         }
       }
     }
@@ -147,7 +173,12 @@ class _EvaluationSetup {
               "Cannot set baseline configuration twice."); //$NON-NLS-1$
         }
 
-        if (!(this.m_modules.isEmpty())) {
+        checkNoModule: {
+          for (final ArrayList<_ModuleEntry> module : this.m_modules) {
+            if (!(module.isEmpty())) {
+              break checkNoModule;
+            }
+          }
           throw new IllegalStateException(//
               "Cannot set baseline configuration after adding modules.");//$NON-NLS-1$
         }
@@ -181,39 +212,23 @@ class _EvaluationSetup {
    */
   final void _addModule(final IEvaluationModule module,
       final Configuration config) {
-    _EvaluationSetup._checkModule(module);
-    synchronized (this.m_synch) {
-      this._addModule(new _ModuleEntry(module, this
-          ._getConfiguration(config)));
-    }
-  }
+    final int type, size;
+    final ArrayList<_ModuleEntry> list;
 
-  /**
-   * Add a module entry
-   * 
-   * @param module
-   *          the module entry to add
-   */
-  final void _addModule(final _ModuleEntry module) {
-    _EvaluationSetup._checkModuleEntry(module);
-    synchronized (this.m_synch) {
-      this.m_modules.add(module);
-    }
-  }
+    type = _EvaluationSetup._checkModule(module);
 
-  /**
-   * check a module entry
-   * 
-   * @param module
-   *          the module entry
-   */
-  static final void _checkModuleEntry(final _ModuleEntry module) {
-    if (module == null) {
-      throw new IllegalArgumentException(//
-          "Cannot add null module entry."); //$NON-NLS-1$
+    synchronized (this.m_synch) {
+      if (this.m_modules == null) {
+        throw new IllegalStateException(//
+            "Cannot add modules after modules have been taken."); //$NON-NLS-1$
+      }
+
+      list = this.m_modules[type];
+      size = list.size();
+
+      list.add(new _ModuleEntry(module, this._getConfiguration(config),
+          size));
     }
-    _EvaluationSetup._checkModule(module.m_module);
-    _EvaluationSetup._checkConfiguration(module.m_config);
   }
 
   /**
@@ -221,7 +236,7 @@ class _EvaluationSetup {
    * 
    * @return the modules
    */
-  final ArrayList<_ModuleEntry> _getModules() {
+  final ArrayList<_ModuleEntry>[] _getModules() {
     return this.m_modules;
   }
 
@@ -230,8 +245,8 @@ class _EvaluationSetup {
    * 
    * @return the modules
    */
-  final ArrayList<_ModuleEntry> _takeModules() {
-    final ArrayList<_ModuleEntry> modules;
+  final ArrayList<_ModuleEntry>[] _takeModules() {
+    final ArrayList<_ModuleEntry>[] modules;
 
     synchronized (this.m_synch) {
       modules = this.m_modules;
@@ -241,6 +256,7 @@ class _EvaluationSetup {
     if (modules == null) {
       throw new IllegalStateException("Modules already taken."); //$NON-NLS-1$
     }
+
     return modules;
   }
 
@@ -275,8 +291,9 @@ class _EvaluationSetup {
    * 
    * @param module
    *          the module
+   * @return the module type
    */
-  static final void _checkModule(final IEvaluationModule module) {
+  static final int _checkModule(final IEvaluationModule module) {
     if (module == null) {
       throw new IllegalArgumentException(//
           "Cannot add null module to evaluation."); //$NON-NLS-1$
@@ -290,6 +307,30 @@ class _EvaluationSetup {
           "' to evaluation, since it cannot be used (see causing exception)."),//$NON-NLS-1$
           tt);
     }
+
+    if (module instanceof IDescriptionModule) {
+      return _EvaluationSetup.TYPE_DESCRIPTION;
+    }
+    if (module instanceof IExperimentModule) {
+      return _EvaluationSetup.TYPE_EXPERIMENT;
+    }
+    if (module instanceof IExperimentSetModule) {
+      return _EvaluationSetup.TYPE_EXPERIMENT_SET;
+    }
+    if (module instanceof IAppendixModule) {
+      return _EvaluationSetup.TYPE_APPENDIX;
+    }
+    throw new IllegalArgumentException((((((((((((//
+        "Module must either be an instance of " //$NON-NLS-1$
+        + TextUtils.className(IDescriptionModule.class)) + //
+        ',') + ' ') //
+        + TextUtils.className(IExperimentModule.class)) + //
+        ',') + ' ') //
+        + TextUtils.className(IExperimentSetModule.class)) + //
+        ',') + ' ') //
+        + TextUtils.className(IAppendixModule.class)) + //
+        " but is an instance of ")//$NON-NLS-1$
+        + TextUtils.className(module.getClass()));
   }
 
   /**

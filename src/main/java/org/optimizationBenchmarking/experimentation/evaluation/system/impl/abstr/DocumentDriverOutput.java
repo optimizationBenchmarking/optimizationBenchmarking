@@ -5,7 +5,8 @@ import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
 
 /**
- * A wrapper for output via the document API based on a driver
+ * A wrapper for output via the document API based on a document builder
+ * coming from a document driver
  */
 public class DocumentDriverOutput implements IEvaluationOutput {
 

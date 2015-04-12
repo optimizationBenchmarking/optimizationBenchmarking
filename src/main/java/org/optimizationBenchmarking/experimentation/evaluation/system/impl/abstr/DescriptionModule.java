@@ -3,30 +3,30 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetJobBuilder;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetModule;
+import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IDescriptionJobBuilder;
+import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IDescriptionModule;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
 /**
- * The abstract basic implementation for experiment set modules.
+ * The abstract basic implementation for description modules.
  */
-public abstract class ExperimentSetModule extends
-    _EvaluationModule<ExperimentSet> implements IExperimentSetModule {
+public abstract class DescriptionModule extends
+    _EvaluationModule<ExperimentSet> implements IDescriptionModule {
 
   /** create */
-  protected ExperimentSetModule() {
+  protected DescriptionModule() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final IExperimentSetJobBuilder use() {
+  public final IDescriptionJobBuilder use() {
     this.checkCanUse();
-    return new _ExperimentSetJobBuilder(this);
+    return new _DescriptionJobBuilder(this);
   }
 
   /**
-   * Create the experiment set job.
+   * Create the description job.
    * 
    * @param data
    *          the experiment set to be processed by the job
@@ -37,6 +37,6 @@ public abstract class ExperimentSetModule extends
    *          log info should be written
    */
   @Override
-  public abstract ExperimentSetJob createJob(ExperimentSet data,
+  public abstract DescriptionJob createJob(ExperimentSet data,
       Configuration config, Logger logger);
 }

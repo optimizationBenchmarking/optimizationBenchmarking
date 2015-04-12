@@ -37,9 +37,8 @@ final class _RethrowModeRethrowAsIllegalArgumentException extends
       // OK, handle represents a singular error.
 
       if (handle instanceof IllegalArgumentException) {
-        // If handle is a IllegalArgumentException and either no
-        // message is
-        // provided or the same message as stored in handle, we can
+        // If handle is an IllegalArgumentException and either no message
+        // is provided or the same message as stored in handle, we can
         // directly return it.
         re = ((IllegalArgumentException) handle);
 
@@ -56,15 +55,13 @@ final class _RethrowModeRethrowAsIllegalArgumentException extends
         }
       }
 
-      // handle is a Throwable, but either not a
-      // IllegalArgumentException or a
-      // different message is given, so we use handle as cause.
+      // handle is a Throwable, but either not an IllegalArgumentException
+      // or a different message is given, so we use handle as cause.
       return new IllegalArgumentException(useMessage, ((Throwable) handle));
     }
 
-    // If handle is a collection of errors, we create a
-    // IllegalArgumentException
-    // and add the errors as suppressed errors.
+    // If handle is a collection of errors, we create an
+    // IllegalArgumentException and add the errors as suppressed errors.
     re = new IllegalArgumentException(useMessage);
 
     if (handle instanceof Iterable) {
@@ -84,7 +81,7 @@ final class _RethrowModeRethrowAsIllegalArgumentException extends
    * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_UNSUPPORTED_OPERATION_EXCEPTION}
    */
   private final Object readResolve() {
-    return RethrowMode.AS_UNSUPPORTED_OPERATION_EXCEPTION;
+    return RethrowMode.AS_ILLEGAL_ARGUMENT_EXCEPTION;
   }
 
   /**
@@ -93,6 +90,6 @@ final class _RethrowModeRethrowAsIllegalArgumentException extends
    * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_UNSUPPORTED_OPERATION_EXCEPTION}
    */
   private final Object writeReplace() {
-    return RethrowMode.AS_RUNTIME_EXCEPTION;
+    return RethrowMode.AS_ILLEGAL_ARGUMENT_EXCEPTION;
   }
 }

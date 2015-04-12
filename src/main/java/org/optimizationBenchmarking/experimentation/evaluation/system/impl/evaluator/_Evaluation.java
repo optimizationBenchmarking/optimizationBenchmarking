@@ -36,6 +36,7 @@ import org.optimizationBenchmarking.utils.document.spec.IDocumentHeader;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
+import org.optimizationBenchmarking.utils.io.structured.spec.IIOJob;
 import org.optimizationBenchmarking.utils.io.structured.spec.IInputJobBuilder;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -66,7 +67,6 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    */
   private final void __configure(final Logger logger) {
     final Configuration config;
-    final MemoryTextOutput mto;
 
     config = this._getConfiguration();
     if (config == null) {
@@ -85,21 +85,10 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     this.__configureOutput(config, logger);
     _EvaluationSetup._checkEvaluationOutput(this._getOutput());
 
-    this.__configureModules(config, logger);
-    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
-      mto = new MemoryTextOutput();
-      mto.append("Finished loading configuration ");//$NON-NLS-1$
-      config.toText(mto);
-      mto.append(". The list of modules contains ");//$NON-NLS-1$
-    } else {
-      mto = null;
-    }
-    _ModulesBuilder._checkModules(this._getModules(), mto);
+    this.__loadModules(config, logger);
 
-    if ((mto != null) && (logger != null)
-        && (logger.isLoggable(Level.CONFIG))) {
-      mto.append('.');
-      logger.config(mto.toString());
+    if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+      logger.config("Finished loading configuration."); //$NON-NLS-1$
     }
   }
 
@@ -233,23 +222,24 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    * @param logger
    *          the logger
    */
-  private final void __configureModules(final Configuration config,
+  private final void __loadModules(final Configuration config,
       final Logger logger) {
     final IInputJobBuilder<_EvaluationSetup> builder;
     final _EvaluationXMLInput input;
+    final IIOJob job;
 
     input = _EvaluationXMLInput.getInstance();
     if (input.areSourcesDefined(config)) {
       if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
         logger.config(//
-            "Configuring evaluation process and module hierarchy from XMLFileType.");//$NON-NLS-1$
+            "Configuring evaluation process and module hierarchy from XML.");//$NON-NLS-1$
       }
 
       builder = input.use();
 
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
-            "Job builder for XMLFileType-based evaluation configuration created and will now be configured."); //$NON-NLS-1$
+            "Job builder for XML-based evaluation configuration created and will now be configured."); //$NON-NLS-1$
       }
 
       builder.configure(config);
@@ -258,11 +248,16 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
 
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
-            "Job builder for XMLFileType-based evaluation configuration has been configured."); //$NON-NLS-1$
+            "Job builder for XML-based evaluation configuration has been configured."); //$NON-NLS-1$
       }
 
+      job = builder.create();
+      if (job == null) {
+        throw new IllegalStateException(//
+            "XML-based configuration loader created null job.");//$NON-NLS-1$
+      }
       try {
-        builder.create().call();
+        job.call();
       } catch (final IOException ioe) {
         throw new IllegalArgumentException(//
             "I/O error during evaluation process configuration.", //$NON-NLS-1$
@@ -292,7 +287,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       data = null;
       ErrorUtils
           .logError(
-              logger,//
+              logger,
               "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
               ex, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       return null;// will never be reached
@@ -304,7 +299,9 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
 
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       text = new MemoryTextOutput();
-      text.append("Input data successfully loaded -"); //$NON-NLS-1$
+      text.append("Input data "); //$NON-NLS-1$
+      data.toText(text);
+      text.append(" successfully loaded -"); //$NON-NLS-1$
     } else {
       text = null;
     }
@@ -569,7 +566,9 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     if ((logger != null) && (logger.isLoggable(Level.FINE))) {
-      logger.fine("Destination document successfully allocated."); //$NON-NLS-1$
+      logger.fine("Destination document "//$NON-NLS-1$ 
+          + doc.toString() + //
+          " successfully allocated."); //$NON-NLS-1$
     }
 
     return doc;
@@ -581,7 +580,8 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    * @return the authors
    */
   private final BibAuthors __makeAuthors() {
-    final BibAuthors authors;
+    final Logger logger;
+    BibAuthors authors;
 
     authors = this._takeAuthors();
     if ((authors == null) || (authors.isEmpty())) {
@@ -590,9 +590,15 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
           author.setFamilyName("Anonymous");//$NON-NLS-1$
           author.setPersonalName("Anne"); //$NON-NLS-1$
         }
-        return builder.getResult();
+        authors = builder.getResult();
       }
     }
+
+    logger = this._getLogger();
+    if ((logger != null) && (logger.isLoggable(Level.INFO))) {
+      logger.info("Author(s) set to " + authors); //$NON-NLS-1$
+    }
+
     return authors;
   }
 
@@ -608,7 +614,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    * @param logger
    *          the logger
    */
-  private static final void __summary(final _Modules modules,
+  private static final void __summary(final _MainJob modules,
       final ExperimentSet set, final IPlainText summary,
       final Logger logger) {
     final ArraySetView<Experiment> data;
@@ -667,7 +673,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
 
     summary.append('.');
 
-    modules._doSummaryJobs(set, summary);
+    modules.summary(summary);
   }
 
   /**
@@ -684,7 +690,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    * @param logger
    *          the logger
    */
-  private static final void __header(final _Modules modules,
+  private static final void __header(final _MainJob modules,
       final BibAuthors authors, final ExperimentSet set,
       final IDocumentHeader header, final Logger logger) {
     final ArraySetView<Experiment> data;
@@ -743,11 +749,12 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
   public final void run() {//
     final Logger logger;
     final ExperimentSet data;
-    final _Modules root;
+    final _MainJob root;
     final BibAuthors authors;
 
     logger = this._getLogger();
     this.__configure(logger);
+
     data = this.__loadData(logger);
     if (data == null) {
       return;
@@ -763,18 +770,18 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     MemoryUtils.quickGC();
 
     try (final IDocument doc = this.__createDocument(logger)) {
-      root._doInitJobs(data, doc);
+      root.initialize(doc);
 
       try (final IDocumentHeader header = doc.header()) {
         _Evaluation.__header(root, authors, data, header, logger);
       }
 
       try (final IDocumentBody body = doc.body()) {
-        root._bodyJobs(data, body);
+        root._bodyJobs(body);
       }
 
       try (final IDocumentBody footer = doc.footer()) {
-        root._footerJobs(data, footer);
+        root._footerJobs(footer);
       }
     }
   }

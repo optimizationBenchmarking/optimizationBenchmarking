@@ -3,30 +3,30 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetJobBuilder;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetModule;
+import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixJobBuilder;
+import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixModule;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
 /**
- * The abstract basic implementation for experiment set modules.
+ * The abstract basic implementation for appendix modules.
  */
-public abstract class ExperimentSetModule extends
-    _EvaluationModule<ExperimentSet> implements IExperimentSetModule {
+public abstract class AppendixModule extends
+    _EvaluationModule<ExperimentSet> implements IAppendixModule {
 
   /** create */
-  protected ExperimentSetModule() {
+  protected AppendixModule() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final IExperimentSetJobBuilder use() {
+  public final IAppendixJobBuilder use() {
     this.checkCanUse();
-    return new _ExperimentSetJobBuilder(this);
+    return new _AppendixJobBuilder(this);
   }
 
   /**
-   * Create the experiment set job.
+   * Create the appendix job.
    * 
    * @param data
    *          the experiment set to be processed by the job
@@ -37,6 +37,6 @@ public abstract class ExperimentSetModule extends
    *          log info should be written
    */
   @Override
-  public abstract ExperimentSetJob createJob(ExperimentSet data,
+  public abstract AppendixJob createJob(ExperimentSet data,
       Configuration config, Logger logger);
 }

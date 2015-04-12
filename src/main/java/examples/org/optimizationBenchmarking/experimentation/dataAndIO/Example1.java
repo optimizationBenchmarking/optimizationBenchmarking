@@ -57,7 +57,7 @@ public final class Example1 extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimA"); //$NON-NLS-1$
-      dc.setDescription("Description of dimension A."); //$NON-NLS-1$
+      dc.setDescription("DescriptionModule of dimension A."); //$NON-NLS-1$
       dc.setParser(LongParser.INSTANCE);
       dc.setType(EDimensionType.ITERATION_FE);
       dc.setDirection(EDimensionDirection.INCREASING_STRICTLY);
@@ -65,7 +65,7 @@ public final class Example1 extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimB"); //$NON-NLS-1$
-      dc.setDescription("Description of dimension B."); //$NON-NLS-1$
+      dc.setDescription("DescriptionModule of dimension B."); //$NON-NLS-1$
       dc.setParser(new BoundedLongParser(0, 1000L));
       dc.setType(EDimensionType.ITERATION_SUB_FE);
       dc.setDirection(EDimensionDirection.DECREASING);
@@ -73,7 +73,7 @@ public final class Example1 extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimC"); //$NON-NLS-1$
-      dc.setDescription("Description of dimension C."); //$NON-NLS-1$
+      dc.setDescription("DescriptionModule of dimension C."); //$NON-NLS-1$
       dc.setParser(StrictLongParser.STRICT_INSTANCE);
       dc.setType(EDimensionType.RUNTIME_CPU);
       dc.setDirection(EDimensionDirection.INCREASING);
@@ -81,7 +81,7 @@ public final class Example1 extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimD"); //$NON-NLS-1$
-      dc.setDescription("Description of dimension D."); //$NON-NLS-1$
+      dc.setDescription("DescriptionModule of dimension D."); //$NON-NLS-1$
       dc.setParser(DoubleParser.INSTANCE);
       dc.setType(EDimensionType.RUNTIME_NORMALIZED);
       dc.setDirection(EDimensionDirection.INCREASING);
@@ -89,7 +89,7 @@ public final class Example1 extends ExperimentSetCreator {
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimE"); //$NON-NLS-1$
-      dc.setDescription("Description of dimension E."); //$NON-NLS-1$
+      dc.setDescription("DescriptionModule of dimension E."); //$NON-NLS-1$
       dc.setParser(new BoundedFloatParser(-100f, 100f));
       dc.setType(EDimensionType.QUALITY_PROBLEM_DEPENDENT);
       dc.setDirection(EDimensionDirection.DECREASING);
@@ -116,7 +116,7 @@ public final class Example1 extends ExperimentSetCreator {
 
     try (InstanceContext ic = isc.createInstance()) {
       ic.setName("First Instance"); //$NON-NLS-1$
-      ic.setDescription("Description of instance 1."); //$NON-NLS-1$
+      ic.setDescription("DescriptionModule of instance 1."); //$NON-NLS-1$
       ic.setFeatureValue("scale", Long.valueOf(10)); //$NON-NLS-1$
       ic.setFeatureValue("symmetric", //$NON-NLS-1$
           "Is the instance symmetric?",//$NON-NLS-1$
@@ -137,7 +137,7 @@ public final class Example1 extends ExperimentSetCreator {
     try (InstanceContext ic = isc.createInstance()) {
       ic.setName("Third Instance"); //$NON-NLS-1$
       ic.setUpperBound("dimA", "3000"); //$NON-NLS-1$//$NON-NLS-2$
-      ic.setDescription("Description of instance 3."); //$NON-NLS-1$
+      ic.setDescription("DescriptionModule of instance 3."); //$NON-NLS-1$
       ic.setFeatureValue("scale", Byte.valueOf((byte) 120)); //$NON-NLS-1$
       ic.setFeatureValue("symmetric", "true"); //$NON-NLS-1$//$NON-NLS-2$
     }

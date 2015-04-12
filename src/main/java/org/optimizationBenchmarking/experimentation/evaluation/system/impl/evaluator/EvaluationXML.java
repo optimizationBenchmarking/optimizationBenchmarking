@@ -7,7 +7,7 @@ import java.net.URL;
 import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
 import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
 
-/** the evaluation xml constants */
+/** The evaluation XML constants and file format. */
 public enum EvaluationXML implements IXMLFileType {
 
   /** the evaluation XML */
