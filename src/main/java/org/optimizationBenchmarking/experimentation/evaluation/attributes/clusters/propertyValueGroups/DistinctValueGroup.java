@@ -81,4 +81,16 @@ public final class DistinctValueGroup<DT extends DataElement> extends
     textOut.append(this.m_value);
     super.toText(textOut);
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendValues(final ITextOutput textOut) {
+    textOut.append(this.m_value);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getValuesString() {
+    return this.m_value.toString();
+  }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<e:evaluation
+	xmlns:e="http://www.optimizationBenchmarking.org/formats/evaluationConfiguration/evaluationConfiguration.1.0.xsd"
+	xmlns:cfg="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd">
+
+	<e:module class="description.instances.InstanceInformation">
+	</e:module>
+
+	<e:module class="single.experimentInfo.ExperimentInformation">
+	</e:module>
+
+</e:evaluation>

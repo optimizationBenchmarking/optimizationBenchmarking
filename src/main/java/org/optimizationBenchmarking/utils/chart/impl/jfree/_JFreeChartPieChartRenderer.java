@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.labels.PieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.VerticalAlignment;
@@ -34,7 +33,8 @@ final class _JFreeChartPieChartRenderer
     final _JFreeChartPieDataset data;
     final ArrayListView<CompiledDataScalar> elements;
     final int size;
-    final PieSectionLabelGenerator generator;
+    // SIMPLE_LABELS: final PieSectionLabelGenerator generator;
+    final _JFreeChartPieNullLabelGenerator nuller;
     Color color;
     int index;
     CompiledDataScalar element;
@@ -61,23 +61,26 @@ final class _JFreeChartPieChartRenderer
       this.m_plot.setSectionOutlinesVisible(true);
     }
 
+    nuller = new _JFreeChartPieNullLabelGenerator();
     if (this.m_legendMode.isLegendShown()) {
       this.m_plot.setLabelBackgroundPaint(Color.WHITE);
       this.m_plot.setLabelShadowPaint(Color.WHITE);
       if (this.m_legendMode == ELegendMode.CHART_IS_LEGEND) {
-        this.m_plot.setLabelGenerator(//
-            new _JFreeChartPieNullLabelGenerator());
+        this.m_plot.setLabelGenerator(nuller);
       } else {
         this.m_plot.setLabelGenerator(//
-            new _JFreeChartPieNumberLabelGenerator(this.m_plot));
+            new _JFreeChartPieLabelGenerator(this.m_plot));
+        // SIMPLE_LABELS: new
+        // _JFreeChartPieNumberLabelGenerator(this.m_plot));
       }
       this.m_plot.setLegendLabelGenerator(//
-          new _JFreeChartPieLabelGenerator(this.m_plot));
+          nuller);
+      // SIMPLE_LABELS: new _JFreeChartPieLabelGenerator(this.m_plot));
     } else {
       this.m_plot.setLabelLinksVisible(false);
-      generator = new _JFreeChartPieNullLabelGenerator();
-      this.m_plot.setLabelGenerator(generator);
-      this.m_plot.setLegendLabelGenerator(generator);
+      // SIMPLE_LABELS: generator = new _JFreeChartPieNullLabelGenerator();
+      this.m_plot.setLabelGenerator(nuller);
+      this.m_plot.setLegendLabelGenerator(nuller);
     }
   }
 
@@ -105,7 +108,8 @@ final class _JFreeChartPieChartRenderer
     plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
 
     result = new JFreeChart(null, JFreeChart.DEFAULT_TITLE_FONT, plot,
-        this.m_legendMode.isLegendShown());
+    /* SIMPLE_LABELS: this.m_legendMode.isLegendShown() */
+    (this.m_legendMode == ELegendMode.CHART_IS_LEGEND));
     ChartFactory.getChartTheme().apply(result);
     return result;
 

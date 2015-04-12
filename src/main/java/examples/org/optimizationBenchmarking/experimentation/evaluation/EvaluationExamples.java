@@ -2,25 +2,9 @@ package examples.org.optimizationBenchmarking.experimentation.evaluation;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.DocumentEvaluationOutput;
-import org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator.Evaluator;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluation;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationBuilder;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.config.Configuration;
-import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
-import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
-import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
-import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
-import org.optimizationBenchmarking.utils.text.TextUtils;
-
-import examples.org.optimizationBenchmarking.experimentation.dataAndIO.ExperimentSetCreator;
-import examples.org.optimizationBenchmarking.experimentation.dataAndIO.ExperimentSetExamples;
-import examples.org.optimizationBenchmarking.utils.document.ExampleDocumentConfigurations;
 
 /**
  * This class provides examples for the capabilities of the experiment
@@ -40,12 +24,9 @@ import examples.org.optimizationBenchmarking.utils.document.ExampleDocumentConfi
 public final class EvaluationExamples {
 
   /** the evaluator configurations */
-  public static final ArrayListView<String> EVALUATOR_CONFIGURATIONS = new ArrayListView<>(
-      new String[] { "simple.xml" //$NON-NLS-1$
-      });
-
-  /** the examples to be used */
-  public static final ArrayListView<Class<? extends ExperimentSetCreator>> DATA_EXAMPLES = ExperimentSetExamples.EXAMPLES;
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  public static final ArrayListView<Class<? extends EvaluationExample>> EXAMPLES = new ArrayListView(
+      new Class[] { ExperimentInfoExample.class });
 
   /**
    * Run all the experiments
@@ -57,14 +38,6 @@ public final class EvaluationExamples {
    */
   public static final void main(final String[] args) throws Throwable {
     final Path dir;
-    final Configuration root;
-    final Logger logger;
-    Configuration job;
-    IEvaluationBuilder builder;
-    IEvaluationInput input;
-    IEvaluation eval;
-    int i;
-    Path outputDir;
 
     if ((args != null) && (args.length > 0)) {
       dir = PathUtils.normalize(args[0]);
@@ -72,64 +45,8 @@ public final class EvaluationExamples {
       dir = Files.createTempDirectory("evaluation"); //$NON-NLS-1$
     }
 
-    i = 0;
-    Configuration.setup(args);
-    root = Configuration.getRoot();
-
-    logger = Configuration.getGlobalLogger();
-
-    for (final Class<? extends ExperimentSetCreator> source : EvaluationExamples.DATA_EXAMPLES) {
-
-      logger.info("Now processing example data set " + source); //$NON-NLS-1$
-      input = source.newInstance();
-
-      for (final String config : EvaluationExamples.EVALUATOR_CONFIGURATIONS) {
-        logger.info("Now processing configuration " + config + //$NON-NLS-1$
-            " for example data set " + source);//$NON-NLS-1$
-
-        for (final DocumentConfiguration dest : ExampleDocumentConfigurations.FEW_DIVERSE_CONFIGURATIONS) {
-          logger.info("Now processing document setup " + dest + //$NON-NLS-1$
-              " for configuration " + config + //$NON-NLS-1$
-              " for example data set " + source);//$NON-NLS-1$
-
-          outputDir = PathUtils.normalize(dir
-              .resolve(source.getSimpleName())
-              .resolve(config.substring(0, config.lastIndexOf('.')))
-              .resolve((dest.toString() + '_') + (++i)));
-
-          builder = Evaluator.getInstance().use();
-          builder.setInput(input);
-          builder.setLogger(logger);
-          try (final IDocument doc = dest.createDocument(outputDir,
-              "report", //$NON-NLS-1$
-              null, logger)) {
-            builder.setOutput(new DocumentEvaluationOutput(doc));
-
-            try (final ConfigurationBuilder cb = new ConfigurationBuilder()) {
-              cb.setOwner(root);
-              cb.put(
-                  Evaluator.PARAM_EVALUATION_SETUP,
-                  IOTool.RESOURCE_ELEMENT + '('
-                      + TextUtils.className(EvaluationExamples.class)
-                      + '#' + config + ')');
-              job = cb.getResult();
-            }
-
-            builder.configure(job);
-
-            eval = builder.create();
-            eval.run();
-          }
-
-          logger.info("Finished processing document setup " + dest + //$NON-NLS-1$
-              " for configuration " + config + //$NON-NLS-1$
-              " for example data set " + source);//$NON-NLS-1$
-        }
-
-        logger.info("Finished processing configuration " + config + //$NON-NLS-1$
-            " for example data set " + source);//$NON-NLS-1$
-      }
-      logger.info("Finished processing example data set " + source); //$NON-NLS-1$
+    for (final Class<? extends EvaluationExample> clazz : EvaluationExamples.EXAMPLES) {
+      clazz.newInstance().process(dir);
     }
 
   }

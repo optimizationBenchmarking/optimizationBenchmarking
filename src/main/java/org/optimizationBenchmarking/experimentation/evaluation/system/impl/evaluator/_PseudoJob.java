@@ -202,13 +202,13 @@ class _PseudoJob implements IEvaluationJob {
       }
 
     } else {
-      for (final IEvaluationJob module : children) {
+      for (final IEvaluationJob job : children) {
         try {
-          module.main(dest);
+          job.main(dest);
         } catch (final Throwable caught) {
           RethrowMode.AS_ILLEGAL_STATE_EXCEPTION.rethrow((//
               "Error in evaluation job "//$NON-NLS-1$
-              + module.toString()), false, caught);
+              + String.valueOf(job)), false, caught);
           return;
         }
       }

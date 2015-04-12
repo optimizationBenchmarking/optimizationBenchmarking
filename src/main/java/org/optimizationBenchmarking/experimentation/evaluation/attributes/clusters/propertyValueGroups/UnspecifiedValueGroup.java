@@ -74,8 +74,13 @@ public final class UnspecifiedValueGroup<DT extends DataElement> extends
 
   /** {@inheritDoc} */
   @Override
-  public final void toText(final ITextOutput textOut) {
-    textOut.append(this.m_value);
-    super.toText(textOut);
+  public final void appendValues(final ITextOutput textOut) {
+    textOut.append(this.getValuesString());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getValuesString() {
+    return "unspecified"; //$NON-NLS-1$
   }
 }

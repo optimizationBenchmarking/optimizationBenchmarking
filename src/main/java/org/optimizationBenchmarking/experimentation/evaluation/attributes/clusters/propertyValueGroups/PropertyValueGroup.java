@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.experimentation.data.DataElement;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * A group of values. This class is most likely used to group property
@@ -91,10 +92,32 @@ public abstract class PropertyValueGroup<DT extends DataElement> extends
    */
   public abstract boolean contains(final Object o);
 
+  /**
+   * Append the value specifier to the given text output
+   * 
+   * @param textOut
+   *          the text output to append to
+   */
+  public abstract void appendValues(final ITextOutput textOut);
+
+  /**
+   * Get the values string
+   * 
+   * @return the values string
+   */
+  public String getValuesString() {
+    final MemoryTextOutput mto;
+
+    mto = new MemoryTextOutput();
+    this.appendValues(mto);
+    return mto.toString();
+  }
+
   /** {@inheritDoc} */
   @Override
   public void toText(final ITextOutput textOut) {
     final int size;
+    this.appendValues(textOut);
     textOut.append(':');
     textOut.append(' ');
     textOut.append(size = this.m_data.size());

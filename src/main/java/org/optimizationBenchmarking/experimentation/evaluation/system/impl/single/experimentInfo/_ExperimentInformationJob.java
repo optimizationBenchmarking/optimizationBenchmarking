@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 
-/** A fixed configuration of the experiment information module. */
+/** A job of the experiment information module. */
 final class _ExperimentInformationJob extends ExperimentJob {
 
   /**
