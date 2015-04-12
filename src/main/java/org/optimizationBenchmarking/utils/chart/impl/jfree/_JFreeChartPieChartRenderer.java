@@ -9,7 +9,6 @@ import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.VerticalAlignment;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledDataScalar;
 import org.optimizationBenchmarking.utils.chart.impl.abstr.CompiledPieChart;
-import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
@@ -33,7 +32,6 @@ final class _JFreeChartPieChartRenderer
     final _JFreeChartPieDataset data;
     final ArrayListView<CompiledDataScalar> elements;
     final int size;
-    // SIMPLE_LABELS: final PieSectionLabelGenerator generator;
     final _JFreeChartPieNullLabelGenerator nuller;
     Color color;
     int index;
@@ -65,23 +63,13 @@ final class _JFreeChartPieChartRenderer
     if (this.m_legendMode.isLegendShown()) {
       this.m_plot.setLabelBackgroundPaint(Color.WHITE);
       this.m_plot.setLabelShadowPaint(Color.WHITE);
-      if (this.m_legendMode == ELegendMode.CHART_IS_LEGEND) {
-        this.m_plot.setLabelGenerator(nuller);
-      } else {
-        this.m_plot.setLabelGenerator(//
-            new _JFreeChartPieLabelGenerator(this.m_plot));
-        // SIMPLE_LABELS: new
-        // _JFreeChartPieNumberLabelGenerator(this.m_plot));
-      }
       this.m_plot.setLegendLabelGenerator(//
-          nuller);
-      // SIMPLE_LABELS: new _JFreeChartPieLabelGenerator(this.m_plot));
+          new _JFreeChartPieLabelGenerator(this.m_plot));
     } else {
-      this.m_plot.setLabelLinksVisible(false);
-      // SIMPLE_LABELS: generator = new _JFreeChartPieNullLabelGenerator();
-      this.m_plot.setLabelGenerator(nuller);
       this.m_plot.setLegendLabelGenerator(nuller);
     }
+    this.m_plot.setLabelGenerator(nuller);
+    this.m_plot.setLabelLinksVisible(false);
   }
 
   /** {@inheritDoc} */
@@ -108,8 +96,7 @@ final class _JFreeChartPieChartRenderer
     plot.setInsets(new RectangleInsets(0.0, 5.0, 5.0, 5.0));
 
     result = new JFreeChart(null, JFreeChart.DEFAULT_TITLE_FONT, plot,
-    /* SIMPLE_LABELS: this.m_legendMode.isLegendShown() */
-    (this.m_legendMode == ELegendMode.CHART_IS_LEGEND));
+        this.m_legendMode.isLegendShown());
     ChartFactory.getChartTheme().apply(result);
     return result;
 
