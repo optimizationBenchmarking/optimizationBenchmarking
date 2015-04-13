@@ -64,9 +64,9 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
   private static final String DISTANCE_TYPE = "type"; //$NON-NLS-1$
 
   /** Euclidean distance based on a list of 2D coordinates */
-  private static final String EUC_2D = "EUC_2D"; //$NON-NLS-1$
+  private static final String EUC_2D = "EUC2D"; //$NON-NLS-1$
   /** rounded-up Euclidean distance based on a list of 2D coordinates */
-  private static final String CEIL_2D = "CEIL_2D"; //$NON-NLS-1$
+  private static final String CEIL_2D = "CEIL2D"; //$NON-NLS-1$
   /**
    * geographical distance based on a list of longitude-latitude coordinate
    * pairs
