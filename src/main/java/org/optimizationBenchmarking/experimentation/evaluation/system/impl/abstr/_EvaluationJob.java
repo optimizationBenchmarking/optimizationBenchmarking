@@ -249,8 +249,10 @@ public abstract class _EvaluationJob<DT extends DataSet<?>> implements
   @Override
   public void toText(final ITextOutput textOut) {
     textOut.append(TextUtils.className(this.getClass()));
-    textOut.append(" on "); //$NON-NLS-1$
-    this.m_data.toText(textOut);
+    if (this.m_data != null) {
+      textOut.append(" on "); //$NON-NLS-1$
+      this.m_data.toText(textOut);
+    }
   }
 
   /** {@inheritDoc} */

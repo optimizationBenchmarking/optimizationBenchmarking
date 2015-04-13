@@ -631,16 +631,12 @@ public enum EGroupingMode {
 
     next *= range;
     prev = next;
-    if (prev < 0L) {
-      if (prev > cur) {
+    if (prev <= 0L) {
+      while (prev > cur) {
         prev = SaturatingSub.INSTANCE.computeAsLong(prev, range);
       }
-      if (prev == next) {
-        next += range;
-      }
-    } else {
-      next = SaturatingAdd.INSTANCE.computeAsLong(prev, range);
     }
+    next = SaturatingAdd.INSTANCE.computeAsLong(prev, range);
 
     exclusiveMaxIndex = 0;
     groupIndex = 0;
@@ -691,9 +687,8 @@ public enum EGroupingMode {
         throw new IllegalStateException(//
             "There are long values bigger than MAX_LONG??"); //$NON-NLS-1$
       }
-      next += range;
-      if (next <= prev) {
-        next = Long.MAX_VALUE;
+      next = SaturatingAdd.INSTANCE.computeAsLong(next, range);
+      if (next >= Long.MAX_VALUE) {
         exclusive = false;
       }
     }
@@ -757,8 +752,8 @@ public enum EGroupingMode {
       return null;
     }
 
-    if (prev < 0d) {
-      if (prev > cur) {
+    if (prev <= 0d) {
+      while (prev > cur) {
         if (prevMul <= Long.MIN_VALUE) {
           return null;
         }
@@ -768,10 +763,13 @@ public enum EGroupingMode {
           return null;
         }
       }
+    }
 
+    if (prevMul >= Long.MAX_VALUE) {
+      return null;
     }
     next = ((++prevMul) * range);
-    if (next == prev) {
+    if (next <= prev) {
       return null;
     }
 
