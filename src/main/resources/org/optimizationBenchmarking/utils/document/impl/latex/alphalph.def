@@ -1,0 +1,16 @@
+%
+% We use the alphalph package to deal with situations where counters become
+% larger than 26 but should be presented as letters. This might be the case
+% in some document classes which use alphabetic section "numbers" when a
+% document is automatically generated and we do not have much control about
+% the actual number of sections. The limit of 26 could also be hit in
+% enumerations with many elements. We thus simply replace \alph and \Alph
+% with \alphalph and \AlphAlph, respectively, which can count higher.
+%
+\RequirePackage{alphalph}%
+%
+\def\@documentAPI@alphalph#1{\alphalph{\value{#1}}}%
+\def\@documentAPI@AlphAlph#1{\AlphAlph{\value{#1}}}%
+\global\let\alph\@documentAPI@alphalph%
+\global\let\Alph\@documentAPI@AlphAlph%
+%

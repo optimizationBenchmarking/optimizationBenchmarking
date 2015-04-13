@@ -200,7 +200,17 @@ The licenses used for some of these elements are given in the folder
     - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
     - Status: freely available in the internet
     - Source: [http://www.ctan.org/tex-archive/fonts/amsfonts/](http://www.ctan.org/tex-archive/fonts/amsfonts/)
-    
+ 
+* LaTeX Package "alphalph"
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl-1.3.txt), version 1.3c (see file "[meta/licenses/lppl-1.3.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lppl-1.3.txt)")
+   - Copyright: Copyright (C) 1999, 2006-2008, 2010, 2011 by [<heiko.oberdiek at googlemail.com>](mailto:heiko.oberdiek@googlemail.com)
+   - Author: Heiko Oberdiek
+   - File: [alphalph.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/alphalph.sty)
+   - Version: 2011/05/13 v2.4
+   - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
+   - Status: freely available in the internet
+   - Source: [http://ctan.org/pkg/alphalph](http://ctan.org/pkg/alphalph)
+
     
 ### Referenced Libraries
 

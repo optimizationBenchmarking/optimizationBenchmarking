@@ -432,7 +432,7 @@ public final class LaTeXDocument extends Document {
     LaTeXDriver._endLine(out);
 
     LaTeXDriver._commentLine((((//
-        "All required packages and allocates colors etc. are found in package '" //$NON-NLS-1$
+        "All required packages and allocated colors etc. are found in package '" //$NON-NLS-1$
         + PathUtils.getFileNameWithoutExtension(//
             this.m_setupPackagePath)) + '\'') + '.'), out);
     LaTeXDocument._requirePackage(out,
@@ -789,6 +789,14 @@ public final class LaTeXDocument extends Document {
           if (this.getGraphicFormat() == EGraphicFormat.EPS) {
             LaTeXDocument._requirePackage(out, "breakurl", null); //$NON-NLS-1$
           }
+
+          LaTeXDriver._endLine(out);
+          this._requireResources(
+              LaTeXDocument.class,
+              new String[] { "alphalph.sty" }, //$NON-NLS-1$
+              "Project: alphalph, Version: 2011/05/13 v2.4. Copyright (C) 1999, 2006-2008, 2010, 2011 by Heiko Oberdiek <heiko.oberdiek at googlemail.com> This work may be distributed and/or modified under the conditions of the LaTeX Project Public License, either version 1.3c of this license or (at your option) any later version. This version of this license is in http://www.latex-project.org/lppl/lppl-1-3c.txt and the latest version of this license is in http://www.latex-project.org/lppl.txt and version 1.3 or later is part of all distributions of LaTeX version 2005/12/01 or later. This work has the LPPL maintenance status \"maintained\". This Current Maintainer of this work is Heiko Oberdiek."); //$NON-NLS-1$
+          this.__include("alphalph.def", out);//$NON-NLS-1$
+          LaTeXDriver._endLine(out);
 
           // now add the colors
           if (this.m_hasColors) {
