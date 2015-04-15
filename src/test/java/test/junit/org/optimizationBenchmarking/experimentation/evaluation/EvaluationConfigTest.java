@@ -119,6 +119,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    * config
    */
   @Test(timeout = 3600000)
+  @Category(CategorySlowTests.class)
   public void testConfigOnCSVEDIExampleAndDefaultLaTeX() {
     this.__testApply(new CSVEDIExample(TestBase.getNullLogger()),
         new LaTeXConfigurationBuilder().immutable());
@@ -129,6 +130,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    * output config
    */
   @Test(timeout = 3600000)
+  @Category(CategorySlowTests.class)
   public void testConfigOnCSVEDIExampleAndDefaultXHTML10() {
     this.__testApply(new CSVEDIExample(TestBase.getNullLogger()),
         new XHTML10ConfigurationBuilder().immutable());
@@ -158,6 +160,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    * config
    */
   @Test(timeout = 3600000)
+  @Category(CategorySlowTests.class)
   public void testConfigOnExample2RandomAndDefaultLaTeX() {
     this.__testApply(new Example2Random(TestBase.getNullLogger()),
         new LaTeXConfigurationBuilder().immutable());
@@ -168,6 +171,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    * output config
    */
   @Test(timeout = 3600000)
+  @Category(CategorySlowTests.class)
   public void testConfigOnExample2RandomAndDefaultXHTML10() {
     this.__testApply(new Example2Random(TestBase.getNullLogger()),
         new XHTML10ConfigurationBuilder().immutable());
