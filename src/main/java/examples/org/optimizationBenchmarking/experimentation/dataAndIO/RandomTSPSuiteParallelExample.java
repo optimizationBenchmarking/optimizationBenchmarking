@@ -1,6 +1,7 @@
 package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.DimensionSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
@@ -11,9 +12,14 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 public final class RandomTSPSuiteParallelExample extends
     RandomParallelExample {
 
-  /** create */
-  public RandomTSPSuiteParallelExample() {
-    super();
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger, or {@code null} to use the global logger
+   */
+  public RandomTSPSuiteParallelExample(final Logger logger) {
+    super(logger);
   }
 
   /** {@inheritDoc} */
@@ -38,6 +44,6 @@ public final class RandomTSPSuiteParallelExample extends
    */
   public static void main(final String[] args) {
     Configuration.setup(args);
-    new RandomTSPSuiteParallelExample().run();
+    new RandomTSPSuiteParallelExample(null).run();
   }
 }

@@ -1,6 +1,7 @@
 package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.DimensionSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
@@ -10,9 +11,14 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 /** A class for creating in parallel sets */
 public final class RandomBBOBParallelExample extends RandomParallelExample {
 
-  /** create */
-  public RandomBBOBParallelExample() {
-    super();
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger, or {@code null} to use the global logger
+   */
+  public RandomBBOBParallelExample(final Logger logger) {
+    super(logger);
   }
 
   /** {@inheritDoc} */
@@ -37,6 +43,6 @@ public final class RandomBBOBParallelExample extends RandomParallelExample {
    */
   public static void main(final String[] args) {
     Configuration.setup(args);
-    new RandomBBOBParallelExample().run();
+    new RandomBBOBParallelExample(null).run();
   }
 }

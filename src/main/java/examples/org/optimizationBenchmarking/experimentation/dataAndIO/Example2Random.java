@@ -1,6 +1,7 @@
 package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.DimensionContext;
 import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
@@ -14,9 +15,14 @@ import org.optimizationBenchmarking.utils.parsers.LongParser;
 /** A class for creating experiment sets */
 public final class Example2Random extends RandomExample {
 
-  /** create */
-  public Example2Random() {
-    super();
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger, or {@code null} to use the global logger
+   */
+  public Example2Random(final Logger logger) {
+    super(logger);
   }
 
   /** {@inheritDoc} */
@@ -83,6 +89,6 @@ public final class Example2Random extends RandomExample {
    */
   public static final void main(final String[] args) {
     Configuration.setup(args);
-    new Example2Random().run();
+    new Example2Random(null).run();
   }
 }

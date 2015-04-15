@@ -11,9 +11,14 @@ import org.optimizationBenchmarking.utils.io.EArchiveType;
 /** A class for using some data stored in CSV+EDI format */
 public final class CSVEDIExample extends ExperimentSetCreator {
 
-  /** create */
-  public CSVEDIExample() {
-    super();
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger, or {@code null} to use the global logger
+   */
+  public CSVEDIExample(final Logger logger) {
+    super(logger);
   }
 
   /** {@inheritDoc} */
@@ -21,7 +26,7 @@ public final class CSVEDIExample extends ExperimentSetCreator {
   protected final ExperimentSet buildExperimentSet() throws Exception {
 
     try (final ExperimentSetContext ec = new ExperimentSetContext(
-        Logger.getGlobal())) {
+        this.getLogger())) {
 
       CSVEDIInput
           .getInstance()
@@ -42,6 +47,6 @@ public final class CSVEDIExample extends ExperimentSetCreator {
    */
   public static final void main(final String[] args) {
     Configuration.setup(args);
-    new CSVEDIExample().run();
+    new CSVEDIExample(null).run();
   }
 }

@@ -83,14 +83,11 @@ public class LoggerParser extends Parser<Logger> {
 
       // yes, let's try to parse it
       level = Level.parse(StringParser.INSTANCE.parseString(it.next()));
-      if (!(ret.isLoggable(level))) {
-        ret.setLevel(level);
-      }
+      ret.setLevel(level);
 
-      // if a logging level specified, we will also set the log levels for
-      // all
-      // handlers registered with the loggers, unless a third parameter is
-      // given which is set to "false"
+      // If a logging level specified, we will also set the log levels for
+      // all handlers registered with the loggers, unless a third parameter
+      // is given which is set to "false"
       setHandlerLevels: {
         if (it.hasNext()) {
           if (!(BooleanParser.INSTANCE.parseBoolean(it.next()))) {
@@ -105,34 +102,45 @@ public class LoggerParser extends Parser<Logger> {
         notFound = true;
         findLogger: for (;;) {
 
-          if (!(use.isLoggable(level))) {
-            use.setLevel(level);
-          }
+          use.setLevel(level);
 
           handlers = use.getHandlers();
           if ((handlers != null) && (handlers.length > 0)) {
             for (final Handler handler : handlers) {
 
-              if (record == null) {
-                record = new LogRecord(level, EmptyUtils.EMPTY_STRING);
-              }
+              if (level == Level.OFF) {
+                use.removeHandler(handler);
+                use.setUseParentHandlers(false);
+                notFound = false;
+              } else {
 
-              if (!(handler.isLoggable(record))) {
-                handler.setLevel(level);
-              }
+                if (record == null) {
+                  record = new LogRecord(level, EmptyUtils.EMPTY_STRING);
+                }
 
-              filter = handler.getFilter();
-              if (filter != null) {
-                if (!(filter.isLoggable(record))) {
-                  handler.setFilter(null);
+                if (!(handler.isLoggable(record))) {
+                  handler.setLevel(level);
+                }
+
+                filter = handler.getFilter();
+                if (filter != null) {
+                  if (!(filter.isLoggable(record))) {
+                    handler.setFilter(null);
+                  }
+                }
+
+                if (handler.isLoggable(record)) {
+                  notFound = false;
                 }
               }
-
-              if (handler.isLoggable(record)) {
-                notFound = false;
-              }
+            }
+          } else {
+            if (level == Level.OFF) {
+              use.setUseParentHandlers(false);
+              notFound = false;
             }
           }
+
           if (notFound) {
             if (use.getUseParentHandlers()) {
               use = use.getParent();

@@ -4,6 +4,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Filter;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -55,5 +60,34 @@ public class TestBase {
     }
 
     return o2;
+  }
+
+  /**
+   * Get a logger which discards all its log output
+   * 
+   * @return the logger
+   */
+  public static final Logger getNullLogger() {
+    final Logger logger;
+    final Handler[] handlers;
+
+    logger = Logger.getAnonymousLogger();
+    logger.setLevel(Level.OFF);
+    logger.setFilter(new Filter() {
+      /** {@inheritDoc} */
+      @Override
+      public final boolean isLoggable(final LogRecord record) {
+        return false;
+      }
+    });
+
+    logger.setUseParentHandlers(false);
+    handlers = logger.getHandlers();
+    if (handlers != null) {
+      for (final Handler handler : handlers) {
+        logger.removeHandler(handler);
+      }
+    }
+    return logger;
   }
 }

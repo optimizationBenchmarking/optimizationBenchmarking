@@ -1,5 +1,7 @@
 package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
+import java.util.logging.Logger;
+
 import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.Feature;
 import org.optimizationBenchmarking.experimentation.data.Parameter;
@@ -12,12 +14,31 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 public abstract class ExperimentSetCreator implements IEvaluationInput,
     Runnable {
 
+  /** the logger */
+  private final Logger m_logger;
+
   /** the instance */
   private ExperimentSet m_inst;
 
-  /** create */
-  protected ExperimentSetCreator() {
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger, or {@code null} to use the global logger
+   */
+  protected ExperimentSetCreator(final Logger logger) {
     super();
+    this.m_logger = ((logger != null) ? logger//
+        : Configuration.getGlobalLogger());
+  }
+
+  /**
+   * Get the logger
+   * 
+   * @return the logger
+   */
+  protected final Logger getLogger() {
+    return this.m_logger;
   }
 
   /**

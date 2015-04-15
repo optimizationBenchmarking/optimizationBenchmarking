@@ -11,9 +11,14 @@ import org.optimizationBenchmarking.utils.io.EArchiveType;
 /** A class for creating experiment sets */
 public final class BBOBExample extends ExperimentSetCreator {
 
-  /** create */
-  public BBOBExample() {
-    super();
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger, or {@code null} to use the global logger
+   */
+  public BBOBExample(final Logger logger) {
+    super(logger);
   }
 
   /** {@inheritDoc} */
@@ -21,7 +26,7 @@ public final class BBOBExample extends ExperimentSetCreator {
   protected final ExperimentSet buildExperimentSet() throws Exception {
 
     try (final ExperimentSetContext ec = new ExperimentSetContext(
-        Logger.getGlobal())) {
+        this.getLogger())) {
 
       BBOBInput
           .getInstance()
@@ -42,6 +47,6 @@ public final class BBOBExample extends ExperimentSetCreator {
    */
   public static final void main(final String[] args) {
     Configuration.setup(args);
-    new BBOBExample().run();
+    new BBOBExample(null).run();
   }
 }

@@ -11,16 +11,21 @@ import org.optimizationBenchmarking.utils.io.EArchiveType;
 /** A class for creating experiment sets */
 public final class TSPSuiteExample extends ExperimentSetCreator {
 
-  /** create */
-  public TSPSuiteExample() {
-    super();
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger, or {@code null} to use the global logger
+   */
+  public TSPSuiteExample(final Logger logger) {
+    super(logger);
   }
 
   /** {@inheritDoc} */
   @Override
   protected ExperimentSet buildExperimentSet() throws Exception {
     try (final ExperimentSetContext esc = new ExperimentSetContext(
-        Logger.getGlobal())) {
+        this.getLogger())) {
 
       TSPSuiteInput
           .getInstance()
@@ -42,6 +47,6 @@ public final class TSPSuiteExample extends ExperimentSetCreator {
    */
   public static void main(final String[] args) {
     Configuration.setup(args);
-    new TSPSuiteExample().run();
+    new TSPSuiteExample(null).run();
   }
 }

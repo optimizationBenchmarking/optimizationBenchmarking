@@ -3,6 +3,7 @@ package test.junit.org.optimizationBenchmarking.experimentation.dataAndIO;
 import org.junit.experimental.categories.Category;
 
 import test.junit.CategorySlowTests;
+import test.junit.TestBase;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.RandomBBOBParallelExample;
 
 /**
@@ -14,6 +15,6 @@ public class RandomBBOBParallelTest extends ExperimentSetTest {
 
   /** create */
   public RandomBBOBParallelTest() {
-    super(new RandomBBOBParallelExample());
+    super(new RandomBBOBParallelExample(TestBase.getNullLogger()));
   }
 }

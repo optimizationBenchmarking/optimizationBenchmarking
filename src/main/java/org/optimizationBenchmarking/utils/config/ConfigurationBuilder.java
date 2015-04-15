@@ -99,6 +99,17 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
   }
 
   /**
+   * Define this as a debug context: It won't have any owner.
+   */
+  public synchronized final void setDebug() {
+    this.fsmFlagsAssertAndUpdate(
+        FSM.FLAG_NOTHING,
+        (ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET | ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET),
+        ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET, FSM.FLAG_NOTHING);
+    this.m_data.m_owner = null;
+  }
+
+  /**
    * Put a value
    * 
    * @param key

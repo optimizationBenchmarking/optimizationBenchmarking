@@ -10,6 +10,7 @@ import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.DimensionSet;
 import org.optimizationBenchmarking.experimentation.data.ExperimentContext;
@@ -22,9 +23,14 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 /** A class for creating in parallel sets */
 public class RandomParallelExample extends RandomExample {
 
-  /** create */
-  public RandomParallelExample() {
-    super();
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger, or {@code null} to use the global logger
+   */
+  public RandomParallelExample(final Logger logger) {
+    super(logger);
   }
 
   /**
@@ -138,7 +144,7 @@ public class RandomParallelExample extends RandomExample {
    */
   public static void main(final String[] args) {
     Configuration.setup(args);
-    new RandomParallelExample().run();
+    new RandomParallelExample(null).run();
   }
 
   /** an action for creating an experiment */

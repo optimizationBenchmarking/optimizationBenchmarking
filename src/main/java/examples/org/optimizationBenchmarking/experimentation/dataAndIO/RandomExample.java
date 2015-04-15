@@ -48,9 +48,14 @@ public class RandomExample extends ExperimentSetCreator {
   /** the name counter */
   final AtomicLong m_v;
 
-  /** create */
-  public RandomExample() {
-    super();
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger, or {@code null} to use the global logger
+   */
+  public RandomExample(final Logger logger) {
+    super(logger);
     this.m_v = new AtomicLong();
   }
 
@@ -64,7 +69,7 @@ public class RandomExample extends ExperimentSetCreator {
     this.m_v.set(r.nextLong());
 
     try (final ExperimentSetContext esb = new ExperimentSetContext(
-        Logger.getGlobal())) {
+        this.getLogger())) {
 
       this._createDimensionSet(esb, r);
 
@@ -958,6 +963,6 @@ public class RandomExample extends ExperimentSetCreator {
    */
   public static void main(final String[] args) {
     Configuration.setup(args);
-    new RandomExample().run();
+    new RandomExample(null).run();
   }
 }

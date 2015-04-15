@@ -1,10 +1,5 @@
 package test.junit.org.optimizationBenchmarking.experimentation.evaluation;
 
-import java.util.logging.Filter;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,6 +13,7 @@ import org.optimizationBenchmarking.utils.io.paths.TempDir;
 
 import test.junit.CategorySlowTests;
 import test.junit.InstanceTest;
+import test.junit.TestBase;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.BBOBExample;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.CSVEDIExample;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.Example1;
@@ -55,25 +51,13 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
       final DocumentConfiguration dest) {
     final EvaluationExample example;
     final Configuration config;
-    final Logger logger;
 
     example = this.getInstance();
     Assert.assertNotNull(example);
 
-    logger = Logger.getAnonymousLogger();
-    logger.setLevel(Level.OFF);
-    logger.setFilter(new Filter() {
-      /** {@inheritDoc} */
-      @Override
-      public final boolean isLoggable(final LogRecord record) {
-        return false;
-      }
-
-    });
-
     try (final ConfigurationBuilder builder = new ConfigurationBuilder()) {
-      builder.setOwner(Configuration.getRoot());
-      builder.put(Configuration.PARAM_LOGGER, logger);
+      builder.setDebug();
+      builder.put(Configuration.PARAM_LOGGER, TestBase.getNullLogger());
       config = builder.getResult();
     }
 
@@ -93,7 +77,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
   @Test(timeout = 3600000)
   @Category(CategorySlowTests.class)
   public void testConfigOnBBOBExampleAndDefaultLaTeX() {
-    this.__testApply(new BBOBExample(),
+    this.__testApply(new BBOBExample(TestBase.getNullLogger()),
         new LaTeXConfigurationBuilder().immutable());
   }
 
@@ -104,7 +88,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
   @Test(timeout = 3600000)
   @Category(CategorySlowTests.class)
   public void testConfigOnTSPSuiteExampleAndDefaultXHTML10() {
-    this.__testApply(new TSPSuiteExample(),
+    this.__testApply(new TSPSuiteExample(TestBase.getNullLogger()),
         new XHTML10ConfigurationBuilder().immutable());
   }
 
@@ -115,7 +99,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
   @Test(timeout = 3600000)
   @Category(CategorySlowTests.class)
   public void testConfigOnTSPSuiteExampleAndDefaultLaTeX() {
-    this.__testApply(new TSPSuiteExample(),
+    this.__testApply(new TSPSuiteExample(TestBase.getNullLogger()),
         new LaTeXConfigurationBuilder().immutable());
   }
 
@@ -126,7 +110,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
   @Test(timeout = 3600000)
   @Category(CategorySlowTests.class)
   public void testConfigOnBBOBExampleAndDefaultXHTML10() {
-    this.__testApply(new BBOBExample(),
+    this.__testApply(new BBOBExample(TestBase.getNullLogger()),
         new XHTML10ConfigurationBuilder().immutable());
   }
 
@@ -136,7 +120,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    */
   @Test(timeout = 3600000)
   public void testConfigOnCSVEDIExampleAndDefaultLaTeX() {
-    this.__testApply(new CSVEDIExample(),
+    this.__testApply(new CSVEDIExample(TestBase.getNullLogger()),
         new LaTeXConfigurationBuilder().immutable());
   }
 
@@ -146,7 +130,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    */
   @Test(timeout = 3600000)
   public void testConfigOnCSVEDIExampleAndDefaultXHTML10() {
-    this.__testApply(new CSVEDIExample(),
+    this.__testApply(new CSVEDIExample(TestBase.getNullLogger()),
         new XHTML10ConfigurationBuilder().immutable());
   }
 
@@ -155,7 +139,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    */
   @Test(timeout = 3600000)
   public void testConfigOnExample1AndDefaultLaTeX() {
-    this.__testApply(new Example1(),
+    this.__testApply(new Example1(TestBase.getNullLogger()),
         new LaTeXConfigurationBuilder().immutable());
   }
 
@@ -165,7 +149,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    */
   @Test(timeout = 3600000)
   public void testConfigOnExample1AndDefaultXHTML10() {
-    this.__testApply(new Example1(),
+    this.__testApply(new Example1(TestBase.getNullLogger()),
         new XHTML10ConfigurationBuilder().immutable());
   }
 
@@ -175,7 +159,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    */
   @Test(timeout = 3600000)
   public void testConfigOnExample2RandomAndDefaultLaTeX() {
-    this.__testApply(new Example2Random(),
+    this.__testApply(new Example2Random(TestBase.getNullLogger()),
         new LaTeXConfigurationBuilder().immutable());
   }
 
@@ -185,7 +169,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    */
   @Test(timeout = 3600000)
   public void testConfigOnExample2RandomAndDefaultXHTML10() {
-    this.__testApply(new Example2Random(),
+    this.__testApply(new Example2Random(TestBase.getNullLogger()),
         new XHTML10ConfigurationBuilder().immutable());
   }
 
@@ -195,7 +179,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    */
   @Test(timeout = 3600000)
   public void testConfigOnRandomExampleAndDefaultLaTeX() {
-    this.__testApply(new RandomExample(),
+    this.__testApply(new RandomExample(TestBase.getNullLogger()),
         new LaTeXConfigurationBuilder().immutable());
   }
 
@@ -205,7 +189,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
    */
   @Test(timeout = 3600000)
   public void testConfigOnRandomExampleAndDefaultXHTML10() {
-    this.__testApply(new RandomExample(),
+    this.__testApply(new RandomExample(TestBase.getNullLogger()),
         new XHTML10ConfigurationBuilder().immutable());
   }
 

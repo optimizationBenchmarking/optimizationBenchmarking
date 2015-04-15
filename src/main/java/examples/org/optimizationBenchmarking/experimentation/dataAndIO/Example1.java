@@ -22,9 +22,14 @@ import org.optimizationBenchmarking.utils.parsers.StrictLongParser;
 /** A class for creating experiment sets */
 public final class Example1 extends ExperimentSetCreator {
 
-  /** create */
-  public Example1() {
-    super();
+  /**
+   * create
+   * 
+   * @param logger
+   *          the logger, or {@code null} to use the global logger
+   */
+  public Example1(final Logger logger) {
+    super(logger);
   }
 
   /** {@inheritDoc} */
@@ -33,7 +38,7 @@ public final class Example1 extends ExperimentSetCreator {
     final ExperimentSet es;
 
     try (final ExperimentSetContext esb = new ExperimentSetContext(
-        Logger.getGlobal())) {
+        this.getLogger())) {
 
       this.__createDimensionSet(esb);
 
@@ -647,6 +652,6 @@ public final class Example1 extends ExperimentSetCreator {
    */
   public static final void main(final String[] args) {
     Configuration.setup(args);
-    new Example1().run();
+    new Example1(null).run();
   }
 }
