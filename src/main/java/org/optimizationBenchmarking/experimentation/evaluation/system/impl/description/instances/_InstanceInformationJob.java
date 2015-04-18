@@ -16,6 +16,7 @@ import org.optimizationBenchmarking.utils.chart.spec.IDataScalar;
 import org.optimizationBenchmarking.utils.chart.spec.IPieChart;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.document.impl.FigureSizeParser;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
@@ -29,8 +30,14 @@ import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 /** A job of the instance information module. */
 final class _InstanceInformationJob extends DescriptionJob {
 
+  /** the default figure size */
+  private static final EFigureSize DEFAULT_FIGURE_SIZE = EFigureSize.PAGE_3_PER_ROW;
+
   /** the property value groupers */
   private final PropertyValueGrouper<Feature, Instance>[] m_groupers;
+
+  /** the figure size */
+  private final EFigureSize m_figureSize;
 
   /**
    * Create the instance information job
@@ -61,6 +68,10 @@ final class _InstanceInformationJob extends DescriptionJob {
       groupers[i] = PropertyValueGrouper
           .configure(features.get(i), config);
     }
+
+    this.m_figureSize = config.get(FigureSizeParser.PARAM_FIGURE_SIZE,
+        FigureSizeParser.INSTANCE,
+        _InstanceInformationJob.DEFAULT_FIGURE_SIZE);
   }
 
   /**
@@ -93,7 +104,7 @@ final class _InstanceInformationJob extends DescriptionJob {
     colors = section.getStyles().allocateColors(maxColors);
 
     try (final IFigureSeries series = body.figureSeries(null,
-        EFigureSize.PAGE_2_PER_ROW, "instanceFeaturePieCharts")) { //$NON-NLS-1$
+        this.m_figureSize, "instanceFeaturePieCharts")) { //$NON-NLS-1$
       try (final IComplexText caption = series.caption()) {
         caption.append("Instances per feature setting.");//$NON-NLS-1$
       }

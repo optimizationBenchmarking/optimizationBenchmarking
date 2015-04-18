@@ -196,7 +196,7 @@ public final class Configuration implements Serializable, ITextable {
         synchronized (this.m_data) {
           for (Configuration cfg = this; cfg != null; cfg = cfg.m_owner) {
             synchronized (cfg.m_data) {
-              entry = ((_ConfigMapEntry) (this.m_data.getEntry(key, false)));
+              entry = ((_ConfigMapEntry) (cfg.m_data.getEntry(key, false)));
               if (entry != null) {
                 isLocked = entry.m_isLocked;
                 entry.m_isLocked = true;

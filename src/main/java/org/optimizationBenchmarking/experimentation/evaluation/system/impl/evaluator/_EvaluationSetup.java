@@ -140,10 +140,6 @@ class _EvaluationSetup {
    */
   final void _setBaseConfiguration(final Configuration config) {
     synchronized (this.m_synch) {
-      if (this.m_ownConfiguration != null) {
-        throw new IllegalStateException(//
-            "Cannot set baseline configuration after calling the configure method."); //$NON-NLS-1$
-      }
       this.__doSetBaseConfiguration(config);
     }
   }
@@ -173,11 +169,14 @@ class _EvaluationSetup {
               "Cannot set baseline configuration twice."); //$NON-NLS-1$
         }
 
-        checkNoModule: {
-          for (final ArrayList<_ModuleEntry> module : this.m_modules) {
-            if (!(module.isEmpty())) {
-              break checkNoModule;
+        hasModule: {
+          checkNoModule: {
+            for (final ArrayList<_ModuleEntry> module : this.m_modules) {
+              if (!(module.isEmpty())) {
+                break checkNoModule;
+              }
             }
+            break hasModule;
           }
           throw new IllegalStateException(//
               "Cannot set baseline configuration after adding modules.");//$NON-NLS-1$
@@ -526,6 +525,10 @@ class _EvaluationSetup {
       if (this.m_ownConfiguration != null) {
         throw new IllegalArgumentException(//
             "Cannot set configuration twice."); //$NON-NLS-1$
+      }
+      if (this.m_baseConfiguration != null) {
+        throw new IllegalStateException(//
+            "Cannot set own configuration after setting the base configuration."); //$NON-NLS-1$
       }
       this.m_ownConfiguration = config;
     }

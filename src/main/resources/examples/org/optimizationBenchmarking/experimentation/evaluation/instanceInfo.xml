@@ -3,12 +3,16 @@
 	xmlns:e="http://www.optimizationBenchmarking.org/formats/evaluationConfiguration/evaluationConfiguration.1.0.xsd"
 	xmlns:cfg="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd">
 
+	<cfg:configuration>
+		<cfg:parameter name="figureSize" value="2 by 2" />
+	</cfg:configuration>
+
 	<e:module class="description.instances.InstanceInformation">
 		<cfg:configuration>
 			<cfg:parameter name="defaultGrouping" value="? to 10" />
 			<cfg:parameter name="fGrouping" value="powers of 3" />
 			<cfg:parameter name="nGrouping" value="multiples of 2000" />
-      <cfg:parameter name="condGrouping" value="2 to 4" />
+			<cfg:parameter name="condGrouping" value="2 to 4" />
 		</cfg:configuration>
 	</e:module>
 

@@ -90,6 +90,33 @@ public final class GraphicDriverParser extends
     return __GraphicDriverParserLoader.INSTANCE;
   }
 
+  // default, automatic serialization replacement and resolve routines for
+  // singletons
+  //
+  /**
+   * Write replace: the instance this method is invoked on will be replaced
+   * with the singleton instance {@link #getInstance()} for serialization,
+   * i.e., when the instance is written with
+   * {@link java.io.ObjectOutputStream#writeObject(Object)}.
+   * 
+   * @return the replacement instance (always {@link #getInstance()})
+   */
+  private final Object writeReplace() {
+    return GraphicDriverParser.getInstance();
+  }
+
+  /**
+   * Read resolve: The instance this method is invoked on will be replaced
+   * with the singleton instance {@link #getInstance()} after
+   * serialization, i.e., when the instance is read with
+   * {@link java.io.ObjectInputStream#readObject()}.
+   * 
+   * @return the replacement instance (always {@link #getInstance()})
+   */
+  private final Object readResolve() {
+    return GraphicDriverParser.getInstance();
+  }
+
   /** the instance loader */
   private static final class __GraphicDriverParserLoader {
     /** the instance */

@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.graphics.PageDimension;
 import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.math.MathConstants;
@@ -51,6 +52,10 @@ public enum EFigureSize {
   COLUMN_2_PER_ROW(2, -1, false),
 
   ;
+
+  /** the set of all figure sizes */
+  public static final ArraySetView<EFigureSize> INSTANCES = //
+  new ArraySetView<>(EFigureSize.values());
 
   /**
    * the number of figures of that size that should fit along the x-axis,

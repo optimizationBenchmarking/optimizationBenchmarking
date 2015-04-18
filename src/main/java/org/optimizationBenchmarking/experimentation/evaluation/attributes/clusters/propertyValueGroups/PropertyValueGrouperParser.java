@@ -15,30 +15,34 @@ import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterato
 
 /**
  * A parser which can transform a string to a property value grouper. The
- * following syntax is supported (where
- * <code>|<code> indicates an <em>exclusive or</em> choice of strings):
+ * following syntax is supported (where <code>|</code> indicates an
+ * <em>exclusive or</em> choice of strings):
  * <dl>
- * <dt><code>m|? to n|?</code></dt> <dd>Try to find between <code>m</code>
- * to <code>n</code> groups. A question mark (<code>?</code>) can be
- * specified instead of either <code>m</code> or <code>n</code> and
- * indicates <em>don't care</em>, in which case a reasonable default is
- * used. The resulting groups may be generated based on any grouping mode.</dd>
+ * <dt><code>m|? to n|?</code></dt>
+ * <dd>Try to find between <code>m</code> to <code>n</code> groups. A
+ * question mark (<code>?</code>) can be specified instead of either
+ * <code>m</code> or <code>n</code> and indicates <em>don't care</em>, in
+ * which case a reasonable default is used. The resulting groups may be
+ * generated based on any grouping mode.</dd>
  * <dt>
- * <code>m|? to n|? multiples|powers|any</code></dt> <dd>Try to find a
- * grouping where the ranges are multiples or powers (or anything) such
- * that there are <code>m</code> to <code>n</code> groups. A question mark
- * (<code>?</code> ) can be specified instead of either <code>m</code> or
- * <code>n</code> and indicates <em>don't care</em>, in which case a
- * reasonable default is used.</dd> <dt>
+ * <code>m|? to n|? multiples|powers|any</code></dt>
+ * <dd>Try to find a grouping where the ranges are multiples or powers (or
+ * anything) such that there are <code>m</code> to <code>n</code> groups. A
+ * question mark (<code>?</code> ) can be specified instead of either
+ * <code>m</code> or <code>n</code> and indicates <em>don't care</em>, in
+ * which case a reasonable default is used.</dd>
+ * <dt>
  * <code>multiples|powers of p</code></dt>
  * <dd>The grouping is to be based on powers or multiples of the number
  * <code>p</code>. The group number results automatically and cannot be
- * specified.</dd> <dt>
- * <code>multiples|powers|distinct|any</code></dt> <dd>
- * Groupings are to be found which are either multiples, powers, correspond
- * to distinct values, or are any of the above. The group number is
- * <em>don't care</em> in the multiple, power, or any case and results
- * automatically in the distinct case.</dd> </dl>
+ * specified.</dd>
+ * <dt>
+ * <code>multiples|powers|distinct|any</code></dt>
+ * <dd>Groupings are to be found which are either multiples, powers,
+ * correspond to distinct values, or are any of the above. The group number
+ * is <em>don't care</em> in the multiple, power, or any case and results
+ * automatically in the distinct case.</dd>
+ * </dl>
  * 
  * @param <PT>
  *          the property type
