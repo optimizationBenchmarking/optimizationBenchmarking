@@ -45,12 +45,44 @@ public final class Add extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final float computeAsFloat(final float x0, final float x1) {
+    final long l0, l1;
+
+    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
+      l0 = ((long) x0);
+      if (l0 == x0) {
+        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
+          l1 = ((long) x1);
+          if (l1 == x1) {
+            if (SaturatingAdd.getOverflowType(l0, l1) == 0) {
+              return (l0 + l1);
+            }
+          }
+        }
+      }
+    }
+
     return (x0 + x1);
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
+    final long l0, l1;
+
+    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
+      l0 = ((long) x0);
+      if (l0 == x0) {
+        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
+          l1 = ((long) x1);
+          if (l1 == x1) {
+            if (SaturatingAdd.getOverflowType(l0, l1) == 0) {
+              return (l0 + l1);
+            }
+          }
+        }
+      }
+    }
+
     return (x0 + x1);
   }
 
@@ -60,7 +92,7 @@ public final class Add extends BinaryFunction {
     switch (SaturatingAdd.getOverflowType(x0, x1)) {
       case -1:
       case 1: {
-        return this.computeAsDouble(((double) x0), ((double) x1));
+        return (((double) x0) + ((double) x1));
       }
       default: {
         return (x0 + x1);

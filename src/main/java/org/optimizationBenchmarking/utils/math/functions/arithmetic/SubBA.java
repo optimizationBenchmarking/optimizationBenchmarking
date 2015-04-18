@@ -45,25 +45,58 @@ public final class SubBA extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final float computeAsFloat(final float x0, final float x1) {
+    final long l0, l1;
+
+    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
+      l0 = ((long) x0);
+      if (l0 == x0) {
+        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
+          l1 = ((long) x1);
+          if (l1 == x1) {
+            if (SaturatingSub.getOverflowType(l1, l0) == 0) {
+              return (l1 - l0);
+            }
+          }
+        }
+      }
+    }
     return (x1 - x0);
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
+    final long l0, l1;
+
+    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
+      l0 = ((long) x0);
+      if (l0 == x0) {
+        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
+          l1 = ((long) x1);
+          if (l1 == x1) {
+            if (SaturatingSub.getOverflowType(l1, l0) == 0) {
+              return (l1 - l0);
+            }
+          }
+        }
+      }
+    }
+
     return (x1 - x0);
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final long x0, final long x1) {
-    if (x0 <= Long.MIN_VALUE) {
-      if (x1 < 0L) {
+    switch (SaturatingSub.getOverflowType(x1, x0)) {
+      case -1:
+      case 1: {
+        return (((double) x1) - ((double) x0));
+      }
+      default: {
         return (x1 - x0);
       }
-      return (((double) x1) - ((double) x0));
     }
-    return Add.INSTANCE.computeAsDouble(x1, (-x0));
   }
 
   /** {@inheritDoc} */

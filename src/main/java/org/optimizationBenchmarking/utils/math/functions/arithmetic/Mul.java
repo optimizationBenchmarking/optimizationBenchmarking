@@ -45,12 +45,46 @@ public final class Mul extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final float computeAsFloat(final float x0, final float x1) {
+    final long l0, l1, res;
+
+    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
+      l0 = ((long) x0);
+      if (l0 == x0) {
+        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
+          l1 = ((long) x1);
+          if (l1 == x1) {
+            res = (l1 * l0);
+            if ((res / l0) == l1) {
+              return res;
+            }
+          }
+        }
+      }
+    }
+
     return (x0 * x1);
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
+    final long l0, l1, res;
+
+    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
+      l0 = ((long) x0);
+      if (l0 == x0) {
+        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
+          l1 = ((long) x1);
+          if (l1 == x1) {
+            res = (l1 * l0);
+            if ((res / l0) == l1) {
+              return res;
+            }
+          }
+        }
+      }
+    }
+
     return (x0 * x1);
   }
 

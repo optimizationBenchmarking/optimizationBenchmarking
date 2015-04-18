@@ -8,7 +8,7 @@ import test.junit.org.optimizationBenchmarking.utils.math.functions.Mathematical
 import test.junit.org.optimizationBenchmarking.utils.math.functions.TestCase;
 
 /** The test of the saturating subtract function */
-public class SaturatingSubTest extends MathematicalFunctionTest {
+public final class SaturatingSubTest extends MathematicalFunctionTest {
 
   /** the test cases */
   private static final TestCase[] TEST_CASES = { //
@@ -43,33 +43,33 @@ public class SaturatingSubTest extends MathematicalFunctionTest {
 
   /** {@inheritDoc} */
   @Override
-  public MathematicalFunction getFunction() {
+  public final MathematicalFunction getFunction() {
     return SaturatingSub.INSTANCE;
   }
 
   /** {@inheritDoc} */
   @Override
-  protected boolean isCommutative() {
+  protected final boolean isCommutative() {
     return false;
   }
 
   /** {@inheritDoc} */
   @Override
-  public TestCase[] getTestCases() {
+  public final TestCase[] getTestCases() {
     return SaturatingSubTest.TEST_CASES;
   }
 
   /** {@inheritDoc} */
   @Override
   @Ignore
-  public void testTestCasesAllDouble() {
+  public final void testTestCasesAllDouble() {
     // ignored
   }
 
   /** {@inheritDoc} */
   @Override
   @Ignore
-  public void testTestCasesAllFloat() {
+  public final void testTestCasesAllFloat() {
     // ignored
   }
 }

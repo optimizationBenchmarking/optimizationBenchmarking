@@ -288,9 +288,8 @@ public final class Add3 extends TernaryFunction {
     }
 
     // ok, there was no pure long-arithmetic sum of all three numbers
-    // without overflow
-    // so let us try to sum with long arithmetic anyway _and_ with double
-    // arithmetic
+    // without overflow so let us try to sum with long arithmetic anyway
+    // _and_ with double arithmetic
     longApprox = (x0 + x1 + x2);
     doubleApprox = Add3.__computeAsDouble(x0, x1, x2);
 

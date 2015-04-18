@@ -7,7 +7,7 @@ import test.junit.org.optimizationBenchmarking.utils.math.functions.Mathematical
 import test.junit.org.optimizationBenchmarking.utils.math.functions.TestCase;
 
 /** The test of the saturating add function */
-public class SaturatingAddTest extends MathematicalFunctionTest {
+public final class SaturatingAddTest extends MathematicalFunctionTest {
 
   /** the test cases */
   private static final TestCase[] TEST_CASES = { //
@@ -50,19 +50,19 @@ public class SaturatingAddTest extends MathematicalFunctionTest {
 
   /** {@inheritDoc} */
   @Override
-  public MathematicalFunction getFunction() {
+  public final MathematicalFunction getFunction() {
     return SaturatingAdd.INSTANCE;
   }
 
   /** {@inheritDoc} */
   @Override
-  protected boolean isCommutative() {
+  protected final boolean isCommutative() {
     return true;
   }
 
   /** {@inheritDoc} */
   @Override
-  public TestCase[] getTestCases() {
+  public final TestCase[] getTestCases() {
     return SaturatingAddTest.TEST_CASES;
   }
 }
