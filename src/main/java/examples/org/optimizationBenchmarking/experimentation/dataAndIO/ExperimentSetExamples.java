@@ -13,6 +13,7 @@ public final class ExperimentSetExamples {
       Example1.class,//
           Example2Random.class,//
           BBOBExample.class,//
+          CSVEDIExample.class,//
           TSPSuiteExample.class,//
           RandomBBOBParallelExample.class,//
           RandomTSPSuiteParallelExample.class,//

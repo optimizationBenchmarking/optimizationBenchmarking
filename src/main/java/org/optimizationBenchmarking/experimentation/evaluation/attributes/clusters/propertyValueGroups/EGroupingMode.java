@@ -297,12 +297,12 @@ public enum EGroupingMode {
   /** the choices for the {@code double} multiples */
   static final double[] MULTIPLE_CHOICES_D = { 1e-30d, 1e-24d, 1e-21d,
       1e-18d, 1e-15d, 1e-12d, 1e-9d, 1e-6, 1e-5, 1e-4d, 1E-3d, 1E-2d,
-      1E-1d, 0.125d, (1d / 3d), 0.25d, 0.5d, 1d, 1.5d, 2d, 2.5d, 3d, 5d,
-      7.5d, 10d, 15d, 20d, 25d, 30d, 40d, 50d, 75d, 100d, 200d, 250d,
-      500d, 750d, 1_000d, 1_500d, 2_000d, 2_500d, 5_000d, 1e4d, 1e5d,
-      1e6d, 1e7d, 1e8d, 1e9d, 1e10d, 1e12d, 1e15d, 1e18d, 1e20d, 1e21d,
-      1e24d, 1e27d, 1e30d, 1e35d, 1e40d, 1e50d, 1e60d, 1e70d, 1e100d,
-      1e200d, 1e300d };
+      1E-1d, 0.125d, 0.2d, 0.25d, 0.3d, (1d / 3d), 0.4d, 0.5d, 0.75d, 1d,
+      1.5d, 2d, 2.5d, 3d, 4d, 5d, 7.5d, 10d, 15d, 20d, 25d, 30d, 40d, 50d,
+      75d, 100d, 200d, 250d, 500d, 750d, 1_000d, 1_500d, 2_000d, 2_500d,
+      5_000d, 1e4d, 1e5d, 1e6d, 1e7d, 1e8d, 1e9d, 1e10d, 1e12d, 1e15d,
+      1e18d, 1e20d, 1e21d, 1e24d, 1e27d, 1e30d, 1e35d, 1e40d, 1e50d,
+      1e60d, 1e70d, 1e100d, 1e200d, 1e300d };
 
   /**
    * Create a grouping

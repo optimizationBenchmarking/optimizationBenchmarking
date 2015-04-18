@@ -14,8 +14,6 @@ import org.optimizationBenchmarking.experimentation.data.Property;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * An attribute which can group property values.
@@ -37,46 +35,14 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
 
   /** The suffix of the grouping parameter: {@value} */
   public static final String PARAM_GROUPING_SUFFIX = "Grouping"; //$NON-NLS-1$
-  /** The parameter suffix defining the minimum number of groups: {@value} */
-  public static final String PARAM_GROUPING_MIN_GROUPS_SUFFIX = //
-  (PropertyValueGrouper.PARAM_GROUPING_SUFFIX + "MinGroups");//$NON-NLS-1$
-  /** The parameter suffix defining the maximum number of groups: {@value} */
-  public static final String PARAM_GROUPING_MAX_GROUPS_SUFFIX = //
-  (PropertyValueGrouper.PARAM_GROUPING_SUFFIX + "MaxGroups");//$NON-NLS-1$
-  /** The parameter suffix defining the grouping mode: {@value} */
-  public static final String PARAM_GROUPING_MODE_SUFFIX = //
-  (PropertyValueGrouper.PARAM_GROUPING_SUFFIX + "Mode");//$NON-NLS-1$
-  /** The parameter suffix defining the grouping parameter: {@value} */
-  public static final String PARAM_GROUPING_PARAMETER_SUFFIX = //
-  (PropertyValueGrouper.PARAM_GROUPING_SUFFIX + "Param");//$NON-NLS-1$
 
-  /** The parameter for all grouping min group numbers */
-  public static final String PARAM_ALL_GROUPING_MIN_GROUPS = //
-  (Character
-      .toLowerCase(PropertyValueGrouper.PARAM_GROUPING_MIN_GROUPS_SUFFIX
-          .charAt(0))//
-  + PropertyValueGrouper.PARAM_GROUPING_MIN_GROUPS_SUFFIX.substring(1));
-  /** The parameter for all grouping max group numbers */
-  public static final String PARAM_ALL_GROUPING_MAX_GROUPS = //
-  (Character
-      .toLowerCase(PropertyValueGrouper.PARAM_GROUPING_MAX_GROUPS_SUFFIX
-          .charAt(0))//
-  + PropertyValueGrouper.PARAM_GROUPING_MAX_GROUPS_SUFFIX.substring(1));
-  /** The parameter for all grouping modes */
-  public static final String PARAM_ALL_GROUPING_MODE = //
-  (Character.toLowerCase(PropertyValueGrouper.PARAM_GROUPING_MODE_SUFFIX
-      .charAt(0))//
-  + PropertyValueGrouper.PARAM_GROUPING_MODE_SUFFIX.substring(1));
-  /** The parameter for all grouping parameters */
-  public static final String PARAM_ALL_GROUPING_PARAMETER = //
-  (Character
-      .toLowerCase(PropertyValueGrouper.PARAM_GROUPING_PARAMETER_SUFFIX
-          .charAt(0))//
-  + PropertyValueGrouper.PARAM_GROUPING_PARAMETER_SUFFIX.substring(1));
+  /** The default parameter for all grouping */
+  public static final String PARAM_DEFAULT_GROUPING = //
+  ("default" + PropertyValueGrouper.PARAM_GROUPING_SUFFIX);//$NON-NLS-1$
 
   /** The default value grouper for experiment parameters */
   @SuppressWarnings("rawtypes")
-  private static final PropertyValueGrouper DEFAULT_GROUPER//
+  static final PropertyValueGrouper DEFAULT_GROUPER//
   = new PropertyValueGrouper(PropertyValueGrouper.DEFAULT_GROUPING_MODE,
       null, PropertyValueGrouper.DEFAULT_MIN_GROUPS,
       PropertyValueGrouper.DEFAULT_MAX_GROUPS);
@@ -147,6 +113,42 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
   }
 
   /**
+   * Get the goal minimum number of groups
+   * 
+   * @return the goal minimum number of groups
+   */
+  public final int getMinGroups() {
+    return this.m_minGroups;
+  }
+
+  /**
+   * Get the goal maximum number of groups
+   * 
+   * @return the goal maximum number of groups
+   */
+  public final int getMaxGroups() {
+    return this.m_maxGroups;
+  }
+
+  /**
+   * Get the grouping parameter, or {@code null} if none is specified
+   * 
+   * @return the grouping parameter, or {@code null} if none is specified
+   */
+  public final Number getGroupingParameter() {
+    return this.m_groupingParameter;
+  }
+
+  /**
+   * Get the grouping mode
+   * 
+   * @return the grouping mode
+   */
+  public final EGroupingMode getGroupingMode() {
+    return this.m_groupingMode;
+  }
+
+  /**
    * Load a property value grouper from a configuration
    * 
    * @param property
@@ -159,98 +161,24 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
    * @param <PX>
    *          the property type
    */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   public static final <DX extends DataElement, PX extends Property<?>> PropertyValueGrouper<PX, DX> configure(
       final PX property, final Configuration config) {
-    return PropertyValueGrouper.configure(
-        ((property != null) ? property.getName() : null), config);
-  }
+    final PropertyValueGrouper all;
 
-  /**
-   * Load a property value grouper from a configuration
-   * 
-   * @param propertyName
-   *          the property name
-   * @param config
-   *          the configuration
-   * @return the grouper
-   * @param <DX>
-   *          the element type
-   * @param <PX>
-   *          the property type
-   */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  public static final <DX extends DataElement, PX extends Property<?>> PropertyValueGrouper<PX, DX> configure(
-      final String propertyName, final Configuration config) {
-    final EGroupingMode mode, allMode;
-    final int minGroups, maxGroups, allMinGroups, allMaxGroups;
-    final Number param, allParam;
-    final boolean isSpecial;
-    String prefix;
+    all = config.get(PropertyValueGrouper.PARAM_DEFAULT_GROUPING,//
+        PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER,//
+        PropertyValueGrouper.DEFAULT_GROUPER);
 
-    if (config == null) {
-      return PropertyValueGrouper.DEFAULT_GROUPER;
+    if (property != null) {
+      return config
+          .get(//
+              (property.getName() + PropertyValueGrouper.PARAM_GROUPING_SUFFIX),//
+              PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER,//
+              all);
     }
 
-    prefix = TextUtils.prepare(propertyName);
-    isSpecial = (prefix != null);
-
-    allMode = config.getInstance(
-        PropertyValueGrouper.PARAM_ALL_GROUPING_MODE,//
-        EGroupingMode.class, PropertyValueGrouper.DEFAULT_GROUPING_MODE);
-    if (isSpecial) {
-      mode = config.getInstance((prefix + //
-          PropertyValueGrouper.PARAM_GROUPING_MODE_SUFFIX),//
-          EGroupingMode.class,//
-          allMode);
-    } else {
-      mode = allMode;
-    }
-
-    allMinGroups = config.getInt(
-        PropertyValueGrouper.PARAM_ALL_GROUPING_MIN_GROUPS, 0, 10000,//
-        PropertyValueGrouper.DEFAULT_MIN_GROUPS);
-    if (isSpecial) {
-      minGroups = config.getInt(
-          (prefix + //
-          PropertyValueGrouper.PARAM_GROUPING_MIN_GROUPS_SUFFIX), 0,
-          (Math.max(allMinGroups, 10000) + 1), allMinGroups);
-    } else {
-      minGroups = allMinGroups;
-    }
-
-    allMaxGroups = config.getInt(
-        PropertyValueGrouper.PARAM_ALL_GROUPING_MAX_GROUPS, allMinGroups,
-        (Math.max(allMinGroups, 10000) + 1),//
-        PropertyValueGrouper.DEFAULT_MAX_GROUPS);
-    if (isSpecial) {
-      maxGroups = config.getInt(
-          (prefix + //
-          PropertyValueGrouper.PARAM_GROUPING_MAX_GROUPS_SUFFIX),
-          Math.max(allMinGroups, minGroups),
-          (Math.max(Math.max(minGroups, allMaxGroups), 10000) + 1),
-          allMaxGroups);
-    } else {
-      maxGroups = allMaxGroups;
-    }
-
-    allParam = config.get(
-        PropertyValueGrouper.PARAM_ALL_GROUPING_PARAMETER,
-        AnyNumberParser.INSTANCE, null);
-    if (isSpecial) {
-      param = config.get(
-          (prefix + PropertyValueGrouper.PARAM_GROUPING_PARAMETER_SUFFIX),
-          AnyNumberParser.INSTANCE, allParam);
-    } else {
-      param = allParam;
-    }
-
-    if ((mode == PropertyValueGrouper.DEFAULT_GROUPER.m_groupingMode)
-        && (minGroups == PropertyValueGrouper.DEFAULT_GROUPER.m_minGroups)
-        && (maxGroups == PropertyValueGrouper.DEFAULT_GROUPER.m_maxGroups)
-        && (param == PropertyValueGrouper.DEFAULT_GROUPER.m_groupingParameter)) {
-      return PropertyValueGrouper.DEFAULT_GROUPER;
-    }
-    return new PropertyValueGrouper(mode, param, minGroups, maxGroups);
+    return all;
   }
 
   /** {@inheritDoc} */

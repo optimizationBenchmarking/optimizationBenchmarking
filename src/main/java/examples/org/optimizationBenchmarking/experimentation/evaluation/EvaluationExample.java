@@ -154,7 +154,9 @@ public abstract class EvaluationExample {
     try {
       for (final Class<? extends ExperimentSetCreator> source : ExperimentSetExamples.EXAMPLES) {
         for (final DocumentConfiguration dest : ExampleDocumentConfigurations.FEW_DIVERSE_CONFIGURATIONS) {
-          this.process(source.newInstance(), dest, baseDir, root, logger);
+          this.process(
+              source.getConstructor(Logger.class).newInstance(logger),
+              dest, baseDir, root, logger);
         }
       }
     } catch (final Throwable tt) {

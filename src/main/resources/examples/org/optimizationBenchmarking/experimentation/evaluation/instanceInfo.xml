@@ -4,6 +4,12 @@
 	xmlns:cfg="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd">
 
 	<e:module class="description.instances.InstanceInformation">
+		<cfg:configuration>
+			<cfg:parameter name="defaultGrouping" value="? to 10" />
+			<cfg:parameter name="fGrouping" value="powers of 3" />
+			<cfg:parameter name="nGrouping" value="multiples of 2000" />
+      <cfg:parameter name="condGrouping" value="2 to 4" />
+		</cfg:configuration>
 	</e:module>
 
 	<e:module class="single.experimentInfo.ExperimentInformation">
