@@ -7,6 +7,7 @@ import java.awt.Stroke;
 import org.optimizationBenchmarking.utils.chart.spec.IDataScalar;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 
 /** A scalar data element */
 public class DataScalar extends DataElement implements IDataScalar {
@@ -38,7 +39,7 @@ public class DataScalar extends DataElement implements IDataScalar {
       throw new IllegalArgumentException(value
           + " is not a permitted scalar data value."); //$NON-NLS-1$
     }
-    this.m_data = Double.valueOf(value);
+    this.m_data = NumericalTypes.valueOf(value);
   }
 
   /** {@inheritDoc} */
@@ -48,7 +49,7 @@ public class DataScalar extends DataElement implements IDataScalar {
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
         DataElement.FLAG_HAS_DATA, DataElement.FLAG_HAS_DATA,
         FSM.FLAG_NOTHING);
-    this.m_data = Long.valueOf(value);
+    this.m_data = NumericalTypes.valueOf(value);
   }
 
   /** {@inheritDoc} */

@@ -48,7 +48,7 @@ final class _JFreeChartPieDataset extends
    */
   private static final Number __value(final Number in) {
     final double a, b;
-    if (in instanceof Double) {
+    if ((in instanceof Double) || (in instanceof Float)) {
       a = in.doubleValue();
       b = _JFreeChartDataset._f(a);
       if (b != a) {

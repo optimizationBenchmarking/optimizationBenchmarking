@@ -36,7 +36,7 @@ final class _AllEngines implements Iterable<_LaTeXToolChainComponentDesc> {
     /** {@inheritDoc} */
     @Override
     public final boolean hasNext() {
-      return (this.m_index <= 5);
+      return (this.m_index <= 6);
     }
 
     /** {@inheritDoc} */
@@ -60,6 +60,9 @@ final class _AllEngines implements Iterable<_LaTeXToolChainComponentDesc> {
         }
         case 5: {
           return _PdfLaTeXAsLaTeX._getDescription();
+        }
+        case 6: {
+          return _XeLaTeX._getDescription();
         }
         default: {
           return super.next(); // no more elements

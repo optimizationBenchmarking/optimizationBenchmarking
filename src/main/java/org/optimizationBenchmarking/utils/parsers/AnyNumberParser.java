@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
@@ -70,7 +71,8 @@ public class AnyNumberParser extends NumberParser<Number> {
               origNumberError.addSuppressed(error4);
 
               try {
-                retVal = AnyNumberParser.__get(Double.parseDouble(string));
+                retVal = NumericalTypes
+                    .valueOf(Double.parseDouble(string));
                 break checker;
               } catch (final NumberFormatException error5) {
                 origNumberError.addSuppressed(error5);
@@ -99,7 +101,7 @@ public class AnyNumberParser extends NumberParser<Number> {
             // try again to parse the string directly
             try {
               i = Integer.parseInt(str);
-              retVal = AnyNumberParser.__get(prep.getReturn(i));
+              retVal = NumericalTypes.valueOf(prep.getReturn(i));
               break checker;
             } catch (final Throwable canBeIgnored) {
               // we ignore this exception, as we will throw the original
@@ -108,7 +110,7 @@ public class AnyNumberParser extends NumberParser<Number> {
 
             try {
               l = Long.parseLong(str);
-              retVal = AnyNumberParser.__get(prep.getReturn(l));
+              retVal = NumericalTypes.valueOf(prep.getReturn(l));
               break checker;
             } catch (final Throwable canBeIgnored) {
               // we ignore this exception, as we will throw the original
@@ -117,7 +119,7 @@ public class AnyNumberParser extends NumberParser<Number> {
 
             try {
               d = Double.parseDouble(str);
-              retVal = AnyNumberParser.__get(prep.getReturn(d));
+              retVal = NumericalTypes.valueOf(prep.getReturn(d));
               break checker;
             } catch (final Throwable canBeIgnored) {
               // we ignore this exception, as we will throw the original
@@ -129,7 +131,7 @@ public class AnyNumberParser extends NumberParser<Number> {
           if ((str.length() > 2) && (str.charAt(0) == '0')) {
             if ((base = _PreparedString._getBase(str.charAt(1))) != 0) {
               try {
-                retVal = AnyNumberParser.__get(prep.getReturn(Long
+                retVal = NumericalTypes.valueOf(prep.getReturn(Long
                     .parseLong(str.substring(2), base)));
                 break checker;
               } catch (final Throwable canBeIgnored) {
@@ -143,7 +145,7 @@ public class AnyNumberParser extends NumberParser<Number> {
           cnst = _TextConst.findConst(str);
           if (cnst != null) {
             if (cnst.hasInt()) {
-              retVal = AnyNumberParser.__get(prep.getReturn(cnst.m_l));
+              retVal = NumericalTypes.valueOf(prep.getReturn(cnst.m_l));
               break checker;
             }
             break outer;
@@ -172,43 +174,6 @@ public class AnyNumberParser extends NumberParser<Number> {
 
     this.validate(retVal);
     return retVal;
-  }
-
-  /**
-   * convert a long to a number
-   * 
-   * @param l
-   *          the long
-   * @return the number
-   */
-  private static final Number __get(final long l) {
-    if ((l >= Byte.MIN_VALUE) && (l <= Byte.MAX_VALUE)) {
-      return Byte.valueOf((byte) l);
-    }
-    if ((l >= Short.MIN_VALUE) && (l <= Short.MAX_VALUE)) {
-      return Short.valueOf((short) l);
-    }
-    if ((l >= Integer.MIN_VALUE) && (l <= Integer.MAX_VALUE)) {
-      return Integer.valueOf((int) l);
-    }
-    return Long.valueOf(l);
-  }
-
-  /**
-   * convert a double to a number
-   * 
-   * @param d
-   *          the double
-   * @return the number
-   */
-  private static final Number __get(final double d) {
-    final float f;
-
-    f = ((float) d);
-    if (f == d) {
-      return Float.valueOf(f);
-    }
-    return Double.valueOf(d);
   }
 
   /** {@inheritDoc} */

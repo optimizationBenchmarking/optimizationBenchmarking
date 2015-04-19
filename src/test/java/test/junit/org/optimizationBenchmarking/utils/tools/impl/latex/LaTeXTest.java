@@ -284,7 +284,9 @@ public class LaTeXTest extends ToolTest<LaTeX> {
   }
 
   /**
-   * test whether we run the tool chain for pdf figures
+   * test whether we run the tool chain for
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#PDF}
+   * figures
    */
   @Test(timeout = 3600000)
   public void testCanBuildWithPDF() {
@@ -292,7 +294,9 @@ public class LaTeXTest extends ToolTest<LaTeX> {
   }
 
   /**
-   * test whether we run the tool chain for eps figures
+   * test whether we run the tool chain for
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#EPS}
+   * figures
    */
   @Test(timeout = 3600000)
   public void testCanBuildWithEPS() {
@@ -300,7 +304,9 @@ public class LaTeXTest extends ToolTest<LaTeX> {
   }
 
   /**
-   * test whether we run the tool chain for jpeg figures
+   * test whether we run the tool chain for
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#JPEG}
+   * figures
    */
   @Test(timeout = 3600000)
   public void testCanBuildWithJPEG() {
@@ -308,196 +314,12 @@ public class LaTeXTest extends ToolTest<LaTeX> {
   }
 
   /**
-   * test whether we run the tool chain for png figures
+   * test whether we run the tool chain for
+   * {@link org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#PNG}
+   * figures
    */
   @Test(timeout = 3600000)
   public void testCanBuildWithPNG() {
     this.__test(EGraphicFormat.PNG, false);
   }
-
-  //
-  // /**
-  // * test whether we run the tool chain for a simple example with BibTeX
-  // * and a mock requirement for JPEG images
-  // */
-  // @Test(timeout = 3600000)
-  // public void testCanBuildBibTeXExampleWithMockJPEGRequirement() {
-  // final LaTeX tool;
-  // final __FileProducerListener listener;
-  // final LaTeXJobBuilder builder;
-  // final LaTeXJob job;
-  //
-  // tool = this.getInstance();
-  // Assert.assertNotNull(tool);
-  // try (final TempDir temp = new TempDir()) {
-  // builder = tool.use();
-  // listener = new __FileProducerListener();
-  // builder.setFileProducerListener(listener);
-  // builder.setMainFile(this.__makeBibTeXExample(temp));
-  // builder.requireFileType(ELaTeXFileType.TEX);
-  // builder.requireFileType(ELaTeXFileType.BIB);
-  // builder.requireFileType(EGraphicFormat.JPEG);
-  // job = builder.create();
-  // Assert.assertNotNull(job);
-  // try {
-  // job.call();
-  // } catch (Throwable t) {
-  // throw new RuntimeException(//
-  //            "LaTeX document compilation failed.", //$NON-NLS-1$
-  // t);
-  // }
-  // Assert.assertNotNull(listener.m_types);
-  //
-  // if (listener.m_types.size() > 0) {
-  // Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
-  // }
-  //
-  // } catch (IOException ioe) {
-  // throw new RuntimeException(//
-  //          "LaTeX test failed.", //$NON-NLS-1$
-  // ioe);
-  // }
-  // }
-  //
-  // /**
-  // * test whether we run the tool chain for a simple example with BibTeX
-  // * and a mock requirement for PDF images
-  // */
-  // @Test(timeout = 3600000)
-  // public void testCanBuildBibTeXExampleWithMockPDFRequirement() {
-  // final LaTeX tool;
-  // final __FileProducerListener listener;
-  // final LaTeXJobBuilder builder;
-  // final LaTeXJob job;
-  //
-  // tool = this.getInstance();
-  // Assert.assertNotNull(tool);
-  // try (final TempDir temp = new TempDir()) {
-  // builder = tool.use();
-  // listener = new __FileProducerListener();
-  // builder.setFileProducerListener(listener);
-  // builder.setMainFile(this.__makeBibTeXExample(temp));
-  // builder.requireFileType(ELaTeXFileType.TEX);
-  // builder.requireFileType(ELaTeXFileType.BIB);
-  // builder.requireFileType(EGraphicFormat.PDF);
-  // job = builder.create();
-  // Assert.assertNotNull(job);
-  // try {
-  // job.call();
-  // } catch (Throwable t) {
-  // throw new RuntimeException(//
-  //            "LaTeX document compilation failed.", //$NON-NLS-1$
-  // t);
-  // }
-  // Assert.assertNotNull(listener.m_types);
-  //
-  // if (listener.m_types.size() > 0) {
-  // Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
-  // }
-  //
-  // } catch (IOException ioe) {
-  // throw new RuntimeException(//
-  //          "LaTeX test failed.", //$NON-NLS-1$
-  // ioe);
-  // }
-  // }
-  //
-  // /**
-  // * test whether we run the tool chain for a simple example with BibTeX
-  // * and a mock requirement for EPS images
-  // */
-  // @Test(timeout = 3600000)
-  // public void testCanBuildBibTeXExampleWithMockEPSRequirement() {
-  // final LaTeX tool;
-  // final __FileProducerListener listener;
-  // final LaTeXJobBuilder builder;
-  // final LaTeXJob job;
-  //
-  // tool = this.getInstance();
-  // Assert.assertNotNull(tool);
-  // try (final TempDir temp = new TempDir()) {
-  // builder = tool.use();
-  // listener = new __FileProducerListener();
-  // builder.setFileProducerListener(listener);
-  // builder.setMainFile(this.__makeBibTeXExample(temp));
-  // builder.requireFileType(ELaTeXFileType.TEX);
-  // builder.requireFileType(ELaTeXFileType.BIB);
-  // builder.requireFileType(EGraphicFormat.EPS);
-  // job = builder.create();
-  // Assert.assertNotNull(job);
-  // try {
-  // job.call();
-  // } catch (Throwable t) {
-  // throw new RuntimeException(//
-  //            "LaTeX document compilation failed.", //$NON-NLS-1$
-  // t);
-  // }
-  // Assert.assertNotNull(listener.m_types);
-  //
-  // if (listener.m_types.size() > 0) {
-  // Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
-  // }
-  //
-  // } catch (IOException ioe) {
-  // throw new RuntimeException(//
-  //          "LaTeX test failed.", //$NON-NLS-1$
-  // ioe);
-  // }
-  // }
-  //
-  // /**
-  // * test whether we run the tool chain for a simple example with BibTeX
-  // * and a mock requirement for PNG images
-  // */
-  // @Test(timeout = 3600000)
-  // public void testCanBuildBibTeXExampleWithMockPNGRequirement() {
-  // final LaTeX tool;
-  // final __FileProducerListener listener;
-  // final LaTeXJobBuilder builder;
-  // final LaTeXJob job;
-  //
-  // tool = this.getInstance();
-  // Assert.assertNotNull(tool);
-  // try (final TempDir temp = new TempDir()) {
-  // builder = tool.use();
-  // listener = new __FileProducerListener();
-  // builder.setFileProducerListener(listener);
-  // builder.setMainFile(this.__makeBibTeXExample(temp));
-  // builder.requireFileType(ELaTeXFileType.TEX);
-  // builder.requireFileType(ELaTeXFileType.BIB);
-  // builder.requireFileType(EGraphicFormat.PNG);
-  // job = builder.create();
-  // Assert.assertNotNull(job);
-  // try {
-  // job.call();
-  // } catch (Throwable t) {
-  // throw new RuntimeException(//
-  //            "LaTeX document compilation failed.", //$NON-NLS-1$
-  // t);
-  // }
-  // Assert.assertNotNull(listener.m_types);
-  //
-  // if (listener.m_types.size() > 0) {
-  // Assert.assertTrue(listener.m_types.contains(ELaTeXFileType.PDF));
-  // }
-  //
-  // } catch (IOException ioe) {
-  // throw new RuntimeException(//
-  //          "LaTeX test failed.", //$NON-NLS-1$
-  // ioe);
-  // }
-  // }
-  //
-  // /** {@inheritDoc} */
-  // @Override
-  // public void validateInstance() {
-  // super.validateInstance();
-  // this.testCanBuildPlainExample();
-  // this.testCanBuildBibTeXExample();
-  // this.testCanBuildBibTeXExampleWithMockEPSRequirement();
-  // this.testCanBuildBibTeXExampleWithMockJPEGRequirement();
-  // this.testCanBuildBibTeXExampleWithMockPDFRequirement();
-  // this.testCanBuildBibTeXExampleWithMockPNGRequirement();
-  // }
-
 }

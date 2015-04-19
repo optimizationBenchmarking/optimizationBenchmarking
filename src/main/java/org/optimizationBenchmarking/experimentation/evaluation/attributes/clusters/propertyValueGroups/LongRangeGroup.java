@@ -3,7 +3,15 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 import org.optimizationBenchmarking.experimentation.data.DataElement;
 
 /**
- * A group of elements belonging to an integer range.
+ * A group of elements belonging to an integer range. The limits of this
+ * range
+ * {@link org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.ValueRangeGroup#getLowerBound()}
+ * and
+ * {@link org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.ValueRangeGroup#getUpperBound()}
+ * can be interpreted via {@link java.lang.Number#longValue()} without loss
+ * of accuracy or precision, but are not necessarily instances of
+ * {@link java.lang.Long}. They may even be instances of
+ * {@link java.lang.Byte}, if they are actually {@code byte} values.
  * 
  * @param <DT>
  *          the data set type
@@ -28,7 +36,7 @@ public final class LongRangeGroup<DT extends DataElement> extends
    * @param data
    *          the data
    */
-  LongRangeGroup(final Long lowerBound, final Long upperBound,
+  LongRangeGroup(final Number lowerBound, final Number upperBound,
       final boolean isUpperExclusive, final Number[] values,
       final DT[] data) {
     super(lowerBound, upperBound, isUpperExclusive, values, data);

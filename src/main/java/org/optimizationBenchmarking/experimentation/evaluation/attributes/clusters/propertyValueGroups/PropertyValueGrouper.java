@@ -334,8 +334,7 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
     final ArrayList<Number> memberValues;
     DataElement[] elements;
     Number[] numbers;
-    Number num;
-    Long lower, upper, oldUpper;
+    Number num, lower, upper, oldUpper;
     int i, size;
 
     list = new LongRangeGroup[groups.m_groups.length];
@@ -347,11 +346,11 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
       members.clear();
       memberValues.clear();
 
-      lower = ((Long) (group.m_lower));
+      lower = ((Number) (group.m_lower));
       if (lower.equals(oldUpper)) {
         lower = oldUpper;
       }
-      oldUpper = upper = ((Long) (group.m_upper));
+      oldUpper = upper = ((Number) (group.m_upper));
 
       inner: for (final _PropertyValueInstances inst : values.m_values) {
         num = ((Number) (inst.m_value));
@@ -430,8 +429,7 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
     final ArrayList<Number> memberValues;
     DataElement[] elements;
     Number[] numbers;
-    Number num;
-    Double lower, upper, oldUpper;
+    Number num, lower, upper, oldUpper;
     int i, size;
 
     list = new DoubleRangeGroup[groups.m_groups.length];
@@ -443,11 +441,11 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
       members.clear();
       memberValues.clear();
 
-      lower = ((Double) (group.m_lower));
+      lower = ((Number) (group.m_lower));
       if (lower.equals(oldUpper)) {
         lower = oldUpper;
       }
-      oldUpper = upper = ((Double) (group.m_upper));
+      oldUpper = upper = ((Number) (group.m_upper));
 
       inner: for (final _PropertyValueInstances inst : values.m_values) {
         num = ((Number) (inst.m_value));

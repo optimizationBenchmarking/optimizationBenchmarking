@@ -1,7 +1,12 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Div;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingAdd;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingSub;
+import org.optimizationBenchmarking.utils.math.functions.power.Log;
+import org.optimizationBenchmarking.utils.math.functions.power.Pow;
 
 /**
  * A set of different modi for grouping elements.
@@ -433,8 +438,8 @@ public enum EGroupingMode {
 
       if (exclusiveMaxIndex > minIndex) {
         group = buffer[groupIndex++];
-        group.m_lower = Long.valueOf(prev);
-        group.m_upper = Long.valueOf(next);
+        group.m_lower = NumericalTypes.valueOf(prev);
+        group.m_upper = NumericalTypes.valueOf(next);
         group.m_isUpperExclusive = exclusive;
         group.m_size = (exclusiveMaxIndex - minIndex);
         if ((exclusiveMaxIndex >= data.length) || //
@@ -468,7 +473,7 @@ public enum EGroupingMode {
     }
 
     return new _Groups(buffer, minGroups, maxGroups, POWERS,//
-        Long.valueOf(power));
+        NumericalTypes.valueOf(power));
   }
 
   /**
@@ -487,7 +492,6 @@ public enum EGroupingMode {
   static _Groups _groupDoublesByPowerRange(final double power,
       final _PropertyValueInstances<Number>[] data, final int minGroups,
       final int maxGroups, final _Group[] buffer) {
-    final Number param;
     double prev, next, cur;
     long pwr;
     int minIndex, exclusiveMaxIndex, groupIndex;
@@ -499,9 +503,9 @@ public enum EGroupingMode {
       return null;
     }
 
-    pwr = (((long) (Math.log(Double.MAX_VALUE) / Math.log(power))) + 1L);
+    pwr = (((long) (Log.INSTANCE.computeAsDouble(power, Double.MAX_VALUE))) + 1L);
     prev = Double.NEGATIVE_INFINITY;
-    while ((next = (-Math.pow(power, pwr))) <= prev) {
+    while ((next = (-Pow.INSTANCE.computeAsDouble(power, pwr))) <= prev) {
       pwr--;
     }
 
@@ -539,8 +543,8 @@ public enum EGroupingMode {
 
       if (exclusiveMaxIndex > minIndex) {
         group = buffer[groupIndex++];
-        group.m_lower = Double.valueOf(prev);
-        group.m_upper = Double.valueOf(next);
+        group.m_lower = NumericalTypes.valueOf(prev);
+        group.m_upper = NumericalTypes.valueOf(next);
         group.m_isUpperExclusive = exclusive;
         group.m_size = (exclusiveMaxIndex - minIndex);
         if ((exclusiveMaxIndex >= data.length) || //
@@ -555,19 +559,20 @@ public enum EGroupingMode {
           throw new IllegalStateException(//
               "There are double values bigger than POSITIVE_INFINITY??"); //$NON-NLS-1$
         }
-        next = Math.pow(power, (++pwr));
+        next = Pow.INSTANCE.computeAsDouble(power, (++pwr));
         if (next >= Double.POSITIVE_INFINITY) {
           exclusive = false;
         }
       } else {
         if (prev == 0d) {
-          pwr = (((long) (Math.log(Double.MIN_VALUE) / Math.log(power))) - 1L);
+          pwr = (((long) (Log.INSTANCE.computeAsDouble(power,
+              Double.MIN_VALUE))) - 1L);
 
-          while ((next = Math.pow(power, pwr)) <= 0d) {
+          while ((next = Pow.INSTANCE.computeAsDouble(power, pwr)) <= 0d) {
             pwr++;
           }
         } else {
-          next = (-(Math.pow(power, (--pwr))));
+          next = (-(Pow.INSTANCE.computeAsDouble(power, (--pwr))));
           if (next == 0d) {
             next = 0d; // deal with -0d -> 0d
           }
@@ -578,13 +583,8 @@ public enum EGroupingMode {
       buffer[groupIndex].m_size = (-1);
     }
 
-    pwr = ((long) power);
-    if (pwr == power) {
-      param = Long.valueOf(pwr);
-    } else {
-      param = Double.valueOf(power);
-    }
-    return new _Groups(buffer, minGroups, maxGroups, POWERS, param);
+    return new _Groups(buffer, minGroups, maxGroups, POWERS,//
+        NumericalTypes.valueOf(pwr));
   }
 
   /**
@@ -698,7 +698,7 @@ public enum EGroupingMode {
     }
 
     return new _Groups(buffer, minGroups, maxGroups, MULTIPLES,
-        Long.valueOf(range));
+        NumericalTypes.valueOf(range));
   }
 
   /**
@@ -719,7 +719,6 @@ public enum EGroupingMode {
   static _Groups _groupDoublesByMultipleRange(final double range,
       final _PropertyValueInstances<Number>[] data, final int minGroups,
       final int maxGroups, final _Group[] buffer) {
-    final Number param;
     double prev, next, cur;
     long prevMul;
     int minIndex, exclusiveMaxIndex, groupIndex;
@@ -731,8 +730,9 @@ public enum EGroupingMode {
     }
 
     cur = data[0].m_value.doubleValue();
-    prev = (cur / range);
-    next = (data[data.length - 1].m_value.doubleValue() / range);
+    prev = Div.INSTANCE.computeAsDouble(cur, range);
+    next = Div.INSTANCE.computeAsDouble(
+        data[data.length - 1].m_value.doubleValue(), range);
 
     if ((Math.abs(next) + Math.abs(prev)) >= 1000d) {
       return null; // too many steps!
@@ -747,8 +747,8 @@ public enum EGroupingMode {
       return null; // cannot use the range due to imprecision
     }
 
-    next = prev = (prevMul * range);
-    if ((prev + range) == prev) {
+    next = prev = Mul.INSTANCE.computeAsDouble(prevMul, range);
+    if ((prev + range) <= prev) {
       return null;
     }
 
@@ -758,8 +758,8 @@ public enum EGroupingMode {
           return null;
         }
         prevMul--;
-        prev = (prevMul * range);
-        if ((prev + range) == prev) {
+        prev = Mul.INSTANCE.computeAsDouble(prevMul, range);
+        if ((prev + range) <= prev) {
           return null;
         }
       }
@@ -768,7 +768,7 @@ public enum EGroupingMode {
     if (prevMul >= Long.MAX_VALUE) {
       return null;
     }
-    next = ((++prevMul) * range);
+    next = Mul.INSTANCE.computeAsDouble((++prevMul), range);
     if (next <= prev) {
       return null;
     }
@@ -812,7 +812,7 @@ public enum EGroupingMode {
         return null;
       }
       prevMul++;
-      next = (prevMul * range);
+      next = Mul.INSTANCE.computeAsDouble(prevMul, range);
       if (next <= prev) {
         return null;
       }
@@ -822,13 +822,7 @@ public enum EGroupingMode {
       buffer[groupIndex].m_size = (-1);
     }
 
-    prevMul = ((long) range);
-    if (prevMul == range) {
-      param = Long.valueOf(prevMul);
-    } else {
-      param = Double.valueOf(range);
-    }
-
-    return new _Groups(buffer, minGroups, maxGroups, MULTIPLES, param);
+    return new _Groups(buffer, minGroups, maxGroups, MULTIPLES,
+        NumericalTypes.valueOf(range));
   }
 }

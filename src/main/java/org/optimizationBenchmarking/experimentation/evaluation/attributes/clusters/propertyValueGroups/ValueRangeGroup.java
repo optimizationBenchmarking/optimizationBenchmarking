@@ -54,10 +54,6 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends DataElement>
       throw new IllegalArgumentException(//
           "Upper bound of value range group must not be null."); //$NON-NLS-1$
     }
-    if (lowerBound.getClass() != upperBound.getClass()) {
-      throw new IllegalArgumentException(//
-          "The class of the lower and upper bound of a value range group must be the same."); //$NON-NLS-1$
-    }
     if (values == null) {
       throw new IllegalArgumentException(//
           "The value list of the value range group must not be null."); //$NON-NLS-1$

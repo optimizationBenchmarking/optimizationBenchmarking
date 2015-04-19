@@ -19,4 +19,4 @@ install:
   - sudo apt-get -q -y -f install texlive
   
 # custom build step
-script: mvn -C -B test compile package deploy
+script: mvn -C -B test compile

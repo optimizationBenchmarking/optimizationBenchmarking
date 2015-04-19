@@ -353,6 +353,132 @@ public final class NumericalTypes {
     return res;
   }
 
+  /**
+   * Convert the given {@code byte} value to a number
+   * 
+   * @param val
+   *          the value
+   * @return the number
+   */
+  public static final Number valueOf(final byte val) {
+    return Byte.valueOf(val);
+  }
+
+  /**
+   * Convert the given {@code short} value to a number
+   * 
+   * @param val
+   *          the value
+   * @return the number
+   */
+  public static final Number valueOf(final short val) {
+    final int types;
+
+    types = NumericalTypes.getTypes(val);
+    if ((types & NumericalTypes.IS_BYTE) != 0) {
+      return Byte.valueOf((byte) val);
+    }
+    return Short.valueOf(val);
+  }
+
+  /**
+   * Convert the given {@code int} value to a number
+   * 
+   * @param val
+   *          the value
+   * @return the number
+   */
+  public static final Number valueOf(final int val) {
+    final int types;
+
+    types = NumericalTypes.getTypes(val);
+    if ((types & NumericalTypes.IS_BYTE) != 0) {
+      return Byte.valueOf((byte) val);
+    }
+    if ((types & NumericalTypes.IS_SHORT) != 0) {
+      return Short.valueOf((short) val);
+    }
+    return Integer.valueOf(val);
+  }
+
+  /**
+   * Convert the given {@code long} value to a number
+   * 
+   * @param val
+   *          the value
+   * @return the number
+   */
+  public static final Number valueOf(final long val) {
+    final int types;
+
+    types = NumericalTypes.getTypes(val);
+    if ((types & NumericalTypes.IS_BYTE) != 0) {
+      return Byte.valueOf((byte) val);
+    }
+    if ((types & NumericalTypes.IS_SHORT) != 0) {
+      return Short.valueOf((short) val);
+    }
+    if ((types & NumericalTypes.IS_INT) != 0) {
+      return Integer.valueOf((int) val);
+    }
+    return Long.valueOf(val);
+  }
+
+  /**
+   * Convert the given {@code float} value to a number
+   * 
+   * @param val
+   *          the value
+   * @return the number
+   */
+  public static final Number valueOf(final float val) {
+    final int types;
+
+    types = NumericalTypes.getTypes(val);
+    if ((types & NumericalTypes.IS_BYTE) != 0) {
+      return Byte.valueOf((byte) val);
+    }
+    if ((types & NumericalTypes.IS_SHORT) != 0) {
+      return Short.valueOf((short) val);
+    }
+    if ((types & NumericalTypes.IS_INT) != 0) {
+      return Integer.valueOf((int) val);
+    }
+    if ((types & NumericalTypes.IS_LONG) != 0) {
+      return Long.valueOf((long) val);
+    }
+    return Float.valueOf(val);
+  }
+
+  /**
+   * Convert the given {@code double} value to a number
+   * 
+   * @param val
+   *          the value
+   * @return the number
+   */
+  public static final Number valueOf(final double val) {
+    final int types;
+
+    types = NumericalTypes.getTypes(val);
+    if ((types & NumericalTypes.IS_BYTE) != 0) {
+      return Byte.valueOf((byte) val);
+    }
+    if ((types & NumericalTypes.IS_SHORT) != 0) {
+      return Short.valueOf((short) val);
+    }
+    if ((types & NumericalTypes.IS_INT) != 0) {
+      return Integer.valueOf((int) val);
+    }
+    if ((types & NumericalTypes.IS_LONG) != 0) {
+      return Long.valueOf((long) val);
+    }
+    if ((types & NumericalTypes.IS_FLOAT) != 0) {
+      return Float.valueOf((float) val);
+    }
+    return Double.valueOf(val);
+  }
+
   /** the forbidden constructor */
   private NumericalTypes() {
     ErrorUtils.doNotCall();
