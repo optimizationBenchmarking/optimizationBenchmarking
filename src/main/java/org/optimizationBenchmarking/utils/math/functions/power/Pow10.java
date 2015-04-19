@@ -44,14 +44,8 @@ public final class Pow10 extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final float computeAsFloat(final float x1) {
-    return ((float) (Math.pow(10d, x1)));
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public final double computeAsDouble(final double x1) {
-    return (Math.pow(10d, x1));
+    return Pow.INSTANCE.computeAsDouble(10d, x1);
   }
 
   /** {@inheritDoc} */

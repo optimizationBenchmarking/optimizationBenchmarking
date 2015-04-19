@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
+import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 
 /**
@@ -44,14 +46,23 @@ public final class Lg extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final float computeAsFloat(final float x1) {
-    return ((float) (Math.log10(x1)));
+  public final double computeAsDouble(final double x1) {
+    if (MathLibraries.HAS_FASTMATH) {
+      return Lg.__fastMathLog10(x1);
+    }
+    return Math.log10(x1);
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final double computeAsDouble(final double x1) {
-    return (Math.log10(x1));
+  /**
+   * Compute {@code log1ß} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the parameter
+   * @return the result
+   */
+  private static final double __fastMathLog10(final double x1) {
+    return FastMath.log10(x1);
   }
 
   /** {@inheritDoc} */
