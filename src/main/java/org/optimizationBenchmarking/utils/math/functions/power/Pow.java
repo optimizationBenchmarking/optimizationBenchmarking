@@ -22,109 +22,74 @@ public final class Pow extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final int computeAsInt(final int x1, final int x2) {
-    int result, exp, base;
-
-    if (x2 <= (1)) {
-      if ((x2 <= (0)) && (x1 == (0))) {
+  public final long computeAsLong(final long x1, final long x2) {
+    if (x2 <= 1L) {
+      if ((x2 <= 0L) && (x1 == 0L)) {
         throw new java.lang.ArithmeticException("0 to a power <= 0"); //$NON-NLS-1$
       }
-      if (x2 < (0)) {
-        return (0);
+      if (x2 < 0L) {
+        return 0L;
       }
-      if (x2 == (1)) {
+      if (x2 == 1L) {
         return x1;
       }
-      return (1);
+      return 1L;
     }
 
-    if (x1 <= (2)) {
-      if (x1 == (0)) {
-        return (0);
-      }
-      if (x1 == (1)) {
-        return (1);
-      }
-      if (x1 == (2)) {
-        result = ((1) << x2);
-        if (result <= (0)) {
-          return (java.lang.Integer.MAX_VALUE);
-        }
-        return result;
-      }
+    if (x1 == 0L) {
+      return 0L;
+    }
+    if (x1 == 1L) {
+      return 1L;
     }
 
-    result = (1);
-    exp = x2;
-    base = x1;
-
-    for (;;) {
-      if ((exp & (1)) != (0)) {
-        if ((result *= base) <= (0)) {
-          if ((x1 < (0)) && ((x2 & (1)) != (0))) {
-            return (java.lang.Integer.MIN_VALUE);
-          }
-          return (java.lang.Integer.MAX_VALUE);
-        }
-      }
-
-      if ((exp >>>= (1)) <= (0)) {
-        return result;
-      }
-      base *= base;
-    }
+    return Pow.__long(x1, x2);
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final long computeAsLong(final long x1, final long x2) {
-    long result, exp, base;
+  /**
+   * Compute the result as long
+   * 
+   * @param x1
+   *          the first parameter
+   * @param x2
+   *          the second parameter
+   * @return the result
+   */
+  private static final long __long(final long x1, final long x2) {
+    long result, exp, base, nextRes;
 
-    if (x2 <= (1L)) {
-      if ((x2 <= (0L)) && (x1 == (0L))) {
-        throw new java.lang.ArithmeticException("0 to a power <= 0"); //$NON-NLS-1$
+    if (x1 == 2L) {
+      if (x2 >= 63) {
+        return Long.MAX_VALUE;
       }
-      if (x2 < (0L)) {
-        return (0L);
-      }
-      if (x2 == (1L)) {
-        return x1;
-      }
-      return (1L);
+      return (1L << x2);
     }
 
-    if (x1 <= (2L)) {
-      if (x1 == (0L)) {
-        return (0L);
-      }
-      if (x1 == (1L)) {
-        return (1L);
-      }
-      if (x1 == (2L)) {
-        result = ((1L) << x2);
-        if (result <= (0L)) {
-          return (java.lang.Long.MAX_VALUE);
-        }
-        return result;
-      }
-    }
-
-    result = (1L);
+    result = 1L;
     exp = x2;
     base = x1;
 
     for (;;) {
-      if ((exp & (1L)) != (0L)) {
-        if ((result *= base) <= (0L)) {
-          if ((x1 < (0L)) && ((x2 & (1L)) != (0L))) {
+      if ((exp & 1L) != 0L) {
+        nextRes = (result * base);
+        if ((nextRes / base) != result) {
+          if ((x1 < 0L) && ((x2 & 1L) != 0L)) {
             return (java.lang.Long.MIN_VALUE);
           }
           return (java.lang.Long.MAX_VALUE);
         }
+        result = nextRes;
       }
 
-      if ((exp >>>= (1L)) <= (0L)) {
+      if ((exp >>>= 1L) <= 0L) {
         return result;
+      }
+      if ((base < (-Sqr.SQRT_LONG_MAX_VALUE))
+          || (base > Sqr.SQRT_LONG_MAX_VALUE)) {
+        if ((x1 < 0L) && ((x2 & 1L) != 0L)) {
+          return (java.lang.Long.MIN_VALUE);
+        }
+        return (java.lang.Long.MAX_VALUE);
       }
       base *= base;
     }
@@ -133,6 +98,57 @@ public final class Pow extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1, final double x2) {
+    final long l1, l2, res;
+
+    // try to use integer arithmetic where possible
+    if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
+      l1 = ((long) x1);
+      if (l1 == x1) {
+
+        if ((x2 > Long.MIN_VALUE) && (x2 <= Long.MAX_VALUE)) {
+          l2 = ((long) x2);
+          if ((l2 == x2) && (l2 > Long.MIN_VALUE)) {
+
+            if (l2 == 0L) {
+              return 1d;
+            }
+
+            if (l1 <= 0L) {
+              if (l1 == 0L) {
+                if (l2 <= 0L) {
+                  return Double.NaN;
+                }
+                return 0d;
+              }
+              if (l1 == (-1L)) {
+                return (((l2 & 1L) == 0L) ? 1d : (-1d));
+              }
+            } else {
+              if (l1 == 1L) {
+                return 1d;
+              }
+            }
+
+            if (l2 < 0L) {
+              res = Pow.__long(l1, -l2);
+            } else {
+              res = Pow.__long(l1, l2);
+            }
+
+            if ((res > Long.MIN_VALUE) && (res < Long.MAX_VALUE)) {
+              if (l2 < 0L) {
+                return (1d / res);
+              }
+              return res;
+            }
+
+          }
+        }
+
+      }
+    }
+
+    // resort to double arithmetic
     if (MathLibraries.HAS_FASTMATH) {
       return Pow.__fastMathPow(x1, x2);
     }

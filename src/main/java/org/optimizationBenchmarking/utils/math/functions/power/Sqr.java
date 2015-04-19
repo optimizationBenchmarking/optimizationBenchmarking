@@ -11,7 +11,7 @@ public final class Sqr extends UnaryFunction {
   private static final long serialVersionUID = 1L;
 
   /** the square root of {@value java.lang.Long#MAX_VALUE}: {@value} */
-  private static final long SQRT_LONG_MAX_VALUE = 3037000499L;
+  static final long SQRT_LONG_MAX_VALUE = 3037000499L;
 
   /** the globally shared instance */
   public static final Sqr INSTANCE = new Sqr();
