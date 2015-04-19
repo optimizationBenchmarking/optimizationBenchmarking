@@ -60,6 +60,12 @@ public final class Identity extends UnaryFunction {
     return this;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isLongArithmeticAccurate() {
+    return true;
+  }
+
   // default, automatic serialization replacement and resolve routines for
   // singletons
   //

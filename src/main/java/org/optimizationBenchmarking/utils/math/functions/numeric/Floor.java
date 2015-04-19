@@ -54,6 +54,12 @@ public final class Floor extends UnaryFunction {
     return (Math.floor(x1));
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isLongArithmeticAccurate() {
+    return true;
+  }
+
   // default, automatic serialization replacement and resolve routines for
   // singletons
   //

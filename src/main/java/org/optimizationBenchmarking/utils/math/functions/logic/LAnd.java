@@ -28,6 +28,12 @@ public final class LAnd extends BinaryBooleanFunction {
     return (x1 ? 0 : (-1));
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isLongArithmeticAccurate() {
+    return true;
+  }
+
   // default, automatic serialization replacement and resolve routines for
   // singletons
   //

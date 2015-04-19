@@ -120,6 +120,12 @@ public final class CeilDiv extends BinaryFunction {
     return Math.ceil(x1 / x2);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isLongArithmeticAccurate() {
+    return true;
+  }
+
   // default, automatic serialization replacement and resolve routines for
   // singletons
   //

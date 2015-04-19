@@ -54,6 +54,12 @@ public final class BXor extends BinaryFunction {
     return this.computeAsLong(((long) x1), ((long) x2));
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isLongArithmeticAccurate() {
+    return true;
+  }
+
   // default, automatic serialization replacement and resolve routines for
   // singletons
   //

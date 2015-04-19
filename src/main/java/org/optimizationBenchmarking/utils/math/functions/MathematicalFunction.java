@@ -430,4 +430,17 @@ public abstract class MathematicalFunction implements Serializable {
   public int hashCode() {
     return this.getClass().hashCode();
   }
+
+  /**
+   * Is a calculation in {@code long} arithmetic accurate? Some
+   * mathematical functions will always return the correct result for
+   * {@link #computeAsLong(long...)}, for example min, max, round, etc.
+   * Others will not (such as +, sin).
+   * 
+   * @return {@code true} if calculating values in {@code long} arithmetic
+   *         will always return accurate results, {@code false} otherwise
+   */
+  public boolean isLongArithmeticAccurate() {
+    return false;
+  }
 }

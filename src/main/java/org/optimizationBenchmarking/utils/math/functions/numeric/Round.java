@@ -54,6 +54,12 @@ public final class Round extends UnaryFunction {
     return (Math.rint(x1));
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isLongArithmeticAccurate() {
+    return true;
+  }
+
   // default, automatic serialization replacement and resolve routines for
   // singletons
   //
