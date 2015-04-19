@@ -21,24 +21,36 @@ public final class Negate extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final byte computeAsByte(final byte x0) {
+    if (x0 <= Byte.MIN_VALUE) {
+      return Byte.MAX_VALUE;
+    }
     return ((byte) (-x0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final short computeAsShort(final short x0) {
+    if (x0 <= Short.MIN_VALUE) {
+      return Short.MAX_VALUE;
+    }
     return ((short) (-x0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final int computeAsInt(final int x0) {
+    if (x0 <= Integer.MIN_VALUE) {
+      return Integer.MAX_VALUE;
+    }
     return (-x0);
   }
 
   /** {@inheritDoc} */
   @Override
   public final long computeAsLong(final long x0) {
+    if (x0 <= Long.MIN_VALUE) {
+      return Long.MAX_VALUE;
+    }
     return (-x0);
   }
 

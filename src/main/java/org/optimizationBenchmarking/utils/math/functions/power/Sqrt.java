@@ -20,7 +20,63 @@ public final class Sqrt extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public final long computeAsLong(final long x0) {
+    if (x0 < 0L) {
+      throw new ArithmeticException(//
+          "Cannot take square root of " + x0); //$NON-NLS-1$
+    }
+    return Sqrt.__isqrt(x0);
+  }
+
+  /**
+   * An integer-based algorithm based on
+   * http://en.wikipedia.org/wiki/Methods_of_computing_square_roots
+   * 
+   * @param num
+   *          the number
+   * @return the result
+   */
+  private static final long __isqrt(long num) {
+    long res, bit;
+
+    res = 0L;
+    bit = (1L << 62L);
+
+    // "bit" starts at the highest power of four <= the argument.
+    while (bit > num) {
+      bit >>= 2L;
+    }
+
+    while (bit != 0L) {
+      if (num >= (res + bit)) {
+        num -= (res + bit);
+        res = ((res >> 1L) + bit);
+      } else {
+        res >>= 1L;
+      }
+      bit >>= 2;
+    }
+    return res;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final double computeAsDouble(final double x1) {
+    final long l0, res;
+
+    if ((x1 >= 0d) && (x1 <= Long.MAX_VALUE)) {
+      l0 = ((long) x1);
+      if (l0 == x1) {
+        if (l0 == 0L) {
+          return 0d;
+        }
+        res = Sqrt.__isqrt(l0);
+        if ((res * res) == l0) {
+          return res;
+        }
+      }
+    }
+
     if (MathLibraries.HAS_FASTMATH) {
       return Sqrt.__fastMathSqrt(x1);
     }

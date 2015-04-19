@@ -35,13 +35,13 @@ public final class Lg extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final int computeAsInt(final int x1) {
-    return Log.INSTANCE.computeAsInt((10), x1);
+    return Log.INSTANCE.computeAsInt(10, x1);
   }
 
   /** {@inheritDoc} */
   @Override
   public final long computeAsLong(final long x1) {
-    return Log.INSTANCE.computeAsLong((10L), x1);
+    return Log.INSTANCE.computeAsLong(10L, x1);
   }
 
   /** {@inheritDoc} */
