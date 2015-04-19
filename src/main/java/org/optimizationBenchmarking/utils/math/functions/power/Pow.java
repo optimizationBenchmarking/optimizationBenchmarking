@@ -143,7 +143,6 @@ public final class Pow extends BinaryFunction {
               }
               return res;
             }
-
           }
         }
 
@@ -151,7 +150,6 @@ public final class Pow extends BinaryFunction {
             && MathLibraries.HAS_FASTMATH) {
           return Pow.__fastMathPow(x1, ((int) l2));
         }
-
       }
     }
 
@@ -189,7 +187,14 @@ public final class Pow extends BinaryFunction {
    * @return the result
    */
   private static final double __fastMathPow(final double x1, final int x2) {
-    return FastMath.pow(x1, x2);
+    final double res;
+
+    res = FastMath.pow(x1, x2);
+    if ((res > Double.NEGATIVE_INFINITY)
+        && (res < Double.POSITIVE_INFINITY)) {
+      return res; // only if finite and not NaN
+    }
+    return FastMath.pow(x1, ((double) x2));
   }
 
   /** {@inheritDoc} */
