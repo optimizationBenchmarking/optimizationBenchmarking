@@ -192,11 +192,11 @@ public class BinaryFunction extends MathematicalFunction {
 
     r = this.computeAsDouble(x0, x1);
 
-    if (r <= (java.lang.Double.NEGATIVE_INFINITY)) {
-      return (java.lang.Long.MIN_VALUE);
+    if (r <= java.lang.Long.MIN_VALUE) {
+      return java.lang.Long.MIN_VALUE;
     }
-    if (r >= (java.lang.Double.POSITIVE_INFINITY)) {
-      return (java.lang.Long.MAX_VALUE);
+    if (r >= java.lang.Long.MAX_VALUE) {
+      return java.lang.Long.MAX_VALUE;
     }
     if (java.lang.Double.isNaN(r)) {
       this._throwIllegalNaN();

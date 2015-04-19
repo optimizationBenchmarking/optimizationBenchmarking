@@ -12,6 +12,29 @@ public final class Lg extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the lookup table */
+  static final long[] TABLE = { //
+  1L,//
+      10L,//
+      100L,//
+      1_000L,//
+      10_000L,//
+      100_000L,//
+      1_000_000L,//
+      10_000_000L,//
+      100_000_000L,//
+      1_000_000_000L,//
+      10_000_000_000L,//
+      100_000_000_000L,//
+      1_000_000_000_000L,//
+      10_000_000_000_000L,//
+      100_000_000_000_000L,//
+      1_000_000_000_000_000L,//
+      10_000_000_000_000_000L,//
+      100_000_000_000_000_000L,//
+      1_000_000_000_000_000_000L,//
+  };
+
   /** the globally shared instance */
   public static final Lg INSTANCE = new Lg();
 
@@ -20,33 +43,103 @@ public final class Lg extends UnaryFunction {
     super();
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final byte computeAsByte(final byte x1) {
-    return Log.INSTANCE.computeAsByte(((byte) (10)), x1);
-  }
+  /**
+   * lookup the value in the lookup table
+   * 
+   * @param l
+   *          the long value
+   * @return the result
+   */
+  private static final int __lookup(final long l) {
+    int low, high, mid;
+    long midVal;
 
-  /** {@inheritDoc} */
-  @Override
-  public final short computeAsShort(final short x1) {
-    return Log.INSTANCE.computeAsShort(((short) (10)), x1);
+    low = 0;
+    high = (Lg.TABLE.length - 1);
+
+    while (low <= high) {
+      mid = ((low + high) >>> 1);
+      midVal = Lg.TABLE[mid];
+
+      if (midVal < l) {
+        low = (mid + 1);
+      } else {
+        if (midVal > l) {
+          high = (mid - 1);
+        } else {
+          return mid; // key found
+        }
+      }
+    }
+    return low;
   }
 
   /** {@inheritDoc} */
   @Override
   public final int computeAsInt(final int x1) {
-    return Log.INSTANCE.computeAsInt(10, x1);
+    if (x1 <= 0) {
+      if (x1 == 0) {
+        return Integer.MIN_VALUE;
+      }
+      throw new ArithmeticException(//
+          "Cannot compute log10 of " + x1); //$NON-NLS-1$
+    }
+    return Lg.__lookup(x1);
   }
 
   /** {@inheritDoc} */
   @Override
   public final long computeAsLong(final long x1) {
-    return Log.INSTANCE.computeAsLong(10L, x1);
+    if (x1 <= 0L) {
+      if (x1 == 0L) {
+        return Long.MIN_VALUE;
+      }
+      throw new ArithmeticException(//
+          "Cannot compute log10 of " + x1); //$NON-NLS-1$
+    }
+    return Lg.__lookup(x1);
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
+    final double x2;
+    long l1;
+    int res;
+
+    if ((x1 >= 0d) && (x1 <= Long.MAX_VALUE)) {
+      l1 = ((long) x1);
+
+      if (l1 == x1) {
+        if (l1 == 0L) {
+          return Double.NEGATIVE_INFINITY;
+        }
+        res = Lg.__lookup(l1);
+        if ((res < Lg.TABLE.length) && (Lg.TABLE[res] == l1)) {
+          return res;
+        }
+      } else {
+
+        if (x1 < 1d) {
+          x2 = (1d / x1);
+
+          if ((x2 >= 0d) && (x2 <= Long.MAX_VALUE)) {
+            l1 = ((long) x2);
+
+            if (l1 == x2) {
+              if (l1 == 0L) {
+                return Double.NEGATIVE_INFINITY;
+              }
+              res = Lg.__lookup(l1);
+              if ((res < Lg.TABLE.length) && (Lg.TABLE[res] == l1)) {
+                return -res;
+              }
+            }
+          }
+        }
+      }
+    }
+
     if (MathLibraries.HAS_FASTMATH) {
       return Lg.__fastMathLog10(x1);
     }
@@ -54,7 +147,7 @@ public final class Lg extends UnaryFunction {
   }
 
   /**
-   * Compute {@code log1ß} with
+   * Compute {@code log10} with
    * {@link org.apache.commons.math3.util.FastMath}
    * 
    * @param x1

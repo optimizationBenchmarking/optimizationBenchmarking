@@ -24,15 +24,28 @@ public final class Log extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public final long computeAsLong(final long x1, final long x2) {
+    if (x1 == 10L) {
+      return Lg.INSTANCE.computeAsLong(x2);
+    }
+    return super.computeAsLong(x1, x2);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final double computeAsDouble(final double x1, final double x2) {
     final double d;
 
-    if (MathLibraries.HAS_FASTMATH) {
-      return Log.__fastMathLog(x1, x2);
+    if (x1 == 10d) {
+      return Lg.INSTANCE.computeAsDouble(x2);
     }
 
-    if (x1 == 10d) {
-      return Math.log10(x2);
+    if (x1 == Math.E) {
+      return Ln.INSTANCE.computeAsDouble(x2);
+    }
+
+    if (MathLibraries.HAS_FASTMATH) {
+      return Log.__fastMathLog(x1, x2);
     }
 
     d = Math.log(x2);

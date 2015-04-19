@@ -20,31 +20,45 @@ public final class Pow10 extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final byte computeAsByte(final byte x1) {
-    return Pow.INSTANCE.computeAsByte(((byte) (10)), x1);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final short computeAsShort(final short x1) {
-    return Pow.INSTANCE.computeAsShort(((short) (10)), x1);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public final int computeAsInt(final int x1) {
-    return Pow.INSTANCE.computeAsInt((10), x1);
+    if (x1 < 0) {
+      return 0;
+    }
+    if (x1 < 10) {
+      return ((int) (Lg.TABLE[x1]));
+    }
+    return Integer.MAX_VALUE;
   }
 
   /** {@inheritDoc} */
   @Override
   public final long computeAsLong(final long x1) {
-    return Pow.INSTANCE.computeAsLong((10L), x1);
+    if (x1 < 0) {
+      return 0;
+    }
+    if (x1 < Lg.TABLE.length) {
+      return Lg.TABLE[(int) x1];
+    }
+    return Long.MAX_VALUE;
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
+    final int i1;
+
+    if ((x1 > (-Lg.TABLE.length)) && (x1 < Lg.TABLE.length)) {
+      i1 = ((int) x1);
+      if (i1 == x1) {
+        if (i1 >= 0) {
+          return Lg.TABLE[i1];
+        }
+        if (i1 > (-Lg.TABLE.length)) {
+          return (1d / Lg.TABLE[-i1]);
+        }
+      }
+    }
+
     return Pow.INSTANCE.computeAsDouble(10d, x1);
   }
 
