@@ -101,17 +101,19 @@ public final class Pow extends BinaryFunction {
     final long l1, l2, res;
 
     // try to use integer arithmetic where possible
-    if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
-      l1 = ((long) x1);
-      if (l1 == x1) {
 
-        if ((x2 > Long.MIN_VALUE) && (x2 <= Long.MAX_VALUE)) {
-          l2 = ((long) x2);
-          if ((l2 == x2) && (l2 > Long.MIN_VALUE)) {
+    if ((x2 > Long.MIN_VALUE) && (x2 <= Long.MAX_VALUE)) {
+      l2 = ((long) x2);
+      if ((l2 == x2) && (l2 > Long.MIN_VALUE)) {
 
-            if (l2 == 0L) {
-              return 1d;
-            }
+        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
+
+          if (l2 == 0L) {
+            return 1d;
+          }
+
+          l1 = ((long) x1);
+          if (l1 == x1) {
 
             if (l1 <= 0L) {
               if (l1 == 0L) {
@@ -145,6 +147,11 @@ public final class Pow extends BinaryFunction {
           }
         }
 
+        if ((l2 >= Integer.MIN_VALUE) && (l2 <= Integer.MAX_VALUE)
+            && MathLibraries.HAS_FASTMATH) {
+          return Pow.__fastMathPow(x1, ((int) l2));
+        }
+
       }
     }
 
@@ -167,6 +174,21 @@ public final class Pow extends BinaryFunction {
    */
   private static final double __fastMathPow(final double x1,
       final double x2) {
+    return FastMath.pow(x1, x2);
+  }
+
+  /**
+   * Compute {@code pow} with
+   * {@link org.apache.commons.math3.util.FastMath} where the second
+   * argument is an integer value
+   * 
+   * @param x1
+   *          the base
+   * @param x2
+   *          the value
+   * @return the result
+   */
+  private static final double __fastMathPow(final double x1, final int x2) {
     return FastMath.pow(x1, x2);
   }
 
