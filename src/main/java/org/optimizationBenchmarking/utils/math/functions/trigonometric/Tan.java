@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions.trigonometric;
 
+import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 
 /** The tan function */
@@ -19,7 +21,22 @@ public final class Tan extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
-    return Math.atan(x1);
+    if (MathLibraries.HAS_FASTMATH) {
+      return Tan.__fastMathTan(x1);
+    }
+    return Math.tan(x1);
+  }
+
+  /**
+   * Compute {@code tan} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the parameter
+   * @return the result
+   */
+  private static final double __fastMathTan(final double x1) {
+    return FastMath.tan(x1);
   }
 
   /** {@inheritDoc} */

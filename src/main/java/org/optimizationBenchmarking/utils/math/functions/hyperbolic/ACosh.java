@@ -1,6 +1,13 @@
 package org.optimizationBenchmarking.utils.math.functions.hyperbolic;
 
+import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Sub;
+import org.optimizationBenchmarking.utils.math.functions.power.Ln;
+import org.optimizationBenchmarking.utils.math.functions.power.Sqr;
+import org.optimizationBenchmarking.utils.math.functions.power.Sqrt;
 
 /** The acosh function */
 public final class ACosh extends UnaryFunction {
@@ -19,7 +26,26 @@ public final class ACosh extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
-    return Math.log(x1 + Math.sqrt((x1 * x1) - 1d));
+    if (MathLibraries.HAS_FASTMATH) {
+      return ACosh.__fastMathACosh(x1);
+    }
+    return Ln.INSTANCE.computeAsDouble(//
+        Add.INSTANCE.computeAsDouble(x1,//
+            Sqrt.INSTANCE.computeAsDouble(//
+                Sub.INSTANCE.computeAsDouble(//
+                    Sqr.INSTANCE.computeAsDouble(x1), 1d))));
+  }
+
+  /**
+   * Compute {@code acosh} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the parameter
+   * @return the result
+   */
+  private static final double __fastMathACosh(final double x1) {
+    return FastMath.acosh(x1);
   }
 
   /** {@inheritDoc} */

@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions.trigonometric;
 
+import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 
 /** The sin function */
@@ -19,7 +21,22 @@ public final class Sin extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
+    if (MathLibraries.HAS_FASTMATH) {
+      return Sin.__fastMathSin(x1);
+    }
     return Math.sin(x1);
+  }
+
+  /**
+   * Compute {@code sin} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the parameter
+   * @return the result
+   */
+  private static final double __fastMathSin(final double x1) {
+    return FastMath.sin(x1);
   }
 
   /** {@inheritDoc} */

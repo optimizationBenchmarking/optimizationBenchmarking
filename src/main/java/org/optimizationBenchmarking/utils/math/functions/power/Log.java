@@ -1,6 +1,9 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
+import org.apache.commons.math3.util.FastMath;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Div;
 
 /**
  * The log function computes the logarithm of {@code x2} to the base
@@ -24,6 +27,10 @@ public final class Log extends BinaryFunction {
   public final double computeAsDouble(final double x1, final double x2) {
     final double d;
 
+    if (MathLibraries.HAS_FASTMATH) {
+      return Log.__fastMathLog(x1, x2);
+    }
+
     if (x1 == 10d) {
       return Math.log10(x2);
     }
@@ -32,7 +39,22 @@ public final class Log extends BinaryFunction {
     if (x1 == Math.E) {
       return d;
     }
-    return (d / Math.log(x1));
+    return Div.INSTANCE.computeAsDouble(d, Math.log(x1));
+  }
+
+  /**
+   * Compute {@code log} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the base
+   * @param x2
+   *          the value
+   * @return the result
+   */
+  private static final double __fastMathLog(final double x1,
+      final double x2) {
+    return FastMath.log(x1, x2);
   }
 
   // default, automatic serialization replacement and resolve routines for

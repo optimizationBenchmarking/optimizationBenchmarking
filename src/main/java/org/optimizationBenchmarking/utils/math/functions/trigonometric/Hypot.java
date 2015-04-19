@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.utils.math.functions.trigonometric;
 
+import org.apache.commons.math3.util.FastMath;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 
 /** The hypot function */
 public final class Hypot extends BinaryFunction {
@@ -19,7 +21,25 @@ public final class Hypot extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1, final double x2) {
+    if (MathLibraries.HAS_FASTMATH) {
+      return Hypot.__fastMathHypot(x1, x2);
+    }
     return Math.hypot(x1, x2);
+  }
+
+  /**
+   * Compute {@code hypot} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the first value
+   * @param x2
+   *          the second value
+   * @return the result
+   */
+  private static final double __fastMathHypot(final double x1,
+      final double x2) {
+    return FastMath.hypot(x1, x2);
   }
 
   // default, automatic serialization replacement and resolve routines for

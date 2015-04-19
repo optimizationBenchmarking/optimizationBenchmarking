@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.math;
 
+import org.optimizationBenchmarking.utils.math.functions.power.Ln;
+
 /** A set of common mathematical constants */
 public final class MathConstants {
 
@@ -77,7 +79,8 @@ public final class MathConstants {
   public static final double EPS = Math.pow(2.0d, -52.0d);
 
   /** The natural logarithm of EPS */
-  public static final double LN_EPS = Math.log(MathConstants.EPS);
+  public static final double LN_EPS = Ln.INSTANCE
+      .computeAsDouble(MathConstants.EPS);
 
   /**
    * The natural logarithm of Double.MAX_VALUE, or, in other words, the
@@ -85,7 +88,8 @@ public final class MathConstants {
    * 
    * @see Double#MAX_VALUE
    */
-  public static final double LN_MAX_DOUBLE = Math.log(Double.MAX_VALUE);
+  public static final double LN_MAX_DOUBLE = Ln.INSTANCE
+      .computeAsDouble(Double.MAX_VALUE);
 
   /**
    * The natural logarithm of Double.MIN_VALUE, or, in other words, the
@@ -94,7 +98,8 @@ public final class MathConstants {
    * 
    * @see Double#MIN_VALUE
    */
-  public static final double LN_MIN_DOUBLE = Math.log(Double.MIN_VALUE);
+  public static final double LN_MIN_DOUBLE = Ln.INSTANCE
+      .computeAsDouble(Double.MIN_VALUE);
 
   /**
    * multiplying a number {@code s} by {@value #GOLDEN_RATIO} will give you

@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions.trigonometric;
 
+import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 
 /** The acos function */
@@ -19,7 +21,22 @@ public final class ACos extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
+    if (MathLibraries.HAS_FASTMATH) {
+      return ACos.__fastMathAcos(x1);
+    }
     return Math.acos(x1);
+  }
+
+  /**
+   * Compute {@code acos} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the parameter
+   * @return the result
+   */
+  private static final double __fastMathAcos(final double x1) {
+    return FastMath.acos(x1);
   }
 
   /** {@inheritDoc} */

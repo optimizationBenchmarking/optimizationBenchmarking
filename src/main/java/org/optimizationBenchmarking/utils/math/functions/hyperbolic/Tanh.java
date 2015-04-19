@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions.hyperbolic;
 
+import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 
 /** The tanh function */
@@ -19,7 +21,22 @@ public final class Tanh extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
+    if (MathLibraries.HAS_FASTMATH) {
+      return Tanh.__fastMathTanh(x1);
+    }
     return Math.tanh(x1);
+  }
+
+  /**
+   * Compute {@code tanh} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the parameter
+   * @return the result
+   */
+  private static final double __fastMathTanh(final double x1) {
+    return FastMath.tanh(x1);
   }
 
   /** {@inheritDoc} */

@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
+import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 
 /** The sqrt function */
@@ -19,7 +21,22 @@ public final class Sqrt extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
+    if (MathLibraries.HAS_FASTMATH) {
+      return Sqrt.__fastMathSqrt(x1);
+    }
     return Math.sqrt(x1);
+  }
+
+  /**
+   * Compute {@code sqrt} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the parameter
+   * @return the result
+   */
+  private static final double __fastMathSqrt(final double x1) {
+    return FastMath.sqrt(x1);
   }
 
   /** {@inheritDoc} */

@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Sub;
 
 /** The sqrt(1-x*x) function */
 public final class Sqrt1z extends UnaryFunction {
@@ -19,7 +20,9 @@ public final class Sqrt1z extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
-    return Math.sqrt(1d - (x1 * x1));
+    return Sqrt.INSTANCE.computeAsDouble(//
+        Sub.INSTANCE.computeAsDouble(//
+            1d, Sqr.INSTANCE.computeAsDouble(x1)));
   }
 
   // default, automatic serialization replacement and resolve routines for

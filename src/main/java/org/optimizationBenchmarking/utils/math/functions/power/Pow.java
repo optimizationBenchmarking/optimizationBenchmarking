@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
+import org.apache.commons.math3.util.FastMath;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 
 /**
  * The pow function: raise {@code x1} to the power {@code x2}
@@ -130,14 +132,26 @@ public final class Pow extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final float computeAsFloat(final float x1, final float x2) {
-    return ((float) (Math.pow(x1, x2)));
+  public final double computeAsDouble(final double x1, final double x2) {
+    if (MathLibraries.HAS_FASTMATH) {
+      return Pow.__fastMathPow(x1, x2);
+    }
+    return (Math.pow(x1, x2));
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final double computeAsDouble(final double x1, final double x2) {
-    return (Math.pow(x1, x2));
+  /**
+   * Compute {@code pow} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the base
+   * @param x2
+   *          the value
+   * @return the result
+   */
+  private static final double __fastMathPow(final double x1,
+      final double x2) {
+    return FastMath.pow(x1, x2);
   }
 
   /** {@inheritDoc} */

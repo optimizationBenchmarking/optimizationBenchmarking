@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions.hyperbolic;
 
+import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 
 /** The sinh function */
@@ -19,7 +21,22 @@ public final class Sinh extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
+    if (MathLibraries.HAS_FASTMATH) {
+      return Sinh.__fastMathSinh(x1);
+    }
     return Math.sinh(x1);
+  }
+
+  /**
+   * Compute {@code sinh} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the parameter
+   * @return the result
+   */
+  private static final double __fastMathSinh(final double x1) {
+    return FastMath.sinh(x1);
   }
 
   /** {@inheritDoc} */

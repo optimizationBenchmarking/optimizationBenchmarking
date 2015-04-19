@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
+import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 
 /** The exp function */
@@ -19,7 +21,22 @@ public final class Exp extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1) {
+    if (MathLibraries.HAS_FASTMATH) {
+      return Exp.__fastMathExp(x1);
+    }
     return Math.exp(x1);
+  }
+
+  /**
+   * Compute {@code exp} with
+   * {@link org.apache.commons.math3.util.FastMath}
+   * 
+   * @param x1
+   *          the parameter
+   * @return the result
+   */
+  private static final double __fastMathExp(final double x1) {
+    return FastMath.exp(x1);
   }
 
   /** {@inheritDoc} */
