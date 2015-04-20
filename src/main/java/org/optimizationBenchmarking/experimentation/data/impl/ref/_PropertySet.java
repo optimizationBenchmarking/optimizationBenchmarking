@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IPropertySet;
+import org.optimizationBenchmarking.experimentation.data.spec.IPropertySetting;
 import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
 import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 
@@ -17,7 +18,9 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
  * @param <PST>
  *          the property setting type
  */
-abstract class _PropertySet<PVT extends PropertyValue<?>, PT extends Property<PVT>, PST extends _PropertySetting<?, ?>>
+abstract class _PropertySet<PVT extends PropertyValue<?>, //
+PT extends Property<PVT>, //
+PST extends IPropertySetting> //
     extends _IDObjectSet<PT> implements IPropertySet {
 
   /** the serial version uid */
