@@ -1,7 +1,9 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+
 /** A set of runs for a given instance */
-public interface IInstanceRuns extends IRuns {
+public interface IInstanceRuns extends IDataSet {
 
   /**
    * Get the owning experiment
@@ -18,4 +20,11 @@ public interface IInstanceRuns extends IRuns {
    */
   public abstract IInstance getInstance();
 
+  /**
+   * Get the runs of this instance runs set
+   * 
+   * @return the runs of this instance runs set
+   */
+  @Override
+  public abstract ArraySetView<? extends IRun> getData();
 }
