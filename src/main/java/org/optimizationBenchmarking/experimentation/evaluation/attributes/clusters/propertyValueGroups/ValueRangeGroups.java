@@ -32,7 +32,7 @@ public class ValueRangeGroups<DT extends IDataElement> extends
    *          unspecified, or {@code null} if no such elements exist
    */
   ValueRangeGroups(final IProperty property, final EGroupingMode mode,
-      final Number info, final ValueRangeGroup<?, DT>[] groups,
+      final Number info, final ValueRangeGroup<DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super(property, mode, info, groups, unspecified);
   }
@@ -40,7 +40,7 @@ public class ValueRangeGroups<DT extends IDataElement> extends
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public ArraySetView<? extends ValueRangeGroup<?, DT>> getGroups() {
+  public ArraySetView<? extends ValueRangeGroup<DT>> getGroups() {
     return ((ArraySetView) (this.m_data));
   }
 }

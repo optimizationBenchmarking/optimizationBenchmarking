@@ -324,14 +324,12 @@ DT extends IDataElement> //
    * @param values
    *          the values
    * @return the groups
-   * @param <DX>
-   *          the element type
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  private static final <DX extends DataElement> LongRangeGroups<DX> __longRange(
-      final _Groups groups, final _PropertyValueSet values) {
-    final LongRangeGroup<DX>[] list;
-    final UnspecifiedValueGroup<DX> unspec;
+  private static final ValueRangeGroups __longRange(final _Groups groups,
+      final _PropertyValueSet values) {
+    final ValueRangeGroup[] list;
+    final UnspecifiedValueGroup unspec;
     final ArrayList<IDataElement> members;
     final ArrayList<Number> memberValues;
     IDataElement[] elements;
@@ -339,7 +337,7 @@ DT extends IDataElement> //
     Number num, lower, upper, oldUpper;
     int i, size;
 
-    list = new LongRangeGroup[groups.m_groups.length];
+    list = new ValueRangeGroup[groups.m_groups.length];
     members = new ArrayList<>();
     memberValues = new ArrayList<>();
     i = 0;
@@ -393,7 +391,7 @@ DT extends IDataElement> //
       numbers = memberValues.toArray(new Number[size]);
       Arrays.sort(numbers);
 
-      list[i++] = new LongRangeGroup(lower, upper,
+      list[i++] = new ValueRangeGroup(lower, upper,
           group.m_isUpperExclusive, numbers, elements);
     }
 
@@ -407,7 +405,7 @@ DT extends IDataElement> //
       unspec = null;
     }
 
-    return new LongRangeGroups(values.m_property, groups.m_groupingMode,
+    return new ValueRangeGroups(values.m_property, groups.m_groupingMode,
         groups.m_groupingParameter, list, unspec);
   }
 
@@ -419,14 +417,12 @@ DT extends IDataElement> //
    * @param values
    *          the values
    * @return the groups
-   * @param <DX>
-   *          the element type
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  private static final <DX extends DataElement> DoubleRangeGroups<DX> __doubleRange(
+  private static final ValueRangeGroups __doubleRange(
       final _Groups groups, final _PropertyValueSet values) {
-    final DoubleRangeGroup<DX>[] list;
-    final UnspecifiedValueGroup<DX> unspec;
+    final ValueRangeGroup[] list;
+    final UnspecifiedValueGroup unspec;
     final ArrayList<IDataElement> members;
     final ArrayList<Number> memberValues;
     DataElement[] elements;
@@ -434,7 +430,7 @@ DT extends IDataElement> //
     Number num, lower, upper, oldUpper;
     int i, size;
 
-    list = new DoubleRangeGroup[groups.m_groups.length];
+    list = new ValueRangeGroup[groups.m_groups.length];
     members = new ArrayList<>();
     memberValues = new ArrayList<>();
     i = 0;
@@ -488,7 +484,7 @@ DT extends IDataElement> //
       numbers = memberValues.toArray(new Number[size]);
       Arrays.sort(numbers);
 
-      list[i++] = new DoubleRangeGroup(lower, upper,
+      list[i++] = new ValueRangeGroup(lower, upper,
           group.m_isUpperExclusive, numbers, elements);
     }
 
@@ -502,7 +498,7 @@ DT extends IDataElement> //
       unspec = null;
     }
 
-    return new DoubleRangeGroups(values.m_property, groups.m_groupingMode,
+    return new ValueRangeGroups(values.m_property, groups.m_groupingMode,
         groups.m_groupingParameter, list, unspec);
   }
 

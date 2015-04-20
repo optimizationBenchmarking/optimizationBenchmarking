@@ -82,7 +82,7 @@ public abstract class PropertyValueGroup<DT extends IDataElement> extends
   /**
    * Does the group contain the given value object? Or, at least, would it
    * contain the value potentially? For example, a
-   * {@link org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.LongRangeGroup}
+   * {@link org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.ValueRangeGroup}
    * would contain any value in its specified range, even if the value does
    * not actually exist.
    * 

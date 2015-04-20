@@ -2,31 +2,30 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A group of data elements belonging to range of values.
  * 
- * @param <VT>
- *          the value type
  * @param <DT>
  *          the data set type
  */
-public abstract class ValueRangeGroup<VT extends Object, DT extends IDataElement>
-    extends PropertyValueGroup<DT> {
+public class ValueRangeGroup<DT extends IDataElement> extends
+    PropertyValueGroup<DT> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** the inclusive lower bound */
-  private final VT m_lower;
+  private final Number m_lower;
   /** the inclusive or exclusive upper bound */
-  private final VT m_upper;
+  private final Number m_upper;
   /** is the upper bound exclusive? */
   private final boolean m_isUpperExclusive;
   /** the actual values */
-  private final ArraySetView<VT> m_values;
+  private final ArraySetView<Number> m_values;
 
   /**
    * create the property value group
@@ -42,8 +41,9 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends IDataElement
    * @param data
    *          the data
    */
-  ValueRangeGroup(final VT lowerBound, final VT upperBound,
-      final boolean isUpperExclusive, final VT[] values, final DT[] data) {
+  ValueRangeGroup(final Number lowerBound, final Number upperBound,
+      final boolean isUpperExclusive, final Number[] values,
+      final DT[] data) {
     super(data);
 
     if (lowerBound == null) {
@@ -94,7 +94,7 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends IDataElement
    * @see #getUpperBound()
    * @see #getValues()
    */
-  public final VT getLowerBound() {
+  public final Number getLowerBound() {
     return this.m_lower;
   }
 
@@ -106,7 +106,7 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends IDataElement
    * @see #getLowerBound()
    * @see #getValues()
    */
-  public final VT getUpperBound() {
+  public final Number getUpperBound() {
     return this.m_upper;
   }
 
@@ -142,7 +142,7 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends IDataElement
    * @see #getLowerBound()
    * @see #getUpperBound()
    */
-  public final ArraySetView<VT> getValues() {
+  public final ArraySetView<Number> getValues() {
     return this.m_values;
   }
 
@@ -152,31 +152,29 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends IDataElement
     textOut.append('[');
 
     addLower: {
-      if (this.m_lower instanceof Number) {
-        if (this.m_lower instanceof Long) {
-          textOut.append(((Long) this.m_lower).longValue());
-          break addLower;
-        }
-        if (this.m_lower instanceof Double) {
-          textOut.append(((Double) this.m_lower).doubleValue());
-          break addLower;
-        }
-        if (this.m_lower instanceof Integer) {
-          textOut.append(((Integer) this.m_lower).intValue());
-          break addLower;
-        }
-        if (this.m_lower instanceof Short) {
-          textOut.append(((Short) this.m_lower).shortValue());
-          break addLower;
-        }
-        if (this.m_lower instanceof Byte) {
-          textOut.append(((Byte) this.m_lower).byteValue());
-          break addLower;
-        }
-        if (this.m_lower instanceof Float) {
-          textOut.append(((Float) this.m_lower).floatValue());
-          break addLower;
-        }
+      if (this.m_lower instanceof Long) {
+        textOut.append(((Long) this.m_lower).longValue());
+        break addLower;
+      }
+      if (this.m_lower instanceof Double) {
+        textOut.append(((Double) this.m_lower).doubleValue());
+        break addLower;
+      }
+      if (this.m_lower instanceof Integer) {
+        textOut.append(((Integer) this.m_lower).intValue());
+        break addLower;
+      }
+      if (this.m_lower instanceof Short) {
+        textOut.append(((Short) this.m_lower).shortValue());
+        break addLower;
+      }
+      if (this.m_lower instanceof Byte) {
+        textOut.append(((Byte) this.m_lower).byteValue());
+        break addLower;
+      }
+      if (this.m_lower instanceof Float) {
+        textOut.append(((Float) this.m_lower).floatValue());
+        break addLower;
       }
       textOut.append(this.m_lower);
     }
@@ -184,31 +182,29 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends IDataElement
     textOut.append(',');
 
     addUpper: {
-      if (this.m_upper instanceof Number) {
-        if (this.m_upper instanceof Long) {
-          textOut.append(((Long) this.m_upper).longValue());
-          break addUpper;
-        }
-        if (this.m_upper instanceof Double) {
-          textOut.append(((Double) this.m_upper).doubleValue());
-          break addUpper;
-        }
-        if (this.m_upper instanceof Integer) {
-          textOut.append(((Integer) this.m_upper).intValue());
-          break addUpper;
-        }
-        if (this.m_upper instanceof Short) {
-          textOut.append(((Short) this.m_upper).shortValue());
-          break addUpper;
-        }
-        if (this.m_upper instanceof Byte) {
-          textOut.append(((Byte) this.m_upper).byteValue());
-          break addUpper;
-        }
-        if (this.m_upper instanceof Float) {
-          textOut.append(((Float) this.m_upper).floatValue());
-          break addUpper;
-        }
+      if (this.m_upper instanceof Long) {
+        textOut.append(((Long) this.m_upper).longValue());
+        break addUpper;
+      }
+      if (this.m_upper instanceof Double) {
+        textOut.append(((Double) this.m_upper).doubleValue());
+        break addUpper;
+      }
+      if (this.m_upper instanceof Integer) {
+        textOut.append(((Integer) this.m_upper).intValue());
+        break addUpper;
+      }
+      if (this.m_upper instanceof Short) {
+        textOut.append(((Short) this.m_upper).shortValue());
+        break addUpper;
+      }
+      if (this.m_upper instanceof Byte) {
+        textOut.append(((Byte) this.m_upper).byteValue());
+        break addUpper;
+      }
+      if (this.m_upper instanceof Float) {
+        textOut.append(((Float) this.m_upper).floatValue());
+        break addUpper;
       }
       textOut.append(this.m_upper);
     }
@@ -230,4 +226,65 @@ public abstract class ValueRangeGroup<VT extends Object, DT extends IDataElement
       textOut.append('s');
     }
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean contains(final Object o) {
+    final Number number;
+    final boolean numIsInteger;
+    final long integer;
+    final double floating;
+    final int cmp;
+
+    if (o instanceof Number) {
+      number = ((Number) o);
+
+      numIsInteger = ((number instanceof Byte) || //
+          (number instanceof Short) || //
+          (number instanceof Integer) || //
+      (number instanceof Long));
+      if (numIsInteger) {
+        integer = number.longValue();
+
+        if ((this.m_lower instanceof Byte) || //
+            (this.m_lower instanceof Short) || //
+            (this.m_lower instanceof Integer) || //
+            (this.m_lower instanceof Long)) {
+          if (this.m_lower.longValue() > integer) {
+            return false;
+          }
+        } else {
+          if (this.m_lower.longValue() > integer) {
+            return false;
+          }
+        }
+
+        if ((this.m_upper instanceof Byte) || //
+            (this.m_upper instanceof Short) || //
+            (this.m_upper instanceof Integer) || //
+            (this.m_upper instanceof Long)) {
+          cmp = Long.compare(integer, this.m_upper.longValue());
+        } else {
+          cmp = EComparison.compareDoubles(integer,
+              this.m_upper.doubleValue());
+        }
+
+      } else {
+        floating = number.doubleValue();
+        if (floating != floating) {
+          return false;
+        }
+
+        if (this.m_lower.doubleValue() > floating) {
+          return false;
+        }
+        cmp = EComparison.compareDoubles(floating,
+            this.m_upper.doubleValue());
+      }
+
+      return (cmp < (this.m_isUpperExclusive ? 0 : 1));
+    }
+    return false;
+  }
+
 }
