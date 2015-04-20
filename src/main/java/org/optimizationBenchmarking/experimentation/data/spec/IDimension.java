@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
+import org.optimizationBenchmarking.utils.parsers.NumberParser;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /**
@@ -45,4 +46,13 @@ public interface IDimension extends INamedElement {
    */
   @Override
   public abstract IDimensionSet getOwner();
+
+  /**
+   * Get the parser able to read strings representing values of this
+   * dimension. This parser may be bounded.
+   * 
+   * @return the parser able to read strings representing values of this
+   *         dimension.
+   */
+  public abstract NumberParser<Number> getParser();
 }

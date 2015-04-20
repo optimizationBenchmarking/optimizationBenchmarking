@@ -5,19 +5,19 @@ import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.DataPoint;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Dimension;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionSet;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.FeatureValue;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceRuns;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceSet;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ParameterValue;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Run;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataPoint;
+import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
+import org.optimizationBenchmarking.experimentation.data.spec.IDimensionSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
+import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetXMLOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
@@ -112,23 +112,23 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
               TextUtils.className(data.getClass()));
     }
     write: {
-      if (data instanceof ExperimentSet) {
-        EDIOutput.__writeExperimentSet(((ExperimentSet) data), root, job);
+      if (data instanceof IExperimentSet) {
+        EDIOutput.__writeExperimentSet(((IExperimentSet) data), root, job);
         break write;
       }
 
-      if (data instanceof DimensionSet) {
-        EDIOutput.__writeDimensionSet(((DimensionSet) data), root, job);
+      if (data instanceof IDimensionSet) {
+        EDIOutput.__writeDimensionSet(((IDimensionSet) data), root, job);
         break write;
       }
 
-      if (data instanceof InstanceSet) {
-        EDIOutput.__writeInstanceSet(((InstanceSet) data), root, job);
+      if (data instanceof IInstanceSet) {
+        EDIOutput.__writeInstanceSet(((IInstanceSet) data), root, job);
         break write;
       }
 
-      if (data instanceof Experiment) {
-        EDIOutput.__writeExperiment(((Experiment) data), root, job,
+      if (data instanceof IExperiment) {
+        EDIOutput.__writeExperiment(((IExperiment) data), root, job,
             described);
         break write;
       }
@@ -161,152 +161,164 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
   /**
    * Write an experiment set
    * 
-   * @param es
+   * @param experimentSet
    *          the experiment set
    * @param dest
    *          the destination
    * @param job
    *          the job
    */
-  private static final void __writeExperimentSet(final ExperimentSet es,
-      final XMLElement dest, final IOJob job) {
+  private static final void __writeExperimentSet(
+      final IExperimentSet experimentSet, final XMLElement dest,
+      final IOJob job) {
     final Logger logger;
 
     logger = job.getLogger();
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
-          ("Beginning to write experiment set " + es)); //$NON-NLS-1$
+          ("Beginning to write experiment set " + experimentSet)); //$NON-NLS-1$
     }
 
-    EDIOutput.__writeDimensionSet(es.getDimensions(), dest, job);
-    EDIOutput.__writeInstanceSet(es.getInstances(), dest, job);
-    EDIOutput.__writeExperiments(es.getData(), dest, job);
+    EDIOutput
+        .__writeDimensionSet(experimentSet.getDimensions(), dest, job);
+    EDIOutput.__writeInstanceSet(experimentSet.getInstances(), dest, job);
+    EDIOutput.__writeExperiments(experimentSet.getData(), dest, job);
 
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
-          ("Finished writing experiment set " + es)); //$NON-NLS-1$
+          ("Finished writing experiment set " + experimentSet)); //$NON-NLS-1$
     }
   }
 
   /**
    * Write an dimension set
    * 
-   * @param ds
+   * @param dimensionSet
    *          the dimension set
    * @param dest
    *          the destination
    * @param job
    *          the job
    */
-  private static final void __writeDimensionSet(final DimensionSet ds,
-      final XMLElement dest, final IOJob job) {
+  private static final void __writeDimensionSet(
+      final IDimensionSet dimensionSet, final XMLElement dest,
+      final IOJob job) {
     final Logger logger;
-    EPrimitiveType t;
-    NumberParser<?> p;
-    String s;
-    long l;
-    double f;
+    EPrimitiveType type;
+    NumberParser<?> parser;
+    String string;
+    long integer;
+    double floating;
 
     logger = job.getLogger();
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
-          ("Beginning to write dimension set " + ds)); //$NON-NLS-1$
+          ("Beginning to write dimension set " + dimensionSet)); //$NON-NLS-1$
     }
 
     try (final XMLElement root = dest.element()) {
       root.name(EDI.NAMESPACE_URI, EDI.ELEMENT_DIMENSIONS);
 
-      for (final Dimension d : ds.getData()) {
+      for (final IDimension dimension : dimensionSet.getData()) {
         try (final XMLElement dim = root.element()) {
           dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_DIMENSION);
 
           dim.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
-              d.getName());
+              dimension.getName());
 
-          s = d.getDescription();
-          if (s != null) {
+          string = dimension.getDescription();
+          if (string != null) {
             dim.attributeEncoded(EDI.NAMESPACE_URI,
-                EDI.ATTRIBUTE_DESCRIPTION, s);
+                EDI.ATTRIBUTE_DESCRIPTION, string);
           }
 
           dim.attributeRaw(EDI.NAMESPACE_URI,
               EDI.ATTRIBUTE_DIMENSION_TYPE,
-              EDI._getDimensionTypeName(d.getDimensionType()));
+              EDI._getDimensionTypeName(dimension.getDimensionType()));
 
           dim.attributeRaw(EDI.NAMESPACE_URI,
               EDI.ATTRIBUTE_DIMENSION_DIRECTION,
-              EDI._getDimensionDirectionName(d.getDirection()));
+              EDI._getDimensionDirectionName(dimension.getDirection()));
 
-          t = d.getDataType();
+          type = dimension.getDataType();
           dim.attributeRaw(EDI.NAMESPACE_URI,
-              EDI.ATTRIBUTE_DIMENSION_DATA_TYPE, EDI._getDataTypeName(t));
+              EDI.ATTRIBUTE_DIMENSION_DATA_TYPE,
+              EDI._getDataTypeName(type));
 
-          p = d.getParser();
-          switch (t) {
+          parser = dimension.getParser();
+          switch (type) {
             case BYTE: {
-              if ((l = p.getLowerBoundLong()) > Byte.MIN_VALUE) {
+              if ((integer = parser.getLowerBoundLong()) > Byte.MIN_VALUE) {
                 dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND, Long.toString(l));
+                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
+                    Long.toString(integer));
               }
-              if ((l = p.getUpperBoundLong()) < Byte.MAX_VALUE) {
+              if ((integer = parser.getUpperBoundLong()) < Byte.MAX_VALUE) {
                 dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND, Long.toString(l));
+                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
+                    Long.toString(integer));
               }
               break;
             }
             case SHORT: {
-              if ((l = p.getLowerBoundLong()) > Short.MIN_VALUE) {
+              if ((integer = parser.getLowerBoundLong()) > Short.MIN_VALUE) {
                 dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND, Long.toString(l));
+                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
+                    Long.toString(integer));
               }
-              if ((l = p.getUpperBoundLong()) < Short.MAX_VALUE) {
+              if ((integer = parser.getUpperBoundLong()) < Short.MAX_VALUE) {
                 dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND, Long.toString(l));
+                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
+                    Long.toString(integer));
               }
               break;
             }
             case INT: {
-              if ((l = p.getLowerBoundLong()) > Integer.MIN_VALUE) {
+              if ((integer = parser.getLowerBoundLong()) > Integer.MIN_VALUE) {
                 dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND, Long.toString(l));
+                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
+                    Long.toString(integer));
               }
-              if ((l = p.getUpperBoundLong()) < Integer.MAX_VALUE) {
+              if ((integer = parser.getUpperBoundLong()) < Integer.MAX_VALUE) {
                 dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND, Long.toString(l));
+                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
+                    Long.toString(integer));
               }
               break;
             }
             case LONG: {
-              if ((l = p.getLowerBoundLong()) > Long.MIN_VALUE) {
+              if ((integer = parser.getLowerBoundLong()) > Long.MIN_VALUE) {
                 dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND, Long.toString(l));
+                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
+                    Long.toString(integer));
               }
-              if ((l = p.getUpperBoundLong()) < Long.MAX_VALUE) {
+              if ((integer = parser.getUpperBoundLong()) < Long.MAX_VALUE) {
                 dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND, Long.toString(l));
+                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
+                    Long.toString(integer));
               }
               break;
             }
             case FLOAT:
             case DOUBLE: {
-              if ((f = p.getLowerBoundDouble()) > Double.NEGATIVE_INFINITY) {
+              if ((floating = parser.getLowerBoundDouble()) > Double.NEGATIVE_INFINITY) {
                 dim.attributeRaw(EDI.NAMESPACE_URI,
                     EDI.ATTRIBUTE_FLOAT_LOWER_BOUND,
-                    XMLNumberAppender.INSTANCE.toString(f,
+                    XMLNumberAppender.INSTANCE.toString(floating,
                         ETextCase.IN_SENTENCE));
               }
-              if ((f = p.getUpperBoundDouble()) < Double.POSITIVE_INFINITY) {
+              if ((floating = parser.getUpperBoundDouble()) < Double.POSITIVE_INFINITY) {
                 dim.attributeRaw(EDI.NAMESPACE_URI,
                     EDI.ATTRIBUTE_FLOAT_UPPER_BOUND,
-                    XMLNumberAppender.INSTANCE.toString(f,
+                    XMLNumberAppender.INSTANCE.toString(floating,
                         ETextCase.IN_SENTENCE));
               }
               break;
             }
             default: {
-              throw new IllegalArgumentException(t + //
+              throw new IllegalArgumentException(type + //
                   " cannot be the data type of dimension " //$NON-NLS-1$
-                  + d);
+                  + dimension);
             }
           }
 
@@ -317,44 +329,44 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
-          ("Finished to write dimension set " + ds)); //$NON-NLS-1$
+          ("Finished to write dimension set " + dimensionSet)); //$NON-NLS-1$
     }
   }
 
   /**
    * Write an instance set
    * 
-   * @param ds
+   * @param instances
    *          the instance set
    * @param dest
    *          the destination
    * @param job
    *          the job
    */
-  private static final void __writeInstanceSet(final InstanceSet ds,
-      final XMLElement dest, final IOJob job) {
-    final HashSet<Object> hs;
-    final ArraySetView<Dimension> dims;
+  private static final void __writeInstanceSet(
+      final IInstanceSet instances, final XMLElement dest, final IOJob job) {
+    final HashSet<Object> hashSet;
+    final ArraySetView<? extends IDimension> dimensions;
     final Logger logger;
-    String s;
-    Feature fe;
+    String string;
+    IFeature feature;
     Number lower, upper;
-    NumberParser<?> p;
+    NumberParser<?> parser;
     boolean x, y;
 
     logger = job.getLogger();
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
-          ("Beginning to write instance set " + ds)); //$NON-NLS-1$
+          ("Beginning to write instance set " + instances)); //$NON-NLS-1$
     }
 
     try (final XMLElement root = dest.element()) {
       root.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INSTANCES);
 
-      hs = new HashSet<>();
-      dims = ds.getOwner().getDimensions().getData();
+      hashSet = new HashSet<>();
+      dimensions = instances.getOwner().getDimensions().getData();
 
-      for (final Instance i : ds.getData()) {
+      for (final IInstance i : instances.getData()) {
 
         try (XMLElement inst = root.element()) {
           inst.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INSTANCE);
@@ -362,55 +374,55 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
           inst.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
               i.getName());
 
-          s = i.getDescription();
-          if (s != null) {
+          string = i.getDescription();
+          if (string != null) {
             inst.attributeEncoded(EDI.NAMESPACE_URI,
-                EDI.ATTRIBUTE_DESCRIPTION, s);
+                EDI.ATTRIBUTE_DESCRIPTION, string);
           }
 
-          for (final FeatureValue fv : i.getFeatureSetting()) {
+          for (final IFeatureValue featureValue : i.getFeatureSetting()) {
             try (final XMLElement feat = inst.element()) {
               feat.name(EDI.NAMESPACE_URI, EDI.ELEMENT_FEATURE);
 
-              fe = fv.getKey();
+              feature = featureValue.getOwner();
 
               feat.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
-                  fe.getName());
-              s = fe.getDescription();
-              if (s != null) {
-                if (hs.add(fe)) {
+                  feature.getName());
+              string = feature.getDescription();
+              if (string != null) {
+                if (hashSet.add(feature)) {
                   feat.attributeEncoded(EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_FEATURE_DESCRIPTION, s);
+                      EDI.ATTRIBUTE_FEATURE_DESCRIPTION, string);
                 }
               }
 
               feat.attributeEncoded(EDI.NAMESPACE_URI,
-                  EDI.ATTRIBUTE_FEATURE_VALUE, fv.getName());
-              s = fv.getDescription();
-              if (s != null) {
-                if (hs.add(fv)) {
+                  EDI.ATTRIBUTE_FEATURE_VALUE, featureValue.getName());
+              string = featureValue.getDescription();
+              if (string != null) {
+                if (hashSet.add(featureValue)) {
                   feat.attributeEncoded(EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_FEATURE_VALUE_DESCRIPTION, s);
+                      EDI.ATTRIBUTE_FEATURE_VALUE_DESCRIPTION, string);
                 }
               }
 
             }
           }
 
-          for (final Dimension d : dims) {
-            lower = i.getLowerBound(d);
-            upper = i.getUpperBound(d);
-            p = d.getParser();
+          for (final IDimension dimension : dimensions) {
+            lower = i.getLowerBound(dimension);
+            upper = i.getUpperBound(dimension);
+            parser = dimension.getParser();
 
-            if (d.getDataType().isInteger()) {
-              x = (lower.longValue() > p.getLowerBoundLong());
-              y = (upper.longValue() < p.getUpperBoundLong());
+            if (dimension.getDataType().isInteger()) {
+              x = (lower.longValue() > parser.getLowerBoundLong());
+              y = (upper.longValue() < parser.getUpperBoundLong());
               if (x || y) {
                 try (final XMLElement dim = inst.element()) {
                   dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_BOUNDS);
 
                   dim.attributeEncoded(EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_DIMENSION, d.getName());
+                      EDI.ATTRIBUTE_DIMENSION, dimension.getName());
                   if (x) {
                     dim.attributeRaw(EDI.NAMESPACE_URI,
                         EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
@@ -427,14 +439,14 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
             } else {
 
-              x = (lower.doubleValue() > p.getLowerBoundDouble());
-              y = (upper.doubleValue() < p.getUpperBoundDouble());
+              x = (lower.doubleValue() > parser.getLowerBoundDouble());
+              y = (upper.doubleValue() < parser.getUpperBoundDouble());
               if (x || y) {
                 try (final XMLElement dim = inst.element()) {
                   dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_BOUNDS);
 
                   dim.attributeEncoded(EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_DIMENSION, d.getName());
+                      EDI.ATTRIBUTE_DIMENSION, dimension.getName());
                   if (x) {
                     dim.attributeRaw(
                         EDI.NAMESPACE_URI,
@@ -459,14 +471,14 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
-          ("Finished to write instance set " + ds)); //$NON-NLS-1$
+          ("Finished to write instance set " + instances)); //$NON-NLS-1$
     }
   }
 
   /**
    * Write the experiments
    * 
-   * @param e
+   * @param experiment
    *          the experiment
    * @param dest
    *          the dest
@@ -475,98 +487,104 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
    * @param described
    *          the described elements
    */
-  private static final void __writeExperiment(final Experiment e,
-      final XMLElement dest, final IOJob job,
-      final HashSet<Object> described) {
+  private static final void __writeExperiment(
+      final IExperiment experiment, final XMLElement dest,
+      final IOJob job, final HashSet<Object> described) {
     final boolean[] isInt;
-    final int k;
-    final ArraySetView<Dimension> ds;
+    final int dimensionSize;
+    final ArraySetView<? extends IDimension> dimensions;
     final Logger logger;
-    String s;
-    Parameter fe;
+    String string;
+    IParameter parameter;
     int i;
 
     logger = job.getLogger();
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
-          ("Beginning to write experiment " + e)); //$NON-NLS-1$
+          ("Beginning to write experiment " + experiment)); //$NON-NLS-1$
     }
 
     try (final XMLElement root = dest.element()) {
       root.name(EDI.NAMESPACE_URI, EDI.ELEMENT_EXPERIMENT);
 
       root.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
-          e.getName());
+          experiment.getName());
 
-      s = e.getDescription();
-      if (s != null) {
+      string = experiment.getDescription();
+      if (string != null) {
         root.attributeEncoded(EDI.NAMESPACE_URI,
-            EDI.ATTRIBUTE_DESCRIPTION, s);
+            EDI.ATTRIBUTE_DESCRIPTION, string);
       }
 
-      for (final ParameterValue fv : e.getParameterSetting()) {
-        if (fv.isUnspecified()) {
+      for (final IParameterValue parameterValue : experiment
+          .getParameterSetting()) {
+        if (parameterValue.isUnspecified()) {
           continue;
         }
-        try (final XMLElement p = root.element()) {
-          p.name(EDI.NAMESPACE_URI, EDI.ELEMENT_PARAMETER);
-          fe = fv.getKey();
+        try (final XMLElement point = root.element()) {
+          point.name(EDI.NAMESPACE_URI, EDI.ELEMENT_PARAMETER);
+          parameter = parameterValue.getOwner();
 
-          p.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
-              fe.getName());
-          s = fe.getDescription();
-          if (s != null) {
-            if (described.add(fe)) {
-              p.attributeEncoded(EDI.NAMESPACE_URI,
-                  EDI.ATTRIBUTE_PARAMETER_DESCRIPTION, s);
+          point.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
+              parameter.getName());
+          string = parameter.getDescription();
+          if (string != null) {
+            if (described.add(parameter)) {
+              point.attributeEncoded(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_PARAMETER_DESCRIPTION, string);
             }
           }
 
-          p.attributeEncoded(EDI.NAMESPACE_URI,
-              EDI.ATTRIBUTE_PARAMETER_VALUE, fv.getName());
-          s = fv.getDescription();
-          if (s != null) {
-            if (described.add(fv)) {
-              p.attributeEncoded(EDI.NAMESPACE_URI,
-                  EDI.ATTRIBUTE_PARAMETER_VALUE_DESCRIPTION, s);
+          point.attributeEncoded(EDI.NAMESPACE_URI,
+              EDI.ATTRIBUTE_PARAMETER_VALUE, parameterValue.getName());
+          string = parameterValue.getDescription();
+          if (string != null) {
+            if (described.add(parameterValue)) {
+              point.attributeEncoded(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_PARAMETER_VALUE_DESCRIPTION, string);
             }
           }
 
         }
       }
 
-      ds = e.getOwner().getDimensions().getData();
-      k = ds.size();
-      isInt = new boolean[k];
-      for (i = k; (--i) >= 0;) {
-        isInt[i] = ds.get(i).getDataType().isInteger();
+      dimensions = experiment.getOwner().getDimensions().getData();
+      dimensionSize = dimensions.size();
+      isInt = new boolean[dimensionSize];
+      for (i = dimensionSize; (--i) >= 0;) {
+        isInt[i] = dimensions.get(i).getDataType().isInteger();
       }
 
-      for (final InstanceRuns ir : e.getData()) {
-        try (final XMLElement irx = root.element()) {
-          irx.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INSTANCE_RUNS);
+      for (final IInstanceRuns instanceRuns : experiment.getData()) {
+        try (final XMLElement instanceRunsXML = root.element()) {
+          instanceRunsXML.name(EDI.NAMESPACE_URI,
+              EDI.ELEMENT_INSTANCE_RUNS);
 
-          irx.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_INSTANCE,
-              ir.getInstance().getName());
-          for (final Run r : ir.getData()) {
-            try (final XMLElement rx = irx.element()) {
-              rx.name(EDI.NAMESPACE_URI, EDI.ELEMENT_RUN);
+          instanceRunsXML
+              .attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_INSTANCE,
+                  instanceRuns.getInstance().getName());
+          for (final IRun run : instanceRuns.getData()) {
+            try (final XMLElement runXML = instanceRunsXML.element()) {
+              runXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_RUN);
 
-              for (final DataPoint p : r.getData()) {
-                try (final XMLElement px = rx.element()) {
-                  px.name(EDI.NAMESPACE_URI, EDI.ELEMENT_POINT);
-                  for (i = 0; i < k; i++) {
+              for (final IDataPoint point : run.getData()) {
+                try (final XMLElement pointXML = runXML.element()) {
+                  pointXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_POINT);
+                  for (i = 0; i < dimensionSize; i++) {
                     if (isInt[i]) {
-                      try (final XMLElement ix = px.element()) {
-                        ix.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INT);
-                        ix.textRaw().append(p.getLong(i));
+                      try (final XMLElement valueXML = pointXML.element()) {
+                        valueXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INT);
+                        valueXML.textRaw().append(point.getLong(i));
                       }
                     } else {
-                      try (final XMLElement ix = px.element()) {
-                        ix.name(EDI.NAMESPACE_URI, EDI.ELEMENT_FLOAT);
-                        ix.textRaw().append(
-                            XMLNumberAppender.INSTANCE.toString(
-                                p.getDouble(i), ETextCase.IN_SENTENCE));
+                      try (final XMLElement valueXML = pointXML.element()) {
+                        valueXML
+                            .name(EDI.NAMESPACE_URI, EDI.ELEMENT_FLOAT);
+                        valueXML.textRaw()
+                            .append(
+                                XMLNumberAppender.INSTANCE.toString(
+                                    point.getDouble(i),
+                                    ETextCase.IN_SENTENCE));
 
                       }
                     }
@@ -585,7 +603,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
-          ("Finished writing experiment " + e)); //$NON-NLS-1$
+          ("Finished writing experiment " + experiment)); //$NON-NLS-1$
     }
   }
 
@@ -600,7 +618,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
    *          the job
    */
   private static final void __writeExperiments(
-      final ArraySetView<Experiment> es, final XMLElement dest,
+      final ArraySetView<? extends IExperiment> es, final XMLElement dest,
       final IOJob job) {
     final HashSet<Object> described;
     final Logger logger;
@@ -615,7 +633,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
       root.name(EDI.NAMESPACE_URI, EDI.ELEMENT_EXPERIMENTS);
 
       described = new HashSet<>();
-      for (final Experiment e : es) {
+      for (final IExperiment e : es) {
         EDIOutput.__writeExperiment(e, root, job, described);
       }
 

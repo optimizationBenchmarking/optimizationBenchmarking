@@ -217,11 +217,8 @@ public class Dimension extends _NamedIDObject implements IDimension {
     textOut.append(')');
   }
 
-  /**
-   * Get the parser able to read this type
-   * 
-   * @return the parser able to read this type
-   */
+  /** {@inheritDoc} */
+  @Override
   public final NumberParser<Number> getParser() {
     return this.m_parser;
   }

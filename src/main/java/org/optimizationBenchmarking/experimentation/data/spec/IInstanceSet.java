@@ -12,4 +12,12 @@ public interface IInstanceSet extends IDataSet {
    */
   @Override
   public abstract ArraySetView<? extends IInstance> getData();
+
+  /**
+   * Get the owning experiment set
+   * 
+   * @return the owning experiment set
+   */
+  @Override
+  public abstract IExperimentSet getOwner();
 }
