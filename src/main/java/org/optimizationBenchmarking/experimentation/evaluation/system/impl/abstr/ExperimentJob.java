@@ -2,14 +2,14 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 
 /**
  * The kind of job which can carry out the work of an
  * {@link org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentModule}
  * .
  */
-public abstract class ExperimentJob extends _EvaluationJob<Experiment> {
+public abstract class ExperimentJob extends _EvaluationJob<IExperiment> {
   /**
    * Create the experiment evaluation job
    * 
@@ -18,7 +18,7 @@ public abstract class ExperimentJob extends _EvaluationJob<Experiment> {
    * @param logger
    *          the logger
    */
-  protected ExperimentJob(final Experiment data, final Logger logger) {
+  protected ExperimentJob(final IExperiment data, final Logger logger) {
     super(data, logger);
   }
 }

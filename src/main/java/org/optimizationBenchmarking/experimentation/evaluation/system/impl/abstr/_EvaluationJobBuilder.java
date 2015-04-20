@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.DataSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationJob;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationJobBuilder;
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  * @param <JBT>
  *          the job builder type
  */
-class _EvaluationJobBuilder<DT extends DataSet<?>, MT extends _EvaluationModule<DT>, JT extends IEvaluationJob, JBT extends _EvaluationJobBuilder<DT, MT, JT, JBT>>
+class _EvaluationJobBuilder<DT extends IDataSet, MT extends _EvaluationModule<DT>, JT extends IEvaluationJob, JBT extends _EvaluationJobBuilder<DT, MT, JT, JBT>>
     extends ToolJobBuilder<JT, JBT> implements IEvaluationJobBuilder {
 
   /** the module */

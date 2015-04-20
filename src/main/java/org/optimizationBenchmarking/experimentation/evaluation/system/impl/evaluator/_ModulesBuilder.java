@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 
@@ -33,7 +33,7 @@ final class _ModulesBuilder {
    * @return the configured module hierarchy
    */
   static final _MainJob _buildModules(final _EvaluationSetup setup,
-      final ExperimentSet data, final Logger logger) {
+      final IExperimentSet data, final Logger logger) {
     final ArrayList<_ModuleEntry>[] allModules;
     final _DescriptionJobs descriptionJobs;
     final _ExperimentJobs experimentJobs;

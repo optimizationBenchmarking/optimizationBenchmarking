@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.desc
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.DescriptionModule;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
@@ -19,8 +19,9 @@ public final class InstanceInformation extends DescriptionModule {
 
   /** {@inheritDoc} */
   @Override
-  public final _InstanceInformationJob createJob(final ExperimentSet data,
-      final Configuration config, final Logger logger) {
+  public final _InstanceInformationJob createJob(
+      final IExperimentSet data, final Configuration config,
+      final Logger logger) {
     return new _InstanceInformationJob(data, config, logger);
   }
 

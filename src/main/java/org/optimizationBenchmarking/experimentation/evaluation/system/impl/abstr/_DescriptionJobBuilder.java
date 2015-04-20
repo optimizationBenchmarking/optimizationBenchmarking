@@ -1,12 +1,12 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IDescriptionJobBuilder;
 
 /** The description job builder implementation */
 final class _DescriptionJobBuilder
     extends
-    _EvaluationJobBuilder<ExperimentSet, DescriptionModule, DescriptionJob, _DescriptionJobBuilder>
+    _EvaluationJobBuilder<IExperimentSet, DescriptionModule, DescriptionJob, _DescriptionJobBuilder>
     implements IDescriptionJobBuilder {
 
   /**

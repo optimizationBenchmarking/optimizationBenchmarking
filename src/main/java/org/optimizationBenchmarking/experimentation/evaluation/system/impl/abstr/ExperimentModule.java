@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentJobBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentModule;
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
  * The abstract basic implementation for experiment modules.
  */
 public abstract class ExperimentModule extends
-    _EvaluationModule<Experiment> implements IExperimentModule {
+    _EvaluationModule<IExperiment> implements IExperimentModule {
 
   /** create */
   protected ExperimentModule() {
@@ -37,6 +37,6 @@ public abstract class ExperimentModule extends
    *          log info should be written
    */
   @Override
-  public abstract ExperimentJob createJob(Experiment data,
+  public abstract ExperimentJob createJob(IExperiment data,
       Configuration config, Logger logger);
 }

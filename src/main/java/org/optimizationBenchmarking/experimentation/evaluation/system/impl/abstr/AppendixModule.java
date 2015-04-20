@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixJobBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixModule;
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
  * The abstract basic implementation for appendix modules.
  */
 public abstract class AppendixModule extends
-    _EvaluationModule<ExperimentSet> implements IAppendixModule {
+    _EvaluationModule<IExperimentSet> implements IAppendixModule {
 
   /** create */
   protected AppendixModule() {
@@ -37,6 +37,6 @@ public abstract class AppendixModule extends
    *          log info should be written
    */
   @Override
-  public abstract AppendixJob createJob(ExperimentSet data,
+  public abstract AppendixJob createJob(IExperimentSet data,
       Configuration config, Logger logger);
 }

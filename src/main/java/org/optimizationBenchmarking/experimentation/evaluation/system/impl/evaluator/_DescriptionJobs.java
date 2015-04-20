@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 
@@ -18,21 +18,21 @@ final class _DescriptionJobs extends _PartJob {
    * @param children
    *          the children
    */
-  _DescriptionJobs(final ExperimentSet data, final Logger logger,
+  _DescriptionJobs(final IExperimentSet data, final Logger logger,
       final _PseudoJob[] children) {
     super(data, logger, children);
   }
 
   /** {@inheritDoc} */
   @Override
-  final void _writeSectionIntroduction(final ExperimentSet data,
+  final void _writeSectionIntroduction(final IExperimentSet data,
       final ISectionBody body) {
     //
   }
 
   /** {@inheritDoc} */
   @Override
-  final void _writeSectionTitle(final ExperimentSet data,
+  final void _writeSectionTitle(final IExperimentSet data,
       final IPlainText title) {
     title.append("Background"); //$NON-NLS-1$
   }

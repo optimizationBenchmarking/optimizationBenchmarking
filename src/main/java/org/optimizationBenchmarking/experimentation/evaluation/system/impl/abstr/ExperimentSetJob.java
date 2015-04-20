@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 
 /**
  * The kind of job which can carry out the work of an
@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
  * .
  */
 public abstract class ExperimentSetJob extends
-    _EvaluationJob<ExperimentSet> {
+    _EvaluationJob<IExperimentSet> {
   /**
    * Create the experiment set evaluation job
    * 
@@ -19,7 +19,7 @@ public abstract class ExperimentSetJob extends
    * @param logger
    *          the logger
    */
-  protected ExperimentSetJob(final ExperimentSet data, final Logger logger) {
+  protected ExperimentSetJob(final IExperimentSet data, final Logger logger) {
     super(data, logger);
   }
 }

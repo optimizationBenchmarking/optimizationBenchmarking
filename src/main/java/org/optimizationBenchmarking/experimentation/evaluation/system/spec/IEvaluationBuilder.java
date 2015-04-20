@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.spec;
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
@@ -66,7 +66,7 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
    * @return this builder
    * @see #setInput(IEvaluationInput)
    */
-  public abstract IEvaluationBuilder setInputData(final ExperimentSet data);
+  public abstract IEvaluationBuilder setInputData(final IExperimentSet data);
 
   /**
    * Set the input source for the data of this evaluation process.
@@ -75,7 +75,7 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
    *          the input object to obtain the data for the evaluation
    *          process
    * @return this builder
-   * @see #setInputData(ExperimentSet)
+   * @see #setInputData(IExperimentSet)
    */
   public abstract IEvaluationBuilder setInput(final IEvaluationInput input);
 

@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.sing
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.ExperimentModule;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
@@ -19,7 +19,7 @@ public final class ExperimentInformation extends ExperimentModule {
 
   /** {@inheritDoc} */
   @Override
-  public final _ExperimentInformationJob createJob(final Experiment data,
+  public final _ExperimentInformationJob createJob(final IExperiment data,
       final Configuration config, final Logger logger) {
     return new _ExperimentInformationJob(data, logger);
   }

@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.sing
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.ExperimentJob;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
@@ -20,13 +20,13 @@ final class _ExperimentInformationJob extends ExperimentJob {
    * @param logger
    *          the logger
    */
-  _ExperimentInformationJob(final Experiment data, final Logger logger) {
+  _ExperimentInformationJob(final IExperiment data, final Logger logger) {
     super(data, logger);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final void doMain(final Experiment data,
+  protected final void doMain(final IExperiment data,
       final ISectionContainer sectionContainer, final Logger logger) {
 
     try (final ISection section = sectionContainer.section(null)) {

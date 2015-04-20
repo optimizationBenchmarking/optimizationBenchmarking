@@ -1,12 +1,12 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixJobBuilder;
 
 /** The appendix job builder implementation */
 final class _AppendixJobBuilder
     extends
-    _EvaluationJobBuilder<ExperimentSet, AppendixModule, AppendixJob, _AppendixJobBuilder>
+    _EvaluationJobBuilder<IExperimentSet, AppendixModule, AppendixJob, _AppendixJobBuilder>
     implements IAppendixJobBuilder {
 
   /**

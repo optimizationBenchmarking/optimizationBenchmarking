@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.spec;
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
 /**
@@ -26,5 +26,5 @@ public interface IDescriptionJobBuilder extends IEvaluationJobBuilder {
    *          the data to be evaluated
    * @return this builder
    */
-  public abstract IDescriptionJobBuilder setData(final ExperimentSet data);
+  public abstract IDescriptionJobBuilder setData(final IExperimentSet data);
 }

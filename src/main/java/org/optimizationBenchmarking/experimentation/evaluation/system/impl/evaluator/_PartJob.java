@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationJob;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
  */
 abstract class _PartJob extends _PseudoJob {
   /** the data */
-  private final ExperimentSet m_data;
+  private final IExperimentSet m_data;
 
   /**
    * create the descriptions module
@@ -27,7 +27,7 @@ abstract class _PartJob extends _PseudoJob {
    * @param children
    *          the children
    */
-  _PartJob(final ExperimentSet data, final Logger logger,
+  _PartJob(final IExperimentSet data, final Logger logger,
       final IEvaluationJob[] children) {
     super(logger, children);
     this.m_data = data;
@@ -47,7 +47,7 @@ abstract class _PartJob extends _PseudoJob {
    * @param body
    *          the section body
    */
-  void _writeSectionIntroduction(final ExperimentSet data,
+  void _writeSectionIntroduction(final IExperimentSet data,
       final ISectionBody body) {
     //
   }
@@ -60,7 +60,7 @@ abstract class _PartJob extends _PseudoJob {
    * @param title
    *          the title
    */
-  void _writeSectionTitle(final ExperimentSet data, final IPlainText title) {
+  void _writeSectionTitle(final IExperimentSet data, final IPlainText title) {
     //
   }
 

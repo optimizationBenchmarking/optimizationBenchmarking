@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationJob;
 
 /** The holder for the appendices */
@@ -17,7 +17,7 @@ final class _AppendixJobs extends _PartJob {
    * @param children
    *          the children
    */
-  _AppendixJobs(final ExperimentSet data, final Logger logger,
+  _AppendixJobs(final IExperimentSet data, final Logger logger,
       final IEvaluationJob[] children) {
     super(data, logger, children);
   }

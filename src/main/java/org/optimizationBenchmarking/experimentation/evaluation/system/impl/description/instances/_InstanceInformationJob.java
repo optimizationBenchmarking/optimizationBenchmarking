@@ -3,10 +3,10 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.desc
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.FeatureSet;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
 import org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.PropertyValueGroup;
 import org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.PropertyValueGrouper;
 import org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.PropertyValueGroups;
@@ -34,7 +34,7 @@ final class _InstanceInformationJob extends DescriptionJob {
   private static final EFigureSize DEFAULT_FIGURE_SIZE = EFigureSize.PAGE_3_PER_ROW;
 
   /** the property value groupers */
-  private final PropertyValueGrouper<Feature, Instance>[] m_groupers;
+  private final PropertyValueGrouper<IFeature, IInstance>[] m_groupers;
 
   /** the figure size */
   private final EFigureSize m_figureSize;
@@ -49,14 +49,14 @@ final class _InstanceInformationJob extends DescriptionJob {
    * @param config
    *          the configuration
    */
-  @SuppressWarnings("unchecked")
-  _InstanceInformationJob(final ExperimentSet data,
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  _InstanceInformationJob(final IExperimentSet data,
       final Configuration config, final Logger logger) {
     super(data, logger);
 
-    final FeatureSet featureSet;
-    final PropertyValueGrouper<Feature, Instance>[] groupers;
-    final ArraySetView<Feature> features;
+    final IFeatureSet featureSet;
+    final PropertyValueGrouper<IFeature, IInstance>[] groupers;
+    final ArraySetView<? extends IFeature> features;
     final int size;
     int i;
 
@@ -65,8 +65,8 @@ final class _InstanceInformationJob extends DescriptionJob {
     size = features.size();
     this.m_groupers = groupers = new PropertyValueGrouper[size];
     for (i = size; (--i) >= 0;) {
-      groupers[i] = PropertyValueGrouper
-          .configure(features.get(i), config);
+      groupers[i] = ((PropertyValueGrouper) (PropertyValueGrouper
+          .configure(features.get(i), config)));
     }
 
     this.m_figureSize = config.get(FigureSizeParser.PARAM_FIGURE_SIZE,
@@ -85,9 +85,9 @@ final class _InstanceInformationJob extends DescriptionJob {
    *          the section body
    */
   @SuppressWarnings("unchecked")
-  private final void __makeFeatureFigures(final ExperimentSet data,
+  private final void __makeFeatureFigures(final IExperimentSet data,
       final ISection section, final ISectionBody body) {
-    final PropertyValueGroups<Instance>[] groups;
+    final PropertyValueGroups<IInstance>[] groups;
     final List<ColorStyle> colors;
     String featureName;
     int index, groupIndex, maxColors;
@@ -95,7 +95,7 @@ final class _InstanceInformationJob extends DescriptionJob {
     groups = new PropertyValueGroups[this.m_groupers.length];
     maxColors = 0;
     index = 0;
-    for (final Feature feature : data.getFeatures().getData()) {
+    for (final IFeature feature : data.getFeatures().getData()) {
       groups[index] = this.m_groupers[index].get(feature);
       maxColors = Math.max(maxColors, groups[index].getGroups().size());
       index++;
@@ -110,7 +110,7 @@ final class _InstanceInformationJob extends DescriptionJob {
       }
 
       index = 0;
-      for (final PropertyValueGroups<Instance> grouper : groups) {
+      for (final PropertyValueGroups<IInstance> grouper : groups) {
         featureName = grouper.getOwner().getName();
         try (final IFigure figure = series.figure(null, featureName)) {
           try (final IComplexText caption = figure.caption()) {
@@ -120,7 +120,7 @@ final class _InstanceInformationJob extends DescriptionJob {
           try (final IPieChart pie = figure.pieChart()) {
             groupIndex = 0;
             pie.setLegendMode(ELegendMode.SHOW_COMPLETE_LEGEND);
-            for (final PropertyValueGroup<Instance> group : grouper
+            for (final PropertyValueGroup<IInstance> group : grouper
                 .getGroups()) {
               try (final IDataScalar slice = pie.slice()) {
                 slice.setColor(colors.get(groupIndex++));
@@ -136,7 +136,7 @@ final class _InstanceInformationJob extends DescriptionJob {
 
   /** {@inheritDoc} */
   @Override
-  protected final void doMain(final ExperimentSet data,
+  protected final void doMain(final IExperimentSet data,
       final ISectionContainer sectionContainer, final Logger logger) {
 
     try (final ISection section = sectionContainer.section(null)) {

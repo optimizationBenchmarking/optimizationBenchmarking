@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluation;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
@@ -39,7 +39,7 @@ final class _EvaluationBuilder extends _EvaluationSetup implements
 
   /** {@inheritDoc} */
   @Override
-  public final IEvaluationBuilder setInputData(final ExperimentSet data) {
+  public final IEvaluationBuilder setInputData(final IExperimentSet data) {
     this._setInputData(data);
     return this;
   }

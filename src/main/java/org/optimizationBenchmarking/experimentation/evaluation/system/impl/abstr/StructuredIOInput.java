@@ -3,8 +3,8 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
 import org.optimizationBenchmarking.utils.io.structured.spec.IInputJobBuilder;
 
@@ -42,7 +42,7 @@ public class StructuredIOInput implements IEvaluationInput {
 
   /** {@inheritDoc} */
   @Override
-  public final ExperimentSet getExperimentSet() throws IOException {
+  public final IExperimentSet getExperimentSet() throws IOException {
     final IInputJobBuilder<ExperimentSetContext> builder;
     final Logger logger;
 

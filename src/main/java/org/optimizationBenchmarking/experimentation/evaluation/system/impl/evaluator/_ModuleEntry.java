@@ -3,8 +3,8 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixJobBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixModule;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IDescriptionJobBuilder;
@@ -92,7 +92,7 @@ final class _ModuleEntry {
    *           if something goes wrong
    */
   static final _DescriptionJobs _makeDescriptionJobs(
-      final ArrayList<_ModuleEntry> entries, final ExperimentSet data,
+      final ArrayList<_ModuleEntry> entries, final IExperimentSet data,
       final Logger logger) throws Exception {
     final _PseudoJob[] jobs;
 
@@ -117,7 +117,7 @@ final class _ModuleEntry {
    *           if something goes wrong
    */
   private static final _PseudoJob[] __makeDescriptionJobs(
-      final ArrayList<_ModuleEntry> entries, final ExperimentSet data,
+      final ArrayList<_ModuleEntry> entries, final IExperimentSet data,
       final Logger logger) throws Exception {
     final int size;
     final _PseudoJob[] jobs;
@@ -160,11 +160,11 @@ final class _ModuleEntry {
    *           if something goes wrong
    */
   static final _ExperimentJobs _makeExperimentJobs(
-      final ArrayList<_ModuleEntry> entries, final ExperimentSet data,
+      final ArrayList<_ModuleEntry> entries, final IExperimentSet data,
       final Logger logger) throws Exception {
     final _PseudoJob[] jobs;
 
-    jobs = _ModuleEntry.__makeExperimentJobs(entries, data, logger);
+    jobs = _ModuleEntry.__makeExperimentsJobs(entries, data, logger);
     if (jobs != null) {
       return new _ExperimentJobs(data, logger, jobs);
     }
@@ -184,13 +184,13 @@ final class _ModuleEntry {
    * @throws Exception
    *           if something goes wrong
    */
-  private static final _PseudoJob[] __makeExperimentJobs(
-      final ArrayList<_ModuleEntry> entries, final ExperimentSet data,
+  private static final _PseudoJob[] __makeExperimentsJobs(
+      final ArrayList<_ModuleEntry> entries, final IExperimentSet data,
       final Logger logger) throws Exception {
     final int size;
-    final ArraySetView<Experiment> list;
+    final ArraySetView<? extends IExperiment> list;
     final _PseudoJob[] singleExperiments;
-    Experiment experiment;
+    IExperiment experiment;
     int i;
 
     if ((entries == null) || (entries.size() <= 0)) {
@@ -226,7 +226,7 @@ final class _ModuleEntry {
    *           if something goes wrong
    */
   private static final _PseudoJob[] __makeExperimentJobs(
-      final ArrayList<_ModuleEntry> entries, final Experiment data,
+      final ArrayList<_ModuleEntry> entries, final IExperiment data,
       final Logger logger) throws Exception {
     final int size;
     final _PseudoJob[] jobs;
@@ -269,7 +269,7 @@ final class _ModuleEntry {
    *           if something goes wrong
    */
   static final _ExperimentSetJobs _makeExperimentSetJobs(
-      final ArrayList<_ModuleEntry> entries, final ExperimentSet data,
+      final ArrayList<_ModuleEntry> entries, final IExperimentSet data,
       final Logger logger) throws Exception {
     final _PseudoJob[] jobs;
 
@@ -294,7 +294,7 @@ final class _ModuleEntry {
    *           if something goes wrong
    */
   private static final _PseudoJob[] __makeExperimentSetJobs(
-      final ArrayList<_ModuleEntry> entries, final ExperimentSet data,
+      final ArrayList<_ModuleEntry> entries, final IExperimentSet data,
       final Logger logger) throws Exception {
     final int size;
     final _PseudoJob[] jobs;
@@ -337,7 +337,7 @@ final class _ModuleEntry {
    *           if something goes wrong
    */
   static final _AppendixJobs _makeAppendixJobs(
-      final ArrayList<_ModuleEntry> entries, final ExperimentSet data,
+      final ArrayList<_ModuleEntry> entries, final IExperimentSet data,
       final Logger logger) throws Exception {
     final _PseudoJob[] jobs;
 
@@ -362,7 +362,7 @@ final class _ModuleEntry {
    *           if something goes wrong
    */
   private static final _PseudoJob[] __makeAppendixJobs(
-      final ArrayList<_ModuleEntry> entries, final ExperimentSet data,
+      final ArrayList<_ModuleEntry> entries, final IExperimentSet data,
       final Logger logger) throws Exception {
     final int size;
     final _PseudoJob[] jobs;

@@ -164,7 +164,7 @@ DT extends IDataElement> //
    *          the property type
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public static final <DX extends DataElement, PX extends IProperty> PropertyValueGrouper<PX, DX> configure(
+  public static final <DX extends IDataElement, PX extends IProperty> PropertyValueGrouper<PX, DX> configure(
       final PX property, final Configuration config) {
     final PropertyValueGrouper all;
 

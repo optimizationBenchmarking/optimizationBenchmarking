@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IDescriptionJobBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IDescriptionModule;
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
  * The abstract basic implementation for description modules.
  */
 public abstract class DescriptionModule extends
-    _EvaluationModule<ExperimentSet> implements IDescriptionModule {
+    _EvaluationModule<IExperimentSet> implements IDescriptionModule {
 
   /** create */
   protected DescriptionModule() {
@@ -37,6 +37,6 @@ public abstract class DescriptionModule extends
    *          log info should be written
    */
   @Override
-  public abstract DescriptionJob createJob(ExperimentSet data,
+  public abstract DescriptionJob createJob(IExperimentSet data,
       Configuration config, Logger logger);
 }

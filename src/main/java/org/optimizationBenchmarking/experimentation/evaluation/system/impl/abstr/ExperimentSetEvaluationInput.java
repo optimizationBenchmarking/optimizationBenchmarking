@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
 
 /**
@@ -14,7 +14,7 @@ public final class ExperimentSetEvaluationInput implements
     IEvaluationInput {
 
   /** the wrapped data set */
-  private volatile ExperimentSet m_data;
+  private volatile IExperimentSet m_data;
 
   /**
    * create
@@ -22,7 +22,7 @@ public final class ExperimentSetEvaluationInput implements
    * @param data
    *          the data
    */
-  public ExperimentSetEvaluationInput(final ExperimentSet data) {
+  public ExperimentSetEvaluationInput(final IExperimentSet data) {
     super();
 
     if (data == null) {
@@ -33,8 +33,8 @@ public final class ExperimentSetEvaluationInput implements
 
   /** {@inheritDoc} */
   @Override
-  public final ExperimentSet getExperimentSet() {
-    final ExperimentSet data;
+  public final IExperimentSet getExperimentSet() {
+    final IExperimentSet data;
 
     synchronized (this) {
       data = this.m_data;
@@ -42,7 +42,7 @@ public final class ExperimentSetEvaluationInput implements
     }
 
     if (data == null) {
-      throw new IllegalStateException("ExperimentSet already taken."); //$NON-NLS-1$
+      throw new IllegalStateException("IExperimentSet already taken."); //$NON-NLS-1$
     }
 
     return data;

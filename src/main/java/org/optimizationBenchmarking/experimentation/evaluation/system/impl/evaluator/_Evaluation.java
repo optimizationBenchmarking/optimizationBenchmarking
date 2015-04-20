@@ -6,14 +6,15 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Run;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
+import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.DocumentDriverOutput;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.StructuredIOInput;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluation;
@@ -273,8 +274,8 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    *          the logger
    * @return the experiment set
    */
-  private final ExperimentSet __loadData(final Logger logger) {
-    ExperimentSet data;
+  private final IExperimentSet __loadData(final Logger logger) {
+    IExperimentSet data;
     MemoryTextOutput text;
 
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
@@ -300,7 +301,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       text = new MemoryTextOutput();
       text.append("Input data "); //$NON-NLS-1$
-      data.toText(text);
+      text.append(data);
       text.append(" successfully loaded -"); //$NON-NLS-1$
     } else {
       text = null;
@@ -324,13 +325,13 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    *          store a status message in here (if not {@code null}).
    */
   private static final void __checkExperimentData(
-      final ExperimentSet data, final MemoryTextOutput message) {
-    final ArraySetView<Experiment> experimentSet;
-    ArraySetView<InstanceRuns> instanceRuns;
-    ArraySetView<Run> runs;
-    ArraySetView<Instance> instanceSet;
-    ArraySetView<Feature> featureSet;
-    ArraySetView<Parameter> parameterSet;
+      final IExperimentSet data, final MemoryTextOutput message) {
+    final ArraySetView<? extends IExperiment> experimentSet;
+    ArraySetView<? extends IInstanceRuns> instanceRuns;
+    ArraySetView<? extends IRun> runs;
+    ArraySetView<? extends IInstance> instanceSet;
+    ArraySetView<? extends IFeature> featureSet;
+    ArraySetView<? extends IParameter> parameterSet;
     int i, j, k;
 
     if (data == null) {
@@ -379,7 +380,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     j = 0;
-    for (final Parameter param : parameterSet) {
+    for (final IParameter param : parameterSet) {
       j++;
       if (param == null) {
         throw new IllegalArgumentException("The " + j + //$NON-NLS-1$
@@ -402,7 +403,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     i = 0;
-    for (final Experiment ex : experimentSet) {
+    for (final IExperiment ex : experimentSet) {
       i++;
       if (ex == null) {
         throw new IllegalArgumentException(
@@ -424,7 +425,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       }
 
       j = 0;
-      for (final InstanceRuns instance : instanceRuns) {
+      for (final IInstanceRuns instance : instanceRuns) {
         j++;
         if (instance == null) {
           throw new IllegalArgumentException(//
@@ -484,7 +485,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     i = 0;
-    for (final Instance inst : instanceSet) {
+    for (final IInstance inst : instanceSet) {
       i++;
       if (inst == null) {
         throw new IllegalArgumentException(//
@@ -513,7 +514,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     j = 0;
-    for (final Feature feature : featureSet) {
+    for (final IFeature feature : featureSet) {
       j++;
       if (feature == null) {
         throw new IllegalArgumentException(//
@@ -615,11 +616,11 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    *          the logger
    */
   private static final void __summary(final _MainJob modules,
-      final ExperimentSet set, final IPlainText summary,
+      final IExperimentSet set, final IPlainText summary,
       final Logger logger) {
-    final ArraySetView<Experiment> data;
+    final ArraySetView<? extends IExperiment> data;
     final int size;
-    final Parameter param;
+    final IParameter param;
     Object name;
     HashSet<String> names;
 
@@ -648,7 +649,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       summary.append(" experiments"); //$NON-NLS-1$
       if (param != null) {
         names = null;
-        for (final Experiment experiment : data) {
+        for (final IExperiment experiment : data) {
           name = experiment.getParameterSetting().get(param);
           if ((name != null) && (name instanceof String)) {
             if (names == null) {
@@ -691,11 +692,11 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    *          the logger
    */
   private static final void __header(final _MainJob modules,
-      final BibAuthors authors, final ExperimentSet set,
+      final BibAuthors authors, final IExperimentSet set,
       final IDocumentHeader header, final Logger logger) {
-    final ArraySetView<Experiment> data;
+    final ArraySetView<? extends IExperiment> data;
     final int size;
-    final Parameter param;
+    final IParameter param;
     final Object name;
 
     if ((logger != null) && (logger.isLoggable(Level.FINE))) {
@@ -748,7 +749,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
   @Override
   public final void run() {//
     final Logger logger;
-    final ExperimentSet data;
+    final IExperimentSet data;
     final _MainJob root;
     final BibAuthors authors;
 

@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationJob;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
@@ -20,7 +20,7 @@ final class _ExperimentJobs extends _PartJob {
    * @param children
    *          the children
    */
-  _ExperimentJobs(final ExperimentSet data, final Logger logger,
+  _ExperimentJobs(final IExperimentSet data, final Logger logger,
       final IEvaluationJob[] children) {
     super(data, logger, children);
   }
@@ -33,14 +33,14 @@ final class _ExperimentJobs extends _PartJob {
 
   /** {@inheritDoc} */
   @Override
-  final void _writeSectionIntroduction(final ExperimentSet data,
+  final void _writeSectionIntroduction(final IExperimentSet data,
       final ISectionBody body) {
     //
   }
 
   /** {@inheritDoc} */
   @Override
-  final void _writeSectionTitle(final ExperimentSet data,
+  final void _writeSectionTitle(final IExperimentSet data,
       final IPlainText title) {
     if (data.getData().size() > 1) {
       title.append(this._getName());

@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.DocumentEvaluationOutput;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.ExperimentSetEvaluationInput;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixModule;
@@ -338,7 +338,7 @@ class _EvaluationSetup {
    * @param data
    *          the data
    */
-  static final void _checkData(final ExperimentSet data) {
+  static final void _checkData(final IExperimentSet data) {
     final int experimentCount, instanceCount;
 
     if (data == null) {
@@ -373,7 +373,7 @@ class _EvaluationSetup {
    * @param data
    *          the data
    */
-  final void _setInputData(final ExperimentSet data) {
+  final void _setInputData(final IExperimentSet data) {
     _EvaluationSetup._checkData(data);
     this._setInput(new ExperimentSetEvaluationInput(data));
   }

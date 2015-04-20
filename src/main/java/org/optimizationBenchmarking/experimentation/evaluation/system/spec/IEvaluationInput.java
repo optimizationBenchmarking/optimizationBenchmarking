@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.spec;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 
 /**
  * A source for data to be used in the evaluation process.
@@ -16,5 +16,5 @@ public interface IEvaluationInput {
    * @throws Exception
    *           if something fails
    */
-  public abstract ExperimentSet getExperimentSet() throws Exception;
+  public abstract IExperimentSet getExperimentSet() throws Exception;
 }
