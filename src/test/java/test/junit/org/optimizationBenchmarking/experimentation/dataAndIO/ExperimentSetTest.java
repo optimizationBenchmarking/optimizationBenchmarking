@@ -11,20 +11,23 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.DataPoint;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Dimension;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionSet;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.FeatureValue;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ParameterValue;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Run;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataPoint;
+import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
+import org.optimizationBenchmarking.experimentation.data.spec.IDimensionSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
+import org.optimizationBenchmarking.experimentation.data.spec.IRun;
+import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInput;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
@@ -32,14 +35,13 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 import test.junit.InstanceTest;
 import test.junit.org.optimizationBenchmarking.utils.collections.lists.ArraySetViewTestBase;
-import examples.org.optimizationBenchmarking.experimentation.dataAndIO.ExperimentSetCreator;
 
 /** A class for creating experiment sets */
 @Ignore
-public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
+public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
 
   /** the instance */
-  private final ExperimentSetCreator m_inst;
+  private final IEvaluationInput m_inst;
 
   /**
    * create
@@ -47,14 +49,14 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    * @param creator
    *          the wrapped creator
    */
-  protected ExperimentSetTest(final ExperimentSetCreator creator) {
+  protected ExperimentSetTest(final IEvaluationInput creator) {
     super();
     this.m_inst = creator;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final ExperimentSet getInstance() {
+  public final IExperimentSet getInstance() {
     try {
       return this.m_inst.getExperimentSet();
     } catch (final Throwable tt) {
@@ -68,7 +70,7 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    */
   @Test(timeout = 3600000)
   public final void testExperimentSetData() {
-    final ArraySetView<Experiment> d;
+    final ArraySetView<? extends IExperiment> d;
 
     d = this.getInstance().getData();
     Assert.assertNotNull(d);
@@ -81,7 +83,7 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    */
   @Test(timeout = 3600000)
   public final void testExperimentSetDimensions() {
-    final DimensionSet ds;
+    final IDimensionSet ds;
 
     ds = this.getInstance().getDimensions();
     Assert.assertNotNull(ds);
@@ -92,17 +94,17 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    */
   @Test(timeout = 24000000)
   public final void testExperimentRunsMatrix() {
-    ArrayListView<InstanceRuns> irSet;
-    ArrayListView<Run> rSet;
+    ArrayListView<? extends IInstanceRuns> irSet;
+    ArrayListView<? extends IRun> rSet;
     final Random rand;
-    final HashSet<InstanceRuns> irChoice;
-    final HashSet<Run> rChoice;
+    final HashSet<IInstanceRuns> irChoice;
+    final HashSet<IRun> rChoice;
 
     rand = new Random();
     irChoice = new HashSet<>();
     rChoice = new HashSet<>();
 
-    for (final Experiment es : this.getInstance().getData()) {
+    for (final IExperiment es : this.getInstance().getData()) {
       irSet = es.getData();
       if (irSet.isEmpty()) {
         continue;
@@ -114,7 +116,7 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
         irChoice.add(irSet.get(rand.nextInt(irSet.size())));
       }
 
-      for (final InstanceRuns ir : irChoice) {
+      for (final IInstanceRuns ir : irChoice) {
         rSet = ir.getData();
         if (irSet.isEmpty()) {
           continue;
@@ -125,7 +127,7 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
         while ((rChoice.size() < rSet.size()) && (rChoice.size() < 4)) {
           rChoice.add(rSet.get(rand.nextInt(rSet.size())));
         }
-        for (final Run r : rChoice) {
+        for (final IRun r : rChoice) {
           new _MatrixTest<>(null, r, false).validateInstance();
         }
       }
@@ -137,17 +139,17 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    */
   @Test(timeout = 134000000)
   public final void testExperimentRunsList() {
-    ArrayListView<InstanceRuns> irSet;
-    ArrayListView<Run> rSet;
+    ArrayListView<? extends IInstanceRuns> irSet;
+    ArrayListView<? extends IRun> rSet;
     final Random rand;
-    final HashSet<InstanceRuns> irChoice;
-    final HashSet<Run> rChoice;
+    final HashSet<IInstanceRuns> irChoice;
+    final HashSet<IRun> rChoice;
 
     rand = new Random();
     irChoice = new HashSet<>();
     rChoice = new HashSet<>();
 
-    for (final Experiment es : this.getInstance().getData()) {
+    for (final IExperiment es : this.getInstance().getData()) {
       irSet = es.getData();
       if (irSet.isEmpty()) {
         continue;
@@ -159,7 +161,7 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
         irChoice.add(irSet.get(rand.nextInt(irSet.size())));
       }
 
-      for (final InstanceRuns ir : irChoice) {
+      for (final IInstanceRuns ir : irChoice) {
         rSet = ir.getData();
         if (irSet.isEmpty()) {
           continue;
@@ -170,7 +172,7 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
         while ((rChoice.size() < rSet.size()) && (rChoice.size() < 4)) {
           rChoice.add(rSet.get(rand.nextInt(rSet.size())));
         }
-        for (final Run r : rChoice) {
+        for (final IRun r : rChoice) {
           new ArraySetViewTestBase<>(null, r.getData(),//
               false).validateInstance();
         }
@@ -240,25 +242,25 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    */
   @Test(timeout = 3600000)
   public final void testExperimentRunsFindExistingValue() {
-    ExperimentSet es;
-    DimensionSet dims;
-    DataPoint dp, found, cur;
-    ArraySetView<DataPoint> dps;
+    IExperimentSet es;
+    IDimensionSet dims;
+    IDataPoint dp, found, cur;
+    ArraySetView<? extends IDataPoint> dps;
     int i, j, index;
 
     es = this.getInstance();
     dims = es.getDimensions();
 
-    for (final Experiment e : es.getData()) {
-      for (final InstanceRuns ir : e.getData()) {
-        for (final Run run : ir.getData()) {
+    for (final IExperiment e : es.getData()) {
+      for (final IInstanceRuns ir : e.getData()) {
+        for (final IRun run : ir.getData()) {
           // begin run
           dps = run.getData();
 
           // check whether find really turns up the earliest data point
           // with a given value
-          for (final DataPoint x : dps) {
-            for (final Dimension dim : dims.getData()) {
+          for (final IDataPoint x : dps) {
+            for (final IDimension dim : dims.getData()) {
               index = dim.getIndex();
 
               // do we find the right point?
@@ -335,19 +337,19 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    */
   @Test(timeout = 3600000)
   public final void testExperimentRunsFindValuesBeforeStartOrAfterEnd() {
-    ExperimentSet es;
-    DimensionSet dims;
-    DataPoint first, last;
+    IExperimentSet es;
+    IDimensionSet dims;
+    IDataPoint first, last;
     double o, p;
-    ArraySetView<DataPoint> dps;
+    ArraySetView<? extends IDataPoint> dps;
     int index;
 
     es = this.getInstance();
     dims = es.getDimensions();
 
-    for (final Experiment e : es.getData()) {
-      for (final InstanceRuns ir : e.getData()) {
-        for (final Run run : ir.getData()) {
+    for (final IExperiment e : es.getData()) {
+      for (final IInstanceRuns ir : e.getData()) {
+        for (final IRun run : ir.getData()) {
           // begin run
           dps = run.getData();
 
@@ -355,7 +357,7 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
           first = dps.get(0);
           last = dps.get(dps.size() - 1);
 
-          for (final Dimension dim : dims.getData()) {
+          for (final IDimension dim : dims.getData()) {
             index = dim.getIndex();
 
             if (dim.getDirection().isIncreasing()) {
@@ -384,20 +386,20 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    */
   @Test(timeout = 3600000)
   public final void testExperimentRunsFindValuesBetween() {
-    ExperimentSet es;
-    DimensionSet dims;
-    DataPoint first, last;
+    IExperimentSet es;
+    IDimensionSet dims;
+    IDataPoint first, last;
     double o, p, q;
-    ArraySetView<DataPoint> dps;
+    ArraySetView<? extends IDataPoint> dps;
     int i, index;
     long a, b, c;
 
     es = this.getInstance();
     dims = es.getDimensions();
 
-    for (final Experiment e : es.getData()) {
-      for (final InstanceRuns ir : e.getData()) {
-        for (final Run run : ir.getData()) {
+    for (final IExperiment e : es.getData()) {
+      for (final IInstanceRuns ir : e.getData()) {
+        for (final IRun run : ir.getData()) {
           // begin run
           dps = run.getData();
 
@@ -406,7 +408,7 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
             first = dps.get(i);
             last = dps.get(i + 1);
 
-            for (final Dimension dim : dims.getData()) {
+            for (final IDimension dim : dims.getData()) {
 
               index = dim.getIndex();
 
@@ -464,7 +466,7 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    */
   @Test(timeout = 3600000)
   public void testEDISerializationCanonical() {
-    final ExperimentSet inst, es1, es2;
+    final IExperimentSet inst, es1, es2;
     final EDIOutput output;
     final EDIInput input;
     String s1, s2;
@@ -533,14 +535,14 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    * @param b
    *          set b
    */
-  static final void _assertEquals(final ExperimentSet a,
-      final ExperimentSet b) {
+  static final void _assertEquals(final IExperimentSet a,
+      final IExperimentSet b) {
     int s;
-    ArraySetView<Experiment> ae, be;
-    ArraySetView<Feature> af, bf;
-    ArraySetView<Parameter> ap, bp;
-    ArraySetView<Dimension> ad, bd;
-    Dimension d1, d2;
+    ArraySetView<? extends IExperiment> ae, be;
+    ArraySetView<? extends IFeature> af, bf;
+    ArraySetView<? extends IParameter> ap, bp;
+    ArraySetView<? extends IDimension> ad, bd;
+    IDimension d1, d2;
 
     ae = a.getData();
     be = b.getData();
@@ -663,16 +665,16 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    * @param b
    *          set b
    */
-  static final void _assertEquals(final Experiment a, final Experiment b) {
+  static final void _assertEquals(final IExperiment a, final IExperiment b) {
     Iterator<Map.Entry<IProperty, Object>> x, y;
     Map.Entry<IProperty, Object> xe, ye;
     boolean z;
-    ArraySetView<InstanceRuns> ia, ib;
-    InstanceRuns iae, ibe;
+    ArraySetView<? extends IInstanceRuns> ia, ib;
+    IInstanceRuns iae, ibe;
     int si, sr, sp;
-    ArraySetView<Run> ra, rb;
-    Run rae, rbe;
-    ArraySetView<DataPoint> da, db;
+    ArraySetView<? extends IRun> ra, rb;
+    IRun rae, rbe;
+    ArraySetView<? extends IDataPoint> da, db;
 
     Assert.assertEquals(a.getName(), b.getName());
     Assert.assertEquals(a.getDescription(), b.getDescription());
@@ -730,9 +732,9 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    * @param b
    *          set b
    */
-  static final void _assertEquals(final Parameter a, final Parameter b) {
-    ArraySetView<ParameterValue> x, y;
-    ParameterValue xe, ye;
+  static final void _assertEquals(final IParameter a, final IParameter b) {
+    ArraySetView<? extends IParameterValue> x, y;
+    IParameterValue xe, ye;
     int s;
 
     Assert.assertEquals(a.getName(), b.getName());
@@ -759,9 +761,9 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    * @param b
    *          set b
    */
-  static final void _assertEquals(final Feature a, final Feature b) {
-    ArraySetView<FeatureValue> x, y;
-    FeatureValue xe, ye;
+  static final void _assertEquals(final IFeature a, final IFeature b) {
+    ArraySetView<? extends IFeatureValue> x, y;
+    IFeatureValue xe, ye;
     int s;
 
     Assert.assertEquals(a.getName(), b.getName());
@@ -788,7 +790,7 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    * @param b
    *          set b
    */
-  static final void _assertEquals(final Instance a, final Instance b) {
+  static final void _assertEquals(final IInstance a, final IInstance b) {
     Iterator<Map.Entry<IProperty, Object>> x, y;
     Map.Entry<IProperty, Object> xe, ye;
     boolean z;
