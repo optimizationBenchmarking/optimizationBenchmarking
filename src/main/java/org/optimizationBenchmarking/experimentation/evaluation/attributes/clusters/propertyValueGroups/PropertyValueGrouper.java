@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
@@ -275,15 +274,13 @@ DT extends IDataElement> //
    * @param values
    *          the values
    * @return the groups
-   * @param <DX>
-   *          the element type
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  private static final <DX extends DataElement> DistinctValueGroups<DX> __distinct(
+  private static final DistinctValueGroups __distinct(
       final _Groups groups, final _PropertyValueSet values) {
-    final DistinctValueGroup<DX>[] list;
-    final UnspecifiedValueGroup<DX> unspec;
-    DataElement[] elements;
+    final DistinctValueGroup[] list;
+    final UnspecifiedValueGroup unspec;
+    IDataElement[] elements;
     int i;
 
     list = new DistinctValueGroup[groups.m_groups.length];
@@ -291,7 +288,7 @@ DT extends IDataElement> //
     outer: for (final _Group group : groups.m_groups) {
       for (final _PropertyValueInstances inst : values.m_values) {
         if (EComparison.equals(inst.m_value, group.m_lower)) {
-          elements = new DataElement[inst.m_size];
+          elements = new IDataElement[inst.m_size];
           System.arraycopy(inst.m_elements, 0, elements, 0, inst.m_size);
           list[i++] = new DistinctValueGroup(inst.m_value, elements);
           continue outer;
@@ -304,7 +301,7 @@ DT extends IDataElement> //
     }
 
     if (values.m_unspecified != null) {
-      elements = new DataElement[values.m_unspecified.m_size];
+      elements = new IDataElement[values.m_unspecified.m_size];
       System.arraycopy(values.m_unspecified.m_elements, 0, elements, 0,
           values.m_unspecified.m_size);
       unspec = new UnspecifiedValueGroup(values.m_unspecified.m_value,
@@ -396,7 +393,7 @@ DT extends IDataElement> //
     }
 
     if (values.m_unspecified != null) {
-      elements = new DataElement[values.m_unspecified.m_size];
+      elements = new IDataElement[values.m_unspecified.m_size];
       System.arraycopy(values.m_unspecified.m_elements, 0, elements, 0,
           values.m_unspecified.m_size);
       unspec = new UnspecifiedValueGroup(values.m_unspecified.m_value,
@@ -425,7 +422,7 @@ DT extends IDataElement> //
     final UnspecifiedValueGroup unspec;
     final ArrayList<IDataElement> members;
     final ArrayList<Number> memberValues;
-    DataElement[] elements;
+    IDataElement[] elements;
     Number[] numbers;
     Number num, lower, upper, oldUpper;
     int i, size;
@@ -472,7 +469,7 @@ DT extends IDataElement> //
             + group.m_lower) + ',') + group.m_upper)
             + (group.m_isUpperExclusive ? ')' : ']'));
       }
-      elements = members.toArray(new DataElement[size]);
+      elements = members.toArray(new IDataElement[size]);
       Arrays.sort(elements);
 
       if ((size = memberValues.size()) <= 0) {
@@ -489,7 +486,7 @@ DT extends IDataElement> //
     }
 
     if (values.m_unspecified != null) {
-      elements = new DataElement[values.m_unspecified.m_size];
+      elements = new IDataElement[values.m_unspecified.m_size];
       System.arraycopy(values.m_unspecified.m_elements, 0, elements, 0,
           values.m_unspecified.m_size);
       unspec = new UnspecifiedValueGroup(values.m_unspecified.m_value,
