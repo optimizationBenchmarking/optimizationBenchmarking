@@ -195,7 +195,7 @@ class _PropertyFSMSettingBuilder<PST extends _PropertySetting<?, ?>>
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
+  @SuppressWarnings("rawtypes")
   @Override
   final PST _doFinalize(final HashMap<String, Object> compiled,
       final int count) {

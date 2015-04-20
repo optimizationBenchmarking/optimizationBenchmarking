@@ -27,7 +27,7 @@ public final class FeatureSet extends
 
   /** {@inheritDoc} */
   @Override
-  final FeatureSetting _createSetting(final PropertyValue<?>[] values,
+  final FeatureSetting _createSetting(final PropertyValue[] values,
       final boolean isGeneralized) {
     return new FeatureSetting(values, isGeneralized);
   }

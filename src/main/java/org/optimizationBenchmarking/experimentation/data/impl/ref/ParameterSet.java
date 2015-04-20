@@ -28,7 +28,7 @@ public final class ParameterSet extends
 
   /** {@inheritDoc} */
   @Override
-  final ParameterSetting _createSetting(final PropertyValue<?>[] values,
+  final ParameterSetting _createSetting(final PropertyValue[] values,
       final boolean isGeneralized) {
     return new ParameterSetting(values, isGeneralized);
   }

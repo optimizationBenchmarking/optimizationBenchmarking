@@ -7,17 +7,12 @@ import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
 
 /**
  * the property mapping iterator
- * 
- * @param <PVT>
- *          the property value type
- * @param <PT>
- *          the property type
  */
-final class _PropertyMappingIterator<PVT extends PropertyValue<?>, PT extends Property<PVT>>
-    extends BasicIterator<PVT> {
+@SuppressWarnings("rawtypes")
+final class _PropertyMappingIterator extends BasicIterator<PropertyValue> {
 
   /** the owner */
-  private final _PropertySet<PVT, PT, ?> m_owner;
+  private final _PropertySet m_owner;
 
   /** the iterator */
   private final Iterator<Map.Entry<String, Object>> m_it;
@@ -35,7 +30,7 @@ final class _PropertyMappingIterator<PVT extends PropertyValue<?>, PT extends Pr
    * @param allowNullValues
    *          are {@code null} values allowed (and ignored)?
    */
-  _PropertyMappingIterator(final _PropertySet<PVT, PT, ?> owner,
+  _PropertyMappingIterator(final _PropertySet owner,
       final Iterator<Map.Entry<String, Object>> it,
       final boolean allowNullValues) {
     super();
@@ -52,12 +47,12 @@ final class _PropertyMappingIterator<PVT extends PropertyValue<?>, PT extends Pr
 
   /** {@inheritDoc} */
   @Override
-  public final PVT next() {
+  public final PropertyValue next() {
     final Map.Entry<String, Object> e;
-    final PT prop;
+    final Property prop;
     final String key;
     final Object val;
-    final PVT v;
+    final PropertyValue v;
 
     e = this.m_it.next();
     if (e == null) {

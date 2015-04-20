@@ -79,11 +79,10 @@ PST extends IPropertySetting> //
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public final PST createSettingFromValues(
       final Iterable<? extends IPropertyValue> values) {
-    return this._createSetting(((Iterator) (values.iterator())),//
+    return this._createSetting(values.iterator(),//
         true, false);
   }
 
@@ -95,11 +94,12 @@ PST extends IPropertySetting> //
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
   public final PST createSettingFromMapping(
       final Map.Entry<String, Object>[] values) {
-    return this._createSetting(new _PropertyMappingIterator<>(this,
-        new ArrayIterator<>(values), false), true, false);
+    return this._createSetting(new _PropertyMappingIterator(this,
+        new ArrayIterator(values), false), true, false);
   }
 
   /** {@inheritDoc} */
@@ -107,7 +107,7 @@ PST extends IPropertySetting> //
   public final PST createSettingFromMapping(
       final Iterable<Map.Entry<String, Object>> values) {
     return this._createSetting(
-        new _PropertyMappingIterator<>(this, values.iterator(), false),
+        new _PropertyMappingIterator(this, values.iterator(), false),
         true, false);
   }
 
@@ -127,7 +127,8 @@ PST extends IPropertySetting> //
    *          has there been a generalization
    * @return the setting
    */
-  abstract PST _createSetting(PropertyValue<?>[] values,
+  @SuppressWarnings("rawtypes")
+  abstract PST _createSetting(PropertyValue[] values,
       final boolean isGeneralized);
 
   /**
@@ -145,13 +146,13 @@ PST extends IPropertySetting> //
    * @return the parameter setting
    */
   @SuppressWarnings("rawtypes")
-  final PST _createSetting(final Iterator<? extends PVT> values,
+  final PST _createSetting(final Iterator values,
       final boolean fillGeneral, final boolean allowNullValues) {
-    final PropertyValue<?>[] ps;
+    final PropertyValue[] ps;
     final PT[] data;
     boolean isGeneral;
-    Property<?> valueParameter;
-    PropertyValue<?> v;
+    Property valueParameter;
+    PropertyValue v;
     int valueId, valueParameterId, count;
 
     data = this.m_properties;
@@ -159,7 +160,7 @@ PST extends IPropertySetting> //
     count = 0;
     isGeneral = false;
     while (values.hasNext()) {
-      v = values.next();
+      v = ((PropertyValue) (values.next()));
       if (v == null) {
         if (allowNullValues) {
           continue;
