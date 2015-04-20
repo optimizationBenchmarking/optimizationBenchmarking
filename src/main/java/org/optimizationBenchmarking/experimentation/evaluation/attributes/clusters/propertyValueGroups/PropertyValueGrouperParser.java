@@ -1,11 +1,11 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Property;
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
+import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.parsers.IntParser;
@@ -49,7 +49,8 @@ import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterato
  * @param <DT>
  *          the data element type
  */
-public final class PropertyValueGrouperParser<PT extends Property<?>, DT extends DataElement>
+public final class PropertyValueGrouperParser<PT extends IProperty, //
+DT extends IDataElement> //
     extends Parser<PropertyValueGrouper<PT, DT>> {
 
   /** the serial version uid */
@@ -61,11 +62,11 @@ public final class PropertyValueGrouperParser<PT extends Property<?>, DT extends
   = new PropertyValueGrouperParser();
 
   /** The default value grouper parser for experiment parameters */
-  public static final PropertyValueGrouperParser<Parameter, Experiment>//
+  public static final PropertyValueGrouperParser<IParameter, IExperiment>//
   DEFAULT_PARAMETER_GROUPER_PARSER = PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER;
 
   /** The default value grouper parser for instance features */
-  public static final PropertyValueGrouperParser<Feature, Instance>//
+  public static final PropertyValueGrouperParser<IFeature, IInstance>//
   DEFAULT_FEATURE_GROUPER_PARSER = PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER;
 
   /** the don't care string */

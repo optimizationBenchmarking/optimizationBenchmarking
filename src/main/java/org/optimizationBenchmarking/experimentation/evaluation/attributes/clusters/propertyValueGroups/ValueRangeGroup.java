@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * @param <DT>
  *          the data set type
  */
-public abstract class ValueRangeGroup<VT extends Object, DT extends DataElement>
+public abstract class ValueRangeGroup<VT extends Object, DT extends IDataElement>
     extends PropertyValueGroup<DT> {
 
   /** the serial version uid */

@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ParameterValue;
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -12,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * @param <DT>
  *          the data set type
  */
-public final class UnspecifiedValueGroup<DT extends DataElement> extends
+public final class UnspecifiedValueGroup<DT extends IDataElement> extends
     PropertyValueGroup<DT> {
 
   /** the serial version uid */
@@ -36,10 +35,6 @@ public final class UnspecifiedValueGroup<DT extends DataElement> extends
       throw new IllegalArgumentException(//
           "The unspecified property value cannot be null."); //$NON-NLS-1$
     }
-    if (!(ParameterValue.isUnspecified(value))) {
-      throw new IllegalArgumentException(//
-          "The unspecified property value must actually be unspecified."); //$NON-NLS-1$
-    }
     this.m_value = value;
 
     this.m_hashCode = HashUtils.combineHashes(//
@@ -54,16 +49,6 @@ public final class UnspecifiedValueGroup<DT extends DataElement> extends
    */
   public final Object getValue() {
     return this.m_value;
-  }
-
-  /**
-   * Does this group represent unspecified parameter values?
-   * 
-   * @return {@code true} if the group stands for all elements which do not
-   *         have the given parameter specified
-   */
-  public final boolean isUnspecified() {
-    return ParameterValue.isUnspecified(this.m_value);
   }
 
   /** {@inheritDoc} */

@@ -7,6 +7,14 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  */
 public interface IParameter extends IProperty {
   /**
+   * Get the owning parameter set
+   * 
+   * @return the owning parameter set
+   */
+  @Override
+  public abstract IParameterSet getOwner();
+
+  /**
    * Get the set of parameter values
    * 
    * @return the set of parameter values

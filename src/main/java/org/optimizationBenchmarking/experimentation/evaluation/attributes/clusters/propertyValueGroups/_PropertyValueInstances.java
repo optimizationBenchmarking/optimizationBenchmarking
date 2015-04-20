@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /**
@@ -16,7 +16,7 @@ final class _PropertyValueInstances<VT> implements
   final VT m_value;
 
   /** the elements */
-  final DataElement[] m_elements;
+  final IDataElement[] m_elements;
 
   /** the number of elements */
   int m_size;
@@ -31,7 +31,7 @@ final class _PropertyValueInstances<VT> implements
    */
   _PropertyValueInstances(final VT value, final int estimatedSize) {
     super();
-    this.m_elements = new DataElement[estimatedSize];
+    this.m_elements = new IDataElement[estimatedSize];
     this.m_value = value;
   }
 

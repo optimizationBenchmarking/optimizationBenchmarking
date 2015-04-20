@@ -2,9 +2,11 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 
 import java.util.Arrays;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ParameterValue;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Property;
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
+import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 
@@ -28,7 +30,7 @@ final class _PropertyValueSet<VT> {
   final Class<VT> m_valueClass;
 
   /** the property in question */
-  final Property<?> m_property;
+  final IProperty m_property;
 
   /** Are the values integers? */
   final boolean m_areValuesIntegers;
@@ -45,7 +47,7 @@ final class _PropertyValueSet<VT> {
    *          the elements
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  _PropertyValueSet(final Property property, final ArraySetView elements) {
+  _PropertyValueSet(final IProperty property, final ArraySetView elements) {
     super();
 
     final int elementSize, valueSize;
@@ -53,7 +55,7 @@ final class _PropertyValueSet<VT> {
     _PropertyValueInstances unspecified, added;
     int collectedCount, collectedElements;
     Object value;
-    boolean canInt, canDouble;
+    boolean canInt, canDouble, isUnspecified;
     Class allClazz, curClazz;
 
     if (property == null) {
@@ -79,21 +81,38 @@ final class _PropertyValueSet<VT> {
     allClazz = null;
     canInt = canDouble = true;
 
-    mainLoop: for (final DataElement element : ((ArraySetView<DataElement>) (elements))) {
+    mainLoop: for (final IDataElement element : ((ArraySetView<IDataElement>) (elements))) {
       collectedElements++;
 
       if (element == null) {
         throw new IllegalStateException(//
             "Element cannot be null."); //$NON-NLS-1$
       }
-      value = property.get(element);
+
+      isUnspecified = false;
+      if (element instanceof IExperiment) {
+        value = ((IExperiment) element).getParameterSetting()
+            .get(property);
+        if (property instanceof IParameter) {
+          isUnspecified = ((IParameter) property).findValue(value)
+              .isUnspecified();
+        }
+      } else {
+        if (element instanceof IInstance) {
+          value = ((IInstance) element).getFeatureSetting().get(property);
+        } else {
+          throw new IllegalArgumentException(//
+              element + //
+                  " is neither a instance of IExperiment nor IInstance, so it cannot have properties.");//$NON-NLS-1$
+        }
+      }
       if (value == null) {
         throw new IllegalStateException(//
             "Property value cannot be null."); //$NON-NLS-1$
       }
 
       // is the value unspecified?
-      if (ParameterValue.isUnspecified(value)) {
+      if (isUnspecified) {
         if (unspecified == null) {
           unspecified = new _PropertyValueInstances<>(value,
               ((elementSize - collectedElements) + 1));

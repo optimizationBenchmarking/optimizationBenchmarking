@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 
 /**
  * A group of elements belonging to a floating-point based range range. The
@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
  * @param <DT>
  *          the data set type
  */
-public final class DoubleRangeGroup<DT extends DataElement> extends
+public final class DoubleRangeGroup<DT extends IDataElement> extends
     ValueRangeGroup<Number, DT> {
 
   /** the serial version uid */

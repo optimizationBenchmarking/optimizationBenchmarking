@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Property;
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * @param <DT>
  *          the data element type
  */
-public class ValueRangeGroups<DT extends DataElement> extends
+public class ValueRangeGroups<DT extends IDataElement> extends
     PropertyValueGroups<DT> {
 
   /** the serial version uid */
@@ -31,7 +31,7 @@ public class ValueRangeGroups<DT extends DataElement> extends
    *          a group holding all elements for which the property value was
    *          unspecified, or {@code null} if no such elements exist
    */
-  ValueRangeGroups(final Property<?> property, final EGroupingMode mode,
+  ValueRangeGroups(final IProperty property, final EGroupingMode mode,
       final Number info, final ValueRangeGroup<?, DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super(property, mode, info, groups, unspecified);

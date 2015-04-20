@@ -3,14 +3,15 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.clust
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Property;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
+import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
@@ -23,7 +24,8 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  * @param <DT>
  *          the data element type
  */
-public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataElement>
+public final class PropertyValueGrouper<PT extends IProperty, //
+DT extends IDataElement> //
     extends Attribute<PT, PropertyValueGroups<DT>> {
 
   /** the default minimum number of anticipated groups */
@@ -48,11 +50,11 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
       PropertyValueGrouper.DEFAULT_MAX_GROUPS);
 
   /** The default value grouper for experiment parameters */
-  public static final PropertyValueGrouper<Parameter, Experiment>//
+  public static final PropertyValueGrouper<IParameter, IExperiment>//
   DEFAULT_PARAMETER_GROUPER = PropertyValueGrouper.DEFAULT_GROUPER;
 
   /** The default value grouper for instance features */
-  public static final PropertyValueGrouper<Feature, Instance>//
+  public static final PropertyValueGrouper<IFeature, IInstance>//
   DEFAULT_FEATURE_GROUPER = PropertyValueGrouper.DEFAULT_GROUPER;
 
   /** the grouping mode to use */
@@ -162,7 +164,7 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
    *          the property type
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public static final <DX extends DataElement, PX extends Property<?>> PropertyValueGrouper<PX, DX> configure(
+  public static final <DX extends DataElement, PX extends IProperty> PropertyValueGrouper<PX, DX> configure(
       final PX property, final Configuration config) {
     final PropertyValueGrouper all;
 
@@ -203,12 +205,12 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
     int index;
 
     // obtain the values
-    if (data instanceof Feature) {
-      set = new _PropertyValueSet(data, ((Feature) data).getOwner()
+    if (data instanceof IFeature) {
+      set = new _PropertyValueSet(data, ((IFeature) data).getOwner()
           .getOwner().getInstances().getData());
     } else {
-      if (data instanceof Parameter) {
-        set = new _PropertyValueSet(data, ((Parameter) data).getOwner()
+      if (data instanceof IParameter) {
+        set = new _PropertyValueSet(data, ((IParameter) data).getOwner()
             .getOwner().getData());
       } else {
         throw new IllegalArgumentException(//
@@ -330,9 +332,9 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
       final _Groups groups, final _PropertyValueSet values) {
     final LongRangeGroup<DX>[] list;
     final UnspecifiedValueGroup<DX> unspec;
-    final ArrayList<DataElement> members;
+    final ArrayList<IDataElement> members;
     final ArrayList<Number> memberValues;
-    DataElement[] elements;
+    IDataElement[] elements;
     Number[] numbers;
     Number num, lower, upper, oldUpper;
     int i, size;
@@ -379,7 +381,7 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
             + group.m_lower) + ',') + group.m_upper)
             + (group.m_isUpperExclusive ? ')' : ']'));
       }
-      elements = members.toArray(new DataElement[size]);
+      elements = members.toArray(new IDataElement[size]);
       Arrays.sort(elements);
 
       if ((size = memberValues.size()) <= 0) {
@@ -425,7 +427,7 @@ public final class PropertyValueGrouper<PT extends Property<?>, DT extends DataE
       final _Groups groups, final _PropertyValueSet values) {
     final DoubleRangeGroup<DX>[] list;
     final UnspecifiedValueGroup<DX> unspec;
-    final ArrayList<DataElement> members;
+    final ArrayList<IDataElement> members;
     final ArrayList<Number> memberValues;
     DataElement[] elements;
     Number[] numbers;

@@ -7,6 +7,14 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  */
 public interface IFeature extends IProperty {
   /**
+   * Get the owning feature set
+   * 
+   * @return the owning feature set
+   */
+  @Override
+  public abstract IFeatureSet getOwner();
+
+  /**
    * Get the set of feature values
    * 
    * @return the set of feature values
@@ -31,4 +39,5 @@ public interface IFeature extends IProperty {
    */
   @Override
   public abstract IFeatureValue getGeneralized();
+
 }

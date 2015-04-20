@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Property;
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * @param <DT>
  *          the data type
  */
-public final class DistinctValueGroups<DT extends DataElement> extends
+public final class DistinctValueGroups<DT extends IDataElement> extends
     PropertyValueGroups<DT> {
 
   /** the serial version uid */
@@ -27,7 +27,7 @@ public final class DistinctValueGroups<DT extends DataElement> extends
    *          a group holding all elements for which the property value was
    *          unspecified, or {@code null} if no such elements exist
    */
-  DistinctValueGroups(final Property<?> property,
+  DistinctValueGroups(final IProperty property,
       final DistinctValueGroup<DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super(property, EGroupingMode.DISTINCT, null, groups, unspecified);

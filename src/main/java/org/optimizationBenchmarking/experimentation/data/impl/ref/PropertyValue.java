@@ -108,7 +108,7 @@ public abstract class PropertyValue<OT extends Property<?>> extends
   /** {@inheritDoc} */
   @Override
   public final boolean isGeneralized() {
-    return PropertyValue.isGeneralized(this.m_value);
+    return _PropertyValueGeneralized.INSTANCE.equals(this.m_value);
   }
 
   /** {@inheritDoc} */
@@ -117,18 +117,5 @@ public abstract class PropertyValue<OT extends Property<?>> extends
     textOut.append(((OT) (this.m_owner)).getName());
     textOut.append('=');
     textOut.append(this.m_value);
-  }
-
-  /**
-   * Check whether a property value is generalized
-   * 
-   * @param value
-   *          the value
-   * @return {@code true} if the value is generalized, {@code false} if it
-   *         is not
-   * @see #isGeneralized()
-   */
-  public static final boolean isGeneralized(final Object value) {
-    return _PropertyValueGeneralized.INSTANCE.equals(value);
   }
 }

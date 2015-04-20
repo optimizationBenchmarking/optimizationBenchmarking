@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
+import org.optimizationBenchmarking.experimentation.data.spec.IPropertySet;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /**
@@ -55,6 +56,12 @@ public abstract class Property<DT extends PropertyValue<?>> extends
     this.m_general = generalized;
     generalized.m_id = _PropertyValueGeneralized.ID;
     ((PropertyValue) generalized).m_owner = this;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public IPropertySet getOwner() {
+    return ((IPropertySet) (this.m_owner));
   }
 
   /**

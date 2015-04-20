@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.data.impl.ref;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
@@ -282,7 +283,7 @@ public class DataSet<DT extends Comparable<?>> extends _IDObject {
 
   /** Get the owning element */
   @Override
-  public DataElement getOwner() {
+  public IDataElement getOwner() {
     return this.m_owner;
   }
 }

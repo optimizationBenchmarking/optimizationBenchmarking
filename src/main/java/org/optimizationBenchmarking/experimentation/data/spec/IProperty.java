@@ -9,6 +9,14 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 public interface IProperty extends IDataSet, INamedElement {
 
   /**
+   * Get the owning property set
+   * 
+   * @return the owning property set
+   */
+  @Override
+  public abstract IPropertySet getOwner();
+
+  /**
    * Get the primitive type of this property, or {@code null} if the
    * property values are strings.
    * 

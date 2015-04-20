@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Property;
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
@@ -13,14 +13,14 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * @param <DT>
  *          the data element type
  */
-public class PropertyValueGroups<DT extends DataElement> extends
+public class PropertyValueGroups<DT extends IDataElement> extends
     _GroupBase implements Comparable<PropertyValueGroups<?>> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** the property */
-  final Property<?> m_property;
+  final IProperty m_property;
 
   /** the data */
   final ArraySetView<PropertyValueGroup<DT>> m_data;
@@ -53,9 +53,8 @@ public class PropertyValueGroups<DT extends DataElement> extends
    *          unspecified, or {@code null} if no such elements exist
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  PropertyValueGroups(final Property<?> property,
-      final EGroupingMode mode, final Number info,
-      final PropertyValueGroup<DT>[] groups,
+  PropertyValueGroups(final IProperty property, final EGroupingMode mode,
+      final Number info, final PropertyValueGroup<DT>[] groups,
       final UnspecifiedValueGroup<DT> unspecified) {
     super();
 
@@ -104,7 +103,7 @@ public class PropertyValueGroups<DT extends DataElement> extends
 
   /** {@inheritDoc} */
   @Override
-  public final Property<?> getOwner() {
+  public final IProperty getOwner() {
     return this.m_property;
   }
 

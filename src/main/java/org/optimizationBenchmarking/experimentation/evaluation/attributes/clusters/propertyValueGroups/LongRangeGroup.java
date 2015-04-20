@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 
 /**
  * A group of elements belonging to an integer range. The limits of this
@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
  * @param <DT>
  *          the data set type
  */
-public final class LongRangeGroup<DT extends DataElement> extends
+public final class LongRangeGroup<DT extends IDataElement> extends
     ValueRangeGroup<Number, DT> {
 
   /** the serial version uid */
