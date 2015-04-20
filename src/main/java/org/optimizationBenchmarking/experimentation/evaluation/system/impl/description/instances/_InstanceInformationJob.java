@@ -3,10 +3,10 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.desc
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.data.Feature;
-import org.optimizationBenchmarking.experimentation.data.FeatureSet;
-import org.optimizationBenchmarking.experimentation.data.Instance;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.FeatureSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
 import org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.PropertyValueGroup;
 import org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.PropertyValueGrouper;
 import org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.PropertyValueGroups;

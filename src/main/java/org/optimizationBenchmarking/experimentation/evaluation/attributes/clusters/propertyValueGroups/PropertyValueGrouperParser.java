@@ -1,11 +1,11 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.DataElement;
-import org.optimizationBenchmarking.experimentation.data.Experiment;
-import org.optimizationBenchmarking.experimentation.data.Feature;
-import org.optimizationBenchmarking.experimentation.data.Instance;
-import org.optimizationBenchmarking.experimentation.data.Parameter;
-import org.optimizationBenchmarking.experimentation.data.Property;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Property;
+import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.parsers.IntParser;

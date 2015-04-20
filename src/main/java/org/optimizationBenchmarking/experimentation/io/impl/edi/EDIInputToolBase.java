@@ -8,7 +8,7 @@ import javax.xml.parsers.SAXParserFactory;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.impl.FlatExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetXMLInput;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;

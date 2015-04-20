@@ -3,10 +3,10 @@ package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.DimensionContext;
-import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
-import org.optimizationBenchmarking.experimentation.data.EDimensionType;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
+import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;

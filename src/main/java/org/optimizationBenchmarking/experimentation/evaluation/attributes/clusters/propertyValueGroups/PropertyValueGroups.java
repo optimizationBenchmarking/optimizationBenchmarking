@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.DataElement;
-import org.optimizationBenchmarking.experimentation.data.Property;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Property;
+import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
@@ -110,9 +110,9 @@ public class PropertyValueGroups<DT extends DataElement> extends
 
   /**
    * Get the group for which the property value is unspecified. For
-   * {@link org.optimizationBenchmarking.experimentation.data.Feature
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Feature
    * features}, this method will always return {@code null}. For
-   * {@link org.optimizationBenchmarking.experimentation.data.Parameter
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter
    * parameters}, this method might either return {@code null} (in case
    * that all experiments have this parameter value specified) or a group
    * with the distinct, unspecified value.

@@ -9,8 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.LinkedHashSet;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.data.Instance;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDI;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInputToolBase;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;

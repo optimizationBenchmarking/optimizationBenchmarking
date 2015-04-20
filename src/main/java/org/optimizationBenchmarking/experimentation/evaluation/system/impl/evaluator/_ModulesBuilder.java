@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 

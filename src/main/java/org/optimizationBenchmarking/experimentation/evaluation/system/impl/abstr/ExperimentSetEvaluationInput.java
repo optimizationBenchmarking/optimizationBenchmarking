@@ -1,13 +1,14 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
 
 /**
  * An implementation of the
  * {@link org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput}
  * interface which directly wraps around an instance of
- * {@link org.optimizationBenchmarking.experimentation.data.ExperimentSet}.
+ * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet}
+ * .
  */
 public final class ExperimentSetEvaluationInput implements
     IEvaluationInput {

@@ -14,11 +14,11 @@ import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentContext;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
-import org.optimizationBenchmarking.experimentation.data.Parameter;
-import org.optimizationBenchmarking.experimentation.data.RunContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceRunsContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.RunContext;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;

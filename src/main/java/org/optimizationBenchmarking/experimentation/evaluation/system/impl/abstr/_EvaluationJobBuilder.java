@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr;
 
-import org.optimizationBenchmarking.experimentation.data.DataSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.DataSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationJob;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationJobBuilder;
 import org.optimizationBenchmarking.utils.config.Configuration;

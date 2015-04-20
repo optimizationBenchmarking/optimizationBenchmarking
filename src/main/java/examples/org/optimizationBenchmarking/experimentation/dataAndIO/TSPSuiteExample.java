@@ -2,8 +2,8 @@ package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.impl.tspSuite.TSPSuiteInput;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.EArchiveType;

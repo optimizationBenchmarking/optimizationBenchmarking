@@ -3,10 +3,10 @@ package org.optimizationBenchmarking.experimentation.evaluation.attributes.basic
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.optimizationBenchmarking.experimentation.data.Attribute;
-import org.optimizationBenchmarking.experimentation.data.EAttributeType;
-import org.optimizationBenchmarking.experimentation.data.Feature;
-import org.optimizationBenchmarking.experimentation.data.Instance;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
+import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
+import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**

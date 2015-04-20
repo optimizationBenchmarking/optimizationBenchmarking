@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 
-import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
-import org.optimizationBenchmarking.experimentation.data.EDimensionType;
+import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
+import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
 import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
 import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;

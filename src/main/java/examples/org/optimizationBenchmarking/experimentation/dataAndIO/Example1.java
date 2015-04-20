@@ -2,16 +2,16 @@ package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.DimensionContext;
-import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
-import org.optimizationBenchmarking.experimentation.data.EDimensionType;
-import org.optimizationBenchmarking.experimentation.data.ExperimentContext;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.data.InstanceContext;
-import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
-import org.optimizationBenchmarking.experimentation.data.Parameter;
-import org.optimizationBenchmarking.experimentation.data.RunContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceRunsContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.RunContext;
+import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
+import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.parsers.BoundedFloatParser;
 import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;

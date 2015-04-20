@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.DataElement;
-import org.optimizationBenchmarking.experimentation.data.ParameterValue;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ParameterValue;
+import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;

@@ -3,11 +3,11 @@ package org.optimizationBenchmarking.experimentation.io.impl.bbob;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import org.optimizationBenchmarking.experimentation.data.DimensionContext;
-import org.optimizationBenchmarking.experimentation.data.EDimensionDirection;
-import org.optimizationBenchmarking.experimentation.data.EDimensionType;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.data.InstanceContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceContext;
+import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
+import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
 import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetFileInput;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;

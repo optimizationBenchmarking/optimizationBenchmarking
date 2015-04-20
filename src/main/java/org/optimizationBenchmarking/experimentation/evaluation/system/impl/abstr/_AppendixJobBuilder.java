@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixJobBuilder;
 
 /** The appendix job builder implementation */

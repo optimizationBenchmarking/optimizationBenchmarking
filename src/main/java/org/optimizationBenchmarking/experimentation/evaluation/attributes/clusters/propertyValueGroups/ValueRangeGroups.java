@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.DataElement;
-import org.optimizationBenchmarking.experimentation.data.Property;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Property;
+import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**

@@ -3,8 +3,8 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.Experiment;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixJobBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppendixModule;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IDescriptionJobBuilder;

@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.io.spec;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
 import org.optimizationBenchmarking.utils.io.structured.spec.IInputTool;
 
 /** A data source interface for experiment data */

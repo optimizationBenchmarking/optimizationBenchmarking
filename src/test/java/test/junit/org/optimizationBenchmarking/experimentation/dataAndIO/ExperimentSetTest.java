@@ -11,19 +11,20 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.optimizationBenchmarking.experimentation.data.DataPoint;
-import org.optimizationBenchmarking.experimentation.data.Dimension;
-import org.optimizationBenchmarking.experimentation.data.DimensionSet;
-import org.optimizationBenchmarking.experimentation.data.Experiment;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.data.Feature;
-import org.optimizationBenchmarking.experimentation.data.FeatureValue;
-import org.optimizationBenchmarking.experimentation.data.Instance;
-import org.optimizationBenchmarking.experimentation.data.InstanceRuns;
-import org.optimizationBenchmarking.experimentation.data.Parameter;
-import org.optimizationBenchmarking.experimentation.data.ParameterValue;
-import org.optimizationBenchmarking.experimentation.data.Run;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.DataPoint;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Dimension;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.FeatureValue;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceRuns;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ParameterValue;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Run;
+import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInput;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
@@ -663,8 +664,8 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    *          set b
    */
   static final void _assertEquals(final Experiment a, final Experiment b) {
-    Iterator<Map.Entry<Parameter, Object>> x, y;
-    Map.Entry<Parameter, Object> xe, ye;
+    Iterator<Map.Entry<IProperty, Object>> x, y;
+    Map.Entry<IProperty, Object> xe, ye;
     boolean z;
     ArraySetView<InstanceRuns> ia, ib;
     InstanceRuns iae, ibe;
@@ -688,7 +689,8 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
       xe = x.next();
       ye = y.next();
       ExperimentSetTest.__assertVEquals(xe.getValue(), ye.getValue());
-      ExperimentSetTest._assertEquals(xe.getKey(), ye.getKey());
+      ExperimentSetTest._assertEquals(((Parameter) (xe.getKey())),
+          ((Parameter) (ye.getKey())));
     }
 
     ia = a.getData();
@@ -787,8 +789,8 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
    *          set b
    */
   static final void _assertEquals(final Instance a, final Instance b) {
-    Iterator<Map.Entry<Feature, Object>> x, y;
-    Map.Entry<Feature, Object> xe, ye;
+    Iterator<Map.Entry<IProperty, Object>> x, y;
+    Map.Entry<IProperty, Object> xe, ye;
     boolean z;
 
     Assert.assertEquals(a.getName(), b.getName());
@@ -806,7 +808,8 @@ public class ExperimentSetTest extends InstanceTest<ExperimentSet> {
       xe = x.next();
       ye = y.next();
       ExperimentSetTest.__assertVEquals(xe.getValue(), ye.getValue());
-      ExperimentSetTest._assertEquals(xe.getKey(), ye.getKey());
+      ExperimentSetTest._assertEquals(((Feature) (xe.getKey())),
+          ((Feature) (ye.getKey())));
     }
   }
 

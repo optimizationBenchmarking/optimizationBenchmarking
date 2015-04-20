@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.spec;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 
 /**
  * A source for data to be used in the evaluation process.

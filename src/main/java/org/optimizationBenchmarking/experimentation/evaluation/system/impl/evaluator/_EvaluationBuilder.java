@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.eval
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluation;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;

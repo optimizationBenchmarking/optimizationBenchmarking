@@ -12,12 +12,12 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.DimensionSet;
-import org.optimizationBenchmarking.experimentation.data.ExperimentContext;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.data.Instance;
-import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
-import org.optimizationBenchmarking.experimentation.data.InstanceSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceRunsContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceSet;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** A class for creating in parallel sets */

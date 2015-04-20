@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.DataSet;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.DataSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationJob;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;

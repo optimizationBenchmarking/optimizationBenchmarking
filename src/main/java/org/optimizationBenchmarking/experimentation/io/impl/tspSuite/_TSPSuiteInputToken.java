@@ -2,10 +2,10 @@ package org.optimizationBenchmarking.experimentation.io.impl.tspSuite;
 
 import java.nio.file.Path;
 
-import org.optimizationBenchmarking.experimentation.data.ExperimentContext;
-import org.optimizationBenchmarking.experimentation.data.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.data.InstanceRunsContext;
-import org.optimizationBenchmarking.experimentation.data.RunContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceRunsContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.RunContext;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** the internal content handler */

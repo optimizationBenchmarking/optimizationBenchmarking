@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 
 /**
  * A group of elements belonging to an integer range. The limits of this
