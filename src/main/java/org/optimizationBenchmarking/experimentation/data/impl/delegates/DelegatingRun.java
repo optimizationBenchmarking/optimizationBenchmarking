@@ -10,6 +10,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IDataPoint;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 
@@ -17,7 +18,8 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
  * A delegating run is basically a shadow of another run with a different
  * owner, but delegates attribute-based computations to that run.
  */
-public class DelegatingRun extends AbstractRun {
+public class DelegatingRun extends AbstractRun implements
+    Comparable<DelegatingRun> {
 
   /** the original run */
   private final IRun m_orig;
@@ -143,5 +145,28 @@ public class DelegatingRun extends AbstractRun {
       final Attribute<XDT, RT> attribute) {
     return DataElement.delegateGetAttribute(((XDT) (this.m_orig)),
         attribute);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int compareTo(final DelegatingRun o) {
+    if (o != null) {
+      return EComparison.compareObjects(this.m_orig, o.m_orig);
+    }
+    return (-1);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean equals(final Object o) {
+    return ((o == this) || //
+    ((o instanceof DelegatingRun) && //
+    (EComparison.equals(this.m_orig, ((DelegatingRun) o).m_orig))));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return this.m_orig.hashCode();
   }
 }

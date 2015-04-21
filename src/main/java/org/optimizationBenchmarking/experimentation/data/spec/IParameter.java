@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * The interface for parameters of an experiment.
@@ -20,7 +20,7 @@ public interface IParameter extends IProperty {
    * @return the set of parameter values
    */
   @Override
-  public abstract ArraySetView<? extends IParameterValue> getData();
+  public abstract ArrayListView<? extends IParameterValue> getData();
 
   /**
    * Obtain a parameter value fitting to a given value object

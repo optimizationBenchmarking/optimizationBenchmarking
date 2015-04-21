@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /**
@@ -30,7 +30,7 @@ public interface IProperty extends IElementSet, INamedElement {
    * @return the set of property values
    */
   @Override
-  public abstract ArraySetView<? extends IPropertyValue> getData();
+  public abstract ArrayListView<? extends IPropertyValue> getData();
 
   /**
    * Obtain a property value fitting to a given value object

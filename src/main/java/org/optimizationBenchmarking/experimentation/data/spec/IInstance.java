@@ -4,6 +4,15 @@ package org.optimizationBenchmarking.experimentation.data.spec;
  * A benchmark instance.
  */
 public interface IInstance extends INamedElement {
+
+  /**
+   * Get the owning instance set
+   * 
+   * @return the owning instance set
+   */
+  @Override
+  public abstract IInstanceSet getOwner();
+
   /**
    * Get the features of this instance
    * 

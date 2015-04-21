@@ -28,6 +28,28 @@ public class AbstractParameterSet extends
     super(owner);
   }
 
+  /**
+   * Own an
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractParameter}
+   * .
+   * 
+   * @param parameter
+   *          the parameter set to own
+   */
+  protected final void own(final AbstractParameter parameter) {
+    if (parameter == null) {
+      throw new IllegalArgumentException(//
+          "AbstractParameter to be owned by AbstractParameterSet cannot be null."); //$NON-NLS-1$
+    }
+    synchronized (parameter) {
+      if (parameter.m_owner != null) {
+        throw new IllegalArgumentException(//
+            "AbstractParameter to be owned by AbstractParameterSet already owned.");//$NON-NLS-1$
+      }
+      parameter.m_owner = this;
+    }
+  }
+
   /** {@inheritDoc} */
   @Override
   final IParameterSetting _createEmpty() {

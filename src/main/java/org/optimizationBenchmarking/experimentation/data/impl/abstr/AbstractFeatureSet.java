@@ -28,6 +28,28 @@ public class AbstractFeatureSet extends
     super(owner);
   }
 
+  /**
+   * Own an
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractFeature}
+   * .
+   * 
+   * @param feature
+   *          the feature set to own
+   */
+  protected final void own(final AbstractFeature feature) {
+    if (feature == null) {
+      throw new IllegalArgumentException(//
+          "AbstractFeature to be owned by AbstractFeatureSet cannot be null."); //$NON-NLS-1$
+    }
+    synchronized (feature) {
+      if (feature.m_owner != null) {
+        throw new IllegalArgumentException(//
+            "AbstractFeature to be owned by AbstractFeatureSet already owned.");//$NON-NLS-1$
+      }
+      feature.m_owner = this;
+    }
+  }
+
   /** {@inheritDoc} */
   @Override
   final IFeatureSetting _createEmpty() {

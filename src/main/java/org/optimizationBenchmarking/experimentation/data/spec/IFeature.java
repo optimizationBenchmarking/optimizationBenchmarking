@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * A feature of an experiment.
@@ -20,7 +20,7 @@ public interface IFeature extends IProperty {
    * @return the set of feature values
    */
   @Override
-  public abstract ArraySetView<? extends IFeatureValue> getData();
+  public abstract ArrayListView<? extends IFeatureValue> getData();
 
   /**
    * Obtain a feature value fitting to a given value object

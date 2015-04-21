@@ -33,13 +33,25 @@ public class AbstractInstanceSet extends AbstractNamedElementSet implements
   }
 
   /**
-   * Create an abstract instance set without an owner. You must later set
-   * the owner via
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractInstanceSet)}
+   * Own an
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstance}
    * .
+   * 
+   * @param instance
+   *          the instance to own
    */
-  protected AbstractInstanceSet() {
-    super();
+  protected final void own(final AbstractInstance instance) {
+    if (instance == null) {
+      throw new IllegalArgumentException(//
+          "AbstractInstance to be owned by AbstractInstanceSet cannot be null."); //$NON-NLS-1$
+    }
+    synchronized (instance) {
+      if (instance.m_owner != null) {
+        throw new IllegalArgumentException(//
+            "AbstractInstance to be owned by AbstractInstanceSet already owned.");//$NON-NLS-1$
+      }
+      instance.m_owner = this;
+    }
   }
 
   /** {@inheritDoc} */
