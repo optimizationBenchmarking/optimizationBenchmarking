@@ -68,7 +68,7 @@ public abstract class Attribute<ST extends IDataElement, RT> extends
    */
   public final RT get(final ST data) {
     if (data instanceof DataElement) {
-      return ((DataElement) data)._getAttribute(this);
+      return ((DataElement) data).getAttribute(this);
     }
     throw new IllegalArgumentException(
         "All elements of the experiment API which can have attributes must be instances of " //$NON-NLS-1$

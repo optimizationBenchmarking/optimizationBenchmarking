@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.spec.IDataSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
 /**
@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
  * @param <DT>
  *          the data set type
  */
-abstract class _EvaluationModule<DT extends IDataSet> extends
+abstract class _EvaluationModule<DT extends IElementSet> extends
     EvaluationModule {
 
   /** create the module */

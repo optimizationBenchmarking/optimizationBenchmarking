@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 /**
  * A run is, basically, a list of data points and a matrix.
  */
-public interface IRun extends IDataSet, IMatrix {
+public interface IRun extends IElementSet, IMatrix {
 
   /**
    * Get the owning instance runs set.

@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.data.spec;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /** A set of runs for a given instance */
-public interface IInstanceRuns extends IDataSet {
+public interface IInstanceRuns extends IElementSet {
 
   /**
    * Get the owning experiment

@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.data.spec;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /** The interface describing experiment sets */
-public interface IExperimentSet extends IDataSet {
+public interface IExperimentSet extends INamedElementSet {
 
   /**
    * Get the experiments of this experiment set
@@ -41,4 +41,12 @@ public interface IExperimentSet extends IDataSet {
    */
   public abstract IParameterSet getParameters();
 
+  /**
+   * Find the experiment of the given name
+   * 
+   * @return the experiment with the given name, or {@code null} if none
+   *         was found of that name
+   */
+  @Override
+  public abstract IExperiment find(final String name);
 }

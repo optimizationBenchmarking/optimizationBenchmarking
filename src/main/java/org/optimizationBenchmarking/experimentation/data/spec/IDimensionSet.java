@@ -7,6 +7,15 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  */
 public interface IDimensionSet extends INamedElementSet {
   /**
+   * Get the owning experiment set, or {@code null} if this element is not
+   * owned by anything else.
+   * 
+   * @return the owning experiment set
+   */
+  @Override
+  public abstract IExperimentSet getOwner();
+
+  /**
    * Get the dimensions of this dimension set
    * 
    * @return the dimensions of this dimension set

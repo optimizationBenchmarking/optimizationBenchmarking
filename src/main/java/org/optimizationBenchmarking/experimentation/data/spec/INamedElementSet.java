@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 /**
  * A set of named elements.
  */
-public interface INamedElementSet extends IDataSet {
+public interface INamedElementSet extends IElementSet {
   /**
    * Get the data elements of this data set
    * 

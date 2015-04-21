@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 /**
  * The basic interface for properties.
  */
-public interface IProperty extends IDataSet, INamedElement {
+public interface IProperty extends IElementSet, INamedElement {
 
   /**
    * Get the owning property set

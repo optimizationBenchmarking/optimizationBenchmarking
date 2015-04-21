@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * @param <DT>
  *          the type
  */
-public class DataSet<DT extends Comparable<?>> extends _IDObject {
+public class ElementSet<DT extends Comparable<?>> extends _IDObject {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public class DataSet<DT extends Comparable<?>> extends _IDObject {
    *          the data
    */
   @SuppressWarnings("unchecked")
-  DataSet(final DataElement owner, final DT... data) {
+  ElementSet(final DataElement owner, final DT... data) {
     this(data, true, false, false);
   }
 
@@ -47,7 +47,7 @@ public class DataSet<DT extends Comparable<?>> extends _IDObject {
    * @param own
    *          should we own the elements?
    */
-  DataSet(final DT[] data, final boolean clone, final boolean sort,
+  ElementSet(final DT[] data, final boolean clone, final boolean sort,
       final boolean own) {
     super();
 
@@ -216,9 +216,9 @@ public class DataSet<DT extends Comparable<?>> extends _IDObject {
     Object x, y;
     int i, r;
 
-    if (o instanceof DataSet) {
+    if (o instanceof ElementSet) {
       a = this.m_data;
-      b = ((DataSet) o).m_data;
+      b = ((ElementSet) o).m_data;
 
       if (a == b) {
         return 0;

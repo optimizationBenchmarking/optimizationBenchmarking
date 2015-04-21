@@ -27,7 +27,7 @@ public interface IPropertySetting extends Map<IProperty, Object>,
    *         property values as {@code setting} or is more general (does
    *         not specify some settings)
    */
-  public abstract boolean contains(final IPropertySetting setting);
+  public abstract boolean subsumes(final IPropertySetting setting);
 
   /**
    * Does this setting contain at least one generalized value?
@@ -58,15 +58,5 @@ public interface IPropertySetting extends Map<IProperty, Object>,
    *         otherwise
    */
   public abstract boolean contains(final IPropertyValue value);
-
-  /**
-   * Get the value of a given property, or {@code null} if this property is
-   * not specified.
-   * 
-   * @param property
-   *          the property
-   * @return the property value
-   */
-  public abstract Object valueOf(final IProperty property);
 
 }

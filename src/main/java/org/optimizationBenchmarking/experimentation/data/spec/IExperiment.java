@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 /**
  * An experiment.
  */
-public interface IExperiment extends INamedElement, IDataSet {
+public interface IExperiment extends INamedElement, IElementSet {
 
   /**
    * Get the owning experiment set

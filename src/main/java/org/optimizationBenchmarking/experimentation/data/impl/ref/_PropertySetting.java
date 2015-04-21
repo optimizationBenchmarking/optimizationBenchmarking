@@ -69,36 +69,6 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
   }
 
   /**
-   * Get the value of a given property, or {@code null} if this property is
-   * not specified.
-   * 
-   * @param property
-   *          the property
-   * @return the property value
-   */
-  @SuppressWarnings("rawtypes")
-  public final Object valueOf(final PT property) {
-    final int id;
-    final PropertyValue[] pv;
-    final PropertyValue v;
-
-    return ((((property != null) && //
-        ((id = property.m_id) >= 0) && //
-        (id < (pv = this.m_values).length) && //
-    ((v = pv[id]).m_owner == property))) ? v.m_value : null);
-  }
-
-  /** {@inheritDoc} */
-  @SuppressWarnings("unchecked")
-  @Override
-  public final Object valueOf(final IProperty property) {
-    if (property instanceof Property) {
-      return this.valueOf((PT) property);
-    }
-    return null;
-  }
-
-  /**
    * Check whether a given property value is contained in the property
    * value set.
    * 
@@ -244,55 +214,38 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
     return super.equals(o);
   }
 
-  /**
-   * Check if this parameter set is the same or a super-set of another
-   * setting.
-   * 
-   * @param setting
-   *          the other setting
-   * @return {@code true} if this set here either specifies the same
-   *         parameter values as {@code setting} or is more general (does
-   *         not specify some settings)
-   */
+  /** {@inheritDoc} */
   @SuppressWarnings("rawtypes")
-  public final boolean contains(final _PropertySetting<?, ?> setting) {
+  @Override
+  public final boolean subsumes(final IPropertySetting setting) {
     final PropertyValue[] vs1, vs2;
     PropertyValue v2;
     int i;
 
-    if (setting == this) {
-      return true;
-    }
-    if (setting == null) {
-      return false;
-    }
-
-    vs1 = this.m_values;
-    vs2 = setting.m_values;
-    if (vs1 == vs2) {
-      return true;
-    }
-    i = 0;
-    for (final PropertyValue v1 : vs1) {
-      v2 = vs2[i++];
-      if (v1 == v2) {
-        continue;
-      }
-      if ((v1.m_owner == v2.m_owner) && //
-          (v1.m_value == _PropertyValueGeneralized.INSTANCE)) {
-        continue;
-      }
-      return false;
-    }
-    return true;
-  }
-
-  /** {@inheritDoc} */
-  @SuppressWarnings("rawtypes")
-  @Override
-  public final boolean contains(final IPropertySetting setting) {
     if (setting instanceof _PropertySetting) {
-      return this.contains((_PropertySetting) setting);
+
+      if (setting == this) {
+        return true;
+      }
+
+      vs1 = this.m_values;
+      vs2 = ((_PropertySetting) setting).m_values;
+      if (vs1 == vs2) {
+        return true;
+      }
+      i = 0;
+      for (final PropertyValue v1 : vs1) {
+        v2 = vs2[i++];
+        if (v1 == v2) {
+          continue;
+        }
+        if ((v1.m_owner == v2.m_owner) && //
+            (_PropertyValueGeneralized.INSTANCE.equals(v1.m_value))) {
+          continue;
+        }
+        return false;
+      }
+      return true;
     }
     return false;
   }

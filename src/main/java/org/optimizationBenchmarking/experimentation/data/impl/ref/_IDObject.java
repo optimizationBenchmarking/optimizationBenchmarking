@@ -1,15 +1,17 @@
 package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** An internal class for named id objects. */
 abstract class _IDObject extends DataElement implements
-    Comparable<_IDObject> {
+    Comparable<_IDObject>, ITextable, Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -208,9 +210,9 @@ abstract class _IDObject extends DataElement implements
     if ((this.m_id >= 0) && (this.m_owner != null)) {
       clazz = this.getClass();
 
-      if (this.m_owner instanceof DataSet) {
+      if (this.m_owner instanceof ElementSet) {
         try {
-          k = ((DataSet) (this.m_owner)).m_data.get(this.m_id);
+          k = ((ElementSet) (this.m_owner)).m_data.get(this.m_id);
           if (clazz.isInstance(k)) {
             return k;
           }

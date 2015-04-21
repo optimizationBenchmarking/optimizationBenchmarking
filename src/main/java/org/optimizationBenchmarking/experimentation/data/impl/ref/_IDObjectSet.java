@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * @param <DT>
  *          the type
  */
-abstract class _IDObjectSet<DT extends _IDObject> extends DataSet<DT> {
+abstract class _IDObjectSet<DT extends _IDObject> extends ElementSet<DT> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.math.matrix.MatrixColumns;
 import org.optimizationBenchmarking.utils.math.matrix.MatrixRows;
 
 /** a run. */
-public abstract class Run extends DataSet<DataPoint> implements IRun {
+public abstract class Run extends ElementSet<DataPoint> implements IRun {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

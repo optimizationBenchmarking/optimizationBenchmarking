@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.system.impl.abst
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.spec.IDataSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationJob;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
@@ -19,33 +19,39 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * @param <DT>
  *          the data type
  */
-public abstract class _EvaluationJob<DT extends IDataSet> implements
+public abstract class _EvaluationJob<DT extends IElementSet> implements
     IEvaluationJob, ITextable {
 
   /** the initial state */
   private static final int STATE_NOTHING = 0;
   /**
    * we are before calling
-   * {@link #doInitialize(IDataSet, IDocument, Logger)}
+   * {@link #doInitialize(IElementSet, IDocument, Logger)}
    */
   private static final int STATE_BEFORE_INIT = (_EvaluationJob.STATE_NOTHING + 1);
   /**
    * we are after calling
-   * {@link #doInitialize(IDataSet, IDocument, Logger)}
+   * {@link #doInitialize(IElementSet, IDocument, Logger)}
    */
   private static final int STATE_AFTER_INIT = (_EvaluationJob.STATE_BEFORE_INIT + 1);
-  /** we are before calling {@link #doSummary(IDataSet, IPlainText, Logger)} */
+  /**
+   * we are before calling
+   * {@link #doSummary(IElementSet, IPlainText, Logger)}
+   */
   private static final int STATE_BEFORE_SUMMARY = (_EvaluationJob.STATE_AFTER_INIT + 1);
-  /** we are after calling {@link #doSummary(IDataSet, IPlainText, Logger)} */
+  /**
+   * we are after calling
+   * {@link #doSummary(IElementSet, IPlainText, Logger)}
+   */
   private static final int STATE_AFTER_SUMMARY = (_EvaluationJob.STATE_BEFORE_SUMMARY + 1);
   /**
    * we are before calling
-   * {@link #doMain(IDataSet, ISectionContainer, Logger)}
+   * {@link #doMain(IElementSet, ISectionContainer, Logger)}
    */
   private static final int STATE_BEFORE_MAIN = (_EvaluationJob.STATE_AFTER_SUMMARY + 1);
   /**
    * we are after calling
-   * {@link #doMain(IDataSet, ISectionContainer, Logger)}
+   * {@link #doMain(IElementSet, ISectionContainer, Logger)}
    */
   private static final int STATE_AFTER_MAIN = (_EvaluationJob.STATE_BEFORE_MAIN + 1);
 
@@ -101,7 +107,7 @@ public abstract class _EvaluationJob<DT extends IDataSet> implements
    * @param data
    *          the data
    */
-  static final void _checkData(final Object caller, final IDataSet data) {
+  static final void _checkData(final Object caller, final IElementSet data) {
     final ArraySetView<?> list;
 
     if (data == null) {

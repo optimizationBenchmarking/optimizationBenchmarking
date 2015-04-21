@@ -5,9 +5,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 
 /**
- * <p>
- * An experiment set.
- * </p>
+ * The implementation of the
+ * {@link org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet}
+ * interface, i.e., the main entry point to the Experiment Data API
+ * implementation here.
  */
 public final class ExperimentSet extends _IDObjectSet<Experiment>
     implements IExperimentSet {
@@ -185,7 +186,13 @@ public final class ExperimentSet extends _IDObjectSet<Experiment>
 
   /** {@inheritDoc} */
   @Override
-  public ExperimentSet getOwner() {
+  public final ExperimentSet getOwner() {
     return null;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final Experiment find(final String name) {
+    return super.find(name);
   }
 }

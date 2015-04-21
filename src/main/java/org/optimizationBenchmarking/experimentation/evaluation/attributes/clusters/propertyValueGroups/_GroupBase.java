@@ -1,13 +1,17 @@
 package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
 
+import java.io.Serializable;
+
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * The base class for all kinds of group objects
  */
-abstract class _GroupBase extends DataElement {
+abstract class _GroupBase extends DataElement implements Serializable,
+    ITextable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
