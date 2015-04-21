@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExpe
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentModule;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetJobBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExperimentSetModule;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** an entry for modules */
@@ -188,7 +188,7 @@ final class _ModuleEntry {
       final ArrayList<_ModuleEntry> entries, final IExperimentSet data,
       final Logger logger) throws Exception {
     final int size;
-    final ArraySetView<? extends IExperiment> list;
+    final ArrayListView<? extends IExperiment> list;
     final _PseudoJob[] singleExperiments;
     IExperiment experiment;
     int i;

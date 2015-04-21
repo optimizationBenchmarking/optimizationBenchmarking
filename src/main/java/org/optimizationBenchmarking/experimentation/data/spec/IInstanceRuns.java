@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /** A set of runs for a given instance */
 public interface IInstanceRuns extends IElementSet {
@@ -26,5 +26,5 @@ public interface IInstanceRuns extends IElementSet {
    * @return the runs of this instance runs set
    */
   @Override
-  public abstract ArraySetView<? extends IRun> getData();
+  public abstract ArrayListView<? extends IRun> getData();
 }

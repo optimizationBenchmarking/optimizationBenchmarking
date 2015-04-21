@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSetting;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
@@ -36,7 +37,7 @@ public class AbstractFeatureSet extends
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public ArraySetView<? extends IFeature> getData() {
+  public ArrayListView<? extends IFeature> getData() {
     return ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
   }
 

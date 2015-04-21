@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataPoint;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.math.matrix.AbstractMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
@@ -44,7 +45,7 @@ public abstract class AbstractRun extends AbstractElementSet implements
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public ArraySetView<? extends IDataPoint> getData() {
+  public ArrayListView<? extends IDataPoint> getData() {
     return ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
   }
 
@@ -57,7 +58,7 @@ public abstract class AbstractRun extends AbstractElementSet implements
   /** {@inheritDoc} */
   @Override
   public int n() {
-    final ArraySetView<? extends IDataPoint> data;
+    final ArrayListView<? extends IDataPoint> data;
     data = this.getData();
     if (data.size() > 0) {
       return data.get(0).size();
@@ -80,7 +81,7 @@ public abstract class AbstractRun extends AbstractElementSet implements
   /** {@inheritDoc} */
   @Override
   public boolean isIntegerMatrix() {
-    final ArraySetView<? extends IDataPoint> data;
+    final ArrayListView<? extends IDataPoint> data;
     data = this.getData();
     if (data.size() > 0) {
       return data.get(0).isIntegerMatrix();

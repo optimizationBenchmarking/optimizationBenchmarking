@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataPoint;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 
@@ -21,6 +21,9 @@ public class DelegatingRun extends AbstractRun {
 
   /** the original run */
   private final IRun m_orig;
+
+  /** the index of this run in the owning element */
+  int m_index;
 
   /**
    * create a delegating run
@@ -41,7 +44,7 @@ public class DelegatingRun extends AbstractRun {
 
   /** {@inheritDoc} */
   @Override
-  public final ArraySetView<? extends IDataPoint> getData() {
+  public final ArrayListView<? extends IDataPoint> getData() {
     return this.m_orig.getData();
   }
 

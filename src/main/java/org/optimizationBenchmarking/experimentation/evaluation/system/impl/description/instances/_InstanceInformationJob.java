@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr
 import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.chart.spec.IDataScalar;
 import org.optimizationBenchmarking.utils.chart.spec.IPieChart;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.FigureSizeParser;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -56,7 +56,7 @@ final class _InstanceInformationJob extends DescriptionJob {
 
     final IFeatureSet featureSet;
     final PropertyValueGrouper<IFeature, IInstance>[] groupers;
-    final ArraySetView<? extends IFeature> features;
+    final ArrayListView<? extends IFeature> features;
     final int size;
     int i;
 

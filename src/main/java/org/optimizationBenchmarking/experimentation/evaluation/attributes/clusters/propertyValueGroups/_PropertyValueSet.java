@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 
@@ -47,7 +48,7 @@ final class _PropertyValueSet<VT> {
    *          the elements
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  _PropertyValueSet(final IProperty property, final ArraySetView elements) {
+  _PropertyValueSet(final IProperty property, final ArrayListView elements) {
     super();
 
     final int elementSize, valueSize;

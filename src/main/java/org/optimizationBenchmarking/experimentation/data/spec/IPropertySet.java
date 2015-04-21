@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.data.spec;
 
 import java.util.Map;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * A set of properties, such as those belonging to an experiment or
@@ -24,7 +24,7 @@ public interface IPropertySet extends INamedElementSet {
    * @return the properties of this property set
    */
   @Override
-  public abstract ArraySetView<? extends IProperty> getData();
+  public abstract ArrayListView<? extends IProperty> getData();
 
   /**
    * Obtain a property fitting to a given name

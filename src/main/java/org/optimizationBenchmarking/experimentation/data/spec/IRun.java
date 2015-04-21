@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
@@ -22,7 +22,7 @@ public interface IRun extends IElementSet, IMatrix {
    * @return the data points of this run
    */
   @Override
-  public abstract ArraySetView<? extends IDataPoint> getData();
+  public abstract ArrayListView<? extends IDataPoint> getData();
 
   /**
    * Find the the data point in this run whose column/dimension

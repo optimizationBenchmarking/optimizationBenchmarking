@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationJob;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
@@ -108,7 +108,7 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
    *          the data
    */
   static final void _checkData(final Object caller, final IElementSet data) {
-    final ArraySetView<?> list;
+    final ArrayListView<?> list;
 
     if (data == null) {
       throw new IllegalArgumentException(//

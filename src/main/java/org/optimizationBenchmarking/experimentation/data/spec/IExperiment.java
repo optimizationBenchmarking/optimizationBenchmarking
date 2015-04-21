@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * An experiment.
@@ -21,7 +21,7 @@ public interface IExperiment extends INamedElement, IElementSet {
    * @return the instance runs of this experiment
    */
   @Override
-  public abstract ArraySetView<? extends IInstanceRuns> getData();
+  public abstract ArrayListView<? extends IInstanceRuns> getData();
 
   /**
    * Get the parameter map.

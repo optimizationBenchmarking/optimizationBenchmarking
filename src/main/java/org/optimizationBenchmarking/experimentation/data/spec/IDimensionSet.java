@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * The set of measurement dimensions.
@@ -21,7 +21,7 @@ public interface IDimensionSet extends INamedElementSet {
    * @return the dimensions of this dimension set
    */
   @Override
-  public abstract ArraySetView<? extends IDimension> getData();
+  public abstract ArrayListView<? extends IDimension> getData();
 
   /**
    * Find the dimension with the given name

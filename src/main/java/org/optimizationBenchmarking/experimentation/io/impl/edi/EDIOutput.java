@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetXMLOutput;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
@@ -346,7 +346,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
   private static final void __writeInstanceSet(
       final IInstanceSet instances, final XMLElement dest, final IOJob job) {
     final HashSet<Object> hashSet;
-    final ArraySetView<? extends IDimension> dimensions;
+    final ArrayListView<? extends IDimension> dimensions;
     final Logger logger;
     String string;
     IFeature feature;
@@ -492,7 +492,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
       final IOJob job, final HashSet<Object> described) {
     final boolean[] isInt;
     final int dimensionSize;
-    final ArraySetView<? extends IDimension> dimensions;
+    final ArrayListView<? extends IDimension> dimensions;
     final Logger logger;
     String string;
     IParameter parameter;
@@ -618,8 +618,8 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
    *          the job
    */
   private static final void __writeExperiments(
-      final ArraySetView<? extends IExperiment> es, final XMLElement dest,
-      final IOJob job) {
+      final ArrayListView<? extends IExperiment> es,
+      final XMLElement dest, final IOJob job) {
     final HashSet<Object> described;
     final Logger logger;
 

@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.data.impl.abstr;
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
@@ -25,7 +26,7 @@ public class AbstractElementSet extends DataElement implements IElementSet {
 
   /** {@inheritDoc} */
   @Override
-  public ArraySetView<?> getData() {
+  public ArrayListView<?> getData() {
     return ArraySetView.EMPTY_SET_VIEW;
   }
 }

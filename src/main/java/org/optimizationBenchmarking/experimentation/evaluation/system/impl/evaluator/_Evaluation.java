@@ -26,7 +26,6 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.DocumentDriverParser;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
@@ -326,12 +325,12 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    */
   private static final void __checkExperimentData(
       final IExperimentSet data, final MemoryTextOutput message) {
-    final ArraySetView<? extends IExperiment> experimentSet;
-    ArraySetView<? extends IInstanceRuns> instanceRuns;
-    ArraySetView<? extends IRun> runs;
-    ArraySetView<? extends IInstance> instanceSet;
-    ArraySetView<? extends IFeature> featureSet;
-    ArraySetView<? extends IParameter> parameterSet;
+    final ArrayListView<? extends IExperiment> experimentSet;
+    ArrayListView<? extends IInstanceRuns> instanceRuns;
+    ArrayListView<? extends IRun> runs;
+    ArrayListView<? extends IInstance> instanceSet;
+    ArrayListView<? extends IFeature> featureSet;
+    ArrayListView<? extends IParameter> parameterSet;
     int i, j, k;
 
     if (data == null) {
@@ -618,7 +617,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
   private static final void __summary(final _MainJob modules,
       final IExperimentSet set, final IPlainText summary,
       final Logger logger) {
-    final ArraySetView<? extends IExperiment> data;
+    final ArrayListView<? extends IExperiment> data;
     final int size;
     final IParameter param;
     Object name;
@@ -694,7 +693,7 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
   private static final void __header(final _MainJob modules,
       final BibAuthors authors, final IExperimentSet set,
       final IDocumentHeader header, final Logger logger) {
-    final ArraySetView<? extends IExperiment> data;
+    final ArrayListView<? extends IExperiment> data;
     final int size;
     final IParameter param;
     final Object name;

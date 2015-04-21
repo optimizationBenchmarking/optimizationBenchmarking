@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /** The interface describing experiment sets */
 public interface IExperimentSet extends INamedElementSet {
@@ -11,7 +11,7 @@ public interface IExperimentSet extends INamedElementSet {
    * @return experiments of this experiment set
    */
   @Override
-  public abstract ArraySetView<? extends IExperiment> getData();
+  public abstract ArrayListView<? extends IExperiment> getData();
 
   /**
    * Get the set of measurement dimensions

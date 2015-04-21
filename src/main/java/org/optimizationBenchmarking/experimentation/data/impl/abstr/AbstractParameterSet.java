@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSetting;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
@@ -36,7 +37,7 @@ public class AbstractParameterSet extends
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public ArraySetView<? extends IParameter> getData() {
+  public ArrayListView<? extends IParameter> getData() {
     return ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
   }
 

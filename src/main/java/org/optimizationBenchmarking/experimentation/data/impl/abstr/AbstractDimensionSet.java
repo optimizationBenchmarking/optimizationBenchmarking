@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.data.impl.abstr;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimensionSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
@@ -39,7 +40,7 @@ public class AbstractDimensionSet extends AbstractNamedElementSet
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public ArraySetView<? extends IDimension> getData() {
+  public ArrayListView<? extends IDimension> getData() {
     return ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
   }
 

@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.data.impl.abstr;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
@@ -50,7 +51,7 @@ public class AbstractInstanceSet extends AbstractNamedElementSet implements
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public ArraySetView<? extends IInstance> getData() {
+  public ArrayListView<? extends IInstance> getData() {
     return ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
   }
 

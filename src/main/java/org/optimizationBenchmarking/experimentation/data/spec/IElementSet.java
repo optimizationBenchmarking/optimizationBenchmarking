@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * A set of data elements.
@@ -12,6 +12,6 @@ public interface IElementSet extends IDataElement {
    * 
    * @return the data elements of this data set
    */
-  public abstract ArraySetView<?> getData();
+  public abstract ArrayListView<?> getData();
 
 }

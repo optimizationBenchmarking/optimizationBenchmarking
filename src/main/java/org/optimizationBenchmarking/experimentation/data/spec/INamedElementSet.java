@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * A set of named elements.
@@ -12,7 +12,7 @@ public interface INamedElementSet extends IElementSet {
    * @return the data elements of this data set
    */
   @Override
-  public abstract ArraySetView<? extends INamedElement> getData();
+  public abstract ArrayListView<? extends INamedElement> getData();
 
   /**
    * Find the element with the given name

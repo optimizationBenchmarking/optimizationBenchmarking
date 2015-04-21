@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.data.spec;
 
 import java.util.Map;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * The set of experiment parameters.
@@ -14,7 +14,7 @@ public interface IParameterSet extends IPropertySet {
    * @return the parameters of this parameter set
    */
   @Override
-  public abstract ArraySetView<? extends IParameter> getData();
+  public abstract ArrayListView<? extends IParameter> getData();
 
   /**
    * Obtain a parameter fitting to a given name

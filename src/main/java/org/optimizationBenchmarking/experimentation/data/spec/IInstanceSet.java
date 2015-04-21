@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /** The interface describing instance sets */
 public interface IInstanceSet extends IElementSet {
@@ -11,7 +11,7 @@ public interface IInstanceSet extends IElementSet {
    * @return instances of this instance set
    */
   @Override
-  public abstract ArraySetView<? extends IInstance> getData();
+  public abstract ArrayListView<? extends IInstance> getData();
 
   /**
    * Get the owning experiment set

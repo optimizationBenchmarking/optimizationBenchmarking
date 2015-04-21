@@ -31,10 +31,9 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEval
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInput;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 import test.junit.InstanceTest;
-import test.junit.org.optimizationBenchmarking.utils.collections.lists.ArraySetViewTestBase;
+import test.junit.org.optimizationBenchmarking.utils.collections.lists.ArrayListViewTestBase;
 
 /** A class for creating experiment sets */
 @Ignore
@@ -70,7 +69,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
    */
   @Test(timeout = 3600000)
   public final void testExperimentSetData() {
-    final ArraySetView<? extends IExperiment> d;
+    final ArrayListView<? extends IExperiment> d;
 
     d = this.getInstance().getData();
     Assert.assertNotNull(d);
@@ -173,7 +172,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
           rChoice.add(rSet.get(rand.nextInt(rSet.size())));
         }
         for (final IRun r : rChoice) {
-          new ArraySetViewTestBase<>(null, r.getData(),//
+          new ArrayListViewTestBase<>(null, r.getData(),//
               false).validateInstance();
         }
       }
@@ -245,7 +244,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
     IExperimentSet es;
     IDimensionSet dims;
     IDataPoint dp, found, cur;
-    ArraySetView<? extends IDataPoint> dps;
+    ArrayListView<? extends IDataPoint> dps;
     int i, j, index;
 
     es = this.getInstance();
@@ -341,7 +340,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
     IDimensionSet dims;
     IDataPoint first, last;
     double o, p;
-    ArraySetView<? extends IDataPoint> dps;
+    ArrayListView<? extends IDataPoint> dps;
     int index;
 
     es = this.getInstance();
@@ -390,7 +389,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
     IDimensionSet dims;
     IDataPoint first, last;
     double o, p, q;
-    ArraySetView<? extends IDataPoint> dps;
+    ArrayListView<? extends IDataPoint> dps;
     int i, index;
     long a, b, c;
 
@@ -538,10 +537,10 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
   static final void _assertEquals(final IExperimentSet a,
       final IExperimentSet b) {
     int s;
-    ArraySetView<? extends IExperiment> ae, be;
-    ArraySetView<? extends IFeature> af, bf;
-    ArraySetView<? extends IParameter> ap, bp;
-    ArraySetView<? extends IDimension> ad, bd;
+    ArrayListView<? extends IExperiment> ae, be;
+    ArrayListView<? extends IFeature> af, bf;
+    ArrayListView<? extends IParameter> ap, bp;
+    ArrayListView<? extends IDimension> ad, bd;
     IDimension d1, d2;
 
     ae = a.getData();
@@ -669,12 +668,12 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
     Iterator<Map.Entry<IProperty, Object>> x, y;
     Map.Entry<IProperty, Object> xe, ye;
     boolean z;
-    ArraySetView<? extends IInstanceRuns> ia, ib;
+    ArrayListView<? extends IInstanceRuns> ia, ib;
     IInstanceRuns iae, ibe;
     int si, sr, sp;
-    ArraySetView<? extends IRun> ra, rb;
+    ArrayListView<? extends IRun> ra, rb;
     IRun rae, rbe;
-    ArraySetView<? extends IDataPoint> da, db;
+    ArrayListView<? extends IDataPoint> da, db;
 
     Assert.assertEquals(a.getName(), b.getName());
     Assert.assertEquals(a.getDescription(), b.getDescription());
@@ -733,7 +732,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
    *          set b
    */
   static final void _assertEquals(final IParameter a, final IParameter b) {
-    ArraySetView<? extends IParameterValue> x, y;
+    ArrayListView<? extends IParameterValue> x, y;
     IParameterValue xe, ye;
     int s;
 
@@ -762,7 +761,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
    *          set b
    */
   static final void _assertEquals(final IFeature a, final IFeature b) {
-    ArraySetView<? extends IFeatureValue> x, y;
+    ArrayListView<? extends IFeatureValue> x, y;
     IFeatureValue xe, ye;
     int s;
 

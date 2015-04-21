@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.data.impl.abstr;
 
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
@@ -20,7 +21,7 @@ public class AbstractNamedElementSet extends AbstractElementSet implements
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public ArraySetView<? extends INamedElement> getData() {
+  public ArrayListView<? extends INamedElement> getData() {
     return ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
   }
 

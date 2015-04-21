@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.data.spec;
 
 import java.util.Map;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * The set of experiment features.
@@ -14,7 +14,7 @@ public interface IFeatureSet extends IPropertySet {
    * @return the features of this feature set
    */
   @Override
-  public abstract ArraySetView<? extends IFeature> getData();
+  public abstract ArrayListView<? extends IFeature> getData();
 
   /**
    * Obtain a feature fitting to a given name

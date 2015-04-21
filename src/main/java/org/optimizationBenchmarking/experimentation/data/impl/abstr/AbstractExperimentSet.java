@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSet;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
@@ -141,7 +142,7 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public ArraySetView<? extends IExperiment> getData() {
+  public ArrayListView<? extends IExperiment> getData() {
     final IDataElement owner;
 
     owner = this.getOwner();

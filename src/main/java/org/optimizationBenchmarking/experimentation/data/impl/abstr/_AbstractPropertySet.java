@@ -8,6 +8,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.experimentation.data.spec.IPropertySet;
 import org.optimizationBenchmarking.experimentation.data.spec.IPropertySetting;
 import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
@@ -52,7 +53,7 @@ abstract class _AbstractPropertySet<ST extends IPropertySetting> extends
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public ArraySetView<? extends IProperty> getData() {
+  public ArrayListView<? extends IProperty> getData() {
     return ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
   }
 
