@@ -25,27 +25,15 @@ abstract class _AbstractPropertySet<ST extends IPropertySetting> extends
   IExperimentSet m_owner;
 
   /**
-   * create the abstract property set
+   * Create the abstract property set. If {@code owner==null}, you must
+   * later set it.
    * 
    * @param owner
    *          the owner
    */
   _AbstractPropertySet(final IExperimentSet owner) {
     super();
-
-    if (owner == null) {
-      throw new IllegalArgumentException(//
-          "Owning IExperimentSet of AbstractPropertySet must not be null."); //$NON-NLS-1$
-    }
     this.m_owner = owner;
-  }
-
-  /**
-   * Create the abstract property set without an owner. You must later set
-   * the owner.
-   */
-  _AbstractPropertySet() {
-    super();
   }
 
   /**

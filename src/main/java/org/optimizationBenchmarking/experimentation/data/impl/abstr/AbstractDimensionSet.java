@@ -17,28 +17,17 @@ public class AbstractDimensionSet extends AbstractNamedElementSet
   IExperimentSet m_owner;
 
   /**
-   * create the abstract dimension set
+   * Create the abstract dimension set. If {@code owner==null}, you must
+   * later set it via
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractDimensionSet)}
+   * .
    * 
    * @param owner
    *          the owner
    */
   protected AbstractDimensionSet(final IExperimentSet owner) {
     super();
-    if (owner == null) {
-      throw new IllegalArgumentException(//
-          "Owning IExperimentSet of AbstractDimensionSet must not be null."); //$NON-NLS-1$
-    }
     this.m_owner = owner;
-  }
-
-  /**
-   * Create an abstract dimension set without an owner. You must later set
-   * the owner via
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractDimensionSet)}
-   * .
-   */
-  protected AbstractDimensionSet() {
-    super();
   }
 
   /** {@inheritDoc} */

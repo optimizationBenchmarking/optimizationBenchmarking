@@ -18,35 +18,22 @@ public class AbstractExperiment extends AbstractElementSet implements
   IExperimentSet m_owner;
 
   /**
-   * create
+   * Create the abstract experiment. If {@code owner==null}, you must later
+   * set it via
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractExperiment)}
+   * .
    * 
    * @param owner
    *          the owner
    */
   protected AbstractExperiment(final IExperimentSet owner) {
     super();
-    if (owner == null) {
-      throw new IllegalArgumentException(//
-          "Owning IExperimentSet of AbstractExperiment must not be null."); //$NON-NLS-1$
-    }
     this.m_owner = owner;
-  }
-
-  /**
-   * Create an abstract experiment without an owner. You must later set the
-   * owner via
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractExperiment)}
-   * .
-   */
-  protected AbstractExperiment() {
-    super();
   }
 
   /**
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstanceRuns}
-   * . The run must have been created with the parameter-less constructor
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstanceRuns#AbstractInstanceRuns()}
    * .
    * 
    * @param runs

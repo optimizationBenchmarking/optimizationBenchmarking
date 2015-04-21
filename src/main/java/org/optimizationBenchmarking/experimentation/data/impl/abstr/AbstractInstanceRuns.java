@@ -17,35 +17,22 @@ public abstract class AbstractInstanceRuns extends AbstractElementSet
   IExperiment m_owner;
 
   /**
-   * create
+   * Create the abstract instance runs. If {@code owner==null}, you must
+   * later set it via
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperiment#own(AbstractInstanceRuns)}
+   * .
    * 
    * @param owner
    *          the owner
    */
   protected AbstractInstanceRuns(final IExperiment owner) {
     super();
-    if (owner == null) {
-      throw new IllegalArgumentException(//
-          "Owning IExperiment of AbstractInstanceRuns must not be null."); //$NON-NLS-1$
-    }
     this.m_owner = owner;
-  }
-
-  /**
-   * Create an abstract instance runs without an owner. You must later set
-   * the owner via
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperiment#own(AbstractInstanceRuns)}
-   * .
-   */
-  protected AbstractInstanceRuns() {
-    super();
   }
 
   /**
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractRun}
-   * . The run must have been created with the parameter-less constructor
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractRun#AbstractRun()}
    * .
    * 
    * @param run

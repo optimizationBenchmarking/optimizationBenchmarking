@@ -15,23 +15,16 @@ public class AbstractFeatureSet extends
     _AbstractPropertySet<IFeatureSetting> implements IFeatureSet {
 
   /**
-   * create the abstract feature set
+   * Create the abstract feature set. If {@code owner==null}, you must
+   * later set it via
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractFeatureSet)}
+   * .
    * 
    * @param owner
    *          the owner
    */
   protected AbstractFeatureSet(final IExperimentSet owner) {
     super(owner);
-  }
-
-  /**
-   * Create an abstract feature set without an owner. You must later set
-   * the owner via
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractFeatureSet)}
-   * .
-   */
-  protected AbstractFeatureSet() {
-    super();
   }
 
   /** {@inheritDoc} */

@@ -25,9 +25,6 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
   /**
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperiment}
-   * . The experiment must have been created with the parameter-less
-   * constructor
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperiment#AbstractExperiment()}
    * .
    * 
    * @param experiment
@@ -50,9 +47,6 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
   /**
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractFeatureSet}
-   * . The feature set must have been created with the parameter-less
-   * constructor
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractFeatureSet#AbstractFeatureSet()}
    * .
    * 
    * @param features
@@ -75,9 +69,6 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
   /**
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractParameterSet}
-   * . The parameter set must have been created with the parameter-less
-   * constructor
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractParameterSet#AbstractParameterSet()}
    * .
    * 
    * @param parameters
@@ -100,9 +91,6 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
   /**
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractDimensionSet}
-   * . The dimension set must have been created with the parameter-less
-   * constructor
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractDimensionSet#AbstractDimensionSet()}
    * .
    * 
    * @param dimensions
@@ -125,9 +113,6 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
   /**
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstanceSet}
-   * . The instance set must have been created with the parameter-less
-   * constructor
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstanceSet#AbstractInstanceSet()}
    * .
    * 
    * @param instances

@@ -22,28 +22,17 @@ public abstract class AbstractRun extends AbstractElementSet implements
   IInstanceRuns m_owner;
 
   /**
-   * create
+   * Create the abstract run. If {@code owner==null}, you must later set it
+   * via
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstanceRuns#own(AbstractRun)}
+   * .
    * 
    * @param owner
    *          the owner
    */
   protected AbstractRun(final IInstanceRuns owner) {
     super();
-    if (owner == null) {
-      throw new IllegalArgumentException(//
-          "Owning IInstanceRuns of AbstractRun must not be null."); //$NON-NLS-1$
-    }
     this.m_owner = owner;
-  }
-
-  /**
-   * Create an abstract run without an owner. You must later set the owner
-   * via
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstanceRuns#own(AbstractRun)}
-   * .
-   */
-  protected AbstractRun() {
-    super();
   }
 
   /** {@inheritDoc} */

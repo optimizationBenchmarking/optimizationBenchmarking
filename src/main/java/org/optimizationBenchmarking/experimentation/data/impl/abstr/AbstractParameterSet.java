@@ -15,23 +15,16 @@ public class AbstractParameterSet extends
     _AbstractPropertySet<IParameterSetting> implements IParameterSet {
 
   /**
-   * create the abstract parameter set
+   * Create the abstract parameter set. If {@code owner==null}, you must
+   * later set it via
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractParameterSet)}
+   * .
    * 
    * @param owner
    *          the owner
    */
   protected AbstractParameterSet(final IExperimentSet owner) {
     super(owner);
-  }
-
-  /**
-   * Create an abstract parameter set without an owner. You must later set
-   * the owner via
-   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractParameterSet)}
-   * .
-   */
-  protected AbstractParameterSet() {
-    super();
   }
 
   /** {@inheritDoc} */

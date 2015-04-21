@@ -95,4 +95,23 @@ public abstract class DataElement implements IDataElement {
 
     return computed;
   }
+
+  /**
+   * Delegate getting the value of a given attribute. This is an internal
+   * method you should better leave your fingers away from...
+   * 
+   * @param to
+   *          the object to delegate to
+   * @param attribute
+   *          the attribute
+   * @return the attribute
+   * @param <XDT>
+   *          the data set type
+   * @param <RT>
+   *          the property type
+   */
+  protected static final <XDT extends IDataElement, RT> RT delegateGetAttribute(
+      final XDT to, final Attribute<XDT, RT> attribute) {
+    return ((DataElement) to).getAttribute(attribute);
+  }
 }
