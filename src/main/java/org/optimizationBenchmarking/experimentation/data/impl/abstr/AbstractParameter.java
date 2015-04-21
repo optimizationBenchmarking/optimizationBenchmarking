@@ -32,6 +32,28 @@ public class AbstractParameter extends AbstractProperty implements
     this.m_owner = owner;
   }
 
+  /**
+   * Own an
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractParameterValue}
+   * .
+   * 
+   * @param parameterValue
+   *          the parameter set to own
+   */
+  protected final void own(final AbstractParameterValue parameterValue) {
+    if (parameterValue == null) {
+      throw new IllegalArgumentException(//
+          "AbstractParameterValue to be owned by AbstractParameter cannot be null."); //$NON-NLS-1$
+    }
+    synchronized (parameterValue) {
+      if (parameterValue.m_owner != null) {
+        throw new IllegalArgumentException(//
+            "AbstractParameterValue to be owned by AbstractParameter already owned.");//$NON-NLS-1$
+      }
+      parameterValue.m_owner = this;
+    }
+  }
+
   /** {@inheritDoc} */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override

@@ -30,6 +30,28 @@ public class AbstractFeature extends AbstractProperty implements IFeature {
     this.m_owner = owner;
   }
 
+  /**
+   * Own an
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractFeatureValue}
+   * .
+   * 
+   * @param featureValue
+   *          the feature set to own
+   */
+  protected final void own(final AbstractFeatureValue featureValue) {
+    if (featureValue == null) {
+      throw new IllegalArgumentException(//
+          "AbstractFeatureValue to be owned by AbstractFeature cannot be null."); //$NON-NLS-1$
+    }
+    synchronized (featureValue) {
+      if (featureValue.m_owner != null) {
+        throw new IllegalArgumentException(//
+            "AbstractFeatureValue to be owned by AbstractFeature already owned.");//$NON-NLS-1$
+      }
+      featureValue.m_owner = this;
+    }
+  }
+
   /** {@inheritDoc} */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
