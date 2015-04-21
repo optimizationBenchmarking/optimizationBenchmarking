@@ -22,9 +22,6 @@ public class DelegatingRun extends AbstractRun {
   /** the original run */
   private final IRun m_orig;
 
-  /** the index of this run in the owning element */
-  int m_index;
-
   /**
    * create a delegating run
    * 

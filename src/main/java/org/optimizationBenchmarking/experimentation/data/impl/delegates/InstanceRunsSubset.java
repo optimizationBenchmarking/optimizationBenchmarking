@@ -43,7 +43,6 @@ public class InstanceRunsSubset extends AbstractInstanceRuns {
     final ArrayListView<? extends IRun> origData, copyData;
     final DelegatingRun[] runs;
     final int origSize, copySize;
-    DelegatingRun newRun;
     boolean canDelegate;
     int i;
 
@@ -91,8 +90,7 @@ public class InstanceRunsSubset extends AbstractInstanceRuns {
 
       canDelegate &= (run == origData.get(i));
 
-      runs[i] = newRun = new DelegatingRun(run, this);
-      newRun.m_index = i;
+      runs[i] = new DelegatingRun(run, this);
     }
 
     this.m_data = new ArrayListView<>(runs);
