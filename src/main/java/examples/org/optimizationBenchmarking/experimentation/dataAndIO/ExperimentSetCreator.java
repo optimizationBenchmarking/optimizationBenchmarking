@@ -2,9 +2,9 @@ package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.PropertyValueGrouper;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
 import org.optimizationBenchmarking.utils.MemoryUtils;
@@ -18,7 +18,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
   private final Logger m_logger;
 
   /** the instance */
-  private ExperimentSet m_inst;
+  private IExperimentSet m_inst;
 
   /**
    * create
@@ -48,7 +48,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
    * @throws Exception
    *           if something goes wrong
    */
-  protected abstract ExperimentSet buildExperimentSet() throws Exception;
+  protected abstract IExperimentSet buildExperimentSet() throws Exception;
 
   /**
    * Get the experiment set
@@ -58,7 +58,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
    *           if something goes wrong
    */
   @Override
-  public final synchronized ExperimentSet getExperimentSet()
+  public final synchronized IExperimentSet getExperimentSet()
       throws Exception {
     if (this.m_inst == null) {
       this.m_inst = this.buildExperimentSet();
@@ -70,7 +70,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
   /** Load the experiment data and print the infos */
   @Override
   public final void run() {
-    final ExperimentSet es;
+    final IExperimentSet es;
 
     try {
       es = this.getExperimentSet();
@@ -90,7 +90,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
       System.out.print("Experiments: "); //$NON-NLS-1$
       System.out.println(es.getData());
 
-      for (final Feature feature : es.getFeatures().getData()) {
+      for (final IFeature feature : es.getFeatures().getData()) {
         System.out.print("Grouped Feature '");//$NON-NLS-1$
         System.out.print(feature.getName());
         System.out.print("': ");//$NON-NLS-1$
@@ -99,7 +99,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
                 Configuration.getRoot()).get(feature));
       }
 
-      for (final Parameter parameter : es.getParameters().getData()) {
+      for (final IParameter parameter : es.getParameters().getData()) {
         System.out.print("Grouped Parameter '");//$NON-NLS-1$
         System.out.print(parameter.getName());
         System.out.print("': ");//$NON-NLS-1$

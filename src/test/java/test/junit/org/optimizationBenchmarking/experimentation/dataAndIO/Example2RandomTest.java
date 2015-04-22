@@ -3,7 +3,7 @@ package test.junit.org.optimizationBenchmarking.experimentation.dataAndIO;
 import test.junit.TestBase;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.Example2Random;
 
-/** A class for creating experiment sets */
+/** Test the second example data. */
 public class Example2RandomTest extends ExperimentSetTest {
 
   /** create */

@@ -52,6 +52,18 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
 
   /** {@inheritDoc} */
   @Override
+  final void _checkDiscardOrig() {
+    if ((this.m_data != null) && //
+        (this.m_dimensions != null) && //
+        (this.m_features != null) && //
+        (this.m_instances != null) && //
+        (this.m_parameters != null)) {
+      this.m_orig = null;
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
   final IExperiment _shadow(final IExperiment element) {
     return new ShadowExperiment(this, element, null);
   }
@@ -61,7 +73,8 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
   public synchronized final IDimensionSet getDimensions() {
     if (this.m_dimensions == null) {
       this.m_dimensions = new ShadowDimensionSet(this,
-          this.m_shadowUnpacked.getDimensions(), null);
+          this.m_orig.getDimensions(), null);
+      this._checkDiscardOrig();
     }
     return this.m_dimensions;
   }
@@ -71,7 +84,8 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
   public synchronized final IInstanceSet getInstances() {
     if (this.m_instances == null) {
       this.m_instances = new ShadowInstanceSet(this,
-          this.m_shadowUnpacked.getInstances(), null);
+          this.m_orig.getInstances(), null);
+      this._checkDiscardOrig();
     }
     return this.m_instances;
   }
@@ -81,7 +95,8 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
   public synchronized final IFeatureSet getFeatures() {
     if (this.m_features == null) {
       this.m_features = new ShadowFeatureSet(this,
-          this.m_shadowUnpacked.getFeatures(), null);
+          this.m_orig.getFeatures(), null);
+      this._checkDiscardOrig();
     }
     return this.m_features;
   }
@@ -91,7 +106,8 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
   public synchronized final IParameterSet getParameters() {
     if (this.m_parameters == null) {
       this.m_parameters = new ShadowParameterSet(this,
-          this.m_shadowUnpacked.getParameters(), null);
+          this.m_orig.getParameters(), null);
+      this._checkDiscardOrig();
     }
     return this.m_parameters;
   }

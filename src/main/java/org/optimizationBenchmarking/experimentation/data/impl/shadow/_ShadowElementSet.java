@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
-import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
@@ -27,10 +26,10 @@ PT extends IDataElement> extends //
     _ShadowDataElement<OT, ST> implements IElementSet {
 
   /** the data */
-  private ArrayListView<? extends PT> m_data;
+  ArrayListView<? extends PT> m_data;
 
   /** the original property to copy from */
-  private ST m_orig;
+  ST m_orig;
 
   /**
    * create the shadow element set
@@ -46,11 +45,17 @@ PT extends IDataElement> extends //
       final Collection<? extends PT> selection) {
     super(owner, shadow);
 
+    this.m_orig = shadow;
     if (selection != null) {
       this.__shadow(selection, true);
-    } else {
-      this.m_orig = shadow;
     }
+  }
+
+  /**
+   * Discard the original object after the goal has been achieved.
+   */
+  void _checkDiscardOrig() {
+    this.m_orig = null;
   }
 
   /**
@@ -71,37 +76,38 @@ PT extends IDataElement> extends //
 
     if ((selection == null) || ((i = selection.size()) <= 0)) {
       this.m_data = ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
-      return;
-    }
-    array = new IProperty[i];
-    i = 0;
-    for (final PT value : selection) {
-      set = value;
-      shadow: {
-        if (set instanceof _ShadowProperty) {
-          spv = ((_ShadowProperty) set);
-          if (spv.m_owner == null) {
-            if (canOwn) {
-              spv.m_owner = this;
-              break shadow;
+    } else {
+      array = new IDataElement[i];
+      i = 0;
+      for (final PT value : selection) {
+        set = value;
+        shadow: {
+          if (set instanceof _ShadowProperty) {
+            spv = ((_ShadowProperty) set);
+            if (spv.m_owner == null) {
+              if (canOwn) {
+                spv.m_owner = this;
+                break shadow;
+              }
+              throw new IllegalArgumentException(//
+                  "Element without owner encountered."); //$NON-NLS-1$
             }
-            throw new IllegalArgumentException(//
-                "Element without owner encountered."); //$NON-NLS-1$
           }
+          set = this._shadow(value);
         }
-        set = this._shadow(value);
+
+        array[i++] = set;
       }
 
-      array[i++] = set;
-    }
+      try {
+        Arrays.sort(array);
+      } catch (final Throwable tt) {
+        // ignore
+      }
 
-    try {
-      Arrays.sort(array);
-    } catch (final Throwable tt) {
-      // ignore
+      this.m_data = new ArrayListView(array);
     }
-
-    this.m_data = new ArrayListView(array);
+    this._checkDiscardOrig();
   }
 
   /**
@@ -119,7 +125,6 @@ PT extends IDataElement> extends //
   public synchronized final ArrayListView<? extends PT> getData() {
     if (this.m_data == null) {
       this.__shadow((ArrayListView) (this.m_orig.getData()), false);
-      this.m_orig = null;
     }
     return this.m_data;
   }

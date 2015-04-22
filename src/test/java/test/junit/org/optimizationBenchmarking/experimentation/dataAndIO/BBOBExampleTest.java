@@ -6,7 +6,7 @@ import test.junit.CategorySlowTests;
 import test.junit.TestBase;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.BBOBExample;
 
-/** A class for creating experiment sets */
+/** Test the BBOB example data. */
 @Category(CategorySlowTests.class)
 public class BBOBExampleTest extends ExperimentSetTest {
 
