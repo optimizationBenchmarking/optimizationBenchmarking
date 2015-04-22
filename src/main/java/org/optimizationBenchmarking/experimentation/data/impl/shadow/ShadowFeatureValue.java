@@ -5,11 +5,12 @@ import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
 
 /**
  * A shadow feature value is basically a shadow of another feature value
- * with a different owner, but delegates attribute-based computations to
- * that feature value.
+ * with a different owner and potentially different attributes. If all
+ * associated data of this element is the same, it will delegate
+ * attribute-based computations to that feature value.
  */
 public class ShadowFeatureValue extends
-    _ShadowDataElement<IFeature, IFeatureValue> implements IFeatureValue {
+    _ShadowPropertyValue<IFeature, IFeatureValue> implements IFeatureValue {
 
   /**
    * create the shadow feature value
@@ -21,31 +22,6 @@ public class ShadowFeatureValue extends
    */
   public ShadowFeatureValue(final IFeature owner,
       final IFeatureValue shadow) {
-    super(shadow);
-    this.m_owner = owner;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final Object getValue() {
-    return this.m_shadowUnpacked.getValue();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final boolean isGeneralized() {
-    return this.m_shadowUnpacked.isGeneralized();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String getName() {
-    return this.m_shadowUnpacked.getName();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final String getDescription() {
-    return this.m_shadowUnpacked.getDescription();
+    super(owner, shadow);
   }
 }

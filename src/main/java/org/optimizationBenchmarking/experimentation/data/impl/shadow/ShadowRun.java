@@ -10,8 +10,10 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 
 /**
- * A shadow run is basically a shadow of another run with a different
- * owner, but delegates attribute-based computations to that run.
+ * A shadow run is basically a shadow of another run with a different owner
+ * and potentially different attributes. If all associated data of this
+ * element is the same, it will delegate attribute-based computations to
+ * that run.
  */
 public class ShadowRun extends _ShadowDataElement<IInstanceRuns, IRun>
     implements IRun {
@@ -25,8 +27,7 @@ public class ShadowRun extends _ShadowDataElement<IInstanceRuns, IRun>
    *          the original run
    */
   public ShadowRun(final IInstanceRuns owner, final IRun orig) {
-    super(orig);
-    this.m_owner = owner;
+    super(owner, orig);
   }
 
   /** {@inheritDoc} */

@@ -13,8 +13,8 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * @param <ST>
  *          the shadow type
  */
-class _ShadowDataElement<OT extends IDataElement, ST> extends DataElement
-    implements Comparable<_ShadowDataElement<OT, ST>> {
+class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
+    extends DataElement implements Comparable<_ShadowDataElement<OT, ST>> {
 
   /** the owner */
   OT m_owner;
@@ -31,12 +31,16 @@ class _ShadowDataElement<OT extends IDataElement, ST> extends DataElement
   /**
    * create the shadow element
    * 
+   * @param owner
+   *          the owner
    * @param shadow
    *          the object to shadow
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  _ShadowDataElement(final ST shadow) {
+  _ShadowDataElement(final OT owner, final ST shadow) {
     super();
+
+    this.m_owner = owner;
 
     if (shadow == null) {
       throw new IllegalArgumentException(//
@@ -69,7 +73,7 @@ class _ShadowDataElement<OT extends IDataElement, ST> extends DataElement
    * @return the shadow delegate
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  private synchronized final ST __getAttributeDelegate() {
+  synchronized final ST _getAttributeDelegate() {
     ST delegate, best;
 
     delegate = this.m_shadowDelegate;
@@ -83,10 +87,16 @@ class _ShadowDataElement<OT extends IDataElement, ST> extends DataElement
       best = delegate;
       if (delegate instanceof _ShadowDataElement) {
         delegate = ((ST) (((_ShadowDataElement) delegate)
-            .__getAttributeDelegate()));
+            ._getAttributeDelegate()));
         if (delegate != null) {
           best = delegate;
         }
+      }
+    }
+
+    if (best != this.m_shadowUnpacked) {
+      if (this._canDelegateAttributesTo(this.m_shadowUnpacked)) {
+        best = this.m_shadowUnpacked;
       }
     }
 
@@ -101,7 +111,7 @@ class _ShadowDataElement<OT extends IDataElement, ST> extends DataElement
       final Attribute<XDT, RT> attribute) {
     final ST delegate;
 
-    delegate = this.__getAttributeDelegate();
+    delegate = this._getAttributeDelegate();
 
     if (delegate != null) {
       return DataElement.delegateGetAttribute(((XDT) (delegate)),
@@ -137,10 +147,10 @@ class _ShadowDataElement<OT extends IDataElement, ST> extends DataElement
       return false;
     }
     if (o instanceof _ShadowDataElement) {
-      a = this.__getAttributeDelegate();
+      a = this._getAttributeDelegate();
       if (a != null) {
         sde = ((_ShadowDataElement) o);
-        b = sde.__getAttributeDelegate();
+        b = sde._getAttributeDelegate();
         if (a == b) {
           return EComparison.equals(this.m_shadowUnpacked,
               ((_ShadowDataElement) o).m_shadowUnpacked);

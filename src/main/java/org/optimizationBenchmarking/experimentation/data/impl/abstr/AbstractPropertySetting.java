@@ -31,7 +31,7 @@ public class AbstractPropertySetting extends
   /** {@inheritDoc} */
   @Override
   public int size() {
-    return 0;
+    return this.entrySet().size();
   }
 
   /** {@inheritDoc} */
@@ -99,8 +99,8 @@ public class AbstractPropertySetting extends
       return (-1);
     }
 
-    for (final java.util.Map.Entry<IProperty, Object> entry : this
-        .entrySet()) {
+    for (final java.util.Map.Entry<IProperty, Object> entry : //
+    this.entrySet()) {
       res = EComparison.compareObjects(entry.getValue(),
           o.get(entry.getKey()));
       if (res != 0) {
@@ -131,8 +131,8 @@ public class AbstractPropertySetting extends
       return false;
     }
 
-    for (final java.util.Map.Entry<IProperty, Object> entry : this
-        .entrySet()) {
+    for (final java.util.Map.Entry<IProperty, Object> entry : //
+    this.entrySet()) {
       key = entry.getKey();
 
       value1 = entry.getValue();
@@ -154,8 +154,8 @@ public class AbstractPropertySetting extends
   /** {@inheritDoc} */
   @Override
   public boolean isGeneralized() {
-    for (final java.util.Map.Entry<IProperty, Object> entry : this
-        .entrySet()) {
+    for (final java.util.Map.Entry<IProperty, Object> entry : //
+    this.entrySet()) {
       if (EComparison.equals(//
           entry.getKey().getGeneralized().getValue(), entry.getValue())) {
         return false;
