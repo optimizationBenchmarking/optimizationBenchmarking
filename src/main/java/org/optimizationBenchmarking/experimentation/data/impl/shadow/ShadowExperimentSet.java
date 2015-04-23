@@ -80,45 +80,27 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
     super(owner, shadow, experimentSelection);
 
     if (dimensions != null) {
-      synchronized (dimensions) {
-        if (dimensions.m_owner != null) {
-          throw new IllegalArgumentException(//
-              "Owner of shadow dimension set already set."); //$NON-NLS-1$
-        }
-        dimensions.m_owner = this;
-        this.m_dimensions = dimensions;
-      }
+      dimensions.setOwner(this);
+      this.m_dimensions = dimensions;
     }
 
     if (features != null) {
       synchronized (features) {
-        if (features.m_owner != null) {
-          throw new IllegalArgumentException(//
-              "Owner of shadow feature set already set."); //$NON-NLS-1$
-        }
-        features.m_owner = this;
+        features.setOwner(this);
         this.m_features = features;
       }
     }
 
     if (instances != null) {
       synchronized (instances) {
-        if (instances.m_owner != null) {
-          throw new IllegalArgumentException(//
-              "Owner of shadow instance set already set."); //$NON-NLS-1$
-        }
-        instances.m_owner = this;
+        instances.setOwner(this);
         this.m_instances = instances;
       }
     }
 
     if (parameters != null) {
       synchronized (parameters) {
-        if (parameters.m_owner != null) {
-          throw new IllegalArgumentException(//
-              "Owner of shadow parameter set already set."); //$NON-NLS-1$
-        }
-        parameters.m_owner = this;
+        parameters.setOwner(this);
         this.m_parameters = parameters;
       }
     }

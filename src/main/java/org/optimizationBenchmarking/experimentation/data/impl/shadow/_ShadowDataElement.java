@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A shadow of a data element.
@@ -53,6 +54,27 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
     } else {
       this.m_shadowUnpacked = shadow;
     }
+  }
+
+  /**
+   * Set the owner of this element
+   * 
+   * @param owner
+   *          the owner
+   */
+  protected synchronized final void setOwner(final OT owner) {
+    if (owner == null) {
+      throw new IllegalArgumentException(
+          "Cannot set null owner to an instance of " + //$NON-NLS-1$
+              TextUtils.className(this.getClass()));
+    }
+    if (this.m_owner != null) {
+      throw new IllegalStateException(//
+          "Instance of "//$NON-NLS-1$
+              + TextUtils.className(this.getClass()) + //
+              " already has an owner.");//$NON-NLS-1$
+    }
+    this.m_owner = owner;
   }
 
   /**

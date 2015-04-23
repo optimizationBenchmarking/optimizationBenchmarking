@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A shadow element set is basically a shadow of another element set with a
@@ -70,16 +71,22 @@ PT extends IDataElement> extends //
   private final void __shadow(final Collection<? extends PT> selection,
       final boolean canOwn) {
     final IDataElement[] array;
+    final int size;
     PT set;
     _ShadowProperty spv;
     int i;
 
-    if ((selection == null) || ((i = selection.size()) <= 0)) {
+    if ((selection == null) || ((size = selection.size()) <= 0)) {
       this.m_data = ((ArraySetView) (ArraySetView.EMPTY_SET_VIEW));
     } else {
-      array = new IDataElement[i];
+      array = new IDataElement[size];
       i = 0;
       for (final PT value : selection) {
+        if (value == null) {
+          throw new IllegalArgumentException(//
+              "Null value in selection collection."); //$NON-NLS-1$
+        }
+
         set = value;
         shadow: {
           if (set instanceof _ShadowProperty) {
@@ -91,14 +98,30 @@ PT extends IDataElement> extends //
                   break shadow;
                 }
                 throw new IllegalArgumentException(//
-                    "Element without owner encountered."); //$NON-NLS-1$
+                    "Instance of " //$NON-NLS-1$
+                        + TextUtils.className(spv.getClass()) + //
+                        "without owner encountered."); //$NON-NLS-1$
               }
             }
           }
           set = this._shadow(value);
+          if (set == null) {
+            throw new IllegalStateException(//
+                "Element shadow cannot be null.");//$NON-NLS-1$
+          }
+        }
+
+        if (set.getOwner() != this) {
+          throw new IllegalStateException(//
+              "Can only have elements in the shadow collection which belong to the owning object.");//$NON-NLS-1$
         }
 
         array[i++] = set;
+      }
+
+      if (i != size) {
+        throw new IllegalStateException(//
+            "Immutable collection has gotten shorter?");//$NON-NLS-1$
       }
 
       try {
