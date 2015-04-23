@@ -59,25 +59,56 @@ class _ShadowPropertyValue<OT extends IProperty, ST extends IPropertyValue>
 
   /** {@inheritDoc} */
   @Override
-  public int compareTo(final _ShadowDataElement<OT, ST> o) {
+  public final int compareTo(final _ShadowDataElement<OT, ST> o) {
     final IPropertyValue pv;
     int res;
 
-    res = super.compareTo(o);
-    if (res != 0) {
-      return res;
+    if (o == null) {
+      return (-1);
+    }
+    if (o == this) {
+      return 0;
     }
 
-    if (o instanceof IPropertyValue) {
-      pv = ((IPropertyValue) o);
+    if ((this.m_shadowUnpacked == o.m_shadowUnpacked) || //
+        (this == o.m_shadowUnpacked) || //
+        (this.m_shadowUnpacked == o) || //
+        (this == o.m_shadowDelegate) || //
+        (this.m_shadowDelegate == o)) {
+      return 0;
+    }
 
-      res = EComparison.compareObjects(this.getOwner(), pv.getOwner());
-      if (res != 0) {
-        return res;
+    findWayToCompare: {
+      if (o instanceof _ShadowPropertyValue) {
+        res = EComparison.compareObjects(//
+            this.m_shadowUnpacked.getOwner(),//
+            o.m_shadowUnpacked.getOwner());
+        if (res != 0) {
+          return res;
+        }
+
+        break findWayToCompare;
       }
 
-      return EComparison.compareObjects(this.getValue(), pv.getValue());
+      if (o instanceof IPropertyValue) {
+        pv = ((IPropertyValue) o);
+
+        res = EComparison.compareObjects(//
+            this.getOwner(),//
+            pv.getOwner());
+        if (res != 0) {
+          return res;
+        }
+
+        res = EComparison.compareObjects(this.m_shadowUnpacked.getValue(),
+            pv.getValue());
+        if (res != 0) {
+          return res;
+        }
+      }
     }
-    return 0;
+
+    return EComparison.compareObjects(this.m_shadowUnpacked,
+        o.m_shadowUnpacked);
   }
 }

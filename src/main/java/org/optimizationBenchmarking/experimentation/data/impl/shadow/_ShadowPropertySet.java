@@ -123,7 +123,7 @@ PST extends IPropertySetting> extends //
     }
 
     for (final IProperty prope : data) {
-      if (!(done.contains(prope))) {
+      if (done.add(prope)) {
         list.add(prope.getGeneralized());
       }
     }
@@ -151,7 +151,7 @@ PST extends IPropertySetting> extends //
   @Override
   public final PST createSettingFromMapping(
       final Map<String, Object> values) {
-    return this.createSettingFromMapping(values.entrySet());
+    return this.__createSettingFromIterable(values.entrySet());
   }
 
   /** {@inheritDoc} */
@@ -159,7 +159,7 @@ PST extends IPropertySetting> extends //
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public final PST createSettingFromMapping(
       final Entry<String, Object>[] values) {
-    return this.createSettingFromMapping(new ArrayListView(values));
+    return this.__createSettingFromIterable(new ArrayListView(values));
   }
 
   /** {@inheritDoc} */
@@ -173,6 +173,6 @@ PST extends IPropertySetting> extends //
   @Override
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public final PST createSettingFromValues(final IPropertyValue... values) {
-    return this.createSettingFromValues(new ArrayListView(values));
+    return this.__createSettingFromIterable(new ArrayListView(values));
   }
 }

@@ -23,7 +23,7 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
   private boolean m_shadowDelegateComputed;
 
   /** the shadowed object */
-  private ST m_shadowDelegate;
+  ST m_shadowDelegate;
 
   /** the unpacked shadowed object */
   final ST m_shadowUnpacked;
@@ -129,6 +129,15 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
     if (o == this) {
       return 0;
     }
+
+    if ((this.m_shadowUnpacked == o.m_shadowUnpacked) || //
+        (this == o.m_shadowUnpacked) || //
+        (this.m_shadowUnpacked == o) || //
+        (this == o.m_shadowDelegate) || //
+        (this.m_shadowDelegate == o)) {
+      return 0;
+    }
+
     return EComparison.compareObjects(this.m_shadowUnpacked,
         o.m_shadowUnpacked);
   }
