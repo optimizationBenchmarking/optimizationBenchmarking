@@ -12,8 +12,6 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Feature;
-import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataPoint;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimensionSet;
@@ -690,8 +688,8 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
       xe = x.next();
       ye = y.next();
       ExperimentSetTest.__assertVEquals(xe.getValue(), ye.getValue());
-      ExperimentSetTest._assertEquals(((Parameter) (xe.getKey())),
-          ((Parameter) (ye.getKey())));
+      ExperimentSetTest._assertEquals(((IParameter) (xe.getKey())),
+          ((IParameter) (ye.getKey())));
     }
 
     ia = a.getData();
@@ -809,8 +807,8 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
       xe = x.next();
       ye = y.next();
       ExperimentSetTest.__assertVEquals(xe.getValue(), ye.getValue());
-      ExperimentSetTest._assertEquals(((Feature) (xe.getKey())),
-          ((Feature) (ye.getKey())));
+      ExperimentSetTest._assertEquals(((IFeature) (xe.getKey())),
+          ((IFeature) (ye.getKey())));
     }
   }
 

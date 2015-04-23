@@ -94,7 +94,7 @@ class _ShadowPropertyValue<OT extends IProperty, ST extends IPropertyValue>
         pv = ((IPropertyValue) o);
 
         res = EComparison.compareObjects(//
-            this.getOwner(),//
+            this.m_owner,//
             pv.getOwner());
         if (res != 0) {
           return res;

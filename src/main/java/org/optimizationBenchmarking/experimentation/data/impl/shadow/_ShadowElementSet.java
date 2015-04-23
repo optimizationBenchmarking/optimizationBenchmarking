@@ -84,13 +84,15 @@ PT extends IDataElement> extends //
         shadow: {
           if (set instanceof _ShadowProperty) {
             spv = ((_ShadowProperty) set);
-            if (spv.m_owner == null) {
-              if (canOwn) {
-                spv.m_owner = this;
-                break shadow;
+            synchronized (spv) {
+              if (spv.m_owner == null) {
+                if (canOwn) {
+                  spv.m_owner = this;
+                  break shadow;
+                }
+                throw new IllegalArgumentException(//
+                    "Element without owner encountered."); //$NON-NLS-1$
               }
-              throw new IllegalArgumentException(//
-                  "Element without owner encountered."); //$NON-NLS-1$
             }
           }
           set = this._shadow(value);

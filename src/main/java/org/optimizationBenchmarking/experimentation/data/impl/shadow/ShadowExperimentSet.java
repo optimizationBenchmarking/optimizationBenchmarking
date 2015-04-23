@@ -50,6 +50,82 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
     super(owner, shadow, experimentSelection);
   }
 
+  /**
+   * create the shadow experiment set
+   * 
+   * @param owner
+   *          the owning element set
+   * @param shadow
+   *          the experiment set to shadow
+   * @param experimentSelection
+   *          the selection of experiments
+   * @param dimensions
+   *          the dimension set to use (or {@code null} to create one on
+   *          demand)
+   * @param features
+   *          the feature set to use (or {@code null} to create one on
+   *          demand)
+   * @param instances
+   *          the instance set to use (or {@code null} to create one on
+   *          demand)
+   * @param parameters
+   *          the parameter set to use (or {@code null} to create one on
+   *          demand)
+   */
+  public ShadowExperimentSet(final OT owner, final IExperimentSet shadow,
+      final Collection<? extends IExperiment> experimentSelection,
+      final ShadowDimensionSet dimensions,
+      final ShadowFeatureSet features, final ShadowInstanceSet instances,
+      final ShadowParameterSet parameters) {
+    super(owner, shadow, experimentSelection);
+
+    if (dimensions != null) {
+      synchronized (dimensions) {
+        if (dimensions.m_owner != null) {
+          throw new IllegalArgumentException(//
+              "Owner of shadow dimension set already set."); //$NON-NLS-1$
+        }
+        dimensions.m_owner = this;
+        this.m_dimensions = dimensions;
+      }
+    }
+
+    if (features != null) {
+      synchronized (features) {
+        if (features.m_owner != null) {
+          throw new IllegalArgumentException(//
+              "Owner of shadow feature set already set."); //$NON-NLS-1$
+        }
+        features.m_owner = this;
+        this.m_features = features;
+      }
+    }
+
+    if (instances != null) {
+      synchronized (instances) {
+        if (instances.m_owner != null) {
+          throw new IllegalArgumentException(//
+              "Owner of shadow instance set already set."); //$NON-NLS-1$
+        }
+        instances.m_owner = this;
+        this.m_instances = instances;
+      }
+    }
+
+    if (parameters != null) {
+      synchronized (parameters) {
+        if (parameters.m_owner != null) {
+          throw new IllegalArgumentException(//
+              "Owner of shadow parameter set already set."); //$NON-NLS-1$
+        }
+        parameters.m_owner = this;
+        this.m_parameters = parameters;
+      }
+    }
+
+    this._checkDiscardOrig();
+  }
+
   /** {@inheritDoc} */
   @Override
   final void _checkDiscardOrig() {
