@@ -5,12 +5,19 @@ import java.util.Collection;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
+import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
+import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /**
  * An object which can help to select data.
@@ -82,6 +89,11 @@ public class DataSelection extends
    *          the experiment to add
    */
   public synchronized final void addExperiment(final IExperiment experiment) {
+
+    if (experiment == null) {
+      throw new IllegalArgumentException("Cannot add a null experiment."); //$NON-NLS-1$
+    }
+
     if (this._add(experiment)) {
       this.m_compiled = null;
       this.m_parameters._addSubElements(experiment.getParameterSetting());
@@ -98,9 +110,205 @@ public class DataSelection extends
    *          the instance run set
    */
   public synchronized final void addInstanceRuns(final IInstanceRuns runs) {
+
+    if (runs == null) {
+      throw new IllegalArgumentException(
+          "Cannot add a null instance runs."); //$NON-NLS-1$
+    }
+
     if (this._addSubElement(runs)) {
       this.m_compiled = null;
       this.__addInstance(runs.getInstance());
+    }
+  }
+
+  /**
+   * If there are any instance run sets which fit to the given instance,
+   * add them to the selection (and add the instance as well). If no data
+   * exists for the instance, ignore it.
+   * 
+   * @param instance
+   *          the instance
+   */
+  public synchronized final void addInstance(final IInstance instance) {
+    boolean changed;
+
+    if (instance == null) {
+      throw new IllegalArgumentException("Cannot add a null instance."); //$NON-NLS-1$
+    }
+
+    changed = false;
+    outer: for (final IExperiment experiment : this.m_set.getData()) {
+      for (final IInstanceRuns runs : experiment.getData()) {
+        if (EComparison.equals(instance, runs.getInstance())) {
+          if (this._addSubElement(runs)) {
+            changed = true;
+          }
+          continue outer;
+        }
+      }
+    }
+
+    if (changed) {
+      this.m_compiled = null;
+      this.__addInstance(instance);
+    }
+  }
+
+  /**
+   * Add a given property value. This entails checking all elements which
+   * specify the value and to add them.
+   * 
+   * @param value
+   *          the property value
+   */
+  public final void addPropertyValue(final IPropertyValue value) {
+    if (value instanceof IFeatureValue) {
+      this.addFeatureValue((IFeatureValue) value);
+    } else {
+      if (value instanceof IParameterValue) {
+        this.addParameterValue((IParameterValue) value);
+      } else {
+        throw new IllegalArgumentException(//
+            "Property value must eithe be a feature or a parameter value."); //$NON-NLS-1$
+      }
+    }
+  }
+
+  /**
+   * Add a given property value. This entails checking all elements which
+   * specify the value and to add them.
+   * 
+   * @param property
+   *          the property
+   * @param value
+   *          the property value
+   */
+  public final void addPropertyValue(final IProperty property,
+      final Object value) {
+    if (property instanceof IFeature) {
+      this.addFeatureValue(((IFeature) property), value);
+    } else {
+      if (property instanceof IParameterValue) {
+        this.addParameterValue(((IParameter) property), value);
+      } else {
+        throw new IllegalArgumentException(//
+            "Property must eithe be a feature or a parameter."); //$NON-NLS-1$
+      }
+    }
+  }
+
+  /**
+   * Add a given feature value. This entails checking all instances which
+   * specify the value and to perform {@link #addInstance(IInstance)} with
+   * them.
+   * 
+   * @param value
+   *          the feature value
+   */
+  public final void addFeatureValue(final IFeatureValue value) {
+    if (value == null) {
+      throw new IllegalArgumentException(//
+          "Cannot add a null feature value."); //$NON-NLS-1$
+    }
+
+    if (value.isGeneralized()) {
+      throw new IllegalArgumentException(//
+          "Cannot add generalized feature value."); //$NON-NLS-1$
+    }
+
+    this.addFeatureValue(value.getOwner(), value.getValue());
+  }
+
+  /**
+   * Add a given feature value. This entails checking all instances which
+   * specify the value and to perform {@link #addInstance(IInstance)} with
+   * them.
+   * 
+   * @param feature
+   *          the feature
+   * @param value
+   *          the feature value
+   */
+  public final void addFeatureValue(final IFeature feature,
+      final Object value) {
+
+    if (value == null) {
+      throw new IllegalArgumentException(//
+          "Cannot add a null feature value."); //$NON-NLS-1$
+    }
+    if (feature == null) {
+      throw new IllegalArgumentException(//
+          "Owner of feature value cannot be null."); //$NON-NLS-1$
+    }
+    if (EComparison.equals(feature.getGeneralized().getValue(), value)) {
+      throw new IllegalArgumentException(//
+          "Cannot add generalized feature value."); //$NON-NLS-1$
+    }
+
+    for (final IInstance instance : this.m_set.getInstances().getData()) {
+      if (EComparison.equals(instance.getFeatureSetting().get(feature),
+          value)) {
+        this.addInstance(instance);
+      }
+    }
+  }
+
+  /**
+   * Add a given parameter value. This entails checking all experiment
+   * which specify the value and to perform
+   * {@link #addExperiment(IExperiment)} with them.
+   * 
+   * @param value
+   *          the parameter value
+   */
+  public final void addParameterValue(final IParameterValue value) {
+    if (value == null) {
+      throw new IllegalArgumentException(//
+          "Cannot add a null parameter value."); //$NON-NLS-1$
+    }
+
+    if (value.isGeneralized()) {
+      throw new IllegalArgumentException(//
+          "Cannot add generalized parameter value."); //$NON-NLS-1$
+    }
+
+    this.addParameterValue(value.getOwner(), value.getValue());
+  }
+
+  /**
+   * Add a given parameter value. This entails checking all experiments
+   * which specify the value and to perform
+   * {@link #addExperiment(IExperiment)} with them.
+   * 
+   * @param parameter
+   *          the parameter
+   * @param value
+   *          the parameter value
+   */
+  public final void addParameterValue(final IParameter parameter,
+      final Object value) {
+
+    if (value == null) {
+      throw new IllegalArgumentException(//
+          "Cannot add a null parameter value."); //$NON-NLS-1$
+    }
+
+    if (parameter == null) {
+      throw new IllegalArgumentException(//
+          "Owner of parameter value cannot be null."); //$NON-NLS-1$
+    }
+
+    if (EComparison.equals(parameter.getGeneralized().getValue(), value)) {
+      throw new IllegalArgumentException(//
+          "Cannot add generalized parameter value."); //$NON-NLS-1$
+    }
+
+    for (final IExperiment experiment : this.m_set.getData()) {
+      if (EComparison.equals(
+          experiment.getParameterSetting().get(parameter), value)) {
+        this.addExperiment(experiment);
+      }
     }
   }
 
