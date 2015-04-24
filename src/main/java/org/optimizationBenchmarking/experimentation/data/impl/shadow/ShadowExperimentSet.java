@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.data.impl.shadow;
 
 import java.util.Collection;
 
+import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection._CompiledSelection;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimensionSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
@@ -106,6 +107,33 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
     }
 
     this._checkDiscardOrig();
+  }
+
+  /**
+   * Create an experiment set from a selection
+   * 
+   * @param owner
+   *          the owner
+   * @param selection
+   *          the selection
+   */
+  private ShadowExperimentSet(final OT owner,
+      final _CompiledSelection selection) {
+    this(owner, selection.m_original, selection.m_experiments, null,
+        selection.m_features, selection.m_instances,
+        selection.m_parameters);
+  }
+
+  /**
+   * Create an experiment set from a data selection
+   * 
+   * @param owner
+   *          the owner
+   * @param selection
+   *          the selection
+   */
+  public ShadowExperimentSet(final OT owner, final DataSelection selection) {
+    this(owner, selection._getSelection());
   }
 
   /** {@inheritDoc} */

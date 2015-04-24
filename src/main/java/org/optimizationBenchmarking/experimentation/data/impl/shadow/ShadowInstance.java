@@ -33,7 +33,8 @@ public class ShadowInstance extends
   @Override
   public synchronized final IFeatureSetting getFeatureSetting() {
     if (this.m_setting == null) {
-      this.m_setting = this.m_owner
+      this.m_setting = this
+          .getOwner()
           .getOwner()
           .getFeatures()
           .createSettingFromValues(

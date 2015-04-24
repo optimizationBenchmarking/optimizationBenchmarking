@@ -48,7 +48,7 @@ class _ShadowPropertyValue<OT extends IProperty, ST extends IPropertyValue>
   /** {@inheritDoc} */
   @Override
   public final IProperty getKey() {
-    return this.m_owner;
+    return this.getOwner();
   }
 
   /** {@inheritDoc} */
@@ -94,7 +94,7 @@ class _ShadowPropertyValue<OT extends IProperty, ST extends IPropertyValue>
         pv = ((IPropertyValue) o);
 
         res = EComparison.compareObjects(//
-            this.m_owner,//
+            this.getOwner(),//
             pv.getOwner());
         if (res != 0) {
           return res;
