@@ -189,7 +189,7 @@ public class DataSelection extends
     if (property instanceof IFeature) {
       this.addFeatureValue(((IFeature) property), value);
     } else {
-      if (property instanceof IParameterValue) {
+      if (property instanceof IParameter) {
         this.addParameterValue(((IParameter) property), value);
       } else {
         throw new IllegalArgumentException(//

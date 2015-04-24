@@ -1,11 +1,5 @@
-package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
+package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
-import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
-import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
-import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
-import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
-import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
-import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.parsers.IntParser;
@@ -43,31 +37,16 @@ import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterato
  * is <em>don't care</em> in the multiple, power, or any case and results
  * automatically in the distinct case.</dd>
  * </dl>
- * 
- * @param <PT>
- *          the property type
- * @param <DT>
- *          the data element type
  */
-public final class PropertyValueGrouperParser<PT extends IProperty, //
-DT extends IDataElement> //
-    extends Parser<PropertyValueGrouper<PT, DT>> {
+public final class PropertyValueGrouperParser extends
+    Parser<PropertyValueGrouper> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** The default value grouper parser */
-  @SuppressWarnings("rawtypes")
-  static final PropertyValueGrouperParser DEFAULT_GROUPER_PARSER//
+  public static final PropertyValueGrouperParser DEFAULT_GROUPER_PARSER//
   = new PropertyValueGrouperParser();
-
-  /** The default value grouper parser for experiment parameters */
-  public static final PropertyValueGrouperParser<IParameter, IExperiment>//
-  DEFAULT_PARAMETER_GROUPER_PARSER = PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER;
-
-  /** The default value grouper parser for instance features */
-  public static final PropertyValueGrouperParser<IFeature, IInstance>//
-  DEFAULT_FEATURE_GROUPER_PARSER = PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER;
 
   /** the don't care string */
   private static final String DONT_CARE = "?";//$NON-NLS-1$
@@ -91,15 +70,14 @@ DT extends IDataElement> //
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
-  public final Class<PropertyValueGrouper<PT, DT>> getOutputClass() {
-    return ((Class) (PropertyValueGrouper.class));
+  public final Class<PropertyValueGrouper> getOutputClass() {
+    return PropertyValueGrouper.class;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final PropertyValueGrouper<PT, DT> parseString(final String string)
+  public final PropertyValueGrouper parseString(final String string)
       throws Exception {
     final String use;
     final EGroupingMode defMode;
@@ -237,7 +215,7 @@ DT extends IDataElement> //
         return PropertyValueGrouper.DEFAULT_GROUPER;
       }
 
-      return new PropertyValueGrouper<>(mode, param, minGroups, maxGroups);
+      return new PropertyValueGrouper(mode, param, minGroups, maxGroups);
     } catch (final Throwable cause) {
       throw new IllegalArgumentException((("The string '" + string) + //$NON-NLS-1$
           "' is not a valid grouping definition."),//$NON-NLS-1$

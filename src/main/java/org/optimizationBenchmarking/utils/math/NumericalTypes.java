@@ -62,11 +62,28 @@ public final class NumericalTypes {
   public static final long MAX_DOUBLE_LONG = 9007199254740992L;
 
   /**
+   * Get the possible types of a given object
+   * 
+   * @param object
+   *          the object
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the object, or {@code 0} if the object is not a
+   *         number
+   */
+  public static final int getTypes(final Object object) {
+    if (object instanceof Number) {
+      return NumericalTypes.getTypes((Number) object);
+    }
+    return 0;
+  }
+
+  /**
    * Get the possible types of a given number
    * 
    * @param number
    *          the number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final Number number) {
     BasicNumber base;
@@ -112,7 +129,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@link java.lang.Byte byte} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final Byte number) {
     return (NumericalTypes.IS_BYTE | NumericalTypes.IS_SHORT
@@ -125,7 +143,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@code byte} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final byte number) {
     return (NumericalTypes.IS_BYTE | NumericalTypes.IS_SHORT
@@ -138,7 +157,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@link java.lang.Short short} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final Short number) {
     return NumericalTypes.getTypes(number.shortValue());
@@ -149,7 +169,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@code short} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final short number) {
     if ((number < Byte.MIN_VALUE) || (number > Byte.MAX_VALUE)) {
@@ -166,7 +187,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@link java.lang.Integer int} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final Integer number) {
     return NumericalTypes.getTypes(number.intValue());
@@ -177,7 +199,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@code int} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final int number) {
     int res;
@@ -202,7 +225,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@link java.lang.Long long} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final Long number) {
     return NumericalTypes.getTypes(number.longValue());
@@ -213,7 +237,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@code long} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final long number) {
     int res;
@@ -245,7 +270,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@link java.lang.Float float} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final Float number) {
     return NumericalTypes.getTypes(number.floatValue());
@@ -256,7 +282,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@code float} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final float number) {
     final double d;
@@ -299,7 +326,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@link java.lang.Double double} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final Double number) {
     return NumericalTypes.getTypes(number.doubleValue());
@@ -310,7 +338,8 @@ public final class NumericalTypes {
    * 
    * @param number
    *          the {@code short} number
-   * @return the types
+   * @return a bit set (binary or) of the different type constants which
+   *         apply to the number
    */
   public static final int getTypes(final double number) {
     int res;

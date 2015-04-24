@@ -2,10 +2,10 @@ package examples.org.optimizationBenchmarking.experimentation.dataAndIO;
 
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueGrouper;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
-import org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups.PropertyValueGrouper;
 import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
 import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.config.Configuration;

@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.evaluation.attributes.clusters.propertyValueGroups;
+package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Div;
