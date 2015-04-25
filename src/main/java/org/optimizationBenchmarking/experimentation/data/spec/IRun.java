@@ -72,7 +72,7 @@ public interface IRun extends IElementSet, IMatrix {
    * exactly at time {@code value} or the last data point in this run which
    * is earlier than {@code value} (all according to time dimension
    * {@code column} ). If no such point exists, i.e., if all points in this
-   * run happen after time {@code value}, return {@code null}.</li>
+   * run happen after the time {@code value}, return {@code null}.</li>
    * </ul>
    * 
    * @param column

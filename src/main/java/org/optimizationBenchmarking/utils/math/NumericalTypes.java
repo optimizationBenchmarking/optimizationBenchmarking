@@ -299,7 +299,7 @@ public final class NumericalTypes {
         if ((l >= Integer.MIN_VALUE) && (l <= Integer.MAX_VALUE)) {
           res |= NumericalTypes.IS_INT;
           if ((l >= Short.MIN_VALUE) && (l <= Short.MAX_VALUE)) {
-            res |= NumericalTypes.IS_SHORT | NumericalTypes.IS_FLOAT;
+            res |= NumericalTypes.IS_SHORT;
             if ((l >= Byte.MIN_VALUE) && (l <= Byte.MAX_VALUE)) {
               res |= NumericalTypes.IS_BYTE;
             }
@@ -352,13 +352,14 @@ public final class NumericalTypes {
       if ((number >= Long.MIN_VALUE) && (number <= Long.MAX_VALUE)) {
         l = ((long) number);
         if (l == number) {
+          res |= IS_LONG;
           if ((l >= Integer.MIN_VALUE) && (l <= Integer.MAX_VALUE)) {
             res |= NumericalTypes.IS_INT;
             if ((l >= NumericalTypes.MIN_FLOAT_INT)
                 && (l <= NumericalTypes.MAX_FLOAT_INT)) {
               res |= NumericalTypes.IS_FLOAT;
               if ((l >= Short.MIN_VALUE) && (l <= Short.MAX_VALUE)) {
-                res |= NumericalTypes.IS_SHORT | NumericalTypes.IS_FLOAT;
+                res |= NumericalTypes.IS_SHORT;
                 if ((l >= Byte.MIN_VALUE) && (l <= Byte.MAX_VALUE)) {
                   res |= NumericalTypes.IS_BYTE;
                 }
@@ -370,7 +371,7 @@ public final class NumericalTypes {
       }
 
       if (number != number) {
-        res |= NumericalTypes.IS_DOUBLE;
+        res |= NumericalTypes.IS_FLOAT;
       } else {
         f = ((float) number);
         if (f == number) {
