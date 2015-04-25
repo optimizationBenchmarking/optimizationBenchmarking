@@ -73,7 +73,7 @@ abstract class _Longs extends _List {
     idx = this.m_size;
     offset = 0;
     add: {
-      loop: for (long lng : this.m_data) {
+      loop: for (final long lng : this.m_data) {
         if ((idx--) <= 0) {
           break loop;
         }

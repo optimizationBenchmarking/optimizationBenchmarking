@@ -352,7 +352,7 @@ public final class NumericalTypes {
       if ((number >= Long.MIN_VALUE) && (number <= Long.MAX_VALUE)) {
         l = ((long) number);
         if (l == number) {
-          res |= IS_LONG;
+          res |= NumericalTypes.IS_LONG;
           if ((l >= Integer.MIN_VALUE) && (l <= Integer.MAX_VALUE)) {
             res |= NumericalTypes.IS_INT;
             if ((l >= NumericalTypes.MIN_FLOAT_INT)

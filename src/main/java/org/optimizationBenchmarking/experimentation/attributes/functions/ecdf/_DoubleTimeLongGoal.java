@@ -28,7 +28,7 @@ final class _DoubleTimeLongGoal extends _Doubles {
 
   /** {@inheritDoc} */
   @Override
-  final void _addRun(IRun run) {
+  final void _addRun(final IRun run) {
     final IDataPoint dp;
 
     if (run != null) {

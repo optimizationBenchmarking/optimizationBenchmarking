@@ -71,7 +71,7 @@ abstract class _Doubles extends _List {
     idx = this.m_size;
     offset = 0;
     add: {
-      loop: for (double dbl : this.m_data) {
+      loop: for (final double dbl : this.m_data) {
         if ((idx--) <= 0) {
           break loop;
         }

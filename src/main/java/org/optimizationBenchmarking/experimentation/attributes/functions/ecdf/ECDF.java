@@ -11,7 +11,10 @@ import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
-import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
+import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
+import org.optimizationBenchmarking.utils.math.matrix.ColumnTransformedMatrix;
+import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
@@ -19,7 +22,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * experiment or instance runs set, the fraction of runs which have reached
  * a specified goal.
  */
-public final class ECDF extends Attribute<IElementSet, DoubleMatrix1D> {
+public final class ECDF extends Attribute<IElementSet, IMatrix> {
 
   /** the time dimension */
   private final IDimension m_timeDim;
@@ -42,6 +45,12 @@ public final class ECDF extends Attribute<IElementSet, DoubleMatrix1D> {
   /** the goal index */
   private final int m_goalIndex;
 
+  /** the time transformation */
+  private final UnaryFunction m_timeTransform;
+
+  /** the source attribute */
+  private final ECDF m_source;
+
   /**
    * Create the ECDF attribute
    * 
@@ -51,9 +60,11 @@ public final class ECDF extends Attribute<IElementSet, DoubleMatrix1D> {
    *          the goal dimension
    * @param goalValue
    *          the goal value
+   * @param timeTransform
+   *          the time transformation
    */
   public ECDF(final IDimension timeDim, final IDimension goalDim,
-      Number goalValue) {
+      final Number goalValue, final UnaryFunction timeTransform) {
     super(EAttributeType.TEMPORARILY_STORED);
 
     if ((timeDim == null) || (goalDim == null) || (goalValue == null)) {
@@ -81,8 +92,8 @@ public final class ECDF extends Attribute<IElementSet, DoubleMatrix1D> {
         if ((NumericalTypes.getTypes(goalValue) & NumericalTypes.IS_LONG) != 0) {
           this.m_goalValueLong = goalValue.longValue();
         } else {
-          this.m_goalValueLong = __doubleToLong(goalValue.doubleValue(),
-              goalDim);
+          this.m_goalValueLong = ECDF.__doubleToLong(
+              goalValue.doubleValue(), goalDim);
         }
 
         this.m_goalValueDouble = this.m_goalValueLong;
@@ -91,9 +102,16 @@ public final class ECDF extends Attribute<IElementSet, DoubleMatrix1D> {
       default: {
         this.m_goalValueDouble = goalValue.doubleValue();
         this.m_useLongGoal = false;
-        this.m_goalValueLong = __doubleToLong(this.m_goalValueDouble,
+        this.m_goalValueLong = ECDF.__doubleToLong(this.m_goalValueDouble,
             goalDim);
       }
+    }
+
+    this.m_timeTransform = timeTransform;
+    if (timeTransform != null) {
+      this.m_source = new ECDF(timeDim, goalDim, goalValue, null);
+    } else {
+      this.m_source = null;
     }
   }
 
@@ -104,9 +122,11 @@ public final class ECDF extends Attribute<IElementSet, DoubleMatrix1D> {
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.m_timeIndex),//
             HashUtils.hashCode(this.m_goalIndex)),//
-        (this.m_useLongGoal//
-        ? HashUtils.hashCode(this.m_goalValueLong)//
-            : HashUtils.hashCode(this.m_goalValueDouble)));//
+        HashUtils.combineHashes(//
+            (this.m_useLongGoal//
+            ? HashUtils.hashCode(this.m_goalValueLong)//
+                : HashUtils.hashCode(this.m_goalValueDouble)),//
+            HashUtils.hashCode(this.m_timeTransform)));//
   }
 
   /** {@inheritDoc} */
@@ -121,7 +141,8 @@ public final class ECDF extends Attribute<IElementSet, DoubleMatrix1D> {
     if (o instanceof ECDF) {
       other = ((ECDF) o);
       if ((this.m_timeIndex == other.m_timeIndex) && //
-          (this.m_goalIndex == other.m_goalIndex)) {
+          (this.m_goalIndex == other.m_goalIndex) && //
+          (EComparison.equals(this.m_timeTransform, other.m_timeTransform))) {
         if (this.m_useLongGoal) {
           if (other.m_useLongGoal) {
             return (this.m_goalValueLong == other.m_goalValueLong);
@@ -235,8 +256,8 @@ public final class ECDF extends Attribute<IElementSet, DoubleMatrix1D> {
    */
   private static final void __addExperimentSet(
       final IExperimentSet experimentSet, final _List list) {
-    for (IExperiment experiment : experimentSet.getData()) {
-      __addExperiment(experiment, list);
+    for (final IExperiment experiment : experimentSet.getData()) {
+      ECDF.__addExperiment(experiment, list);
     }
   }
 
@@ -250,8 +271,8 @@ public final class ECDF extends Attribute<IElementSet, DoubleMatrix1D> {
    */
   private static final void __addExperiment(final IExperiment experiment,
       final _List list) {
-    for (IInstanceRuns runs : experiment.getData()) {
-      __addInstanceRuns(runs, list);
+    for (final IInstanceRuns runs : experiment.getData()) {
+      ECDF.__addInstanceRuns(runs, list);
     }
   }
 
@@ -265,56 +286,68 @@ public final class ECDF extends Attribute<IElementSet, DoubleMatrix1D> {
    */
   private static final void __addInstanceRuns(final IInstanceRuns runs,
       final _List list) {
-    for (IRun run : runs.getData()) {
+    for (final IRun run : runs.getData()) {
       list._addRun(run);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final DoubleMatrix1D compute(IElementSet data) {
+  protected final IMatrix compute(final IElementSet data) {
     final _List list;
+    IMatrix computed;
 
-    if (this.m_goalDim.getDataType().isFloat()) {
-      if (this.m_timeDim.getDataType().isInteger()) {
-        list = new _LongTimeDoubleGoal(this.m_timeDim, this.m_goalIndex,
-            this.m_goalValueDouble);
-      } else {
-        list = new _DoubleTimeDoubleGoal(this.m_timeDim, this.m_goalIndex,
-            this.m_goalValueDouble);
-      }
+    if (this.m_source != null) {
+      computed = this.m_source.get(data);
     } else {
-      if (this.m_timeDim.getDataType().isInteger()) {
-        list = new _LongTimeLongGoal(this.m_timeDim, this.m_goalIndex,
-            this.m_goalValueLong);
-      } else {
-        list = new _DoubleTimeLongGoal(this.m_timeDim, this.m_goalIndex,
-            this.m_goalValueLong);
-      }
-    }
-
-    if (data instanceof IExperimentSet) {
-      __addExperimentSet(((IExperimentSet) data), list);
-    } else {
-      if (data instanceof IExperiment) {
-        __addExperiment(((IExperiment) data), list);
-      } else {
-        if (data instanceof IInstanceRuns) {
-          __addInstanceRuns(((IInstanceRuns) data), list);
+      if (this.m_goalDim.getDataType().isFloat()) {
+        if (this.m_timeDim.getDataType().isInteger()) {
+          list = new _LongTimeDoubleGoal(this.m_timeDim, this.m_goalIndex,
+              this.m_goalValueDouble);
         } else {
-          if (data instanceof IRun) {
-            list._addRun((IRun) data);
+          list = new _DoubleTimeDoubleGoal(this.m_timeDim,
+              this.m_goalIndex, this.m_goalValueDouble);
+        }
+      } else {
+        if (this.m_timeDim.getDataType().isInteger()) {
+          list = new _LongTimeLongGoal(this.m_timeDim, this.m_goalIndex,
+              this.m_goalValueLong);
+        } else {
+          list = new _DoubleTimeLongGoal(this.m_timeDim, this.m_goalIndex,
+              this.m_goalValueLong);
+        }
+      }
+
+      if (data instanceof IExperimentSet) {
+        ECDF.__addExperimentSet(((IExperimentSet) data), list);
+      } else {
+        if (data instanceof IExperiment) {
+          ECDF.__addExperiment(((IExperiment) data), list);
+        } else {
+          if (data instanceof IInstanceRuns) {
+            ECDF.__addInstanceRuns(((IInstanceRuns) data), list);
           } else {
-            throw new IllegalArgumentException(//
-                "ECDF can only be computed over an IExperimentSet, IExperiment, IInstanceRuns, or IRun, but you provided " //$NON-NLS-1$
-                    + ((data != null)//
-                    ? (TextUtils.className(data.getClass()) + '.')//
-                        : "null."));//$NON-NLS-1$
+            if (data instanceof IRun) {
+              list._addRun((IRun) data);
+            } else {
+              throw new IllegalArgumentException(//
+                  "ECDF can only be computed over an IExperimentSet, IExperiment, IInstanceRuns, or IRun, but you provided " //$NON-NLS-1$
+                      + ((data != null)//
+                      ? (TextUtils.className(data.getClass()) + '.')//
+                          : "null."));//$NON-NLS-1$
+            }
           }
         }
       }
+
+      computed = list._toMatrix();
     }
 
-    return list._toMatrix();
+    if (this.m_timeTransform != null) {
+      computed = new ColumnTransformedMatrix(computed,
+          this.m_timeTransform, Identity.INSTANCE);
+    }
+
+    return computed;
   }
 }
