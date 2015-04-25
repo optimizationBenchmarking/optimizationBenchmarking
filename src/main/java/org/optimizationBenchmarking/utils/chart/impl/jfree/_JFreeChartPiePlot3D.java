@@ -91,6 +91,7 @@ final class _JFreeChartPiePlot3D extends PiePlot3D {
     iterator = keys.iterator();
     legendLabelGenerator = this.getLegendLabelGenerator();
     mto = null;
+
     while (iterator.hasNext()) {
       key = (Comparable) iterator.next();
       n = dataset.getValue(key);
@@ -104,6 +105,7 @@ final class _JFreeChartPiePlot3D extends PiePlot3D {
           include = (v > 0.0d);
         }
       }
+
       if (include) {
         string = legendLabelGenerator.generateAttributedSectionLabel(
             dataset, key);
@@ -121,8 +123,8 @@ final class _JFreeChartPiePlot3D extends PiePlot3D {
           label = mto.toString();
           mto.clear();
         }
-        if (label != null) {
 
+        if (label != null) {
           paint = this.lookupSectionPaint(key);
           outlinePaint = this.lookupSectionOutlinePaint(key);
           outlineStroke = this.lookupSectionOutlineStroke(key);

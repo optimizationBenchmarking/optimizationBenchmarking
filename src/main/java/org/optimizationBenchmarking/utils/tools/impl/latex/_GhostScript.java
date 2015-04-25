@@ -128,6 +128,8 @@ final class _GhostScript extends _LaTeXToolChainComponent {
     builder.addStringArgument("-dDownsampleMonoImages=false"); //$NON-NLS-1$
     builder.addStringArgument("-dDownsampleGrayImages=false"); //$NON-NLS-1$
     builder.addStringArgument("-dDownsampleColorImages=false"); //$NON-NLS-1$
+    builder.addStringArgument("-dDetectDuplicateImages=true"); //$NON-NLS-1$
+    builder.addStringArgument("-dHaveTransparency=true"); //$NON-NLS-1$
     builder.addStringArgument("-dFastWebView=false"); //$NON-NLS-1$
     builder.addStringArgument("-dNOPAUSE"); //$NON-NLS-1$
     builder.addStringArgument("-dQUIET"); //$NON-NLS-1$

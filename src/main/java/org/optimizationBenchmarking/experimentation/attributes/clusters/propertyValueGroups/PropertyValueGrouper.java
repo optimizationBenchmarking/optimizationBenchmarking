@@ -1,16 +1,19 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
-import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
@@ -146,12 +149,82 @@ public final class PropertyValueGrouper extends
             HashUtils.hashCode(this.m_maxGroups)));
   }
 
+  /**
+   * Get the values of a given feature
+   * 
+   * @param feature
+   *          the feature
+   * @return the values of the feature
+   */
+  private static final Object[] __getFeatureValues(final IFeature feature) {
+    final HashSet<Object> values;
+    final int max;
+    Object value;
+
+    max = feature.getData().size();
+    values = new HashSet<>(max);
+    outer: for (final IExperiment experiment : feature.getOwner()
+        .getOwner().getData()) {
+      for (final IInstanceRuns runs : experiment.getData()) {
+        value = runs.getInstance().getFeatureSetting().get(feature);
+        if (value != null) {
+          if (values.add(value)) {
+            if (values.size() >= max) {
+              break outer;
+            }
+          }
+        }
+      }
+    }
+
+    return values.toArray(new Object[values.size()]);
+  }
+
+  /**
+   * Get the values of a given parameter
+   * 
+   * @param parameter
+   *          the parameter
+   * @return the values of the parameter
+   */
+  private static final Object[] __getParameterValues(
+      final IParameter parameter) {
+    final HashSet<Object> values;
+    final int max;
+    final Object unspec;
+    Object value;
+    IParameterValue pv;
+
+    pv = parameter.getUnspecified();
+    if (pv != null) {
+      unspec = pv.getValue();
+    } else {
+      unspec = null;
+    }
+
+    max = parameter.getData().size();
+    values = new HashSet<>(max);
+
+    outer: for (final IExperiment experiment : parameter.getOwner()
+        .getOwner().getData()) {
+      value = experiment.getParameterSetting().get(parameter);
+      if (!(EComparison.equals(value, unspec))) {
+        if (values.add(value)) {
+          if (values.size() >= max) {
+            break outer;
+          }
+        }
+      }
+    }
+
+    return values.toArray(new Object[values.size()]);
+  }
+
   /** {@inheritDoc} */
   @Override
   protected final PropertyValueGroups compute(final IProperty data) {
     final _Groups groups;
     final IExperimentSet set;
-    ArrayListView<? extends IPropertyValue> valueSet;
     Object[] objData;
     Number[] numberData;
     _Group[] buffer;
@@ -161,18 +234,27 @@ public final class PropertyValueGrouper extends
     IParameterValue pv;
 
     // extract all values
-    valueSet = data.getData();
-    objData = new Object[valueSet.size()];
-    index = 0;
-    type = (-1);
-    for (final IPropertyValue propVal : valueSet) {
-      objData[index++] = value = propVal.getValue();
-      if (type != 0) {
-        type &= NumericalTypes.getTypes(value);
+    if (data instanceof IFeature) {
+      objData = PropertyValueGrouper.__getFeatureValues((IFeature) data);
+    } else {
+      if (data instanceof IParameter) {
+        objData = PropertyValueGrouper
+            .__getParameterValues((IParameter) data);
+      } else {
+        throw new IllegalArgumentException(//
+            "Property must either be feature or parameter."); //$NON-NLS-1$
       }
     }
-    valueSet = null;
 
+    // get the numerical type, if any
+    type = (-1);
+    for (final Object object : objData) {
+      if ((type &= NumericalTypes.getTypes(object)) == 0) {
+        break;
+      }
+    }
+
+    // sort the data
     try {
       Arrays.sort(objData);
     } catch (final Throwable ignoreable) {
@@ -180,7 +262,7 @@ public final class PropertyValueGrouper extends
     }
 
     // allocate the memory for the group
-    buffer = new _Group[index];
+    buffer = new _Group[objData.length];
     for (index = buffer.length; (--index) >= 0;) {
       buffer[index] = new _Group();
     }
