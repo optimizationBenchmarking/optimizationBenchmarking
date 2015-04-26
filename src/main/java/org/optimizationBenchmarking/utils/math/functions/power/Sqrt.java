@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 
@@ -64,15 +65,16 @@ public final class Sqrt extends UnaryFunction {
   public final double computeAsDouble(final double x1) {
     final long l0, res;
 
-    if ((x1 >= 0d) && (x1 <= Long.MAX_VALUE)) {
+    if ((NumericalTypes.getTypes(x1) & NumericalTypes.IS_LONG) != 0) {
       l0 = ((long) x1);
-      if (l0 == x1) {
-        if (l0 == 0L) {
-          return 0d;
-        }
+      if (l0 > 0L) {
         res = Sqrt.__isqrt(l0);
         if ((res * res) == l0) {
           return res;
+        }
+      } else {
+        if (l0 == 0L) {
+          return 0d;
         }
       }
     }

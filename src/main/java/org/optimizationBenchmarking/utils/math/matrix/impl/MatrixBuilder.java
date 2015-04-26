@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.math.matrix.impl;
 
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
@@ -532,15 +533,11 @@ public final class MatrixBuilder implements IAggregate {
       final long[] longData;
       final double[] doubleData;
       float[] floatData;
-      float flt;
       long l;
       int i;
 
-      if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
-        l = ((long) v);
-        if (v == l) {
-          return this._append(l, size);
-        }
+      if ((NumericalTypes.getTypes(v) & NumericalTypes.IS_LONG) != 0) {
+        return this._append(((long) v), size);
       }
 
       longData = this.m_data;
@@ -550,11 +547,11 @@ public final class MatrixBuilder implements IAggregate {
       tryFloats: {
         for (i = size; (--i) >= 0;) {
           l = longData[i];
-          flt = l;
-          if (((long) flt) != l) {
+          if ((NumericalTypes.getBestFloatingPointRepresentation(l) & //
+          NumericalTypes.IS_FLOAT) == 0) {
             break tryFloats;
           }
-          floatData[i] = flt;
+          floatData[i] = l;
         }
         return new _FloatArray(floatData);
       }
@@ -573,15 +570,12 @@ public final class MatrixBuilder implements IAggregate {
     final _Array _append(final double v, final int size) {
       final long[] longData;
       final double[] doubleData;
-      float flt;
-      long l;
+      final int types;
       int i;
 
-      if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
-        l = ((long) v);
-        if (v == l) {
-          return this._append(l, size);
-        }
+      types = NumericalTypes.getTypes(v);
+      if ((types & NumericalTypes.IS_LONG) != 0) {
+        return this._append(((long) v), size);
       }
 
       if (v != v) {
@@ -594,9 +588,8 @@ public final class MatrixBuilder implements IAggregate {
         return this._append(Float.NEGATIVE_INFINITY, size);
       }
 
-      flt = ((float) v);
-      if (flt == v) {
-        return this._append(flt, size);
+      if ((types & NumericalTypes.IS_FLOAT) != 0) {
+        return this._append(((float) v), size);
       }
 
       longData = this.m_data;
@@ -673,13 +666,11 @@ public final class MatrixBuilder implements IAggregate {
     /** {@inheritDoc} */
     @Override
     final _Array _append(final long v, final int size) {
-      float flt;
-
-      flt = v;
-      if (((long) flt) != v) {
+      if ((NumericalTypes.getTypes(v) & //
+      NumericalTypes.IS_FLOAT) == 0) {
         return this._append(((double) v), size);
       }
-      return this._append(flt, size);
+      return this._append(((float) v), size);
     }
 
     /** {@inheritDoc} */
@@ -702,7 +693,6 @@ public final class MatrixBuilder implements IAggregate {
     final _Array _append(final double v, final int size) {
       final float[] floatData;
       final double[] doubleData;
-      float flt;
       int i;
 
       if (v != v) {
@@ -715,9 +705,9 @@ public final class MatrixBuilder implements IAggregate {
         return this._append(Float.NEGATIVE_INFINITY, size);
       }
 
-      flt = ((float) v);
-      if (v == flt) {
-        return this._append(flt, size);
+      if ((NumericalTypes.getTypes(v) & //
+      NumericalTypes.IS_FLOAT) != 0) {
+        return this._append(((float) v), size);
       }
 
       floatData = this.m_data;
@@ -826,24 +816,17 @@ public final class MatrixBuilder implements IAggregate {
     final _Array _append(final float v, final int size) {
       final int[] intData;
       final double[] doubleData;
+      final int types;
       float[] floatData;
-      float flt;
-      double dbl;
-      long l;
-      int i;
+      int i, val;
 
-      if ((v >= Integer.MIN_VALUE) && (v <= Integer.MAX_VALUE)) {
-        i = ((int) v);
-        if (v == (i)) {
-          return this._append(i, size);
-        }
+      types = NumericalTypes.getTypes(v);
+      if ((types & NumericalTypes.IS_INT) != 0) {
+        return this._append(((int) v), size);
       }
 
-      if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
-        l = ((long) v);
-        if (v == (l)) {
-          return this._append(l, size);
-        }
+      if ((types & NumericalTypes.IS_LONG) != 0) {
+        return this._append(((long) v), size);
       }
 
       intData = this.m_data;
@@ -852,15 +835,12 @@ public final class MatrixBuilder implements IAggregate {
       floatData[size] = v;
       tryFloats: {
         for (i = size; (--i) >= 0;) {
-          l = intData[i];
-          flt = l;
-          if (((int) flt) != l) {
-            dbl = l;
-            if (Math.abs(((int) dbl) - l) < Math.abs(((int) flt) - l)) {
-              break tryFloats;
-            }
+          val = intData[i];
+          if ((NumericalTypes.getBestFloatingPointRepresentation(val) //
+          & NumericalTypes.IS_FLOAT) == 0) {
+            break tryFloats;
           }
-          floatData[i] = flt;
+          floatData[i] = val;
         }
         return new _FloatArray(floatData);
       }
@@ -879,22 +859,16 @@ public final class MatrixBuilder implements IAggregate {
     final _Array _append(final double v, final int size) {
       final int[] intData;
       final double[] doubleData;
-      float flt;
-      long l;
+      final int types;
       int i;
 
-      if ((v >= Integer.MIN_VALUE) && (v <= Integer.MAX_VALUE)) {
-        i = ((int) v);
-        if (v == i) {
-          return this._append(i, size);
-        }
+      types = NumericalTypes.getTypes(v);
+      if ((types & NumericalTypes.IS_INT) != 0) {
+        return this._append(((int) v), size);
       }
 
-      if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
-        l = ((long) v);
-        if (v == l) {
-          return this._append(l, size);
-        }
+      if ((types & NumericalTypes.IS_LONG) != 0) {
+        return this._append(((long) v), size);
       }
 
       if (v != v) {
@@ -907,9 +881,8 @@ public final class MatrixBuilder implements IAggregate {
         return this._append(Float.NEGATIVE_INFINITY, size);
       }
 
-      flt = ((float) v);
-      if (flt == v) {
-        return this._append(flt, size);
+      if ((types & NumericalTypes.IS_FLOAT) != 0) {
+        return this._append(((float) v), size);
       }
 
       intData = this.m_data;
@@ -1036,29 +1009,20 @@ public final class MatrixBuilder implements IAggregate {
     final _Array _append(final float v, final int size) {
       final short[] shortData;
       float[] floatData;
-      long l;
-      short s;
+      final int types;
       int i;
 
-      if ((v >= Short.MIN_VALUE) && (v <= Short.MAX_VALUE)) {
-        s = ((short) v);
-        if (v == s) {
-          return this._append(s, size);
-        }
+      types = NumericalTypes.getTypes(v);
+      if ((types & NumericalTypes.IS_SHORT) != 0) {
+        return this._append(((short) v), size);
       }
 
-      if ((v >= Integer.MIN_VALUE) && (v <= Integer.MAX_VALUE)) {
-        i = ((int) v);
-        if (v == i) {
-          return this._append(i, size);
-        }
+      if ((types & NumericalTypes.IS_INT) != 0) {
+        return this._append(((int) v), size);
       }
 
-      if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
-        l = ((long) v);
-        if (v == l) {
-          return this._append(l, size);
-        }
+      if ((types & NumericalTypes.IS_LONG) != 0) {
+        return this._append(((long) v), size);
       }
 
       shortData = this.m_data;
@@ -1076,30 +1040,20 @@ public final class MatrixBuilder implements IAggregate {
     final _Array _append(final double v, final int size) {
       final short[] shortData;
       double[] doubleData;
-      long l;
-      short s;
+      final int types;
       int i;
-      float f;
 
-      if ((v >= Short.MIN_VALUE) && (v <= Short.MAX_VALUE)) {
-        s = ((short) v);
-        if (v == s) {
-          return this._append(s, size);
-        }
+      types = NumericalTypes.getTypes(v);
+      if ((types & NumericalTypes.IS_SHORT) != 0) {
+        return this._append(((short) v), size);
       }
 
-      if ((v >= Integer.MIN_VALUE) && (v <= Integer.MAX_VALUE)) {
-        i = ((int) v);
-        if (v == i) {
-          return this._append(i, size);
-        }
+      if ((types & NumericalTypes.IS_INT) != 0) {
+        return this._append(((int) v), size);
       }
 
-      if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
-        l = ((long) v);
-        if (v == l) {
-          return this._append(l, size);
-        }
+      if ((types & NumericalTypes.IS_LONG) != 0) {
+        return this._append(((long) v), size);
       }
 
       if (v != v) {
@@ -1112,9 +1066,8 @@ public final class MatrixBuilder implements IAggregate {
         return this._append(Float.NEGATIVE_INFINITY, size);
       }
 
-      f = ((float) v);
-      if (f == v) {
-        return this._append(f, size);
+      if ((types & NumericalTypes.IS_FLOAT) != 0) {
+        return this._append(((float) v), size);
       }
 
       shortData = this.m_data;
@@ -1262,37 +1215,24 @@ public final class MatrixBuilder implements IAggregate {
     final _Array _append(final float v, final int size) {
       final byte[] byteData;
       float[] floatData;
-      long l;
-      byte b;
-      short s;
+      final int types;
       int i;
 
-      if ((v >= Byte.MIN_VALUE) && (v <= Byte.MAX_VALUE)) {
-        b = ((byte) v);
-        if (v == b) {
-          return this._append(b, size);
-        }
+      types = NumericalTypes.getTypes(v);
+      if ((types & NumericalTypes.IS_BYTE) != 0) {
+        return this._append(((byte) v), size);
       }
 
-      if ((v >= Short.MIN_VALUE) && (v <= Short.MAX_VALUE)) {
-        s = ((short) v);
-        if (v == s) {
-          return this._append(s, size);
-        }
+      if ((types & NumericalTypes.IS_SHORT) != 0) {
+        return this._append(((short) v), size);
       }
 
-      if ((v >= Integer.MIN_VALUE) && (v <= Integer.MAX_VALUE)) {
-        i = ((int) v);
-        if (v == i) {
-          return this._append(i, size);
-        }
+      if ((types & NumericalTypes.IS_INT) != 0) {
+        return this._append(((int) v), size);
       }
 
-      if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
-        l = ((long) v);
-        if (v == l) {
-          return this._append(l, size);
-        }
+      if ((types & NumericalTypes.IS_LONG) != 0) {
+        return this._append(((long) v), size);
       }
 
       byteData = this.m_data;
@@ -1309,39 +1249,25 @@ public final class MatrixBuilder implements IAggregate {
     @Override
     final _Array _append(final double v, final int size) {
       final byte[] byteData;
+      final int types;
       double[] doubleData;
-      long l;
-      short s;
-      byte b;
       int i;
-      float f;
 
-      if ((v >= Byte.MIN_VALUE) && (v <= Byte.MAX_VALUE)) {
-        b = ((byte) v);
-        if (v == b) {
-          return this._append(b, size);
-        }
+      types = NumericalTypes.getTypes(v);
+      if ((types & NumericalTypes.IS_BYTE) != 0) {
+        return this._append(((byte) v), size);
       }
 
-      if ((v >= Short.MIN_VALUE) && (v <= Short.MAX_VALUE)) {
-        s = ((short) v);
-        if (v == s) {
-          return this._append(s, size);
-        }
+      if ((types & NumericalTypes.IS_SHORT) != 0) {
+        return this._append(((short) v), size);
       }
 
-      if ((v >= Integer.MIN_VALUE) && (v <= Integer.MAX_VALUE)) {
-        i = ((int) v);
-        if (v == i) {
-          return this._append(i, size);
-        }
+      if ((types & NumericalTypes.IS_INT) != 0) {
+        return this._append(((int) v), size);
       }
 
-      if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
-        l = ((long) v);
-        if (v == l) {
-          return this._append(l, size);
-        }
+      if ((types & NumericalTypes.IS_LONG) != 0) {
+        return this._append(((long) v), size);
       }
 
       if (v != v) {
@@ -1354,9 +1280,8 @@ public final class MatrixBuilder implements IAggregate {
         return this._append(Float.NEGATIVE_INFINITY, size);
       }
 
-      f = ((float) v);
-      if (f == v) {
-        return this._append(f, size);
+      if ((types & NumericalTypes.IS_FLOAT) != 0) {
+        return this._append(((float) v), size);
       }
 
       byteData = this.m_data;

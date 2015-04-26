@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 
 /**
@@ -47,17 +48,13 @@ public final class Sub extends BinaryFunction {
   public final float computeAsFloat(final float x0, final float x1) {
     final long l0, l1;
 
-    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
+    if ((NumericalTypes.IS_LONG & //
+        NumericalTypes.getTypes(x0) & //
+    NumericalTypes.getTypes(x1)) != 0) {
       l0 = ((long) x0);
-      if (l0 == x0) {
-        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
-          l1 = ((long) x1);
-          if (l1 == x1) {
-            if (SaturatingSub.getOverflowType(l0, l1) == 0) {
-              return (l0 - l1);
-            }
-          }
-        }
+      l1 = ((long) x1);
+      if (SaturatingSub.getOverflowType(l0, l1) == 0) {
+        return (l0 - l1);
       }
     }
 
@@ -69,17 +66,13 @@ public final class Sub extends BinaryFunction {
   public final double computeAsDouble(final double x0, final double x1) {
     final long l0, l1;
 
-    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
+    if ((NumericalTypes.IS_LONG & //
+        NumericalTypes.getTypes(x0) & //
+    NumericalTypes.getTypes(x1)) != 0) {
       l0 = ((long) x0);
-      if (l0 == x0) {
-        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
-          l1 = ((long) x1);
-          if (l1 == x1) {
-            if (SaturatingSub.getOverflowType(l0, l1) == 0) {
-              return (l0 - l1);
-            }
-          }
-        }
+      l1 = ((long) x1);
+      if (SaturatingSub.getOverflowType(l0, l1) == 0) {
+        return (l0 - l1);
       }
     }
 

@@ -25,10 +25,29 @@ public final class SqrtTest extends MathematicalFunctionTest {
       new TestCase(9, 81),//
       new TestCase(10, 100),//
       new TestCase(Math.sqrt(1000), 1000),
+      new TestCase(3037000497L, (3037000497L * 3037000497L)),//
       new TestCase(3037000498L, (3037000498L * 3037000498L)),//
       new TestCase(3037000499L, (3037000499L * 3037000499L)), //
-      new TestCase(Math.sqrt((3037000499L * 3037000499L) - 1L),//
-          ((3037000499L * 3037000499L) - 1L)) //
+
+      // This test case does not work because the conversion from long to
+      // double has a loss of precision
+      // new TestCase(Math.sqrt((3037000499L * 3037000499L) - 1L),//
+      // ((3037000499L * 3037000499L) - 1L)) //
+
+      // Thus, we now use test cases which ensures that conversion without
+      // loss of precision is possible.
+      new TestCase(((long) (Math.sqrt(9007199254740992L))),
+          (((long) (Math.sqrt(9007199254740992L))) * //
+          ((long) (Math.sqrt(9007199254740992L))))),//
+      new TestCase((((long) (Math.sqrt(9007199254740992L))) - 1L),
+          ((((long) (Math.sqrt(9007199254740992L))) - 1L) * //
+          (((long) (Math.sqrt(9007199254740992L))) - 1L))),//
+      new TestCase((((long) (Math.sqrt(9007199254740992L))) - 2L),
+          ((((long) (Math.sqrt(9007199254740992L))) - 2L) * //
+          (((long) (Math.sqrt(9007199254740992L))) - 2L))),//
+      new TestCase((((long) (Math.sqrt(9007199254740992L))) - 3L),
+          ((((long) (Math.sqrt(9007199254740992L))) - 3L) * //
+          (((long) (Math.sqrt(9007199254740992L))) - 3L))),//
   };
 
   /** create */

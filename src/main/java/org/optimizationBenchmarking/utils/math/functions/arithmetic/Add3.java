@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
 
 /**
@@ -48,38 +49,13 @@ public final class Add3 extends TernaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final float computeAsFloat(final float x0, final float x1,
-      final float x2) {
-    return ((float) (this.computeAsDouble(x0, x1, x2)));
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public final double computeAsDouble(final double x0, final double x1,
       final double x2) {
-    long a, b, c;
-
-    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
-      a = ((long) x0);
-      if (a == x0) {
-
-        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
-          b = ((long) x1);
-          if (b == x1) {
-
-            if ((x2 >= Long.MIN_VALUE) && (x2 <= Long.MAX_VALUE)) {
-              c = ((long) x2);
-              if (c == x2) {
-
-                return this.computeAsDouble(a, b, c);
-
-              }
-            }
-
-          }
-        }
-
-      }
+    if ((NumericalTypes.IS_LONG & //
+        NumericalTypes.getTypes(x0) & //
+        NumericalTypes.getTypes(x1) & //
+    NumericalTypes.getTypes(x2)) != 0) {
+      return this.computeAsDouble(((long) x0), ((long) x1), ((long) x2));
     }
 
     return Add3.__computeAsDouble(x0, x1, x2);

@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.text.numbers;
 
 import java.io.Serializable;
 
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -95,16 +96,18 @@ public abstract class NumberAppender implements Serializable {
    */
   public void appendTo(final double v, final ETextCase textCase,
       final ITextOutput textOut) {
-    long l;
+    final int types;
 
-    if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
-      l = ((long) v);
-      if (l == v) {
-        this.appendTo(l, textCase, textOut);
-        return;
+    types = NumericalTypes.getTypes(v);
+    if ((types & NumericalTypes.IS_INT) != 0) {
+      this.appendTo(((int) v), textCase, textOut);
+    } else {
+      if ((types & NumericalTypes.IS_LONG) != 0) {
+        this.appendTo(((long) v), textCase, textOut);
+      } else {
+        textOut.append(v);
       }
     }
-    textOut.append(v);
   }
 
   /**

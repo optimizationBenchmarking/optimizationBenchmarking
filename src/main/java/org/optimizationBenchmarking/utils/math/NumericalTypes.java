@@ -203,6 +203,7 @@ public final class NumericalTypes {
    *         apply to the number
    */
   public static final int getTypes(final int number) {
+    final float f;
     int res;
 
     res = (NumericalTypes.IS_INT | NumericalTypes.IS_LONG | NumericalTypes.IS_DOUBLE);
@@ -214,6 +215,11 @@ public final class NumericalTypes {
         if ((number >= Byte.MIN_VALUE) && (number <= Byte.MAX_VALUE)) {
           res |= NumericalTypes.IS_BYTE;
         }
+      }
+    } else {
+      f = number;
+      if (((long) f) == number) {
+        res |= NumericalTypes.IS_FLOAT;
       }
     }
 
@@ -241,24 +247,40 @@ public final class NumericalTypes {
    *         apply to the number
    */
   public static final int getTypes(final long number) {
+    final double d;
+    final float f;
     int res;
 
-    res = NumericalTypes.IS_LONG;
-    if ((number >= NumericalTypes.MIN_DOUBLE_LONG)
-        && (number <= NumericalTypes.MAX_DOUBLE_LONG)) {
-      res |= NumericalTypes.IS_DOUBLE;
-      if ((number >= Integer.MIN_VALUE) && (number <= Integer.MAX_VALUE)) {
-        res |= NumericalTypes.IS_INT;
-        if ((number >= NumericalTypes.MIN_FLOAT_INT)
-            && (number <= NumericalTypes.MAX_FLOAT_INT)) {
-          res |= NumericalTypes.IS_FLOAT;
-          if ((number >= Short.MIN_VALUE) && (number <= Short.MAX_VALUE)) {
-            res |= NumericalTypes.IS_SHORT | NumericalTypes.IS_FLOAT;
-            if ((number >= Byte.MIN_VALUE) && (number <= Byte.MAX_VALUE)) {
-              res |= NumericalTypes.IS_BYTE;
+    checkDoubleAndFloat: {
+      res = NumericalTypes.IS_LONG;
+      if ((number >= NumericalTypes.MIN_DOUBLE_LONG)
+          && (number <= NumericalTypes.MAX_DOUBLE_LONG)) {
+        res |= NumericalTypes.IS_DOUBLE;
+        if ((number >= Integer.MIN_VALUE) && (number <= Integer.MAX_VALUE)) {
+          res |= NumericalTypes.IS_INT;
+          if ((number >= NumericalTypes.MIN_FLOAT_INT)
+              && (number <= NumericalTypes.MAX_FLOAT_INT)) {
+            res |= NumericalTypes.IS_FLOAT;
+            if ((number >= Short.MIN_VALUE) && (number <= Short.MAX_VALUE)) {
+              res |= NumericalTypes.IS_SHORT | NumericalTypes.IS_FLOAT;
+              if ((number >= Byte.MIN_VALUE) && (number <= Byte.MAX_VALUE)) {
+                res |= NumericalTypes.IS_BYTE;
+              }
             }
+
+            break checkDoubleAndFloat;
           }
         }
+      } else {
+        d = number;
+        if (((long) d) == number) {
+          res |= NumericalTypes.IS_DOUBLE;
+        }
+      }
+
+      f = number;
+      if (((long) f) == number) {
+        res |= NumericalTypes.IS_FLOAT;
       }
     }
 
@@ -292,28 +314,36 @@ public final class NumericalTypes {
 
     res = NumericalTypes.IS_FLOAT;
 
-    if ((number >= Long.MIN_VALUE) && (number <= Long.MAX_VALUE)) {
-      l = ((long) number);
-      if (l == number) {
-        res |= NumericalTypes.IS_LONG;
-        if ((l >= Integer.MIN_VALUE) && (l <= Integer.MAX_VALUE)) {
-          res |= NumericalTypes.IS_INT;
-          if ((l >= Short.MIN_VALUE) && (l <= Short.MAX_VALUE)) {
-            res |= NumericalTypes.IS_SHORT;
-            if ((l >= Byte.MIN_VALUE) && (l <= Byte.MAX_VALUE)) {
-              res |= NumericalTypes.IS_BYTE;
+    checkDouble: {
+      if ((number >= Long.MIN_VALUE) && (number <= Long.MAX_VALUE)) {
+        l = ((long) number);
+        if (l == number) {
+          res |= NumericalTypes.IS_LONG;
+          if ((l >= NumericalTypes.MIN_DOUBLE_LONG)
+              && (l <= NumericalTypes.MAX_DOUBLE_LONG)) {
+            res |= NumericalTypes.IS_DOUBLE;
+            if ((l >= Integer.MIN_VALUE) && (l <= Integer.MAX_VALUE)) {
+              res |= NumericalTypes.IS_INT;
+              if ((l >= Short.MIN_VALUE) && (l <= Short.MAX_VALUE)) {
+                res |= NumericalTypes.IS_SHORT;
+                if ((l >= Byte.MIN_VALUE) && (l <= Byte.MAX_VALUE)) {
+                  res |= NumericalTypes.IS_BYTE;
+                }
+              }
             }
+            break checkDouble;
           }
         }
       }
-    }
 
-    if (number != number) {
-      res |= NumericalTypes.IS_DOUBLE;
-    } else {
-      d = number;
-      if (((float) d) == number) {// should always be true, but let's check
+      if (number != number) {
         res |= NumericalTypes.IS_DOUBLE;
+      } else {
+        d = number;
+        if (((float) d) == number) {// should always be true, but let's
+                                    // check
+          res |= NumericalTypes.IS_DOUBLE;
+        }
       }
     }
 
@@ -381,6 +411,85 @@ public final class NumericalTypes {
     }
 
     return res;
+  }
+
+  /**
+   * Find the best floating point representation for the given {@code long}
+   * value:
+   * <ol>
+   * <li>If the {@code long} {@code value} can be converted to a
+   * {@code float} without loss of precision, we return {@link #IS_FLOAT}.</li>
+   * <li>Otherwise, if the {@code long} {@code value} can be converted to a
+   * {@code double} without loss of precision, we return {@link #IS_DOUBLE}
+   * .</li>
+   * <li>Otherwise, we convert to value both to a {@code double} and to a
+   * {@code float} and check which representation leads to the smallest
+   * difference to {@code value} when converted back. If the difference is
+   * the same, we return {@link #IS_FLOAT}, otherwise the representation
+   * with the smaller difference.</li>
+   * </ol>
+   * 
+   * @param value
+   *          the value
+   * @return either {@link #IS_FLOAT} or {@link #IS_DOUBLE}
+   */
+  public static final int getBestFloatingPointRepresentation(
+      final long value) {
+    final int types;
+    final float f;
+    final double d;
+    long difF, difD;
+
+    types = NumericalTypes.getTypes(value);
+    if ((types & NumericalTypes.IS_FLOAT) != 0) {
+      return NumericalTypes.IS_FLOAT;
+    }
+    if ((types & NumericalTypes.IS_DOUBLE) != 0) {
+      return NumericalTypes.IS_DOUBLE;
+    }
+
+    f = value;
+    d = value;
+
+    difF = (((long) f) - value);
+    if (difF <= 0L) {
+      if (difF == 0L) {
+        return NumericalTypes.IS_FLOAT;
+      }
+      difF = (-difF);
+    }
+    difD = (((long) d) - value);
+    if (difD <= 0L) {
+      if (difD == 0L) {
+        return NumericalTypes.IS_DOUBLE;
+      }
+      difD = (-difD);
+    }
+
+    return ((difF <= difD) ? NumericalTypes.IS_FLOAT
+        : NumericalTypes.IS_DOUBLE);
+  }
+
+  /**
+   * Find the best floating point representation for the given {@code int}
+   * value:
+   * <ol>
+   * <li>If the {@code int} {@code value} can be converted to a
+   * {@code float} without loss of precision, we return {@link #IS_FLOAT}.</li>
+   * <li>Otherwise, we return {@link #IS_DOUBLE}, since any {@code int} can
+   * be converted to a {@code double} without loss of precision.</li>
+   * </ol>
+   * 
+   * @param value
+   *          the value
+   * @return either {@link #IS_FLOAT} or {@link #IS_DOUBLE}
+   */
+  public static final int getBestFloatingPointRepresentation(
+      final int value) {
+    if ((NumericalTypes.getTypes(value) & NumericalTypes.IS_FLOAT) != 0) {
+      return NumericalTypes.IS_FLOAT;
+    }
+    return NumericalTypes.IS_DOUBLE;
   }
 
   /**

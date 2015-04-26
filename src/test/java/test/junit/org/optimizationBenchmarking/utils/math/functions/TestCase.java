@@ -52,11 +52,11 @@ public final class TestCase {
     super();
 
     int i;
-    this.m_in = new Byte[i = in.length];
+    this.m_in = new Number[i = in.length];
     for (; (--i) >= 0;) {
-      this.m_in[i] = Byte.valueOf(in[i]);
+      this.m_in[i] = NumericalTypes.valueOf(in[i]);
     }
-    this.m_out = Byte.valueOf(out);
+    this.m_out = NumericalTypes.valueOf(out);
     this.m_choices = TestCase.__checkChoices(this.m_out, this.m_in);
   }
 
@@ -72,11 +72,11 @@ public final class TestCase {
     super();
 
     int i;
-    this.m_in = new Short[i = in.length];
+    this.m_in = new Number[i = in.length];
     for (; (--i) >= 0;) {
-      this.m_in[i] = Short.valueOf(in[i]);
+      this.m_in[i] = NumericalTypes.valueOf(in[i]);
     }
-    this.m_out = Short.valueOf(out);
+    this.m_out = NumericalTypes.valueOf(out);
     this.m_choices = TestCase.__checkChoices(this.m_out, this.m_in);
   }
 
@@ -92,11 +92,11 @@ public final class TestCase {
     super();
 
     int i;
-    this.m_in = new Integer[i = in.length];
+    this.m_in = new Number[i = in.length];
     for (; (--i) >= 0;) {
-      this.m_in[i] = Integer.valueOf(in[i]);
+      this.m_in[i] = NumericalTypes.valueOf(in[i]);
     }
-    this.m_out = Integer.valueOf(out);
+    this.m_out = NumericalTypes.valueOf(out);
     this.m_choices = TestCase.__checkChoices(this.m_out, this.m_in);
   }
 
@@ -112,11 +112,11 @@ public final class TestCase {
     super();
 
     int i;
-    this.m_in = new Long[i = in.length];
+    this.m_in = new Number[i = in.length];
     for (; (--i) >= 0;) {
-      this.m_in[i] = Long.valueOf(in[i]);
+      this.m_in[i] = NumericalTypes.valueOf(in[i]);
     }
-    this.m_out = Long.valueOf(out);
+    this.m_out = NumericalTypes.valueOf(out);
     this.m_choices = TestCase.__checkChoices(this.m_out, this.m_in);
   }
 
@@ -132,11 +132,11 @@ public final class TestCase {
     super();
 
     int i;
-    this.m_in = new Float[i = in.length];
+    this.m_in = new Number[i = in.length];
     for (; (--i) >= 0;) {
-      this.m_in[i] = Float.valueOf(in[i]);
+      this.m_in[i] = NumericalTypes.valueOf(in[i]);
     }
-    this.m_out = Float.valueOf(out);
+    this.m_out = NumericalTypes.valueOf(out);
     this.m_choices = TestCase.__checkChoices(this.m_out, this.m_in);
   }
 
@@ -152,11 +152,11 @@ public final class TestCase {
     super();
 
     int i;
-    this.m_in = new Double[i = in.length];
+    this.m_in = new Number[i = in.length];
     for (; (--i) >= 0;) {
-      this.m_in[i] = Double.valueOf(in[i]);
+      this.m_in[i] = NumericalTypes.valueOf(in[i]);
     }
-    this.m_out = Double.valueOf(out);
+    this.m_out = NumericalTypes.valueOf(out);
     this.m_choices = TestCase.__checkChoices(this.m_out, this.m_in);
   }
 
@@ -172,11 +172,11 @@ public final class TestCase {
     super();
 
     int i;
-    this.m_in = new Long[i = in.length];
+    this.m_in = new Number[i = in.length];
     for (; (--i) >= 0;) {
-      this.m_in[i] = Long.valueOf(in[i]);
+      this.m_in[i] = NumericalTypes.valueOf(in[i]);
     }
-    this.m_out = Double.valueOf(out);
+    this.m_out = NumericalTypes.valueOf(out);
     this.m_choices = TestCase.__checkChoices(this.m_out, this.m_in);
   }
 
@@ -192,11 +192,11 @@ public final class TestCase {
     super();
 
     int i;
-    this.m_in = new Integer[i = in.length];
+    this.m_in = new Number[i = in.length];
     for (; (--i) >= 0;) {
-      this.m_in[i] = Integer.valueOf(in[i]);
+      this.m_in[i] = NumericalTypes.valueOf(in[i]);
     }
-    this.m_out = Double.valueOf(out);
+    this.m_out = NumericalTypes.valueOf(out);
     this.m_choices = TestCase.__checkChoices(this.m_out, this.m_in);
   }
 
@@ -215,7 +215,7 @@ public final class TestCase {
     int inTypes, res, both;
 
     outTypes = NumericalTypes.getTypes(out);
-    inTypes = 0xffffffff;
+    inTypes = (-1);
     for (final Number num : in) {
       inTypes &= NumericalTypes.getTypes(num);
     }

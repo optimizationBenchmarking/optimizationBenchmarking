@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 
 /**
@@ -45,6 +46,29 @@ public final class Div extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final float computeAsFloat(final float x0, final float x1) {
+    long a, b, res;
+
+    if ((NumericalTypes.IS_LONG & //
+        NumericalTypes.getTypes(x0) & //
+    NumericalTypes.getTypes(x1)) != 0) {
+      a = ((long) x0);
+      b = ((long) x1);
+      if (b == 0L) {
+        if (a < 0L) {
+          return Float.NEGATIVE_INFINITY;
+        }
+        if (a > 0L) {
+          return Float.POSITIVE_INFINITY;
+        }
+        return Float.NaN;
+      }
+
+      res = (a / b);
+      if ((b * res) == a) {
+        return res;
+      }
+    }
+
     return (x0 / x1);
   }
 
@@ -53,31 +77,24 @@ public final class Div extends BinaryFunction {
   public final double computeAsDouble(final double x0, final double x1) {
     long a, b, res;
 
-    if ((x0 >= Long.MIN_VALUE) && (x0 <= Long.MAX_VALUE)) {
+    if ((NumericalTypes.IS_LONG & //
+        NumericalTypes.getTypes(x0) & //
+    NumericalTypes.getTypes(x1)) != 0) {
       a = ((long) x0);
-      if (a == x0) {
-
-        if ((x1 >= Long.MIN_VALUE) && (x1 <= Long.MAX_VALUE)) {
-          b = ((long) x1);
-          if (b == x1) {
-
-            if (b == 0L) {
-              if (a < 0L) {
-                return Double.NEGATIVE_INFINITY;
-              }
-              if (a > 0L) {
-                return Double.POSITIVE_INFINITY;
-              }
-              return Double.NaN;
-            }
-
-            res = (a / b);
-            if ((b * res) == a) {
-              return res;
-            }
-
-          }
+      b = ((long) x1);
+      if (b == 0L) {
+        if (a < 0L) {
+          return Double.NEGATIVE_INFINITY;
         }
+        if (a > 0L) {
+          return Double.POSITIVE_INFINITY;
+        }
+        return Double.NaN;
+      }
+
+      res = (a / b);
+      if ((b * res) == a) {
+        return res;
       }
     }
 

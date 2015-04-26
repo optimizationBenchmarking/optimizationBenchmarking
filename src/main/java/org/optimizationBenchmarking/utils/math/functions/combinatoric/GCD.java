@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.combinatoric;
 
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 
 /**
@@ -71,27 +72,21 @@ public final class GCD extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x1, final double x2) {
-    long a, b;
+    long a;
     double u, v, temp;
 
     u = x1;
     v = x2;
 
     for (;;) {
-      if ((v >= Long.MIN_VALUE) && (v <= Long.MAX_VALUE)) {
+      if ((NumericalTypes.getTypes(v) & NumericalTypes.IS_LONG) != 0) {
         a = ((long) v);
-        if (a == v) {
-          if (a == 0L) {
-            return Math.abs(u);
-          }
+        if (a == 0L) {
+          return Math.abs(u);
+        }
 
-          if ((u >= Long.MIN_VALUE) && (u <= Long.MAX_VALUE)) {
-            b = ((long) u);
-            if (b == u) {
-              return this.computeAsLong(b, a);
-            }
-          }
-
+        if ((NumericalTypes.getTypes(u) & NumericalTypes.IS_LONG) != 0) {
+          return this.computeAsLong(((long) u), a);
         }
       } else {
         if (v != v) {
