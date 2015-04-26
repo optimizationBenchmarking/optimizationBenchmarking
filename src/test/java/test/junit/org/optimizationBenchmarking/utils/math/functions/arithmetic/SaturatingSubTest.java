@@ -60,16 +60,30 @@ public final class SaturatingSubTest extends MathematicalFunctionTest {
   }
 
   /** {@inheritDoc} */
-  @Override
   @Ignore
-  public final void testTestCasesAllDouble() {
-    // ignored
+  @Override
+  public void testTestCasesAllDouble() {
+    //
   }
 
   /** {@inheritDoc} */
-  @Override
   @Ignore
-  public final void testTestCasesAllFloat() {
-    // ignored
+  @Override
+  public void testTestCasesAllFloat() {
+    //
+  }
+
+  /** {@inheritDoc} */
+  @Ignore
+  @Override
+  public void testTestCasesInLongOutDouble() {
+    //
+  }
+
+  /** {@inheritDoc} */
+  @Ignore
+  @Override
+  public void testTestCasesInIntOutDouble() {
+    //
   }
 }

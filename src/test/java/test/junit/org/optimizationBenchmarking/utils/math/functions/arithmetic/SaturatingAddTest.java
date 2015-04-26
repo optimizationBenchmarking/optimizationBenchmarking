@@ -1,5 +1,6 @@
 package test.junit.org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.junit.Ignore;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingAdd;
 
@@ -64,5 +65,33 @@ public final class SaturatingAddTest extends MathematicalFunctionTest {
   @Override
   public final TestCase[] getTestCases() {
     return SaturatingAddTest.TEST_CASES;
+  }
+
+  /** {@inheritDoc} */
+  @Ignore
+  @Override
+  public void testTestCasesAllDouble() {
+    //
+  }
+
+  /** {@inheritDoc} */
+  @Ignore
+  @Override
+  public void testTestCasesAllFloat() {
+    //
+  }
+
+  /** {@inheritDoc} */
+  @Ignore
+  @Override
+  public void testTestCasesInLongOutDouble() {
+    //
+  }
+
+  /** {@inheritDoc} */
+  @Ignore
+  @Override
+  public void testTestCasesInIntOutDouble() {
+    //
   }
 }

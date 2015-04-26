@@ -91,13 +91,13 @@ public final class SaturatingSub extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final float computeAsFloat(final float x0, final float x1) {
-    return (x0 + x1);
+    return Sub.INSTANCE.computeAsFloat(x0, x1);
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
-    return (x0 + x1);
+    return Sub.INSTANCE.computeAsDouble(x0, x1);
   }
 
   /** {@inheritDoc} */

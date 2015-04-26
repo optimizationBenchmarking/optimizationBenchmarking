@@ -61,6 +61,16 @@ public final class NumericalTypes {
    */
   public static final long MAX_DOUBLE_LONG = 9007199254740992L;
 
+  /** the {@link java.lang.Long#MAX_VALUE} as {@code double}: {@value} */
+  private static final double MAX_LONG_DOUBLE = Long.MAX_VALUE;
+  /** the {@link java.lang.Long#MIN_VALUE} as {@code double}: {@value} */
+  private static final double MIN_LONG_DOUBLE = Long.MIN_VALUE;
+
+  /** the {@link java.lang.Long#MAX_VALUE} as {@code float}: {@value} */
+  private static final float MAX_LONG_FLOAT = Long.MAX_VALUE;
+  /** the {@link java.lang.Long#MIN_VALUE} as {@code float}: {@value} */
+  private static final float MIN_LONG_FLOAT = Long.MIN_VALUE;
+
   /**
    * Get the possible types of a given object
    * 
@@ -315,7 +325,8 @@ public final class NumericalTypes {
     res = NumericalTypes.IS_FLOAT;
 
     checkDouble: {
-      if ((number >= Long.MIN_VALUE) && (number <= Long.MAX_VALUE)) {
+      if ((number >= NumericalTypes.MIN_LONG_FLOAT)
+          && (number <= NumericalTypes.MAX_LONG_FLOAT)) {
         l = ((long) number);
         if (l == number) {
           res |= NumericalTypes.IS_LONG;
@@ -379,7 +390,8 @@ public final class NumericalTypes {
     res = NumericalTypes.IS_DOUBLE;
 
     checkFloat: {
-      if ((number >= Long.MIN_VALUE) && (number <= Long.MAX_VALUE)) {
+      if ((number >= NumericalTypes.MIN_LONG_DOUBLE)
+          && (number <= NumericalTypes.MAX_LONG_DOUBLE)) {
         l = ((long) number);
         if (l == number) {
           res |= NumericalTypes.IS_LONG;
