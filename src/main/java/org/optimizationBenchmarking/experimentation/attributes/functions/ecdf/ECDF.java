@@ -63,8 +63,8 @@ public final class ECDF extends Attribute<IElementSet, IMatrix> {
    * @param timeTransform
    *          the time transformation
    */
-  public ECDF(final IDimension timeDim, final IDimension goalDim,
-      final Number goalValue, final UnaryFunction timeTransform) {
+  public ECDF(final IDimension timeDim, final UnaryFunction timeTransform,
+      final IDimension goalDim, final Number goalValue) {
     super(EAttributeType.TEMPORARILY_STORED);
 
     if ((timeDim == null) || (goalDim == null) || (goalValue == null)) {
@@ -109,7 +109,7 @@ public final class ECDF extends Attribute<IElementSet, IMatrix> {
 
     this.m_timeTransform = timeTransform;
     if (timeTransform != null) {
-      this.m_source = new ECDF(timeDim, goalDim, goalValue, null);
+      this.m_source = new ECDF(timeDim, null, goalDim, goalValue);
     } else {
       this.m_source = null;
     }
