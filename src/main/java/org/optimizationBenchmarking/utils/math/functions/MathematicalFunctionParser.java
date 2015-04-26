@@ -5,6 +5,9 @@ import java.util.LinkedHashSet;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Div;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Max;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Min;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.ModuloDivisorSign;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Sub;
 import org.optimizationBenchmarking.utils.math.functions.binary.BAnd;
@@ -21,10 +24,13 @@ import org.optimizationBenchmarking.utils.math.functions.numeric.Floor;
 import org.optimizationBenchmarking.utils.math.functions.numeric.Round;
 import org.optimizationBenchmarking.utils.math.functions.power.Cbrt;
 import org.optimizationBenchmarking.utils.math.functions.power.Cube;
+import org.optimizationBenchmarking.utils.math.functions.power.Ld;
 import org.optimizationBenchmarking.utils.math.functions.power.Lg;
 import org.optimizationBenchmarking.utils.math.functions.power.Ln;
 import org.optimizationBenchmarking.utils.math.functions.power.Log;
 import org.optimizationBenchmarking.utils.math.functions.power.Pow;
+import org.optimizationBenchmarking.utils.math.functions.power.Pow10;
+import org.optimizationBenchmarking.utils.math.functions.power.Pow2;
 import org.optimizationBenchmarking.utils.math.functions.power.Sqr;
 import org.optimizationBenchmarking.utils.math.functions.power.Sqrt;
 import org.optimizationBenchmarking.utils.math.functions.special.Beta;
@@ -94,12 +100,21 @@ public final class MathematicalFunctionParser extends
       case "+": {return Add.INSTANCE;} //$NON-NLS-1$
       case "-": {return Sub.INSTANCE;} //$NON-NLS-1$
       case "*": {return Mul.INSTANCE;} //$NON-NLS-1$
+      case "**": {return Pow.INSTANCE;} //$NON-NLS-1$
+      case "**10": {return Pow10.INSTANCE;} //$NON-NLS-1$
+      case "**2": {return Pow2.INSTANCE;} //$NON-NLS-1$
       case "/": {return Div.INSTANCE;} //$NON-NLS-1$
+      case "%": {return ModuloDivisorSign.INSTANCE;} //$NON-NLS-1$
       case "^": {return Pow.INSTANCE;} //$NON-NLS-1$
-      case "²": {return Sqr.INSTANCE;} //$NON-NLS-1$
-      case "³": {return Cube.INSTANCE;} //$NON-NLS-1$
+      case "^10": {return Pow10.INSTANCE;} //$NON-NLS-1$
+      case "^2": {return Pow2.INSTANCE;} //$NON-NLS-1$
+      case "\u00b2": {return Sqr.INSTANCE;} //$NON-NLS-1$
+      case "\u00b3": {return Cube.INSTANCE;} //$NON-NLS-1$
+      case "\u221a": {return Sqrt.INSTANCE;} //$NON-NLS-1$
+      case "\u221b": {return Cbrt.INSTANCE;} //$NON-NLS-1$
       case "abs": {return Absolute.INSTANCE;} //$NON-NLS-1$
-      case "acos": {return ACos.INSTANCE;} //$NON-NLS-1$
+      case "absolute": {return Absolute.INSTANCE;} //$NON-NLS-1$
+      case "acos": {return ACos.INSTANCE;} //$NON-NLS-1$$
       case "acosh": {return ACosh.INSTANCE;} //$NON-NLS-1$
       case "asin": {return ASin.INSTANCE;} //$NON-NLS-1$
       case "asinh": {return ASinh.INSTANCE;} //$NON-NLS-1$
@@ -111,9 +126,18 @@ public final class MathematicalFunctionParser extends
       case "cosh": {return Cosh.INSTANCE;} //$NON-NLS-1$
       case "cube": {return Cube.INSTANCE;} //$NON-NLS-1$
       case "floor": {return Floor.INSTANCE;} //$NON-NLS-1$
+      case "ld": {return Ld.INSTANCE;} //$NON-NLS-1$
       case "ln": {return Ln.INSTANCE;} //$NON-NLS-1$
       case "lg": {return Lg.INSTANCE;} //$NON-NLS-1$
       case "log": {return Log.INSTANCE;} //$NON-NLS-1$
+      case "log10": {return Lg.INSTANCE;} //$NON-NLS-1$
+      case "log2": {return Ld.INSTANCE;} //$NON-NLS-1$
+      case "log_10": {return Lg.INSTANCE;} //$NON-NLS-1$
+      case "log_2": {return Ld.INSTANCE;} //$NON-NLS-1$
+      case "min": {return Min.INSTANCE;} //$NON-NLS-1$
+      case "max": {return Max.INSTANCE;} //$NON-NLS-1$
+      case "mod": {return ModuloDivisorSign.INSTANCE;} //$NON-NLS-1$
+      case "modulo": {return ModuloDivisorSign.INSTANCE;} //$NON-NLS-1$
       case "round": {return Round.INSTANCE;} //$NON-NLS-1$
       case "sin": {return Sin.INSTANCE;} //$NON-NLS-1$
       case "sinh": {return Sinh.INSTANCE;} //$NON-NLS-1$

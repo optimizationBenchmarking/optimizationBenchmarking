@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 
 /**
@@ -43,18 +44,9 @@ public final class ModuloDivisorSign extends BinaryFunction {
     super();
   }
 
-  /**
-   * Compute the modulo, i.e., the remainder of the division of {@code x0}
-   * by {@code x1}. The result will have the same sign as {@code x1}.
-   * 
-   * @param x0
-   *          the dividend
-   * @param x1
-   *          the divisor
-   * @return the remainder of the division, i.e.,
-   *         {@code modulo(x0, x1)= x0 - x1*floor(x0/x1)}
-   */
-  public static final int modulo(final int x0, final int x1) {
+  /** {@inheritDoc} */
+  @Override
+  public final int computeAsInt(final int x0, final int x1) {
     final int var;
 
     if (((var = (x0 % x1)) != 0) && ((x0 ^ x1) < 0)) {
@@ -64,18 +56,9 @@ public final class ModuloDivisorSign extends BinaryFunction {
     return var;
   }
 
-  /**
-   * Compute the modulo, i.e., the remainder of the division of {@code x0}
-   * by {@code x1}. The result will have the same sign as {@code x1}.
-   * 
-   * @param x0
-   *          the dividend
-   * @param x1
-   *          the divisor
-   * @return the remainder of the division, i.e.,
-   *         {@code modulo(x0, x1)= x0 - x1*floor(x0/x1)}
-   */
-  public static final long modulo(final long x0, final long x1) {
+  /** {@inheritDoc} */
+  @Override
+  public final long computeAsLong(final long x0, final long x1) {
     final long var;
 
     if (((var = (x0 % x1)) != 0) && ((x0 ^ x1) < 0)) {
@@ -85,49 +68,16 @@ public final class ModuloDivisorSign extends BinaryFunction {
     return var;
   }
 
-  /**
-   * Compute the modulo, i.e., the remainder of the division of {@code x0}
-   * by {@code x1}. The result will have the same sign as {@code x1}.
-   * 
-   * @param x0
-   *          the divident
-   * @param x1
-   *          the divisor
-   * @return the remainder of the division, i.e.,
-   *         {@code modulo(x0, x1)= x0 - x1*floor(x0/x1)}
-   */
-  public static final double modulo(final double x0, final double x1) {
-    return (x0 - (x1 * Math.floor(x0 / x1)));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final byte computeAsByte(final byte x0, final byte x1) {
-    return ((byte) (ModuloDivisorSign.modulo(x0, x1)));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final short computeAsShort(final short x0, final short x1) {
-    return ((short) (ModuloDivisorSign.modulo(x0, x1)));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final int computeAsInt(final int x0, final int x1) {
-    return (ModuloDivisorSign.modulo(x0, x1));
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final long computeAsLong(final long x0, final long x1) {
-    return (ModuloDivisorSign.modulo(x0, x1));
-  }
-
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
-    return (ModuloDivisorSign.modulo(x0, x1));
+    if ((NumericalTypes.IS_LONG & //
+        NumericalTypes.getTypes(x0) & //
+    NumericalTypes.getTypes(x1)) != 0) {
+      return this.computeAsLong(((long) x0), ((long) x1));
+    }
+
+    return (x0 - (x1 * Math.floor(x0 / x1)));
   }
 
   /** {@inheritDoc} */

@@ -3,18 +3,18 @@ package org.optimizationBenchmarking.utils.math.functions.power;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 
 /**
- * The 10^x function
+ * The 2^x function
  */
-public final class Pow10 extends UnaryFunction {
+public final class Pow2 extends UnaryFunction {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** the globally shared instance */
-  public static final Pow10 INSTANCE = new Pow10();
+  public static final Pow2 INSTANCE = new Pow2();
 
   /** instantiate */
-  private Pow10() {
+  private Pow2() {
     super();
   }
 
@@ -24,8 +24,8 @@ public final class Pow10 extends UnaryFunction {
     if (x1 < 0) {
       return 0;
     }
-    if (x1 < 10) {
-      return ((int) (Lg.TABLE[x1]));
+    if (x1 < 31) {
+      return (1 << x1);
     }
     return Integer.MAX_VALUE;
   }
@@ -36,8 +36,8 @@ public final class Pow10 extends UnaryFunction {
     if (x1 < 0) {
       return 0;
     }
-    if (x1 < Lg.TABLE.length) {
-      return Lg.TABLE[(int) x1];
+    if (x1 < 63L) {
+      return (1 << x1);
     }
     return Long.MAX_VALUE;
   }
@@ -47,23 +47,23 @@ public final class Pow10 extends UnaryFunction {
   public final double computeAsDouble(final double x1) {
     final int i1;
 
-    if ((x1 > (-Lg.TABLE.length)) && (x1 < Lg.TABLE.length)) {
+    if ((x1 > (-63)) && (x1 < 63)) {
       i1 = ((int) x1);
       if (i1 == x1) {
         if (i1 >= 0) {
-          return Lg.TABLE[i1];
+          return (1L << i1);
         }
-        return (1d / Lg.TABLE[-i1]);
+        return (1d / (1L << (-i1)));
       }
     }
 
-    return Pow.INSTANCE.computeAsDouble(10d, x1);
+    return Pow.INSTANCE.computeAsDouble(2d, x1);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Lg invertFor(final int index) {
-    return Lg.INSTANCE;
+  public final Ld invertFor(final int index) {
+    return Ld.INSTANCE;
   }
 
   // default, automatic serialization replacement and resolve routines for
@@ -78,7 +78,7 @@ public final class Pow10 extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
-    return Pow10.INSTANCE;
+    return Pow2.INSTANCE;
   }
 
   /**
@@ -90,6 +90,6 @@ public final class Pow10 extends UnaryFunction {
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {
-    return Pow10.INSTANCE;
+    return Pow2.INSTANCE;
   }
 }
