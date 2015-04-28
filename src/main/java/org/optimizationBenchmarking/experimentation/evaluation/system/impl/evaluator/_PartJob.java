@@ -74,6 +74,18 @@ abstract class _PartJob extends _PseudoJob {
     return 2;
   }
 
+  /**
+   * This method is called before a section begins.
+   * 
+   * @param data
+   *          the data
+   * @param section
+   *          the section
+   */
+  void _beforeSection(final IExperimentSet data, final ISection section) {
+    // do nothing
+  }
+
   /** {@inheritDoc} */
   @Override
   public final void main(final ISectionContainer dest) {
@@ -82,6 +94,8 @@ abstract class _PartJob extends _PseudoJob {
 
       if (this.m_children.length >= this._getMinSectionsToOpenNewSection()) {
         try (final ISection section = dest.section(null)) {
+          this._beforeSection(this.m_data, section);
+
           try (final IPlainText title = section.title()) {
             this._writeSectionTitle(this.m_data, title);
           }

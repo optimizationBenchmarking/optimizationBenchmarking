@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
 import org.optimizationBenchmarking.utils.math.BasicNumber;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 
 /**
  * This class computes the maximum of a set of numbers.
@@ -48,36 +49,30 @@ public final class MaximumAggregate extends ScalarAggregate {
   @SuppressWarnings("incomplete-switch")
   @Override
   public final void append(final double value) {
-    final long l;
 
     if (this.m_state == BasicNumber.STATE_NAN) {
       return;
     }
 
-    if (value < Long.MIN_VALUE) {
-      if (value <= Double.NEGATIVE_INFINITY) {
-        if (this.m_state == BasicNumber.STATE_EMPTY) {
-          this.m_state = BasicNumber.STATE_NEGATIVE_INFINITY;
-        }
-        return;
+    if ((NumericalTypes.getTypes(value) & NumericalTypes.IS_LONG) != 0) {
+      this.append((long) value);
+      return;
+    }
+
+    if (value <= Double.NEGATIVE_INFINITY) {
+      if (this.m_state == BasicNumber.STATE_EMPTY) {
+        this.m_state = BasicNumber.STATE_NEGATIVE_INFINITY;
       }
-    } else {
-      if (value > Long.MAX_VALUE) {
-        if (value >= Double.POSITIVE_INFINITY) {
-          this.m_state = BasicNumber.STATE_POSITIVE_INFINITY;
-          return;
-        }
-      } else {
-        if (value != value) {
-          this.m_state = BasicNumber.STATE_NAN;
-          return;
-        }
-        l = ((long) value);
-        if (l == value) {
-          this.append(l);
-          return;
-        }
-      }
+      return;
+    }
+    if (value >= Double.POSITIVE_INFINITY) {
+      this.m_state = BasicNumber.STATE_POSITIVE_INFINITY;
+      return;
+    }
+
+    if (value != value) {
+      this.m_state = BasicNumber.STATE_NAN;
+      return;
     }
 
     switch (this.m_state) {

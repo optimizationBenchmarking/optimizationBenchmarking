@@ -2,9 +2,8 @@ package org.optimizationBenchmarking.utils.graphics.style;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.List;
 
-import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.collections.maps.StringMap;
 import org.optimizationBenchmarking.utils.graphics.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorPalette;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
@@ -18,23 +17,24 @@ import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokeStyle;
  */
 public final class StyleSet {
 
-  /** the font palette */
-  private final FontPalette m_fonts;
+  /** the owning style set */
+  private final StyleSet m_owner;
+
+  /** the style set definition */
+  private final _StyleSetDefinition m_def;
 
   /** the used fonts */
   private int m_usedFonts;
-
-  /** the color palette */
-  private final ColorPalette m_colors;
-
   /** the used colors */
   private int m_usedColors;
-
-  /** the stroke palette */
-  private final StrokePalette m_strokes;
-
   /** the used strokes */
   private int m_usedStrokes;
+  /** the named colors */
+  private StringMap<ColorStyle> m_namedColors;
+  /** the named strokes */
+  private StringMap<StrokeStyle> m_namedStrokes;
+  /** the named fonts */
+  private StringMap<FontStyle> m_namedFonts;
 
   /**
    * Create the style set
@@ -48,23 +48,32 @@ public final class StyleSet {
    */
   public StyleSet(final FontPalette fonts, final ColorPalette colors,
       final StrokePalette strokes) {
+    this(fonts, colors, strokes, null);
+  }
+
+  /**
+   * Create the style set
+   * 
+   * @param fonts
+   *          the font palette
+   * @param strokes
+   *          the stroke palette
+   * @param colors
+   *          the color palette
+   * @param owner
+   *          the owning style set
+   */
+  private StyleSet(final FontPalette fonts, final ColorPalette colors,
+      final StrokePalette strokes, final StyleSet owner) {
     super();
 
-    if (fonts == null) {
-      throw new IllegalArgumentException(//
-          "The font palette cannot be null."); //$NON-NLS-1$
+    if (owner == null) {
+      this.m_def = new _StyleSetDefinition(fonts, colors, strokes);
+    } else {
+      this.m_def = owner.m_def;
     }
-    if (colors == null) {
-      throw new IllegalArgumentException(//
-          "The color palette cannot be null."); //$NON-NLS-1$
-    }
-    if (strokes == null) {
-      throw new IllegalArgumentException(//
-          "The stroke palette cannot be null."); //$NON-NLS-1$
-    }
-    this.m_fonts = fonts;
-    this.m_colors = colors;
-    this.m_strokes = strokes;
+
+    this.m_owner = owner;
   }
 
   /**
@@ -74,97 +83,201 @@ public final class StyleSet {
    *          the owning style set
    */
   public StyleSet(final StyleSet owner) {
-    this(owner.m_fonts, owner.m_colors, owner.m_strokes);
+    this(null, null, null, owner);
     this.m_usedColors = owner.m_usedColors;
     this.m_usedFonts = owner.m_usedFonts;
     this.m_usedStrokes = owner.m_usedStrokes;
   }
 
   /**
-   * check the styles
+   * Allocate a fonts. Best effort is made to return fonts different from
+   * those allocated before.
    * 
-   * @param n
-   *          the number of elements
+   * @return the font
    */
-  private static void __checkN(final int n) {
-    if (n < 0) {
-      throw new IllegalArgumentException(//
-          "Cannot allocate a negative number of styles, such as " + n); //$NON-NLS-1$
-    }
+  public synchronized final FontStyle allocateFont() {
+    final int index;
+    this.m_usedFonts = index = ((this.m_usedFonts + 1) % this.m_def.m_fontsSize);
+    return this.m_def.m_fonts.get(index);
   }
 
   /**
-   * allocate a set of fonts
+   * Allocate a colors. Best effort is made to return colors different from
+   * those allocated before.
    * 
-   * @param n
-   *          the number of fonts to allocate
-   * @return the list of fonts, or {@code null} if less than {@code n}
-   *         fonts can be allocated
+   * @return the color
+   */
+  public synchronized final ColorStyle allocateColor() {
+    final int index;
+    this.m_usedColors = index = ((this.m_usedColors + 1) % this.m_def.m_colorsSize);
+    return this.m_def.m_colors.get(index);
+  }
+
+  /**
+   * Allocate a strokes. Best effort is made to return strokes different
+   * from those allocated before.
+   * 
+   * @return the stroke
+   */
+  public synchronized final StrokeStyle allocateStroke() {
+    final int index;
+    this.m_usedStrokes = index = ((this.m_usedStrokes + 1) % this.m_def.m_strokesSize);
+    return this.m_def.m_strokes.get(index);
+  }
+
+  /**
+   * Obtain the color of a given name. If {@code allocateIfUndefined} is
+   * {@code true} and no color is defined for the given name yet, then one
+   * will be allocated. If {@code allocateIfUndefined} is {@code false} and
+   * no color is defined for the given name yet, {@code null} will be
+   * returned.
+   * 
+   * @param name
+   *          the name
+   * @param allocateIfUndefined
+   *          should the color be allocated if it is still undefined?
+   * @return the color for the given name, or {@code null} if none was
+   *         allocated for the name and {@code allocateIfUndefined} is
+   *         {@code false}
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public synchronized final List<FontStyle> allocateFonts(final int n) {
-    int a, b;
+  public synchronized final ColorStyle getColor(final String name,
+      final boolean allocateIfUndefined) {
+    ColorStyle color;
+    StyleSet owner;
 
-    StyleSet.__checkN(n);
-    if (n <= 0) {
-      return ((List) (ArraySetView.EMPTY_SET_VIEW));
+    if (this.m_namedColors != null) {
+      color = this.m_namedColors.get(name);
+      if (color != null) {
+        return color;
+      }
     }
-    a = this.m_usedFonts;
-    b = (a + n);
-    if (b <= this.m_fonts.size()) {
-      this.m_usedFonts = b;
-      return this.m_fonts.subList(a, b);
+
+    if (allocateIfUndefined) {
+      if (this.m_namedColors == null) {
+        findMapToCopy: {
+          for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
+            synchronized (owner) {
+              if (owner.m_namedColors != null) {
+                this.m_namedColors = ((StringMap) (//
+                owner.m_namedColors.clone()));
+                break findMapToCopy;
+              }
+            }
+          }
+          this.m_namedColors = new StringMap<>();
+        }
+      }
+
+      color = this.allocateColor();
+      this.m_namedColors.put(name, color);
+      return color;
     }
+
     return null;
   }
 
   /**
-   * allocate a set of colors
+   * Obtain the font of a given name. If {@code allocateIfUndefined} is
+   * {@code true} and no font is defined for the given name yet, then one
+   * will be allocated. If {@code allocateIfUndefined} is {@code false} and
+   * no font is defined for the given name yet, {@code null} will be
+   * returned.
    * 
-   * @param n
-   *          the number of colors to allocate
-   * @return the list of colors, or {@code null} if less than {@code n}
-   *         colors can be allocated
+   * @param name
+   *          the name
+   * @param allocateIfUndefined
+   *          should the font be allocated if it is still undefined?
+   * @return the font for the given name, or {@code null} if none was
+   *         allocated for the name and {@code allocateIfUndefined} is
+   *         {@code false}
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public synchronized final List<ColorStyle> allocateColors(final int n) {
-    int a, b;
+  public synchronized final FontStyle getFont(final String name,
+      final boolean allocateIfUndefined) {
+    FontStyle font;
+    StyleSet owner;
 
-    StyleSet.__checkN(n);
-    if (n <= 0) {
-      return ((List) (ArraySetView.EMPTY_SET_VIEW));
+    if (this.m_namedFonts != null) {
+      font = this.m_namedFonts.get(name);
+      if (font != null) {
+        return font;
+      }
     }
-    a = this.m_usedColors;
-    b = (a + n);
-    if (b <= this.m_colors.size()) {
-      this.m_usedColors = b;
-      return this.m_colors.subList(a, b);
+
+    if (allocateIfUndefined) {
+      if (this.m_namedFonts == null) {
+        findMapToCopy: {
+          for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
+            synchronized (owner) {
+              if (owner.m_namedFonts != null) {
+                this.m_namedFonts = ((StringMap) (//
+                owner.m_namedFonts.clone()));
+                break findMapToCopy;
+              }
+            }
+          }
+          this.m_namedFonts = new StringMap<>();
+        }
+      }
+
+      font = this.allocateFont();
+      this.m_namedFonts.put(name, font);
+      return font;
     }
+
     return null;
   }
 
   /**
-   * allocate a set of strokes
+   * Obtain the stroke of a given name. If {@code allocateIfUndefined} is
+   * {@code true} and no stroke is defined for the given name yet, then one
+   * will be allocated. If {@code allocateIfUndefined} is {@code false} and
+   * no stroke is defined for the given name yet, {@code null} will be
+   * returned.
    * 
-   * @param n
-   *          the number of strokes to allocate
-   * @return the list of strokes, or {@code null} if less than {@code n}
-   *         strokes can be allocated
+   * @param name
+   *          the name
+   * @param allocateIfUndefined
+   *          should the stroke be allocated if it is still undefined?
+   * @return the stroke for the given name, or {@code null} if none was
+   *         allocated for the name and {@code allocateIfUndefined} is
+   *         {@code false}
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public synchronized final List<StrokeStyle> allocateStrokes(final int n) {
-    int a, b;
+  public synchronized final StrokeStyle getStroke(final String name,
+      final boolean allocateIfUndefined) {
+    StrokeStyle stroke;
+    StyleSet owner;
 
-    StyleSet.__checkN(n);
-    if (n <= 0) {
-      return ((List) (ArraySetView.EMPTY_SET_VIEW));
+    if (this.m_namedStrokes != null) {
+      stroke = this.m_namedStrokes.get(name);
+      if (stroke != null) {
+        return stroke;
+      }
     }
-    a = this.m_usedStrokes;
-    b = (a + n);
-    if (b <= this.m_strokes.size()) {
-      this.m_usedStrokes = b;
-      return this.m_strokes.subList(a, b);
+
+    if (allocateIfUndefined) {
+      if (this.m_namedStrokes == null) {
+        findMapToCopy: {
+          for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
+            synchronized (owner) {
+              if (owner.m_namedStrokes != null) {
+                this.m_namedStrokes = ((StringMap) (//
+                owner.m_namedStrokes.clone()));
+                break findMapToCopy;
+              }
+            }
+          }
+          this.m_namedStrokes = new StringMap<>();
+        }
+      }
+
+      stroke = this.allocateStroke();
+      this.m_namedStrokes.put(name, stroke);
+      return stroke;
     }
+
     return null;
   }
 
@@ -174,7 +287,7 @@ public final class StyleSet {
    * @return the default stroke
    */
   public final StrokeStyle getDefaultStroke() {
-    return this.m_strokes.getDefaultStroke();
+    return this.m_def.m_strokes.getDefaultStroke();
   }
 
   /**
@@ -183,7 +296,7 @@ public final class StyleSet {
    * @return the thin stroke
    */
   public final StrokeStyle getThinStroke() {
-    return this.m_strokes.getThinStroke();
+    return this.m_def.m_strokes.getThinStroke();
   }
 
   /**
@@ -192,7 +305,7 @@ public final class StyleSet {
    * @return the thick stroke
    */
   public final StrokeStyle getThickStroke() {
-    return this.m_strokes.getThickStroke();
+    return this.m_def.m_strokes.getThickStroke();
   }
 
   /**
@@ -201,7 +314,7 @@ public final class StyleSet {
    * @return the default font style
    */
   public final FontStyle getDefaultFont() {
-    return this.m_fonts.getDefaultFont();
+    return this.m_def.m_fonts.getDefaultFont();
   }
 
   /**
@@ -210,7 +323,7 @@ public final class StyleSet {
    * @return the emphasize font style
    */
   public final FontStyle getEmphFont() {
-    return this.m_fonts.getEmphFont();
+    return this.m_def.m_fonts.getEmphFont();
   }
 
   /**
@@ -219,7 +332,7 @@ public final class StyleSet {
    * @return the code font style
    */
   public final FontStyle getCodeFont() {
-    return this.m_fonts.getCodeFont();
+    return this.m_def.m_fonts.getCodeFont();
   }
 
   /**
@@ -228,7 +341,7 @@ public final class StyleSet {
    * @return the black color
    */
   public final ColorStyle getBlack() {
-    return this.m_colors.getBlack();
+    return this.m_def.m_colors.getBlack();
   }
 
   /**
@@ -237,7 +350,7 @@ public final class StyleSet {
    * @return the white color
    */
   public final ColorStyle getWhite() {
-    return this.m_colors.getWhite();
+    return this.m_def.m_colors.getWhite();
   }
 
   /**
@@ -248,9 +361,9 @@ public final class StyleSet {
    *          the graphics context
    */
   public final void initialize(final Graphics2D graphics) {
-    this.m_fonts.initialize(graphics);
-    this.m_colors.initialize(graphics);
-    this.m_strokes.initialize(graphics);
+    this.m_def.m_fonts.initialize(graphics);
+    this.m_def.m_colors.initialize(graphics);
+    this.m_def.m_strokes.initialize(graphics);
   }
 
   /**
@@ -261,7 +374,7 @@ public final class StyleSet {
    * @return the color most similar to the RGB value
    */
   public final ColorStyle getMostSimilarColor(final int rgb) {
-    return this.m_colors.getMostSimilarColor(rgb);
+    return this.m_def.m_colors.getMostSimilarColor(rgb);
   }
 
   /**
@@ -272,7 +385,7 @@ public final class StyleSet {
    * @return the color most similar to a given color
    */
   public final ColorStyle getMostSimilarColor(final Color color) {
-    return this.m_colors.getMostSimilarColor(color);
+    return this.m_def.m_colors.getMostSimilarColor(color);
   }
 
   /**
@@ -293,7 +406,7 @@ public final class StyleSet {
   public final FontStyle getMostSimilarFont(final EFontFamily family,
       final boolean bold, final boolean italic, final boolean underlined,
       final float size) {
-    return this.m_fonts.getMostSimilarFont(family, bold, italic,
+    return this.m_def.m_fonts.getMostSimilarFont(family, bold, italic,
         underlined, size);
   }
 }

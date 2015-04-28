@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.system.impl.description.instances;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueGroup;
@@ -24,6 +24,7 @@ import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
+import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 
 /** A job of the instance information module. */
@@ -85,20 +86,23 @@ final class _InstanceInformationJob extends DescriptionJob {
   private final void __makeFeatureFigures(final IExperimentSet data,
       final ISection section, final ISectionBody body) {
     final PropertyValueGroups[] groups;
-    final List<ColorStyle> colors;
+    final ArrayList<ColorStyle> colors;
+    final StyleSet styles;
     String featureName;
-    int index, groupIndex, maxColors;
+    int index, groupIndex, needed;
 
     groups = new PropertyValueGroups[this.m_groupers.length];
-    maxColors = 0;
+    colors = new ArrayList<>();
     index = 0;
+    styles = section.getStyles();
     for (final IFeature feature : data.getFeatures().getData()) {
       groups[index] = this.m_groupers[index].get(feature);
-      maxColors = Math.max(maxColors, groups[index].getData().size());
+      needed = groups[index].getData().size();
+      while (colors.size() < needed) {
+        colors.add(styles.allocateColor());
+      }
       index++;
     }
-
-    colors = section.getStyles().allocateColors(maxColors);
 
     try (final IFigureSeries series = body.figureSeries(null,
         this.m_figureSize, "instanceFeaturePieCharts")) { //$NON-NLS-1$

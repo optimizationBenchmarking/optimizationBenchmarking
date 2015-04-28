@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
@@ -1142,41 +1142,35 @@ public class RandomDocumentExample extends DocumentExample {
   private final void __loadStyles() {
     final StyleSet ss;
     final ArrayList<Object> list;
+    HashSet<Object> set;
 
     ss = this.m_doc.getStyles();
     list = new ArrayList<>();
 
-    findFonts: for (;;) {
-      final List<FontStyle> s = ss.allocateFonts(1);
-      if (s == null) {
-        break findFonts;
-      }
-      list.addAll(s);
+    set = new HashSet<>();
+    while (set.add(ss.allocateFont())) {/* */
     }
+    list.addAll(set);
+    set.clear();
+
     list.add(ss.getCodeFont());
     list.add(ss.getDefaultFont());
     list.add(ss.getEmphFont());
     this.m_fonts = list.toArray(new FontStyle[list.size()]);
 
     list.clear();
-    findColors: for (;;) {
-      final List<ColorStyle> s = ss.allocateColors(1);
-      if (s == null) {
-        break findColors;
-      }
-      list.addAll(s);
+    while (set.add(ss.allocateColor())) {/* */
     }
+    list.addAll(set);
+    set.clear();
     list.add(ss.getBlack());
     this.m_colors = list.toArray(new ColorStyle[list.size()]);
 
     list.clear();
-    findStrokes: for (;;) {
-      final List<StrokeStyle> s = ss.allocateStrokes(1);
-      if (s == null) {
-        break findStrokes;
-      }
-      list.addAll(s);
+    while (set.add(ss.allocateStroke())) {/* */
     }
+    list.addAll(set);
+    set = null;
     list.add(ss.getDefaultStroke());
     list.add(ss.getThickStroke());
     list.add(ss.getThinStroke());
