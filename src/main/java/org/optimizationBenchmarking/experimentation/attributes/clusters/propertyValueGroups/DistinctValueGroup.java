@@ -52,6 +52,12 @@ public final class DistinctValueGroup extends
   /** {@inheritDoc} */
   @Override
   public final String getCriterionString() {
-    return this.m_value.toString();
+    return String.valueOf(this.m_value);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    return ("value_" + String.valueOf(this.m_value)); //$NON-NLS-1$
   }
 }

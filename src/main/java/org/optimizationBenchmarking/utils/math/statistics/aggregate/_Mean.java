@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
 import org.optimizationBenchmarking.utils.math.BasicNumber;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.combinatoric.GCD;
 
 /** The arithmetic mean */
@@ -91,30 +92,25 @@ final class _Mean extends _InternalAggregate {
    */
   private final void _setDouble(final double dres) {
     ScalarAggregate agg;
-    final long lres;
 
-    if (dres < Long.MIN_VALUE) {
-      if (dres <= Double.NEGATIVE_INFINITY) {
-        this._assign(this.m_info.m_min.m_agg);
-        return;
-      }
-    } else {
-      if (dres > Long.MAX_VALUE) {
-        if (dres >= Double.POSITIVE_INFINITY) {
-          this._assign(this.m_info.m_max.m_agg);
-          return;
-        }
-      } else {
-        if (dres != dres) {
-          this.m_state = BasicNumber.STATE_NAN;
-        } else {
-          lres = ((long) dres);
-          if (lres == dres) {
-            this._setLong(lres);
-            return;
-          }
-        }
-      }
+    if ((NumericalTypes.getTypes(dres) & NumericalTypes.IS_LONG) != 0) {
+      this._setLong((long) dres);
+      return;
+    }
+
+    if (dres <= Double.NEGATIVE_INFINITY) {
+      this._assign(this.m_info.m_min.m_agg);
+      return;
+    }
+
+    if (dres >= Double.POSITIVE_INFINITY) {
+      this._assign(this.m_info.m_max.m_agg);
+      return;
+    }
+
+    if (dres != dres) {
+      this.m_state = BasicNumber.STATE_NAN;
+      return;
     }
 
     this.m_state = BasicNumber.STATE_DOUBLE;

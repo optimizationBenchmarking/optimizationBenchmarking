@@ -46,6 +46,89 @@ public final class PathUtils {
   }
 
   /**
+   * Sanitize a component of a path. This method replaces all characters
+   * which could potentially cause problems with an underscore, i.e.,
+   * {@code "_"}. This will potentially change the path component. It may
+   * make sense to use this method when automatically generating paths to
+   * ensure that nothing will go wrong.
+   * 
+   * @param component
+   *          the path component
+   * @return the sanitized component
+   */
+  public static final String sanitizePathComponent(final String component) {
+    final char[] data;
+    final String normalized;
+    int index, codepoint;
+    boolean changed;
+
+    if (component == null) {
+      throw new IllegalArgumentException(//
+          "Path component cannot be null."); //$NON-NLS-1$
+    }
+
+    normalized = TextUtils.normalize(component);
+    if (normalized == null) {
+      throw new IllegalArgumentException(//
+          "Normalized form of path component cannot be null."); //$NON-NLS-1$
+    }
+
+    data = normalized.toCharArray();
+    changed = false;
+    outer: for (index = data.length; (--index) >= 0;) {
+
+      switch (codepoint = data[index]) {
+        case 0x22: // """
+        case 0x23: // "#"
+        case 0x24: // "$"
+        case 0x25: // "%"
+        case 0x26: // "&"
+        case 0x27: // "'"
+        case 0x2e: // "."
+        case 0x2f:// "/"
+        case 0x2a: // "*"
+        case 0x3a: // ":"
+        case 0x3c: // "<"
+        case 0x3f: // "?"
+        case 0x3e: // ">"
+        case 0x5c: // "\"
+        case 0x5e: // "^"
+        case 0x60: // "`"
+        case 0x7e: // "~"
+        case 0x7b: // "{“
+        case 0x7d: // "}"
+        case 0xa7: // "§"
+        case 0xb4: {// "´"
+          break;
+        }
+        default: {
+          if (codepoint <= 32) {
+            break;
+          }
+          if (!(Character.isDefined(codepoint) && Character
+              .isValidCodePoint(codepoint))) {
+            break;
+          }
+          if (Character.isISOControl(codepoint) || //
+              Character.isWhitespace(codepoint)) {
+            break;
+          }
+
+        }
+          continue outer;
+      }
+      data[index] = '_';
+      changed = true;
+    }
+
+    if (changed) {
+      return new String(data);
+    }
+
+    return normalized;
+  }
+
+  /**
    * Returns the {@code FileSystemProvider} to delegate to.
    * 
    * @param path

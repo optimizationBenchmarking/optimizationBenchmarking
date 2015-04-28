@@ -74,7 +74,8 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
     this.m_size = size;
     this.m_folder = PathUtils.normalize(this.m_doc.m_basePath.resolve(
         BasicFigure.GRAPHICS_OFFSET).resolve(
-        (path == null) ? this.m_globalID : path));
+        (path == null) ? this.m_globalID : //
+            PathUtils.sanitizePathComponent(path)));
     this.m_figuresPerRow = Math.max(1, this.getDocument()
         .getFiguresPerRow(size));
   }

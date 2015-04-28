@@ -38,15 +38,15 @@ import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterato
  * automatically in the distinct case.</dd>
  * </dl>
  */
-public final class PropertyValueGrouperParser extends
+final class _PropertyValueGrouperParser extends
     Parser<PropertyValueGrouper> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** The default value grouper parser */
-  public static final PropertyValueGrouperParser DEFAULT_GROUPER_PARSER//
-  = new PropertyValueGrouperParser();
+  public static final _PropertyValueGrouperParser DEFAULT_GROUPER_PARSER//
+  = new _PropertyValueGrouperParser();
 
   /** the don't care string */
   private static final String DONT_CARE = "?";//$NON-NLS-1$
@@ -65,7 +65,7 @@ public final class PropertyValueGrouperParser extends
   private static final String TO = "to";//$NON-NLS-1$
 
   /** create the parser */
-  private PropertyValueGrouperParser() {
+  private _PropertyValueGrouperParser() {
     super();
   }
 
@@ -144,16 +144,16 @@ public final class PropertyValueGrouperParser extends
 
         if (minMaxMode) {
           current = iterator.next();
-          if (!(PropertyValueGrouperParser.TO.equalsIgnoreCase(current))) {
+          if (!(_PropertyValueGrouperParser.TO.equalsIgnoreCase(current))) {
             throw new IllegalArgumentException(
                 (((//
-                    '\'' + PropertyValueGrouperParser.TO) + "' expected, but '")//$NON-NLS-1$ 
+                    '\'' + _PropertyValueGrouperParser.TO) + "' expected, but '")//$NON-NLS-1$ 
                     + current)
                     + "' found.");//$NON-NLS-1$
           }
 
           current = iterator.next();
-          if (!(PropertyValueGrouperParser.DONT_CARE.equals(current))) {
+          if (!(_PropertyValueGrouperParser.DONT_CARE.equals(current))) {
             maxGroups = IntParser.INSTANCE.parseInt(current);
           }
 
@@ -183,9 +183,9 @@ public final class PropertyValueGrouperParser extends
                     (((((((//
                         "Found '" + current) + //$NON-NLS-1$
                         "' but expected ")//$NON-NLS-1$
-                        + PropertyValueGrouperParser.MULTIPLES) + ',') + ' ') + PropertyValueGrouperParser.POWERS)//
+                        + _PropertyValueGrouperParser.MULTIPLES) + ',') + ' ') + _PropertyValueGrouperParser.POWERS)//
                         + ", or ") + //$NON-NLS-1$
-                        PropertyValueGrouperParser.ANY);
+                        _PropertyValueGrouperParser.ANY);
               }
             }
           }
@@ -195,10 +195,10 @@ public final class PropertyValueGrouperParser extends
           if (iterator.hasNext()) {
 
             current = iterator.next();
-            if (!(PropertyValueGrouperParser.OF.equalsIgnoreCase(current))) {
+            if (!(_PropertyValueGrouperParser.OF.equalsIgnoreCase(current))) {
               throw new IllegalArgumentException(
                   (((//
-                      '\'' + PropertyValueGrouperParser.OF) + "' expected, but '")//$NON-NLS-1$ 
+                      '\'' + _PropertyValueGrouperParser.OF) + "' expected, but '")//$NON-NLS-1$ 
                       + current)
                       + "' found.");//$NON-NLS-1$
             }

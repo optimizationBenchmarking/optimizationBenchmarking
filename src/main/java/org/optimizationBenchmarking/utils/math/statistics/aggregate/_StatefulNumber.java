@@ -9,13 +9,13 @@ class _StatefulNumber extends BasicNumber {
   private static final long serialVersionUID = 1L;
 
   /** the state */
-  protected int m_state;
+  int m_state;
 
   /** the long value */
-  protected long m_long;
+  long m_long;
 
   /** the double value */
-  protected double m_double;
+  double m_double;
 
   /** the empty state */
   _StatefulNumber() {

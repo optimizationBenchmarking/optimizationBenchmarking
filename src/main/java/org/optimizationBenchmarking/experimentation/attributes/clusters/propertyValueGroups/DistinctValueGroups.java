@@ -33,7 +33,7 @@ public final class DistinctValueGroups extends PropertyValueGroups {
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public final ArrayListView<DistinctValueGroup> getGroups() {
+  public final ArrayListView<DistinctValueGroup> getData() {
     return ((ArrayListView) (this.m_data));
   }
 
@@ -41,5 +41,11 @@ public final class DistinctValueGroups extends PropertyValueGroups {
   @Override
   final DistinctValueGroup _group(final _Group group) {
     return new DistinctValueGroup(this, group.m_selection, group.m_lower);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    return ("distinct_" + this.m_property.getName()); //$NON-NLS-1$
   }
 }

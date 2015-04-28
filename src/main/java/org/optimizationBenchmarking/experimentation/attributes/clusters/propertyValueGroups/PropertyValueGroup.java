@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
+import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.ShadowExperimentSet;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -13,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  *          the owning groups
  */
 public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
-    extends ShadowExperimentSet<OT> {
+    extends ShadowExperimentSet<OT> implements ICluster {
 
   /**
    * create the property value group

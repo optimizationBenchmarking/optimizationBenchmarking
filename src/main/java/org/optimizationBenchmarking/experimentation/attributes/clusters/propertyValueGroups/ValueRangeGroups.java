@@ -48,7 +48,7 @@ public class ValueRangeGroups extends PropertyValueGroups {
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public final ArrayListView<ValueRangeGroup> getGroups() {
+  public final ArrayListView<ValueRangeGroup> getData() {
     return ((ArrayListView) (this.m_data));
   }
 
@@ -59,5 +59,15 @@ public class ValueRangeGroups extends PropertyValueGroups {
    */
   public final Number getInfo() {
     return this.m_parameter;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    return (this.m_property.getName() + //
+        "_grouped_by_" + //$NON-NLS-1$
+        this.getGroupingMode().toString().toLowerCase() + //
+        "_of_" + //$NON-NLS-1$
+    this.m_parameter.toString());
   }
 }

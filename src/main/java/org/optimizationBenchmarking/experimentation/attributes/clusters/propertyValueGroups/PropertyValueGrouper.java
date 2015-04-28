@@ -344,15 +344,26 @@ public final class PropertyValueGrouper extends
   public static final PropertyValueGrouper configure(
       final IProperty property, final Configuration config) {
     final PropertyValueGrouper all;
+    final String name;
+
+    if (config == null) {
+      throw new IllegalArgumentException(//
+          "Configuration cannot be null."); //$NON-NLS-1$
+    }
+
     all = config.get(PropertyValueGrouper.PARAM_DEFAULT_GROUPING,//
-        PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER,//
+        _PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER,//
         PropertyValueGrouper.DEFAULT_GROUPER);
     if (property != null) {
-      return config
-          .get(//
-              (property.getName() + PropertyValueGrouper.PARAM_GROUPING_SUFFIX),//
-              PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER,//
-              all);
+      name = property.getName();
+      if (name == null) {
+        throw new IllegalStateException(//
+            "Property name cannot be null.");//$NON-NLS-1$
+      }
+      return config.get((property.getName()//
+          + PropertyValueGrouper.PARAM_GROUPING_SUFFIX),//
+          _PropertyValueGrouperParser.DEFAULT_GROUPER_PARSER,//
+          all);
     }
     return all;
   }

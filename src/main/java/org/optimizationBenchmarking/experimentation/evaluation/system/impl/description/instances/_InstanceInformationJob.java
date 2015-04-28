@@ -94,7 +94,7 @@ final class _InstanceInformationJob extends DescriptionJob {
     index = 0;
     for (final IFeature feature : data.getFeatures().getData()) {
       groups[index] = this.m_groupers[index].get(feature);
-      maxColors = Math.max(maxColors, groups[index].getGroups().size());
+      maxColors = Math.max(maxColors, groups[index].getData().size());
       index++;
     }
 
@@ -117,7 +117,7 @@ final class _InstanceInformationJob extends DescriptionJob {
           try (final IPieChart pie = figure.pieChart()) {
             groupIndex = 0;
             pie.setLegendMode(ELegendMode.SHOW_COMPLETE_LEGEND);
-            for (final PropertyValueGroup<?> group : grouper.getGroups()) {
+            for (final PropertyValueGroup<?> group : grouper.getData()) {
               try (final IDataScalar slice = pie.slice()) {
                 slice.setColor(colors.get(groupIndex++));
                 slice.setTitle(group.getCriterionString());

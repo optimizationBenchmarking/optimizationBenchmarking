@@ -52,6 +52,12 @@ public final class UnspecifiedValueGroup extends
   /** {@inheritDoc} */
   @Override
   public final String getCriterionString() {
-    return this.m_value.toString();
+    return String.valueOf(this.m_value);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    return "unspecified"; //$NON-NLS-1$
   }
 }

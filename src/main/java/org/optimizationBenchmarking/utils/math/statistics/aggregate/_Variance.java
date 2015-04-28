@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
 import org.optimizationBenchmarking.utils.math.BasicNumber;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.combinatoric.GCD;
 
 /** The variance mean */
@@ -54,6 +55,11 @@ final class _Variance extends _InternalAggregate {
         div = ((double) (lsum / lres)) / ((double) (count / lres));
         if ((div > Double.NEGATIVE_INFINITY)
             && (div < Double.POSITIVE_INFINITY) && (div == div)) {
+          if ((NumericalTypes.getTypes(div) & NumericalTypes.IS_LONG) != 0) {
+            this.m_long = ((long) div);
+            this.m_state = BasicNumber.STATE_INTEGER;
+            return;
+          }
           this.m_double = div;
           this.m_state = BasicNumber.STATE_DOUBLE;
           return;
@@ -65,6 +71,11 @@ final class _Variance extends _InternalAggregate {
         div = (s.m_double / count);
         if ((div > Double.NEGATIVE_INFINITY)
             && (div < Double.POSITIVE_INFINITY) && (div == div)) {
+          if ((NumericalTypes.getTypes(div) & NumericalTypes.IS_LONG) != 0) {
+            this.m_long = ((long) div);
+            this.m_state = BasicNumber.STATE_INTEGER;
+            return;
+          }
           this.m_double = div;
           this.m_state = BasicNumber.STATE_DOUBLE;
           return;

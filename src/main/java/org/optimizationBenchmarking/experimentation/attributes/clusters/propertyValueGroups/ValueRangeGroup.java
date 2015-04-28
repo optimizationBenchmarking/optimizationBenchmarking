@@ -155,4 +155,10 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
     textOut.append(this.m_isUpperExclusive ? ')' : ']');
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    return ("range_" + this.getCriterionString()); //$NON-NLS-1$
+  }
+
 }

@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
 import org.optimizationBenchmarking.utils.math.BasicNumber;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingAdd;
 
 /**
  * A class to compute a (numerical stable) sum of elements. This class
@@ -206,7 +208,6 @@ public final class StableSum extends ScalarAggregate {
   @Override
   public final void append(final long value) {
     final int state;
-    long newSum;
 
     // if the sum is empty, we can take the long value directly
     state = this.m_state;
@@ -227,17 +228,9 @@ public final class StableSum extends ScalarAggregate {
     // we currently use long arithmetic, which means we can try to do
     // absolutely exact calculations
     if (state == BasicNumber.STATE_INTEGER) {
-      newSum = (this.m_long + value);
-      if (value < 0L) {
-        if (newSum < this.m_long) {
-          this.m_long = newSum;
-          return;
-        }
-      } else { // value > 0L
-        if (newSum > this.m_long) {
-          this.m_long = newSum;
-          return;
-        }
+      if (SaturatingAdd.getOverflowType(this.m_long, value) == 0) {
+        this.m_long += value;
+        return;
       }
 
       // Hm, our long arithmetic has overflown, either towards positive or
@@ -258,78 +251,68 @@ public final class StableSum extends ScalarAggregate {
    */
   @Override
   public final void append(final double value) {
-    final long lvalue;
     final int state;
 
     state = this.m_state;
 
-    if (value < Long.MIN_VALUE) {
-      // We are outside the long range towards negative.
-      if (value <= Double.NEGATIVE_INFINITY) {
-        // Set state to negative infinity, unless ...
-        switch (state) {
-          case STATE_POSITIVE_INFINITY: {
-            this.m_state = BasicNumber.STATE_NAN; // ...it was positive
-                                                  // infinity
-            return;
-          }
-          case STATE_NAN: {
-            return; // ...or nan
-          }
-          default: {
-            // STATE_POSITIVE_OVERFLOW, STATE_NEGATIVE_OVERFLOW,
-            // STATE_DOUBLE, STATE_INTEGER,
-            // STATE_NEGATIVE_INFINITY
-            this.m_state = BasicNumber.STATE_NEGATIVE_INFINITY;
-          }
+    // We are outside the long range towards negative.
+    if (value <= Double.NEGATIVE_INFINITY) {
+      // Set state to negative infinity, unless ...
+      switch (state) {
+        case STATE_POSITIVE_INFINITY: {
+          this.m_state = BasicNumber.STATE_NAN; // ...it was positive
+                                                // infinity
+          return;
         }
-        return; // nothing else to do
+        case STATE_NAN: {
+          return; // ...or nan
+        }
+        default: {
+          // STATE_POSITIVE_OVERFLOW, STATE_NEGATIVE_OVERFLOW,
+          // STATE_DOUBLE, STATE_INTEGER,
+          // STATE_NEGATIVE_INFINITY
+          this.m_state = BasicNumber.STATE_NEGATIVE_INFINITY;
+        }
       }
-    } else {
-      if (value > Long.MAX_VALUE) {
-        // We are outside the long range towards positive.
-        if (value >= Double.POSITIVE_INFINITY) {
-          // Set state to positive infinity, unless...
-          switch (state) {
-            case STATE_NEGATIVE_INFINITY: {
-              this.m_state = BasicNumber.STATE_NAN; // ...it was negative
-                                                    // infinity
-              return;
-            }
-            case STATE_NAN: {
-              return; // ...or nan
-            }
-            default: {
-              // STATE_POSITIVE_OVERFLOW, STATE_NEGATIVE_OVERFLOW,
-              // STATE_DOUBLE, STATE_INTEGER,
-              // STATE_POSITIVE_INFINITY
-              this.m_state = BasicNumber.STATE_POSITIVE_INFINITY;
-            }
-          }
-          return; // nothing else to do
-        }
-      } else {
-        // OK, we are either in the range of long, or NaN
-        if (value != value) {
+      return; // nothing else to do
+    }
+    // We are outside the long range towards positive.
+    if (value >= Double.POSITIVE_INFINITY) {
+      // Set state to positive infinity, unless...
+      switch (state) {
+        case STATE_NEGATIVE_INFINITY: {
+          // ...it was negative infinity
           this.m_state = BasicNumber.STATE_NAN;
-          return;// NaN? exit.
+          return;
         }
-
-        lvalue = ((long) value);// try to do long arithmetic
-        if (lvalue == value) {// ok, the double value is actually a long
-          if (lvalue != 0L) {
-            this.append(lvalue);
-            return;// and we are done
-          }
-
-          if (state == BasicNumber.STATE_EMPTY) {
-            this.m_long = 0L;
-            this.m_state = BasicNumber.STATE_INTEGER;
-          }
-
-          return;// and we are done
+        case STATE_NAN: {
+          return; // ...or nan
+        }
+        default: {
+          // STATE_POSITIVE_OVERFLOW, STATE_NEGATIVE_OVERFLOW,
+          // STATE_DOUBLE, STATE_INTEGER,
+          // STATE_POSITIVE_INFINITY
+          this.m_state = BasicNumber.STATE_POSITIVE_INFINITY;
         }
       }
+      return; // nothing else to do
+    }
+    // OK, we are either in the range of long, or NaN
+    if (value != value) {
+      this.m_state = BasicNumber.STATE_NAN;
+      return;// NaN? exit.
+    }
+    if (value == 0d) {
+      if (this.m_state == BasicNumber.STATE_EMPTY) {
+        this.m_state = BasicNumber.STATE_INTEGER;
+        this.m_long = 0L;
+      }
+      return;
+    }
+
+    if ((NumericalTypes.getTypes(value) & NumericalTypes.IS_LONG) != 0) {
+      this.append((long) value);
+      return;
     }
 
     if (state == BasicNumber.STATE_EMPTY) {// it's the first number
