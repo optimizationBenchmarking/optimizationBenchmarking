@@ -3,6 +3,10 @@ package org.optimizationBenchmarking.experimentation.attributes.clusters.propert
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A set of property value range groups. */
 public class ValueRangeGroups extends PropertyValueGroups {
@@ -69,5 +73,35 @@ public class ValueRangeGroups extends PropertyValueGroups {
         this.getGroupingMode().toString().toLowerCase() + //
         "_of_" + //$NON-NLS-1$
     this.m_parameter.toString());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final IMath math) {
+    try (final IText text = math.text()) {
+      this.appendName(text, ETextCase.IN_SENTENCE);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase next;
+
+    next = this.m_property.appendName(textOut, textCase);
+    textOut.append(' ');
+    if (next == null) {
+      next = ETextCase.IN_SENTENCE;
+    }
+    next = next.appendWords("grouped by", textOut); //$NON-NLS-1$
+    textOut.append(' ');
+    next = next.appendWord(
+        this.getGroupingMode().toString().toLowerCase(), textOut);
+    textOut.append(' ');
+    next = next.appendWord("of", textOut); //$NON-NLS-1$
+    textOut.append(' ');
+    PropertyValueGroup._appendNumber(this.m_parameter, textOut);
+    return next.nextCase();
   }
 }

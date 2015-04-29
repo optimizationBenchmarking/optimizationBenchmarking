@@ -8,6 +8,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -110,8 +111,9 @@ abstract class _ShadowProperty<OT extends IPropertySet, ST extends IProperty, PV
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final ITextOutput textOut) {
-    this.m_shadowUnpacked.appendName(textOut);
+  public final ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.m_shadowUnpacked.appendName(textOut, textCase);
   }
 
   /** {@inheritDoc} */

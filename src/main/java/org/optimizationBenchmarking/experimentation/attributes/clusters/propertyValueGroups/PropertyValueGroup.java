@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.attributes.clusters.propert
 import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.ShadowExperimentSet;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -47,5 +48,22 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
     mto = new MemoryTextOutput();
     this.appendCriterion(mto);
     return mto.toString();
+  }
+
+  /**
+   * Append a number
+   * 
+   * @param number
+   *          the number to append
+   * @param out
+   *          the text output device
+   */
+  static final void _appendNumber(final Number number,
+      final ITextOutput out) {
+    if ((NumericalTypes.getTypes(number) & NumericalTypes.IS_LONG) != 0) {
+      out.append(number.longValue());
+    } else {
+      out.append(number.doubleValue());
+    }
   }
 }

@@ -111,6 +111,12 @@ public final class Ld extends UnaryFunction {
     return Pow2.INSTANCE;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "log2"; //$NON-NLS-1$
+  }
+
   // default, automatic serialization replacement and resolve routines for
   // singletons
   //

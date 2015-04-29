@@ -1,12 +1,13 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
+import org.optimizationBenchmarking.experimentation.data.spec.ISemanticComponent;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * A clustering is an element set containing clusters.
  */
-public interface IClustering extends IElementSet {
+public interface IClustering extends IElementSet, ISemanticComponent {
 
   /**
    * Obtain the clusters
@@ -15,13 +16,4 @@ public interface IClustering extends IElementSet {
    */
   @Override
   public abstract ArrayListView<? extends ICluster> getData();
-
-  /**
-   * Obtain a suggestion for the path component of figures drawn based on
-   * this clustering
-   * 
-   * @return a suggestion for the path component of figures drawn based on
-   *         this clustering
-   */
-  public abstract String getPathComponentSuggestion();
 }

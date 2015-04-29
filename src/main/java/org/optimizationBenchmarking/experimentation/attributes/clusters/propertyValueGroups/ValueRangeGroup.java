@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IText;
-import org.optimizationBenchmarking.utils.math.NumericalTypes;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -172,24 +172,16 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
     try (final IMath compare = math.compare(EMathComparison.LESS_OR_EQUAL)) {
 
       try (final IText number = compare.number()) {
-        if ((NumericalTypes.getTypes(this.m_lower) & NumericalTypes.IS_LONG) != 0) {
-          number.append(this.m_lower.longValue());
-        } else {
-          number.append(this.m_lower.doubleValue());
-        }
+        PropertyValueGroup._appendNumber(this.m_lower, number);
       }
 
       try (final IMath compare2 = compare.compare(//
           this.m_isUpperExclusive ? EMathComparison.LESS
               : EMathComparison.LESS_OR_EQUAL)) {
-        this.getOwner().m_property.appendName(compare);
+        this.getOwner().m_property.appendName(compare2);
 
-        try (final IText number = compare.number()) {
-          if ((NumericalTypes.getTypes(this.m_upper) & NumericalTypes.IS_LONG) != 0) {
-            number.append(this.m_upper.longValue());
-          } else {
-            number.append(this.m_upper.doubleValue());
-          }
+        try (final IText number = compare2.number()) {
+          PropertyValueGroup._appendNumber(this.m_upper, number);
         }
       }
     }
@@ -197,31 +189,31 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final ITextOutput textOut) {
+  public final ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase next;
+
+    next = ((textCase != null) ? textCase.nextCase()
+        : ETextCase.IN_SENTENCE);
+
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-        this.appendName(textOut);
+        this.appendName(math);
       }
     } else {
 
-      if ((NumericalTypes.getTypes(this.m_lower) & NumericalTypes.IS_LONG) != 0) {
-        textOut.append(this.m_lower.longValue());
-      } else {
-        textOut.append(this.m_lower.doubleValue());
-      }
+      PropertyValueGroup._appendNumber(this.m_lower, textOut);
 
       textOut.append('\u2264');
 
-      this.getOwner().m_property.appendName(textOut);
+      next = this.getOwner().m_property.appendName(textOut, next);
 
       textOut.append(this.m_isUpperExclusive ? '<' : '\u2265');
 
-      if ((NumericalTypes.getTypes(this.m_upper) & NumericalTypes.IS_LONG) != 0) {
-        textOut.append(this.m_upper.longValue());
-      } else {
-        textOut.append(this.m_upper.doubleValue());
-      }
+      PropertyValueGroup._appendNumber(this.m_lower, textOut);
     }
+
+    return ((next != null) ? next : ETextCase.IN_SENTENCE);
   }
 
 }

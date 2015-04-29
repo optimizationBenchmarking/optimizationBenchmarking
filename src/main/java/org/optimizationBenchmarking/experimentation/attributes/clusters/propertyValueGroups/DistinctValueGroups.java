@@ -3,6 +3,10 @@ package org.optimizationBenchmarking.experimentation.attributes.clusters.propert
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A set of distinct property value groups.
@@ -47,5 +51,30 @@ public final class DistinctValueGroups extends PropertyValueGroups {
   @Override
   public final String getPathComponentSuggestion() {
     return ("distinct_" + this.m_property.getName()); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final IMath math) {
+    try (final IText text = math.text()) {
+      this.appendName(text, ETextCase.IN_SENTENCE);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase next;
+
+    next = this.m_property.appendName(textOut, textCase);
+    if (next == null) {
+      next = ETextCase.IN_SENTENCE;
+    }
+
+    textOut.append(' ');
+
+    return next.appendWords("grouped by distinct values", //$NON-NLS-1$
+        textOut);
   }
 }

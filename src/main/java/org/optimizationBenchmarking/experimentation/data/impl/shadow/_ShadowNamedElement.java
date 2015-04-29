@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.data.impl.shadow;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -51,8 +52,9 @@ class _ShadowNamedElement<OT extends IDataElement, ST extends INamedElement>
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final ITextOutput textOut) {
-    this.m_shadowUnpacked.appendName(textOut);
+  public final ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.m_shadowUnpacked.appendName(textOut, textCase);
   }
 
   /** {@inheritDoc} */

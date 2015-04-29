@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -31,8 +32,12 @@ public interface ISemanticComponent {
    * 
    * @param textOut
    *          the text output device
+   * @param textCase
+   *          the text case to be used
+   * @return the next text case
    */
-  public abstract void appendName(final ITextOutput textOut);
+  public abstract ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase);
 
   /**
    * Obtain a suggestion for the path component of figures drawn based on

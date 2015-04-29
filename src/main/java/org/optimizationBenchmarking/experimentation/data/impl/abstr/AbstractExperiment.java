@@ -9,6 +9,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IMathName;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -99,7 +100,8 @@ public class AbstractExperiment extends AbstractElementSet implements
 
   /** {@inheritDoc} */
   @Override
-  public void appendName(final ITextOutput textOut) {
+  public ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
         this.appendName(math);
@@ -107,6 +109,9 @@ public class AbstractExperiment extends AbstractElementSet implements
     } else {
       textOut.append(this.getName());
     }
+
+    return ((textCase != null) ? textCase.nextCase()
+        : ETextCase.IN_SENTENCE);
   }
 
   /** {@inheritDoc} */

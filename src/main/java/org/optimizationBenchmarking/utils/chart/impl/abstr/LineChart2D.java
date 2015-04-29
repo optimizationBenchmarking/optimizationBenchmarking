@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** The builder for two-dimensional line charts. */
-public class LineChart2D extends AxisChart implements ILineChart2D {
+public class LineChart2D extends Chart implements ILineChart2D {
 
   /** the x-axis type has been set */
   private static final int FLAG_HAS_X_AXIS = (Chart.FLAG_CHART_BUILDER_MAX << 1);

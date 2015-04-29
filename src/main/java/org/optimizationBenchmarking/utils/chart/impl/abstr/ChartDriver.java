@@ -12,6 +12,7 @@ import org.optimizationBenchmarking.utils.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
+import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokeStyle;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
 
@@ -394,8 +395,11 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
     defaultStroke = styles.getDefaultStroke();
     defaultWidth = defaultStroke.getLineWidth();
     thickWidth = styles.getThickStroke().getLineWidth();
-    goalWidth = Math.max(defaultWidth,
-        Math.min(thickWidth, (0.5f * (defaultWidth + thickWidth))));
+    goalWidth = Math.max(defaultWidth,//
+        Math.min(thickWidth,//
+            ((float) (0.01d * Math.round(100d * //
+                ((0.65d * defaultWidth) + //
+                (0.35d * thickWidth)))))));
 
     return new BasicStroke(goalWidth, defaultStroke.getEndCap(),
         defaultStroke.getLineJoin(), defaultStroke.getMiterLimit());
@@ -464,7 +468,12 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
    */
   protected synchronized Stroke createDefaultGridLineStroke(
       final StyleSet styles) {
-    return styles.getThinStroke();
+    final StrokeStyle thin;
+
+    thin = styles.getThinStroke();
+    return new BasicStroke(thin.getLineWidth(), thin.getEndCap(),
+        thin.getLineJoin(), thin.getMiterLimit(),
+        new float[] { 0.5f, 2.5f }, 0f);
   }
 
   /**
@@ -498,7 +507,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
    */
   protected synchronized Color createDefaultGridLineColor(
       final StyleSet styles) {
-    return styles.getMostSimilarColor(Color.GRAY);
+    return this.getDefaultAxisColor(styles);
   }
 
   /**
@@ -518,7 +527,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
     key = _EDefaults.GRID_COLOR.ordinal();
     result = ((Color) (defaults[key]));
     if (result == null) {
-      defaults[key] = result = this.createDefaultAxisColor(styles);
+      defaults[key] = result = this.createDefaultGridLineColor(styles);
     }
     return result;
   }

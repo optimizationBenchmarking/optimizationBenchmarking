@@ -9,6 +9,7 @@ import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IMathName;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -328,8 +329,11 @@ abstract class _IDObject extends DataElement implements
    * 
    * @param textOut
    *          the text output device
+   * @param textCase
+   *          the text case
+   * @return the next text case
    */
-  void appendName(final ITextOutput textOut) {
+  ETextCase appendName(final ITextOutput textOut, final ETextCase textCase) {
     if (textOut instanceof IComplexText) {
       try (final IPlainText emph = ((IComplexText) textOut).emphasize()) {
         emph.append(this.getName());
@@ -337,6 +341,8 @@ abstract class _IDObject extends DataElement implements
     } else {
       textOut.append(this.getName());
     }
+    return ((textCase != null) ? textCase.nextCase()
+        : ETextCase.IN_SENTENCE);
   }
 
   /**

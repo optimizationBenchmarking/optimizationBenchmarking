@@ -1,6 +1,9 @@
 package org.optimizationBenchmarking.utils.document.impl;
 
+import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IMathName;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
@@ -48,14 +51,15 @@ public final class FunctionToMathBridge {
    * {@link org.optimizationBenchmarking.utils.math.functions.MathematicalFunction}
    * to an invocation of a function via the
    * {@link org.optimizationBenchmarking.utils.document.spec.IMath}
-   * interface
+   * interface. Even if {@code function==null}, a new instance of
+   * {@link org.optimizationBenchmarking.utils.document.spec.IMath} will be
+   * returned. This instance will simply delegate to {@code math}.
    * 
    * @param function
    *          the function
    * @param math
    *          the input math interface
-   * @return the new math interface, or {@code math} if
-   *         {@code function==null}
+   * @return the new math interface
    */
   public static final IMath bridge(final MathematicalFunction function,
       final IMath math) {
@@ -68,7 +72,7 @@ public final class FunctionToMathBridge {
     }
 
     if (function == null) {
-      return math;
+      return new __NeverClosingMath(math);
     }
 
     if (function instanceof Add) {
@@ -149,5 +153,180 @@ public final class FunctionToMathBridge {
 
     return math.nAryFunction(function.toString(), function.getMinArity(),
         function.getMaxArity());
+  }
+
+  /** an internal wrapper which never closes */
+  private static final class __NeverClosingMath implements IMath {
+
+    /** the original */
+    private final IMath m_orig;
+
+    /**
+     * create the never closing math
+     * 
+     * @param orig
+     *          the original
+     */
+    __NeverClosingMath(final IMath orig) {
+      super();
+      this.m_orig = orig;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void close() {
+      // ignore
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath inBraces() {
+      return this.m_orig.inBraces();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath add() {
+      return this.m_orig.add();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath sub() {
+      return this.m_orig.sub();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath mul() {
+      return this.m_orig.mul();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath div() {
+      return this.m_orig.div();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath divInline() {
+      return this.m_orig.divInline();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath mod() {
+      return this.m_orig.mod();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath log() {
+      return this.m_orig.log();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath ln() {
+      return this.m_orig.ln();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath ld() {
+      return this.m_orig.ld();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath lg() {
+      return this.m_orig.lg();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath pow() {
+      return this.m_orig.pow();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath root() {
+      return this.m_orig.root();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath sqrt() {
+      return this.m_orig.sqrt();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath compare(final EMathComparison cmp) {
+      return this.m_orig.compare(cmp);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath negate() {
+      return this.m_orig.negate();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath abs() {
+      return this.m_orig.abs();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath factorial() {
+      return this.m_orig.factorial();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath sin() {
+      return this.m_orig.sin();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath cos() {
+      return this.m_orig.cos();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath tan() {
+      return this.m_orig.tan();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMath nAryFunction(final String name, final int minArity,
+        final int maxArity) {
+      return this.m_orig.nAryFunction(name, minArity, maxArity);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IComplexText text() {
+      return this.m_orig.text();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IMathName name() {
+      return this.m_orig.name();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final IText number() {
+      return this.m_orig.number();
+    }
   }
 }

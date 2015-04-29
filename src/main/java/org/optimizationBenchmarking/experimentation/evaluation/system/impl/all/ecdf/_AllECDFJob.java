@@ -8,10 +8,11 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.all.FunctionJob;
 import org.optimizationBenchmarking.utils.config.Configuration;
-import org.optimizationBenchmarking.utils.document.spec.IPlainText;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
 
 /** A job of the ECDF module. */
 final class _AllECDFJob extends FunctionJob {
@@ -32,6 +33,7 @@ final class _AllECDFJob extends FunctionJob {
 
   }
 
+  /** {@inheritDoc} */
   @Override
   protected final FunctionAttribute<? super IExperiment> configureFunction(
       final IExperimentSet data, final Configuration config) {
@@ -41,12 +43,36 @@ final class _AllECDFJob extends FunctionJob {
 
   /** {@inheritDoc} */
   @Override
+  protected final ScalarAggregate getYAxisMinimumAggregate() {
+    return null;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final double getYAxisMinimumValue() {
+    return 0d;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final ScalarAggregate getYAxisMaximumAggregate() {
+    return null;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final double getYAxisMaximumValue() {
+    return 1d;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected final void doMain(final IExperimentSet data,
       final ISectionContainer sectionContainer, final Logger logger) {
 
     try (final ISection section = sectionContainer.section(null)) {
-      try (final IPlainText title = section.title()) {
-        title.append("Estimated Cumulative Distribution Function"); //$NON-NLS-1$
+      try (final IComplexText title = section.title()) {
+        this.makeTitle(title);
       }
 
       try (final ISectionBody body = section.body()) {

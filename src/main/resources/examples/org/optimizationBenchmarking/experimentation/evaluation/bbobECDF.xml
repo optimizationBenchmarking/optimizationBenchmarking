@@ -4,15 +4,16 @@
 	xmlns:cfg="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd">
 
 	<cfg:configuration>
-		<cfg:parameter name="figureSize" value="2 by 2" />
+		<cfg:parameter name="figureSize" value="2 per row" />
 		<cfg:parameter name="makeLegendFigure" value="true" />
+		<cfg:parameter name="showAxisTitles" value="false" />
 	</cfg:configuration>
 
 	<e:module class="description.instances.InstanceInformation" />
 
 	<e:module class="all.ecdf.AllECDF">
 		<cfg:configuration>
-			<cfg:parameter name="ecdf" value="FEs, F 0" />
+			<cfg:parameter name="ecdf" value="lg FEs, F 1e-8" />
 			<cfg:parameter name="figureSize" value="page wide" />
 			<cfg:parameter name="makeLegendFigure" value="false" />
 		</cfg:configuration>
@@ -20,15 +21,15 @@
 
 	<e:module class="all.ecdf.AllECDF">
 		<cfg:configuration>
-			<cfg:parameter name="ecdf" value="FEs, F 0" />
-			<cfg:parameter name="groupBy" value="n" />
+			<cfg:parameter name="ecdf" value="lg FEs, F 1e-8" />
+			<cfg:parameter name="groupBy" value="dim" />
 		</cfg:configuration>
 	</e:module>
 
 	<e:module class="all.ecdf.AllECDF">
 		<cfg:configuration>
-			<cfg:parameter name="ecdf" value="ld NT, F 0.1" />
-			<cfg:parameter name="groupBy" value="type" />
+			<cfg:parameter name="ecdf" value="lg FEs, F 1e-5" />
+			<cfg:parameter name="groupBy" value="sep" />
 		</cfg:configuration>
 	</e:module>
 

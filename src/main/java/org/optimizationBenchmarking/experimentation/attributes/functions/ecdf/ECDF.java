@@ -390,20 +390,33 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
   /** {@inheritDoc} */
   @Override
-  protected final void appendXAxisTitlePlain(final ITextOutput textOut) {
+  protected final ETextCase appendXAxisTitlePlain(
+      final ITextOutput textOut, final ETextCase textCase) {
+    final ETextCase next;
+
+    next = ((textCase != null) ? textCase.nextCase()
+        : ETextCase.IN_SENTENCE);
+
     if (this.m_timeTransform != null) {
-      textOut.append(this.m_timeTransform);
+      textOut.append(this.m_timeTransform.toString());
       textOut.append(' ');
     }
-    this.m_timeDim.appendName(textOut);
+
+    return this.m_timeDim.appendName(textOut, next);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected final void appendYAxisTitlePlain(final ITextOutput textOut) {
+  protected final ETextCase appendYAxisTitlePlain(
+      final ITextOutput textOut, final ETextCase textCase) {
+    ETextCase next;
+
+    next = ((textCase != null) ? textCase.nextCase()
+        : ETextCase.IN_SENTENCE);
+
     textOut.append(ECDF.ECDF_SHORT_NAME);
     textOut.append('(');
-    this.m_goalDim.appendName(textOut);
+    next = this.m_goalDim.appendName(textOut, next);
     textOut.append(',');
     if (this.m_useLongGoal) {
       textOut.append(this.m_goalValueLong);
@@ -412,7 +425,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
           ETextCase.IN_SENTENCE, textOut);
     }
     textOut.append(')');
-
+    return next;
   }
 
   /** {@inheritDoc} */
@@ -420,7 +433,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
   public final void appendXAxisTitle(final IMath math) {
     try (final IMath inner = FunctionToMathBridge.bridge(
         this.m_timeTransform, math)) {
-      this.m_timeDim.appendName(math);
+      this.m_timeDim.appendName(inner);
     }
   }
 
@@ -428,7 +441,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
   @Override
   public final void appendYAxisTitle(final IMath math) {
     try (final IMath ecdf = math.nAryFunction(ECDF.ECDF_SHORT_NAME, 2, 2)) {
-      this.m_goalDim.appendName(math);
+      this.m_goalDim.appendName(ecdf);
       try (final IText number = ecdf.number()) {
         if (this.m_useLongGoal) {
           number.append(this.m_goalValueLong);
@@ -437,5 +450,38 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
         }
       }
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase appendLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase next;
+
+    next = ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
+    next = next.appendWords(//
+        "estimated cumulative distribution function for",//$NON-NLS-1$
+        textOut);
+    textOut.append(' ');
+
+    next = this.m_goalDim.appendName(textOut, next);
+    next = ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
+    textOut.append(' ');
+    next = next.appendWords(//
+        "with goal", textOut);//$NON-NLS-1$
+    textOut.append(' ');
+
+    if (this.m_useLongGoal) {
+      textOut.append(this.m_goalValueLong);
+    } else {
+      textOut.append(this.m_goalValueDouble);
+    }
+
+    textOut.append(' ');
+    next = next.appendWord(//
+        "over", textOut);//$NON-NLS-1$
+    textOut.append(' ');
+
+    return this.appendXAxisTitle(textOut, next);
   }
 }

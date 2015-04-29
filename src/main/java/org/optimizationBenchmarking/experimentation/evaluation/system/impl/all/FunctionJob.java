@@ -34,7 +34,6 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.FiniteMaximu
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.FiniteMinimumAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
 import org.optimizationBenchmarking.utils.text.ETextCase;
-import org.optimizationBenchmarking.utils.text.numbers.InTextNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -48,11 +47,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
    * Should there be a sub-figure which only serves as legend, hence
    * allowing us to omit legends in the other figures?
    */
-  public static final String PARAM_MAKE_LEGEND_FIGURE = "legendFigure"; //$NON-NLS-1$
+  public static final String PARAM_MAKE_LEGEND_FIGURE = "makeLegendFigure"; //$NON-NLS-1$
   /**
    * Should the figures include axis titles?
    */
-  public static final String PARAM_PRINT_AXIS_TITLES = "axisTitles"; //$NON-NLS-1$
+  public static final String PARAM_PRINT_AXIS_TITLES = "showAxisTitles"; //$NON-NLS-1$
 
   /** the figure size */
   private final EFigureSize m_figureSize;
@@ -602,7 +601,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
     // initialize the x-axis
     try (final IAxis xAxis = chart.xAxis()) {
       if (mto != null) {
-        this.m_function.appendXAxisTitle(mto);
+        this.m_function.appendXAxisTitle(mto, ETextCase.IN_SENTENCE);
         xAxis.setTitle(mto.toString());
         mto.clear();
 
@@ -646,7 +645,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
     try (final IAxis yAxis = chart.yAxis()) {
       if (mto != null) {
-        this.m_function.appendYAxisTitle(mto);
+        this.m_function.appendYAxisTitle(mto, ETextCase.IN_SENTENCE);
         yAxis.setTitle(mto.toString());
         mto.clear();
 
@@ -829,14 +828,28 @@ public abstract class FunctionJob extends ExperimentSetJob {
           this.m_figureSize, path)) {
         this.__logFigure(logger, 1, 1);
 
+        exps = experiments.get(0);
+
         try (final IComplexText caption = figure.caption()) {
-          caption.append("XXX");//TODO //$NON-NLS-1$
+
+          caption.append("The "); //$NON-NLS-1$
+          this.m_function.appendLongName(caption, ETextCase.IN_SENTENCE);
+          if (clusters != null) {
+            caption.append(" with data separated according to "); //$NON-NLS-1$
+            clusters.appendName(caption, ETextCase.IN_SENTENCE);
+            if (exps instanceof ICluster) {
+              caption.append(':');
+              caption.append(' ');
+              ((ICluster) exps).appendName(caption, ETextCase.IN_SENTENCE);
+            }
+          }
+          caption.append('.');
         }
 
         try (final ILineChart2D lines = figure.lineChart2D()) {
           lines.setLegendMode(ELegendMode.SHOW_COMPLETE_LEGEND);
-          this.__drawChart(lines, experiments.get(0), true,
-              this.m_showAxisTitles, styles);
+          this.__drawChart(lines, exps, true, this.m_showAxisTitles,
+              styles);
         }
 
         ret = figure.getLabel();
@@ -846,7 +859,13 @@ public abstract class FunctionJob extends ExperimentSetJob {
           this.m_figureSize, mainPath)) {
 
         try (final IComplexText caption = figureSeries.caption()) {
-          caption.append("XXX");//TODO //$NON-NLS-1$
+          caption.append("The "); //$NON-NLS-1$
+          this.m_function.appendLongName(caption, ETextCase.IN_SENTENCE);
+          if (clusters != null) {
+            caption.append(" with data separated according to "); //$NON-NLS-1$
+            clusters.appendName(caption, ETextCase.IN_SENTENCE);
+          }
+          caption.append('.');
         }
 
         index = 0;
@@ -858,14 +877,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
           try (final IFigure figure = figureSeries.figure(null, path)) {
 
             try (final IComplexText caption = figure.caption()) {
-              caption.append("Legend for the next ");//$NON-NLS-1$
-              if (size > 1) {
-                InTextNumberAppender.INSTANCE.appendTo(size,
-                    ETextCase.IN_SENTENCE, caption);
-                caption.append(" figures.");//$NON-NLS-1$
-              } else {
-                caption.append(" figure.");//$NON-NLS-1$
-              }
+              caption.append(//
+                  "Legend for all sub-figures of this figure.");//$NON-NLS-1$              
             }
             try (final ILineChart2D lines = figure.lineChart2D()) {
               lines.setLegendMode(ELegendMode.CHART_IS_LEGEND);
@@ -887,7 +900,12 @@ public abstract class FunctionJob extends ExperimentSetJob {
           try (final IFigure figure = figureSeries.figure(null, path)) {
 
             try (final IComplexText caption = figure.caption()) {
-              caption.append("XXX");//TODO //$NON-NLS-1$
+              this.m_function.appendName(caption, ETextCase.IN_SENTENCE);
+              if (expSet instanceof ICluster) {
+                caption.append(" for "); //$NON-NLS-1$
+                ((ICluster) expSet).appendName(caption,
+                    ETextCase.IN_SENTENCE);
+              }
             }
 
             try (final ILineChart2D lines = figure.lineChart2D()) {
@@ -907,6 +925,16 @@ public abstract class FunctionJob extends ExperimentSetJob {
     }
 
     return ret;
+  }
+
+  /**
+   * Make the title
+   * 
+   * @param title
+   *          the title destination
+   */
+  protected void makeTitle(final IComplexText title) {
+    this.m_function.appendLongName(title, ETextCase.AT_TITLE_START);
   }
 
   /**

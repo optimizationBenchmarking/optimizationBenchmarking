@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IMathName;
 import org.optimizationBenchmarking.utils.document.spec.IText;
-import org.optimizationBenchmarking.utils.math.NumericalTypes;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -74,11 +74,8 @@ public final class DistinctValueGroup extends
       this.getOwner().m_property.appendName(compare);
       if (this.m_value instanceof Number) {
         try (final IText number = compare.number()) {
-          if ((NumericalTypes.getTypes(this.m_value) & NumericalTypes.IS_LONG) != 0) {
-            number.append(((Number) (this.m_value)).longValue());
-          } else {
-            number.append(((Number) (this.m_value)).doubleValue());
-          }
+          PropertyValueGroup._appendNumber(((Number) (this.m_value)),
+              number);
         }
       } else {
         try (final IMathName name = compare.name()) {
@@ -90,23 +87,26 @@ public final class DistinctValueGroup extends
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final ITextOutput textOut) {
+  public final ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    final ETextCase next;
+
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-        this.appendName(textOut);
+        this.appendName(math);
       }
+      next = textCase;
     } else {
-      this.getOwner().m_property.appendName(textOut);
+      next = this.getOwner().m_property.appendName(textOut, textCase);
       textOut.append('=');
       if (this.m_value instanceof Number) {
-        if ((NumericalTypes.getTypes(this.m_value) & NumericalTypes.IS_LONG) != 0) {
-          textOut.append(((Number) (this.m_value)).longValue());
-        } else {
-          textOut.append(((Number) (this.m_value)).doubleValue());
-        }
+        PropertyValueGroup._appendNumber(((Number) (this.m_value)),
+            textOut);
       } else {
         textOut.append(this.m_value);
       }
     }
+
+    return ((next != null) ? next : ETextCase.IN_SENTENCE);
   }
 }

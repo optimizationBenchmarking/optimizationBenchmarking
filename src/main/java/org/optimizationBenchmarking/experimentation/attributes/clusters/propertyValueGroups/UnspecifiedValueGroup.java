@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelecti
 import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -80,10 +81,17 @@ public final class UnspecifiedValueGroup extends
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final ITextOutput textOut) {
-    this.getOwner().m_property.appendName(textOut);
+  public final ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase next;
+
+    next = this.getOwner().m_property.appendName(textOut, textCase);
+    if (next == null) {
+      next = ETextCase.IN_SENTENCE;
+    }
     textOut.append(" is "); //$NON-NLS-1$
-    textOut.append(UnspecifiedValueGroup.UNSPECIFIED);
+    next.appendWord(UnspecifiedValueGroup.UNSPECIFIED, textOut);
+    return next.nextCase();
   }
 
 }

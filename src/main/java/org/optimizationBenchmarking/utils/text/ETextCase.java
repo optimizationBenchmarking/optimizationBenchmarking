@@ -171,11 +171,18 @@ public enum ETextCase {
       final ITextOutput textOut) {
     final WordBasedStringIterator it;
     ETextCase t;
+    boolean first;
 
     it = new WordBasedStringIterator(words);
     t = this;
+    first = true;
 
     while (it.hasNext()) {
+      if (first) {
+        first = false;
+      } else {
+        textOut.append(' ');
+      }
       t = t.appendWord(it.next(), textOut);
     }
 

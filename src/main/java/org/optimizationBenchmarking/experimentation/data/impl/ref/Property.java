@@ -5,6 +5,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.experimentation.data.spec.IPropertySet;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -243,10 +244,14 @@ public abstract class Property<DT extends PropertyValue<?>> extends
    * 
    * @param textOut
    *          the text output device
+   * @param textCase
+   *          the text case
+   * @return the next text case
    */
   @Override
-  public final void appendName(final ITextOutput textOut) {
-    super.appendName(textOut);
+  public final ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return super.appendName(textOut, textCase);
   }
 
   /**

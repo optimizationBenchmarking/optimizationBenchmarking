@@ -9,12 +9,12 @@ import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import examples.org.optimizationBenchmarking.experimentation.dataAndIO.TSPSuiteExample;
 
 /**
- * An example for the experiment information output.
+ * An example for the ECDF on TSP Suite data
  */
-public final class TSPSuiteECDFExample extends EvaluationExample {
+public final class ECDFTSPSuiteExample extends EvaluationExample {
 
   /** create */
-  public TSPSuiteECDFExample() {
+  public ECDFTSPSuiteExample() {
     super();
   }
 
@@ -42,7 +42,7 @@ public final class TSPSuiteECDFExample extends EvaluationExample {
     }
 
     Configuration.setup(args);
-    new TSPSuiteECDFExample().process(dir, TSPSuiteExample.class);
+    new ECDFTSPSuiteExample().process(dir, TSPSuiteExample.class);
   }
 
 }

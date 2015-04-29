@@ -164,6 +164,12 @@ public final class Lg extends UnaryFunction {
     return Pow10.INSTANCE;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "log10"; //$NON-NLS-1$
+  }
+
   // default, automatic serialization replacement and resolve routines for
   // singletons
   //

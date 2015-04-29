@@ -8,6 +8,7 @@ import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -41,29 +42,55 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
 
   /** {@inheritDoc} */
   @Override
-  public void appendName(final ITextOutput textOut) {
-    this.appendYAxisTitle(textOut);
-    textOut.append(" over "); //$NON-NLS-1$
-    this.appendXAxisTitle(textOut);
+  public ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase next;
+
+    next = this.appendYAxisTitle(textOut, textCase);
+    if (next == null) {
+      next = ETextCase.IN_SENTENCE;
+    }
+    textOut.append(' ');
+    next = next.appendWord("over", textOut); //$NON-NLS-1$
+    textOut.append(' ');
+    return this.appendXAxisTitle(textOut, next);
+  }
+
+  /**
+   * Append a long version of the name of this function
+   * 
+   * @param textOut
+   *          the text output device
+   * @param textCase
+   *          the text case to use
+   * @return the next text case
+   */
+  public ETextCase appendLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.appendName(textOut, textCase);
   }
 
   /**
    * Append the title of the x-axis to a text output device. Do the work of
-   * {@link #appendXAxisTitle(ITextOutput)} in case its parameter is a
-   * plain text output.
+   * {@link #appendXAxisTitle(ITextOutput, ETextCase)} in case its
+   * parameter is a plain text output.
    * 
    * @param textOut
    *          the text output device
+   * @param textCase
+   *          the text case to use
+   * @return the next text case
    */
-  protected abstract void appendXAxisTitlePlain(final ITextOutput textOut);
+  protected abstract ETextCase appendXAxisTitlePlain(
+      final ITextOutput textOut, final ETextCase textCase);
 
   /**
    * Append the axis title of the abscissa axis (commonly referred to as
    * x-axis) to the given
    * {@linkplain org.optimizationBenchmarking.utils.document.spec.IMath
    * mathematics output device} {@code math}. Do the work of
-   * {@link #appendXAxisTitle(ITextOutput)} in case its parameter is an
-   * instance of
+   * {@link #appendXAxisTitle(ITextOutput, ETextCase)} in case its
+   * parameter is an instance of
    * {@link org.optimizationBenchmarking.utils.document.spec.IMath}.
    * 
    * @param math
@@ -85,34 +112,46 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    *          the text output to append the axis title to, potentially an
    *          instance of
    *          {@link org.optimizationBenchmarking.utils.document.spec.IComplexText}
+   * @param textCase
+   *          the text case to use
+   * @return the next text case
    */
-  public final void appendXAxisTitle(final ITextOutput textOut) {
+  public final ETextCase appendXAxisTitle(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase next;
+
+    next = ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
         this.appendXAxisTitle(math);
       }
-    } else {
-      this.appendXAxisTitlePlain(textOut);
+      return next.nextCase();
     }
+
+    return this.appendXAxisTitlePlain(textOut, textCase);
   }
 
   /**
    * Append the title of the y-axis to a text output device. Do the work of
-   * {@link #appendYAxisTitle(ITextOutput)} in case its parameter is a
-   * plain text output.
+   * {@link #appendYAxisTitle(ITextOutput, ETextCase)} in case its
+   * parameter is a plain text output.
    * 
    * @param textOut
    *          the text output device
+   * @param textCase
+   *          the text case to use
+   * @return the next text case
    */
-  protected abstract void appendYAxisTitlePlain(final ITextOutput textOut);
+  protected abstract ETextCase appendYAxisTitlePlain(
+      final ITextOutput textOut, final ETextCase textCase);
 
   /**
    * Append the axis title of the ordinate axis (commonly referred to as
    * y-axis) to the given
    * {@linkplain org.optimizationBenchmarking.utils.document.spec.IMath
    * mathematics output device} {@code math}. Do the work of
-   * {@link #appendYAxisTitle(ITextOutput)} in case its parameter is an
-   * instance of
+   * {@link #appendYAxisTitle(ITextOutput, ETextCase)} in case its
+   * parameter is an instance of
    * {@link org.optimizationBenchmarking.utils.document.spec.IMath}.
    * 
    * @param math
@@ -134,14 +173,22 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    *          the text output to append the axis title to, potentially an
    *          instance of
    *          {@link org.optimizationBenchmarking.utils.document.spec.IComplexText}
+   * @param textCase
+   *          the text case to use
+   * @return the next text case
    */
-  public final void appendYAxisTitle(final ITextOutput textOut) {
+  public final ETextCase appendYAxisTitle(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase next;
+
+    next = ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-        this.appendXAxisTitle(math);
+        this.appendYAxisTitle(math);
       }
-    } else {
-      this.appendXAxisTitlePlain(textOut);
+      return next.nextCase();
     }
+
+    return this.appendYAxisTitlePlain(textOut, textCase);
   }
 }

@@ -8,6 +8,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSetting;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -107,8 +108,9 @@ public class ShadowExperiment extends //
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final ITextOutput textOut) {
-    this.m_shadowUnpacked.appendName(textOut);
+  public final ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.m_shadowUnpacked.appendName(textOut, textCase);
   }
 
   /** {@inheritDoc} */

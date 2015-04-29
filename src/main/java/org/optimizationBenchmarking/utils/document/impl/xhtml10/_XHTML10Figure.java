@@ -133,6 +133,7 @@ final class _XHTML10Figure extends Figure {
       final Path docFolder, final PhysicalDimension size,
       final char[] caption) {
     String s;
+    int i, j;
 
     out.append(_XHTML10Figure.FIGURE_IMG_URI);
 
@@ -148,7 +149,23 @@ final class _XHTML10Figure extends Figure {
     out.append(size.getHeight());
     if ((caption != null) && (caption.length > 0)) {
       out.append(_XHTML10Figure.FIGURE_IMG_ALT);
-      out.append(caption);
+
+      j = 0;
+      for (i = j; i < caption.length; i++) {
+        if (caption[i] == '<') {
+          out.append(caption, j, i);
+        }
+        inner: for (j = i; (++j) < caption.length;) {
+          if (caption[j] == '>') {
+            j++;
+            break inner;
+          }
+        }
+        i = j;
+      }
+      if (j < caption.length) {
+        out.append(caption, j, caption.length);
+      }
     } else {
       out.append(_XHTML10Figure.FIGURE_IMG_ALT, 0, 3);
     }
