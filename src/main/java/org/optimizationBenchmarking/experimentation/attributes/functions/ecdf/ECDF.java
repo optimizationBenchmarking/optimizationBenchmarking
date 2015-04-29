@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions.ecdf;
 
-import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
+import org.optimizationBenchmarking.experimentation.attributes.functions.FunctionAttribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
@@ -15,14 +15,18 @@ import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
 import org.optimizationBenchmarking.utils.math.matrix.ColumnTransformedMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * The Estimated Cumulative Distribution Function returns, for an
  * experiment or instance runs set, the fraction of runs which have reached
  * a specified goal.
  */
-public final class ECDF extends Attribute<IElementSet, IMatrix> {
+public final class ECDF extends FunctionAttribute<IElementSet> {
 
   /** the time dimension */
   private final IDimension m_timeDim;
@@ -349,5 +353,56 @@ public final class ECDF extends Attribute<IElementSet, IMatrix> {
     }
 
     return computed;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    final MemoryTextOutput mto;
+
+    mto = new MemoryTextOutput();
+    mto.append("ecdf_for_"); //$NON-NLS-1$
+    mto.append(this.m_goalDim.getName());
+    mto.append('_');
+    if (this.m_useLongGoal) {
+      mto.append(this.m_goalValueLong);
+    } else {
+      SimpleNumberAppender.INSTANCE.appendTo(this.m_goalValueDouble,
+          ETextCase.IN_SENTENCE, mto);
+    }
+    mto.append("_over_"); //$NON-NLS-1$
+    if (this.m_timeTransform != null) {
+      mto.append(this.m_timeTransform.toString());
+      mto.append('_');
+    }
+    mto.append(this.m_timeDim.getName());
+
+    return mto.toString();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendXAxisTitle(final ITextOutput textOut) {
+    if (this.m_timeTransform != null) {
+      textOut.append(this.m_timeTransform);
+      textOut.append(' ');
+    }
+    textOut.append(this.m_timeDim.getName());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendYAxisTitle(final ITextOutput textOut) {
+    textOut.append("ECDF("); //$NON-NLS-1$
+    textOut.append(this.m_goalDim.getName());
+    textOut.append(',');
+    if (this.m_useLongGoal) {
+      textOut.append(this.m_goalValueLong);
+    } else {
+      SimpleNumberAppender.INSTANCE.appendTo(this.m_goalValueDouble,
+          ETextCase.IN_SENTENCE, textOut);
+    }
+    textOut.append(')');
+
   }
 }

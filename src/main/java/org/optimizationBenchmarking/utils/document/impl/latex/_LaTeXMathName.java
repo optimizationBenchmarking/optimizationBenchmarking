@@ -11,7 +11,7 @@ final class _LaTeXMathName extends MathName {
       't', 'i', 't', '{', };
 
   /**
-   * create the mathematical in-braces element
+   * create the mathematical name element
    * 
    * @param owner
    *          the owner

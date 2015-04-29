@@ -3,7 +3,6 @@ package org.optimizationBenchmarking.experimentation.attributes.functions.ecdf;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
-import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 
 /** a list of {@code long}s */
@@ -109,7 +108,7 @@ abstract class _Longs extends _List {
     for (i = 0; i < size;) {
       current = data[i];
       inner: for (; (++i) < size;) {
-        if (EComparison.compareDoubles(current, data[i]) == 0) {
+        if (current != data[i]) {
           break inner;
         }
       }

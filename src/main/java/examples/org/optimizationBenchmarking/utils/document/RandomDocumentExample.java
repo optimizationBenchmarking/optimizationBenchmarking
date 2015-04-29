@@ -1982,12 +1982,12 @@ public class RandomDocumentExample extends DocumentExample {
    */
   private final void __fillMath(final IMath math, final int minArgs,
       final int maxArgs, final int depth) {
-    int args;
+    int args, n;
 
     args = 0;
 
     do {
-      switch (this.m_rand.nextInt((depth <= 0) ? 3 : 23)) {
+      switch (this.m_rand.nextInt((depth <= 0) ? 3 : 26)) {
 
         case 0: {
           try (final IText text = math.name()) {
@@ -2150,6 +2150,18 @@ public class RandomDocumentExample extends DocumentExample {
         case 22: {
           try (final IMath nm = math.tan()) {
             this.__fillMath(nm, 1, 1, (depth - 1));
+          }
+          break;
+        }
+
+        case 23:
+        case 24:
+        case 25: {
+          n = (1 + this.m_rand.nextInt(3));
+          try (final IMath nm = math.nAryFunction(
+              ("operator" + this.m_rand.nextInt(100)), //$NON-NLS-1$
+              n, n)) {
+            this.__fillMath(nm, n, n, (depth - 1));
           }
           break;
         }

@@ -107,7 +107,7 @@ abstract class _Doubles extends _List {
     for (i = 0; i < size;) {
       current = data[i];
       inner: for (; (++i) < size;) {
-        if (EComparison.compareDoubles(current, data[i]) == 0) {
+        if (EComparison.compareDoubles(current, data[i]) != 0) {
           break inner;
         }
       }

@@ -469,6 +469,14 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
+  protected final _XHTML10MathNAryFunction createMathNAryFunction(
+      final BasicMath owner, final String name, final int minArity,
+      final int maxArity) {
+    return new _XHTML10MathNAryFunction(owner, name, minArity, maxArity);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected final _XHTML10MathNumber createMathNumber(final BasicMath owner) {
     return new _XHTML10MathNumber(owner);
   }

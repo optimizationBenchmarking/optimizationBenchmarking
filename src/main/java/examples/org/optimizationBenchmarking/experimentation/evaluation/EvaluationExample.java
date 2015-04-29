@@ -140,24 +140,50 @@ public abstract class EvaluationExample {
   }
 
   /**
-   * Process: Write all the examples in a given base dir
+   * Process: Write the examples for a given data source in a given base
+   * dir
    * 
+   * @param source
+   *          the data source
    * @param baseDir
    *          the base dir
    */
-  public final void process(final Path baseDir) {
+  public final void process(final Path baseDir,
+      final Class<? extends ExperimentSetCreator> source) {
     final Configuration root;
     final Logger logger;
 
     root = Configuration.getRoot();
     logger = Configuration.getGlobalLogger();
     try {
+      for (final DocumentConfiguration dest : ExampleDocumentConfigurations.FEW_DIVERSE_CONFIGURATIONS) {
+        this.process(//
+            source.getConstructor(Logger.class).newInstance(logger),//
+            dest, baseDir, root, logger);
+      }
+    } catch (final Throwable tt) {
+      ErrorUtils.logError(
+          logger, //
+          ("Severe error during experiment example " //$NON-NLS-1$
+              + TextUtils.className(this.getClass()) + " for source " + //$NON-NLS-1$
+          TextUtils.className(source)), tt, true,
+          RethrowMode.AS_RUNTIME_EXCEPTION);
+    }
+  }
+
+  /**
+   * Process: Write all the examples in a given base dir
+   * 
+   * @param baseDir
+   *          the base dir
+   */
+  public final void process(final Path baseDir) {
+    final Logger logger;
+
+    logger = Configuration.getGlobalLogger();
+    try {
       for (final Class<? extends ExperimentSetCreator> source : ExperimentSetExamples.EXAMPLES) {
-        for (final DocumentConfiguration dest : ExampleDocumentConfigurations.FEW_DIVERSE_CONFIGURATIONS) {
-          this.process(
-              source.getConstructor(Logger.class).newInstance(logger),
-              dest, baseDir, root, logger);
-        }
+        this.process(baseDir, source);
       }
     } catch (final Throwable tt) {
       ErrorUtils.logError(

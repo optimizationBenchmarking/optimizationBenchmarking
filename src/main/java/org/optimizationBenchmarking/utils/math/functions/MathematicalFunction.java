@@ -402,7 +402,7 @@ public abstract class MathematicalFunction implements Serializable {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return this.getClass().getSimpleName();
+    return this.getClass().getSimpleName().toLowerCase();
   }
 
   /**

@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.MathName;
 /** an mathematical name element of a section in a XHTML document */
 final class _XHTML10MathName extends MathName {
   /**
-   * create the mathematical in-braces element
+   * create the mathematical name element
    * 
    * @param owner
    *          the owner

@@ -296,7 +296,7 @@ final class _ModulesBuilder {
     int index, currentID, otherID, destIndex;
 
     length = containment.length;
-    find: for (index = 0; index < modules.size(); index++) {
+    find: for (index = 0; index < modules.size();) {
       current = modules.get(index);
       currentID = current.m_id;
 
@@ -313,10 +313,12 @@ final class _ModulesBuilder {
         }
         if (currentID > containedIn.m_id) {
           if (containment[currentID][containedIn.m_id] != 1) {
+            index++;
             continue find;
           }
         } else {
           if (containment[containedIn.m_id][currentID] != (-1)) {
+            index++;
             continue find;
           }
         }
@@ -327,6 +329,7 @@ final class _ModulesBuilder {
       for (otherID = currentID; (--otherID) >= 0;) {
         if (containment[currentID][otherID] == 1) {
           if (!done[otherID]) {
+            index++;
             continue find;
           }
         }
@@ -335,6 +338,7 @@ final class _ModulesBuilder {
       for (otherID = currentID; (++otherID) < length;) {
         if (containment[otherID][currentID] == (-1)) {
           if (!done[otherID]) {
+            index++;
             continue find;
           }
         }

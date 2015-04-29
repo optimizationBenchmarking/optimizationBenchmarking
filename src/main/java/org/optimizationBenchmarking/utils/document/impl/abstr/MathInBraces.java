@@ -9,7 +9,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 public class MathInBraces extends BasicMath {
 
   /** the marks */
-  final int m_braces;
+  private final int m_braceIndex;
 
   /**
    * Create a text.
@@ -17,21 +17,37 @@ public class MathInBraces extends BasicMath {
    * @param owner
    *          the owning FSM
    */
-  @SuppressWarnings("resource")
   protected MathInBraces(final BasicMath owner) {
     super(owner);
 
+    this.m_braceIndex = MathInBraces._getBraceIndex(owner);
+  }
+
+  /**
+   * Get the brace index
+   * 
+   * @param owner
+   *          the owning document element
+   * @return the brace index
+   */
+  static final int _getBraceIndex(final DocumentElement owner) {
     DocumentElement o;
+    MathNAryFunction f;
 
     for (o = owner; o != null; o = o._owner()) {
 
       if (o instanceof MathInBraces) {
-        this.m_braces = (((MathInBraces) o).m_braces + 1);
-        return;
+        return (((MathInBraces) o).m_braceIndex + 1);
+      }
+      if (o instanceof MathNAryFunction) {
+        f = ((MathNAryFunction) o);
+        if (f.needsBraces()) {
+          return (f.getBraceIndex() + 1);
+        }
       }
     }
 
-    this.m_braces = 0;
+    return 0;
   }
 
   /** {@inheritDoc} */
@@ -46,7 +62,7 @@ public class MathInBraces extends BasicMath {
    * @return the brace index
    */
   protected final int getBraceIndex() {
-    return this.m_braces;
+    return this.m_braceIndex;
   }
 
   /** {@inheritDoc} */

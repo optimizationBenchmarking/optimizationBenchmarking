@@ -52,14 +52,33 @@ public class CompiledAxis extends CompiledTitledElement {
       final double min, final double max) {
     super(title, titleFont);
 
+    final double useMin, useMax;
+
     Axis._assertMin(min);
     Axis._assertMax(max);
-    if (max <= min) {
+    if (max < min) {
       throw new IllegalArgumentException(//
           ((("CompiledAxis range [" + min) //$NON-NLS-1$
               + ',') + max)
               + "] is invalid, the minimum must be less than the maximum."); //$NON-NLS-1$
     }
+
+    if (max <= min) {
+      if (max == 0d) {
+        useMin = 0d;
+        useMax = 1d;
+      } else {
+        useMin = (min - Math.abs(0.05d * min));
+        useMax = (max + Math.abs(0.05d * max));
+      }
+
+      Axis._assertMin(useMin);
+      Axis._assertMax(useMax);
+    } else {
+      useMin = min;
+      useMax = max;
+    }
+
     if (tickFont == null) {
       throw new IllegalArgumentException("Tick font cannot be null."); //$NON-NLS-1$
     }
@@ -78,8 +97,8 @@ public class CompiledAxis extends CompiledTitledElement {
     if (gridLineColor == null) {
       throw new IllegalArgumentException("Grid line color cannot be null."); //$NON-NLS-1$
     }
-    this.m_min = min;
-    this.m_max = max;
+    this.m_min = useMin;
+    this.m_max = useMax;
     this.m_tickFont = tickFont;
     this.m_axisStroke = axisStroke;
     this.m_axisColor = axisColor;

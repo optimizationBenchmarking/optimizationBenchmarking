@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<e:evaluation
+	xmlns:e="http://www.optimizationBenchmarking.org/formats/evaluationConfiguration/evaluationConfiguration.1.0.xsd"
+	xmlns:cfg="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd">
+
+	<cfg:configuration>
+		<cfg:parameter name="figureSize" value="2 by 2" />
+	</cfg:configuration>
+
+	<e:module class="all.ecdf.AllECDF">
+		<cfg:configuration>
+			<cfg:parameter name="ecdf" value="FEs, F 0" />
+		</cfg:configuration>
+	</e:module>
+
+  <e:module class="all.ecdf.AllECDF">
+    <cfg:configuration>
+      <cfg:parameter name="ecdf" value="FEs, F 0" />
+      <cfg:parameter name="groupBy" value="n" />
+    </cfg:configuration>
+  </e:module>
+
+  <e:module class="all.ecdf.AllECDF">
+    <cfg:configuration>
+      <cfg:parameter name="ecdf" value="ld NT, F 0.1" />
+      <cfg:parameter name="groupBy" value="type" />
+    </cfg:configuration>
+  </e:module>
+
+</e:evaluation>

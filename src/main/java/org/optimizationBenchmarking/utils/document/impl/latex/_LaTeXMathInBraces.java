@@ -7,12 +7,12 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.MathInBraces;
 final class _LaTeXMathInBraces extends MathInBraces {
 
   /** the begin brace */
-  private static final char[][] BRACE_BEGIN = {//
+  static final char[][] BRACE_BEGIN = {//
   { '{', '\\', 'l', 'e', 'f', 't', '(', '{', },//
       { '{', '\\', 'l', 'e', 'f', 't', '[', '{', }, };
 
   /** the end brace */
-  private static final char[][] BRACE_END = {//
+  static final char[][] BRACE_END = {//
   { '}', '\\', 'r', 'i', 'g', 'h', 't', ')', '}' },//
       { '}', '\\', 'r', 'i', 'g', 'h', 't', ']', '}' },//
   };

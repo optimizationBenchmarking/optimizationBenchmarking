@@ -12,6 +12,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.ExperimentSetJob;
 import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
+import org.optimizationBenchmarking.utils.chart.spec.ELineType;
 import org.optimizationBenchmarking.utils.chart.spec.IAxis;
 import org.optimizationBenchmarking.utils.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
@@ -285,6 +286,42 @@ public abstract class FunctionJob extends ExperimentSetJob {
   }
 
   /**
+   * Get the title font of the x-axis. Returns {@code null} to use default.
+   * 
+   * @return the title font of the x-axis, or {@code null} for default
+   */
+  protected FontStyle getXAxisTitleFont() {
+    return null;
+  }
+
+  /**
+   * Get the tick font of the x-axis. Returns {@code null} to use default.
+   * 
+   * @return the tick font of the x-axis, or {@code null} for default
+   */
+  protected FontStyle getXAxisTickFont() {
+    return null;
+  }
+
+  /**
+   * Get the color of the x-axis. Returns {@code null} to use default.
+   * 
+   * @return the color of the x-axis, or {@code null} for default
+   */
+  protected ColorStyle getXAxisColor() {
+    return null;
+  }
+
+  /**
+   * Get the stroke of the x-axis. Returns {@code null} to use default.
+   * 
+   * @return the stroke of the x-axis, or {@code null} for default
+   */
+  protected StrokeStyle getXAxisStroke() {
+    return null;
+  }
+
+  /**
    * Get an aggregate to be used to determine the minimum value of the
    * x-axis. If this method returns {@code null}, the fixed value returned
    * by {@link #getXAxisMinimumValue()} is used as minimum for the x-axis.
@@ -330,6 +367,42 @@ public abstract class FunctionJob extends ExperimentSetJob {
    */
   protected double getXAxisMaximumValue() {
     return 0d;
+  }
+
+  /**
+   * Get the title font of the y-axis. Returns {@code null} to use default.
+   * 
+   * @return the title font of the y-axis, or {@code null} for default
+   */
+  protected FontStyle getYAxisTitleFont() {
+    return null;
+  }
+
+  /**
+   * Get the tick font of the y-axis. Returns {@code null} to use default.
+   * 
+   * @return the tick font of the y-axis, or {@code null} for default
+   */
+  protected FontStyle getYAxisTickFont() {
+    return null;
+  }
+
+  /**
+   * Get the color of the y-axis. Returns {@code null} to use default.
+   * 
+   * @return the color of the y-axis, or {@code null} for default
+   */
+  protected ColorStyle getYAxisColor() {
+    return null;
+  }
+
+  /**
+   * Get the stroke of the y-axis. Returns {@code null} to use default.
+   * 
+   * @return the stroke of the y-axis, or {@code null} for default
+   */
+  protected StrokeStyle getYAxisStroke() {
+    return null;
   }
 
   /**
@@ -425,11 +498,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *          the function representing the experiment
    * @param styles
    *          the style set
-   * @return the color to use for the line
+   * @return the color to use for the line or {@code null} for default
    */
   protected ColorStyle getExperimentColor(final IExperiment experiment,
       final IMatrix computed, final StyleSet styles) {
-    return styles.getColor(experiment.getName(), true);
+    return null;
   }
 
   /**
@@ -481,6 +554,20 @@ public abstract class FunctionJob extends ExperimentSetJob {
   }
 
   /**
+   * Get the line type to use for a given experiment.
+   * 
+   * @param experiment
+   *          the experiment to be represented
+   * @param computed
+   *          the function representing the experiment
+   * @return the line type to use for the line
+   */
+  protected ELineType getExperimentLineType(final IExperiment experiment,
+      final IMatrix computed) {
+    return ELineType.STAIRS_KEEP_LEFT;
+  }
+
+  /**
    * draw the line chart
    * 
    * @param chart
@@ -518,6 +605,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
         this.m_function.appendXAxisTitle(mto);
         xAxis.setTitle(mto.toString());
         mto.clear();
+
+        font = this.getXAxisTitleFont();
+        if (font != null) {
+          xAxis.setTitleFont(font.getFont());
+        }
       }
 
       aggregate = this.getXAxisMinimumAggregate();
@@ -533,6 +625,21 @@ public abstract class FunctionJob extends ExperimentSetJob {
       } else {
         xAxis.setMaximum(this.getXAxisMaximumValue());
       }
+
+      color = this.getXAxisColor();
+      if (color != null) {
+        xAxis.setAxisColor(color);
+      }
+
+      stroke = this.getXAxisStroke();
+      if (stroke != null) {
+        xAxis.setAxisStroke(stroke);
+      }
+
+      font = this.getXAxisTickFont();
+      if (font != null) {
+        xAxis.setTickFont(font.getFont());
+      }
     }
 
     // initialize the y-axis
@@ -542,6 +649,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
         this.m_function.appendYAxisTitle(mto);
         yAxis.setTitle(mto.toString());
         mto.clear();
+
+        font = this.getYAxisTitleFont();
+        if (font != null) {
+          yAxis.setTitleFont(font.getFont());
+        }
       }
 
       aggregate = this.getYAxisMinimumAggregate();
@@ -556,6 +668,21 @@ public abstract class FunctionJob extends ExperimentSetJob {
         yAxis.setMaximumAggregate(aggregate);
       } else {
         yAxis.setMaximum(this.getYAxisMaximumValue());
+      }
+
+      color = this.getYAxisColor();
+      if (color != null) {
+        yAxis.setAxisColor(color);
+      }
+
+      stroke = this.getYAxisStroke();
+      if (stroke != null) {
+        yAxis.setAxisStroke(stroke);
+      }
+
+      font = this.getYAxisTickFont();
+      if (font != null) {
+        yAxis.setTickFont(font.getFont());
       }
     }
 
@@ -582,30 +709,35 @@ public abstract class FunctionJob extends ExperimentSetJob {
             line.setStart(xy[0], xy[1]);
           }
 
+          line.setType(this.getExperimentLineType(experiment, computed));
+
           color = this.getExperimentColor(experiment, computed, styles);
           if (color != null) {
             line.setColor(color);
+          } else {
+            line.setColor(styles.getColor(experiment.getName(), true));
           }
 
           stroke = this.getExperimentStroke(experiment, computed, styles);
           if (stroke != null) {
             line.setStroke(stroke);
+          } else {
+            line.setStroke(styles.getDefaultStroke());
           }
 
           if (showLineTitles) {
             title = this.getExperimentTitle(experiment, computed);
             if (title != null) {
+              line.setTitle(title);
               font = this.getExperimentFont(experiment, computed, styles);
               if (font != null) {
                 line.setTitleFont(font.getFont());
+              } else {
+                line.setTitleFont(styles.getDefaultFont().getFont());
               }
-              line.setTitle(title);
             }
-
           }
-
         }
-
       }
     }
   }
@@ -696,6 +828,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
       try (final IFigure figure = body.figure(mainLabel,
           this.m_figureSize, path)) {
         this.__logFigure(logger, 1, 1);
+
+        try (final IComplexText caption = figure.caption()) {
+          caption.append("XXX");//TODO //$NON-NLS-1$
+        }
+
         try (final ILineChart2D lines = figure.lineChart2D()) {
           lines.setLegendMode(ELegendMode.SHOW_COMPLETE_LEGEND);
           this.__drawChart(lines, experiments.get(0), true,
@@ -707,6 +844,10 @@ public abstract class FunctionJob extends ExperimentSetJob {
     } else {
       try (final IFigureSeries figureSeries = body.figureSeries(mainLabel,
           this.m_figureSize, mainPath)) {
+
+        try (final IComplexText caption = figureSeries.caption()) {
+          caption.append("XXX");//TODO //$NON-NLS-1$
+        }
 
         index = 0;
 
@@ -725,11 +866,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
               } else {
                 caption.append(" figure.");//$NON-NLS-1$
               }
-              try (final ILineChart2D lines = figure.lineChart2D()) {
-                lines.setLegendMode(ELegendMode.CHART_IS_LEGEND);
-                this.__drawChart(lines, experiments.get(0), true, true,
-                    styles);
-              }
+            }
+            try (final ILineChart2D lines = figure.lineChart2D()) {
+              lines.setLegendMode(ELegendMode.CHART_IS_LEGEND);
+              this.__drawChart(lines, experiments.get(0), true, true,
+                  styles);
             }
           }
         }
@@ -744,6 +885,10 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
           this.__logFigure(logger, (++index), size);
           try (final IFigure figure = figureSeries.figure(null, path)) {
+
+            try (final IComplexText caption = figure.caption()) {
+              caption.append("XXX");//TODO //$NON-NLS-1$
+            }
 
             try (final ILineChart2D lines = figure.lineChart2D()) {
               lines.setLegendMode(this.m_makeLegendFigure//

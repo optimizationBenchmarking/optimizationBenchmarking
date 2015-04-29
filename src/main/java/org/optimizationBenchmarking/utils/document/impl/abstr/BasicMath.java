@@ -201,6 +201,15 @@ public abstract class BasicMath extends DocumentPart implements IMath {
 
   /** {@inheritDoc} */
   @Override
+  public synchronized final IMath nAryFunction(final String name,
+      final int minArity, final int maxArity) {
+    this.__nextIndex();
+    return this.m_driver.createMathNAryFunction(this, name, minArity,
+        maxArity);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final synchronized MathInBraces inBraces() {
     this.__nextIndex();
     return this.m_driver.createMathInBraces(this);

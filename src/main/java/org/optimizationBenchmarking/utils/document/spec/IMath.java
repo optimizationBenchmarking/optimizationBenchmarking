@@ -222,6 +222,20 @@ public interface IMath extends IDocumentElement {
   public abstract IMath tan();
 
   /**
+   * Print an {@code n}-ary function
+   * 
+   * @param name
+   *          the name of the function
+   * @param minArity
+   *          the minimum number of arguments
+   * @param maxArity
+   *          the maximum number of arguments
+   * @return the mathematical context allowing us to put the arguments
+   */
+  public abstract IMath nAryFunction(final String name,
+      final int minArity, final int maxArity);
+
+  /**
    * Write some plain text
    * 
    * @return the mathematical text

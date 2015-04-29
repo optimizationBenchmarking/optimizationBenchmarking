@@ -455,6 +455,14 @@ public final class LaTeXDriver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
+  protected final _LaTeXMathNAryFunction createMathNAryFunction(
+      final BasicMath owner, final String name, final int minArity,
+      final int maxArity) {
+    return new _LaTeXMathNAryFunction(owner, name, minArity, maxArity);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected final _LaTeXMathInBraces createMathInBraces(
       final BasicMath owner) {
     return new _LaTeXMathInBraces(owner);

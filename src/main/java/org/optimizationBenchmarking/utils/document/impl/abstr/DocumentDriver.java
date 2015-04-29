@@ -661,6 +661,24 @@ public abstract class DocumentDriver extends DocumentProducerTool
   }
 
   /**
+   * Create an {@code n}-ary function
+   * 
+   * @param owner
+   *          the owner
+   * @param name
+   *          the name of the function
+   * @param minArity
+   *          the minimum number of arguments
+   * @param maxArity
+   *          the maximum number of arguments
+   * @return the mathematical context allowing us to put the arguments
+   */
+  protected MathNAryFunction createMathNAryFunction(final BasicMath owner,
+      final String name, final int minArity, final int maxArity) {
+    return new MathNAryFunction(owner, name, minArity, maxArity);
+  }
+
+  /**
    * Create a mathematics number
    * 
    * @param owner
