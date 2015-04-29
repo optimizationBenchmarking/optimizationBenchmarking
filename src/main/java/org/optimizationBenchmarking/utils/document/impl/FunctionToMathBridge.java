@@ -24,10 +24,17 @@ import org.optimizationBenchmarking.utils.math.functions.trigonometric.Sin;
 import org.optimizationBenchmarking.utils.math.functions.trigonometric.Tan;
 
 /**
+ * <p>
  * This class provides a bridge between the implementations of
  * {@link org.optimizationBenchmarking.utils.math.functions.MathematicalFunction}
  * and the {@link org.optimizationBenchmarking.utils.document.spec.IMath}
  * interface of the Document API.
+ * </p>
+ * <p>
+ * TODO: This class cannot deal yet with
+ * {@link org.optimizationBenchmarking.utils.math.functions.power.Sqr} and
+ * {@link org.optimizationBenchmarking.utils.math.functions.power.Cube}.
+ * </p>
  */
 public final class FunctionToMathBridge {
 
@@ -47,21 +54,21 @@ public final class FunctionToMathBridge {
    *          the function
    * @param math
    *          the input math interface
-   * @return the new math interface
+   * @return the new math interface, or {@code math} if
+   *         {@code function==null}
    */
   public static final IMath bridge(final MathematicalFunction function,
       final IMath math) {
     IMath temp;
 
-    if (function == null) {
-      throw new IllegalArgumentException(//
-          "Mathematical function cannot be null."); //$NON-NLS-1$
-    }
-
     if (math == null) {
       throw new IllegalArgumentException(//
           "Math interface cannot be null when trying to represent mathematical function "//$NON-NLS-1$
               + function);
+    }
+
+    if (function == null) {
+      return math;
     }
 
     if (function instanceof Add) {
@@ -140,7 +147,7 @@ public final class FunctionToMathBridge {
       return math.tan();
     }
 
-    return math.nAryFunction(function.toString(),
-        function.getMinArity(), function.getMaxArity());
+    return math.nAryFunction(function.toString(), function.getMinArity(),
+        function.getMaxArity());
   }
 }

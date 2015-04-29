@@ -6,7 +6,9 @@ import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.experimentation.data.spec.IPropertySet;
 import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A shadow property is basically a shadow of another property with a
@@ -98,5 +100,23 @@ abstract class _ShadowProperty<OT extends IPropertySet, ST extends IProperty, PV
   @Override
   public final String getDescription() {
     return this.m_shadowUnpacked.getDescription();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final IMath math) {
+    this.m_shadowUnpacked.appendName(math);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final ITextOutput textOut) {
+    this.m_shadowUnpacked.appendName(textOut);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    return this.m_shadowUnpacked.getPathComponentSuggestion();
   }
 }

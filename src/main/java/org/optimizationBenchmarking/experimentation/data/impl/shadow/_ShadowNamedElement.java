@@ -2,6 +2,8 @@ package org.optimizationBenchmarking.experimentation.data.impl.shadow;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A shadow named element is basically a shadow of another named element
@@ -39,5 +41,23 @@ class _ShadowNamedElement<OT extends IDataElement, ST extends INamedElement>
   @Override
   public final String getDescription() {
     return this.m_shadowUnpacked.getDescription();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final IMath math) {
+    this.m_shadowUnpacked.appendName(math);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final ITextOutput textOut) {
+    this.m_shadowUnpacked.appendName(textOut);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    return this.m_shadowUnpacked.getPathComponentSuggestion();
   }
 }

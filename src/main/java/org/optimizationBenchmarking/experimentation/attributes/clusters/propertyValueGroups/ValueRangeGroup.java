@@ -1,6 +1,11 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
+import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -159,6 +164,64 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
   @Override
   public final String getPathComponentSuggestion() {
     return ("range_" + this.getCriterionString()); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final IMath math) {
+    try (final IMath compare = math.compare(EMathComparison.LESS_OR_EQUAL)) {
+
+      try (final IText number = compare.number()) {
+        if ((NumericalTypes.getTypes(this.m_lower) & NumericalTypes.IS_LONG) != 0) {
+          number.append(this.m_lower.longValue());
+        } else {
+          number.append(this.m_lower.doubleValue());
+        }
+      }
+
+      try (final IMath compare2 = compare.compare(//
+          this.m_isUpperExclusive ? EMathComparison.LESS
+              : EMathComparison.LESS_OR_EQUAL)) {
+        this.getOwner().m_property.appendName(compare);
+
+        try (final IText number = compare.number()) {
+          if ((NumericalTypes.getTypes(this.m_upper) & NumericalTypes.IS_LONG) != 0) {
+            number.append(this.m_upper.longValue());
+          } else {
+            number.append(this.m_upper.doubleValue());
+          }
+        }
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final ITextOutput textOut) {
+    if (textOut instanceof IComplexText) {
+      try (final IMath math = ((IComplexText) textOut).inlineMath()) {
+        this.appendName(textOut);
+      }
+    } else {
+
+      if ((NumericalTypes.getTypes(this.m_lower) & NumericalTypes.IS_LONG) != 0) {
+        textOut.append(this.m_lower.longValue());
+      } else {
+        textOut.append(this.m_lower.doubleValue());
+      }
+
+      textOut.append('\u2264');
+
+      this.getOwner().m_property.appendName(textOut);
+
+      textOut.append(this.m_isUpperExclusive ? '<' : '\u2265');
+
+      if ((NumericalTypes.getTypes(this.m_upper) & NumericalTypes.IS_LONG) != 0) {
+        textOut.append(this.m_upper.longValue());
+      } else {
+        textOut.append(this.m_upper.doubleValue());
+      }
+    }
   }
 
 }

@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.data.spec;
 /**
  * This interface is common to all elements which have a name.
  */
-public interface INamedElement extends IDataElement {
+public interface INamedElement extends IDataElement, ISemanticComponent {
   /**
    * Obtain the name of this object.
    * 

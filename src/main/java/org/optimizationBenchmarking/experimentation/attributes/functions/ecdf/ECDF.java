@@ -9,6 +9,9 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.document.impl.FunctionToMathBridge;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
@@ -27,6 +30,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * a specified goal.
  */
 public final class ECDF extends FunctionAttribute<IElementSet> {
+
+  /**
+   * the string to be used in text documents to identify the ECDF: {@value}
+   */
+  public static final String ECDF_SHORT_NAME = "ecdf"; //$NON-NLS-1$
 
   /** the time dimension */
   private final IDimension m_timeDim;
@@ -362,7 +370,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
     mto = new MemoryTextOutput();
     mto.append("ecdf_for_"); //$NON-NLS-1$
-    mto.append(this.m_goalDim.getName());
+    mto.append(this.m_goalDim.getPathComponentSuggestion());
     mto.append('_');
     if (this.m_useLongGoal) {
       mto.append(this.m_goalValueLong);
@@ -375,26 +383,27 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       mto.append(this.m_timeTransform.toString());
       mto.append('_');
     }
-    mto.append(this.m_timeDim.getName());
+    mto.append(this.m_timeDim.getPathComponentSuggestion());
 
     return mto.toString();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void appendXAxisTitle(final ITextOutput textOut) {
+  protected final void appendXAxisTitlePlain(final ITextOutput textOut) {
     if (this.m_timeTransform != null) {
       textOut.append(this.m_timeTransform);
       textOut.append(' ');
     }
-    textOut.append(this.m_timeDim.getName());
+    this.m_timeDim.appendName(textOut);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void appendYAxisTitle(final ITextOutput textOut) {
-    textOut.append("ECDF("); //$NON-NLS-1$
-    textOut.append(this.m_goalDim.getName());
+  protected final void appendYAxisTitlePlain(final ITextOutput textOut) {
+    textOut.append(ECDF.ECDF_SHORT_NAME);
+    textOut.append('(');
+    this.m_goalDim.appendName(textOut);
     textOut.append(',');
     if (this.m_useLongGoal) {
       textOut.append(this.m_goalValueLong);
@@ -404,5 +413,29 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     }
     textOut.append(')');
 
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendXAxisTitle(final IMath math) {
+    try (final IMath inner = FunctionToMathBridge.bridge(
+        this.m_timeTransform, math)) {
+      this.m_timeDim.appendName(math);
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendYAxisTitle(final IMath math) {
+    try (final IMath ecdf = math.nAryFunction(ECDF.ECDF_SHORT_NAME, 2, 2)) {
+      this.m_goalDim.appendName(math);
+      try (final IText number = ecdf.number()) {
+        if (this.m_useLongGoal) {
+          number.append(this.m_goalValueLong);
+        } else {
+          number.append(this.m_goalValueDouble);
+        }
+      }
+    }
   }
 }

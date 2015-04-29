@@ -1,6 +1,9 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
+import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -8,6 +11,9 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 public final class UnspecifiedValueGroup extends
     PropertyValueGroup<PropertyValueGroups> {
+
+  /** the unspecified string: {@value} */
+  private static final String UNSPECIFIED = "unspecified"; //$NON-NLS-1$
 
   /** the singular value */
   private final Object m_value;
@@ -46,18 +52,38 @@ public final class UnspecifiedValueGroup extends
   /** {@inheritDoc} */
   @Override
   public final void appendCriterion(final ITextOutput textOut) {
-    textOut.append(this.m_value);
+    textOut.append(UnspecifiedValueGroup.UNSPECIFIED);
   }
 
   /** {@inheritDoc} */
   @Override
   public final String getCriterionString() {
-    return String.valueOf(this.m_value);
+    return String.valueOf(UnspecifiedValueGroup.UNSPECIFIED);
   }
 
   /** {@inheritDoc} */
   @Override
   public final String getPathComponentSuggestion() {
-    return "unspecified"; //$NON-NLS-1$
+    return UnspecifiedValueGroup.UNSPECIFIED;
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final IMath math) {
+    try (final IMath compare = math.compare(EMathComparison.EQUAL)) {
+      this.getOwner().m_property.appendName(compare);
+      try (final IComplexText text = math.text()) {
+        text.append(UnspecifiedValueGroup.UNSPECIFIED);
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final ITextOutput textOut) {
+    this.getOwner().m_property.appendName(textOut);
+    textOut.append(" is "); //$NON-NLS-1$
+    textOut.append(UnspecifiedValueGroup.UNSPECIFIED);
+  }
+
 }

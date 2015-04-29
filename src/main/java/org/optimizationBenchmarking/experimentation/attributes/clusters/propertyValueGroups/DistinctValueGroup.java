@@ -1,6 +1,12 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
+import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IMathName;
+import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -58,6 +64,49 @@ public final class DistinctValueGroup extends
   /** {@inheritDoc} */
   @Override
   public final String getPathComponentSuggestion() {
-    return ("value_" + String.valueOf(this.m_value)); //$NON-NLS-1$
+    return ('=' + String.valueOf(this.m_value));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final IMath math) {
+    try (final IMath compare = math.compare(EMathComparison.EQUAL)) {
+      this.getOwner().m_property.appendName(compare);
+      if (this.m_value instanceof Number) {
+        try (final IText number = compare.number()) {
+          if ((NumericalTypes.getTypes(this.m_value) & NumericalTypes.IS_LONG) != 0) {
+            number.append(((Number) (this.m_value)).longValue());
+          } else {
+            number.append(((Number) (this.m_value)).doubleValue());
+          }
+        }
+      } else {
+        try (final IMathName name = compare.name()) {
+          name.append(this.m_value);
+        }
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final ITextOutput textOut) {
+    if (textOut instanceof IComplexText) {
+      try (final IMath math = ((IComplexText) textOut).inlineMath()) {
+        this.appendName(textOut);
+      }
+    } else {
+      this.getOwner().m_property.appendName(textOut);
+      textOut.append('=');
+      if (this.m_value instanceof Number) {
+        if ((NumericalTypes.getTypes(this.m_value) & NumericalTypes.IS_LONG) != 0) {
+          textOut.append(((Number) (this.m_value)).longValue());
+        } else {
+          textOut.append(((Number) (this.m_value)).doubleValue());
+        }
+      } else {
+        textOut.append(this.m_value);
+      }
+    }
   }
 }

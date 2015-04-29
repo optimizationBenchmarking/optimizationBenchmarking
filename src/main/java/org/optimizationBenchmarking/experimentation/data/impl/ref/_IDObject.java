@@ -5,6 +5,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IMathName;
+import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -303,5 +307,44 @@ abstract class _IDObject extends DataElement implements
     sb = new MemoryTextOutput();
     this.toText(sb);
     return sb.toString();
+  }
+
+  /**
+   * the internal blueprint method for appending the name of an object to a
+   * mathematics context
+   * 
+   * @param math
+   *          the maths context
+   */
+  void appendName(final IMath math) {
+    try (final IMathName name = math.name()) {
+      name.append(this.getName());
+    }
+  }
+
+  /**
+   * the internal blueprint method for appending the name of an object to a
+   * text output device
+   * 
+   * @param textOut
+   *          the text output device
+   */
+  void appendName(final ITextOutput textOut) {
+    if (textOut instanceof IComplexText) {
+      try (final IPlainText emph = ((IComplexText) textOut).emphasize()) {
+        emph.append(this.getName());
+      }
+    } else {
+      textOut.append(this.getName());
+    }
+  }
+
+  /**
+   * the internal blueprint method for getting a path component
+   * 
+   * @return the path component
+   */
+  String getPathComponentSuggestion() {
+    return this.getName();
   }
 }

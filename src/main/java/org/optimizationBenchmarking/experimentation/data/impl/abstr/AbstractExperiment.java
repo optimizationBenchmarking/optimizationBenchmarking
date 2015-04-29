@@ -6,6 +6,10 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSetting;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IMathName;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * An abstract implementation of the
@@ -83,5 +87,31 @@ public class AbstractExperiment extends AbstractElementSet implements
   @Override
   public IParameterSetting getParameterSetting() {
     return new AbstractParameterSetting();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void appendName(final IMath math) {
+    try (final IMathName name = math.name()) {
+      name.append(this.getName());
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void appendName(final ITextOutput textOut) {
+    if (textOut instanceof IComplexText) {
+      try (final IMath math = ((IComplexText) textOut).inlineMath()) {
+        this.appendName(math);
+      }
+    } else {
+      textOut.append(this.getName());
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String getPathComponentSuggestion() {
+    return this.getName();
   }
 }

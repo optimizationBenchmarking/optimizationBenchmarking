@@ -7,6 +7,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSetting;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A shadow experiment is basically a shadow of another experiment with a
@@ -95,5 +97,23 @@ public class ShadowExperiment extends //
     }
 
     return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final IMath math) {
+    this.m_shadowUnpacked.appendName(math);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void appendName(final ITextOutput textOut) {
+    this.m_shadowUnpacked.appendName(textOut);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String getPathComponentSuggestion() {
+    return this.m_shadowUnpacked.getPathComponentSuggestion();
   }
 }
