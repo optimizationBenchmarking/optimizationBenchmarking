@@ -465,10 +465,9 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     textOut.append(' ');
 
     next = this.m_goalDim.appendName(textOut, next);
-    next = ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
+    next = ((next != null) ? next : ETextCase.IN_SENTENCE);
     textOut.append(' ');
-    next = next.appendWords(//
-        "with goal", textOut);//$NON-NLS-1$
+    next = next.appendWords("with goal", textOut);//$NON-NLS-1$
     textOut.append(' ');
 
     if (this.m_useLongGoal) {
@@ -478,8 +477,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     }
 
     textOut.append(' ');
-    next = next.appendWord(//
-        "over", textOut);//$NON-NLS-1$
+    next = next.appendWord("over", textOut);//$NON-NLS-1$
     textOut.append(' ');
 
     return this.appendXAxisTitle(textOut, next);

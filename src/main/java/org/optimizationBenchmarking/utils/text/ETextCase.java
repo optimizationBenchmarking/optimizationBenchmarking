@@ -49,6 +49,80 @@ public enum ETextCase {
   public static final ArraySetView<ETextCase> INSTANCES = new ArraySetView<>(
       ETextCase.values());
 
+  /**
+   * Some words which should be ignored in title case, such as articles,
+   * conjunctions, and prepositions. See
+   * http://www.grammar-monster.com/lessons/capital_letters_title_case.htm
+   */
+  private static final char[][] IGNORE = {//
+  { 'a', },//
+      { 'a', 'b', 'o', 'u', 't', },//
+      { 'a', 'b', 'o', 'v', 'e', },//
+      { 'a', 'c', 'r', 'o', 's', 's', },//
+      { 'a', 'f', 't', 'e', 'r', },//
+      { 'a', 'g', 'a', 'i', 'n', 's', 't', },//
+      { 'a', 'l', 'o', 'n', 'g', },//
+      { 'a', 'l', 't', 'h', 'o', 'u', 'g', 'h', },//
+      { 'a', 'm', 'o', 'n', 'g', },//
+      { 'a', 'n', },//
+      { 'a', 'n', 'd', },//
+      { 'a', 'r', 'o', 'u', 'n', 'd', },//
+      { 'a', 's', },//
+      { 'a', 't', },//
+      { 'b', 'e', 'c', 'a', 'u', 's', 'e', },//
+      { 'b', 'e', 'f', 'o', 'r', 'e', },//
+      { 'b', 'e', 'h', 'i', 'n', 'd', },//
+      { 'b', 'e', 'l', 'o', 'w', },//
+      { 'b', 'e', 'n', 'e', 'a', 't', 'h', },//
+      { 'b', 'e', 's', 'i', 'd', 'e', },//
+      { 'b', 'e', 't', 'w', 'e', 'e', 'n', },//
+      { 'b', 'e', 'y', 'o', 'n', 'd', },//
+      { 'b', 'u', 't', },//
+      { 'b', 'y', },//
+      { 'd', 'o', 'w', 'n', },//
+      { 'd', 'u', 'r', 'i', 'n', 'g', },//
+      { 'e', 'i', 't', 'h', 'e', 'r', },//
+      { 'e', 'x', 'c', 'e', 'p', 't', },//
+      { 'f', 'o', 'r', },//
+      { 'f', 'r', 'o', 'm', },//
+      { 'i', 'f', },//
+      { 'i', 'n', },//
+      { 'i', 'n', 's', 'i', 'd', 'e', },//
+      { 'i', 'n', 't', 'o', },//
+      { 'l', 'i', 'k', 'e', },//
+      { 'n', 'e', 'a', 'r', },//
+      { 'n', 'e', 'i', 't', 'h', 'e', 'r', },//
+      { 'n', 'o', 'r', },//
+      { 'o', 'f', },//
+      { 'o', 'f', 'f', },//
+      { 'o', 'n', },//
+      { 'o', 'r', },//
+      { 'o', 'v', 'e', 'r' },//
+      { 's', 'i', 'n', 'c', 'e', },//
+      { 's', 'o', },//
+      { 's', 'o', 'o', 'n', },//
+      { 't', 'h', 'a', 'n', },//
+      { 't', 'h', 'a', 't', },//
+      { 't', 'h', 'e', },//
+      { 't', 'h', 'o', 'u', 'g', 'h', },//
+      { 't', 'h', 'r', 'o', 'u', 'g', 'h', },//
+      { 't', 'o', },//
+      { 't', 'o', 'w', 'a', 'r', 'd', },//
+      { 'u', 'n', 'd', 'e', 'r', },//
+      { 'u', 'n', 't', 'i', 'l', },//
+      { 'u', 'p', },//
+      { 'u', 'p', 'o', 'n', },//
+      { 'w', 'h', 'e', 'n', },//
+      { 'w', 'h', 'e', 'n', 'e', 'v', 'e', 'r', },//
+      { 'w', 'h', 'e', 'r', 'e', },//
+      { 'w', 'h', 'e', 'r', 'e', 'a', 's', },//
+      { 'w', 'h', 'e', 'r', 'e', 'v', 'e', 'r', },//
+      { 'w', 'h', 'e', 't', 'h', 'e', 'r', },//
+      { 'w', 'h', 'i', 'l', 'e', },//
+      { 'w', 'h', 'y', },//
+      { 'w', 'i', 't', 'h', },//
+      { 'y', 'e', 't', } };
+
   /** the next text case */
   private final ETextCase m_next;
 
@@ -129,7 +203,8 @@ public enum ETextCase {
   /**
    * Append a single word to the given text output. Use this method only if
    * it is clear that there is at most one word in the string {@code word},
-   * use {@link #appendWords(String, ITextOutput)} otherwise.
+   * use {@link #appendWords(String, ITextOutput)} otherwise. The word must
+   * be in lower case.
    * 
    * @param word
    *          the word to append
@@ -147,19 +222,147 @@ public enum ETextCase {
       return this;
     }
     c = word.charAt(0);
-    u = this.adjustCaseOfFirstCharInWord(c);
-    if (c != u) {
-      textOut.append(u);
-      textOut.append(word, 1, l);
-    } else {
+
+    useOrig: {
+      if (this != IN_SENTENCE) {
+        if ((this != IN_TITLE) || ETextCase.__cantIgnore(word)) {
+          u = this.adjustCaseOfFirstCharInWord(c);
+          if (c != u) {
+            textOut.append(u);
+            textOut.append(word, 1, l);
+            break useOrig;
+          }
+        }
+      }
       textOut.append(word);
     }
+
     return this.nextCase();
   }
 
   /**
+   * Compare a word to a character array
+   * 
+   * @param word
+   *          the word
+   * @param data
+   *          the array
+   * @return the typical comparison result
+   */
+  private static final int __compare(final String word, final char[] data) {
+    final int len, max;
+    char ch1, ch2;
+    int i;
+
+    len = word.length();
+    max = Math.min(len, data.length);
+    for (i = 0; i < max; i++) {
+      ch1 = word.charAt(i);
+      ch2 = data[i];
+      if (ch1 < ch2) {
+        return -1;
+      }
+      if (ch1 > ch2) {
+        return 1;
+      }
+    }
+    return ((len < data.length) ? -1 : ((len > data.length) ? 1 : 0));
+  }
+
+  /**
+   * Compare a word to a character array
+   * 
+   * @param word
+   *          the word
+   * @param data
+   *          the array
+   * @return the typical comparison result
+   */
+  private static final int __compare(final char[] word, final char[] data) {
+    final int len, max;
+    char ch1, ch2;
+    int i;
+
+    len = word.length;
+    max = Math.min(len, data.length);
+    for (i = 0; i < max; i++) {
+      ch1 = word[i];
+      ch2 = data[i];
+      if (ch1 < ch2) {
+        return -1;
+      }
+      if (ch1 > ch2) {
+        return 1;
+      }
+    }
+    return ((len < data.length) ? -1 : ((len > data.length) ? 1 : 0));
+  }
+
+  /**
+   * check whether a word can be ignored.
+   * 
+   * @param word
+   *          the word
+   * @return {@code true} if it cannot be ignored inside a title,
+   *         {@code false} otherwise
+   */
+  private static final boolean __cantIgnore(final String word) {
+    int low, high, mid, cmp;
+
+    low = 0;
+    high = (ETextCase.IGNORE.length - 1);
+
+    while (low <= high) {
+      mid = ((low + high) >>> 1);
+      cmp = ETextCase.__compare(word, ETextCase.IGNORE[mid]);
+
+      if (cmp > 0) {
+        low = (mid + 1);
+      } else {
+        if (cmp < 0) {
+          high = (mid - 1);
+        } else {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  /**
+   * check whether a word can be ignored.
+   * 
+   * @param word
+   *          the word
+   * @return {@code true} if it cannot be ignored inside a title,
+   *         {@code false} otherwise
+   */
+  private static final boolean __cantIgnore(final char[] word) {
+    int low, high, mid, cmp;
+
+    low = 0;
+    high = (ETextCase.IGNORE.length - 1);
+
+    while (low <= high) {
+      mid = ((low + high) >>> 1);
+      cmp = ETextCase.__compare(word, ETextCase.IGNORE[mid]);
+
+      if (cmp > 0) {
+        low = (mid + 1);
+      } else {
+        if (cmp < 0) {
+          high = (mid - 1);
+        } else {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  /**
    * Append a string potentially containing more than one word to the given
-   * text output
+   * text output. The words must be in lower case.
    * 
    * @param words
    *          the words to append
@@ -190,7 +393,8 @@ public enum ETextCase {
   }
 
   /**
-   * Append a single word to the given text output
+   * Append a single word to the given text output. The word must be in
+   * lower case.
    * 
    * @param word
    *          the word to append
@@ -208,13 +412,21 @@ public enum ETextCase {
       return this;
     }
     c = word[0];
-    u = this.adjustCaseOfFirstCharInWord(c);
-    if (c != u) {
-      textOut.append(u);
-      textOut.append(word, 1, l);
-    } else {
+
+    useOrig: {
+      if (this != IN_SENTENCE) {
+        if ((this != IN_TITLE) || ETextCase.__cantIgnore(word)) {
+          u = this.adjustCaseOfFirstCharInWord(c);
+          if (c != u) {
+            textOut.append(u);
+            textOut.append(word, 1, l);
+            break useOrig;
+          }
+        }
+      }
       textOut.append(word);
     }
+
     return this.nextCase();
   }
 }
