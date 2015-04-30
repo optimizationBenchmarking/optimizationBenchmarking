@@ -57,6 +57,7 @@ public class ShadowInstanceRuns extends //
   @Override
   final boolean _canDelegateAttributesTo(final IInstanceRuns shadow) {
     final ArrayListView<? extends IRun> mine, yours;
+    IRun myRun;
     int size;
 
     mine = this.getData();
@@ -67,10 +68,31 @@ public class ShadowInstanceRuns extends //
       return false;
     }
 
-    for (final IRun run : mine) {
-      if (!(yours.contains(((ShadowRun) run).m_shadowUnpacked))) {
-        return false;
+    outer: for (final IRun run : mine) {
+
+      // Since we regard runs as atomic, we can directly compare the
+      // unpacked versions.
+      myRun = (((ShadowRun) run).m_shadowUnpacked);
+
+      if (yours.contains(myRun)) {
+        continue outer;
       }
+
+      for (final IRun otherRun : yours) {
+        if (otherRun == run) {
+          continue outer;
+        }
+        if (otherRun == myRun) {
+          continue outer;
+        }
+        if (otherRun instanceof ShadowRun) {
+          if (((ShadowRun) otherRun).m_shadowUnpacked == myRun) {
+            continue outer;
+          }
+        }
+      }
+
+      return false;
     }
 
     return true;

@@ -96,7 +96,7 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   synchronized final ST _getAttributeDelegate() {
-    ST delegate, best;
+    ST delegate, next, best;
 
     delegate = this.m_shadowDelegate;
     if (this.m_shadowDelegateComputed) {
@@ -104,21 +104,25 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
     }
     this.m_shadowDelegateComputed = true;
 
-    best = null;
-    if (this._canDelegateAttributesTo(delegate)) {
-      best = delegate;
-      if (delegate instanceof _ShadowDataElement) {
-        delegate = ((ST) (((_ShadowDataElement) delegate)
-            ._getAttributeDelegate()));
-        if (delegate != null) {
-          best = delegate;
-        }
-      }
-    }
-
-    if (best != this.m_shadowUnpacked) {
+    findBest: {
       if (this._canDelegateAttributesTo(this.m_shadowUnpacked)) {
         best = this.m_shadowUnpacked;
+        break findBest;
+      }
+
+      if (delegate instanceof _ShadowDataElement) {
+        next = ((ST) (((_ShadowDataElement) delegate)
+            ._getAttributeDelegate()));
+        if ((next != null) && this._canDelegateAttributesTo(next)) {
+          best = next;
+          break findBest;
+        }
+      }
+
+      if (this._canDelegateAttributesTo(delegate)) {
+        best = delegate;
+      } else {
+        best = null;
       }
     }
 

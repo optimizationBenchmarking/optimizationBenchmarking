@@ -63,4 +63,27 @@ public class ShadowInstance extends
     return this.m_shadowUnpacked.getLowerBound(dim);// TODO: unpack
   }
 
+  /** {@inheritDoc} */
+  @Override
+  final boolean _canDelegateAttributesTo(final IInstance shadow) {
+    final IInstanceSet insts, others;
+
+    if (this == shadow) {
+      return true;
+    }
+
+    insts = this.getOwner();
+    others = shadow.getOwner();
+    if (insts == others) {
+      return true;
+    }
+
+    if (insts instanceof ShadowInstanceSet) {
+      if (((ShadowInstanceSet) insts)._canDelegateAttributesTo(others)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }

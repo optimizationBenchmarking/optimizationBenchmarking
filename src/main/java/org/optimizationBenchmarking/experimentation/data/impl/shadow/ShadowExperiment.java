@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSetting;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -76,6 +77,7 @@ public class ShadowExperiment extends //
   final boolean _canDelegateAttributesTo(final IExperiment shadow) {
     final ArrayListView<? extends IInstanceRuns> mine, yours;
     IInstanceRuns delegate;
+    String name;
     int size;
 
     mine = this.getData();
@@ -86,15 +88,41 @@ public class ShadowExperiment extends //
       return false;
     }
 
-    for (final IInstanceRuns run : mine) {
-      delegate = ((ShadowInstanceRuns) run)._getAttributeDelegate();
+    outer: for (final IInstanceRuns runs : mine) {
+      delegate = ((ShadowInstanceRuns) runs)._getAttributeDelegate();
+
       if (delegate == null) {
         return false;
       }
-      if (!(yours.contains(delegate))) {
-        return false;
+
+      if (yours.contains(delegate)) {
+        continue outer;
       }
-      // TODO: deal with the case that shadow is already a shadow
+
+      name = delegate.getInstance().getName();
+
+      for (final IInstanceRuns other : yours) {
+        if (EComparison.equals(name, other.getInstance().getName())) {
+          // If the other experiment has instance runs for the same
+          // instance, let's check if they are compatible.
+          if (other == delegate) {
+            // would be odd, since !yours.contains(delegate)
+            // but let's check it anyway
+            continue outer;
+          }
+          if (other == mine) {
+            continue outer;
+          }
+          if (other instanceof ShadowInstanceRuns) {
+            if ((((ShadowInstanceRuns) other)._getAttributeDelegate()) == delegate) {
+              continue outer;
+            }
+          }
+          return false;
+        }
+      }
+
+      return false;
     }
 
     return true;

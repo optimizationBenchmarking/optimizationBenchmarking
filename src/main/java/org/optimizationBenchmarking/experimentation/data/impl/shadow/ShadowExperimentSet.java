@@ -10,6 +10,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSet;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * A shadow experiment set is basically a shadow of another experiment set
@@ -197,4 +198,53 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
     }
     return this.m_parameters;
   }
+
+  /** {@inheritDoc} */
+  @Override
+  final boolean _canDelegateAttributesTo(final IExperimentSet shadow) {
+    final ArrayListView<? extends IExperiment> mine, yours;
+    IExperiment delegate, other;
+    int size;
+
+    mine = this.getData();
+    yours = shadow.getData();
+
+    size = mine.size();
+    if (size != yours.size()) {
+      return false;
+    }
+
+    outer: for (final IExperiment experiment : mine) {
+      delegate = ((ShadowExperiment) experiment)._getAttributeDelegate();
+
+      if (delegate == null) {
+        return false;
+      }
+
+      if (yours.contains(delegate)) {
+        continue outer;
+      }
+
+      other = shadow.find(delegate.getName());
+      if (other == null) {
+        return false;
+      }
+      if (other == delegate) {
+        continue outer;
+      }
+      if (other == mine) {
+        continue outer;
+      }
+      if (other instanceof ShadowExperiment) {
+        if ((((ShadowExperiment) other)._getAttributeDelegate()) == delegate) {
+          continue outer;
+        }
+      }
+
+      return false;
+    }
+
+    return true;
+  }
+
 }
