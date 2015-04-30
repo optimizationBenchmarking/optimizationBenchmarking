@@ -83,6 +83,24 @@ public class DataSelection extends
   }
 
   /**
+   * Add a list of complete experiments to the selection, i.e., do
+   * {@link #addExperiment(IExperiment)} on all of them
+   * 
+   * @param experiments
+   *          the experiments to add
+   */
+  public final void addExperiments(
+      final Iterable<? extends IExperiment> experiments) {
+    if (experiments == null) {
+      throw new IllegalArgumentException(//
+          "Iterable of experiments cannot be null."); //$NON-NLS-1$
+    }
+    for (final IExperiment experiment : experiments) {
+      this.addExperiment(experiment);
+    }
+  }
+
+  /**
    * Add a complete experiment to the selection
    * 
    * @param experiment
@@ -91,7 +109,8 @@ public class DataSelection extends
   public synchronized final void addExperiment(final IExperiment experiment) {
 
     if (experiment == null) {
-      throw new IllegalArgumentException("Cannot add a null experiment."); //$NON-NLS-1$
+      throw new IllegalArgumentException(//
+          "Cannot add a null experiment."); //$NON-NLS-1$
     }
 
     if (this._add(experiment)) {
@@ -119,6 +138,28 @@ public class DataSelection extends
     if (this._addSubElement(runs)) {
       this.m_compiled = null;
       this.__addInstance(runs.getInstance());
+    }
+  }
+
+  /**
+   * For each of the instances in {@code instances}, check if there are any
+   * instance run sets which fit to it. If so, add them to the selection
+   * (and add the instance as well). If no data exists for the instance,
+   * ignore it.
+   * 
+   * @param instances
+   *          the instances
+   */
+  public final void addInstances(
+      final Iterable<? extends IInstance> instances) {
+
+    if (instances == null) {
+      throw new IllegalArgumentException(//
+          "Iterable of instances cannot be null."); //$NON-NLS-1$
+    }
+
+    for (final IInstance instance : instances) {
+      this.addInstance(instance);
     }
   }
 
@@ -170,7 +211,8 @@ public class DataSelection extends
         this.addParameterValue((IParameterValue) value);
       } else {
         throw new IllegalArgumentException(//
-            "Property value must eithe be a feature or a parameter value."); //$NON-NLS-1$
+            "Property value must either be a feature or a parameter value, but is" //$NON-NLS-1$
+                + value);
       }
     }
   }
@@ -193,7 +235,8 @@ public class DataSelection extends
         this.addParameterValue(((IParameter) property), value);
       } else {
         throw new IllegalArgumentException(//
-            "Property must eithe be a feature or a parameter."); //$NON-NLS-1$
+            "Property must eithe be a feature or a parameter, but is " //$NON-NLS-1$
+                + property);
       }
     }
   }
