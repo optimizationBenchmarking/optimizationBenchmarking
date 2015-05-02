@@ -60,7 +60,7 @@ PT extends IDataElement> extends //
   }
 
   /**
-   * shadow the given collection of properties
+   * shadow the given collection of elements
    * 
    * @param selection
    *          the selection
@@ -73,7 +73,7 @@ PT extends IDataElement> extends //
     final IDataElement[] array;
     final int size;
     PT set;
-    _ShadowProperty spv;
+    _ShadowDataElement spv;
     int i;
 
     if ((selection == null) || ((size = selection.size()) <= 0)) {
@@ -89,8 +89,8 @@ PT extends IDataElement> extends //
 
         set = value;
         shadow: {
-          if (set instanceof _ShadowProperty) {
-            spv = ((_ShadowProperty) set);
+          if (set instanceof _ShadowDataElement) {
+            spv = ((_ShadowDataElement) set);
             synchronized (spv) {
               if (spv.m_owner == null) {
                 if (canOwn) {
