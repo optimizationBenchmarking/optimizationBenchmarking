@@ -98,7 +98,7 @@ public final class StyleSet {
   public synchronized final FontStyle allocateFont() {
     final int index;
     index = this.m_usedFonts;
-    this.m_usedFonts = ((index + 1) % this.m_def.m_colorsSize);
+    this.m_usedFonts = ((index + 1) % this.m_def.m_fontsSize);
     return this.m_def.m_fonts.get(index);
   }
 
@@ -125,7 +125,7 @@ public final class StyleSet {
   public synchronized final StrokeStyle allocateStroke() {
     final int index;
     index = this.m_usedStrokes;
-    this.m_usedStrokes = ((index + 1) % this.m_def.m_colorsSize);
+    this.m_usedStrokes = ((index + 1) % this.m_def.m_strokesSize);
     return this.m_def.m_strokes.get(index);
   }
 
