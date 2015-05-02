@@ -29,7 +29,12 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * </p>
  * <ol>
  * <li>Matrix 1:
- * <table border="1">
+ * <table border="1" summary="Matrix 1: A matrix with two columns.">
+ * <caption>Matrix 1: A matrix with two columns.</caption>
+ * <tr>
+ * <th>{@code x}</th>
+ * <th>{@code y}</th>
+ * </tr>
  * <tr>
  * <td>1</td>
  * <td>10</td>
@@ -65,7 +70,12 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * </table>
  * </li>
  * <li>Matrix 2:
- * <table border="1">
+ * <table border="1" summary="Matrix 2: A matrix with two columns.">
+ * <caption>Matrix 2: A matrix with two columns.</caption>
+ * <tr>
+ * <th>{@code x}</th>
+ * <th>{@code y}</th>
+ * </tr>
  * <tr>
  * <td>2</td>
  * <td>22</td>
@@ -101,7 +111,12 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * </table>
  * </li>
  * <li>Matrix 3:
- * <table border="1">
+ * <table border="1" summary="Matrix 3: A matrix with two columns.">
+ * <caption>Matrix 3: A matrix with two columns.</caption>
+ * <tr>
+ * <th>{@code x}</th>
+ * <th>{@code y}</th>
+ * </tr>
  * <tr>
  * <td>3</td>
  * <td>36</td>
