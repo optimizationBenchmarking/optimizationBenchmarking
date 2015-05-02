@@ -13,6 +13,7 @@ import org.optimizationBenchmarking.utils.math.matrix.impl.LongMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.ShortMatrix1D;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -39,19 +40,25 @@ public class AbstractMatrix implements IMatrix, ITextable {
   /** {@inheritDoc} */
   @Override
   public double getDouble(final int row, final int column) {
-    throw new IndexOutOfBoundsException(
-        ((("Matrix access getDouble(" + row) + ',') + column + //$NON-NLS-1$
-            " is invalid, the valid index range is (0.." + this.m() + //$NON-NLS-1$
-            ", 0.." + this.n()) + '.'); //$NON-NLS-1$
+    throw new IndexOutOfBoundsException(//
+        (((((("Matrix access " + //$NON-NLS-1$
+            TextUtils.className(this.getClass()))
+            + ".getDouble(" + row) + ',') + column + //$NON-NLS-1$
+            ") is invalid, the valid index range is (0.." //$NON-NLS-1$
+        + (this.m() - 1)) + ", 0.."//$NON-NLS-1$ 
+        + (this.n() - 1)) + ')') + '.');
   }
 
   /** {@inheritDoc} */
   @Override
   public long getLong(final int row, final int column) {
-    throw new IndexOutOfBoundsException(
-        ((("Matrix access getLong(" + row) + ',') + column + //$NON-NLS-1$
-            " is invalid, the valid index range is (0.." + this.m() + //$NON-NLS-1$
-            ", 0.." + this.n()) + '.'); //$NON-NLS-1$
+    throw new IndexOutOfBoundsException(//
+        (((((("Matrix access " + //$NON-NLS-1$
+            TextUtils.className(this.getClass()))
+            + ".getLong(" + row) + ',') + column + //$NON-NLS-1$
+            ") is invalid, the valid index range is (0.." //$NON-NLS-1$
+        + (this.m() - 1)) + ", 0.."//$NON-NLS-1$ 
+        + (this.n() - 1)) + ')') + '.');
   }
 
   /** {@inheritDoc} */

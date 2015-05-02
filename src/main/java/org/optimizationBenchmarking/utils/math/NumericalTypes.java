@@ -122,14 +122,14 @@ public final class NumericalTypes {
       res = 0;
       base = ((BasicNumber) number);
       if (base.isInteger()) {
-        res |= NumericalTypes.IS_LONG;
+        res |= NumericalTypes.getTypes(base.longValue());
       }
       if (base.isReal()) {
-        res |= NumericalTypes.IS_DOUBLE;
+        res |= NumericalTypes.getTypes(base.doubleValue());
       }
     } else {
-      res = (NumericalTypes.getTypes(number.longValue()) & NumericalTypes
-          .getTypes(number.doubleValue()));
+      res = (NumericalTypes.getTypes(number.longValue()) & //
+      NumericalTypes.getTypes(number.doubleValue()));
     }
     return ((res != 0) ? res : NumericalTypes.IS_DOUBLE);
   }

@@ -1,6 +1,8 @@
-package org.optimizationBenchmarking.utils.math.matrix;
+package org.optimizationBenchmarking.utils.math.matrix.processing;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.matrix.AbstractMatrix;
+import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
  * A matrix which is based on applying a unary function to the columns of
