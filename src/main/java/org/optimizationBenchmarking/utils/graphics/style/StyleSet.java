@@ -97,7 +97,8 @@ public final class StyleSet {
    */
   public synchronized final FontStyle allocateFont() {
     final int index;
-    this.m_usedFonts = index = ((this.m_usedFonts + 1) % this.m_def.m_fontsSize);
+    index = this.m_usedFonts;
+    this.m_usedFonts = ((index + 1) % this.m_def.m_colorsSize);
     return this.m_def.m_fonts.get(index);
   }
 
@@ -109,7 +110,9 @@ public final class StyleSet {
    */
   public synchronized final ColorStyle allocateColor() {
     final int index;
-    this.m_usedColors = index = ((this.m_usedColors + 1) % this.m_def.m_colorsSize);
+
+    index = this.m_usedColors;
+    this.m_usedColors = ((index + 1) % this.m_def.m_colorsSize);
     return this.m_def.m_colors.get(index);
   }
 
@@ -121,7 +124,8 @@ public final class StyleSet {
    */
   public synchronized final StrokeStyle allocateStroke() {
     final int index;
-    this.m_usedStrokes = index = ((this.m_usedStrokes + 1) % this.m_def.m_strokesSize);
+    index = this.m_usedStrokes;
+    this.m_usedStrokes = ((index + 1) % this.m_def.m_colorsSize);
     return this.m_def.m_strokes.get(index);
   }
 
@@ -146,29 +150,34 @@ public final class StyleSet {
     ColorStyle color;
     StyleSet owner;
 
-    if (this.m_namedColors != null) {
-      color = this.m_namedColors.get(name);
-      if (color != null) {
-        return color;
-      }
-    }
-
-    if (allocateIfUndefined) {
-      if (this.m_namedColors == null) {
-        findMapToCopy: {
-          for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
-            synchronized (owner) {
-              if (owner.m_namedColors != null) {
+    if (this.m_namedColors == null) {
+      findMapToCopy: {
+        for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
+          synchronized (owner) {
+            if (owner.m_namedColors != null) {
+              if (allocateIfUndefined) {
                 this.m_namedColors = ((StringMap) (//
                 owner.m_namedColors.clone()));
                 break findMapToCopy;
               }
+
+              return owner.m_namedColors.get(name);
             }
           }
-          this.m_namedColors = new StringMap<>();
         }
+        if (!allocateIfUndefined) {
+          return null;
+        }
+        this.m_namedColors = new StringMap<>();
       }
+    }
 
+    color = this.m_namedColors.get(name);
+    if (color != null) {
+      return color;
+    }
+
+    if (allocateIfUndefined) {
       color = this.allocateColor();
       this.m_namedColors.put(name, color);
       return color;
@@ -198,29 +207,34 @@ public final class StyleSet {
     FontStyle font;
     StyleSet owner;
 
-    if (this.m_namedFonts != null) {
-      font = this.m_namedFonts.get(name);
-      if (font != null) {
-        return font;
-      }
-    }
-
-    if (allocateIfUndefined) {
-      if (this.m_namedFonts == null) {
-        findMapToCopy: {
-          for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
-            synchronized (owner) {
-              if (owner.m_namedFonts != null) {
+    if (this.m_namedFonts == null) {
+      findMapToCopy: {
+        for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
+          synchronized (owner) {
+            if (owner.m_namedFonts != null) {
+              if (allocateIfUndefined) {
                 this.m_namedFonts = ((StringMap) (//
                 owner.m_namedFonts.clone()));
                 break findMapToCopy;
               }
+
+              return owner.m_namedFonts.get(name);
             }
           }
-          this.m_namedFonts = new StringMap<>();
         }
+        if (!allocateIfUndefined) {
+          return null;
+        }
+        this.m_namedFonts = new StringMap<>();
       }
+    }
 
+    font = this.m_namedFonts.get(name);
+    if (font != null) {
+      return font;
+    }
+
+    if (allocateIfUndefined) {
       font = this.allocateFont();
       this.m_namedFonts.put(name, font);
       return font;
@@ -250,29 +264,34 @@ public final class StyleSet {
     StrokeStyle stroke;
     StyleSet owner;
 
-    if (this.m_namedStrokes != null) {
-      stroke = this.m_namedStrokes.get(name);
-      if (stroke != null) {
-        return stroke;
-      }
-    }
-
-    if (allocateIfUndefined) {
-      if (this.m_namedStrokes == null) {
-        findMapToCopy: {
-          for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
-            synchronized (owner) {
-              if (owner.m_namedStrokes != null) {
+    if (this.m_namedStrokes == null) {
+      findMapToCopy: {
+        for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
+          synchronized (owner) {
+            if (owner.m_namedStrokes != null) {
+              if (allocateIfUndefined) {
                 this.m_namedStrokes = ((StringMap) (//
                 owner.m_namedStrokes.clone()));
                 break findMapToCopy;
               }
+
+              return owner.m_namedStrokes.get(name);
             }
           }
-          this.m_namedStrokes = new StringMap<>();
         }
+        if (!allocateIfUndefined) {
+          return null;
+        }
+        this.m_namedStrokes = new StringMap<>();
       }
+    }
 
+    stroke = this.m_namedStrokes.get(name);
+    if (stroke != null) {
+      return stroke;
+    }
+
+    if (allocateIfUndefined) {
       stroke = this.allocateStroke();
       this.m_namedStrokes.put(name, stroke);
       return stroke;
