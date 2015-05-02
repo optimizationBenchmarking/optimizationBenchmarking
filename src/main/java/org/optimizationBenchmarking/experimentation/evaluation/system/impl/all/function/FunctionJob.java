@@ -1,8 +1,10 @@
-package org.optimizationBenchmarking.experimentation.evaluation.system.impl.all;
+package org.optimizationBenchmarking.experimentation.evaluation.system.impl.all.function;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.experimentation.attributes.OnlySharedInstanceRuns;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.IClustering;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueSelector;
@@ -25,21 +27,41 @@ import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.IFigureSeries;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
+import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokeStyle;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.CompoundAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.FiniteMaximumAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.FiniteMinimumAggregate;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
 import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
- * A function job is an
+ * A function job is a base class
  * {@link org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.ExperimentSetJob}
- * designed to plot a function.
+ * designed to support evaluation approaches which plot functions for
+ * different experiments into one diagram. The function job is applied to
+ * an
+ * {@link org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet}
+ * and will compute the function for each
+ * {@link org.optimizationBenchmarking.experimentation.data.spec.IExperiment
+ * experiment} in that experiment set. Computation is limited to
+ * {@link org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns}
+ * for which data exists in all experiments. Diagrams are only printed if
+ * they contain functions functions with at least two different {@code x}
+ * and {@code y} coordinates, i.e., no empty diagrams will be plotted.
+ * Clusters or experiment sets which would lead to empty diagrams are not
+ * considered in the computation, experiments which produce empty functions
+ * (not containing at least one value, are omitted as well.
+ * {@link #getClusteringAlgorithm() Clustering} is supported, i.e., the
+ * experiment set can be divided into different sub-sets according to
+ * different criteria.
  */
 public abstract class FunctionJob extends ExperimentSetJob {
 
@@ -455,10 +477,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
   /**
    * Get an optional starting point for a given experiment function.
    * 
-   * @param experiment
-   *          the experiment to be represented
-   * @param computed
-   *          the function representing the experiment
+   * @param function
+   *          the experiment function data
    * @param xyDest
    *          an array of length 2 to receive an x and y coordinate of the
    *          starting point (in case {@code true} is returned)
@@ -466,103 +486,89 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *         otherwise
    */
   protected boolean getExperimentFunctionStart(
-      final IExperiment experiment, final IMatrix computed,
-      final double[] xyDest) {
+      final ExperimentFunction function, final double[] xyDest) {
     return false; // nothing
   }
 
   /**
    * Get an optional end point for a given experiment function.
    * 
-   * @param experiment
-   *          the experiment to be represented
-   * @param computed
-   *          the function representing the experiment
+   * @param function
+   *          the experiment function data
    * @param xyDest
    *          an array of length 2 to receive an x and y coordinate of the
    *          end point (in case {@code true} is returned)
    * @return {@code true} if a end point was set, {@code false} otherwise
    */
-  protected boolean getExperimentFunctionEnd(final IExperiment experiment,
-      final IMatrix computed, final double[] xyDest) {
+  protected boolean getExperimentFunctionEnd(
+      final ExperimentFunction function, final double[] xyDest) {
     return false; // nothing
   }
 
   /**
    * Get the color to use for a given experiment.
    * 
-   * @param experiment
-   *          the experiment to be represented
-   * @param computed
-   *          the function representing the experiment
+   * @param function
+   *          the experiment function data
    * @param styles
    *          the style set
    * @return the color to use for the line or {@code null} for default
    */
-  protected ColorStyle getExperimentColor(final IExperiment experiment,
-      final IMatrix computed, final StyleSet styles) {
+  protected ColorStyle getExperimentColor(
+      final ExperimentFunction function, final StyleSet styles) {
     return null;
   }
 
   /**
    * Get the stroke to use for a given experiment.
    * 
-   * @param experiment
-   *          the experiment to be represented
-   * @param computed
-   *          the function representing the experiment
+   * @param function
+   *          the experiment function data
    * @param styles
    *          the style set
    * @return the stroke to use for the line, or {@code null} for the
    *         default
    */
-  protected StrokeStyle getExperimentStroke(final IExperiment experiment,
-      final IMatrix computed, final StyleSet styles) {
+  protected StrokeStyle getExperimentStroke(
+      final ExperimentFunction function, final StyleSet styles) {
     return null;
   }
 
   /**
    * Get the font to use for a given experiment.
    * 
-   * @param experiment
-   *          the experiment to be represented
-   * @param computed
-   *          the function representing the experiment
+   * @param function
+   *          the experiment function data
    * @param styles
    *          the style set
    * @return the font style to use for the line, or {@code null} for the
    *         default
    */
-  protected FontStyle getExperimentFont(final IExperiment experiment,
-      final IMatrix computed, final StyleSet styles) {
+  protected FontStyle getExperimentFont(final ExperimentFunction function,
+      final StyleSet styles) {
     return null;
   }
 
   /**
    * Get the title to use for a given experiment.
    * 
-   * @param experiment
-   *          the experiment to be represented
-   * @param computed
-   *          the function representing the experiment
+   * @param function
+   *          the experiment function data
    * @return the title to use for the experiment
    */
-  protected String getExperimentTitle(final IExperiment experiment,
-      final IMatrix computed) {
-    return experiment.getName();
+  protected String getExperimentTitle(final ExperimentFunction function) {
+    return function.getExperiment().getName();
   }
 
   /**
    * Get the line type to use for a given experiment.
    * 
-   * @param experiment
-   *          the experiment to be represented
-   * @param computed
-   *          the function representing the experiment
+   * @param function
+   *          the experiment function data
    * @return the line type to use for the line
    */
-  protected ELineType getExperimentLineType(final IExperiment experiment,
-      final IMatrix computed) {
+  protected ELineType getExperimentLineType(
+      final ExperimentFunction function) {
     return ELineType.STAIRS_KEEP_LEFT;
   }
 
@@ -581,12 +587,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *          the style set
    */
   private final void __drawChart(final ILineChart2D chart,
-      final IExperimentSet data, final boolean showLineTitles,
+      final ExperimentSetFunctions data, final boolean showLineTitles,
       final boolean showAxisTitles, final StyleSet styles) {
     final MemoryTextOutput mto;
     final double[] xy;
     String title;
-    IMatrix computed;
     StrokeStyle stroke;
     FontStyle font;
     ColorStyle color;
@@ -687,53 +692,51 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
     // plot the functions, one for each experiment
     xy = new double[2];
-    for (final IExperiment experiment : data.getData()) {
-      computed = this.m_function.get(experiment);
-      if ((computed != null) && (computed.m() > 0)) {
+    for (final ExperimentFunction experimentFunction : data.getData()) {
 
-        try (final ILine2D line = chart.line()) {
-          line.setData(computed);
+      try (final ILine2D line = chart.line()) {
+        line.setData(experimentFunction.getFunction());
 
-          // set values to NaN to provoke fail-fast behavior
-          xy[0] = Double.NaN;
-          xy[1] = Double.NaN;
-          if (this.getExperimentFunctionStart(experiment, computed, xy)) {
-            line.setStart(xy[0], xy[1]);
-          }
+        // set values to NaN to provoke fail-fast behavior
+        xy[0] = Double.NaN;
+        xy[1] = Double.NaN;
+        if (this.getExperimentFunctionStart(experimentFunction, xy)) {
+          line.setStart(xy[0], xy[1]);
+        }
 
-          // set values to NaN to provoke fail-fast behavior
-          xy[0] = Double.NaN;
-          xy[1] = Double.NaN;
-          if (this.getExperimentFunctionEnd(experiment, computed, xy)) {
-            line.setStart(xy[0], xy[1]);
-          }
+        // set values to NaN to provoke fail-fast behavior
+        xy[0] = Double.NaN;
+        xy[1] = Double.NaN;
+        if (this.getExperimentFunctionEnd(experimentFunction, xy)) {
+          line.setStart(xy[0], xy[1]);
+        }
 
-          line.setType(this.getExperimentLineType(experiment, computed));
+        line.setType(this.getExperimentLineType(experimentFunction));
 
-          color = this.getExperimentColor(experiment, computed, styles);
-          if (color != null) {
-            line.setColor(color);
-          } else {
-            line.setColor(styles.getColor(experiment.getName(), true));
-          }
+        color = this.getExperimentColor(experimentFunction, styles);
+        if (color != null) {
+          line.setColor(color);
+        } else {
+          line.setColor(styles.getColor(experimentFunction.getExperiment()
+              .getName(), true));
+        }
 
-          stroke = this.getExperimentStroke(experiment, computed, styles);
-          if (stroke != null) {
-            line.setStroke(stroke);
-          } else {
-            line.setStroke(styles.getDefaultStroke());
-          }
+        stroke = this.getExperimentStroke(experimentFunction, styles);
+        if (stroke != null) {
+          line.setStroke(stroke);
+        } else {
+          line.setStroke(styles.getDefaultStroke());
+        }
 
-          if (showLineTitles) {
-            title = this.getExperimentTitle(experiment, computed);
-            if (title != null) {
-              line.setTitle(title);
-              font = this.getExperimentFont(experiment, computed, styles);
-              if (font != null) {
-                line.setTitleFont(font.getFont());
-              } else {
-                line.setTitleFont(styles.getDefaultFont().getFont());
-              }
+        if (showLineTitles) {
+          title = this.getExperimentTitle(experimentFunction);
+          if (title != null) {
+            line.setTitle(title);
+            font = this.getExperimentFont(experimentFunction, styles);
+            if (font != null) {
+              line.setTitleFont(font.getFont());
+            } else {
+              line.setTitleFont(styles.getDefaultFont().getFont());
             }
           }
         }
@@ -756,55 +759,33 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *          the main label to be used
    * @return the actual label of the created figure
    */
-  protected ILabel makePlots(final IExperimentSet data,
+  protected ILabel makePlots(final FunctionData data,
       final ISectionBody body, final StyleSet styles, final Logger logger,
       final ILabel mainLabel) {
-    final IClustering clusters;
-    final ArrayListView<? extends IExperimentSet> experiments;
     final ILabel ret;
     final String mainPath;
+    final IClustering clustering;
+    final ArrayListView<ExperimentSetFunctions> allFunctions;
+    ExperimentSetFunctions experimentSetFunctions;
+    ICluster cluster;
     String path;
-    IExperimentSet exps;
-    int size, index;
+    int size, index, instances;
 
     if (data == null) {
-      throw new IllegalStateException(//
-          "Experiment set cannot be null.");//$NON-NLS-1$
-    }
-
-    if (this.m_clusterer != null) {
-      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-        logger.finer("Now computing clustering of data according to " //$NON-NLS-1$
-            + this.m_clusterer);
-      }
-      clusters = this.m_clusterer.get(data);
-      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
-        logger.finer("Finished computing clustering of data according to " //$NON-NLS-1$
-            + this.m_clusterer);
-      }
-      if (clusters == null) {
-        throw new IllegalStateException(//
-            "Clustering cannot be null.");//$NON-NLS-1$
-      }
-
-      experiments = clusters.getData();
-    } else {
-      experiments = new ArrayListView<>(new IExperimentSet[] { data });
-      clusters = null;
-    }
-
-    if (experiments == null) {
-      throw new IllegalStateException(//
-          "List of experiments cannot be null.");//$NON-NLS-1$
+      throw new IllegalArgumentException(//
+          "Function data is null, which means we cannot draw any diagram."); //$NON-NLS-1$      
     }
 
     path = this.getFunctionPathComponentSuggestion();
-    if (clusters != null) {
-      mainPath = (path + '_' + clusters.getPathComponentSuggestion());
+    clustering = data.getClustering();
+    if (clustering != null) {
+      mainPath = (path + '_' + clustering.getPathComponentSuggestion());
     } else {
       mainPath = path;
     }
-    size = experiments.size();
+
+    allFunctions = data.getData();
+    size = allFunctions.size();
     if (size <= 0) {
       throw new IllegalStateException(//
           "List of experiments cannot be empty.");//$NON-NLS-1$
@@ -816,31 +797,27 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
     if (size == 1) {
       path = mainPath;
-      if (clusters != null) {
-        exps = experiments.get(0);
-        if (exps instanceof ICluster) {
-          path = (path + '_' + //
-          ((ICluster) exps).getPathComponentSuggestion());
-        }
+      experimentSetFunctions = allFunctions.get(0);
+      cluster = experimentSetFunctions.getCluster();
+      if (cluster != null) {
+        path = (path + '_' + cluster.getPathComponentSuggestion());
       }
 
       try (final IFigure figure = body.figure(mainLabel,
           this.m_figureSize, path)) {
         this.__logFigure(logger, 1, 1);
 
-        exps = experiments.get(0);
-
         try (final IComplexText caption = figure.caption()) {
 
           caption.append("The "); //$NON-NLS-1$
           this.m_function.appendLongName(caption, ETextCase.IN_SENTENCE);
-          if (clusters != null) {
+          if (clustering != null) {
             caption.append(" with data separated according to "); //$NON-NLS-1$
-            clusters.appendName(caption, ETextCase.IN_SENTENCE);
-            if (exps instanceof ICluster) {
+            clustering.appendName(caption, ETextCase.IN_SENTENCE);
+            if (cluster != null) {
               caption.append(':');
               caption.append(' ');
-              ((ICluster) exps).appendName(caption, ETextCase.IN_SENTENCE);
+              cluster.appendName(caption, ETextCase.IN_SENTENCE);
             }
           }
           caption.append('.');
@@ -848,8 +825,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
         try (final ILineChart2D lines = figure.lineChart2D()) {
           lines.setLegendMode(ELegendMode.SHOW_COMPLETE_LEGEND);
-          this.__drawChart(lines, exps, true, this.m_showAxisTitles,
-              styles);
+          this.__drawChart(lines, experimentSetFunctions, true,
+              this.m_showAxisTitles, styles);
         }
 
         ret = figure.getLabel();
@@ -861,9 +838,9 @@ public abstract class FunctionJob extends ExperimentSetJob {
         try (final IComplexText caption = figureSeries.caption()) {
           caption.append("The "); //$NON-NLS-1$
           this.m_function.appendLongName(caption, ETextCase.IN_SENTENCE);
-          if (clusters != null) {
+          if (clustering != null) {
             caption.append(" with data separated according to "); //$NON-NLS-1$
-            clusters.appendName(caption, ETextCase.IN_SENTENCE);
+            clustering.appendName(caption, ETextCase.IN_SENTENCE);
           }
           caption.append('.');
         }
@@ -882,29 +859,34 @@ public abstract class FunctionJob extends ExperimentSetJob {
             }
             try (final ILineChart2D lines = figure.lineChart2D()) {
               lines.setLegendMode(ELegendMode.CHART_IS_LEGEND);
-              this.__drawChart(lines, experiments.get(0), true, true,
+              this.__drawChart(lines, allFunctions.get(0), true, true,
                   styles);
             }
           }
         }
 
-        for (final IExperimentSet expSet : experiments) {
+        for (final ExperimentSetFunctions experimentSetFunctions2 : data
+            .getData()) {
 
           path = mainPath;
-          if ((clusters != null) && (expSet instanceof ICluster)) {
-            path = (path + '_' + ((ICluster) expSet)
-                .getPathComponentSuggestion());
+          cluster = experimentSetFunctions2.getCluster();
+          if (cluster != null) {
+            path = (path + '_' + cluster.getPathComponentSuggestion());
           }
 
           this.__logFigure(logger, (++index), size);
           try (final IFigure figure = figureSeries.figure(null, path)) {
 
             try (final IComplexText caption = figure.caption()) {
-              this.m_function.appendName(caption, ETextCase.IN_SENTENCE);
-              if (expSet instanceof ICluster) {
-                caption.append(" for "); //$NON-NLS-1$
-                ((ICluster) expSet).appendName(caption,
-                    ETextCase.IN_SENTENCE);
+              if (cluster == null) {
+                this.m_function.appendName(caption, ETextCase.IN_SENTENCE);
+              } else {
+                instances = cluster.getData().get(0).getData().size();
+                caption.append(instances);
+                caption.append((instances == 1)//
+                ? " instance with " : //$NON-NLS-1$
+                    " instances with ");//$NON-NLS-1$
+                cluster.appendName(caption, ETextCase.IN_SENTENCE);
               }
             }
 
@@ -912,7 +894,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
               lines.setLegendMode(this.m_makeLegendFigure//
               ? ELegendMode.HIDE_COMPLETE_LEGEND//
                   : ELegendMode.SHOW_COMPLETE_LEGEND);
-              this.__drawChart(lines, expSet,
+              this.__drawChart(lines, experimentSetFunctions2,
                   (!(this.m_makeLegendFigure)),
                   (!(this.m_makeLegendFigure)), styles);
             }
@@ -956,4 +938,170 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
     }
   }
+
+  /**
+   * Perform the main process: Paint the figures, write the text.
+   * 
+   * @param data
+   *          the data, or {@code null} if no data exists to draw
+   *          reasonable diagrams
+   * @param sectionContainer
+   *          the section container
+   * @param logger
+   *          the logger
+   */
+  protected void process(final FunctionData data,
+      final ISectionContainer sectionContainer, final Logger logger) {
+    //
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void doMain(final IExperimentSet data,
+      final ISectionContainer sectionContainer, final Logger logger) {
+    final FunctionData functionData;
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      logger.finer("Beginning to compute data for " + //$NON-NLS-1$
+          TextUtils.className(this.getClass()));
+    }
+
+    functionData = this.__makeData(data, logger);
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      logger.finer(((("Finished computing data for " + //$NON-NLS-1$
+          TextUtils.className(this.getClass())) + ", found ") + //$NON-NLS-1$
+          ((functionData != null) ? functionData.getData().size() : 0))
+          + " clusters with useful data, which will now be processed.");//$NON-NLS-1$
+    }
+
+    this.process(functionData, sectionContainer, logger);
+
+    if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+      logger.finer("Finished processing of data in " + //$NON-NLS-1$
+          TextUtils.className(this.getClass()));
+    }
+  }
+
+  /**
+   * Make the data for a given experiment set
+   * 
+   * @param logger
+   *          the logger
+   * @param set
+   *          the experiment set
+   * @return the data
+   */
+  private final FunctionData __makeData(final IExperimentSet set,
+      final Logger logger) {
+    final IExperimentSet selected;
+    final IClustering clustering;
+    final int size;
+    ArrayList<ExperimentFunction> experimentSetTemp;
+    ArrayList<ExperimentSetFunctions> clustersTemp;
+    ExperimentSetFunctions experimentSetFunctions;
+
+    selected = OnlySharedInstanceRuns.INSTANCE.get(set);
+
+    experimentSetTemp = new ArrayList<>();
+
+    if (this.m_clusterer != null) {
+
+      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+        logger.finer("Now computing clustering of data according to " //$NON-NLS-1$
+            + this.m_clusterer);
+      }
+      clustering = this.m_clusterer.get(selected);
+      if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+        logger.finer("Finished computing clustering of data according to " //$NON-NLS-1$
+            + this.m_clusterer);
+      }
+      if (clustering == null) {
+        throw new IllegalStateException(//
+            "Clustering cannot be null.");//$NON-NLS-1$
+      }
+
+      clustersTemp = new ArrayList<>();
+      for (final ICluster cluster : clustering.getData()) {
+        experimentSetFunctions = this.__makeFunctions(cluster, cluster,
+            experimentSetTemp);
+        if (experimentSetFunctions != null) {
+          clustersTemp.add(experimentSetFunctions);
+        }
+      }
+    } else {
+      experimentSetFunctions = this.__makeFunctions(selected, null,
+          experimentSetTemp);
+      if (experimentSetFunctions == null) {
+        return null;
+      }
+      clustering = null;
+      clustersTemp = new ArrayList<>();
+      clustersTemp.add(experimentSetFunctions);
+    }
+
+    size = clustersTemp.size();
+    if (size <= 0) {
+      return null;
+    }
+    return new FunctionData(clustering,
+        clustersTemp.toArray(new ExperimentSetFunctions[size]));
+  }
+
+  /**
+   * Make the functions over the experiment sets.
+   * 
+   * @param set
+   *          the experiment set
+   * @param cluster
+   *          the cluster
+   * @param temp
+   *          a temporary list to store the results
+   * @return the functions, or {@code null} if none were defined
+   */
+  private final ExperimentSetFunctions __makeFunctions(
+      final IExperimentSet set, final ICluster cluster,
+      final ArrayList<ExperimentFunction> temp) {
+    final FiniteMinimumAggregate minX, minY;
+    final FiniteMaximumAggregate maxX, maxY;
+    final IAggregate minMaxX, minMaxY;
+    final int size;
+    IMatrix function;
+    ExperimentSetFunctions retVal;
+
+    minX = new FiniteMinimumAggregate();
+    minY = new FiniteMinimumAggregate();
+    maxX = new FiniteMaximumAggregate();
+    maxY = new FiniteMaximumAggregate();
+    minMaxX = CompoundAggregate.combine(minX, maxX);
+    minMaxY = CompoundAggregate.combine(minY, maxY);
+
+    for (final IExperiment experiment : set.getData()) {
+      function = this.m_function.get(experiment);
+      if (function == null) {
+        continue;
+      }
+      if (function.m() <= 0) {
+        continue;
+      }
+      if (function.n() < 2) {
+        continue;
+      }
+      function.aggregateColumn(0, minMaxX);
+      function.aggregateColumn(1, minMaxY);
+      temp.add(new ExperimentFunction(experiment, function));
+    }
+
+    retVal = null;
+    size = temp.size();
+    if (size > 0) {
+      if ((minX.compareTo(maxX) != 0) && (minY.compareTo(maxY) != 0)) {
+        retVal = new ExperimentSetFunctions(set, cluster,
+            temp.toArray(new ExperimentFunction[size]));
+      }
+    }
+    temp.clear();
+    return retVal;
+  }
+
 }

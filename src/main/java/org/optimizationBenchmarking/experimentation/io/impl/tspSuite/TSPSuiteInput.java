@@ -64,16 +64,16 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
   private static final String DISTANCE_TYPE = "type"; //$NON-NLS-1$
 
   /** Euclidean distance based on a list of 2D coordinates */
-  private static final String EUC_2D = "EUC2D"; //$NON-NLS-1$
+  private static final String EUC_2D = "euc2d"; //$NON-NLS-1$
   /** rounded-up Euclidean distance based on a list of 2D coordinates */
-  private static final String CEIL_2D = "CEIL2D"; //$NON-NLS-1$
+  private static final String CEIL_2D = "ceil2d"; //$NON-NLS-1$
   /**
    * geographical distance based on a list of longitude-latitude coordinate
    * pairs
    */
-  private static final String GEO = "GEO"; //$NON-NLS-1$
+  private static final String GEO = "geo"; //$NON-NLS-1$
   /** pseudo-Euclidean distance based on a list of 2D coordinates */
-  private static final String ATT = "ATT"; //$NON-NLS-1$
+  private static final String ATT = "att"; //$NON-NLS-1$
   /** full distance matrix */
   private static final String MATRIX = "mat"; //$NON-NLS-1$
 

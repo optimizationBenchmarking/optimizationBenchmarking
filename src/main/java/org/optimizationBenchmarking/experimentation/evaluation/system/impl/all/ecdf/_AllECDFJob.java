@@ -6,7 +6,8 @@ import org.optimizationBenchmarking.experimentation.attributes.functions.Functio
 import org.optimizationBenchmarking.experimentation.attributes.functions.ecdf.ECDFParser;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
-import org.optimizationBenchmarking.experimentation.evaluation.system.impl.all.FunctionJob;
+import org.optimizationBenchmarking.experimentation.evaluation.system.impl.all.function.FunctionData;
+import org.optimizationBenchmarking.experimentation.evaluation.system.impl.all.function.FunctionJob;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
@@ -67,7 +68,7 @@ final class _AllECDFJob extends FunctionJob {
 
   /** {@inheritDoc} */
   @Override
-  protected final void doMain(final IExperimentSet data,
+  protected void process(final FunctionData data,
       final ISectionContainer sectionContainer, final Logger logger) {
 
     try (final ISection section = sectionContainer.section(null)) {
@@ -76,7 +77,9 @@ final class _AllECDFJob extends FunctionJob {
       }
 
       try (final ISectionBody body = section.body()) {
-        this.makePlots(data, body, section.getStyles(), logger, null);
+        if (data != null) {
+          this.makePlots(data, body, section.getStyles(), logger, null);
+        }
       }
     }
   }

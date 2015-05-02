@@ -29,6 +29,12 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
 public final class OnlySharedInstanceRuns extends
     Attribute<IExperimentSet, IExperimentSet> {
 
+  /**
+   * The globally shared instance of the {@link OnlySharedInstanceRuns}
+   * attribute
+   */
+  public static final OnlySharedInstanceRuns INSTANCE = new OnlySharedInstanceRuns();
+
   /** create the instance of this attribute */
   private OnlySharedInstanceRuns() {
     super(EAttributeType.TEMPORARILY_STORED);
