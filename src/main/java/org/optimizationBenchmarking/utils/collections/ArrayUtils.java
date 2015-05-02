@@ -66,6 +66,26 @@ public final class ArrayUtils {
   }
 
   /**
+   * convert an array of {@code long} values to an array of {@code double}.
+   * 
+   * @param array
+   *          the array of {@code long}
+   * @return the array of {@code double}
+   */
+  public static final double[] longsToDoubles(final long[] array) {
+    final double[] res;
+    int i;
+
+    res = new double[array.length];
+    i = 0;
+    for (final long x : array) {
+      res[i++] = x;
+    }
+
+    return res;
+  }
+
+  /**
    * convert an array of {@code double} values to an array of {@code long}.
    * 
    * @param array

@@ -4,8 +4,10 @@ import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.optimizationBenchmarking.utils.collections.ArrayUtils;
 import org.optimizationBenchmarking.utils.math.combinatorics.PermutationIterator;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.impl.LongMatrix1D;
 import org.optimizationBenchmarking.utils.math.matrix.processing.iterator2D.MatrixIterator2D;
 
@@ -78,13 +80,27 @@ public class MatrixIterator2DTest extends TestBase {
 
     it = new PermutationIterator(MatrixIterator2DTest.DATA_1.length);
     while (it.hasNext()) {
-      MatrixIterator2DTest.__testLong(MatrixIterator2DTest.DATA_1,
+      MatrixIterator2DTest.__testXLongYLong(MatrixIterator2DTest.DATA_1,
           it.next(), MatrixIterator2DTest.EXPECTED_1);
     }
   }
 
+  /** test whether the iteration proceeds as expected */
+  @Test(timeout = 3600000)
+  public void testDoubleIterationData1() {
+    final PermutationIterator it;
+
+    it = new PermutationIterator(MatrixIterator2DTest.DATA_1.length);
+    while (it.hasNext()) {
+      MatrixIterator2DTest.__testXDoubleYDouble(
+          MatrixIterator2DTest.DATA_1, it.next(),
+          MatrixIterator2DTest.EXPECTED_1);
+    }
+  }
+
   /**
-   * test a permutation of a given data array
+   * test a permutation of a given data array where all coordinates are
+   * longs
    * 
    * @param data
    *          the data
@@ -93,7 +109,7 @@ public class MatrixIterator2DTest extends TestBase {
    * @param result
    *          the expected result
    */
-  private static final void __testLong(final long[][] data,
+  private static final void __testXLongYLong(final long[][] data,
       final int[] perm, final long[][] result) {
     final IMatrix[] matrices;
     final boolean[] have;
@@ -120,6 +136,65 @@ public class MatrixIterator2DTest extends TestBase {
 
       outer: for (; (--i) >= 0;) {
         val = iterator.getLong(0, i);
+        finder: for (j = expected.length; (--j) > 0;) {
+          if (expected[j] == val) {
+            if (have[j - 1]) {
+              continue finder;
+            }
+            have[j - 1] = true;
+            continue outer;
+          }
+        }
+        Assert.fail("Value " + val + //$NON-NLS-1$ 
+            " not found."); //$NON-NLS-1$
+      }
+
+      new MatrixTest<>(null, iterator, true).validateInstance();
+    }
+
+    Assert.assertFalse(iterator.hasNext());
+  }
+
+  /**
+   * test a permutation of a given data array where all coordinates are
+   * doubles
+   * 
+   * @param data
+   *          the data
+   * @param perm
+   *          the permutation
+   * @param result
+   *          the expected result
+   */
+  private static final void __testXDoubleYDouble(final long[][] data,
+      final int[] perm, final long[][] result) {
+    final IMatrix[] matrices;
+    final boolean[] have;
+    final MatrixIterator2D iterator;
+    double val;
+    int i, j;
+
+    i = data.length;
+    matrices = new IMatrix[i];
+    have = new boolean[i];
+    for (; (--i) >= 0;) {
+
+      matrices[perm[i] - 1] = new DoubleMatrix1D(//
+          ArrayUtils.longsToDoubles(data[i]),//
+          (data[i].length >>> 1), 2);
+    }
+
+    iterator = MatrixIterator2D.iterate(0, 1, matrices);
+    for (final long[] expected : result) {
+      Assert.assertTrue(iterator.hasNext());
+      Assert.assertTrue(iterator.next().doubleValue() == expected[0]);
+      Arrays.fill(have, false);
+      i = (expected.length - 1);
+      Assert.assertEquals(i, iterator.n());
+      Assert.assertEquals(matrices.length, iterator.nMax());
+
+      outer: for (; (--i) >= 0;) {
+        val = iterator.getDouble(0, i);
         finder: for (j = expected.length; (--j) > 0;) {
           if (expected[j] == val) {
             if (have[j - 1]) {
