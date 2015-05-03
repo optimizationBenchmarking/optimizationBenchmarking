@@ -12,8 +12,8 @@ import org.optimizationBenchmarking.utils.chart.spec.ILine2D;
 import org.optimizationBenchmarking.utils.chart.spec.ILineChart2D;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.math.matrix.impl.LongMatrix1D;
-import org.optimizationBenchmarking.utils.math.statistics.Maximum;
-import org.optimizationBenchmarking.utils.math.statistics.Minimum;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.MaximumAggregate;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.MinimumAggregate;
 
 /**
  * A simple, almost deterministic example for rendering 2D line charts.
@@ -55,13 +55,13 @@ public class SimpleLineChart2DExample extends ChartExample {
 
       try (final IAxis axis = chart.xAxis()) {
         axis.setTitle("x-axis");//$NON-NLS-1$
-        axis.setMaximumAggregate(Maximum.INSTANCE.createAggregate());
-        axis.setMinimumAggregate(Minimum.INSTANCE.createAggregate());
+        axis.setMaximumAggregate(new MaximumAggregate());
+        axis.setMinimumAggregate(new MinimumAggregate());
       }
       try (final IAxis axis = chart.yAxis()) {
         axis.setTitle("y-axis");//$NON-NLS-1$
-        axis.setMaximumAggregate(Maximum.INSTANCE.createAggregate());
-        axis.setMinimumAggregate(Minimum.INSTANCE.createAggregate());
+        axis.setMaximumAggregate(new MaximumAggregate());
+        axis.setMinimumAggregate(new MinimumAggregate());
       }
 
       count = random.nextInt(6);

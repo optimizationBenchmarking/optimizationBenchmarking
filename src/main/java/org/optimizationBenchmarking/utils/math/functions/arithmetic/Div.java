@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.combinatoric.GCD;
 
 /**
  * The {@code "/"} function
@@ -46,27 +47,9 @@ public final class Div extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final float computeAsFloat(final float x0, final float x1) {
-    long a, b, res;
-
     if ((NumericalTypes.IS_LONG & //
-        NumericalTypes.getTypes(x0) & //
-    NumericalTypes.getTypes(x1)) != 0) {
-      a = ((long) x0);
-      b = ((long) x1);
-      if (b == 0L) {
-        if (a < 0L) {
-          return Float.NEGATIVE_INFINITY;
-        }
-        if (a > 0L) {
-          return Float.POSITIVE_INFINITY;
-        }
-        return Float.NaN;
-      }
-
-      res = (a / b);
-      if ((b * res) == a) {
-        return res;
-      }
+        NumericalTypes.getTypes(x0) & NumericalTypes.getTypes(x1)) != 0) {
+      return ((float) (this.computeAsDouble(((long) x0), ((long) x1))));
     }
 
     return (x0 / x1);
@@ -75,27 +58,9 @@ public final class Div extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
-    long a, b, res;
-
     if ((NumericalTypes.IS_LONG & //
-        NumericalTypes.getTypes(x0) & //
-    NumericalTypes.getTypes(x1)) != 0) {
-      a = ((long) x0);
-      b = ((long) x1);
-      if (b == 0L) {
-        if (a < 0L) {
-          return Double.NEGATIVE_INFINITY;
-        }
-        if (a > 0L) {
-          return Double.POSITIVE_INFINITY;
-        }
-        return Double.NaN;
-      }
-
-      res = (a / b);
-      if ((b * res) == a) {
-        return res;
-      }
+        NumericalTypes.getTypes(x0) & NumericalTypes.getTypes(x1)) != 0) {
+      return this.computeAsDouble(((long) x0), ((long) x1));
     }
 
     return (x0 / x1);
@@ -104,7 +69,7 @@ public final class Div extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final long x0, final long x1) {
-    long res;
+    final long res, gcd;
 
     if (x1 == 0L) {
       if (x0 < 0L) {
@@ -121,7 +86,12 @@ public final class Div extends BinaryFunction {
       return res;
     }
 
-    return (((double) x0) / ((double) x1));
+    // Try to achieve maximum accuracy by first dividing both numbers by
+    // their greatest common divisor. This should lead to the least
+    // rounding/truncation errors in the subsequent floating point
+    // division.
+    gcd = GCD.INSTANCE.computeAsLong(x0, x1);
+    return (((double) (x0 / gcd)) / ((double) (x1 / gcd)));
   }
 
   /** {@inheritDoc} */

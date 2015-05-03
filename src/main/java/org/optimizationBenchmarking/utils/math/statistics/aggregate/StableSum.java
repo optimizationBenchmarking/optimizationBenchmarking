@@ -186,8 +186,8 @@ public final class StableSum extends ScalarAggregate {
 
           // Let's check if we can even switch back to long arithmetic
           if ((this.m_state == BasicNumber.STATE_DOUBLE)
-              && (this.m_compensation == 0d) && (newSum >= Long.MIN_VALUE)
-              && (newSum <= Long.MAX_VALUE)) {
+              && (this.m_compensation == 0d) && //
+              (newSum >= Long.MIN_VALUE) && (newSum <= Long.MAX_VALUE)) {
             // We are in the range of long, with no pending compensation...
             lsum = ((long) newSum);
             if (lsum == newSum) {// ...and the new sum is an integer!
