@@ -769,7 +769,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
     ExperimentSetFunctions experimentSetFunctions;
     ICluster cluster;
     String path;
-    int size, index, instances;
+    int size, index;
 
     if (data == null) {
       throw new IllegalArgumentException(//
@@ -881,11 +881,6 @@ public abstract class FunctionJob extends ExperimentSetJob {
               if (cluster == null) {
                 this.m_function.appendName(caption, ETextCase.IN_SENTENCE);
               } else {
-                instances = cluster.getData().get(0).getData().size();
-                caption.append(instances);
-                caption.append((instances == 1)//
-                ? " instance with " : //$NON-NLS-1$
-                    " instances with ");//$NON-NLS-1$
                 cluster.appendName(caption, ETextCase.IN_SENTENCE);
               }
             }

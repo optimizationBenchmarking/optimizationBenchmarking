@@ -189,7 +189,7 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase appendName(final ITextOutput textOut,
+  final ETextCase _appendName(final ITextOutput textOut,
       final ETextCase textCase) {
     ETextCase next;
 
@@ -210,7 +210,7 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
 
       textOut.append(this.m_isUpperExclusive ? '<' : '\u2265');
 
-      PropertyValueGroup._appendNumber(this.m_lower, textOut);
+      PropertyValueGroup._appendNumber(this.m_upper, textOut);
     }
 
     return ((next != null) ? next : ETextCase.IN_SENTENCE);

@@ -87,7 +87,7 @@ public final class DistinctValueGroup extends
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase appendName(final ITextOutput textOut,
+  final ETextCase _appendName(final ITextOutput textOut,
       final ETextCase textCase) {
     final ETextCase next;
 

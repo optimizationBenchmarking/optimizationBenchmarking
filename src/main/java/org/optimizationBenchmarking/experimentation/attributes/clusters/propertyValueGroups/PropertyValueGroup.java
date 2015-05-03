@@ -3,7 +3,10 @@ package org.optimizationBenchmarking.experimentation.attributes.clusters.propert
 import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.ShadowExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -65,5 +68,50 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
     } else {
       out.append(number.doubleValue());
     }
+  }
+
+  /**
+   * Append a name
+   * 
+   * @param textOut
+   *          the text output devide
+   * @param textCase
+   *          the text case
+   * @return the next text case
+   */
+  abstract ETextCase _appendName(final ITextOutput textOut,
+      final ETextCase textCase);
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase appendName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    final ArrayListView<? extends IInstance> list;
+    final int size;
+    ETextCase useCase;
+
+    useCase = ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
+    list = this.getInstances().getData();
+    size = list.size();
+    if (size <= 0) {
+      useCase = useCase.appendWords("no instance", textOut); //$NON-NLS-1$
+    } else {
+      if (size <= 1) {
+        useCase = useCase.appendWord("instance", textOut); //$NON-NLS-1$
+        textOut.append(' ');
+        useCase = list.get(0).appendName(textOut, useCase);
+      } else {
+        textOut.append(size);
+        textOut.append(' ');
+        useCase = useCase.appendWord("instances", textOut); //$NON-NLS-1$
+      }
+    }
+    if (useCase == null) {
+      useCase = ETextCase.IN_SENTENCE;
+    }
+    textOut.append(' ');
+    useCase = useCase.appendWord("with", textOut); //$NON-NLS-1$
+    textOut.append(' ');
+    return this._appendName(textOut, useCase);
   }
 }

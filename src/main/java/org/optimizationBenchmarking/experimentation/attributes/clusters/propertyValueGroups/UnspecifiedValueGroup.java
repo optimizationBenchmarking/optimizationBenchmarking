@@ -81,7 +81,7 @@ public final class UnspecifiedValueGroup extends
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase appendName(final ITextOutput textOut,
+  final ETextCase _appendName(final ITextOutput textOut,
       final ETextCase textCase) {
     ETextCase next;
 
