@@ -341,8 +341,7 @@ abstract class _IDObject extends DataElement implements
     } else {
       textOut.append(this.getName());
     }
-    return ((textCase != null) ? textCase.nextCase()
-        : ETextCase.IN_SENTENCE);
+    return ETextCase.ensure(textCase).nextCase();
   }
 
   /**

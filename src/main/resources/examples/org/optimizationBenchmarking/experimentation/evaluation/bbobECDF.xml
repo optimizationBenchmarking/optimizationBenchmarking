@@ -33,4 +33,11 @@
 		</cfg:configuration>
 	</e:module>
 
+	<e:module class="all.ecdf.AllECDF">
+		<cfg:configuration>
+			<cfg:parameter name="ecdf" value="ln FEs, F 1e-5" />
+			<cfg:parameter name="byInstance" value="true" />
+		</cfg:configuration>
+	</e:module>
+
 </e:evaluation>

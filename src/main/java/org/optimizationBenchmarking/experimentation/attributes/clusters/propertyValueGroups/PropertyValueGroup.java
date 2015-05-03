@@ -74,7 +74,7 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
    * Append a name
    * 
    * @param textOut
-   *          the text output devide
+   *          the text output device
    * @param textCase
    *          the text case
    * @return the next text case
@@ -90,7 +90,7 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
     final int size;
     ETextCase useCase;
 
-    useCase = ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
+    useCase = ETextCase.ensure(textCase);
     list = this.getInstances().getData();
     size = list.size();
     if (size <= 0) {
@@ -106,11 +106,9 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
         useCase = useCase.appendWord("instances", textOut); //$NON-NLS-1$
       }
     }
-    if (useCase == null) {
-      useCase = ETextCase.IN_SENTENCE;
-    }
+
     textOut.append(' ');
-    useCase = useCase.appendWord("with", textOut); //$NON-NLS-1$
+    useCase = ETextCase.ensure(useCase).appendWord("with", textOut); //$NON-NLS-1$
     textOut.append(' ');
     return this._appendName(textOut, useCase);
   }

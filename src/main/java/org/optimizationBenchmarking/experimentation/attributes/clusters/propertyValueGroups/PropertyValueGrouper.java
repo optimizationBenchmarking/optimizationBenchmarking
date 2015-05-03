@@ -19,7 +19,17 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 
 /**
- * An attribute which can group property values.
+ * An attribute which can group property values. The groups are generated
+ * according to
+ * {@link org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.EGroupingMode
+ * modes}, currently including
+ * {@link org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.EGroupingMode#DISTINCT
+ * distinct} values for a given property for arbitrarily-typed properties
+ * and ranges which are
+ * {@link org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.EGroupingMode#MULTIPLES
+ * muliples} or
+ * {@link org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.EGroupingMode#POWERS}
+ * of reasonable numbers for numerical properties.
  */
 public final class PropertyValueGrouper extends
     Attribute<IProperty, PropertyValueGroups> {

@@ -193,8 +193,7 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
       final ETextCase textCase) {
     ETextCase next;
 
-    next = ((textCase != null) ? textCase.nextCase()
-        : ETextCase.IN_SENTENCE);
+    next = ETextCase.ensure(textCase);
 
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
@@ -213,7 +212,7 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
       PropertyValueGroup._appendNumber(this.m_upper, textOut);
     }
 
-    return ((next != null) ? next : ETextCase.IN_SENTENCE);
+    return ETextCase.ensure(next);
   }
 
 }

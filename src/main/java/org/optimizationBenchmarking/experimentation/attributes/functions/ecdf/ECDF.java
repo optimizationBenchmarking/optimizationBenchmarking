@@ -183,8 +183,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       final ITextOutput textOut, final ETextCase textCase) {
     final ETextCase next;
 
-    next = ((textCase != null) ? textCase.nextCase()
-        : ETextCase.IN_SENTENCE);
+    next = ETextCase.ensure(textCase);
 
     if (this.m_timeTransform != null) {
       textOut.append(this.m_timeTransform.toString());
@@ -200,8 +199,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       final ITextOutput textOut, final ETextCase textCase) {
     ETextCase next;
 
-    next = ((textCase != null) ? textCase.nextCase()
-        : ETextCase.IN_SENTENCE);
+    next = ETextCase.ensure(textCase);
 
     textOut.append(ECDF.ECDF_SHORT_NAME);
     textOut.append('(');
@@ -211,7 +209,8 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       textOut.append(this.m_raw.m_goalValueLong);
     } else {
       SimpleNumberAppender.INSTANCE.appendTo(this.m_raw.m_goalValueDouble,
-          ETextCase.IN_SENTENCE, textOut);
+          next, textOut);
+      next = next.nextCase();
     }
     textOut.append(')');
     return next;
@@ -247,14 +246,14 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       final ETextCase textCase) {
     ETextCase next;
 
-    next = ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
+    next = ETextCase.ensure(textCase);
     next = next.appendWords(//
         "estimated cumulative distribution function for",//$NON-NLS-1$
         textOut);
     textOut.append(' ');
 
     next = this.m_raw.m_goalDim.appendName(textOut, next);
-    next = ((next != null) ? next : ETextCase.IN_SENTENCE);
+    next = ETextCase.ensure(next);
     textOut.append(' ');
     next = next.appendWords("with goal", textOut);//$NON-NLS-1$
     textOut.append(' ');

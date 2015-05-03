@@ -118,9 +118,9 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    */
   public final ETextCase appendXAxisTitle(final ITextOutput textOut,
       final ETextCase textCase) {
-    ETextCase next;
+    final ETextCase next;
 
-    next = ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
+    next = ETextCase.ensure(textCase);
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
         this.appendXAxisTitle(math);
@@ -179,9 +179,9 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    */
   public final ETextCase appendYAxisTitle(final ITextOutput textOut,
       final ETextCase textCase) {
-    ETextCase next;
+    final ETextCase next;
 
-    next = ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
+    next = ETextCase.ensure(textCase);
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
         this.appendYAxisTitle(math);

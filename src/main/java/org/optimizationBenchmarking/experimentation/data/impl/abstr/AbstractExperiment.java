@@ -102,6 +102,7 @@ public class AbstractExperiment extends AbstractElementSet implements
   @Override
   public ETextCase appendName(final ITextOutput textOut,
       final ETextCase textCase) {
+
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
         this.appendName(math);
@@ -110,8 +111,7 @@ public class AbstractExperiment extends AbstractElementSet implements
       textOut.append(this.getName());
     }
 
-    return ((textCase != null) ? textCase.nextCase()
-        : ETextCase.IN_SENTENCE);
+    return ETextCase.ensure(textCase).nextCase();
   }
 
   /** {@inheritDoc} */

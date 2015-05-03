@@ -40,7 +40,7 @@ public final class InTextNumberAppender extends NumberAppender {
   public final void appendTo(final long v, final ETextCase textCase,
       final ITextOutput textOut) {
     if ((v >= 0) && (v < InTextNumberAppender.SMALL_NUMBERS.length)) {
-      ((textCase != null) ? textCase : ETextCase.IN_SENTENCE).appendWord(
+      ETextCase.ensure(textCase).appendWord(
           InTextNumberAppender.SMALL_NUMBERS[(int) v], textOut);
     } else {
       textOut.append(v);
@@ -62,7 +62,7 @@ public final class InTextNumberAppender extends NumberAppender {
   public final void appendTo(final int v, final ETextCase textCase,
       final ITextOutput textOut) {
     if ((v >= 0) && (v < InTextNumberAppender.SMALL_NUMBERS.length)) {
-      ((textCase != null) ? textCase : ETextCase.IN_SENTENCE).appendWord(
+      ETextCase.ensure(textCase).appendWord(
           InTextNumberAppender.SMALL_NUMBERS[v], textOut);
     } else {
       textOut.append(v);

@@ -13,9 +13,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 public final class DistinctValueGroups extends PropertyValueGroups {
 
-  /** the serial version uid */
-  private static final long serialVersionUID = 1L;
-
   /**
    * create the distinct value groups
    * 

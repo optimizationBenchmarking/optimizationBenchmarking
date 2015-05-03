@@ -86,6 +86,7 @@ public enum ESequenceMode {
       final boolean last, final ETextCase textCase, final ITextOutput dest) {
     final String s;
     final int l;
+    final ETextCase useCase;
     int i, j;
     char lowerCase, upperCase;
 
@@ -94,7 +95,8 @@ public enum ESequenceMode {
       return;
     }
 
-    if ((textCase == null) || (textCase == ETextCase.IN_SENTENCE)) {
+    useCase = ETextCase.ensure(textCase);
+    if (useCase == ETextCase.IN_SENTENCE) {
       dest.append(o);
       return;
     }
@@ -104,7 +106,7 @@ public enum ESequenceMode {
     j = 0;
     do {
       i = j;
-      if (textCase == ETextCase.AT_SENTENCE_START) {
+      if (useCase == ETextCase.AT_SENTENCE_START) {
         j = l;
       } else {
         j = s.indexOf(' ', i);
@@ -115,7 +117,7 @@ public enum ESequenceMode {
         }
       }
       lowerCase = s.charAt(i);
-      upperCase = textCase.adjustCaseOfFirstCharInWord(lowerCase);
+      upperCase = useCase.adjustCaseOfFirstCharInWord(lowerCase);
       if (lowerCase != upperCase) {
         dest.append(upperCase);
         dest.append(s, (i + 1), j);

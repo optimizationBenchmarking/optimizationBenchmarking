@@ -60,8 +60,7 @@ public class AbstractNamedElement extends DataElement implements
       textOut.append(this.getName());
     }
 
-    return ((textCase != null) ? textCase.nextCase()
-        : ETextCase.IN_SENTENCE);
+    return ETextCase.ensure(textCase).nextCase();
   }
 
   /** {@inheritDoc} */

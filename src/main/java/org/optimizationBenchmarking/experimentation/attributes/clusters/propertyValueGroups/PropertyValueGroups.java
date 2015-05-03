@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
-import java.io.Serializable;
-
 import org.optimizationBenchmarking.experimentation.attributes.clusters.IClustering;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
@@ -12,10 +10,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * A set of property value groups.
  */
 public abstract class PropertyValueGroups extends DataElement implements
-    Serializable, IClustering {
-
-  /** the serial version uid */
-  private static final long serialVersionUID = 1L;
+    IClustering {
 
   /** the property */
   final IProperty m_property;

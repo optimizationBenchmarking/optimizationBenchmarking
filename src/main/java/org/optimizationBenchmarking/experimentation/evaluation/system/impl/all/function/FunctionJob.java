@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.experimentation.attributes.OnlySharedInstanceRuns;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.IClustering;
+import org.optimizationBenchmarking.experimentation.attributes.clusters.byInstance.ByInstanceGrouping;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueSelector;
 import org.optimizationBenchmarking.experimentation.attributes.functions.FunctionAttribute;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
@@ -294,6 +295,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
    */
   protected Attribute<? super IExperimentSet, ? extends IClustering> configureClustering(
       final IExperimentSet data, final Configuration config) {
+
+    if (config.getBoolean(ByInstanceGrouping.PARAM_BY_INSTANCE, false)) {
+      return ByInstanceGrouping.INSTANCE;
+    }
+
     return PropertyValueSelector.configure(data, config);
   }
 

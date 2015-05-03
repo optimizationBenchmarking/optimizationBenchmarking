@@ -52,7 +52,8 @@ public final class PropertyValueSelector extends
   /** {@inheritDoc} */
   @Override
   protected final int calcHashCode() {
-    return HashUtils.combineHashes(HashUtils.hashCode(this.m_property),//
+    return HashUtils.combineHashes(//
+        HashUtils.hashCode(this.m_property),//
         HashUtils.hashCode(this.m_grouper));
   }
 
@@ -81,9 +82,10 @@ public final class PropertyValueSelector extends
     if (property == null) {
       property = data.getParameters().find(this.m_property);
       if (property == null) {
-        throw new IllegalStateException(//
-            "Property '" + this.m_property + //$NON-NLS-1$
-                "' not known to experiment set " + data);//$NON-NLS-1$
+        throw new IllegalStateException(((//
+            "Property '" + this.m_property) + //$NON-NLS-1$
+            "' not known to experiment set ") //$NON-NLS-1$
+            + data);
       }
     }
 
@@ -123,12 +125,12 @@ public final class PropertyValueSelector extends
       property = data.getParameters().find(groupBy);
       if (property == null) {
         throw new IllegalArgumentException(((//
-            "Cannot find property '" + groupBy) + '\'') + '.');//$NON-NLS-1$
+            "Cannot find property '" + groupBy) //$NON-NLS-1$
+            + '\'') + '.');
       }
     }
 
     return new PropertyValueSelector(property.getName(),
         PropertyValueGrouper.configure(property, config));
-
   }
 }

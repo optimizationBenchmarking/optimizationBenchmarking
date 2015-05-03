@@ -11,9 +11,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /** A set of property value range groups. */
 public class ValueRangeGroups extends PropertyValueGroups {
 
-  /** the serial version uid */
-  private static final long serialVersionUID = 1L;
-
   /** the grouping parameterrmation */
   private final Number m_parameter;
 

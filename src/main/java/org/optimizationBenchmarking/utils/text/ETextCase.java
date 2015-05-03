@@ -429,4 +429,17 @@ public enum ETextCase {
 
     return this.nextCase();
   }
+
+  /**
+   * Ensure that the a text case is not {@code null}, return the default
+   * text case if it is.
+   * 
+   * @param textCase
+   *          the text case
+   * @return {@code textCase} if {@code textCase != null},
+   *         {@link #IN_SENTENCE} otherwise
+   */
+  public static final ETextCase ensure(final ETextCase textCase) {
+    return ((textCase != null) ? textCase : ETextCase.IN_SENTENCE);
+  }
 }
