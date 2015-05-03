@@ -79,13 +79,13 @@ public final class GCD extends BinaryFunction {
     v = x2;
 
     for (;;) {
-      if ((NumericalTypes.getTypes(v) & NumericalTypes.IS_LONG) != 0) {
+      if (NumericalTypes.isLong(v)) {
         a = ((long) v);
         if (a == 0L) {
           return Math.abs(u);
         }
 
-        if ((NumericalTypes.getTypes(u) & NumericalTypes.IS_LONG) != 0) {
+        if (NumericalTypes.isLong(u)) {
           return this.computeAsLong(((long) u), a);
         }
       } else {

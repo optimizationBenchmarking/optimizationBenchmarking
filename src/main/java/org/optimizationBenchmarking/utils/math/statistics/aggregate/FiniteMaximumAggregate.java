@@ -54,7 +54,7 @@ public final class FiniteMaximumAggregate extends ScalarAggregate {
   @Override
   public final void append(final double value) {
 
-    if ((NumericalTypes.getTypes(value) & NumericalTypes.IS_LONG) != 0) {
+    if (NumericalTypes.isLong(value)) {
       this.append((long) value);
       return;
     }

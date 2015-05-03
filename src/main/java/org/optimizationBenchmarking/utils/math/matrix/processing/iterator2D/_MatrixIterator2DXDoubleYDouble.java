@@ -72,10 +72,8 @@ final class _MatrixIterator2DXDoubleYDouble extends MatrixIterator2D {
       }
 
       looper: for (; position < max; position++) {
-        if (EComparison.compareDoubles(
-            //
-            MatrixIterator2D._d(matrix.getDouble(position, this.m_xDim)),
-            x) > 0) {
+        if (EComparison.compareDoubles(MatrixIterator2D._d(//
+            matrix.getDouble(position, this.m_xDim)), x) > 0) {
           break looper;
         }
       }

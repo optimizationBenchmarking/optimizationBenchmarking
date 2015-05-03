@@ -54,19 +54,19 @@ public final class MaximumAggregate extends ScalarAggregate {
       return;
     }
 
-    if ((NumericalTypes.getTypes(value) & NumericalTypes.IS_LONG) != 0) {
+    if (NumericalTypes.isLong(value)) {
       this.append((long) value);
       return;
     }
 
     if (value <= Double.NEGATIVE_INFINITY) {
       if (this.m_state == BasicNumber.STATE_EMPTY) {
-        this.m_state = BasicNumber.STATE_NEGATIVE_INFINITY;
+        this._setNegativeInfinity();
       }
       return;
     }
     if (value >= Double.POSITIVE_INFINITY) {
-      this.m_state = BasicNumber.STATE_POSITIVE_INFINITY;
+      this._setPositiveInfinity();
       return;
     }
 

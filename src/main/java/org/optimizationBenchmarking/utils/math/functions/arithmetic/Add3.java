@@ -51,10 +51,8 @@ public final class Add3 extends TernaryFunction {
   @Override
   public final double computeAsDouble(final double x0, final double x1,
       final double x2) {
-    if ((NumericalTypes.IS_LONG & //
-        NumericalTypes.getTypes(x0) & //
-        NumericalTypes.getTypes(x1) & //
-    NumericalTypes.getTypes(x2)) != 0) {
+    if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)
+        && NumericalTypes.isLong(x2)) {
       return this.computeAsDouble(((long) x0), ((long) x1), ((long) x2));
     }
 

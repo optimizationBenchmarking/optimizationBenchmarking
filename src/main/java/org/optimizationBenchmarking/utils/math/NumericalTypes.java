@@ -375,6 +375,44 @@ public final class NumericalTypes {
   }
 
   /**
+   * Check whether a {@code float} number can be converted to a
+   * {@code long} without loss of precision or accuracy.
+   * 
+   * @param number
+   *          the {@code float} / floating point number
+   * @return {@code true} if {@code ((long)number) == number},
+   *         {@code false} otherwise
+   */
+  public static final boolean isLong(final float number) {
+    final long l;
+    if ((number >= NumericalTypes.MIN_LONG_FLOAT)
+        && (number <= NumericalTypes.MAX_LONG_FLOAT)) {
+      l = ((long) number);
+      return (l == number);
+    }
+    return false;
+  }
+
+  /**
+   * Check whether a {@code double} number can be converted to a
+   * {@code long} without loss of precision or accuracy.
+   * 
+   * @param number
+   *          the {@code double} / floating point number
+   * @return {@code true} if {@code ((long)number) == number},
+   *         {@code false} otherwise
+   */
+  public static final boolean isLong(final double number) {
+    final long l;
+    if ((number >= NumericalTypes.MIN_LONG_DOUBLE)
+        && (number <= NumericalTypes.MAX_LONG_DOUBLE)) {
+      l = ((long) number);
+      return (l == number);
+    }
+    return false;
+  }
+
+  /**
    * Get the possible types of a given {@code short} number
    * 
    * @param number

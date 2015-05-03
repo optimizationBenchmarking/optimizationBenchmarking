@@ -47,8 +47,7 @@ public final class Div extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final float computeAsFloat(final float x0, final float x1) {
-    if ((NumericalTypes.IS_LONG & //
-        NumericalTypes.getTypes(x0) & NumericalTypes.getTypes(x1)) != 0) {
+    if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
       return ((float) (this.computeAsDouble(((long) x0), ((long) x1))));
     }
 
@@ -58,8 +57,7 @@ public final class Div extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
-    if ((NumericalTypes.IS_LONG & //
-        NumericalTypes.getTypes(x0) & NumericalTypes.getTypes(x1)) != 0) {
+    if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
       return this.computeAsDouble(((long) x0), ((long) x1));
     }
 

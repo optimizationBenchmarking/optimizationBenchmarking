@@ -48,9 +48,7 @@ public final class Sub extends BinaryFunction {
   public final float computeAsFloat(final float x0, final float x1) {
     final long l0, l1;
 
-    if ((NumericalTypes.IS_LONG & //
-        NumericalTypes.getTypes(x0) & //
-    NumericalTypes.getTypes(x1)) != 0) {
+    if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
       l0 = ((long) x0);
       l1 = ((long) x1);
       if (SaturatingSub.getOverflowType(l0, l1) == 0) {
@@ -66,9 +64,7 @@ public final class Sub extends BinaryFunction {
   public final double computeAsDouble(final double x0, final double x1) {
     final long l0, l1;
 
-    if ((NumericalTypes.IS_LONG & //
-        NumericalTypes.getTypes(x0) & //
-    NumericalTypes.getTypes(x1)) != 0) {
+    if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
       l0 = ((long) x0);
       l1 = ((long) x1);
       if (SaturatingSub.getOverflowType(l0, l1) == 0) {

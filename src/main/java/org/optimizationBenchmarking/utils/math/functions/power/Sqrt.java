@@ -65,7 +65,7 @@ public final class Sqrt extends UnaryFunction {
   public final double computeAsDouble(final double x1) {
     final long l0, res;
 
-    if ((NumericalTypes.getTypes(x1) & NumericalTypes.IS_LONG) != 0) {
+    if (NumericalTypes.isLong(x1)) {
       l0 = ((long) x1);
       if (l0 > 0L) {
         res = Sqrt.__isqrt(l0);

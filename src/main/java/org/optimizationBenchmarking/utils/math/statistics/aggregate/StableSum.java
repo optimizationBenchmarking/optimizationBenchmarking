@@ -260,8 +260,8 @@ public final class StableSum extends ScalarAggregate {
       // Set state to negative infinity, unless ...
       switch (state) {
         case STATE_POSITIVE_INFINITY: {
-          this.m_state = BasicNumber.STATE_NAN; // ...it was positive
-                                                // infinity
+          // ...it was positive infinity
+          this.m_state = BasicNumber.STATE_NAN;
           return;
         }
         case STATE_NAN: {
@@ -271,7 +271,7 @@ public final class StableSum extends ScalarAggregate {
           // STATE_POSITIVE_OVERFLOW, STATE_NEGATIVE_OVERFLOW,
           // STATE_DOUBLE, STATE_INTEGER,
           // STATE_NEGATIVE_INFINITY
-          this.m_state = BasicNumber.STATE_NEGATIVE_INFINITY;
+          this._setNegativeInfinity();
         }
       }
       return; // nothing else to do
@@ -292,7 +292,7 @@ public final class StableSum extends ScalarAggregate {
           // STATE_POSITIVE_OVERFLOW, STATE_NEGATIVE_OVERFLOW,
           // STATE_DOUBLE, STATE_INTEGER,
           // STATE_POSITIVE_INFINITY
-          this.m_state = BasicNumber.STATE_POSITIVE_INFINITY;
+          this._setPositiveInfinity();
         }
       }
       return; // nothing else to do
@@ -310,7 +310,7 @@ public final class StableSum extends ScalarAggregate {
       return;
     }
 
-    if ((NumericalTypes.getTypes(value) & NumericalTypes.IS_LONG) != 0) {
+    if (NumericalTypes.isLong(value)) {
       this.append((long) value);
       return;
     }

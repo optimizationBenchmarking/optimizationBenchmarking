@@ -71,9 +71,7 @@ public final class ModuloDivisorSign extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
-    if ((NumericalTypes.IS_LONG & //
-        NumericalTypes.getTypes(x0) & //
-    NumericalTypes.getTypes(x1)) != 0) {
+    if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
       return this.computeAsLong(((long) x0), ((long) x1));
     }
 

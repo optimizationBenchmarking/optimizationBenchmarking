@@ -105,12 +105,54 @@ class _StatefulNumber extends BasicNumber {
 
   /** reset all internal state information */
   void reset() {
-    this.m_state = BasicNumber.STATE_EMPTY;
+    this._setEmpty();
   }
 
   /** {@inheritDoc} */
   @Override
   public int getState() {
     return this.m_state;
+  }
+
+  /** set this number to empty */
+  final void _setEmpty() {
+    this.m_state = BasicNumber.STATE_EMPTY;
+    this.m_double = Double.NaN;
+    this.m_long = 0L;
+  }
+
+  /** set this number to NaN */
+  final void _setNaN() {
+    this.m_state = BasicNumber.STATE_NAN;
+    this.m_double = Double.NaN;
+    this.m_long = 0L;
+  }
+
+  /** Set this number to positive infinity */
+  final void _setPositiveInfinity() {
+    this.m_state = BasicNumber.STATE_POSITIVE_INFINITY;
+    this.m_double = Double.POSITIVE_INFINITY;
+    this.m_long = Long.MAX_VALUE;
+  }
+
+  /** Set this number to positive overflow */
+  final void _setPositiveOverflow() {
+    this.m_state = BasicNumber.STATE_POSITIVE_OVERFLOW;
+    this.m_double = Double.POSITIVE_INFINITY;
+    this.m_long = Long.MAX_VALUE;
+  }
+
+  /** Set this number to negative infinity */
+  final void _setNegativeInfinity() {
+    this.m_state = BasicNumber.STATE_NEGATIVE_INFINITY;
+    this.m_double = Double.NEGATIVE_INFINITY;
+    this.m_long = Long.MIN_VALUE;
+  }
+
+  /** Set this number to negative overflow */
+  final void _setNegativeOverflow() {
+    this.m_state = BasicNumber.STATE_NEGATIVE_OVERFLOW;
+    this.m_double = Double.NEGATIVE_INFINITY;
+    this.m_long = Long.MIN_VALUE;
   }
 }
