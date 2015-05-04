@@ -5,7 +5,7 @@ public class MathRoot extends MathFunction {
 
   /**
    * Create an root function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

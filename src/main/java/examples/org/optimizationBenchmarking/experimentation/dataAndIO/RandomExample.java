@@ -42,15 +42,15 @@ public class RandomExample extends ExperimentSetCreator {
 
   /** the parsers */
   private static final NumberParser<?>[] PARSERS = new NumberParser[] {
-      ByteParser.INSTANCE, ShortParser.INSTANCE, IntParser.INSTANCE,
-      LongParser.INSTANCE, FloatParser.INSTANCE, DoubleParser.INSTANCE };
+    ByteParser.INSTANCE, ShortParser.INSTANCE, IntParser.INSTANCE,
+    LongParser.INSTANCE, FloatParser.INSTANCE, DoubleParser.INSTANCE };
 
   /** the name counter */
   final AtomicLong m_v;
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger, or {@code null} to use the global logger
    */
@@ -86,7 +86,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create the dimension set
-   * 
+   *
    * @param dsc
    *          the context
    * @param r
@@ -101,7 +101,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create the dimension set
-   * 
+   *
    * @param dsc
    *          the context
    * @param r
@@ -118,7 +118,7 @@ public class RandomExample extends ExperimentSetCreator {
             this.m_v.incrementAndGet()));
       }
       dc.setParser(RandomExample.PARSERS[r
-          .nextInt(RandomExample.PARSERS.length)]);
+                                         .nextInt(RandomExample.PARSERS.length)]);
       dc.setType(EDimensionType.INSTANCES.get(r
           .nextInt(EDimensionType.INSTANCES.size())));
       dc.setDirection(EDimensionDirection.INSTANCES.get(r
@@ -129,7 +129,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create a property map
-   * 
+   *
    * @param r
    *          the randomizer
    * @return the property map
@@ -150,7 +150,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create a property map
-   * 
+   *
    * @param map
    *          the map
    * @param canOmit
@@ -245,7 +245,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create the instance set
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -276,7 +276,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create the instance set
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -297,7 +297,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create a random data point
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dimss
@@ -365,7 +365,7 @@ public class RandomExample extends ExperimentSetCreator {
           } while (((ts <= (Short.MIN_VALUE + 2)))
               || ((ts >= (Short.MAX_VALUE - 2))
                   || (ts < np.getLowerBoundLong()) || (ts > np
-                  .getUpperBoundLong())));
+                      .getUpperBoundLong())));
 
           if (lst != null) {
             lst.add(Short.valueOf(ts));
@@ -487,7 +487,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create a random data point
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dimss
@@ -578,7 +578,7 @@ public class RandomExample extends ExperimentSetCreator {
             } while (((ts <= (Short.MIN_VALUE + 2)))
                 || ((ts >= (Short.MAX_VALUE - 2))
                     || (ts < np.getLowerBoundLong()) || (ts > np
-                    .getUpperBoundLong())));
+                        .getUpperBoundLong())));
 
             if (lst != null) {
               lst.add(Short.valueOf(ts));
@@ -696,7 +696,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create a random run
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -781,7 +781,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create a random run
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -798,7 +798,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create a random run
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -824,7 +824,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create a random run
-   * 
+   *
    * @param r
    *          the randomizer
    * @param dims
@@ -850,7 +850,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create the experiment set
-   * 
+   *
    * @param isc
    *          the context
    * @param dims
@@ -903,7 +903,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create the experiment set
-   * 
+   *
    * @param isc
    *          the context
    * @param dims
@@ -929,7 +929,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * create the experiment set
-   * 
+   *
    * @param isc
    *          the context
    * @param dims
@@ -957,7 +957,7 @@ public class RandomExample extends ExperimentSetCreator {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          the command line arguments
    */

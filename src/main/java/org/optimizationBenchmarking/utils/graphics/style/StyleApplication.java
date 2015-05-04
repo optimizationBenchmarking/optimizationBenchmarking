@@ -11,7 +11,7 @@ public class StyleApplication implements Closeable {
 
   /**
    * the style
-   * 
+   *
    * @param g
    *          the graphic
    */
@@ -26,7 +26,7 @@ public class StyleApplication implements Closeable {
 
   /**
    * clean up the graphic object
-   * 
+   *
    * @param g
    *          the graphic
    */

@@ -5,7 +5,7 @@ public interface ILine2D extends IDataSeries2D {
 
   /**
    * Set the type of the line.
-   * 
+   *
    * @param type
    *          the type to set
    */

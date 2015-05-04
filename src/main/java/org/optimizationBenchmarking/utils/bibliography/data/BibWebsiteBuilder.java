@@ -12,7 +12,7 @@ public final class BibWebsiteBuilder extends BibRecordWithPublisherBuilder {
 
   /**
    * create the website builder
-   * 
+   *
    * @param owner
    *          the owner
    */

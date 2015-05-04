@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.MathNumber;
 final class _LaTeXMathNumber extends MathNumber {
   /**
    * create the mathematical in-braces element
-   * 
+   *
    * @param owner
    *          the owner
    */

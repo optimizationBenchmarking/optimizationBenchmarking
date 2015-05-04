@@ -31,7 +31,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 1 parameter.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a byte
@@ -45,7 +45,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 1 parameter.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a short
@@ -59,7 +59,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 1 parameter.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a int
@@ -73,7 +73,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 1 parameter.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a long
@@ -87,7 +87,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 1 parameter.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a float
@@ -101,7 +101,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 1 parameter.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a double
@@ -117,7 +117,7 @@ public class UnaryFunction extends MathematicalFunction {
    * function template delegates the computation to the {@code int} variant
    * of this function. The {@code int} result of that function is then
    * casted to {@code byte}.
-   * 
+   *
    * @param x0
    *          the byte argument of the function
    * @return the return value of this function, a {@code byte}
@@ -136,7 +136,7 @@ public class UnaryFunction extends MathematicalFunction {
    * function template delegates the computation to the {@code int} variant
    * of this function. The {@code int} result of that function is then
    * casted to {@code short}.
-   * 
+   *
    * @param x0
    *          the short argument of the function
    * @return the return value of this function, a {@code short}
@@ -155,7 +155,7 @@ public class UnaryFunction extends MathematicalFunction {
    * function template delegates the computation to the {@code long}
    * variant of this function. The {@code long} result of that function is
    * then casted to {@code int}.
-   * 
+   *
    * @param x0
    *          the int argument of the function
    * @return the return value of this function, a {@code int}
@@ -174,7 +174,7 @@ public class UnaryFunction extends MathematicalFunction {
    * function template delegates the computation to the {@code double}
    * variant of this function. The {@code double} result of that function
    * is then casted to {@code long}.
-   * 
+   *
    * @param x0
    *          the long argument of the function
    * @return the return value of this function, a {@code long}
@@ -201,7 +201,7 @@ public class UnaryFunction extends MathematicalFunction {
    * function template delegates the computation to the {@code double}
    * variant of this function. The {@code double} result of that function
    * is then casted to {@code float}.
-   * 
+   *
    * @param x0
    *          the float argument of the function
    * @return the return value of this function, a {@code float}
@@ -217,7 +217,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Compute the function value in the {@code double} domain. Every
    * sub-class of this class must, at least, override this function.
-   * 
+   *
    * @param x0
    *          the {@code double} argument of the function
    * @return the return value of this function, a {@code double}
@@ -229,7 +229,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Compute the function result as {@code double} based on an {@code long}
    * input
-   * 
+   *
    * @param x0
    *          the {@code long} argument of the function
    * @return the return value of this function, a {@code double}
@@ -241,7 +241,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Compute the function result as {@code double} based on an {@code int}
    * input
-   * 
+   *
    * @param x0
    *          the {@code int} argument of the function
    * @return the return value of this function, a {@code double}
@@ -253,7 +253,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 1 parameter.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a double
@@ -267,7 +267,7 @@ public class UnaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 1 parameter.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a double

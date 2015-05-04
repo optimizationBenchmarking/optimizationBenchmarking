@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 final class _ExperimentSetJobs extends _PartJob {
   /**
    * create the experiment set statistics module
-   * 
+   *
    * @param data
    *          the data
    * @param logger
@@ -43,7 +43,7 @@ final class _ExperimentSetJobs extends _PartJob {
   /**
    * With this method, we make sure that one (hopefully unique) color is
    * assigned to each experiment.
-   * 
+   *
    * @param data
    *          {@inheritDoc}
    * @param section

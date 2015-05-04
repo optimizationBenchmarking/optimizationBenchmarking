@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 
 /**
  * A file input job builder.
- * 
+ *
  * @param <D>
  *          the data element which will be filled
  */
@@ -35,7 +35,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /**
    * Add a path to an input source
-   * 
+   *
    * @param path
    *          the path to read from
    * @param encoding
@@ -53,7 +53,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add a path to an input source, using the default encoding and
    * expecting no Archive compression
-   * 
+   *
    * @param path
    *          the path to read from
    * @return this builder
@@ -62,7 +62,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /**
    * Add an input source file
-   * 
+   *
    * @param file
    *          the file to read from
    * @param encoding
@@ -80,7 +80,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add an input source file , using the default encoding and expecting no
    * Archive compression
-   * 
+   *
    * @param file
    *          the file to read from
    * @return this builder
@@ -89,7 +89,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /**
    * Add a path to an input source
-   * 
+   *
    * @param path
    *          the path to read from
    * @param encoding
@@ -107,7 +107,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add a path to an input source, using the default encoding and
    * expecting no Archive compression
-   * 
+   *
    * @param path
    *          the path to read from
    * @return this builder
@@ -116,7 +116,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /**
    * Add an input source file
-   * 
+   *
    * @param file
    *          the file to read from
    * @param encoding
@@ -134,7 +134,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add an input source file, using the default encoding and expecting no
    * Archive compression
-   * 
+   *
    * @param file
    *          the file to read from
    * @return this builder
@@ -144,7 +144,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add a stream containing an archive. The stream may or may not be
    * closed upon termination.
-   * 
+   *
    * @param stream
    *          the stream to read the input from
    * @param encoding
@@ -163,7 +163,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
    * Add a stream containing an archive, using the default encoding and
    * expecting a (compressed) archive. The stream may or may not be closed
    * upon termination.
-   * 
+   *
    * @param stream
    *          the stream to read the input from
    * @param archiveType
@@ -176,7 +176,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /**
    * Add an input resource containing an archive
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -196,7 +196,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add an input resource containing an archive, using the default
    * encoding and expecting a (compressed) archive.
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -212,7 +212,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /**
    * Add an input resource containing an archive
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -232,7 +232,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add an input resource containing an archive, using the default
    * encoding and expecting a (compressed) archive.
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -247,7 +247,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /**
    * Add a URI to read an archive from.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @param encoding
@@ -264,7 +264,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add a URI to read an archive from, using the default encoding and
    * expecting a (compressed) archive.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @param archiveType
@@ -277,7 +277,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /**
    * Add a URL to read an archive from.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @param encoding
@@ -294,7 +294,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add a URL to read an archive from, using the default encoding and
    * expecting a (compressed) archive.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @param archiveType
@@ -307,7 +307,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /**
    * Add a URI to read an archive from.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @param encoding
@@ -324,7 +324,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add a URI to read an archive from, using the default encoding and
    * expecting a (compressed) archive.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @param archiveType
@@ -337,7 +337,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /**
    * Add a URL to read an archive from.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @param encoding
@@ -354,7 +354,7 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
   /**
    * Add a URL to read an archive from, using the default encoding and
    * expecting a (compressed) archive.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @param archiveType

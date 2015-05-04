@@ -36,12 +36,12 @@ final class _BibTeX8 extends _LaTeXToolChainComponent {
 
     this.m_executable = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "bibtex8" //$NON-NLS-1$
-        ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+            ), CanExecutePredicate.INSTANCE),//
+            IsFilePredicate.INSTANCE, null);
 
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config((this.m_executable != null) ? //
-      ("BibTeX8 executable '" + this.m_executable + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
+          ("BibTeX8 executable '" + this.m_executable + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
           "No BibTeX8 executable found.");//$NON-NLS-1$
     }
   }
@@ -100,7 +100,7 @@ final class _BibTeX8 extends _LaTeXToolChainComponent {
 
     if (this._getFile(job, ELaTeXFileType.BBL, true,
         " This could mean that the main document contains no citations.")//$NON-NLS-1$
-    != null) {
+        != null) {
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
             (("Finished applying BibTeX8 to '" + aux) + '\'') + '.'); //$NON-NLS-1$
@@ -116,7 +116,7 @@ final class _BibTeX8 extends _LaTeXToolChainComponent {
 
   /**
    * get the description
-   * 
+   *
    * @return the description
    */
   static final _LaTeXToolChainComponentDesc _getDescription() {
@@ -125,7 +125,7 @@ final class _BibTeX8 extends _LaTeXToolChainComponent {
 
   /** the description */
   private static final class __BibTeX8Desc extends
-      _LaTeXToolChainComponentDesc {
+  _LaTeXToolChainComponentDesc {
 
     /** the description */
     static final _LaTeXToolChainComponentDesc DESC = new __BibTeX8Desc();

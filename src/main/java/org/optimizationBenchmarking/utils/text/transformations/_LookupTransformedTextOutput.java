@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
  * which transforms text according to a lookup table and writes it to its
  * output.
- * 
+ *
  * @author Thomas Weise
  */
 class _LookupTransformedTextOutput extends _TransformedTextOutput {
@@ -21,7 +21,7 @@ class _LookupTransformedTextOutput extends _TransformedTextOutput {
 
   /**
    * create the transformed text output
-   * 
+   *
    * @param out
    *          the wrapped output
    * @param data
@@ -114,7 +114,7 @@ class _LookupTransformedTextOutput extends _TransformedTextOutput {
 
   /**
    * resolve a given character
-   * 
+   *
    * @param ch
    *          the character to resolve
    * @return the resolved sequence

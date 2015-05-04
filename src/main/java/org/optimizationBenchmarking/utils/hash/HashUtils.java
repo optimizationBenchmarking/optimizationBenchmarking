@@ -14,7 +14,7 @@ public final class HashUtils {
    * on both hash codes {@code a} and {@code b}. This result depends on the
    * order of the parameters, i.e., it (usually) is different for
    * {@code (a, b)} and {@code (b, a)}.
-   * 
+   *
    * @param a
    *          the first hash code
    * @param b
@@ -30,7 +30,7 @@ public final class HashUtils {
    * on both hash codes {@code a} and {@code b}. This result does not
    * depend on the order of the parameters, i.e., it is the same for
    * {@code (a, b)} and {@code (b, a)}.
-   * 
+   *
    * @param a
    *          the first hash code
    * @param b
@@ -43,7 +43,7 @@ public final class HashUtils {
 
   /**
    * Compute the hash code of a byte.
-   * 
+   *
    * @param b
    *          the data
    * @return the hash
@@ -54,7 +54,7 @@ public final class HashUtils {
 
   /**
    * Compute the hash code of a {@code short}
-   * 
+   *
    * @param b
    *          the data
    * @return the hash
@@ -65,7 +65,7 @@ public final class HashUtils {
 
   /**
    * Compute the hash code of an integer.
-   * 
+   *
    * @param b
    *          the data
    * @return the hash
@@ -76,7 +76,7 @@ public final class HashUtils {
 
   /**
    * Compute the hash code of a float.
-   * 
+   *
    * @param b
    *          the data
    * @return the hash
@@ -87,7 +87,7 @@ public final class HashUtils {
 
   /**
    * Compute the hash code of a long.
-   * 
+   *
    * @param b
    *          the data
    * @return the hash
@@ -98,7 +98,7 @@ public final class HashUtils {
 
   /**
    * Compute the hash code of a double.
-   * 
+   *
    * @param b
    *          the data
    * @return the hash
@@ -109,7 +109,7 @@ public final class HashUtils {
 
   /**
    * Compute the hash code of an object.
-   * 
+   *
    * @param b
    *          the data
    * @return the hash
@@ -152,7 +152,7 @@ public final class HashUtils {
    * array, the hash code of the array will be computed. Different from
    * {@link java.util.Arrays#deepHashCode(Object[])}, this method allows
    * for objects to be object arrays containing themselves.
-   * 
+   *
    * @param o
    *          the object
    * @return the hash code of the object
@@ -165,7 +165,7 @@ public final class HashUtils {
    * The internal method to compute a &quot;deep&quot; hash code of an
    * object. If the object is an array, the hash code of the array will be
    * computed.
-   * 
+   *
    * @param o
    *          the object
    * @param done
@@ -214,7 +214,7 @@ public final class HashUtils {
 
   /**
    * Compute the hash code of a character.
-   * 
+   *
    * @param b
    *          the data
    * @return the hash
@@ -225,7 +225,7 @@ public final class HashUtils {
 
   /**
    * Compute the hash code of a boolean value.
-   * 
+   *
    * @param b
    *          the data
    * @return the hash
@@ -239,7 +239,7 @@ public final class HashUtils {
    * map. This key is guaranteed to not be {@code null}. If {@code o} is an
    * array, the returned key will identify this array <em>and</em> any
    * equal array.
-   * 
+   *
    * @param o
    *          the object
    * @return the key

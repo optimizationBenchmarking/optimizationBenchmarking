@@ -6,20 +6,20 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /**
  * The internal, abstract base class for sets of bibliographic elements.
- * 
+ *
  * @param <DT>
  *          the element type
  * @param <CT>
  *          the comparable type
  */
 class _BibSet<DT extends _BibElement<? super DT>, CT extends _BibSet<DT, CT>>
-    extends ArrayListView<DT> implements Set<DT>, Comparable<CT> {
+extends ArrayListView<DT> implements Set<DT>, Comparable<CT> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data of the set
    * @param cannotBeEmpty
@@ -43,14 +43,14 @@ class _BibSet<DT extends _BibElement<? super DT>, CT extends _BibSet<DT, CT>>
         if (el == null) {
           throw new IllegalArgumentException(//
               "Elements must not be null, but the one at index " //$NON-NLS-1$
-                  + i + " is."); //$NON-NLS-1$
+              + i + " is."); //$NON-NLS-1$
         }
         for (j = i; (--j) >= 0;) {
           if (el.equals(data[j])) {
             throw new IllegalArgumentException(//
                 "There must not be two equal elements, but elements equal to '" //$NON-NLS-1$
-                    + el + "' exist at index " + j + //$NON-NLS-1$
-                    " and " + i); //$NON-NLS-1$
+                + el + "' exist at index " + j + //$NON-NLS-1$
+                " and " + i); //$NON-NLS-1$
           }
         }
       }
@@ -59,7 +59,7 @@ class _BibSet<DT extends _BibElement<? super DT>, CT extends _BibSet<DT, CT>>
 
   /**
    * check if the data is the same
-   * 
+   *
    * @param data
    *          the data
    * @param len

@@ -10,7 +10,7 @@ public class BibBook extends BibBookRecord {
 
   /**
    * Create a new bibliography record
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -47,7 +47,7 @@ public class BibBook extends BibBookRecord {
 
   /**
    * Create a new bibliography record
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -93,7 +93,7 @@ public class BibBook extends BibBookRecord {
 
   /**
    * Get the date
-   * 
+   *
    * @return the date
    */
   public final BibDate getDate() {

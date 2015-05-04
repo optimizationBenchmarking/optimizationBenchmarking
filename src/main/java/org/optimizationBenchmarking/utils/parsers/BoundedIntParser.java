@@ -13,7 +13,7 @@ public class BoundedIntParser extends IntParser {
 
   /**
    * Create the bounded int parser
-   * 
+   *
    * @param min
    *          the minimum allowed value, a
    *          {@link java.lang.IllegalArgumentException
@@ -31,7 +31,7 @@ public class BoundedIntParser extends IntParser {
 
   /**
    * Create the bounded int parser
-   * 
+   *
    * @param min
    *          the minimum allowed value, a
    *          {@link java.lang.IllegalArgumentException

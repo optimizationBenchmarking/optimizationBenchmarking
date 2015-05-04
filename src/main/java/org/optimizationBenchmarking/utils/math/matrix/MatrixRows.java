@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.math.matrix;
 
 /**
  * A class for matrix rows
- * 
+ *
  * @param <OT>
  *          the owning matrix type
  */
@@ -15,7 +15,7 @@ public class MatrixRows<OT extends IMatrix> extends AbstractMatrix {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owning matrix
    * @param rows
@@ -76,7 +76,7 @@ public class MatrixRows<OT extends IMatrix> extends AbstractMatrix {
     }
 
     return ((e && (cc.length == c.length)) ? this : //
-        this.m_owner.selectRows(d ? rows : cc));
+      this.m_owner.selectRows(d ? rows : cc));
   }
 
   /** {@inheritDoc} */

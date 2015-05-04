@@ -34,7 +34,7 @@ public class DataElement extends TitledElement implements IDataElement {
 
   /**
    * create the chart item
-   * 
+   *
    * @param owner
    *          the owner
    * @param id
@@ -82,7 +82,7 @@ public class DataElement extends TitledElement implements IDataElement {
       case FLAG_HAS_STROKE: {
         append.append("strokeSet");break;} //$NON-NLS-1$
       case FLAG_HAS_DATA: {
-        append.append("dataSet");break;} //$NON-NLS-1$      
+        append.append("dataSet");break;} //$NON-NLS-1$
       default: {
         super.fsmFlagsAppendName(flagValue, flagIndex, append);
       }
@@ -119,7 +119,7 @@ public class DataElement extends TitledElement implements IDataElement {
 
   /**
    * Process the data element
-   * 
+   *
    * @param owner
    *          the owning chart
    * @param driver

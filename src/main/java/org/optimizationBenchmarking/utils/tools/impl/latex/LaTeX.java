@@ -69,7 +69,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IConfigurableJobTool;
  * </p>
  */
 public class LaTeX extends FileProducerTool implements
-    IConfigurableJobTool {
+IConfigurableJobTool {
 
   /** create */
   LaTeX() {
@@ -110,7 +110,7 @@ public class LaTeX extends FileProducerTool implements
 
   /**
    * Sanitize a file type for checking whether it is acceptable.
-   * 
+   *
    * @param type
    *          the type
    * @return the type which can be added
@@ -141,12 +141,12 @@ public class LaTeX extends FileProducerTool implements
 
     throw new IllegalArgumentException(
         (("No LaTeX tool chain can be required to understand type '" //$NON-NLS-1$
-        + type) + '\'') + '.');
+            + type) + '\'') + '.');
   }
 
   /**
    * Is there a tool chain for the given types?
-   * 
+   *
    * @param types
    *          the types
    * @return {@code true} if there is a tool chain, {@code false} otherwise
@@ -178,7 +178,7 @@ public class LaTeX extends FileProducerTool implements
 
   /**
    * try to find a tool chain for the given required types
-   * 
+   *
    * @param types
    *          the types
    * @return the tool chain (1st element: loop, 2nd element: refine)
@@ -247,7 +247,7 @@ public class LaTeX extends FileProducerTool implements
   /**
    * Get a tool chain able to convert dvi files to pdf, or {@code null} if
    * none is found
-   * 
+   *
    * @return the tool chain, or {@code null} if none is found
    */
   private static final _LaTeXToolChainComponent[] __dvi2pdf() {
@@ -256,7 +256,7 @@ public class LaTeX extends FileProducerTool implements
 
   /**
    * Get the tool to be used for bibtex, or {@code null} if none is found
-   * 
+   *
    * @return the tool to be used for bibtex, or {@code null} if none is
    *         found
    */
@@ -267,7 +267,7 @@ public class LaTeX extends FileProducerTool implements
   /**
    * Get the tool to be used for ps to pdf conversion, or {@code null} if
    * none is
-   * 
+   *
    * @return the tool to be used for ps to pdf conversion , or {@code null}
    *         if none is found
    */
@@ -277,7 +277,7 @@ public class LaTeX extends FileProducerTool implements
 
   /**
    * Get the globally shared instance of the LaTeX tool
-   * 
+   *
    * @return the globally shared instance of the LaTeX tool
    */
   public static final LaTeX getInstance() {
@@ -288,7 +288,7 @@ public class LaTeX extends FileProducerTool implements
    * Obtain all the supported graphic formats. This method returns a list
    * of all graphic formats which may potentially be supported by a tool
    * chain.
-   * 
+   *
    * @return all the supported graphic formats
    */
   public static final ArraySetView<EGraphicFormat> getAllSupportedGraphicFormats() {
@@ -333,7 +333,7 @@ public class LaTeX extends FileProducerTool implements
 
   /**
    * Try to find a LaTeX tool chain component for the given file types
-   * 
+   *
    * @param required
    *          the required file types
    * @return the tool chain component

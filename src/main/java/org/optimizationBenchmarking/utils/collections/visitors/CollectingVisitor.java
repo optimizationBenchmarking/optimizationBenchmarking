@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 /**
  * A visitor which collects everything he sees.
- * 
+ *
  * @param <T>
  *          the type
  */
 public class CollectingVisitor<T> extends ArrayList<T> implements
-    IVisitor<T> {
+IVisitor<T> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

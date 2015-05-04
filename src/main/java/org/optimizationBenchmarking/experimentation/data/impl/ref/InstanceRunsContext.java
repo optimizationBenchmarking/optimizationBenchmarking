@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A context for creating instance run sets . */
 public final class InstanceRunsContext extends
-    _HierarchicalCollection<Run, RunContext, InstanceRuns> {
+_HierarchicalCollection<Run, RunContext, InstanceRuns> {
 
   /** we have an instance */
   private static final int FLAG_HAS_INSTANCE = (FSM.FLAG_NOTHING + 1);
@@ -19,7 +19,7 @@ public final class InstanceRunsContext extends
 
   /**
    * create the experiment set context
-   * 
+   *
    * @param context
    *          the context
    * @param ownerProps
@@ -51,7 +51,7 @@ public final class InstanceRunsContext extends
 
   /**
    * Get the instance belonging to this run context.
-   * 
+   *
    * @return the instance belonging to this run context
    */
   public final Instance getInstance() {
@@ -60,7 +60,7 @@ public final class InstanceRunsContext extends
 
   /**
    * Set the instance of this instance run context
-   * 
+   *
    * @param inst
    *          the instance of this instance run context
    */
@@ -86,7 +86,7 @@ public final class InstanceRunsContext extends
 
   /**
    * Set the instance of this instance run context
-   * 
+   *
    * @param inst
    *          the instance of this instance run context
    */
@@ -96,7 +96,7 @@ public final class InstanceRunsContext extends
     if (i == null) {
       throw new IllegalArgumentException(
           (("No instance matches the string '" + //$NON-NLS-1$
-          inst) + '\'') + '.');
+              inst) + '\'') + '.');
     }
     this.setInstance(i);
   }
@@ -109,7 +109,7 @@ public final class InstanceRunsContext extends
 
   /**
    * get the dimension set
-   * 
+   *
    * @return the dimension set
    */
   final DimensionSet _getDimensionSet() {
@@ -118,7 +118,7 @@ public final class InstanceRunsContext extends
 
   /**
    * get the instance set
-   * 
+   *
    * @return the instance set
    */
   final InstanceSet _getInstanceSet() {
@@ -127,7 +127,7 @@ public final class InstanceRunsContext extends
 
   /**
    * Create an run context
-   * 
+   *
    * @return the run context
    */
   public final RunContext createRun() {
@@ -161,7 +161,7 @@ public final class InstanceRunsContext extends
 
   /**
    * Define a parameter with a given name and description
-   * 
+   *
    * @param name
    *          the parameter name
    * @param desc
@@ -175,7 +175,7 @@ public final class InstanceRunsContext extends
 
   /**
    * Set a parameter value.
-   * 
+   *
    * @param parameterName
    *          the parameter name
    * @param parameterDescription
@@ -195,7 +195,7 @@ public final class InstanceRunsContext extends
 
   /**
    * Set a parameter value.
-   * 
+   *
    * @param parameterName
    *          the parameter name
    * @param parameterValue
@@ -211,7 +211,7 @@ public final class InstanceRunsContext extends
 
   /**
    * Set a parameter value.
-   * 
+   *
    * @param parameterName
    *          the parameter name
    * @param parameterValue

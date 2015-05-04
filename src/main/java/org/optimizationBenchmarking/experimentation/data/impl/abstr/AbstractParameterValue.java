@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
  * interface.
  */
 public class AbstractParameterValue extends AbstractPropertyValue
-    implements IParameterValue {
+implements IParameterValue {
 
   /** the owning feature */
   IParameter m_owner;
@@ -19,7 +19,7 @@ public class AbstractParameterValue extends AbstractPropertyValue
    * later set it via
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractParameter#own(AbstractParameterValue)}
    * .
-   * 
+   *
    * @param owner
    *          the owner
    */

@@ -8,12 +8,12 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
  * A parser for a given type
- * 
+ *
  * @param <ET>
  *          the element type
  */
 public class ListParser<ET> extends
-    CollectionParser<ET, ArrayListView<ET>> {
+CollectionParser<ET, ArrayListView<ET>> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public class ListParser<ET> extends
 
   /**
    * create the parser
-   * 
+   *
    * @param elementParser
    *          the element parser
    * @param ignoreNull

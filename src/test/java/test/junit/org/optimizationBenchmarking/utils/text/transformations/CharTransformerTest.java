@@ -25,7 +25,7 @@ import test.junit.InstanceTest;
  */
 @Ignore
 public abstract class CharTransformerTest extends
-    InstanceTest<CharTransformer> {
+InstanceTest<CharTransformer> {
 
   /** the begin of unicode data */
   public static final String UNICODE_START = "\\u"; //$NON-NLS-1$
@@ -40,7 +40,7 @@ public abstract class CharTransformerTest extends
 
   /**
    * get the test cases
-   * 
+   *
    * @return the test cases
    * @throws IOException
    *           if io fails
@@ -60,7 +60,7 @@ public abstract class CharTransformerTest extends
 
     try (InputStream is = this.getClass().getResourceAsStream(
         this.getClass().getSimpleName() + //
-            ".cases")) { //$NON-NLS-1$
+        ".cases")) { //$NON-NLS-1$
       try (InputStreamReader r = new InputStreamReader(is)) {
         try (BufferedReader br = new BufferedReader(r)) {
           while ((s = br.readLine()) != null) {
@@ -88,7 +88,7 @@ public abstract class CharTransformerTest extends
 
   /**
    * prepare a string
-   * 
+   *
    * @param orig
    *          the original string
    * @return the prepared string
@@ -123,7 +123,7 @@ public abstract class CharTransformerTest extends
 
   /**
    * test if the transformer can correctly transform single characters
-   * 
+   *
    * @throws IOException
    *           the io exception if io fails
    */
@@ -140,7 +140,7 @@ public abstract class CharTransformerTest extends
 
   /**
    * test if the transformer can correctly transform single characters
-   * 
+   *
    * @throws IOException
    *           the io exception if io fails
    */

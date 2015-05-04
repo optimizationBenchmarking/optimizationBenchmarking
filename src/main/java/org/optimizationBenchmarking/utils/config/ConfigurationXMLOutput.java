@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.io.xml.XMLElement;
 
 /** the configuration xml output */
 public final class ConfigurationXMLOutput extends
-    XMLOutputTool<Configuration> {
+XMLOutputTool<Configuration> {
 
   /** create */
   ConfigurationXMLOutput() {
@@ -21,7 +21,7 @@ public final class ConfigurationXMLOutput extends
 
   /**
    * get the instance of the {@link ConfigurationXMLOutput}
-   * 
+   *
    * @return the instance of the {@link ConfigurationXMLOutput}
    */
   public static final ConfigurationXMLOutput getInstance() {
@@ -70,7 +70,7 @@ public final class ConfigurationXMLOutput extends
   @Override
   protected final void file(final IOJob job, final Configuration data,
       final Path file, final StreamEncoding<?, ?> encoding)
-      throws Throwable {
+          throws Throwable {
     super.file(job, data, file, encoding);
     if (Files.exists(file)) {
       this.addFile(job, file, ConfigurationXML.CONFIG_XML);
@@ -81,7 +81,7 @@ public final class ConfigurationXMLOutput extends
   @Override
   protected final String getDefaultPlainOutputFileName() {
     return ("config." + //$NON-NLS-1$
-    ConfigurationXML.CONFIG_XML.getDefaultSuffix());
+        ConfigurationXML.CONFIG_XML.getDefaultSuffix());
   }
 
   /** the loader */

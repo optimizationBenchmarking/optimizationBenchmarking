@@ -13,7 +13,7 @@ public class BoundedLongParser extends LongParser {
 
   /**
    * Create the bounded long parser
-   * 
+   *
    * @param min
    *          the minimum allowed value, a
    *          {@link java.lang.IllegalArgumentException
@@ -31,7 +31,7 @@ public class BoundedLongParser extends LongParser {
 
   /**
    * Create the bounded long parser
-   * 
+   *
    * @param min
    *          the minimum allowed value, a
    *          {@link java.lang.IllegalArgumentException

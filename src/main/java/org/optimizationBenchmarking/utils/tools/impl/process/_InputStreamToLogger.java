@@ -29,7 +29,7 @@ final class _InputStreamToLogger extends _WorkerThread {
 
   /**
    * create
-   * 
+   *
    * @param source
    *          the source
    * @param log

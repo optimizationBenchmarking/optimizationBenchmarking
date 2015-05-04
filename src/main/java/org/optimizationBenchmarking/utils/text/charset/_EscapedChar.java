@@ -13,7 +13,7 @@ final class _EscapedChar extends Char {
 
   /**
    * create
-   * 
+   *
    * @param chr
    *          the character
    * @param afterBackslash

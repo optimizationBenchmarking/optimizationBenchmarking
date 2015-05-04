@@ -30,7 +30,7 @@ final class _DelayedSectionBody implements ISectionBody {
 
   /**
    * create
-   * 
+   *
    * @param real
    *          the real body
    */

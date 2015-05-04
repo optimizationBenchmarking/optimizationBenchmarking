@@ -13,7 +13,7 @@ public interface IChartSelector extends IToolJob {
    * paining has completed. The chart will fill the complete graphic, i.e.,
    * set its extent to
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic#getBounds()}
-   * 
+   *
    * @return the line chart
    */
   public abstract ILineChart2D lineChart2D();
@@ -24,7 +24,7 @@ public interface IChartSelector extends IToolJob {
    * completed. The chart will fill the complete graphic, i.e., set its
    * extent to
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic#getBounds()}
-   * 
+   *
    * @return the pie chart
    */
   public abstract IPieChart pieChart();

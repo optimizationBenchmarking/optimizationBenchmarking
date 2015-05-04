@@ -31,7 +31,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
 
   /**
    * Perform the module test
-   * 
+   *
    * @param example
    *          the example
    */
@@ -41,7 +41,7 @@ public class EvaluationConfigTest extends InstanceTest<EvaluationExample> {
 
   /**
    * Process a given experiment source and destination
-   * 
+   *
    * @param input
    *          the experiment set source
    * @param dest

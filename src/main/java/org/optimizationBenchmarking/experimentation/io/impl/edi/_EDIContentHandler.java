@@ -36,7 +36,7 @@ final class _EDIContentHandler extends DelegatingHandler {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owning handler
    * @param esb
@@ -90,7 +90,7 @@ final class _EDIContentHandler extends DelegatingHandler {
 
   /**
    * start the bounds element
-   * 
+   *
    * @param atts
    *          the attributes
    */
@@ -129,7 +129,7 @@ final class _EDIContentHandler extends DelegatingHandler {
 
   /**
    * start the dimension
-   * 
+   *
    * @param atts
    *          the attributes
    */
@@ -201,7 +201,7 @@ final class _EDIContentHandler extends DelegatingHandler {
 
   /**
    * start the experiment
-   * 
+   *
    * @param atts
    *          the attributes
    */
@@ -229,7 +229,7 @@ final class _EDIContentHandler extends DelegatingHandler {
 
   /**
    * start the feature
-   * 
+   *
    * @param atts
    *          the attributes
    */
@@ -237,17 +237,17 @@ final class _EDIContentHandler extends DelegatingHandler {
     this.m_context.instanceSetFeatureValue(//
         DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
             EDI.ATTRIBUTE_NAME),//
-        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
-            EDI.ATTRIBUTE_FEATURE_DESCRIPTION),//
-        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
-            EDI.ATTRIBUTE_FEATURE_VALUE),//
-        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
-            EDI.ATTRIBUTE_FEATURE_VALUE_DESCRIPTION));
+            DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+                EDI.ATTRIBUTE_FEATURE_DESCRIPTION),//
+                DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+                    EDI.ATTRIBUTE_FEATURE_VALUE),//
+                    DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+                        EDI.ATTRIBUTE_FEATURE_VALUE_DESCRIPTION));
   }
 
   /**
    * start the instance
-   * 
+   *
    * @param atts
    *          the attributes
    */
@@ -275,7 +275,7 @@ final class _EDIContentHandler extends DelegatingHandler {
 
   /**
    * start the instance runs
-   * 
+   *
    * @param atts
    *          the attributes
    */
@@ -324,7 +324,7 @@ final class _EDIContentHandler extends DelegatingHandler {
 
   /**
    * start the parameter
-   * 
+   *
    * @param atts
    *          the attributes
    */
@@ -332,12 +332,12 @@ final class _EDIContentHandler extends DelegatingHandler {
     this.m_context.parameterSetValue(//
         DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
             EDI.ATTRIBUTE_NAME),//
-        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
-            EDI.ATTRIBUTE_PARAMETER_DESCRIPTION),//
-        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
-            EDI.ATTRIBUTE_PARAMETER_VALUE),//
-        DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
-            EDI.ATTRIBUTE_PARAMETER_VALUE_DESCRIPTION));
+            DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+                EDI.ATTRIBUTE_PARAMETER_DESCRIPTION),//
+                DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+                    EDI.ATTRIBUTE_PARAMETER_VALUE),//
+                    DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
+                        EDI.ATTRIBUTE_PARAMETER_VALUE_DESCRIPTION));
   }
 
   /** {@inheritDoc} */
@@ -347,7 +347,7 @@ final class _EDIContentHandler extends DelegatingHandler {
       final Attributes attributes) throws SAXException {
 
     if (((this.m_logger != null) && //
-    (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL)))) {
+        (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL)))) {
       this.m_logger.log(IOTool.FINER_LOG_LEVEL, ("Start of element <" + //$NON-NLS-1$
           uri + ':' + localName + '>'));
     }
@@ -409,7 +409,7 @@ final class _EDIContentHandler extends DelegatingHandler {
       final String localName, final String qName) throws SAXException {
 
     if (((this.m_logger != null) && //
-    (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL)))) {
+        (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL)))) {
       this.m_logger.log(IOTool.FINER_LOG_LEVEL, ("End of element </" + //$NON-NLS-1$
           uri + ':' + localName + '>'));
     }

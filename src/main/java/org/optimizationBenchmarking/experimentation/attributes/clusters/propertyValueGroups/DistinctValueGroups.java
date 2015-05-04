@@ -15,7 +15,7 @@ public final class DistinctValueGroups extends PropertyValueGroups {
 
   /**
    * create the distinct value groups
-   * 
+   *
    * @param groups
    *          the groups
    * @param property

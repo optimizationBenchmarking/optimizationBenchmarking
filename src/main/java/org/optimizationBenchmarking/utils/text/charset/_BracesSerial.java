@@ -17,7 +17,7 @@ final class _BracesSerial implements Serializable {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   final Object readResolve() {

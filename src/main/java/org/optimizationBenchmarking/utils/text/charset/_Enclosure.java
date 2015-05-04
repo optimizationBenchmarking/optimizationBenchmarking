@@ -2,12 +2,12 @@ package org.optimizationBenchmarking.utils.text.charset;
 
 /**
  * A collection of enclosures
- * 
+ *
  * @param <ET>
  *          the end type
  */
 abstract class _Enclosure<ET extends _EnclosureEnd<?, ET>> extends
-    Enclosure implements Comparable<_Enclosure<?>> {
+Enclosure implements Comparable<_Enclosure<?>> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -23,7 +23,7 @@ abstract class _Enclosure<ET extends _EnclosureEnd<?, ET>> extends
 
   /**
    * Create
-   * 
+   *
    * @param begin
    *          the beginning character
    * @param end
@@ -81,7 +81,7 @@ abstract class _Enclosure<ET extends _EnclosureEnd<?, ET>> extends
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   final Object writeReplace() {
@@ -90,7 +90,7 @@ abstract class _Enclosure<ET extends _EnclosureEnd<?, ET>> extends
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   final Object readResolve() {

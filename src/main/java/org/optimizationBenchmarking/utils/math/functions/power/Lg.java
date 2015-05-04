@@ -14,25 +14,25 @@ public final class Lg extends UnaryFunction {
 
   /** the lookup table */
   static final long[] TABLE = { //
-  1L,//
-      10L,//
-      100L,//
-      1_000L,//
-      10_000L,//
-      100_000L,//
-      1_000_000L,//
-      10_000_000L,//
-      100_000_000L,//
-      1_000_000_000L,//
-      10_000_000_000L,//
-      100_000_000_000L,//
-      1_000_000_000_000L,//
-      10_000_000_000_000L,//
-      100_000_000_000_000L,//
-      1_000_000_000_000_000L,//
-      10_000_000_000_000_000L,//
-      100_000_000_000_000_000L,//
-      1_000_000_000_000_000_000L,//
+    1L,//
+    10L,//
+    100L,//
+    1_000L,//
+    10_000L,//
+    100_000L,//
+    1_000_000L,//
+    10_000_000L,//
+    100_000_000L,//
+    1_000_000_000L,//
+    10_000_000_000L,//
+    100_000_000_000L,//
+    1_000_000_000_000L,//
+    10_000_000_000_000L,//
+    100_000_000_000_000L,//
+    1_000_000_000_000_000L,//
+    10_000_000_000_000_000L,//
+    100_000_000_000_000_000L,//
+    1_000_000_000_000_000_000L,//
   };
 
   /** the globally shared instance */
@@ -45,7 +45,7 @@ public final class Lg extends UnaryFunction {
 
   /**
    * lookup the value in the lookup table
-   * 
+   *
    * @param l
    *          the long value
    * @return the result
@@ -149,7 +149,7 @@ public final class Lg extends UnaryFunction {
   /**
    * Compute {@code log10} with
    * {@link org.apache.commons.math3.util.FastMath}
-   * 
+   *
    * @param x1
    *          the parameter
    * @return the result
@@ -178,7 +178,7 @@ public final class Lg extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -190,7 +190,7 @@ public final class Lg extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

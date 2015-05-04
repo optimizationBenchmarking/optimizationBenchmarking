@@ -14,7 +14,7 @@ public class StringMapCITest extends StringMapTest {
 
   /**
    * create
-   * 
+   *
    * @param map
    *          the map
    */
@@ -29,7 +29,7 @@ public class StringMapCITest extends StringMapTest {
 
   /**
    * modify a given key
-   * 
+   *
    * @param key
    *          the key
    * @param random

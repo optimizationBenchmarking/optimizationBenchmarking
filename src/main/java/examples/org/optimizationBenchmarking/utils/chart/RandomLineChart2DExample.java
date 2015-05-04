@@ -34,7 +34,7 @@ public class RandomLineChart2DExample extends ChartExample {
 
   /**
    * run the example: there are problems with the different output
-   * 
+   *
    * @param args
    *          the arguments
    * @throws IOException
@@ -79,7 +79,7 @@ public class RandomLineChart2DExample extends ChartExample {
 
   /**
    * Setup the axis
-   * 
+   *
    * @param axis
    *          the axis
    * @param styles
@@ -176,7 +176,7 @@ public class RandomLineChart2DExample extends ChartExample {
 
   /**
    * Setup the line
-   * 
+   *
    * @param line
    *          the line
    * @param styles
@@ -249,7 +249,7 @@ public class RandomLineChart2DExample extends ChartExample {
 
   /**
    * fill a data array
-   * 
+   *
    * @param data
    *          the array
    * @param min
@@ -384,7 +384,7 @@ public class RandomLineChart2DExample extends ChartExample {
 
   /**
    * revert a part of a data array
-   * 
+   *
    * @param data
    *          the data
    * @param i

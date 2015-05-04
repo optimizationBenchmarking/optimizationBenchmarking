@@ -14,7 +14,7 @@ final class _ExperimentInformationJob extends ExperimentJob {
 
   /**
    * Create the experiment information job
-   * 
+   *
    * @param data
    *          the data
    * @param logger

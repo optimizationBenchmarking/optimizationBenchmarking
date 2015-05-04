@@ -27,7 +27,7 @@ public final class ExternalProcessTest {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          ignored
    * @throws IOException

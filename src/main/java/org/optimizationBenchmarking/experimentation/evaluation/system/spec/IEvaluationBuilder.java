@@ -29,7 +29,7 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
    * {@link #configure(Configuration)} may override it. It also must be
    * called before any invocation of
    * {@link #addModule(IEvaluationModule, Configuration)}.
-   * 
+   *
    * @param config
    *          the basic configuration to use
    * @return this evaluation builder
@@ -48,7 +48,7 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
    * no configuration context is provided, the module will be configured
    * with the {@link #configure(Configuration) context} used for this
    * evaluation builder.
-   * 
+   *
    * @param module
    *          the evaluator module to add
    * @param config
@@ -60,7 +60,7 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
 
   /**
    * Set the data of this evaluation process.
-   * 
+   *
    * @param data
    *          the data
    * @return this builder
@@ -70,7 +70,7 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
 
   /**
    * Set the input source for the data of this evaluation process.
-   * 
+   *
    * @param input
    *          the input object to obtain the data for the evaluation
    *          process
@@ -81,7 +81,7 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
 
   /**
    * Set the document to which the evaluation result should be written
-   * 
+   *
    * @param doc
    *          the document
    * @return this builder
@@ -92,7 +92,7 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
   /**
    * Set the output object generating the document to be used for storing
    * the experiment output
-   * 
+   *
    * @param output
    *          the output object
    * @return this builder
@@ -103,7 +103,7 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
 
   /**
    * Set the authors of the output document.
-   * 
+   *
    * @param authors
    *          the authors of the output document.
    * @return this builder

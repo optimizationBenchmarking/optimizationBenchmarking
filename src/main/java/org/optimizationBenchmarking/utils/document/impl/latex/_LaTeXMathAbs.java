@@ -8,14 +8,14 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXMathAbs extends MathAbs {
   /** the begin abs */
   private static final char[] ABS_BEGIN = { '{', '\\', 'l', 'e', 'f', 't',
-      '|', '{', };
+    '|', '{', };
   /** the end abs */
   private static final char[] ABS_END = { '}', '\\', 'r', 'i', 'g', 'h',
-      't', '|', '}' };
+    't', '|', '}' };
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

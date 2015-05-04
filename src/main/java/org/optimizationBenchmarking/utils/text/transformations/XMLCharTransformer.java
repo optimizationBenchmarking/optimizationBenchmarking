@@ -20,7 +20,7 @@ public final class XMLCharTransformer extends CharTransformer {
 
   /**
    * Get the instance of the XMLFileType character transformer
-   * 
+   *
    * @return the instance of the XMLFileType character transformer
    */
   public static final XMLCharTransformer getInstance() {

@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXItemizationItem extends ItemizationItem {
   /**
    * Create a new itemization item
-   * 
+   *
    * @param owner
    *          the owning text
    */

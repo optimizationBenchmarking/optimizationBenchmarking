@@ -12,7 +12,7 @@ final class _PropertyFSMPropertyRecord extends _PropertyFSMRecord {
 
   /**
    * create
-   * 
+   *
    * @param propertyName
    *          the property name
    * @param propertyDesc

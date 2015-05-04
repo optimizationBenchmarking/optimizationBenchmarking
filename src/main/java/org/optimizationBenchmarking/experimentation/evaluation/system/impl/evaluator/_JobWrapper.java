@@ -16,7 +16,7 @@ final class _JobWrapper extends _PseudoJob {
 
   /**
    * create the pseudo job
-   * 
+   *
    * @param logger
    *          the logger
    * @param job
@@ -37,7 +37,7 @@ final class _JobWrapper extends _PseudoJob {
   @Override
   final String _getName() {
     return ("Job " + //$NON-NLS-1$
-    TextUtils.className(this.m_job.getClass()));
+        TextUtils.className(this.m_job.getClass()));
   }
 
   /** {@inheritDoc} */

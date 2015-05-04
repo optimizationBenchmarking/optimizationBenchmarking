@@ -12,7 +12,7 @@ final class _TempFileWriter extends FileWriter {
 
   /**
    * create
-   * 
+   *
    * @throws IOException
    *           if i/o fails
    */
@@ -23,7 +23,7 @@ final class _TempFileWriter extends FileWriter {
 
   /**
    * create
-   * 
+   *
    * @param f
    *          the file
    * @throws IOException

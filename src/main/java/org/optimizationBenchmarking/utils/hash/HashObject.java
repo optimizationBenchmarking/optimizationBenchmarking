@@ -17,7 +17,7 @@ public abstract class HashObject {
 
   /**
    * calculate the hash code
-   * 
+   *
    * @return the hash code
    */
   protected int calcHashCode() {

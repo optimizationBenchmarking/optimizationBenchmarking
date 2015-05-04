@@ -33,7 +33,7 @@ public final class GraphicsExample {
 
   /**
    * run the example: there are problems with the pdf output
-   * 
+   *
    * @param args
    *          the arguments
    * @throws IOException
@@ -55,7 +55,7 @@ public final class GraphicsExample {
               dir,
               (((((GraphicsExample.class.getSimpleName() + '_') + (++z)) + '_') + driver
                   .toString())), GraphicsExample.SIZE,
-              new FinishedPrinter(driver), Logger.getGlobal())) {
+                  new FinishedPrinter(driver), Logger.getGlobal())) {
         for (int i = 1; i < 50; i++) {
           GraphicsExample.paint(g);
           GraphicsExample.__paintComponent(g);
@@ -70,7 +70,7 @@ public final class GraphicsExample {
 
   /**
    * paint a small component
-   * 
+   *
    * @param g
    *          the graphic
    */
@@ -82,7 +82,7 @@ public final class GraphicsExample {
     jcb = new JList<>(new String[] { "item 1",//$NON-NLS-1$
         "item 2", //$NON-NLS-1$
         "item 3", //$NON-NLS-1$
-        "item 4" });//$NON-NLS-1$
+    "item 4" });//$NON-NLS-1$
 
     jcb.setSelectedIndices(new int[] { 0, 2 });
     jcb.setBorder(new BevelBorder(BevelBorder.LOWERED));
@@ -100,7 +100,7 @@ public final class GraphicsExample {
 
   /**
    * paint the graphic
-   * 
+   *
    * @param g
    *          the graphic
    */

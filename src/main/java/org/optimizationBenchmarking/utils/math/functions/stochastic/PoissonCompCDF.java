@@ -26,7 +26,7 @@ public final class PoissonCompCDF extends BinaryFunction {
   /**
    * Returns the sum of the terms k+1 to infinity of the Poisson
    * distribution.
-   * 
+   *
    * @param k
    *          start
    * @param x
@@ -57,7 +57,7 @@ public final class PoissonCompCDF extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -69,7 +69,7 @@ public final class PoissonCompCDF extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

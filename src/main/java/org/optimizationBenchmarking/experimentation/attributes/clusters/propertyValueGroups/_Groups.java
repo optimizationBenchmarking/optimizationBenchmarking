@@ -23,7 +23,7 @@ final class _Groups implements Comparable<_Groups> {
 
   /**
    * Create a grouping
-   * 
+   *
    * @param groups
    *          the groups
    * @param minGroups
@@ -97,7 +97,7 @@ final class _Groups implements Comparable<_Groups> {
   /**
    * Check whether the values {@code a} and {@code b} differ relatively
    * less than {@code fraction}.
-   * 
+   *
    * @param a
    *          the first value
    * @param b
@@ -162,8 +162,8 @@ final class _Groups implements Comparable<_Groups> {
       // we will take the less discontinuous one.
       if ((resDisc != 0) && //
           ((Math.max(this.m_discontinuousScore, o.m_discontinuousScore) > 0.1d) && //
-          (!(_Groups.__inRange(this.m_discontinuousScore,
-              o.m_discontinuousScore, 0.5d))))) {
+              (!(_Groups.__inRange(this.m_discontinuousScore,
+                  o.m_discontinuousScore, 0.5d))))) {
         return resDisc;
       }
 

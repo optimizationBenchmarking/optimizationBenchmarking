@@ -7,31 +7,31 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
 
 /**
  * The combination of two predicates with logical {@code or}
- * 
+ *
  * @param <T>
  *          the element type this condition applies to.
  */
 public final class AndPredicate<T> extends HashObject implements
-    IPredicate<T>, Serializable {
+IPredicate<T>, Serializable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /**
    * the first predicate
-   * 
+   *
    * @serial the first predicate to evaluate (must not be {@code null}
    */
   private final IPredicate<? super T> m_a;
   /**
    * the second predicate
-   * 
+   *
    * @serial the second predicate to evaluate (must not be {@code null}
    */
   private final IPredicate<? super T> m_b;
 
   /**
    * The condition
-   * 
+   *
    * @param a
    *          the first predicate to evaluate (must not be {@code null}
    * @param b
@@ -47,7 +47,7 @@ public final class AndPredicate<T> extends HashObject implements
 
   /**
    * calculate the hash code
-   * 
+   *
    * @return the hash code
    */
   protected final int calcHash() {
@@ -75,7 +75,7 @@ public final class AndPredicate<T> extends HashObject implements
     if (o instanceof AndPredicate) {
       c = ((AndPredicate) o);
       return ((this.m_a.equals(c.m_a) && this.m_a.equals(c.m_b)) || //
-      (this.m_a.equals(c.m_b) && this.m_a.equals(c.m_a)));
+          (this.m_a.equals(c.m_b) && this.m_a.equals(c.m_a)));
     }
     return false;
   }

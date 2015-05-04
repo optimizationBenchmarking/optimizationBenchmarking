@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
  * The builder for an R engine.
  */
 public final class REngineBuilder extends
-    MathEngineBuilder<REngine, REngineBuilder> {
+MathEngineBuilder<REngine, REngineBuilder> {
 
   /** create the R engine builder */
   REngineBuilder() {

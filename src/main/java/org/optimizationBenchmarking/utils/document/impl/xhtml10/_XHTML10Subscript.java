@@ -12,7 +12,7 @@ final class _XHTML10Subscript extends Subscript {
 
   /**
    * create the subscript element
-   * 
+   *
    * @param owner
    *          the owner
    */

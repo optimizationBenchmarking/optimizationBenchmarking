@@ -12,14 +12,14 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
  * computations to that instance.
  */
 public class ShadowInstance extends
-    _ShadowNamedElement<IInstanceSet, IInstance> implements IInstance {
+_ShadowNamedElement<IInstanceSet, IInstance> implements IInstance {
 
   /** the feature setting */
   private IFeatureSetting m_setting;
 
   /**
    * create the shadow instance
-   * 
+   *
    * @param owner
    *          the owning instance set
    * @param shadow

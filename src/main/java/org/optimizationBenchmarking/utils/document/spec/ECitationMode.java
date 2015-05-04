@@ -37,7 +37,7 @@ public enum ECitationMode {
 
   /**
    * create the citation mode
-   * 
+   *
    * @param id
    *          {@code true} print the id?
    * @param authors
@@ -57,7 +57,7 @@ public enum ECitationMode {
 
   /**
    * Should we print the year?
-   * 
+   *
    * @return the {@code true} if the year should be printed, {@code false}
    *         otherwise
    */
@@ -67,7 +67,7 @@ public enum ECitationMode {
 
   /**
    * Should we print the authors?
-   * 
+   *
    * @return the {@code true} if the authors should be printed,
    *         {@code false} otherwise
    */
@@ -77,7 +77,7 @@ public enum ECitationMode {
 
   /**
    * Should we print the id?
-   * 
+   *
    * @return the {@code true} if the id should be printed, {@code false}
    *         otherwise
    */
@@ -87,7 +87,7 @@ public enum ECitationMode {
 
   /**
    * Should we print the title?
-   * 
+   *
    * @return the {@code true} if the title should be printed, {@code false}
    *         otherwise
    */

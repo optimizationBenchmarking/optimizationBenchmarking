@@ -8,11 +8,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXMathDiv extends MathDiv {
   /** the begin div */
   private static final char[] DIV_BEGIN = { '{', '\\', 'f', 'r', 'a', 'c',
-      '{', };
+    '{', };
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

@@ -38,7 +38,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Get the instance of the {@link BibliographyXMLOutput}
-   * 
+   *
    * @return the instance of the {@link BibliographyXMLOutput}
    */
   public static final BibliographyXMLOutput getInstance() {
@@ -58,7 +58,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write an object
-   * 
+   *
    * @param o
    *          the object to write
    * @param dest
@@ -142,7 +142,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write the bibliography record's default attributes
-   * 
+   *
    * @param rec
    *          the bib record
    * @param dest
@@ -174,7 +174,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write a book's default attributes
-   * 
+   *
    * @param rec
    *          the book
    * @param dest
@@ -220,7 +220,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write a in-book's default attributes
-   * 
+   *
    * @param rec
    *          the in-book
    * @param dest
@@ -253,7 +253,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write the bibliography
-   * 
+   *
    * @param rec
    *          the bibliography
    * @param owner
@@ -270,7 +270,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write the bibliography article
-   * 
+   *
    * @param rec
    *          the article
    * @param owner
@@ -335,7 +335,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write the bibliography book
-   * 
+   *
    * @param rec
    *          the book
    * @param owner
@@ -365,7 +365,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write the bibliography technical report
-   * 
+   *
    * @param rec
    *          the technical report
    * @param owner
@@ -412,7 +412,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write the bibliography website
-   * 
+   *
    * @param rec
    *          the website
    * @param owner
@@ -440,7 +440,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write the bibliography thesis
-   * 
+   *
    * @param rec
    *          the thesis
    * @param owner
@@ -480,7 +480,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write the bibliography in-collection
-   * 
+   *
    * @param rec
    *          the in-collection
    * @param owner
@@ -505,7 +505,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write the bibliography in-proceedings
-   * 
+   *
    * @param rec
    *          the in-collection
    * @param owner
@@ -530,7 +530,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * Write the bibliography proceedings
-   * 
+   *
    * @param rec
    *          the proceedings
    * @param owner
@@ -562,7 +562,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * write a set of authors
-   * 
+   *
    * @param authors
    *          the authors
    * @param tag
@@ -585,7 +585,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * write an author
-   * 
+   *
    * @param author
    *          the author
    * @param owner
@@ -623,7 +623,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * write a place
-   * 
+   *
    * @param place
    *          the place
    * @param tag
@@ -662,7 +662,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
 
   /**
    * write a date
-   * 
+   *
    * @param date
    *          the date
    * @param tag
@@ -715,15 +715,15 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
   /** {@inheritDoc} */
   @Override
   protected final String getDefaultPlainOutputFileName() {
-    return ("bibliography." + //$NON-NLS-1$ 
-    BibliographyXML.BIBLIOGRAPHY_XML.getDefaultSuffix());
+    return ("bibliography." + //$NON-NLS-1$
+        BibliographyXML.BIBLIOGRAPHY_XML.getDefaultSuffix());
   }
 
   /** {@inheritDoc} */
   @Override
   protected final void file(final IOJob job, final Object data,
       final Path file, final StreamEncoding<?, ?> encoding)
-      throws Throwable {
+          throws Throwable {
     super.file(job, data, file, encoding);
     if (Files.exists(file)) {
       this.addFile(job, file, BibliographyXML.BIBLIOGRAPHY_XML);

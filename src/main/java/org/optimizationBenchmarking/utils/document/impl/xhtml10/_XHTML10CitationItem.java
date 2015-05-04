@@ -15,7 +15,7 @@ final class _XHTML10CitationItem extends CitationItem {
 
   /**
    * Create the bibliographic record
-   * 
+   *
    * @param record
    *          the bibliographic record
    * @param mode

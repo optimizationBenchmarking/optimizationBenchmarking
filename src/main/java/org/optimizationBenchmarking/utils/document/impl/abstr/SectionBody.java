@@ -27,7 +27,7 @@ public class SectionBody extends StructuredText implements ISectionBody {
 
   /**
    * Create a section body
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -37,7 +37,7 @@ public class SectionBody extends StructuredText implements ISectionBody {
 
   /**
    * Get the owning section
-   * 
+   *
    * @return the owning section
    */
   @Override

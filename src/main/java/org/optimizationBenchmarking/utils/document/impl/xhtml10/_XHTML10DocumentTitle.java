@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentTitle;
 final class _XHTML10DocumentTitle extends DocumentTitle {
   /**
    * Create a document title.
-   * 
+   *
    * @param owner
    *          the owning document header
    */

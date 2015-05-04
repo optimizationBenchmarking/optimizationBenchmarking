@@ -16,11 +16,11 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * graphics Java's raster graphics.
  */
 public final class ImageIOPNGGraphicDriver extends
-    _ImageIORasterGraphicDriver {
+_ImageIORasterGraphicDriver {
 
   /**
    * Get the instance of the PNG driver based on Java's imaging API
-   * 
+   *
    * @return the instance of the PNG driver based on Java's imaging API
    */
   public static final ImageIOPNGGraphicDriver getInstance() {
@@ -61,7 +61,7 @@ public final class ImageIOPNGGraphicDriver extends
   static final class _ImageIOPNGSPILoader {
     /** the image writer spi */
     static final ImageWriterSpi SPI = //
-    _ImageIORasterGraphicDriver.getSPI(EGraphicFormat.PNG);
+        _ImageIORasterGraphicDriver.getSPI(EGraphicFormat.PNG);
   }
 
   /** the default loader */
@@ -72,6 +72,6 @@ public final class ImageIOPNGGraphicDriver extends
      * >PNG</a> driver instance
      */
     static final ImageIOPNGGraphicDriver INSTANCE = //
-    new ImageIOPNGGraphicDriver();
+        new ImageIOPNGGraphicDriver();
   }
 }

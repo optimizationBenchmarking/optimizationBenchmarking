@@ -10,7 +10,7 @@ public interface ICluster extends IExperimentSet, ISemanticComponent {
 
   /**
    * Obtain the owning clustering
-   * 
+   *
    * @return the owning clustering
    */
   @Override

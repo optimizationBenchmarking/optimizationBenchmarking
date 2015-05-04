@@ -19,7 +19,7 @@ public class BufferedReaderIterator extends BasicIterator<String> {
 
   /**
    * Create the {@link java.io.BufferedReader}-based iterator
-   * 
+   *
    * @param reader
    *          the reader
    */
@@ -30,7 +30,7 @@ public class BufferedReaderIterator extends BasicIterator<String> {
 
   /**
    * Prepare a string for acccess
-   * 
+   *
    * @param s
    *          the string
    * @return the prepared string
@@ -50,9 +50,9 @@ public class BufferedReaderIterator extends BasicIterator<String> {
           s = this.m_reader.readLine();
         } catch (final IOException ioe) {
           RethrowMode.AS_RUNTIME_EXCEPTION
-              .rethrow(//
-                  "Error while invoking readLine() in order to get the next line from a BufferedReader to iterate over via a BufferedReaderIterator.", //$NON-NLS-1$
-                  true, ioe);
+          .rethrow(//
+              "Error while invoking readLine() in order to get the next line from a BufferedReader to iterate over via a BufferedReaderIterator.", //$NON-NLS-1$
+              true, ioe);
           return false;
         }
 

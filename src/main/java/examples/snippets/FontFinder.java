@@ -21,7 +21,7 @@ public final class FontFinder {
 
   /**
    * List all the potential names of fonts available on the linux system
-   * 
+   *
    * @return the list of strings that may identify fonts
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -94,7 +94,7 @@ public final class FontFinder {
 
   /**
    * This method tries to load every single font that it can
-   * 
+   *
    * @param fonts
    *          the fonts
    */
@@ -114,7 +114,7 @@ public final class FontFinder {
           try {
             load = new Font(font, //
                 (((style & 1) != 0) ? Font.BOLD : 0) | //
-                    (((style & 2) != 0) ? Font.ITALIC : 0), size);
+                (((style & 2) != 0) ? Font.ITALIC : 0), size);
 
             ff = load.getFontName();
             ff = ff.toLowerCase();
@@ -126,7 +126,7 @@ public final class FontFinder {
               System.out.print(ff);
               System.out.print("' (ps: '"); //$NON-NLS-1$
               System.out.print(load.getPSName());
-              System.out.print("') with "); //$NON-NLS-1$              
+              System.out.print("') with "); //$NON-NLS-1$
               System.out.print(load.getSize2D());
               System.out.print("pt"); //$NON-NLS-1$
               if (load.isBold()) {
@@ -156,7 +156,7 @@ public final class FontFinder {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          ignored
    * @throws Throwable

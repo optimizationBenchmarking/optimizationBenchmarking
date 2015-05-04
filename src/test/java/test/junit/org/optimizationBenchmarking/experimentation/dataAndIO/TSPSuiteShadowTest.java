@@ -22,14 +22,14 @@ public class TSPSuiteShadowTest extends ExperimentSetTest {
 
   /** wrap an experiment set creator */
   private static final class __TSPSuiteCreatorWrapper extends
-      ExperimentSetCreator {
+  ExperimentSetCreator {
 
     /** the example */
     private final TSPSuiteExample m_tspSuiteExample;
 
     /**
      * create
-     * 
+     *
      * @param logger
      *          the logger, or {@code null} to use the global logger
      */

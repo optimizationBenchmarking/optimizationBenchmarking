@@ -38,7 +38,7 @@ public class ExampleDocument {
 
   /**
    * create an example document
-   * 
+   *
    * @param _namespaces
    *          the namespaces used in the document
    * @param _root
@@ -53,7 +53,7 @@ public class ExampleDocument {
 
   /**
    * Create an example document
-   * 
+   *
    * @param rand
    *          the randomizer
    * @return the document
@@ -66,7 +66,7 @@ public class ExampleDocument {
 
   /**
    * Create an example document
-   * 
+   *
    * @param rand
    *          the randomizer
    * @param nodes
@@ -86,7 +86,7 @@ public class ExampleDocument {
 
   /**
    * create some example namespaces
-   * 
+   *
    * @param rand
    *          the randomizer
    * @return the namespaces
@@ -115,7 +115,7 @@ public class ExampleDocument {
 
   /**
    * create an example namespace
-   * 
+   *
    * @param rand
    *          the randomizer
    * @return the namespaces
@@ -190,7 +190,7 @@ public class ExampleDocument {
 
   /**
    * create some example element
-   * 
+   *
    * @param rand
    *          the randomizer
    * @param namespaces
@@ -252,15 +252,15 @@ public class ExampleDocument {
     return new ExampleElement(namespaces[rand.nextInt(namespaces.length)],//
         RandomUtils.longToString(RandomUtils.DEFAULT_CHARSET,
             rand.nextLong()),//
-        ((attrs.size() > 0) ? attrs.toArray(new ExampleAttribute[attrs
-            .size()]) : ExampleDocument.EMPTY_ATTRIBUTES),//
-        ((sub.size() > 0) ? sub.toArray(new Object[sub.size()])
-            : ExampleDocument.EMPTY_OBJECTS));
+            ((attrs.size() > 0) ? attrs.toArray(new ExampleAttribute[attrs
+                                                                     .size()]) : ExampleDocument.EMPTY_ATTRIBUTES),//
+                                                                     ((sub.size() > 0) ? sub.toArray(new Object[sub.size()])
+                                                                         : ExampleDocument.EMPTY_OBJECTS));
   }
 
   /**
    * Make an object that can be converted to a string.
-   * 
+   *
    * @param rand
    *          the randomizer
    * @param canLorem
@@ -293,7 +293,7 @@ public class ExampleDocument {
 
   /**
    * The main method: test if document generation is correct
-   * 
+   *
    * @param args
    *          the arguments, ignored
    * @throws Throwable

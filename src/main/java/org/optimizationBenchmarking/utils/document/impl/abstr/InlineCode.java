@@ -5,7 +5,7 @@ public class InlineCode extends Text {
 
   /**
    * Create an in-line code text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

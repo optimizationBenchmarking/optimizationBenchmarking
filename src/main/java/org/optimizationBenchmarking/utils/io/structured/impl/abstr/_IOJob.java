@@ -16,7 +16,7 @@ abstract class _IOJob extends IOJob implements IIOJob {
 
   /**
    * create the _IOJob
-   * 
+   *
    * @param logger
    *          the logger
    * @param tool
@@ -43,7 +43,7 @@ abstract class _IOJob extends IOJob implements IIOJob {
 
   /**
    * do the actual job
-   * 
+   *
    * @throws Throwable
    *           if it must
    */
@@ -65,7 +65,7 @@ abstract class _IOJob extends IOJob implements IIOJob {
           && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
         logger.log(IOTool.DEFAULT_LOG_LEVEL,//
             (("Begin of " + //$NON-NLS-1$
-            this.m_tool.toString()) + " I/O.")); //$NON-NLS-1$
+                this.m_tool.toString()) + " I/O.")); //$NON-NLS-1$
       }
 
       this.m_token = this.m_tool.createToken(this, this.m_data);
@@ -79,7 +79,7 @@ abstract class _IOJob extends IOJob implements IIOJob {
           && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
         logger.log(IOTool.DEFAULT_LOG_LEVEL,//
             (("End of " + this.m_tool.toString()) + //$NON-NLS-1$
-            " I/O")); //$NON-NLS-1$
+                " I/O")); //$NON-NLS-1$
       }
     } catch (final Throwable error) {
       this.handleError(error, null);

@@ -9,7 +9,7 @@ final class _LaTeXMathPow extends MathPow {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

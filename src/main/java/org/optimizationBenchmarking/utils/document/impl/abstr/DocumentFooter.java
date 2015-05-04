@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.hierarchy.FSM;
  * stuff such as appendices.
  */
 public class DocumentFooter extends _StyleProviderPart implements
-    IDocumentBody {
+IDocumentBody {
 
   /** a flag indicating that the citations have been taken */
   private static final int FLAG_CITATIONS_TAKEN = (FSM.FLAG_NOTHING + 1);
@@ -24,7 +24,7 @@ public class DocumentFooter extends _StyleProviderPart implements
 
   /**
    * Create a new document body
-   * 
+   *
    * @param owner
    *          the owning document
    */
@@ -43,7 +43,7 @@ public class DocumentFooter extends _StyleProviderPart implements
 
   /**
    * Get the owning document
-   * 
+   *
    * @return the owning document
    */
   @Override
@@ -53,7 +53,7 @@ public class DocumentFooter extends _StyleProviderPart implements
 
   /**
    * Process the bibliography
-   * 
+   *
    * @param bib
    *          the bibliography
    */

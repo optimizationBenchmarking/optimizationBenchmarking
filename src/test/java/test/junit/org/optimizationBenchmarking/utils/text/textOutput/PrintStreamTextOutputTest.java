@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  */
 @Ignore
 public class PrintStreamTextOutputTest extends
-    TextOutputTest<ByteArrayOutputStream> {
+TextOutputTest<ByteArrayOutputStream> {
 
   /** create */
   public PrintStreamTextOutputTest() {

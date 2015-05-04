@@ -10,7 +10,7 @@ public final class Brace extends _EnclosureEnd<Braces, Brace> {
 
   /**
    * create
-   * 
+   *
    * @param chr
    *          the character
    * @param isOpening

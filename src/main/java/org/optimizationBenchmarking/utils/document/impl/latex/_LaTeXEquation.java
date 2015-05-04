@@ -9,14 +9,14 @@ final class _LaTeXEquation extends Equation {
 
   /** begin equation */
   private static final char[] EQUATION_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-      'n', '{', 'e', 'q', 'u', 'a', 't', 'i', 'o', 'n', '}' };
+    'n', '{', 'e', 'q', 'u', 'a', 't', 'i', 'o', 'n', '}' };
   /** end equation */
   private static final char[] EQUATION_END = { '\\', 'e', 'n', 'd', '{',
-      'e', 'q', 'u', 'a', 't', 'i', 'o', 'n', '}' };
+    'e', 'q', 'u', 'a', 't', 'i', 'o', 'n', '}' };
 
   /**
    * Create a new equation
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index

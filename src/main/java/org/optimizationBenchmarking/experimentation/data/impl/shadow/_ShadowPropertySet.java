@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * a different owner and potentially different attributes. If all
  * associated data of this element is the same, it will delegate
  * attribute-based computations to that property set.
- * 
+ *
  * @param <ST>
  *          the shadow type
  * @param <PT>
@@ -30,11 +30,11 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 abstract class _ShadowPropertySet<ST extends IPropertySet, //
 PT extends IProperty, //
 PST extends IPropertySetting> extends //
-    _ShadowNamedElementSet<IExperimentSet, ST, PT> implements IPropertySet {
+_ShadowNamedElementSet<IExperimentSet, ST, PT> implements IPropertySet {
 
   /**
    * create the shadow property
-   * 
+   *
    * @param owner
    *          the owning property set
    * @param shadow
@@ -49,7 +49,7 @@ PST extends IPropertySetting> extends //
 
   /**
    * Create a setting from a list
-   * 
+   *
    * @param values
    *          the list of values
    * @return the property setting
@@ -58,7 +58,7 @@ PST extends IPropertySetting> extends //
 
   /**
    * create a setting from an iterable
-   * 
+   *
    * @param values
    *          the values
    * @return the setting
@@ -111,14 +111,14 @@ PST extends IPropertySetting> extends //
         if (pv == null) {
           throw new IllegalArgumentException(((//
               "Could not find value '" //$NON-NLS-1$
-                  + value + " of property '"//$NON-NLS-1$
+              + value + " of property '"//$NON-NLS-1$
               + name) + '\'') + '.');
         }
         list.add(pv);
       } else {
         throw new IllegalArgumentException(//
             "Property value for property '" //$NON-NLS-1$
-                + name + "' defined more than once."); //$NON-NLS-1$
+            + name + "' defined more than once."); //$NON-NLS-1$
       }
     }
 

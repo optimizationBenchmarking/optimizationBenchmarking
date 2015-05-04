@@ -22,7 +22,7 @@ public abstract class NumberAppender implements Serializable {
 
   /**
    * Append a {@code long} number to a text output device
-   * 
+   *
    * @param v
    *          the {@code long} value to append
    * @param textCase
@@ -37,7 +37,7 @@ public abstract class NumberAppender implements Serializable {
 
   /**
    * Convert a {@code long} number to a string
-   * 
+   *
    * @param v
    *          the {@code long} value to append
    * @param textCase
@@ -54,7 +54,7 @@ public abstract class NumberAppender implements Serializable {
 
   /**
    * Append an {@code int} number to a text output device
-   * 
+   *
    * @param v
    *          the {@code int} value to append
    * @param textCase
@@ -69,7 +69,7 @@ public abstract class NumberAppender implements Serializable {
 
   /**
    * Convert a {@code int} number to a string
-   * 
+   *
    * @param v
    *          the {@code int} value to append
    * @param textCase
@@ -86,7 +86,7 @@ public abstract class NumberAppender implements Serializable {
 
   /**
    * Append a {@code double} number to a text output device
-   * 
+   *
    * @param v
    *          the {@code double} value to append
    * @param textCase
@@ -112,7 +112,7 @@ public abstract class NumberAppender implements Serializable {
 
   /**
    * Convert a {@code double} number to a string
-   * 
+   *
    * @param v
    *          the {@code double} value to append
    * @param textCase

@@ -37,12 +37,12 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
         new FileNamePredicate(true, "dvips",//$NON-NLS-1$
             "dvi2ps",//$NON-NLS-1$
             "dvitops"//$NON-NLS-1$
-        ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+            ), CanExecutePredicate.INSTANCE),//
+            IsFilePredicate.INSTANCE, null);
 
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config((this.m_executable != null) ? //
-      ("Dvips executable '" + this.m_executable + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
+          ("Dvips executable '" + this.m_executable + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
           "No dvips executable found.");//$NON-NLS-1$
     }
   }
@@ -71,7 +71,7 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
             ELaTeXFileType.DVI,
             true,//
             " This could mean that (Pdf)LaTeX was not yet executed or does not produce any dvi output."//$NON-NLS-1$
-        )) == null) {
+            )) == null) {
       return;
     }
 
@@ -110,8 +110,8 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
             job,
             ELaTeXFileType.PS,
             true,
-            " This could mean that no postscript output can be built from the dvi file or that the dvi file has errors.")//$NON-NLS-1$ 
-    != null) {
+            " This could mean that no postscript output can be built from the dvi file or that the dvi file has errors.")//$NON-NLS-1$
+            != null) {
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
             (("Finished applying dvips to '" + dvi) + '\'') + '.'); //$NON-NLS-1$
@@ -127,7 +127,7 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
 
   /**
    * get the description of the Dvi2Ps tool
-   * 
+   *
    * @return the instance
    */
   static final _LaTeXToolChainComponentDesc _getDescription() {
@@ -136,7 +136,7 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
 
   /** the description */
   private static final class __Dvi2PsDesc extends
-      _LaTeXToolChainComponentDesc {
+  _LaTeXToolChainComponentDesc {
 
     /** the description */
     static final _LaTeXToolChainComponentDesc DESC = new __Dvi2PsDesc();

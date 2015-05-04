@@ -9,7 +9,7 @@ final class _LaTeXMathNegate extends MathNegate {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

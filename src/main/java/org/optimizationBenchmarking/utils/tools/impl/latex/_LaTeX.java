@@ -51,9 +51,9 @@ final class _LaTeX extends _LaTeXToolChainComponent {
 
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config((this.m_executable != null) ? //
-      ("LaTeX executable '" + this.m_executable + //$NON-NLS-1$
-      "' found.") //$NON-NLS-1$
-          : "No LaTeX executable found.");//$NON-NLS-1$
+          ("LaTeX executable '" + this.m_executable + //$NON-NLS-1$
+              "' found.") //$NON-NLS-1$
+              : "No LaTeX executable found.");//$NON-NLS-1$
     }
   }
 
@@ -121,7 +121,7 @@ final class _LaTeX extends _LaTeXToolChainComponent {
             ELaTeXFileType.AUX,
             true,
             " This could mean that the latex document does not contain any label, citation, or section."//$NON-NLS-1$
-        ) == null) {
+            ) == null) {
       ok = false;
     }
     if (this
@@ -130,7 +130,7 @@ final class _LaTeX extends _LaTeXToolChainComponent {
             ELaTeXFileType.DVI,
             true,
             " This could mean that the latex document does not produce any (dvi) output."//$NON-NLS-1$
-        ) == null) {
+            ) == null) {
       ok = false;
     }
 
@@ -150,7 +150,7 @@ final class _LaTeX extends _LaTeXToolChainComponent {
 
   /**
    * get the description
-   * 
+   *
    * @return the description
    */
   static final _LaTeXToolChainComponentDesc _getDescription() {
@@ -159,7 +159,7 @@ final class _LaTeX extends _LaTeXToolChainComponent {
 
   /** the description */
   private static final class __LaTeXDesc extends
-      _LaTeXToolChainComponentDesc {
+  _LaTeXToolChainComponentDesc {
 
     /** the description */
     static final _LaTeXToolChainComponentDesc DESC = new __LaTeXDesc();
@@ -200,13 +200,13 @@ final class _LaTeX extends _LaTeXToolChainComponent {
 
       path = PathUtils.findFirstInPath(new AndPredicate<>(
           new FileNamePredicate(true, "latex" //$NON-NLS-1$
-          ), CanExecutePredicate.INSTANCE),//
-          IsFilePredicate.INSTANCE, null);
+              ), CanExecutePredicate.INSTANCE),//
+              IsFilePredicate.INSTANCE, null);
       if (path == null) {
         path = PathUtils.findFirstInPath(new AndPredicate<>(
             new FileNamePredicate(true, "cslatex" //$NON-NLS-1$
-            ), CanExecutePredicate.INSTANCE),//
-            IsFilePredicate.INSTANCE, null);
+                ), CanExecutePredicate.INSTANCE),//
+                IsFilePredicate.INSTANCE, null);
       }
 
       PATH = path;

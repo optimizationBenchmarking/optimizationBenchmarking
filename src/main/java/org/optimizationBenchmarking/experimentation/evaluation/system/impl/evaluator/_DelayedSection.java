@@ -20,7 +20,7 @@ final class _DelayedSection implements ISection {
 
   /**
    * create a delayed section
-   * 
+   *
    * @param real
    *          the real section
    */

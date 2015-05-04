@@ -20,7 +20,7 @@ public abstract class NumberList extends BasicList<Number> {
 
   /**
    * Get the value at index {@code index}, as {@code double}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code double}
@@ -29,7 +29,7 @@ public abstract class NumberList extends BasicList<Number> {
 
   /**
    * Get the value at index {@code index}, as {@code float}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code float}
@@ -40,7 +40,7 @@ public abstract class NumberList extends BasicList<Number> {
 
   /**
    * Get the value at index {@code index}, as {@code long}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code long}
@@ -51,7 +51,7 @@ public abstract class NumberList extends BasicList<Number> {
 
   /**
    * Get the value at index {@code index}, as {@code int}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code int}
@@ -62,7 +62,7 @@ public abstract class NumberList extends BasicList<Number> {
 
   /**
    * Get the value at index {@code index}, as {@code short}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code short}
@@ -73,7 +73,7 @@ public abstract class NumberList extends BasicList<Number> {
 
   /**
    * Get the value at index {@code index}, as {@code byte}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code byte}
@@ -84,7 +84,7 @@ public abstract class NumberList extends BasicList<Number> {
 
   /**
    * Get the value at the given {@code dimension}
-   * 
+   *
    * @param dimension
    *          the dimension
    * @return the number
@@ -96,7 +96,7 @@ public abstract class NumberList extends BasicList<Number> {
 
   /**
    * store the data of this point into the destination {@code double} array
-   * 
+   *
    * @param dest
    *          the destination {@code double} array
    * @param destStart
@@ -114,7 +114,7 @@ public abstract class NumberList extends BasicList<Number> {
 
   /**
    * store the data of this point into the destination {@code long} array
-   * 
+   *
    * @param dest
    *          the destination {@code long} array
    * @param destStart
@@ -132,7 +132,7 @@ public abstract class NumberList extends BasicList<Number> {
 
   /**
    * store the data of this point into the destination {@code int} array
-   * 
+   *
    * @param dest
    *          the destination {@code int} array
    * @param destStart

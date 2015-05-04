@@ -10,11 +10,11 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** A class for creating in parallel sets */
 public final class RandomTSPSuiteParallelExample extends
-    RandomParallelExample {
+RandomParallelExample {
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger, or {@code null} to use the global logger
    */
@@ -38,7 +38,7 @@ public final class RandomTSPSuiteParallelExample extends
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          the command line arguments
    */

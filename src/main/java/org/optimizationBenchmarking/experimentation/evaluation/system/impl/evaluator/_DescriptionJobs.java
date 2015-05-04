@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 final class _DescriptionJobs extends _PartJob {
   /**
    * create the descriptions module
-   * 
+   *
    * @param data
    *          the data
    * @param logger

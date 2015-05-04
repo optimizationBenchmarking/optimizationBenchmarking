@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 public class EnumerationItem extends ListItem {
   /**
    * Create a structured text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -16,7 +16,7 @@ public class EnumerationItem extends ListItem {
 
   /**
    * Get the owning enumeration list
-   * 
+   *
    * @return the owning enumeration list
    */
   @Override

@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 public interface IFeatureSet extends IPropertySet {
   /**
    * Get the features of this feature set
-   * 
+   *
    * @return the features of this feature set
    */
   @Override
@@ -18,7 +18,7 @@ public interface IFeatureSet extends IPropertySet {
 
   /**
    * Obtain a feature fitting to a given name
-   * 
+   *
    * @param name
    *          the feature name
    * @return the feature, or {@code null} if none could be found
@@ -31,7 +31,7 @@ public interface IFeatureSet extends IPropertySet {
    * values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Feature#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the set of feature values
    * @return the feature setting
@@ -46,7 +46,7 @@ public interface IFeatureSet extends IPropertySet {
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Feature#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the feature setting
@@ -61,7 +61,7 @@ public interface IFeatureSet extends IPropertySet {
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Feature#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the feature setting
@@ -76,7 +76,7 @@ public interface IFeatureSet extends IPropertySet {
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Feature#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the feature setting
@@ -90,7 +90,7 @@ public interface IFeatureSet extends IPropertySet {
    * values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Feature#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the set of feature values
    * @return the feature setting

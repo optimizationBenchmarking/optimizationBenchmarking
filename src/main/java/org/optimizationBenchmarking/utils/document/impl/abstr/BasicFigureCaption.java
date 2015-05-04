@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 public class BasicFigureCaption extends ComplexText {
   /**
    * create the caption
-   * 
+   *
    * @param owner
    *          the owner
    */

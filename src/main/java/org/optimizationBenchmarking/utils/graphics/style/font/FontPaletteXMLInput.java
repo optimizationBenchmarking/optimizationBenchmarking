@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 
 /** the font palette xml input driver */
 public final class FontPaletteXMLInput extends
-    XMLInputTool<FontPaletteBuilder> {
+XMLInputTool<FontPaletteBuilder> {
 
   /** create */
   FontPaletteXMLInput() {
@@ -73,7 +73,7 @@ public final class FontPaletteXMLInput extends
 
   /**
    * get the instance of the {@link FontPaletteXMLInput}
-   * 
+   *
    * @return the instance of the {@link FontPaletteXMLInput}
    */
   public static final FontPaletteXMLInput getInstance() {

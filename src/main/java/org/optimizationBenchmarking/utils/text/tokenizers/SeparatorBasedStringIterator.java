@@ -13,7 +13,7 @@ public class SeparatorBasedStringIterator extends _StringIterator {
 
   /**
    * Create the CSV iterator
-   * 
+   *
    * @param string
    *          the string to iterate over
    * @param split

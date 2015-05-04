@@ -17,7 +17,7 @@ final class _FreeHEPSVGGraphic extends SVGGraphics2D {
 
   /**
    * Create the wrapper
-   * 
+   *
    * @param _os
    *          the output stream
    * @param size

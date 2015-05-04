@@ -27,7 +27,7 @@ final class _StyleSetDefinition {
 
   /**
    * Create the style set
-   * 
+   *
    * @param fonts
    *          the font palette
    * @param strokes

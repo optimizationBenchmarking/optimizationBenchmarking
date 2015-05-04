@@ -17,7 +17,7 @@ public final class FileProducerCollector extends ProducedFileSet {
 
   /**
    * Assert that files of the given types have been produced
-   * 
+   *
    * @param types
    *          the file types
    */

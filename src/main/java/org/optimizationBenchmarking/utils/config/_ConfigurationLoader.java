@@ -8,14 +8,14 @@ import org.optimizationBenchmarking.utils.error.RethrowMode;
 
 /** the configuration loader */
 final class _ConfigurationLoader implements
-    PrivilegedAction<Configuration> {
+PrivilegedAction<Configuration> {
 
   /** the command line arguments */
   private final String[] m_args;
 
   /**
    * create the configuration loader
-   * 
+   *
    * @param args
    *          the loader
    */

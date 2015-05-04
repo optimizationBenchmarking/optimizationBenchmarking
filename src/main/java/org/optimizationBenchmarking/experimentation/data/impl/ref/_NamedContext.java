@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * A builder for named objects.
- * 
+ *
  * @param <RT>
  *          the return type
  */
@@ -26,7 +26,7 @@ class _NamedContext<RT> extends _Context<RT> {
 
   /**
    * create
-   * 
+   *
    * @param element
    *          the owning element
    */
@@ -47,7 +47,7 @@ class _NamedContext<RT> extends _Context<RT> {
 
   /**
    * Set the name of this dimension
-   * 
+   *
    * @param name
    *          the name of this dimension
    */
@@ -70,7 +70,7 @@ class _NamedContext<RT> extends _Context<RT> {
 
   /**
    * Get the name of this object
-   * 
+   *
    * @return the name of this object
    */
   public synchronized final String getName() {
@@ -80,7 +80,7 @@ class _NamedContext<RT> extends _Context<RT> {
 
   /**
    * Set the description of this object
-   * 
+   *
    * @param description
    *          the description of this object
    */
@@ -91,7 +91,7 @@ class _NamedContext<RT> extends _Context<RT> {
 
   /**
    * Add a string to the description of this object
-   * 
+   *
    * @param description
    *          the description of this object
    */
@@ -104,7 +104,7 @@ class _NamedContext<RT> extends _Context<RT> {
 
   /**
    * Get the description of this object
-   * 
+   *
    * @return the description of this object
    */
   public synchronized final String getDescription() {
@@ -113,7 +113,7 @@ class _NamedContext<RT> extends _Context<RT> {
 
   /**
    * merge descriptions
-   * 
+   *
    * @param descA
    *          description a
    * @param descB
@@ -172,7 +172,7 @@ class _NamedContext<RT> extends _Context<RT> {
 
   /**
    * compile and return the compilation result
-   * 
+   *
    * @param name
    *          the name
    * @param description
@@ -199,8 +199,8 @@ class _NamedContext<RT> extends _Context<RT> {
     if (b == null) {
       throw new IllegalArgumentException(//
           "A name must not normalize to null, buth the name '" //$NON-NLS-1$
-              + a + "' of " + this + //$NON-NLS-1$
-              " does."); //$NON-NLS-1$
+          + a + "' of " + this + //$NON-NLS-1$
+          " does."); //$NON-NLS-1$
     }
 
     if (c != null) {
@@ -209,8 +209,8 @@ class _NamedContext<RT> extends _Context<RT> {
       if (d == null) {
         throw new IllegalArgumentException(//
             "A non-empty descriptionmust not normalize to null, buth the description '" //$NON-NLS-1$
-                + c + "' of " + this + //$NON-NLS-1$
-                " does."); //$NON-NLS-1$
+            + c + "' of " + this + //$NON-NLS-1$
+            " does."); //$NON-NLS-1$
       }
     } else {
       d = null;

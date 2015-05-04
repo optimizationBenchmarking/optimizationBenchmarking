@@ -14,7 +14,7 @@ public class DataSeries extends DataElement implements IDataSeries {
 
   /**
    * create the data series
-   * 
+   *
    * @param owner
    *          the owner
    * @param id
@@ -37,7 +37,7 @@ public class DataSeries extends DataElement implements IDataSeries {
 
   /**
    * check the matrix
-   * 
+   *
    * @param matrix
    *          the matrix
    */

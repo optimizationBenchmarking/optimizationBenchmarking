@@ -70,7 +70,7 @@ final class Axis extends TitledElement implements IAxis {
 
   /**
    * create the chart item
-   * 
+   *
    * @param owner
    *          the owner
    * @param col
@@ -232,7 +232,7 @@ final class Axis extends TitledElement implements IAxis {
 
   /**
    * check a minimum value
-   * 
+   *
    * @param min
    *          the minimum value
    */
@@ -255,7 +255,7 @@ final class Axis extends TitledElement implements IAxis {
 
   /**
    * check a maximum value
-   * 
+   *
    * @param max
    *          the maximum value
    */
@@ -306,7 +306,7 @@ final class Axis extends TitledElement implements IAxis {
 
   /**
    * Register some data
-   * 
+   *
    * @param data
    *          the data set
    */
@@ -318,7 +318,7 @@ final class Axis extends TitledElement implements IAxis {
 
   /**
    * get the axis
-   * 
+   *
    * @return the axis
    */
   @SuppressWarnings("resource")

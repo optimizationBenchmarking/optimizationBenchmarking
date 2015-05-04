@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.SubFigureCaption;
 final class _XHTML10SubFigureCaption extends SubFigureCaption {
   /**
    * Create a new sub-figure caption
-   * 
+   *
    * @param owner
    *          the owner
    */

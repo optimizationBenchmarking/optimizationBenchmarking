@@ -9,7 +9,7 @@ final class _XHTML10MathMul extends MathMul {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

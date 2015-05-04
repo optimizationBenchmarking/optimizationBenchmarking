@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
 
 /**
  * a mapped selection
- * 
+ *
  * @param <ST>
  *          the set type
  * @param <ET>
@@ -18,14 +18,14 @@ import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
  *          the sub-element type
  */
 abstract class _MappedSelection<ST extends IElementSet, ET extends IElementSet, SET extends IDataElement>
-    extends _Selection<ST, ET> {
+extends _Selection<ST, ET> {
 
   /** the selection */
   HashMap<ET, Object> m_selection;
 
   /**
    * create the property selection
-   * 
+   *
    * @param set
    *          the property set to select from
    */
@@ -35,7 +35,7 @@ abstract class _MappedSelection<ST extends IElementSet, ET extends IElementSet, 
 
   /**
    * create a sub-selection
-   * 
+   *
    * @param element
    *          the element
    * @return the selection
@@ -44,7 +44,7 @@ abstract class _MappedSelection<ST extends IElementSet, ET extends IElementSet, 
 
   /**
    * Check whether a sub-element can be added
-   * 
+   *
    * @param value
    *          the element to check
    * @return {@code true} if the element can be added, {@code false}
@@ -72,7 +72,7 @@ abstract class _MappedSelection<ST extends IElementSet, ET extends IElementSet, 
 
   /**
    * add a sub-element
-   * 
+   *
    * @param element
    *          the element to add
    * @return {@code true} if something changed because of the addition,
@@ -118,7 +118,7 @@ abstract class _MappedSelection<ST extends IElementSet, ET extends IElementSet, 
 
   /**
    * add a set of sub-elements
-   * 
+   *
    * @param elements
    *          the elements
    */

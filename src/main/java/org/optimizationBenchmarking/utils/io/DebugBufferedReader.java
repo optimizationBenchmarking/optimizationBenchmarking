@@ -22,7 +22,7 @@ public class DebugBufferedReader extends BufferedReader {
 
   /**
    * Create the debug buffered reader
-   * 
+   *
    * @param source
    *          the source reader
    * @param debug
@@ -37,7 +37,7 @@ public class DebugBufferedReader extends BufferedReader {
 
   /**
    * Create the debug buffered reader
-   * 
+   *
    * @param source
    *          the source reader
    */
@@ -54,7 +54,7 @@ public class DebugBufferedReader extends BufferedReader {
       result = this.m_source.read();
     } catch (final Throwable tt) {
       try {
-        throw new IOException("Error when reading single character.", tt); //$NON-NLS-1$            
+        throw new IOException("Error when reading single character.", tt); //$NON-NLS-1$
       } catch (final IOException ioe) {
         synchronized (this.m_debug) {
           ioe.printStackTrace(this.m_debug);
@@ -86,9 +86,9 @@ public class DebugBufferedReader extends BufferedReader {
     } catch (final Throwable tt) {
       try {
         throw new IOException(
-            (((("Error when reading " + len) + //$NON-NLS-1$  
+            (((("Error when reading " + len) + //$NON-NLS-1$
                 " characters into array ")//$NON-NLS-1$
-                + ((cbuf != null) ? cbuf.toString() : String.valueOf(null)) + " starting at index ") + off), tt); //$NON-NLS-1$            
+                + ((cbuf != null) ? cbuf.toString() : String.valueOf(null)) + " starting at index ") + off), tt); //$NON-NLS-1$
       } catch (final IOException ioe) {
         synchronized (this.m_debug) {
           ioe.printStackTrace(this.m_debug);
@@ -118,7 +118,7 @@ public class DebugBufferedReader extends BufferedReader {
       result = this.m_source.readLine();
     } catch (final Throwable tt) {
       try {
-        throw new IOException("Error when reading line.", tt);//$NON-NLS-1$            
+        throw new IOException("Error when reading line.", tt);//$NON-NLS-1$
       } catch (final IOException ioe) {
         synchronized (this.m_debug) {
           ioe.printStackTrace(this.m_debug);
@@ -147,7 +147,7 @@ public class DebugBufferedReader extends BufferedReader {
     } catch (final Throwable tt) {
       try {
         throw new IOException("Error when skipping " + n + //$NON-NLS-1$
-            " chars.", tt);//$NON-NLS-1$            
+            " chars.", tt);//$NON-NLS-1$
       } catch (final IOException ioe) {
         synchronized (this.m_debug) {
           ioe.printStackTrace(this.m_debug);
@@ -166,7 +166,7 @@ public class DebugBufferedReader extends BufferedReader {
     } catch (final Throwable tt) {
       try {
         throw new IOException(
-            "Error when checking whether data is ready to be read.", tt);//$NON-NLS-1$                   
+            "Error when checking whether data is ready to be read.", tt);//$NON-NLS-1$
       } catch (final IOException ioe) {
         synchronized (this.m_debug) {
           ioe.printStackTrace(this.m_debug);
@@ -224,7 +224,7 @@ public class DebugBufferedReader extends BufferedReader {
       this.m_source.reset();
     } catch (final Throwable tt) {
       try {
-        throw new IOException("Error when resetting.", tt);//$NON-NLS-1$                   
+        throw new IOException("Error when resetting.", tt);//$NON-NLS-1$
       } catch (final IOException ioe) {
         synchronized (this.m_debug) {
           ioe.printStackTrace(this.m_debug);

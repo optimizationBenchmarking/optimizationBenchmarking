@@ -7,7 +7,7 @@ public class PlainText extends Text implements IPlainText {
 
   /**
    * Create a text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

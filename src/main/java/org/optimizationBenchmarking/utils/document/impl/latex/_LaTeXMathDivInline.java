@@ -9,7 +9,7 @@ final class _LaTeXMathDivInline extends MathDivInline {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

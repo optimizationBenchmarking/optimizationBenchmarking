@@ -11,7 +11,7 @@ public interface IClustering extends IElementSet, ISemanticComponent {
 
   /**
    * Obtain the clusters
-   * 
+   *
    * @return the list of clusters
    */
   @Override

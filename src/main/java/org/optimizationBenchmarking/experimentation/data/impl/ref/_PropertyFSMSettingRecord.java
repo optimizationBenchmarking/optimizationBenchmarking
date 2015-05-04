@@ -13,7 +13,7 @@ final class _PropertyFSMSettingRecord extends _PropertyFSMRecord {
 
   /**
    * create
-   * 
+   *
    * @param propertyName
    *          the property name
    * @param propertyDesc
@@ -49,7 +49,7 @@ final class _PropertyFSMSettingRecord extends _PropertyFSMRecord {
         this.m_dead = true;
         throw new IllegalStateException(//
             "Value of property '" + this.m_propertyName + //$NON-NLS-1$
-                "' cannot be null as it has a non-zero refCount."); //$NON-NLS-1$
+            "' cannot be null as it has a non-zero refCount."); //$NON-NLS-1$
       }
 
       if (!(this.m_propertyValue.equals(propertyValue))) {
@@ -65,7 +65,7 @@ final class _PropertyFSMSettingRecord extends _PropertyFSMRecord {
         this.m_dead = true;
         throw new IllegalStateException(//
             "Value of property '" + this.m_propertyName + //$NON-NLS-1$
-                "' cannot be set to null."); //$NON-NLS-1$
+            "' cannot be set to null."); //$NON-NLS-1$
       }
       this.m_propertyValue = propertyValue;
     }

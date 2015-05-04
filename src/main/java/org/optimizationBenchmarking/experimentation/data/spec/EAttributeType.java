@@ -58,7 +58,7 @@ public enum EAttributeType {
 
   /**
    * Create the attribute type
-   * 
+   *
    * @param store
    *          should the attribute data
    */
@@ -71,7 +71,7 @@ public enum EAttributeType {
    * the cache in a
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.ElementSet
    * data object}.
-   * 
+   *
    * @param o
    *          the packed object
    * @return the unpacked object
@@ -88,7 +88,7 @@ public enum EAttributeType {
    * cache in a
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.ElementSet
    * data object}.
-   * 
+   *
    * @param o
    *          the unpacked object
    * @return the packed object

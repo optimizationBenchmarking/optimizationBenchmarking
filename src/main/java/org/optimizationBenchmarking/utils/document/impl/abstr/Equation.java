@@ -27,7 +27,7 @@ public class Equation extends BasicMath implements IEquation {
 
   /**
    * Create an equation
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index
@@ -44,7 +44,7 @@ public class Equation extends BasicMath implements IEquation {
     if (index <= 0) {
       throw new IllegalArgumentException(//
           "Object index must be greater than 0, but is " //$NON-NLS-1$
-              + index);
+          + index);
     }
 
     this.m_index = index;
@@ -67,7 +67,7 @@ public class Equation extends BasicMath implements IEquation {
 
   /**
    * Render a string to an index
-   * 
+   *
    * @param index
    *          the index to render
    * @return a string
@@ -78,7 +78,7 @@ public class Equation extends BasicMath implements IEquation {
 
   /**
    * Get the label of this equation
-   * 
+   *
    * @return the label of this equation, or {@code null} if it has none
    */
   @Override
@@ -89,7 +89,7 @@ public class Equation extends BasicMath implements IEquation {
   /**
    * Get the index of the equation within the owning context (starts at
    * {@code 1})
-   * 
+   *
    * @return the index of the equation within the owning section
    */
   public final int getIndex() {
@@ -100,7 +100,7 @@ public class Equation extends BasicMath implements IEquation {
    * Get the global id, which identifies this equation globally unique in
    * the document. This id is composed of the rendered indexes through the
    * complete element hierarchy.
-   * 
+   *
    * @return the globally unique id of this equation
    */
   public final String getGlobalID() {
@@ -111,7 +111,7 @@ public class Equation extends BasicMath implements IEquation {
    * Get the local id, which identifies this equation within its owning
    * context. It corresponds to a {@link #renderIndex(int) rendered}
    * version of {@link #getIndex()}.
-   * 
+   *
    * @return the locally unique id of this equation within the owning
    *         section body
    */

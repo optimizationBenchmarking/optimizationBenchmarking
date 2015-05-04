@@ -121,13 +121,13 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
   /** {@inheritDoc} */
   @Override
   protected final String getDefaultPlainOutputFileName() {
-    return ("bibliography." + //$NON-NLS-1$ 
-    ELaTeXFileType.BIB.getDefaultSuffix());
+    return ("bibliography." + //$NON-NLS-1$
+        ELaTeXFileType.BIB.getDefaultSuffix());
   }
 
   /**
    * Get the instance of the {@link BibTeXOutput}
-   * 
+   *
    * @return the instance of the {@link BibTeXOutput}
    */
   public static final BibTeXOutput getInstance() {
@@ -158,12 +158,12 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
     throw new IllegalArgumentException(//
         "Element '" + data + //$NON-NLS-1$
-            "' cannot be processed by BibTeX output driver."); //$NON-NLS-1$
+        "' cannot be processed by BibTeX output driver."); //$NON-NLS-1$
   }
 
   /**
    * store an in-collection record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -209,7 +209,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store a bibliographic record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -255,18 +255,18 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
     }
     if (data instanceof BibTechReport) {
       BibTeXOutput
-          .__storeTechReport(((BibTechReport) data), raw, enc, buf);
+      .__storeTechReport(((BibTechReport) data), raw, enc, buf);
       return;
     }
 
     throw new IllegalArgumentException(//
         "Element '" + data + //$NON-NLS-1$
-            "' is of unknown type cannot be processed by BibTeX output driver."); //$NON-NLS-1$
+        "' is of unknown type cannot be processed by BibTeX output driver."); //$NON-NLS-1$
   }
 
   /**
    * put a string into a buffer
-   * 
+   *
    * @param name
    *          the string
    * @param buf
@@ -283,7 +283,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * write a field value start
-   * 
+   *
    * @param name
    *          the field name
    * @param buf
@@ -299,7 +299,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * write a record start
-   * 
+   *
    * @param name
    *          the field name
    * @param rec
@@ -318,7 +318,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * end a field
-   * 
+   *
    * @param raw
    *          the output
    */
@@ -330,7 +330,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * end a record
-   * 
+   *
    * @param raw
    *          the output
    */
@@ -340,7 +340,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * write a simple field
-   * 
+   *
    * @param name
    *          the field name
    * @param value
@@ -363,7 +363,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * write a pages field
-   * 
+   *
    * @param start
    *          the start page
    * @param end
@@ -395,7 +395,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * write a organization field
-   * 
+   *
    * @param name
    *          the field name
    * @param org
@@ -433,7 +433,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * write a date field
-   * 
+   *
    * @param start
    *          the start date
    * @param end
@@ -593,7 +593,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * write a full date
-   * 
+   *
    * @param date
    *          the date
    * @param raw
@@ -631,7 +631,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * write a date field
-   * 
+   *
    * @param value
    *          the field value
    * @param raw
@@ -681,7 +681,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * write an author field
-   * 
+   *
    * @param name
    *          the field name
    * @param value
@@ -738,7 +738,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store an article record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -781,7 +781,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store a book record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -814,7 +814,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store a thesis record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -858,7 +858,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store a book inner record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -887,7 +887,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store a proceedings inner record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -910,7 +910,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store a proceedings record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -942,7 +942,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store an in-proceedings record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -987,7 +987,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store a website record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -1021,7 +1021,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store a technical report record
-   * 
+   *
    * @param data
    *          the data
    * @param raw
@@ -1060,7 +1060,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
   /**
    * store a bibliography
-   * 
+   *
    * @param data
    *          the data
    * @param raw

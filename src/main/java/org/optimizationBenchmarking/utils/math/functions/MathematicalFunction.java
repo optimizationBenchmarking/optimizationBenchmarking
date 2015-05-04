@@ -30,7 +30,7 @@ public abstract class MathematicalFunction implements Serializable {
   /**
    * Get the minimum arity of this function, i.e., the number of arguments
    * it requires at least.
-   * 
+   *
    * @return the number of arguments that this function needs at least
    * @see #getMaxArity()
    */
@@ -39,7 +39,7 @@ public abstract class MathematicalFunction implements Serializable {
   /**
    * Get the maximum arity of this function, i.e., the number of arguments
    * it permits at most.
-   * 
+   *
    * @return the number of arguments that this function needs accepts at
    *         most
    * @see #getMinArity()
@@ -49,20 +49,20 @@ public abstract class MathematicalFunction implements Serializable {
   /**
    * throws the illegal argument exception caused by a NaN return value for
    * an integer function.
-   * 
+   *
    * @throws IllegalArgumentException
    *           always
    */
   final void _throwIllegalNaN() {
     throw new IllegalArgumentException(//
         "The integer-based '" + this.toString() + //$NON-NLS-1$
-            "' delegate to a real-valued calculation has returned NaN."); //$NON-NLS-1$
+        "' delegate to a real-valued calculation has returned NaN."); //$NON-NLS-1$
   }
 
   /**
    * throws the illegal argument exception caused by an illegal arity for
    * an integer function.
-   * 
+   *
    * @param length
    *          the dimension of the argument
    * @throws IllegalArgumentException
@@ -75,24 +75,24 @@ public abstract class MathematicalFunction implements Serializable {
     if (length < x) {
       throw new IllegalArgumentException(//
           "The function '" + this.toString() + //$NON-NLS-1$
-              "' requires at least " + x + //$NON-NLS-1$
-              " parameters, but was invoked with " + length + //$NON-NLS-1$
-              " arguments."); //$NON-NLS-1$
+          "' requires at least " + x + //$NON-NLS-1$
+          " parameters, but was invoked with " + length + //$NON-NLS-1$
+          " arguments."); //$NON-NLS-1$
     }
     x = this.getMaxArity();
     if (length < x) {
       throw new IllegalArgumentException(//
           "The function '" + this.toString() + //$NON-NLS-1$
-              "' allows at most " + x + //$NON-NLS-1$
-              " parameters, but was invoked with " + length + //$NON-NLS-1$
-              " arguments."); //$NON-NLS-1$
+          "' allows at most " + x + //$NON-NLS-1$
+          " parameters, but was invoked with " + length + //$NON-NLS-1$
+          " arguments."); //$NON-NLS-1$
     }
   }
 
   /**
    * Compute the result of this function when all parameters are
    * {@code double} valued.
-   * 
+   *
    * @param x
    *          the vector of parameters, which must contain (at least)
    *          {@link #getMinArity()} and at most {@link #getMaxArity()}
@@ -107,7 +107,7 @@ public abstract class MathematicalFunction implements Serializable {
   /**
    * Compute the result of this function as {@code double} when all
    * parameters are {@code long} valued.
-   * 
+   *
    * @param x
    *          the vector of parameters, which must contain (at least)
    *          {@link #getMinArity()} and at most {@link #getMaxArity()}
@@ -133,7 +133,7 @@ public abstract class MathematicalFunction implements Serializable {
   /**
    * Compute the result of this function as {@code double} when all
    * parameters are {@code int} valued.
-   * 
+   *
    * @param x
    *          the vector of parameters, which must contain (at least)
    *          {@link #getMinArity()} and at most {@link #getMaxArity()}
@@ -161,7 +161,7 @@ public abstract class MathematicalFunction implements Serializable {
    * function template delegates the computation to the {@code int} variant
    * of this function. The {@code int} result of that function is then
    * casted to {@code byte}.
-   * 
+   *
    * @param x
    *          the vector of parameters, which must contain at least
    *          {@link #getMinArity()} and at most {@link #getMaxArity()}
@@ -194,7 +194,7 @@ public abstract class MathematicalFunction implements Serializable {
    * function template delegates the computation to the {@code int} variant
    * of this function. The {@code int} result of that function is then
    * casted to {@code short}.
-   * 
+   *
    * @param x
    *          the vector of parameters, which must contain at least
    *          {@link #getMinArity()} and at most {@link #getMaxArity()}
@@ -227,7 +227,7 @@ public abstract class MathematicalFunction implements Serializable {
    * function template delegates the computation to the {@code long}
    * variant of this function. The {@code long} result of that function is
    * then casted to {@code int}.
-   * 
+   *
    * @param x
    *          the vector of parameters, which must contain at least
    *          {@link #getMinArity()} and at most {@link #getMaxArity()}
@@ -260,7 +260,7 @@ public abstract class MathematicalFunction implements Serializable {
    * function template delegates the computation to the {@code double}
    * variant of this function. The {@code double} result of that function
    * is then casted to {@code long}.
-   * 
+   *
    * @param x
    *          the vector of parameters, which must contain at least
    *          {@link #getMinArity()} and at most {@link #getMaxArity()}
@@ -301,7 +301,7 @@ public abstract class MathematicalFunction implements Serializable {
    * function template delegates the computation to the {@code double}
    * variant of this function. The {@code double} result of that function
    * is then casted to {@code float}.
-   * 
+   *
    * @param x
    *          the vector of parameters, which must contain at least
    *          {@link #getMinArity()} and at most {@link #getMaxArity()}
@@ -346,7 +346,7 @@ public abstract class MathematicalFunction implements Serializable {
    * example, multiplication is an inverse for division, but a division by
    * zero may not be invertible.
    * </p>
-   * 
+   *
    * @param index
    *          the index of the parameter with
    *          <code>0&le;index&lt;{@link #getMaxArity()}</code>
@@ -370,7 +370,7 @@ public abstract class MathematicalFunction implements Serializable {
    * function where the parameter at index {@code index} is left out (if it
    * disappeared during the differentiation procedure).
    * </p>
-   * 
+   *
    * @param index
    *          the index of the parameter with
    *          <code>0&le;index&lt;{@link #getMaxArity()}</code>
@@ -389,7 +389,7 @@ public abstract class MathematicalFunction implements Serializable {
    * course, all integrals could have an added constant {@code c}. We
    * assume that {@code c=0} here.
    * </p>
-   * 
+   *
    * @param index
    *          the index of the parameter with
    *          <code>0&le;index&lt;{@link #getMaxArity()}</code>
@@ -408,7 +408,7 @@ public abstract class MathematicalFunction implements Serializable {
   /**
    * This instance equals to any object of the same class. The reason is
    * that mathematical functions are usually singletons.
-   * 
+   *
    * @param o
    *          the object
    * @return {@code true} if {@code o} is an instance of the same class,
@@ -417,13 +417,13 @@ public abstract class MathematicalFunction implements Serializable {
   @Override
   public boolean equals(final Object o) {
     return ((o == this) || //
-    ((o != null) && (this.getClass() == o.getClass())));
+        ((o != null) && (this.getClass() == o.getClass())));
   }
 
   /**
    * The hash code here is set to the hash code of the class, since
    * mathematical functions are usually singletons.
-   * 
+   *
    * @return the hash code
    */
   @Override
@@ -436,7 +436,7 @@ public abstract class MathematicalFunction implements Serializable {
    * mathematical functions will always return the correct result for
    * {@link #computeAsLong(long...)}, for example min, max, round, etc.
    * Others will not (such as +, sin).
-   * 
+   *
    * @return {@code true} if calculating values in {@code long} arithmetic
    *         will always return accurate results, {@code false} otherwise
    */

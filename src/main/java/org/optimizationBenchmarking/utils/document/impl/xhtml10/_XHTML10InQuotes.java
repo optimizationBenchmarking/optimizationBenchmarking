@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.PlainText;
 final class _XHTML10InQuotes extends InQuotes {
   /**
    * create the in-quotes element
-   * 
+   *
    * @param owner
    *          the owner
    */

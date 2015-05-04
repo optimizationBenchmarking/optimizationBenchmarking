@@ -52,7 +52,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * render a compiled 2D line chart
-   * 
+   *
    * @param chart
    *          the chart to be rendered.
    * @param graphic
@@ -66,7 +66,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * render a compiled pie chart
-   * 
+   *
    * @param chart
    *          the chart to be rendered.
    * @param graphic
@@ -79,7 +79,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Scale a font with the base font scale
-   * 
+   *
    * @param font
    *          the font
    * @param scale
@@ -146,7 +146,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the defaults for a given style set
-   * 
+   *
    * @param styles
    *          the style set
    * @return the defaults for a given style set
@@ -166,7 +166,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Scale the title font of the chart
-   * 
+   *
    * @param font
    *          the title font
    * @return the scaled font
@@ -177,7 +177,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Create the default font to be used for the chart title
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default font to be used for the chart title
@@ -189,7 +189,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the default font to be used for the chart title
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default font to be used for the chart title
@@ -211,7 +211,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Scale the data title font of a data element
-   * 
+   *
    * @param font
    *          the data title font
    * @return the scaled font
@@ -222,7 +222,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Create the default font to be used for a data element titles
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default font to be used for a data element titles
@@ -234,7 +234,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the default font to be used for a data element title
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default font to be used for a data element title
@@ -256,7 +256,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Create the default data stroke
-   * 
+   *
    * @param styles
    *          the styles
    * @return the default data stroke
@@ -268,7 +268,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the default data stroke
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default stroke to be used for a data
@@ -290,7 +290,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Scale the axis title font of the chart
-   * 
+   *
    * @param font
    *          the axis title font
    * @return the scaled font
@@ -301,7 +301,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Create the default font to be used for axis titles
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default font to be used for axis titles
@@ -314,7 +314,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the default font to be used for an axis title
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default font to be used for an axis title
@@ -336,7 +336,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Scale the axis tick font of the chart
-   * 
+   *
    * @param font
    *          the axis title font
    * @return the scaled font
@@ -347,7 +347,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Create the default font to be used for axis ticks
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default font to be used for axis ticks
@@ -360,7 +360,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the default font to be used for an axis ticks
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default font to be used for an axis ticks
@@ -382,7 +382,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the stroke to be used for axes
-   * 
+   *
    * @param styles
    *          the styles
    * @return the axes stroke
@@ -399,7 +399,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
         Math.min(thickWidth,//
             ((float) (0.01d * Math.round(100d * //
                 ((0.65d * defaultWidth) + //
-                (0.35d * thickWidth)))))));
+                    (0.35d * thickWidth)))))));
 
     return new BasicStroke(goalWidth, defaultStroke.getEndCap(),
         defaultStroke.getLineJoin(), defaultStroke.getMiterLimit());
@@ -407,7 +407,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the default axis stroke
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default stroke to be used for an axis
@@ -429,7 +429,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Create the color to be used for axes
-   * 
+   *
    * @param styles
    *          the styles
    * @return the axis color
@@ -440,7 +440,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the default axis color
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default color to be used for an axis
@@ -461,7 +461,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the stroke to be used for grid lines
-   * 
+   *
    * @param styles
    *          the styles
    * @return the grid line stroke
@@ -478,7 +478,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the default grid line stroke
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default stroke to be used for a grid line
@@ -500,7 +500,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the color to be used for grid lines
-   * 
+   *
    * @param styles
    *          the styles
    * @return the grid line color
@@ -512,7 +512,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
   /**
    * Get the default grid line color
-   * 
+   *
    * @param styles
    *          the available style set
    * @return the default color to be used for an grid lines
@@ -543,7 +543,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
     /**
      * Create a font key
-     * 
+     *
      * @param font
      *          the font
      * @param size
@@ -589,7 +589,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
       if (o instanceof __FontKey) {
         fk = ((__FontKey) o);
         return ((fk.m_hash == this.m_hash) && //
-        (this.m_fontName.equals(fk.m_fontName)));
+            (this.m_fontName.equals(fk.m_fontName)));
       }
 
       return false;

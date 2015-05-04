@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.FigureSeriesCaptio
 final class _XHTML10FigureSeriesCaption extends FigureSeriesCaption {
   /**
    * Create a new figure series caption
-   * 
+   *
    * @param owner
    *          the owner
    */

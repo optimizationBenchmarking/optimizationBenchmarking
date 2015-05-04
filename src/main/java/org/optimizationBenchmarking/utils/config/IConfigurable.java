@@ -19,7 +19,7 @@ public interface IConfigurable {
    * the above. Parameter names are strings and used as keys into this hash
    * map and the values are, well, the parameter values. When overriding
    * this method, you must always call the super method.
-   * 
+   *
    * @param config
    *          the configuration to use
    * @return this configurable instance

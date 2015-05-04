@@ -23,7 +23,7 @@ public final class ExampleFontPalettes {
 
   /**
    * create the example font palettes
-   * 
+   *
    * @return the font palettes
    */
   private static final ArrayListView<FontPalette> __make() {
@@ -34,10 +34,10 @@ public final class ExampleFontPalettes {
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
 
       FontPaletteXMLInput
-          .getInstance()
-          .use()
-          .setDestination(tb)
-          .addResource(FontPaletteExample.class, "examples.fontPalette").create().call(); //$NON-NLS-1$
+      .getInstance()
+      .use()
+      .setDestination(tb)
+      .addResource(FontPaletteExample.class, "examples.fontPalette").create().call(); //$NON-NLS-1$
       palette = tb.getResult();
       if ((palette != null) && (!(palette.isEmpty()))) {
         all.add(palette);
@@ -48,10 +48,10 @@ public final class ExampleFontPalettes {
 
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
       FontPaletteXMLInput
-          .getInstance()
-          .use()
-          .setDestination(tb)
-          .addResource(XHTML10Driver.class, "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
+      .getInstance()
+      .use()
+      .setDestination(tb)
+      .addResource(XHTML10Driver.class, "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
       palette = tb.getResult();
       if ((palette != null) && (!(palette.isEmpty()))) {
         all.add(palette);
@@ -62,10 +62,10 @@ public final class ExampleFontPalettes {
 
     try (final FontPaletteBuilder tb = new FontPaletteBuilder()) {
       FontPaletteXMLInput
-          .getInstance()
-          .use()
-          .setDestination(tb)
-          .addResource(LaTeXDriver.class, "latex.fontPalette").create().call(); //$NON-NLS-1$
+      .getInstance()
+      .use()
+      .setDestination(tb)
+      .addResource(LaTeXDriver.class, "latex.fontPalette").create().call(); //$NON-NLS-1$
       palette = tb.getResult();
       if ((palette != null) && (!(palette.isEmpty()))) {
         all.add(palette);

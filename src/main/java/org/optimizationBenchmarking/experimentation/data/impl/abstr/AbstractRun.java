@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
  * interface.
  */
 public abstract class AbstractRun extends AbstractElementSet implements
-    IRun {
+IRun {
 
   /** the owner */
   IInstanceRuns m_owner;
@@ -27,7 +27,7 @@ public abstract class AbstractRun extends AbstractElementSet implements
    * via
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstanceRuns#own(AbstractRun)}
    * .
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -142,6 +142,7 @@ public abstract class AbstractRun extends AbstractElementSet implements
   @Override
   public abstract IDataPoint find(int column, double value);
 
+  /** {@inheritDoc} */
   @Override
   public abstract IDataPoint find(int column, long value);
 }

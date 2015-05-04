@@ -13,7 +13,7 @@ public final class _EscapedQuotationMark extends QuotationMark {
 
   /**
    * create
-   * 
+   *
    * @param chr
    *          the character
    * @param isOpening

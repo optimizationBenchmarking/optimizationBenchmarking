@@ -60,7 +60,7 @@ final class _UnknownEncoding extends StreamEncoding<Closeable, Closeable> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   @Override
@@ -70,7 +70,7 @@ final class _UnknownEncoding extends StreamEncoding<Closeable, Closeable> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   @Override

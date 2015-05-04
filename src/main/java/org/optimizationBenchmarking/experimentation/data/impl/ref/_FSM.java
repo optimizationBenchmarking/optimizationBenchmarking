@@ -17,7 +17,7 @@ class _FSM extends NormalizingFSM {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -45,7 +45,7 @@ class _FSM extends NormalizingFSM {
 
   /**
    * Published version of the {@link #normalize(Object)} method.
-   * 
+   *
    * @param input
    *          the input
    * @return the result
@@ -58,7 +58,7 @@ class _FSM extends NormalizingFSM {
 
   /**
    * Published version of the {@link #normalize(Object)} method.
-   * 
+   *
    * @param input
    *          the input
    * @return the result

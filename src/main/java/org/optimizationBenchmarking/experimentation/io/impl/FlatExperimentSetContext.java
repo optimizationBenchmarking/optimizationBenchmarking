@@ -92,7 +92,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Create the experiment data parser
-   * 
+   *
    * @param context
    *          the wrapped experiment set context
    */
@@ -112,7 +112,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Push an external id onto the id stack
-   * 
+   *
    * @param id
    *          the id to be pushed
    */
@@ -144,7 +144,7 @@ public class FlatExperimentSetContext {
    * Close all open contexts <em>except</em> the root experiment set
    * context
    */
-  @SuppressWarnings("incomplete-switch")
+  @SuppressWarnings({ "incomplete-switch", "fallthrough" })
   public synchronized final void flush() {
 
     switch (this.m_mode) {
@@ -230,14 +230,14 @@ public class FlatExperimentSetContext {
 
   /**
    * Get a text describing the error location
-   * 
+   *
    * @param error
    *          the error
    * @param hasCause
    *          do we know the cause of the error?
    * @return a text describing the error location
    */
-  @SuppressWarnings("incomplete-switch")
+  @SuppressWarnings({ "incomplete-switch", "fallthrough" })
   private final String __errorLocation(final String error,
       final boolean hasCause) {
     final MemoryTextOutput mto;
@@ -299,14 +299,14 @@ public class FlatExperimentSetContext {
     i = this.m_external.size();
     if (i > 0) {
       mto.append(//
-      ". The id of the most recently used external data source is '");//$NON-NLS-1$
+          ". The id of the most recently used external data source is '");//$NON-NLS-1$
       mto.append(this.m_external.get(i - 1));
       mto.append('\'');
     }
 
     if (hasCause) {
       mto.append(//
-      ". More information of what has led to the error is given in the causing exception.");//$NON-NLS-1$
+          ". More information of what has led to the error is given in the causing exception.");//$NON-NLS-1$
     } else {
       mto.append('.');
     }
@@ -316,7 +316,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Ensure that we are in a dimension context
-   * 
+   *
    * @param forceNew
    *          should we enforce the creation of a new dimension?
    * @return the dimension context
@@ -367,7 +367,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Begin a (new?) dimension
-   * 
+   *
    * @param forceNew
    *          {@code true}: close a potentially existing dimension context
    *          and open a new one, {@code false}: keep a potentially open
@@ -410,7 +410,7 @@ public class FlatExperimentSetContext {
   /**
    * Set the name of the current dimension. If we currently are not in a
    * dimension context, try to create one.
-   * 
+   *
    * @param name
    *          the name of the current dimension
    */
@@ -423,7 +423,7 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting dimension name '") //$NON-NLS-1$
-          + name) + '\'') + '.'), true), error);
+              + name) + '\'') + '.'), true), error);
     }
     this.m_dimensionName = name;
   }
@@ -431,7 +431,7 @@ public class FlatExperimentSetContext {
   /**
    * Set the description of the current dimension. If we currently are not
    * in a dimension context, try to create one.
-   * 
+   *
    * @param description
    *          the description of the current dimension
    */
@@ -445,14 +445,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting dimension description '") //$NON-NLS-1$
-          + description) + '\'') + '.'), true), error);
+              + description) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Add some text to the description of the current dimension. If we
    * currently are not in a dimension context, try to create one.
-   * 
+   *
    * @param description
    *          the description to be added the current dimension
    */
@@ -466,14 +466,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while adding dimension description '") //$NON-NLS-1$
-          + description) + '\'') + '.'), true), error);
+              + description) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Set the direction of the current dimension. If we currently are not in
    * a dimension context, try to create one.
-   * 
+   *
    * @param direction
    *          the direction of the current dimension
    */
@@ -487,14 +487,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting dimension direction string '") //$NON-NLS-1$
-          + direction) + '\'') + '.'), true), error);
+              + direction) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Set the direction of the current dimension. If we currently are not in
    * a dimension context, try to create one.
-   * 
+   *
    * @param direction
    *          the direction of the current dimension
    */
@@ -508,14 +508,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting dimension direction '") //$NON-NLS-1$
-          + direction) + '\'') + '.'), true), error);
+              + direction) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Set the parser of the current dimension. If we currently are not in a
    * dimension context, try to create one.
-   * 
+   *
    * @param parserClass
    *          the parser class: must take two numbers as parameter
    * @param lowerBound
@@ -525,7 +525,7 @@ public class FlatExperimentSetContext {
    */
   public synchronized final void dimensionSetParser(
       final Class<? extends NumberParser<?>> parserClass,
-      final Number lowerBound, final Number upperBound) {
+          final Number lowerBound, final Number upperBound) {
     final DimensionContext context;
 
     context = this.__dimensionEnsure(false);
@@ -535,16 +535,16 @@ public class FlatExperimentSetContext {
       throw new IllegalStateException(
           this.__errorLocation(//
               ((((((("Error while setting dimension parser class ") //$NON-NLS-1$
-              + TextUtils.className(parserClass)) + " and lower bound ") + lowerBound) + //$NON-NLS-1$
-              " and upper bound ") + upperBound) + '.'), //$NON-NLS-1$
-              true), error);
+                  + TextUtils.className(parserClass)) + " and lower bound ") + lowerBound) + //$NON-NLS-1$
+                  " and upper bound ") + upperBound) + '.'), //$NON-NLS-1$
+                  true), error);
     }
   }
 
   /**
    * Set the parser of the current dimension. If we currently are not in a
    * dimension context, try to create one.
-   * 
+   *
    * @param parser
    *          the parser of the current dimension
    */
@@ -558,14 +558,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting dimension parser '") //$NON-NLS-1$
-          + parser) + '\'') + '.'), true), error);
+              + parser) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Set the parser of the current dimension. If we currently are not in a
    * dimension context, try to create one.
-   * 
+   *
    * @param parserClass
    *          the parser class: must take two numbers as parameter
    * @param lowerBound
@@ -585,15 +585,15 @@ public class FlatExperimentSetContext {
       throw new IllegalStateException(this.__errorLocation(//
           ((((((("Error while setting dimension parser strings '") //$NON-NLS-1$
               + parserClass + "' and lower bound '") + lowerBound) + //$NON-NLS-1$
-          " and upper bound '") + upperBound) + '\'') + '.'), //$NON-NLS-1$
-          true), error);
+              " and upper bound '") + upperBound) + '\'') + '.'), //$NON-NLS-1$
+              true), error);
     }
   }
 
   /**
    * Set the parser of the current dimension. If we currently are not in a
    * dimension context, try to create one.
-   * 
+   *
    * @param parser
    *          the parser of the current dimension
    */
@@ -606,14 +606,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting dimension parser string '") //$NON-NLS-1$
-          + parser) + '\'') + '.'), true), error);
+              + parser) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Set the type of the current dimension. If we currently are not in a
    * dimension context, try to create one.
-   * 
+   *
    * @param type
    *          the type of the current dimension
    */
@@ -626,14 +626,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           ((("Error while setting dimension type ") //$NON-NLS-1$
-          + type) + '.'), true), error);
+              + type) + '.'), true), error);
     }
   }
 
   /**
    * Set the type of the current dimension. If we currently are not in a
    * dimension context, try to create one.
-   * 
+   *
    * @param type
    *          the type of the current dimension
    */
@@ -646,13 +646,13 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting dimension type string '") //$NON-NLS-1$
-          + type) + '\'') + '.'), true), error);
+              + type) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Obtain the set of all dimensions
-   * 
+   *
    * @return the set of all dimensions
    */
   public synchronized final DimensionSet dimensionGetAll() {
@@ -667,7 +667,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Define an instance feature with a given name and description
-   * 
+   *
    * @param name
    *          the feature name
    * @param desc
@@ -683,9 +683,9 @@ public class FlatExperimentSetContext {
         } catch (final Throwable error) {
           throw new IllegalStateException(this.__errorLocation(//
               ((((("Error while declaring feature '") //$NON-NLS-1$
-              + name) + "' with description '") + desc) + //$NON-NLS-1$
-              "' to the experiment set context."), //$NON-NLS-1$
-              true), error);
+                  + name) + "' with description '") + desc) + //$NON-NLS-1$
+                  "' to the experiment set context."), //$NON-NLS-1$
+                  true), error);
         }
         return;
       }
@@ -696,9 +696,9 @@ public class FlatExperimentSetContext {
         } catch (final Throwable error) {
           throw new IllegalStateException(this.__errorLocation(//
               ((((("Error while declaring feature '") //$NON-NLS-1$
-              + name) + "' with description '") + desc) + //$NON-NLS-1$
-              "' to the instance context."), //$NON-NLS-1$
-              true), error);
+                  + name) + "' with description '") + desc) + //$NON-NLS-1$
+                  "' to the instance context."), //$NON-NLS-1$
+                  true), error);
         }
         return;
       }
@@ -714,7 +714,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Define a parameter with a given name and description
-   * 
+   *
    * @param name
    *          the parameter name
    * @param desc
@@ -730,9 +730,9 @@ public class FlatExperimentSetContext {
         } catch (final Throwable error) {
           throw new IllegalStateException(this.__errorLocation(//
               ((((("Error while declaring parameter '") //$NON-NLS-1$
-              + name) + "' with description '") + desc) + //$NON-NLS-1$
-              "' to the experiment set context."), //$NON-NLS-1$
-              true), error);
+                  + name) + "' with description '") + desc) + //$NON-NLS-1$
+                  "' to the experiment set context."), //$NON-NLS-1$
+                  true), error);
         }
         return;
       }
@@ -743,9 +743,9 @@ public class FlatExperimentSetContext {
         } catch (final Throwable error) {
           throw new IllegalStateException(this.__errorLocation(//
               ((((("Error while declaring parameter '") //$NON-NLS-1$
-              + name) + "' with description '") + desc) + //$NON-NLS-1$
-              "' to the experiment context."), true),//$NON-NLS-1$
-              error);
+                  + name) + "' with description '") + desc) + //$NON-NLS-1$
+                  "' to the experiment context."), true),//$NON-NLS-1$
+                  error);
         }
         return;
       }
@@ -756,9 +756,9 @@ public class FlatExperimentSetContext {
         } catch (final Throwable error) {
           throw new IllegalStateException(this.__errorLocation(//
               ((((("Error while declaring parameter '") //$NON-NLS-1$
-              + name) + "' with description '") + desc) + //$NON-NLS-1$
-              "' to the run set context."), true),//$NON-NLS-1$
-              error);
+                  + name) + "' with description '") + desc) + //$NON-NLS-1$
+                  "' to the run set context."), true),//$NON-NLS-1$
+                  error);
         }
         return;
       }
@@ -768,9 +768,9 @@ public class FlatExperimentSetContext {
         } catch (final Throwable error) {
           throw new IllegalStateException(this.__errorLocation(//
               ((((("Error while declaring parameter '") //$NON-NLS-1$
-              + name) + "' with description '") + desc) + //$NON-NLS-1$
-              "' to the run context."), true),//$NON-NLS-1$
-              error);
+                  + name) + "' with description '") + desc) + //$NON-NLS-1$
+                  "' to the run context."), true),//$NON-NLS-1$
+                  error);
         }
         return;
       }
@@ -786,7 +786,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Ensure that we are in a instance context
-   * 
+   *
    * @param forceNew
    *          should we enforce the creation of a new instance?
    * @return the instance context
@@ -853,7 +853,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Begin a (new?) instance
-   * 
+   *
    * @param forceNew
    *          {@code true}: close a potentially existing instance context
    *          and open a new one, {@code false}: keep a potentially open
@@ -895,7 +895,7 @@ public class FlatExperimentSetContext {
   /**
    * Set the name of the current instance. If we currently are not in a
    * instance context, try to create one.
-   * 
+   *
    * @param name
    *          the name of the current instance
    */
@@ -908,7 +908,7 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting instance name '") //$NON-NLS-1$
-          + name) + '\'') + '.'), true), error);
+              + name) + '\'') + '.'), true), error);
     }
     this.m_instanceName = name;
   }
@@ -916,7 +916,7 @@ public class FlatExperimentSetContext {
   /**
    * Set the description of the current instance. If we currently are not
    * in a instance context, try to create one.
-   * 
+   *
    * @param description
    *          the description of the current instance
    */
@@ -930,14 +930,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting instance description '") //$NON-NLS-1$
-          + description) + '\'') + '.'), true), error);
+              + description) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Add some text to the description of the current instance. If we
    * currently are not in a instance context, try to create one.
-   * 
+   *
    * @param description
    *          the description to be added the current instance
    */
@@ -951,14 +951,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while adding instance description '") //$NON-NLS-1$
-          + description) + '\'') + '.'), true), error);
+              + description) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Set a feature value of the current instance. If we currently are not
    * in a instance context, try to create one.
-   * 
+   *
    * @param featureName
    *          the feature name
    * @param featureValue
@@ -983,7 +983,7 @@ public class FlatExperimentSetContext {
   /**
    * Set a feature value of the current instance. If we currently are not
    * in a instance context, try to create one.
-   * 
+   *
    * @param featureName
    *          the feature name
    * @param featureValue
@@ -1013,7 +1013,7 @@ public class FlatExperimentSetContext {
   /**
    * Set a feature value of the current instance. If we currently are not
    * in a instance context, try to create one.
-   * 
+   *
    * @param featureName
    *          the feature name
    * @param featureDescription
@@ -1048,7 +1048,7 @@ public class FlatExperimentSetContext {
    * Set the lower boundary for the given dimension of the current
    * instance. If we currently are not in a instance context, try to create
    * one.
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound
@@ -1074,7 +1074,7 @@ public class FlatExperimentSetContext {
    * Set the lower boundary for the given dimension of the current
    * instance. If we currently are not in a instance context, try to create
    * one.
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound
@@ -1100,7 +1100,7 @@ public class FlatExperimentSetContext {
    * Set the upper boundary for the given dimension of the current
    * instance. If we currently are not in a instance context, try to create
    * one.
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound
@@ -1126,7 +1126,7 @@ public class FlatExperimentSetContext {
    * Set the upper boundary for the given dimension of the current
    * instance. If we currently are not in a instance context, try to create
    * one.
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound
@@ -1150,7 +1150,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Obtain the set of all instances
-   * 
+   *
    * @return the set of all instances
    */
   @SuppressWarnings("incomplete-switch")
@@ -1192,7 +1192,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Obtain the set of all features
-   * 
+   *
    * @return the set of all features
    */
   @SuppressWarnings("incomplete-switch")
@@ -1235,11 +1235,12 @@ public class FlatExperimentSetContext {
 
   /**
    * Ensure that we are in an experiment context
-   * 
+   *
    * @param forceNew
    *          should we enforce the creation of a new experiment?
    * @return the instance context
    */
+  @SuppressWarnings("fallthrough")
   private final ExperimentContext __experimentEnsure(final boolean forceNew) {
 
     switch (this.m_mode) {
@@ -1346,7 +1347,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Begin a (new?) experiment
-   * 
+   *
    * @param forceNew
    *          {@code true}: close a potentially existing experiment context
    *          and open a new one, {@code false}: keep a potentially open
@@ -1357,6 +1358,7 @@ public class FlatExperimentSetContext {
   }
 
   /** End the current experiment */
+  @SuppressWarnings("fallthrough")
   public synchronized final void experimentEnd() {
 
     switch (this.m_mode) {
@@ -1422,7 +1424,7 @@ public class FlatExperimentSetContext {
   /**
    * Set the name of the current experiment. If we currently are not in a
    * experiment context, try to create one.
-   * 
+   *
    * @param name
    *          the name of the current experiment
    */
@@ -1435,7 +1437,7 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting experiment name '") //$NON-NLS-1$
-          + name) + '\'') + '.'), true), error);
+              + name) + '\'') + '.'), true), error);
     }
     this.m_experimentName = name;
   }
@@ -1443,7 +1445,7 @@ public class FlatExperimentSetContext {
   /**
    * Set the description of the current experiment. If we currently are not
    * in a experiment context, try to create one.
-   * 
+   *
    * @param description
    *          the description of the current experiment
    */
@@ -1457,14 +1459,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting experiment description '") //$NON-NLS-1$
-          + description) + '\'') + '.'), true), error);
+              + description) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Add some text to the description of the current experiment. If we
    * currently are not in a experiment context, try to create one.
-   * 
+   *
    * @param description
    *          the description to be added the current experiment
    */
@@ -1478,19 +1480,20 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while adding experiment description '") //$NON-NLS-1$
-          + description) + '\'') + '.'), true), error);
+              + description) + '\'') + '.'), true), error);
     }
   }
 
   /**
    * Set a parameter value of the current experiment. If we currently are
    * not in a experiment context, try to create one.
-   * 
+   *
    * @param parameterName
    *          the parameter name
    * @param parameterValue
    *          the parameter value
    */
+  @SuppressWarnings("fallthrough")
   public final synchronized void parameterSetValue(
       final String parameterName, final Object parameterValue) {
     final ExperimentContext context;
@@ -1548,7 +1551,7 @@ public class FlatExperimentSetContext {
   /**
    * Set a parameter value of the current experiment. If we currently are
    * not in a experiment context, try to create one.
-   * 
+   *
    * @param parameterName
    *          the parameter name
    * @param parameterValue
@@ -1556,6 +1559,7 @@ public class FlatExperimentSetContext {
    * @param parameterValueDescription
    *          the parameter value description
    */
+  @SuppressWarnings("fallthrough")
   public final synchronized void parameterSetValue(
       final String parameterName, final Object parameterValue,
       final String parameterValueDescription) {
@@ -1618,7 +1622,7 @@ public class FlatExperimentSetContext {
   /**
    * Set a parameter value of the current experiment. If we currently are
    * not in a experiment context, try to create one.
-   * 
+   *
    * @param parameterName
    *          the parameter name
    * @param parameterDescription
@@ -1628,6 +1632,7 @@ public class FlatExperimentSetContext {
    * @param parameterValueDescription
    *          the parameter value description
    */
+  @SuppressWarnings("fallthrough")
   public final synchronized void parameterSetValue(
       final String parameterName, final String parameterDescription,
       final Object parameterValue, final String parameterValueDescription) {
@@ -1695,11 +1700,12 @@ public class FlatExperimentSetContext {
 
   /**
    * Ensure that we are in an instance runs context
-   * 
+   *
    * @param forceNew
    *          should we enforce the creation of a new instance runset?
    * @return the instance runs context
    */
+  @SuppressWarnings("fallthrough")
   private final InstanceRunsContext __runsEnsure(final boolean forceNew) {
 
     switch (this.m_mode) {
@@ -1768,7 +1774,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Begin a (new?) run set
-   * 
+   *
    * @param forceNew
    *          {@code true}: close a potentially existing run set context
    *          and open a new one, {@code false}: keep a potentially open
@@ -1779,6 +1785,7 @@ public class FlatExperimentSetContext {
   }
 
   /** End the current run set */
+  @SuppressWarnings("fallthrough")
   public synchronized final void runsEnd() {
 
     switch (this.m_mode) {
@@ -1829,7 +1836,7 @@ public class FlatExperimentSetContext {
   /**
    * Set the instance of this instance run context. If we currently are not
    * in a run set context, try to create one.
-   * 
+   *
    * @param inst
    *          the instance of this instance run context
    */
@@ -1853,7 +1860,7 @@ public class FlatExperimentSetContext {
   /**
    * Set the instance of this instance run context. If we currently are not
    * in a run set context, try to create one.
-   * 
+   *
    * @param inst
    *          the instance of this instance run context
    */
@@ -1875,7 +1882,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Ensure that we are in a run context
-   * 
+   *
    * @param forceNew
    *          should we enforce the creation of a new run?
    * @return the run context
@@ -1925,7 +1932,7 @@ public class FlatExperimentSetContext {
 
   /**
    * Begin a (new?) run
-   * 
+   *
    * @param forceNew
    *          {@code true}: close a potentially existing run context and
    *          open a new one, {@code false}: keep a potentially open
@@ -1968,7 +1975,7 @@ public class FlatExperimentSetContext {
   /**
    * Add a data point to the current run. If we currently are not in a run
    * context, try to create one.
-   * 
+   *
    * @param point
    *          the data point to be added
    */
@@ -1981,14 +1988,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           ((("Error while adding data point instance ") //$NON-NLS-1$
-          + point) + " to run."), true), error);//$NON-NLS-1$
+              + point) + " to run."), true), error);//$NON-NLS-1$
     }
   }
 
   /**
    * Add a data point to the current run. If we currently are not in a run
    * context, try to create one.
-   * 
+   *
    * @param point
    *          the data point to be added
    */
@@ -2001,14 +2008,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           ((("Error while adding data point object ") //$NON-NLS-1$
-          + point) + " to run."), true), error);//$NON-NLS-1$
+              + point) + " to run."), true), error);//$NON-NLS-1$
     }
   }
 
   /**
    * Add a data point to the current run. If we currently are not in a run
    * context, try to create one.
-   * 
+   *
    * @param values
    *          the data point values to be added
    */
@@ -2021,14 +2028,14 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           ((("Error while adding data point numbers ") //$NON-NLS-1$
-          + Arrays.toString(values)) + " to run."), true), error);//$NON-NLS-1$
+              + Arrays.toString(values)) + " to run."), true), error);//$NON-NLS-1$
     }
   }
 
   /**
    * Add a data point to the current run. If we currently are not in a run
    * context, try to create one.
-   * 
+   *
    * @param point
    *          the data point to be added
    */
@@ -2041,7 +2048,7 @@ public class FlatExperimentSetContext {
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           ((("Error while adding data point string '") //$NON-NLS-1$
-          + point) + "' to run."), true), error);//$NON-NLS-1$
+              + point) + "' to run."), true), error);//$NON-NLS-1$
     }
   }
 }

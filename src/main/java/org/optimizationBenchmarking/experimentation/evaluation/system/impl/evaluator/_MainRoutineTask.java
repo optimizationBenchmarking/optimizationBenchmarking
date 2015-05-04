@@ -19,7 +19,7 @@ final class _MainRoutineTask extends RecursiveAction {
 
   /**
    * create the task
-   * 
+   *
    * @param job
    *          the job
    * @param container
@@ -40,7 +40,7 @@ final class _MainRoutineTask extends RecursiveAction {
 
   /**
    * Get the string representation of the task.
-   * 
+   *
    * @return the string representation of the task
    */
   @Override

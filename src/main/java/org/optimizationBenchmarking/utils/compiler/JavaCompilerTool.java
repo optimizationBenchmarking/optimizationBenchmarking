@@ -117,7 +117,7 @@ public class JavaCompilerTool extends Tool {
 
   /**
    * Get the globally shared instance of the java compiler tool
-   * 
+   *
    * @return the globally shared instance of the java compiler tool
    */
   public static final JavaCompilerTool getInstance() {

@@ -28,7 +28,7 @@ public class StringParser extends Parser<String> {
 
   /**
    * parse the string, but don't validate yet
-   * 
+   *
    * @param inString
    *          the string
    * @return the result
@@ -202,14 +202,14 @@ public class StringParser extends Parser<String> {
     final String ret;
 
     ret = ((o == null) ? EmptyUtils.EMPTY_STRING : //
-        this.__parseString(String.valueOf(o)));
+      this.__parseString(String.valueOf(o)));
     this.validate(ret);
     return ret;
   }
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -218,7 +218,7 @@ public class StringParser extends Parser<String> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

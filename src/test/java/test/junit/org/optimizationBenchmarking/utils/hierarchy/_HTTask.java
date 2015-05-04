@@ -31,7 +31,7 @@ final class _HTTask extends RecursiveAction {
 
   /**
    * create
-   * 
+   *
    * @param root
    *          the root object
    * @param owner
@@ -52,7 +52,7 @@ final class _HTTask extends RecursiveAction {
 
   /**
    * write a random string
-   * 
+   *
    * @param h
    *          the appendable
    * @param r

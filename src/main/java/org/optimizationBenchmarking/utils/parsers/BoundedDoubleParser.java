@@ -13,7 +13,7 @@ public class BoundedDoubleParser extends DoubleParser {
 
   /**
    * Create the bounded double parser
-   * 
+   *
    * @param min
    *          the minimum allowed value, a
    *          {@link java.lang.IllegalArgumentException
@@ -31,7 +31,7 @@ public class BoundedDoubleParser extends DoubleParser {
 
   /**
    * Create the bounded double parser
-   * 
+   *
    * @param min
    *          the minimum allowed value, a
    *          {@link java.lang.IllegalArgumentException

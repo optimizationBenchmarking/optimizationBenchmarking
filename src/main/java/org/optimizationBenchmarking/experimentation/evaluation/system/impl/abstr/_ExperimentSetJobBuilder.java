@@ -5,13 +5,13 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IExpe
 
 /** The experiment set job builder implementation */
 final class _ExperimentSetJobBuilder
-    extends
-    _EvaluationJobBuilder<IExperimentSet, ExperimentSetModule, ExperimentSetJob, _ExperimentSetJobBuilder>
-    implements IExperimentSetJobBuilder {
+extends
+_EvaluationJobBuilder<IExperimentSet, ExperimentSetModule, ExperimentSetJob, _ExperimentSetJobBuilder>
+implements IExperimentSetJobBuilder {
 
   /**
    * create the job builder
-   * 
+   *
    * @param module
    *          the module
    */

@@ -11,7 +11,7 @@ public final class TempDirExample {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          ignored
    */
@@ -32,13 +32,13 @@ public final class TempDirExample {
         file = tempPath.resolve("test.txt");//$NON-NLS-1$
         Files.createFile(file);
 
-        System.out.println(file + " exists: " + Files.exists(file));//$NON-NLS-1$        
+        System.out.println(file + " exists: " + Files.exists(file));//$NON-NLS-1$
       }
 
       System.out.println("After try-with-resources scope"); //$NON-NLS-1$
       System.out.println(tempPath + " exists: " + //$NON-NLS-1$
           Files.exists(tempPath));
-      System.out.println(file + " exists: " + Files.exists(file));//$NON-NLS-1$        
+      System.out.println(file + " exists: " + Files.exists(file));//$NON-NLS-1$
 
     } catch (final Throwable ttt) {
       ttt.printStackTrace(); // this should not happen

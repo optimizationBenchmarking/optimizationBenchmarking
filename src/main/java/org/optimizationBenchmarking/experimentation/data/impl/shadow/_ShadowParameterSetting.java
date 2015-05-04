@@ -12,7 +12,7 @@ final class _ShadowParameterSetting extends AbstractParameterSetting {
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the data
    */

@@ -19,7 +19,7 @@ abstract class _PartJob extends _PseudoJob {
 
   /**
    * create the descriptions module
-   * 
+   *
    * @param data
    *          the data
    * @param logger
@@ -41,7 +41,7 @@ abstract class _PartJob extends _PseudoJob {
 
   /**
    * Write the introduction of the section containing all sub-jobs.
-   * 
+   *
    * @param data
    *          the data
    * @param body
@@ -54,7 +54,7 @@ abstract class _PartJob extends _PseudoJob {
 
   /**
    * Write the title of the section containing all sub-jobs.
-   * 
+   *
    * @param data
    *          the data
    * @param title
@@ -66,7 +66,7 @@ abstract class _PartJob extends _PseudoJob {
 
   /**
    * A new section is created if at least this many sub-jobs are founds
-   * 
+   *
    * @return the minimum number of sub-sections required to justify
    *         grouping them into a section
    */
@@ -76,7 +76,7 @@ abstract class _PartJob extends _PseudoJob {
 
   /**
    * This method is called before a section begins.
-   * 
+   *
    * @param data
    *          the data
    * @param section

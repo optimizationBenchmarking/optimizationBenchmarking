@@ -10,7 +10,7 @@ public class MathCompare extends MathFunction {
 
   /**
    * Create an compare function
-   * 
+   *
    * @param owner
    *          the owning FSM
    * @param comp
@@ -27,7 +27,7 @@ public class MathCompare extends MathFunction {
 
   /**
    * Get the comparison
-   * 
+   *
    * @return the comparison
    */
   public final EMathComparison getComparison() {

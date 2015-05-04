@@ -31,7 +31,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 4 parameters.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a byte
@@ -45,7 +45,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 4 parameters.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a short
@@ -59,7 +59,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 4 parameters.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a int
@@ -73,7 +73,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 4 parameters.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a long
@@ -87,7 +87,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 4 parameters.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a float
@@ -101,7 +101,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 4 parameters.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a double
@@ -117,7 +117,7 @@ public class QuaternaryFunction extends MathematicalFunction {
    * function template delegates the computation to the {@code int} variant
    * of this function. The {@code int} result of that function is then
    * casted to {@code byte}.
-   * 
+   *
    * @param x0
    *          the 1st byte argument of the function
    * @param x1
@@ -143,7 +143,7 @@ public class QuaternaryFunction extends MathematicalFunction {
    * function template delegates the computation to the {@code int} variant
    * of this function. The {@code int} result of that function is then
    * casted to {@code short}.
-   * 
+   *
    * @param x0
    *          the 1st short argument of the function
    * @param x1
@@ -169,7 +169,7 @@ public class QuaternaryFunction extends MathematicalFunction {
    * function template delegates the computation to the {@code long}
    * variant of this function. The {@code long} result of that function is
    * then casted to {@code int}.
-   * 
+   *
    * @param x0
    *          the 1st int argument of the function
    * @param x1
@@ -195,7 +195,7 @@ public class QuaternaryFunction extends MathematicalFunction {
    * function template delegates the computation to the {@code double}
    * variant of this function. The {@code double} result of that function
    * is then casted to {@code long}.
-   * 
+   *
    * @param x0
    *          the 1st long argument of the function
    * @param x1
@@ -229,7 +229,7 @@ public class QuaternaryFunction extends MathematicalFunction {
    * function template delegates the computation to the {@code double}
    * variant of this function. The {@code double} result of that function
    * is then casted to {@code float}.
-   * 
+   *
    * @param x0
    *          the 1st float argument of the function
    * @param x1
@@ -252,7 +252,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Compute the function value in the {@code double} domain. Every
    * sub-class of this class must, at least, override this function.
-   * 
+   *
    * @param x0
    *          the 1st {@code double} argument of the function
    * @param x1
@@ -271,7 +271,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Compute the function result as {@code double} based on four
    * {@code long} inputs
-   * 
+   *
    * @param x0
    *          the 1st {@code long} argument of the function
    * @param x1
@@ -291,7 +291,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Compute the function result as {@code double} based on four
    * {@code int} inputs
-   * 
+   *
    * @param x0
    *          the 1st {@code int} argument of the function
    * @param x1
@@ -311,7 +311,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 4 parameters.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a double
@@ -325,7 +325,7 @@ public class QuaternaryFunction extends MathematicalFunction {
   /**
    * Delegate the function call with open parameter count to the
    * corresponding function with exactly 4 parameters.
-   * 
+   *
    * @param x
    *          the parameter array
    * @return the return value of this function, a double

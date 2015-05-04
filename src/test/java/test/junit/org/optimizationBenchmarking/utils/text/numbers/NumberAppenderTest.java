@@ -22,7 +22,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
 
   /**
    * create the number appender test
-   * 
+   *
    * @param instance
    *          the instance
    * @param canParse
@@ -36,7 +36,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
 
   /**
    * parse a string to a double
-   * 
+   *
    * @param s
    *          the string
    * @return the double
@@ -47,7 +47,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
 
   /**
    * parse a string to a long
-   * 
+   *
    * @param s
    *          the string
    * @return the long
@@ -266,7 +266,7 @@ public class NumberAppenderTest extends InstanceTest<NumberAppender> {
 
   /**
    * Create a double which has a long representation
-   * 
+   *
    * @param r
    *          the random number generator
    * @return the double number

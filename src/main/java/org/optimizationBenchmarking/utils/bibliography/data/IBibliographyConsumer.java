@@ -5,7 +5,7 @@ public interface IBibliographyConsumer {
 
   /**
    * Consume the given, created bibliography
-   * 
+   *
    * @param bib
    *          the created bibliography
    */

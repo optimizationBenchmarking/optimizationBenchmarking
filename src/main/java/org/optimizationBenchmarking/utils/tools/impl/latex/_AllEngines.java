@@ -23,7 +23,7 @@ final class _AllEngines implements Iterable<_LaTeXToolChainComponentDesc> {
 
   /** the internal iterator implementation */
   private static final class __Iterator extends
-      BasicIterator<_LaTeXToolChainComponentDesc> {
+  BasicIterator<_LaTeXToolChainComponentDesc> {
 
     /** the index */
     private int m_index;

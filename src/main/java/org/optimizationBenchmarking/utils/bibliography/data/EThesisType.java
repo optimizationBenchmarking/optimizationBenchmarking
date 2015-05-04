@@ -23,7 +23,7 @@ public enum EThesisType {
 
   /**
    * Create the thesis
-   * 
+   *
    * @param name
    *          the name
    */
@@ -33,7 +33,7 @@ public enum EThesisType {
 
   /**
    * Get the name of the thesis type
-   * 
+   *
    * @return the name of the thesis type
    */
   public final String getName() {

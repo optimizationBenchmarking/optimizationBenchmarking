@@ -15,7 +15,7 @@ public class Char implements Serializable, Comparable<Char> {
 
   /**
    * create
-   * 
+   *
    * @param chr
    *          the character
    */
@@ -27,7 +27,7 @@ public class Char implements Serializable, Comparable<Char> {
   /**
    * Get the escape sequence of this character, or {@code null} if none is
    * defined
-   * 
+   *
    * @return the escape sequence
    */
   public String getEscapeSequence() {
@@ -36,7 +36,7 @@ public class Char implements Serializable, Comparable<Char> {
 
   /**
    * Get the character
-   * 
+   *
    * @return the character
    */
   public final char getChar() {
@@ -72,7 +72,7 @@ public class Char implements Serializable, Comparable<Char> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   protected final Object writeReplace() {
@@ -81,7 +81,7 @@ public class Char implements Serializable, Comparable<Char> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   protected final Object readResolve() {

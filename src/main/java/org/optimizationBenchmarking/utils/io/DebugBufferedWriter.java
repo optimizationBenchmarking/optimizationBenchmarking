@@ -19,7 +19,7 @@ public final class DebugBufferedWriter extends BufferedWriter {
 
   /**
    * Create the debug buffered writer
-   * 
+   *
    * @param dest
    *          the destination
    * @param debug
@@ -34,7 +34,7 @@ public final class DebugBufferedWriter extends BufferedWriter {
 
   /**
    * Create the debug buffered writer
-   * 
+   *
    * @param dest
    *          the destination
    */

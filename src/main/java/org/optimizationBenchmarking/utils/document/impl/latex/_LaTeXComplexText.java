@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXComplexText extends ComplexText {
   /**
    * create the complex text
-   * 
+   *
    * @param owner
    *          the owning element
    */

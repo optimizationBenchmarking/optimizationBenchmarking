@@ -9,7 +9,7 @@ public interface IStyleProvider {
 
   /**
    * Access the style set
-   * 
+   *
    * @return the style set
    */
   public abstract StyleSet getStyles();

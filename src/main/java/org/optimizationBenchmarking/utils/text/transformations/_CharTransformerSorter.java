@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 /** an internal sorter class */
 final class _CharTransformerSorter implements Comparator<char[]>,
-    Serializable {
+Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -32,7 +32,7 @@ final class _CharTransformerSorter implements Comparator<char[]>,
    * with the singleton instance {@link #SORTER} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #SORTER})
    */
   private final Object writeReplace() {
@@ -44,7 +44,7 @@ final class _CharTransformerSorter implements Comparator<char[]>,
    * with the singleton instance {@link #SORTER} after serialization, i.e.,
    * when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #SORTER})
    */
   private final Object readResolve() {

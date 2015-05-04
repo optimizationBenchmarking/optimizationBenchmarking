@@ -12,7 +12,7 @@ public class CompiledChart extends CompiledTitledElement {
 
   /**
    * Create a titled element
-   * 
+   *
    * @param title
    *          the title, or {@code null} if no title is specified
    * @param titleFont
@@ -33,7 +33,7 @@ public class CompiledChart extends CompiledTitledElement {
 
   /**
    * Get the legend mode
-   * 
+   *
    * @return the legend mode defining whether and how the legend data
    *         should be printed
    */

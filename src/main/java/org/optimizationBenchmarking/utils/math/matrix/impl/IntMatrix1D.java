@@ -19,7 +19,7 @@ public class IntMatrix1D extends AbstractMatrix {
 
   /**
    * create the matrix
-   * 
+   *
    * @param data
    *          the data
    * @param m

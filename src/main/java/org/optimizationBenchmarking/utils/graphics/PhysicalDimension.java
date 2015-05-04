@@ -18,7 +18,7 @@ public class PhysicalDimension extends DoubleDimension {
 
   /**
    * create a new double dimension
-   * 
+   *
    * @param width
    *          the width
    * @param height
@@ -35,7 +35,7 @@ public class PhysicalDimension extends DoubleDimension {
 
   /**
    * Check the unit
-   * 
+   *
    * @param unit
    *          the unit
    */
@@ -47,7 +47,7 @@ public class PhysicalDimension extends DoubleDimension {
 
   /**
    * create a new double dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @param unit
@@ -59,7 +59,7 @@ public class PhysicalDimension extends DoubleDimension {
 
   /**
    * Get the unit
-   * 
+   *
    * @return the unit
    */
   public final ELength getUnit() {
@@ -68,7 +68,7 @@ public class PhysicalDimension extends DoubleDimension {
 
   /**
    * Convert this object to a given unit
-   * 
+   *
    * @param unit
    *          the unit
    * @return the new object
@@ -89,7 +89,7 @@ public class PhysicalDimension extends DoubleDimension {
   public final boolean contains(final Dimension2D dim) {
     return super.contains(//
         (dim instanceof PhysicalDimension) ? //
-        ((PhysicalDimension) dim).convertTo(this.m_unit)
+            ((PhysicalDimension) dim).convertTo(this.m_unit)
             : dim);
   }
 
@@ -108,7 +108,7 @@ public class PhysicalDimension extends DoubleDimension {
 
   /**
    * compare this physical dimension to another one
-   * 
+   *
    * @param dim
    *          the dimension
    * @return {@code true} if they are equals, {@code false} otherwise
@@ -121,20 +121,20 @@ public class PhysicalDimension extends DoubleDimension {
 
     if (l1 == l2) {
       return ((EComparison.EQUAL.compare(this.m_width, dim.m_width))//
-      && (EComparison.EQUAL.compare(this.m_height, dim.m_height)));
+          && (EComparison.EQUAL.compare(this.m_height, dim.m_height)));
     }
 
     return ((EComparison.EQUAL.compare(//
         ((l1 == ELength.PT) ? this.m_width : //
-            (l1.convertTo(this.m_width, ELength.PT))),//
-        ((l2 == ELength.PT) ? dim.m_width : //
+          (l1.convertTo(this.m_width, ELength.PT))),//
+          ((l2 == ELength.PT) ? dim.m_width : //
             (l2.convertTo(dim.m_width, ELength.PT)))))//
-    && //
-    (EComparison.EQUAL.compare(//
-        ((l1 == ELength.PT) ? this.m_height : //
-            (l1.convertTo(this.m_height, ELength.PT))),//
-        ((l2 == ELength.PT) ? dim.m_height : //
-            (l2.convertTo(dim.m_height, ELength.PT))))));
+            && //
+            (EComparison.EQUAL.compare(//
+                ((l1 == ELength.PT) ? this.m_height : //
+                  (l1.convertTo(this.m_height, ELength.PT))),//
+                  ((l2 == ELength.PT) ? dim.m_height : //
+                    (l2.convertTo(dim.m_height, ELength.PT))))));
   }
 
   /** {@inheritDoc} */
@@ -154,7 +154,7 @@ public class PhysicalDimension extends DoubleDimension {
       dim = ((PhysicalDimension) o);
       return ((EComparison.EQUAL.compare(this.m_width, dim.m_width))//
           && (EComparison.EQUAL.compare(this.m_height, dim.m_height))//
-      && EComparison.equals(this.m_unit, dim.m_unit));
+          && EComparison.equals(this.m_unit, dim.m_unit));
     }
 
     return false;

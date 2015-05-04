@@ -30,7 +30,7 @@ public class SimpleLineChart2DExample extends ChartExample {
 
   /**
    * run the example: there are problems with the different output
-   * 
+   *
    * @param args
    *          the arguments
    * @throws IOException
@@ -106,7 +106,7 @@ public class SimpleLineChart2DExample extends ChartExample {
 
   /**
    * make a line
-   * 
+   *
    * @param chart
    *          the chart
    * @param color

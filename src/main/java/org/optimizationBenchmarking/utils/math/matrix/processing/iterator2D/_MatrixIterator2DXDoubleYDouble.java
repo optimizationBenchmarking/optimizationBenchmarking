@@ -18,7 +18,7 @@ final class _MatrixIterator2DXDoubleYDouble extends MatrixIterator2D {
 
   /**
    * Create a new 2d matrix iterator
-   * 
+   *
    * @param matrices
    *          the list of matrices
    * @param xDim
@@ -51,7 +51,7 @@ final class _MatrixIterator2DXDoubleYDouble extends MatrixIterator2D {
 
   /**
    * set the x-coordinate
-   * 
+   *
    * @param x
    *          the x-coordinate
    */
@@ -138,7 +138,7 @@ final class _MatrixIterator2DXDoubleYDouble extends MatrixIterator2D {
       inner: for (;;) {
         if ((xAtPosition > oldX) && //
             (noSmallestLarger || //
-            (EComparison.compareDoubles(xAtPosition, smallestLarger) < 0))) {
+                (EComparison.compareDoubles(xAtPosition, smallestLarger) < 0))) {
           // The new x-coordinate must be larger than the old one but
           // smaller than the smallest such increase we found before
           // (unless we did not discover a next point yet).
@@ -212,7 +212,7 @@ final class _MatrixIterator2DXDoubleYDouble extends MatrixIterator2D {
 
   /**
    * This kind of matrix is always an integer matrix.
-   * 
+   *
    * @return {@code true}
    */
   @Override

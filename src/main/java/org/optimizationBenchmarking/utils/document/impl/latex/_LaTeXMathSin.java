@@ -11,7 +11,7 @@ final class _LaTeXMathSin extends MathSin {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

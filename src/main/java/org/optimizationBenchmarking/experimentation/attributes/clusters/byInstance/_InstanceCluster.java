@@ -9,11 +9,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** an instance cluster */
 final class _InstanceCluster extends ShadowExperimentSet<_InstanceGroups>
-    implements ICluster {
+implements ICluster {
 
   /**
    * Create an instance cluster
-   * 
+   *
    * @param owner
    *          the owner
    * @param selection

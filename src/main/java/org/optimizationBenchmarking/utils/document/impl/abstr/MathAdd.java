@@ -5,7 +5,7 @@ public class MathAdd extends MathFunction {
 
   /**
    * Create an add function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

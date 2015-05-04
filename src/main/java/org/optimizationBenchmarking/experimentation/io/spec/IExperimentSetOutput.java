@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IOutputTool;
  * However, it <em>must</em> support storing instances of
  * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet}
  * .
- * 
+ *
  * @param <T>
  *          the experiment data item type which can be stored
  */

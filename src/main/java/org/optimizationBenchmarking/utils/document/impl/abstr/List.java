@@ -8,12 +8,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * The base class for lists
- * 
+ *
  * @param <IT>
  *          the item type
  */
 public abstract class List<IT extends ListItem> extends DocumentPart
-    implements IList {
+implements IList {
 
   /** does this list have an item? */
   private static final int FLAG_HAS_ITEM = (FSM.FLAG_NOTHING + 1);
@@ -26,7 +26,7 @@ public abstract class List<IT extends ListItem> extends DocumentPart
 
   /**
    * Create a new enumeration
-   * 
+   *
    * @param owner
    *          the owning text
    */
@@ -40,22 +40,22 @@ public abstract class List<IT extends ListItem> extends DocumentPart
     add = 0;
     outer: {
       inner: {
-        for (o = owner; o != null;) {
-          if (o instanceof List) {
-            add += (1 + (((List) o).m_listDepth));
-            break outer;
-          }
-          if (o instanceof IList) {
-            add++;
-          }
+      for (o = owner; o != null;) {
+        if (o instanceof List) {
+          add += (1 + (((List) o).m_listDepth));
+          break outer;
+        }
+        if (o instanceof IList) {
+          add++;
+        }
 
-          if (o instanceof DocumentElement) {
-            o = ((DocumentElement) o)._owner();
-          } else {
-            break inner;
-          }
+        if (o instanceof DocumentElement) {
+          o = ((DocumentElement) o)._owner();
+        } else {
+          break inner;
         }
       }
+    }
     }
 
     this.m_listDepth = add;
@@ -63,7 +63,7 @@ public abstract class List<IT extends ListItem> extends DocumentPart
 
   /**
    * Get the owning structured text
-   * 
+   *
    * @return the owning structured text
    */
   @Override
@@ -78,7 +78,7 @@ public abstract class List<IT extends ListItem> extends DocumentPart
    * enumerations} or
    * {@link org.optimizationBenchmarking.utils.document.spec.IStructuredText#itemization()
    * itemizations}.
-   * 
+   *
    * @return the number of "outer" lists into which this list is embedded,
    *         or {@code 0} if this is a top-level list
    */
@@ -88,7 +88,7 @@ public abstract class List<IT extends ListItem> extends DocumentPart
 
   /**
    * Create an item
-   * 
+   *
    * @return the item
    */
   abstract IT createItem();

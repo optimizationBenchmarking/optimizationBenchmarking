@@ -8,7 +8,7 @@ public interface IUnit {
   /**
    * Obtain the conversion function to a given unit, return {@code null} if
    * no conversion is known.
-   * 
+   *
    * @param other
    *          the other unit
    * @return the conversion function to that function, or {@code null} if
@@ -18,7 +18,7 @@ public interface IUnit {
 
   /**
    * Convert a value from this unit to another one
-   * 
+   *
    * @param value
    *          the value
    * @param other
@@ -32,7 +32,7 @@ public interface IUnit {
 
   /**
    * Convert a value from this unit to another one
-   * 
+   *
    * @param value
    *          the value
    * @param other
@@ -45,28 +45,28 @@ public interface IUnit {
 
   /**
    * Obtain the long name
-   * 
+   *
    * @return the long name
    */
   public abstract String getLongName();
 
   /**
    * Obtain the name
-   * 
+   *
    * @return the name
    */
   public abstract String getName();
 
   /**
    * Obtain the shortcut
-   * 
+   *
    * @return the shortcut
    */
   public abstract String getShortcut();
 
   /**
    * Get the dimension to which the unit belongs
-   * 
+   *
    * @return the dimension to which the unit belongs
    */
   public abstract IDimension getDimension();

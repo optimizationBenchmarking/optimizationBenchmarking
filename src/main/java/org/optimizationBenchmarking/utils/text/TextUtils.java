@@ -29,7 +29,7 @@ public final class TextUtils {
 
   /**
    * obtain the line separator
-   * 
+   *
    * @return the line separator
    */
   private static final String getLineSeparator() {
@@ -72,7 +72,7 @@ public final class TextUtils {
 
     try {
       try (java.io.ByteArrayOutputStream baos = //
-      new java.io.ByteArrayOutputStream(2)) {
+          new java.io.ByteArrayOutputStream(2)) {
         try (java.io.PrintStream ps = new java.io.PrintStream(baos)) {
           ps.println();
           ps.flush();
@@ -102,7 +102,7 @@ public final class TextUtils {
   /**
    * Prepare a string by trimming it and setting it to {@code null} if the
    * length is 0.
-   * 
+   *
    * @param s
    *          the string
    * @return the prepared version of {@code s}, {@code null} if it was
@@ -125,7 +125,7 @@ public final class TextUtils {
 
   /**
    * Normalize a string.
-   * 
+   *
    * @param s
    *          the string
    * @return the normalized version
@@ -156,7 +156,7 @@ public final class TextUtils {
 
   /**
    * Get an easy-to-use representation of a class.
-   * 
+   *
    * @param c
    *          the class
    * @return the name
@@ -205,7 +205,7 @@ public final class TextUtils {
 
   /**
    * Translate a throwable to a string.
-   * 
+   *
    * @param t
    *          the throwable
    * @return the string
@@ -225,7 +225,7 @@ public final class TextUtils {
 
   /**
    * Could the given string be a class name?
-   * 
+   *
    * @param s
    *          the string
    * @return {@code true} if {@code s} could be a class name, {@code false}

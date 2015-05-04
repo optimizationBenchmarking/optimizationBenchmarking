@@ -16,14 +16,14 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerTool;
  * interface.
  */
 public abstract class AbstractGraphicDriver extends DocumentProducerTool
-    implements IGraphicDriver {
+implements IGraphicDriver {
 
   /** the graphic format managed by this driver */
   private final EGraphicFormat m_format;
 
   /**
    * instantiate
-   * 
+   *
    * @param format
    *          the format
    */
@@ -34,7 +34,7 @@ public abstract class AbstractGraphicDriver extends DocumentProducerTool
 
   /**
    * Create the graphic
-   * 
+   *
    * @param builder
    *          the graphic builder
    * @return the graphic

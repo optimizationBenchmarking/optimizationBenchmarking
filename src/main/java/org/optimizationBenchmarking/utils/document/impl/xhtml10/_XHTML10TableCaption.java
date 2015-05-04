@@ -7,20 +7,20 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10TableCaption extends TableCaption {
   /** the start of the float tr body */
   private static final char[] TABLE_TR_BODY_BEGIN = { '<', 't', 'r', ' ',
-      'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'l', 'e', 'B',
-      'o', 'd', 'y', '"', '>' };
+    'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'l', 'e', 'B',
+    'o', 'd', 'y', '"', '>' };
   /** the start of the float body td */
   private static final char[] TABLE_TD_BODY_BEGIN = { '<', 't', 'd', ' ',
-      'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'l', 'e', 'B',
-      'o', 'd', 'y', '"', '>' };
+    'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'l', 'e', 'B',
+    'o', 'd', 'y', '"', '>' };
 
   /** the start of table */
   private static final char[] TAB_TABLE_BEGIN = { '<', 't', 'a', 'b', 'l',
-      'e', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', '"', '>' };
+    'e', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', '"', '>' };
 
   /**
    * Create the caption of a table
-   * 
+   *
    * @param owner
    *          the owning table
    */

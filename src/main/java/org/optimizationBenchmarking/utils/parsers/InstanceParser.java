@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
  * Get an instance from a string.
- * 
+ *
  * @param <T>
  *          the instance type
  */
@@ -20,7 +20,7 @@ public class InstanceParser<T> extends Parser<T> {
 
   /**
    * create
-   * 
+   *
    * @param baseClass
    *          the base class of the instance to return, used to check type
    *          consistency

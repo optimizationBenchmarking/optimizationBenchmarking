@@ -12,12 +12,12 @@ import org.optimizationBenchmarking.utils.io.structured.spec.ITextInputTool;
 
 /**
  * A tool for reading text input
- * 
+ *
  * @param <S>
  *          the destination type
  */
 public class TextInputTool<S> extends StreamInputTool<S> implements
-    ITextInputTool<S> {
+ITextInputTool<S> {
 
   /** create */
   protected TextInputTool() {
@@ -59,7 +59,7 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
 
   /**
    * Handle a reader
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -84,7 +84,7 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
   @Override
   protected void stream(final IOJob job, final S data,
       final InputStream stream, final StreamEncoding<?, ?> encoding)
-      throws Throwable {
+          throws Throwable {
     final Logger logger;
     final Class<?> clazz;
 
@@ -97,8 +97,8 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
       logger = job.getLogger();
       if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
         logger.log(IOTool.FINE_LOG_LEVEL,//
-            ("Using text encoding " + //$NON-NLS-1$ 
-            encoding.name()));
+            ("Using text encoding " + //$NON-NLS-1$
+                encoding.name()));
       }
       try (final Reader reader = ((Reader) (encoding
           .wrapInputStream(stream)))) {
@@ -113,7 +113,7 @@ public class TextInputTool<S> extends StreamInputTool<S> implements
 
   /**
    * Handle a reader
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data

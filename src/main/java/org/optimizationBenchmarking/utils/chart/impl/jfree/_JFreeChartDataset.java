@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
  * a base class for JFreeChart data sets.
- * 
+ *
  * @param <T>
  *          the data element type
  */
@@ -33,7 +33,7 @@ class _JFreeChartDataset<T extends CompiledDataElement> implements Dataset {
 
   /**
    * create the dataset
-   * 
+   *
    * @param data
    *          the data
    */
@@ -57,7 +57,7 @@ class _JFreeChartDataset<T extends CompiledDataElement> implements Dataset {
 
   /**
    * Get the number of items
-   * 
+   *
    * @return the number of items
    */
   public final int getItemCount() {
@@ -66,7 +66,7 @@ class _JFreeChartDataset<T extends CompiledDataElement> implements Dataset {
 
   /**
    * format a double
-   * 
+   *
    * @param d
    *          the double
    * @return the formatted double
@@ -79,7 +79,7 @@ class _JFreeChartDataset<T extends CompiledDataElement> implements Dataset {
 
   /**
    * Get the key of the given index
-   * 
+   *
    * @param index
    *          the index
    * @return the key
@@ -91,7 +91,7 @@ class _JFreeChartDataset<T extends CompiledDataElement> implements Dataset {
 
   /**
    * Get the index of the given key
-   * 
+   *
    * @param key
    *          the key
    * @return the index
@@ -103,7 +103,7 @@ class _JFreeChartDataset<T extends CompiledDataElement> implements Dataset {
 
   /**
    * Get the list of keys
-   * 
+   *
    * @return the list of keys
    */
   @SuppressWarnings("rawtypes")
@@ -113,7 +113,7 @@ class _JFreeChartDataset<T extends CompiledDataElement> implements Dataset {
 
   /**
    * Get the number of series
-   * 
+   *
    * @return the number of series
    */
   public final int getSeriesCount() {
@@ -122,7 +122,7 @@ class _JFreeChartDataset<T extends CompiledDataElement> implements Dataset {
 
   /**
    * Get the series key
-   * 
+   *
    * @param series
    *          the series
    * @return the series key
@@ -134,7 +134,7 @@ class _JFreeChartDataset<T extends CompiledDataElement> implements Dataset {
 
   /**
    * get the index of the given key
-   * 
+   *
    * @param seriesKey
    *          the key
    * @return its index

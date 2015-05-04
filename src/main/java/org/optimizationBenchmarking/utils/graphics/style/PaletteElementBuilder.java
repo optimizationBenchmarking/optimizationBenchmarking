@@ -6,16 +6,16 @@ import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 
 /**
  * A builder for a palette element.
- * 
+ *
  * @param <ET>
  *          the element type
  */
 public abstract class PaletteElementBuilder<ET extends IStyle> extends
-    BuilderFSM<ET> {
+BuilderFSM<ET> {
 
   /**
    * Create the palette element builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -26,7 +26,7 @@ public abstract class PaletteElementBuilder<ET extends IStyle> extends
 
   /**
    * load a string
-   * 
+   *
    * @param strings
    *          the strings
    */

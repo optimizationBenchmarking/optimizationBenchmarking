@@ -19,7 +19,7 @@ public final class XHTML10DefaultFontPalette extends FontPalette {
 
   /**
    * create the palette
-   * 
+   *
    * @param def
    *          the default font style
    * @param emph
@@ -36,7 +36,7 @@ public final class XHTML10DefaultFontPalette extends FontPalette {
 
   /**
    * read resolve
-   * 
+   *
    * @return {@link #getInstance()}
    */
   private final Object readResolve() {
@@ -45,7 +45,7 @@ public final class XHTML10DefaultFontPalette extends FontPalette {
 
   /**
    * write replace
-   * 
+   *
    * @return {@link #getInstance()}
    */
   private final Object writeReplace() {
@@ -54,7 +54,7 @@ public final class XHTML10DefaultFontPalette extends FontPalette {
 
   /**
    * Get an instance of the default XHTML 1.0 font palette
-   * 
+   *
    * @return the default XHTML 1.0 font palette
    */
   public static final XHTML10DefaultFontPalette getInstance() {
@@ -66,7 +66,7 @@ public final class XHTML10DefaultFontPalette extends FontPalette {
 
   /** the default XHTML 1.0 font palette builder */
   private static final class __XHTML10DefaultFontPaletteBuilder extends
-      FontPaletteBuilder {
+  FontPaletteBuilder {
     /** the default XHTML 1.0 font palette builder */
     __XHTML10DefaultFontPaletteBuilder() {
       super();
@@ -100,22 +100,22 @@ public final class XHTML10DefaultFontPalette extends FontPalette {
       logger = Configuration.getGlobalLogger();
       try (final __XHTML10DefaultFontPaletteBuilder cspb = new __XHTML10DefaultFontPaletteBuilder()) {
         FontPaletteXMLInput
-            .getInstance()
-            .use()
-            .setLogger(Configuration.getGlobalLogger())
-            .setDestination(cspb)
-            .addResource(XHTML10DefaultFontPalette.class,
-                "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
+        .getInstance()
+        .use()
+        .setLogger(Configuration.getGlobalLogger())
+        .setDestination(cspb)
+        .addResource(XHTML10DefaultFontPalette.class,
+            "xhtml10.fontPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         error = t;
         pal = null;
         try {
           ErrorUtils
-              .logError(
-                  logger,//
-                  "Error while loading the default font palette for the XHTML 1.0 Document Driver. This will creating XHTML 1.0 documents using this palette impossible.",//$NON-NLS-1$
-                  error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+          .logError(
+              logger,//
+              "Error while loading the default font palette for the XHTML 1.0 Document Driver. This will creating XHTML 1.0 documents using this palette impossible.",//$NON-NLS-1$
+              error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
         } catch (final Throwable a) {
           error = a;
         }

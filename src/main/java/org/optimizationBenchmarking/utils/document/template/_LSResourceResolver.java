@@ -10,7 +10,7 @@ final class _LSResourceResolver extends SimpleLSResourceResolver {
 
   /**
    * create
-   * 
+   *
    * @param del
    *          the delegate
    */

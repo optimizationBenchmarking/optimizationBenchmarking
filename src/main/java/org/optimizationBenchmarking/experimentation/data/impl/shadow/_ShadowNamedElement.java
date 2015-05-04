@@ -11,18 +11,18 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * with a different owner and potentially different attributes. If all
  * associated data of this element is the same, it will delegate
  * attribute-based computations to that named element.
- * 
+ *
  * @param <OT>
  *          the owner type
  * @param <ST>
  *          the shadow type
  */
 class _ShadowNamedElement<OT extends IDataElement, ST extends INamedElement>
-    extends _ShadowDataElement<OT, ST> implements INamedElement {
+extends _ShadowDataElement<OT, ST> implements INamedElement {
 
   /**
    * create the shadow named element
-   * 
+   *
    * @param owner
    *          the owning element
    * @param shadow

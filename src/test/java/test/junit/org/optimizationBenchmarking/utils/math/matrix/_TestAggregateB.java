@@ -29,7 +29,7 @@ final class _TestAggregateB {
 
   /**
    * Append a matrix value
-   * 
+   *
    * @param matrix
    *          the matrix
    * @param row
@@ -45,7 +45,7 @@ final class _TestAggregateB {
 
   /**
    * Append a matrix value
-   * 
+   *
    * @param matrix
    *          the matrix
    * @param row

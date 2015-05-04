@@ -9,7 +9,7 @@ import test.junit.InstanceTest;
 
 /**
  * the basic tool test
- * 
+ *
  * @param <T>
  *          the tool type
  */
@@ -23,7 +23,7 @@ public abstract class ToolTest<T extends ITool> extends InstanceTest<T> {
 
   /**
    * get the tool to test
-   * 
+   *
    * @return the tool to test
    */
   @Override

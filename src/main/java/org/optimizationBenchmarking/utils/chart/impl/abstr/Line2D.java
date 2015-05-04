@@ -23,7 +23,7 @@ public class Line2D extends DataSeries2D implements ILine2D {
 
   /**
    * create the chart item
-   * 
+   *
    * @param owner
    *          the owner
    * @param id
@@ -42,7 +42,7 @@ public class Line2D extends DataSeries2D implements ILine2D {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_HAS_TYPE: {
-        append.append("typeSet");break;} //$NON-NLS-1$      
+        append.append("typeSet");break;} //$NON-NLS-1$
       default: {
         super.fsmFlagsAppendName(flagValue, flagIndex, append);
       }

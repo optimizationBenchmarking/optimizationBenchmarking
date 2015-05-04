@@ -67,7 +67,7 @@ public final class MedianFileSize extends SimpleFileVisitor<Path> {
     long s;
 
     if (this.m_inResult) {
-      if ("txt".equalsIgnoreCase(PathUtils.getFileExtension(file))) { //$NON-NLS-1$      
+      if ("txt".equalsIgnoreCase(PathUtils.getFileExtension(file))) { //$NON-NLS-1$
         sizes = this.m_sizes;
         s = attrs.size();
         if (s >= 0L) {
@@ -88,7 +88,7 @@ public final class MedianFileSize extends SimpleFileVisitor<Path> {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          ignored
    * @throws Throwable
@@ -131,9 +131,9 @@ public final class MedianFileSize extends SimpleFileVisitor<Path> {
 
     if ((k & 1) == 0) {
       k >>= 1;
-      MedianFileSize.__printlnSize(
-          (mfs.m_sizes[k >> 1] + mfs.m_sizes[1 + (k >> 1)]) >>> 1L,
-          maxLength);
+            MedianFileSize.__printlnSize(
+                (mfs.m_sizes[k >> 1] + mfs.m_sizes[1 + (k >> 1)]) >>> 1L,
+                maxLength);
     } else {
       MedianFileSize.__printlnSize(mfs.m_sizes[k >> 1], maxLength);
     }
@@ -142,7 +142,7 @@ public final class MedianFileSize extends SimpleFileVisitor<Path> {
 
   /**
    * print a long
-   * 
+   *
    * @param l
    *          the long
    * @param maxLength
@@ -161,7 +161,7 @@ public final class MedianFileSize extends SimpleFileVisitor<Path> {
 
   /**
    * print a given size
-   * 
+   *
    * @param size
    *          the size
    * @param maxLength

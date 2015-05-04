@@ -11,7 +11,7 @@ public final class TryFinallyResource {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          ignored
    * @throws IOException

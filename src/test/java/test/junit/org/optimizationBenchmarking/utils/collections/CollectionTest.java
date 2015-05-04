@@ -15,7 +15,7 @@ import test.junit.InstanceTest;
 
 /**
  * a test for collection classes
- * 
+ *
  * @param <ET>
  *          the element type
  * @param <T>
@@ -23,7 +23,7 @@ import test.junit.InstanceTest;
  */
 @Ignore
 public class CollectionTest<ET, T extends Collection<ET>> extends
-    InstanceTest<T> {
+InstanceTest<T> {
 
   /** create */
   public CollectionTest() {
@@ -32,7 +32,7 @@ public class CollectionTest<ET, T extends Collection<ET>> extends
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    * @param isSingleton
@@ -63,7 +63,7 @@ public class CollectionTest<ET, T extends Collection<ET>> extends
 
   /**
    * create an instance of the element type
-   * 
+   *
    * @param sequence
    *          the sequence value
    * @return an instance of the element type
@@ -254,7 +254,7 @@ public class CollectionTest<ET, T extends Collection<ET>> extends
 
   /**
    * do the recursive add and iterator remove
-   * 
+   *
    * @param random
    *          the randomizer
    * @param depth
@@ -327,7 +327,7 @@ public class CollectionTest<ET, T extends Collection<ET>> extends
 
   /**
    * do the recursive add and iterator remove
-   * 
+   *
    * @param random
    *          the randomizer
    * @param depth

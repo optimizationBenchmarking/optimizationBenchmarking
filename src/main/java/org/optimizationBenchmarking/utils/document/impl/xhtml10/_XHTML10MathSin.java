@@ -8,11 +8,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10MathSin extends MathSin {
   /** the operator */
   private final static char[] OP = new char[] { 's', 'i', 'n', '&', 'n',
-      'b', 's', 'p', ';' };
+    'b', 's', 'p', ';' };
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

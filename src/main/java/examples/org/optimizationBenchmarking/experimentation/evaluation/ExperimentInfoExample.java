@@ -24,7 +24,7 @@ public final class ExperimentInfoExample extends EvaluationExample {
 
   /**
    * Run the example
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Throwable

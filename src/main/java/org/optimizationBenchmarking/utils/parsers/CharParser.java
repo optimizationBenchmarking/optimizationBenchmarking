@@ -78,7 +78,7 @@ public class CharParser extends StrictCharParser {
 
   /**
    * The raw parsing method for calling inside {@link #parseString(String)}
-   * 
+   *
    * @param o
    *          the object
    * @return the return value
@@ -119,7 +119,7 @@ public class CharParser extends StrictCharParser {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -128,7 +128,7 @@ public class CharParser extends StrictCharParser {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

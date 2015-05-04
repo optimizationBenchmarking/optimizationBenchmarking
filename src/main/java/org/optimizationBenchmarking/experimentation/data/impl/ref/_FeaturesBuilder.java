@@ -6,11 +6,11 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
  * a manager for properties
  */
 final class _FeaturesBuilder extends
-    _PropertyFSMPropertiesBuilder<FeatureValue, Feature, FeatureSet> {
+_PropertyFSMPropertiesBuilder<FeatureValue, Feature, FeatureSet> {
 
   /**
    * create
-   * 
+   *
    * @param ctx
    *          the context
    */

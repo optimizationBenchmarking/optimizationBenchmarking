@@ -18,7 +18,7 @@ class _StringIterator extends BasicIterator<String> {
 
   /**
    * Create the CSV iterator
-   * 
+   *
    * @param string
    *          the string to iterate over
    */
@@ -34,7 +34,7 @@ class _StringIterator extends BasicIterator<String> {
   public String next() {
     throw new NoSuchElementException(//
         "Finished iterating over string '" //$NON-NLS-1$
-            + this.m_string + "'.");//$NON-NLS-1$
+        + this.m_string + "'.");//$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

@@ -13,12 +13,12 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 /**
  * A file output job builder is a device that may store data into a single
  * file or into multiple files in a folder structure..
- * 
+ *
  * @param <D>
  *          the data type which can be stored
  */
 public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
-    IFileProducerJobBuilder {
+IFileProducerJobBuilder {
 
   /** {@inheritDoc} */
   @Override
@@ -35,7 +35,7 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
 
   /**
    * Set the path to the output
-   * 
+   *
    * @param path
    *          the path to write to
    * @param encoding
@@ -52,7 +52,7 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
   /**
    * Set the path to the output, using the default encoding and no ZIP
    * compression
-   * 
+   *
    * @param path
    *          the path to write to
    * @return this builder
@@ -61,7 +61,7 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
 
   /**
    * Set the file to the output
-   * 
+   *
    * @param file
    *          the file to write to
    * @param encoding
@@ -78,7 +78,7 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
   /**
    * Set a file to the output, using the default encoding and no ZIP
    * compression
-   * 
+   *
    * @param file
    *          the file to write to
    * @return this builder
@@ -87,7 +87,7 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
 
   /**
    * Set the path to the output
-   * 
+   *
    * @param path
    *          the path to write to
    * @param encoding
@@ -104,7 +104,7 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
   /**
    * Set the path to the output, using the default encoding and no ZIP
    * compression
-   * 
+   *
    * @param path
    *          the path to write to
    * @return this builder
@@ -113,7 +113,7 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
 
   /**
    * Set the file to the output
-   * 
+   *
    * @param file
    *          the file to write to
    * @param encoding
@@ -130,7 +130,7 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
   /**
    * Set a file to the output, using the default encoding and no ZIP
    * compression
-   * 
+   *
    * @param file
    *          the file to write to
    * @return this builder
@@ -140,7 +140,7 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
   /**
    * Set the stream to which should receive a ZIP archive with all the
    * output. The stream may or may not be closed upon termination.
-   * 
+   *
    * @param stream
    *          the stream to write the output to
    * @param encoding
@@ -159,7 +159,7 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
    * Set the stream to write all the output as ZIP archive to, using the
    * default encoding and ZIP compression. The stream may or may not be
    * closed upon termination.
-   * 
+   *
    * @param stream
    *          the stream to write the output to
    * @param archiveType

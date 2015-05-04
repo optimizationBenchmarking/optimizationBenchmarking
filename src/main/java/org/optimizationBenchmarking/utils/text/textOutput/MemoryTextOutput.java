@@ -17,41 +17,41 @@ import org.optimizationBenchmarking.utils.text.ITextable;
  * if multiple text nodes are forked in parallel.
  */
 public class MemoryTextOutput extends AbstractTextOutput implements
-    CharSequence, ITextable {
+CharSequence, ITextable {
 
   /** the ten's digits */
   private final static char[] DIGIT_TENS = { '0', '0', '0', '0', '0', '0',
-      '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1',
-      '1', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '3', '3',
-      '3', '3', '3', '3', '3', '3', '3', '3', '4', '4', '4', '4', '4',
-      '4', '4', '4', '4', '4', '5', '5', '5', '5', '5', '5', '5', '5',
-      '5', '5', '6', '6', '6', '6', '6', '6', '6', '6', '6', '6', '7',
-      '7', '7', '7', '7', '7', '7', '7', '7', '7', '8', '8', '8', '8',
-      '8', '8', '8', '8', '8', '8', '9', '9', '9', '9', '9', '9', '9',
-      '9', '9', '9', };
+    '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1',
+    '1', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '3', '3',
+    '3', '3', '3', '3', '3', '3', '3', '3', '4', '4', '4', '4', '4',
+    '4', '4', '4', '4', '4', '5', '5', '5', '5', '5', '5', '5', '5',
+    '5', '5', '6', '6', '6', '6', '6', '6', '6', '6', '6', '6', '7',
+    '7', '7', '7', '7', '7', '7', '7', '7', '7', '8', '8', '8', '8',
+    '8', '8', '8', '8', '8', '8', '9', '9', '9', '9', '9', '9', '9',
+    '9', '9', '9', };
 
   /** the one's digits */
   private final static char[] DIGIT_ONES = { '0', '1', '2', '3', '4', '5',
-      '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8',
-      '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1',
-      '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4',
-      '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7',
-      '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-      '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3',
-      '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6',
-      '7', '8', '9', };
+    '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8',
+    '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1',
+    '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4',
+    '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7',
+    '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3',
+    '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6',
+    '7', '8', '9', };
 
   /** the integer size table */
   private static final int[] INT_SIZE_TABLE = { 9, 99, 999, 9999, 99999,
-      999999, 9999999, 99999999, 999999999, Integer.MAX_VALUE };
+    999999, 9999999, 99999999, 999999999, Integer.MAX_VALUE };
 
   /** the minimum long */
   private static final char[] LONG_MIN_VAL = //
-  Long.toString(Long.MIN_VALUE).toCharArray();
+      Long.toString(Long.MIN_VALUE).toCharArray();
 
   /** the minimum int */
   private static final char[] INT_MIN_VAL = //
-  Integer.toString(Integer.MIN_VALUE).toCharArray();
+      Integer.toString(Integer.MIN_VALUE).toCharArray();
 
   /** the data */
   private char[] m_data;
@@ -67,7 +67,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
   /**
    * create
-   * 
+   *
    * @param size
    *          the size
    */
@@ -78,7 +78,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
   /**
    * Find the last occurrence of the given character
-   * 
+   *
    * @param ch
    *          the character
    * @return the last occurrence of {@code ch} in this text, or {@code -1}
@@ -98,7 +98,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
   /**
    * Check whether this text output contains the character {@code ch}
-   * 
+   *
    * @param ch
    *          the character to find
    * @return {@code true} if it is contained in this text ouput,
@@ -123,7 +123,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
    * Ensure that the internal buffer is big enough to hold a given number
    * of characters, update the internal length variable, and return its old
    * length.
-   * 
+   *
    * @param len
    *          the number of characters to store
    * @return the old length
@@ -137,9 +137,9 @@ public class MemoryTextOutput extends AbstractTextOutput implements
     if ((newLen = (curLen + len)) < curLen) {
       throw new IllegalStateException(//
           "Internal buffer too big: cannot add " + //$NON-NLS-1$
-              len + " characters to the existing " + //$NON-NLS-1$
-              curLen + " ones, the result would be " + //$NON-NLS-1$
-              newLen);
+          len + " characters to the existing " + //$NON-NLS-1$
+          curLen + " ones, the result would be " + //$NON-NLS-1$
+          newLen);
     }
     this.m_size = (newLen = (curLen + len));
     if (newLen > data.length) {
@@ -223,7 +223,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
    * a copy of the method {@code java.lang.Integer#toString()} which uses
    * some package-private stuff. For performance reasons, we copy it here,
    * slightly modified.
-   * 
+   *
    * @param v
    *          the integer to add
    */
@@ -297,7 +297,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
    * a copy of the method {@code java.lang.Long#toString()} which uses some
    * package-private stuff. For performance reasons, we copy it here,
    * slightly modified.
-   * 
+   *
    * @param v
    *          the long to add
    */
@@ -401,7 +401,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
   /**
    * Obtain the characters stored in this buffer
-   * 
+   *
    * @return the characters
    */
   public final char[] toChars() {
@@ -416,7 +416,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
   /**
    * append a character iterator
-   * 
+   *
    * @param iterator
    *          the iterator
    */
@@ -450,7 +450,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
 
   /**
    * Shrink the length of this memory text output to {@code len}
-   * 
+   *
    * @param len
    *          the length to shrink to
    * @throws IllegalArgumentException

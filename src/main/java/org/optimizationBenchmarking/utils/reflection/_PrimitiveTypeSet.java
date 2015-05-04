@@ -9,7 +9,7 @@ final class _PrimitiveTypeSet extends ArraySetView<EPrimitiveType> {
 
   /**
    * the type set
-   * 
+   *
    * @param data
    *          the data
    */
@@ -19,7 +19,7 @@ final class _PrimitiveTypeSet extends ArraySetView<EPrimitiveType> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -28,7 +28,7 @@ final class _PrimitiveTypeSet extends ArraySetView<EPrimitiveType> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

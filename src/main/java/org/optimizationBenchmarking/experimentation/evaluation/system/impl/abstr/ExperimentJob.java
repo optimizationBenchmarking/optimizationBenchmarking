@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 public abstract class ExperimentJob extends _EvaluationJob<IExperiment> {
   /**
    * Create the experiment evaluation job
-   * 
+   *
    * @param data
    *          the data
    * @param logger

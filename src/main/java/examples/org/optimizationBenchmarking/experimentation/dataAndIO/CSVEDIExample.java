@@ -13,7 +13,7 @@ public final class CSVEDIExample extends ExperimentSetCreator {
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger, or {@code null} to use the global logger
    */
@@ -29,11 +29,11 @@ public final class CSVEDIExample extends ExperimentSetCreator {
         this.getLogger())) {
 
       CSVEDIInput
-          .getInstance()
-          .use()
-          .setDestination(ec)
-          .addArchiveResource(CSVEDIExample.class,
-              "csvEdiExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$
+      .getInstance()
+      .use()
+      .setDestination(ec)
+      .addArchiveResource(CSVEDIExample.class,
+          "csvEdiExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$
           .create().call();
       return ec.create();
     }
@@ -41,7 +41,7 @@ public final class CSVEDIExample extends ExperimentSetCreator {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          the command line arguments
    */

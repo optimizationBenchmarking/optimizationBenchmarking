@@ -23,7 +23,7 @@ public enum ELegendMode {
 
   /**
    * Create the legend mode
-   * 
+   *
    * @param showLegend
    *          should we show the legend?
    */
@@ -33,7 +33,7 @@ public enum ELegendMode {
 
   /**
    * Should we show the legend?
-   * 
+   *
    * @return {@code true} if the legend should be shown, {@code false}
    *         otherwise
    */

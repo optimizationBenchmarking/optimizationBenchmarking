@@ -37,7 +37,7 @@ public class SimpleLSInput extends InputSource implements LSInput {
 
   /**
    * create
-   * 
+   *
    * @param publicId
    *          the public id
    * @param systemId
@@ -59,7 +59,7 @@ public class SimpleLSInput extends InputSource implements LSInput {
 
   /**
    * Create the internal input stream
-   * 
+   *
    * @return the input stream
    */
   protected InputStream createInputStream() {
@@ -68,7 +68,7 @@ public class SimpleLSInput extends InputSource implements LSInput {
 
   /**
    * Create the internal reader
-   * 
+   *
    * @return the reader
    */
   protected Reader createReader() {
@@ -110,9 +110,9 @@ public class SimpleLSInput extends InputSource implements LSInput {
         r.close();
       } catch (final Throwable t) {
         RethrowMode.AS_RUNTIME_EXCEPTION
-            .rethrow(//
-                "Error while closing old character stream of SimpleLSInput in order to set a new one.", //$NON-NLS-1$
-                true, t);
+        .rethrow(//
+            "Error while closing old character stream of SimpleLSInput in order to set a new one.", //$NON-NLS-1$
+            true, t);
       } finally {
         super.setCharacterStream(null);
       }
@@ -148,9 +148,9 @@ public class SimpleLSInput extends InputSource implements LSInput {
         is.close();
       } catch (final Throwable t) {
         RethrowMode.AS_RUNTIME_EXCEPTION
-            .rethrow(//
-                "Error while closing byte stream of SimpleLSInput in order to set a new one.", //$NON-NLS-1$
-                true, t);
+        .rethrow(//
+            "Error while closing byte stream of SimpleLSInput in order to set a new one.", //$NON-NLS-1$
+            true, t);
       } finally {
         super.setByteStream(null);
       }

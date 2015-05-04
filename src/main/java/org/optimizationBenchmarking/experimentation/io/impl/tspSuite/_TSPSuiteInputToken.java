@@ -28,7 +28,7 @@ final class _TSPSuiteInputToken {
 
   /**
    * create
-   * 
+   *
    * @param esb
    *          the experiment set builder to use
    */
@@ -67,7 +67,7 @@ final class _TSPSuiteInputToken {
 
   /**
    * begin a run
-   * 
+   *
    * @param f
    *          the file
    * @return the run context to use

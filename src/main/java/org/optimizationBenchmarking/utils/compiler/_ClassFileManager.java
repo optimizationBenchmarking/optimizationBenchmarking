@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.collections.maps.StringMap;
  * A class manager loading compiled objects.
  */
 class _ClassFileManager extends
-    ForwardingJavaFileManager<StandardJavaFileManager> {
+ForwardingJavaFileManager<StandardJavaFileManager> {
   /**
    * Instance of JavaClassObject that will store the compiled bytecode of
    * our class
@@ -24,7 +24,7 @@ class _ClassFileManager extends
   /**
    * Will initialize the manager with the specified standard java file
    * manager
-   * 
+   *
    * @param standardManager
    *          the manager we forward to
    */
@@ -35,7 +35,7 @@ class _ClassFileManager extends
 
   /**
    * obtain a class loader with all the classes loaded into it
-   * 
+   *
    * @return the class loader
    */
   public final ClassLoader loadClasses() {

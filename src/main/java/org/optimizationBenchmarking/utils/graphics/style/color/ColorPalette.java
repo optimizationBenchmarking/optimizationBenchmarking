@@ -25,7 +25,7 @@ public class ColorPalette extends Palette<ColorStyle> {
 
   /**
    * create the palette
-   * 
+   *
    * @param data
    *          the palette data
    */
@@ -45,18 +45,18 @@ public class ColorPalette extends Palette<ColorStyle> {
           name.equalsIgnoreCase(white)) {
         throw new IllegalArgumentException(//
             "The ID of the " + i + //$NON-NLS-1$
-                "th color is '" + name + //$NON-NLS-1$
-                "' which is not permitted."); //$NON-NLS-1$
+            "th color is '" + name + //$NON-NLS-1$
+            "' which is not permitted."); //$NON-NLS-1$
       }
 
       for (j = i; (--j) >= 0;) {
         if (name.equalsIgnoreCase(data[j].getID())) {
           throw new IllegalArgumentException(//
-              "No two colors in a palette can have the same ID, but ID '"//$NON-NLS-1$ 
-                  + name + "' of the " + i + //$NON-NLS-1$
-                  "th color equals ID '" + //$NON-NLS-1$
-                  data[j].getID() + "' of the " + j //$NON-NLS-1$
-                  + "th color.");//$NON-NLS-1$
+              "No two colors in a palette can have the same ID, but ID '"//$NON-NLS-1$
+              + name + "' of the " + i + //$NON-NLS-1$
+              "th color equals ID '" + //$NON-NLS-1$
+              data[j].getID() + "' of the " + j //$NON-NLS-1$
+              + "th color.");//$NON-NLS-1$
         }
       }
     }
@@ -65,7 +65,7 @@ public class ColorPalette extends Palette<ColorStyle> {
 
   /**
    * Get the black color
-   * 
+   *
    * @return the black color
    */
   public final ColorStyle getBlack() {
@@ -74,7 +74,7 @@ public class ColorPalette extends Palette<ColorStyle> {
 
   /**
    * Get the white color
-   * 
+   *
    * @return the white color
    */
   public final ColorStyle getWhite() {
@@ -108,7 +108,7 @@ public class ColorPalette extends Palette<ColorStyle> {
 
   /**
    * get the rgb difference
-   * 
+   *
    * @param a
    *          the first rgb value
    * @param b
@@ -134,7 +134,7 @@ public class ColorPalette extends Palette<ColorStyle> {
 
   /**
    * Get the color most similar to another color
-   * 
+   *
    * @param color
    *          the other color
    * @return the color most similar to a given color
@@ -148,7 +148,7 @@ public class ColorPalette extends Palette<ColorStyle> {
 
   /**
    * Get the color most similar to a given RGB value
-   * 
+   *
    * @param rgb
    *          the rgb value of the color
    * @return the color most similar to the RGB value

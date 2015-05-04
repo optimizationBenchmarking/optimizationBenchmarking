@@ -11,7 +11,7 @@ final class _LaTeXCodeBody extends CodeBody {
 
   /**
    * create the code body
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

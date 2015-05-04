@@ -13,14 +13,14 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * may be used by subclasses to express their numerical state.
  */
 public abstract class BasicNumber extends Number implements
-    Comparable<Number>, ITextable {
+Comparable<Number>, ITextable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /**
    * The empty state: the number has no value.
-   * 
+   *
    * @see #getState()
    */
   public static final int STATE_EMPTY = 0;
@@ -29,7 +29,7 @@ public abstract class BasicNumber extends Number implements
    * The {@code long} state: the number is a valid integer ({@code long}).
    * Only in this state, {@link #isInteger()} will return {@code true}.
    * {@link #isReal()} will return {@code true} as well.
-   * 
+   *
    * @see #getState()
    */
   public static final int STATE_INTEGER = (BasicNumber.STATE_EMPTY + 1);
@@ -37,7 +37,7 @@ public abstract class BasicNumber extends Number implements
    * The {@code double} state: the number is a finite and well-defined
    * {@code double}. {@link #isReal()} will return {@code true} only in
    * this state and in state {@link #STATE_INTEGER}.
-   * 
+   *
    * @see #getState()
    */
   public static final int STATE_DOUBLE = (BasicNumber.STATE_INTEGER + 1);
@@ -45,14 +45,14 @@ public abstract class BasicNumber extends Number implements
   /**
    * The number has overflown, i.e., left the valid range of {@code double}
    * towards positive infinity.
-   * 
+   *
    * @see #getState()
    */
   public static final int STATE_POSITIVE_OVERFLOW = (BasicNumber.STATE_DOUBLE + 1);
   /**
    * The positive infinity state: the number corresponds to
    * {@link java.lang.Double#POSITIVE_INFINITY}.
-   * 
+   *
    * @see #getState()
    */
   public static final int STATE_POSITIVE_INFINITY = (BasicNumber.STATE_POSITIVE_OVERFLOW + 1);
@@ -60,34 +60,34 @@ public abstract class BasicNumber extends Number implements
   /**
    * The number has underflown, i.e., left the valid range of
    * {@code double} towards negative infinity.
-   * 
+   *
    * @see #getState()
    */
   public static final int STATE_NEGATIVE_OVERFLOW = (BasicNumber.STATE_POSITIVE_INFINITY + 1);
   /**
    * The negative infinity state: the number corresponds to
    * {@link java.lang.Double#NEGATIVE_INFINITY}.
-   * 
+   *
    * @see #getState()
    */
   public static final int STATE_NEGATIVE_INFINITY = (BasicNumber.STATE_NEGATIVE_OVERFLOW + 1);
   /**
    * The not-a-number state: the number corresponds to
    * {@link java.lang.Double#NaN}.
-   * 
+   *
    * @see #getState()
    */
   public static final int STATE_NAN = (BasicNumber.STATE_NEGATIVE_INFINITY + 1);
 
   /** the state names */
   static final String[] STATE_NAMES = {
-      "empty", //$NON-NLS-1$
-      null, null,
-      "overflow",//$NON-NLS-1$
-      Double.toString(Double.POSITIVE_INFINITY),
-      "underflow",//$NON-NLS-1$
-      Double.toString(Double.NEGATIVE_INFINITY),
-      Double.toString(Double.NaN), };
+    "empty", //$NON-NLS-1$
+    null, null,
+    "overflow",//$NON-NLS-1$
+    Double.toString(Double.POSITIVE_INFINITY),
+    "underflow",//$NON-NLS-1$
+    Double.toString(Double.NEGATIVE_INFINITY),
+    Double.toString(Double.NaN), };
 
   /** create */
   protected BasicNumber() {
@@ -103,7 +103,7 @@ public abstract class BasicNumber extends Number implements
    * introduce own, new states. In a {@link #compareTo(Number) comparison},
    * new states must be considered to be between
    * {@link #STATE_POSITIVE_INFINITY} and {@link #STATE_EMPTY}.
-   * 
+   *
    * @return the number state
    * @see #STATE_EMPTY
    * @see #STATE_INTEGER
@@ -118,7 +118,7 @@ public abstract class BasicNumber extends Number implements
 
   /**
    * Get the sign of this number
-   * 
+   *
    * @return the sign of this number
    */
   public int sign() {
@@ -289,7 +289,7 @@ public abstract class BasicNumber extends Number implements
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @param number
    *          the other number to compare with
    */
@@ -532,7 +532,7 @@ public abstract class BasicNumber extends Number implements
 
   /**
    * Does the number represent a valid, finite real number?
-   * 
+   *
    * @return {@code true} if <code>state=={@link #STATE_INTEGER}</code> or
    *         <code>state=={@link #STATE_DOUBLE}</code>
    */
@@ -544,7 +544,7 @@ public abstract class BasicNumber extends Number implements
 
   /**
    * Does the number represent a valid, finite integer number?
-   * 
+   *
    * @return {@code true} if <code>state=={@link #STATE_INTEGER}</code>
    */
   public boolean isInteger() {

@@ -11,7 +11,7 @@ public final class ParallelExample {
 
   /**
    * the main method
-   * 
+   *
    * @param args
    *          command line arguments are ignored
    * @throws Throwable

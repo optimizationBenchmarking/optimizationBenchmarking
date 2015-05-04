@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** A parser for document drivers. */
 public final class DocumentDriverParser extends
-    InstanceParser<IDocumentDriver> {
+InstanceParser<IDocumentDriver> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public final class DocumentDriverParser extends
 
   /**
    * get the prefixes
-   * 
+   *
    * @return the path prefixes
    */
   private static final String[] __prefixes() {
@@ -64,7 +64,7 @@ public final class DocumentDriverParser extends
    * with the singleton instance {@link #getInstance()} for serialization,
    * i.e., when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #getInstance()})
    */
   private final Object writeReplace() {
@@ -76,7 +76,7 @@ public final class DocumentDriverParser extends
    * with the singleton instance {@link #getInstance()} after
    * serialization, i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #getInstance()})
    */
   private final Object readResolve() {
@@ -85,7 +85,7 @@ public final class DocumentDriverParser extends
 
   /**
    * Get the singleton instance of this parser
-   * 
+   *
    * @return the document driver parser
    */
   public static final DocumentDriverParser getInstance() {

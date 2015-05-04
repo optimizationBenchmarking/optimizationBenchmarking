@@ -42,7 +42,7 @@ public final class TestCase {
 
   /**
    * create a test case based on bytes
-   * 
+   *
    * @param out
    *          the expected output
    * @param in
@@ -62,7 +62,7 @@ public final class TestCase {
 
   /**
    * create a test case based on shorts
-   * 
+   *
    * @param out
    *          the expected output
    * @param in
@@ -82,7 +82,7 @@ public final class TestCase {
 
   /**
    * create a test case based on ints
-   * 
+   *
    * @param out
    *          the expected output
    * @param in
@@ -102,7 +102,7 @@ public final class TestCase {
 
   /**
    * create a test case based on longs
-   * 
+   *
    * @param out
    *          the expected output
    * @param in
@@ -122,7 +122,7 @@ public final class TestCase {
 
   /**
    * create a test case based on floats
-   * 
+   *
    * @param out
    *          the expected output
    * @param in
@@ -142,7 +142,7 @@ public final class TestCase {
 
   /**
    * create a test case based on doubles
-   * 
+   *
    * @param out
    *          the expected output
    * @param in
@@ -162,7 +162,7 @@ public final class TestCase {
 
   /**
    * create a test case based on long input and double output
-   * 
+   *
    * @param out
    *          the expected output
    * @param in
@@ -182,7 +182,7 @@ public final class TestCase {
 
   /**
    * create a test case based on int input and double output
-   * 
+   *
    * @param out
    *          the expected output
    * @param in
@@ -202,7 +202,7 @@ public final class TestCase {
 
   /**
    * check the possible choices
-   * 
+   *
    * @param out
    *          the output number
    * @param in

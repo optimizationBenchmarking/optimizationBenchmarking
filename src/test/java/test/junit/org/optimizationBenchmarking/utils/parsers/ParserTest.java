@@ -13,7 +13,7 @@ import test.junit.TestBase;
 
 /**
  * the basic test for parsers
- * 
+ *
  * @param <T>
  *          the parsed type
  */
@@ -27,14 +27,14 @@ public abstract class ParserTest<T> extends TestBase {
 
   /**
    * Get the parser
-   * 
+   *
    * @return the parser
    */
   protected abstract Parser<T> getParser();
 
   /**
    * A set of expected results for object-based parsing
-   * 
+   *
    * @return the set of expected results for object-based parsing
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -44,7 +44,7 @@ public abstract class ParserTest<T> extends TestBase {
 
   /**
    * A set of expected results for string-based parsing
-   * 
+   *
    * @return the set of expected results for string-based parsing
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -54,7 +54,7 @@ public abstract class ParserTest<T> extends TestBase {
 
   /**
    * A set of inputs where object-based parsing must fail
-   * 
+   *
    * @return the set of inputs where object-based parsing must fail
    */
   protected Collection<Object> getExpectedObjectParsingFailures() {
@@ -63,7 +63,7 @@ public abstract class ParserTest<T> extends TestBase {
 
   /**
    * A set of inputs where string-based parsing must fail
-   * 
+   *
    * @return the set of inputs where string-based parsing must fail
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })

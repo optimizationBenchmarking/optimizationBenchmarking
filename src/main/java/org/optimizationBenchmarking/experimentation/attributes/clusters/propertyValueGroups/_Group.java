@@ -29,7 +29,7 @@ final class _Group implements Cloneable {
 
   /**
    * Does this group contain the given object?
-   * 
+   *
    * @param o
    *          the object
    * @return {@code true} if it is in the group, {@code false} otherwise

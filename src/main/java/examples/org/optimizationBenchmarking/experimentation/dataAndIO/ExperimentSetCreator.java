@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** A class for creating experiment sets */
 public abstract class ExperimentSetCreator implements IEvaluationInput,
-    Runnable {
+Runnable {
 
   /** the logger */
   private final Logger m_logger;
@@ -22,7 +22,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger, or {@code null} to use the global logger
    */
@@ -34,7 +34,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
 
   /**
    * Get the logger
-   * 
+   *
    * @return the logger
    */
   protected final Logger getLogger() {
@@ -43,7 +43,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
 
   /**
    * Build an experiment set
-   * 
+   *
    * @return the constructed experiment set
    * @throws Exception
    *           if something goes wrong
@@ -52,7 +52,7 @@ public abstract class ExperimentSetCreator implements IEvaluationInput,
 
   /**
    * Get the experiment set
-   * 
+   *
    * @return the experiment set
    * @throws Exception
    *           if something goes wrong

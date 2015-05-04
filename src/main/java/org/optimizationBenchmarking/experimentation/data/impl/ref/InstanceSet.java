@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 
 /** A set of instances. */
 public final class InstanceSet extends _IDObjectSet<Instance> implements
-    IInstanceSet {
+IInstanceSet {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -16,7 +16,7 @@ public final class InstanceSet extends _IDObjectSet<Instance> implements
 
   /**
    * Create
-   * 
+   *
    * @param data
    *          the data
    */
@@ -27,7 +27,7 @@ public final class InstanceSet extends _IDObjectSet<Instance> implements
 
   /**
    * Find the given instance.
-   * 
+   *
    * @param name
    *          the name
    * @return the instance, or {@code null} if it could not be found

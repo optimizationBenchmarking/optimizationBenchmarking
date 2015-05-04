@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXTableBody extends TableBody {
   /**
    * Create a body of a table
-   * 
+   *
    * @param owner
    *          the owning table
    */

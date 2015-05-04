@@ -31,7 +31,7 @@ public abstract class FileCollector implements IFileProducerListener {
    * {@link org.optimizationBenchmarking.utils.io.IFileType file type},
    * neither of which can be null. Adding two equal paths will result in an
    * {@link IllegalStateException}.
-   * 
+   *
    * @param path
    *          the path to the file
    * @param type
@@ -46,7 +46,7 @@ public abstract class FileCollector implements IFileProducerListener {
    * Add a {@link java.nio.file.Path file}/
    * {@link org.optimizationBenchmarking.utils.io.IFileType file type}
    * -association to this file collection.
-   * 
+   *
    * @param p
    *          the path to add
    */
@@ -54,7 +54,7 @@ public abstract class FileCollector implements IFileProducerListener {
 
   /**
    * Add a set of paths into the file collection.
-   * 
+   *
    * @param ps
    *          the paths to add
    */

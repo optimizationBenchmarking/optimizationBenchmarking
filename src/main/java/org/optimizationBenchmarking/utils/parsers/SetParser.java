@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /**
  * A parser for sets
- * 
+ *
  * @param <ET>
  *          the element type
  */
@@ -18,7 +18,7 @@ public class SetParser<ET> extends CollectionParser<ET, ArraySetView<ET>> {
 
   /**
    * create the parser
-   * 
+   *
    * @param elementParser
    *          the element parser
    * @param ignoreNull

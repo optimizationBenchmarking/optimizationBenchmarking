@@ -28,7 +28,7 @@ public abstract class Tool extends HashObject implements ITool {
    * words: if {@link #canUse()} returns {@code false}, this method throws
    * an exception. If {@link #canUse()} returns {@code true}, this method
    * does nothing. This method should be called in {@link #use()} as well.
-   * 
+   *
    * @throws UnsupportedOperationException
    *           if {@link #canUse()} returns {@code false}.
    */

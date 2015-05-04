@@ -15,7 +15,7 @@ public final class FontLoadingTest {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          ignored
    */

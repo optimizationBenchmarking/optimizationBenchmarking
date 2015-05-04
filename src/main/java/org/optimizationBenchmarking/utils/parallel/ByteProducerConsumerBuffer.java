@@ -16,7 +16,7 @@ package org.optimizationBenchmarking.utils.parallel;
  * </p>
  */
 public final class ByteProducerConsumerBuffer extends
-    ProducerConsumerBuffer<byte[]> {
+ProducerConsumerBuffer<byte[]> {
 
   /** Create the buffer */
   public ByteProducerConsumerBuffer() {
@@ -25,7 +25,7 @@ public final class ByteProducerConsumerBuffer extends
 
   /**
    * Create the buffer
-   * 
+   *
    * @param initialSize
    *          the buffer size, 0 for default
    */

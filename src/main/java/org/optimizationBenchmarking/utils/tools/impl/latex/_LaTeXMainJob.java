@@ -42,7 +42,7 @@ final class _LaTeXMainJob extends LaTeXJob {
 
   /**
    * create the main job
-   * 
+   *
    * @param mainFile
    *          the main file
    * @param loop
@@ -81,7 +81,7 @@ final class _LaTeXMainJob extends LaTeXJob {
     this.m_baseName = PathUtils.getFileNameWithoutExtension(main);
 
     if (this.m_baseName == null) {
-      throw new IllegalArgumentException(("LaTeX main file '" + //$NON-NLS-1$ 
+      throw new IllegalArgumentException(("LaTeX main file '" + //$NON-NLS-1$
           main)
           + "' has a null file name if extension is removed!?"); //$NON-NLS-1$
     }
@@ -93,7 +93,7 @@ final class _LaTeXMainJob extends LaTeXJob {
 
   /**
    * Get the logger
-   * 
+   *
    * @return the logger
    */
   final Logger _getLogger() {
@@ -102,7 +102,7 @@ final class _LaTeXMainJob extends LaTeXJob {
 
   /**
    * get the directory in which the jobs are executed
-   * 
+   *
    * @return the directory in which the jobs are executed
    */
   final Path _getDirectory() {
@@ -111,7 +111,7 @@ final class _LaTeXMainJob extends LaTeXJob {
 
   /**
    * Get the file of the given type
-   * 
+   *
    * @param type
    *          the requested file type
    * @return the file of type {@code type}
@@ -122,7 +122,7 @@ final class _LaTeXMainJob extends LaTeXJob {
 
   /**
    * get the base name of the document
-   * 
+   *
    * @return the base name of the document
    */
   final String _getBaseName() {
@@ -165,7 +165,7 @@ final class _LaTeXMainJob extends LaTeXJob {
 
   /**
    * check whether anything has changed
-   * 
+   *
    * @return {@code true} if something has changed, {@code false} otherwise
    */
   private final boolean __hasChanged() {
@@ -230,8 +230,8 @@ final class _LaTeXMainJob extends LaTeXJob {
     logger = this.getLogger();
     if (logger != null) {
       document = ((" LaTeX document '" + //$NON-NLS-1$
-          (this._getFile(ELaTeXFileType.TEX) + "' in folder '") + //$NON-NLS-1$ 
-      this.m_directory) + '\'');
+          (this._getFile(ELaTeXFileType.TEX) + "' in folder '") + //$NON-NLS-1$
+          this.m_directory) + '\'');
     } else {
       document = null;
     }
@@ -280,8 +280,8 @@ final class _LaTeXMainJob extends LaTeXJob {
           if ((logger != null) && (logger.isLoggable(Level.FINE))) {
             logger.fine((((//
                 "Finished main compilation loop for" + //$NON-NLS-1$
-                document) + " after ") + rounds) + //$NON-NLS-1$ 
-                " compilation cycles."); //$NON-NLS-1$ 
+                document) + " after ") + rounds) + //$NON-NLS-1$
+                " compilation cycles."); //$NON-NLS-1$
           }
         }
 
@@ -335,9 +335,9 @@ final class _LaTeXMainJob extends LaTeXJob {
             Files.deleteIfExists(path);
           } catch (final Throwable ignoreable) {
             ErrorUtils.logError(this.getLogger(), Level.WARNING,
-                (((("Error when trying to delete file '" + //$NON-NLS-1$ 
-                path) + "' of type ") + type) + '.'),//$NON-NLS-1$
-                ignoreable, true, RethrowMode.DONT_RETHROW);
+                (((("Error when trying to delete file '" + //$NON-NLS-1$
+                    path) + "' of type ") + type) + '.'),//$NON-NLS-1$
+                    ignoreable, true, RethrowMode.DONT_RETHROW);
           }
         }
       }

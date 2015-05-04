@@ -7,7 +7,7 @@ public interface IPropertyValue extends INamedElement {
 
   /**
    * Get the owning property
-   * 
+   *
    * @return the owning property
    */
   @Override
@@ -15,14 +15,14 @@ public interface IPropertyValue extends INamedElement {
 
   /**
    * Get the property value
-   * 
+   *
    * @return the property value
    */
   public abstract Object getValue();
 
   /**
    * Is the value generalized?
-   * 
+   *
    * @return {@code true} if this is the generalized value of the property
    *         returned by {@link #getOwner()}, {@code false} otherwise
    */

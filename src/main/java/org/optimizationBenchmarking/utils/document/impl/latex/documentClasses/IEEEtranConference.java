@@ -15,7 +15,7 @@ public final class IEEEtranConference extends _IEEEtranUsage {
   /**
    * get the globally shared instance of the {@code IEEEtran} document
    * class
-   * 
+   *
    * @return the {@code IEEEtran} document class
    */
   public static final IEEEtranConference getInstance() {

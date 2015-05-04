@@ -7,11 +7,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXTableCaption extends TableCaption {
   /** begin small */
   private static final char[] SMALL_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-      'n', '{', 's', 'm', 'a', 'l', 'l', '}' };
+    'n', '{', 's', 'm', 'a', 'l', 'l', '}' };
 
   /**
    * Create the caption of a table
-   * 
+   *
    * @param owner
    *          the owning table
    */

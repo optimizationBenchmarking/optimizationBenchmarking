@@ -17,7 +17,7 @@ public final class Example2Random extends RandomExample {
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger, or {@code null} to use the global logger
    */
@@ -83,7 +83,7 @@ public final class Example2Random extends RandomExample {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          the command line arguments
    */

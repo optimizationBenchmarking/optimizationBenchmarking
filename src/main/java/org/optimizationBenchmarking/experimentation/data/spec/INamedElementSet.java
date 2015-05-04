@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 public interface INamedElementSet extends IElementSet {
   /**
    * Get the data elements of this data set
-   * 
+   *
    * @return the data elements of this data set
    */
   @Override
@@ -16,7 +16,7 @@ public interface INamedElementSet extends IElementSet {
 
   /**
    * Find the element with the given name
-   * 
+   *
    * @param name
    *          the name
    * @return the element, or {@code null} if it could not be found

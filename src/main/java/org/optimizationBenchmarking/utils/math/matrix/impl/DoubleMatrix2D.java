@@ -13,7 +13,7 @@ public class DoubleMatrix2D extends AbstractMatrix {
 
   /**
    * create the matrix
-   * 
+   *
    * @param data
    *          the data
    */

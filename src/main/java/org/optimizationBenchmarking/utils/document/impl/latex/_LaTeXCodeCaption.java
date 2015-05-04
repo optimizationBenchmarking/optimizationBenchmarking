@@ -8,11 +8,11 @@ final class _LaTeXCodeCaption extends CodeCaption {
 
   /** the float caption */
   private static final char[] FLOAT_CAPTION = { ',', 'c', 'a', 'p', 't',
-      'i', 'o', 'n', '=', '{' };
+    'i', 'o', 'n', '=', '{' };
 
   /**
    * create the code caption
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

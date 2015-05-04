@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 public class DocumentTitle extends PlainText {
   /**
    * create the title
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -16,7 +16,7 @@ public class DocumentTitle extends PlainText {
 
   /**
    * Get the owning document header
-   * 
+   *
    * @return the owning document header
    */
   @Override

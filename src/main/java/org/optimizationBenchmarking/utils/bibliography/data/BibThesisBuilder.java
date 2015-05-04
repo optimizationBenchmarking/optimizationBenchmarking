@@ -26,7 +26,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * create the thesis builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -55,7 +55,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * Set the school
-   * 
+   *
    * @param school
    *          the school
    */
@@ -67,13 +67,13 @@ public final class BibThesisBuilder extends BibBookBuilder {
     if ((this.m_school = this.normalize(school)) == null) {
       throw new IllegalArgumentException(//
           "School  cannot be set to empty or null, but '" //$NON-NLS-1$
-              + school + "' is."); //$NON-NLS-1$
+          + school + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the school
-   * 
+   *
    * @return the schoolbuilder
    */
   public synchronized final BibOrganizationBuilder school() {
@@ -94,7 +94,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * Set the thesis type
-   * 
+   *
    * @param type
    *          the type
    */
@@ -111,7 +111,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
 
   /**
    * Set the type
-   * 
+   *
    * @param type
    *          the type
    */
@@ -123,7 +123,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
     if (m == null) {
       throw new IllegalArgumentException(//
           "Type strings must not be null or empty, but '" //$NON-NLS-1$
-              + type + "' is."); //$NON-NLS-1$
+          + type + "' is."); //$NON-NLS-1$
     }
 
     res = null;

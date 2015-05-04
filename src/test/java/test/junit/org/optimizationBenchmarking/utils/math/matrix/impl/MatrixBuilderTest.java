@@ -35,7 +35,7 @@ public class MatrixBuilderTest extends TestBase {
     for (testIt = 1; testIt <= 500; testIt++) {
 
       data = new long[rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))]//
-      [rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))];
+          [rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))];
       size = (data.length * data[0].length);
       builder = new MatrixBuilder(EPrimitiveType.BYTE);
       curType = 1;
@@ -131,7 +131,7 @@ public class MatrixBuilderTest extends TestBase {
     for (testIt = 1; testIt <= 500; testIt++) {
 
       data = new double[rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))]//
-      [rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))];
+          [rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))];
       size = (data.length * data[0].length);
       builder = new MatrixBuilder(EPrimitiveType.BYTE);
       curType = 1;
@@ -256,7 +256,7 @@ public class MatrixBuilderTest extends TestBase {
     for (testIt = 1; testIt <= 500; testIt++) {
 
       data = new double[rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))]//
-      [rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))];
+          [rand.nextBoolean() ? 1 : (1 + rand.nextInt(1000))];
       size = (data.length * data[0].length);
       builder = new MatrixBuilder(EPrimitiveType.BYTE);
       curType = 1;

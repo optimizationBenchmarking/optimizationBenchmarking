@@ -32,7 +32,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
   /**
    * Create the configuration builder
-   * 
+   *
    * @param owner
    *          the owning fsm
    */
@@ -42,7 +42,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
   /**
    * Create the configuration builder
-   * 
+   *
    * @param owner
    *          the owning fsm
    * @param setRootOwner
@@ -80,7 +80,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
   /**
    * Set the owner of the configuration to be built
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -111,7 +111,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
   /**
    * Put a value
-   * 
+   *
    * @param key
    *          the key
    * @param value
@@ -135,7 +135,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
     if (isLocked) {
       throw new IllegalStateException(//
           "There has already been a read access to '" + key + //$NON-NLS-1$
-              "', so it cannot be changed anymore."); //$NON-NLS-1$
+          "', so it cannot be changed anymore."); //$NON-NLS-1$
     }
   }
 
@@ -144,7 +144,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
    * {@code key=value} or {@code key:value} and may be preceded by any
    * number of {@code -} or {@code /}-es. If the value part is missing
    * {@code "true"} is used as value.
-   * 
+   *
    * @param s
    *          the string
    */
@@ -189,7 +189,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
   /**
    * Load command line arguments into a map
-   * 
+   *
    * @param args
    *          the arguments
    */
@@ -203,7 +203,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
   /**
    * Store some information from a map
-   * 
+   *
    * @param map
    *          the map
    */
@@ -217,7 +217,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
   /**
    * Store some information from a properties set
-   * 
+   *
    * @param prop
    *          the properties
    */
@@ -227,7 +227,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
   /**
    * Configure this configuration from a set of command line parameters
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws IOException

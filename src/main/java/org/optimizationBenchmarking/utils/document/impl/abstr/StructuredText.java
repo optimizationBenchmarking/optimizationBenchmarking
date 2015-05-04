@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.document.spec.IStructuredText;
 public class StructuredText extends ComplexText implements IStructuredText {
   /**
    * Create a structured text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

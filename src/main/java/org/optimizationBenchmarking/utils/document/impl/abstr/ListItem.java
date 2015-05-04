@@ -10,7 +10,7 @@ public class ListItem extends StructuredText {
 
   /**
    * Create a list item.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -21,7 +21,7 @@ public class ListItem extends StructuredText {
 
   /**
    * Get the list item's index
-   * 
+   *
    * @return the list item's index
    */
   public final int getIndex() {

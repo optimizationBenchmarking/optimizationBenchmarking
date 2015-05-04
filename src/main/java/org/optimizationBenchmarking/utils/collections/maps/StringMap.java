@@ -4,12 +4,12 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A hash map that uses {@link java.lang.String}s as keys.
- * 
+ *
  * @param <ET>
  *          the element type
  */
 public class StringMap<ET> extends
-    ObjectMap<String, ET, ObjectMapEntry<String, ET>> {
+ObjectMap<String, ET, ObjectMapEntry<String, ET>> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -20,7 +20,7 @@ public class StringMap<ET> extends
 
   /**
    * Prepare a string for usage in the map
-   * 
+   *
    * @param s
    *          the string
    * @return the prepared one

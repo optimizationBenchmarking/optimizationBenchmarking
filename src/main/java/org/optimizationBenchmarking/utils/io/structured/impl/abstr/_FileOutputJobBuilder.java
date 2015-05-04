@@ -12,14 +12,14 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * The class for building file output jobs
- * 
+ *
  * @param <DT>
  *          the source data type
  * @param <JBT>
  *          the job builder type
  */
 class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
-    extends _IOJobBuilder<JBT> implements IFileOutputJobBuilder<DT> {
+extends _IOJobBuilder<JBT> implements IFileOutputJobBuilder<DT> {
 
   /** the source */
   DT m_source;
@@ -32,7 +32,7 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
 
   /**
    * create the job builder
-   * 
+   *
    * @param tool
    *          the owning tool
    */
@@ -100,7 +100,7 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
 
   /**
    * validate the source data
-   * 
+   *
    * @param source
    *          the source data
    */
@@ -230,7 +230,7 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
   /**
    * Set the stream to write to. The stream may or may not be closed upon
    * termination.
-   * 
+   *
    * @param stream
    *          the stream to write the output to
    * @param encoding

@@ -18,7 +18,7 @@ public final class LaTeXDocumentBuilder extends DocumentBuilder {
 
   /**
    * the LaTeX document builder
-   * 
+   *
    * @param driver
    *          the driver to use
    */
@@ -36,7 +36,7 @@ public final class LaTeXDocumentBuilder extends DocumentBuilder {
 
   /**
    * Get the document class
-   * 
+   *
    * @return the document class
    */
   public final LaTeXDocumentClass getDocumentClass() {
@@ -46,13 +46,13 @@ public final class LaTeXDocumentBuilder extends DocumentBuilder {
 
   /**
    * Set the document class
-   * 
+   *
    * @param documentClass
    *          the document class
    */
   public final void setDocumentClass(final LaTeXDocumentClass documentClass) {
     ((LaTeXConfigurationBuilder) (this.getConfigurationBuilder()))
-        .setDocumentClass(documentClass);
+    .setDocumentClass(documentClass);
   }
 
   /** {@inheritDoc} */
@@ -66,7 +66,7 @@ public final class LaTeXDocumentBuilder extends DocumentBuilder {
   /**
    * Should we try to compile the document to PDF after it has been
    * created?
-   * 
+   *
    * @param compile
    *          {@code true} for enabling auto-compilation, {@code false} for
    *          disabling auto-compilation
@@ -77,7 +77,7 @@ public final class LaTeXDocumentBuilder extends DocumentBuilder {
 
   /**
    * Should we try to compile the document?
-   * 
+   *
    * @return {@code true} for enabling compilation, {@code false} for
    *         disabling compilation
    */

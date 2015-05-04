@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  * A condition that is constant.
  */
 public final class ConstantPredicate extends HashObject implements
-    IPredicate<Object>, Serializable {
+IPredicate<Object>, Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -23,14 +23,14 @@ public final class ConstantPredicate extends HashObject implements
 
   /**
    * the value
-   * 
+   *
    * @serial the boolean value returned by the predicate
    */
   private final boolean m_value;
 
   /**
    * create
-   * 
+   *
    * @param value
    *          the value
    */
@@ -59,7 +59,7 @@ public final class ConstantPredicate extends HashObject implements
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -69,7 +69,7 @@ public final class ConstantPredicate extends HashObject implements
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

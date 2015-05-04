@@ -26,7 +26,7 @@ public abstract class DataFactory extends Parser<DataPoint> {
 
   /**
    * Create a data point from an array of number instances
-   * 
+   *
    * @param numbers
    *          the numbers
    * @return the data point
@@ -35,7 +35,7 @@ public abstract class DataFactory extends Parser<DataPoint> {
 
   /**
    * Create a run from a set of data points
-   * 
+   *
    * @param instance
    *          the benchmark instance to which the run should belong
    * @param points

@@ -22,12 +22,12 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A tool for reading file input
- * 
+ *
  * @param <S>
  *          the destination type
  */
 public class FileInputTool<S> extends IOTool<S> implements
-    IFileInputTool<S> {
+IFileInputTool<S> {
 
   /** create */
   protected FileInputTool() {
@@ -39,7 +39,7 @@ public class FileInputTool<S> extends IOTool<S> implements
    * configuration? In other words, if we create a job builder for this
    * input driver and configure it based on {@code config}, can we create
    * and execute a job from it?
-   * 
+   *
    * @param config
    *          the configuration
    * @return {@code true} if sources are defined, {@code false} otherwise
@@ -53,7 +53,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Get the sources
-   * 
+   *
    * @param config
    *          the configuration
    * @return the sources
@@ -89,7 +89,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Get the suffix to be used for the source parameter
-   * 
+   *
    * @return the suffix to be used for the source parameter
    */
   protected String getSourcesParameterSuffix() {
@@ -171,8 +171,8 @@ public class FileInputTool<S> extends IOTool<S> implements
           && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
         logger.log(IOTool.DEFAULT_LOG_LEVEL,//
             "Beginning input from resource '" + //$NON-NLS-1$
-                location.m_location2
-                + "' of class " + location.m_location1); //$NON-NLS-1$
+            location.m_location2
+            + "' of class " + location.m_location1); //$NON-NLS-1$
       }
       this.__resource(job, data, ((Class<?>) (location.m_location1)),
           ((String) (location.m_location2)), location.m_encoding,
@@ -181,8 +181,8 @@ public class FileInputTool<S> extends IOTool<S> implements
           && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
         logger.log(IOTool.DEFAULT_LOG_LEVEL,//
             "Finished input from resource '" + //$NON-NLS-1$
-                location.m_location2
-                + "' of class " + location.m_location1); //$NON-NLS-1$
+            location.m_location2
+            + "' of class " + location.m_location1); //$NON-NLS-1$
       }
       return;
     }
@@ -200,7 +200,7 @@ public class FileInputTool<S> extends IOTool<S> implements
               && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
             logger.log(IOTool.DEFAULT_LOG_LEVEL,//
                 "Beginning input from URL specified as String: " + //$NON-NLS-1$
-                    location.m_location1);
+                location.m_location1);
           }
           this.__url(job, data, new URL((String) (location.m_location1)),
               location.m_encoding, location.m_archiveType);
@@ -208,7 +208,7 @@ public class FileInputTool<S> extends IOTool<S> implements
               && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
             logger.log(IOTool.DEFAULT_LOG_LEVEL,//
                 "Finished input from URL specified as String: " + //$NON-NLS-1$
-                    location.m_location1);
+                location.m_location1);
           }
           return;
         }
@@ -221,7 +221,7 @@ public class FileInputTool<S> extends IOTool<S> implements
               && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
             logger.log(IOTool.DEFAULT_LOG_LEVEL,//
                 "Beginning input from URI specified as String: " + //$NON-NLS-1$
-                    location.m_location1);
+                location.m_location1);
           }
           this.__uri(job, data, new URI((String) (location.m_location1)),
               location.m_encoding, location.m_archiveType);
@@ -229,7 +229,7 @@ public class FileInputTool<S> extends IOTool<S> implements
               && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
             logger.log(IOTool.DEFAULT_LOG_LEVEL,//
                 "Finished input from URI specified as String: " + //$NON-NLS-1$
-                    location.m_location1);
+                location.m_location1);
           }
           return;
         }
@@ -243,7 +243,7 @@ public class FileInputTool<S> extends IOTool<S> implements
             && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
           logger.log(IOTool.DEFAULT_LOG_LEVEL,//
               "Beginning input from Resource specified as String: " + //$NON-NLS-1$
-                  location.m_location1 + ':' + location.m_location2);
+              location.m_location1 + ':' + location.m_location2);
         }
         this.__resource(job, data,
             Class.forName((String) (location.m_location1)),
@@ -253,7 +253,7 @@ public class FileInputTool<S> extends IOTool<S> implements
             && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
           logger.log(IOTool.DEFAULT_LOG_LEVEL,//
               "Finished input from Resource specified as String: " + //$NON-NLS-1$
-                  location.m_location1 + ':' + location.m_location2);
+              location.m_location1 + ':' + location.m_location2);
         }
         return;
       }
@@ -264,7 +264,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Load an archive
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -292,14 +292,14 @@ public class FileInputTool<S> extends IOTool<S> implements
         logger.log(IOTool.FINE_LOG_LEVEL,//
             ((("Begin decompressing " + type.getName() + //$NON-NLS-1$
                 " to temporary folder '" //$NON-NLS-1$
-            + path) + '\'') + '.'));
+                + path) + '\'') + '.'));
       }
       type.decompressStreamToFolder(stream, path,
           this.getArchiveFallbackFileName());
       if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
         logger.log(IOTool.FINE_LOG_LEVEL,//
             ((("Finished decompressing to temporary folder '" //$NON-NLS-1$
-            + path) + '\'') + '.'));
+                + path) + '\'') + '.'));
       }
       this._path(job, data, path,
           Files.readAttributes(path, BasicFileAttributes.class), encoding,
@@ -309,7 +309,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Handle a file which may be compressed
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -328,7 +328,7 @@ public class FileInputTool<S> extends IOTool<S> implements
   final void _file(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-      throws Throwable {
+          throws Throwable {
     final Object oldCur;
     final Logger logger;
 
@@ -356,7 +356,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Handle a resource
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -375,7 +375,7 @@ public class FileInputTool<S> extends IOTool<S> implements
   private final void __resource(final IOJob job, final S data,
       final Class<?> clazz, final String name,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-      throws Throwable {
+          throws Throwable {
     final Object oldCur;
 
     oldCur = job.m_current;
@@ -391,7 +391,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Handle an URL
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -407,7 +407,7 @@ public class FileInputTool<S> extends IOTool<S> implements
    */
   private final void __url(final IOJob job, final S data, final URL url,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-      throws Throwable {
+          throws Throwable {
     final Object oldCur;
     oldCur = job.m_current;
     try {
@@ -422,7 +422,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Handle an URI
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -438,7 +438,7 @@ public class FileInputTool<S> extends IOTool<S> implements
    */
   private final void __uri(final IOJob job, final S data, final URI uri,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-      throws Throwable {
+          throws Throwable {
     URL url;
     Path path;
     Throwable errorA, errorB, ioError;
@@ -494,7 +494,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Handle a stream
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -539,7 +539,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Handle a stream
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -558,7 +558,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Handle a file
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -580,7 +580,7 @@ public class FileInputTool<S> extends IOTool<S> implements
 
   /**
    * Enter a directory
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -596,7 +596,7 @@ public class FileInputTool<S> extends IOTool<S> implements
    */
   protected boolean enterDirectory(final IOJob job, final S data,
       final Path path, final BasicFileAttributes attributes)
-      throws Throwable {
+          throws Throwable {
     return true;
   }
 
@@ -604,7 +604,7 @@ public class FileInputTool<S> extends IOTool<S> implements
    * Check whether a file in a directory is loadable. This method is only
    * called if the input source does not just identify a single file, in
    * which case loading is enforced.
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -619,14 +619,14 @@ public class FileInputTool<S> extends IOTool<S> implements
    */
   protected boolean isFileInDirectoryLoadable(final IOJob job,
       final S data, final Path path, final BasicFileAttributes attributes)
-      throws Throwable {
+          throws Throwable {
     return ((path != null) && (attributes != null) && //
-    (attributes.isRegularFile()));
+        (attributes.isRegularFile()));
   }
 
   /**
    * Leave a directory
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -646,7 +646,7 @@ public class FileInputTool<S> extends IOTool<S> implements
   final void _path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-      throws Throwable {
+          throws Throwable {
 
     final Object oldCur;
     oldCur = job.m_current;
@@ -678,7 +678,7 @@ public class FileInputTool<S> extends IOTool<S> implements
   /**
    * Process an uncompressed path, which may either be a directory or a
    * file.
-   * 
+   *
    * @param job
    *          the job
    * @param data

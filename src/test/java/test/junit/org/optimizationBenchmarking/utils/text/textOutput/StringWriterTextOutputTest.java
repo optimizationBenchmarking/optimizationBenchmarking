@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
  */
 public class StringWriterTextOutputTest extends
-    TextOutputTest<StringWriter> {
+TextOutputTest<StringWriter> {
 
   /** create */
   public StringWriterTextOutputTest() {

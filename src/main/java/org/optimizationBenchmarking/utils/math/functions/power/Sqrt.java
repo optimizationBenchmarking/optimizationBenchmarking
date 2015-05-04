@@ -32,25 +32,26 @@ public final class Sqrt extends UnaryFunction {
   /**
    * An integer-based algorithm based on
    * http://en.wikipedia.org/wiki/Methods_of_computing_square_roots
-   * 
+   *
    * @param num
    *          the number
    * @return the result
    */
-  private static final long __isqrt(long num) {
-    long res, bit;
+  private static final long __isqrt(final long num) {
+    long res, bit, theNum;
 
     res = 0L;
     bit = (1L << 62L);
+    theNum = num;
 
     // "bit" starts at the highest power of four <= the argument.
-    while (bit > num) {
+    while (bit > theNum) {
       bit >>= 2L;
     }
 
     while (bit != 0L) {
-      if (num >= (res + bit)) {
-        num -= (res + bit);
+      if (theNum >= (res + bit)) {
+        theNum -= (res + bit);
         res = ((res >> 1L) + bit);
       } else {
         res >>= 1L;
@@ -88,7 +89,7 @@ public final class Sqrt extends UnaryFunction {
   /**
    * Compute {@code sqrt} with
    * {@link org.apache.commons.math3.util.FastMath}
-   * 
+   *
    * @param x1
    *          the parameter
    * @return the result
@@ -111,7 +112,7 @@ public final class Sqrt extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -123,7 +124,7 @@ public final class Sqrt extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

@@ -5,7 +5,7 @@ public class MathMod extends MathFunction {
 
   /**
    * Create an mod function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

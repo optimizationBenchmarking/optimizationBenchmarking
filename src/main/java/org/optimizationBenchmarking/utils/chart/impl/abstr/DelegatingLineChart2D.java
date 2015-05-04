@@ -19,7 +19,7 @@ public class DelegatingLineChart2D implements ILineChart2D {
 
   /**
    * create the delegating 2D line chart
-   * 
+   *
    * @param chart
    *          the chart
    */

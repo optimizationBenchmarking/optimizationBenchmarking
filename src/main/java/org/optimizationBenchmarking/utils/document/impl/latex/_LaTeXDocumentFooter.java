@@ -18,15 +18,15 @@ import org.optimizationBenchmarking.utils.tools.impl.latex.ELaTeXFileType;
 final class _LaTeXDocumentFooter extends DocumentFooter {
   /** begin the bibliography style */
   private static final char[] BIBLIOGRAPHY_STYLE_BEGIN = { '\\', 'b', 'i',
-      'b', 'l', 'i', 'o', 'g', 'r', 'a', 'p', 'h', 'y', 's', 't', 'y',
-      'l', 'e', '{' };
+    'b', 'l', 'i', 'o', 'g', 'r', 'a', 'p', 'h', 'y', 's', 't', 'y',
+    'l', 'e', '{' };
   /** begin the bibliography */
   private static final char[] BIBLIOGRAPHY_BEGIN = { '\\', 'b', 'i', 'b',
-      'l', 'i', 'o', 'g', 'r', 'a', 'p', 'h', 'y', '{' };
+    'l', 'i', 'o', 'g', 'r', 'a', 'p', 'h', 'y', '{' };
 
   /**
    * Create a document footer
-   * 
+   *
    * @param owner
    *          the owning document
    */
@@ -54,7 +54,7 @@ final class _LaTeXDocumentFooter extends DocumentFooter {
     doc = ((LaTeXDocument) (this.getDocument()));
     path = PathUtils.createPathInside(doc.getDocumentFolder(),//
         ((PathUtils.getFileNameWithoutExtension(doc.getDocumentPath()) + //
-        "-bibliography.") + ELaTeXFileType.BIB.getDefaultSuffix())); //$NON-NLS-1$
+            "-bibliography.") + ELaTeXFileType.BIB.getDefaultSuffix())); //$NON-NLS-1$
 
     logger = this.getLogger();
     if ((logger != null) && (logger.isLoggable(Level.FINE))) {
@@ -74,16 +74,16 @@ final class _LaTeXDocumentFooter extends DocumentFooter {
 
     try {
       driver.use().setPath(path).setLogger(logger).setSource(bib)
-          .setFileProducerListener(this.getFileCollector()).create()
-          .call();
+      .setFileProducerListener(this.getFileCollector()).create()
+      .call();
     } catch (final Throwable error) {
       ErrorUtils
-          .logError(logger,
-              Level.WARNING,//
-              "Error during BibTeX output of citations to '"//$NON-NLS-1$
-                  + path + //
-                  "'. This will lead to undefined references in the final document.",//$NON-NLS-1$
-              error, true, RethrowMode.DONT_RETHROW);
+      .logError(logger,
+          Level.WARNING,//
+          "Error during BibTeX output of citations to '"//$NON-NLS-1$
+          + path + //
+          "'. This will lead to undefined references in the final document.",//$NON-NLS-1$
+          error, true, RethrowMode.DONT_RETHROW);
       return;
     }
 
@@ -91,7 +91,7 @@ final class _LaTeXDocumentFooter extends DocumentFooter {
       if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
         logger.warning(//
             "BibTeX output driver was told to produce '" + path //$NON-NLS-1$
-                + "' but this file has not been produced although no error was generated. This is odd. No bibliography can be stored. This will lead to undefined references in the LaTeX document."); //$NON-NLS-1$
+            + "' but this file has not been produced although no error was generated. This is odd. No bibliography can be stored. This will lead to undefined references in the LaTeX document."); //$NON-NLS-1$
       }
       return;
     }

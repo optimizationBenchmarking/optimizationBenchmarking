@@ -71,7 +71,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * </p>
  */
 public final class FileProducerSupport extends _FileSet implements
-    Closeable {
+Closeable {
 
   /**
    * the map of files if more than one was produced (otherwise,
@@ -99,7 +99,7 @@ public final class FileProducerSupport extends _FileSet implements
 
   /**
    * create
-   * 
+   *
    * @param listener
    *          the listener, or {@code null} if none was specified
    */
@@ -144,7 +144,7 @@ public final class FileProducerSupport extends _FileSet implements
 
   /**
    * Get the (current) collection of created files.
-   * 
+   *
    * @return A collection with all the created files.
    * @throws IllegalStateException
    *           if the file producer support has already been
@@ -175,7 +175,7 @@ public final class FileProducerSupport extends _FileSet implements
 
   /**
    * make the list view for a map
-   * 
+   *
    * @param map
    *          the map
    * @return the list view

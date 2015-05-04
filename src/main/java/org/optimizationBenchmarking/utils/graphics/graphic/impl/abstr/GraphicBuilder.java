@@ -15,8 +15,8 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerJobBu
 
 /** The base class for graphics builders */
 public final class GraphicBuilder extends
-    DocumentProducerJobBuilder<Graphic, GraphicBuilder> implements
-    IGraphicBuilder, ITextable {
+DocumentProducerJobBuilder<Graphic, GraphicBuilder> implements
+IGraphicBuilder, ITextable {
 
   /** the dots per inch parameter */
   public static final String PARAM_DPI = "dpi"; //$NON-NLS-1$
@@ -38,7 +38,7 @@ public final class GraphicBuilder extends
 
   /**
    * create the tool job builder
-   * 
+   *
    * @param owner
    *          the owning graphic builder
    */
@@ -76,9 +76,9 @@ public final class GraphicBuilder extends
         || (r >= GraphicBuilder.MAX_SIZE_M)) {
       throw new IllegalArgumentException(//
           "A graphic width cannot be smaller than 0.1mm or larger than 10m, but "//$NON-NLS-1$
-              + w + " specified in " + sizeUnit + //$NON-NLS-1$ 
-              " equals " + r + //$NON-NLS-1$
-              "m.");//$NON-NLS-1$
+          + w + " specified in " + sizeUnit + //$NON-NLS-1$
+          " equals " + r + //$NON-NLS-1$
+          "m.");//$NON-NLS-1$
     }
 
     r = sizeUnit.convertTo(h, ELength.M);
@@ -86,9 +86,9 @@ public final class GraphicBuilder extends
         || (r >= GraphicBuilder.MAX_SIZE_M)) {
       throw new IllegalArgumentException(//
           "A graphic height cannot be smaller than 0.1mm or larger than 10m, but "//$NON-NLS-1$
-              + h + " specified in " + sizeUnit + //$NON-NLS-1$ 
-              " equals " + r + //$NON-NLS-1$
-              "m.");//$NON-NLS-1$
+          + h + " specified in " + sizeUnit + //$NON-NLS-1$
+          " equals " + r + //$NON-NLS-1$
+          "m.");//$NON-NLS-1$
     }
 
     this.m_size = size;
@@ -107,7 +107,7 @@ public final class GraphicBuilder extends
 
   /**
    * Get the size of the graphic to be built
-   * 
+   *
    * @return the size of the graphic to be built
    * @see #setSize(PhysicalDimension)
    */
@@ -124,7 +124,7 @@ public final class GraphicBuilder extends
 
   /**
    * Get the dots per inch
-   * 
+   *
    * @return the dots per inch
    * @see #setDotsPerInch(int)
    */
@@ -141,7 +141,7 @@ public final class GraphicBuilder extends
 
   /**
    * Get the color model
-   * 
+   *
    * @return the color model
    */
   public final EColorModel getColorModel() {
@@ -150,7 +150,7 @@ public final class GraphicBuilder extends
 
   /**
    * Get the graphics quality
-   * 
+   *
    * @return the graphics quality
    */
   public final double getQuality() {
@@ -199,7 +199,7 @@ public final class GraphicBuilder extends
     if (o instanceof GraphicBuilder) {
       bui = ((GraphicBuilder) o);
       return (EComparison.equals(this.m_config, bui.m_config) && //
-      EComparison.equals(this.m_size, bui.m_size));
+          EComparison.equals(this.m_size, bui.m_size));
     }
     return false;
   }

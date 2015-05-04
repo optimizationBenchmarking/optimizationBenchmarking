@@ -35,14 +35,14 @@ public abstract class BibliographyTest extends ArrayListViewTest {
 
   /**
    * Create a bibliography
-   * 
+   *
    * @return the bibliography
    */
   protected abstract Bibliography createBibliography();
 
   /**
    * create my bibliography
-   * 
+   *
    * @return the bibliography
    */
   public synchronized Bibliography getBibliography() {
@@ -61,7 +61,7 @@ public abstract class BibliographyTest extends ArrayListViewTest {
 
   /**
    * test serializing and deserializing to xml
-   * 
+   *
    * @throws IOException
    *           if it fails
    */
@@ -113,7 +113,7 @@ public abstract class BibliographyTest extends ArrayListViewTest {
 
   /**
    * test serializing and deserializing to xml
-   * 
+   *
    * @throws IOException
    *           if it fails
    */

@@ -29,7 +29,7 @@ public final class AllECDF extends ExperimentSetModule {
 
   /**
    * Get the globally shared instance of the instance information module
-   * 
+   *
    * @return the globally shared instance of the instance information
    *         module
    */

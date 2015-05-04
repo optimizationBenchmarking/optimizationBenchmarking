@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
  */
 public class BufferedWriterTextOutputTest extends
-    TextOutputTest<BufferedWriter> {
+TextOutputTest<BufferedWriter> {
 
   /** create */
   public BufferedWriterTextOutputTest() {
@@ -45,7 +45,7 @@ public class BufferedWriterTextOutputTest extends
 
     /**
      * create
-     * 
+     *
      * @param sw
      *          the string writer
      */

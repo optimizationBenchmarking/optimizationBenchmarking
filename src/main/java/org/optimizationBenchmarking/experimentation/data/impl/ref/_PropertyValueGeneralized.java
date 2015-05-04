@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /** the generalized parameter value */
 final class _PropertyValueGeneralized implements Serializable,
-    Comparable<Object> {
+Comparable<Object> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -25,7 +25,7 @@ final class _PropertyValueGeneralized implements Serializable,
 
   /**
    * read resolve
-   * 
+   *
    * @return {@link #INSTANCE}
    */
   private final Object readResolve() {
@@ -34,7 +34,7 @@ final class _PropertyValueGeneralized implements Serializable,
 
   /**
    * write replace
-   * 
+   *
    * @return {@link #INSTANCE}
    */
   private final Object writeReplace() {

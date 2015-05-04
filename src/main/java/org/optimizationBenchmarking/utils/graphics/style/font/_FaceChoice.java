@@ -16,7 +16,7 @@ final class _FaceChoice {
 
   /**
    * Create the face choice
-   * 
+   *
    * @param name
    *          the face choice
    * @param resource

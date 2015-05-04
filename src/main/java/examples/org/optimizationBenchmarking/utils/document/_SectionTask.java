@@ -21,7 +21,7 @@ final class _SectionTask extends RecursiveAction {
 
   /**
    * The section depth
-   * 
+   *
    * @param de
    *          the owning example
    * @param sc

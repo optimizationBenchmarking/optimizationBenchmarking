@@ -8,18 +8,18 @@ final class _LaTeXMathInBraces extends MathInBraces {
 
   /** the begin brace */
   static final char[][] BRACE_BEGIN = {//
-  { '{', '\\', 'l', 'e', 'f', 't', '(', '{', },//
-      { '{', '\\', 'l', 'e', 'f', 't', '[', '{', }, };
+    { '{', '\\', 'l', 'e', 'f', 't', '(', '{', },//
+    { '{', '\\', 'l', 'e', 'f', 't', '[', '{', }, };
 
   /** the end brace */
   static final char[][] BRACE_END = {//
-  { '}', '\\', 'r', 'i', 'g', 'h', 't', ')', '}' },//
-      { '}', '\\', 'r', 'i', 'g', 'h', 't', ']', '}' },//
+    { '}', '\\', 'r', 'i', 'g', 'h', 't', ')', '}' },//
+    { '}', '\\', 'r', 'i', 'g', 'h', 't', ']', '}' },//
   };
 
   /**
    * create the mathematical in-braces element
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -35,7 +35,7 @@ final class _LaTeXMathInBraces extends MathInBraces {
     super.onOpen();
     this.getTextOutput().append(
         _LaTeXMathInBraces.BRACE_BEGIN[this.getBraceIndex()
-            % _LaTeXMathInBraces.BRACE_BEGIN.length]);
+                                       % _LaTeXMathInBraces.BRACE_BEGIN.length]);
   }
 
   /** {@inheritDoc} */
@@ -43,7 +43,7 @@ final class _LaTeXMathInBraces extends MathInBraces {
   protected synchronized final void onClose() {
     this.getTextOutput().append(
         _LaTeXMathInBraces.BRACE_END[this.getBraceIndex()
-            % _LaTeXMathInBraces.BRACE_END.length]);
+                                     % _LaTeXMathInBraces.BRACE_END.length]);
     super.onClose();
   }
 }

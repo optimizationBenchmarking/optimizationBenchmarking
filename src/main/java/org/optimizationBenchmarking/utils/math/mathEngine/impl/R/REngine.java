@@ -50,7 +50,7 @@ public final class REngine extends MathEngine {
 
   /**
    * create
-   * 
+   *
    * @param process
    *          the process
    * @param temp
@@ -74,7 +74,7 @@ public final class REngine extends MathEngine {
     this.m_out = e.wrapOutputStream(process.getStdIn());
 
     this.m_id = (((this.getClass().getSimpleName() + ' ') + '#') + //
-    Long.toString(REngine.ENGINE_ID.incrementAndGet()));
+        Long.toString(REngine.ENGINE_ID.incrementAndGet()));
 
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info(this.m_id + " successfully started"); //$NON-NLS-1$
@@ -101,27 +101,26 @@ public final class REngine extends MathEngine {
 
   /**
    * create a temporary file
-   * 
+   *
    * @return the file
    * @throws IOException
    *           if it must
    */
-  @SuppressWarnings("nls")
   final Path _tempFile() throws IOException {
     return PathUtils.normalize(Files.createTempFile(this.m_temp.getPath(),
-        null, ".dat"));
+        null, ".dat")); //$NON-NLS-1$
   }
 
   /**
    * Handle an error
-   * 
+   *
    * @param t
    *          the throwable
    */
   final void _handleError(final Object t) {
     ErrorUtils.logError(this.getLogger(),
-        ("Error during communication with R in engine " + //$NON-NLS-1$ 
-        this.hashCode()), t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+        ("Error during communication with R in engine " + //$NON-NLS-1$
+            this.hashCode()), t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
   }
 
   /** {@inheritDoc} */
@@ -178,7 +177,7 @@ public final class REngine extends MathEngine {
 
   /**
    * Use the variable: get its name
-   * 
+   *
    * @param variable
    *          the variable
    * @return the variable's name
@@ -189,7 +188,7 @@ public final class REngine extends MathEngine {
 
   /**
    * Use the variable: get its type
-   * 
+   *
    * @param variable
    *          the variable
    * @return the variable's type
@@ -200,7 +199,7 @@ public final class REngine extends MathEngine {
 
   /**
    * Set the type of a variable
-   * 
+   *
    * @param variable
    *          the variable
    * @param type
@@ -213,7 +212,7 @@ public final class REngine extends MathEngine {
 
   /**
    * Delete a variable
-   * 
+   *
    * @param variable
    *          the variable
    */
@@ -305,7 +304,7 @@ public final class REngine extends MathEngine {
 
   /**
    * issue a command to get a scalar
-   * 
+   *
    * @param variable
    *          the variable
    * @return the string
@@ -321,7 +320,7 @@ public final class REngine extends MathEngine {
       case MATRIX: {
         throw new IllegalArgumentException(
             "Cannot query variable " + variable + //$NON-NLS-1$
-                " as scalar."); //$NON-NLS-1$
+            " as scalar."); //$NON-NLS-1$
       }
     }
 

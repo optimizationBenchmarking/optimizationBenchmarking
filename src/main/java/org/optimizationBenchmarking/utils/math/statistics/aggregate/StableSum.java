@@ -72,7 +72,7 @@ public final class StableSum extends ScalarAggregate {
 
   /**
    * add a value while updating the compensation
-   * 
+   *
    * @param value
    *          the value to add
    */
@@ -94,7 +94,7 @@ public final class StableSum extends ScalarAggregate {
 
   /**
    * perform a plain double arithmetic addition.
-   * 
+   *
    * @param value
    *          the value to add
    */
@@ -245,7 +245,7 @@ public final class StableSum extends ScalarAggregate {
 
   /**
    * Visit a given {@code double}, i.e., add it to the stable sum.
-   * 
+   *
    * @param value
    *          the value to add
    */

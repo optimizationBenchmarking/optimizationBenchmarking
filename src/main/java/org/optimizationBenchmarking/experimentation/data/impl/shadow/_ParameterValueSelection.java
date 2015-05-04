@@ -7,11 +7,11 @@ import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
 
 /** a parameter value selection */
 final class _ParameterValueSelection extends
-    _PropertyValueSelection<IParameter, IParameterValue> {
+_PropertyValueSelection<IParameter, IParameterValue> {
 
   /**
    * create the parameter value selection
-   * 
+   *
    * @param parameter
    *          the original parameter
    */

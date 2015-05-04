@@ -16,7 +16,7 @@ public class ValueRangeGroups extends PropertyValueGroups {
 
   /**
    * create the value range groups
-   * 
+   *
    * @param groups
    *          the groups
    * @param property
@@ -55,7 +55,7 @@ public class ValueRangeGroups extends PropertyValueGroups {
 
   /**
    * Get the grouping parameter.
-   * 
+   *
    * @return the grouping parameter.
    */
   public final Number getInfo() {
@@ -69,7 +69,7 @@ public class ValueRangeGroups extends PropertyValueGroups {
         "_grouped_by_" + //$NON-NLS-1$
         this.getGroupingMode().toString().toLowerCase() + //
         "_of_" + //$NON-NLS-1$
-    this.m_parameter.toString());
+        this.m_parameter.toString());
   }
 
   /** {@inheritDoc} */

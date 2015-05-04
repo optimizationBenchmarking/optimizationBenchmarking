@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 
 /** a test for collection classes */
 public class ArraySetViewTest extends
-    ArrayListViewTestBase<Object, ArraySetView<Object>> {
+ArrayListViewTestBase<Object, ArraySetView<Object>> {
 
   /** create */
   public ArraySetViewTest() {

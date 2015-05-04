@@ -26,7 +26,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
 
   /**
    * create
-   * 
+   *
    * @param builder
    *          the builder
    */
@@ -34,8 +34,8 @@ public class DocumentConfiguration extends GraphicConfiguration {
       final DocumentConfigurationBuilder builder) {
     super(builder);
     DocumentConfiguration
-        ._checkDocumentDriver(this.m_documentDriver = builder
-            .getDocumentDriver());
+    ._checkDocumentDriver(this.m_documentDriver = builder
+    .getDocumentDriver());
     DocumentConfiguration._checkChartDriver(this.m_chartDriver = builder
         .getChartDriver());
     DocumentConfiguration._checkGraphicDriverCompliance(
@@ -52,12 +52,12 @@ public class DocumentConfiguration extends GraphicConfiguration {
 
     throw new UnsupportedOperationException(//
         "Cannot make instance of " + //$NON-NLS-1$
-            TextUtils.className(this.getClass()) + " immutable."); //$NON-NLS-1$
+        TextUtils.className(this.getClass()) + " immutable."); //$NON-NLS-1$
   }
 
   /**
    * check the chart driver
-   * 
+   *
    * @param driver
    *          the chart driver which must not be null
    */
@@ -70,7 +70,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
 
   /**
    * check the document driver
-   * 
+   *
    * @param driver
    *          the document driver which must not be null
    */
@@ -84,7 +84,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
 
   /**
    * check whether a graphic driver complies with a document driver
-   * 
+   *
    * @param graphics
    *          the graphics driver
    * @param document
@@ -103,7 +103,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
 
   /**
    * Get the chart driver
-   * 
+   *
    * @return the chart driver
    */
   public final IChartDriver getChartDriver() {
@@ -112,7 +112,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
 
   /**
    * Get the document driver
-   * 
+   *
    * @return the document driver
    */
   public final IDocumentDriver getDocumentDriver() {
@@ -133,7 +133,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
         config = ((DocumentConfiguration) o);
         return (EComparison.equals(this.m_chartDriver,
             config.m_chartDriver) && EComparison.equals(
-            this.m_documentDriver, config.m_documentDriver));
+                this.m_documentDriver, config.m_documentDriver));
       }
     } else {
       if (o instanceof DocumentConfigurationBuilder) {
@@ -141,7 +141,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
           builder = ((DocumentConfigurationBuilder) o);
           return (EComparison.equals(this.m_chartDriver,
               builder.getChartDriver()) && EComparison.equals(
-              this.m_documentDriver, builder.getDocumentDriver()));
+                  this.m_documentDriver, builder.getDocumentDriver()));
         }
       }
     }
@@ -173,7 +173,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
 
   /**
    * Create a document builder with this object's settings
-   * 
+   *
    * @return the document builder
    */
   public IDocumentBuilder createDocumentBuilder() {
@@ -212,7 +212,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
    * and not already defined in this configuration object. This kitchen
    * sink approach is not nice and maybe will be amended later. But for now
    * it will do.
-   * 
+   *
    * @param basePath
    *          the base path, i.e., the folder in which the document should
    *          be created

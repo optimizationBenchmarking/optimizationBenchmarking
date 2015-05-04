@@ -17,21 +17,21 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * internally. In this case, the attribute instance also serves as key to a
  * {@link java.util.HashMap hash map}-based cache.
  * </p>
- * 
+ *
  * @param <ST>
  *          the source object type which is attributed
  * @param <RT>
  *          the result type of the attribute
  */
 public abstract class Attribute<ST extends IDataElement, RT> extends
-    HashObject {
+HashObject {
 
   /** the attribute type */
   final EAttributeType m_type;
 
   /**
    * create the attribute
-   * 
+   *
    * @param type
    *          the attribute type
    */
@@ -46,7 +46,7 @@ public abstract class Attribute<ST extends IDataElement, RT> extends
 
   /**
    * Compute the value of this attribute.
-   * 
+   *
    * @param data
    *          the data to compute the value from
    * @return the value
@@ -61,7 +61,7 @@ public abstract class Attribute<ST extends IDataElement, RT> extends
 
   /**
    * Get the value of the attribute from a given data element
-   * 
+   *
    * @param data
    *          the data element
    * @return the result type
@@ -72,11 +72,11 @@ public abstract class Attribute<ST extends IDataElement, RT> extends
     }
     throw new IllegalArgumentException(
         "All elements of the experiment API which can have attributes must be instances of " //$NON-NLS-1$
-            + TextUtils.className(DataElement.class) + //
-            " but you supplied "//$NON-NLS-1$ 
-            + ((data == null) ? "null" : //$NON-NLS-1$
-                " an instance of " //$NON-NLS-1$
-                    + TextUtils.className(data.getClass())) + '.');//
+        + TextUtils.className(DataElement.class) + //
+        " but you supplied "//$NON-NLS-1$
+        + ((data == null) ? "null" : //$NON-NLS-1$
+          " an instance of " //$NON-NLS-1$
+          + TextUtils.className(data.getClass())) + '.');//
   }
 
 }

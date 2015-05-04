@@ -64,7 +64,7 @@ public class BBOBInput extends ExperimentSetFileInput {
 
   /** the dimensions */
   static final byte[] DIMENSIONS = new byte[] { (byte) 2, (byte) 3,
-      (byte) 5, (byte) 10, (byte) 20, (byte) 40, };
+    (byte) 5, (byte) 10, (byte) 20, (byte) 40, };
 
   /** create */
   BBOBInput() {
@@ -73,7 +73,7 @@ public class BBOBInput extends ExperimentSetFileInput {
 
   /**
    * get the instance of the {@link BBOBInput}
-   * 
+   *
    * @return the instance of the {@link BBOBInput}
    */
   public static final BBOBInput getInstance() {
@@ -82,7 +82,7 @@ public class BBOBInput extends ExperimentSetFileInput {
 
   /**
    * fill in the dimension set
-   * 
+   *
    * @param esb
    *          the experiment set builder
    */
@@ -100,7 +100,7 @@ public class BBOBInput extends ExperimentSetFileInput {
     try (final DimensionContext d = esb.createDimension()) {
       d.setName("F"); //$NON-NLS-1$
       d.setDescription(//
-      "the best objective value - F_opt"); //$NON-NLS-1$
+          "the best objective value - F_opt"); //$NON-NLS-1$
       d.setDirection(EDimensionDirection.DECREASING);
       d.setType(EDimensionType.QUALITY_PROBLEM_DEPENDENT);
       d.setParser(new BoundedDoubleParser(0d, Double.MAX_VALUE));
@@ -110,7 +110,7 @@ public class BBOBInput extends ExperimentSetFileInput {
 
   /**
    * Make a function name
-   * 
+   *
    * @param id
    *          the function id
    * @param dim
@@ -123,7 +123,7 @@ public class BBOBInput extends ExperimentSetFileInput {
 
   /**
    * fill in the instance set
-   * 
+   *
    * @param esb
    *          the experiment set builder
    */
@@ -447,7 +447,7 @@ public class BBOBInput extends ExperimentSetFileInput {
         } else {
           if (bdim <= 7) {
             d = d2; // from
-                    // http://en.wikipedia.org/wiki/Rosenbrock_function
+            // http://en.wikipedia.org/wiki/Rosenbrock_function
           } else {
             d = d2; // doi:10.1162/evco.2009.17.3.437)
           }

@@ -26,7 +26,7 @@ public final class PermutationIterator extends BasicIterator<int[]> {
 
   /**
    * create the iterator
-   * 
+   *
    * @param n
    *          the length of the permutations
    */

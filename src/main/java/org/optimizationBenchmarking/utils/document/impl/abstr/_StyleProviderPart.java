@@ -13,7 +13,7 @@ class _StyleProviderPart extends DocumentPart implements IStyleProvider {
 
   /**
    * Create a document part.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -24,7 +24,7 @@ class _StyleProviderPart extends DocumentPart implements IStyleProvider {
 
   /**
    * Create the style set
-   * 
+   *
    * @param owner
    *          the owner
    * @return the style set

@@ -5,12 +5,12 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
  * A parser for classes
- * 
+ *
  * @param <T>
  *          the base type
  */
 public class ClassParser<T extends Object> extends
-    Parser<Class<? extends T>> {
+Parser<Class<? extends T>> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ public class ClassParser<T extends Object> extends
 
   /**
    * create the parser
-   * 
+   *
    * @param base
    *          the base class
    */
@@ -43,7 +43,7 @@ public class ClassParser<T extends Object> extends
 
   /**
    * Get the base class
-   * 
+   *
    * @return the base class
    */
   public final Class<T> getBaseClass() {
@@ -108,7 +108,7 @@ public class ClassParser<T extends Object> extends
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -120,7 +120,7 @@ public class ClassParser<T extends Object> extends
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

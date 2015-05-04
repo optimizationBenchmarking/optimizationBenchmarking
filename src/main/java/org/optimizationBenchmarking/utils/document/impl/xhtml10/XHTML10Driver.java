@@ -56,31 +56,31 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** the start of the section div */
   static final char[] SECTION_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ', 'c',
-      'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i', 'o', 'n',
-      '"', '>' };
+    'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i', 'o', 'n',
+    '"', '>' };
   /** the start of the section head div */
   static final char[] SECTION_HEAD_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ',
-      'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i', 'o',
-      'n', 'H', 'e', 'a', 'd', '"', '>' };
+    'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i', 'o',
+    'n', 'H', 'e', 'a', 'd', '"', '>' };
   /** the start of the section body div */
   static final char[] SECTION_BODY_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ',
-      'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i', 'o',
-      'n', 'B', 'o', 'd', 'y', '"', '>' };
+    'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i', 'o',
+    'n', 'B', 'o', 'd', 'y', '"', '>' };
 
   /** the head line start */
   static final char[][] HEADLINE_BEGIN = {
-      { '<', 'h', '1', '>' },
-      { '<', 'h', '2', '>' },
-      { '<', 'h', '3', '>' },
-      { '<', 'h', '4', '>' },
-      { '<', 'h', '5', '>' },
-      { '<', 'h', '6', '>' },
-      { '<', 'd', 'i', 'v', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'h',
-          '7', '"', '>' } };
+    { '<', 'h', '1', '>' },
+    { '<', 'h', '2', '>' },
+    { '<', 'h', '3', '>' },
+    { '<', 'h', '4', '>' },
+    { '<', 'h', '5', '>' },
+    { '<', 'h', '6', '>' },
+    { '<', 'd', 'i', 'v', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'h',
+      '7', '"', '>' } };
 
   /** the span class begin */
   static final char[] SPAN_CLASS_BEGIN = { '<', 's', 'p', 'a', 'n', ' ',
-      'c', 'l', 'a', 's', 's', '=', '"', };
+    'c', 'l', 'a', 's', 's', '=', '"', };
   /** the span end */
   static final char[] SPAN_END = { '<', '/', 's', 'p', 'a', 'n', '>', };
 
@@ -89,31 +89,31 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** the head line end */
   static final char[][] HEADLINE_END = { { '<', '/', 'h', '1', '>' },
-      { '<', '/', 'h', '2', '>' }, { '<', '/', 'h', '3', '>' },
-      { '<', '/', 'h', '4', '>' }, { '<', '/', 'h', '5', '>' },
-      { '<', '/', 'h', '6', '>' }, XHTML10Driver.DIV_END };
+    { '<', '/', 'h', '2', '>' }, { '<', '/', 'h', '3', '>' },
+    { '<', '/', 'h', '4', '>' }, { '<', '/', 'h', '5', '>' },
+    { '<', '/', 'h', '6', '>' }, XHTML10Driver.DIV_END };
 
   /** the span end followed by a non-breakable space */
   static final char[] SPAN_END_NBSP = { '<', '/', 's', 'p', 'a', 'n', '>',
-      '&', 'n', 'b', 's', 'p', ';' };
+    '&', 'n', 'b', 's', 'p', ';' };
 
   /** the label start */
   private static final char[] LABEL_BEGIN = { '<', 'a', ' ', 'i', 'd',
-      '=', '"', };
+    '=', '"', };
   /** the label end */
   private static final char[] LABEL_END = {// avoid empty tags
-  '"', '>', '<', '/', 'a', '>' };
+    '"', '>', '<', '/', 'a', '>' };
   /** non-breaking space */
   static final char[] NBSP = { '&', 'n', 'b', 's', 'p', ';' };
 
   /** the br */
   static final char[] BR = { '<', 'b', 'r', '/', '>', '&', 'n', 'b', 's',
-      'p', ';', '&', 'n', 'b', 's', 'p', ';', '&', 'n', 'b', 's', 'p',
-      ';', '&', 'n', 'b', 's', 'p', ';' };
+    'p', ';', '&', 'n', 'b', 's', 'p', ';', '&', 'n', 'b', 's', 'p',
+    ';', '&', 'n', 'b', 's', 'p', ';' };
 
   /** the reference href id */
   static final char[] A_REF = { '<', 'a', ' ', 'c', 'l', 'a', 's', 's',
-      '=', '"', 'r', 'e', 'f', '"', ' ', 'h', 'r', 'e', 'f', '=', '"', '#' };
+    '=', '"', 'r', 'e', 'f', '"', ' ', 'h', 'r', 'e', 'f', '=', '"', '#' };
 
   /** the 3rd part of a reference */
   static final char[] A_REF_END = { '<', '/', 'a', '>' };
@@ -149,7 +149,7 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /**
    * Encode a text output
-   * 
+   *
    * @param raw
    *          the raw output
    * @return the encoded output
@@ -659,7 +659,7 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /**
    * write a label
-   * 
+   *
    * @param label
    *          the label
    * @param out
@@ -673,7 +673,7 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /**
    * write a label
-   * 
+   *
    * @param label
    *          the label
    * @param out
@@ -689,7 +689,7 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /**
    * Get the XHTML driver
-   * 
+   *
    * @return the XHTML driver
    */
   public static final XHTML10Driver getInstance() {
@@ -698,7 +698,7 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /**
    * Get the default page dimension for XHTML 1.0 documents
-   * 
+   *
    * @return the default page dimension for XHTML 1.0 documents
    */
   public static final PageDimension defaultPageDimension() {
@@ -707,7 +707,7 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /**
    * Get the default graphic driver for XHTML 1.0 documents
-   * 
+   *
    * @return the default graphic driver for XHTML 1.0 documents
    */
   public static final IGraphicDriver defaultGraphicDriver() {

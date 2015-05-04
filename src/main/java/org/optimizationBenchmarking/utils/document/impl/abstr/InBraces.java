@@ -7,14 +7,14 @@ public class InBraces extends PlainText {
 
   /** the marks */
   private static final Braces[] BRACES = { Braces.PARENTHESES,
-      Braces.BRACKETS, Braces.CURLY_BRACES, Braces.ANGLE, Braces.CHEVRON };
+    Braces.BRACKETS, Braces.CURLY_BRACES, Braces.ANGLE, Braces.CHEVRON };
 
   /** the marks */
   private final int m_braces;
 
   /**
    * Create a text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -42,7 +42,7 @@ public class InBraces extends PlainText {
 
   /**
    * Get the brace index
-   * 
+   *
    * @return the brace index
    */
   protected final int getBraceIndex() {
@@ -51,7 +51,7 @@ public class InBraces extends PlainText {
 
   /**
    * Get the brace marks
-   * 
+   *
    * @return the brace marks
    */
   public Braces getBraces() {

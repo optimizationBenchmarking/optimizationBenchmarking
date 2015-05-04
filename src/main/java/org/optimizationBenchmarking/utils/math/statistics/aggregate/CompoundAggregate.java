@@ -10,7 +10,7 @@ public final class CompoundAggregate implements IAggregate {
 
   /**
    * create
-   * 
+   *
    * @param a
    *          the first child aggregate
    * @param b
@@ -24,7 +24,7 @@ public final class CompoundAggregate implements IAggregate {
 
   /**
    * Create a compound aggregate composed of two other aggregates
-   * 
+   *
    * @param a
    *          the first aggregate
    * @param b
@@ -44,7 +44,7 @@ public final class CompoundAggregate implements IAggregate {
 
   /**
    * Create a compound aggregate composed of several other aggregates
-   * 
+   *
    * @param agg
    *          the set of aggregates
    * @return the compound aggregate
@@ -55,7 +55,7 @@ public final class CompoundAggregate implements IAggregate {
 
   /**
    * Combine aggregates
-   * 
+   *
    * @param agg
    *          the aggregate list
    * @param start

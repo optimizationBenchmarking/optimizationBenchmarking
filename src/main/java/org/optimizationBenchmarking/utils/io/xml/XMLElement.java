@@ -72,7 +72,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * create a new xml element
-   * 
+   *
    * @param owner
    *          the owner the name
    */
@@ -116,7 +116,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Set the name of this element
-   * 
+   *
    * @param namespaceURI
    *          the namespace uri
    * @param name
@@ -164,7 +164,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Move to the given state
-   * 
+   *
    * @param maximumAllowedState
    *          the maximum allowed state
    * @param targetState
@@ -262,10 +262,10 @@ public final class XMLElement extends XMLBase {
         default: {
           sb = new MemoryTextOutput();
           sb.append(//
-          "We should have never gotten here, old state "); //$NON-NLS-1$
+              "We should have never gotten here, old state "); //$NON-NLS-1$
           this.fsmStateAppendName(oldState, sb);
           sb.append(//
-          " is unknown or inconsistent and cannot be left for target state "); //$NON-NLS-1$
+              " is unknown or inconsistent and cannot be left for target state "); //$NON-NLS-1$
           this.fsmStateAppendName(targetState, sb);
           sb.append('.');
           throw new IllegalStateException(sb.toString());
@@ -284,7 +284,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Obtain the prefix for a given namespace.
-   * 
+   *
    * @param uri
    *          the namespace URI
    * @param isDefaultNamespaceAllowed
@@ -376,7 +376,7 @@ public final class XMLElement extends XMLBase {
    * cannot lead to problems with the XMLFileType specification. In
    * particular, do not write stuff such as <code>&amp;</code> or
    * <code>&lt;</code>.
-   * 
+   *
    * @return the raw text output destination
    * @see #textEncoded()
    */
@@ -389,7 +389,7 @@ public final class XMLElement extends XMLBase {
    * Get a
    * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    * for writing arbitrary text output to this element.
-   * 
+   *
    * @return the encoded text output destination
    * @see #textRaw()
    */
@@ -401,7 +401,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Write an attribute value, encode if necessary.
-   * 
+   *
    * @param namespaceURI
    *          the namespace of the attribute
    * @param name
@@ -440,7 +440,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Write an attribute value
-   * 
+   *
    * @param namespaceURI
    *          the namespace of the attribute
    * @param name
@@ -460,7 +460,7 @@ public final class XMLElement extends XMLBase {
    * applied if it is absolutely clear that the contents of {@code value}
    * will not violate the XMLFileType specification, in particular, do not
    * contain stuff such as {@code "}.
-   * 
+   *
    * @param namespaceURI
    *          the namespace of the attribute
    * @param name
@@ -475,12 +475,13 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Assign a prefix to a namespace uri
-   * 
+   *
    * @param namespaceURI
    *          the namespace uri
    * @param prefix
    *          the prefix
    */
+  @SuppressWarnings("unchecked")
   public synchronized final void namespaceSetPrefix(
       final URI namespaceURI, final String prefix) {
     final String pf;
@@ -492,16 +493,16 @@ public final class XMLElement extends XMLBase {
     if (namespaceURI == null) {
       throw new IllegalArgumentException(//
           "Cannot set prefix '" + prefix + //$NON-NLS-1$
-              "' for null namespace URI in '" + this + //$NON-NLS-1$
-              "'."); //$NON-NLS-1$
+          "' for null namespace URI in '" + this + //$NON-NLS-1$
+          "'."); //$NON-NLS-1$
     }
 
     pf = TextUtils.normalize(prefix);
     if (pf == null) {
       throw new IllegalArgumentException(//
           "Namespace prefix must not be empty or null, but prefix for namespace '"//$NON-NLS-1$
-              + namespaceURI + "' is '" + prefix + //$NON-NLS-1$
-              "' in '" + this + "'."); //$NON-NLS-1$//$NON-NLS-2$
+          + namespaceURI + "' is '" + prefix + //$NON-NLS-1$
+          "' in '" + this + "'."); //$NON-NLS-1$//$NON-NLS-2$
     }
 
     this.fsmStateAssertAndSet(EComparison.LESS_OR_EQUAL,
@@ -518,8 +519,8 @@ public final class XMLElement extends XMLBase {
       definition = nss.get(useURI);
       if (definition != null) {
         if (this.getOwner() instanceof XMLElement) {
-          this.m_namespaces = nss = ((HashMap<Object, _Namespace>) (nss
-              .clone()));
+          this.m_namespaces = nss = //
+              ((HashMap<Object, _Namespace>) (nss.clone()));
         }
 
         nss.put(namespaceURI, definition);
@@ -533,10 +534,10 @@ public final class XMLElement extends XMLBase {
       }
       throw new IllegalArgumentException(//
           "Prefix '" + prefix + //$NON-NLS-1$
-              "' has already been assigned to namespace URI '"//$NON-NLS-1$
-              + definition.m_uri
-              + "' so it cannot be assigned to URI '" + namespaceURI + //$NON-NLS-1$
-              "' in '" + this + "'."); //$NON-NLS-1$//$NON-NLS-2$
+          "' has already been assigned to namespace URI '"//$NON-NLS-1$
+          + definition.m_uri
+          + "' so it cannot be assigned to URI '" + namespaceURI + //$NON-NLS-1$
+          "' in '" + this + "'."); //$NON-NLS-1$//$NON-NLS-2$
     }
 
     if (this.getOwner() instanceof XMLElement) {
@@ -558,7 +559,7 @@ public final class XMLElement extends XMLBase {
 
   /**
    * Set the namespace uri as default namespace
-   * 
+   *
    * @param namespaceURI
    *          the namespace uri
    */

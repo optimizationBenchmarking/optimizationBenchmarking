@@ -10,7 +10,7 @@ import test.junit.TestBase;
 
 /**
  * The base class for testing producer and consumer buffers.
- * 
+ *
  * @param <T>
  *          the array type
  */
@@ -24,7 +24,7 @@ public abstract class ProducerConsumerBufferTest<T> extends TestBase {
 
   /**
    * create a new array
-   * 
+   *
    * @param size
    *          the size
    * @return the array
@@ -33,7 +33,7 @@ public abstract class ProducerConsumerBufferTest<T> extends TestBase {
 
   /**
    * fill an array with random data
-   * 
+   *
    * @param array
    *          the array
    * @param r
@@ -43,7 +43,7 @@ public abstract class ProducerConsumerBufferTest<T> extends TestBase {
 
   /**
    * assert that the contents of two arrays are equal
-   * 
+   *
    * @param a
    *          the first array
    * @param b
@@ -53,7 +53,7 @@ public abstract class ProducerConsumerBufferTest<T> extends TestBase {
 
   /**
    * create a new buffer
-   * 
+   *
    * @param size
    *          the size
    * @return the buffer
@@ -62,7 +62,7 @@ public abstract class ProducerConsumerBufferTest<T> extends TestBase {
 
   /**
    * Test whether the written data and the data we read is the same
-   * 
+   *
    * @throws InterruptedException
    *           if it fails...
    */
@@ -149,7 +149,7 @@ public abstract class ProducerConsumerBufferTest<T> extends TestBase {
 
     /**
      * create the writer thread
-     * 
+     *
      * @param write
      *          the stuff to write
      * @param size
@@ -225,7 +225,7 @@ public abstract class ProducerConsumerBufferTest<T> extends TestBase {
 
     /**
      * create the read thread
-     * 
+     *
      * @param read
      *          the stuff to read
      * @param size

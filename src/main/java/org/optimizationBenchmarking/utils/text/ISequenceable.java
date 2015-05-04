@@ -10,7 +10,7 @@ public interface ISequenceable {
 
   /**
    * Write this object's content to a sequence.
-   * 
+   *
    * @param isFirstInSequence
    *          is the object the first in the sequence?
    * @param isLastInSequence

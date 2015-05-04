@@ -8,13 +8,13 @@ final class _LaTeXTableBodyRow extends TableBodyRow {
 
   /** the row color */
   private static final char[] ROW_COLOR = { '\\', 'r', 'o', 'w', 'c', 'o',
-      'l', 'o', 'r', '{', 't', 'a', 'b', 'l', 'e', 'B', 'o', 'd', 'y',
-      'E', 'v', 'e', 'n', 'R', 'o', 'w', 'B', 'a', 'c', 'k', 'g', 'r',
-      'o', 'u', 'n', 'd', 'C', 'o', 'l', 'o', 'r', '}', };
+    'l', 'o', 'r', '{', 't', 'a', 'b', 'l', 'e', 'B', 'o', 'd', 'y',
+    'E', 'v', 'e', 'n', 'R', 'o', 'w', 'B', 'a', 'c', 'k', 'g', 'r',
+    'o', 'u', 'n', 'd', 'C', 'o', 'l', 'o', 'r', '}', };
 
   /**
    * Create a row of a body of a table
-   * 
+   *
    * @param owner
    *          the owning table body
    */

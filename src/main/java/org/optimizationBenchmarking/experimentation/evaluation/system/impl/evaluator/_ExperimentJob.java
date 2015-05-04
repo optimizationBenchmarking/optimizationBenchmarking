@@ -16,7 +16,7 @@ final class _ExperimentJob extends _PartJob {
 
   /**
    * create the single experiment statistics job
-   * 
+   *
    * @param experiment
    *          the experiment
    * @param data
@@ -40,7 +40,7 @@ final class _ExperimentJob extends _PartJob {
   @Override
   final String _getName() {
     return ("Single-Experiment Statistics for " //$NON-NLS-1$
-    + this.m_experiment.getName());
+        + this.m_experiment.getName());
   }
 
   /** {@inheritDoc} */

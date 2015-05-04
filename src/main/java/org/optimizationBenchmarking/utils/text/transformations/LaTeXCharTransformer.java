@@ -34,7 +34,7 @@ public final class LaTeXCharTransformer extends LookupCharTransformer {
 
   /**
    * Get the instance of the LaTeX char transformer
-   * 
+   *
    * @return the instance
    */
   public static final LaTeXCharTransformer getInstance() {

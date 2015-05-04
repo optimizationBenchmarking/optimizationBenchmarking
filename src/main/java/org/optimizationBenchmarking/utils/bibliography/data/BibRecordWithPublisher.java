@@ -15,14 +15,14 @@ public class BibRecordWithPublisher extends BibRecord {
 
   /**
    * the publisher
-   * 
+   *
    * @serial serial field
    */
   final BibOrganization m_publisher;
 
   /**
    * Create the website record
-   * 
+   *
    * @param direct
    *          direct?
    * @param authors
@@ -53,12 +53,12 @@ public class BibRecordWithPublisher extends BibRecord {
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.calcHashCode(),
             HashUtils.hashCode(this.m_publisher)),
-        HashUtils.hashCode(this.m_publisher));
+            HashUtils.hashCode(this.m_publisher));
   }
 
   /**
    * Get the publisher
-   * 
+   *
    * @return the publisher
    */
   public final BibOrganization getPublisher() {

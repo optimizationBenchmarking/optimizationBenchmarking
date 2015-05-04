@@ -21,7 +21,7 @@ public class AbstractFeature extends AbstractProperty implements IFeature {
    * set it via
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractFeatureSet#own(AbstractFeature)}
    * .
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -34,7 +34,7 @@ public class AbstractFeature extends AbstractProperty implements IFeature {
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractFeatureValue}
    * .
-   * 
+   *
    * @param featureValue
    *          the feature set to own
    */

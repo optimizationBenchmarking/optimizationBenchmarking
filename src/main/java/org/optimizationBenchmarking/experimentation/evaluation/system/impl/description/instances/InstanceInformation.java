@@ -27,7 +27,7 @@ public final class InstanceInformation extends DescriptionModule {
 
   /**
    * Get the globally shared instance of the instance information module
-   * 
+   *
    * @return the globally shared instance of the instance information
    *         module
    */

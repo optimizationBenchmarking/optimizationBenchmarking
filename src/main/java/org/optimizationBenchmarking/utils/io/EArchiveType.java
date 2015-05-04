@@ -132,7 +132,7 @@ public enum EArchiveType implements IFileType {
     @Override
     public final OutputStream compressStream(
         final OutputStream destination, final String fallbackFileName)
-        throws IOException {
+            throws IOException {
       return new __ZipOutputStream(destination,
           EArchiveType._fallback(fallbackFileName));
     }
@@ -203,7 +203,7 @@ public enum EArchiveType implements IFileType {
     @Override
     public final OutputStream compressStream(
         final OutputStream destination, final String fallbackFileName)
-        throws IOException {
+            throws IOException {
       return new GZIPOutputStream(destination);
     }
 
@@ -218,7 +218,7 @@ public enum EArchiveType implements IFileType {
 
   /**
    * get a fall back file name
-   * 
+   *
    * @param fallbackFileName
    *          the suggestion
    * @return the name
@@ -233,7 +233,7 @@ public enum EArchiveType implements IFileType {
   /**
    * Compress a single file or a whole folder structure to an output
    * stream.
-   * 
+   *
    * @param sourcePath
    *          the file or folder
    * @param destStream
@@ -246,7 +246,7 @@ public enum EArchiveType implements IFileType {
 
   /**
    * De-compress a stream to a folder.
-   * 
+   *
    * @param sourceStream
    *          the source stream
    * @param destFolder
@@ -265,7 +265,7 @@ public enum EArchiveType implements IFileType {
   /**
    * Create an archive only containing a single file or data stream and
    * provide a destination stream.
-   * 
+   *
    * @param destination
    *          the output stream to which the compressed output will be
    *          written
@@ -280,11 +280,11 @@ public enum EArchiveType implements IFileType {
    */
   public abstract OutputStream compressStream(
       final OutputStream destination, final String fallbackFileName)
-      throws IOException;
+          throws IOException;
 
   /**
    * Open a single stream from an archive an load its data
-   * 
+   *
    * @param source
    *          the input stream with the compressed data
    * @return the wrapped stream from which uncompressed data can be read
@@ -307,7 +307,7 @@ public enum EArchiveType implements IFileType {
 
     /**
      * create the zipper
-     * 
+     *
      * @param root
      *          the root path
      * @param zipStream
@@ -364,7 +364,7 @@ public enum EArchiveType implements IFileType {
 
   /**
    * make a zip output stream
-   * 
+   *
    * @param out
    *          the output stream
    * @return the zip output stream
@@ -386,7 +386,7 @@ public enum EArchiveType implements IFileType {
 
     /**
      * create
-     * 
+     *
      * @param out
      *          the destination stream
      * @param fallbackFileName
@@ -452,7 +452,7 @@ public enum EArchiveType implements IFileType {
 
     /**
      * create the zip input stream
-     * 
+     *
      * @param in
      *          the stream with the compressed data
      * @throws IOException
@@ -561,7 +561,7 @@ public enum EArchiveType implements IFileType {
 
     /**
      * Do we potentially have data to read?
-     * 
+     *
      * @return {@code true} if we may have data, {@code false} otherwise
      * @throws IOException
      *           if i/o fails
@@ -585,7 +585,7 @@ public enum EArchiveType implements IFileType {
 
     /**
      * finish a stream part
-     * 
+     *
      * @throws IOException
      *           if i/o fails
      */
@@ -604,14 +604,14 @@ public enum EArchiveType implements IFileType {
    * A visitor for the storing paths all into a single stream
    */
   private static final class __PathCompressor extends
-      SimpleFileVisitor<Path> {
+  SimpleFileVisitor<Path> {
 
     /** the output stream */
     private final OutputStream m_stream;
 
     /**
      * create the path compressor
-     * 
+     *
      * @param stream
      *          the stream
      */

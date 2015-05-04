@@ -9,7 +9,7 @@ final class _LaTeXMathMul extends MathMul {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

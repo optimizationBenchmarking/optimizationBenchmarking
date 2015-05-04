@@ -17,7 +17,7 @@ public class CompiledLineChart2D extends CompiledChart {
 
   /**
    * Create a titled element
-   * 
+   *
    * @param title
    *          the title, or {@code null} if no title is specified
    * @param titleFont
@@ -53,7 +53,7 @@ public class CompiledLineChart2D extends CompiledChart {
 
   /**
    * Get the x-axis
-   * 
+   *
    * @return the x-axis
    */
   public final CompiledAxis getXAxis() {
@@ -62,7 +62,7 @@ public class CompiledLineChart2D extends CompiledChart {
 
   /**
    * Get the y-axis
-   * 
+   *
    * @return the y-axis
    */
   public final CompiledAxis getYAxis() {
@@ -71,7 +71,7 @@ public class CompiledLineChart2D extends CompiledChart {
 
   /**
    * Get the lines
-   * 
+   *
    * @return the lines
    */
   public final ArrayListView<CompiledLine2D> getLines() {

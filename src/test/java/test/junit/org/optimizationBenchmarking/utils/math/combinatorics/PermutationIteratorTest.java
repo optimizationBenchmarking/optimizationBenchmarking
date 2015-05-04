@@ -21,7 +21,7 @@ public class PermutationIteratorTest {
 
   /**
    * test permutation creation of length n
-   * 
+   *
    * @param n
    *          the length
    */
@@ -50,7 +50,7 @@ public class PermutationIteratorTest {
 
   /**
    * test permutation creation of length n
-   * 
+   *
    * @param n
    *          the length
    */

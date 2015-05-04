@@ -48,7 +48,7 @@ class _HFTDummyHierarchicalFSM extends HierarchicalFSM {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    * @param doOpen
@@ -67,7 +67,7 @@ class _HFTDummyHierarchicalFSM extends HierarchicalFSM {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -122,7 +122,7 @@ class _HFTDummyHierarchicalFSM extends HierarchicalFSM {
     Assert.assertTrue(this.m_isOpened);
     Assert.assertFalse(this.m_isClosed);
     Assert
-        .assertTrue(this.m_beforeChildOpens >= (hasOtherChildren ? 1 : 0));
+    .assertTrue(this.m_beforeChildOpens >= (hasOtherChildren ? 1 : 0));
     Assert.assertTrue(this.m_afterChildOpened <= this.m_beforeChildOpens);
     Assert.assertTrue(this.m_afterChildClosed <= this.m_afterChildOpened);
     Assert.assertTrue((((_HFTDummyHierarchicalFSM) child).m_id) == (-1));
@@ -134,7 +134,7 @@ class _HFTDummyHierarchicalFSM extends HierarchicalFSM {
     Assert.assertTrue(this.m_isOpened);
     Assert.assertFalse(this.m_isClosed);
     Assert
-        .assertTrue(this.m_beforeChildOpens > (hasOtherChildren ? 1 : 0));
+    .assertTrue(this.m_beforeChildOpens > (hasOtherChildren ? 1 : 0));
     Assert.assertTrue(this.m_afterChildOpened < this.m_beforeChildOpens);
     Assert.assertTrue(this.m_afterChildClosed <= this.m_afterChildOpened);
     Assert.assertTrue((((_HFTDummyHierarchicalFSM) child).m_id) >= 0);
@@ -156,11 +156,11 @@ class _HFTDummyHierarchicalFSM extends HierarchicalFSM {
     Assert.assertTrue(this.m_isOpened);
     Assert.assertFalse(this.m_isClosed);
     Assert
-        .assertTrue(this.m_beforeChildOpens > (hasOtherChildren ? 1 : 0));
+    .assertTrue(this.m_beforeChildOpens > (hasOtherChildren ? 1 : 0));
     Assert.assertTrue(this.m_afterChildOpened < this.m_beforeChildOpens);
     Assert.assertTrue(this.m_afterChildClosed <= this.m_afterChildOpened);
     Assert
-        .assertTrue(this.m_afterChildOpened >= (hasOtherChildren ? 1 : 0));
+    .assertTrue(this.m_afterChildOpened >= (hasOtherChildren ? 1 : 0));
     super.afterChildOpened(child, hasOtherChildren);
     this.m_afterChildOpened++;
 
@@ -170,9 +170,9 @@ class _HFTDummyHierarchicalFSM extends HierarchicalFSM {
     Assert.assertTrue(this.m_isOpened);
     Assert.assertFalse(this.m_isClosed);
     Assert
-        .assertTrue(this.m_beforeChildOpens > (hasOtherChildren ? 1 : 0));
+    .assertTrue(this.m_beforeChildOpens > (hasOtherChildren ? 1 : 0));
     Assert
-        .assertTrue(this.m_afterChildOpened >= (hasOtherChildren ? 2 : 1));
+    .assertTrue(this.m_afterChildOpened >= (hasOtherChildren ? 2 : 1));
     Assert.assertTrue(this.m_afterChildOpened <= this.m_beforeChildOpens);
     Assert.assertTrue(this.m_afterChildClosed < this.m_afterChildOpened);
 

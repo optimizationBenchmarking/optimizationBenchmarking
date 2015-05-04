@@ -40,7 +40,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * create a new document class
-   * 
+   *
    * @param clazz
    *          the class
    * @param params
@@ -80,12 +80,12 @@ public class LaTeXDocumentClass extends PageDimension {
     if ((this.m_class = TextUtils.normalize(clazz)) == null) {
       throw new IllegalArgumentException(//
           "Document class name cannot be empty or null, but is '" //$NON-NLS-1$
-              + clazz + '\'');
+          + clazz + '\'');
     }
     if ((this.m_bibStyle = TextUtils.normalize(bibStyle)) == null) {
       throw new IllegalArgumentException(//
           "Bibliography style cannot be empty or null, but is '" //$NON-NLS-1$
-              + bibStyle + '\'');
+          + bibStyle + '\'');
     }
     if (paperSize == null) {
       throw new IllegalArgumentException(//
@@ -111,15 +111,15 @@ public class LaTeXDocumentClass extends PageDimension {
     if (this.m_highest.ordinal() > this.m_lowest.ordinal()) {
       throw new IllegalArgumentException(//
           "If the highest supported document section type is " //$NON-NLS-1$
-              + this.m_highest
-              + ", then the lowest supported document section type cannot be " //$NON-NLS-1$ 
-              + this.m_lowest + ", since this is 'semantically bigger'."); //$NON-NLS-1$
+          + this.m_highest
+          + ", then the lowest supported document section type cannot be " //$NON-NLS-1$
+          + this.m_lowest + ", since this is 'semantically bigger'."); //$NON-NLS-1$
     }
   }
 
   /**
    * Get the document class name
-   * 
+   *
    * @return the document class name
    */
   public final String getDocumentClass() {
@@ -128,7 +128,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the document class parameters
-   * 
+   *
    * @return the document class parameters
    */
   public final ArrayListView<String> getDocumentClassParameters() {
@@ -137,7 +137,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the bibliography style name
-   * 
+   *
    * @return the bibliography style name
    */
   public final String getBibliographyStyle() {
@@ -146,7 +146,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the paper size
-   * 
+   *
    * @return the paper size
    */
   public final EPaperSize getPaperSize() {
@@ -155,7 +155,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the font palette
-   * 
+   *
    * @return the font palette
    */
   public final FontPalette getFontPalette() {
@@ -165,7 +165,7 @@ public class LaTeXDocumentClass extends PageDimension {
   /**
    * Get the highest supported section type, e.g.,
    * {@link ELaTeXSection#PART}
-   * 
+   *
    * @return the highest supported section type
    */
   public final ELaTeXSection getHighestSectionType() {
@@ -175,7 +175,7 @@ public class LaTeXDocumentClass extends PageDimension {
   /**
    * Get the lowest supported section type, e.g.,
    * {@link ELaTeXSection#SUBSECTION}
-   * 
+   *
    * @return the lowest supported section type
    */
   public final ELaTeXSection getLowestSectionType() {
@@ -205,15 +205,15 @@ public class LaTeXDocumentClass extends PageDimension {
             HashUtils.combineHashes(//
                 HashUtils.hashCode(this.m_class),//
                 HashUtils.hashCode(this.m_classParams))),//
-        HashUtils.combineHashes(
-            //
-            HashUtils.combineHashes(//
-                HashUtils.hashCode(this.m_bibStyle),//
-                HashUtils.hashCode(this.m_fonts)), //
-            HashUtils.combineHashes(
-                //
-                HashUtils.hashCode(this.m_highest),
-                HashUtils.hashCode(this.m_lowest))));
+                HashUtils.combineHashes(
+                    //
+                    HashUtils.combineHashes(//
+                        HashUtils.hashCode(this.m_bibStyle),//
+                        HashUtils.hashCode(this.m_fonts)), //
+                        HashUtils.combineHashes(
+                            //
+                            HashUtils.hashCode(this.m_highest),
+                            HashUtils.hashCode(this.m_lowest))));
   }
 
   /** {@inheritDoc} */
@@ -234,14 +234,14 @@ public class LaTeXDocumentClass extends PageDimension {
           EComparison.equals(this.m_fonts, c.m_fonts) && //
           EComparison.equals(this.m_highest, c.m_highest) && //
           EComparison.equals(this.m_lowest, c.m_lowest) && //
-      super.equals(o));
+          super.equals(o));
     }
     return false;
   }
 
   /**
    * Get the command that begins the summary
-   * 
+   *
    * @return the command that begins the summary
    */
   protected String getSummaryBegin() {
@@ -250,7 +250,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that ends the summary
-   * 
+   *
    * @return the command that ends the summary
    */
   protected String getSummaryEnd() {
@@ -259,7 +259,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that begins the title
-   * 
+   *
    * @return the command that begins the title
    */
   protected String getTitleBegin() {
@@ -268,7 +268,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that ends the title
-   * 
+   *
    * @return the command that ends the title
    */
   protected String getTitleEnd() {
@@ -277,7 +277,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that begins the authors
-   * 
+   *
    * @return the command that begins the authors
    */
   protected String getAuthorsBegin() {
@@ -286,7 +286,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that ends the authors
-   * 
+   *
    * @return the command that ends the authors
    */
   protected String getAuthorsEnd() {
@@ -295,7 +295,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that begins an author
-   * 
+   *
    * @return the command that begins an author
    */
   protected String getAuthorBegin() {
@@ -304,7 +304,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that ends an author
-   * 
+   *
    * @return the command that ends an author
    */
   protected String getAuthorEnd() {
@@ -313,7 +313,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that separates two authors
-   * 
+   *
    * @return the command that separates two authors
    */
   protected String getAuthorSeparator() {
@@ -322,7 +322,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that begins the date
-   * 
+   *
    * @return the command that begins the date
    */
   protected String getDateBegin() {
@@ -331,7 +331,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that ends the date
-   * 
+   *
    * @return the command that ends the date
    */
   protected String getDateEnd() {
@@ -340,7 +340,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the command that makes the title
-   * 
+   *
    * @return the command that makes the title
    */
   protected String getMakeTitle() {
@@ -352,7 +352,7 @@ public class LaTeXDocumentClass extends PageDimension {
    * via {@link #requireResources(LaTeXDocument, String[], String)} and to
    * load packages via
    * {@link #requirePackage(ITextOutput, String, String[])}.
-   * 
+   *
    * @param doc
    *          the document to initialize
    * @param setupPackage
@@ -368,7 +368,7 @@ public class LaTeXDocumentClass extends PageDimension {
   /**
    * Require that a set of resources (located together with this class)
    * should be copied to the location of the LaTeX document {@code doc}.
-   * 
+   *
    * @param doc
    *          the document to which the resources should be co-located
    * @param resources
@@ -384,7 +384,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Require a package.
-   * 
+   *
    * @param setupPackage
    *          the text output to write to
    * @param packageName
@@ -400,7 +400,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Write a comment and end the line.
-   * 
+   *
    * @param comment
    *          the comment
    * @param out
@@ -413,7 +413,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * End the line
-   * 
+   *
    * @param out
    *          the text output
    */
@@ -423,7 +423,7 @@ public class LaTeXDocumentClass extends PageDimension {
 
   /**
    * Get the default document class
-   * 
+   *
    * @return the default document class
    */
   public static final LaTeXDocumentClass getDefaultDocumentClass() {

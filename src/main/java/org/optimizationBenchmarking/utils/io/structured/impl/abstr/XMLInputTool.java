@@ -18,12 +18,12 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * A tool for reading XMLFileType input
- * 
+ *
  * @param <S>
  *          the source type
  */
 public class XMLInputTool<S> extends TextInputTool<S> implements
-    IXMLInputTool<S> {
+IXMLInputTool<S> {
 
   /** the xml version */
   protected static final String XML_VERSION = "1.0"; //$NON-NLS-1$
@@ -57,7 +57,7 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
 
   /**
    * Configure the SAX parser factory
-   * 
+   *
    * @param spf
    *          the sax parser factory to be used by this driver
    * @throws Throwable
@@ -70,7 +70,7 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
 
   /**
    * Wrap the loader context into an appropriate default handler
-   * 
+   *
    * @param dataDestination
    *          the destination
    * @param job
@@ -110,7 +110,7 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
 
   /**
    * Read the data from an XMLFileType document
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -137,7 +137,7 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
   @Override
   protected void stream(final IOJob job, final S data,
       final InputStream stream, final StreamEncoding<?, ?> encoding)
-      throws Throwable {
+          throws Throwable {
     this.m_spf.newSAXParser().parse(stream,
         this.wrapDestination(data, job));
   }
@@ -183,8 +183,8 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
     if (this.m_cause != null) {
       throw new UnsupportedOperationException(//
           "Cannot use tool '" + //$NON-NLS-1$
-              TextUtils.className(this.getClass())
-              + " due to error in XMLFileType parser initialization.",//$NON-NLS-1$
+          TextUtils.className(this.getClass())
+          + " due to error in XMLFileType parser initialization.",//$NON-NLS-1$
           this.m_cause);
     }
     super.checkCanUse();

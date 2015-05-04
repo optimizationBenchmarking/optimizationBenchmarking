@@ -9,29 +9,29 @@ final class _XHTML10Equation extends Equation {
 
   /** the equation div begin */
   private static final char[] EQU_DIV = { '<', 'd', 'i', 'v', ' ', 'c',
-      'l', 'a', 's', 's', '=', '"', 'e', 'q', 'u', 'a', 't', 'i', 'o',
-      'n', '"', '>' };
+    'l', 'a', 's', 's', '=', '"', 'e', 'q', 'u', 'a', 't', 'i', 'o',
+    'n', '"', '>' };
   /** the equation table begin */
   private static final char[] EQU_TAB = { '<', 't', 'a', 'b', 'l', 'e',
-      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'e', 'q', 'u', 'a', 't',
-      'i', 'o', 'n', '"', '>' };
+    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'e', 'q', 'u', 'a', 't',
+    'i', 'o', 'n', '"', '>' };
   /** the equation tr begin */
   private static final char[] EQU_TR = { '<', 't', 'r', ' ', 'c', 'l',
-      'a', 's', 's', '=', '"', 'e', 'q', 'u', 'a', 't', 'i', 'o', 'n',
-      '"', '>' };
+    'a', 's', 's', '=', '"', 'e', 'q', 'u', 'a', 't', 'i', 'o', 'n',
+    '"', '>' };
   /** the equation td begin */
   private static final char[] EQU_BODY_TD = { '<', 't', 'd', ' ', 'c',
-      'l', 'a', 's', 's', '=', '"', 'e', 'q', 'u', 'a', 't', 'i', 'o',
-      'n', 'B', 'o', 'd', 'y', '"', '>' };
+    'l', 'a', 's', 's', '=', '"', 'e', 'q', 'u', 'a', 't', 'i', 'o',
+    'n', 'B', 'o', 'd', 'y', '"', '>' };
   /** the equation td begin */
   private static final char[] EQU_NR_TD = { '<', 't', 'd', ' ', 'c', 'l',
-      'a', 's', 's', '=', '"', 'e', 'q', 'u', 'a', 't', 'i', 'o', 'n',
-      'N', 'u', 'm', 'b', 'e', 'r', '"', '>', '(', 'E', 'q', '.', '&',
-      'n', 'b', 's', 'p', ';' };
+    'a', 's', 's', '=', '"', 'e', 'q', 'u', 'a', 't', 'i', 'o', 'n',
+    'N', 'u', 'm', 'b', 'e', 'r', '"', '>', '(', 'E', 'q', '.', '&',
+    'n', 'b', 's', 'p', ';' };
 
   /**
    * Create a new equation
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index

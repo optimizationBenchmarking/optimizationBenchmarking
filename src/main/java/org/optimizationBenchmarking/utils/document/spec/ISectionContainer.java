@@ -8,7 +8,7 @@ package org.optimizationBenchmarking.utils.document.spec;
 public interface ISectionContainer extends IDocumentElement {
   /**
    * Create a new section.
-   * 
+   *
    * @param useLabel
    *          a label to use for the table,
    *          {@link org.optimizationBenchmarking.utils.document.spec.ELabelType#AUTO}

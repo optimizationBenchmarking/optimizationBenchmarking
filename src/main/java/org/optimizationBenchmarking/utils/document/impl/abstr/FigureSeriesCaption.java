@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 public class FigureSeriesCaption extends ComplexText {
   /**
    * create the caption
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -16,7 +16,7 @@ public class FigureSeriesCaption extends ComplexText {
 
   /**
    * Get the owning figure series
-   * 
+   *
    * @return the owning figure series
    */
   @Override

@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 
 /** the configuration xml input */
 public final class ConfigurationXMLInput extends
-    XMLInputTool<ConfigurationBuilder> {
+XMLInputTool<ConfigurationBuilder> {
 
   /** create */
   ConfigurationXMLInput() {
@@ -72,7 +72,7 @@ public final class ConfigurationXMLInput extends
 
   /**
    * get the instance of the {@link ConfigurationXMLInput}
-   * 
+   *
    * @return the instance of the {@link ConfigurationXMLInput}
    */
   public static final ConfigurationXMLInput getInstance() {

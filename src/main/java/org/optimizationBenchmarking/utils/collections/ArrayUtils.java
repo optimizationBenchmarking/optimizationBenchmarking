@@ -7,7 +7,7 @@ public final class ArrayUtils {
 
   /**
    * convert an array of {@code long} values to an array of {@code int}.
-   * 
+   *
    * @param array
    *          the array of {@code long}
    * @return the array of {@code int}
@@ -27,7 +27,7 @@ public final class ArrayUtils {
 
   /**
    * convert an array of {@code long} values to an array of {@code short}.
-   * 
+   *
    * @param array
    *          the array of {@code long}
    * @return the array of {@code short}
@@ -47,7 +47,7 @@ public final class ArrayUtils {
 
   /**
    * convert an array of {@code long} values to an array of {@code byte}.
-   * 
+   *
    * @param array
    *          the array of {@code long}
    * @return the array of {@code byte}
@@ -67,7 +67,7 @@ public final class ArrayUtils {
 
   /**
    * convert an array of {@code long} values to an array of {@code double}.
-   * 
+   *
    * @param array
    *          the array of {@code long}
    * @return the array of {@code double}
@@ -87,7 +87,7 @@ public final class ArrayUtils {
 
   /**
    * convert an array of {@code double} values to an array of {@code long}.
-   * 
+   *
    * @param array
    *          the array of {@code double}
    * @return the array of {@code long}
@@ -108,7 +108,7 @@ public final class ArrayUtils {
   /**
    * convert an array of {@code double} values to an array of {@code float}
    * .
-   * 
+   *
    * @param array
    *          the array of {@code double}
    * @return the array of {@code float}
@@ -128,7 +128,7 @@ public final class ArrayUtils {
 
   /**
    * convert an array of {@code double} values to an array of {@code int}.
-   * 
+   *
    * @param array
    *          the array of {@code double}
    * @return the array of {@code int}
@@ -149,7 +149,7 @@ public final class ArrayUtils {
   /**
    * convert an array of {@code double} values to an array of {@code short}
    * .
-   * 
+   *
    * @param array
    *          the array of {@code double}
    * @return the array of {@code short}
@@ -169,7 +169,7 @@ public final class ArrayUtils {
 
   /**
    * convert an array of {@code double} values to an array of {@code byte}.
-   * 
+   *
    * @param array
    *          the array of {@code double}
    * @return the array of {@code byte}

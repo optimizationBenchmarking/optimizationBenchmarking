@@ -14,12 +14,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * instance features} and
  * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter
  * experiment parameters}.
- * 
+ *
  * @param <DT>
  *          the data type.
  */
 public abstract class Property<DT extends PropertyValue<?>> extends
-    _NamedIDObjectSet<DT> implements IProperty {
+_NamedIDObjectSet<DT> implements IProperty {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -35,7 +35,7 @@ public abstract class Property<DT extends PropertyValue<?>> extends
 
   /**
    * create
-   * 
+   *
    * @param name
    *          the property name
    * @param desc
@@ -69,7 +69,7 @@ public abstract class Property<DT extends PropertyValue<?>> extends
 
   /**
    * get the unspecified value
-   * 
+   *
    * @return the unspecified property value
    */
   DT getUnspecified() {
@@ -209,7 +209,7 @@ public abstract class Property<DT extends PropertyValue<?>> extends
 
   /**
    * Get the value of this property for the given element
-   * 
+   *
    * @param element
    *          the element to get the property value of
    * @return the property value
@@ -223,7 +223,7 @@ public abstract class Property<DT extends PropertyValue<?>> extends
    * Append the "name" of this object to the given
    * {@link org.optimizationBenchmarking.utils.document.spec.IMath
    * mathematics context}.
-   * 
+   *
    * @param math
    *          the mathematics output device
    */
@@ -241,7 +241,7 @@ public abstract class Property<DT extends PropertyValue<?>> extends
    * including the ability to
    * {@link org.optimizationBenchmarking.utils.document.spec.IComplexText#inlineMath()
    * display mathematical text}.
-   * 
+   *
    * @param textOut
    *          the text output device
    * @param textCase
@@ -257,7 +257,7 @@ public abstract class Property<DT extends PropertyValue<?>> extends
   /**
    * Obtain a suggestion for the path component of figures drawn based on
    * this object.
-   * 
+   *
    * @return a suggestion for the path component of figures drawn based on
    *         this component.
    */

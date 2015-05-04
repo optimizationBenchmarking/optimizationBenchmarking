@@ -24,7 +24,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerTool;
 
 /** A document driver. */
 public abstract class DocumentDriver extends DocumentProducerTool
-    implements IDocumentDriver {
+implements IDocumentDriver {
 
   /** create the document driver */
   protected DocumentDriver() {
@@ -33,7 +33,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Encode a text output
-   * 
+   *
    * @param raw
    *          the raw text output
    * @return the encoded version
@@ -44,7 +44,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a document header
-   * 
+   *
    * @param owner
    *          the owning document
    * @return the document header
@@ -55,7 +55,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a document body
-   * 
+   *
    * @param owner
    *          the owning document
    * @return the document body
@@ -66,7 +66,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a document footer
-   * 
+   *
    * @param owner
    *          the owning document
    * @return the document footer
@@ -77,7 +77,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create an in-braces object
-   * 
+   *
    * @param owner
    *          the owning text
    * @return the in-braces object
@@ -88,7 +88,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create an in-quotes object
-   * 
+   *
    * @param owner
    *          the owning text
    * @return the in-quotes object
@@ -99,7 +99,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * check a given style for use in a text
-   * 
+   *
    * @param style
    *          the style to be checked
    */
@@ -121,7 +121,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a styled text.
-   * 
+   *
    * @param owner
    *          the owning text
    * @param style
@@ -135,7 +135,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the in-line code
-   * 
+   *
    * @param owner
    *          the owner
    * @return the in-line code
@@ -146,7 +146,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the emphasize
-   * 
+   *
    * @param owner
    *          the owner
    * @return the emphasize
@@ -157,7 +157,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the sub-script text
-   * 
+   *
    * @param owner
    *          the owner
    * @return the sub-script text
@@ -168,7 +168,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the super-script text
-   * 
+   *
    * @param owner
    *          the owner
    * @return the super-script text
@@ -179,7 +179,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create an inline math object
-   * 
+   *
    * @param owner
    *          the owner
    * @return the inline math context
@@ -190,7 +190,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the reference item
-   * 
+   *
    * @param type
    *          the type
    * @param seq
@@ -206,7 +206,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * create a label
-   * 
+   *
    * @param owner
    *          the label owner
    * @param type
@@ -225,7 +225,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the title writer
-   * 
+   *
    * @param owner
    *          the owner
    * @return the title writer
@@ -236,7 +236,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the summary writer
-   * 
+   *
    * @param owner
    *          the owner
    * @return the summary writer
@@ -248,7 +248,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the section
-   * 
+   *
    * @param owner
    *          the owner
    * @param useLabel
@@ -264,7 +264,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the section title
-   * 
+   *
    * @param owner
    *          the owner
    * @return the section title
@@ -275,7 +275,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the section body
-   * 
+   *
    * @param owner
    *          the owner
    * @return the section body
@@ -286,7 +286,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create an enumeration
-   * 
+   *
    * @param owner
    *          the owner
    * @return an enumeration
@@ -297,7 +297,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create an itemization
-   * 
+   *
    * @param owner
    *          the owner
    * @return an itemization
@@ -308,7 +308,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a table
-   * 
+   *
    * @param owner
    *          the owner
    * @param useLabel
@@ -329,7 +329,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * create a new figure
-   * 
+   *
    * @param owner
    *          the owner
    * @param useLabel
@@ -350,7 +350,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a figure series
-   * 
+   *
    * @param owner
    *          the owner
    * @param useLabel
@@ -372,7 +372,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a code block
-   * 
+   *
    * @param owner
    *          the owner
    * @param useLabel
@@ -390,7 +390,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a equation
-   * 
+   *
    * @param owner
    *          the owner
    * @param useLabel
@@ -406,7 +406,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create an enumeration item
-   * 
+   *
    * @param owner
    *          the owner
    * @return the item
@@ -417,7 +417,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create an itemization item
-   * 
+   *
    * @param owner
    *          the owner
    * @return the item
@@ -428,7 +428,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical add
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -439,7 +439,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical sub
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -450,7 +450,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical mul
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -461,7 +461,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical division
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -472,7 +472,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create an inline mathematical division
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -483,7 +483,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical ln
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -494,7 +494,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical lg
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -505,7 +505,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical ld
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -516,7 +516,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical log
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -527,7 +527,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical mod
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -538,7 +538,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical pow
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -549,7 +549,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical root
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -560,7 +560,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical square root
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -571,7 +571,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical comparison
-   * 
+   *
    * @param owner
    *          the owner
    * @param comp
@@ -585,7 +585,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical negate
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -596,7 +596,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical absolute
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -607,7 +607,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical factorial
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -618,7 +618,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical sine
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -629,7 +629,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical cos
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -640,7 +640,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematical tan
-   * 
+   *
    * @param owner
    *          the owner
    * @return the function
@@ -651,7 +651,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create an in-braces object for mathematics
-   * 
+   *
    * @param owner
    *          the owner
    * @return the in-braces object
@@ -662,7 +662,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create an {@code n}-ary function
-   * 
+   *
    * @param owner
    *          the owner
    * @param name
@@ -680,7 +680,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematics number
-   * 
+   *
    * @param owner
    *          the owner
    * @return the number object
@@ -691,7 +691,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematics name
-   * 
+   *
    * @param owner
    *          the owner
    * @return the name object
@@ -702,7 +702,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a mathematics text
-   * 
+   *
    * @param owner
    *          the owner
    * @return the text object
@@ -713,7 +713,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a figure's caption
-   * 
+   *
    * @param owner
    *          the owner
    * @return the caption
@@ -724,7 +724,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the code caption
-   * 
+   *
    * @param owner
    *          the owner
    * @return the table caption
@@ -735,7 +735,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the code body
-   * 
+   *
    * @param owner
    *          the owner
    * @return the code body
@@ -746,7 +746,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the figure caption
-   * 
+   *
    * @param owner
    *          the owning text
    * @return the figure caption
@@ -758,7 +758,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a sub-figure
-   * 
+   *
    * @param owner
    *          the owner
    * @param useLabel
@@ -774,7 +774,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a sub-figure caption
-   * 
+   *
    * @param owner
    *          the owner
    * @return the new sub-figure caption
@@ -785,7 +785,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the table caption
-   * 
+   *
    * @param owner
    *          the owner
    * @return the table caption
@@ -796,7 +796,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the table header
-   * 
+   *
    * @param owner
    *          the owner
    * @return the table header
@@ -807,7 +807,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the table body
-   * 
+   *
    * @param owner
    *          the owner
    * @return the table body
@@ -818,7 +818,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the table footer
-   * 
+   *
    * @param owner
    *          the owner
    * @return the table footer
@@ -829,7 +829,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the body row
-   * 
+   *
    * @param owner
    *          the owner
    * @return the table body row
@@ -840,7 +840,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the footer row
-   * 
+   *
    * @param owner
    *          the owner
    * @return the table footer row
@@ -851,7 +851,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the header row
-   * 
+   *
    * @param owner
    *          the owner
    * @return the table header row
@@ -862,7 +862,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a new table body cell
-   * 
+   *
    * @param owner
    *          the owner
    * @param rowSpan
@@ -880,7 +880,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a new table header cell
-   * 
+   *
    * @param owner
    *          the owner
    * @param rowSpan
@@ -899,7 +899,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create a new table footer cell
-   * 
+   *
    * @param owner
    *          the owner
    * @param rowSpan
@@ -918,7 +918,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Obtain the default graphics driver for this document type
-   * 
+   *
    * @return the default graphics driver for this document type
    */
   protected IGraphicDriver getDefaultGraphicDriver() {
@@ -927,7 +927,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * check the graphic driver
-   * 
+   *
    * @param driver
    *          the driver, never {@code null}
    */
@@ -937,7 +937,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Create the bibliographic record
-   * 
+   *
    * @param item
    *          the bibliographic record
    * @param mode
@@ -953,7 +953,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
    * This method is called to prepend a space to a citation. You can do
    * citations without having a space in front of them. This method will
    * choose the appropriate space, if one is needed.
-   * 
+   *
    * @param citationMode
    *          the citation mode
    * @param textCase
@@ -979,7 +979,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Check a bibliography citation mode
-   * 
+   *
    * @param citationMode
    *          the citation mode
    * @param textCase
@@ -1004,7 +1004,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * check the citations
-   * 
+   *
    * @param bib
    *          the citations
    */
@@ -1021,7 +1021,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
    * corresponding the
    * {@link org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder}
    * has been closed.
-   * 
+   *
    * @param bib
    *          the bibliography
    * @param citationMode
@@ -1061,7 +1061,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
    * This method is called to prepend a space to a reference. You can do
    * references without having a space in front of them. This method will
    * choose the appropriate space, if one is needed.
-   * 
+   *
    * @param textCase
    *          the text case
    * @param complexText
@@ -1079,7 +1079,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Do the actual referencing work
-   * 
+   *
    * @param textCase
    *          the text case
    * @param sequenceMode
@@ -1104,7 +1104,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Check the reference setup
-   * 
+   *
    * @param textCase
    *          the text case
    * @param sequenceMode
@@ -1130,7 +1130,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
 
   /**
    * Reference a sequence of elements
-   * 
+   *
    * @param textCase
    *          the text case
    * @param sequenceMode
@@ -1171,7 +1171,7 @@ public abstract class DocumentDriver extends DocumentProducerTool
         if (a.equals(labels[j])) {
           throw new IllegalArgumentException(//
               "The same label must not appear twice in a reference, but '" //$NON-NLS-1$
-                  + a + "' does."); //$NON-NLS-1$
+              + a + "' does."); //$NON-NLS-1$
         }
       }
 

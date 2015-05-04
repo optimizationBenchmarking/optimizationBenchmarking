@@ -19,7 +19,7 @@ final class _MainJob extends _PseudoJob {
 
   /**
    * create the module job
-   * 
+   *
    * @param logger
    *          the logger
    * @param descriptionJobs
@@ -97,7 +97,7 @@ final class _MainJob extends _PseudoJob {
 
   /**
    * do all the body jobs
-   * 
+   *
    * @param body
    *          the document body
    */
@@ -124,7 +124,7 @@ final class _MainJob extends _PseudoJob {
 
   /**
    * do all the footer jobs
-   * 
+   *
    * @param footer
    *          the document footer
    */

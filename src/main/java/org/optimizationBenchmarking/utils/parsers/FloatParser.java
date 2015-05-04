@@ -89,7 +89,7 @@ public class FloatParser extends StrictFloatParser {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -98,7 +98,7 @@ public class FloatParser extends StrictFloatParser {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

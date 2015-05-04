@@ -26,33 +26,33 @@ public enum EPrimitiveType {
   BOOLEAN(boolean.class, Boolean.class, 1,
       StrictBooleanParser.STRICT_INSTANCE, BooleanParser.INSTANCE),
 
-  /** the boolean type class */
-  CHAR(char.class, Character.class, 2, StrictCharParser.STRICT_INSTANCE,
-      CharParser.INSTANCE),
+      /** the boolean type class */
+      CHAR(char.class, Character.class, 2, StrictCharParser.STRICT_INSTANCE,
+          CharParser.INSTANCE),
 
-  /** the byte type class */
-  BYTE(byte.class, Byte.class, 4, StrictByteParser.STRICT_INSTANCE,
-      ByteParser.INSTANCE),
+          /** the byte type class */
+          BYTE(byte.class, Byte.class, 4, StrictByteParser.STRICT_INSTANCE,
+              ByteParser.INSTANCE),
 
-  /** the short type class */
-  SHORT(short.class, Short.class, 4, StrictShortParser.STRICT_INSTANCE,
-      ShortParser.INSTANCE),
+              /** the short type class */
+              SHORT(short.class, Short.class, 4, StrictShortParser.STRICT_INSTANCE,
+                  ShortParser.INSTANCE),
 
-  /** the int type class */
-  INT(int.class, Integer.class, 4, StrictIntParser.STRICT_INSTANCE,
-      IntParser.INSTANCE),
+                  /** the int type class */
+                  INT(int.class, Integer.class, 4, StrictIntParser.STRICT_INSTANCE,
+                      IntParser.INSTANCE),
 
-  /** the long type class */
-  LONG(long.class, Long.class, 4, StrictLongParser.STRICT_INSTANCE,
-      LongParser.INSTANCE),
+                      /** the long type class */
+                      LONG(long.class, Long.class, 4, StrictLongParser.STRICT_INSTANCE,
+                          LongParser.INSTANCE),
 
-  /** the float type class */
-  FLOAT(float.class, Float.class, 8, StrictFloatParser.STRICT_INSTANCE,
-      FloatParser.INSTANCE),
+                          /** the float type class */
+                          FLOAT(float.class, Float.class, 8, StrictFloatParser.STRICT_INSTANCE,
+                              FloatParser.INSTANCE),
 
-  /** the double type class */
-  DOUBLE(double.class, Double.class, 8,
-      StrictDoubleParser.STRICT_INSTANCE, DoubleParser.INSTANCE), ;
+                              /** the double type class */
+                              DOUBLE(double.class, Double.class, 8,
+                                  StrictDoubleParser.STRICT_INSTANCE, DoubleParser.INSTANCE), ;
 
   /** the type */
   private static final EPrimitiveType[] _TYPES = EPrimitiveType.values();
@@ -81,7 +81,7 @@ public enum EPrimitiveType {
 
   /**
    * create the number type
-   * 
+   *
    * @param primitive
    *          the primitive type
    * @param wrapper
@@ -104,7 +104,7 @@ public enum EPrimitiveType {
 
   /**
    * Get the strict parser belonging to this type
-   * 
+   *
    * @return the strict parser belonging to this type
    */
   public final Parser<?> getStrictParser() {
@@ -113,7 +113,7 @@ public enum EPrimitiveType {
 
   /**
    * Get the loose parser belonging to this type
-   * 
+   *
    * @return the loose parser belonging to this type
    */
   public final Parser<?> getLooseParser() {
@@ -122,7 +122,7 @@ public enum EPrimitiveType {
 
   /**
    * Get the primitive type
-   * 
+   *
    * @return the primitive type
    */
   public final Class<?> getPrimitiveType() {
@@ -131,7 +131,7 @@ public enum EPrimitiveType {
 
   /**
    * Get the wrapper class
-   * 
+   *
    * @return the wrapper class
    */
   public final Class<?> getWrapperClass() {
@@ -140,7 +140,7 @@ public enum EPrimitiveType {
 
   /**
    * Is this a boolean type?
-   * 
+   *
    * @return {@code true} if this is a boolean type, {@code false}
    *         otherwise
    */
@@ -150,7 +150,7 @@ public enum EPrimitiveType {
 
   /**
    * Is this a character type?
-   * 
+   *
    * @return {@code true} if this is a character type, {@code false}
    *         otherwise
    */
@@ -160,7 +160,7 @@ public enum EPrimitiveType {
 
   /**
    * Is this a integer type?
-   * 
+   *
    * @return {@code true} if this is a integer type, {@code false}
    *         otherwise
    */
@@ -170,7 +170,7 @@ public enum EPrimitiveType {
 
   /**
    * Is this a floating point type?
-   * 
+   *
    * @return {@code true} if this is a floating type, {@code false}
    *         otherwise
    */
@@ -180,7 +180,7 @@ public enum EPrimitiveType {
 
   /**
    * Is this a numerical type?
-   * 
+   *
    * @return {@code true} if this is a numerical type, {@code false}
    *         otherwise
    */
@@ -190,7 +190,7 @@ public enum EPrimitiveType {
 
   /**
    * Get the primitive type name
-   * 
+   *
    * @return the primitive type name
    */
   public final String getPrimitiveTypeName() {
@@ -200,7 +200,7 @@ public enum EPrimitiveType {
   /**
    * Is a variable of this primitive type directly assignable from an
    * expression of primitive type {@code type} (without explicit cast)?
-   * 
+   *
    * @param type
    *          the other type
    * @return {@code true} if and only if a variable of this primitive type
@@ -231,7 +231,7 @@ public enum EPrimitiveType {
 
   /**
    * Get a primitive type fitting to a given class.
-   * 
+   *
    * @param clazz
    *          the class
    * @return the primitive type, or {@code null} if none was found

@@ -9,7 +9,7 @@ final class _XHTML10MathNAryFunction extends MathNAryFunction {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    * @param name

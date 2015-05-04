@@ -11,7 +11,7 @@ final class _LaTeXMathLn extends MathLn {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

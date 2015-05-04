@@ -16,7 +16,7 @@ import java.io.Closeable;
  * The {@link #m_buffer internal array} is used as a ring buffer. However,
  * different from a traditional ring buffer, it may grow infinitely.
  * </p>
- * 
+ *
  * @param <T>
  *          the array type
  */
@@ -39,7 +39,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
 
   /**
    * Create the buffer
-   * 
+   *
    * @param initialSize
    *          the buffer size, 0 for default
    */
@@ -52,7 +52,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
 
   /**
    * Create an array of the given size
-   * 
+   *
    * @param size
    *          the size
    * @return the array
@@ -61,7 +61,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
 
   /**
    * Get the length of an array
-   * 
+   *
    * @param array
    *          the array
    * @return its length
@@ -74,7 +74,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
    * notified}. If the current internal backing store is not big enough to
    * hold the data, a new store will be allocated. If the buffer has been
    * {@link #close() closed}, nothing will be stored.
-   * 
+   *
    * @param source
    *          the source
    * @param start
@@ -91,7 +91,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
     if ((source == null) || (count < 0) || (start < 0)
         || ((count + start) > (s = this._length(source)))) {
       throw new IllegalArgumentException("Reading " + //$NON-NLS-1$
-          count + " elements starting at " + start//$NON-NLS-1$ 
+          count + " elements starting at " + start//$NON-NLS-1$
           + " from array " + source + //$NON-NLS-1$
           " of length " + s//$NON-NLS-1$
           + " is not possible.");//$NON-NLS-1$
@@ -159,7 +159,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
    * Blocking read (at most) a number ({@code count} of bytes from the
    * buffer into a destination array. This method may read less if fewer
    * elements are in the buffer.
-   * 
+   *
    * @param dest
    *          the destination array
    * @param start
@@ -180,7 +180,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
    * into a destination array, if possible. This method may read less
    * <em>only</em> if the buffer was {@link #close() closed} and there can
    * never be enough elements in it to satisfy the request.
-   * 
+   *
    * @param dest
    *          the destination array
    * @param start
@@ -199,7 +199,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
   /**
    * Blocking read (at most) a number ({@code count} of bytes from the
    * buffer into a destination array.
-   * 
+   *
    * @param dest
    *          the destination array
    * @param start
@@ -225,7 +225,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
       if ((dest == null) || (count < 0) || (start < 0)
           || ((count + start) > (s = this._length(dest)))) {
         throw new IllegalArgumentException("Writing " + //$NON-NLS-1$
-            count + " elements starting at " + start//$NON-NLS-1$ 
+            count + " elements starting at " + start//$NON-NLS-1$
             + " to array " + dest + //$NON-NLS-1$
             " of length " + s//$NON-NLS-1$
             + " is not possible.");//$NON-NLS-1$
@@ -286,7 +286,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
    * Blocking skip over (delete) (at most) a number ({@code count} of bytes
    * from the buffer. This method may delete/skip over less if fewer
    * elements are in the buffer.
-   * 
+   *
    * @param count
    *          the number of bytes to delete/skip over
    * @return the <em>actual</em> number of bytes skipped over (may be less
@@ -302,7 +302,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
    * from the buffer, if possible. This method may delete less
    * <em>only</em> if the buffer was {@link #close() closed} and there can
    * never be enough elements in it to satisfy the request.
-   * 
+   *
    * @param count
    *          the number of bytes to delete
    * @return the <em>actual</em> number of bytes deleted/skipped over (may
@@ -322,7 +322,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
 
   /**
    * Get the current number of elements in the buffer
-   * 
+   *
    * @return the current number of elements in the buffer
    */
   public final int size() {
@@ -342,7 +342,7 @@ public abstract class ProducerConsumerBuffer<T> implements Closeable {
 
   /**
    * Has this buffer been closed?
-   * 
+   *
    * @return {@code true} if the buffer has been closed, {@code false}
    *         otherwise
    */

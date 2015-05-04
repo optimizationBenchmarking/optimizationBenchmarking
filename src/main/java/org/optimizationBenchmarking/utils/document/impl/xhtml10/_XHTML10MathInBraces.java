@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10MathInBraces extends MathInBraces {
   /**
    * create the mathematical in-braces element
-   * 
+   *
    * @param owner
    *          the owner
    */

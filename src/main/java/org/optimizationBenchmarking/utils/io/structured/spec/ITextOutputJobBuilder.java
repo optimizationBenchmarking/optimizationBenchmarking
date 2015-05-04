@@ -14,12 +14,12 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A text output job builder.
- * 
+ *
  * @param <D>
  *          the data type which can be stored
  */
 public interface ITextOutputJobBuilder<D> extends
-    IStreamOutputJobBuilder<D> {
+IStreamOutputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
@@ -100,7 +100,7 @@ public interface ITextOutputJobBuilder<D> extends
   /**
    * Set the writer. The Writer may or may not be closed when the output is
    * finished.
-   * 
+   *
    * @param writer
    *          the writer to write the output to
    * @return this builder
@@ -109,7 +109,7 @@ public interface ITextOutputJobBuilder<D> extends
 
   /**
    * Set the text output device
-   * 
+   *
    * @param textOut
    *          the text output device to write the output to
    * @return this builder

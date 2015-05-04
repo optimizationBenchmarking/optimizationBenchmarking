@@ -9,19 +9,19 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ConfigurableToolJobBu
 
 /**
  * The base class for building IO jobs
- * 
+ *
  * @param <JBT>
  *          the job builder type
  */
 abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
-    ConfigurableToolJobBuilder<IIOJob, JBT> implements IIOJobBuilder {
+ConfigurableToolJobBuilder<IIOJob, JBT> implements IIOJobBuilder {
 
   /** the tool */
   final IOTool<?> m_tool;
 
   /**
    * create the IIOJobBuilder
-   * 
+   *
    * @param tool
    *          the owning tool
    */
@@ -39,7 +39,7 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
 
   /**
    * load the give source/dest list string
-   * 
+   *
    * @param location
    *          the location string
    */
@@ -105,12 +105,12 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
 
     throw new UnsupportedOperationException(//
         "Cannot process I/O function '" + function + //$NON-NLS-1$
-            "' with parameter '" + parameter + '\'');//$NON-NLS-1$
+        "' with parameter '" + parameter + '\'');//$NON-NLS-1$
   }
 
   /**
    * Set the path
-   * 
+   *
    * @param path
    *          the path
    * @param encoding
@@ -123,7 +123,7 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
 
   /**
    * Set the uri
-   * 
+   *
    * @param uri
    *          the uri
    * @param encoding
@@ -136,7 +136,7 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
 
   /**
    * Set the url
-   * 
+   *
    * @param url
    *          the url
    * @param encoding
@@ -149,7 +149,7 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
 
   /**
    * Set the resource
-   * 
+   *
    * @param clazz
    *          the class
    * @param resource
@@ -164,7 +164,7 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
 
   /**
    * validate the tool
-   * 
+   *
    * @param tool
    *          the tool
    */
@@ -180,7 +180,7 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
 
   /**
    * create the job
-   * 
+   *
    * @return the job
    */
   abstract IIOJob _doCreate();

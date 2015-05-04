@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 /**
  * an iterator returning a single object instance
- * 
+ *
  * @param <T>
  *          the type
  */
@@ -17,7 +17,7 @@ public final class InstanceIterator<T> extends BasicIterator<T> {
 
   /**
    * instantiate
-   * 
+   *
    * @param inst
    *          the instance
    */

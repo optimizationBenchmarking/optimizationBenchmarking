@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 public class SectionTitle extends ComplexText {
   /**
    * create the title
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -16,7 +16,7 @@ public class SectionTitle extends ComplexText {
 
   /**
    * Get the owning section
-   * 
+   *
    * @return the owning section
    */
   @Override

@@ -14,8 +14,8 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * computations to that parameter.
  */
 public class ShadowParameter extends
-    _ShadowProperty<IParameterSet, IParameter, IParameterValue> implements
-    IParameter {
+_ShadowProperty<IParameterSet, IParameter, IParameterValue> implements
+IParameter {
 
   /** the unspecified parameter value */
   private IParameterValue m_unspecified;
@@ -25,7 +25,7 @@ public class ShadowParameter extends
 
   /**
    * create the shadow parameter value
-   * 
+   *
    * @param owner
    *          the owning parameter
    * @param shadow

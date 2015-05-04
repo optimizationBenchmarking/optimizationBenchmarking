@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** The experiment. */
 public final class Experiment extends _IDObjectSet<InstanceRuns> implements
-    IExperiment {
+IExperiment {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -22,7 +22,7 @@ public final class Experiment extends _IDObjectSet<InstanceRuns> implements
 
   /**
    * instantiate
-   * 
+   *
    * @param name
    *          the name
    * @param desc
@@ -58,7 +58,7 @@ public final class Experiment extends _IDObjectSet<InstanceRuns> implements
     if (n == null) {
       throw new IllegalArgumentException(//
           "Experiments must have a non-empty name, but name '" + //$NON-NLS-1$
-              name + "' was provided."); //$NON-NLS-1$
+          name + "' was provided."); //$NON-NLS-1$
 
     }
     this.m_name = n;
@@ -86,9 +86,9 @@ public final class Experiment extends _IDObjectSet<InstanceRuns> implements
     if (before.m_inst.equals(after.m_inst)) {
       throw new IllegalArgumentException(
           (((((("An experiment cannot contain more than one run set for a given instance, but run set '" //$NON-NLS-1$
-          + before) + "' and '") + //$NON-NLS-1$
-          after) + "' are both for instance '") + //$NON-NLS-1$
-          before.m_inst) + '\'') + '.');
+              + before) + "' and '") + //$NON-NLS-1$
+              after) + "' are both for instance '") + //$NON-NLS-1$
+              before.m_inst) + '\'') + '.');
     }
   }
 
@@ -119,7 +119,7 @@ public final class Experiment extends _IDObjectSet<InstanceRuns> implements
    * Append the "name" of this object to the given
    * {@link org.optimizationBenchmarking.utils.document.spec.IMath
    * mathematics context}.
-   * 
+   *
    * @param math
    *          the mathematics output device
    */
@@ -137,7 +137,7 @@ public final class Experiment extends _IDObjectSet<InstanceRuns> implements
    * including the ability to
    * {@link org.optimizationBenchmarking.utils.document.spec.IComplexText#inlineMath()
    * display mathematical text}.
-   * 
+   *
    * @param textOut
    *          the text output device
    * @param textCase
@@ -153,7 +153,7 @@ public final class Experiment extends _IDObjectSet<InstanceRuns> implements
   /**
    * Obtain a suggestion for the path component of figures drawn based on
    * this object.
-   * 
+   *
    * @return a suggestion for the path component of figures drawn based on
    *         this component.
    */

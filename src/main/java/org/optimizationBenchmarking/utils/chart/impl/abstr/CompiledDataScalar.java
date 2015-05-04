@@ -12,7 +12,7 @@ public class CompiledDataScalar extends CompiledDataElement {
 
   /**
    * Create a scalar data
-   * 
+   *
    * @param id
    *          the id
    * @param title
@@ -40,7 +40,7 @@ public class CompiledDataScalar extends CompiledDataElement {
 
   /**
    * Get the number associated with this scalar data
-   * 
+   *
    * @return the number associated with this scalar data
    */
   public final Number getData() {

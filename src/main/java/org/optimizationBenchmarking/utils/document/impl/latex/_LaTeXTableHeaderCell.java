@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 final class _LaTeXTableHeaderCell extends TableHeaderCell {
   /**
    * Create a header cell of a table
-   * 
+   *
    * @param owner
    *          the owning row
    * @param cols

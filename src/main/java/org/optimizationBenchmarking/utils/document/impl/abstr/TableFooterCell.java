@@ -9,7 +9,7 @@ public class TableFooterCell extends TableCell {
 
   /**
    * Create the table footer cell
-   * 
+   *
    * @param owner
    *          the owning row
    * @param cols

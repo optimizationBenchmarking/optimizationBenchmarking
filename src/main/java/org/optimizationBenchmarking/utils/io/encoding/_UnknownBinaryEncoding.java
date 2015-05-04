@@ -10,7 +10,7 @@ import java.io.Writer;
  * An unknown encoding.
  */
 final class _UnknownBinaryEncoding extends
-    StreamEncoding<InputStream, OutputStream> {
+StreamEncoding<InputStream, OutputStream> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -62,7 +62,7 @@ final class _UnknownBinaryEncoding extends
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   @Override
@@ -72,7 +72,7 @@ final class _UnknownBinaryEncoding extends
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   @Override

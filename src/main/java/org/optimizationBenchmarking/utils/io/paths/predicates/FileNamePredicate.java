@@ -22,7 +22,7 @@ public final class FileNamePredicate extends StringInListIgnoreCase<Path> {
 
   /**
    * Create the file name comparison predicate
-   * 
+   *
    * @param ignoreExtension
    *          ignore (remove) the file extension (if any) before the name
    *          comparison
@@ -37,7 +37,7 @@ public final class FileNamePredicate extends StringInListIgnoreCase<Path> {
 
   /**
    * Create the file name comparison predicate
-   * 
+   *
    * @param ignoreExtension
    *          ignore (remove) the file extension (if any) before the name
    *          comparison

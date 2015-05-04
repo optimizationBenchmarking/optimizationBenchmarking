@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10MathRoot extends MathRoot {
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

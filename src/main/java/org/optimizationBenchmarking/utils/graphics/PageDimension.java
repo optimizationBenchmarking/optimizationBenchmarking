@@ -17,7 +17,7 @@ public class PageDimension extends PhysicalDimension {
 
   /** "columns " */
   private static final char[] COLS = { ' ', 'c', 'o', 'l', 'u', 'm', 'n',
-      's', ' ', '\u00e0', ' ' };
+    's', ' ', '\u00e0', ' ' };
 
   /** the number of columns */
   private final int m_columnCount;
@@ -27,7 +27,7 @@ public class PageDimension extends PhysicalDimension {
 
   /**
    * create a new page dimension
-   * 
+   *
    * @param width
    *          the width
    * @param height
@@ -48,7 +48,7 @@ public class PageDimension extends PhysicalDimension {
     if (columnCount <= 0) {
       throw new IllegalArgumentException(//
           "Number of columns must be positive, but is " //$NON-NLS-1$
-              + columnCount);
+          + columnCount);
     }
     if ((d = (columnCount * columnWidth)) > width) {
       throw new IllegalArgumentException("Total width " + d + //$NON-NLS-1$
@@ -64,7 +64,7 @@ public class PageDimension extends PhysicalDimension {
 
   /**
    * create a new page dimension
-   * 
+   *
    * @param width
    *          the width
    * @param height
@@ -79,7 +79,7 @@ public class PageDimension extends PhysicalDimension {
 
   /**
    * create a new page dimension
-   * 
+   *
    * @param copy
    *          the physical dimension to copy
    */
@@ -89,7 +89,7 @@ public class PageDimension extends PhysicalDimension {
 
   /**
    * create a new page dimension
-   * 
+   *
    * @param copy
    *          the dimension to copy
    * @param unit
@@ -101,7 +101,7 @@ public class PageDimension extends PhysicalDimension {
 
   /**
    * Get the number of columns
-   * 
+   *
    * @return the number of columns
    */
   public final int getColumnCount() {
@@ -110,7 +110,7 @@ public class PageDimension extends PhysicalDimension {
 
   /**
    * Get the width of a column
-   * 
+   *
    * @return the width of a column
    */
   public final double getColumnWidth() {
@@ -158,7 +158,7 @@ public class PageDimension extends PhysicalDimension {
           && (EComparison.EQUAL.compare(this.m_height, dim.m_height))//
           && (EComparison.EQUAL.compare(this.m_columnWidth,
               dim.m_columnWidth))//
-      && EComparison.equals(this.m_unit, dim.m_unit));
+              && EComparison.equals(this.m_unit, dim.m_unit));
     }
     return false;
   }
@@ -171,10 +171,10 @@ public class PageDimension extends PhysicalDimension {
             HashUtils.combineHashes(//
                 HashUtils.hashCode(this.m_height),//
                 HashUtils.hashCode(this.m_width)),//
-            HashUtils.combineHashes(//
-                HashUtils.hashCode(this.m_columnWidth),//
-                HashUtils.hashCode(this.m_columnCount))),//
-        HashUtils.hashCode(this.m_unit));
+                HashUtils.combineHashes(//
+                    HashUtils.hashCode(this.m_columnWidth),//
+                    HashUtils.hashCode(this.m_columnCount))),//
+                    HashUtils.hashCode(this.m_unit));
   }
 
   /** {@inheritDoc} */

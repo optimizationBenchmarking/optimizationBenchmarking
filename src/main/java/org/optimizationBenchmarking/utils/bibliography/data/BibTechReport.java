@@ -21,7 +21,7 @@ public class BibTechReport extends BibRecordWithPublisher {
 
   /**
    * create a record for technical reports
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -51,7 +51,7 @@ public class BibTechReport extends BibRecordWithPublisher {
 
   /**
    * create a record for technical reports
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -90,15 +90,15 @@ public class BibTechReport extends BibRecordWithPublisher {
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.calcHashCode(),//
             HashUtils.hashCode(this.m_issn)),//
-        HashUtils.combineHashes(
-            //
-            HashUtils.hashCode(this.m_series),
-            HashUtils.hashCode(this.m_number)));
+            HashUtils.combineHashes(
+                //
+                HashUtils.hashCode(this.m_series),
+                HashUtils.hashCode(this.m_number)));
   }
 
   /**
    * Get the issn
-   * 
+   *
    * @return the issn
    */
   public final String getISSN() {
@@ -107,7 +107,7 @@ public class BibTechReport extends BibRecordWithPublisher {
 
   /**
    * Get the series
-   * 
+   *
    * @return the series
    */
   public final String getSeries() {
@@ -116,7 +116,7 @@ public class BibTechReport extends BibRecordWithPublisher {
 
   /**
    * Get the number
-   * 
+   *
    * @return the number
    */
   public final String getNumber() {
@@ -125,7 +125,7 @@ public class BibTechReport extends BibRecordWithPublisher {
 
   /**
    * Get the date
-   * 
+   *
    * @return the date
    */
   public final BibDate getDate() {
@@ -142,7 +142,7 @@ public class BibTechReport extends BibRecordWithPublisher {
 
       return (EComparison.equals(this.m_issn, x.m_issn) && //
           EComparison.equals(this.m_series, x.m_series) && //
-      EComparison.equals(this.m_number, x.m_number));
+          EComparison.equals(this.m_number, x.m_number));
     }
 
     return false;

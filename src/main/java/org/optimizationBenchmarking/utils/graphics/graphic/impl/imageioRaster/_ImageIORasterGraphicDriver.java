@@ -27,7 +27,7 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
 
   /**
    * the hidden constructor
-   * 
+   *
    * @param type
    *          the graphic type
    */
@@ -37,7 +37,7 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
 
   /**
    * create the writer spi
-   * 
+   *
    * @param type
    *          the graphic type
    * @return an image writer service provider for a given graphic type
@@ -134,7 +134,7 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
 
   /**
    * pre-process the color
-   * 
+   *
    * @param model
    *          the model
    * @return the pre-processed model
@@ -184,13 +184,13 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
     return this._create(
         this.makePath(builder.getBasePath(),
             builder.getMainDocumentNameSuggestion()), builder.getLogger(),
-        builder.getFileProducerListener(), img, g, wPt, hPt, wDPI, hDPI,
-        builder.getQuality());
+            builder.getFileProducerListener(), img, g, wPt, hPt, wDPI, hDPI,
+            builder.getQuality());
   }
 
   /**
    * create the graphic
-   * 
+   *
    * @param path
    *          the path
    * @param logger

@@ -35,7 +35,7 @@ public final class PathUtils {
 
   /**
    * Check whether a path is {@code null}
-   * 
+   *
    * @param path
    *          the path to check
    */
@@ -51,7 +51,7 @@ public final class PathUtils {
    * {@code "_"}. This will potentially change the path component. It may
    * make sense to use this method when automatically generating paths to
    * ensure that nothing will go wrong.
-   * 
+   *
    * @param component
    *          the path component
    * @return the sanitized component
@@ -115,7 +115,7 @@ public final class PathUtils {
           }
 
         }
-          continue outer;
+        continue outer;
       }
       data[index] = '_';
       changed = true;
@@ -130,7 +130,7 @@ public final class PathUtils {
 
   /**
    * Returns the {@code FileSystemProvider} to delegate to.
-   * 
+   *
    * @param path
    *          the path
    * @return the file system provider
@@ -161,7 +161,7 @@ public final class PathUtils {
 
   /**
    * Try to find a canonical version of a given path
-   * 
+   *
    * @param path
    *          the path
    * @return the canonicalized version
@@ -173,14 +173,14 @@ public final class PathUtils {
     if (s == null) {
       throw new IllegalArgumentException(//
           "Path cannot be null, empty, or composed only of whitespace but is '" //$NON-NLS-1$
-              + s + "'.");//$NON-NLS-1$
+          + s + "'.");//$NON-NLS-1$
     }
     return PathUtils.normalize(Paths.get(path));
   }
 
   /**
    * Try to find a canonical version of a given path
-   * 
+   *
    * @param path
    *          the path
    * @return the canonicalized version
@@ -230,7 +230,7 @@ public final class PathUtils {
 
   /**
    * Canonicalize a file
-   * 
+   *
    * @param f
    *          the file
    * @return the canonicalized version
@@ -262,7 +262,7 @@ public final class PathUtils {
    * Get a file representing the physical path. This method will never
    * return {@code null}. If no physical file can be derived from the path,
    * an {@link java.lang.IllegalArgumentException} will be thrown.
-   * 
+   *
    * @param path
    *          the path
    * @return the file representing the physical path
@@ -294,7 +294,7 @@ public final class PathUtils {
     }
 
     message = ("Cannot translate path '" + path + //$NON-NLS-1$
-    "' to a physical file path."); //$NON-NLS-1$;
+        "' to a physical file path."); //$NON-NLS-1$;
     if (error != null) {
       throw new IllegalArgumentException(message, error);
     }
@@ -305,7 +305,7 @@ public final class PathUtils {
    * Get a string representing the physical path. This method will never
    * return {@code null}. If no physical file can be derived from the path,
    * an {@link java.lang.IllegalArgumentException} will be thrown.
-   * 
+   *
    * @param path
    *          the path
    * @param useSlashAsSeparator
@@ -327,13 +327,13 @@ public final class PathUtils {
     }
     throw new IllegalArgumentException(//
         "Error when obtaining path string from '" + //$NON-NLS-1$
-            path + '\'');
+        path + '\'');
   }
 
   /**
    * Open an output stream to a given path. This method never returns
    * {@code null}.
-   * 
+   *
    * @param path
    *          the path
    * @return the output stream
@@ -373,14 +373,14 @@ public final class PathUtils {
       stream = null;
       RethrowMode.AS_IO_EXCEPTION.rethrow(//
           (("Error while trying to open an OutputStream to path '" //$NON-NLS-1$
-          + path) + '\''), true, //
-          ErrorUtils.aggregateError(t3, error));
+              + path) + '\''), true, //
+              ErrorUtils.aggregateError(t3, error));
     }
 
     if (stream == null) {
       throw new IllegalStateException(//
-          "Provider did not throw an exception when creating OutputStream for path '"//$NON-NLS-1$ 
-              + path + "', but returned null."); //$NON-NLS-1$
+          "Provider did not throw an exception when creating OutputStream for path '"//$NON-NLS-1$
+          + path + "', but returned null."); //$NON-NLS-1$
     }
     return stream;
   }
@@ -388,7 +388,7 @@ public final class PathUtils {
   /**
    * Open an input stream from a given path. This method never returns
    * {@code null}.
-   * 
+   *
    * @param path
    *          the path
    * @return the input stream
@@ -414,15 +414,15 @@ public final class PathUtils {
 
     if (stream == null) {
       throw new IllegalStateException(//
-          "Provider did not throw an exception when creating InputStream for path '"//$NON-NLS-1$ 
-              + path + "', but returned null."); //$NON-NLS-1$
+          "Provider did not throw an exception when creating InputStream for path '"//$NON-NLS-1$
+          + path + "', but returned null."); //$NON-NLS-1$
     }
     return stream;
   }
 
   /**
    * Prepare a file name
-   * 
+   *
    * @param name
    *          the file name
    * @return the prepared name
@@ -434,7 +434,7 @@ public final class PathUtils {
     if (n == null) {
       throw new IllegalArgumentException(//
           "Name must not be empty or null, but is '" //$NON-NLS-1$
-              + name + '\'');//
+          + name + '\'');//
     }
     return n;
   }
@@ -442,7 +442,7 @@ public final class PathUtils {
   /**
    * Add a given name to a path. This corresponds to creating a path
    * referencing sub-directory or file inside a folder.
-   * 
+   *
    * @param path
    *          the path to a directory
    * @param name
@@ -473,14 +473,14 @@ public final class PathUtils {
 
     throw new IllegalArgumentException(//
         "File '" + child + //$NON-NLS-1$
-            "' is not located inside folder '" + parent + //$NON-NLS-1$
-            "' and thus, the name '" + name + //$NON-NLS-1$
-            "' is invalid.");//$NON-NLS-1$
+        "' is not located inside folder '" + parent + //$NON-NLS-1$
+        "' and thus, the name '" + name + //$NON-NLS-1$
+        "' is invalid.");//$NON-NLS-1$
   }
 
   /**
    * Make a file name based on a given name suggestion and an extension.
-   * 
+   *
    * @param nameSuggestion
    *          the file name suggestion
    * @param extension
@@ -523,7 +523,7 @@ public final class PathUtils {
   /**
    * Get the name of a file or folder. If {@code fileOrFolder} refers to a
    * file, then the name will include a potential file suffix/extension.
-   * 
+   *
    * @param fileOrFolder
    *          the file or folder
    * @return the name of the file or folder, or {@code null} if
@@ -561,7 +561,7 @@ public final class PathUtils {
   /**
    * Get the extension (file name suffix) of a given file name, not
    * including the dot and cast to lower case.
-   * 
+   *
    * @param fileName
    *          the file name
    * @return the extension, or {@code null} if no extension exists or
@@ -593,7 +593,7 @@ public final class PathUtils {
   /**
    * Get the extension (file name suffix) of a given file, not including
    * the dot and cast to lower case.
-   * 
+   *
    * @param file
    *          the file
    * @return the extension, or {@code null} if no extension exists
@@ -617,7 +617,7 @@ public final class PathUtils {
 
   /**
    * Get the file name without extension of a given file.
-   * 
+   *
    * @param fileName
    *          the file name
    * @return the file name without extension, or {@code null} if no name
@@ -651,7 +651,7 @@ public final class PathUtils {
 
   /**
    * Get the file name without extension of a given file.
-   * 
+   *
    * @param file
    *          the file
    * @return the file name without extension, or {@code null} if no name
@@ -726,7 +726,7 @@ public final class PathUtils {
    * design idea: Reduce outside dependencies, rely on the security
    * settings, configuration, and implementation of the JVM.</li>
    * </ol>
-   * 
+   *
    * @param path
    *          the path to delete
    * @throws IOException
@@ -778,7 +778,7 @@ public final class PathUtils {
    * {@code C:\Windows\System32}, though, as we can skip such
    * constellations without modifying any result of a search process.)
    * </p>
-   * 
+   *
    * @return the path
    * @see #visitPath(FileVisitor, Path...)
    * @see #findFirstInPath(IPredicate, IPredicate, Path[])
@@ -790,7 +790,7 @@ public final class PathUtils {
   /**
    * Get the current directory, i.e., the directory in which this program
    * was executed
-   * 
+   *
    * @return the directory in which this program was executed
    */
   public static final Path getCurrentDir() {
@@ -799,7 +799,7 @@ public final class PathUtils {
 
   /**
    * Get the java home directory
-   * 
+   *
    * @return java home directory
    */
   public static final Path getJavaHomeDir() {
@@ -808,7 +808,7 @@ public final class PathUtils {
 
   /**
    * Get the user home directory
-   * 
+   *
    * @return user home directory
    */
   public static final Path getUserHomeDir() {
@@ -817,7 +817,7 @@ public final class PathUtils {
 
   /**
    * Get the temp directory
-   * 
+   *
    * @return temp directory
    */
   public static final Path getTempDir() {
@@ -836,7 +836,7 @@ public final class PathUtils {
    * other known temporary folder. This method provides the basic
    * infrastructure on which
    * {@link #findFirstInPath(IPredicate, IPredicate, Path[])} is built.
-   * 
+   *
    * @param visitor
    *          the visitor
    * @param visitFirst
@@ -850,7 +850,7 @@ public final class PathUtils {
    */
   public static final FileVisitResult visitPath(
       final FileVisitor<Path> visitor, final Path[] visitFirst)
-      throws IOException {
+          throws IOException {
     final __PathVisitor visitorWrapper;
     Path[] pathSet;
     FileVisitResult r;
@@ -901,7 +901,7 @@ public final class PathUtils {
    * attsPredicate}. Therefore, first, visit the {@link java.nio.file.Path
    * paths} in the array {@code visitVist}. If no fitting path was found,
    * then visit the elements of the {@link #getPath() PATH}.
-   * 
+   *
    * @param visitFirst
    *          {@code null} or a list of paths to visit <em>before</em>
    *          walking through the {@link #getPath() PATH}. Elements in this
@@ -1018,7 +1018,7 @@ public final class PathUtils {
           }
 
           for (final String def : new String[] {//
-          "HOME", //$NON-NLS-1$
+              "HOME", //$NON-NLS-1$
               "HOMEPATH", //$NON-NLS-1$
               "USERPROFILE", //$NON-NLS-1$
           }) {
@@ -1066,7 +1066,7 @@ public final class PathUtils {
 
       // get path lists from environment variables or java configuration
       for (final String key : new String[] {//
-      Configuration.PARAM_PATH,// PATH
+          Configuration.PARAM_PATH,// PATH
           "java.class.path",// class path //$NON-NLS-1$
           "classpath",//environment class path //$NON-NLS-1$
           "java.library.path",//path to native libraries//$NON-NLS-1$
@@ -1081,7 +1081,7 @@ public final class PathUtils {
 
       // add paths from environment variables or java config
       for (final String key : new String[] {//
-      "ProgramFiles", //$NON-NLS-1$
+          "ProgramFiles", //$NON-NLS-1$
           "ProgramFiles(x86)", //$NON-NLS-1$
           "ProgramW6432)", //$NON-NLS-1$
           "CommonProgramFiles", //$NON-NLS-1$
@@ -1100,14 +1100,14 @@ public final class PathUtils {
 
       // add default paths if they exist
       for (final String template : new String[] {//
-      "C:/Program Files", //$NON-NLS-1$
+          "C:/Program Files", //$NON-NLS-1$
           "C:/Program Files (x86)", //$NON-NLS-1$
           "C:/Windows", //$NON-NLS-1$
           "/etc", //$NON-NLS-1$
           "/bin", //$NON-NLS-1$
           "/usr/bin", //$NON-NLS-1$
           "/usr/lib", //$NON-NLS-1$
-          "/usr/sbin", //$NON-NLS-1$ 
+          "/usr/sbin", //$NON-NLS-1$
           "/usr/local/bin", //$NON-NLS-1$
           "/usr/local/etc", //$NON-NLS-1$
           "/usr/local/lib", //$NON-NLS-1$
@@ -1230,7 +1230,7 @@ public final class PathUtils {
     /** {@inheritDoc} */
     @Override
     public Path parseString(final String string) throws IOException,
-        SecurityException {
+    SecurityException {
       BasicFileAttributes bfa;
       Path f;
 
@@ -1275,7 +1275,7 @@ public final class PathUtils {
    * in a directory, then the directory itself.
    */
   private static final class __DeleteFileTree extends
-      SimpleFileVisitor<Path> {
+  SimpleFileVisitor<Path> {
 
     /** the exceptions */
     private ArrayList<Throwable> m_exceptions;
@@ -1287,7 +1287,7 @@ public final class PathUtils {
 
     /**
      * store an exception (synchronized just in case)
-     * 
+     *
      * @param t
      *          the exception to store
      */
@@ -1309,7 +1309,7 @@ public final class PathUtils {
      * {@code path} and which has all the collected exceptions as
      * {@link java.lang.Throwable#addSuppressed(java.lang.Throwable)
      * suppressed exceptions}.
-     * 
+     *
      * @param path
      *          the root path
      * @throws IOException
@@ -1391,7 +1391,7 @@ public final class PathUtils {
         skip.add(p);
       }
       for (final String template : new String[] {//
-      "/tmp", //$NON-NLS-1$
+          "/tmp", //$NON-NLS-1$
           "/etc/cups/ssl", //$NON-NLS-1$
           "/etc/ssl/private", //$NON-NLS-1$
           "/etc/polkit-1/localauthority",//$NON-NLS-1$
@@ -1424,7 +1424,7 @@ public final class PathUtils {
 
         // add default paths if they exist
         for (final String template : new String[] {//
-        "addins", //$NON-NLS-1$
+            "addins", //$NON-NLS-1$
             "ADFS", //$NON-NLS-1$
             "AppCompat", //$NON-NLS-1$
             "apppatch", //$NON-NLS-1$
@@ -1527,7 +1527,7 @@ public final class PathUtils {
 
     /**
      * create the path visitor
-     * 
+     *
      * @param visitor
      *          the visitor to carry around
      */
@@ -1547,7 +1547,7 @@ public final class PathUtils {
      * Add an element to a hash set in a synchronized way &ndash;
      * synchronization here is "just-in-case". Who knows what these new
      * Java versions will parallelize.
-     * 
+     *
      * @param p
      *          the path to add
      * @param id
@@ -1652,7 +1652,7 @@ public final class PathUtils {
 
     /**
      * create the path visitor
-     * 
+     *
      * @param pathPredicate
      *          the path predicate to match
      * @param attsPredicate
@@ -1667,7 +1667,7 @@ public final class PathUtils {
 
     /**
      * Check whether the predicates match
-     * 
+     *
      * @param path
      *          the path
      * @param attrs
@@ -1678,33 +1678,33 @@ public final class PathUtils {
     private final FileVisitResult __check(final Path path,
         final BasicFileAttributes attrs) {
       check: {
-        checkAtts: {
-          if (this.m_attsPredicate != null) {
-            try {
-              if (this.m_attsPredicate.check(attrs)) {
-                break checkAtts;
-              }
-            } catch (final Throwable t) {
-              //
-            }
-            break check;
+      checkAtts: {
+      if (this.m_attsPredicate != null) {
+        try {
+          if (this.m_attsPredicate.check(attrs)) {
+            break checkAtts;
           }
+        } catch (final Throwable t) {
+          //
         }
-
-        if (this.m_pathPredicate != null) {
-          try {
-            if (this.m_pathPredicate.check(path)) {
-              this.m_found = path;
-              return FileVisitResult.TERMINATE;
-            }
-
-          } catch (final Throwable t) {
-            //
-          }
-        }
+        break check;
       }
-      return ((this.m_found == null) ? FileVisitResult.CONTINUE
-          : FileVisitResult.TERMINATE);
+    }
+
+    if (this.m_pathPredicate != null) {
+      try {
+        if (this.m_pathPredicate.check(path)) {
+          this.m_found = path;
+          return FileVisitResult.TERMINATE;
+        }
+
+      } catch (final Throwable t) {
+        //
+      }
+    }
+    }
+    return ((this.m_found == null) ? FileVisitResult.CONTINUE
+        : FileVisitResult.TERMINATE);
     }
 
     /** {@inheritDoc} */
@@ -1743,13 +1743,13 @@ public final class PathUtils {
    * this operation through a <code>PrivilegedAction</code>.
    */
   private static final class __Canonicalizer implements
-      PrivilegedAction<File> {
+  PrivilegedAction<File> {
     /** The file to canonicalize. */
     private final File m_file;
 
     /**
      * The constructor of the canonicalizer.
-     * 
+     *
      * @param file
      *          The file to be canonicalized.
      */

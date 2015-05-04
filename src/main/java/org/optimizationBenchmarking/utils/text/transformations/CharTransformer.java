@@ -29,7 +29,7 @@ public abstract class CharTransformer {
    * {@code out}. The new wrapper will transform all character data that it
    * receives according to the rules of this character transformation
    * definition and then pass them on to {@code out}.
-   * 
+   *
    * @param out
    *          the
    *          {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
@@ -47,7 +47,7 @@ public abstract class CharTransformer {
 
   /**
    * Transform a string
-   * 
+   *
    * @param s
    *          the string
    * @param form

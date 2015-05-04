@@ -8,14 +8,14 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
 
 /**
  * The base class for tool job builders
- * 
+ *
  * @param <J>
  *          the job type
  * @param <R>
  *          the return type of the setter methods
  */
 public abstract class ConfigurableToolJobBuilder<J extends IToolJob, R extends ConfigurableToolJobBuilder<J, R>>
-    extends ToolJobBuilder<J, R> implements IConfigurableToolJobBuilder {
+extends ToolJobBuilder<J, R> implements IConfigurableToolJobBuilder {
 
   /** create the tool job builder */
   protected ConfigurableToolJobBuilder() {
@@ -24,7 +24,7 @@ public abstract class ConfigurableToolJobBuilder<J extends IToolJob, R extends C
 
   /**
    * Get a parameter prefix
-   * 
+   *
    * @return the parameter prefix, or {@code null} if none is needed
    */
   protected String getParameterPrefix() {

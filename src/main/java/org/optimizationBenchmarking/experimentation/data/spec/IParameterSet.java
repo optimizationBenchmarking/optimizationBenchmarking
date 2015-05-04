@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 public interface IParameterSet extends IPropertySet {
   /**
    * Get the parameters of this parameter set
-   * 
+   *
    * @return the parameters of this parameter set
    */
   @Override
@@ -18,7 +18,7 @@ public interface IParameterSet extends IPropertySet {
 
   /**
    * Obtain a parameter fitting to a given name
-   * 
+   *
    * @param name
    *          the parameter name
    * @return the parameter, or {@code null} if none could be found
@@ -31,7 +31,7 @@ public interface IParameterSet extends IPropertySet {
    * All values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the set of parameter values
    * @return the parameter setting
@@ -46,7 +46,7 @@ public interface IParameterSet extends IPropertySet {
    * considered as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the parameter setting
@@ -61,7 +61,7 @@ public interface IParameterSet extends IPropertySet {
    * considered as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the parameter setting
@@ -76,7 +76,7 @@ public interface IParameterSet extends IPropertySet {
    * considered as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the parameter setting
@@ -90,7 +90,7 @@ public interface IParameterSet extends IPropertySet {
    * All values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the set of parameter values
    * @return the parameter setting

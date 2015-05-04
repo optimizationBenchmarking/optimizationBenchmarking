@@ -21,7 +21,7 @@ abstract class _FileSet extends FileCollector {
 
   /**
    * Check whether a given path has already been added
-   * 
+   *
    * @param path
    *          the path to be added
    * @return the type of the path, or {@code null} if none exists
@@ -30,7 +30,7 @@ abstract class _FileSet extends FileCollector {
 
   /**
    * Do the work of adding a file
-   * 
+   *
    * @param path
    *          the path
    * @param type
@@ -60,8 +60,8 @@ abstract class _FileSet extends FileCollector {
     if (normalized == null) {
       throw new IllegalArgumentException(//
           "Path '" + path + //$NON-NLS-1$
-              "' of type " + type + //$NON-NLS-1$
-              " normalizes to null."); //$NON-NLS-1$
+          "' of type " + type + //$NON-NLS-1$
+          " normalizes to null."); //$NON-NLS-1$
     }
 
     if (!(Files.isRegularFile(normalized))) {
@@ -85,7 +85,7 @@ abstract class _FileSet extends FileCollector {
 
     throw new IllegalStateException(((((("Path '" + normalized) + //$NON-NLS-1$
         "' is already associated with type ") + oldType) //$NON-NLS-1$
-        + " and cannot be associated a second time (to type ") + //$NON-NLS-1$ 
+        + " and cannot be associated a second time (to type ") + //$NON-NLS-1$
         type + '\'') + '.');
   }
 

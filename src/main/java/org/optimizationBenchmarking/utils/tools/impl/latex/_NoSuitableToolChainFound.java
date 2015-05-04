@@ -15,7 +15,7 @@ final class _NoSuitableToolChainFound extends LaTeXJob {
 
   /**
    * Create the tool chain job
-   * 
+   *
    * @param listener
    *          the file producer listener
    * @param logger
@@ -51,7 +51,7 @@ final class _NoSuitableToolChainFound extends LaTeXJob {
 
   /**
    * Always returns {@code false}: This job does nothing.
-   * 
+   *
    * @return false
    */
   @Override

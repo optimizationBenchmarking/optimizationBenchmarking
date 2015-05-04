@@ -28,7 +28,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * wrapped} around an instance of that interface, it will not necessarily
  * propagate any closing when being closed.
  * </p>
- * 
+ *
  * @author Thomas Weise
  */
 public class AbstractTextOutput implements ITextOutput, IStreamEncoded {
@@ -165,7 +165,7 @@ public class AbstractTextOutput implements ITextOutput, IStreamEncoded {
 
   /**
    * Wrap a text output object around a given {@link java.lang.Appendable}
-   * 
+   *
    * @param in
    *          the {@link java.lang.Appendable}
    * @return the text output

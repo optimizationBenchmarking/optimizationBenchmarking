@@ -23,8 +23,8 @@ public class ByteParser extends StrictByteParser {
     if ((val < Byte.MIN_VALUE) || (val > Byte.MAX_VALUE)) {
       throw new IllegalArgumentException(string
           + (((((" represents value " + val) + //$NON-NLS-1$
-          " which is outside of the valid range [") + Byte.MIN_VALUE) + //$NON-NLS-1$
-          ',') + Byte.MAX_VALUE) + " for bytes."); //$NON-NLS-1$
+              " which is outside of the valid range [") + Byte.MIN_VALUE) + //$NON-NLS-1$
+              ',') + Byte.MAX_VALUE) + " for bytes."); //$NON-NLS-1$
     }
 
     retVal = ((byte) val);
@@ -56,7 +56,7 @@ public class ByteParser extends StrictByteParser {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -65,7 +65,7 @@ public class ByteParser extends StrictByteParser {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

@@ -12,7 +12,7 @@ final class _XHTML10Itemization extends Itemization {
 
   /**
    * Create a new itemization
-   * 
+   *
    * @param owner
    *          the owning text
    */

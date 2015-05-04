@@ -11,7 +11,7 @@ public final class ExampleElement extends _ExampleBase {
 
   /**
    * Create an example attribute
-   * 
+   *
    * @param _namespace
    *          the namespace
    * @param _name

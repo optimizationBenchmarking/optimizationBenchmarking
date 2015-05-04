@@ -78,7 +78,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
  * </p>
  */
 public abstract class Graphic extends Graphics2D implements Closeable,
-    IToolJob {
+IToolJob {
 
   /** the font attributes */
   private static final Map<TextAttribute, Object> FONT_ATTRIBUTES;
@@ -147,7 +147,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * instantiate
-   * 
+   *
    * @param listener
    *          the object to notify when we are closed, or {@code null} if
    *          none needs to be notified
@@ -167,7 +167,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Allow the automatic conversion to integer data types.
-   * 
+   *
    * @return {@code true} if the graphic should try to convert floating
    *         point coordinates to {@code int} as often as possible
    */
@@ -187,7 +187,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
   /**
    * Obtain the bounds of this graphic in
    * {@link org.optimizationBenchmarking.utils.math.units.ELength#PT pt}
-   * 
+   *
    * @return the bounds of this graphic
    */
   public Rectangle2D getBounds() {
@@ -226,7 +226,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Get the graphics format to which this graphic belongs
-   * 
+   *
    * @return the graphics format to which this graphic belongs
    */
   public abstract EGraphicFormat getGraphicFormat();
@@ -250,13 +250,13 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * get this graphic's id to a text output
-   * 
+   *
    * @return the name
    */
   private final String __name() {
     return (((((((((TextUtils.className(this.getClass())) + //
-    '#') + System.identityHashCode(this)) + ' ') + '(') + //
-    this.getGraphicFormat()) + '@') + this.m_path) + ')');
+        '#') + System.identityHashCode(this)) + ' ') + '(') + //
+        this.getGraphicFormat()) + '@') + this.m_path) + ')');
   }
 
   /** {@inheritDoc} */
@@ -316,7 +316,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * This method is invoked before something happens
-   * 
+   *
    * @param what
    *          what is going to happen?
    */
@@ -328,7 +328,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a 3-dimensional rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate of the origin
    * @param y
@@ -355,7 +355,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill a 3-dimensional rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate of the origin
    * @param y
@@ -384,7 +384,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a given shape.
-   * 
+   *
    * @param s
    *          the shape
    */
@@ -467,7 +467,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param op
@@ -492,7 +492,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a rendered image
-   * 
+   *
    * @param img
    *          the image
    * @param xform
@@ -513,7 +513,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a renderable image
-   * 
+   *
    * @param img
    *          the image
    * @param xform
@@ -534,7 +534,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a string
-   * 
+   *
    * @param str
    *          the string
    * @param x
@@ -556,7 +556,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a string
-   * 
+   *
    * @param str
    *          the string
    * @param x
@@ -578,7 +578,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a string
-   * 
+   *
    * @param iterator
    *          the string
    * @param x
@@ -602,7 +602,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a string
-   * 
+   *
    * @param iterator
    *          the string
    * @param x
@@ -627,7 +627,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a glyph vector
-   * 
+   *
    * @param g
    *          the glyph vector
    * @param x
@@ -650,7 +650,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill a shape
-   * 
+   *
    * @param s
    *          the shape
    */
@@ -667,7 +667,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the composite
-   * 
+   *
    * @param comp
    *          the composite
    */
@@ -684,7 +684,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the paint
-   * 
+   *
    * @param paint
    *          the paint
    */
@@ -701,7 +701,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the stroke
-   * 
+   *
    * @param s
    *          the stroke
    */
@@ -718,7 +718,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set a rendering hint
-   * 
+   *
    * @param hintKey
    *          the key
    * @param hintValue
@@ -745,7 +745,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the rendering hints
-   * 
+   *
    * @param hints
    *          the rendering hints
    */
@@ -764,7 +764,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * translate
-   * 
+   *
    * @param x
    *          the x movement
    * @param y
@@ -785,7 +785,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * translate
-   * 
+   *
    * @param x
    *          the x movement
    * @param y
@@ -810,7 +810,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Rotate
-   * 
+   *
    * @param theta
    *          the angle
    */
@@ -833,7 +833,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Rotate
-   * 
+   *
    * @param theta
    *          the angle
    * @param x
@@ -862,7 +862,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * scale
-   * 
+   *
    * @param sx
    *          the x-scale
    * @param sy
@@ -887,7 +887,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * shear
-   * 
+   *
    * @param shx
    *          the x-scale
    * @param shy
@@ -912,7 +912,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Transform
-   * 
+   *
    * @param Tx
    *          the transform
    */
@@ -929,7 +929,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the transform
-   * 
+   *
    * @param Tx
    *          the transform
    */
@@ -941,9 +941,9 @@ public abstract class Graphic extends Graphics2D implements Closeable,
       trafo.invert();
     } catch (final Throwable error) {
       RethrowMode.AS_RUNTIME_EXCEPTION
-          .rethrow(//
-              "Cannot emulate setting transform, as the current transform cannot be inverted.", //$NON-NLS-1$
-              true, error);
+      .rethrow(//
+          "Cannot emulate setting transform, as the current transform cannot be inverted.", //$NON-NLS-1$
+          true, error);
     }
     trafo.concatenate(Tx);
     this.doTransform(trafo);
@@ -960,7 +960,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the background color
-   * 
+   *
    * @param color
    *          the color
    */
@@ -977,7 +977,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Clip
-   * 
+   *
    * @param s
    *          the shape to transform and intersect with the current clip
    */
@@ -998,7 +998,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * create a graphics context
-   * 
+   *
    * @return the graphics
    */
   protected Graphics doCreate() {
@@ -1018,7 +1018,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * create a graphics
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -1044,7 +1044,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the color
-   * 
+   *
    * @param c
    *          the color
    */
@@ -1071,7 +1071,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the xor mode
-   * 
+   *
    * @param c1
    *          the color
    */
@@ -1088,7 +1088,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the font
-   * 
+   *
    * @param font
    *          the font
    */
@@ -1105,7 +1105,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Intersect a rectangle with a clip
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -1128,7 +1128,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     q = this.getClip();
     if ((q == null) || //
         ((!(((rect = q.getBounds2D()).isEmpty()) || //
-        (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
+            (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
       this.before(Graphic.BEFORE_CHANGE_CLIP);
       this.doClipRect(x, y, width, height);
     }
@@ -1136,7 +1136,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the clip
-   * 
+   *
    * @param x
    *          the x-coordinate of the clip rectangle
    * @param y
@@ -1167,7 +1167,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Set the clip shape
-   * 
+   *
    * @param clip
    *          the clip shape
    */
@@ -1188,7 +1188,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Copy an area
-   * 
+   *
    * @param x
    *          the x-coordinate of origin of the area to be copied
    * @param y
@@ -1217,7 +1217,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a straight line between two points
-   * 
+   *
    * @param x1
    *          the x-coordinate of the first point
    * @param y1
@@ -1240,7 +1240,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * fill a rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate of the origin of the rectangle
    * @param y
@@ -1265,7 +1265,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate of the origin of the rectangle
    * @param y
@@ -1301,7 +1301,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Clear a rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate of the origin of the rectangle
    * @param y
@@ -1337,7 +1337,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw a rectangle with rounded corners
-   * 
+   *
    * @param x
    *          the x-coordinate of the origin of the rectangle
    * @param y
@@ -1375,7 +1375,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * fill a rectangle with rounded corners
-   * 
+   *
    * @param x
    *          the x-coordinate of the origin of the rectangle
    * @param y
@@ -1410,7 +1410,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an oval
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -1437,7 +1437,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill an oval
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -1462,7 +1462,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an arc
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -1494,7 +1494,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill an arc
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -1524,7 +1524,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw a poly line
-   * 
+   *
    * @param xPoints
    *          the x-coordinates
    * @param yPoints
@@ -1565,7 +1565,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw a polygon
-   * 
+   *
    * @param xPoints
    *          the x-coordinates
    * @param yPoints
@@ -1609,7 +1609,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a polygon
-   * 
+   *
    * @param p
    *          the polygon
    */
@@ -1629,7 +1629,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill a polygon
-   * 
+   *
    * @param xPoints
    *          the x-coordinates
    * @param yPoints
@@ -1654,7 +1654,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * fill a polygon
-   * 
+   *
    * @param p
    *          the polygon
    */
@@ -1676,7 +1676,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw some characters
-   * 
+   *
    * @param data
    *          the data
    * @param offset
@@ -1705,7 +1705,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw some bytes
-   * 
+   *
    * @param data
    *          the data
    * @param offset
@@ -1736,7 +1736,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -1765,7 +1765,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -1799,7 +1799,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -1830,7 +1830,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -1866,7 +1866,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param dx1
@@ -1911,7 +1911,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param dx1
@@ -1958,7 +1958,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param xform
@@ -1985,7 +1985,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Add some rendering hints
-   * 
+   *
    * @param hints
    *          the hints
    */
@@ -2032,7 +2032,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * convert a coordinate
-   * 
+   *
    * @param d
    *          the coordinate
    * @return the integer version
@@ -2043,7 +2043,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * convert a length
-   * 
+   *
    * @param d
    *          the coordinate
    * @return the integer version
@@ -2057,7 +2057,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a 3-d rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2079,7 +2079,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a 3-d rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2123,7 +2123,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill a 3-d rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2145,7 +2145,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill a 3-d rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2200,7 +2200,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a buffered image
-   * 
+   *
    * @param img
    *          the image
    * @param op
@@ -2219,7 +2219,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a buffered image
-   * 
+   *
    * @param img
    *          the image
    * @param op
@@ -2255,7 +2255,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a string
-   * 
+   *
    * @param str
    *          the string
    * @param x
@@ -2270,7 +2270,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a string
-   * 
+   *
    * @param str
    *          the string
    * @param x
@@ -2315,7 +2315,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a string
-   * 
+   *
    * @param iterator
    *          the string
    * @param x
@@ -2330,7 +2330,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a string
-   * 
+   *
    * @param iterator
    *          the string
    * @param x
@@ -2376,7 +2376,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a glyph vector
-   * 
+   *
    * @param g
    *          the glyph vector
    * @param x
@@ -2391,7 +2391,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a glyph vector
-   * 
+   *
    * @param g
    *          the glyph vector
    * @param x
@@ -2436,7 +2436,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * create a graphics object
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2457,7 +2457,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * create a graphics object
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2499,7 +2499,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * clip the given rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2516,7 +2516,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * clip the given rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2535,7 +2535,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     q = this.getClip();
     if ((q == null) || //
         ((!(((rect = q.getBounds2D()).isEmpty()) || //
-        (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
+            (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
       this.before(Graphic.BEFORE_CHANGE_CLIP);
 
       if (this.autoConvertCoordinatesToInt()) {
@@ -2565,7 +2565,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * set the clip to the given rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2582,7 +2582,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * set the clip to the given rectangle
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2628,7 +2628,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Copy some area
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2651,7 +2651,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Copy some area
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -2718,7 +2718,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw a line
-   * 
+   *
    * @param x1
    *          the start x-coordinate
    * @param y1
@@ -2735,7 +2735,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw a line
-   * 
+   *
    * @param x1
    *          the start x-coordinate
    * @param y1
@@ -2780,7 +2780,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * fill a rectangle
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -2797,7 +2797,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * fill a rectangle
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -2847,7 +2847,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw a rectangle
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -2864,7 +2864,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw a rectangle
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -2922,7 +2922,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * clear a rectangle
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -2947,7 +2947,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * clear a rectangle
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -2997,7 +2997,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw a round rectangle
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -3020,7 +3020,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw a round rectangle
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -3106,7 +3106,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * fill a round rectangle
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -3129,7 +3129,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * fill a round rectangle
-   * 
+   *
    * @param x
    *          the start x-coordinate
    * @param y
@@ -3210,7 +3210,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an oval
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -3227,7 +3227,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an oval
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -3287,7 +3287,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill an oval
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -3304,7 +3304,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill an oval
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -3352,7 +3352,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an arc
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -3375,7 +3375,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw an arc
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -3450,7 +3450,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill an arc
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -3473,7 +3473,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Fill an arc
-   * 
+   *
    * @param x
    *          the x-coordinate
    * @param y
@@ -3541,7 +3541,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Create a shape composed of a set of points
-   * 
+   *
    * @param xPoints
    *          the x points
    * @param yPoints
@@ -3571,7 +3571,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a poly-line
-   * 
+   *
    * @param xPoints
    *          the x-points
    * @param yPoints
@@ -3586,7 +3586,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a poly-line
-   * 
+   *
    * @param xPoints
    *          the x-points
    * @param yPoints
@@ -3616,7 +3616,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a polygon
-   * 
+   *
    * @param xPoints
    *          the x-points
    * @param yPoints
@@ -3631,7 +3631,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a polygon
-   * 
+   *
    * @param xPoints
    *          the x-points
    * @param yPoints
@@ -3661,7 +3661,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a polygon
-   * 
+   *
    * @param xPoints
    *          the x-points
    * @param yPoints
@@ -3676,7 +3676,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Draw a polygon
-   * 
+   *
    * @param xPoints
    *          the x-points
    * @param yPoints
@@ -3694,7 +3694,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw the given characters
-   * 
+   *
    * @param data
    *          the character data
    * @param offset
@@ -3715,7 +3715,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw the given characters
-   * 
+   *
    * @param data
    *          the character data
    * @param offset
@@ -3751,7 +3751,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -3771,7 +3771,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -3808,7 +3808,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * Create an affine transform for scaling an image
-   * 
+   *
    * @param image
    *          the image
    * @param width
@@ -3840,7 +3840,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -3874,7 +3874,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -3933,7 +3933,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -3955,7 +3955,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -3995,7 +3995,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -4030,7 +4030,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * draw an image
-   * 
+   *
    * @param img
    *          the image
    * @param x
@@ -4093,7 +4093,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * TODO Draw an image
-   * 
+   *
    * @param img
    *          the specified image to be drawn. This method does nothing if
    *          {@code img} is null.
@@ -4136,7 +4136,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * TODO Draw an image
-   * 
+   *
    * @param img
    *          the specified image to be drawn. This method does nothing if
    *          {@code img} is null.
@@ -4234,7 +4234,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * TODO Draw an image
-   * 
+   *
    * @param img
    *          the specified image to be drawn. This method does nothing if
    *          {@code img} is null.
@@ -4280,7 +4280,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
   /**
    * TODO Draw an image
-   * 
+   *
    * @param img
    *          the specified image to be drawn. This method does nothing if
    *          {@code img} is null.
@@ -4390,7 +4390,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
     /**
      * Translate the coordinate system
-     * 
+     *
      * @param x
      *          the translation along the x-axis
      * @param y
@@ -4449,7 +4449,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
 
     /**
      * create
-     * 
+     *
      * @param x
      *          the starting x-coordinate
      * @param y

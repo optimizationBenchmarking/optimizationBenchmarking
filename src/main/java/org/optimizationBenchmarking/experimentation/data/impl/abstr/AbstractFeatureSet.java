@@ -13,14 +13,14 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * interface.
  */
 public class AbstractFeatureSet extends
-    _AbstractPropertySet<IFeatureSetting> implements IFeatureSet {
+_AbstractPropertySet<IFeatureSetting> implements IFeatureSet {
 
   /**
    * Create the abstract feature set. If {@code owner==null}, you must
    * later set it via
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractFeatureSet)}
    * .
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -32,7 +32,7 @@ public class AbstractFeatureSet extends
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractFeature}
    * .
-   * 
+   *
    * @param feature
    *          the feature set to own
    */

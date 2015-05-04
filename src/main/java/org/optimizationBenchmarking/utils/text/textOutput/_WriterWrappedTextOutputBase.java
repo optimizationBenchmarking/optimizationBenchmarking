@@ -9,16 +9,16 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 /**
  * A basic version of the text output wrapped around any subclass of
  * {@link java.io.Writer}.
- * 
+ *
  * @param <W>
  *          the writer type
  */
 class _WriterWrappedTextOutputBase<W extends Writer> extends
-    _AppendableWrappedTextOutputBase<W> {
+_AppendableWrappedTextOutputBase<W> {
 
   /**
    * Create a wrapped text output
-   * 
+   *
    * @param out
    *          the output
    */

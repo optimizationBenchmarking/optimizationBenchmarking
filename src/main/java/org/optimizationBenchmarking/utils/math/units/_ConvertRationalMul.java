@@ -14,7 +14,7 @@ final class _ConvertRationalMul extends _ConversionFunction {
 
   /**
    * create
-   * 
+   *
    * @param multiplier
    *          the multiplier
    */

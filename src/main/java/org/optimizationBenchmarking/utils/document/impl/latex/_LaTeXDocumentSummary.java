@@ -8,7 +8,7 @@ final class _LaTeXDocumentSummary extends DocumentSummary {
 
   /**
    * Create a document summary.
-   * 
+   *
    * @param owner
    *          the owning document header
    */

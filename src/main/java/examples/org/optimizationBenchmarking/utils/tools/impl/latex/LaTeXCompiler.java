@@ -86,7 +86,7 @@ public final class LaTeXCompiler {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Exception
@@ -107,7 +107,7 @@ public final class LaTeXCompiler {
           "Now beginning to build LaTeX job. This entails searching for executables and may take a while."); //$NON-NLS-1$
       logger.info(//
           "Btw, LaTeX supports the following graphic formats: " //$NON-NLS-1$
-              + LaTeX.getAllSupportedGraphicFormats());
+          + LaTeX.getAllSupportedGraphicFormats());
     }
 
     builder = LaTeX.getInstance().use();

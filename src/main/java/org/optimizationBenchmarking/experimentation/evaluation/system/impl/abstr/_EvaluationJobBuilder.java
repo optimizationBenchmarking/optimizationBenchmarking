@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
 
 /**
  * The internal base class for evaluation job builders
- * 
+ *
  * @param <DT>
  *          the data type
  * @param <MT>
@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  *          the job builder type
  */
 class _EvaluationJobBuilder<DT extends IElementSet, MT extends _EvaluationModule<DT>, JT extends IEvaluationJob, JBT extends _EvaluationJobBuilder<DT, MT, JT, JBT>>
-    extends ToolJobBuilder<JT, JBT> implements IEvaluationJobBuilder {
+extends ToolJobBuilder<JT, JBT> implements IEvaluationJobBuilder {
 
   /** the module */
   private final MT m_module;
@@ -33,7 +33,7 @@ class _EvaluationJobBuilder<DT extends IElementSet, MT extends _EvaluationModule
 
   /**
    * create the job builder
-   * 
+   *
    * @param module
    *          the module
    */
@@ -42,14 +42,14 @@ class _EvaluationJobBuilder<DT extends IElementSet, MT extends _EvaluationModule
     if (module == null) {
       throw new IllegalArgumentException(//
           "Owning module of an "//$NON-NLS-1$
-              + TextUtils.className(this.getClass()) + " cannot be null."); //$NON-NLS-1$
+          + TextUtils.className(this.getClass()) + " cannot be null."); //$NON-NLS-1$
     }
     this.m_module = module;
   }
 
   /**
    * Set the data
-   * 
+   *
    * @param data
    *          the data
    * @return this builder
@@ -88,6 +88,7 @@ class _EvaluationJobBuilder<DT extends IElementSet, MT extends _EvaluationModule
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
   @Override
   public synchronized final JT create() throws Exception {
     this.validate();

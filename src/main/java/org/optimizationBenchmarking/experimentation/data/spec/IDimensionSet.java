@@ -9,7 +9,7 @@ public interface IDimensionSet extends INamedElementSet {
   /**
    * Get the owning experiment set, or {@code null} if this element is not
    * owned by anything else.
-   * 
+   *
    * @return the owning experiment set
    */
   @Override
@@ -17,7 +17,7 @@ public interface IDimensionSet extends INamedElementSet {
 
   /**
    * Get the dimensions of this dimension set
-   * 
+   *
    * @return the dimensions of this dimension set
    */
   @Override
@@ -25,7 +25,7 @@ public interface IDimensionSet extends INamedElementSet {
 
   /**
    * Find the dimension with the given name
-   * 
+   *
    * @param name
    *          the name
    * @return the dimension, or {@code null} if it could not be found

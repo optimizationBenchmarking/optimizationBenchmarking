@@ -34,7 +34,7 @@ public final class Gamma extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -46,7 +46,7 @@ public final class Gamma extends UnaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

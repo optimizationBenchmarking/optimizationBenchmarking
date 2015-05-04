@@ -14,12 +14,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A tool for generating text output
- * 
+ *
  * @param <S>
  *          the source type
  */
 public class TextOutputTool<S> extends StreamOutputTool<S> implements
-    ITextOutputTool<S> {
+ITextOutputTool<S> {
 
   /** create */
   protected TextOutputTool() {
@@ -68,7 +68,7 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
 
   /**
    * Store the data element to a writer
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -92,7 +92,7 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
 
   /**
    * Store the data element to a text output device
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -111,7 +111,7 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
   @Override
   protected void stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding)
-      throws Throwable {
+          throws Throwable {
     final Logger logger;
     Class<?> clazz;
 
@@ -125,7 +125,7 @@ public class TextOutputTool<S> extends StreamOutputTool<S> implements
       if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
         logger.log(IOTool.FINE_LOG_LEVEL,//
             ("Using text encoding " //$NON-NLS-1$
-            + encoding.name()));
+                + encoding.name()));
       }
       try (final Writer writer = ((Writer) (encoding
           .wrapOutputStream(stream)))) {

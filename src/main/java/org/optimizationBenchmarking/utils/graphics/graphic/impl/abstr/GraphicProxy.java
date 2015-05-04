@@ -39,7 +39,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * . This wrapper allows us to forward all calls to a given graphics
  * object. Its {@link #onClose()} routine must be overridden to dispose
  * that object when the graphic context is released.
- * 
+ *
  * @param <GT>
  *          the proxy graphics type
  */
@@ -50,7 +50,7 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
 
   /**
    * instantiate
-   * 
+   *
    * @param graphic
    *          the graphic to use
    * @param log

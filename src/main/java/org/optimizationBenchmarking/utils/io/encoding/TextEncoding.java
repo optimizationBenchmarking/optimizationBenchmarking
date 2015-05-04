@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * A text encoding based on some fixed character set.
  */
 public final class TextEncoding extends
-    StreamEncoding<BufferedReader, BufferedWriter> {
+StreamEncoding<BufferedReader, BufferedWriter> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public final class TextEncoding extends
 
   /**
    * create
-   * 
+   *
    * @param names
    *          the encodings names
    * @param autoRegister
@@ -44,7 +44,7 @@ public final class TextEncoding extends
 
   /**
    * register with more names
-   * 
+   *
    * @param moreNames
    *          the names
    */
@@ -124,7 +124,7 @@ public final class TextEncoding extends
 
   /**
    * create
-   * 
+   *
    * @param name
    *          the encodings name
    * @param autoRegister
@@ -136,7 +136,7 @@ public final class TextEncoding extends
 
   /**
    * Get the name under which this encoding is known in the Java world
-   * 
+   *
    * @return the name under which this encoding is known in the Java world
    */
   public final String getJavaName() {
@@ -145,7 +145,7 @@ public final class TextEncoding extends
 
   /**
    * Try to resolve the name of an encoding
-   * 
+   *
    * @param name
    *          the name
    * @return the resolved name

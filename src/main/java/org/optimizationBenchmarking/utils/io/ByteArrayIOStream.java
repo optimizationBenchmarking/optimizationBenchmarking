@@ -21,7 +21,7 @@ public class ByteArrayIOStream extends ByteArrayOutputStream {
 
   /**
    * instantiate
-   * 
+   *
    * @param size
    *          the size to be allocated
    */
@@ -32,7 +32,7 @@ public class ByteArrayIOStream extends ByteArrayOutputStream {
   /**
    * Get an input stream which can directly read from the data previously
    * written to the output.
-   * 
+   *
    * @return an input stream which can directly read the data which was
    *         written to the output before
    */

@@ -35,7 +35,7 @@ final class _XHTML10MathCompare extends MathCompare {
     _XHTML10MathCompare.SIGNS[EMathComparison.APPROXIMATELY.ordinal()] = new char[] {
         '&', 'a', 's', 'y', 'm', 'p', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.APPROXIMATELY_EQUAL
-        .ordinal()] = new char[] { '&', '#', 'x', '2', '2', '4', 'a', ';' };
+                              .ordinal()] = new char[] { '&', '#', 'x', '2', '2', '4', 'a', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.PROPROTIONAL_TO.ordinal()] = new char[] {
         '&', 'p', 'r', 'o', 'p', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.NOT_EQUAL.ordinal()] = new char[] {
@@ -45,9 +45,9 @@ final class _XHTML10MathCompare extends MathCompare {
     _XHTML10MathCompare.SIGNS[EMathComparison.NOT_APPROXIMATELY.ordinal()] = new char[] {
         '&', '#', 'x', '2', '2', '4', '9', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.NOT_APPROXIMATELY_EQUAL
-        .ordinal()] = new char[] { '&', '#', 'x', '2', '2', '4', '7', ';' };
+                              .ordinal()] = new char[] { '&', '#', 'x', '2', '2', '4', '7', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.NOT_PROPROTIONAL_TO
-        .ordinal()] = new char[] { '&', 'n', 'o', 't', ';', '&', 'p', 'r',
+                              .ordinal()] = new char[] { '&', 'n', 'o', 't', ';', '&', 'p', 'r',
         'o', 'p', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.ELEMENT_OF.ordinal()] = new char[] {
         '&', 'i', 's', 'i', 'n', ';' };
@@ -60,7 +60,7 @@ final class _XHTML10MathCompare extends MathCompare {
     _XHTML10MathCompare.SIGNS[EMathComparison.SUBSET_OF_OR_EQUAL.ordinal()] = new char[] {
         '&', 's', 'u', 'b', 'e', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.NOT_SUBSET_OF_OR_EQUAL
-        .ordinal()] = new char[] { '&', 'n', 's', 'u', 'b', 'e', ';' };
+                              .ordinal()] = new char[] { '&', 'n', 's', 'u', 'b', 'e', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.DEFINED_AS.ordinal()] = new char[] {
         '&', '#', 'x', '2', '2', '5', 'c', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.APPROXIMATED_AS.ordinal()] = new char[] {
@@ -72,7 +72,7 @@ final class _XHTML10MathCompare extends MathCompare {
     _XHTML10MathCompare.SIGNS[EMathComparison.PRECEDES_OR_EQUAL.ordinal()] = new char[] {
         '&', '#', 'x', '2', '2', '7', 'c', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.NOT_PRECEDES_OR_EQUAL
-        .ordinal()] = new char[] { '&', '#', 'x', '2', '2', 'e', '0', ';' };
+                              .ordinal()] = new char[] { '&', '#', 'x', '2', '2', 'e', '0', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.SUCCEEDS.ordinal()] = new char[] {
         '&', '#', 'x', '2', '2', '7', 'b', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.NOT_SUCCEEDS.ordinal()] = new char[] {
@@ -80,7 +80,7 @@ final class _XHTML10MathCompare extends MathCompare {
     _XHTML10MathCompare.SIGNS[EMathComparison.SUCCEEDS_OR_EQUAL.ordinal()] = new char[] {
         '&', '#', 'x', '2', '2', '7', 'd', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.NOT_SUCCEEDS_OR_EQUAL
-        .ordinal()] = new char[] { '&', '#', 'x', '2', '2', 'e', '1', ';' };
+                              .ordinal()] = new char[] { '&', '#', 'x', '2', '2', 'e', '1', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.SIMILAR.ordinal()] = new char[] {
         '&', '#', 'x', '2', '2', '3', 'c', ';' };
     _XHTML10MathCompare.SIGNS[EMathComparison.NOT_SIMILAR.ordinal()] = new char[] {
@@ -90,7 +90,7 @@ final class _XHTML10MathCompare extends MathCompare {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    * @param cmp

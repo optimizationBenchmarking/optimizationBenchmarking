@@ -38,7 +38,7 @@ public final class StyleSet {
 
   /**
    * Create the style set
-   * 
+   *
    * @param fonts
    *          the font palette
    * @param strokes
@@ -53,7 +53,7 @@ public final class StyleSet {
 
   /**
    * Create the style set
-   * 
+   *
    * @param fonts
    *          the font palette
    * @param strokes
@@ -78,7 +78,7 @@ public final class StyleSet {
 
   /**
    * Create a style set from an owning style set
-   * 
+   *
    * @param owner
    *          the owning style set
    */
@@ -92,7 +92,7 @@ public final class StyleSet {
   /**
    * Allocate a fonts. Best effort is made to return fonts different from
    * those allocated before.
-   * 
+   *
    * @return the font
    */
   public synchronized final FontStyle allocateFont() {
@@ -105,7 +105,7 @@ public final class StyleSet {
   /**
    * Allocate a colors. Best effort is made to return colors different from
    * those allocated before.
-   * 
+   *
    * @return the color
    */
   public synchronized final ColorStyle allocateColor() {
@@ -119,7 +119,7 @@ public final class StyleSet {
   /**
    * Allocate a strokes. Best effort is made to return strokes different
    * from those allocated before.
-   * 
+   *
    * @return the stroke
    */
   public synchronized final StrokeStyle allocateStroke() {
@@ -135,7 +135,7 @@ public final class StyleSet {
    * will be allocated. If {@code allocateIfUndefined} is {@code false} and
    * no color is defined for the given name yet, {@code null} will be
    * returned.
-   * 
+   *
    * @param name
    *          the name
    * @param allocateIfUndefined
@@ -152,24 +152,24 @@ public final class StyleSet {
 
     if (this.m_namedColors == null) {
       findMapToCopy: {
-        for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
-          synchronized (owner) {
-            if (owner.m_namedColors != null) {
-              if (allocateIfUndefined) {
-                this.m_namedColors = ((StringMap) (//
-                owner.m_namedColors.clone()));
-                break findMapToCopy;
-              }
-
-              return owner.m_namedColors.get(name);
+      for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
+        synchronized (owner) {
+          if (owner.m_namedColors != null) {
+            if (allocateIfUndefined) {
+              this.m_namedColors = ((StringMap) (//
+                  owner.m_namedColors.clone()));
+              break findMapToCopy;
             }
+
+            return owner.m_namedColors.get(name);
           }
         }
-        if (!allocateIfUndefined) {
-          return null;
-        }
-        this.m_namedColors = new StringMap<>();
       }
+      if (!allocateIfUndefined) {
+        return null;
+      }
+      this.m_namedColors = new StringMap<>();
+    }
     }
 
     color = this.m_namedColors.get(name);
@@ -192,7 +192,7 @@ public final class StyleSet {
    * will be allocated. If {@code allocateIfUndefined} is {@code false} and
    * no font is defined for the given name yet, {@code null} will be
    * returned.
-   * 
+   *
    * @param name
    *          the name
    * @param allocateIfUndefined
@@ -209,24 +209,24 @@ public final class StyleSet {
 
     if (this.m_namedFonts == null) {
       findMapToCopy: {
-        for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
-          synchronized (owner) {
-            if (owner.m_namedFonts != null) {
-              if (allocateIfUndefined) {
-                this.m_namedFonts = ((StringMap) (//
-                owner.m_namedFonts.clone()));
-                break findMapToCopy;
-              }
-
-              return owner.m_namedFonts.get(name);
+      for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
+        synchronized (owner) {
+          if (owner.m_namedFonts != null) {
+            if (allocateIfUndefined) {
+              this.m_namedFonts = ((StringMap) (//
+                  owner.m_namedFonts.clone()));
+              break findMapToCopy;
             }
+
+            return owner.m_namedFonts.get(name);
           }
         }
-        if (!allocateIfUndefined) {
-          return null;
-        }
-        this.m_namedFonts = new StringMap<>();
       }
+      if (!allocateIfUndefined) {
+        return null;
+      }
+      this.m_namedFonts = new StringMap<>();
+    }
     }
 
     font = this.m_namedFonts.get(name);
@@ -249,7 +249,7 @@ public final class StyleSet {
    * will be allocated. If {@code allocateIfUndefined} is {@code false} and
    * no stroke is defined for the given name yet, {@code null} will be
    * returned.
-   * 
+   *
    * @param name
    *          the name
    * @param allocateIfUndefined
@@ -266,24 +266,24 @@ public final class StyleSet {
 
     if (this.m_namedStrokes == null) {
       findMapToCopy: {
-        for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
-          synchronized (owner) {
-            if (owner.m_namedStrokes != null) {
-              if (allocateIfUndefined) {
-                this.m_namedStrokes = ((StringMap) (//
-                owner.m_namedStrokes.clone()));
-                break findMapToCopy;
-              }
-
-              return owner.m_namedStrokes.get(name);
+      for (owner = this.m_owner; (owner != null); owner = owner.m_owner) {
+        synchronized (owner) {
+          if (owner.m_namedStrokes != null) {
+            if (allocateIfUndefined) {
+              this.m_namedStrokes = ((StringMap) (//
+                  owner.m_namedStrokes.clone()));
+              break findMapToCopy;
             }
+
+            return owner.m_namedStrokes.get(name);
           }
         }
-        if (!allocateIfUndefined) {
-          return null;
-        }
-        this.m_namedStrokes = new StringMap<>();
       }
+      if (!allocateIfUndefined) {
+        return null;
+      }
+      this.m_namedStrokes = new StringMap<>();
+    }
     }
 
     stroke = this.m_namedStrokes.get(name);
@@ -302,7 +302,7 @@ public final class StyleSet {
 
   /**
    * Get the default stroke
-   * 
+   *
    * @return the default stroke
    */
   public final StrokeStyle getDefaultStroke() {
@@ -311,7 +311,7 @@ public final class StyleSet {
 
   /**
    * Get the thin stroke
-   * 
+   *
    * @return the thin stroke
    */
   public final StrokeStyle getThinStroke() {
@@ -320,7 +320,7 @@ public final class StyleSet {
 
   /**
    * Get the thick stroke
-   * 
+   *
    * @return the thick stroke
    */
   public final StrokeStyle getThickStroke() {
@@ -329,7 +329,7 @@ public final class StyleSet {
 
   /**
    * Get the default font style
-   * 
+   *
    * @return the default font style
    */
   public final FontStyle getDefaultFont() {
@@ -338,7 +338,7 @@ public final class StyleSet {
 
   /**
    * Get the emphasize font style
-   * 
+   *
    * @return the emphasize font style
    */
   public final FontStyle getEmphFont() {
@@ -347,7 +347,7 @@ public final class StyleSet {
 
   /**
    * Get the code font style
-   * 
+   *
    * @return the code font style
    */
   public final FontStyle getCodeFont() {
@@ -356,7 +356,7 @@ public final class StyleSet {
 
   /**
    * Get the black color
-   * 
+   *
    * @return the black color
    */
   public final ColorStyle getBlack() {
@@ -365,7 +365,7 @@ public final class StyleSet {
 
   /**
    * Get the white color
-   * 
+   *
    * @return the white color
    */
   public final ColorStyle getWhite() {
@@ -375,7 +375,7 @@ public final class StyleSet {
   /**
    * Initialize a graphics context with the default font, color, and stroke
    * settings
-   * 
+   *
    * @param graphics
    *          the graphics context
    */
@@ -387,7 +387,7 @@ public final class StyleSet {
 
   /**
    * Get the color most similar to a given RGB value
-   * 
+   *
    * @param rgb
    *          the rgb value of the color
    * @return the color most similar to the RGB value
@@ -398,7 +398,7 @@ public final class StyleSet {
 
   /**
    * Get the color most similar to another color
-   * 
+   *
    * @param color
    *          the other color
    * @return the color most similar to a given color
@@ -409,7 +409,7 @@ public final class StyleSet {
 
   /**
    * Find the font style most similar to a given setup
-   * 
+   *
    * @param family
    *          the font family
    * @param bold

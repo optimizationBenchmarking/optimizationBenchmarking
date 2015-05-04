@@ -15,7 +15,7 @@ final class _DelayedSectionContainer implements ISectionContainer {
 
   /**
    * create a delayed section
-   * 
+   *
    * @param real
    *          the real section
    */
@@ -34,7 +34,7 @@ final class _DelayedSectionContainer implements ISectionContainer {
   /**
    * Obtain the container for the sub-sections. Do not close this
    * container.
-   * 
+   *
    * @return the container for the sub-sections
    */
   final ISectionContainer _getContainerForSubSections() {

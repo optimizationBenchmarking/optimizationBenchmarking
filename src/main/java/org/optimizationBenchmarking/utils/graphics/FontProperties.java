@@ -56,7 +56,7 @@ public class FontProperties extends HashObject {
 
   /**
    * Create the font properties object
-   * 
+   *
    * @param flags
    *          the flags
    */
@@ -85,7 +85,7 @@ public class FontProperties extends HashObject {
 
   /**
    * Get the font family
-   * 
+   *
    * @return the font family, or {@code null} if no family is defined
    */
   public final EFontFamily getFamily() {
@@ -113,7 +113,7 @@ public class FontProperties extends HashObject {
 
   /**
    * Is this font italic?
-   * 
+   *
    * @return {@code true} for italic fonts, {@code false} for normal ones
    */
   public final boolean isItalic() {
@@ -122,7 +122,7 @@ public class FontProperties extends HashObject {
 
   /**
    * Is this font bold?
-   * 
+   *
    * @return {@code true} for bold fonts, {@code false} for normal ones
    */
   public final boolean isBold() {
@@ -131,7 +131,7 @@ public class FontProperties extends HashObject {
 
   /**
    * Is this font underlined?
-   * 
+   *
    * @return {@code true} for underlined fonts, {@code false} for normal
    *         ones
    */
@@ -170,7 +170,7 @@ public class FontProperties extends HashObject {
    * The output of {@link java.awt.Font#getStyle()}, on the other hand, may
    * be {@code or}-ed ({@code | mask}) with the result of this method.
    * </p>
-   * 
+   *
    * @return the style flags, a combination of {@link java.awt.Font#PLAIN},
    *         {@link java.awt.Font#ITALIC}, and {@link java.awt.Font#BOLD}
    */
@@ -194,7 +194,7 @@ public class FontProperties extends HashObject {
 
   /**
    * Get the font properties for a font name in a heuristic way
-   * 
+   *
    * @param name
    *          the font name
    * @return the font family
@@ -287,7 +287,7 @@ public class FontProperties extends HashObject {
 
   /**
    * Get the font properties for a given font
-   * 
+   *
    * @param font
    *          the font object
    * @param useOnlyName
@@ -382,7 +382,7 @@ public class FontProperties extends HashObject {
    * resource-based lookup. If you want this, use
    * <code>{@link #getFontProperties(Font, boolean) getFontProperties(Font, false)}.{@link #isUnderlined()}</code>
    * instead.
-   * 
+   *
    * @param font
    *          the font
    * @return {@code true} if the font is underlined, {@code false}
@@ -398,7 +398,7 @@ public class FontProperties extends HashObject {
 
   /**
    * get the flags
-   * 
+   *
    * @param data
    *          the data string
    * @param idx
@@ -455,7 +455,7 @@ public class FontProperties extends HashObject {
 
   /** the internal font flag class */
   private static final class __FontFlags extends FontProperties implements
-      Comparable<__FontFlags> {
+  Comparable<__FontFlags> {
 
     /** the array with the font flags */
     static final __FontFlags[] FLAGS;
@@ -467,7 +467,7 @@ public class FontProperties extends HashObject {
 
       al = new ArrayList<>();
       try (final InputStream is = //
-      FontProperties.class.getResourceAsStream("knownFonts.txt")) { //$NON-NLS-1$
+          FontProperties.class.getResourceAsStream("knownFonts.txt")) { //$NON-NLS-1$
         try (final InputStreamReader isr = new InputStreamReader(is)) {
           try (final BufferedReader br = new BufferedReader(isr)) {
             while ((s = br.readLine()) != null) {
@@ -493,7 +493,7 @@ public class FontProperties extends HashObject {
 
     /**
      * create
-     * 
+     *
      * @param data
      *          the data string
      * @param idx
@@ -507,7 +507,7 @@ public class FontProperties extends HashObject {
 
     /**
      * create
-     * 
+     *
      * @param data
      *          the data string
      */

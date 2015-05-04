@@ -216,7 +216,7 @@ public class AnyNumberParser extends NumberParser<Number> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -225,7 +225,7 @@ public class AnyNumberParser extends NumberParser<Number> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

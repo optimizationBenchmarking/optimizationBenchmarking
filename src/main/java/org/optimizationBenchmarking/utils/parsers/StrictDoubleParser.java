@@ -29,7 +29,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
   /**
    * Parse the string
-   * 
+   *
    * @param string
    *          the string
    * @return the return type
@@ -52,9 +52,9 @@ public class StrictDoubleParser extends NumberParser<Double> {
     if (hasLong && (l != d)) {
       throw new IllegalArgumentException(//
           "Loss of fidelity when parsing '" + string + //$NON-NLS-1$
-              "' to a double (" + d + //$NON-NLS-1$
-              ") compared to parsing it to a long (" + //$NON-NLS-1$
-              l + ")."); //$NON-NLS-1$
+          "' to a double (" + d + //$NON-NLS-1$
+          ") compared to parsing it to a long (" + //$NON-NLS-1$
+          l + ")."); //$NON-NLS-1$
     }
 
     this.validateDouble(d);
@@ -97,7 +97,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -106,7 +106,7 @@ public class StrictDoubleParser extends NumberParser<Double> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

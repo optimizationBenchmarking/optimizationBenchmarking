@@ -9,11 +9,11 @@ final class _XHTML10MathLg extends MathLg {
 
   /** the operator */
   private final static char[] OP = new char[] { 'l', 'o', 'g', '<', 's',
-      'u', 'b', '>', '1', '0', '<', '/', 's', 'u', 'b', '>', };
+    'u', 'b', '>', '1', '0', '<', '/', 's', 'u', 'b', '>', };
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

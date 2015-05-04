@@ -130,7 +130,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Create a document.
-   * 
+   *
    * @param driver
    *          the document driver
    * @param writer
@@ -184,7 +184,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Create a document.
-   * 
+   *
    * @param driver
    *          the document driver
    * @param builder
@@ -199,7 +199,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Create a document.
-   * 
+   *
    * @param driver
    *          the document driver
    * @param docPath
@@ -220,7 +220,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Get the label for a given object.
-   * 
+   *
    * @param type
    *          the label type
    * @param label
@@ -246,8 +246,8 @@ public class Document extends DocumentElement implements IDocument {
       if (r.m_type != type) {
         throw new IllegalArgumentException(//
             "A label of type '" + r.m_type + //$NON-NLS-1$
-                "' cannot be used to label an '" + //$NON-NLS-1$
-                type + "'."); //$NON-NLS-1$
+            "' cannot be used to label an '" + //$NON-NLS-1$
+            type + "'."); //$NON-NLS-1$
       }
       this.__setReferenceText(r, text);
       return r;
@@ -255,15 +255,15 @@ public class Document extends DocumentElement implements IDocument {
 
     throw new IllegalArgumentException(//
         "Invalid label: '" + label + //$NON-NLS-1$
-            "', only " + TextUtils.className(ELabelType.class) + //$NON-NLS-1$
-            ".AUTO and instances of " + TextUtils.className(Label.class) + //$NON-NLS-1$
-            " permitted."); //$NON-NLS-1$
+        "', only " + TextUtils.className(ELabelType.class) + //$NON-NLS-1$
+        ".AUTO and instances of " + TextUtils.className(Label.class) + //$NON-NLS-1$
+        " permitted."); //$NON-NLS-1$
   }
 
   /**
    * Create a new label to mark a table or figure or section with that is
    * going to be written in the future.
-   * 
+   *
    * @param type
    *          the label type
    * @param refText
@@ -290,7 +290,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * set the reference text of a label
-   * 
+   *
    * @param label
    *          the label
    * @param refText
@@ -311,7 +311,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Remember that a given style has been used
-   * 
+   *
    * @param style
    *          the style
    */
@@ -324,7 +324,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Get the output writer
-   * 
+   *
    * @param docPath
    *          the document path
    * @return the writer
@@ -349,7 +349,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Get the path to the folder containing the document
-   * 
+   *
    * @return the path to the folder containing the document
    */
   public final Path getDocumentFolder() {
@@ -473,7 +473,7 @@ public class Document extends DocumentElement implements IDocument {
    * termination sequence to the main {@link #getTextOutput() document
    * stream}. The stream is still open, but will be closed directly after
    * this method returns.
-   * 
+   *
    * @see #onClose()
    */
   protected void doOnClose() {
@@ -486,7 +486,7 @@ public class Document extends DocumentElement implements IDocument {
    * be generated and added to the overall outcome via the methods provided
    * by {@link #getFileCollector()} (this will not change the value of
    * {@code paths} passed into this method).
-   * 
+   *
    * @param usedStyles
    *          the set of used styles
    * @param paths
@@ -499,7 +499,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Get the document id
-   * 
+   *
    * @return the document id
    */
   final String __name() {
@@ -509,7 +509,7 @@ public class Document extends DocumentElement implements IDocument {
     if (s == null) {
       this.m_docName = s = (" document '" + //$NON-NLS-1$
           this.m_documentPath + "' of type " + //$NON-NLS-1$
-      TextUtils.className(this.m_driver.getClass()));
+          TextUtils.className(this.m_driver.getClass()));
     }
     return s;
   }
@@ -529,7 +529,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see #doOnClose()
    * @see #postProcess(Set, ArrayListView)
    */
@@ -596,7 +596,7 @@ public class Document extends DocumentElement implements IDocument {
     }
     if (error != null) {
       ErrorUtils.logError(log,//
-          ("Error during finalization of" + this.__name()), //$NON-NLS-1$          
+          ("Error during finalization of" + this.__name()), //$NON-NLS-1$
           error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
@@ -615,7 +615,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Translate a figure size to a physical dimension
-   * 
+   *
    * @param size
    *          the size
    * @return the translated size
@@ -627,7 +627,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Get the figures per row
-   * 
+   *
    * @param size
    *          the figure size
    * @return the number of figures of this size that fit into one row
@@ -646,7 +646,7 @@ public class Document extends DocumentElement implements IDocument {
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic#close()
    * closed}, it will notify the provided {@code listener} interface
    * (unless {@code listener==null}).
-   * 
+   *
    * @param basePath
    *          the base path, i.e., the folder in which the graphic should
    *          be created
@@ -671,7 +671,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Get the graphic format used by this document
-   * 
+   *
    * @return the graphic format used by this document
    */
   protected EGraphicFormat getGraphicFormat() {
@@ -689,7 +689,7 @@ public class Document extends DocumentElement implements IDocument {
 
   /**
    * Create a chart selector
-   * 
+   *
    * @param graphic
    *          the graphic
    * @return the chart selector

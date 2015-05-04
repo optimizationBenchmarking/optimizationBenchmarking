@@ -16,7 +16,7 @@ public abstract class Run extends ElementSet<DataPoint> implements IRun {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data points
    */

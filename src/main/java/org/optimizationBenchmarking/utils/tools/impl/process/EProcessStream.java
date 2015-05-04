@@ -29,7 +29,7 @@ public enum EProcessStream {
 
   /**
    * create
-   * 
+   *
    * @param redir
    *          the redirect
    */

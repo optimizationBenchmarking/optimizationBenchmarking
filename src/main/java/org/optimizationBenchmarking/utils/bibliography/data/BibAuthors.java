@@ -16,7 +16,7 @@ public final class BibAuthors extends _BibSet<BibAuthor, BibAuthors> {
 
   /**
    * create the bib set
-   * 
+   *
    * @param data
    *          the data of the set
    */
@@ -26,7 +26,7 @@ public final class BibAuthors extends _BibSet<BibAuthor, BibAuthors> {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data of the set
    * @param cannotBeEmpty
@@ -41,7 +41,7 @@ public final class BibAuthors extends _BibSet<BibAuthor, BibAuthors> {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data of the set
    * @param check

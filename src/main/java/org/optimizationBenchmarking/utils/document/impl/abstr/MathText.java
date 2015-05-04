@@ -5,7 +5,7 @@ public class MathText extends ComplexText {
 
   /**
    * Create a text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

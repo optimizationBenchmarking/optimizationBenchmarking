@@ -13,7 +13,7 @@ public class MathInBraces extends BasicMath {
 
   /**
    * Create a text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -25,7 +25,7 @@ public class MathInBraces extends BasicMath {
 
   /**
    * Get the brace index
-   * 
+   *
    * @param owner
    *          the owning document element
    * @return the brace index
@@ -58,7 +58,7 @@ public class MathInBraces extends BasicMath {
 
   /**
    * Get the brace index
-   * 
+   *
    * @return the brace index
    */
   protected final int getBraceIndex() {

@@ -25,7 +25,7 @@ final class _ImageIOJPEGGraphic extends _ImageIORasterGraphic {
 
   /**
    * instantiate
-   * 
+   *
    * @param path
    *          the path
    * @param logger
@@ -69,9 +69,9 @@ final class _ImageIOJPEGGraphic extends _ImageIORasterGraphic {
     final Element tree, jfif;
     tree = ((Element) (metaData.getAsTree("javax_imageio_jpeg_image_1.0"))); //$NON-NLS-1$
     jfif = ((Element) (tree.getElementsByTagName("app0JFIF").item(0)));//$NON-NLS-1$
-    jfif.setAttribute("Xdensity",//$NON-NLS-1$ 
+    jfif.setAttribute("Xdensity",//$NON-NLS-1$
         Long.toString(Math.max(1L, Math.round(this.m_xDPI))));
-    jfif.setAttribute("Ydensity",//$NON-NLS-1$ 
+    jfif.setAttribute("Ydensity",//$NON-NLS-1$
         Long.toString(Math.max(1L, Math.round(this.m_yDPI))));
     jfif.setAttribute("resUnits", "1"); //$NON-NLS-1$//$NON-NLS-2$
     metaData.setFromTree("javax_imageio_jpeg_image_1.0", tree);//$NON-NLS-1$

@@ -22,7 +22,7 @@ public class LoggingWriter extends Writer {
 
   /**
    * Create the logging writer
-   * 
+   *
    * @param logger
    *          the logger, or {@code null} if none is used
    * @param level
@@ -50,7 +50,7 @@ public class LoggingWriter extends Writer {
 
   /**
    * Get the internal buffer
-   * 
+   *
    * @return the internal buffer
    * @throws IllegalStateException
    *           if this writer is already closed
@@ -64,7 +64,7 @@ public class LoggingWriter extends Writer {
 
   /**
    * check if we should flush
-   * 
+   *
    * @throws IllegalStateException
    *           if i/o fails
    */

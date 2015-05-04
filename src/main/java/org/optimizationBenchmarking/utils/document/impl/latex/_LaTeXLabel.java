@@ -12,7 +12,7 @@ final class _LaTeXLabel extends Label {
 
   /**
    * create an LaTeX label
-   * 
+   *
    * @param owner
    *          the owner
    * @param type

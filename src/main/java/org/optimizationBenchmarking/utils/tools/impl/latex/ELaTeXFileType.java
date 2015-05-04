@@ -394,7 +394,7 @@ public enum ELaTeXFileType implements IFileType {
 
   /** A set view of all the instances */
   public static final ArraySetView<ELaTeXFileType> INSTANCES = //
-  new ArraySetView<>(ELaTeXFileType.values());
+      new ArraySetView<>(ELaTeXFileType.values());
 
   /** should we delete the file afterwards? */
   private final boolean m_deleteAfter;
@@ -407,7 +407,7 @@ public enum ELaTeXFileType implements IFileType {
 
   /**
    * Create the new LaTeX file type
-   * 
+   *
    * @param deleteAfter
    *          should we delete the file afterwards?
    * @param trackChanges
@@ -424,7 +424,7 @@ public enum ELaTeXFileType implements IFileType {
 
   /**
    * Should we delete the file after the compilation has been completed?
-   * 
+   *
    * @return {@code true} if we need to delete the file, {@code false} if
    *         not
    */
@@ -434,7 +434,7 @@ public enum ELaTeXFileType implements IFileType {
 
   /**
    * Should we track changes to this file type?
-   * 
+   *
    * @return {@code true} if we need to track changes, {@code false}
    *         otherwise
    */
@@ -444,7 +444,7 @@ public enum ELaTeXFileType implements IFileType {
 
   /**
    * Can this be a required input type for a LaTeX tool chain?
-   * 
+   *
    * @return can this be a required input type for a LaTeX tool chain?
    */
   final boolean _canRequire() {

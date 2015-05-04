@@ -30,7 +30,7 @@ final class _LoggedSentinel extends Throwable {
 
   /**
    * create the logged sentinel
-   * 
+   *
    * @param logger
    *          the logger
    * @param level
@@ -51,7 +51,7 @@ final class _LoggedSentinel extends Throwable {
   /**
    * Is the given {@link java.lang.Throwable} has a sentinel for the
    * provided logger?
-   * 
+   *
    * @param logger
    *          the logger
    * @param error
@@ -89,7 +89,7 @@ final class _LoggedSentinel extends Throwable {
 
   /**
    * Mark the given {@link java.lang.Throwable} as logged
-   * 
+   *
    * @param error
    *          the {@link java.lang.Throwable} to be marked
    * @param message
@@ -108,7 +108,7 @@ final class _LoggedSentinel extends Throwable {
 
   /**
    * get the name of a logger
-   * 
+   *
    * @param logger
    *          the logger
    * @return the string

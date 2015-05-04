@@ -19,14 +19,14 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
  * {@link java.lang.ClassLoader} holding the compiled classes.
  */
 public final class JavaCompilerJob extends ToolJob implements
-    Callable<ClassLoader> {
+Callable<ClassLoader> {
 
   /** the sources */
   private final ArrayListView<JavaFileObject> m_sources;
 
   /**
    * create the compiler job
-   * 
+   *
    * @param logger
    *          the logger, or {@code null} if no log is used
    * @param sources

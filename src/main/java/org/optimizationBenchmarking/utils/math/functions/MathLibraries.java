@@ -32,7 +32,7 @@ public final class MathLibraries {
   /**
    * Check whether {@link org.apache.commons.math3.util.FastMath} is in the
    * classpath.
-   * 
+   *
    * @return {@code true} if {@link org.apache.commons.math3.util.FastMath}
    *         can be used, {@code false} otherwise.
    */

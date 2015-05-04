@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.collections.maps;
 
 /**
  * An entry for an object set:
- * 
+ *
  * @param <K>
  *          the key type
  * @param <V>

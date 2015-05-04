@@ -26,7 +26,7 @@ public final class ECDFTSPSuiteExample extends EvaluationExample {
 
   /**
    * Run the example
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Throwable

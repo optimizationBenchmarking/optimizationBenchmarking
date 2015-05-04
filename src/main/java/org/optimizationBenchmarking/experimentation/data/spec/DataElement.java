@@ -18,7 +18,7 @@ public abstract class DataElement implements IDataElement {
   /**
    * Get the value of a given attribute. This is an internal method you
    * should better leave your fingers away from...
-   * 
+   *
    * @param attribute
    *          the attribute
    * @return the attribute
@@ -99,7 +99,7 @@ public abstract class DataElement implements IDataElement {
   /**
    * Delegate getting the value of a given attribute. This is an internal
    * method you should better leave your fingers away from...
-   * 
+   *
    * @param to
    *          the object to delegate to
    * @param attribute

@@ -38,24 +38,24 @@ final class _GhostScript extends _LaTeXToolChainComponent {
     path = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "gswin64c",//$NON-NLS-1$
             "gs"//$NON-NLS-1$
-        ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+            ), CanExecutePredicate.INSTANCE),//
+            IsFilePredicate.INSTANCE, null);
     if (path == null) {
       path = PathUtils.findFirstInPath(new AndPredicate<>(
           new FileNamePredicate(true, "gswin32c"//$NON-NLS-1$
-          ), CanExecutePredicate.INSTANCE),//
-          IsFilePredicate.INSTANCE, null);
+              ), CanExecutePredicate.INSTANCE),//
+              IsFilePredicate.INSTANCE, null);
       if (path == null) {
         path = PathUtils.findFirstInPath(new AndPredicate<>(
             new FileNamePredicate(true, "gswin64"//$NON-NLS-1$
-            ), CanExecutePredicate.INSTANCE),//
-            IsFilePredicate.INSTANCE, null);
+                ), CanExecutePredicate.INSTANCE),//
+                IsFilePredicate.INSTANCE, null);
         if (path == null) {
 
           path = PathUtils.findFirstInPath(new AndPredicate<>(
               new FileNamePredicate(true, "gswin32"//$NON-NLS-1$
-              ), CanExecutePredicate.INSTANCE),//
-              IsFilePredicate.INSTANCE, null);
+                  ), CanExecutePredicate.INSTANCE),//
+                  IsFilePredicate.INSTANCE, null);
         }
       }
     }
@@ -64,9 +64,9 @@ final class _GhostScript extends _LaTeXToolChainComponent {
 
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config((this.m_executable != null) ? //
-      ("GhostScript executable '" + this.m_executable + //$NON-NLS-1$
-      "' found.") //$NON-NLS-1$
-          : "No GhostScript executable found.");//$NON-NLS-1$
+          ("GhostScript executable '" + this.m_executable + //$NON-NLS-1$
+              "' found.") //$NON-NLS-1$
+              : "No GhostScript executable found.");//$NON-NLS-1$
     }
   }
 
@@ -97,7 +97,7 @@ final class _GhostScript extends _LaTeXToolChainComponent {
             ELaTeXFileType.PS,
             true,
             "This means either that LaTeX and dvips were not yet run or that the LaTeX or the dvi file contain errors." //$NON-NLS-1$
-        )) == null) {
+            )) == null) {
       return;
     }
 
@@ -167,7 +167,7 @@ final class _GhostScript extends _LaTeXToolChainComponent {
             ELaTeXFileType.PDF,
             true,
             "This could mean that GhostScript failed to generate the pdf because the postscript file contains errors." //$NON-NLS-1$
-        ) != null) {
+            ) != null) {
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
             (("Finished applying GhostScript to '" + ps) + '\'') + '.'); //$NON-NLS-1$
@@ -183,7 +183,7 @@ final class _GhostScript extends _LaTeXToolChainComponent {
 
   /**
    * get the description of the ghostscript tool
-   * 
+   *
    * @return the instance
    */
   static final _LaTeXToolChainComponentDesc _getDescription() {
@@ -192,7 +192,7 @@ final class _GhostScript extends _LaTeXToolChainComponent {
 
   /** the description */
   private static final class __GhostScriptDesc extends
-      _LaTeXToolChainComponentDesc {
+  _LaTeXToolChainComponentDesc {
 
     /** the description */
     static final _LaTeXToolChainComponentDesc DESC = new __GhostScriptDesc();

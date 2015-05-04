@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.io.structured.spec;
 
 /**
  * A tool for reading text-based input
- * 
+ *
  * @param <S>
  *          the destination data type
  */

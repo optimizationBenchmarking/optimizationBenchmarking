@@ -13,7 +13,7 @@ final class _WriterWriter extends Writer {
 
   /**
    * Create a wrapped text output
-   * 
+   *
    * @param out
    *          the output
    */

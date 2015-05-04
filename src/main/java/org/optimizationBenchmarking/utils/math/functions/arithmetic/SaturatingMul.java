@@ -58,7 +58,7 @@ public final class SaturatingMul extends BinaryFunction {
 
   /**
    * Get the overflow type when multiplying two {@code long} numbers
-   * 
+   *
    * @param x0
    *          the first number
    * @param x1
@@ -124,7 +124,7 @@ public final class SaturatingMul extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -136,7 +136,7 @@ public final class SaturatingMul extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

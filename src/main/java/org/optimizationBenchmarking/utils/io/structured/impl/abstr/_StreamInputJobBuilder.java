@@ -10,19 +10,19 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IStreamInputJobBuil
 
 /**
  * The class for building stream input jobs
- * 
+ *
  * @param <DT>
  *          the source data type
  * @param <JBT>
  *          the job builder type
  */
 class _StreamInputJobBuilder<DT, JBT extends _StreamInputJobBuilder<DT, JBT>>
-    extends _FileInputJobBuilder<DT, JBT> implements
-    IStreamInputJobBuilder<DT> {
+extends _FileInputJobBuilder<DT, JBT> implements
+IStreamInputJobBuilder<DT> {
 
   /**
    * create the job builder
-   * 
+   *
    * @param tool
    *          the owning tool
    */

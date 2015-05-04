@@ -148,7 +148,7 @@ public enum EPaperSize implements IMedium {
 
   /**
    * Create a new paper size
-   * 
+   *
    * @param size
    *          the size
    */

@@ -12,19 +12,19 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 /**
  * A version of the text output wrapped around an
  * {@link java.lang.Appendable}.
- * 
+ *
  * @param <A>
  *          the appendable type
  */
 class _AppendableWrappedTextOutputBase<A extends Appendable> extends
-    AbstractTextOutput {
+AbstractTextOutput {
 
   /** the appendable */
   final A m_out;
 
   /**
    * Create a wrapped text output
-   * 
+   *
    * @param out
    *          the output
    */
@@ -33,7 +33,7 @@ class _AppendableWrappedTextOutputBase<A extends Appendable> extends
     if (out == null) {
       throw new IllegalArgumentException(//
           "The Appendable instance to be wrapped into a " + //$NON-NLS-1$
-              TextUtils.className(this.getClass()) + " cannot be null.");//$NON-NLS-1$
+          TextUtils.className(this.getClass()) + " cannot be null.");//$NON-NLS-1$
     }
     this.m_out = out;
   }
@@ -46,7 +46,7 @@ class _AppendableWrappedTextOutputBase<A extends Appendable> extends
     } catch (final IOException ioe) {
       RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           (("Error while trying to append CharSequence to " //$NON-NLS-1$
-          + TextUtils.className(this.getClass())) + '.'), true, ioe);
+              + TextUtils.className(this.getClass())) + '.'), true, ioe);
     }
     return this;
   }
@@ -60,7 +60,7 @@ class _AppendableWrappedTextOutputBase<A extends Appendable> extends
     } catch (final IOException ioe) {
       RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           (("Error while trying to append part of CharSequence to " //$NON-NLS-1$
-          + TextUtils.className(this.getClass())) + '.'), true, ioe);
+              + TextUtils.className(this.getClass())) + '.'), true, ioe);
     }
     return this;
   }
@@ -73,7 +73,7 @@ class _AppendableWrappedTextOutputBase<A extends Appendable> extends
     } catch (final IOException ioe) {
       RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           (("Error while trying to append char to " //$NON-NLS-1$
-          + TextUtils.className(this.getClass())) + '.'), true, ioe);
+              + TextUtils.className(this.getClass())) + '.'), true, ioe);
     }
     return this;
   }
@@ -87,7 +87,7 @@ class _AppendableWrappedTextOutputBase<A extends Appendable> extends
       } catch (final IOException ioe) {
         RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
             (("Error while trying to flush " //$NON-NLS-1$
-            + TextUtils.className(this.getClass())) + '.'), true, ioe);
+                + TextUtils.className(this.getClass())) + '.'), true, ioe);
       }
     }
   }

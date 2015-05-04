@@ -13,7 +13,7 @@ public interface IStyle {
 
   /**
    * Apply a style to a graphic
-   * 
+   *
    * @param g
    *          the graphic
    * @return an instance of {@link java.io.Closeable}
@@ -22,7 +22,7 @@ public interface IStyle {
 
   /**
    * Append the name of this style to a given text output
-   * 
+   *
    * @param textCase
    *          the text case to use
    * @param dest
@@ -38,7 +38,7 @@ public interface IStyle {
   /**
    * Obtain the ID of this style. This id is unique within the owning
    * palette.
-   * 
+   *
    * @return a unique ID for this style
    */
   public abstract String getID();

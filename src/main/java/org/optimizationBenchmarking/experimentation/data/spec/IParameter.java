@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 public interface IParameter extends IProperty {
   /**
    * Get the owning parameter set
-   * 
+   *
    * @return the owning parameter set
    */
   @Override
@@ -16,7 +16,7 @@ public interface IParameter extends IProperty {
 
   /**
    * Get the set of parameter values
-   * 
+   *
    * @return the set of parameter values
    */
   @Override
@@ -24,7 +24,7 @@ public interface IParameter extends IProperty {
 
   /**
    * Obtain a parameter value fitting to a given value object
-   * 
+   *
    * @param value
    *          the parameter value object
    * @return the parameter value, or {@code null} if none could be found
@@ -34,7 +34,7 @@ public interface IParameter extends IProperty {
 
   /**
    * The parameter value record indicating generalization
-   * 
+   *
    * @return the parameter value record indicating generalization
    */
   @Override
@@ -44,7 +44,7 @@ public interface IParameter extends IProperty {
    * Obtain the parameter value record indicating an unspecified value, or
    * {@code null} if all experiments have a specific value for this
    * parameter.
-   * 
+   *
    * @return the parameter value record indicating an unspecified value, or
    *         {@code null} if all experiments have a specific value for this
    *         parameter.

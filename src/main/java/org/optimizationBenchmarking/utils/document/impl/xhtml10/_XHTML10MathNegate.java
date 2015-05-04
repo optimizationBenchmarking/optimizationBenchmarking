@@ -9,7 +9,7 @@ final class _XHTML10MathNegate extends MathNegate {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

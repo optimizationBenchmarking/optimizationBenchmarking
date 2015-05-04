@@ -16,7 +16,7 @@ public class LaTeXDriverPDFTest extends DocumentDriverTest {
 
   /**
    * make the latex configuration
-   * 
+   *
    * @return the latex configuration
    */
   private static final LaTeXConfiguration __make() {

@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * different owner and potentially different attributes. If all associated
  * data of this element is the same, it will delegate attribute-based
  * computations to that element set.
- * 
+ *
  * @param <OT>
  *          the owner type
  * @param <ST>
@@ -24,7 +24,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  */
 abstract class _ShadowElementSet<OT extends IDataElement, ST extends IElementSet, //
 PT extends IDataElement> extends //
-    _ShadowDataElement<OT, ST> implements IElementSet {
+_ShadowDataElement<OT, ST> implements IElementSet {
 
   /** the data */
   ArrayListView<? extends PT> m_data;
@@ -34,7 +34,7 @@ PT extends IDataElement> extends //
 
   /**
    * create the shadow element set
-   * 
+   *
    * @param owner
    *          the owning element
    * @param shadow
@@ -61,7 +61,7 @@ PT extends IDataElement> extends //
 
   /**
    * shadow the given collection of elements
-   * 
+   *
    * @param selection
    *          the selection
    * @param canOwn
@@ -99,8 +99,8 @@ PT extends IDataElement> extends //
                 }
                 throw new IllegalArgumentException(//
                     "Instance of " //$NON-NLS-1$
-                        + TextUtils.className(spv.getClass()) + //
-                        "without owner encountered."); //$NON-NLS-1$
+                    + TextUtils.className(spv.getClass()) + //
+                    "without owner encountered."); //$NON-NLS-1$
               }
             }
           }
@@ -137,7 +137,7 @@ PT extends IDataElement> extends //
 
   /**
    * Shadow a given element
-   * 
+   *
    * @param element
    *          the element
    * @return the shadow copy

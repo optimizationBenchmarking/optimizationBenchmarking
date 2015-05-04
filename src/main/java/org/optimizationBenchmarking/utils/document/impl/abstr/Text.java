@@ -11,7 +11,7 @@ public abstract class Text extends DocumentPart implements IText {
 
   /**
    * Create a text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -51,7 +51,7 @@ public abstract class Text extends DocumentPart implements IText {
 
   /**
    * Obtain the text output destination to write to
-   * 
+   *
    * @return the text output destination to write to
    */
   protected final ITextOutput encodedText() {

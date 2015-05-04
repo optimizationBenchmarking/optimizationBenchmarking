@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 final class _LaTeXTableFooterCell extends TableFooterCell {
   /**
    * Create a footer cell of a table
-   * 
+   *
    * @param owner
    *          the owning row
    * @param cols

@@ -16,7 +16,7 @@ public class LaTeXConfiguration extends DocumentConfiguration {
 
   /**
    * create the XHTML 1.0 document configuration
-   * 
+   *
    * @param builder
    *          the builder
    */
@@ -29,7 +29,7 @@ public class LaTeXConfiguration extends DocumentConfiguration {
 
   /**
    * Get the document class
-   * 
+   *
    * @return the document class
    */
   public final LaTeXDocumentClass getDocumentClass() {
@@ -38,7 +38,7 @@ public class LaTeXConfiguration extends DocumentConfiguration {
 
   /**
    * check the document class
-   * 
+   *
    * @param documentClass
    *          the document class
    */
@@ -82,7 +82,7 @@ public class LaTeXConfiguration extends DocumentConfiguration {
 
   /**
    * Store the ID of a document class to a text output
-   * 
+   *
    * @param documentClass
    *          the document class
    * @param textOut
@@ -108,7 +108,7 @@ public class LaTeXConfiguration extends DocumentConfiguration {
 
   /**
    * Create a document builder with this object's settings
-   * 
+   *
    * @return the document builder
    */
   @Override

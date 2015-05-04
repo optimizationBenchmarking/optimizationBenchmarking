@@ -22,7 +22,7 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
 
   /**
    * create the property value group
-   * 
+   *
    * @param owner
    *          the owning element set
    * @param selection
@@ -55,7 +55,7 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
 
   /**
    * Obtain the inclusive lower bound of the value range
-   * 
+   *
    * @return the inclusive lower bound of the value range
    * @see #getUpperBound()
    */
@@ -65,7 +65,7 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
 
   /**
    * Obtain the exclusive or inclusive upper bound of the value range
-   * 
+   *
    * @return the exclusive or inclusive upper bound of the value range
    * @see #isUpperBoundExclusive()
    * @see #getLowerBound()
@@ -85,7 +85,7 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
    * {@code long} larger than {@link java.lang.Long#MAX_VALUE}. Or, let's
    * say, a parameter has actually the value
    * {@link java.lang.Double#POSITIVE_INFINITY}.
-   * 
+   *
    * @return {@code true} if the upper bound is exclusive, {@code false}
    *         otherwise
    * @see #getUpperBound()

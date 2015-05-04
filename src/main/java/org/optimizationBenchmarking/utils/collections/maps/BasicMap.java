@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * arbitrary complex data structure and keys do not necessarily need to be
  * objects, they may as well be simple numbers (which then need to be
  * encapsulated into wrapper classes in the implementation).
- * 
+ *
  * @param <K>
  *          the key type
  * @param <V>
@@ -25,7 +25,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  *          the entry type
  */
 public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
-    AbstractMap<K, V> implements Iterable<NT>, Serializable, Cloneable {
+AbstractMap<K, V> implements Iterable<NT>, Serializable, Cloneable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -42,7 +42,7 @@ public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
 
   /**
    * get the map entry for a given key
-   * 
+   *
    * @param key
    *          the key
    * @param create
@@ -62,7 +62,7 @@ public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
   /**
    * this method should be called whenever an entry has been created and
    * inserted into the map
-   * 
+   *
    * @param entry
    *          the new entry
    */
@@ -73,7 +73,7 @@ public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
   /**
    * this method should be called before an entry is removed. it may not be
    * called when the map is cleared
-   * 
+   *
    * @param entry
    *          the entry to be removed
    */
@@ -83,7 +83,7 @@ public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
 
   /**
    * create a map entry
-   * 
+   *
    * @return the new map entry
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -93,7 +93,7 @@ public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
 
   /**
    * remove the given entry from the map
-   * 
+   *
    * @param entry
    *          the entry to remove
    */
@@ -114,7 +114,7 @@ public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
 
   /**
    * Check whether the map contains a given entry
-   * 
+   *
    * @param entry
    *          the entry to find
    * @return {@code true} if the entry was discovered, {@code false}
@@ -179,7 +179,7 @@ public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
 
   /**
    * Access the internal entry set
-   * 
+   *
    * @return the entry set
    */
   public AbstractSet<NT> entries() {
@@ -197,6 +197,7 @@ public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
   @Override
   public BasicMap<K, V, NT> clone() {
     BasicMap<K, V, NT> m;
@@ -218,7 +219,7 @@ public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
 
   /**
    * Visit all the entries in this map
-   * 
+   *
    * @param visitor
    *          the visitor
    * @return {@code false} if the

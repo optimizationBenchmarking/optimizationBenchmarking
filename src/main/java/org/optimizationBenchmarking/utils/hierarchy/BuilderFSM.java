@@ -5,7 +5,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * An abstract base class for FSMs that can build a complex object.
- * 
+ *
  * @param <T>
  *          the name of the thing to be built
  */
@@ -36,7 +36,7 @@ public abstract class BuilderFSM<T> extends NormalizingFSM {
 
   /**
    * Create the builder fsm
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -65,7 +65,7 @@ public abstract class BuilderFSM<T> extends NormalizingFSM {
 
   /**
    * Build the product of this builder
-   * 
+   *
    * @return the product
    */
   protected abstract T compile();
@@ -73,7 +73,7 @@ public abstract class BuilderFSM<T> extends NormalizingFSM {
   /**
    * Obtain the product of this builder. If the product has not yet been
    * created, {@link #compile() compile} the builder's data first.
-   * 
+   *
    * @return the product
    */
   public synchronized T getResult() {

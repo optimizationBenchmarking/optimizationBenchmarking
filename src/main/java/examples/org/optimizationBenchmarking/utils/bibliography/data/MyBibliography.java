@@ -25,7 +25,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * create my bibliography
-   * 
+   *
    * @return the bibliography
    */
   @Override
@@ -48,7 +48,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * add a random own publications
-   * 
+   *
    * @param bb
    *          the builder
    * @param r
@@ -94,7 +94,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * make paper TYW2012SSOECFLSGO
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -110,7 +110,7 @@ public final class MyBibliography extends BibliographyExample {
         }
         try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Yang"); //$NON-NLS-1$
-          ab.setOriginalSpelling("\u6768\u632F\u5B87"); //$NON-NLS-1$          
+          ab.setOriginalSpelling("\u6768\u632F\u5B87"); //$NON-NLS-1$
           ab.setPersonalName("Zhenyu"); //$NON-NLS-1$
         }
         try (final BibAuthorBuilder ab = abs.author()) {
@@ -133,7 +133,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * make paper WWTWDY2014FFA
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -187,7 +187,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * make paper DWT2011ASOSRFEOOGS
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -232,7 +232,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * make paper WZKG2009DGPFz
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -280,7 +280,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * make paper WZKG2007DGPFg
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -361,7 +361,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * make paper WWTY2014EEIAWGP
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -377,7 +377,7 @@ public final class MyBibliography extends BibliographyExample {
         try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Wan"); //$NON-NLS-1$
           ab.setPersonalName("Mingxu"); //$NON-NLS-1$
-          ab.setOriginalSpelling("\u4E07\u660E\u7EEA"); //$NON-NLS-1$          
+          ab.setOriginalSpelling("\u4E07\u660E\u7EEA"); //$NON-NLS-1$
         }
         try (final BibAuthorBuilder ab = abs.author()) {
           ab.setFamilyName("Tang"); //$NON-NLS-1$
@@ -420,7 +420,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * make paper PROC2013IDEAL
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -490,7 +490,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * make paper CWM2011VOEAFRWA
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -532,7 +532,7 @@ public final class MyBibliography extends BibliographyExample {
 
   /**
    * The main routine, printing my bibliography
-   * 
+   *
    * @param args
    *          the command line arguments: ignored
    */

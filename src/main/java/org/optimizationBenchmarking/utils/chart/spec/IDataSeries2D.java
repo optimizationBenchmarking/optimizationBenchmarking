@@ -9,7 +9,7 @@ public interface IDataSeries2D extends IDataSeries {
    * Set a starting point of the 2D series (line). If you do not set a
    * starting point, the start will be taken from the
    * {@link #setData(IMatrix) data matrix}.
-   * 
+   *
    * @param x
    *          the {@code x}-coordinate of the starting point
    * @param y
@@ -21,7 +21,7 @@ public interface IDataSeries2D extends IDataSeries {
    * Set an end point for the 2D series (line). If you do not set a ending
    * point, the end will be taken from the {@link #setData(IMatrix) data
    * matrix}.
-   * 
+   *
    * @param x
    *          the {@code x}-coordinate of the end point
    * @param y

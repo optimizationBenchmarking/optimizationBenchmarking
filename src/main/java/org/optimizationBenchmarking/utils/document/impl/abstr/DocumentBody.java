@@ -12,14 +12,14 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
  * actual document text, sections, graphics, etc.
  */
 public class DocumentBody extends _StyleProviderPart implements
-    IDocumentBody {
+IDocumentBody {
 
   /** the sub-section counter */
   private int m_subsectionCount;
 
   /**
    * Create a new document body
-   * 
+   *
    * @param owner
    *          the owning document
    */
@@ -30,7 +30,7 @@ public class DocumentBody extends _StyleProviderPart implements
 
   /**
    * Get the owning document
-   * 
+   *
    * @return the owning document
    */
   @Override

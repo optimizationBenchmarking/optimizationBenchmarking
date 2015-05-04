@@ -13,16 +13,16 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * A group of experiments or experiment sub-sets selected according to some
  * criterion based on a property.
- * 
+ *
  * @param <OT>
  *          the owning groups
  */
 public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
-    extends ShadowExperimentSet<OT> implements ICluster {
+extends ShadowExperimentSet<OT> implements ICluster {
 
   /**
    * create the property value group
-   * 
+   *
    * @param owner
    *          the owning element set
    * @param selection
@@ -34,7 +34,7 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
 
   /**
    * Append the selection criterion.
-   * 
+   *
    * @param textOut
    *          the text output to append to
    */
@@ -42,7 +42,7 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
 
   /**
    * Get the the selection criterion string
-   * 
+   *
    * @return the the selection criterion string
    */
   public String getCriterionString() {
@@ -55,7 +55,7 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
 
   /**
    * Append a number
-   * 
+   *
    * @param number
    *          the number to append
    * @param out
@@ -72,7 +72,7 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
 
   /**
    * Append a name
-   * 
+   *
    * @param textOut
    *          the text output device
    * @param textCase

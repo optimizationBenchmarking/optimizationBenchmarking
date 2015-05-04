@@ -46,12 +46,12 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * <li>{@link #drawPolyline(double[], double[], int)}</li>
  * <li>{@link #drawPolyline(int[], int[], int)}</li>
  * </ol>
- * 
+ *
  * @param <GT>
  *          the wrapped graphics type
  */
 public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
-    extends GraphicProxy<GT> {
+extends GraphicProxy<GT> {
 
   /** the maximum allowed coordinate: {@value} */
   private static final double MAX_COORD = (Double.MAX_VALUE * 0.5d);
@@ -88,7 +88,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * instantiate
-   * 
+   *
    * @param graphic
    *          the graphic to use
    * @param log
@@ -123,7 +123,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * format a {@code double} value for caching in a line cache
-   * 
+   *
    * @param d
    *          the double value
    * @return the formatted result
@@ -446,7 +446,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Actually draw a shape
-   * 
+   *
    * @param s
    *          the shape
    */
@@ -537,7 +537,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
   /**
    * Try to simplify a list of segments as much as possible by deleting
    * redundant segments
-   * 
+   *
    * @param work
    *          the list of segments
    */
@@ -626,7 +626,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Check whether {@code b} is between {@code a} and {@code c}
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -642,10 +642,11 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Flush an ordered list of connected segments
-   * 
+   *
    * @param work
    *          the list of segments
    */
+  @SuppressWarnings("fallthrough")
   private final void __flushLineSegments(
       final ArrayList<__LineSegment> work) {
     __LineSegment a, b, c, d;
@@ -687,7 +688,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Flush a single line
-   * 
+   *
    * @param x1
    *          the first x coordinate
    * @param y1
@@ -726,7 +727,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Flush a line
-   * 
+   *
    * @param x1
    *          the first x-coordinate
    * @param y1
@@ -743,7 +744,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Flush a line
-   * 
+   *
    * @param x1
    *          the first x-coordinate
    * @param y1
@@ -760,7 +761,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Flush a rectangle
-   * 
+   *
    * @param a
    *          the first segment
    * @param b
@@ -854,7 +855,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Flush drawing a rectangle
-   * 
+   *
    * @param x
    *          the first x-coordinate
    * @param y
@@ -871,7 +872,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Flush drawing a rectangle
-   * 
+   *
    * @param x
    *          the first x-coordinate
    * @param y
@@ -888,7 +889,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Flush a poly line
-   * 
+   *
    * @param work
    *          the list of segments of the poly-line
    */
@@ -959,7 +960,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Flush drawing a poly line
-   * 
+   *
    * @param xPoints
    *          the x-coordinates
    * @param yPoints
@@ -974,7 +975,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
   /**
    * Flush drawing a poly line
-   * 
+   *
    * @param xPoints
    *          the x-coordinates
    * @param yPoints
@@ -995,7 +996,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
     /**
      * Create the double segment
-     * 
+     *
      * @param _x1
      *          the start x
      * @param _y1
@@ -1019,17 +1020,17 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
             HashUtils.combineHashes(//
                 HashUtils.hashCode(this.x1),//
                 HashUtils.hashCode(this.y1)),//
-            HashUtils.combineHashes(//
-                HashUtils.hashCode(this.x2),//
-                HashUtils.hashCode(this.y2)));
+                HashUtils.combineHashes(//
+                    HashUtils.hashCode(this.x2),//
+                    HashUtils.hashCode(this.y2)));
       }
       return HashUtils.combineHashes(//
           HashUtils.combineHashes(//
               HashUtils.hashCode(this.x2),//
               HashUtils.hashCode(this.y2)),//
-          HashUtils.combineHashes(//
-              HashUtils.hashCode(this.x1),//
-              HashUtils.hashCode(this.y1)));
+              HashUtils.combineHashes(//
+                  HashUtils.hashCode(this.x1),//
+                  HashUtils.hashCode(this.y1)));
     }
 
     /** {@inheritDoc} */
@@ -1078,7 +1079,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
     /**
      * Can we somehow attach this segment to x1/y1 of the other segment?
-     * 
+     *
      * @param other
      *          the other segment
      * @return {@code true} if we can
@@ -1105,7 +1106,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
 
     /**
      * Can we somehow attach this segment to x2/y2 of the other segment?
-     * 
+     *
      * @param other
      *          the other segment
      * @return {@code true} if we can
@@ -1134,7 +1135,7 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
     @Override
     public final String toString() {
       return (((((((("(" + this.x1) + //$NON-NLS-1$
-      ',') + this.y1) + ',') + this.x2) + ',') + this.y2) + ')');
+          ',') + this.y1) + ',') + this.x2) + ',') + this.y2) + ')');
     }
   }
 }

@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
  * directory
  */
 public final class IsDirectoryPredicate implements
-    IPredicate<BasicFileAttributes>, Serializable {
+IPredicate<BasicFileAttributes>, Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ public final class IsDirectoryPredicate implements
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -40,7 +40,7 @@ public final class IsDirectoryPredicate implements
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

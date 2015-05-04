@@ -20,7 +20,7 @@ public interface IAppendixJobBuilder extends IEvaluationJobBuilder {
 
   /**
    * Set the data to be evaluated
-   * 
+   *
    * @param data
    *          the data to be evaluated
    * @return this builder

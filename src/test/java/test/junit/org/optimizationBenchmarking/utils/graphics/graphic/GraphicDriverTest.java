@@ -36,7 +36,7 @@ public abstract class GraphicDriverTest extends ToolTest<IGraphicDriver> {
 
   /**
    * test painting an example graphic
-   * 
+   *
    * @throws IOException
    *           if i/o fails
    */
@@ -82,7 +82,7 @@ public abstract class GraphicDriverTest extends ToolTest<IGraphicDriver> {
 
   /** the listener */
   private static final class __FileProducerListener implements
-      IFileProducerListener {
+  IFileProducerListener {
 
     /** the path to the graphic */
     Path m_path;

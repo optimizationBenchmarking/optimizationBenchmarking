@@ -5,7 +5,7 @@ public class MathLog extends MathFunction {
 
   /**
    * Create an log function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

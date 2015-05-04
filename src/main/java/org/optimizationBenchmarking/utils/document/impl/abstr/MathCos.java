@@ -5,7 +5,7 @@ public class MathCos extends MathFunction {
 
   /**
    * Create an cos function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

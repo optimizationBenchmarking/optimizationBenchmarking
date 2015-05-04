@@ -17,7 +17,7 @@ final class _ProducerConsumerOutputStream extends OutputStream {
 
   /**
    * Create the stream
-   * 
+   *
    * @param buffer
    *          the buffer to write to
    */

@@ -51,9 +51,9 @@ final class _PdfLaTeX extends _LaTeXToolChainComponent {
 
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config((this.m_executable != null) ? //
-      ("PdfLaTeX executable '" + this.m_executable + //$NON-NLS-1$
-      "' found.")//$NON-NLS-1$
-          : "No PdfLaTeX executable found.");//$NON-NLS-1$
+          ("PdfLaTeX executable '" + this.m_executable + //$NON-NLS-1$
+              "' found.")//$NON-NLS-1$
+              : "No PdfLaTeX executable found.");//$NON-NLS-1$
     }
   }
 
@@ -120,7 +120,7 @@ final class _PdfLaTeX extends _LaTeXToolChainComponent {
             ELaTeXFileType.AUX,
             true,
             " This could mean that the latex document does not contain any label, citation, or section."//$NON-NLS-1$
-        ) == null) {
+            ) == null) {
       ok = false;
     }
     if (this
@@ -129,7 +129,7 @@ final class _PdfLaTeX extends _LaTeXToolChainComponent {
             ELaTeXFileType.PDF,
             true,
             " This could mean that the latex document does not produce any pdf output."//$NON-NLS-1$
-        ) == null) {
+            ) == null) {
       ok = false;
     }
 
@@ -149,7 +149,7 @@ final class _PdfLaTeX extends _LaTeXToolChainComponent {
 
   /**
    * get the description
-   * 
+   *
    * @return the description
    */
   static final _LaTeXToolChainComponentDesc _getDescription() {
@@ -158,7 +158,7 @@ final class _PdfLaTeX extends _LaTeXToolChainComponent {
 
   /** the description */
   private static final class __PdfLaTeXDesc extends
-      _LaTeXToolChainComponentDesc {
+  _LaTeXToolChainComponentDesc {
 
     /** the description */
     static final _LaTeXToolChainComponentDesc DESC = new __PdfLaTeXDesc();
@@ -196,7 +196,7 @@ final class _PdfLaTeX extends _LaTeXToolChainComponent {
     /** the path to the PdFLaTeX executable */
     static final Path PATH = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "pdflatex" //$NON-NLS-1$
-        ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+            ), CanExecutePredicate.INSTANCE),//
+            IsFilePredicate.INSTANCE, null);
   }
 }

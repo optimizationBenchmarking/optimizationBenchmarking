@@ -36,7 +36,7 @@ public class URIParser extends Parser<URI> {
 
   /**
    * cleanse and validate an uri
-   * 
+   *
    * @param u
    *          the uri
    * @return the cleansed version
@@ -86,7 +86,7 @@ public class URIParser extends Parser<URI> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -95,7 +95,7 @@ public class URIParser extends Parser<URI> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

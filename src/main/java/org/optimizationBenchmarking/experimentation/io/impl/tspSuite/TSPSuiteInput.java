@@ -343,7 +343,7 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
 
   /**
    * Get the instance of the {@link TSPSuiteInput}
-   * 
+   *
    * @return the instance of the {@link TSPSuiteInput}
    */
   public static final TSPSuiteInput getInstance() {
@@ -359,7 +359,7 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
 
   /**
    * get the instance name
-   * 
+   *
    * @param n
    *          the string
    * @return the instance name, or {@code null} if none found
@@ -380,7 +380,7 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
 
   /**
    * fill in the dimension set
-   * 
+   *
    * @param esb
    *          the experiment set builder
    */
@@ -436,7 +436,7 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
     try (final DimensionContext d = esb.createDimension()) {
       d.setName("F"); //$NON-NLS-1$
       d.setDescription(//
-      "the best tour length discovered so far (" + TSPSuiteInput.LENGTH + //$NON-NLS-1$
+          "the best tour length discovered so far (" + TSPSuiteInput.LENGTH + //$NON-NLS-1$
           ") divided by the length of the optimal tour"); //$NON-NLS-1$
       d.setDirection(EDimensionDirection.DECREASING);
       d.setType(EDimensionType.QUALITY_PROBLEM_INDEPENDENT);
@@ -447,7 +447,7 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
 
   /**
    * fill in the instance set
-   * 
+   *
    * @param esb
    *          the experiment set builder
    */
@@ -1587,7 +1587,7 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
     if ((logger != null) && (logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
       logger.log(IOTool.FINER_LOG_LEVEL,//
           (("Beginning to load run from file '" //$NON-NLS-1$
-          + path) + '\''));
+              + path) + '\''));
     }
 
     try (final InputStream stream = PathUtils.openInputStream(path)) {
@@ -1608,13 +1608,13 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
     if ((logger != null) && (logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
       logger.log(IOTool.FINER_LOG_LEVEL,//
           (("Finished loading run from file '" //$NON-NLS-1$
-          + path) + '\''));
+              + path) + '\''));
     }
   }
 
   /**
    * prepare a string for processing
-   * 
+   *
    * @param s
    *          the string
    * @return the result
@@ -1639,7 +1639,7 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
 
   /**
    * load the file data
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -1679,7 +1679,7 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
         } else {
           if (TSPSuiteInput.ALGORITHM_DATA_SECTION.equalsIgnoreCase(s) || //
               TSPSuiteInput.DETERMINISTIC_INITIALIZATION_SECTION
-                  .equalsIgnoreCase(s)) {
+              .equalsIgnoreCase(s)) {
             state = 2;
             if (run == null) {
               run = token._beginRun(file);
@@ -1728,51 +1728,51 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
 
     /** the list of all instance names */
     static final String[] ALL = { TSPSuiteInput.BURMA14,
-        TSPSuiteInput.ULYSSES16, TSPSuiteInput.BR17, TSPSuiteInput.GR17,
-        TSPSuiteInput.GR21, TSPSuiteInput.ULYSSES22, TSPSuiteInput.GR24,
-        TSPSuiteInput.FRI26, TSPSuiteInput.BAYG29, TSPSuiteInput.BAYS29,
-        TSPSuiteInput.FTV33, TSPSuiteInput.FTV35, TSPSuiteInput.FTV38,
-        TSPSuiteInput.DANTZIG42, TSPSuiteInput.SWISS42, TSPSuiteInput.P43,
-        TSPSuiteInput.FTV44, TSPSuiteInput.ATT48, TSPSuiteInput.FTV47,
-        TSPSuiteInput.GR48, TSPSuiteInput.HK48, TSPSuiteInput.RY48P,
-        TSPSuiteInput.EIL51, TSPSuiteInput.BERLIN52, TSPSuiteInput.FT53,
-        TSPSuiteInput.FTV55, TSPSuiteInput.BRAZIL58, TSPSuiteInput.FTV64,
-        TSPSuiteInput.FT70, TSPSuiteInput.ST70, TSPSuiteInput.FTV70,
-        TSPSuiteInput.EIL76, TSPSuiteInput.PR76, TSPSuiteInput.GR96,
-        TSPSuiteInput.RAT99, TSPSuiteInput.KRO124P, TSPSuiteInput.KROA100,
-        TSPSuiteInput.KROB100, TSPSuiteInput.KROC100,
-        TSPSuiteInput.KROD100, TSPSuiteInput.KROE100, TSPSuiteInput.RD100,
-        TSPSuiteInput.EIL101, TSPSuiteInput.LIN105, TSPSuiteInput.PR107,
-        TSPSuiteInput.GR120, TSPSuiteInput.PR124, TSPSuiteInput.BIER127,
-        TSPSuiteInput.CH130, TSPSuiteInput.PR136, TSPSuiteInput.GR137,
-        TSPSuiteInput.PR144, TSPSuiteInput.CH150, TSPSuiteInput.KROA150,
-        TSPSuiteInput.KROB150, TSPSuiteInput.PR152, TSPSuiteInput.U159,
-        TSPSuiteInput.FTV170, TSPSuiteInput.SI175, TSPSuiteInput.BRG180,
-        TSPSuiteInput.RAT195, TSPSuiteInput.D198, TSPSuiteInput.KROA200,
-        TSPSuiteInput.KROB200, TSPSuiteInput.GR202, TSPSuiteInput.TS225,
-        TSPSuiteInput.TSP225, TSPSuiteInput.PR226, TSPSuiteInput.GR229,
-        TSPSuiteInput.GIL262, TSPSuiteInput.PR264, TSPSuiteInput.A280,
-        TSPSuiteInput.PR299, TSPSuiteInput.LIN318, TSPSuiteInput.RBG323,
-        TSPSuiteInput.RBG358, TSPSuiteInput.RD400, TSPSuiteInput.RBG403,
-        TSPSuiteInput.FL417, TSPSuiteInput.GR431, TSPSuiteInput.PR439,
-        TSPSuiteInput.PCB442, TSPSuiteInput.RBG443, TSPSuiteInput.D493,
-        TSPSuiteInput.ATT532, TSPSuiteInput.ALI535, TSPSuiteInput.SI535,
-        TSPSuiteInput.PA561, TSPSuiteInput.U574, TSPSuiteInput.RAT575,
-        TSPSuiteInput.P654, TSPSuiteInput.D657, TSPSuiteInput.GR666,
-        TSPSuiteInput.U724, TSPSuiteInput.RAT783, TSPSuiteInput.DSJ1000,
-        TSPSuiteInput.PR1002, TSPSuiteInput.SI1032, TSPSuiteInput.U1060,
-        TSPSuiteInput.VM1084, TSPSuiteInput.PCB1173, TSPSuiteInput.D1291,
-        TSPSuiteInput.RL1304, TSPSuiteInput.RL1323, TSPSuiteInput.NRW1379,
-        TSPSuiteInput.FL1400, TSPSuiteInput.U1432, TSPSuiteInput.FL1577,
-        TSPSuiteInput.D1655, TSPSuiteInput.VM1748, TSPSuiteInput.U1817,
-        TSPSuiteInput.RL1889, TSPSuiteInput.D2103, TSPSuiteInput.U2152,
-        TSPSuiteInput.U2319, TSPSuiteInput.PR2392, TSPSuiteInput.PCB3038,
-        TSPSuiteInput.FL3795, TSPSuiteInput.FNL4461, TSPSuiteInput.RL5915,
-        TSPSuiteInput.RL5934, TSPSuiteInput.PLA7397,
-        TSPSuiteInput.RL11849, TSPSuiteInput.USA13509,
-        TSPSuiteInput.BRD14051, TSPSuiteInput.D15112,
-        TSPSuiteInput.D18512, TSPSuiteInput.PLA33810,
-        TSPSuiteInput.PLA85900 };
+      TSPSuiteInput.ULYSSES16, TSPSuiteInput.BR17, TSPSuiteInput.GR17,
+      TSPSuiteInput.GR21, TSPSuiteInput.ULYSSES22, TSPSuiteInput.GR24,
+      TSPSuiteInput.FRI26, TSPSuiteInput.BAYG29, TSPSuiteInput.BAYS29,
+      TSPSuiteInput.FTV33, TSPSuiteInput.FTV35, TSPSuiteInput.FTV38,
+      TSPSuiteInput.DANTZIG42, TSPSuiteInput.SWISS42, TSPSuiteInput.P43,
+      TSPSuiteInput.FTV44, TSPSuiteInput.ATT48, TSPSuiteInput.FTV47,
+      TSPSuiteInput.GR48, TSPSuiteInput.HK48, TSPSuiteInput.RY48P,
+      TSPSuiteInput.EIL51, TSPSuiteInput.BERLIN52, TSPSuiteInput.FT53,
+      TSPSuiteInput.FTV55, TSPSuiteInput.BRAZIL58, TSPSuiteInput.FTV64,
+      TSPSuiteInput.FT70, TSPSuiteInput.ST70, TSPSuiteInput.FTV70,
+      TSPSuiteInput.EIL76, TSPSuiteInput.PR76, TSPSuiteInput.GR96,
+      TSPSuiteInput.RAT99, TSPSuiteInput.KRO124P, TSPSuiteInput.KROA100,
+      TSPSuiteInput.KROB100, TSPSuiteInput.KROC100,
+      TSPSuiteInput.KROD100, TSPSuiteInput.KROE100, TSPSuiteInput.RD100,
+      TSPSuiteInput.EIL101, TSPSuiteInput.LIN105, TSPSuiteInput.PR107,
+      TSPSuiteInput.GR120, TSPSuiteInput.PR124, TSPSuiteInput.BIER127,
+      TSPSuiteInput.CH130, TSPSuiteInput.PR136, TSPSuiteInput.GR137,
+      TSPSuiteInput.PR144, TSPSuiteInput.CH150, TSPSuiteInput.KROA150,
+      TSPSuiteInput.KROB150, TSPSuiteInput.PR152, TSPSuiteInput.U159,
+      TSPSuiteInput.FTV170, TSPSuiteInput.SI175, TSPSuiteInput.BRG180,
+      TSPSuiteInput.RAT195, TSPSuiteInput.D198, TSPSuiteInput.KROA200,
+      TSPSuiteInput.KROB200, TSPSuiteInput.GR202, TSPSuiteInput.TS225,
+      TSPSuiteInput.TSP225, TSPSuiteInput.PR226, TSPSuiteInput.GR229,
+      TSPSuiteInput.GIL262, TSPSuiteInput.PR264, TSPSuiteInput.A280,
+      TSPSuiteInput.PR299, TSPSuiteInput.LIN318, TSPSuiteInput.RBG323,
+      TSPSuiteInput.RBG358, TSPSuiteInput.RD400, TSPSuiteInput.RBG403,
+      TSPSuiteInput.FL417, TSPSuiteInput.GR431, TSPSuiteInput.PR439,
+      TSPSuiteInput.PCB442, TSPSuiteInput.RBG443, TSPSuiteInput.D493,
+      TSPSuiteInput.ATT532, TSPSuiteInput.ALI535, TSPSuiteInput.SI535,
+      TSPSuiteInput.PA561, TSPSuiteInput.U574, TSPSuiteInput.RAT575,
+      TSPSuiteInput.P654, TSPSuiteInput.D657, TSPSuiteInput.GR666,
+      TSPSuiteInput.U724, TSPSuiteInput.RAT783, TSPSuiteInput.DSJ1000,
+      TSPSuiteInput.PR1002, TSPSuiteInput.SI1032, TSPSuiteInput.U1060,
+      TSPSuiteInput.VM1084, TSPSuiteInput.PCB1173, TSPSuiteInput.D1291,
+      TSPSuiteInput.RL1304, TSPSuiteInput.RL1323, TSPSuiteInput.NRW1379,
+      TSPSuiteInput.FL1400, TSPSuiteInput.U1432, TSPSuiteInput.FL1577,
+      TSPSuiteInput.D1655, TSPSuiteInput.VM1748, TSPSuiteInput.U1817,
+      TSPSuiteInput.RL1889, TSPSuiteInput.D2103, TSPSuiteInput.U2152,
+      TSPSuiteInput.U2319, TSPSuiteInput.PR2392, TSPSuiteInput.PCB3038,
+      TSPSuiteInput.FL3795, TSPSuiteInput.FNL4461, TSPSuiteInput.RL5915,
+      TSPSuiteInput.RL5934, TSPSuiteInput.PLA7397,
+      TSPSuiteInput.RL11849, TSPSuiteInput.USA13509,
+      TSPSuiteInput.BRD14051, TSPSuiteInput.D15112,
+      TSPSuiteInput.D18512, TSPSuiteInput.PLA33810,
+      TSPSuiteInput.PLA85900 };
 
     static {
       Arrays.sort(__TSPSuiteInputLoader.ALL);

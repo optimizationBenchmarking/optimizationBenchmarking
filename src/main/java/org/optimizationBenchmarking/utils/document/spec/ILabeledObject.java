@@ -8,7 +8,7 @@ public interface ILabeledObject {
   /**
    * Obtain the label of this element, or {@code null} if the element is
    * not labeled
-   * 
+   *
    * @return the label of this element, or {@code null} if the element is
    *         not labeled
    */

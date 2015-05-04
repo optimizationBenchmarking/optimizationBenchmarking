@@ -5,7 +5,7 @@ public class MathDiv extends MathFunction {
 
   /**
    * Create an div function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

@@ -15,7 +15,7 @@ abstract class _Number extends BasicNumber {
 
   /**
    * Set the {@code long} value
-   * 
+   *
    * @param value
    *          the {@code long} value
    */
@@ -25,7 +25,7 @@ abstract class _Number extends BasicNumber {
 
   /**
    * Set the {@code double} value
-   * 
+   *
    * @param value
    *          the {@code double} value
    */

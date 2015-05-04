@@ -29,7 +29,7 @@ public class StrictBooleanParser extends Parser<Boolean> {
 
   /**
    * Validate the parsing result
-   * 
+   *
    * @param value
    *          the parsing result
    * @throws IllegalArgumentException
@@ -42,7 +42,7 @@ public class StrictBooleanParser extends Parser<Boolean> {
 
   /**
    * Parse the string
-   * 
+   *
    * @param string
    *          the string
    * @return the return type
@@ -99,7 +99,7 @@ public class StrictBooleanParser extends Parser<Boolean> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -108,7 +108,7 @@ public class StrictBooleanParser extends Parser<Boolean> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

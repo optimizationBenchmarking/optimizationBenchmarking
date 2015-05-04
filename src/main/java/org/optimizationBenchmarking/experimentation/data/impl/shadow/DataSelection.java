@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * An object which can help to select data.
  */
 public class DataSelection extends
-    _MappedSelection<IExperimentSet, IExperiment, IInstanceRuns> {
+_MappedSelection<IExperimentSet, IExperiment, IInstanceRuns> {
 
   /** the selected features */
   private final _FeatureSelection m_features;
@@ -39,7 +39,7 @@ public class DataSelection extends
 
   /**
    * Create the selection object
-   * 
+   *
    * @param experimentSet
    *          the experiment set to select from
    */
@@ -72,7 +72,7 @@ public class DataSelection extends
 
   /**
    * The internal method to add and instance and its features
-   * 
+   *
    * @param instance
    *          the instance to add
    */
@@ -85,7 +85,7 @@ public class DataSelection extends
   /**
    * Add a list of complete experiments to the selection, i.e., do
    * {@link #addExperiment(IExperiment)} on all of them
-   * 
+   *
    * @param experiments
    *          the experiments to add
    */
@@ -102,7 +102,7 @@ public class DataSelection extends
 
   /**
    * Add a complete experiment to the selection
-   * 
+   *
    * @param experiment
    *          the experiment to add
    */
@@ -124,7 +124,7 @@ public class DataSelection extends
 
   /**
    * Add a given instance run set
-   * 
+   *
    * @param runs
    *          the instance run set
    */
@@ -146,7 +146,7 @@ public class DataSelection extends
    * instance run sets which fit to it. If so, add them to the selection
    * (and add the instance as well). If no data exists for the instance,
    * ignore it.
-   * 
+   *
    * @param instances
    *          the instances
    */
@@ -167,7 +167,7 @@ public class DataSelection extends
    * If there are any instance run sets which fit to the given instance,
    * add them to the selection (and add the instance as well). If no data
    * exists for the instance, ignore it.
-   * 
+   *
    * @param instance
    *          the instance
    */
@@ -199,7 +199,7 @@ public class DataSelection extends
   /**
    * Add a given property value. This entails checking all elements which
    * specify the value and to add them.
-   * 
+   *
    * @param value
    *          the property value
    */
@@ -212,7 +212,7 @@ public class DataSelection extends
       } else {
         throw new IllegalArgumentException(//
             "Property value must either be a feature or a parameter value, but is" //$NON-NLS-1$
-                + value);
+            + value);
       }
     }
   }
@@ -220,7 +220,7 @@ public class DataSelection extends
   /**
    * Add a given property value. This entails checking all elements which
    * specify the value and to add them.
-   * 
+   *
    * @param property
    *          the property
    * @param value
@@ -236,7 +236,7 @@ public class DataSelection extends
       } else {
         throw new IllegalArgumentException(//
             "Property must eithe be a feature or a parameter, but is " //$NON-NLS-1$
-                + property);
+            + property);
       }
     }
   }
@@ -245,7 +245,7 @@ public class DataSelection extends
    * Add a given feature value. This entails checking all instances which
    * specify the value and to perform {@link #addInstance(IInstance)} with
    * them.
-   * 
+   *
    * @param value
    *          the feature value
    */
@@ -267,7 +267,7 @@ public class DataSelection extends
    * Add a given feature value. This entails checking all instances which
    * specify the value and to perform {@link #addInstance(IInstance)} with
    * them.
-   * 
+   *
    * @param feature
    *          the feature
    * @param value
@@ -301,7 +301,7 @@ public class DataSelection extends
    * Add a given parameter value. This entails checking all experiment
    * which specify the value and to perform
    * {@link #addExperiment(IExperiment)} with them.
-   * 
+   *
    * @param value
    *          the parameter value
    */
@@ -323,7 +323,7 @@ public class DataSelection extends
    * Add a given parameter value. This entails checking all experiments
    * which specify the value and to perform
    * {@link #addExperiment(IExperiment)} with them.
-   * 
+   *
    * @param parameter
    *          the parameter
    * @param value
@@ -357,7 +357,7 @@ public class DataSelection extends
 
   /**
    * get the compiled selection
-   * 
+   *
    * @return the compiled selection
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -487,7 +487,7 @@ public class DataSelection extends
 
     /**
      * the compiled selection
-     * 
+     *
      * @param experimentSet
      *          the experiment set
      * @param features

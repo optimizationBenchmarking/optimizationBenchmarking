@@ -6,8 +6,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSet;
 
 /** The feature set. */
 public final class FeatureSet extends
-    _PropertySet<FeatureValue, Feature, FeatureSetting> implements
-    IFeatureSet {
+_PropertySet<FeatureValue, Feature, FeatureSetting> implements
+IFeatureSet {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -16,7 +16,7 @@ public final class FeatureSet extends
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the instances
    */

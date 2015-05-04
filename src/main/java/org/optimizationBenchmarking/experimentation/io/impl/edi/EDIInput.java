@@ -21,7 +21,7 @@ public final class EDIInput extends EDIInputToolBase {
 
   /**
    * get the instance of the {@link EDIInput}
-   * 
+   *
    * @return the instance of the {@link EDIInput}
    */
   public static final EDIInput getInstance() {

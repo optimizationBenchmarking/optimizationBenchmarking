@@ -11,7 +11,7 @@ final class _LaTeXMathMod extends MathMod {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

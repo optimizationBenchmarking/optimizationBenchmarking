@@ -8,7 +8,7 @@ package org.optimizationBenchmarking.utils.collections.maps;
  * when queried whether it {@link java.util.Map#equals(Object) equals}
  * another map, although it may have a different
  * {@link java.util.Map#hashCode() hash code}.
- * 
+ *
  * @param <ET>
  *          the element type
  */

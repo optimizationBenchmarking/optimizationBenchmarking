@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  * A builder for creating the chart selector.
  */
 public class ChartBuilder extends
-    ToolJobBuilder<ChartSelector, ChartBuilder> implements IChartBuilder {
+ToolJobBuilder<ChartSelector, ChartBuilder> implements IChartBuilder {
 
   /** the chart driver */
   private final ChartDriver m_driver;
@@ -22,7 +22,7 @@ public class ChartBuilder extends
 
   /**
    * create the chart builder
-   * 
+   *
    * @param driver
    *          the chart driver
    */
@@ -34,7 +34,7 @@ public class ChartBuilder extends
 
   /**
    * check whether a graphic parameter is valid
-   * 
+   *
    * @param graphic
    *          the graphic parameter
    */
@@ -47,7 +47,7 @@ public class ChartBuilder extends
 
   /**
    * check whether a chart driver is valid
-   * 
+   *
    * @param driver
    *          the chart driver to check
    */
@@ -59,7 +59,7 @@ public class ChartBuilder extends
 
   /**
    * check whether a style set for a chart is valid
-   * 
+   *
    * @param styleSet
    *          the style set
    */
@@ -88,7 +88,7 @@ public class ChartBuilder extends
 
   /**
    * Get the graphic to draw the chart on
-   * 
+   *
    * @return the graphic to draw the chart on
    * @see #setGraphic(Graphic)
    */
@@ -106,7 +106,7 @@ public class ChartBuilder extends
 
   /**
    * Get the style set to be used for the chart
-   * 
+   *
    * @return the style set to be used for the chart
    */
   public final StyleSet getStyleSet() {
@@ -124,7 +124,7 @@ public class ChartBuilder extends
 
   /**
    * Get the chart driver
-   * 
+   *
    * @return the chart driver
    */
   public final ChartDriver getChartDriver() {

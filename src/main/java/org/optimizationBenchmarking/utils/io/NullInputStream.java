@@ -15,7 +15,7 @@ public final class NullInputStream extends InputStream {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @return always {@code -1}
    */
   @Override
@@ -25,7 +25,7 @@ public final class NullInputStream extends InputStream {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @return always {@code -1}
    */
   @Override
@@ -35,7 +35,7 @@ public final class NullInputStream extends InputStream {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @return always {@code -1}
    */
   @Override
@@ -45,7 +45,7 @@ public final class NullInputStream extends InputStream {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @return always {@code Math.max(n, 0L)}
    */
   @Override
@@ -55,7 +55,7 @@ public final class NullInputStream extends InputStream {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @return always {@code 0}
    */
   @Override
@@ -85,7 +85,7 @@ public final class NullInputStream extends InputStream {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @return always {@code true}
    */
   @Override

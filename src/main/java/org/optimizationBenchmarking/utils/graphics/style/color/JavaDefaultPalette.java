@@ -70,7 +70,7 @@ public final class JavaDefaultPalette extends ColorPalette {
 
   /**
    * Get an instance of the default java color palette
-   * 
+   *
    * @return the default java color palette
    */
   public static final JavaDefaultPalette getInstance() {
@@ -79,7 +79,7 @@ public final class JavaDefaultPalette extends ColorPalette {
 
   /**
    * read resolve
-   * 
+   *
    * @return {@link #getInstance()}
    */
   private final Object readResolve() {
@@ -88,7 +88,7 @@ public final class JavaDefaultPalette extends ColorPalette {
 
   /**
    * write replace
-   * 
+   *
    * @return {@link #getInstance()}
    */
   private final Object writeReplace() {

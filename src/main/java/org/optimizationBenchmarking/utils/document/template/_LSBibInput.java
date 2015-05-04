@@ -11,7 +11,7 @@ final class _LSBibInput extends SimpleLSInput {
 
   /**
    * create
-   * 
+   *
    * @param publicId
    *          the public id
    * @param systemId

@@ -8,7 +8,7 @@ public final class LongAdditionTest {
 
   /**
    * The main routine printing long values which could be critical
-   * 
+   *
    * @param args
    *          ignored
    */

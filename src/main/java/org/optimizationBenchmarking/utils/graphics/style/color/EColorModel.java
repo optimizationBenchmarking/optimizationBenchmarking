@@ -113,7 +113,7 @@ public enum EColorModel {
 
   /**
    * Create the image color model
-   * 
+   *
    * @param biType
    *          the buffered image type, for use with
    *          {@link java.awt.image.BufferedImage}
@@ -125,7 +125,7 @@ public enum EColorModel {
   /**
    * Get the color model type to be used when instantiating the
    * {@link java.awt.image.BufferedImage buffered image}
-   * 
+   *
    * @return the color model type to be used when instantiating the
    *         {@link java.awt.image.BufferedImage buffered image}
    */
@@ -135,7 +135,7 @@ public enum EColorModel {
 
   /**
    * get the default palette for this graphics model
-   * 
+   *
    * @return the default palette for this graphics model
    */
   public abstract ColorPalette getDefaultPalette();

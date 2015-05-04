@@ -21,7 +21,7 @@ public class TempDir implements Closeable {
 
   /**
    * create the temporary directory
-   * 
+   *
    * @throws IOException
    *           if io fails
    */
@@ -40,7 +40,7 @@ public class TempDir implements Closeable {
 
   /**
    * Get the path of the temporary directory.
-   * 
+   *
    * @return the path to the directory
    */
   public final Path getPath() {

@@ -61,7 +61,7 @@ public final class ArithmeticMeanAggregate extends ScalarAggregate {
 
   /**
    * set a long value
-   * 
+   *
    * @param lres
    *          the long value
    */
@@ -149,7 +149,7 @@ public final class ArithmeticMeanAggregate extends ScalarAggregate {
 
   /**
    * set a double value
-   * 
+   *
    * @param dres
    *          the long value
    */

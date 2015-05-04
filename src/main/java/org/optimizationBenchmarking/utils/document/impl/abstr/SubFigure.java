@@ -11,7 +11,7 @@ public class SubFigure extends BasicFigure {
 
   /**
    * Create a sub-figure
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param useLabel
@@ -32,7 +32,7 @@ public class SubFigure extends BasicFigure {
 
   /**
    * Get the owning section body
-   * 
+   *
    * @return the owning section body
    */
   @Override

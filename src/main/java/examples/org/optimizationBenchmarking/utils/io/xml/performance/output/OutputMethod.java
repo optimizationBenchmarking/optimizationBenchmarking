@@ -16,7 +16,7 @@ public abstract class OutputMethod {
 
   /**
    * Create a writer
-   * 
+   *
    * @return the writer
    * @throws IOException
    *           if io fails

@@ -39,7 +39,7 @@ public enum ELength implements IUnit {
    * href="http://en.wikipedia.org/wiki/PostScript">PostScript</a>
    * definition
    */
-  POINT("point", "pt", "point (postscript)"), //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$  
+  POINT("point", "pt", "point (postscript)"), //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
   /**
    * <a href="http://www.giss.nasa.gov/tools/latex/ltx-86.html">Scaled
    * Point</a>
@@ -126,26 +126,26 @@ public enum ELength implements IUnit {
   /** the small chinese li */
   LI_CHINESE_SMALL("li(small)", "\u5e02\u5398", //$NON-NLS-1$//$NON-NLS-2$
       "small li"), //$NON-NLS-1$
-  /** the chinese hao */
-  HAO_CHINESE("hao", "\u6beb"), //$NON-NLS-1$//$NON-NLS-2$
-  /** the chinese si */
-  SI_CHINESE("si", "\u4e1d"), //$NON-NLS-1$//$NON-NLS-2$
-  /** the chinese hu */
-  HU_CHINESE("hu", "\u5ffd"), //$NON-NLS-1$//$NON-NLS-2$
+      /** the chinese hao */
+      HAO_CHINESE("hao", "\u6beb"), //$NON-NLS-1$//$NON-NLS-2$
+      /** the chinese si */
+      SI_CHINESE("si", "\u4e1d"), //$NON-NLS-1$//$NON-NLS-2$
+      /** the chinese hu */
+      HU_CHINESE("hu", "\u5ffd"), //$NON-NLS-1$//$NON-NLS-2$
 
-  /** a light second */
-  LIGHT_SECOND("light second"), //$NON-NLS-1$
-  /** a light minute */
-  LIGHT_MINUTE("light minute"), //$NON-NLS-1$
-  /** an astronomical unit */
-  ASTRONOMICAL_UNIT("astronomical unit", "AU"), //$NON-NLS-1$//$NON-NLS-2$
-  /** a light year */
-  LIGHT_YEAR("light year", "ly"), //$NON-NLS-1$//$NON-NLS-2$
-  /** a parsec */
-  PARSEC("parsec"), //$NON-NLS-1$
-  /** red shift */
-  RED_SHIFT("red shift", "z"), //$NON-NLS-1$//$NON-NLS-2$
-  ;
+      /** a light second */
+      LIGHT_SECOND("light second"), //$NON-NLS-1$
+      /** a light minute */
+      LIGHT_MINUTE("light minute"), //$NON-NLS-1$
+      /** an astronomical unit */
+      ASTRONOMICAL_UNIT("astronomical unit", "AU"), //$NON-NLS-1$//$NON-NLS-2$
+      /** a light year */
+      LIGHT_YEAR("light year", "ly"), //$NON-NLS-1$//$NON-NLS-2$
+      /** a parsec */
+      PARSEC("parsec"), //$NON-NLS-1$
+      /** red shift */
+      RED_SHIFT("red shift", "z"), //$NON-NLS-1$//$NON-NLS-2$
+      ;
 
   /** the nanometer */
   public static final ELength NM = NANOMETER;
@@ -355,7 +355,7 @@ public enum ELength implements IUnit {
 
   /**
    * Create
-   * 
+   *
    * @param name
    *          the name
    * @param shortcut
@@ -372,7 +372,7 @@ public enum ELength implements IUnit {
 
   /**
    * Create
-   * 
+   *
    * @param name
    *          the name
    * @param shortcut
@@ -384,7 +384,7 @@ public enum ELength implements IUnit {
 
   /**
    * Create the name
-   * 
+   *
    * @param name
    *          the name
    */
@@ -394,7 +394,7 @@ public enum ELength implements IUnit {
 
   /**
    * Get the conversion function
-   * 
+   *
    * @param other
    *          the other unit
    * @return the function
@@ -417,7 +417,7 @@ public enum ELength implements IUnit {
 
   /**
    * Convert a value
-   * 
+   *
    * @param value
    *          the value
    * @param other
@@ -447,7 +447,7 @@ public enum ELength implements IUnit {
 
   /**
    * Convert a value
-   * 
+   *
    * @param value
    *          the value
    * @param other

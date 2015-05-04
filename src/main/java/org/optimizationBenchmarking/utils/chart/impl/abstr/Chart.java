@@ -39,7 +39,7 @@ public class Chart extends TitledElement implements IChart {
 
   /**
    * create the line chart
-   * 
+   *
    * @param graphic
    *          the graphic
    * @param styleSet
@@ -82,7 +82,7 @@ public class Chart extends TitledElement implements IChart {
 
   /**
    * Compute the id of the chart
-   * 
+   *
    * @return the id
    */
   final String _id() {

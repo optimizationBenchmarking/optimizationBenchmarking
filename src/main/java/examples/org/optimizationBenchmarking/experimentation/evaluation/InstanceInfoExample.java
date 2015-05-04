@@ -24,7 +24,7 @@ public final class InstanceInfoExample extends EvaluationExample {
 
   /**
    * Run the example
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Throwable

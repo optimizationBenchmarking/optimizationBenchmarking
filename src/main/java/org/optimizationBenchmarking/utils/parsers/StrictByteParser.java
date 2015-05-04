@@ -29,7 +29,7 @@ public class StrictByteParser extends NumberParser<Byte> {
 
   /**
    * Validate the parsing result
-   * 
+   *
    * @param value
    *          the parsing result
    * @throws IllegalArgumentException
@@ -42,7 +42,7 @@ public class StrictByteParser extends NumberParser<Byte> {
 
   /**
    * Parse the string
-   * 
+   *
    * @param string
    *          the string
    * @return the return type
@@ -90,7 +90,7 @@ public class StrictByteParser extends NumberParser<Byte> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -99,7 +99,7 @@ public class StrictByteParser extends NumberParser<Byte> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {
@@ -149,8 +149,8 @@ public class StrictByteParser extends NumberParser<Byte> {
     if ((d < Byte.MIN_VALUE) || (d > Byte.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((d + " is not a valid byte value, since it is out of the range ") + //$NON-NLS-1$
-          Byte.MIN_VALUE) + "..") + //$NON-NLS-1$
-          Byte.MAX_VALUE) + '.');
+              Byte.MIN_VALUE) + "..") + //$NON-NLS-1$
+              Byte.MAX_VALUE) + '.');
     }
 
     b = ((byte) d);
@@ -167,8 +167,8 @@ public class StrictByteParser extends NumberParser<Byte> {
     if ((l < Byte.MIN_VALUE) || (l > Byte.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((l + " is not a valid byte value, since it is out of the range ") + //$NON-NLS-1$
-          Byte.MIN_VALUE) + "..") + //$NON-NLS-1$
-          Byte.MAX_VALUE) + '.');
+              Byte.MIN_VALUE) + "..") + //$NON-NLS-1$
+              Byte.MAX_VALUE) + '.');
     }
     this.validateByte((byte) l);
   }

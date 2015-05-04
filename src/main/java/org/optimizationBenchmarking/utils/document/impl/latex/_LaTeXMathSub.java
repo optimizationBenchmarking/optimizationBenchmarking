@@ -9,7 +9,7 @@ final class _LaTeXMathSub extends MathSub {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

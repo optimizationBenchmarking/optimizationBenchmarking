@@ -5,7 +5,7 @@ package org.optimizationBenchmarking.utils.error;
  * {@link java.lang.IllegalArgumentException}.
  */
 final class _RethrowModeRethrowAsIllegalArgumentException extends
-    RethrowMode<IllegalArgumentException> {
+RethrowMode<IllegalArgumentException> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ final class _RethrowModeRethrowAsIllegalArgumentException extends
     IllegalArgumentException re;
 
     useMessage = ((message != null) ? //
-    (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
+        (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
         : RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG);
 
     if (handle == null) {
@@ -77,7 +77,7 @@ final class _RethrowModeRethrowAsIllegalArgumentException extends
 
   /**
    * read-resolve
-   * 
+   *
    * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_UNSUPPORTED_OPERATION_EXCEPTION}
    */
   private final Object readResolve() {
@@ -86,7 +86,7 @@ final class _RethrowModeRethrowAsIllegalArgumentException extends
 
   /**
    * write-replace
-   * 
+   *
    * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_UNSUPPORTED_OPERATION_EXCEPTION}
    */
   private final Object writeReplace() {

@@ -19,7 +19,7 @@ public final class SigAlternateFontPalette extends FontPalette {
 
   /**
    * create the palette
-   * 
+   *
    * @param def
    *          the default font style
    * @param emph
@@ -36,7 +36,7 @@ public final class SigAlternateFontPalette extends FontPalette {
 
   /**
    * read resolve
-   * 
+   *
    * @return {@link #getInstance()}
    */
   private final Object readResolve() {
@@ -45,7 +45,7 @@ public final class SigAlternateFontPalette extends FontPalette {
 
   /**
    * write replace
-   * 
+   *
    * @return {@link #getInstance()}
    */
   private final Object writeReplace() {
@@ -54,7 +54,7 @@ public final class SigAlternateFontPalette extends FontPalette {
 
   /**
    * Get an instance of the default sig-alternate font palette
-   * 
+   *
    * @return the default sig-alternate font palette
    */
   public static final SigAlternateFontPalette getInstance() {
@@ -66,7 +66,7 @@ public final class SigAlternateFontPalette extends FontPalette {
 
   /** the sig-alternate font palette builder */
   private static final class __SigAlternateDefaultFontPaletteBuilder
-      extends FontPaletteBuilder {
+  extends FontPaletteBuilder {
     /** the default sig-alternate font palette */
     __SigAlternateDefaultFontPaletteBuilder() {
       super();
@@ -103,12 +103,12 @@ public final class SigAlternateFontPalette extends FontPalette {
       logger = Configuration.getGlobalLogger();
       try (final __SigAlternateDefaultFontPaletteBuilder cspb = new __SigAlternateDefaultFontPaletteBuilder()) {
         FontPaletteXMLInput
-            .getInstance()
-            .use()
-            .setLogger(Configuration.getGlobalLogger())
-            .setDestination(cspb)
-            .addResource(SigAlternateFontPalette.class,
-                "sig-alternate.fontPalette").create().call(); //$NON-NLS-1$
+        .getInstance()
+        .use()
+        .setLogger(Configuration.getGlobalLogger())
+        .setDestination(cspb)
+        .addResource(SigAlternateFontPalette.class,
+            "sig-alternate.fontPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         error = t;
@@ -116,10 +116,10 @@ public final class SigAlternateFontPalette extends FontPalette {
 
         try {
           ErrorUtils
-              .logError(
-                  logger,
-                  "Error while loading the sig-alternate font palette. This will make creating LaTeX documents depending on the sig-alternate document class impossible.",//$NON-NLS-1$
-                  error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+          .logError(
+              logger,
+              "Error while loading the sig-alternate font palette. This will make creating LaTeX documents depending on the sig-alternate document class impossible.",//$NON-NLS-1$
+              error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
         } catch (final Throwable a) {
           error = a;
         }

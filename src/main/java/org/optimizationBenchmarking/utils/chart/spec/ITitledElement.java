@@ -9,7 +9,7 @@ public interface ITitledElement extends IChartElement {
    * {@link org.optimizationBenchmarking.utils.chart.spec.IChart#setLegendMode(ELegendMode)
    * legend mode} of the chart, the title may or may not be printed. If you
    * do not set a title, it will not be printed anyway.
-   * 
+   *
    * @param title
    *          the title
    */
@@ -26,7 +26,7 @@ public interface ITitledElement extends IChartElement {
    * expect the underlying
    * {@link org.optimizationBenchmarking.utils.chart.spec.IChartDriver
    * chart driver} implementation to resize them appropriately.
-   * 
+   *
    * @param titleFont
    *          the title font
    */

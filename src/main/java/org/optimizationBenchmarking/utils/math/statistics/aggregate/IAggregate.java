@@ -5,7 +5,7 @@ public interface IAggregate {
 
   /**
    * append a byte
-   * 
+   *
    * @param v
    *          the byte
    */
@@ -13,7 +13,7 @@ public interface IAggregate {
 
   /**
    * append a short
-   * 
+   *
    * @param v
    *          the short
    */
@@ -21,7 +21,7 @@ public interface IAggregate {
 
   /**
    * append an integer
-   * 
+   *
    * @param v
    *          the int
    */
@@ -29,7 +29,7 @@ public interface IAggregate {
 
   /**
    * append a long
-   * 
+   *
    * @param v
    *          the long
    */
@@ -37,7 +37,7 @@ public interface IAggregate {
 
   /**
    * append a float
-   * 
+   *
    * @param v
    *          the float
    */
@@ -45,7 +45,7 @@ public interface IAggregate {
 
   /**
    * append a double
-   * 
+   *
    * @param v
    *          the double
    */

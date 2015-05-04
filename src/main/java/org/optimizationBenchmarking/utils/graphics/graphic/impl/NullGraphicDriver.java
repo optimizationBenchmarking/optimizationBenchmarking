@@ -21,7 +21,7 @@ public final class NullGraphicDriver extends AbstractGraphicDriver {
 
   /**
    * Get the instance of the null graphics driver
-   * 
+   *
    * @return the instance of the null graphics driver
    */
   public static final NullGraphicDriver getInstance() {

@@ -21,7 +21,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
 
   /**
    * create the XHTML 1.0 document configuration
-   * 
+   *
    * @param builder
    *          the builder
    */
@@ -36,7 +36,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
 
   /**
    * Get the screen size
-   * 
+   *
    * @return the screen size
    */
   public final PageDimension getScreenSize() {
@@ -45,7 +45,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
 
   /**
    * Get the font palette of this document builder
-   * 
+   *
    * @return the font palette of this document builder
    */
   public final FontPalette getFontPalette() {
@@ -54,7 +54,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
 
   /**
    * check the font palette
-   * 
+   *
    * @param fonts
    *          the font palette
    */
@@ -69,7 +69,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
 
   /**
    * Set the size of the screen
-   * 
+   *
    * @param size
    *          the size of the screen
    */
@@ -85,7 +85,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.hashCode(),
             HashUtils.hashCode(this.m_fonts)),
-        HashUtils.hashCode(this.m_size));
+            HashUtils.hashCode(this.m_size));
   }
 
   /** {@inheritDoc} */
@@ -109,7 +109,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
           builder = ((XHTML10ConfigurationBuilder) o);
           return (EComparison.equals(this.m_fonts,
               builder.getFontPalette()) && EComparison.equals(this.m_size,
-              builder.getScreenSize()));
+                  builder.getScreenSize()));
         }
       }
     }
@@ -119,7 +119,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
 
   /**
    * append the font name
-   * 
+   *
    * @param style
    *          the style
    * @param textOut
@@ -148,7 +148,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
 
   /**
    * Create a document builder with this object's settings
-   * 
+   *
    * @return the document builder
    */
   @Override

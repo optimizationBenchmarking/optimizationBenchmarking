@@ -39,111 +39,111 @@ final class _XHTML10Document extends Document {
 
   /** the xml header start: charset must follow */
   private static final char[] XML_HEADER_BEGIN = { '<', '?', 'x', 'm',
-      'l', ' ', 'v', 'e', 'r', 's', 'i', 'o', 'n', '=', '"', '1', '.',
-      '0', '"', ' ', 'e', 'n', 'c', 'o', 'd', 'i', 'n', 'g', '=', '"' };
+    'l', ' ', 'v', 'e', 'r', 's', 'i', 'o', 'n', '=', '"', '1', '.',
+    '0', '"', ' ', 'e', 'n', 'c', 'o', 'd', 'i', 'n', 'g', '=', '"' };
   /** the xml header end: newline must follow */
   private static final char[] XML_HEADER_END = { '"', '?', '>' };
 
   /** the doc type */
   private static final char[] DOC_TYPE = { '<', '!', 'D', 'O', 'C', 'T',
-      'Y', 'P', 'E', ' ', 'h', 't', 'm', 'l', ' ', 'P', 'U', 'B', 'L',
-      'I', 'C', ' ', '"', '-', '/', '/', 'W', '3', 'C', '/', '/', 'D',
-      'T', 'D', ' ', 'X', 'H', 'T', 'M', 'L', ' ', '1', '.', '0', ' ',
-      'S', 't', 'r', 'i', 'c', 't', '/', '/', 'E', 'N', '"', ' ', '"',
-      'h', 't', 't', 'p', ':', '/', '/', 'w', 'w', 'w', '.', 'w', '3',
-      '.', 'o', 'r', 'g', '/', 'T', 'R', '/', 'x', 'h', 't', 'm', 'l',
-      '1', '/', 'D', 'T', 'D', '/', 'x', 'h', 't', 'm', 'l', '1', '-',
-      's', 't', 'r', 'i', 'c', 't', '.', 'd', 't', 'd', '"', '>' };
+    'Y', 'P', 'E', ' ', 'h', 't', 'm', 'l', ' ', 'P', 'U', 'B', 'L',
+    'I', 'C', ' ', '"', '-', '/', '/', 'W', '3', 'C', '/', '/', 'D',
+    'T', 'D', ' ', 'X', 'H', 'T', 'M', 'L', ' ', '1', '.', '0', ' ',
+    'S', 't', 'r', 'i', 'c', 't', '/', '/', 'E', 'N', '"', ' ', '"',
+    'h', 't', 't', 'p', ':', '/', '/', 'w', 'w', 'w', '.', 'w', '3',
+    '.', 'o', 'r', 'g', '/', 'T', 'R', '/', 'x', 'h', 't', 'm', 'l',
+    '1', '/', 'D', 'T', 'D', '/', 'x', 'h', 't', 'm', 'l', '1', '-',
+    's', 't', 'r', 'i', 'c', 't', '.', 'd', 't', 'd', '"', '>' };
 
   /** the doc type, charset must follow */
   private static final char[] HTML_BEGIN = //
-  (("<html xmlns=\"" + XHTML.XHTML_1_0.getNamespace()) + //$NON-NLS-1$
-  "\" lang=\"en\" xml:lang=\"en\">").toCharArray(); //$NON-NLS-1$
+      (("<html xmlns=\"" + XHTML.XHTML_1_0.getNamespace()) + //$NON-NLS-1$
+          "\" lang=\"en\" xml:lang=\"en\">").toCharArray(); //$NON-NLS-1$
 
   /** the head begin */
   private static final char[] HEAD_BEGIN = { '<', 'h', 'e', 'a', 'd', '>' };
 
   /** the head begin */
   private static final char[] META_CHARSET_BEGIN = { '<', 'm', 'e', 't',
-      'a', ' ', 'h', 't', 't', 'p', '-', 'e', 'q', 'u', 'i', 'v', '=',
-      '"', 'c', 'o', 'n', 't', 'e', 'n', 't', '-', 't', 'y', 'p', 'e',
-      '"', ' ', 'c', 'o', 'n', 't', 'e', 'n', 't', '=', '"', 'a', 'p',
-      'p', 'l', 'i', 'c', 'a', 't', 'i', 'o', 'n', '/', 'x', 'h', 't',
-      'm', 'l', '+', 'x', 'm', 'l', ';', ' ', 'c', 'h', 'a', 'r', 's',
-      'e', 't', '=' };
+    'a', ' ', 'h', 't', 't', 'p', '-', 'e', 'q', 'u', 'i', 'v', '=',
+    '"', 'c', 'o', 'n', 't', 'e', 'n', 't', '-', 't', 'y', 'p', 'e',
+    '"', ' ', 'c', 'o', 'n', 't', 'e', 'n', 't', '=', '"', 'a', 'p',
+    'p', 'l', 'i', 'c', 'a', 't', 'i', 'o', 'n', '/', 'x', 'h', 't',
+    'm', 'l', '+', 'x', 'm', 'l', ';', ' ', 'c', 'h', 'a', 'r', 's',
+    'e', 't', '=' };
 
   /** the meta style type */
   private static final char[] META_STYLE_TYPE = { '<', 'm', 'e', 't', 'a',
-      ' ', 'h', 't', 't', 'p', '-', 'e', 'q', 'u', 'i', 'v', '=', '"',
-      'c', 'o', 'n', 't', 'e', 'n', 't', '-', 's', 't', 'y', 'l', 'e',
-      '-', 't', 'y', 'p', 'e', '"', ' ', 'c', 'o', 'n', 't', 'e', 'n',
-      't', '=', '"', 't', 'e', 'x', 't', '/', 'c', 's', 's', '"', ' ',
-      '/', '>' };
+    ' ', 'h', 't', 't', 'p', '-', 'e', 'q', 'u', 'i', 'v', '=', '"',
+    'c', 'o', 'n', 't', 'e', 'n', 't', '-', 's', 't', 'y', 'l', 'e',
+    '-', 't', 'y', 'p', 'e', '"', ' ', 'c', 'o', 'n', 't', 'e', 'n',
+    't', '=', '"', 't', 'e', 'x', 't', '/', 'c', 's', 's', '"', ' ',
+    '/', '>' };
 
   /** the default css link */
   private static final char[] DEFAULT_CSS_LINK = { '<', 'l', 'i', 'n',
-      'k', ' ', 'r', 'e', 'l', '=', '"', 's', 't', 'y', 'l', 'e', 's',
-      'h', 'e', 'e', 't', '"', ' ', 'm', 'e', 'd', 'i', 'a', '=', '"',
-      'a', 'l', 'l', '"', ' ', 'h', 'r', 'e', 'f', '=', '"' };
+    'k', ' ', 'r', 'e', 'l', '=', '"', 's', 't', 'y', 'l', 'e', 's',
+    'h', 'e', 'e', 't', '"', ' ', 'm', 'e', 'd', 'i', 'a', '=', '"',
+    'a', 'l', 'l', '"', ' ', 'h', 'r', 'e', 'f', '=', '"' };
   /** the print css link */
   private static final char[] PRINT_CSS_LINK = { '<', 'l', 'i', 'n', 'k',
-      ' ', 'r', 'e', 'l', '=', '"', 's', 't', 'y', 'l', 'e', 's', 'h',
-      'e', 'e', 't', '"', ' ', 'm', 'e', 'd', 'i', 'a', '=', '"', 'p',
-      'r', 'i', 'n', 't', '"', ' ', 'h', 'r', 'e', 'f', '=', '"', };
+    ' ', 'r', 'e', 'l', '=', '"', 's', 't', 'y', 'l', 'e', 's', 'h',
+    'e', 'e', 't', '"', ' ', 'm', 'e', 'd', 'i', 'a', '=', '"', 'p',
+    'r', 'i', 'n', 't', '"', ' ', 'h', 'r', 'e', 'f', '=', '"', };
   /** the font size */
   private static final char[] FONT_SIZE = { 'f', 'o', 'n', 't', '-', 's',
-      'i', 'z', 'e', ':' };
+    'i', 'z', 'e', ':' };
   /** the font family */
   private static final char[] FONT_FAMILY = { 'f', 'o', 'n', 't', '-',
-      'f', 'a', 'm', 'i', 'l', 'y', ':' };
+    'f', 'a', 'm', 'i', 'l', 'y', ':' };
   /** the font variant */
   private static final char[] FONT_VARIANT = { 'f', 'o', 'n', 't', '-',
-      'v', 'a', 'r', 'i', 'a', 'n', 't', ':', 'n', 'o', 'r', 'm', 'a',
-      'l', ';' };
+    'v', 'a', 'r', 'i', 'a', 'n', 't', ':', 'n', 'o', 'r', 'm', 'a',
+    'l', ';' };
   /** the font transform */
   private static final char[] FONT_TRANSFORM = { 't', 'e', 'x', 't', '-',
-      't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', ':', 'n', 'o', 'n',
-      'e', ';' };
+    't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', ':', 'n', 'o', 'n',
+    'e', ';' };
   /** the weight bold */
   private static final char[] FONT_WEIGHT_BOLD = { 'f', 'o', 'n', 't',
-      '-', 'w', 'e', 'i', 'g', 'h', 't', ':', 'b', 'o', 'l', 'd', ';' };
+    '-', 'w', 'e', 'i', 'g', 'h', 't', ':', 'b', 'o', 'l', 'd', ';' };
   /** the weight normal */
   private static final char[] FONT_WEIGHT_NORMAL = { 'f', 'o', 'n', 't',
-      '-', 'w', 'e', 'i', 'g', 'h', 't', ':', 'n', 'o', 'r', 'm', 'a',
-      'l', ';' };
+    '-', 'w', 'e', 'i', 'g', 'h', 't', ':', 'n', 'o', 'r', 'm', 'a',
+    'l', ';' };
   /** the weight inherit */
   private static final char[] FONT_WEIGHT_INHERIT = { 'f', 'o', 'n', 't',
-      '-', 'w', 'e', 'i', 'g', 'h', 't', ':', 'i', 'n', 'h', 'e', 'r',
-      'i', 't', ';' };
+    '-', 'w', 'e', 'i', 'g', 'h', 't', ':', 'i', 'n', 'h', 'e', 'r',
+    'i', 't', ';' };
   /** the italic style */
   private static final char[] FONT_STYLE_ITALIC = { 'f', 'o', 'n', 't',
-      '-', 's', 't', 'y', 'l', 'e', ':', 'i', 't', 'a', 'l', 'i', 'c', ';' };
+    '-', 's', 't', 'y', 'l', 'e', ':', 'i', 't', 'a', 'l', 'i', 'c', ';' };
   /** the normal style */
   private static final char[] FONT_STYLE_NORMAL = { 'f', 'o', 'n', 't',
-      '-', 's', 't', 'y', 'l', 'e', ':', 'n', 'o', 'r', 'm', 'a', 'l', ';' };
+    '-', 's', 't', 'y', 'l', 'e', ':', 'n', 'o', 'r', 'm', 'a', 'l', ';' };
   /** the inherit style */
   private static final char[] FONT_STYLE_INHERIT = { 'f', 'o', 'n', 't',
-      '-', 's', 't', 'y', 'l', 'e', ':', 'i', 'n', 'h', 'e', 'r', 'i',
-      't', ';' };
+    '-', 's', 't', 'y', 'l', 'e', ':', 'i', 'n', 'h', 'e', 'r', 'i',
+    't', ';' };
   /** the underline decoration */
   private static final char[] FONT_DEC_UNDERLINE = { 't', 'e', 'x', 't',
-      '-', 'd', 'e', 'c', 'o', 'r', 'a', 't', 'i', 'o', 'n', ':', 'u',
-      'n', 'd', 'e', 'r', 'l', 'i', 'n', 'e', ';' };
+    '-', 'd', 'e', 'c', 'o', 'r', 'a', 't', 'i', 'o', 'n', ':', 'u',
+    'n', 'd', 'e', 'r', 'l', 'i', 'n', 'e', ';' };
   /** the normal decoration */
   private static final char[] FONT_DEC_NORMAL = { 't', 'e', 'x', 't', '-',
-      'd', 'e', 'c', 'o', 'r', 'a', 't', 'i', 'o', 'n', ':', 'n', 'o',
-      'r', 'm', 'a', 'l', ';' };
+    'd', 'e', 'c', 'o', 'r', 'a', 't', 'i', 'o', 'n', ':', 'n', 'o',
+    'r', 'm', 'a', 'l', ';' };
   /** the inherited decoration */
   private static final char[] FONT_DEC_INHERIT = { 't', 'e', 'x', 't',
-      '-', 'd', 'e', 'c', 'o', 'r', 'a', 't', 'i', 'o', 'n', ':', 'i',
-      'n', 'h', 'e', 'r', 'i', 't', ';' };
+    '-', 'd', 'e', 'c', 'o', 'r', 'a', 't', 'i', 'o', 'n', ':', 'i',
+    'n', 'h', 'e', 'r', 'i', 't', ';' };
 
   /** the page size */
   private final PageDimension m_pageSize;
 
   /**
    * Create a document.
-   * 
+   *
    * @param builder
    *          the document builder
    */
@@ -264,10 +264,10 @@ final class _XHTML10Document extends Document {
           }
         } catch (final Throwable t) {
           ErrorUtils
-              .logError(
-                  this.getLogger(),//
-                  "Error while building Cascading Style Sheet (CSS) for XHTML 1.0 Document. This will make the document look odd.", //$NON-NLS-1$
-                  t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+          .logError(
+              this.getLogger(),//
+              "Error while building Cascading Style Sheet (CSS) for XHTML 1.0 Document. This will make the document look odd.", //$NON-NLS-1$
+              t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
         }
 
         this.getFileCollector().addFile(path, EWebFileTypes.CSS);
@@ -279,7 +279,7 @@ final class _XHTML10Document extends Document {
 
   /**
    * write a given style
-   * 
+   *
    * @param fs
    *          the style
    * @param name
@@ -372,7 +372,7 @@ final class _XHTML10Document extends Document {
 
   /**
    * create the styles
-   * 
+   *
    * @param bw
    *          the writer
    * @param usedStyles

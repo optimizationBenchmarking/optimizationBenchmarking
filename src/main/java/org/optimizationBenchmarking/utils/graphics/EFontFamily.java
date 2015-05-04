@@ -27,7 +27,7 @@ public enum EFontFamily {
 
   /**
    * Create
-   * 
+   *
    * @param fam
    *          the font family name
    */
@@ -37,7 +37,7 @@ public enum EFontFamily {
 
   /**
    * Get the name of the font family, as used in {@link java.awt.Font}
-   * 
+   *
    * @return the name of the font family, as used in {@link java.awt.Font}
    */
   public final String getFontFamilyName() {

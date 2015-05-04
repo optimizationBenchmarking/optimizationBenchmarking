@@ -31,32 +31,32 @@ final class _LaTeXTable extends Table {
 
   /** begin the table a */
   private static final char[] TABLE_A_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-      'n', '{', 't', 'a', 'b', 'l', 'e', '}', '[', 't', 'b', ']' };
+    'n', '{', 't', 'a', 'b', 'l', 'e', '}', '[', 't', 'b', ']' };
   /** begin the table b */
   private static final char[] TABLE_A_END = { '\\', 'e', 'n', 'd', '{',
-      't', 'a', 'b', 'l', 'e', '}' };
+    't', 'a', 'b', 'l', 'e', '}' };
   /** end the table a */
   private static final char[] TABLE_B_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-      'n', '{', 't', 'a', 'b', 'l', 'e', '*', '}', '[', 't', 'b', ']' };
+    'n', '{', 't', 'a', 'b', 'l', 'e', '*', '}', '[', 't', 'b', ']' };
   /** end the table b */
   private static final char[] TABLE_B_END = { '\\', 'e', 'n', 'd', '{',
-      't', 'a', 'b', 'l', 'e', '*', '}' };
+    't', 'a', 'b', 'l', 'e', '*', '}' };
 
   /** end the tabular */
   private static final char[] TABULAR_END = { '\\', 'e', 'n', 'd', '{',
-      't', 'a', 'b', 'u', 'l', 'a', 'r', '}' };
+    't', 'a', 'b', 'u', 'l', 'a', 'r', '}' };
   /** end small */
   private static final char[] SMALL_END = { '\\', 'e', 'n', 'd', '{', 's',
-      'm', 'a', 'l', 'l', '}' };
+    'm', 'a', 'l', 'l', '}' };
 
   /** the hline */
   static final char[] HLINE = { '\\', 'h', 'l', 'i', 'n', 'e' };
   /** the multi-col */
   private static final char[] MULTI_COLUMN = { '\\', 'm', 'u', 'l', 't',
-      'i', 'c', 'o', 'l', 'u', 'm', 'n', '{' };
+    'i', 'c', 'o', 'l', 'u', 'm', 'n', '{' };
   /** the first part of a multi-row */
   private static final char[] MULTI_ROW_1 = { '\\', 'm', 'u', 'l', 't',
-      'i', 'r', 'o', 'w', '{' };
+    'i', 'r', 'o', 'w', '{' };
   /** the second part of a multi-row */
   private static final char[] MULTI_ROW_2 = { '}', '{', '*', '}', '{', };
 
@@ -65,7 +65,7 @@ final class _LaTeXTable extends Table {
 
   /**
    * Create a table
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index
@@ -101,7 +101,7 @@ final class _LaTeXTable extends Table {
     LaTeXDriver._endLine(out);
 
     this.m_pageWide = (this.spansAllColumns() && //
-    (doc.m_class.getColumnCount() > 1));
+        (doc.m_class.getColumnCount() > 1));
     out.append(this.m_pageWide ? _LaTeXTable.TABLE_B_BEGIN
         : _LaTeXTable.TABLE_A_BEGIN);
     LaTeXDriver._endLine(out);
@@ -114,7 +114,7 @@ final class _LaTeXTable extends Table {
 
   /**
    * translate a table cell definition into a cell mode sequence
-   * 
+   *
    * @param defs
    *          the table cell definitions
    * @param out
@@ -145,7 +145,7 @@ final class _LaTeXTable extends Table {
         default: {
           throw new IllegalArgumentException(//
               "Unknown table cell definition " //$NON-NLS-1$
-                  + def);
+              + def);
         }
       }
       out.append(ch);
@@ -175,7 +175,7 @@ final class _LaTeXTable extends Table {
 
   /**
    * begin a table cell
-   * 
+   *
    * @param cell
    *          the cell
    * @param out
@@ -218,7 +218,7 @@ final class _LaTeXTable extends Table {
 
   /**
    * end a table cell
-   * 
+   *
    * @param cell
    *          the cell
    * @param out

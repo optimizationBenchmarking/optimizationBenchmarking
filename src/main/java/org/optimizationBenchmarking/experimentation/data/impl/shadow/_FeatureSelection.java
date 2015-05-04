@@ -8,11 +8,11 @@ import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
 
 /** a feature selection */
 final class _FeatureSelection extends
-    _PropertySelection<IFeatureSet, IFeature, IFeatureValue> {
+_PropertySelection<IFeatureSet, IFeature, IFeatureValue> {
 
   /**
    * create the feature selection
-   * 
+   *
    * @param set
    *          the original set
    */

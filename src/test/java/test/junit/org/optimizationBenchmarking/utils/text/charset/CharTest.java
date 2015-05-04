@@ -19,7 +19,7 @@ public class CharTest extends TestBase {
 
   /**
    * create
-   * 
+   *
    * @param ch
    *          the char
    */
@@ -30,7 +30,7 @@ public class CharTest extends TestBase {
 
   /**
    * Get the char
-   * 
+   *
    * @return the char
    */
   protected Char getChar() {
@@ -117,7 +117,7 @@ public class CharTest extends TestBase {
 
       Assert.assertTrue(e.getDashCount() > 0);
       Assert
-          .assertEquals(e.getDashCount(), e.getOtherEnd().getDashCount());
+      .assertEquals(e.getDashCount(), e.getOtherEnd().getDashCount());
     }
   }
 

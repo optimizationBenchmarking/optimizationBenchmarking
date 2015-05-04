@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * interface.
  */
 public class AbstractExperimentSet extends AbstractNamedElementSet
-    implements IExperimentSet {
+implements IExperimentSet {
 
   /** create */
   protected AbstractExperimentSet() {
@@ -27,7 +27,7 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperiment}
    * .
-   * 
+   *
    * @param experiment
    *          the experiment to own
    */
@@ -49,7 +49,7 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractFeatureSet}
    * .
-   * 
+   *
    * @param features
    *          the features set to own
    */
@@ -71,7 +71,7 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractParameterSet}
    * .
-   * 
+   *
    * @param parameters
    *          the parameters set to own
    */
@@ -93,7 +93,7 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractDimensionSet}
    * .
-   * 
+   *
    * @param dimensions
    *          the dimensions set to own
    */
@@ -115,7 +115,7 @@ public class AbstractExperimentSet extends AbstractNamedElementSet
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstanceSet}
    * .
-   * 
+   *
    * @param instances
    *          the instances set to own
    */

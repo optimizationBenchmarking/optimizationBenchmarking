@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a set of dimensions */
 public final class DimensionSet extends _IDObjectSet<Dimension> implements
-    IDimensionSet {
+IDimensionSet {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -20,7 +20,7 @@ public final class DimensionSet extends _IDObjectSet<Dimension> implements
 
   /**
    * The dimensions
-   * 
+   *
    * @param data
    *          the data of the set
    * @param logger
@@ -34,7 +34,7 @@ public final class DimensionSet extends _IDObjectSet<Dimension> implements
 
   /**
    * Get the parser that can read a string and parse to a data point
-   * 
+   *
    * @return a parser that can read a string and parse to a data point
    */
   public final DataFactory getDataFactory() {
@@ -43,7 +43,7 @@ public final class DimensionSet extends _IDObjectSet<Dimension> implements
 
   /**
    * Find the given dimension.
-   * 
+   *
    * @param name
    *          the name
    * @return the dimension, or {@code null} if it could not be found

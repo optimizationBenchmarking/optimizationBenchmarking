@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentElement;
 final class _XHTML10ComplexText extends ComplexText {
   /**
    * create the complex text
-   * 
+   *
    * @param owner
    *          the owning element
    */

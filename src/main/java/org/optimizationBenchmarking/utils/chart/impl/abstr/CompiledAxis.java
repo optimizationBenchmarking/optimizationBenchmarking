@@ -26,7 +26,7 @@ public class CompiledAxis extends CompiledTitledElement {
 
   /**
    * create the axis
-   * 
+   *
    * @param title
    *          the title
    * @param axisColor
@@ -108,7 +108,7 @@ public class CompiledAxis extends CompiledTitledElement {
 
   /**
    * Get the minimum value of this axis
-   * 
+   *
    * @return the minimum value of this axis
    */
   public final double getMinimum() {
@@ -117,7 +117,7 @@ public class CompiledAxis extends CompiledTitledElement {
 
   /**
    * Get the maximum value of this axis
-   * 
+   *
    * @return the maximum value of this axis
    */
   public final double getMaximum() {
@@ -126,7 +126,7 @@ public class CompiledAxis extends CompiledTitledElement {
 
   /**
    * Get the tick font of this axis
-   * 
+   *
    * @return the tick font of this axis
    */
   public final Font getTickFont() {
@@ -135,7 +135,7 @@ public class CompiledAxis extends CompiledTitledElement {
 
   /**
    * Get the axis stroke
-   * 
+   *
    * @return the axis stroke
    */
   public final Stroke getAxisStroke() {
@@ -144,7 +144,7 @@ public class CompiledAxis extends CompiledTitledElement {
 
   /**
    * Get the axis color
-   * 
+   *
    * @return the axis color
    */
   public final Color getAxisColor() {
@@ -153,7 +153,7 @@ public class CompiledAxis extends CompiledTitledElement {
 
   /**
    * Get the grid line stroke
-   * 
+   *
    * @return the grid line stroke
    */
   public final Stroke getGridLineStroke() {
@@ -162,7 +162,7 @@ public class CompiledAxis extends CompiledTitledElement {
 
   /**
    * Get the grid line color
-   * 
+   *
    * @return the grid line color
    */
   public final Color getGridLineColor() {

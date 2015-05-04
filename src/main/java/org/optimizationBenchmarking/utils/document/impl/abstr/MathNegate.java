@@ -5,7 +5,7 @@ public class MathNegate extends MathFunction {
 
   /**
    * Create a negate function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

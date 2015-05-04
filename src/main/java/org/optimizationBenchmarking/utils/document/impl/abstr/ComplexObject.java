@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * The base class for sections, tables, and figures
  */
 public abstract class ComplexObject extends DocumentPart implements
-    ILabeledObject {
+ILabeledObject {
 
   /** the package */
   private static final Package LOG_PACKAGE = ComplexObject.class
@@ -34,7 +34,7 @@ public abstract class ComplexObject extends DocumentPart implements
 
   /**
    * Create a complex object
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index
@@ -51,7 +51,7 @@ public abstract class ComplexObject extends DocumentPart implements
     if (index <= 0) {
       throw new IllegalArgumentException(//
           "Object index must be greater than 0, but is " //$NON-NLS-1$
-              + index);
+          + index);
     }
 
     this._constructorHook(owner);
@@ -77,7 +77,7 @@ public abstract class ComplexObject extends DocumentPart implements
    * An internal hook used in the constructor, needed to implement the
    * behavior of sections correctly. This method is called before
    * initializing the members of this class
-   * 
+   *
    * @param owner
    *          the owning object
    */
@@ -87,14 +87,14 @@ public abstract class ComplexObject extends DocumentPart implements
 
   /**
    * Get the label type
-   * 
+   *
    * @return the label type
    */
   abstract ELabelType _labelType();
 
   /**
    * Get the owner id
-   * 
+   *
    * @param owner
    *          the owner
    * @return the id of the owner
@@ -120,7 +120,7 @@ public abstract class ComplexObject extends DocumentPart implements
 
   /**
    * Render a string to an index
-   * 
+   *
    * @param index
    *          the index to render
    * @return a string
@@ -131,7 +131,7 @@ public abstract class ComplexObject extends DocumentPart implements
 
   /**
    * Get the label of this object
-   * 
+   *
    * @return the label of this object, or {@code null} if it has none
    */
   @Override
@@ -142,7 +142,7 @@ public abstract class ComplexObject extends DocumentPart implements
   /**
    * Get the index of the object within the owning context (starts at
    * {@code 1})
-   * 
+   *
    * @return the index of the object within the owning section
    */
   public final int getIndex() {
@@ -153,7 +153,7 @@ public abstract class ComplexObject extends DocumentPart implements
    * Get the global id, which identifies this object globally unique in the
    * document. This id is composed of the rendered indexes through the
    * complete element hierarchy.
-   * 
+   *
    * @return the globally unique id of this object
    */
   public final String getGlobalID() {
@@ -164,7 +164,7 @@ public abstract class ComplexObject extends DocumentPart implements
    * Get the local id, which identifies this object within its owning
    * context. It corresponds to a {@link #renderIndex(int) rendered}
    * version of {@link #getIndex()}.
-   * 
+   *
    * @return the locally unique id of this object within the owning context
    */
   public final String getLocalID() {
@@ -173,7 +173,7 @@ public abstract class ComplexObject extends DocumentPart implements
 
   /**
    * get the object type
-   * 
+   *
    * @return the type
    */
   final String _getType() {

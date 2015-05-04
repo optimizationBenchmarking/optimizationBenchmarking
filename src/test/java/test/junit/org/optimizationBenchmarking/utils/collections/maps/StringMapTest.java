@@ -19,7 +19,7 @@ public class StringMapTest extends ObjectMapTest {
 
   /**
    * create
-   * 
+   *
    * @param map
    *          the map
    */
@@ -42,7 +42,7 @@ public class StringMapTest extends ObjectMapTest {
 
   /**
    * modify a given key
-   * 
+   *
    * @param key
    *          the key
    * @param random

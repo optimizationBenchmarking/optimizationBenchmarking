@@ -11,19 +11,19 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * with a different owner and potentially different attributes. If all
  * associated data of this element is the same, it will delegate
  * attribute-based computations to that property value.
- * 
+ *
  * @param <OT>
  *          the owner type
  * @param <ST>
  *          the shadow type
  */
 class _ShadowPropertyValue<OT extends IProperty, ST extends IPropertyValue>
-    extends _ShadowNamedElement<OT, ST> implements IPropertyValue,
-    Map.Entry<IProperty, Object> {
+extends _ShadowNamedElement<OT, ST> implements IPropertyValue,
+Map.Entry<IProperty, Object> {
 
   /**
    * create the shadow property value
-   * 
+   *
    * @param owner
    *          the owning property
    * @param shadow

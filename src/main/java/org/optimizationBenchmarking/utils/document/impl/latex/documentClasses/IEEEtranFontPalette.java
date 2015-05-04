@@ -19,7 +19,7 @@ public final class IEEEtranFontPalette extends FontPalette {
 
   /**
    * create the palette
-   * 
+   *
    * @param def
    *          the default font style
    * @param emph
@@ -36,7 +36,7 @@ public final class IEEEtranFontPalette extends FontPalette {
 
   /**
    * read resolve
-   * 
+   *
    * @return {@link #getInstance()}
    */
   private final Object readResolve() {
@@ -45,7 +45,7 @@ public final class IEEEtranFontPalette extends FontPalette {
 
   /**
    * write replace
-   * 
+   *
    * @return {@link #getInstance()}
    */
   private final Object writeReplace() {
@@ -54,7 +54,7 @@ public final class IEEEtranFontPalette extends FontPalette {
 
   /**
    * Get an instance of the default IEEEtran font palette
-   * 
+   *
    * @return the default IEEEtran font palette
    */
   public static final IEEEtranFontPalette getInstance() {
@@ -66,7 +66,7 @@ public final class IEEEtranFontPalette extends FontPalette {
 
   /** theIEEEtran font palette builder */
   private static final class __IEEETranDefaultFontPaletteBuilder extends
-      FontPaletteBuilder {
+  FontPaletteBuilder {
     /** the IEEEtran font palette builder */
     __IEEETranDefaultFontPaletteBuilder() {
       super();
@@ -99,21 +99,21 @@ public final class IEEEtranFontPalette extends FontPalette {
       logger = Configuration.getGlobalLogger();
       try (final __IEEETranDefaultFontPaletteBuilder cspb = new __IEEETranDefaultFontPaletteBuilder()) {
         FontPaletteXMLInput
-            .getInstance()
-            .use()
-            .setLogger(Configuration.getGlobalLogger())
-            .setDestination(cspb)
-            .addResource(IEEEtranFontPalette.class, "IEEEtran.fontPalette").create().call(); //$NON-NLS-1$
+        .getInstance()
+        .use()
+        .setLogger(Configuration.getGlobalLogger())
+        .setDestination(cspb)
+        .addResource(IEEEtranFontPalette.class, "IEEEtran.fontPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         error = t;
         pal = null;
         try {
           ErrorUtils
-              .logError(
-                  logger,
-                  "Error while loading the IEEEtran font palette. This will make creating LaTeX documents depending on the IEEEtran document class impossible.",//$NON-NLS-1$
-                  error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+          .logError(
+              logger,
+              "Error while loading the IEEEtran font palette. This will make creating LaTeX documents depending on the IEEEtran document class impossible.",//$NON-NLS-1$
+              error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
         } catch (final Throwable a) {
           error = a;
         }

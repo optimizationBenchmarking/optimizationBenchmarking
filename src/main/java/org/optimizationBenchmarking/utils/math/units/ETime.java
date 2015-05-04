@@ -139,12 +139,12 @@ public enum ETime implements IUnit {
   /** time since the cheop's pyramid was built */
   TIME_SINCE_BUILDING_OF_CHEOPS_PYRAMID(
       "time since building of cheop's pyramid"), //$NON-NLS-1$
-  /** time since the big bang */
-  TIME_SINCE_BIG_BANG("time since the big bang"), //$NON-NLS-1$
-  /** time since the extinction of the dinosaurs */
-  TIME_SINCE_EXTINCTION_OF_DINOSAURS(
-      "time since the extinction of the dinosaurs"), //$NON-NLS-1$
-  ;
+      /** time since the big bang */
+      TIME_SINCE_BIG_BANG("time since the big bang"), //$NON-NLS-1$
+      /** time since the extinction of the dinosaurs */
+      TIME_SINCE_EXTINCTION_OF_DINOSAURS(
+          "time since the extinction of the dinosaurs"), //$NON-NLS-1$
+          ;
 
   /** the default year */
   public static final ETime YEAR = YEAR_JULIAN;
@@ -281,7 +281,7 @@ public enum ETime implements IUnit {
 
   /**
    * Create
-   * 
+   *
    * @param name
    *          the name
    * @param shortcut
@@ -298,7 +298,7 @@ public enum ETime implements IUnit {
 
   /**
    * Create
-   * 
+   *
    * @param name
    *          the name
    * @param shortcut
@@ -310,7 +310,7 @@ public enum ETime implements IUnit {
 
   /**
    * Create the name
-   * 
+   *
    * @param name
    *          the name
    */
@@ -320,7 +320,7 @@ public enum ETime implements IUnit {
 
   /**
    * Get the conversion function
-   * 
+   *
    * @param other
    *          the other unit
    * @return the function
@@ -343,7 +343,7 @@ public enum ETime implements IUnit {
 
   /**
    * Convert a value
-   * 
+   *
    * @param value
    *          the value
    * @param other
@@ -373,7 +373,7 @@ public enum ETime implements IUnit {
 
   /**
    * Convert a value
-   * 
+   *
    * @param value
    *          the value
    * @param other
@@ -436,7 +436,7 @@ public enum ETime implements IUnit {
 
   /**
    * Return the java time unit belonging to this time unit, if any
-   * 
+   *
    * @return the corresponding java time unit, or {@code null} if none
    *         found
    */

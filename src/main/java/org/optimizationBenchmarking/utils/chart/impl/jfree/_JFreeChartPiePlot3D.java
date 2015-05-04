@@ -31,7 +31,7 @@ final class _JFreeChartPiePlot3D extends PiePlot3D {
 
   /**
    * create
-   * 
+   *
    * @param dataset
    *          the data set
    */
@@ -44,7 +44,7 @@ final class _JFreeChartPiePlot3D extends PiePlot3D {
    * version from {@link org.jfree.chart.plot.PiePlot} because it ignores
    * the method
    * {@link org.jfree.chart.labels.PieSectionLabelGenerator#generateAttributedSectionLabel(PieDataset, Comparable)}
-   * 
+   *
    * @return The legend items (never <code>null</code>).
    */
   @SuppressWarnings("rawtypes")

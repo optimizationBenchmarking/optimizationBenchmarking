@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 public class TableBodyCell extends TableCell {
   /**
    * Create the table body cell
-   * 
+   *
    * @param owner
    *          the owning row
    * @param cols

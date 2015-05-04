@@ -17,15 +17,15 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerJobBu
 
 /** The class for document builders */
 public abstract class DocumentBuilder extends
-    DocumentProducerJobBuilder<Document, DocumentBuilder> implements
-    IDocumentBuilder, ITextable {
+DocumentProducerJobBuilder<Document, DocumentBuilder> implements
+IDocumentBuilder, ITextable {
 
   /** the owning builder */
   private final DocumentConfigurationBuilder m_builder;
 
   /**
    * create the tool job builder
-   * 
+   *
    * @param owner
    *          the owning document builder
    */
@@ -38,7 +38,7 @@ public abstract class DocumentBuilder extends
 
   /**
    * create the internal configuration builder object
-   * 
+   *
    * @param owner
    *          the owning document driver
    * @return the internal configuration builder
@@ -51,14 +51,14 @@ public abstract class DocumentBuilder extends
 
   /**
    * Create the style set.
-   * 
+   *
    * @return the style set
    */
   protected abstract StyleSet createStyleSet();
 
   /**
    * Get the owning document driver
-   * 
+   *
    * @return the owning document driver
    */
   protected final DocumentDriver getOwner() {
@@ -67,7 +67,7 @@ public abstract class DocumentBuilder extends
 
   /**
    * Get the document configuration represented by this builder
-   * 
+   *
    * @return the document configuration represented by this builder
    */
   protected final DocumentConfiguration getDocumentConfiguration() {
@@ -76,7 +76,7 @@ public abstract class DocumentBuilder extends
 
   /**
    * get the immutable graphic configuration
-   * 
+   *
    * @return the immutable graphic configuration
    */
   final GraphicConfiguration _graphicConfig() {
@@ -85,7 +85,7 @@ public abstract class DocumentBuilder extends
 
   /**
    * Get the document configuration builder
-   * 
+   *
    * @return the document configuration builder
    */
   protected final DocumentConfigurationBuilder getConfigurationBuilder() {
@@ -101,7 +101,7 @@ public abstract class DocumentBuilder extends
 
   /**
    * Get the dots per inch
-   * 
+   *
    * @return the dots per inch
    * @see #setDotsPerInch(int)
    */
@@ -118,7 +118,7 @@ public abstract class DocumentBuilder extends
 
   /**
    * Get the color model
-   * 
+   *
    * @return the color model
    * @see #setColorModel(EColorModel)
    */
@@ -135,7 +135,7 @@ public abstract class DocumentBuilder extends
 
   /**
    * Get the rendering quality
-   * 
+   *
    * @return the rendering quality
    */
   public final double getQuality() {
@@ -152,7 +152,7 @@ public abstract class DocumentBuilder extends
   /**
    * Get the graphic driver to be used for creating the graphics in the
    * document.
-   * 
+   *
    * @return the graphic driver to use
    * @see #setGraphicDriver(IGraphicDriver)
    */
@@ -179,10 +179,10 @@ public abstract class DocumentBuilder extends
         && (logger.isLoggable(Level.FINE))) {
       logger.fine(//
           "Begin creation of document '" + //$NON-NLS-1$
-              this.getMainDocumentNameSuggestion()
-              + "' in folder '" + this.getBasePath() + //$NON-NLS-1$
-              "' with graphic driver " + //$NON-NLS-1$ 
-              this.getGraphicDriver());
+          this.getMainDocumentNameSuggestion()
+          + "' in folder '" + this.getBasePath() + //$NON-NLS-1$
+          "' with graphic driver " + //$NON-NLS-1$
+          this.getGraphicDriver());
     }
     return this.doCreateDocument();
   }
@@ -211,7 +211,7 @@ public abstract class DocumentBuilder extends
 
   /**
    * Get the chart driver
-   * 
+   *
    * @return the chart driver
    */
   public final IChartDriver getChartDriver() {
@@ -220,7 +220,7 @@ public abstract class DocumentBuilder extends
 
   /**
    * Create the document
-   * 
+   *
    * @return the document
    */
   protected abstract Document doCreateDocument();

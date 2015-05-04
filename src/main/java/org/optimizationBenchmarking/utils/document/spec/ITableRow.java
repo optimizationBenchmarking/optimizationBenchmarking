@@ -5,7 +5,7 @@ public interface ITableRow extends IDocumentElement {
 
   /**
    * Create a cell which may span multiple rows or columns
-   * 
+   *
    * @param rowSpan
    *          the number of rows the cell spans
    * @param colSpan
@@ -20,7 +20,7 @@ public interface ITableRow extends IDocumentElement {
 
   /**
    * Create a cell
-   * 
+   *
    * @return the text interface where the table cell's text can be written
    *         to
    */

@@ -23,7 +23,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -37,7 +37,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * A new delegate has begun its work
-   * 
+   *
    * @param delegate
    *          the delegate
    */
@@ -46,7 +46,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * A delegate has finished its work
-   * 
+   *
    * @param delegate
    *          the delegate
    */
@@ -63,7 +63,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate resolve entity
-   * 
+   *
    * @param publicId
    *          see {@link #resolveEntity(String, String)}
    * @param systemId
@@ -85,7 +85,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do resolve entity
-   * 
+   *
    * @param publicId
    *          see {@link #resolveEntity(String, String)}
    * @param systemId
@@ -113,7 +113,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate notation declaration
-   * 
+   *
    * @param name
    *          see {@link #notationDecl(String, String, String)}
    * @param publicId
@@ -133,7 +133,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do notation declaration
-   * 
+   *
    * @param name
    *          see {@link #notationDecl(String, String, String)}
    * @param publicId
@@ -143,7 +143,6 @@ public class DelegatingHandler extends DefaultHandler {
    * @throws SAXException
    *           see {@link #notationDecl(String, String, String)}
    */
-  @SuppressWarnings("unused")
   protected void doNotationDecl(final String name, final String publicId,
       final String systemId) throws SAXException {
     //
@@ -162,7 +161,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate an unparsed entity declaration
-   * 
+   *
    * @param name
    *          see
    *          {@link #unparsedEntityDecl(String, String, String, String)}
@@ -190,7 +189,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do an unparsed entity declaration
-   * 
+   *
    * @param name
    *          see
    *          {@link #unparsedEntityDecl(String, String, String, String)}
@@ -228,7 +227,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate set document locator
-   * 
+   *
    * @param locator
    *          see {@link #setDocumentLocator(Locator)}
    */
@@ -241,7 +240,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do set document locator
-   * 
+   *
    * @param locator
    *          see {@link #setDocumentLocator(Locator)}
    */
@@ -261,7 +260,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate start document
-   * 
+   *
    * @throws SAXException
    *           see {@link #startDocument()}
    */
@@ -275,7 +274,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do start document
-   * 
+   *
    * @throws SAXException
    *           see {@link #startDocument()}
    */
@@ -295,7 +294,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate end document
-   * 
+   *
    * @throws SAXException
    *           see {@link #endDocument()}
    */
@@ -309,7 +308,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do end document
-   * 
+   *
    * @throws SAXException
    *           see {@link #endDocument()}
    */
@@ -329,7 +328,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate start prefix mapping
-   * 
+   *
    * @param prefix
    *          see {@link #startPrefixMapping(String, String)}
    * @param uri
@@ -347,7 +346,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do start prefix mapping
-   * 
+   *
    * @param prefix
    *          see {@link #startPrefixMapping(String, String)}
    * @param uri
@@ -373,7 +372,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate end prefix mapping
-   * 
+   *
    * @param prefix
    *          see {@link #endPrefixMapping(String)}
    * @throws SAXException
@@ -389,7 +388,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do end prefix mapping
-   * 
+   *
    * @param prefix
    *          see {@link #endPrefixMapping(String)}
    * @throws SAXException
@@ -413,7 +412,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate start element
-   * 
+   *
    * @param uri
    *          see {@link #startElement(String, String, String, Attributes)}
    * @param localName
@@ -437,7 +436,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do start element
-   * 
+   *
    * @param uri
    *          see {@link #startElement(String, String, String, Attributes)}
    * @param localName
@@ -468,7 +467,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate end element
-   * 
+   *
    * @param uri
    *          see {@link #endElement(String, String, String)}
    * @param localName
@@ -488,7 +487,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do end element
-   * 
+   *
    * @param uri
    *          see {@link #endElement(String, String, String)}
    * @param localName
@@ -516,7 +515,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate characters
-   * 
+   *
    * @param ch
    *          see {@link #characters(char[], int, int)}
    * @param start
@@ -537,7 +536,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do characters
-   * 
+   *
    * @param ch
    *          see {@link #characters(char[], int, int)}
    * @param start
@@ -565,7 +564,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate ignorableWhitespace
-   * 
+   *
    * @param ch
    *          see {@link #ignorableWhitespace(char[], int, int)}
    * @param start
@@ -586,7 +585,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do ignorableWhitespace
-   * 
+   *
    * @param ch
    *          see {@link #ignorableWhitespace(char[], int, int)}
    * @param start
@@ -614,7 +613,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate processing instructions
-   * 
+   *
    * @param target
    *          see {@link #processingInstruction(String, String)}
    * @param data
@@ -632,7 +631,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do processing instructions
-   * 
+   *
    * @param target
    *          see {@link #processingInstruction(String, String)}
    * @param data
@@ -658,7 +657,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate skipped entities
-   * 
+   *
    * @param name
    *          see {@link #skippedEntity(String)}
    * @throws SAXException
@@ -674,7 +673,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do skipped entities
-   * 
+   *
    * @param name
    *          see {@link #skippedEntity(String)}
    * @throws SAXException
@@ -696,7 +695,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate a warning
-   * 
+   *
    * @param e
    *          see {@link #warning(SAXParseException)}
    * @throws SAXException
@@ -712,7 +711,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do a warning
-   * 
+   *
    * @param e
    *          see {@link #warning(SAXParseException)}
    * @throws SAXException
@@ -734,7 +733,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate a error
-   * 
+   *
    * @param e
    *          see {@link #error(SAXParseException)}
    * @throws SAXException
@@ -750,7 +749,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do a error
-   * 
+   *
    * @param e
    *          see {@link #error(SAXParseException)}
    * @throws SAXException
@@ -772,7 +771,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * delegate a fatalError
-   * 
+   *
    * @param e
    *          see {@link #fatalError(SAXParseException)}
    * @throws SAXException
@@ -788,7 +787,7 @@ public class DelegatingHandler extends DefaultHandler {
 
   /**
    * do a fatalError
-   * 
+   *
    * @param e
    *          see {@link #fatalError(SAXParseException)}
    * @throws SAXException
@@ -817,7 +816,7 @@ public class DelegatingHandler extends DefaultHandler {
    * attribute with an empty ({@code ""}) namespace and the right
    * {@code name}. If that fails as well, it looks just for an attribute
    * where the qualified name is the same as {@code name}.
-   * 
+   *
    * @param attributes
    *          the attributes
    * @param namespaceURI
@@ -847,7 +846,7 @@ public class DelegatingHandler extends DefaultHandler {
    * {@link org.optimizationBenchmarking.utils.text.TextUtils#normalize(String)}
    * to normalize the result. This will convert all empty string attribute
    * values to {@code null}.
-   * 
+   *
    * @param attributes
    *          the attributes
    * @param namespaceURI

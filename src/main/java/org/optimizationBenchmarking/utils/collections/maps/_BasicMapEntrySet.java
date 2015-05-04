@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
 
 /**
  * the entry set of the basic map.
- * 
+ *
  * @param <K>
  *          the key type
  * @param <V>
@@ -16,14 +16,14 @@ import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
  *          the entry type
  */
 final class _BasicMapEntrySet<K, V, NT extends BasicMapEntry<K, V>>
-    extends AbstractSet<NT> {
+extends AbstractSet<NT> {
 
   /** the map */
   private final BasicMap<K, V, NT> m_map;
 
   /**
    * create
-   * 
+   *
    * @param map
    *          the map
    */

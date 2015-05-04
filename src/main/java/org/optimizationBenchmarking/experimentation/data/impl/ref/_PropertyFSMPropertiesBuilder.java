@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * This is the base class for classes that can build a set of properties.
- * 
+ *
  * @param <PT>
  *          the property type
  * @param <PVT>
@@ -21,12 +21,12 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  *          the property set type the property builder type
  */
 abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT extends Property<?>, PST extends _PropertySet<?, ?, ?>>
-    extends _PropertyFSM<_PropertyFSMPropertyRecord, PST, PST, _FSM>
-    implements Comparator<PropertyValue<?>> {
+extends _PropertyFSM<_PropertyFSMPropertyRecord, PST, PST, _FSM>
+implements Comparator<PropertyValue<?>> {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -37,7 +37,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
 
   /**
    * normalize the parameter description.
-   * 
+   *
    * @param name
    *          the parameter name
    * @param desc
@@ -81,7 +81,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
 
   /**
    * Create a property value
-   * 
+   *
    * @param name
    *          the value's name
    * @param value
@@ -95,7 +95,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
 
   /**
    * create the property
-   * 
+   *
    * @param name
    *          the property's name
    * @param values
@@ -114,7 +114,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
 
   /**
    * create the property set
-   * 
+   *
    * @param data
    *          the properties
    * @return the property set
@@ -123,7 +123,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
 
   /**
    * merge names
-   * 
+   *
    * @param a
    *          names a
    * @param b
@@ -159,7 +159,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
 
   /**
    * Turn a property context into a property
-   * 
+   *
    * @param rec
    *          the record
    * @param totalCount
@@ -193,14 +193,14 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
     if (rec.m_refCount > totalCount) {
       throw new IllegalStateException(//
           "Property '" + rec.m_propertyName + //$NON-NLS-1$
-              "' used too often???"); //$NON-NLS-1$
+          "' used too often???"); //$NON-NLS-1$
     }
 
     i = descriptions.size();
     if (i > refCount) {
       throw new IllegalStateException(//
           "Property '" + rec.m_propertyName + //$NON-NLS-1$
-              "' has more values than have been declared?"); //$NON-NLS-1$
+          "' has more values than have been declared?"); //$NON-NLS-1$
     }
 
     // property was declared, but never used
@@ -284,123 +284,123 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
     makePv: {
 
       parseA: {
-        // did we succeed in parsing?
-        if (primitiveTypes.isEmpty()) {
-          break parseA;
-        }
-
-        // yes! cool, we found one or multiple parser that can translate
-        // the
-        // property values to primitive types. Let's take the "strictest"
-        // one
-        type = primitiveTypes.get(0);
-        if (type == null) {
-          break parseA;
-        }
-
-        parser = (strict ? type.getStrictParser() : type.getLooseParser());
-        if (parser == null) {
-          break parseA;
-        }
-        try {
-          for (final Object value : values) {
-            propertyValue = this.m_owner._normalize(parser
-                .parseObject(value));
-            if (propertyValue == null) {
-              break parseA;
-            }
-            q = this._createPropertyValue(
-                this.m_owner._normalize(_PropertyFSMPropertiesBuilder
-                    .__mergeNames(String.valueOf(value),
-                        String.valueOf(propertyValue))), this.m_owner
-                    ._normalize(descriptions.get(value)), propertyValue);
-            if (parsed.containsKey(q.m_name)) {
-              break parseA; // uh??
-            }
-            parsed.put(q.m_name, q);
-          }
-        } catch (final Throwable vv) {
-          break parseA;
-        }
-        break makePv;// success
+      // did we succeed in parsing?
+      if (primitiveTypes.isEmpty()) {
+        break parseA;
       }
 
-      // ok, parsing did not work out. let's check if the parameter is a
-      // class
-      // name parameter of the type "name (class)"
-      parsed.clear();
-      type = null;
-      isClass: {
+      // yes! cool, we found one or multiple parser that can translate
+      // the
+      // property values to primitive types. Let's take the "strictest"
+      // one
+      type = primitiveTypes.get(0);
+      if (type == null) {
+        break parseA;
+      }
+
+      parser = (strict ? type.getStrictParser() : type.getLooseParser());
+      if (parser == null) {
+        break parseA;
+      }
+      try {
         for (final Object value : values) {
-          if (!(value instanceof String)) {
-            break isClass;
-          }
-          stringValue = this.m_owner._normalizeLocal((String) value);
-          if (stringValue == null) {
-            break isClass;
-          }
-          len = stringValue.length();
-          if (len <= 2) {
-            break isClass;
-          }
-          if (stringValue.charAt(len - 1) != ')') {
-            break isClass;
-          }
-          i = stringValue.lastIndexOf('(');
-          if ((i <= 0) || (i >= (len - 2))) {
-            break isClass;
-          }
-          if (!(TextUtils.couldBeClassName(stringValue.substring(i + 1,
-              len - 1)))) {
-            break isClass;
-          }
-          propertyValue = this.m_owner._normalizeLocal(stringValue
-              .substring(0, i));
+          propertyValue = this.m_owner._normalize(parser
+              .parseObject(value));
           if (propertyValue == null) {
-            break isClass;
+            break parseA;
           }
-
           q = this._createPropertyValue(
-              this.m_owner._normalize(stringValue),
-              this.m_owner._normalize(descriptions.get(value)),
-              this.m_owner._normalize(propertyValue));
-
+              this.m_owner._normalize(_PropertyFSMPropertiesBuilder
+                  .__mergeNames(String.valueOf(value),
+                      String.valueOf(propertyValue))), this.m_owner
+                      ._normalize(descriptions.get(value)), propertyValue);
           if (parsed.containsKey(q.m_name)) {
-            break isClass; // uh??
+            break parseA; // uh??
           }
           parsed.put(q.m_name, q);
         }
-        break makePv; // success!
+      } catch (final Throwable vv) {
+        break parseA;
       }
+      break makePv;// success
+    }
 
-      // ok, we can neither parse the parameter values to primitive types,
-      // nor
-      // are they class names. So let's use them as is.
-      parsed.clear();
+    // ok, parsing did not work out. let's check if the parameter is a
+    // class
+    // name parameter of the type "name (class)"
+    parsed.clear();
+    type = null;
+    isClass: {
       for (final Object value : values) {
-        propertyValue = this.m_owner._normalize(value);
-        if (propertyValue instanceof String) {
-          stringValue = ((String) propertyValue);
-        } else {
-          stringValue = this.m_owner._normalize(String
-              .valueOf(propertyValue));
+        if (!(value instanceof String)) {
+          break isClass;
         }
+        stringValue = this.m_owner._normalizeLocal((String) value);
+        if (stringValue == null) {
+          break isClass;
+        }
+        len = stringValue.length();
+        if (len <= 2) {
+          break isClass;
+        }
+        if (stringValue.charAt(len - 1) != ')') {
+          break isClass;
+        }
+        i = stringValue.lastIndexOf('(');
+        if ((i <= 0) || (i >= (len - 2))) {
+          break isClass;
+        }
+        if (!(TextUtils.couldBeClassName(stringValue.substring(i + 1,
+            len - 1)))) {
+          break isClass;
+        }
+        propertyValue = this.m_owner._normalizeLocal(stringValue
+            .substring(0, i));
+        if (propertyValue == null) {
+          break isClass;
+        }
+
         q = this._createPropertyValue(
             this.m_owner._normalize(stringValue),
             this.m_owner._normalize(descriptions.get(value)),
             this.m_owner._normalize(propertyValue));
 
         if (parsed.containsKey(q.m_name)) {
-          throw new IllegalArgumentException(//
-              "Property value name clash in property '" + //$NON-NLS-1$
-                  rec.m_propertyName + "' for value '" //$NON-NLS-1$
-                  + q.m_value + "' with name '" //$NON-NLS-1$
-                  + q.m_name + "' and description '" + //$NON-NLS-1$
-                  q.m_description + "' -- how the *** did that happen?"); //$NON-NLS-1$
+          break isClass; // uh??
         }
-
         parsed.put(q.m_name, q);
       }
+      break makePv; // success!
+    }
+
+    // ok, we can neither parse the parameter values to primitive types,
+    // nor
+    // are they class names. So let's use them as is.
+    parsed.clear();
+    for (final Object value : values) {
+      propertyValue = this.m_owner._normalize(value);
+      if (propertyValue instanceof String) {
+        stringValue = ((String) propertyValue);
+      } else {
+        stringValue = this.m_owner._normalize(String
+            .valueOf(propertyValue));
+      }
+      q = this._createPropertyValue(
+          this.m_owner._normalize(stringValue),
+          this.m_owner._normalize(descriptions.get(value)),
+          this.m_owner._normalize(propertyValue));
+
+      if (parsed.containsKey(q.m_name)) {
+        throw new IllegalArgumentException(//
+            "Property value name clash in property '" + //$NON-NLS-1$
+            rec.m_propertyName + "' for value '" //$NON-NLS-1$
+            + q.m_value + "' with name '" //$NON-NLS-1$
+            + q.m_name + "' and description '" + //$NON-NLS-1$
+            q.m_description + "' -- how the *** did that happen?"); //$NON-NLS-1$
+      }
+
+      parsed.put(q.m_name, q);
+    }
     }
 
     propertyValues = parsed.values().toArray(
@@ -408,8 +408,8 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
     if (propertyValues.length > values.length) {
       throw new IllegalStateException(//
           "Property value set of property '" + //$NON-NLS-1$
-              rec.m_propertyName + //
-              "' is inconsistent."); //$NON-NLS-1$
+          rec.m_propertyName + //
+          "' is inconsistent."); //$NON-NLS-1$
     }
     Arrays.sort(propertyValues, this);
 
@@ -417,7 +417,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
     return this._createProperty(n, this.m_owner
         ._normalize(_PropertyFSMPropertiesBuilder.__normalizeDesc(n,
             rec.m_propertyDesc)), type, propertyValues,
-        (refCount < totalCount));
+            (refCount < totalCount));
   }
 
   /** {@inheritDoc} */
@@ -495,7 +495,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
     if (i <= 0) {
       throw new IllegalStateException(//
           "No properties defined in map " //$NON-NLS-1$
-              + map + '.');
+          + map + '.');
     }
 
     return this._createPropertySet(list.toArray(new Property[i]));

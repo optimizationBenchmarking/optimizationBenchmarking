@@ -46,7 +46,7 @@ public abstract class ChartExample {
 
   /**
    * Perform the chart example
-   * 
+   *
    * @param selector
    *          the chart selector
    * @param styles
@@ -59,7 +59,7 @@ public abstract class ChartExample {
 
   /**
    * Perform the chart example
-   * 
+   *
    * @param selector
    *          the chart selector
    * @param styles
@@ -74,31 +74,31 @@ public abstract class ChartExample {
 
   /**
    * Obtain a random legend mode
-   * 
+   *
    * @param rand
    *          the random number generator
    * @return the legend mode
    */
   protected static final ELegendMode randomLegendMode(final Random rand) {
     return ChartExample.LEGEND_MODES[rand
-        .nextInt(ChartExample.LEGEND_MODES.length)];
+                                     .nextInt(ChartExample.LEGEND_MODES.length)];
   }
 
   /**
    * Obtain a random line type
-   * 
+   *
    * @param rand
    *          the random number generator
    * @return the line type
    */
   protected static final ELineType randomLineType(final Random rand) {
     return ChartExample.LINE_TYPES[rand
-        .nextInt(ChartExample.LINE_TYPES.length)];
+                                   .nextInt(ChartExample.LINE_TYPES.length)];
   }
 
   /**
    * Create a random style set
-   * 
+   *
    * @param rand
    *          the random number generator
    * @return the style set
@@ -107,15 +107,15 @@ public abstract class ChartExample {
     return new StyleSet(//
         ExampleFontPalettes.PALETTES.get(rand
             .nextInt(ExampleFontPalettes.PALETTES.size())),//
-        ColorPaletteExample.PALETTES.get(rand
-            .nextInt(ColorPaletteExample.PALETTES.size())),//
-        StrokePaletteExample.PALETTES.get(rand
-            .nextInt(StrokePaletteExample.PALETTES.size())));//
+            ColorPaletteExample.PALETTES.get(rand
+                .nextInt(ColorPaletteExample.PALETTES.size())),//
+                StrokePaletteExample.PALETTES.get(rand
+                    .nextInt(StrokePaletteExample.PALETTES.size())));//
   }
 
   /**
    * Set the title of a titled element
-   * 
+   *
    * @param element
    *          the element
    * @param styles
@@ -164,7 +164,7 @@ public abstract class ChartExample {
 
   /**
    * create a random color
-   * 
+   *
    * @param styles
    *          the styles
    * @param rand
@@ -191,7 +191,7 @@ public abstract class ChartExample {
 
   /**
    * run the example: there are problems with the different output
-   * 
+   *
    * @param args
    *          the arguments
    * @throws IOException
@@ -233,7 +233,7 @@ public abstract class ChartExample {
                   sub,//
                   ((((((((this.getClass().getSimpleName() + '_') + example) + '_') + (++z)) + '_') + d
                       .toString()) + '_') + c.getClass().getSimpleName()),//
-                  size, new FinishedPrinter(c, d), logger)) {
+                      size, new FinishedPrinter(c, d), logger)) {
             rand.setSeed(seed);
             this.perform(c.use().setGraphic(g).setLogger(logger)
                 .setStyleSet(styles).create(), styles, rand);

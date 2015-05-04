@@ -12,7 +12,7 @@ public class ConfigurationXMLHandler extends DelegatingHandler {
 
   /**
    * Create
-   * 
+   *
    * @param owner
    *          the owning handler, or {@code null} if not used
    * @param dest

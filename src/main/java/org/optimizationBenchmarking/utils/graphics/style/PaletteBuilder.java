@@ -16,14 +16,14 @@ import org.optimizationBenchmarking.utils.text.tokenizers.SeparatorBasedStringIt
  * {@link org.optimizationBenchmarking.utils.collections.lists.ArrayListView}
  * which contains objects of a given type, which, in turn, defines a
  * graphical appearance.
- * 
+ *
  * @param <ET>
  *          the element type
  * @param <PT>
  *          the palette type
  */
 public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
-    extends BuilderFSM<PT> {
+extends BuilderFSM<PT> {
 
   /** do we have elements? */
   protected static final int FLAG_HAS_ELEMENTS = (FSM.FLAG_NOTHING + 1);
@@ -35,7 +35,7 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
 
   /**
    * Create the palette builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -60,7 +60,7 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
 
   /**
    * Add an element to this palette
-   * 
+   *
    * @param element
    *          the element to add
    */
@@ -81,7 +81,7 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
     if ((s1 == null) || (s1.length() <= 0)) {
       throw new IllegalArgumentException(//
           "Palette element must not have empty name, but '" //$NON-NLS-1$
-              + t + "' has.");//$NON-NLS-1$
+          + t + "' has.");//$NON-NLS-1$
     }
 
     this.beforeAdd(element);
@@ -96,8 +96,8 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
       s2 = x.toString();
       if (String.CASE_INSENSITIVE_ORDER.compare(s1, s2.toString()) == 0) {
         throw new IllegalArgumentException(//
-            "No two palette elements must have the same name, but '"//$NON-NLS-1$ 
-                + s1 + "' and '" + s2 + "' do.");//$NON-NLS-1$//$NON-NLS-2$
+            "No two palette elements must have the same name, but '"//$NON-NLS-1$
+            + s1 + "' and '" + s2 + "' do.");//$NON-NLS-1$//$NON-NLS-2$
       }
     }
 
@@ -108,7 +108,7 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
   /**
    * This method is called before an element is added in order to provide a
    * final chance to check it
-   * 
+   *
    * @param element
    *          the element to be added
    */
@@ -118,7 +118,7 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
 
   /**
    * Add a list of element to this palette
-   * 
+   *
    * @param elements
    *          the elements to add
    */
@@ -132,14 +132,14 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
 
   /**
    * create the element builder
-   * 
+   *
    * @return the builder
    */
   protected abstract PaletteElementBuilder<ET> createElementBuilder();
 
   /**
    * create a builder fsm
-   * 
+   *
    * @return add the element
    */
   public synchronized PaletteElementBuilder<ET> add() {
@@ -169,7 +169,7 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
 
   /**
    * Process a finished and closed palette element builder
-   * 
+   *
    * @param child
    *          the completed element builder
    */
@@ -192,7 +192,7 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
 
   /**
    * Create the palette
-   * 
+   *
    * @param data
    *          the data
    * @return the palette
@@ -240,7 +240,7 @@ public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
 
   /**
    * Iterate over a string
-   * 
+   *
    * @param s
    *          the string
    * @return the iterator

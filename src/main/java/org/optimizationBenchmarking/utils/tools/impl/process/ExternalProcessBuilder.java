@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  * A builder for external processes.
  */
 public final class ExternalProcessBuilder extends
-    ToolJobBuilder<ExternalProcess, ExternalProcessBuilder> {
+ToolJobBuilder<ExternalProcess, ExternalProcessBuilder> {
 
   /** an atomic process counter */
   private static final AtomicLong PROC_ID = new AtomicLong();
@@ -58,7 +58,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Set the executable
-   * 
+   *
    * @param path
    *          the path to the executable
    * @return this builder
@@ -78,7 +78,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Add a string command line argument
-   * 
+   *
    * @param s
    *          the string command line argument
    * @return this builder
@@ -98,7 +98,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Add a path command line argument
-   * 
+   *
    * @param path
    *          the path command line argument
    * @return this builder
@@ -109,7 +109,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Set a string environment variable for the sub-process
-   * 
+   *
    * @param key
    *          the key
    * @param value
@@ -124,7 +124,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Set a path environment variable for the sub-process
-   * 
+   *
    * @param key
    *          the key
    * @param value
@@ -140,7 +140,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Remove an environment variable
-   * 
+   *
    * @param key
    *          the variable to remove
    * @return this builder
@@ -152,7 +152,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Clear the environment, i.e., delete all variables
-   * 
+   *
    * @return this builder
    */
   public final ExternalProcessBuilder clearEnvironment() {
@@ -162,7 +162,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Set the directory in which the process should be executed
-   * 
+   *
    * @param dir
    *          the directory
    * @return this builder
@@ -174,7 +174,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Set the stdin stream definition
-   * 
+   *
    * @param def
    *          the stream definition
    * @return this builder
@@ -187,12 +187,12 @@ public final class ExternalProcessBuilder extends
       this.m_stdin = def;
       return this;
     }
-    throw new IllegalArgumentException("Cannot set stdin to " + def); //$NON-NLS-1$     
+    throw new IllegalArgumentException("Cannot set stdin to " + def); //$NON-NLS-1$
   }
 
   /**
    * Read the stdin of this process from the given path
-   * 
+   *
    * @param source
    *          the source
    * @return this builder
@@ -205,7 +205,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Set the stdout stream definition
-   * 
+   *
    * @param def
    *          the stream definition
    * @return this builder
@@ -222,7 +222,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Store the stdout of this process to the given path
-   * 
+   *
    * @param dest
    *          the destination
    * @param append
@@ -257,7 +257,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Set the stderr stream definition
-   * 
+   *
    * @param def
    *          the stream definition
    * @return this builder
@@ -276,7 +276,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * Store the stderr of this process to the given path
-   * 
+   *
    * @param dest
    *          the destination
    * @param append
@@ -298,7 +298,7 @@ public final class ExternalProcessBuilder extends
 
   /**
    * validate the stream merge
-   * 
+   *
    * @param merge
    *          the merge
    */
@@ -314,14 +314,14 @@ public final class ExternalProcessBuilder extends
       if (this.m_stderr != this.m_stdout) {
         throw new IllegalStateException(//
             "If you merge stdout and stderr, they cannot have different stream modes, but stdout has " + //$NON-NLS-1$
-                this.m_stdout + " and stderr has " //$NON-NLS-1$
-                + this.m_stderr);
+            this.m_stdout + " and stderr has " //$NON-NLS-1$
+            + this.m_stderr);
       }
       if (!(EComparison.equals(err, out))) {
         throw new IllegalStateException(//
             "If you merge stdout and stderr, they cannot have different redirects, but stdout has " + //$NON-NLS-1$
-                this.m_pb.redirectOutput() + " and stderr has " //$NON-NLS-1$
-                + this.m_pb.redirectError());
+            this.m_pb.redirectOutput() + " and stderr has " //$NON-NLS-1$
+            + this.m_pb.redirectError());
       }
     } else {
       if ((((t1 = out.type()) == Redirect.Type.APPEND) || (t1 == Redirect.Type.WRITE))
@@ -329,16 +329,16 @@ public final class ExternalProcessBuilder extends
           && EComparison.equals((f = out.file()), err.file())) {
         throw new IllegalStateException(//
             "If you do not merge stdout and stderr, they cannot be redirected to the same file " + //$NON-NLS-1$
-                t1 + " and stderr has " //$NON-NLS-1$
-                + t2 + " and both redirect to '" + //$NON-NLS-1$
-                f + '\'');
+            t1 + " and stderr has " //$NON-NLS-1$
+            + t2 + " and both redirect to '" + //$NON-NLS-1$
+            f + '\'');
       }
     }
   }
 
   /**
    * Should stdout and stderr be merged?
-   * 
+   *
    * @param merge
    *          {@code true} if stdout and stderr should be merged,
    *          {@code false} if they are separate streams
@@ -376,6 +376,7 @@ public final class ExternalProcessBuilder extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("fallthrough")
   public final ExternalProcess create() throws IOException {
     final Logger log;
     final ExternalProcess external;

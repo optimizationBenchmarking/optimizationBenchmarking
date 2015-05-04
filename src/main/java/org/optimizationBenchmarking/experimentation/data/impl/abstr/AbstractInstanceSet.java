@@ -12,14 +12,14 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * interface.
  */
 public class AbstractInstanceSet extends AbstractNamedElementSet implements
-    IInstanceSet {
+IInstanceSet {
 
   /** the owning experiment set */
   IExperimentSet m_owner;
 
   /**
    * create the abstract instance set
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -36,7 +36,7 @@ public class AbstractInstanceSet extends AbstractNamedElementSet implements
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstance}
    * .
-   * 
+   *
    * @param instance
    *          the instance to own
    */

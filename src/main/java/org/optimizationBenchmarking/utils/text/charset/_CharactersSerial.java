@@ -17,7 +17,7 @@ final class _CharactersSerial implements Serializable {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   final Object readResolve() {

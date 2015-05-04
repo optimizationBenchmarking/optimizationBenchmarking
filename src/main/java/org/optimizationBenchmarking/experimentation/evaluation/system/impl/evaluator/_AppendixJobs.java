@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEval
 final class _AppendixJobs extends _PartJob {
   /**
    * create the appendices module
-   * 
+   *
    * @param data
    *          the data
    * @param logger

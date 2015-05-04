@@ -45,7 +45,7 @@ public final class Evaluator extends ToolSuite implements IEvaluator {
 
   /**
    * Get the shared instance of the evaluator tool.
-   * 
+   *
    * @return the shared instance
    */
   public static final Evaluator getInstance() {

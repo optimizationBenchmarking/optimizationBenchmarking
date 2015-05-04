@@ -5,7 +5,7 @@ public class MathPow extends MathFunction {
 
   /**
    * Create an pow function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

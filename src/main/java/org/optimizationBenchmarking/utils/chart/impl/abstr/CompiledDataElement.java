@@ -18,7 +18,7 @@ public class CompiledDataElement extends CompiledTitledElement {
 
   /**
    * Create a data series
-   * 
+   *
    * @param id
    *          the id
    * @param title
@@ -47,7 +47,7 @@ public class CompiledDataElement extends CompiledTitledElement {
 
   /**
    * Get the color associated with this data series
-   * 
+   *
    * @return the color associated with this data element
    */
   public final Color getColor() {
@@ -56,7 +56,7 @@ public class CompiledDataElement extends CompiledTitledElement {
 
   /**
    * Get the stroke associated with this data element
-   * 
+   *
    * @return the stroke associated with this data element
    */
   public final Stroke getStroke() {
@@ -65,7 +65,7 @@ public class CompiledDataElement extends CompiledTitledElement {
 
   /**
    * Get the id of this data element
-   * 
+   *
    * @return the unique identifier of this data element
    */
   public final int getID() {

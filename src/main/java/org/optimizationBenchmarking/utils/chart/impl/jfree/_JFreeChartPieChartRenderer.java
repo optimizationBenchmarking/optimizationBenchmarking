@@ -17,12 +17,12 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * </p>
  */
 final class _JFreeChartPieChartRenderer
-    extends
-    _JFreeChartRenderer<CompiledPieChart, _JFreeChartPieDataset, PiePlot3D> {
+extends
+_JFreeChartRenderer<CompiledPieChart, _JFreeChartPieDataset, PiePlot3D> {
 
   /**
    * Create a new line chart
-   * 
+   *
    * @param chart
    *          the chart to paint
    */

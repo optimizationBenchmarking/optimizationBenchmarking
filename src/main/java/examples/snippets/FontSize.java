@@ -54,7 +54,7 @@ public final class FontSize {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          ignored
    * @throws Throwable
@@ -72,7 +72,7 @@ public final class FontSize {
     for (final int scale : new int[] { 1, 2 }) {
       for (final String fontName : new String[] { "Courier New", //$NON-NLS-1$
           "Arial", //$NON-NLS-1$
-          "Times New Roman" }) {//$NON-NLS-1$
+      "Times New Roman" }) {//$NON-NLS-1$
         System.out.println("============ " + fontName + //$NON-NLS-1$
             " ===============");//$NON-NLS-1$
         im = new BufferedImage(500, 200, BufferedImage.TYPE_INT_RGB);
@@ -86,7 +86,7 @@ public final class FontSize {
         System.out.println(lm.getHeight() + " -- " + fm.getHeight());//$NON-NLS-1$
         System.out.println(lm.getAscent() + " -- " + fm.getAscent());//$NON-NLS-1$
         System.out.println(lm.getDescent() + " -- " + fm.getDescent());//$NON-NLS-1$
-        System.out.println(lm.getLeading() + " -- " + fm.getLeading());//$NON-NLS-1$    
+        System.out.println(lm.getLeading() + " -- " + fm.getLeading());//$NON-NLS-1$
         b = fm.getStringBounds(s, g);
         System.out.println(b);
 

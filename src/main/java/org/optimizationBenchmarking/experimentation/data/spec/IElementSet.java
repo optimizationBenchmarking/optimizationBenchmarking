@@ -9,7 +9,7 @@ public interface IElementSet extends IDataElement {
 
   /**
    * Get the data elements of this data set
-   * 
+   *
    * @return the data elements of this data set
    */
   public abstract ArrayListView<?> getData();

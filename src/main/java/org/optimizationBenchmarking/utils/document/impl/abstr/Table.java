@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * The base class for tables
  */
 public class Table extends ComplexObject implements ITable,
-    Iterable<ETableCellDef> {
+Iterable<ETableCellDef> {
 
   /** the state when the caption has been created */
   private static final int STATE_CAPTION_CREATED = (DocumentElement.STATE_MAX_ELEMENT + 1);
@@ -91,7 +91,7 @@ public class Table extends ComplexObject implements ITable,
 
   /**
    * Create a table
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index
@@ -137,7 +137,7 @@ public class Table extends ComplexObject implements ITable,
 
   /**
    * Check if the table definition is OK
-   * 
+   *
    * @param def
    *          the table definition
    * @return the number of cells
@@ -155,7 +155,7 @@ public class Table extends ComplexObject implements ITable,
       if (d == null) {
         throw new IllegalArgumentException(//
             "No cell definition element can be null, but one of " + //$NON-NLS-1$
-                def + " is."); //$NON-NLS-1$
+            def + " is."); //$NON-NLS-1$
       }
       if (d != ETableCellDef.VERTICAL_SEPARATOR) {
         cells++;
@@ -164,7 +164,7 @@ public class Table extends ComplexObject implements ITable,
     if (cells <= 0) {
       throw new IllegalArgumentException(//
           "Table definition cannot be empty, i.e., must contain at least one regular cell - but " //$NON-NLS-1$
-              + Arrays.toString(def) + " does not."); //$NON-NLS-1$
+          + Arrays.toString(def) + " does not."); //$NON-NLS-1$
     }
 
     return cells;
@@ -172,7 +172,7 @@ public class Table extends ComplexObject implements ITable,
 
   /**
    * Does this table span all columns?
-   * 
+   *
    * @return {@code true} if the table spans all columns, {@code false} if
    *         it is only one column wide
    */
@@ -182,7 +182,7 @@ public class Table extends ComplexObject implements ITable,
 
   /**
    * Render the table index
-   * 
+   *
    * @param index
    *          the index to render
    * @return the table index
@@ -193,7 +193,7 @@ public class Table extends ComplexObject implements ITable,
 
   /**
    * Get the current number of rows
-   * 
+   *
    * @return the current number of rows
    */
   public final int getRowCount() {
@@ -202,7 +202,7 @@ public class Table extends ComplexObject implements ITable,
 
   /**
    * Obtain the cells per row
-   * 
+   *
    * @return the cells per row
    */
   public final int getCellsPerRow() {
@@ -223,7 +223,7 @@ public class Table extends ComplexObject implements ITable,
 
   /**
    * Get the owning section body
-   * 
+   *
    * @return the owning section body
    */
   @Override
@@ -366,7 +366,7 @@ public class Table extends ComplexObject implements ITable,
 
   /**
    * Get the cell definition
-   * 
+   *
    * @return the cell definition
    */
   @Override

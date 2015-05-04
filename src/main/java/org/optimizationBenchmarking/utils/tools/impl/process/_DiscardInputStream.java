@@ -19,7 +19,7 @@ final class _DiscardInputStream extends _WorkerThread {
 
   /**
    * create
-   * 
+   *
    * @param source
    *          the source
    * @param log

@@ -5,7 +5,7 @@ public class MathFactorial extends MathFunction {
 
   /**
    * Create a factorial function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

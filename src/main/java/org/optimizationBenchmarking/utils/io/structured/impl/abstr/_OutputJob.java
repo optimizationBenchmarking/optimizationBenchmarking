@@ -17,7 +17,7 @@ final class _OutputJob extends _IOJob {
 
   /**
    * create the _IOJob
-   * 
+   *
    * @param logger
    *          the logger
    * @param tool

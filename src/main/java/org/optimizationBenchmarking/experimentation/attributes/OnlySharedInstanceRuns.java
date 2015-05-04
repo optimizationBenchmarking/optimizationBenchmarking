@@ -27,7 +27,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * the same instances, this attribute returns the original experiment set.
  */
 public final class OnlySharedInstanceRuns extends
-    Attribute<IExperimentSet, IExperimentSet> {
+Attribute<IExperimentSet, IExperimentSet> {
 
   /**
    * The globally shared instance of the {@link OnlySharedInstanceRuns}

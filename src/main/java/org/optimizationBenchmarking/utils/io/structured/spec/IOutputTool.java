@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.io.structured.spec;
 
 /**
  * A tool for generating output
- * 
+ *
  * @param <S>
  *          the source data type
  */

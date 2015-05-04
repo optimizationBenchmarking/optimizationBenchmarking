@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 public class TableFooter extends TableSection {
   /**
    * Create a table footer
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

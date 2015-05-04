@@ -4,17 +4,17 @@ import java.util.HashMap;
 
 /**
  * The base class for everything that creates a property.
- * 
+ *
  * @param <PST>
  *          the property settings type
  */
 class _PropertyFSMSettingBuilder<PST extends _PropertySetting<?, ?>>
-    extends
-    _PropertyFSM<_PropertyFSMSettingRecord, HashMap<String, Object>, PST, _PropertyFSM<?, ?, ?, ?>> {
+extends
+_PropertyFSM<_PropertyFSMSettingRecord, HashMap<String, Object>, PST, _PropertyFSM<?, ?, ?, ?>> {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -34,7 +34,7 @@ class _PropertyFSMSettingBuilder<PST extends _PropertySetting<?, ?>>
 
   /**
    * process the default parameters
-   * 
+   *
    * @param map
    *          the map to process
    */
@@ -195,7 +195,7 @@ class _PropertyFSMSettingBuilder<PST extends _PropertySetting<?, ?>>
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   final PST _doFinalize(final HashMap<String, Object> compiled,
       final int count) {

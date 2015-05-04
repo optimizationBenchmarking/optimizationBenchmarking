@@ -12,7 +12,7 @@ final class _DelegatingPieChart extends DelegatingPieChart {
 
   /**
    * create the delegating pie chart
-   * 
+   *
    * @param graphic
    *          the graphic
    * @param chart

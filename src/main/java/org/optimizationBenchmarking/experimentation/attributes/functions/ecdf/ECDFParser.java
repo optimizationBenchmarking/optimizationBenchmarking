@@ -51,7 +51,7 @@ public final class ECDFParser extends Parser<ECDF> {
 
   /**
    * Create the parser
-   * 
+   *
    * @param dimensions
    *          the dimension set
    */
@@ -85,21 +85,21 @@ public final class ECDFParser extends Parser<ECDF> {
     if (use == null) {
       throw new IllegalArgumentException(
           "ECDF string cannot be null, empty, or just consist of white space, but '" //$NON-NLS-1$
-              + string + "' does.");//$NON-NLS-1$
+          + string + "' does.");//$NON-NLS-1$
     }
 
     commaIndex = use.indexOf(',');
     if (commaIndex <= 0) {
       throw new IllegalArgumentException(
           "ECDF string must contain a comma somewhere in the middle, but '"//$NON-NLS-1$
-              + string + "' does not.");//$NON-NLS-1$
+          + string + "' does not.");//$NON-NLS-1$
     }
 
     timeString = TextUtils.prepare(use.substring(0, commaIndex));
     if (timeString == null) {
       throw new IllegalArgumentException(
-          "ECDF time dimension string cannot be null, empty, or just consist of white space, but '" //$NON-NLS-1$          
-              + string + "' has such a string.");//$NON-NLS-1$
+          "ECDF time dimension string cannot be null, empty, or just consist of white space, but '" //$NON-NLS-1$
+          + string + "' has such a string.");//$NON-NLS-1$
     }
 
     transform = null;
@@ -107,7 +107,7 @@ public final class ECDFParser extends Parser<ECDF> {
     if (timeDim == null) {
       spaceIndex = timeString.indexOf(' ');
       if (spaceIndex <= 0) {
-        throw new IllegalArgumentException("ECDF time string '" //$NON-NLS-1$          
+        throw new IllegalArgumentException("ECDF time string '" //$NON-NLS-1$
             + string + "' does not match to any dimension.");//$NON-NLS-1$
       }
 
@@ -116,13 +116,13 @@ public final class ECDFParser extends Parser<ECDF> {
       timeString = TextUtils.prepare(timeString.substring(spaceIndex + 1));
       if (timeString == null) {
         throw new IllegalArgumentException(
-            "ECDF time dimension string cannot be null, empty, or just consist of white space, but '" //$NON-NLS-1$          
-                + string + "' has such a string.");//$NON-NLS-1$
+            "ECDF time dimension string cannot be null, empty, or just consist of white space, but '" //$NON-NLS-1$
+            + string + "' has such a string.");//$NON-NLS-1$
       }
 
       timeDim = this.m_dimensions.find(timeString);
       if (timeDim == null) {
-        throw new IllegalArgumentException("ECDF time string '" //$NON-NLS-1$          
+        throw new IllegalArgumentException("ECDF time string '" //$NON-NLS-1$
             + string + "' does not match to any dimension.");//$NON-NLS-1$
       }
       if (transformString != null) {
@@ -130,18 +130,18 @@ public final class ECDFParser extends Parser<ECDF> {
             transformString);
         if (transform == null) {
           throw new IllegalArgumentException(((((//
-              "Invalid transformation string for ECDF: '" //$NON-NLS-1$      
+              "Invalid transformation string for ECDF: '" //$NON-NLS-1$
               + transformString) + //
-              "' in definition '") //$NON-NLS-1$      
+              "' in definition '") //$NON-NLS-1$
               + string) + '\'') + '.');
         }
         if (!(transform instanceof UnaryFunction)) {
           throw new IllegalArgumentException((((//
-              "Invalid transformation string for ECDF: '" //$NON-NLS-1$      
+              "Invalid transformation string for ECDF: '" //$NON-NLS-1$
               + transformString) + //
-              "' in definition '") //$NON-NLS-1$      
+              "' in definition '") //$NON-NLS-1$
               + string)
-              + "' is not a unary function.");//$NON-NLS-1$      
+              + "' is not a unary function.");//$NON-NLS-1$
         }
       }
     }
@@ -150,14 +150,14 @@ public final class ECDFParser extends Parser<ECDF> {
     if (spaceIndex <= commaIndex) {
       throw new IllegalArgumentException(//
           "Goal string of ECDF definition must contain a space, but in '"//$NON-NLS-1$
-              + string + "' this is not the case.");//$NON-NLS-1$
+          + string + "' this is not the case.");//$NON-NLS-1$
     }
     goalString = TextUtils.prepare(use.substring((commaIndex + 1),
         spaceIndex));
     if (goalString == null) {
       throw new IllegalArgumentException(//
           "Goal string of ECDF definition must not be null, empty, or just contain white space, but in '"//$NON-NLS-1$
-              + string + "' this is the case.");//$NON-NLS-1$
+          + string + "' this is the case.");//$NON-NLS-1$
     }
     goalDim = this.m_dimensions.find(goalString);
     if (goalDim == null) {
@@ -173,7 +173,7 @@ public final class ECDFParser extends Parser<ECDF> {
     if (goalString == null) {
       throw new IllegalArgumentException(//
           "Goal value string of ECDF definition must not be null, empty, or just contain white space, but in '"//$NON-NLS-1$
-              + string + "' this is the case.");//$NON-NLS-1$
+          + string + "' this is the case.");//$NON-NLS-1$
     }
 
     goalValue = AnyNumberParser.INSTANCE.parseString(goalString);

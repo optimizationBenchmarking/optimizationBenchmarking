@@ -10,7 +10,7 @@ public interface IRun extends IElementSet, IMatrix {
 
   /**
    * Get the owning instance runs set.
-   * 
+   *
    * @return the owning instance runs set.
    */
   @Override
@@ -18,7 +18,7 @@ public interface IRun extends IElementSet, IMatrix {
 
   /**
    * Get the data points of this run
-   * 
+   *
    * @return the data points of this run
    */
   @Override
@@ -46,7 +46,7 @@ public interface IRun extends IElementSet, IMatrix {
    * If either case, if there are any data points with value {@code value}
    * in dimension/column {@code column} in this run, then the
    * first/earliest one of them will be returned.
-   * 
+   *
    * @param column
    *          the column
    * @param value
@@ -74,7 +74,7 @@ public interface IRun extends IElementSet, IMatrix {
    * {@code column} ). If no such point exists, i.e., if all points in this
    * run happen after the time {@code value}, return {@code null}.</li>
    * </ul>
-   * 
+   *
    * @param column
    *          the column
    * @param value

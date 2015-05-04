@@ -29,7 +29,7 @@ import org.optimizationBenchmarking.utils.text.transformations.NormalCharTransfo
 
 /** A builder for font styles */
 public final class FontStyleBuilder extends
-    PaletteElementBuilder<FontStyle> {
+PaletteElementBuilder<FontStyle> {
 
   /** the font attributes */
   private static final HashMap<TextAttribute, Object> FONT_ATTRIBUTES;
@@ -76,7 +76,7 @@ public final class FontStyleBuilder extends
 
   /**
    * A builder for font styles
-   * 
+   *
    * @param owner
    *          the owning style builder
    * @param choice
@@ -97,7 +97,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Check whether a font family is acceptable
-   * 
+   *
    * @param family
    *          the font family
    */
@@ -110,7 +110,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Set the font family
-   * 
+   *
    * @param family
    *          the font family
    */
@@ -122,7 +122,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Get the font family
-   * 
+   *
    * @return the font family
    */
   public final EFontFamily getFamily() {
@@ -131,7 +131,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Set whether this font should be italic
-   * 
+   *
    * @param italic
    *          {@code true} if this font is italic
    */
@@ -142,7 +142,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Is this font italic?
-   * 
+   *
    * @return {@code true} for italic fonts, {@code false} for normal ones
    */
   public final boolean isItalic() {
@@ -151,7 +151,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Set whether this font should be bold
-   * 
+   *
    * @param bold
    *          {@code true} if this font is bold
    */
@@ -162,7 +162,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Is this font bold?
-   * 
+   *
    * @return {@code true} for bold fonts, {@code false} for normal ones
    */
   public final boolean isBold() {
@@ -171,7 +171,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Set whether this font should be underlined
-   * 
+   *
    * @param underlined
    *          {@code true} if this font is underlined
    */
@@ -182,7 +182,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Is this font underlined?
-   * 
+   *
    * @return {@code true} for underlined fonts, {@code false} for normal
    *         ones
    */
@@ -192,7 +192,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Check the size of font
-   * 
+   *
    * @param size
    *          the size to check
    */
@@ -210,7 +210,7 @@ public final class FontStyleBuilder extends
   /**
    * Set the size of this font style in
    * {@link org.optimizationBenchmarking.utils.math.units.ELength#POINT pt}
-   * 
+   *
    * @param size
    *          the size of this font style in
    *          {@link org.optimizationBenchmarking.utils.math.units.ELength#POINT
@@ -225,7 +225,7 @@ public final class FontStyleBuilder extends
   /**
    * Get the size of this font in
    * {@link org.optimizationBenchmarking.utils.math.units.ELength#POINT pt}
-   * 
+   *
    * @return the size of this font in
    *         {@link org.optimizationBenchmarking.utils.math.units.ELength#POINT
    *         pt}
@@ -243,7 +243,7 @@ public final class FontStyleBuilder extends
    * other choices added with {@link #addFaceChoice(String)} are added
    * behind it. The last face choice will be the {@link #getFamily() font
    * family}.
-   * 
+   *
    * @param name
    *          the face choice name
    * @return {@code true} if the face choice was new and addable,
@@ -263,7 +263,7 @@ public final class FontStyleBuilder extends
    * other choices added with {@link #addFaceChoice(String)} are added
    * behind it. The last face choice will be the {@link #getFamily() font
    * family}.
-   * 
+   *
    * @param name
    *          the face choice name
    * @param resource
@@ -285,7 +285,7 @@ public final class FontStyleBuilder extends
   /**
    * Add several face choices at once, as specified in
    * {@link #addFaceChoice(String)}
-   * 
+   *
    * @param choices
    *          the choices
    * @return {@code true} if at least one new choice was added
@@ -306,7 +306,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Copy the contents of a given font style into this style builder
-   * 
+   *
    * @param base
    *          the font style to copy
    */
@@ -325,7 +325,7 @@ public final class FontStyleBuilder extends
    * font families are allowed, logical font families are forbidden. They
    * are only the last resort during the {@linkplain #compile() compilation
    * process}.
-   * 
+   *
    * @param name
    *          the name
    * @return {@code true} if the font name is allowed, {@code false}
@@ -357,7 +357,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Does a font fit to a given name choice?
-   * 
+   *
    * @param font
    *          the font
    * @param name
@@ -376,8 +376,8 @@ public final class FontStyleBuilder extends
       if (fontNameLength >= nameLength) {
 
         shorter = ((fontNameLength > nameLength)//
-        ? fontName.substring(0, nameLength)//
-            : fontName);
+            ? fontName.substring(0, nameLength)//
+                : fontName);
         if (shorter.equalsIgnoreCase(name)) {
           return true;
         }
@@ -388,8 +388,8 @@ public final class FontStyleBuilder extends
         fontNameLength = fontName.length();
         if (fontNameLength >= nameLength) {
           shorter = ((fontNameLength > nameLength)//
-          ? fontName.substring(0, nameLength)//
-              : fontName);
+              ? fontName.substring(0, nameLength)//
+                  : fontName);
           if (shorter.equalsIgnoreCase(name)) {
             return true;
           }
@@ -400,8 +400,8 @@ public final class FontStyleBuilder extends
           fontNameLength = fontName.length();
           if (fontNameLength >= nameLength) {
             shorter = ((fontNameLength > nameLength)//
-            ? fontName.substring(0, nameLength)//
-                : fontName);
+                ? fontName.substring(0, nameLength)//
+                    : fontName);
             if (shorter.equalsIgnoreCase(name)) {
               return true;
             }
@@ -415,7 +415,7 @@ public final class FontStyleBuilder extends
 
   /**
    * Add a face choice to the set of choices
-   * 
+   *
    * @param choices
    *          the set of face choice
    * @param choice
@@ -435,7 +435,7 @@ public final class FontStyleBuilder extends
    * the logical aspects of the font style to a physical one, i.e., a font
    * family to a font. The list of face choices is subsequently updated to
    * represent the actual physical choice.
-   * 
+   *
    * @return the font style
    */
   @SuppressWarnings({ "rawtypes", "unchecked", "resource" })
@@ -506,12 +506,12 @@ public final class FontStyleBuilder extends
                   if (font != null) {
                     try {
                       GraphicsEnvironment.getLocalGraphicsEnvironment()
-                          .registerFont(font);
+                      .registerFont(font);
                     } catch (final Throwable ignore) {
                       ErrorUtils.logError(Configuration.getGlobalLogger(),
-                          "Ignorable error during the attempt to register font '"//$NON-NLS-1$ 
-                              + font + //
-                              "' with the local graphics environment.", //$NON-NLS-1$
+                          "Ignorable error during the attempt to register font '"//$NON-NLS-1$
+                          + font + //
+                          "' with the local graphics environment.", //$NON-NLS-1$
                           ignore, false, RethrowMode.DONT_RETHROW);
                     }
                     if (FontStyleBuilder
@@ -530,10 +530,10 @@ public final class FontStyleBuilder extends
           }
         } catch (final Throwable error) {
           ErrorUtils
-              .logError(
-                  Configuration.getGlobalLogger(),
-                  "Strange but ignorable error during the creation of a font style detected.", //$NON-NLS-1$
-                  error, true, RethrowMode.DONT_RETHROW);
+          .logError(
+              Configuration.getGlobalLogger(),
+              "Strange but ignorable error during the creation of a font style detected.", //$NON-NLS-1$
+              error, true, RethrowMode.DONT_RETHROW);
         }
       }
 

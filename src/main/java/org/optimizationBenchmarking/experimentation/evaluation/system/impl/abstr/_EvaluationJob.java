@@ -15,12 +15,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * The base class for evaluation jobs.
- * 
+ *
  * @param <DT>
  *          the data type
  */
 public abstract class _EvaluationJob<DT extends IElementSet> implements
-    IEvaluationJob, ITextable {
+IEvaluationJob, ITextable {
 
   /** the initial state */
   private static final int STATE_NOTHING = 0;
@@ -57,21 +57,21 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
 
   /** the state names */
   private static final char[][] STATE_NAMES = {
-      { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'o', 'n', 's', 't', 'r', 'u',
-          'c', 't', 'i', 'o', 'n', },
+    { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'o', 'n', 's', 't', 'r', 'u',
+      'c', 't', 'i', 'o', 'n', },
       { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
-          'g', ' ', 'd', 'o', 'I', 'n', 'i', 't', 'i', 'a', 'l', 'i', 'z',
-          'e', },
-      { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
+        'g', ' ', 'd', 'o', 'I', 'n', 'i', 't', 'i', 'a', 'l', 'i', 'z',
+        'e', },
+        { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
           ' ', 'd', 'o', 'I', 'n', 'i', 't', 'i', 'a', 'l', 'i', 'z', 'e', },
-      { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
-          'g', ' ', 'd', 'o', 'S', 'u', 'm', 'm', 'a', 'r', 'y', },
-      { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
-          ' ', 'd', 'o', 'S', 'u', 'm', 'm', 'a', 'r', 'y', },
-      { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
-          'g', ' ', 'd', 'o', 'M', 'a', 'i', 'n', },
-      { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
-          ' ', 'd', 'o', 'M', 'a', 'i', 'n', }, };
+          { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
+            'g', ' ', 'd', 'o', 'S', 'u', 'm', 'm', 'a', 'r', 'y', },
+            { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
+              ' ', 'd', 'o', 'S', 'u', 'm', 'm', 'a', 'r', 'y', },
+              { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
+                'g', ' ', 'd', 'o', 'M', 'a', 'i', 'n', },
+                { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
+                  ' ', 'd', 'o', 'M', 'a', 'i', 'n', }, };
 
   /** the data */
   private DT m_data;
@@ -84,7 +84,7 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
 
   /**
    * Create the evaluation job
-   * 
+   *
    * @param data
    *          the data
    * @param logger
@@ -101,7 +101,7 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
 
   /**
    * Check the data and find whether it is OK or not
-   * 
+   *
    * @param caller
    *          the caller
    * @param data
@@ -113,32 +113,32 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
     if (data == null) {
       throw new IllegalArgumentException(//
           TextUtils.className(caller.getClass()) + //
-              " cannot accept null as input data."); //$NON-NLS-1$
+          " cannot accept null as input data."); //$NON-NLS-1$
     }
 
     list = data.getData();
     if (list == null) {
       throw new IllegalArgumentException(//
           "The getData() method of the "//$NON-NLS-1$
-              + TextUtils.className(data.getClass()) + //
-              " provided as input to the " //$NON-NLS-1$
-              + TextUtils.className(caller.getClass()) + //
-              " returned null.");//$NON-NLS-1$
+          + TextUtils.className(data.getClass()) + //
+          " provided as input to the " //$NON-NLS-1$
+          + TextUtils.className(caller.getClass()) + //
+          " returned null.");//$NON-NLS-1$
     }
 
     if (list.isEmpty()) {
       throw new IllegalArgumentException(//
           "The getData() method of the "//$NON-NLS-1$
-              + TextUtils.className(data.getClass()) + //
-              " provided as input to the " //$NON-NLS-1$
-              + TextUtils.className(caller.getClass()) + //
-              " returned an empty set.");//$NON-NLS-1$
+          + TextUtils.className(data.getClass()) + //
+          " provided as input to the " //$NON-NLS-1$
+          + TextUtils.className(caller.getClass()) + //
+          " returned an empty set.");//$NON-NLS-1$
     }
   }
 
   /**
    * step the state
-   * 
+   *
    * @param expected
    *          the expected state
    * @param next
@@ -164,7 +164,7 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
 
   /**
    * Perform the initialization. This may involve, e.g., allocating labels.
-   * 
+   *
    * @param data
    *          the data to process
    * @param document
@@ -193,7 +193,7 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
 
   /**
    * Write the summary text, if any.
-   * 
+   *
    * @param data
    *          the data to process
    * @param summary
@@ -222,7 +222,7 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
 
   /**
    * Generate the main section.
-   * 
+   *
    * @param data
    *          the data to process
    * @param sectionContainer

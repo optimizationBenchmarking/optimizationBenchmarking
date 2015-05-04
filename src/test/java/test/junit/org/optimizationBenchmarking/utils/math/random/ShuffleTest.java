@@ -335,7 +335,7 @@ public class ShuffleTest {
                   }
                   testIndex = ((((testIndex + arrayLength) % arrayLength) + arrayLength) % arrayLength);
                   Assert
-                      .assertEquals(arrayA[testIndex], arrayB[testIndex]);
+                  .assertEquals(arrayA[testIndex], arrayB[testIndex]);
                 }
               }
             }

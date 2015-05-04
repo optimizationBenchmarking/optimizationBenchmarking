@@ -27,21 +27,21 @@ abstract class _LaTeXToolChainComponent {
 
   /**
    * what kind of file does this component produce?
-   * 
+   *
    * @return the kind of file that the component produces
    */
   abstract ELaTeXFileType _produces();
 
   /**
    * Can this component be used?
-   * 
+   *
    * @return {@code true} if and only if the component can be used
    */
   abstract boolean _canUse();
 
   /**
    * use this component
-   * 
+   *
    * @param job
    *          the main job
    * @throws IOException
@@ -51,7 +51,7 @@ abstract class _LaTeXToolChainComponent {
 
   /**
    * require a path from the job
-   * 
+   *
    * @param job
    *          the job
    * @param type
@@ -109,7 +109,7 @@ abstract class _LaTeXToolChainComponent {
 
   /**
    * Check whether two file types equal
-   * 
+   *
    * @param type1
    *          the first type
    * @param type2
@@ -142,7 +142,7 @@ abstract class _LaTeXToolChainComponent {
 
   /**
    * Try to find the command line arguments of a given process.
-   * 
+   *
    * @param executable
    *          the executable
    * @param helpOption
@@ -156,7 +156,7 @@ abstract class _LaTeXToolChainComponent {
    */
   static final String[] _getArgs(final Path executable,
       final String helpOption, final String... patterns)
-      throws IOException {
+          throws IOException {
     final ExternalProcessBuilder builder;
     final String[] retval;
     String pattern;
@@ -220,7 +220,7 @@ abstract class _LaTeXToolChainComponent {
 
       ret = ep.waitFor();
       if (ret != 0) {
-        throw new IOException("Binary '" + //$NON-NLS-1$ 
+        throw new IOException("Binary '" + //$NON-NLS-1$
             executable + "' returned " + ret + //$NON-NLS-1$
             " when asked for '" + helpOption + //$NON-NLS-1$
             '\'' + '.');

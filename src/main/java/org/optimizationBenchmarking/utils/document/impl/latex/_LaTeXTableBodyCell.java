@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 final class _LaTeXTableBodyCell extends TableBodyCell {
   /**
    * Create a body cell of a table
-   * 
+   *
    * @param owner
    *          the owning row
    * @param cols

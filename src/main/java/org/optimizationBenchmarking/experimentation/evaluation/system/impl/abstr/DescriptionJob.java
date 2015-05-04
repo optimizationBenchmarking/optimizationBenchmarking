@@ -10,10 +10,10 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
  * .
  */
 public abstract class DescriptionJob extends
-    _EvaluationJob<IExperimentSet> {
+_EvaluationJob<IExperimentSet> {
   /**
    * Create the description evaluation job
-   * 
+   *
    * @param data
    *          the data
    * @param logger

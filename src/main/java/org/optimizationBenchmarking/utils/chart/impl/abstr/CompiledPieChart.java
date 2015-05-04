@@ -13,7 +13,7 @@ public class CompiledPieChart extends CompiledChart {
 
   /**
    * Create a titled element
-   * 
+   *
    * @param title
    *          the title, or {@code null} if no title is specified
    * @param titleFont
@@ -38,7 +38,7 @@ public class CompiledPieChart extends CompiledChart {
 
   /**
    * Get the slices
-   * 
+   *
    * @return the slices
    */
   public final ArrayListView<CompiledDataScalar> getSlices() {

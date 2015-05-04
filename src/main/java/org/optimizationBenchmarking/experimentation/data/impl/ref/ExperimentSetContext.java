@@ -111,7 +111,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger to use, or {@code null} if none is required
    */
@@ -149,7 +149,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * Get the logger
-   * 
+   *
    * @return the logger
    */
   public final Logger getLogger() {
@@ -170,7 +170,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * Create the dimension set.
-   * 
+   *
    * @return the dimension set context
    */
   private synchronized final _DimensionSetContext __getDimensionSetContext() {
@@ -184,7 +184,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * Create the dimension context
-   * 
+   *
    * @return the dimension context
    */
   public final DimensionContext createDimension() {
@@ -204,7 +204,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * Create the instance set.
-   * 
+   *
    * @return the instance set context
    */
   private synchronized final _InstanceSetContext __getInstanceSetContext() {
@@ -220,7 +220,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * Define an instance feature with a given name and description
-   * 
+   *
    * @param name
    *          the feature name
    * @param desc
@@ -232,7 +232,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * Create the instance context
-   * 
+   *
    * @return the instance context
    */
   public final InstanceContext createInstance() {
@@ -252,7 +252,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * Create the experiment set.
-   * 
+   *
    * @return the experiment set context
    */
   private synchronized final _ExperimentSetContext __getExperimentSetContext() {
@@ -268,7 +268,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * Define a parameter with a given name and description
-   * 
+   *
    * @param name
    *          the parameter name
    * @param desc
@@ -280,7 +280,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * Create the experiment context
-   * 
+   *
    * @return the experiment context
    */
   public final ExperimentContext createExperiment() {
@@ -359,7 +359,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
    * the {@link #createDimension() dimension set creation} has been
    * completed and will throw a {@link java.lang.IllegalStateException}
    * before that.
-   * 
+   *
    * @return the created dimension set
    */
   public synchronized final DimensionSet getDimensionSet() {
@@ -373,7 +373,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
    * Obtain the created instance set. This method is only available after
    * the {@link #createInstance() instance set creation} has been completed
    * and will throw a {@link java.lang.IllegalStateException} before that.
-   * 
+   *
    * @return the created instance set
    */
   public synchronized final InstanceSet getInstanceSet() {
@@ -387,7 +387,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
    * Obtain the created feature set. This method is only available after
    * the {@link #createInstance() instance set creation} has been completed
    * and will throw a {@link java.lang.IllegalStateException} before that.
-   * 
+   *
    * @return the created feature set
    */
   public synchronized final FeatureSet getFeatureSet() {
@@ -399,7 +399,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
 
   /**
    * Obtain the created experiment set
-   * 
+   *
    * @return the created experiment set
    */
   public synchronized final ExperimentSet create() {
@@ -416,7 +416,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
     if (es == null) {
       throw new IllegalStateException(//
           TextUtils.className(ExperimentSet.class) + //
-              " instance cannot be null, but strangely is?!"); //$NON-NLS-1$
+          " instance cannot be null, but strangely is?!"); //$NON-NLS-1$
     }
 
     return es;

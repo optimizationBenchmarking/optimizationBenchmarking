@@ -8,11 +8,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXMathNAryFunction extends MathNAryFunction {
   /** the begin n-ary */
   private static final char[] N_ARY_BEGIN = { '{', '\\', 'm', 'a', 't',
-      'h', 'r', 'm', '{', };
+    'h', 'r', 'm', '{', };
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    * @param name
@@ -44,7 +44,7 @@ final class _LaTeXMathNAryFunction extends MathNAryFunction {
     if (needsBraces) {
       braceIndex = this.getBraceIndex();
       out.append(_LaTeXMathInBraces.BRACE_BEGIN[braceIndex
-          % _LaTeXMathInBraces.BRACE_BEGIN.length]);
+                                                % _LaTeXMathInBraces.BRACE_BEGIN.length]);
     } else {
       out.append('\\');
       out.append(',');
@@ -63,7 +63,7 @@ final class _LaTeXMathNAryFunction extends MathNAryFunction {
 
     if (needsBraces) {
       out.append(_LaTeXMathInBraces.BRACE_END[braceIndex
-          % _LaTeXMathInBraces.BRACE_END.length]);
+                                              % _LaTeXMathInBraces.BRACE_END.length]);
     }
 
     out.append('}');

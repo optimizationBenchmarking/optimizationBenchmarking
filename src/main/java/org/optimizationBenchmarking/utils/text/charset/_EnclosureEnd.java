@@ -2,14 +2,14 @@ package org.optimizationBenchmarking.utils.text.charset;
 
 /**
  * the internal base class for enclosures
- * 
+ *
  * @param <OT>
  *          the owning enumeration
  * @param <T>
  *          the other end type
  */
 abstract class _EnclosureEnd<OT extends _Enclosure<T>, T extends _EnclosureEnd<OT, T>>
-    extends EnclosureEnd {
+extends EnclosureEnd {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ abstract class _EnclosureEnd<OT extends _Enclosure<T>, T extends _EnclosureEnd<O
 
   /**
    * create
-   * 
+   *
    * @param chr
    *          the character
    * @param isOpening

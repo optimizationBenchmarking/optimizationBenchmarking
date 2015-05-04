@@ -10,11 +10,11 @@ import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
  * attribute-based computations to that feature value.
  */
 public class ShadowFeatureValue extends
-    _ShadowPropertyValue<IFeature, IFeatureValue> implements IFeatureValue {
+_ShadowPropertyValue<IFeature, IFeatureValue> implements IFeatureValue {
 
   /**
    * create the shadow feature value
-   * 
+   *
    * @param owner
    *          the owning feature
    * @param shadow

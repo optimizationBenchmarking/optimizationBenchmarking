@@ -32,32 +32,32 @@ public final class RandomBibliography extends BibliographyExample {
 
   /** the character ranges */
   private static final char[][] RANGES = { //
-  { '\u03a0', '\u03f3' },//
-      { '\u0410', '\u044f' },//
-      { '\u0531', '\u0556' },//
-      { '\u05d0', '\u05ea' },//
-      { '\u0621', '\u064a' },//
-      { '\u0905', '\u0939' },//
-      { '\u0985', '\u09b9' },//
-      { '\u0a05', '\u0a39' },//
-      { '\u0a85', '\u0ab9' },//
-      { '\u0b05', '\u0b39' },//
-      { '\u0b85', '\u0bb9' },//
-      { '\u0c05', '\u0c39' },//
-      { '\u0c85', '\u0cb9' },//
-      { '\u0d05', '\u0d39' },//
-      { '\u0e01', '\u0e2e' },//
-      { '\u0e81', '\u0eae' },//
-      { '\u0f40', '\u0f69' },//
-      { '\u10a0', '\u10f6' },//
-      { '\uac00', '\ud768' },//
-      { '\u3041', '\u3357' },//
-      { '\u4e00', '\u9fa5' },//
+    { '\u03a0', '\u03f3' },//
+    { '\u0410', '\u044f' },//
+    { '\u0531', '\u0556' },//
+    { '\u05d0', '\u05ea' },//
+    { '\u0621', '\u064a' },//
+    { '\u0905', '\u0939' },//
+    { '\u0985', '\u09b9' },//
+    { '\u0a05', '\u0a39' },//
+    { '\u0a85', '\u0ab9' },//
+    { '\u0b05', '\u0b39' },//
+    { '\u0b85', '\u0bb9' },//
+    { '\u0c05', '\u0c39' },//
+    { '\u0c85', '\u0cb9' },//
+    { '\u0d05', '\u0d39' },//
+    { '\u0e01', '\u0e2e' },//
+    { '\u0e81', '\u0eae' },//
+    { '\u0f40', '\u0f69' },//
+    { '\u10a0', '\u10f6' },//
+    { '\uac00', '\ud768' },//
+    { '\u3041', '\u3357' },//
+    { '\u4e00', '\u9fa5' },//
   };
 
   /**
    * create my bibliography
-   * 
+   *
    * @return the bibliography
    */
   @Override
@@ -95,40 +95,44 @@ public final class RandomBibliography extends BibliographyExample {
               this.__randomBook(trb, this.m_rand.nextBoolean(),
                   Integer.MAX_VALUE);
             }
+            break;
           }
 
           case 4: {
             try (final BibInCollectionBuilder trb = bb.inCollection()) {
               this.__randomInBook(trb);
             }
+            break;
           }
 
           case 5: {
             try (final BibArticleBuilder trb = bb.article()) {
               this.__randomArticle(trb);
             }
+            break;
           }
 
           case 6: {
             try (final BibThesisBuilder trb = bb.thesis()) {
               this.__randomThesis(trb);
             }
+            break;
           }
 
           case 7: {
             try (final BibWebsiteBuilder trb = bb.website()) {
               this.__randomWeb(trb);
             }
+            break;
           }
 
           default: {
             try (final BibProceedingsBuilder proc = bb.proceedings()) {
               this.__randomProc(proc);
             }
+            break;
           }
-
         }
-
       } while (((k++) < 5) || (this.m_rand.nextInt(11) > 0));
 
       return bb.getResult();
@@ -137,7 +141,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random name
-   * 
+   *
    * @param first
    *          is it a fist name?
    * @return the random name
@@ -330,7 +334,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * can we use the given character?
-   * 
+   *
    * @param ch
    *          the character
    * @return the normalized character if yes, 0 if no
@@ -382,7 +386,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random original spelling
-   * 
+   *
    * @return the random spelling
    */
   private final String __randomOriginalSpelling() {
@@ -393,7 +397,7 @@ public final class RandomBibliography extends BibliographyExample {
 
     r = this.m_rand;
     range = RandomBibliography.RANGES[r
-        .nextInt(RandomBibliography.RANGES.length)];
+                                      .nextInt(RandomBibliography.RANGES.length)];
     sb = new StringBuilder();
 
     prev = 0;
@@ -423,7 +427,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random title
-   * 
+   *
    * @return the random title
    */
   private final String __randomTitle() {
@@ -609,7 +613,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random address
-   * 
+   *
    * @return the random address
    */
   private final String __randomAddress() {
@@ -771,7 +775,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * make a random organization
-   * 
+   *
    * @param needsInstitute
    *          do we need an institute
    * @param o
@@ -790,7 +794,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random institute name
-   * 
+   *
    * @return the random institute name
    */
   private final String __randomInstituteName() {
@@ -894,7 +898,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random date
-   * 
+   *
    * @return the date
    */
   private final long __randomDate() {
@@ -908,7 +912,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random url
-   * 
+   *
    * @return the url
    */
   private final String __randomURL() {
@@ -985,7 +989,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random isbn
-   * 
+   *
    * @return the random isbn
    */
   private final String __randomISBN() {
@@ -1018,7 +1022,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random issn
-   * 
+   *
    * @return the random issn
    */
   private final String __randomISSN() {
@@ -1044,7 +1048,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random doi
-   * 
+   *
    * @return the random doi
    */
   private final String __randomDoi() {
@@ -1089,7 +1093,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random proceedings name
-   * 
+   *
    * @return the random proceedings name
    */
   private final String __randomProceedingsName() {
@@ -1106,7 +1110,7 @@ public final class RandomBibliography extends BibliographyExample {
       case 1: {
         sb.append("Revised and Selected Papers of the ");break;} //$NON-NLS-1$
       default: {
-        sb.append("Selected Papers from the ");break;} //$NON-NLS-1$      
+        sb.append("Selected Papers from the ");break;} //$NON-NLS-1$
     }
 
     switch (r.nextInt(6)) {
@@ -1151,11 +1155,11 @@ public final class RandomBibliography extends BibliographyExample {
       case 5: {
         sb.append("Australian ");break;} //$NON-NLS-1$
       case 6: {
-        sb.append("Japanese ");break;} //$NON-NLS-1$    
+        sb.append("Japanese ");break;} //$NON-NLS-1$
       case 7: {
-        sb.append("Joint ");break;} //$NON-NLS-1$   
+        sb.append("Joint ");break;} //$NON-NLS-1$
       default: {
-        sb.append("European ");break;} //$NON-NLS-1$      
+        sb.append("European ");break;} //$NON-NLS-1$
     }
 
     switch (r.nextInt(5)) {
@@ -1168,7 +1172,7 @@ public final class RandomBibliography extends BibliographyExample {
       case 3: {
         sb.append("Symposium on ");break;} //$NON-NLS-1$
       default: {
-        sb.append("Multi-Conference on ");break;} //$NON-NLS-1$            
+        sb.append("Multi-Conference on ");break;} //$NON-NLS-1$
     }
     switch (r.nextInt(14)) {
       case 0: {
@@ -1237,7 +1241,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random book name
-   * 
+   *
    * @return the random book name
    */
   private final String __randomBookName() {
@@ -1327,7 +1331,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random journal name
-   * 
+   *
    * @return the random journal name
    */
   private final String __randomJournalName() {
@@ -1421,7 +1425,7 @@ public final class RandomBibliography extends BibliographyExample {
         case 2: {
           sb.append(" News");break;} //$NON-NLS-1$
         default: {
-          sb.append(" Periodical");break;} //$NON-NLS-1$        
+          sb.append(" Periodical");break;} //$NON-NLS-1$
       }
     }
 
@@ -1430,7 +1434,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * random authors
-   * 
+   *
    * @param abs
    *          the authors builder
    * @param max
@@ -1456,7 +1460,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * Generate a random series
-   * 
+   *
    * @return the random series
    */
   private final String __randomSeries() {
@@ -1480,7 +1484,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * make tech report
-   * 
+   *
    * @param trb
    *          the builder
    */
@@ -1507,7 +1511,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * make website
-   * 
+   *
    * @param trb
    *          the builder
    */
@@ -1529,7 +1533,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * make conference paper
-   * 
+   *
    * @param ip
    *          the builder
    */
@@ -1563,7 +1567,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * make an article
-   * 
+   *
    * @param ip
    *          the builder
    */
@@ -1607,7 +1611,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * make a book chapter
-   * 
+   *
    * @param col
    *          the builder
    */
@@ -1641,7 +1645,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * make proceedings report
-   * 
+   *
    * @param proc
    *          the builder
    */
@@ -1693,7 +1697,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * make thesis
-   * 
+   *
    * @param thesis
    *          the builder
    */
@@ -1712,7 +1716,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * make book report
-   * 
+   *
    * @param book
    *          the builder
    * @param authors
@@ -1770,7 +1774,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * the constructor
-   * 
+   *
    * @param rand
    *          the randomizer
    */
@@ -1781,7 +1785,7 @@ public final class RandomBibliography extends BibliographyExample {
 
   /**
    * The main routine, printing my bibliography
-   * 
+   *
    * @param args
    *          the command line arguments: ignored
    */

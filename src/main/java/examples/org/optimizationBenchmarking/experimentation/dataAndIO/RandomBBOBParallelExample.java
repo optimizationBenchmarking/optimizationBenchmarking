@@ -13,7 +13,7 @@ public final class RandomBBOBParallelExample extends RandomParallelExample {
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger, or {@code null} to use the global logger
    */
@@ -37,7 +37,7 @@ public final class RandomBBOBParallelExample extends RandomParallelExample {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          the command line arguments
    */

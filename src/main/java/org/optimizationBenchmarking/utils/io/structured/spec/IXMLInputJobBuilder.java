@@ -15,7 +15,7 @@ import org.xml.sax.InputSource;
 
 /**
  * A xml input job builder.
- * 
+ *
  * @param <D>
  *          the data type which can be stored
  */
@@ -144,7 +144,7 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
 
   /**
    * Add an input source
-   * 
+   *
    * @param source
    *          the input source
    * @return this builder

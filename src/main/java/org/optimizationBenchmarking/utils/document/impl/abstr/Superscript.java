@@ -5,7 +5,7 @@ public class Superscript extends PlainText {
 
   /**
    * Create a super-script text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

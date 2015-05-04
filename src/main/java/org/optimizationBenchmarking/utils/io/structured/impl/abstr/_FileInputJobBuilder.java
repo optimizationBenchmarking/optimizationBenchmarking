@@ -15,14 +15,14 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IFileInputJobBuilde
 
 /**
  * The class for building file input jobs
- * 
+ *
  * @param <DT>
  *          the source data type
  * @param <JBT>
  *          the job builder type
  */
 class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
-    extends _IOJobBuilder<JBT> implements IFileInputJobBuilder<DT> {
+extends _IOJobBuilder<JBT> implements IFileInputJobBuilder<DT> {
 
   /** the destination */
   DT m_dest;
@@ -32,7 +32,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
 
   /**
    * create the job builder
-   * 
+   *
    * @param tool
    *          the owning tool
    */
@@ -92,7 +92,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
 
   /**
    * validate the destination data
-   * 
+   *
    * @param destination
    *          the destination data
    */
@@ -293,7 +293,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
   /**
    * Add a stream to read from. The stream may or may not be closed upon
    * termination.
-   * 
+   *
    * @param stream
    *          the stream to read the input from
    * @param encoding
@@ -316,7 +316,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
 
   /**
    * Add an input resource
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -344,7 +344,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
 
   /**
    * Add an input resource
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -372,7 +372,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
 
   /**
    * Add a URI to read from.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @param encoding
@@ -394,7 +394,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
 
   /**
    * Add a URI to read from.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @param encoding
@@ -412,13 +412,13 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
           "Source URI string cannot be null."); //$NON-NLS-1$
     }
     this.m_sources
-        .add(new _Location(uri, URI.class, encoding, archiveType));
+    .add(new _Location(uri, URI.class, encoding, archiveType));
     return ((JBT) this);
   }
 
   /**
    * Add a URL to read from.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @param encoding
@@ -440,7 +440,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
 
   /**
    * Add a URL to read from.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @param encoding
@@ -458,7 +458,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
           "Source URL string cannot be null."); //$NON-NLS-1$
     }
     this.m_sources
-        .add(new _Location(url, URL.class, encoding, archiveType));
+    .add(new _Location(url, URL.class, encoding, archiveType));
     return ((JBT) this);
   }
 

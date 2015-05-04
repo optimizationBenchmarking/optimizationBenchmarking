@@ -12,40 +12,40 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXStyledText extends StyledText {
   /** the begin normal text */
   static final char[] TEXT_NORMAL_BEGIN = { '{', '\\', 't', 'e', 'x', 't',
-      'n', 'o', 'r', 'm', 'a', 'l', '{', };
+    'n', 'o', 'r', 'm', 'a', 'l', '{', };
   /** the begin emphasize */
   static final char[] EMPH_BEGIN = { '{', '\\', 'e', 'm', 'p', 'h', '{', };
   /** the begin code */
   private static final char[] CODE_BEGIN = { '{', '\\', 't', 'e', 'x',
-      't', 't', 't', '{', };
+    't', 't', 't', '{', };
   /** begin black stuff */
   private static final char[] BLACK_BEGIN = { '{', '\\', 'c', 'o', 'l',
-      'o', 'r', '{', 'b', 'l', 'a', 'c', 'k', '}', '{', };
+    'o', 'r', '{', 'b', 'l', 'a', 'c', 'k', '}', '{', };
   /** begin colored stuff */
   private static final char[] COLOR_BEGIN = { '{', '\\', 'c', 'o', 'l',
-      'o', 'r', '{', };
+    'o', 'r', '{', };
   /** the begin italic */
   private static final char[] TEXTIT_BEGIN = { '{', '\\', 't', 'e', 'x',
-      't', 'i', 't', '{', };
+    't', 'i', 't', '{', };
   /** the begin bold */
   private static final char[] TEXTBF_BEGIN = { '{', '\\', 't', 'e', 'x',
-      't', 'b', 'f', '{', };
+    't', 'b', 'f', '{', };
   /** the begin sans-serif */
   private static final char[] TEXTSF_BEGIN = { '{', '\\', 't', 'e', 'x',
-      't', 's', 'f', '{', };
+    't', 's', 'f', '{', };
   /** the begin roman */
   private static final char[] TEXTRM_BEGIN = { '{', '\\', 't', 'e', 'x',
-      't', 'r', 'm', '{', };
+    't', 'r', 'm', '{', };
   /** the begin textit */
   private static final char[] TEXTUL_BEGIN = { '{', '\\', 'u',//
-      // 'n', 'd', 'e', 'r',
-      'l', 'i', 'n', 'e', '{', };
+    // 'n', 'd', 'e', 'r',
+    'l', 'i', 'n', 'e', '{', };
   /** the begin text type writer */
   private static final char[] TEXTTT_BEGIN = _LaTeXStyledText.CODE_BEGIN;
 
   /**
    * create the styled text
-   * 
+   *
    * @param owner
    *          the owning element
    * @param style

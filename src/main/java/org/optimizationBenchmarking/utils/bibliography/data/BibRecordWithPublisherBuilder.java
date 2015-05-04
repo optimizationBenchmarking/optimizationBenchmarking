@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for bibliographic records with publishers. */
 public abstract class BibRecordWithPublisherBuilder extends
-    BibRecordBuilder {
+BibRecordBuilder {
 
   /** the publisher has been set */
   static final int FLAG_PUBLISHER_SET = (BibRecordBuilder.FLAG_RECORD_LAST << 1);
@@ -20,7 +20,7 @@ public abstract class BibRecordWithPublisherBuilder extends
 
   /**
    * create the website builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -45,7 +45,7 @@ public abstract class BibRecordWithPublisherBuilder extends
 
   /**
    * Set the publisher
-   * 
+   *
    * @param publisher
    *          the publisher
    */
@@ -58,7 +58,7 @@ public abstract class BibRecordWithPublisherBuilder extends
     if ((this.m_publisher = this.normalize(publisher)) == null) {
       throw new IllegalArgumentException(//
           "Publisher  cannot be set to empty or null, but '" //$NON-NLS-1$
-              + publisher + "' is."); //$NON-NLS-1$
+          + publisher + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -84,7 +84,7 @@ public abstract class BibRecordWithPublisherBuilder extends
 
   /**
    * handle an organization with a given tag
-   * 
+   *
    * @param org
    *          the organization
    * @param tag
@@ -101,7 +101,7 @@ public abstract class BibRecordWithPublisherBuilder extends
 
   /**
    * Set publisher
-   * 
+   *
    * @return the publisher builder
    */
   public synchronized final BibOrganizationBuilder publisher() {

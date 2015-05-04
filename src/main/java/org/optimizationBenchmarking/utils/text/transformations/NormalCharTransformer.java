@@ -18,7 +18,7 @@ public final class NormalCharTransformer extends LookupCharTransformer {
 
   /**
    * Get the instance of the normalizing character transformation
-   * 
+   *
    * @return instance of the normalizing character transformation
    */
   public static final NormalCharTransformer getInstance() {

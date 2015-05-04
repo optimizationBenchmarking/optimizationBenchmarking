@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 public class SubFigureCaption extends BasicFigureCaption {
   /**
    * create the caption
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -16,7 +16,7 @@ public class SubFigureCaption extends BasicFigureCaption {
 
   /**
    * Get the owning figure
-   * 
+   *
    * @return the owning figure
    */
   @Override

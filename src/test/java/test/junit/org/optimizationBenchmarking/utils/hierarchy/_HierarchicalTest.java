@@ -19,7 +19,7 @@ public abstract class _HierarchicalTest extends TestBase {
 
   /**
    * test the API multi-threaded
-   * 
+   *
    * @param n
    *          the number of threads
    * @param delayMode

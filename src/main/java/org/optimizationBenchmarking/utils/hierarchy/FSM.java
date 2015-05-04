@@ -32,7 +32,7 @@ public class FSM {
 
   /**
    * Set the state of this finite state machine
-   * 
+   *
    * @param state
    *          the new state of this finite state machine
    */
@@ -42,7 +42,7 @@ public class FSM {
 
   /**
    * Get the state of this finite state machine
-   * 
+   *
    * @return the state of this finite state machine
    */
   protected synchronized final int fsmStateGet() {
@@ -51,7 +51,7 @@ public class FSM {
 
   /**
    * Append the name of a given state to a string builder
-   * 
+   *
    * @param state
    *          the state
    * @param sb
@@ -70,7 +70,7 @@ public class FSM {
    * Assert that the state of finite state machine is related to
    * {@code mustState} according to {@code comp} and throw a
    * {@link java.lang.IllegalStateException} otherwise.
-   * 
+   *
    * @param state
    *          the state this finite state machine must be in
    * @param comp
@@ -106,7 +106,7 @@ public class FSM {
   /**
    * Assert that this finite state machine is in the given state, and
    * throws an {@link java.lang.IllegalStateException} otherwise.
-   * 
+   *
    * @param state
    *          the state this finite state machine must be in
    * @return the state
@@ -121,7 +121,7 @@ public class FSM {
    * Atomically assert that this finite state machine is in the state
    * {@code mustState} and move it to state {@code nextState} or throws an
    * {@link java.lang.IllegalStateException} otherwise.
-   * 
+   *
    * @param mustState
    *          the state this finite state machine must be in
    * @param nextState
@@ -141,7 +141,7 @@ public class FSM {
    * {@code mustState} according to {@code comp} and move it to state
    * {@code nextState} or throws an {@link java.lang.IllegalStateException}
    * otherwise.
-   * 
+   *
    * @param mustState
    *          the state this finite state machine must be in
    * @param comp
@@ -162,7 +162,7 @@ public class FSM {
 
   /**
    * Set some flags
-   * 
+   *
    * @param set
    *          the flags to set
    * @return {@code true} if at least one the flags was not yet set
@@ -176,7 +176,7 @@ public class FSM {
 
   /**
    * Clear some flags
-   * 
+   *
    * @param clear
    *          the flags to clear
    * @return {@code true} if at least one of the flags was already set
@@ -189,7 +189,7 @@ public class FSM {
 
   /**
    * Append a string representation of a given flag to a string builder
-   * 
+   *
    * @param flagValue
    *          the value of the flag: always a power of 2
    * @param flagIndex
@@ -205,7 +205,7 @@ public class FSM {
 
   /**
    * Convert a flag set to a string
-   * 
+   *
    * @param flags
    *          the flags
    * @param fsm
@@ -246,7 +246,7 @@ public class FSM {
   /**
    * Assert that this finite state machine has all of the given flags set,
    * and throws an {@link java.lang.IllegalStateException} otherwise.
-   * 
+   *
    * @param mustBeSet
    *          the flags that must be set
    * @throws IllegalStateException
@@ -261,7 +261,7 @@ public class FSM {
    * Assert that this finite state machine does not have the given
    * configuration of flags set, and throws an
    * {@link java.lang.IllegalStateException} otherwise.
-   * 
+   *
    * @param mustNotBeSet
    *          the flags that must not be set
    * @throws IllegalStateException
@@ -276,7 +276,7 @@ public class FSM {
    * Assert that the flags in {@code mustBeSEt} are set and that those in
    * {@code mustNotBeSet} are not set, throw an
    * {@link java.lang.IllegalStateException} otherwise.
-   * 
+   *
    * @param flags
    *          the flags
    * @param mustBeSet
@@ -319,7 +319,7 @@ public class FSM {
   /**
    * Assert that the flags in {@code mustBeSEt} are set and that those in
    * {@code mustNotBeSet} are not set.
-   * 
+   *
    * @param mustBeSet
    *          the flags that must be set
    * @param mustNotBeSet
@@ -346,7 +346,7 @@ public class FSM {
    * </ol>
    * </li>
    * </ol>
-   * 
+   *
    * @param mustBeSet
    *          the flags that must be set
    * @param mustNotBeSet
@@ -370,7 +370,7 @@ public class FSM {
 
   /**
    * append the state information to the destination
-   * 
+   *
    * @param dest
    *          the destination
    */
@@ -383,7 +383,7 @@ public class FSM {
 
   /**
    * get the name of an hierarchy element
-   * 
+   *
    * @param element
    *          the element
    * @param dest

@@ -7,11 +7,11 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 
 /** a run selection */
 final class _InstanceRunsSelection extends
-    _PlainSelection<IExperiment, IInstanceRuns> {
+_PlainSelection<IExperiment, IInstanceRuns> {
 
   /**
    * create the experiment selection
-   * 
+   *
    * @param experiment
    *          the original experiment
    */

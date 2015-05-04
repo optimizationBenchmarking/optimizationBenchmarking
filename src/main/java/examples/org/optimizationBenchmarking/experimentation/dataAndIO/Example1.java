@@ -24,7 +24,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger, or {@code null} to use the global logger
    */
@@ -54,7 +54,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the dimension set
-   * 
+   *
    * @param dsc
    *          the context
    */
@@ -110,7 +110,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the instance set
-   * 
+   *
    * @param isc
    *          the context
    */
@@ -164,7 +164,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the experiment set
-   * 
+   *
    * @param isc
    *          the context
    */
@@ -182,7 +182,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first experiment
-   * 
+   *
    * @param ec
    *          the ExperimentContext
    */
@@ -204,7 +204,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -223,7 +223,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -241,7 +241,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -259,7 +259,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -277,7 +277,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -296,7 +296,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -311,7 +311,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -325,7 +325,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -339,7 +339,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -379,7 +379,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -397,7 +397,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -411,7 +411,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -426,7 +426,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the second experiment
-   * 
+   *
    * @param ec
    *          the ExperimentContext
    */
@@ -453,7 +453,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -475,7 +475,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -491,7 +491,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -507,7 +507,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -522,7 +522,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -544,7 +544,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -556,7 +556,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -568,7 +568,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -580,7 +580,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first instance run set of the first experiment
-   * 
+   *
    * @param irc
    *          the Instance runs context
    */
@@ -605,7 +605,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -621,7 +621,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -633,7 +633,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * create the first run of the instance run set of the first experiment
-   * 
+   *
    * @param rc
    *          the Instance runs context
    */
@@ -646,7 +646,7 @@ public final class Example1 extends ExperimentSetCreator {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          the command line arguments
    */

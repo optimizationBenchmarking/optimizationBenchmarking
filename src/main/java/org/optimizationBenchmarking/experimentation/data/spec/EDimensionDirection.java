@@ -47,7 +47,7 @@ public enum EDimensionDirection {
 
   /**
    * Create
-   * 
+   *
    * @param isIncreasing
    *          is the direction increasing?
    * @param isStrict
@@ -64,7 +64,7 @@ public enum EDimensionDirection {
 
   /**
    * Is this dimension increasing or decreasing?
-   * 
+   *
    * @return {@code true} if the values of this dimension are increasing,
    *         {@code false} if they are decreasing
    */
@@ -74,7 +74,7 @@ public enum EDimensionDirection {
 
   /**
    * Is the increasing/decreasing of this dimension strict?
-   * 
+   *
    * @return {@code true} if the dimension must always change over time,
    *         {@code false} if it may remain constant
    */
@@ -87,7 +87,7 @@ public enum EDimensionDirection {
    * {@code true} when comparing the next step in this dimension with the
    * previous one, i.e.,
    * <code>{@link org.optimizationBenchmarking.utils.comparison.EComparison}.{@link org.optimizationBenchmarking.utils.comparison.EComparison#compare(boolean, boolean) compare(next, previous)}=true</code>
-   * 
+   *
    * @return the comparison representing this direction
    */
   public final EComparison getComparison() {

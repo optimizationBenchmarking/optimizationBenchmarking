@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.text.predicates.StringInListIgnoreCase
  * This predicate is {@code true} if the file can be executed.
  */
 public final class CanExecutePredicate implements IPredicate<Path>,
-    Serializable {
+Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -81,7 +81,7 @@ public final class CanExecutePredicate implements IPredicate<Path>,
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -90,7 +90,7 @@ public final class CanExecutePredicate implements IPredicate<Path>,
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

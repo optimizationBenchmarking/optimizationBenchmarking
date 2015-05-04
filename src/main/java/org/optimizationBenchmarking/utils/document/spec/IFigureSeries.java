@@ -7,14 +7,14 @@ public interface IFigureSeries extends IDocumentElement, ILabeledObject {
 
   /**
    * write the figure series caption
-   * 
+   *
    * @return the complex text to write the figure series caption
    */
   public abstract IComplexText caption();
 
   /**
    * Create the next figure in the series
-   * 
+   *
    * @param useLabel
    *          a label to use for the figure,
    *          {@link org.optimizationBenchmarking.utils.document.spec.ELabelType#AUTO}

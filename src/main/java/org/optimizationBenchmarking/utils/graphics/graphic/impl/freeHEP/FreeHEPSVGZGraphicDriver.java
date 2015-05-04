@@ -53,8 +53,8 @@ public class FreeHEPSVGZGraphicDriver extends AbstractGraphicDriver {
     if (this.m_error != null) {
       throw new UnsupportedOperationException(
           ("Cannot use " + //$NON-NLS-1$
-          TextUtils.className(FreeHEPSVGZGraphicDriver.class)),
-          this.m_error);
+              TextUtils.className(FreeHEPSVGZGraphicDriver.class)),
+              this.m_error);
     }
     super.checkCanUse();
   }
@@ -67,7 +67,7 @@ public class FreeHEPSVGZGraphicDriver extends AbstractGraphicDriver {
 
   /**
    * get the instance of the FreeHEP SVGZ driver
-   * 
+   *
    * @return the instance of the FreeHEP SVGZ driver
    */
   public static final FreeHEPSVGZGraphicDriver getInstance() {

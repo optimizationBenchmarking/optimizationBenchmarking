@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * An internal set of id objects.
  */
 abstract class _NamedIDObject extends _IDObject implements
-    ISemanticComponent {
+ISemanticComponent {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,7 @@ abstract class _NamedIDObject extends _IDObject implements
 
   /**
    * instantiate
-   * 
+   *
    * @param name
    *          the name of the object
    * @param desc
@@ -33,8 +33,8 @@ abstract class _NamedIDObject extends _IDObject implements
     if ((this.m_name = TextUtils.normalize(name)) == null) {
       throw new IllegalArgumentException(//
           "Instances of " + TextUtils.className(this.getClass()) + //$NON-NLS-1$
-              " must have a non-empty name, but name '" + //$NON-NLS-1$
-              name + "' was provided."); //$NON-NLS-1$
+          " must have a non-empty name, but name '" + //$NON-NLS-1$
+          name + "' was provided."); //$NON-NLS-1$
 
     }
     this.m_description = TextUtils.normalize(desc);
@@ -67,7 +67,7 @@ abstract class _NamedIDObject extends _IDObject implements
    * Append the "name" of this object to the given
    * {@link org.optimizationBenchmarking.utils.document.spec.IMath
    * mathematics context}.
-   * 
+   *
    * @param math
    *          the mathematics output device
    */
@@ -85,7 +85,7 @@ abstract class _NamedIDObject extends _IDObject implements
    * including the ability to
    * {@link org.optimizationBenchmarking.utils.document.spec.IComplexText#inlineMath()
    * display mathematical text}.
-   * 
+   *
    * @param textOut
    *          the text output device
    * @param textCase
@@ -101,7 +101,7 @@ abstract class _NamedIDObject extends _IDObject implements
   /**
    * Obtain a suggestion for the path component of figures drawn based on
    * this object.
-   * 
+   *
    * @return a suggestion for the path component of figures drawn based on
    *         this component.
    */

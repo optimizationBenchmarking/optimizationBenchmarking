@@ -5,7 +5,7 @@ public class WordBasedStringIterator extends _StringIterator {
 
   /**
    * Create the word-based iterator
-   * 
+   *
    * @param string
    *          the string to iterate over
    */

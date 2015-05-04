@@ -5,7 +5,7 @@ public class Emphasize extends PlainText {
 
   /**
    * Create an in-line code text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

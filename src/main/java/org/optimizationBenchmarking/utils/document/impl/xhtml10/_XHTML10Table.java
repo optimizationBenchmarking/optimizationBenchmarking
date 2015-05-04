@@ -19,32 +19,32 @@ final class _XHTML10Table extends Table {
 
   /** the start of the table */
   private static final char[] TABLE_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ',
-      'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'l', 'e', '"',
-      '>', };
+    'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'l', 'e', '"',
+    '>', };
 
   /** the start of the table */
   private static final char[] TABLE_TABLE_BEGIN = { '<', 't', 'a', 'b',
-      'l', 'e', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b',
-      'l', 'e', '"', '>' };
+    'l', 'e', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b',
+    'l', 'e', '"', '>' };
 
   /** the start of the float tr caption */
   private static final char[] TABLE_TR_CAPTION_BEGIN = { '<', 't', 'r',
-      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'l', 'e',
-      'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>' };
+    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'l', 'e',
+    'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>' };
   /** the start of the float td */
   private static final char[] TABLE_TD_CAPTION_SPAN_BEGIN = { '<', 't',
-      'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'l',
-      'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>', '<', 's', 'p',
-      'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'a', 'p',
-      't', 'i', 'o', 'n', 'T', 'i', 't', 'l', 'e', '"', '>', 'T', 'b',
-      'l', '.', '&', 'n', 'b', 's', 'p', ';' };
+    'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'l',
+    'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>', '<', 's', 'p',
+    'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'a', 'p',
+    't', 'i', 'o', 'n', 'T', 'i', 't', 'l', 'e', '"', '>', 'T', 'b',
+    'l', '.', '&', 'n', 'b', 's', 'p', ';' };
 
   /** the cached body */
   private char[] m_body;
 
   /**
    * Create a table
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index

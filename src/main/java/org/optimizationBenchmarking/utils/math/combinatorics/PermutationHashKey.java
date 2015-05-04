@@ -13,7 +13,7 @@ public final class PermutationHashKey implements Cloneable {
 
   /**
    * create the permutation hash key
-   * 
+   *
    * @param data
    *          the data
    */
@@ -24,7 +24,7 @@ public final class PermutationHashKey implements Cloneable {
 
   /**
    * Set the data array, i.e., the permutation
-   * 
+   *
    * @param data
    *          the data
    */
@@ -40,7 +40,7 @@ public final class PermutationHashKey implements Cloneable {
 
   /**
    * Get the data, i.e., the permutation
-   * 
+   *
    * @return the permutation
    */
   public final int[] getData() {
@@ -57,15 +57,15 @@ public final class PermutationHashKey implements Cloneable {
   @Override
   public final boolean equals(final Object o) {
     return ((o == this) || //
-    ((o instanceof PermutationHashKey) && //
-    Arrays.equals(this.m_data, ((PermutationHashKey) o).m_data)));
+        ((o instanceof PermutationHashKey) && //
+            Arrays.equals(this.m_data, ((PermutationHashKey) o).m_data)));
   }
 
   /** {@inheritDoc} */
   @Override
   public final String toString() {
     return (this.m_hash + ": " + //$NON-NLS-1$
-    Arrays.toString(this.m_data));
+        Arrays.toString(this.m_data));
   }
 
   /** {@inheritDoc} */

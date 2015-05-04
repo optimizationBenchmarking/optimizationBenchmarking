@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * An implementation of the text output which forwards all text to an
  * underlying output while applying a specific text transformation.
- * 
+ *
  * @author Thomas Weise
  */
 class _TransformedTextOutput extends AbstractTextOutput {
@@ -17,7 +17,7 @@ class _TransformedTextOutput extends AbstractTextOutput {
 
   /**
    * create the transformed text output
-   * 
+   *
    * @param out
    *          the wrapped output
    */
@@ -62,7 +62,7 @@ class _TransformedTextOutput extends AbstractTextOutput {
   /**
    * This method is called when an unknown character is encountered. By
    * default it throws an {@link java.lang.UnsupportedOperationException}.
-   * 
+   *
    * @param ch
    *          the character
    * @param str

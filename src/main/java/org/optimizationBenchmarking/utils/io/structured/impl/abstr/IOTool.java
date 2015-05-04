@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
 
 /**
  * The base class for tools
- * 
+ *
  * @param <D>
  *          the source/dest data type
  */
@@ -97,7 +97,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /**
    * Get a parameter prefix
-   * 
+   *
    * @return the parameter prefix, or {@code null} if none is needed
    */
   protected abstract String getParameterPrefix();
@@ -113,7 +113,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
    * begins, even before {@link #before(IOJob, Object)}, and creates a
    * token for the job. This token can later be used to store job-specific
    * data.
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -129,7 +129,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /**
    * This method is invoked before beginning the I/O process
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -142,7 +142,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /**
    * This method is invoked after finishing the I/O process
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -158,12 +158,12 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
   void _checkRawStreams() {
     throw new UnsupportedOperationException(//
         this.getClass().getSimpleName() + //
-            " cannot deal with raw (uncompressed) streams, only with files and folders."); //$NON-NLS-1$
+        " cannot deal with raw (uncompressed) streams, only with files and folders."); //$NON-NLS-1$
   }
 
   /**
    * handle a location
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -296,7 +296,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /**
    * Perform I/O to a file
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -319,7 +319,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
     if (prepared == null) {
       throw new IllegalArgumentException(//
           "File name cannot be null, empty, or only composed of white spaces, but '" //$NON-NLS-1$
-              + file + "' is.");//$NON-NLS-1$
+          + file + "' is.");//$NON-NLS-1$
     }
 
     this.__fileFile(job, data, new File(prepared), encoding, archiveType);
@@ -327,7 +327,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /**
    * Perform I/O to a file
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -414,7 +414,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /**
    * Perform I/O to a path
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -437,7 +437,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /**
    * Perform I/O to a path
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -460,7 +460,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /**
    * Perform I/O to a path
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -495,7 +495,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
         throw new IOException(
             ("Error when trying to read attributes of input path '" + //$NON-NLS-1$
                 path + "' (maybe the path does not exist?)."),//$NON-NLS-1$
-            ioe);
+                ioe);
       }
     }
 
@@ -503,7 +503,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
     if ((logger != null) && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
       logger.log(IOTool.DEFAULT_LOG_LEVEL,//
           (input ? //
-          "Reading input from Path '" : //$NON-NLS-1$
+              "Reading input from Path '" : //$NON-NLS-1$
               "Writing output ot Path '") + //$NON-NLS-1$
               path + "' with attributes " + attributes);//$NON-NLS-1$
     }
@@ -512,7 +512,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /**
    * Handle a path: Read input from the path or write output to the path.
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -531,7 +531,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
   void _path(final IOJob job, final D data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-      throws Throwable {
+          throws Throwable {
     if (archiveType != null) {
       throw new IllegalStateException(//
           "Can only handle uncompressed paths here."); //$NON-NLS-1$
@@ -540,7 +540,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
 
   /**
    * Obtain the default fallback file name for archived files
-   * 
+   *
    * @return the default file name
    */
   protected String getArchiveFallbackFileName() {

@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXFigureCaption extends FigureCaption {
   /**
    * Create a new figure caption
-   * 
+   *
    * @param owner
    *          the owner
    */

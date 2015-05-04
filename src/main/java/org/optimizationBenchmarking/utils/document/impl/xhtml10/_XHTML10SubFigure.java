@@ -20,7 +20,7 @@ final class _XHTML10SubFigure extends SubFigure {
 
   /**
    * Create a new sub figure
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param useLabel
@@ -63,8 +63,8 @@ final class _XHTML10SubFigure extends SubFigure {
     }
 
     ((_XHTML10FigureSeries) (this.getOwner()))
-        ._subFigure(new _XHTML10SubFigureDesc(this.m_caption, size,//
-            files.get(0).getKey(), this.getLabel(), this.getGlobalID()));
+    ._subFigure(new _XHTML10SubFigureDesc(this.m_caption, size,//
+        files.get(0).getKey(), this.getLabel(), this.getGlobalID()));
     this.m_caption = null;
   }
 }

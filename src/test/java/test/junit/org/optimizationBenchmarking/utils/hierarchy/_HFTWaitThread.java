@@ -17,7 +17,7 @@ final class _HFTWaitThread extends Thread {
 
   /**
    * create
-   * 
+   *
    * @param end
    *          the end time
    */
@@ -47,7 +47,7 @@ final class _HFTWaitThread extends Thread {
 
   /**
    * fail
-   * 
+   *
    * @param t
    *          the error
    */

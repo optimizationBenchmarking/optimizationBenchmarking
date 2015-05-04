@@ -13,21 +13,21 @@ public class BibThesis extends BibBook {
 
   /**
    * the thesis type
-   * 
+   *
    * @serial serial field
    */
   private final EThesisType m_type;
 
   /**
    * the school
-   * 
+   *
    * @serial serial field
    */
   private final BibOrganization m_school;
 
   /**
    * Create a new bibliography record
-   * 
+   *
    * @param authors
    *          the authors
    * @param type
@@ -67,7 +67,7 @@ public class BibThesis extends BibBook {
 
   /**
    * Create a new bibliography record
-   * 
+   *
    * @param authors
    *          the authors
    * @param type
@@ -125,12 +125,12 @@ public class BibThesis extends BibBook {
     return HashUtils.combineHashes(//
         HashUtils.combineHashes(super.calcHashCode(),//
             HashUtils.hashCode(this.m_school)),// //
-        HashUtils.hashCode(this.m_type));
+            HashUtils.hashCode(this.m_type));
   }
 
   /**
    * Get the thesis type
-   * 
+   *
    * @return the thesis type
    */
   public final EThesisType getType() {
@@ -139,7 +139,7 @@ public class BibThesis extends BibBook {
 
   /**
    * Get the school
-   * 
+   *
    * @return the school
    */
   public final BibOrganization getSchool() {
@@ -155,7 +155,7 @@ public class BibThesis extends BibBook {
       x = ((BibThesis) r);
 
       return (EComparison.equals(this.m_type, x.m_type) && //
-      EComparison.equals(this.m_school, x.m_school));
+          EComparison.equals(this.m_school, x.m_school));
     }
 
     return false;

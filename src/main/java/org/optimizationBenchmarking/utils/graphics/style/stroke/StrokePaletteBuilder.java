@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * A builder for stroke palettes.
  */
 public class StrokePaletteBuilder extends
-    PaletteBuilder<StrokeStyle, StrokePalette> {
+PaletteBuilder<StrokeStyle, StrokePalette> {
 
   /** did we set the default stroke */
   private static final int FLAG_HAS_DEFAULT = (PaletteBuilder.FLAG_HAS_ELEMENTS << 1);
@@ -68,7 +68,7 @@ public class StrokePaletteBuilder extends
 
   /**
    * Set the default stroke
-   * 
+   *
    * @param style
    *          the default stroke
    */
@@ -84,7 +84,7 @@ public class StrokePaletteBuilder extends
 
   /**
    * Set the default stroke
-   * 
+   *
    * @return the builder for the default stroke
    */
   public synchronized final StrokeStyleBuilder setDefaultStroke() {
@@ -95,7 +95,7 @@ public class StrokePaletteBuilder extends
 
   /**
    * Set the thin stroke
-   * 
+   *
    * @param style
    *          the thin stroke
    */
@@ -110,7 +110,7 @@ public class StrokePaletteBuilder extends
 
   /**
    * Set the thin stroke
-   * 
+   *
    * @return the builder for the thin stroke
    */
   public synchronized final StrokeStyleBuilder setThinStroke() {
@@ -121,7 +121,7 @@ public class StrokePaletteBuilder extends
 
   /**
    * Set the thick stroke
-   * 
+   *
    * @param style
    *          the thick stroke
    */
@@ -136,7 +136,7 @@ public class StrokePaletteBuilder extends
 
   /**
    * Set the thick stroke
-   * 
+   *
    * @return the builder for the thick stroke
    */
   public synchronized final StrokeStyleBuilder setThickStroke() {
@@ -157,7 +157,7 @@ public class StrokePaletteBuilder extends
 
   /**
    * Create the stroke palette
-   * 
+   *
    * @param def
    *          the default stroke
    * @param thin

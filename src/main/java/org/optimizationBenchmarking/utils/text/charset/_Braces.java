@@ -12,7 +12,7 @@ final class _Braces extends ArraySetView<Braces> {
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the data
    */
@@ -22,7 +22,7 @@ final class _Braces extends ArraySetView<Braces> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   final Object writeReplace() {
@@ -31,7 +31,7 @@ final class _Braces extends ArraySetView<Braces> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   final Object readResolve() {

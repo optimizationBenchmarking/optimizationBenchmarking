@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 /** A context for dimension sets. */
 final class _DimensionSetContext extends
-    _HierarchicalCollection<Dimension, DimensionContext, DimensionSet> {
+_HierarchicalCollection<Dimension, DimensionContext, DimensionSet> {
 
   /**
    * create
-   * 
+   *
    * @param element
    *          the owning element
    */
@@ -25,7 +25,7 @@ final class _DimensionSetContext extends
 
   /**
    * Create the dimension context
-   * 
+   *
    * @return the dimension context
    */
   final DimensionContext _createDimension() {

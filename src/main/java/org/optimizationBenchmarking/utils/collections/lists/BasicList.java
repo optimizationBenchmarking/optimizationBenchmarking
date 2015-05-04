@@ -11,12 +11,12 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
 
 /**
  * A basic list.
- * 
+ *
  * @param <ET>
  *          the element type
  */
 public class BasicList<ET> extends BasicCollection<ET> implements
-    List<ET>, RandomAccess {
+List<ET>, RandomAccess {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class BasicList<ET> extends BasicCollection<ET> implements
 
   /**
    * check an index for accessing the list
-   * 
+   *
    * @param index
    *          the index
    * @param size
@@ -45,7 +45,7 @@ public class BasicList<ET> extends BasicCollection<ET> implements
 
   /**
    * check an index range for accessing the list
-   * 
+   *
    * @param start
    *          the inclusive start index
    * @param end
@@ -70,7 +70,7 @@ public class BasicList<ET> extends BasicCollection<ET> implements
 
   /**
    * check an index for adding to the list
-   * 
+   *
    * @param index
    *          the index
    * @param size
@@ -103,8 +103,8 @@ public class BasicList<ET> extends BasicCollection<ET> implements
   public ET set(final int index, final ET element) {
     throw new UnsupportedOperationException(//
         "Cannot set element " + element + //$NON-NLS-1$
-            " at index " + index //$NON-NLS-1$
-    );
+        " at index " + index //$NON-NLS-1$
+        );
   }
 
   /** {@inheritDoc} */
@@ -112,8 +112,8 @@ public class BasicList<ET> extends BasicCollection<ET> implements
   public void add(final int index, final ET element) {
     throw new UnsupportedOperationException(//
         "Cannot add element " + element + //$NON-NLS-1$
-            " at index " + index//$NON-NLS-1$
-    );
+        " at index " + index//$NON-NLS-1$
+        );
   }
 
   /** {@inheritDoc} */
@@ -133,7 +133,7 @@ public class BasicList<ET> extends BasicCollection<ET> implements
   public ET remove(final int index) {
     throw new UnsupportedOperationException(//
         "Cannot remove element at index " + index //$NON-NLS-1$
-    );
+        );
   }
 
   /** {@inheritDoc} */
@@ -247,7 +247,7 @@ public class BasicList<ET> extends BasicCollection<ET> implements
    * any succeeding elements to the left (reduces their index). This call
    * shortens the list by {@code (toIndex - fromIndex)} elements. (If
    * {@code toIndex==fromIndex}, this operation has no effect.)
-   * 
+   *
    * @param fromIndex
    *          index of first element to be removed
    * @param toIndex

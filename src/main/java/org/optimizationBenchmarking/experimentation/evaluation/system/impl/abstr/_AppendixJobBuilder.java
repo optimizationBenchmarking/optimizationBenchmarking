@@ -5,13 +5,13 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IAppe
 
 /** The appendix job builder implementation */
 final class _AppendixJobBuilder
-    extends
-    _EvaluationJobBuilder<IExperimentSet, AppendixModule, AppendixJob, _AppendixJobBuilder>
-    implements IAppendixJobBuilder {
+extends
+_EvaluationJobBuilder<IExperimentSet, AppendixModule, AppendixJob, _AppendixJobBuilder>
+implements IAppendixJobBuilder {
 
   /**
    * create the job builder
-   * 
+   *
    * @param module
    *          the module
    */

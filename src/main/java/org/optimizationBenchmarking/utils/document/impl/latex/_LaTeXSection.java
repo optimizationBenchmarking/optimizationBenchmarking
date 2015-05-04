@@ -35,24 +35,24 @@ final class _LaTeXSection extends Section {
 
     _LaTeXSection.SECTIONS[ELaTeXSection.SUBPARAGRAPH.ordinal()] = new char[] {
         '\\', 's', 'u', 'b', 'p', 'a', 'r', 'a', 'g', 'r', 'a', 'p', 'h',
-        '{' };
+    '{' };
   }
 
   /** start the section emulation */
   private static final char[] SECTION_EMULATOR_A = { '\\', 's', 't', 'r',
-      'u', 't', '\\', '\\', '\\', 'n', 'o', 'i', 'n', 'd', 'e', 'n', 't',
-      '\\', 't', 'e', 'x', 't', 'b', 'f', '{' };
+    'u', 't', '\\', '\\', '\\', 'n', 'o', 'i', 'n', 'd', 'e', 'n', 't',
+    '\\', 't', 'e', 'x', 't', 'b', 'f', '{' };
 
   /** start the section emulation */
   private static final char[] APPENDIX = { 'A', 'p', 'p', 'e', 'n', 'd',
-      'i', 'x', ':', '~' };
+    'i', 'x', ':', '~' };
 
   /** is the section emulated? */
   boolean m_emulated;
 
   /**
    * Create a new section
-   * 
+   *
    * @param owner
    *          the owning text
    * @param useLabel

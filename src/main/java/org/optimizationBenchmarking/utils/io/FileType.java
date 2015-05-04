@@ -21,7 +21,7 @@ public class FileType implements IFileType, Serializable {
 
   /**
    * Create
-   * 
+   *
    * @param suffix
    *          the file name suffix
    * @param mime

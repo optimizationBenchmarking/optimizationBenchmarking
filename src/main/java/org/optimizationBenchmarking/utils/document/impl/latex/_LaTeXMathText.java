@@ -11,7 +11,7 @@ final class _LaTeXMathText extends MathText {
 
   /**
    * create the mathematical in-braces element
-   * 
+   *
    * @param owner
    *          the owner
    */

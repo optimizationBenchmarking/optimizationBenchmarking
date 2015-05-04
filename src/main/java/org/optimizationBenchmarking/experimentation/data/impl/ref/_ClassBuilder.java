@@ -38,7 +38,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * data elements on-the-fly.
  */
 final class _ClassBuilder implements Callable<Parser<DataPoint>>,
-    Comparator<Dimension> {
+Comparator<Dimension> {
 
   /** the counter */
   private static volatile long s_counter = 0L;
@@ -84,7 +84,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create a new class builder
-   * 
+   *
    * @param dimensions
    *          the dimensions
    * @param logger
@@ -133,7 +133,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the data point class body
-   * 
+   *
    * @return the data point class body
    */
   private final CharSequence __createDataPoint() {
@@ -168,7 +168,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the data point head
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -176,14 +176,14 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     int i;
 
     sb.append(//
-    "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
+        "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
     sb.append(" extends "); //$NON-NLS-1$
     sb.append(DataPoint.class.getCanonicalName());
     sb.append('{');
 
     sb.append(// serial version uid
-    "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
+        "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
 
     // declare fields: all private and final
     i = 0;
@@ -199,7 +199,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the constructor of the data point
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -232,7 +232,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the getters
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -273,9 +273,9 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
         sb.append("default: {"); //$NON-NLS-1$
         sb.append(//
-        "throw new IndexOutOfBoundsException(\"Index \" + index "); //$NON-NLS-1$
+            "throw new IndexOutOfBoundsException(\"Index \" + index "); //$NON-NLS-1$
         sb.append(//
-        " + \" is out of the value range 0..."); //$NON-NLS-1$
+            " + \" is out of the value range 0..."); //$NON-NLS-1$
         sb.append(this.m_primitiveTypes.length - 1);
         sb.append(".\"); } } }"); //$NON-NLS-1$
       }
@@ -285,7 +285,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     sb.append("@Override public final "); //$NON-NLS-1$
     sb.append(Number.class.getCanonicalName());
     sb.append(//
-    " get(final int index) { switch(index) {"); //$NON-NLS-1$
+        " get(final int index) { switch(index) {"); //$NON-NLS-1$
 
     i = 0;
     for (final EPrimitiveType type2 : this.m_primitiveTypes) {
@@ -300,16 +300,16 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
     sb.append("default: {"); //$NON-NLS-1$
     sb.append(//
-    "throw new IndexOutOfBoundsException(\"Index \" + index "); //$NON-NLS-1$
+        "throw new IndexOutOfBoundsException(\"Index \" + index "); //$NON-NLS-1$
     sb.append(//
-    " + \" is out of the value range 0..."); //$NON-NLS-1$
+        " + \" is out of the value range 0..."); //$NON-NLS-1$
     sb.append(this.m_primitiveTypes.length - 1);
     sb.append(".\"); } } }"); //$NON-NLS-1$
   }
 
   /**
    * create the to-Appendable method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -362,7 +362,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the hashCode method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -370,7 +370,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     int i, z;
 
     sb.append(//
-    "@Override public final int hashCode() { return "); //$NON-NLS-1$
+        "@Override public final int hashCode() { return "); //$NON-NLS-1$
 
     z = (this.m_primitiveTypes.length - 1);
     for (i = 0; i <= z; i++) {
@@ -396,7 +396,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the hash equals method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -405,10 +405,10 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     int i;
 
     sb.append(//
-    "@Override public final boolean equals(final Object o) { "); //$NON-NLS-1$
+        "@Override public final boolean equals(final Object o) { "); //$NON-NLS-1$
 
     sb.append(//
-    "if(o == this) { return true; } "); //$NON-NLS-1$
+        "if(o == this) { return true; } "); //$NON-NLS-1$
 
     sb.append("if(o instanceof "); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
@@ -495,7 +495,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the size method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -508,7 +508,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the compareTo method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -522,7 +522,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     Arrays.sort(dims, this);
 
     sb.append(//
-    "@Override public final int compareTo(final "); //$NON-NLS-1$
+        "@Override public final int compareTo(final "); //$NON-NLS-1$
     sb.append(IDataPoint.class.getCanonicalName());
     sb.append(" o) {if(o == this) {return 0;} "); //$NON-NLS-1$
 
@@ -607,7 +607,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the validateAfter method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -615,7 +615,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     EDimensionDirection dir;
 
     sb.append(//
-    "@Override public final void validateAfter(final "); //$NON-NLS-1$
+        "@Override public final void validateAfter(final "); //$NON-NLS-1$
     sb.append(DataPoint.class.getCanonicalName());
     sb.append(" before) {boolean later = false; String reason = null; final "); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
@@ -644,7 +644,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       }
 
       sb.append(//
-      " than the value of the same dimension in the previous data point, but \" + this.m"); //$NON-NLS-1$
+          " than the value of the same dimension in the previous data point, but \" + this.m"); //$NON-NLS-1$
       sb.append(d.getIndex());
       sb.append(" + \""); //$NON-NLS-1$
       sb.append(dir.isIncreasing() ? '<' : '>');
@@ -664,11 +664,11 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     }
 
     sb.append(//
-    " if(later) { return; } reason = \"The data points must differ in at least one dimension.\";}"); //$NON-NLS-1$
+        " if(later) { return; } reason = \"The data points must differ in at least one dimension.\";}"); //$NON-NLS-1$
     sb.append(//
-    "throw new IllegalStateException(\" Data point \" + "); //$NON-NLS-1$
+        "throw new IllegalStateException(\" Data point \" + "); //$NON-NLS-1$
     sb.append(//
-    "this.toString() + \" cannot follow the data point \" + "); //$NON-NLS-1$
+        "this.toString() + \" cannot follow the data point \" + "); //$NON-NLS-1$
     sb.append("c.toString() + \": \" + reason); }"); //$NON-NLS-1$
   }
 
@@ -683,7 +683,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
     sb = new MemoryTextOutput();
     sb.append(//
-    "@Override public final int n() { return "); //$NON-NLS-1$
+        "@Override public final int n() { return "); //$NON-NLS-1$
     sb.append(this.m_parsers.length);
     sb.append(';');
     sb.append('}');
@@ -703,7 +703,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
     if (floats.size() <= 0) {
       sb.append(//
-      "@Override public final boolean isIntegerMatrix() { return true; }"); //$NON-NLS-1$
+          "@Override public final boolean isIntegerMatrix() { return true; }"); //$NON-NLS-1$
       this.m_matrixChoice = Boolean.TRUE;
     } else {
       if (ints.size() <= 0) {
@@ -734,7 +734,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the matrix access get methods
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -745,14 +745,14 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     for (final EPrimitiveType pt : new EPrimitiveType[] {
         EPrimitiveType.DOUBLE, EPrimitiveType.LONG }) {
       sb.append(//
-      "@Override public final "); //$NON-NLS-1$
+          "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
-      "if(row == 0) { switch(column) {"); //$NON-NLS-1$
+          "if(row == 0) { switch(column) {"); //$NON-NLS-1$
 
       for (i = 0; i < this.m_primitiveTypes.length; i++) {
         sb.append("case "); //$NON-NLS-1$
@@ -770,12 +770,12 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       }
 
       sb.append(//
-      "} } throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
+          "} } throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
       sb.append(//
-      "',') + column + \") is invalid, the valid index range is (0, 0.."); //$NON-NLS-1$
+          "',') + column + \") is invalid, the valid index range is (0, 0.."); //$NON-NLS-1$
       sb.append(this.m_primitiveTypes.length - 1);
       sb.append(").\"); }"); //$NON-NLS-1$
     }
@@ -783,7 +783,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the matrix access aggregate method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -791,7 +791,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     int i;
 
     sb.append(//
-    "@Override public final void aggregateColumn(final int column, final ");//$NON-NLS-1$
+        "@Override public final void aggregateColumn(final int column, final ");//$NON-NLS-1$
     sb.append(IAggregate.class.getCanonicalName());
     sb.append("  aggregate) {  switch(column) {"); //$NON-NLS-1$
     for (i = 0; i < this.m_primitiveTypes.length; i++) {
@@ -802,12 +802,12 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       sb.append("); return; }"); //$NON-NLS-1$
     }
     sb.append(//
-    "} throw new IndexOutOfBoundsException((\"Matrix access aggregateColumn(\" + column) + \") is invalid, the valid index range is 0.."); //$NON-NLS-1$
+        "} throw new IndexOutOfBoundsException((\"Matrix access aggregateColumn(\" + column) + \") is invalid, the valid index range is 0.."); //$NON-NLS-1$
     sb.append(this.m_primitiveTypes.length - 1);
     sb.append(".\"); }"); //$NON-NLS-1$
 
     sb.append(//
-    "@Override public final void aggregateRow(final int row, final ");//$NON-NLS-1$
+        "@Override public final void aggregateRow(final int row, final ");//$NON-NLS-1$
     sb.append(IAggregate.class.getCanonicalName());
     sb.append("  aggregate) {  if(row == 0) {"); //$NON-NLS-1$
     for (i = 0; i < this.m_primitiveTypes.length; i++) {
@@ -816,12 +816,12 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       sb.append(");"); //$NON-NLS-1$
     }
     sb.append(//
-    " } else { throw new IndexOutOfBoundsException((\"Matrix access aggregateRow(\" + row) + \") is invalid, only 0 is a valid index.\");} }"); //$NON-NLS-1$   
+        " } else { throw new IndexOutOfBoundsException((\"Matrix access aggregateRow(\" + row) + \") is invalid, only 0 is a valid index.\");} }"); //$NON-NLS-1$
   }
 
   /**
    * create the to-array method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -857,7 +857,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the to-array method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -963,7 +963,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the visit method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -971,7 +971,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     int i;
 
     sb.append(//
-    "@Override public final boolean visit(final "); //$NON-NLS-1$
+        "@Override public final boolean visit(final "); //$NON-NLS-1$
     sb.append(IVisitor.class.getCanonicalName());
     sb.append("<? super "); //$NON-NLS-1$
     sb.append(Number.class.getCanonicalName());
@@ -1002,7 +1002,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the has any method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1010,7 +1010,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     int i;
 
     sb.append(//
-    "@Override public final boolean hasAny(final "); //$NON-NLS-1$
+        "@Override public final boolean hasAny(final "); //$NON-NLS-1$
     sb.append(IPredicate.class.getCanonicalName());
     sb.append("<? super "); //$NON-NLS-1$
     sb.append(Number.class.getCanonicalName());
@@ -1032,7 +1032,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the select method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1110,7 +1110,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the data point parser
-   * 
+   *
    * @return the data point parser
    */
   private final CharSequence __createFactory() {
@@ -1135,7 +1135,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the data point parser head
-   * 
+   *
    * @param sb
    *          the string parser builder
    */
@@ -1143,14 +1143,14 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     int i;
 
     sb.append(//
-    "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) public final class "); //$NON-NLS-1$
+        "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) public final class "); //$NON-NLS-1$
     sb.append(this.m_factoryClass);
     sb.append(" extends "); //$NON-NLS-1$
     sb.append(DataFactory.class.getCanonicalName());
     sb.append('{');
 
     sb.append(// serial version uid
-    "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
+        "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
 
     // declare fields: all private and final
     i = 0;
@@ -1166,7 +1166,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the constructor of the parser
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1201,7 +1201,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the data point parser string
-   * 
+   *
    * @param sb
    *          the string parser builder
    */
@@ -1278,7 +1278,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the data point parser numbers
-   * 
+   *
    * @param sb
    *          the string parser builder
    */
@@ -1334,7 +1334,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the data point parser object
-   * 
+   *
    * @param sb
    *          the string parser builder
    */
@@ -1360,7 +1360,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the data point parser string
-   * 
+   *
    * @param sb
    *          the string parser builder
    */
@@ -1374,13 +1374,13 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the run
-   * 
+   *
    * @param sb
    *          the string parser builder
    */
   private final void __factoryCreateRun(final MemoryTextOutput sb) {
     sb.append(//
-    "@Override public final "); //$NON-NLS-1$
+        "@Override public final "); //$NON-NLS-1$
     sb.append(Run.class.getCanonicalName());
     sb.append(" createRun(final "); //$NON-NLS-1$
     sb.append(Instance.class.getCanonicalName());
@@ -1395,14 +1395,14 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     sb.append("[points.size()]); for("); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
     sb.append(//
-    " next : data) { instance.validateDataPoint(next); } return new "); //$NON-NLS-1$
+        " next : data) { instance.validateDataPoint(next); } return new "); //$NON-NLS-1$
     sb.append(this.m_runClass);
     sb.append("(data); }"); //$NON-NLS-1$
   }
 
   /**
    * create the run class
-   * 
+   *
    * @return the run class
    */
   private final CharSequence __createRun() {
@@ -1429,21 +1429,21 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the run head
-   * 
+   *
    * @param sb
    *          the string parser builder
    */
   private final void __runClassHead(final MemoryTextOutput sb) {
 
     sb.append(//
-    "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
+        "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
     sb.append(this.m_runClass);
     sb.append(" extends "); //$NON-NLS-1$
     sb.append(Run.class.getCanonicalName());
     sb.append('{');
 
     sb.append(// serial version uid
-    "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
+        "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
 
     sb.append("final "); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
@@ -1452,7 +1452,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the constructor of the run
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1465,7 +1465,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the matrix get methods for runs
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1474,19 +1474,19 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     String s;
 
     sb.append(//
-    "@Override public final int m() { return this.points.length; }"); //$NON-NLS-1$
+        "@Override public final int m() { return this.points.length; }"); //$NON-NLS-1$
 
     for (final EPrimitiveType pt : new EPrimitiveType[] {
         EPrimitiveType.DOUBLE, EPrimitiveType.LONG }) {
       sb.append(//
-      "@Override public final "); //$NON-NLS-1$
+          "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
-      " switch(column) {"); //$NON-NLS-1$
+          " switch(column) {"); //$NON-NLS-1$
 
       for (i = 0; i < this.m_primitiveTypes.length; i++) {
         sb.append("case "); //$NON-NLS-1$
@@ -1504,14 +1504,14 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       }
 
       sb.append(//
-      "} throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
+          "} throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
       sb.append(//
-      "',') + column + \") is invalid, the valid index range is (0..\" + "); //$NON-NLS-1$
+          "',') + column + \") is invalid, the valid index range is (0..\" + "); //$NON-NLS-1$
       sb.append(//
-      "(this.points.length-1) + \", 0.."); //$NON-NLS-1$
+          "(this.points.length-1) + \", 0.."); //$NON-NLS-1$
       sb.append(this.m_primitiveTypes.length - 1);
       sb.append(").\"); }"); //$NON-NLS-1$
     }
@@ -1519,17 +1519,17 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the matrix select methods for runs
-   * 
+   *
    * @param sb
    *          the string builder
    */
   private final void __runIMatrixSelect(final MemoryTextOutput sb) {
 
     sb.append(//
-    "@Override public final "); //$NON-NLS-1$
+        "@Override public final "); //$NON-NLS-1$
     sb.append(IMatrix.class.getCanonicalName());
     sb.append(//
-    " selectColumns(final int... cols) {"); //$NON-NLS-1$
+        " selectColumns(final int... cols) {"); //$NON-NLS-1$
     sb.append("int i;"); //$NON-NLS-1$
     sb.append("checker: {"); //$NON-NLS-1$
     sb.append("i = 0;"); //$NON-NLS-1$
@@ -1547,15 +1547,15 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     sb.append("(this, cols);}"); //$NON-NLS-1$
 
     sb.append(//
-    "@Override public final "); //$NON-NLS-1$
+        "@Override public final "); //$NON-NLS-1$
     sb.append(IMatrix.class.getCanonicalName());
     sb.append(//
-    " selectRows(final int... rows) { if(rows.length<=0) { return this.points[rows[0]]; } return super.selectRows(rows); }"); //$NON-NLS-1$
+        " selectRows(final int... rows) { if(rows.length<=0) { return this.points[rows[0]]; } return super.selectRows(rows); }"); //$NON-NLS-1$
   }
 
   /**
    * create the matrix access aggregate method
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1563,7 +1563,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     int i;
 
     sb.append(//
-    "@Override public final void aggregateColumn(final int column, final ");//$NON-NLS-1$
+        "@Override public final void aggregateColumn(final int column, final ");//$NON-NLS-1$
     sb.append(IAggregate.class.getCanonicalName());
     sb.append("  aggregate) {  switch(column) {"); //$NON-NLS-1$
     for (i = 0; i < this.m_primitiveTypes.length; i++) {
@@ -1577,12 +1577,12 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       sb.append("); } return; }"); //$NON-NLS-1$
     }
     sb.append(//
-    "} throw new IndexOutOfBoundsException((\"Matrix access aggregateColumn(\" + column) + \") is invalid, the valid index range is 0.."); //$NON-NLS-1$
+        "} throw new IndexOutOfBoundsException((\"Matrix access aggregateColumn(\" + column) + \") is invalid, the valid index range is 0.."); //$NON-NLS-1$
     sb.append(this.m_primitiveTypes.length - 1);
     sb.append(".\"); }"); //$NON-NLS-1$
 
     sb.append(//
-    "@Override public final void aggregateRow(final int row, final ");//$NON-NLS-1$
+        "@Override public final void aggregateRow(final int row, final ");//$NON-NLS-1$
     sb.append(IAggregate.class.getCanonicalName());
     sb.append("  aggregate) {  final "); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
@@ -1597,7 +1597,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the appendable method for runs
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1624,7 +1624,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the matrix access methods for runs
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1653,7 +1653,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       sb.append(";int low, sh, high, mid"); //$NON-NLS-1$
       if (!(dir.isStrict())) {
         sb.append(//
-        ", i"); //$NON-NLS-1$
+            ", i"); //$NON-NLS-1$
       }
 
       sb.append("; low = 0;"); //$NON-NLS-1$
@@ -1742,12 +1742,12 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       sb.append("}"); //$NON-NLS-1$
 
       sb.append(//
-      " throw new IndexOutOfBoundsException(\"Column \" + "); //$NON-NLS-1$
+          " throw new IndexOutOfBoundsException(\"Column \" + "); //$NON-NLS-1$
       sb.append(//
-      "column + \" is invalid, valid indexes are in 0.."); //$NON-NLS-1$
+          "column + \" is invalid, valid indexes are in 0.."); //$NON-NLS-1$
       sb.append(this.m_parsers.length - 1);
       sb.append(//
-      ".\");"); //$NON-NLS-1$
+          ".\");"); //$NON-NLS-1$
       sb.append("}"); //$NON-NLS-1$
     }
 
@@ -1755,7 +1755,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the run columns class body
-   * 
+   *
    * @return the run columns class body
    */
   private final CharSequence __createRunColumnsClass() {
@@ -1777,7 +1777,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the matrix access methods for runs
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1789,14 +1789,14 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     for (final EPrimitiveType pt : new EPrimitiveType[] {
         EPrimitiveType.DOUBLE, EPrimitiveType.LONG }) {
       sb.append(//
-      "@Override public final "); //$NON-NLS-1$
+          "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
-      " switch(this.m_cols[column]) {"); //$NON-NLS-1$
+          " switch(this.m_cols[column]) {"); //$NON-NLS-1$
 
       for (i = 0; i < this.m_primitiveTypes.length; i++) {
         sb.append("case "); //$NON-NLS-1$
@@ -1814,28 +1814,28 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       }
 
       sb.append(//
-      "} throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
+          "} throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
 
       sb.append(//
-      "',') + column + \") is invalid, the valid index range is (0..\" + "); //$NON-NLS-1$
+          "',') + column + \") is invalid, the valid index range is (0..\" + "); //$NON-NLS-1$
       sb.append(//
-      "(this.points.length-1) + \", 0.."); //$NON-NLS-1$
+          "(this.points.length-1) + \", 0.."); //$NON-NLS-1$
       sb.append(this.m_primitiveTypes.length - 1);
       sb.append(").\"); }"); //$NON-NLS-1$
     }
 
     sb.append(//
-    "@Override public final "); //$NON-NLS-1$
+        "@Override public final "); //$NON-NLS-1$
     sb.append(this.m_runColumnsClass);
     sb.append(" copy() { return this; }"); //$NON-NLS-1$
   }
 
   /**
    * create the matrix access methods for runs iterating rows
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1846,7 +1846,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     sb.append('<');
     sb.append(IMatrix.class.getCanonicalName());
     sb.append(//
-    "> iterateRows() { if (this.points.length <= 1) { return new "); //$NON-NLS-1$"
+        "> iterateRows() { if (this.points.length <= 1) { return new "); //$NON-NLS-1$"
     sb.append(InstanceIterator.class.getCanonicalName());
     sb.append('<');
     sb.append(IMatrix.class.getCanonicalName());
@@ -1861,14 +1861,14 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the run columns head
-   * 
+   *
    * @param sb
    *          the string builder
    */
   private final void __runColumnsClassHead(final MemoryTextOutput sb) {
 
     sb.append(//
-    "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
+        "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
     sb.append(this.m_runColumnsClass);
     sb.append(" extends "); //$NON-NLS-1$
     sb.append(MatrixColumns.class.getCanonicalName());
@@ -1889,7 +1889,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the constructor of the data point
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1900,7 +1900,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     sb.append("(final "); //$NON-NLS-1$
     sb.append(this.m_runClass);
     sb.append(//
-    " owner, final int[] cols) { super(owner, cols); this.points = owner.points; "); //$NON-NLS-1$
+        " owner, final int[] cols) { super(owner, cols); this.points = owner.points; "); //$NON-NLS-1$
 
     if (!(this.m_matrixChoice instanceof Boolean)) {
       sb.append("checkIsFloat:{checkIsInt: { for(int i: cols) {if "); //$NON-NLS-1$
@@ -1908,7 +1908,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       s = ((String) (this.m_matrixChoice)).replace('@', 'i');
       sb.append(s);
       sb.append(//
-      " {continue; } break checkIsInt; } this.isInt=true;break checkIsFloat; } this.isInt=false;}"); //$NON-NLS-1$
+          " {continue; } break checkIsInt; } this.isInt=true;break checkIsFloat; } this.isInt=false;}"); //$NON-NLS-1$
     }
 
     sb.append('}');
@@ -1927,7 +1927,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the run columns row iterator class body
-   * 
+   *
    * @return the run columns row iterator class body
    */
   private final CharSequence __createRunColumnsRowIterator() {
@@ -1948,7 +1948,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the run columns head
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1956,7 +1956,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       final MemoryTextOutput sb) {
 
     sb.append(//
-    "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
+        "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
     sb.append(this.m_runColumnsRowIteratorClass);
     sb.append(" extends "); //$NON-NLS-1$
     sb.append(MatrixRowIterator.class.getCanonicalName());
@@ -1980,7 +1980,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the constructor of the data point
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -1996,7 +1996,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     }
 
     sb.append(//
-    ") { super(owner); this.points = owner.points; "); //$NON-NLS-1$
+        ") { super(owner); this.points = owner.points; "); //$NON-NLS-1$
 
     if (!(this.m_matrixChoice instanceof Boolean)) {
       sb.append("this.isInt = isi;"); //$NON-NLS-1$
@@ -2019,7 +2019,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
   /**
    * create the matrix access methods for runs columns row iterators
-   * 
+   *
    * @param sb
    *          the string builder
    */
@@ -2031,14 +2031,14 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     for (final EPrimitiveType pt : new EPrimitiveType[] {
         EPrimitiveType.DOUBLE, EPrimitiveType.LONG }) {
       sb.append(//
-      "@Override public final "); //$NON-NLS-1$
+          "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
-      "if(row == 0) { switch(this.cols[column]) {"); //$NON-NLS-1$
+          "if(row == 0) { switch(this.cols[column]) {"); //$NON-NLS-1$
 
       for (i = 0; i < this.m_primitiveTypes.length; i++) {
         sb.append("case "); //$NON-NLS-1$
@@ -2056,15 +2056,15 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       }
 
       sb.append(//
-      "} } throw new IndexOutOfBoundsException((((\"Matrix access get"); //$NON-NLS-1$
+          "} } throw new IndexOutOfBoundsException((((\"Matrix access get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
 
       sb.append(//
-      "',') + column + \") is invalid, the valid index range is (0, 0..\""); //$NON-NLS-1$
+          "',') + column + \") is invalid, the valid index range is (0, 0..\""); //$NON-NLS-1$
       sb.append(//
-      " + (this.cols.length - 1)) + ')'); }"); //$NON-NLS-1$
+          " + (this.cols.length - 1)) + ')'); }"); //$NON-NLS-1$
     }
   }
 

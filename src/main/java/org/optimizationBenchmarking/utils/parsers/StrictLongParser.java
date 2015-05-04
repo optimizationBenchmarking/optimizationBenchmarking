@@ -29,7 +29,7 @@ public class StrictLongParser extends NumberParser<Long> {
 
   /**
    * Parse the string
-   * 
+   *
    * @param string
    *          the string
    * @return the return type
@@ -77,7 +77,7 @@ public class StrictLongParser extends NumberParser<Long> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -86,7 +86,7 @@ public class StrictLongParser extends NumberParser<Long> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {
@@ -136,8 +136,8 @@ public class StrictLongParser extends NumberParser<Long> {
     if ((d < Long.MIN_VALUE) || (d > Long.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((d + " is not a valid long value, since it is out of the range ") + //$NON-NLS-1$
-          Long.MIN_VALUE) + "..") + //$NON-NLS-1$
-          Long.MAX_VALUE) + '.');
+              Long.MIN_VALUE) + "..") + //$NON-NLS-1$
+              Long.MAX_VALUE) + '.');
     }
 
     b = ((long) d);

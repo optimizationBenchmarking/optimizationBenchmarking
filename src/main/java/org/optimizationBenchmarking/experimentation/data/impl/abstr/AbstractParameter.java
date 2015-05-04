@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * interface.
  */
 public class AbstractParameter extends AbstractProperty implements
-    IParameter {
+IParameter {
 
   /** the owner */
   IParameterSet m_owner;
@@ -23,7 +23,7 @@ public class AbstractParameter extends AbstractProperty implements
    * set it via
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractParameterSet#own(AbstractParameter)}
    * .
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -36,7 +36,7 @@ public class AbstractParameter extends AbstractProperty implements
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractParameterValue}
    * .
-   * 
+   *
    * @param parameterValue
    *          the parameter set to own
    */

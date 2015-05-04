@@ -11,7 +11,7 @@ final class _LaTeXEmphasize extends Emphasize {
 
   /**
    * create the subscript element
-   * 
+   *
    * @param owner
    *          the owner
    */

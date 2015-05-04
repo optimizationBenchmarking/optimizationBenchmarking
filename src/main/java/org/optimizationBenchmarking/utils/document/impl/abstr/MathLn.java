@@ -5,7 +5,7 @@ public class MathLn extends MathFunction {
 
   /**
    * Create an ln function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

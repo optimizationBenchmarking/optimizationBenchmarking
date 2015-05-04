@@ -15,7 +15,7 @@ public class CompiledLine2D extends CompiledDataSeries2D {
 
   /**
    * Create a data series
-   * 
+   *
    * @param id
    *          the id
    * @param title
@@ -56,7 +56,7 @@ public class CompiledLine2D extends CompiledDataSeries2D {
 
   /**
    * Assert the line type
-   * 
+   *
    * @param type
    *          the line type
    */
@@ -68,7 +68,7 @@ public class CompiledLine2D extends CompiledDataSeries2D {
 
   /**
    * Get the line type
-   * 
+   *
    * @return the line type
    */
   public final ELineType getType() {

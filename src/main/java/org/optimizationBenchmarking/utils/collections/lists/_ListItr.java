@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * the list iterator
- * 
+ *
  * @param <ET>
  *          the element type
  */
@@ -16,7 +16,7 @@ final class _ListItr<ET> extends _Itr<ET> implements ListIterator<ET> {
 
   /**
    * create
-   * 
+   *
    * @param list
    *          the list
    * @param index

@@ -15,7 +15,7 @@ public class CompiledTitledElement {
 
   /**
    * Create a titled element
-   * 
+   *
    * @param title
    *          the title, or {@code null} if no title is specified
    * @param titleFont
@@ -47,7 +47,7 @@ public class CompiledTitledElement {
   /**
    * Get the title of this titled element, or {@code null} if no title is
    * set
-   * 
+   *
    * @return the title of this titled element, or {@code null} if no title
    *         is set
    */
@@ -57,7 +57,7 @@ public class CompiledTitledElement {
 
   /**
    * Get the title font, i.e., the font used to render the title
-   * 
+   *
    * @return the title font, or {@code null} if no font is specified for
    *         the title and no title should be printed
    */

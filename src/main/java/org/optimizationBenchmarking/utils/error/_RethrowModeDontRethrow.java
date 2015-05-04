@@ -20,7 +20,7 @@ final class _RethrowModeDontRethrow extends RethrowMode<RuntimeException> {
     Throwable re;
 
     useMessage = ((message != null) ? //
-    (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
+        (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
         : RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG);
 
     if (handle == null) {
@@ -76,7 +76,7 @@ final class _RethrowModeDontRethrow extends RethrowMode<RuntimeException> {
 
   /**
    * read-resolve
-   * 
+   *
    * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#DONT_RETHROW}
    */
   private final Object readResolve() {
@@ -85,7 +85,7 @@ final class _RethrowModeDontRethrow extends RethrowMode<RuntimeException> {
 
   /**
    * write-replace
-   * 
+   *
    * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#DONT_RETHROW}
    */
   private final Object writeReplace() {

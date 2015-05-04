@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.config.IConfigurable;
  * A tool job builder whose parameters can be configured.
  */
 public interface IConfigurableToolJobBuilder extends IToolJobBuilder,
-    IConfigurable {
+IConfigurable {
 
   /** {@inheritDoc} */
   @Override

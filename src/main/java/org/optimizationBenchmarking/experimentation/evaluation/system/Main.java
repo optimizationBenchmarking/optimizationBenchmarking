@@ -18,7 +18,7 @@ public final class Main {
 
   /**
    * The main method.
-   * 
+   *
    * @param args
    *          the command line arguments
    */
@@ -70,11 +70,11 @@ public final class Main {
       if (logger != null) {
         if (logger.isLoggable(Level.INFO)) {
           logger.info(//
-              "Starting up the evaluator tool and configuring the evaluation job."); //$NON-NLS-1$        
+              "Starting up the evaluator tool and configuring the evaluation job."); //$NON-NLS-1$
           if (logger.isLoggable(Level.CONFIG)) {
             logger.config(//
                 "The root configuration provided via the command line is " + //$NON-NLS-1$
-                    config.toString());
+                config.toString());
           }
         }
       }
@@ -111,8 +111,8 @@ public final class Main {
         if ((logger != null) && (logger.isLoggable(Level.INFO))) {
           logger.info(//
               "Begin executing the evaluation job in the current thread, '" + //$NON-NLS-1$
-                  Thread.currentThread() + //
-                  "', i.e., on one processor."); //$NON-NLS-1$
+              Thread.currentThread() + //
+              "', i.e., on one processor."); //$NON-NLS-1$
         }
 
         evaluation.run();
@@ -120,7 +120,7 @@ public final class Main {
         if ((logger != null) && (logger.isLoggable(Level.INFO))) {
           logger.info(//
               "The evaluation job has finished (seemingly without encountering an unrecoverable error) in thread " //$NON-NLS-1$
-                  + Thread.currentThread());
+              + Thread.currentThread());
         }
       } else {
 
@@ -142,7 +142,7 @@ public final class Main {
         if ((logger != null) && (logger.isLoggable(Level.FINE))) {
           logger.fine(//
               "Evaluation task successfully submitted to pool " //$NON-NLS-1$
-                  + pool);
+              + pool);
         }
 
         for (;;) {
@@ -151,10 +151,10 @@ public final class Main {
           } catch (final InterruptedException inter) {
             if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
               logger
-                  .log(
-                      Level.WARNING,//
-                      "Caught InterruptedException while waiting for evaluation to finish.", //$NON-NLS-1$
-                      inter);
+              .log(
+                  Level.WARNING,//
+                  "Caught InterruptedException while waiting for evaluation to finish.", //$NON-NLS-1$
+                  inter);
             }
             terminated = 3;
           }
@@ -169,16 +169,16 @@ public final class Main {
               && (logger.isLoggable(Level.INFO))) {
             logger.info(//
                 "Timeout of 1 day ellapsed before " //$NON-NLS-1$
-                    + pool + //
-                    " has terminated. The job takes quite long, it seems.");//$NON-NLS-1$
+                + pool + //
+                " has terminated. The job takes quite long, it seems.");//$NON-NLS-1$
           }
         }
 
         if ((logger != null) && (logger.isLoggable(Level.INFO))) {
           logger.info(//
               "The evaluation job has finished and the pool "//$NON-NLS-1$
-                  + pool + //
-                  " has terminated (seemingly without encountering an unrecoverable error)."); //$NON-NLS-1$
+              + pool + //
+              " has terminated (seemingly without encountering an unrecoverable error)."); //$NON-NLS-1$
         }
       }
     } catch (final Throwable error) {

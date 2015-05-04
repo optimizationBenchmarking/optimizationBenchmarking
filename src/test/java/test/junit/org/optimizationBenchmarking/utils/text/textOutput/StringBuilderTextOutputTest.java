@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
  */
 public class StringBuilderTextOutputTest extends
-    TextOutputTest<StringBuilder> {
+TextOutputTest<StringBuilder> {
 
   /** create */
   public StringBuilderTextOutputTest() {

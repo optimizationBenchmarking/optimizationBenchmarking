@@ -29,7 +29,7 @@ public class StrictIntParser extends NumberParser<Integer> {
 
   /**
    * Validate the parsing result
-   * 
+   *
    * @param value
    *          the parsing result
    * @throws IllegalArgumentException
@@ -41,7 +41,7 @@ public class StrictIntParser extends NumberParser<Integer> {
 
   /**
    * Parse the string
-   * 
+   *
    * @param string
    *          the string
    * @return the return type
@@ -89,7 +89,7 @@ public class StrictIntParser extends NumberParser<Integer> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -98,7 +98,7 @@ public class StrictIntParser extends NumberParser<Integer> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {
@@ -148,8 +148,8 @@ public class StrictIntParser extends NumberParser<Integer> {
     if ((d < Integer.MIN_VALUE) || (d > Integer.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((d + " is not a valid int value, since it is out of the range ") + //$NON-NLS-1$
-          Integer.MIN_VALUE) + "..") + //$NON-NLS-1$
-          Integer.MAX_VALUE) + '.');
+              Integer.MIN_VALUE) + "..") + //$NON-NLS-1$
+              Integer.MAX_VALUE) + '.');
     }
 
     b = ((int) d);
@@ -166,8 +166,8 @@ public class StrictIntParser extends NumberParser<Integer> {
     if ((l < Integer.MIN_VALUE) || (l > Integer.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((l + " is not a valid int value, since it is out of the range ") + //$NON-NLS-1$
-          Integer.MIN_VALUE) + "..") + //$NON-NLS-1$
-          Integer.MAX_VALUE) + '.');
+              Integer.MIN_VALUE) + "..") + //$NON-NLS-1$
+              Integer.MAX_VALUE) + '.');
     }
     this.validateInt((int) l);
   }

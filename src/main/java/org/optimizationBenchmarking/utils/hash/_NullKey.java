@@ -27,7 +27,7 @@ final class _NullKey {
 
   /**
    * read resolve
-   * 
+   *
    * @return the key
    */
   private final Object readResolve() {
@@ -36,7 +36,7 @@ final class _NullKey {
 
   /**
    * write replace
-   * 
+   *
    * @return the key
    */
   private final Object writeReplace() {

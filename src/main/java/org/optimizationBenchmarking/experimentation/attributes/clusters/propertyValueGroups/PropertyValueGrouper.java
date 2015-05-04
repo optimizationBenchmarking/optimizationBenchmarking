@@ -32,14 +32,14 @@ import org.optimizationBenchmarking.utils.math.NumericalTypes;
  * of reasonable numbers for numerical properties.
  */
 public final class PropertyValueGrouper extends
-    Attribute<IProperty, PropertyValueGroups> {
+Attribute<IProperty, PropertyValueGroups> {
 
   /** The suffix of the grouping parameter: {@value} */
   public static final String PARAM_GROUPING_SUFFIX = "Grouping"; //$NON-NLS-1$
 
   /** The default parameter for all grouping */
   public static final String PARAM_DEFAULT_GROUPING = //
-  ("default" + PropertyValueGrouper.PARAM_GROUPING_SUFFIX);//$NON-NLS-1$
+      ("default" + PropertyValueGrouper.PARAM_GROUPING_SUFFIX);//$NON-NLS-1$
 
   /** the default minimum number of anticipated groups */
   private static final int DEFAULT_MIN_GROUPS = 2;
@@ -73,7 +73,7 @@ public final class PropertyValueGrouper extends
 
   /**
    * create the property value grouper
-   * 
+   *
    * @param groupingMode
    *          the grouping mode
    * @param groupingParameter
@@ -97,12 +97,12 @@ public final class PropertyValueGrouper extends
     if (minGroups < 0) {
       throw new IllegalArgumentException(//
           "The minimum number of groups must be greater or equal to 0, but is " //$NON-NLS-1$
-              + minGroups);
+          + minGroups);
     }
     if (maxGroups < minGroups) {//
       throw new IllegalArgumentException(//
           "The maximum number of groups must be greater or equal to the minimum number, but is " //$NON-NLS-1$
-              + maxGroups + " while the minimum is " + minGroups);//$NON-NLS-1$
+          + maxGroups + " while the minimum is " + minGroups);//$NON-NLS-1$
     }
 
     this.m_groupingMode = groupingMode;
@@ -113,7 +113,7 @@ public final class PropertyValueGrouper extends
 
   /**
    * Get the goal minimum number of groups
-   * 
+   *
    * @return the goal minimum number of groups
    */
   public final int getMinGroups() {
@@ -122,7 +122,7 @@ public final class PropertyValueGrouper extends
 
   /**
    * Get the goal maximum number of groups
-   * 
+   *
    * @return the goal maximum number of groups
    */
   public final int getMaxGroups() {
@@ -131,7 +131,7 @@ public final class PropertyValueGrouper extends
 
   /**
    * Get the grouping parameter, or {@code null} if none is specified
-   * 
+   *
    * @return the grouping parameter, or {@code null} if none is specified
    */
   public final Number getGroupingParameter() {
@@ -140,7 +140,7 @@ public final class PropertyValueGrouper extends
 
   /**
    * Get the grouping mode
-   * 
+   *
    * @return the grouping mode
    */
   public final EGroupingMode getGroupingMode() {
@@ -154,14 +154,14 @@ public final class PropertyValueGrouper extends
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.m_groupingMode),//
             HashUtils.hashCode(this.m_groupingParameter)),//
-        HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_minGroups),//
-            HashUtils.hashCode(this.m_maxGroups)));
+            HashUtils.combineHashes(//
+                HashUtils.hashCode(this.m_minGroups),//
+                HashUtils.hashCode(this.m_maxGroups)));
   }
 
   /**
    * Get the values of a given feature
-   * 
+   *
    * @param feature
    *          the feature
    * @return the values of the feature
@@ -192,7 +192,7 @@ public final class PropertyValueGrouper extends
 
   /**
    * Get the values of a given parameter
-   * 
+   *
    * @param parameter
    *          the parameter
    * @return the values of the parameter
@@ -344,7 +344,7 @@ public final class PropertyValueGrouper extends
 
   /**
    * Load a property value grouper from a configuration
-   * 
+   *
    * @param property
    *          the property
    * @param config

@@ -17,7 +17,7 @@ public interface IGraphicDriver extends IDocumentProducerTool {
 
   /**
    * Obtain the graphic format managed by this driver
-   * 
+   *
    * @return the graphic format managed by this driver
    */
   @Override
@@ -25,14 +25,14 @@ public interface IGraphicDriver extends IDocumentProducerTool {
 
   /**
    * Get the default color palette associated with this graphic driver
-   * 
+   *
    * @return the default color palette associated with this graphic driver
    */
   public abstract ColorPalette getColorPalette();
 
   /**
    * Get the default stroke palette associated with this graphic driver
-   * 
+   *
    * @return the default stroke palette associated with this graphic driver
    */
   public abstract StrokePalette getStrokePalette();

@@ -16,7 +16,7 @@ public final class XHTML10DocumentBuilder extends DocumentBuilder {
 
   /**
    * the XHTML 1.0 document builder
-   * 
+   *
    * @param driver
    *          the driver to use
    */
@@ -33,7 +33,7 @@ public final class XHTML10DocumentBuilder extends DocumentBuilder {
 
   /**
    * Set the screen size for the document builder
-   * 
+   *
    * @param size
    *          the screen size
    * @return this document builder
@@ -41,26 +41,26 @@ public final class XHTML10DocumentBuilder extends DocumentBuilder {
   public final XHTML10DocumentBuilder setScreenSize(
       final PhysicalDimension size) {
     ((XHTML10ConfigurationBuilder) (this.getConfigurationBuilder()))
-        .setScreenSize(size);
+    .setScreenSize(size);
     return this;
   }
 
   /**
    * Set the screen size of this builder
-   * 
+   *
    * @param size
    *          the screen size
    * @return this builder
    */
   public final XHTML10DocumentBuilder setScreenSize(final EScreenSize size) {
     ((XHTML10ConfigurationBuilder) (this.getConfigurationBuilder()))
-        .setScreenSize(size);
+    .setScreenSize(size);
     return this;
   }
 
   /**
    * Get the screen size
-   * 
+   *
    * @return the screen size
    */
   public final PageDimension getScreenSize() {
@@ -70,7 +70,7 @@ public final class XHTML10DocumentBuilder extends DocumentBuilder {
 
   /**
    * Set the font palette to be used
-   * 
+   *
    * @param fonts
    *          the font palette to be used
    * @return this builder
@@ -78,13 +78,13 @@ public final class XHTML10DocumentBuilder extends DocumentBuilder {
   public final XHTML10DocumentBuilder setFontPalette(
       final FontPalette fonts) {
     ((XHTML10ConfigurationBuilder) (this.getConfigurationBuilder()))
-        .setFontPalette(fonts);
+    .setFontPalette(fonts);
     return this;
   }
 
   /**
    * Get the font palette of this document builder
-   * 
+   *
    * @return the font palette of this document builder
    */
   public final FontPalette getFontPalette() {

@@ -19,7 +19,7 @@ final class _Namespace {
 
   /**
    * Create a new namespace record
-   * 
+   *
    * @param uri
    *          the uri
    * @param prefixString

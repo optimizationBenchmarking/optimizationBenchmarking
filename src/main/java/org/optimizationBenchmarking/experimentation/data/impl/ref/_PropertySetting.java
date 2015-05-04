@@ -14,15 +14,15 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * a concrete property setting
- * 
+ *
  * @param <PT>
  *          the property type
  * @param <PVT>
  *          the property value type
  */
 class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
-    extends AbstractMap<IProperty, Object> implements Serializable,
-    IPropertySetting {
+extends AbstractMap<IProperty, Object> implements Serializable,
+IPropertySetting {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
 
   /**
    * create
-   * 
+   *
    * @param values
    *          the property values
    * @param isGeneral
@@ -71,7 +71,7 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
   /**
    * Check whether a given property value is contained in the property
    * value set.
-   * 
+   *
    * @param value
    *          the property value
    * @return {@code true} if the property value is contained, {@code false}
@@ -86,7 +86,7 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
     return ((value != null)
         && ((p = ((_IDObject) (value.m_owner))) != null)
         && ((id = p.m_id) >= 0) && (id < (pv = this.m_values).length)//
-    && (pv[id] == value));
+        && (pv[id] == value));
   }
 
   /** {@inheritDoc} */
@@ -102,7 +102,7 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
   /**
    * Check whether a given property value is contained in this property
    * setting
-   * 
+   *
    * @param object
    *          the object
    * @return {@code true} if the property value is contained, {@code false}
@@ -117,13 +117,13 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
     return ((object instanceof PropertyValue)//
         && ((p = ((_IDObject) ((paramValue = ((_IDObject) object)).m_owner))) != null)//
         && ((id = p.m_id) >= 0) && (id < (pv = this.m_values).length) && //
-    (pv[id] == paramValue));
+        (pv[id] == paramValue));
   }
 
   /**
    * Check whether a given property has a value in the configuration of
    * this experiment
-   * 
+   *
    * @param property
    *          the property
    * @return {@code true} if the property has a value, {@code false}
@@ -141,7 +141,7 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
         && (id < (pv = this.m_values).length)
         && ((v = pv[id]).m_owner == property)//
         && ((o = v.m_value) != _PropertyValueGeneralized.INSTANCE) && //
-    (o != _PropertyValueUnspecified.INSTANCE));
+        (o != _PropertyValueUnspecified.INSTANCE));
   }
 
   /** {@inheritDoc} */
@@ -181,7 +181,7 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
     return ((o instanceof Property) && //
         ((id = (((Property) o).m_id)) >= 0) && //
         (id < (pv = this.m_values).length) && //
-    (pv[id].m_owner == o));
+        (pv[id].m_owner == o));
   }
 
   /** {@inheritDoc} */
@@ -195,7 +195,7 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
     return ((((key instanceof Property) && //
         ((id = ((Property) key).m_id) >= 0) && //
         (id < (pv = this.m_values).length) && //
-    ((v = pv[id]).m_owner == key))) ? v.m_value : null);
+        ((v = pv[id]).m_owner == key))) ? v.m_value : null);
   }
 
   /** {@inheritDoc} */
@@ -298,7 +298,7 @@ class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
 
   /**
    * convert this property setting to a name
-   * 
+   *
    * @return the name
    */
   public final String toName() {

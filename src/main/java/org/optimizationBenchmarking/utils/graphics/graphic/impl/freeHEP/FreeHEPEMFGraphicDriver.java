@@ -54,8 +54,8 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
     if (this.m_error != null) {
       throw new UnsupportedOperationException(
           ("Cannot use " + //$NON-NLS-1$
-          TextUtils.className(FreeHEPEMFGraphicDriver.class)),
-          this.m_error);
+              TextUtils.className(FreeHEPEMFGraphicDriver.class)),
+              this.m_error);
     }
     super.checkCanUse();
   }
@@ -68,7 +68,7 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
 
   /**
    * try to initialize
-   * 
+   *
    * @return the properties
    * @throws ClassNotFoundException
    *           if at least one required class could not be loaded
@@ -195,7 +195,7 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
 
   /**
    * get the instance of the FreeHEP EMF driver
-   * 
+   *
    * @return the instance of the FreeHEP EMF driver
    */
   public static final FreeHEPEMFGraphicDriver getInstance() {

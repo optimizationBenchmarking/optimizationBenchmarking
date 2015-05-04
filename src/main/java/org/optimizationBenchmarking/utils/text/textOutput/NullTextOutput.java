@@ -4,7 +4,7 @@ package org.optimizationBenchmarking.utils.text.textOutput;
  * An implementation of
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
  * which does nothing.
- * 
+ *
  * @author Thomas Weise
  */
 public final class NullTextOutput extends AbstractTextOutput {

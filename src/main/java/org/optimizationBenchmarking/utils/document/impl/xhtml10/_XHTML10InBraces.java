@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.PlainText;
 final class _XHTML10InBraces extends InBraces {
   /**
    * create the in-braces element
-   * 
+   *
    * @param owner
    *          the owner
    */

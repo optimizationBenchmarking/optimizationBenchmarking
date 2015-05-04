@@ -8,7 +8,7 @@ final class _TransposedRun extends TransposedMatrix<Run> {
 
   /**
    * create
-   * 
+   *
    * @param run
    *          the run
    */

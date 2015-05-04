@@ -38,7 +38,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
   /**
    * Create the ECDF attribute
-   * 
+   *
    * @param timeDim
    *          the time dimension
    * @param goalDim
@@ -76,7 +76,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     if (o instanceof ECDF) {
       other = ((ECDF) o);
       return (EComparison.equals(this.m_raw, other.m_raw) && //
-      EComparison.equals(this.m_timeTransform, other.m_timeTransform));
+          EComparison.equals(this.m_timeTransform, other.m_timeTransform));
     }
 
     return false;
@@ -84,7 +84,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
   /**
    * Get the time dimension
-   * 
+   *
    * @return the time dimension
    */
   public final IDimension getTimeDimension() {
@@ -93,7 +93,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
   /**
    * Get the goal dimension
-   * 
+   *
    * @return the goal dimension
    */
   public final IDimension getGoalDimension() {
@@ -102,7 +102,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
   /**
    * Is the goal value a {@code long} value?
-   * 
+   *
    * @return {@code true} if the goal value is a {@code long} value,
    *         {@code false} if it is a {@code double}
    * @see #getGoalValueDouble()
@@ -116,7 +116,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
    * Get the goal value as a {@code long}. The result of this method will
    * only be accurate if {@link #isGoalValueLong()} returned {@code true}.
    * Otherwise, {@link #getGoalValueDouble()} should be used.
-   * 
+   *
    * @return the goal value as a {@code long}
    * @see #isGoalValueLong()
    * @see #getGoalValueDouble()
@@ -129,7 +129,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
    * Get the goal value as a {@code double}. The result of this method will
    * only be accurate if {@link #isGoalValueLong()} returned {@code false}.
    * Otherwise, {@link #getGoalValueLong()} should be used.
-   * 
+   *
    * @return the goal value as a {@code double}
    * @see #isGoalValueLong()
    * @see #getGoalValueLong()

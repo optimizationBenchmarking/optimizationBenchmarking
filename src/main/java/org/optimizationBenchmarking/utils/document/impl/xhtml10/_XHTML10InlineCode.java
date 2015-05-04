@@ -12,7 +12,7 @@ final class _XHTML10InlineCode extends InlineCode {
 
   /**
    * create the inline code element
-   * 
+   *
    * @param owner
    *          the owner
    */

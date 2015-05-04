@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
  * An XMLFileType-based experiment input tool.
  */
 public class ExperimentSetXMLInput extends
-    XMLInputTool<ExperimentSetContext> implements IExperimentSetInput {
+XMLInputTool<ExperimentSetContext> implements IExperimentSetInput {
 
   /** create */
   protected ExperimentSetXMLInput() {

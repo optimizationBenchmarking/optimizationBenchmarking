@@ -7,11 +7,11 @@ final class _XHTML10TableFooterRow extends TableFooterRow {
 
   /** the start of a normal tr */
   private static final char[] TAB_TR_F_BEGIN = { '<', 't', 'r', ' ', 'c',
-      'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'F', '"', '>' };
+    'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'F', '"', '>' };
 
   /**
    * Create a row of a footer of a table
-   * 
+   *
    * @param owner
    *          the owning table footer
    */

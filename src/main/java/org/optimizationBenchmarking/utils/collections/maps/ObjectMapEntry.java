@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.collections.maps;
 
 /**
  * A map entry for {@link java.lang.Object} keys and values
- * 
+ *
  * @param <K>
  *          the key type
  * @param <V>

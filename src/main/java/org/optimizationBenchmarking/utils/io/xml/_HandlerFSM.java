@@ -17,7 +17,7 @@ final class _HandlerFSM extends HierarchicalFSM {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    * @param managed

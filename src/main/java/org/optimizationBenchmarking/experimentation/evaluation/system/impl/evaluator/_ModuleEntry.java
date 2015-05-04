@@ -34,7 +34,7 @@ final class _ModuleEntry {
 
   /**
    * create the module entry
-   * 
+   *
    * @param module
    *          the module
    * @param config
@@ -56,7 +56,7 @@ final class _ModuleEntry {
 
   /**
    * Get the number of elements in the hierarchy
-   * 
+   *
    * @param entries
    *          the entries
    * @return the number of elements
@@ -80,7 +80,7 @@ final class _ModuleEntry {
 
   /**
    * Make the description job
-   * 
+   *
    * @param entries
    *          the entries
    * @param data
@@ -105,7 +105,7 @@ final class _ModuleEntry {
 
   /**
    * Make the pseudo jobs which compose a description job.
-   * 
+   *
    * @param entries
    *          the entries
    * @param data
@@ -148,7 +148,7 @@ final class _ModuleEntry {
 
   /**
    * Make the experiment job.
-   * 
+   *
    * @param entries
    *          the entries
    * @param data
@@ -173,7 +173,7 @@ final class _ModuleEntry {
 
   /**
    * Make the experiment jobs
-   * 
+   *
    * @param entries
    *          the entries
    * @param data
@@ -214,7 +214,7 @@ final class _ModuleEntry {
 
   /**
    * Make the experiment jobs
-   * 
+   *
    * @param entries
    *          the entries
    * @param data
@@ -257,7 +257,7 @@ final class _ModuleEntry {
 
   /**
    * Make the experiment set job.
-   * 
+   *
    * @param entries
    *          the entries
    * @param data
@@ -282,7 +282,7 @@ final class _ModuleEntry {
 
   /**
    * Make the experiment set jobs
-   * 
+   *
    * @param entries
    *          the entries
    * @param data
@@ -325,7 +325,7 @@ final class _ModuleEntry {
 
   /**
    * Make the appendix job.
-   * 
+   *
    * @param entries
    *          the entries
    * @param data
@@ -350,7 +350,7 @@ final class _ModuleEntry {
 
   /**
    * Make the appendix jobs
-   * 
+   *
    * @param entries
    *          the entries
    * @param data

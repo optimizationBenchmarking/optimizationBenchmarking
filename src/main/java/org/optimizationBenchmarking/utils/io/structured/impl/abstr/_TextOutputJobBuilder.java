@@ -7,19 +7,19 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The class for building text IO jobs
- * 
+ *
  * @param <DT>
  *          the source data type
  * @param <JBT>
  *          the job builder type
  */
 class _TextOutputJobBuilder<DT, JBT extends _TextOutputJobBuilder<DT, JBT>>
-    extends _StreamOutputJobBuilder<DT, JBT> implements
-    ITextOutputJobBuilder<DT> {
+extends _StreamOutputJobBuilder<DT, JBT> implements
+ITextOutputJobBuilder<DT> {
 
   /**
    * create the job builder
-   * 
+   *
    * @param tool
    *          the owning tool
    */

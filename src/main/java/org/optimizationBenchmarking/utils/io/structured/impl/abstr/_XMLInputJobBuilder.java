@@ -6,19 +6,19 @@ import org.xml.sax.InputSource;
 
 /**
  * The class for building XMLFileType input jobs
- * 
+ *
  * @param <DT>
  *          the source data type
  * @param <JBT>
  *          the job builder type
  */
 class _XMLInputJobBuilder<DT, JBT extends _XMLInputJobBuilder<DT, JBT>>
-    extends _TextInputJobBuilder<DT, JBT> implements
-    IXMLInputJobBuilder<DT> {
+extends _TextInputJobBuilder<DT, JBT> implements
+IXMLInputJobBuilder<DT> {
 
   /**
    * create the job builder
-   * 
+   *
    * @param tool
    *          the owning tool
    */

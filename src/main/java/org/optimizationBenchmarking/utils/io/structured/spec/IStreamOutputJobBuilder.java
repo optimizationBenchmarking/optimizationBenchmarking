@@ -12,12 +12,12 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A stream output job builder.
- * 
+ *
  * @param <D>
  *          the data type which can be stored
  */
 public interface IStreamOutputJobBuilder<D> extends
-    IFileOutputJobBuilder<D> {
+IFileOutputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
@@ -76,7 +76,7 @@ public interface IStreamOutputJobBuilder<D> extends
   /**
    * Set the stream to write to. The stream may or may not be closed upon
    * termination.
-   * 
+   *
    * @param stream
    *          the stream to write the output to
    * @param encoding
@@ -93,7 +93,7 @@ public interface IStreamOutputJobBuilder<D> extends
   /**
    * Set the stream to write to, using the default encoding and no ZIP
    * compression. The stream may or may not be closed upon termination.
-   * 
+   *
    * @param stream
    *          the stream to write the output to
    * @return this builder
@@ -105,7 +105,7 @@ public interface IStreamOutputJobBuilder<D> extends
    * Equivalent to
    * {@link #setStream(OutputStream, StreamEncoding, EArchiveType)
    * setStream(stream, encoding, archiveType)}
-   * 
+   *
    * @param stream
    *          the stream to write the output to
    * @param encoding
@@ -124,7 +124,7 @@ public interface IStreamOutputJobBuilder<D> extends
    * Equivalent to
    * {@link #setStream(OutputStream, StreamEncoding, EArchiveType)
    * setStream(stream, null, archiveType)}
-   * 
+   *
    * @param stream
    *          the stream to write the output to
    * @param archiveType

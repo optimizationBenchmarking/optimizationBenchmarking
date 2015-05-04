@@ -23,7 +23,7 @@ final class _ImageIOPNGGraphic extends _ImageIORasterGraphic {
 
   /**
    * instantiate
-   * 
+   *
    * @param path
    *          the path
    * @param logger

@@ -11,7 +11,7 @@ final class _LaTeXMathSqrt extends MathSqrt {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

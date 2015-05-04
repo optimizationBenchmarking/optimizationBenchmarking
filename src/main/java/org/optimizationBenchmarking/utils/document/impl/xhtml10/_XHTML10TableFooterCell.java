@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10TableFooterCell extends TableFooterCell {
   /**
    * Create a footer cell of a table
-   * 
+   *
    * @param owner
    *          the owning row
    * @param cols

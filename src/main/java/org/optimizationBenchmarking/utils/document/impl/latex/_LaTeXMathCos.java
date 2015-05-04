@@ -11,7 +11,7 @@ final class _LaTeXMathCos extends MathCos {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

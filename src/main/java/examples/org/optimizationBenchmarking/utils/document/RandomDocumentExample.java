@@ -122,32 +122,32 @@ public class RandomDocumentExample extends DocumentExample {
 
   /** the choices for complex text */
   private static final _ERandomDocumentExampleElements[] COMPLEX_TEXT = {
-      _ERandomDocumentExampleElements.IN_BRACES,
-      _ERandomDocumentExampleElements.IN_QUOTES,
-      _ERandomDocumentExampleElements.WITH_FONT,
-      _ERandomDocumentExampleElements.WITH_COLOR,
-      _ERandomDocumentExampleElements.EMPH,
-      _ERandomDocumentExampleElements.INLINE_CODE,
-      _ERandomDocumentExampleElements.SUBSCRIPT,
-      _ERandomDocumentExampleElements.SUPERSCRIPT,
-      _ERandomDocumentExampleElements.INLINE_MATH,
-      _ERandomDocumentExampleElements.REFERENCE,
-      _ERandomDocumentExampleElements.CITATION, };
+    _ERandomDocumentExampleElements.IN_BRACES,
+    _ERandomDocumentExampleElements.IN_QUOTES,
+    _ERandomDocumentExampleElements.WITH_FONT,
+    _ERandomDocumentExampleElements.WITH_COLOR,
+    _ERandomDocumentExampleElements.EMPH,
+    _ERandomDocumentExampleElements.INLINE_CODE,
+    _ERandomDocumentExampleElements.SUBSCRIPT,
+    _ERandomDocumentExampleElements.SUPERSCRIPT,
+    _ERandomDocumentExampleElements.INLINE_MATH,
+    _ERandomDocumentExampleElements.REFERENCE,
+    _ERandomDocumentExampleElements.CITATION, };
   /** the choices for simple text */
   private static final _ERandomDocumentExampleElements[] SIMPLE_TEXT = {
-      _ERandomDocumentExampleElements.IN_BRACES,
-      _ERandomDocumentExampleElements.IN_QUOTES, };
+    _ERandomDocumentExampleElements.IN_BRACES,
+    _ERandomDocumentExampleElements.IN_QUOTES, };
   /** the choices for inside a section */
   private static final _ERandomDocumentExampleElements[] SECTION_PLAIN = {
-      _ERandomDocumentExampleElements.SECTION,
-      _ERandomDocumentExampleElements.ENUM,
-      _ERandomDocumentExampleElements.ITEMIZE,
-      _ERandomDocumentExampleElements.FIGURE,
-      _ERandomDocumentExampleElements.FIGURE_SERIES,
-      _ERandomDocumentExampleElements.TABLE,
-      _ERandomDocumentExampleElements.EQUATION,
-      _ERandomDocumentExampleElements.CODE,
-      _ERandomDocumentExampleElements.NORMAL_TEXT, };
+    _ERandomDocumentExampleElements.SECTION,
+    _ERandomDocumentExampleElements.ENUM,
+    _ERandomDocumentExampleElements.ITEMIZE,
+    _ERandomDocumentExampleElements.FIGURE,
+    _ERandomDocumentExampleElements.FIGURE_SERIES,
+    _ERandomDocumentExampleElements.TABLE,
+    _ERandomDocumentExampleElements.EQUATION,
+    _ERandomDocumentExampleElements.CODE,
+    _ERandomDocumentExampleElements.NORMAL_TEXT, };
 
   /** the maximum runtime: {@value} ms */
   private static final long MAX_RUNTIME = 1400_000L;
@@ -187,7 +187,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * run the example
-   * 
+   *
    * @param args
    *          the arguments
    * @throws Throwable
@@ -266,7 +266,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * note a used label
-   * 
+   *
    * @param e
    *          the labeled element
    */
@@ -284,7 +284,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * pop a label
-   * 
+   *
    * @return the label, or {@code null} if the label list is empty
    */
   private final ILabel __getLabel() {
@@ -304,7 +304,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * get the next figure
-   * 
+   *
    * @return the next figure
    */
   private synchronized final long __nextFigure() {
@@ -313,7 +313,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create the header
-   * 
+   *
    * @param header
    *          the header
    */
@@ -324,7 +324,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create a random header
-   * 
+   *
    * @param header
    *          the header
    * @param clazz
@@ -371,7 +371,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * Create a section in a section container
-   * 
+   *
    * @param sc
    *          the section container
    * @param sectionDepth
@@ -418,23 +418,23 @@ public class RandomDocumentExample extends DocumentExample {
                   cur = _ERandomDocumentExampleElements.NORMAL_TEXT;
                 } else {
                   cur = ((this.m_rand.nextInt(3) > 0)//
-                  ? _ERandomDocumentExampleElements.NORMAL_TEXT
-                      : _ERandomDocumentExampleElements.SECTION);
+                      ? _ERandomDocumentExampleElements.NORMAL_TEXT
+                          : _ERandomDocumentExampleElements.SECTION);
                 }
               } else {
                 cur = this.m_termination._suggest(this.m_rand,
                     RandomDocumentExample.SECTION_PLAIN);
                 while ((cur == last)// never have two same
                     || ((cur == _ERandomDocumentExampleElements.FIGURE) && //
-                    (last == _ERandomDocumentExampleElements.FIGURE_SERIES))//
-                    || ((cur == _ERandomDocumentExampleElements.FIGURE_SERIES) && //
-                    (last == _ERandomDocumentExampleElements.FIGURE))//
-                    || ((cur == _ERandomDocumentExampleElements.ENUM) && //
-                    (last == _ERandomDocumentExampleElements.ITEMIZE))//
-                    || ((cur == _ERandomDocumentExampleElements.ITEMIZE) && //
-                    (last == _ERandomDocumentExampleElements.ENUM))) {
+                        (last == _ERandomDocumentExampleElements.FIGURE_SERIES))//
+                        || ((cur == _ERandomDocumentExampleElements.FIGURE_SERIES) && //
+                            (last == _ERandomDocumentExampleElements.FIGURE))//
+                            || ((cur == _ERandomDocumentExampleElements.ENUM) && //
+                                (last == _ERandomDocumentExampleElements.ITEMIZE))//
+                                || ((cur == _ERandomDocumentExampleElements.ITEMIZE) && //
+                                    (last == _ERandomDocumentExampleElements.ENUM))) {
                   cur = RandomDocumentExample.SECTION_PLAIN[this.m_rand
-                      .nextInt(RandomDocumentExample.SECTION_PLAIN.length)];
+                                                            .nextInt(RandomDocumentExample.SECTION_PLAIN.length)];
                 }
               }
             }
@@ -553,18 +553,18 @@ public class RandomDocumentExample extends DocumentExample {
               || (this.m_termination._continue() && this.m_rand
                   .nextBoolean()));
 
-          if (ra != null) {
-            looper: for (final Future<Void> f : ra) {
-              if (f != null) {
-                try {
-                  f.get();
-                } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(tt, error);
-                  break looper;
-                }
+        if (ra != null) {
+          looper: for (final Future<Void> f : ra) {
+            if (f != null) {
+              try {
+                f.get();
+              } catch (final Throwable tt) {
+                error = ErrorUtils.aggregateError(tt, error);
+                break looper;
               }
             }
           }
+        }
         }
       }
     } catch (final Throwable t) {
@@ -579,7 +579,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * print some text
-   * 
+   *
    * @param out
    *          the text output
    * @param depth
@@ -589,6 +589,7 @@ public class RandomDocumentExample extends DocumentExample {
    * @param canLineBreak
    *          can we have a line break?
    */
+  @SuppressWarnings("fallthrough")
   private final void __text(final ITextOutput out, final int depth,
       final boolean needsNewLine, final boolean canLineBreak) {
     boolean first, must, needs;
@@ -607,268 +608,268 @@ public class RandomDocumentExample extends DocumentExample {
     try {
       main: do {
         spacer: {
-          if (first) {
-            if ((depth <= 0) && must && (!canLineBreak)) {
-              out.appendLineBreak();
-            }
-            break spacer;
-          }
-          if ((!canLineBreak) || this.m_rand.nextBoolean()) {
-            out.append(' ');
-          } else {
+        if (first) {
+          if ((depth <= 0) && must && (!canLineBreak)) {
             out.appendLineBreak();
           }
+          break spacer;
         }
-        first = false;
-
-        if (canLineBreak) {
-          LoremIpsum.appendLoremIpsum(out, this.m_rand, ((depth > 0) ? 8
-              : 64));
+        if ((!canLineBreak) || this.m_rand.nextBoolean()) {
+          out.append(' ');
         } else {
-          LoremIpsum.appendLoremIpsum(out, this.m_rand, 4);
+          out.appendLineBreak();
+        }
+      }
+      first = false;
+
+      if (canLineBreak) {
+        LoremIpsum.appendLoremIpsum(out, this.m_rand, ((depth > 0) ? 8
+            : 64));
+      } else {
+        LoremIpsum.appendLoremIpsum(out, this.m_rand, 4);
+      }
+
+      if ((out instanceof IPlainText) && (depth < 10)) {
+
+        switch (this.m_termination
+            ._suggest(
+                this.m_rand,
+                (out instanceof IComplexText) ? RandomDocumentExample.COMPLEX_TEXT
+                    : RandomDocumentExample.SIMPLE_TEXT)) {
+                      case IN_BRACES: {
+                        out.append(' ');
+                        this.m_termination._done(//
+                            _ERandomDocumentExampleElements.IN_BRACES);
+                        try (final IPlainText t = ((IPlainText) out).inBraces()) {
+                          try {
+                            this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
+                                canLineBreak);
+                          } catch (final Throwable tt) {
+                            error = ErrorUtils.aggregateError(tt, error);
+                            break main;
+                          }
+                        }
+                        break;
+                      }
+                      case IN_QUOTES: {
+                        out.append(' ');
+                        this.m_termination._done(//
+                            _ERandomDocumentExampleElements.IN_QUOTES);
+                        try (final IPlainText t = ((IPlainText) out).inQuotes()) {
+                          try {
+                            this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
+                                canLineBreak);
+                          } catch (final Throwable tt) {
+                            error = ErrorUtils.aggregateError(tt, error);
+                            break main;
+                          }
+                        }
+                        break;
+                      }
+                      case WITH_FONT: {
+                        out.append(' ');
+                        this.m_termination._done(//
+                            _ERandomDocumentExampleElements.WITH_FONT);
+                        try (final IPlainText t = ((IComplexText) out)
+                            .style((s = this.m_fonts[this.m_rand
+                                                     .nextInt(this.m_fonts.length)]))) {
+                          try {
+                            t.append("In ");//$NON-NLS-1$
+                            s.appendDescription(ETextCase.IN_SENTENCE, t, false);
+                            t.append(" font: "); //$NON-NLS-1$
+                            this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
+                                false);
+                          } catch (final Throwable tt) {
+                            error = ErrorUtils.aggregateError(tt, error);
+                            break main;
+                          }
+                        }
+                        break;
+                      }
+                      case WITH_COLOR: {
+                        out.append(' ');
+                        this.m_termination._done(//
+                            _ERandomDocumentExampleElements.WITH_COLOR);
+                        try (final IPlainText t = ((IComplexText) out)
+                            .style((s = this.m_colors[this.m_rand
+                                                      .nextInt(this.m_colors.length)]))) {
+                          try {
+                            t.append("In ");//$NON-NLS-1$
+                            s.appendDescription(ETextCase.IN_SENTENCE, t, false);
+                            t.append(" color: "); //$NON-NLS-1$
+                            this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
+                                canLineBreak);
+                          } catch (final Throwable tt) {
+                            error = ErrorUtils.aggregateError(tt, error);
+                            break main;
+                          }
+                        }
+                        break;
+                      }
+                      case EMPH: {
+                        out.append(' ');
+                        this.m_termination
+                        ._done(_ERandomDocumentExampleElements.EMPH);
+                        try (final IPlainText t = ((IComplexText) out).emphasize()) {
+                          try {
+                            t.append("Something Emphasized: "); //$NON-NLS-1$
+                            LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);
+                          } catch (final Throwable tt) {
+                            error = ErrorUtils.aggregateError(tt, error);
+                            break main;
+                          }
+                        }
+                        break;
+                      }
+                      case INLINE_CODE: {
+                        if (canLineBreak) {
+                          out.append(' ');
+                          this.m_termination
+                          ._done(_ERandomDocumentExampleElements.INLINE_CODE);
+                          try (final IText t = ((IComplexText) out).inlineCode()) {
+                            try {
+                              t.append("Inline Code: "); //$NON-NLS-1$
+                              LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);
+                            } catch (final Throwable tt) {
+                              error = ErrorUtils.aggregateError(tt, error);
+                              break main;
+                            }
+                          }
+                          break;
+                        }
+                      }
+                      case SUBSCRIPT: {
+                        this.m_termination
+                        ._done(_ERandomDocumentExampleElements.SUBSCRIPT);
+                        out.append(" Sub: "); //$NON-NLS-1$
+                        try (final IPlainText t = ((IComplexText) out).subscript()) {
+                          try {
+                            LoremIpsum.appendLoremIpsum(t, this.m_rand, 2);
+                          } catch (final Throwable tt) {
+                            error = ErrorUtils.aggregateError(tt, error);
+                            break main;
+                          }
+                        }
+                        break;
+                      }
+                      case SUPERSCRIPT: {
+                        this.m_termination._done(//
+                            _ERandomDocumentExampleElements.SUPERSCRIPT);
+                        out.append(" Super: "); //$NON-NLS-1$
+                        try (final IPlainText t = ((IComplexText) out).superscript()) {
+                          try {
+                            LoremIpsum.appendLoremIpsum(t, this.m_rand, 2);
+                          } catch (final Throwable tt) {
+                            error = ErrorUtils.aggregateError(tt, error);
+                            break main;
+                          }
+                        }
+                        break;
+                      }
+
+                      case INLINE_MATH: {
+                        this.m_termination._done(//
+                            _ERandomDocumentExampleElements.INLINE_MATH);
+                        out.append(" Inline equation: ");//$NON-NLS-1$
+                        try {
+                          this.__createInlineMath(((IComplexText) out));
+                        } catch (final Throwable tt) {
+                          error = ErrorUtils.aggregateError(tt, error);
+                          break main;
+                        }
+                        break;
+                      }
+
+                      case REFERENCE: {
+                        this.m_termination._done(//
+                            _ERandomDocumentExampleElements.REFERENCE);
+                        try {
+                          if (labels == null) {
+                            labels = new ArrayList<>();
+                          }
+                          do {
+                            l = this.__getLabel();
+                            if (l == null) {
+                              break;
+                            }
+                            if (labels.contains(l)) {
+                              continue;
+                            }
+                            labels.add(l);
+                          } while (this.m_rand.nextBoolean());
+
+                          if (labels.size() > 0) {
+                            out.append(" And here we reference");//$NON-NLS-1$
+
+                            ((IComplexText) out)
+                            .reference(
+                                ETextCase.IN_SENTENCE,
+                                RandomDocumentExample.SEQUENCE[this.m_rand
+                                                               .nextInt(RandomDocumentExample.SEQUENCE.length)],
+                                                               labels.toArray(new ILabel[labels.size()]));
+                            labels.clear();
+                            out.append('.');
+                          }
+                        } catch (final Throwable tt) {
+                          error = ErrorUtils.aggregateError(tt, error);
+                          break main;
+                        }
+                        break;
+                      }
+
+                      case CITATION: {
+                        this.m_termination._done(//
+                            _ERandomDocumentExampleElements.CITATION);
+                        try {
+                          out.append(" And here we cite");//$NON-NLS-1$
+
+                          try (BibliographyBuilder bb = ((IComplexText) out).cite(
+                              RandomDocumentExample.CITES[this.m_rand
+                                                          .nextInt(RandomDocumentExample.CITES.length)],
+                                                          ETextCase.IN_SENTENCE,
+                                                          RandomDocumentExample.SEQUENCE[this.m_rand
+                                                                                         .nextInt(RandomDocumentExample.SEQUENCE.length)])) {
+
+                            do {
+                              bb.add(this.m_bib.get(this.m_rand.nextInt(this.m_bib
+                                  .size())));
+                            } while (this.m_rand.nextBoolean());
+                          }
+                          out.append('.');
+                        } catch (final Throwable tt) {
+                          error = ErrorUtils.aggregateError(tt, error);
+                          break main;
+                        }
+                        break;
+                      }
+                      default: {
+                        throw new IllegalStateException();
+                      }
         }
 
-        if ((out instanceof IPlainText) && (depth < 10)) {
+        needs = true;
+      }
 
-          switch (this.m_termination
-              ._suggest(
-                  this.m_rand,
-                  (out instanceof IComplexText) ? RandomDocumentExample.COMPLEX_TEXT
-                      : RandomDocumentExample.SIMPLE_TEXT)) {
-            case IN_BRACES: {
-              out.append(' ');
-              this.m_termination._done(//
-                  _ERandomDocumentExampleElements.IN_BRACES);
-              try (final IPlainText t = ((IPlainText) out).inBraces()) {
-                try {
-                  this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
-                      canLineBreak);
-                } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(tt, error);
-                  break main;
-                }
-              }
-              break;
-            }
-            case IN_QUOTES: {
-              out.append(' ');
-              this.m_termination._done(//
-                  _ERandomDocumentExampleElements.IN_QUOTES);
-              try (final IPlainText t = ((IPlainText) out).inQuotes()) {
-                try {
-                  this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
-                      canLineBreak);
-                } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(tt, error);
-                  break main;
-                }
-              }
-              break;
-            }
-            case WITH_FONT: {
-              out.append(' ');
-              this.m_termination._done(//
-                  _ERandomDocumentExampleElements.WITH_FONT);
-              try (final IPlainText t = ((IComplexText) out)
-                  .style((s = this.m_fonts[this.m_rand
-                      .nextInt(this.m_fonts.length)]))) {
-                try {
-                  t.append("In ");//$NON-NLS-1$
-                  s.appendDescription(ETextCase.IN_SENTENCE, t, false);
-                  t.append(" font: "); //$NON-NLS-1$
-                  this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
-                      false);
-                } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(tt, error);
-                  break main;
-                }
-              }
-              break;
-            }
-            case WITH_COLOR: {
-              out.append(' ');
-              this.m_termination._done(//
-                  _ERandomDocumentExampleElements.WITH_COLOR);
-              try (final IPlainText t = ((IComplexText) out)
-                  .style((s = this.m_colors[this.m_rand
-                      .nextInt(this.m_colors.length)]))) {
-                try {
-                  t.append("In ");//$NON-NLS-1$
-                  s.appendDescription(ETextCase.IN_SENTENCE, t, false);
-                  t.append(" color: "); //$NON-NLS-1$
-                  this.__text(t, (depth + 1), this.m_rand.nextBoolean(),
-                      canLineBreak);
-                } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(tt, error);
-                  break main;
-                }
-              }
-              break;
-            }
-            case EMPH: {
-              out.append(' ');
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.EMPH);
-              try (final IPlainText t = ((IComplexText) out).emphasize()) {
-                try {
-                  t.append("Something Emphasized: "); //$NON-NLS-1$
-                  LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);
-                } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(tt, error);
-                  break main;
-                }
-              }
-              break;
-            }
-            case INLINE_CODE: {
-              if (canLineBreak) {
-                out.append(' ');
-                this.m_termination
-                    ._done(_ERandomDocumentExampleElements.INLINE_CODE);
-                try (final IText t = ((IComplexText) out).inlineCode()) {
-                  try {
-                    t.append("Inline Code: "); //$NON-NLS-1$
-                    LoremIpsum.appendLoremIpsum(t, this.m_rand, 5);
-                  } catch (final Throwable tt) {
-                    error = ErrorUtils.aggregateError(tt, error);
-                    break main;
-                  }
-                }
-                break;
-              }
-            }
-            case SUBSCRIPT: {
-              this.m_termination
-                  ._done(_ERandomDocumentExampleElements.SUBSCRIPT);
-              out.append(" Sub: "); //$NON-NLS-1$
-              try (final IPlainText t = ((IComplexText) out).subscript()) {
-                try {
-                  LoremIpsum.appendLoremIpsum(t, this.m_rand, 2);
-                } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(tt, error);
-                  break main;
-                }
-              }
-              break;
-            }
-            case SUPERSCRIPT: {
-              this.m_termination._done(//
-                  _ERandomDocumentExampleElements.SUPERSCRIPT);
-              out.append(" Super: "); //$NON-NLS-1$
-              try (final IPlainText t = ((IComplexText) out).superscript()) {
-                try {
-                  LoremIpsum.appendLoremIpsum(t, this.m_rand, 2);
-                } catch (final Throwable tt) {
-                  error = ErrorUtils.aggregateError(tt, error);
-                  break main;
-                }
-              }
-              break;
-            }
+      if (needs && (this.m_rand.nextBoolean())) {
+        try {
+          out.append(' ');
 
-            case INLINE_MATH: {
-              this.m_termination._done(//
-                  _ERandomDocumentExampleElements.INLINE_MATH);
-              out.append(" Inline equation: ");//$NON-NLS-1$
-              try {
-                this.__createInlineMath(((IComplexText) out));
-              } catch (final Throwable tt) {
-                error = ErrorUtils.aggregateError(tt, error);
-                break main;
-              }
-              break;
-            }
-
-            case REFERENCE: {
-              this.m_termination._done(//
-                  _ERandomDocumentExampleElements.REFERENCE);
-              try {
-                if (labels == null) {
-                  labels = new ArrayList<>();
-                }
-                do {
-                  l = this.__getLabel();
-                  if (l == null) {
-                    break;
-                  }
-                  if (labels.contains(l)) {
-                    continue;
-                  }
-                  labels.add(l);
-                } while (this.m_rand.nextBoolean());
-
-                if (labels.size() > 0) {
-                  out.append(" And here we reference");//$NON-NLS-1$
-
-                  ((IComplexText) out)
-                      .reference(
-                          ETextCase.IN_SENTENCE,
-                          RandomDocumentExample.SEQUENCE[this.m_rand
-                              .nextInt(RandomDocumentExample.SEQUENCE.length)],
-                          labels.toArray(new ILabel[labels.size()]));
-                  labels.clear();
-                  out.append('.');
-                }
-              } catch (final Throwable tt) {
-                error = ErrorUtils.aggregateError(tt, error);
-                break main;
-              }
-              break;
-            }
-
-            case CITATION: {
-              this.m_termination._done(//
-                  _ERandomDocumentExampleElements.CITATION);
-              try {
-                out.append(" And here we cite");//$NON-NLS-1$
-
-                try (BibliographyBuilder bb = ((IComplexText) out).cite(
-                    RandomDocumentExample.CITES[this.m_rand
-                        .nextInt(RandomDocumentExample.CITES.length)],
-                    ETextCase.IN_SENTENCE,
-                    RandomDocumentExample.SEQUENCE[this.m_rand
-                        .nextInt(RandomDocumentExample.SEQUENCE.length)])) {
-
-                  do {
-                    bb.add(this.m_bib.get(this.m_rand.nextInt(this.m_bib
-                        .size())));
-                  } while (this.m_rand.nextBoolean());
-                }
-                out.append('.');
-              } catch (final Throwable tt) {
-                error = ErrorUtils.aggregateError(tt, error);
-                break main;
-              }
-              break;
-            }
-            default: {
-              throw new IllegalStateException();
-            }
+          if (canLineBreak) {
+            LoremIpsum.appendLoremIpsum(out, this.m_rand,
+                ((depth > 0) ? 8 : 64));
+          } else {
+            LoremIpsum.appendLoremIpsum(out, this.m_rand, 4);
           }
 
-          needs = true;
+          this.m_termination._done(//
+              _ERandomDocumentExampleElements.NORMAL_TEXT);
+        } catch (final Throwable tt) {
+          error = ErrorUtils.aggregateError(tt, error);
+          break main;
         }
+      }
 
-        if (needs && (this.m_rand.nextBoolean())) {
-          try {
-            out.append(' ');
-
-            if (canLineBreak) {
-              LoremIpsum.appendLoremIpsum(out, this.m_rand,
-                  ((depth > 0) ? 8 : 64));
-            } else {
-              LoremIpsum.appendLoremIpsum(out, this.m_rand, 4);
-            }
-
-            this.m_termination._done(//
-                _ERandomDocumentExampleElements.NORMAL_TEXT);
-          } catch (final Throwable tt) {
-            error = ErrorUtils.aggregateError(tt, error);
-            break main;
-          }
-        }
-
-        first = false;
+      first = false;
       } while ((this.m_termination._continue())
           && ((this.m_rand.nextInt(depth + 2) <= 0)));
     } catch (final Throwable a) {
@@ -883,7 +884,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create a list
-   * 
+   *
    * @param sb
    *          the section body
    * @param listDepth
@@ -898,8 +899,8 @@ public class RandomDocumentExample extends DocumentExample {
     this.m_termination._done(type);
 
     try (final IList list = ((_ERandomDocumentExampleElements.ENUM == type)//
-    ? sb.enumeration()
-        : sb.itemization())) {
+        ? sb.enumeration()
+            : sb.itemization())) {
       ic = 0;
       do {
         try (final IStructuredText item = list.item()) {
@@ -911,7 +912,7 @@ public class RandomDocumentExample extends DocumentExample {
           if ((listDepth < 3) && (this.m_rand.nextInt(listDepth + 5) <= 0)) {
             this.__createList(item, (listDepth + 1), this.m_rand
                 .nextBoolean() ? _ERandomDocumentExampleElements.ENUM
-                : _ERandomDocumentExampleElements.ITEMIZE);
+                    : _ERandomDocumentExampleElements.ITEMIZE);
           }
         }
       } while (this.m_termination._continue()
@@ -922,7 +923,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create the body
-   * 
+   *
    * @param body
    *          the body
    */
@@ -935,7 +936,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create the footer
-   * 
+   *
    * @param footer
    *          the footer
    */
@@ -947,7 +948,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create
-   * 
+   *
    * @param doc
    *          the document
    * @param r
@@ -962,7 +963,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create
-   * 
+   *
    * @param doc
    *          the document
    * @param r
@@ -1132,9 +1133,9 @@ public class RandomDocumentExample extends DocumentExample {
 
     if (error != null) {
       RethrowMode.AS_RUNTIME_EXCEPTION
-          .rethrow(//
-              "Error while creating the global structure of the example document.",//$NON-NLS-1$
-              true, error);
+      .rethrow(//
+          "Error while creating the global structure of the example document.",//$NON-NLS-1$
+          true, error);
     }
   }
 
@@ -1179,7 +1180,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * make the variable declaration
-   * 
+   *
    * @param body
    *          the dest
    * @param vars
@@ -1221,7 +1222,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * make the variable declaration
-   * 
+   *
    * @param body
    *          the destination
    * @param depth
@@ -1234,10 +1235,11 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create a code
-   * 
+   *
    * @param sb
    *          the section body
    */
+  @SuppressWarnings("fallthrough")
   private final void __createCode(final ISectionBody sb) {
     final Random r;
     int i, depth, vars, a, b, c, d, lc;
@@ -1263,251 +1265,251 @@ public class RandomDocumentExample extends DocumentExample {
           lc++;
           switch (r.nextInt(//
               (lc >= 50) ? 1 : //
-                  (depth < RandomDocumentExample.CODE_MAX_DEPTH) ? 11 : 8)) {
+                (depth < RandomDocumentExample.CODE_MAX_DEPTH) ? 11 : 8)) {
 
-            case 0:
-            case 1:
-            case 2:
-            case 3: {
-              if ((!needsContent) && (depth > 0)) {
-                depth--;
-                RandomDocumentExample.__indentLine(body, depth);
-                body.append('}');
-                break;
-              }
-            }
+                  case 0:
+                  case 1:
+                  case 2:
+                  case 3: {
+                    if ((!needsContent) && (depth > 0)) {
+                      depth--;
+                      RandomDocumentExample.__indentLine(body, depth);
+                      body.append('}');
+                      break;
+                    }
+                  }
 
-            case 4: {
-              RandomDocumentExample.__indentLine(body, depth);
-              needsContent = false;
-              a = r.nextInt(vars);
-              do {
-                b = r.nextInt(vars);
-              } while ((vars > 1) && (a == b));
-              do {
-                c = r.nextInt(vars);
-              } while ((vars > 2) && ((a == c) || (b == c)));
-              body.append((char) ('a' + a));
-              body.append(' ');
-              body.append('=');
-              body.append(' ');
-              body.append((char) ('a' + b));
-              body.append(' ');
-              switch (r.nextInt(10)) {
-                case 0: {
-                  body.append('+');
-                  break;
-                }
-                case 1: {
-                  body.append('-');
-                  break;
-                }
-                case 2: {
-                  body.append('*');
-                  break;
-                }
-                case 3: {
-                  body.append("mod"); //$NON-NLS-1$
-                  break;
-                }
-                case 4: {
-                  body.append('<');
-                  body.append('<');
-                  break;
-                }
-                case 5: {
-                  body.append('>');
-                  body.append('>');
-                  break;
-                }
-                case 6: {
-                  body.append('|');
-                  break;
-                }
-                case 7: {
-                  body.append('&');
-                  break;
-                }
-                case 8: {
-                  body.append('^');
-                  break;
-                }
-                default: {
-                  body.append('/');
-                  break;
-                }
-              }
-              body.append(' ');
-              body.append((char) ('a' + c));
-              body.append(';');
-              break;
-            }
+                  case 4: {
+                    RandomDocumentExample.__indentLine(body, depth);
+                    needsContent = false;
+                    a = r.nextInt(vars);
+                    do {
+                      b = r.nextInt(vars);
+                    } while ((vars > 1) && (a == b));
+                    do {
+                      c = r.nextInt(vars);
+                    } while ((vars > 2) && ((a == c) || (b == c)));
+                    body.append((char) ('a' + a));
+                    body.append(' ');
+                    body.append('=');
+                    body.append(' ');
+                    body.append((char) ('a' + b));
+                    body.append(' ');
+                    switch (r.nextInt(10)) {
+                      case 0: {
+                        body.append('+');
+                        break;
+                      }
+                      case 1: {
+                        body.append('-');
+                        break;
+                      }
+                      case 2: {
+                        body.append('*');
+                        break;
+                      }
+                      case 3: {
+                        body.append("mod"); //$NON-NLS-1$
+                        break;
+                      }
+                      case 4: {
+                        body.append('<');
+                        body.append('<');
+                        break;
+                      }
+                      case 5: {
+                        body.append('>');
+                        body.append('>');
+                        break;
+                      }
+                      case 6: {
+                        body.append('|');
+                        break;
+                      }
+                      case 7: {
+                        body.append('&');
+                        break;
+                      }
+                      case 8: {
+                        body.append('^');
+                        break;
+                      }
+                      default: {
+                        body.append('/');
+                        break;
+                      }
+                    }
+                    body.append(' ');
+                    body.append((char) ('a' + c));
+                    body.append(';');
+                    break;
+                  }
 
-            case 5: {
-              RandomDocumentExample.__indentLine(body, depth);
-              needsContent = false;
-              a = r.nextInt(vars);
-              do {
-                b = r.nextInt(vars);
-              } while ((vars > 1) && (a == b));
-              do {
-                c = r.nextInt(vars);
-              } while ((vars > 2) && ((a == c) || (b == c)));
-              do {
-                d = r.nextInt(vars);
-              } while ((vars > 3) && ((a == d) || (b == d) || (c == d)));
+                  case 5: {
+                    RandomDocumentExample.__indentLine(body, depth);
+                    needsContent = false;
+                    a = r.nextInt(vars);
+                    do {
+                      b = r.nextInt(vars);
+                    } while ((vars > 1) && (a == b));
+                    do {
+                      c = r.nextInt(vars);
+                    } while ((vars > 2) && ((a == c) || (b == c)));
+                    do {
+                      d = r.nextInt(vars);
+                    } while ((vars > 3) && ((a == d) || (b == d) || (c == d)));
 
-              body.append((char) ('a' + a));
-              body.append(' ');
-              body.append('=');
-              body.append(' ');
-              body.append('(');
-              body.append('(');
-              body.append((char) ('a' + b));
-              body.append(' ');
-              switch (r.nextInt(4)) {
-                case 0: {
-                  body.append('=');
-                  break;
-                }
-                case 1: {
-                  body.append('<');
-                  break;
-                }
-                case 2: {
-                  body.append('>');
-                  break;
-                }
-                default: {
-                  body.append('!');
-                  break;
-                }
-              }
-              body.append('=');
-              body.append(' ');
-              body.append((char) ('a' + c));
-              body.append(')');
-              body.append(' ');
-              body.append('?');
-              body.append(' ');
-              body.append((char) ('a' + d));
-              body.append(' ');
-              body.append(':');
-              body.append(' ');
-              body.append((char) ('a' + (r.nextBoolean() ? b : c)));
-              body.append(')');
-              body.append(';');
-              break;
-            }
+                    body.append((char) ('a' + a));
+                    body.append(' ');
+                    body.append('=');
+                    body.append(' ');
+                    body.append('(');
+                    body.append('(');
+                    body.append((char) ('a' + b));
+                    body.append(' ');
+                    switch (r.nextInt(4)) {
+                      case 0: {
+                        body.append('=');
+                        break;
+                      }
+                      case 1: {
+                        body.append('<');
+                        break;
+                      }
+                      case 2: {
+                        body.append('>');
+                        break;
+                      }
+                      default: {
+                        body.append('!');
+                        break;
+                      }
+                    }
+                    body.append('=');
+                    body.append(' ');
+                    body.append((char) ('a' + c));
+                    body.append(')');
+                    body.append(' ');
+                    body.append('?');
+                    body.append(' ');
+                    body.append((char) ('a' + d));
+                    body.append(' ');
+                    body.append(':');
+                    body.append(' ');
+                    body.append((char) ('a' + (r.nextBoolean() ? b : c)));
+                    body.append(')');
+                    body.append(';');
+                    break;
+                  }
 
-            case 6: {
-              RandomDocumentExample.__indentLine(body, depth);
-              needsContent = false;
-              body.append("System.out.println("); //$NON-NLS-1$
-              body.append((char) ('a' + r.nextInt(vars)));
-              body.append(')');
-              body.append(';');
-              break;
-            }
+                  case 6: {
+                    RandomDocumentExample.__indentLine(body, depth);
+                    needsContent = false;
+                    body.append("System.out.println("); //$NON-NLS-1$
+                    body.append((char) ('a' + r.nextInt(vars)));
+                    body.append(')');
+                    body.append(';');
+                    break;
+                  }
 
-            case 7: {
-              body.appendLineBreak();
-              body.append('/');
-              body.append('*');
-              body.append(' ');
-              LoremIpsum.appendLoremIpsum(body, r, 10);
-              body.append(' ');
-              body.append('*');
-              body.append('/');
-              break;
-            }
+                  case 7: {
+                    body.appendLineBreak();
+                    body.append('/');
+                    body.append('*');
+                    body.append(' ');
+                    LoremIpsum.appendLoremIpsum(body, r, 10);
+                    body.append(' ');
+                    body.append('*');
+                    body.append('/');
+                    break;
+                  }
 
-            case 8: {
-              RandomDocumentExample.__indentLine(body, depth);
-              needsContent = true;
-              a = r.nextInt(vars);
-              do {
-                b = r.nextInt(vars);
-              } while ((vars > 1) && (a == b));
-              body.append("if("); //$NON-NLS-1$
-              body.append((char) ('a' + a));
-              body.append(' ');
-              body.append(r.nextBoolean() ? '<' : '>');
-              body.append(' ');
-              body.append((char) ('a' + b));
-              body.append(')');
-              body.append(' ');
-              body.append('{');
-              depth++;
-              break;
-            }
+                  case 8: {
+                    RandomDocumentExample.__indentLine(body, depth);
+                    needsContent = true;
+                    a = r.nextInt(vars);
+                    do {
+                      b = r.nextInt(vars);
+                    } while ((vars > 1) && (a == b));
+                    body.append("if("); //$NON-NLS-1$
+                    body.append((char) ('a' + a));
+                    body.append(' ');
+                    body.append(r.nextBoolean() ? '<' : '>');
+                    body.append(' ');
+                    body.append((char) ('a' + b));
+                    body.append(')');
+                    body.append(' ');
+                    body.append('{');
+                    depth++;
+                    break;
+                  }
 
-            default: {
-              RandomDocumentExample.__indentLine(body, depth);
-              needsContent = true;
-              a = r.nextInt(vars);
-              do {
-                b = r.nextInt(vars);
-              } while ((vars > 1) && (a == b));
-              do {
-                c = r.nextInt(vars);
-              } while ((vars > 2) && (((a == c) || (b == c))));
-              body.append("for("); //$NON-NLS-1$
-              body.append((char) ('a' + a));
-              body.append(' ');
-              body.append('=');
-              body.append(' ');
-              body.append((char) ('a' + b));
-              body.append(';');
-              body.append(' ');
-              body.append((char) ('a' + a));
-              body.append(' ');
+                  default: {
+                    RandomDocumentExample.__indentLine(body, depth);
+                    needsContent = true;
+                    a = r.nextInt(vars);
+                    do {
+                      b = r.nextInt(vars);
+                    } while ((vars > 1) && (a == b));
+                    do {
+                      c = r.nextInt(vars);
+                    } while ((vars > 2) && (((a == c) || (b == c))));
+                    body.append("for("); //$NON-NLS-1$
+                    body.append((char) ('a' + a));
+                    body.append(' ');
+                    body.append('=');
+                    body.append(' ');
+                    body.append((char) ('a' + b));
+                    body.append(';');
+                    body.append(' ');
+                    body.append((char) ('a' + a));
+                    body.append(' ');
 
-              i = r.nextInt(5) - 2;
-              switch (i) {
-                case -2: {
-                  body.append('<');
-                  body.append('=');
-                  break;
-                }
-                case -1: {
-                  body.append('<');
-                  break;
-                }
-                case 0: {
-                  body.append('!');
-                  body.append('=');
-                  break;
-                }
-                case 1: {
-                  body.append('>');
-                  body.append('=');
-                  break;
-                }
-                default: {
-                  body.append('>');
-                  break;
-                }
-              }
+                    i = r.nextInt(5) - 2;
+                    switch (i) {
+                      case -2: {
+                        body.append('<');
+                        body.append('=');
+                        break;
+                      }
+                      case -1: {
+                        body.append('<');
+                        break;
+                      }
+                      case 0: {
+                        body.append('!');
+                        body.append('=');
+                        break;
+                      }
+                      case 1: {
+                        body.append('>');
+                        body.append('=');
+                        break;
+                      }
+                      default: {
+                        body.append('>');
+                        break;
+                      }
+                    }
 
-              body.append(' ');
-              body.append((char) ('a' + c));
-              body.append(';');
-              body.append(' ');
-              body.append((char) ('a' + a));
-              if (i <= 0) {
-                body.append('+');
-                body.append('+');
-              } else {
-                body.append('-');
-                body.append('-');
-              }
-              body.append(')');
-              body.append(' ');
-              body.append('{');
-              depth++;
-              break;
-            }
+                    body.append(' ');
+                    body.append((char) ('a' + c));
+                    body.append(';');
+                    body.append(' ');
+                    body.append((char) ('a' + a));
+                    if (i <= 0) {
+                      body.append('+');
+                      body.append('+');
+                    } else {
+                      body.append('-');
+                      body.append('-');
+                    }
+                    body.append(')');
+                    body.append(' ');
+                    body.append('{');
+                    depth++;
+                    break;
+                  }
 
           }
         } while ((lc < 100)
@@ -1518,7 +1520,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create a table
-   * 
+   *
    * @param sb
    *          the section body
    */
@@ -1568,7 +1570,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * make a table section
-   * 
+   *
    * @param sec
    *          the section
    * @param cells
@@ -1602,7 +1604,7 @@ public class RandomDocumentExample extends DocumentExample {
                 }
               }
 
-              maxX = ((i + this.m_rand.nextInt(maxX - i)) + 1);
+            maxX = ((i + this.m_rand.nextInt(maxX - i)) + 1);
             } else {
               maxX = (i + 1);
             }
@@ -1645,7 +1647,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create a figure
-   * 
+   *
    * @param sb
    *          the section body
    */
@@ -1667,7 +1669,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create a figure series
-   * 
+   *
    * @param sb
    *          the section body
    */
@@ -1682,7 +1684,7 @@ public class RandomDocumentExample extends DocumentExample {
     v = s[this.m_rand.nextInt(s.length)];
     c = v.getNX();
     this.m_termination
-        ._done(_ERandomDocumentExampleElements.FIGURE_SERIES);
+    ._done(_ERandomDocumentExampleElements.FIGURE_SERIES);
     try (final IFigureSeries fs = sb.figureSeries(
         this.m_termination._getLabel(this.m_rand, ELabelType.FIGURE), v,
         RandomUtils.longToString(null, this.__nextFigure()))) {
@@ -1697,7 +1699,7 @@ public class RandomDocumentExample extends DocumentExample {
       for (i = (1 + this.m_rand.nextInt(10 * c)); (--i) >= 0;) {
         try (final IFigure fig = fs.figure(this.m_termination._getLabel(
             this.m_rand, ELabelType.SUBFIGURE), RandomUtils.longToString(
-            null, this.__nextFigure()))) {
+                null, this.__nextFigure()))) {
           this.__fillFigure(fig, null);
         }
         MemoryUtils.quickGC();
@@ -1707,7 +1709,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * get a point
-   * 
+   *
    * @param r
    *          the rectangle
    * @return the point
@@ -1721,7 +1723,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * get a random polygon
-   * 
+   *
    * @param r
    *          the rectangle
    * @return the point
@@ -1780,7 +1782,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * fill a figure
-   * 
+   *
    * @param fig
    *          the figure
    * @param v
@@ -1815,10 +1817,11 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * Fill a graphic with random contents
-   * 
+   *
    * @param g
    *          the graphic
    */
+  @SuppressWarnings("fallthrough")
   private final void __randomGraphic(final Graphic g) {
     final Rectangle2D r;
     int k, e, i, limit;
@@ -1939,7 +1942,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create an equation
-   * 
+   *
    * @param sb
    *          the section body
    */
@@ -1955,7 +1958,7 @@ public class RandomDocumentExample extends DocumentExample {
 
   /**
    * create an inline math
-   * 
+   *
    * @param sb
    *          the text
    */
@@ -1963,14 +1966,14 @@ public class RandomDocumentExample extends DocumentExample {
     try (final IMath equ = sb.inlineMath()) {
 
       this.m_termination
-          ._done(_ERandomDocumentExampleElements.INLINE_MATH);
+      ._done(_ERandomDocumentExampleElements.INLINE_MATH);
       this.__fillMath(equ, 1, 1, 4);
     }
   }
 
   /**
    * fill a mathematics context
-   * 
+   *
    * @param math
    *          the maths context
    * @param minArgs
@@ -2099,7 +2102,7 @@ public class RandomDocumentExample extends DocumentExample {
         case 15: {
           try (final IMath nm = math
               .compare(RandomDocumentExample.COMP[this.m_rand
-                  .nextInt(RandomDocumentExample.COMP.length)])) {
+                                                  .nextInt(RandomDocumentExample.COMP.length)])) {
             this.__fillMath(nm, 2, 2, (depth - 1));
           }
           break;
@@ -2174,7 +2177,7 @@ public class RandomDocumentExample extends DocumentExample {
       args++;
     } while ((args < minArgs)
         || (((args < maxArgs) && (this.m_termination._continue()) && //
-        (this.m_rand.nextInt(3) <= 0))));
+            (this.m_rand.nextInt(3) <= 0))));
 
   }
 }

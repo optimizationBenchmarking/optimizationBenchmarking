@@ -20,7 +20,7 @@ final class _CSVEDIContext extends FlatExperimentSetContext {
 
   /**
    * create
-   * 
+   *
    * @param context
    *          the hierarchical context to wrap
    */
@@ -31,7 +31,7 @@ final class _CSVEDIContext extends FlatExperimentSetContext {
 
   /**
    * did we already process dimensions?
-   * 
+   *
    * @return {@code true} if we did, {@code false} otherwise
    */
   final boolean _hasDimensions() {
@@ -45,7 +45,7 @@ final class _CSVEDIContext extends FlatExperimentSetContext {
 
   /**
    * did we already process instances?
-   * 
+   *
    * @return {@code true} if we did, {@code false} otherwise
    */
   final boolean _hasInstances() {
@@ -59,7 +59,7 @@ final class _CSVEDIContext extends FlatExperimentSetContext {
 
   /**
    * Check if a path is new
-   * 
+   *
    * @param path
    *          the path
    * @param attrs

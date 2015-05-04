@@ -73,7 +73,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given object
-   * 
+   *
    * @param object
    *          the object
    * @return a bit set (binary or) of the different type constants which
@@ -89,7 +89,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given number
-   * 
+   *
    * @param number
    *          the number
    * @return a bit set (binary or) of the different type constants which
@@ -129,14 +129,14 @@ public final class NumericalTypes {
       }
     } else {
       res = (NumericalTypes.getTypes(number.longValue()) & //
-      NumericalTypes.getTypes(number.doubleValue()));
+          NumericalTypes.getTypes(number.doubleValue()));
     }
     return ((res != 0) ? res : NumericalTypes.IS_DOUBLE);
   }
 
   /**
    * Get the possible types of a given {@link java.lang.Byte byte} number
-   * 
+   *
    * @param number
    *          the {@link java.lang.Byte byte} number
    * @return a bit set (binary or) of the different type constants which
@@ -150,7 +150,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given {@code byte} number
-   * 
+   *
    * @param number
    *          the {@code byte} number
    * @return a bit set (binary or) of the different type constants which
@@ -164,7 +164,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given {@link java.lang.Short short} number
-   * 
+   *
    * @param number
    *          the {@link java.lang.Short short} number
    * @return a bit set (binary or) of the different type constants which
@@ -176,7 +176,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given {@code short} number
-   * 
+   *
    * @param number
    *          the {@code short} number
    * @return a bit set (binary or) of the different type constants which
@@ -194,7 +194,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given {@link java.lang.Integer int} number
-   * 
+   *
    * @param number
    *          the {@link java.lang.Integer int} number
    * @return a bit set (binary or) of the different type constants which
@@ -206,7 +206,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given {@code int} number
-   * 
+   *
    * @param number
    *          the {@code int} number
    * @return a bit set (binary or) of the different type constants which
@@ -238,7 +238,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given {@link java.lang.Long long} number
-   * 
+   *
    * @param number
    *          the {@link java.lang.Long long} number
    * @return a bit set (binary or) of the different type constants which
@@ -250,7 +250,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given {@code long} number
-   * 
+   *
    * @param number
    *          the {@code long} number
    * @return a bit set (binary or) of the different type constants which
@@ -299,7 +299,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given {@link java.lang.Float float} number
-   * 
+   *
    * @param number
    *          the {@link java.lang.Float float} number
    * @return a bit set (binary or) of the different type constants which
@@ -311,7 +311,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given {@code float} number
-   * 
+   *
    * @param number
    *          the {@code float} number
    * @return a bit set (binary or) of the different type constants which
@@ -352,7 +352,7 @@ public final class NumericalTypes {
       } else {
         d = number;
         if (((float) d) == number) {// should always be true, but let's
-                                    // check
+          // check
           res |= NumericalTypes.IS_DOUBLE;
         }
       }
@@ -364,7 +364,7 @@ public final class NumericalTypes {
   /**
    * Get the possible types of a given {@link java.lang.Double double}
    * number
-   * 
+   *
    * @param number
    *          the {@link java.lang.Double double} number
    * @return a bit set (binary or) of the different type constants which
@@ -377,7 +377,7 @@ public final class NumericalTypes {
   /**
    * Check whether a {@code float} number can be converted to a
    * {@code long} without loss of precision or accuracy.
-   * 
+   *
    * @param number
    *          the {@code float} / floating point number
    * @return {@code true} if {@code ((long)number) == number},
@@ -396,7 +396,7 @@ public final class NumericalTypes {
   /**
    * Check whether a {@code double} number can be converted to a
    * {@code long} without loss of precision or accuracy.
-   * 
+   *
    * @param number
    *          the {@code double} / floating point number
    * @return {@code true} if {@code ((long)number) == number},
@@ -414,7 +414,7 @@ public final class NumericalTypes {
 
   /**
    * Get the possible types of a given {@code short} number
-   * 
+   *
    * @param number
    *          the {@code short} number
    * @return a bit set (binary or) of the different type constants which
@@ -478,7 +478,7 @@ public final class NumericalTypes {
    * the same, we return {@link #IS_FLOAT}, otherwise the representation
    * with the smaller difference.</li>
    * </ol>
-   * 
+   *
    * @param value
    *          the value
    * @return either {@link #IS_FLOAT} or {@link #IS_DOUBLE}
@@ -529,7 +529,7 @@ public final class NumericalTypes {
    * <li>Otherwise, we return {@link #IS_DOUBLE}, since any {@code int} can
    * be converted to a {@code double} without loss of precision.</li>
    * </ol>
-   * 
+   *
    * @param value
    *          the value
    * @return either {@link #IS_FLOAT} or {@link #IS_DOUBLE}
@@ -544,7 +544,7 @@ public final class NumericalTypes {
 
   /**
    * Convert the given {@code byte} value to a number
-   * 
+   *
    * @param val
    *          the value
    * @return the number
@@ -555,7 +555,7 @@ public final class NumericalTypes {
 
   /**
    * Convert the given {@code short} value to a number
-   * 
+   *
    * @param val
    *          the value
    * @return the number
@@ -572,7 +572,7 @@ public final class NumericalTypes {
 
   /**
    * Convert the given {@code int} value to a number
-   * 
+   *
    * @param val
    *          the value
    * @return the number
@@ -592,7 +592,7 @@ public final class NumericalTypes {
 
   /**
    * Convert the given {@code long} value to a number
-   * 
+   *
    * @param val
    *          the value
    * @return the number
@@ -615,7 +615,7 @@ public final class NumericalTypes {
 
   /**
    * Convert the given {@code float} value to a number
-   * 
+   *
    * @param val
    *          the value
    * @return the number
@@ -641,7 +641,7 @@ public final class NumericalTypes {
 
   /**
    * Convert the given {@code double} value to a number
-   * 
+   *
    * @param val
    *          the value
    * @return the number

@@ -5,7 +5,7 @@ public class MathSqrt extends MathFunction {
 
   /**
    * Create an sqrt function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

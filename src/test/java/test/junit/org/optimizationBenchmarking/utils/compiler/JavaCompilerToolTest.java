@@ -91,7 +91,7 @@ public class JavaCompilerToolTest extends ToolTest<JavaCompilerTool> {
     Assert.assertNotNull(clazz1);
 
     try {
-      Assert.assertNotNull(clazz1.getField("xx"));//$NON-NLS-1$ 
+      Assert.assertNotNull(clazz1.getField("xx"));//$NON-NLS-1$
     } catch (final Throwable error) {
       throw new RuntimeException(error);
     }
@@ -104,7 +104,7 @@ public class JavaCompilerToolTest extends ToolTest<JavaCompilerTool> {
     Assert.assertNotNull(clazz2);
 
     try {
-      Assert.assertNotNull(clazz2.getMethod("test"));//$NON-NLS-1$ 
+      Assert.assertNotNull(clazz2.getMethod("test"));//$NON-NLS-1$
     } catch (final Throwable error) {
       throw new RuntimeException(error);
     }

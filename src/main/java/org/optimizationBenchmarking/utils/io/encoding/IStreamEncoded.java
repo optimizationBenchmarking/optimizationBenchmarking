@@ -8,7 +8,7 @@ public interface IStreamEncoded {
 
   /**
    * Get the encoding used by this stream object
-   * 
+   *
    * @return the encoding used by this stream object
    */
   public abstract StreamEncoding<?, ?> getStreamEncoding();

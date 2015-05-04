@@ -53,7 +53,7 @@ public class Section extends ComplexObject implements ISection {
 
   /**
    * Create a new section
-   * 
+   *
    * @param owner
    *          the owning text
    * @param useLabel
@@ -102,7 +102,7 @@ public class Section extends ComplexObject implements ISection {
 
   /**
    * Is this an appendix section?
-   * 
+   *
    * @return {@code true} if and only if this section is part of the
    *         {@link org.optimizationBenchmarking.utils.document.impl.abstr.DocumentFooter}
    */
@@ -113,7 +113,7 @@ public class Section extends ComplexObject implements ISection {
   /**
    * Obtain the number of sections in the hierarchy above this one, or
    * {@code 0} if this is a top-level section.
-   * 
+   *
    * @return {@code 0} if this is a top-level section or the number of
    *         sections above it in the hierarchy otherwise
    */
@@ -135,7 +135,7 @@ public class Section extends ComplexObject implements ISection {
 
   /**
    * Render this section's index only.
-   * 
+   *
    * @param index
    *          the index to render
    * @return the section index string

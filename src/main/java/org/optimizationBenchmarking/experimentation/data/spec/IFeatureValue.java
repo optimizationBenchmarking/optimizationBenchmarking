@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.experimentation.data.spec;
 public interface IFeatureValue extends IPropertyValue {
   /**
    * get the owning feature
-   * 
+   *
    * @return the owning feature
    */
   @Override

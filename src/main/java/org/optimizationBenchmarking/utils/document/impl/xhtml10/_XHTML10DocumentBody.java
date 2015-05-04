@@ -7,7 +7,7 @@ final class _XHTML10DocumentBody extends DocumentBody {
 
   /**
    * Create a document body
-   * 
+   *
    * @param owner
    *          the owning document
    */

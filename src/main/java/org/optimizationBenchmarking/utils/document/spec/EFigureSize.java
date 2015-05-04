@@ -55,7 +55,7 @@ public enum EFigureSize {
 
   /** the set of all figure sizes */
   public static final ArraySetView<EFigureSize> INSTANCES = //
-  new ArraySetView<>(EFigureSize.values());
+      new ArraySetView<>(EFigureSize.values());
 
   /**
    * the number of figures of that size that should fit along the x-axis,
@@ -75,7 +75,7 @@ public enum EFigureSize {
 
   /**
    * create a default figure size
-   * 
+   *
    * @param nx
    *          the number of figures of that size that should fit along the
    *          x-axis, {@code -1} if unspecified
@@ -97,7 +97,7 @@ public enum EFigureSize {
   /**
    * Get the number of figures of that size that should fit along the
    * x-axis, {@code -1} if unspecified
-   * 
+   *
    * @return the number of figures of that size that should fit along the
    *         x-axis, {@code -1} if unspecified
    */
@@ -108,7 +108,7 @@ public enum EFigureSize {
   /**
    * Get the number of figures of that size that should fit along the
    * y-axis, {@code -1} if unspecified
-   * 
+   *
    * @return the number of figures of that size that should fit along the
    *         y-axis, {@code -1} if unspecified
    */
@@ -119,7 +119,7 @@ public enum EFigureSize {
   /**
    * Get does the x-axis span over all columns (i.e., the complete page,
    * {@code true}), or does it only span a single columns ({@code false})?
-   * 
+   *
    * @return does the x-axis span over all columns (i.e., the complete
    *         page, {@code true}), or does it only span a single columns (
    *         {@code false} )?
@@ -130,7 +130,7 @@ public enum EFigureSize {
 
   /**
    * round to full integers if it makes sense
-   * 
+   *
    * @param d
    *          the number
    * @return the rounded result
@@ -152,7 +152,7 @@ public enum EFigureSize {
    * for captions and hope for the best. (This is why this method is called
    * {@link #approximateSize(PageDimension) approximateSize} and not
    * <code>getSize</code>).
-   * 
+   *
    * @param page
    *          the page size dimensions
    * @return an approximated size of the figure
@@ -191,7 +191,7 @@ public enum EFigureSize {
       if (this.m_nx > 1) {
         // if more than one image per row, insert some reasonable spacing
         width -= ((this.m_nx - 1) * //
-        (Math.max(10d, EFigureSize.__round(0.01d * width))));
+            (Math.max(10d, EFigureSize.__round(0.01d * width))));
         width /= this.m_nx;
       }
     } else {
@@ -217,8 +217,8 @@ public enum EFigureSize {
       // space for the overall figure series caption
       // -- this is the sketchy part --
       height = (availableHeight - (//
-      ((this.m_ny <= 1) ? 1 : (this.m_ny + 1)) * //
-      (Math.max(43d, EFigureSize.__round(0.03d * availableHeight)))));
+          ((this.m_ny <= 1) ? 1 : (this.m_ny + 1)) * //
+          (Math.max(43d, EFigureSize.__round(0.03d * availableHeight)))));
       height /= this.m_ny;
     } else {
       height = Double.NaN;

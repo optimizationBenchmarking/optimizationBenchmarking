@@ -12,7 +12,7 @@ public class Enumeration extends List<EnumerationItem> {
 
   /**
    * Create a new enumeration
-   * 
+   *
    * @param owner
    *          the owning text
    */
@@ -24,19 +24,19 @@ public class Enumeration extends List<EnumerationItem> {
 
     outer: {
       inner: {
-        for (o = owner; o != null;) {
-          if (o instanceof Enumeration) {
-            this.m_enumDepth = (1 + (((Enumeration) o).m_enumDepth));
-            break outer;
-          }
-          if (o instanceof DocumentElement) {
-            o = ((DocumentElement) o)._owner();
-          } else {
-            break inner;
-          }
+      for (o = owner; o != null;) {
+        if (o instanceof Enumeration) {
+          this.m_enumDepth = (1 + (((Enumeration) o).m_enumDepth));
+          break outer;
+        }
+        if (o instanceof DocumentElement) {
+          o = ((DocumentElement) o)._owner();
+        } else {
+          break inner;
         }
       }
-      this.m_enumDepth = 0;
+    }
+    this.m_enumDepth = 0;
     }
 
   }
@@ -44,7 +44,7 @@ public class Enumeration extends List<EnumerationItem> {
   /**
    * Obtain the number of enumerations into which this enumerations is
    * nested.
-   * 
+   *
    * @return the number of "outer" enumerations into which this
    *         enumerations is embedded, or {@code 0} if this is a top-level
    *         enumerations

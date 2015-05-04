@@ -16,7 +16,7 @@ public final class ExampleChartDrivers {
 
   /**
    * make the list of example chart drivers
-   * 
+   *
    * @return the list of example chart drivers
    */
   private static final ArrayListView<IChartDriver> __make() {

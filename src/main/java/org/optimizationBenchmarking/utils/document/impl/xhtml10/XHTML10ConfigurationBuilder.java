@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A configuration builder for XHTML 1.0 documents */
 public class XHTML10ConfigurationBuilder extends
-    DocumentConfigurationBuilder {
+DocumentConfigurationBuilder {
 
   /** the screen size */
   public static final String PARAM_SCREEN_SIZE = "screenSize"; //$NON-NLS-1$
@@ -31,7 +31,7 @@ public class XHTML10ConfigurationBuilder extends
 
   /**
    * create the XHTML 1.0 document configuration builder
-   * 
+   *
    * @param driver
    *          the driver to use
    */
@@ -62,7 +62,7 @@ public class XHTML10ConfigurationBuilder extends
 
   /**
    * Set the screen size for the document configuration builder
-   * 
+   *
    * @param size
    *          the screen size
    */
@@ -72,7 +72,7 @@ public class XHTML10ConfigurationBuilder extends
 
   /**
    * make a page dimension
-   * 
+   *
    * @param size
    *          the physical size
    * @return the page dimension
@@ -92,7 +92,7 @@ public class XHTML10ConfigurationBuilder extends
 
   /**
    * trim a dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the trimmed result
@@ -111,7 +111,7 @@ public class XHTML10ConfigurationBuilder extends
 
   /**
    * Set the screen size of this builder
-   * 
+   *
    * @param size
    *          the screen size
    */
@@ -123,7 +123,7 @@ public class XHTML10ConfigurationBuilder extends
 
   /**
    * Get the screen size
-   * 
+   *
    * @return the screen size
    */
   public final PageDimension getScreenSize() {
@@ -134,7 +134,7 @@ public class XHTML10ConfigurationBuilder extends
 
   /**
    * Set the font palette to be used
-   * 
+   *
    * @param fonts
    *          the font palette to be used
    */
@@ -145,7 +145,7 @@ public class XHTML10ConfigurationBuilder extends
 
   /**
    * Get the font palette of this document builder
-   * 
+   *
    * @return the font palette of this document builder
    */
   public final FontPalette getFontPalette() {
@@ -157,7 +157,7 @@ public class XHTML10ConfigurationBuilder extends
 
   /**
    * Set the size of the screen
-   * 
+   *
    * @param size
    *          the size of the screen
    */
@@ -173,7 +173,7 @@ public class XHTML10ConfigurationBuilder extends
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.hashCode(),
             HashUtils.hashCode(this.m_fonts)),
-        HashUtils.hashCode(this.m_size));
+            HashUtils.hashCode(this.m_size));
   }
 
   /** {@inheritDoc} */

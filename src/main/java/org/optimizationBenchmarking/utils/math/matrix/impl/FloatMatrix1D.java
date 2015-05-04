@@ -19,7 +19,7 @@ public class FloatMatrix1D extends AbstractMatrix {
 
   /**
    * create the matrix
-   * 
+   *
    * @param data
    *          the data
    * @param m

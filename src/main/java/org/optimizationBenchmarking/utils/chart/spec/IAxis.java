@@ -19,7 +19,7 @@ public interface IAxis extends ITitledElement {
    * expect the underlying
    * {@link org.optimizationBenchmarking.utils.chart.spec.IChartDriver
    * chart driver} implementation to resize them appropriately.
-   * 
+   *
    * @param tickFont
    *          the font to be used for the ticks of the axis
    */
@@ -28,7 +28,7 @@ public interface IAxis extends ITitledElement {
   /**
    * Set the stroke to be used for the axis. If you do not set a stroke, a
    * default stroke will be used.
-   * 
+   *
    * @param axisStroke
    *          the stroke to be used for the axis
    */
@@ -37,7 +37,7 @@ public interface IAxis extends ITitledElement {
   /**
    * Set the color to be used for the axis. If you do not set a color, a
    * default color will be used.
-   * 
+   *
    * @param axisColor
    *          the color to be used for the axis
    */
@@ -46,7 +46,7 @@ public interface IAxis extends ITitledElement {
   /**
    * Set the stroke to be used for the grid lines. If you do not set a
    * stroke, a default stroke will be used.
-   * 
+   *
    * @param gridLineStroke
    *          the stroke to be used for the grid lines
    */
@@ -55,7 +55,7 @@ public interface IAxis extends ITitledElement {
   /**
    * Set the color to be used for the grid lines. If you do not set a
    * color, a default color will be used.
-   * 
+   *
    * @param gridLineColor
    *          the color to be used for the grid lines
    */
@@ -63,7 +63,7 @@ public interface IAxis extends ITitledElement {
 
   /**
    * Set the aggregate used to compute the minimum axis value
-   * 
+   *
    * @param min
    *          the aggregate used to compute the minimum axis value
    */
@@ -71,7 +71,7 @@ public interface IAxis extends ITitledElement {
 
   /**
    * Set the minimum value for the axis
-   * 
+   *
    * @param min
    *          the minimum value for the axis
    */
@@ -79,7 +79,7 @@ public interface IAxis extends ITitledElement {
 
   /**
    * Set the aggregate used to compute the maximum axis value
-   * 
+   *
    * @param max
    *          the aggregate used to compute the maximum axis value
    */
@@ -87,7 +87,7 @@ public interface IAxis extends ITitledElement {
 
   /**
    * Set the maximum value for the axis
-   * 
+   *
    * @param max
    *          the maximum value for the axis
    */

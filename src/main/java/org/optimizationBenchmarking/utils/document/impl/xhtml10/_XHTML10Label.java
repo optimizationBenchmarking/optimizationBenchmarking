@@ -13,7 +13,7 @@ final class _XHTML10Label extends Label {
 
   /**
    * create an xhtml 1.0 label
-   * 
+   *
    * @param owner
    *          the owner
    * @param type

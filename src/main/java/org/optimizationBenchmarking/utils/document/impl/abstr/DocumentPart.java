@@ -15,7 +15,7 @@ public abstract class DocumentPart extends DocumentElement {
 
   /**
    * Create a document part.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -33,7 +33,7 @@ public abstract class DocumentPart extends DocumentElement {
 
   /**
    * Get the document
-   * 
+   *
    * @return the document
    */
   protected final Document getDocument() {

@@ -8,11 +8,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10MathMod extends MathMod {
   /** the operator */
   private final static char[] OP = new char[] { '&', 'n', 'b', 's', 'p',
-      ';', 'm', 'o', 'd', '&', 'n', 'b', 's', 'p', ';' };
+    ';', 'm', 'o', 'd', '&', 'n', 'b', 's', 'p', ';' };
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

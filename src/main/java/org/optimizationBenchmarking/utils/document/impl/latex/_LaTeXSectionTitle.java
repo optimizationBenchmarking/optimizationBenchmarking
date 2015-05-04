@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXSectionTitle extends SectionTitle {
   /**
    * create the section title
-   * 
+   *
    * @param owner
    *          the owner
    */

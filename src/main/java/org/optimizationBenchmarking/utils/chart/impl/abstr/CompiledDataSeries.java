@@ -14,7 +14,7 @@ public class CompiledDataSeries extends CompiledDataElement {
 
   /**
    * Create a data series
-   * 
+   *
    * @param id
    *          the id
    * @param title
@@ -39,7 +39,7 @@ public class CompiledDataSeries extends CompiledDataElement {
 
   /**
    * check a given matrix
-   * 
+   *
    * @param data
    *          the matrix to check
    */
@@ -52,7 +52,7 @@ public class CompiledDataSeries extends CompiledDataElement {
 
   /**
    * Get the data associated with this data series
-   * 
+   *
    * @return the data associated with this data series
    */
   public final IMatrix getData() {

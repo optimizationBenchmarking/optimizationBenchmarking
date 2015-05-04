@@ -30,7 +30,7 @@ public final class Hypot extends BinaryFunction {
   /**
    * Compute {@code hypot} with
    * {@link org.apache.commons.math3.util.FastMath}
-   * 
+   *
    * @param x1
    *          the first value
    * @param x2
@@ -50,7 +50,7 @@ public final class Hypot extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} for serialization, i.e.,
    * when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object writeReplace() {
@@ -62,7 +62,7 @@ public final class Hypot extends BinaryFunction {
    * with the singleton instance {@link #INSTANCE} after serialization,
    * i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #INSTANCE})
    */
   private final Object readResolve() {

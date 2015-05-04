@@ -12,7 +12,7 @@ public class BibInCollection extends BibInBook {
 
   /**
    * Create a new bibliography record for things that are parts of book
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -39,7 +39,7 @@ public class BibInCollection extends BibInBook {
 
   /**
    * Create a new bibliography record for things that are parts of book
-   * 
+   *
    * @param authors
    *          the authors
    * @param title

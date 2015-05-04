@@ -13,7 +13,7 @@ public interface ITextable {
    * Write this object's textual representation to an instance of
    * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    * .
-   * 
+   *
    * @param textOut
    *          the
    *          {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}

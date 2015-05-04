@@ -126,7 +126,7 @@ public final class Configuration implements Serializable, ITextable {
    * When this method is called for the first time with a given key, this
    * instance is created. If nothing is stored under {@code key} right now,
    * an immutable entry will be created. This method is thread safe.
-   * 
+   *
    * @param key
    *          the key (case insensitive)
    * @param _default
@@ -159,7 +159,7 @@ public final class Configuration implements Serializable, ITextable {
    * {@link #get(String, Parser, Object)}, i.e., an immutable entry will be
    * created. If {@code createIfNotExists} is {@code false}, it will
    * instead return {@code null} and not modify the data.
-   * 
+   *
    * @param key
    *          the key (case insensitive)
    * @param _default
@@ -192,66 +192,66 @@ public final class Configuration implements Serializable, ITextable {
 
     try {
       breakToCheckRetVal: {
-        needsCheck = true;
-        synchronized (this.m_data) {
-          for (Configuration cfg = this; cfg != null; cfg = cfg.m_owner) {
-            synchronized (cfg.m_data) {
-              entry = ((_ConfigMapEntry) (cfg.m_data.getEntry(key, false)));
-              if (entry != null) {
-                isLocked = entry.m_isLocked;
-                entry.m_isLocked = true;
+      needsCheck = true;
+      synchronized (this.m_data) {
+        for (Configuration cfg = this; cfg != null; cfg = cfg.m_owner) {
+          synchronized (cfg.m_data) {
+            entry = ((_ConfigMapEntry) (cfg.m_data.getEntry(key, false)));
+            if (entry != null) {
+              isLocked = entry.m_isLocked;
+              entry.m_isLocked = true;
 
-                value = entry.getValue();
-                clazz = parser.getOutputClass();
-                if (isLocked) {
-                  retVal = clazz.cast(value);
-                } else {
-                  retVal = null;
-                  try {
-                    if (value == null) {
-                      retVal = _default;
+              value = entry.getValue();
+              clazz = parser.getOutputClass();
+              if (isLocked) {
+                retVal = clazz.cast(value);
+              } else {
+                retVal = null;
+                try {
+                  if (value == null) {
+                    retVal = _default;
+                  } else {
+                    if (value instanceof String) {
+                      retVal = parser.parseString((String) value);
+                      needsCheck = false;
                     } else {
-                      if (value instanceof String) {
-                        retVal = parser.parseString((String) value);
-                        needsCheck = false;
+                      if (clazz.isInstance(value)) {
+                        retVal = clazz.cast(value);
                       } else {
-                        if (clazz.isInstance(value)) {
-                          retVal = clazz.cast(value);
-                        } else {
-                          retVal = parser.parseObject(value);
-                          needsCheck = false;
-                        }
+                        retVal = parser.parseObject(value);
+                        needsCheck = false;
                       }
                     }
-                  } finally {
-                    entry.setValue(retVal);
                   }
+                } finally {
+                  entry.setValue(retVal);
                 }
-
-                break breakToCheckRetVal;
               }
+
+              break breakToCheckRetVal;
             }
           }
-
-          if (createIfNotExists) {
-            entry = ((_ConfigMapEntry) (this.m_data.getEntry(key, true)));
-            entry.m_isLocked = true;
-            entry.setValue(_default);
-            retVal = _default;
-            break breakToCheckRetVal;
-          }
-
-          return null;
         }
-      }
 
-      if (needsCheck) {
-        parser.parseObject(retVal);
+        if (createIfNotExists) {
+          entry = ((_ConfigMapEntry) (this.m_data.getEntry(key, true)));
+          entry.m_isLocked = true;
+          entry.setValue(_default);
+          retVal = _default;
+          break breakToCheckRetVal;
+        }
+
+        return null;
       }
-      return retVal;
+    }
+
+    if (needsCheck) {
+      parser.parseObject(retVal);
+    }
+    return retVal;
     } catch (final Throwable tt) {
       RethrowMode.AS_ILLEGAL_STATE_EXCEPTION.rethrow((((((((//
-          "Error while trying to obtain configuration key '" //$NON-NLS-1$ 
+          "Error while trying to obtain configuration key '" //$NON-NLS-1$
           + key) + "\' with parser '") //$NON-NLS-1$
           + parser) + "' and default '") //$NON-NLS-1$
           + _default) + '\'') + '.'), true, tt);
@@ -261,7 +261,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get a parameter which is a class.
-   * 
+   *
    * @param key
    *          the key
    * @param defClass
@@ -295,7 +295,7 @@ public final class Configuration implements Serializable, ITextable {
    * configuration} as parameter. This also holds if it is decided to
    * return {@code defInstance}.
    * </p>
-   * 
+   *
    * @param key
    *          the key
    * @param defInstance
@@ -315,7 +315,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get a path (file or directory) parameter
-   * 
+   *
    * @param key
    *          the key
    * @param def
@@ -328,7 +328,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get a 8 bit signed integer (byte) parameter.
-   * 
+   *
    * @param key
    *          the key identifying the parameter
    * @param min
@@ -353,7 +353,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get a 16 bit signed integer (short) parameter.
-   * 
+   *
    * @param key
    *          the key identifying the parameter
    * @param min
@@ -379,7 +379,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get a 32 bit signed integer (int) parameter.
-   * 
+   *
    * @param key
    *          the key identifying the parameter
    * @param min
@@ -404,7 +404,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get a 64 bit signed integer (long) parameter.
-   * 
+   *
    * @param key
    *          the key identifying the parameter
    * @param min
@@ -430,7 +430,7 @@ public final class Configuration implements Serializable, ITextable {
   /**
    * Get a single-precision (32-bit) floating point number (float)
    * parameter.
-   * 
+   *
    * @param key
    *          the key identifying the parameter
    * @param min
@@ -457,7 +457,7 @@ public final class Configuration implements Serializable, ITextable {
   /**
    * Get a double-precision (64-bit) floating point number (double)
    * parameter.
-   * 
+   *
    * @param key
    *          the key identifying the parameter
    * @param min
@@ -483,7 +483,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get a Boolean parameter.
-   * 
+   *
    * @param key
    *          the key identifying the parameter
    * @param def
@@ -498,7 +498,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get a parameter which is a string.
-   * 
+   *
    * @param key
    *          the key
    * @param def
@@ -511,7 +511,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get a parameter which is a list of strings.
-   * 
+   *
    * @param key
    *          the key
    * @param def
@@ -529,7 +529,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get a parameter which is a list of paths (to directories or files)
-   * 
+   *
    * @param key
    *          the key
    * @param def
@@ -546,7 +546,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * get a logger
-   * 
+   *
    * @param key
    *          the key
    * @param def
@@ -608,7 +608,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get the globally used logger
-   * 
+   *
    * @return the logger
    */
   public static final Logger getGlobalLogger() {
@@ -625,7 +625,7 @@ public final class Configuration implements Serializable, ITextable {
 
   /**
    * Get the root configuration
-   * 
+   *
    * @return the root configuration
    */
   public static final Configuration getRoot() {
@@ -641,7 +641,7 @@ public final class Configuration implements Serializable, ITextable {
    * Setup the root configuration from command line arguments and the
    * system environment. You must call this method at most once, and if you
    * call it, it must be the first call in your {@code main} routine.
-   * 
+   *
    * @param args
    *          the command line arguments, which were passed to the
    *          {@code main} routine

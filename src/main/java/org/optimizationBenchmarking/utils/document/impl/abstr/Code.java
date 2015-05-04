@@ -37,7 +37,7 @@ public class Code extends ComplexObject implements ICode {
     Code.STATE_NAMES[Code.STATE_CAPTION_CREATED] = "captionCreated"; //$NON-NLS-1$
     Code.STATE_NAMES[Code.STATE_CAPTION_BEFORE_OPEN] = "captionBeforeOpen"; //$NON-NLS-1$
     Code.STATE_NAMES[Code.STATE_CAPTION_OPENED] = "captionOpened"; //$NON-NLS-1$
-    Code.STATE_NAMES[Code.STATE_CAPTION_CLOSED] = "captionClosed"; //$NON-NLS-1$    
+    Code.STATE_NAMES[Code.STATE_CAPTION_CLOSED] = "captionClosed"; //$NON-NLS-1$
     Code.STATE_NAMES[Code.STATE_BODY_CREATED] = "bodyCreated"; //$NON-NLS-1$
     Code.STATE_NAMES[Code.STATE_BODY_BEFORE_OPEN] = "bodyBeforeOpen"; //$NON-NLS-1$
     Code.STATE_NAMES[Code.STATE_BODY_OPENED] = "bodyOpened"; //$NON-NLS-1$
@@ -49,7 +49,7 @@ public class Code extends ComplexObject implements ICode {
 
   /**
    * Create a code
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index
@@ -74,7 +74,7 @@ public class Code extends ComplexObject implements ICode {
 
   /**
    * Does this code block span all columns?
-   * 
+   *
    * @return {@code true} if the code block spans all columns,
    *         {@code false} if it is only one column wide
    */
@@ -84,7 +84,7 @@ public class Code extends ComplexObject implements ICode {
 
   /**
    * Get the owning section body
-   * 
+   *
    * @return the owning section body
    */
   @Override

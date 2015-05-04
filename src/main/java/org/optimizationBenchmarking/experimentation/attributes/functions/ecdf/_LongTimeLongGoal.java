@@ -12,7 +12,7 @@ final class _LongTimeLongGoal extends _Longs {
 
   /**
    * create the {@code long} list
-   * 
+   *
    * @param timeDim
    *          the time dimension
    * @param goalIndex

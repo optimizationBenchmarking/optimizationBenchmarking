@@ -30,7 +30,7 @@ public class FontPaletteXMLHandler extends DelegatingHandler {
 
   /**
    * Create
-   * 
+   *
    * @param owner
    *          the owning handler, or {@code null} if not used
    * @param dest
@@ -142,9 +142,9 @@ public class FontPaletteXMLHandler extends DelegatingHandler {
 
       if (FontPaletteXML.ELEMENT_FONT.equalsIgnoreCase(localName)
           || FontPaletteXML.ELEMENT_DEFAULT_FONT
-              .equalsIgnoreCase(localName)
+          .equalsIgnoreCase(localName)
           || FontPaletteXML.ELEMENT_EMPHASIZED_FONT
-              .equalsIgnoreCase(localName)
+          .equalsIgnoreCase(localName)
           || FontPaletteXML.ELEMENT_CODE_FONT.equalsIgnoreCase(localName)) {
         this.m_builder.close();
         this.m_builder = null;

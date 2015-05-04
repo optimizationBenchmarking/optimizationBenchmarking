@@ -10,14 +10,14 @@ public interface IDocumentProducerTool extends IFileProducerTool {
 
   /**
    * Obtain the type of files this tool can create
-   * 
+   *
    * @return the type of files this tool can create
    */
   public abstract IFileType getFileType();
 
   /**
    * Create the builder for producing documents.
-   * 
+   *
    * @return the file producer builder
    */
   @Override

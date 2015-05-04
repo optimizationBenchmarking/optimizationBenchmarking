@@ -122,13 +122,13 @@ public class WordBasedStringIteratorTest {
     Assert.assertFalse(it.hasNext());
 
     it = new WordBasedStringIterator(//
-        "z\n "); //$NON-NLS-1$        
+        "z\n "); //$NON-NLS-1$
     Assert.assertTrue(it.hasNext());
     Assert.assertEquals(it.next(), "z");//$NON-NLS-1$
     Assert.assertFalse(it.hasNext());
 
     it = new WordBasedStringIterator(//
-        "  v   "); //$NON-NLS-1$        
+        "  v   "); //$NON-NLS-1$
     Assert.assertTrue(it.hasNext());
     Assert.assertEquals(it.next(), "v");//$NON-NLS-1$
     Assert.assertFalse(it.hasNext());

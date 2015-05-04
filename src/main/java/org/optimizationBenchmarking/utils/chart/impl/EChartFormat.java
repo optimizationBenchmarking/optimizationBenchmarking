@@ -20,7 +20,7 @@ public enum EChartFormat {
 
   /**
    * Get the chart driver corresponding to this format
-   * 
+   *
    * @return the chart driver
    */
   public abstract IChartDriver getDefaultDriver();

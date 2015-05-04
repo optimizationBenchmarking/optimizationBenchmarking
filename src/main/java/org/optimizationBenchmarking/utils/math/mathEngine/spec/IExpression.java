@@ -11,7 +11,7 @@ public interface IExpression extends IMathEngineScope {
 
   /**
    * The expression has a matrix value.
-   * 
+   *
    * @param matrix
    *          the matrix
    */
@@ -20,7 +20,7 @@ public interface IExpression extends IMathEngineScope {
   /**
    * The expression has a vector value. A vector is a matrix with either
    * only a single column or only a single row.
-   * 
+   *
    * @param vector
    *          the vector
    */
@@ -28,7 +28,7 @@ public interface IExpression extends IMathEngineScope {
 
   /**
    * The expression has a {@code double} value
-   * 
+   *
    * @param d
    *          the {@code double} value
    */
@@ -36,7 +36,7 @@ public interface IExpression extends IMathEngineScope {
 
   /**
    * The expression has a {@code long} value
-   * 
+   *
    * @param d
    *          the {@code long} value
    */
@@ -44,7 +44,7 @@ public interface IExpression extends IMathEngineScope {
 
   /**
    * The expression has a {@code boolean} value
-   * 
+   *
    * @param d
    *          the {@code boolean} value
    */
@@ -52,7 +52,7 @@ public interface IExpression extends IMathEngineScope {
 
   /**
    * The expression has the value of a given {@code variable}
-   * 
+   *
    * @param variable
    *          the variable
    */
@@ -60,7 +60,7 @@ public interface IExpression extends IMathEngineScope {
 
   /**
    * The expression has the value of a function result
-   * 
+   *
    * @param name
    *          the name of the function
    * @return the scope to fill in the function parameters
@@ -69,49 +69,49 @@ public interface IExpression extends IMathEngineScope {
 
   /**
    * The result of a multiplication
-   * 
+   *
    * @return the result of a multiplication
    */
   public abstract IFunction mul();
 
   /**
    * The result of a division
-   * 
+   *
    * @return the result of a division
    */
   public abstract IFunction div();
 
   /**
    * The result of a addition
-   * 
+   *
    * @return the result of a addition
    */
   public abstract IFunction add();
 
   /**
    * The result of a subtraction
-   * 
+   *
    * @return the result of a subtraction
    */
   public abstract IFunction sub();
 
   /**
    * The determinant of a matrix
-   * 
+   *
    * @return the matrix determinant
    */
   public abstract IFunction matrixDeterminant();
 
   /**
    * The result of a matrix transposition
-   * 
+   *
    * @return the result of a matrix transposition
    */
   public abstract IFunction matrixTranspose();
 
   /**
    * The result of a matrix transposition
-   * 
+   *
    * @return the result of a matrix transposition
    */
   public abstract IFunction matrixMul();

@@ -22,7 +22,7 @@ public class CitationItem implements ISequenceable {
 
   /**
    * Create the bibliographic record
-   * 
+   *
    * @param record
    *          the bibliographic record
    * @param mode
@@ -46,7 +46,7 @@ public class CitationItem implements ISequenceable {
 
   /**
    * Get the citation mode
-   * 
+   *
    * @return the citation mode
    */
   public final ECitationMode getMode() {
@@ -55,7 +55,7 @@ public class CitationItem implements ISequenceable {
 
   /**
    * Get the bibliographic record
-   * 
+   *
    * @return the bibliographic record
    */
   public final BibRecord getRecord() {
@@ -64,7 +64,7 @@ public class CitationItem implements ISequenceable {
 
   /**
    * render the author list
-   * 
+   *
    * @param authors
    *          the author list, guaranteed to be non-empty
    * @param textCase
@@ -82,7 +82,7 @@ public class CitationItem implements ISequenceable {
 
   /**
    * render the year
-   * 
+   *
    * @param year
    *          the year
    * @param textCase
@@ -99,7 +99,7 @@ public class CitationItem implements ISequenceable {
 
   /**
    * render the id
-   * 
+   *
    * @param index
    *          the index
    * @param id
@@ -121,7 +121,7 @@ public class CitationItem implements ISequenceable {
 
   /**
    * render the title
-   * 
+   *
    * @param title
    *          the title
    * @param textCase
@@ -153,7 +153,7 @@ public class CitationItem implements ISequenceable {
 
   /**
    * Write this sequence item
-   * 
+   *
    * @param isFirstInSequence
    *          is this the first item in the sequence?
    * @param isLastInSequence
@@ -183,19 +183,19 @@ public class CitationItem implements ISequenceable {
 
     if (mode.printAuthors()) {
       finder: {
-        a = rec.getAuthors();
-        if ((a == null) || (a.isEmpty())) {
-          if (rec instanceof BibBook) {
-            a = (((BibBook) (rec)).getEditors());
-            if ((a == null) || (a.isEmpty())) {
-              break finder;
-            }
+      a = rec.getAuthors();
+      if ((a == null) || (a.isEmpty())) {
+        if (rec instanceof BibBook) {
+          a = (((BibBook) (rec)).getEditors());
+          if ((a == null) || (a.isEmpty())) {
+            break finder;
           }
         }
-        this.renderAuthors(a, textCase, out, raw);
-        tc = tc.nextCase();
-        has = true;
       }
+      this.renderAuthors(a, textCase, out, raw);
+      tc = tc.nextCase();
+      has = true;
+    }
     }
 
     if (mode.printYear()) {
@@ -237,7 +237,7 @@ public class CitationItem implements ISequenceable {
 
   /**
    * this method is called if the ID is not to be rendered
-   * 
+   *
    * @param index
    *          the index
    * @param id

@@ -26,7 +26,7 @@ public class ParallelSectionTask extends RecursiveAction {
 
   /**
    * create
-   * 
+   *
    * @param root
    *          the root object
    * @param sectionIndex

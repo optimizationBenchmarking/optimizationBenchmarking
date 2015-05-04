@@ -16,12 +16,13 @@ import test.junit.TestBase;
 
 /**
  * A test for maps.
- * 
+ *
  * @param <K>
  *          the key type
  * @param <V>
  *          the value type
  * @param <MT>
+ *          the map type
  */
 @Ignore
 public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
@@ -33,7 +34,7 @@ public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
 
   /**
    * Create the instance test
-   * 
+   *
    * @param owner
    *          the owner
    * @param isSingleton
@@ -50,7 +51,7 @@ public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
 
   /**
    * create an instance of the key type
-   * 
+   *
    * @param sequence
    *          the sequence id
    * @return an instance of the key type
@@ -67,7 +68,7 @@ public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
 
   /**
    * create an instance of the value type
-   * 
+   *
    * @param sequence
    *          the sequence id
    * @return an instance of the value type
@@ -84,7 +85,7 @@ public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
 
   /**
    * Can entries of this map be compared to entries of other maps?
-   * 
+   *
    * @return {@code true} if so, {@code false} otherwise
    */
   @SuppressWarnings("rawtypes")
@@ -174,11 +175,11 @@ public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
             && (!((entry instanceof Serializable)//
                 || (entry instanceof Externalizable) || //
                 (((key = entry.getKey()) != null) && //
-                (!((key instanceof Serializable) || //
-                (key instanceof Externalizable)))) || //
-            (((value = entry.getValue()) != null) && //
-            (!((value instanceof Serializable) || //
-            (value instanceof Externalizable))))))) {
+                    (!((key instanceof Serializable) || //
+                        (key instanceof Externalizable)))) || //
+                        (((value = entry.getValue()) != null) && //
+                            (!((value instanceof Serializable) || //
+                                (value instanceof Externalizable))))))) {
           return;
         }
       }
@@ -210,7 +211,7 @@ public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
 
   /**
    * test add and remove
-   * 
+   *
    * @param depth
    *          the depth
    * @param random
@@ -372,17 +373,17 @@ public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
 
   /**
    * run all tests for the collection faces
-   * 
+   *
    * @param map
    *          the map
    */
   private final void __testCollectionFaces(final MT map) {
     new CollectionTest<>(null, map.keySet(), false, false)
-        .validateInstance();
+    .validateInstance();
     new CollectionTest<>(null, map.values(), false, false)
-        .validateInstance();
+    .validateInstance();
     new CollectionTest<>(null, map.entrySet(), false, false)
-        .validateInstance();
+    .validateInstance();
   }
 
   /** {@inheritDoc} */

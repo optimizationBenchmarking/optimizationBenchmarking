@@ -38,7 +38,7 @@ public class Shuffle {
    * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
    * {@code 7}, and {@code 0}.</li>
    * </ul>
-   * 
+   *
    * @param array
    *          the array of {@code byte}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -66,8 +66,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-              " invalid for shuffling byte array of length "//$NON-NLS-1$ 
-              + length);
+          " invalid for shuffling byte array of length "//$NON-NLS-1$
+          + length);
     }
 
     if (length <= 1) {
@@ -110,7 +110,7 @@ public class Shuffle {
    * procedure, the elements of the array are uniformly randomly
    * distributed.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code byte}s that should be shuffled
    * @param random
@@ -145,7 +145,7 @@ public class Shuffle {
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code byte}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -215,7 +215,7 @@ public class Shuffle {
    * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
    * {@code 7}, and {@code 0}.</li>
    * </ul>
-   * 
+   *
    * @param array
    *          the array of {@code short}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -243,8 +243,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-              " invalid for shuffling short array of length "//$NON-NLS-1$ 
-              + length);
+          " invalid for shuffling short array of length "//$NON-NLS-1$
+          + length);
     }
 
     if (length <= 1) {
@@ -287,7 +287,7 @@ public class Shuffle {
    * procedure, the elements of the array are uniformly randomly
    * distributed.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code short}s that should be shuffled
    * @param random
@@ -322,7 +322,7 @@ public class Shuffle {
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code short}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -392,7 +392,7 @@ public class Shuffle {
    * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
    * {@code 7}, and {@code 0}.</li>
    * </ul>
-   * 
+   *
    * @param array
    *          the array of {@code int}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -420,8 +420,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-              " invalid for shuffling int array of length "//$NON-NLS-1$ 
-              + length);
+          " invalid for shuffling int array of length "//$NON-NLS-1$
+          + length);
     }
 
     if (length <= 1) {
@@ -464,7 +464,7 @@ public class Shuffle {
    * procedure, the elements of the array are uniformly randomly
    * distributed.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code int}s that should be shuffled
    * @param random
@@ -499,7 +499,7 @@ public class Shuffle {
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code int}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -568,7 +568,7 @@ public class Shuffle {
    * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
    * {@code 7}, and {@code 0}.</li>
    * </ul>
-   * 
+   *
    * @param array
    *          the array of {@code long}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -596,8 +596,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-              " invalid for shuffling long array of length "//$NON-NLS-1$ 
-              + length);
+          " invalid for shuffling long array of length "//$NON-NLS-1$
+          + length);
     }
 
     if (length <= 1) {
@@ -640,7 +640,7 @@ public class Shuffle {
    * procedure, the elements of the array are uniformly randomly
    * distributed.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code long}s that whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -677,7 +677,7 @@ public class Shuffle {
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code long}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -747,7 +747,7 @@ public class Shuffle {
    * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
    * {@code 7}, and {@code 0}.</li>
    * </ul>
-   * 
+   *
    * @param array
    *          the array of {@code float}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -775,8 +775,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-              " invalid for shuffling float array of length "//$NON-NLS-1$ 
-              + length);
+          " invalid for shuffling float array of length "//$NON-NLS-1$
+          + length);
     }
 
     if (length <= 1) {
@@ -819,7 +819,7 @@ public class Shuffle {
    * procedure, the elements of the array are uniformly randomly
    * distributed.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code float}s that should be shuffled
    * @param random
@@ -854,7 +854,7 @@ public class Shuffle {
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code float}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -924,7 +924,7 @@ public class Shuffle {
    * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
    * {@code 7}, and {@code 0}.</li>
    * </ul>
-   * 
+   *
    * @param array
    *          the array of {@code double}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -952,8 +952,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-              " invalid for shuffling double array of length "//$NON-NLS-1$ 
-              + length);
+          " invalid for shuffling double array of length "//$NON-NLS-1$
+          + length);
     }
 
     if (length <= 1) {
@@ -996,7 +996,7 @@ public class Shuffle {
    * this procedure, the elements of the array are uniformly randomly
    * distributed.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code double}s that should be shuffled
    * @param random
@@ -1032,7 +1032,7 @@ public class Shuffle {
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code double}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -1102,7 +1102,7 @@ public class Shuffle {
    * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
    * {@code 7}, and {@code 0}.</li>
    * </ul>
-   * 
+   *
    * @param array
    *          the array of {@code boolean}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -1130,8 +1130,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-              " invalid for shuffling boolean array of length "//$NON-NLS-1$ 
-              + length);
+          " invalid for shuffling boolean array of length "//$NON-NLS-1$
+          + length);
     }
 
     if (length <= 1) {
@@ -1174,7 +1174,7 @@ public class Shuffle {
    * this procedure, the elements of the array are uniformly randomly
    * distributed.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code boolean}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -1212,7 +1212,7 @@ public class Shuffle {
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code boolean}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -1282,7 +1282,7 @@ public class Shuffle {
    * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
    * {@code 7}, and {@code 0}.</li>
    * </ul>
-   * 
+   *
    * @param array
    *          the array of {@code char}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -1310,8 +1310,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-              " invalid for shuffling char array of length "//$NON-NLS-1$ 
-              + length);
+          " invalid for shuffling char array of length "//$NON-NLS-1$
+          + length);
     }
 
     if (length <= 1) {
@@ -1354,7 +1354,7 @@ public class Shuffle {
    * procedure, the elements of the array are uniformly randomly
    * distributed.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code char}s that should be shuffled
    * @param random
@@ -1389,7 +1389,7 @@ public class Shuffle {
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code char}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -1459,7 +1459,7 @@ public class Shuffle {
    * elements at indexes {@code 3}, {@code 4}, {@code 5}, {@code 6},
    * {@code 7}, and {@code 0}.</li>
    * </ul>
-   * 
+   *
    * @param array
    *          the array of {@code java.lang.Object}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be
@@ -1487,8 +1487,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-              " invalid for shuffling java.lang.Object array of length "//$NON-NLS-1$ 
-              + length);
+          " invalid for shuffling java.lang.Object array of length "//$NON-NLS-1$
+          + length);
     }
 
     if (length <= 1) {
@@ -1531,7 +1531,7 @@ public class Shuffle {
    * After this procedure, the elements of the array are uniformly randomly
    * distributed.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code java.lang.Object}s that should be
    *          shuffled
@@ -1568,7 +1568,7 @@ public class Shuffle {
    * "http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm"
    * >modern algorithm variant</a>.
    * </p>
-   * 
+   *
    * @param array
    *          the array of {@code java.lang.Object}s whose sub-sequence
    *          {@code start...(start+count) mod array.length} is to be

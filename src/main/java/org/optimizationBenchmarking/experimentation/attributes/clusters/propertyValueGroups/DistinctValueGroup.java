@@ -14,14 +14,14 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * value.
  */
 public final class DistinctValueGroup extends
-    PropertyValueGroup<DistinctValueGroups> {
+PropertyValueGroup<DistinctValueGroups> {
 
   /** the singular property value */
   private final Object m_value;
 
   /**
    * create the distinct value group
-   * 
+   *
    * @param owner
    *          the owning element set
    * @param selection
@@ -42,7 +42,7 @@ public final class DistinctValueGroup extends
 
   /**
    * Obtain the property value common to all data elements in this group
-   * 
+   *
    * @return the property value common to all data elements in this group
    */
   public final Object getValue() {

@@ -119,7 +119,7 @@ public class LongParser extends StrictLongParser {
 
   /**
    * The raw parsing method for calling inside {@link #parseString(String)}
-   * 
+   *
    * @param o
    *          the object
    * @return the return value
@@ -152,7 +152,7 @@ public class LongParser extends StrictLongParser {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -161,7 +161,7 @@ public class LongParser extends StrictLongParser {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

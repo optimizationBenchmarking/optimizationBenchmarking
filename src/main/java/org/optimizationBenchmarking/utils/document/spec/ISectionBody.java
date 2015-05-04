@@ -7,7 +7,7 @@ public interface ISectionBody extends IStructuredText, ISectionContainer {
 
   /**
    * Create a table in this block of text.
-   * 
+   *
    * @param useLabel
    *          a label to use for the table,
    *          {@link org.optimizationBenchmarking.utils.document.spec.ELabelType#AUTO}
@@ -24,7 +24,7 @@ public interface ISectionBody extends IStructuredText, ISectionContainer {
 
   /**
    * Create a figure in this block of text.
-   * 
+   *
    * @param useLabel
    *          a label to use for the figure,
    *          {@link org.optimizationBenchmarking.utils.document.spec.ELabelType#AUTO}
@@ -47,7 +47,7 @@ public interface ISectionBody extends IStructuredText, ISectionContainer {
    * relative {@code path} may be modified, resolved, or extended with a
    * suffix to create a graphics file, if necessary. It may also be ignored
    * entirely in cases where the document stores resources internally.
-   * 
+   *
    * @param useLabel
    *          a label to use for the figure,
    *          {@link org.optimizationBenchmarking.utils.document.spec.ELabelType#AUTO}
@@ -67,7 +67,7 @@ public interface ISectionBody extends IStructuredText, ISectionContainer {
 
   /**
    * Create a code block in this block of text.
-   * 
+   *
    * @param useLabel
    *          a label to use for the code block,
    *          {@link org.optimizationBenchmarking.utils.document.spec.ELabelType#AUTO}
@@ -82,7 +82,7 @@ public interface ISectionBody extends IStructuredText, ISectionContainer {
 
   /**
    * Create an equation
-   * 
+   *
    * @param useLabel
    *          a label to use for the equation,
    *          {@link org.optimizationBenchmarking.utils.document.spec.ELabelType#AUTO}

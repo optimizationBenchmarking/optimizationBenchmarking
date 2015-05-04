@@ -15,7 +15,7 @@ public interface IChartBuilder extends IToolJobBuilder {
 
   /**
    * Set the graphic to paint on
-   * 
+   *
    * @param graphic
    *          the graphic to paint
    * @return this builder
@@ -24,7 +24,7 @@ public interface IChartBuilder extends IToolJobBuilder {
 
   /**
    * Set the style set to use for the diagram
-   * 
+   *
    * @param styleSet
    *          the style set to use for the diagram
    * @return this builder
@@ -33,7 +33,7 @@ public interface IChartBuilder extends IToolJobBuilder {
 
   /**
    * Create the chart selector.
-   * 
+   *
    * @return the chart selector
    */
   @Override

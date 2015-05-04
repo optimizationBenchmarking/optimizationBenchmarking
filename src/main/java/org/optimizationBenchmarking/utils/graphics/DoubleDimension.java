@@ -24,7 +24,7 @@ public class DoubleDimension extends Dimension2D implements ITextable {
 
   /**
    * create a new double dimension
-   * 
+   *
    * @param width
    *          the width
    * @param height
@@ -46,7 +46,7 @@ public class DoubleDimension extends Dimension2D implements ITextable {
 
   /**
    * create a new double dimension
-   * 
+   *
    * @param dim
    *          the dimension
    */
@@ -75,7 +75,7 @@ public class DoubleDimension extends Dimension2D implements ITextable {
   /**
    * Obtain a copy of this object - and since this object is immutable, we
    * return it itself.
-   * 
+   *
    * @return this object itself
    */
   @Override
@@ -85,7 +85,7 @@ public class DoubleDimension extends Dimension2D implements ITextable {
 
   /**
    * Check if this dimension object contains another dimension object
-   * 
+   *
    * @param dim
    *          the other dimension
    * @return {@code true} if a rectangle of the size defined by this object
@@ -123,7 +123,7 @@ public class DoubleDimension extends Dimension2D implements ITextable {
       dim = ((Dimension2D) o);
 
       return ((EComparison.EQUAL.compare(this.m_height, dim.getHeight())) && //
-      (EComparison.EQUAL.compare(this.m_width, dim.getWidth())));
+          (EComparison.EQUAL.compare(this.m_width, dim.getWidth())));
     }
 
     return false;

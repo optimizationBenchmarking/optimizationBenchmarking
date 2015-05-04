@@ -11,23 +11,23 @@ final class _XHTML10TableBodyCell extends TableBodyCell {
   static final char[] TAB_TD_BEGIN = { '<', 't', 'd' };
   /** the class c */
   private static final char[] TAB_CLASS_C = { ' ', 'c', 'l', 'a', 's',
-      's', '=', '"', 't', 'a', 'b', 'C', '"', };
+    's', '=', '"', 't', 'a', 'b', 'C', '"', };
   /** the class l */
   private static final char[] TAB_CLASS_L = { ' ', 'c', 'l', 'a', 's',
-      's', '=', '"', 't', 'a', 'b', 'L', '"', };
+    's', '=', '"', 't', 'a', 'b', 'L', '"', };
   /** the class r */
   private static final char[] TAB_CLASS_R = { ' ', 'c', 'l', 'a', 's',
-      's', '=', '"', 't', 'a', 'b', 'R', '"', };
+    's', '=', '"', 't', 'a', 'b', 'R', '"', };
   /** the class colspan */
   private static final char[] TAB_CS = { ' ', 'c', 'o', 'l', 's', 'p',
-      'a', 'n', '=', '"', };
+    'a', 'n', '=', '"', };
   /** the class rowspan */
   private static final char[] TAB_RS = { ' ', 'r', 'o', 'w', 's', 'p',
-      'a', 'n', '=', '"', };
+    'a', 'n', '=', '"', };
 
   /**
    * Create a body cell of a table
-   * 
+   *
    * @param owner
    *          the owning row
    * @param cols
@@ -52,7 +52,7 @@ final class _XHTML10TableBodyCell extends TableBodyCell {
 
   /**
    * print the cell mode
-   * 
+   *
    * @param out
    *          the text output
    * @param cell

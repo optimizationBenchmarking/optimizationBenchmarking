@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
  * {@code null}. The sorted character of the data allows us to consider the
  * array both as a {@link java.util.List list} and as {@link java.util.Set}
  * .
- * 
+ *
  * @param <DT>
  *          the type
  */
@@ -26,7 +26,7 @@ public class ArraySetView<DT> extends ArrayListView<DT> implements Set<DT> {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data of the set - will not be copied or cloned, but used
    *          directly
@@ -37,6 +37,7 @@ public class ArraySetView<DT> extends ArrayListView<DT> implements Set<DT> {
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("unchecked")
   public final int indexOf(final Object o) {
     final Comparable<Object>[] data;
     int i;
@@ -67,6 +68,7 @@ public class ArraySetView<DT> extends ArrayListView<DT> implements Set<DT> {
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("unchecked")
   public final int lastIndexOf(final Object o) {
     final int size;
     final Comparable<Object>[] data;

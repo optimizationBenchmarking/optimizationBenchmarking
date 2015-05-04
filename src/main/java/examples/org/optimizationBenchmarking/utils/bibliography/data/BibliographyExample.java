@@ -25,7 +25,7 @@ public abstract class BibliographyExample implements Runnable {
 
   /**
    * create my bibliography
-   * 
+   *
    * @return the bibliography
    */
   public abstract Bibliography createBibliography();
@@ -41,31 +41,31 @@ public abstract class BibliographyExample implements Runnable {
 
     try {
       BibTeXOutput.getInstance().use().setStream(System.out)
-          .setSource(bib).setLogger(log)
-          .setFileProducerListener(new FinishedPrinter()).create().call();
+      .setSource(bib).setLogger(log)
+      .setFileProducerListener(new FinishedPrinter()).create().call();
 
       BibliographyExample.__flush();
 
       BibliographyXMLOutput.getInstance().use().setStream(System.out)
-          .setSource(bib).setFileProducerListener(new FinishedPrinter())
-          .setLogger(log).create().call();
+      .setSource(bib).setFileProducerListener(new FinishedPrinter())
+      .setLogger(log).create().call();
 
       BibliographyExample.__flush();
 
       try (final TempDir temp = new TempDir()) {
         BibTeXOutput.getInstance().use().setPath(temp.getPath())
-            .setSource(bib).setLogger(log)
-            .setFileProducerListener(new FinishedPrinter()).create()
-            .call();
+        .setSource(bib).setLogger(log)
+        .setFileProducerListener(new FinishedPrinter()).create()
+        .call();
       }
 
       BibliographyExample.__flush();
 
       try (final TempDir temp = new TempDir()) {
         BibliographyXMLOutput.getInstance().use().setPath(temp.getPath())
-            .setSource(bib).setLogger(log)
-            .setFileProducerListener(new FinishedPrinter()).create()
-            .call();
+        .setSource(bib).setLogger(log)
+        .setFileProducerListener(new FinishedPrinter()).create()
+        .call();
       }
 
     } catch (final IOException ioe) {

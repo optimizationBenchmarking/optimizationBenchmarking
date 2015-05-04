@@ -13,7 +13,7 @@ final class _StrokeApplication extends StyleApplication {
 
   /**
    * the style
-   * 
+   *
    * @param g
    *          the graphic
    * @param c

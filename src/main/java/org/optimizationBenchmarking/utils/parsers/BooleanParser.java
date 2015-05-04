@@ -117,7 +117,7 @@ public class BooleanParser extends StrictBooleanParser {
 
   /**
    * The raw parsing method for calling inside {@link #parseString(String)}
-   * 
+   *
    * @param o
    *          the object
    * @return the return value
@@ -159,7 +159,7 @@ public class BooleanParser extends StrictBooleanParser {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -168,7 +168,7 @@ public class BooleanParser extends StrictBooleanParser {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

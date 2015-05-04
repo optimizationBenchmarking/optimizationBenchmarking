@@ -10,7 +10,7 @@ final class _XHTML10BibAuthorHolder implements ISequenceable {
 
   /** the original spelling connector */
   static final char[] ORIGINAL_CONNECTOR = { '&', 'n', 'b', 's', 'p', ';',
-      '[' };
+  '[' };
 
   /** the start chars */
   private final char[] m_start;
@@ -23,7 +23,7 @@ final class _XHTML10BibAuthorHolder implements ISequenceable {
 
   /**
    * create
-   * 
+   *
    * @param start
    *          the start chars
    * @param author

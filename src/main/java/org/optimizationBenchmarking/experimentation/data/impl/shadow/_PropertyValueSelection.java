@@ -6,18 +6,18 @@ import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
 
 /**
  * an internal class managing property values
- * 
+ *
  * @param <PT>
  *          the property type
  * @param <PVT>
  *          the property value type
  */
 abstract class _PropertyValueSelection<PT extends IProperty, PVT extends IPropertyValue>
-    extends _PlainSelection<PT, PVT> {
+extends _PlainSelection<PT, PVT> {
 
   /**
    * create the property value selection
-   * 
+   *
    * @param property
    *          the original property
    */
@@ -27,7 +27,7 @@ abstract class _PropertyValueSelection<PT extends IProperty, PVT extends IProper
 
   /**
    * Check whether a property value should be ignored
-   * 
+   *
    * @param value
    *          the value
    * @return {@code true} if it should be ignored
@@ -39,7 +39,7 @@ abstract class _PropertyValueSelection<PT extends IProperty, PVT extends IProper
     }
     if (value.isGeneralized() || //
         ((value instanceof IParameterValue) && //
-        (((IParameterValue) value).isUnspecified()))) {
+            (((IParameterValue) value).isUnspecified()))) {
       return false;
     }
     return true;

@@ -25,7 +25,7 @@ public class TitledElement extends ChartElement implements ITitledElement {
 
   /**
    * create the chart item
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -39,9 +39,9 @@ public class TitledElement extends ChartElement implements ITitledElement {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_HAS_TITLE: {
-        append.append("titleSet");break;} //$NON-NLS-1$     
+        append.append("titleSet");break;} //$NON-NLS-1$
       case FLAG_HAS_TITLE_FONT: {
-        append.append("titleFontSet");break;} //$NON-NLS-1$       
+        append.append("titleFontSet");break;} //$NON-NLS-1$
       default: {
         super.fsmFlagsAppendName(flagValue, flagIndex, append);
       }
@@ -59,8 +59,8 @@ public class TitledElement extends ChartElement implements ITitledElement {
     if (this.m_title == null) {
       throw new IllegalArgumentException(//
           "Title cannot be set to null or empty string, but was set to '"//$NON-NLS-1$
-              + title + //
-              "'. If you don't want to specify a title, don't set it."); //$NON-NLS-1$
+          + title + //
+          "'. If you don't want to specify a title, don't set it."); //$NON-NLS-1$
     }
   }
 

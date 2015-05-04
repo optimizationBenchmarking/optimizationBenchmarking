@@ -8,12 +8,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * which publishes its API in the dedicated interfaces.
  */
 public class HierarchicalTextOutput extends HierarchicalText implements
-    ITextOutput {
+ITextOutput {
 
   /**
    * Create the hierarchical {@link java.lang.Appendable} with published
    * API
-   * 
+   *
    * @param out
    *          the {@link java.lang.Appendable}
    */
@@ -24,7 +24,7 @@ public class HierarchicalTextOutput extends HierarchicalText implements
   /**
    * Create the hierarchical {@link java.lang.Appendable} with published
    * API
-   * 
+   *
    * @param owner
    *          the owning hierarchical fsm
    */
@@ -35,7 +35,7 @@ public class HierarchicalTextOutput extends HierarchicalText implements
   /**
    * Create the hierarchical {@link java.lang.Appendable} with published
    * API
-   * 
+   *
    * @param owner
    *          the owning hierarchical fsm
    */
@@ -46,7 +46,7 @@ public class HierarchicalTextOutput extends HierarchicalText implements
   /**
    * Obtain a new hierarchical {@link java.lang.Appendable} attached to
    * this one.
-   * 
+   *
    * @return a new hierarchical {@link java.lang.Appendable} attached to
    *         this one
    */
@@ -57,7 +57,7 @@ public class HierarchicalTextOutput extends HierarchicalText implements
   /**
    * Create the hierarchical {@link java.lang.Appendable} with published
    * API
-   * 
+   *
    * @param owner
    *          the owning hierarchical fsm
    * @param out

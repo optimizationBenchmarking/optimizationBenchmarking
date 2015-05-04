@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IDocumentProducerTool;
  * A tool which can produce a specific kind of file, i.e., a document
  */
 public abstract class DocumentProducerTool extends FileProducerTool
-    implements IDocumentProducerTool {
+implements IDocumentProducerTool {
 
   /**
    * Create the file producer tool.
@@ -24,7 +24,7 @@ public abstract class DocumentProducerTool extends FileProducerTool
    * {@link org.optimizationBenchmarking.utils.io.IFileType#getDefaultSuffix()
    * default suffix} of the {@link #getFileType()} managed by this file
    * producer.
-   * 
+   *
    * @param basePath
    *          the base path
    * @param mainDocumentNameSuggestion

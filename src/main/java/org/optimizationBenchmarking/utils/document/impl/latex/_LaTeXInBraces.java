@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXInBraces extends InBraces {
   /**
    * create the in-braces element
-   * 
+   *
    * @param owner
    *          the owner
    */

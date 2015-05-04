@@ -5,7 +5,7 @@ public class MathSub extends MathFunction {
 
   /**
    * Create an sub function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

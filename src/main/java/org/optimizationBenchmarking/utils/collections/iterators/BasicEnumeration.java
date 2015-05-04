@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 /**
  * A base class implementing the {@link java.util.Enumeration} interface.
- * 
+ *
  * @param <T>
  *          the type to iterate about
  */

@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * different owner and potentially different attributes. If all associated
  * data of this element is the same, it will delegate attribute-based
  * computations to that property.
- * 
+ *
  * @param <OT>
  *          the owner type
  * @param <ST>
@@ -25,14 +25,14 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the property value type
  */
 abstract class _ShadowProperty<OT extends IPropertySet, ST extends IProperty, PVT extends IPropertyValue>
-    extends _ShadowElementSet<OT, ST, PVT> implements IProperty {
+extends _ShadowElementSet<OT, ST, PVT> implements IProperty {
 
   /** the general property value type */
   PVT m_general;
 
   /**
    * create the shadow property
-   * 
+   *
    * @param owner
    *          the owning property set
    * @param shadow
@@ -83,6 +83,7 @@ abstract class _ShadowProperty<OT extends IPropertySet, ST extends IProperty, PV
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("unchecked")
   public synchronized final PVT getGeneralized() {
     if (this.m_general == null) {
       this.m_general = this._shadow((PVT) (this.m_orig.getGeneralized()));

@@ -8,14 +8,14 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A shadow of a data element.
- * 
+ *
  * @param <OT>
  *          the owner type
  * @param <ST>
  *          the shadow type
  */
 class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
-    extends DataElement implements Comparable<_ShadowDataElement<OT, ST>> {
+extends DataElement implements Comparable<_ShadowDataElement<OT, ST>> {
 
   /** the owner */
   OT m_owner;
@@ -31,7 +31,7 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
 
   /**
    * create the shadow element
-   * 
+   *
    * @param owner
    *          the owner
    * @param shadow
@@ -58,7 +58,7 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
 
   /**
    * Set the owner of this element
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -71,8 +71,8 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
     if (this.m_owner != null) {
       throw new IllegalStateException(//
           "Instance of "//$NON-NLS-1$
-              + TextUtils.className(this.getClass()) + //
-              " already has an owner.");//$NON-NLS-1$
+          + TextUtils.className(this.getClass()) + //
+          " already has an owner.");//$NON-NLS-1$
     }
     this.m_owner = owner;
   }
@@ -80,7 +80,7 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
   /**
    * Get the delegate to which all attribute computations can be forwarded
    * to, or {@code null} if no forwarding should take place
-   * 
+   *
    * @param shadow
    *          the shadow
    * @return the delegate
@@ -91,7 +91,7 @@ class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
 
   /**
    * Get the shadow delegate
-   * 
+   *
    * @return the shadow delegate
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })

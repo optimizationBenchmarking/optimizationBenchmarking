@@ -93,7 +93,7 @@ class _StatefulNumber extends BasicNumber {
 
   /**
    * copy the value of a given number
-   * 
+   *
    * @param src
    *          the number to copy
    */

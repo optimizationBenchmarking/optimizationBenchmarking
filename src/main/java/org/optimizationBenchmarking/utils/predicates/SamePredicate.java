@@ -10,21 +10,21 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  * the same object.
  */
 public final class SamePredicate extends HashObject implements
-    IPredicate<Object>, Serializable {
+IPredicate<Object>, Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /**
    * The object to compare with
-   * 
+   *
    * @serial the object to compare with
    */
   private final Object m_compare;
 
   /**
    * create
-   * 
+   *
    * @param compare
    *          the object to compare with
    */
@@ -43,8 +43,8 @@ public final class SamePredicate extends HashObject implements
   @Override
   public final boolean equals(final Object o) {
     return ((o == this) || //
-    ((o instanceof SamePredicate) && //
-    (this.m_compare == (((SamePredicate) o).m_compare))));
+        ((o instanceof SamePredicate) && //
+            (this.m_compare == (((SamePredicate) o).m_compare))));
   }
 
   /** {@inheritDoc} */

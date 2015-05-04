@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.EmptyUtils;
 
 /**
  * check whether a string is in a list
- * 
+ *
  * @param <T>
  *          the object type
  */
@@ -18,7 +18,7 @@ public class StringInListIgnoreCase<T> extends StringInList<T> {
 
   /**
    * Create the predicate
-   * 
+   *
    * @param list
    *          the string list
    */
@@ -28,7 +28,7 @@ public class StringInListIgnoreCase<T> extends StringInList<T> {
 
   /**
    * Create the predicate
-   * 
+   *
    * @param list
    *          the string list
    */

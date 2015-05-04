@@ -14,7 +14,7 @@ public interface ISemanticComponent {
    * Append the "name" of this component to the given
    * {@link org.optimizationBenchmarking.utils.document.spec.IMath
    * mathematics context}.
-   * 
+   *
    * @param math
    *          the mathematics output device
    */
@@ -29,7 +29,7 @@ public interface ISemanticComponent {
    * including the ability to
    * {@link org.optimizationBenchmarking.utils.document.spec.IComplexText#inlineMath()
    * display mathematical text}.
-   * 
+   *
    * @param textOut
    *          the text output device
    * @param textCase
@@ -42,7 +42,7 @@ public interface ISemanticComponent {
   /**
    * Obtain a suggestion for the path component of figures drawn based on
    * this component.
-   * 
+   *
    * @return a suggestion for the path component of figures drawn based on
    *         this component.
    */

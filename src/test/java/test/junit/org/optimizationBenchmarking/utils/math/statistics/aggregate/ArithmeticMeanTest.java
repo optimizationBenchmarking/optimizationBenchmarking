@@ -52,17 +52,17 @@ public class ArithmeticMeanTest {
           }
         }
 
-        ss.append(valueToAdd);
-        sum = SaturatingAdd.INSTANCE.computeAsLong(sum, valueToAdd);
+      ss.append(valueToAdd);
+      sum = SaturatingAdd.INSTANCE.computeAsLong(sum, valueToAdd);
 
-        if ((sum % i) == 0) {
-          Assert.assertEquals(ss.getState(), BasicNumber.STATE_INTEGER);
-          Assert.assertEquals((sum / i), ss.longValue());
-        } else {
-          Assert.assertEquals(ss.getState(), BasicNumber.STATE_DOUBLE);
-          Assert.assertEquals((sum / ((double) i)), ss.doubleValue(),
-              1e-10);
-        }
+      if ((sum % i) == 0) {
+        Assert.assertEquals(ss.getState(), BasicNumber.STATE_INTEGER);
+        Assert.assertEquals((sum / i), ss.longValue());
+      } else {
+        Assert.assertEquals(ss.getState(), BasicNumber.STATE_DOUBLE);
+        Assert.assertEquals((sum / ((double) i)), ss.doubleValue(),
+            1e-10);
+      }
       }
     }
   }
@@ -94,7 +94,7 @@ public class ArithmeticMeanTest {
 
         Assert.assertTrue(//
             (ss.getState() == BasicNumber.STATE_DOUBLE) || //
-                (ss.getState() == BasicNumber.STATE_INTEGER));
+            (ss.getState() == BasicNumber.STATE_INTEGER));
         Assert.assertEquals((sum / i), ss.doubleValue(), 1e-10);
 
       }

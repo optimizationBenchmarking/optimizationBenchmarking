@@ -10,24 +10,24 @@ final class _XHTML10DocumentFooter extends DocumentFooter {
 
   /** the html end */
   private static final char[] BODY_HTML_END = { '<', '/', 'b', 'o', 'd',
-      'y', '>', '<', '/', 'h', 't', 'm', 'l', '>' };
+    'y', '>', '<', '/', 'h', 't', 'm', 'l', '>' };
 
   /** the reference table */
   private static final char[] REF_TAB = { '<', 't', 'a', 'b', 'l', 'e',
-      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'r', 'e', 'f', '"', '>' };
+    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'r', 'e', 'f', '"', '>' };
   /** the reference table tr */
   private static final char[] REF_TR = { '<', 't', 'r', ' ', 'c', 'l',
-      'a', 's', 's', '=', '"', 'r', 'e', 'f', '"', '>' };
+    'a', 's', 's', '=', '"', 'r', 'e', 'f', '"', '>' };
   /** the reference table idx td */
   private static final char[] REF_ID_TD = { '<', 't', 'd', ' ', 'c', 'l',
-      'a', 's', 's', '=', '"', 'r', 'e', 'f', 'I', 'd', '"', '>' };
+    'a', 's', 's', '=', '"', 'r', 'e', 'f', 'I', 'd', '"', '>' };
   /** the reference table text td */
   private static final char[] REF_TXT_TD = { '<', 't', 'd', ' ', 'c', 'l',
-      'a', 's', 's', '=', '"', 'r', 'e', 'f', 'T', 'x', 't', '"', '>' };
+    'a', 's', 's', '=', '"', 'r', 'e', 'f', 'T', 'x', 't', '"', '>' };
 
   /**
    * Create a document footer
-   * 
+   *
    * @param owner
    *          the owning document
    */

@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 public class TableHeaderCell extends TableCell {
   /**
    * Create the table header cell
-   * 
+   *
    * @param owner
    *          the owning row
    * @param cols

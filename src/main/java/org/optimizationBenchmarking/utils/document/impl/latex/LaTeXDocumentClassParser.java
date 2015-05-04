@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** A parser for LaTeX document classes */
 public final class LaTeXDocumentClassParser extends
-    InstanceParser<LaTeXDocumentClass> {
+InstanceParser<LaTeXDocumentClass> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -25,7 +25,7 @@ public final class LaTeXDocumentClassParser extends
 
   /**
    * get the prefixes
-   * 
+   *
    * @return the path prefixes
    */
   private static final String[] __prefixes() {
@@ -69,7 +69,7 @@ public final class LaTeXDocumentClassParser extends
 
   /**
    * Get the singleton instance of this parser
-   * 
+   *
    * @return the latex document class parser
    */
   public static final LaTeXDocumentClassParser getInstance() {

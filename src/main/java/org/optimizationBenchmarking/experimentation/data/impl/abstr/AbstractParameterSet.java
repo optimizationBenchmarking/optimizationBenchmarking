@@ -13,14 +13,14 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * interface.
  */
 public class AbstractParameterSet extends
-    _AbstractPropertySet<IParameterSetting> implements IParameterSet {
+_AbstractPropertySet<IParameterSetting> implements IParameterSet {
 
   /**
    * Create the abstract parameter set. If {@code owner==null}, you must
    * later set it via
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractParameterSet)}
    * .
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -32,7 +32,7 @@ public class AbstractParameterSet extends
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractParameter}
    * .
-   * 
+   *
    * @param parameter
    *          the parameter set to own
    */

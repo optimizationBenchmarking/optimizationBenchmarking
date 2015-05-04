@@ -94,7 +94,7 @@ public enum EDimensionType {
    * obtained by the first machine after the same amount of
    * {@link #RUNTIME_CPU CPU time} may seem much better, even for the same
    * algorithm.
-   * 
+   *
    * @return {@code true} if two measurements in this dimension taken on
    *         different computers cannot be compared, {@code false} if they
    *         can.
@@ -113,7 +113,7 @@ public enum EDimensionType {
    * stuff, etc. this way. Thus, {@link #RUNTIME_NORMALIZED normalized
    * runtime} measures (and {@link #RUNTIME_CPU CPU time} as well) may be
    * biased by machine-internal effects.
-   * 
+   *
    * @return {@code true} if the measurements taken in this dimension may
    *         be biased by other stuff going on the same machine,
    *         {@code false} otherwise.
@@ -126,7 +126,7 @@ public enum EDimensionType {
    * Does the dimension represent an quality measure, such as
    * {@link #QUALITY_PROBLEM_DEPENDENT objective values} or
    * {@link #QUALITY_PROBLEM_INDEPENDENT normalized objective values}?
-   * 
+   *
    * @return {@code true} if the dimension represent an quality measure,
    *         such as {@link #QUALITY_PROBLEM_DEPENDENT objective values} or
    *         {@link #QUALITY_PROBLEM_INDEPENDENT normalized objective
@@ -139,7 +139,7 @@ public enum EDimensionType {
   /**
    * Is this dimension a machine-independent time measure based on
    * algorithm steps?
-   * 
+   *
    * @return {@code true} if this dimension represents a
    *         machine-independent time measure based on algorithm steps,
    *         {@code false} if not.
@@ -150,7 +150,7 @@ public enum EDimensionType {
 
   /**
    * Is this dimension a time measure?
-   * 
+   *
    * @return {@code true} if this dimension is a machine-dependent,
    *         machine-independent, or machine-biased time measure,
    *         {@code false} if this dimension does not represent time.

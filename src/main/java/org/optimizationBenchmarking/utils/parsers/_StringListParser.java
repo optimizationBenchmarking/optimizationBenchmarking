@@ -13,7 +13,7 @@ final class _StringListParser extends ListParser<String> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -22,7 +22,7 @@ final class _StringListParser extends ListParser<String> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

@@ -98,7 +98,7 @@ public final class ProcessExecutor extends Tool {
 
   /**
    * Get the instance of the process executor
-   * 
+   *
    * @return the instance of the process executor
    */
   public static final ProcessExecutor getInstance() {

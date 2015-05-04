@@ -26,12 +26,12 @@ public final class Article extends LaTeXDocumentClass {
         LaTeXDefaultFontPalette.getInstance(),// fonts
         ELaTeXSection.SECTION,// highest supported section type
         ELaTeXSection.SUBPARAGRAPH// lowest supported section type
-    );
+        );
   }
 
   /**
    * get the globally shared instance of the {@code article} document class
-   * 
+   *
    * @return the {@code article} document class
    */
   public static final Article getInstance() {

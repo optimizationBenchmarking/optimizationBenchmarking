@@ -9,7 +9,7 @@ import test.junit.InstanceTest;
 
 /**
  * a test for collection classes
- * 
+ *
  * @param <ET>
  *          the element type
  * @param <T>
@@ -17,7 +17,7 @@ import test.junit.InstanceTest;
  */
 @Ignore
 public class ArraySetViewTestBase<ET, T extends ArraySetView<ET>> extends
-    ArrayListViewTestBase<ET, T> {
+ArrayListViewTestBase<ET, T> {
 
   /** create */
   public ArraySetViewTestBase() {
@@ -26,7 +26,7 @@ public class ArraySetViewTestBase<ET, T extends ArraySetView<ET>> extends
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    * @param isSingleton

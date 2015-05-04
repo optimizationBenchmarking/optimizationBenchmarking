@@ -8,11 +8,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10MathAbs extends MathAbs {
   /** the before */
   private final static char[] ABS_TD = { '<', 't', 'd', ' ', 'c', 'l',
-      'a', 's', 's', '=', '"', 'm', 'a', 't', 'h', 'B', 'L', '"', '>' };
+    'a', 's', 's', '=', '"', 'm', 'a', 't', 'h', 'B', 'L', '"', '>' };
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

@@ -10,7 +10,7 @@ public interface IDocumentFactory {
   /**
    * Create a document writing its output to the folder identified by the
    * path {@code destination}.
-   * 
+   *
    * @param destination
    *          a path identifying a destination folder
    * @return the document

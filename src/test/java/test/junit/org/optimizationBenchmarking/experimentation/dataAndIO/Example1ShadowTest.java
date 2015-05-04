@@ -19,14 +19,14 @@ public class Example1ShadowTest extends ExperimentSetTest {
 
   /** wrap an experiment set creator */
   private static final class __ExperimentSet1CreatorWrapper extends
-      ExperimentSetCreator {
+  ExperimentSetCreator {
 
     /** the example */
     private final Example1 m_example1;
 
     /**
      * create
-     * 
+     *
      * @param logger
      *          the logger, or {@code null} to use the global logger
      */

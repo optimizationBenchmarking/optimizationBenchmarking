@@ -14,7 +14,7 @@ import test.junit.InstanceTest;
 
 /**
  * a test for collection classes
- * 
+ *
  * @param <ET>
  *          the element type
  * @param <AT>
@@ -24,7 +24,7 @@ import test.junit.InstanceTest;
  */
 @Ignore
 public class BasicListTest<ET, AT, T extends BasicList<ET>> extends
-    ListTest<ET, T> {
+ListTest<ET, T> {
 
   /** create */
   public BasicListTest() {
@@ -33,7 +33,7 @@ public class BasicListTest<ET, AT, T extends BasicList<ET>> extends
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    * @param isSingleton

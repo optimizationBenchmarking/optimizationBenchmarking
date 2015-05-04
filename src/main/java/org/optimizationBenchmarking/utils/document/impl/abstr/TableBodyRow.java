@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 public class TableBodyRow extends TableRow {
   /**
    * Create the table body row
-   * 
+   *
    * @param owner
    *          the owning table body
    */

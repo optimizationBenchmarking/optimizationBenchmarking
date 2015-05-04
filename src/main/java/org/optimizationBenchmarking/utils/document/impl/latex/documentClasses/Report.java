@@ -26,12 +26,12 @@ public final class Report extends LaTeXDocumentClass {
         LaTeXDefaultFontPalette.getInstance(),// fonts
         ELaTeXSection.CHAPTER,// highest supported section type
         ELaTeXSection.SUBPARAGRAPH// lowest supported section type
-    );
+        );
   }
 
   /**
    * get the globally shared instance of the {@code report} document class
-   * 
+   *
    * @return the {@code report} document class
    */
   public static final Report getInstance() {

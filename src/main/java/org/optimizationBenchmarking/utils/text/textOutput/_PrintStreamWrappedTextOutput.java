@@ -9,11 +9,11 @@ import org.optimizationBenchmarking.utils.text.CharArrayCharSequence;
  * {@link java.io.PrintStream}.
  */
 final class _PrintStreamWrappedTextOutput extends
-    _AppendableWrappedTextOutputBase<PrintStream> {
+_AppendableWrappedTextOutputBase<PrintStream> {
 
   /**
    * Create a wrapped text output
-   * 
+   *
    * @param out
    *          the output
    */

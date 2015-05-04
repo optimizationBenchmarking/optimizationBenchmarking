@@ -21,7 +21,7 @@ class _JFreeChartPieLabelGenerator implements PieSectionLabelGenerator {
 
   /**
    * create
-   * 
+   *
    * @param plot
    *          the plot
    */
@@ -74,7 +74,7 @@ class _JFreeChartPieLabelGenerator implements PieSectionLabelGenerator {
 
   /**
    * Get the title of an element
-   * 
+   *
    * @param element
    *          the element
    * @return the title
@@ -85,7 +85,7 @@ class _JFreeChartPieLabelGenerator implements PieSectionLabelGenerator {
 
   /**
    * Get the attributes of a compiled element
-   * 
+   *
    * @param element
    *          the element
    * @return the attributes

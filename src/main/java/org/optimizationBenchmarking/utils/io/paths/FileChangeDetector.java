@@ -57,7 +57,7 @@ public class FileChangeDetector {
 
   /**
    * Create the change detector
-   * 
+   *
    * @param path
    *          the path to look at
    */
@@ -236,7 +236,7 @@ public class FileChangeDetector {
 
   /**
    * Check whether the file has changed
-   * 
+   *
    * @param reset
    *          reset the change flag?
    * @return {@code true} if a change has been detected to the file or this
@@ -318,7 +318,7 @@ public class FileChangeDetector {
 
   /**
    * Check if the path refers to a regular file
-   * 
+   *
    * @return {@code true} if the path refers to a regular file,
    *         {@code false} otherwise
    */
@@ -331,7 +331,7 @@ public class FileChangeDetector {
 
   /**
    * Get the path tracked by this tracker
-   * 
+   *
    * @return the path tracked by this tracker
    */
   public final Path getPath() {

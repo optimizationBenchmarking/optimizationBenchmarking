@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * graphics.
  */
 public final class ImageIOGIFGraphicDriver extends
-    _ImageIORasterGraphicDriver {
+_ImageIORasterGraphicDriver {
 
   /** Create a new GIF driver for based on {@link javax.imageio ImageIO}. */
   ImageIOGIFGraphicDriver() {
@@ -62,7 +62,7 @@ public final class ImageIOGIFGraphicDriver extends
 
   /**
    * Get the default instance of the GIF driver based on Java's imaging API
-   * 
+   *
    * @return the default instance of the GIF driver based on Java's imaging
    *         API
    */
@@ -74,7 +74,7 @@ public final class ImageIOGIFGraphicDriver extends
   static final class _ImageIOGIFSPILoader {
     /** the image writer spi */
     static final ImageWriterSpi SPI = //
-    _ImageIORasterGraphicDriver.getSPI(EGraphicFormat.GIF);
+        _ImageIORasterGraphicDriver.getSPI(EGraphicFormat.GIF);
   }
 
   /** the default loader */

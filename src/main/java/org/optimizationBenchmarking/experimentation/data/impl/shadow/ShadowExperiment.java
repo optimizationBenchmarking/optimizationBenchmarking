@@ -19,15 +19,15 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * computations to that experiment.
  */
 public class ShadowExperiment extends //
-    _ShadowElementSet<IExperimentSet, IExperiment, IInstanceRuns>
-    implements IExperiment {
+_ShadowElementSet<IExperimentSet, IExperiment, IInstanceRuns>
+implements IExperiment {
 
   /** the parameters */
   private IParameterSetting m_params;
 
   /**
    * create the shadow experiment
-   * 
+   *
    * @param owner
    *          the owning element
    * @param shadow

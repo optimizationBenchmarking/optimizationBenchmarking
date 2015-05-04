@@ -50,7 +50,7 @@ public abstract class EvaluationExample {
 
   /**
    * get the resource class
-   * 
+   *
    * @return the class to load the resource from
    */
   protected Class<?> getResourceClass() {
@@ -59,14 +59,14 @@ public abstract class EvaluationExample {
 
   /**
    * Get the resource name
-   * 
+   *
    * @return the resource name
    */
   protected abstract String getResourceName();
 
   /**
    * Process a given experiment source and destination
-   * 
+   *
    * @param input
    *          the experiment set source
    * @param dest
@@ -106,7 +106,7 @@ public abstract class EvaluationExample {
             .resolve(configName)
             .resolve(
                 (destName + '_')
-                    + EvaluationExample.COUNTER.incrementAndGet()));
+                + EvaluationExample.COUNTER.incrementAndGet()));
 
     builder = Evaluator.getInstance().use();
     builder.setInput(input);
@@ -142,7 +142,7 @@ public abstract class EvaluationExample {
   /**
    * Process: Write the examples for a given data source in a given base
    * dir
-   * 
+   *
    * @param source
    *          the data source
    * @param baseDir
@@ -166,14 +166,14 @@ public abstract class EvaluationExample {
           logger, //
           ("Severe error during experiment example " //$NON-NLS-1$
               + TextUtils.className(this.getClass()) + " for source " + //$NON-NLS-1$
-          TextUtils.className(source)), tt, true,
-          RethrowMode.AS_RUNTIME_EXCEPTION);
+              TextUtils.className(source)), tt, true,
+              RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
 
   /**
    * Process: Write all the examples in a given base dir
-   * 
+   *
    * @param baseDir
    *          the base dir
    */
@@ -189,8 +189,8 @@ public abstract class EvaluationExample {
       ErrorUtils.logError(
           logger, //
           ("Severe error during experiment example " //$NON-NLS-1$
-          + TextUtils.className(this.getClass())), tt, true,
-          RethrowMode.AS_RUNTIME_EXCEPTION);
+              + TextUtils.className(this.getClass())), tt, true,
+              RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
 

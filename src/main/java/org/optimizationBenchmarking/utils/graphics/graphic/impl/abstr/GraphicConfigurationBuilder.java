@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
  * graphic builder}.
  */
 public class GraphicConfigurationBuilder extends GraphicConfiguration
-    implements IConfigurable {
+implements IConfigurable {
 
   /** the graphic driver parameter */
   public static final String PARAM_GRAPHIC_DRIVER = "graphicDriver"; //$NON-NLS-1$
@@ -44,7 +44,7 @@ public class GraphicConfigurationBuilder extends GraphicConfiguration
 
   /**
    * Copy settings from a graphic configuration
-   * 
+   *
    * @param copyFrom
    *          the graphic configuration to copy from
    */
@@ -72,7 +72,7 @@ public class GraphicConfigurationBuilder extends GraphicConfiguration
 
   /**
    * Configure the graphic-driver local parameters
-   * 
+   *
    * @param config
    *          the configuration
    */
@@ -106,7 +106,7 @@ public class GraphicConfigurationBuilder extends GraphicConfiguration
 
   /**
    * Set the dots per inch
-   * 
+   *
    * @param dotsPerInch
    *          the dots per inch
    * @see org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder#setDotsPerInch(int)
@@ -119,7 +119,7 @@ public class GraphicConfigurationBuilder extends GraphicConfiguration
 
   /**
    * Set the color model
-   * 
+   *
    * @param colorModel
    *          the color model
    * @see org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder#setColorModel(EColorModel)
@@ -132,7 +132,7 @@ public class GraphicConfigurationBuilder extends GraphicConfiguration
 
   /**
    * Set the quality
-   * 
+   *
    * @param quality
    *          the quality
    * @see org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicBuilder#setQuality(double)
@@ -145,7 +145,7 @@ public class GraphicConfigurationBuilder extends GraphicConfiguration
 
   /**
    * Set the graphic driver.
-   * 
+   *
    * @param driver
    *          the graphic driver
    * @see #getGraphicDriver()

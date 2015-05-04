@@ -12,7 +12,7 @@ public class ErrorTest {
 
   /**
    * the main method
-   * 
+   *
    * @param args
    *          the command line arguments
    */
@@ -28,7 +28,7 @@ public class ErrorTest {
       System.out.println(1 / 0);
     } catch (final Throwable t) {
       ErrorUtils.logError(log1,
-          "First attemt to log error to global logger.", //$NON-NLS-1$          
+          "First attemt to log error to global logger.", //$NON-NLS-1$
           t, false, RethrowMode.DONT_RETHROW);
       error = t;
     }
@@ -46,38 +46,38 @@ public class ErrorTest {
         error, false, RethrowMode.DONT_RETHROW);
 
     ErrorUtils
-        .logError(
-            log1,
-            "Third attemt to log error to global logger, now with forceLog set to true.", //$NON-NLS-1$
-            error, true, RethrowMode.DONT_RETHROW);
+    .logError(
+        log1,
+        "Third attemt to log error to global logger, now with forceLog set to true.", //$NON-NLS-1$
+        error, true, RethrowMode.DONT_RETHROW);
 
     ErrorUtils
-        .logError(
-            log2,
-            "Third attemt to log error to second logger, now with forceLog set to true.", //$NON-NLS-1$
-            error, true, RethrowMode.DONT_RETHROW);
+    .logError(
+        log2,
+        "Third attemt to log error to second logger, now with forceLog set to true.", //$NON-NLS-1$
+        error, true, RethrowMode.DONT_RETHROW);
 
     try {
       ErrorUtils
-          .logError(
-              log2,
-              "Fourth attemt to log error to second logger, now with forceLog set to false but rethrow mode set to IOException.", //$NON-NLS-1$
-              error, false, RethrowMode.AS_IO_EXCEPTION);
+      .logError(
+          log2,
+          "Fourth attemt to log error to second logger, now with forceLog set to false but rethrow mode set to IOException.", //$NON-NLS-1$
+          error, false, RethrowMode.AS_IO_EXCEPTION);
     } catch (final Throwable t) {
       try {
         ErrorUtils
-            .logError(
-                log2,
-                "Attemt to log caught error to second logger, now with forceLog set to false but rethrow mode set to RuntimeException.", //$NON-NLS-1$
-                ErrorUtils.aggregateError(error, t), false,
-                RethrowMode.AS_RUNTIME_EXCEPTION);
+        .logError(
+            log2,
+            "Attemt to log caught error to second logger, now with forceLog set to false but rethrow mode set to RuntimeException.", //$NON-NLS-1$
+            ErrorUtils.aggregateError(error, t), false,
+            RethrowMode.AS_RUNTIME_EXCEPTION);
       } catch (final Throwable tt) {
         ErrorUtils
-            .logError(
-                log2,
-                "Attemt to log caught re-thrown error to second logger, now with forceLog set to false but rethrow mode set to RuntimeException.", //$NON-NLS-1$
-                ErrorUtils.aggregateError(error, tt), false,
-                RethrowMode.DONT_RETHROW);
+        .logError(
+            log2,
+            "Attemt to log caught re-thrown error to second logger, now with forceLog set to false but rethrow mode set to RuntimeException.", //$NON-NLS-1$
+            ErrorUtils.aggregateError(error, tt), false,
+            RethrowMode.DONT_RETHROW);
       }
     }
 

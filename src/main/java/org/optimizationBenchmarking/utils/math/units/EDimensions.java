@@ -25,14 +25,14 @@ public enum EDimensions implements IDimension {
 
   /** all dimensions */
   public static final ArraySetView<EDimensions> INSTANCES = //
-  new ArraySetView<>(EDimensions.values());
+      new ArraySetView<>(EDimensions.values());
 
   /** the name */
   private final String m_name;
 
   /**
    * create
-   * 
+   *
    * @param name
    *          the name
    */

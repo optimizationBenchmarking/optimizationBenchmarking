@@ -12,7 +12,7 @@ public interface IPlainText extends IText {
    * {@link org.optimizationBenchmarking.utils.document.spec.IPlainText} to
    * which output can be written. This output will appear surrounded by the
    * correct quotation characters in the underlying stream.
-   * 
+   *
    * @return an instance of
    *         {@link org.optimizationBenchmarking.utils.document.spec.IPlainText}
    *         whose text will appear in quotation marks in the underlying
@@ -27,7 +27,7 @@ public interface IPlainText extends IText {
    * {@link org.optimizationBenchmarking.utils.document.spec.IPlainText} to
    * which output can be written. This output will appear surrounded by the
    * correct brace characters in the underlying stream.
-   * 
+   *
    * @return an instance of
    *         {@link org.optimizationBenchmarking.utils.document.spec.IPlainText}
    *         whose text will appear in braces in the underlying stream

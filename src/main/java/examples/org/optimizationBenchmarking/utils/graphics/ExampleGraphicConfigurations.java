@@ -37,7 +37,7 @@ public final class ExampleGraphicConfigurations {
 
   /**
    * make the graphics configurations
-   * 
+   *
    * @return the graphics configurations
    */
   private static final ArrayListView<GraphicConfiguration> __make() {

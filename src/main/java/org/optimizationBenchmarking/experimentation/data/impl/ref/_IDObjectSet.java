@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * An internal set of id objects.
- * 
+ *
  * @param <DT>
  *          the type
  */
@@ -14,7 +14,7 @@ abstract class _IDObjectSet<DT extends _IDObject> extends ElementSet<DT> {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data of the set
    * @param clone
@@ -103,8 +103,8 @@ abstract class _IDObjectSet<DT extends _IDObject> extends ElementSet<DT> {
       if (before.m_id > after.m_id) {
         throw new IllegalArgumentException((((((((//
             "In an instance of " + //$NON-NLS-1$
-                TextUtils.className(this.getClass()) + //
-                ", an element with lower ID cannot follow an element with higher ID, but '" + //$NON-NLS-1$
+            TextUtils.className(this.getClass()) + //
+            ", an element with lower ID cannot follow an element with higher ID, but '" + //$NON-NLS-1$
             before) + "' with ID ") + //$NON-NLS-1$
             before.m_id) + " follows '") + //$NON-NLS-1$
             after) + "' with ID ") + after.m_id) + '.'); //$NON-NLS-1$
@@ -113,8 +113,8 @@ abstract class _IDObjectSet<DT extends _IDObject> extends ElementSet<DT> {
       if (before.m_owner == after.m_owner) {
         throw new IllegalArgumentException(((((((((((//
             "In an instance of " + //$NON-NLS-1$
-                TextUtils.className(this.getClass()) + //
-                ", if two elements have the same ID, they cannot have the same owner, but '" + //$NON-NLS-1$
+            TextUtils.className(this.getClass()) + //
+            ", if two elements have the same ID, they cannot have the same owner, but '" + //$NON-NLS-1$
             before) + "' with ID ") + //$NON-NLS-1$
             before.m_id) + " follows '") + //$NON-NLS-1$
             after) + "' with ID ") + after.m_id) + //$NON-NLS-1$
@@ -171,7 +171,7 @@ abstract class _IDObjectSet<DT extends _IDObject> extends ElementSet<DT> {
 
   /**
    * Find the element with the given name
-   * 
+   *
    * @param name
    *          the name
    * @return the element, or {@code null} if it could not be found

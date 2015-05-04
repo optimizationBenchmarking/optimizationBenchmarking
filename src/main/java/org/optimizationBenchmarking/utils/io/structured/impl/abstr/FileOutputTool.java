@@ -16,12 +16,12 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IFileOutputTool;
 
 /**
  * A tool for generating file output.
- * 
+ *
  * @param <S>
  *          the source type
  */
 public class FileOutputTool<S> extends IOTool<S> implements
-    IFileOutputTool<S> {
+IFileOutputTool<S> {
 
   /** create */
   protected FileOutputTool() {
@@ -36,7 +36,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
 
   /**
    * Get the suffix for the destination parameter
-   * 
+   *
    * @return the suffix for the destination parameter
    */
   protected String getDestinationParamSuffix() {
@@ -75,7 +75,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
 
   /**
    * Store the data element to a stream
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -91,7 +91,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
    */
   void _stream(final IOJob job, final S data, final OutputStream stream,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-      throws Throwable {
+          throws Throwable {
     final Path path;
 
     if (archiveType != null) {
@@ -107,7 +107,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
 
   /**
    * Get the default archive name
-   * 
+   *
    * @return the default archive name
    */
   protected String getDefaultArchiveName() {
@@ -119,7 +119,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
   void _path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-      throws Throwable {
+          throws Throwable {
     final Path file, tempDir;
     final _OutputJob outJob;
     final Object oldCur;
@@ -140,8 +140,8 @@ public class FileOutputTool<S> extends IOTool<S> implements
               && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
             logger.log(IOTool.DEFAULT_LOG_LEVEL,//
                 (((("Path '" + path) + //$NON-NLS-1$
-                "' identifies a directory, creating archive file '")//$NON-NLS-1$
-                + file) + "' for output."));//$NON-NLS-1$
+                    "' identifies a directory, creating archive file '")//$NON-NLS-1$
+                    + file) + "' for output."));//$NON-NLS-1$
           }
         } else {
           file = path;
@@ -169,7 +169,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
 
   /**
    * Write the output to the given path.
-   * 
+   *
    * @param job
    *          the job
    * @param data
@@ -199,7 +199,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
 
   /**
    * Add a file to the job's internal list.
-   * 
+   *
    * @param job
    *          the job
    * @param path
@@ -222,7 +222,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
    * Add a {@link java.nio.file.Path file}/
    * {@link org.optimizationBenchmarking.utils.io.IFileType file type}
    * -association to the job's internal list.
-   * 
+   *
    * @param job
    *          the job
    * @param p
@@ -241,7 +241,7 @@ public class FileOutputTool<S> extends IOTool<S> implements
 
   /**
    * Add a set of paths to the job's internal list.
-   * 
+   *
    * @param job
    *          the job
    * @param ps

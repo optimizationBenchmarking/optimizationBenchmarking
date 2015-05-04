@@ -18,7 +18,7 @@ final class _MatrixIterator2DXLongYDouble extends MatrixIterator2D {
 
   /**
    * Create a new 2d matrix iterator
-   * 
+   *
    * @param matrices
    *          the list of matrices
    * @param xDim
@@ -51,7 +51,7 @@ final class _MatrixIterator2DXLongYDouble extends MatrixIterator2D {
 
   /**
    * set the x-coordinate
-   * 
+   *
    * @param x
    *          the x-coordinate
    */
@@ -208,7 +208,7 @@ final class _MatrixIterator2DXLongYDouble extends MatrixIterator2D {
 
   /**
    * This kind of matrix is always an integer matrix.
-   * 
+   *
    * @return {@code true}
    */
   @Override

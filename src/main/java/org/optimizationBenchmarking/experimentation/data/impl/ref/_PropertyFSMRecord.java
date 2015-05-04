@@ -19,7 +19,7 @@ abstract class _PropertyFSMRecord {
 
   /**
    * create
-   * 
+   *
    * @param propertyName
    *          the property name
    * @param propertyDesc
@@ -35,7 +35,7 @@ abstract class _PropertyFSMRecord {
 
   /**
    * Merge a property definition
-   * 
+   *
    * @param propertyName
    *          the property name
    * @param propertyDesc
@@ -51,14 +51,14 @@ abstract class _PropertyFSMRecord {
       this.m_dead = true;
       throw new IllegalStateException(
           "Properties '" + this.m_propertyName + //$NON-NLS-1$
-              "' and '" + //$NON-NLS-1$
-              propertyName + "' cannot be merged."); //$NON-NLS-1$
+          "' and '" + //$NON-NLS-1$
+          propertyName + "' cannot be merged."); //$NON-NLS-1$
     }
   }
 
   /**
    * Merge a property value definition
-   * 
+   *
    * @param propertyName
    *          the property name
    * @param propertyDesc
@@ -75,7 +75,7 @@ abstract class _PropertyFSMRecord {
   /**
    * assert that the reference count is equal to {@code target} and die
    * otherwise. Throw an exception if the reference count is too high.
-   * 
+   *
    * @param target
    *          the target count
    * @return {@code true} if the property value is erroneous, {@code false}

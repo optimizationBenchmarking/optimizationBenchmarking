@@ -23,7 +23,7 @@ final class _InstanceGroups extends DataElement implements IClustering {
 
   /**
    * create the instance groups
-   * 
+   *
    * @param owner
    *          the owner
    * @param data

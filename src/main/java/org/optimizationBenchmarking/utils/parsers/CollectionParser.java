@@ -11,14 +11,14 @@ import org.optimizationBenchmarking.utils.text.charset.EnclosureEnd;
 
 /**
  * A parser for a given type
- * 
+ *
  * @param <ET>
  *          the element type
  * @param <CT>
  *          the collection type
  */
 public abstract class CollectionParser<ET, CT extends Collection<ET>>
-    extends Parser<CT> {
+extends Parser<CT> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -48,7 +48,7 @@ public abstract class CollectionParser<ET, CT extends Collection<ET>>
 
   /**
    * create the parser
-   * 
+   *
    * @param elementParser
    *          the element parser
    * @param ignoreNull
@@ -70,7 +70,7 @@ public abstract class CollectionParser<ET, CT extends Collection<ET>>
 
   /**
    * create the collection used for gathering the elements
-   * 
+   *
    * @return the collection used for gathering the elements
    */
   protected Collection<ET> createGatheringCollection() {
@@ -82,7 +82,7 @@ public abstract class CollectionParser<ET, CT extends Collection<ET>>
 
   /**
    * Convert a collection to the result collection
-   * 
+   *
    * @param collection
    *          the collection used for gathering elements
    * @return the result collection
@@ -143,22 +143,22 @@ public abstract class CollectionParser<ET, CT extends Collection<ET>>
           }
         }
 
-        quit = (j >= len);
-        if (quit) {
-          temp = (s.substring(i));
-        } else {
-          temp = (s.substring(i, j));
-        }
+      quit = (j >= len);
+      if (quit) {
+        temp = (s.substring(i));
+      } else {
+        temp = (s.substring(i, j));
+      }
 
-        parsed = parser.parseString(temp);
-        if ((parsed != null) || (!(this.m_ignoreNull))) {
-          list.add(parsed);
-        }
+      parsed = parser.parseString(temp);
+      if ((parsed != null) || (!(this.m_ignoreNull))) {
+        list.add(parsed);
+      }
 
-        if (quit) {
-          break looper;
-        }
-        i = (j + 1);
+      if (quit) {
+        break looper;
+      }
+      i = (j + 1);
       }
     }
 

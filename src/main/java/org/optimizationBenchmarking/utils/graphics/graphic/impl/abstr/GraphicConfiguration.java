@@ -52,7 +52,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * make a copy of a given graphic configuration
-   * 
+   *
    * @param copy
    *          the graphic configuration to copy
    */
@@ -80,7 +80,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * Get the immutable version of this configuration
-   * 
+   *
    * @return the immutable version of this configuration
    */
   public GraphicConfiguration immutable() {
@@ -96,7 +96,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * check whether a graphic driver is OK
-   * 
+   *
    * @param driver
    *          the driver
    */
@@ -110,7 +110,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * check the color model
-   * 
+   *
    * @param colorModel
    *          the color model
    */
@@ -122,7 +122,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * check the dots per inch
-   * 
+   *
    * @param dotsPerInch
    *          the dots per inch
    */
@@ -130,14 +130,14 @@ public class GraphicConfiguration implements ITextable {
     if ((dotsPerInch < GraphicConfiguration.MIN_DPI)
         || (dotsPerInch > GraphicConfiguration.MAX_DPI)) {
       throw new IllegalArgumentException(//
-          "Cannot create images with less than 1 pixel per MM (26 dot per inch) or more than 100000 dots per inch, since such images would be nonsense. You specified "//$NON-NLS-1$ 
-              + dotsPerInch + "dpi, which is outside the sane range."); //$NON-NLS-1$
+          "Cannot create images with less than 1 pixel per MM (26 dot per inch) or more than 100000 dots per inch, since such images would be nonsense. You specified "//$NON-NLS-1$
+          + dotsPerInch + "dpi, which is outside the sane range."); //$NON-NLS-1$
     }
   }
 
   /**
    * check a quality value
-   * 
+   *
    * @param quality
    *          the quality value
    */
@@ -147,13 +147,13 @@ public class GraphicConfiguration implements ITextable {
         || (quality != quality)) {
       throw new IllegalArgumentException(//
           "Graphic quality must be in [0,1], but you specified " //$NON-NLS-1$
-              + quality);
+          + quality);
     }
   }
 
   /**
    * Get the dots per inch
-   * 
+   *
    * @return the dots per inch
    */
   public final int getDotsPerInch() {
@@ -162,7 +162,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * Has the dots-per-inch setting been provided?
-   * 
+   *
    * @return {@code true} if the dots-per-inch setting has been provided,
    *         {@code false} otherwise
    */
@@ -172,7 +172,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * Get the graphics quality
-   * 
+   *
    * @return the graphics quality
    */
   public final double getQuality() {
@@ -182,7 +182,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * Has the quality setting been provided?
-   * 
+   *
    * @return {@code true} if the quality has been provided, {@code false}
    *         otherwise
    */
@@ -192,7 +192,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * Get the color model
-   * 
+   *
    * @return the color model
    */
   public final EColorModel getColorModel() {
@@ -202,7 +202,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * Has the color model been provided?
-   * 
+   *
    * @return {@code true} if the color model has been provided
    */
   public final boolean hasColorModel() {
@@ -211,7 +211,7 @@ public class GraphicConfiguration implements ITextable {
 
   /**
    * Get the graphic driver
-   * 
+   *
    * @return the graphic driver
    */
   public final IGraphicDriver getGraphicDriver() {
@@ -225,7 +225,7 @@ public class GraphicConfiguration implements ITextable {
    * and not already defined in this configuration object. This kitchen
    * sink approach is not nice and maybe will be amended later. But for now
    * it will do.
-   * 
+   *
    * @param basePath
    *          the base path, i.e., the folder in which the graphic should
    *          be created

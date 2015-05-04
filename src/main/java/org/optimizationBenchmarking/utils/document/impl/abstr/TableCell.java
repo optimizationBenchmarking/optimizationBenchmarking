@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
  * A table cell
  */
 public class TableCell extends ComplexText implements
-    Iterable<ETableCellDef> {
+Iterable<ETableCellDef> {
 
   /** the start column (inclusive) */
   private final int m_startCol;
@@ -38,7 +38,7 @@ public class TableCell extends ComplexText implements
 
   /**
    * Create the table cell
-   * 
+   *
    * @param owner
    *          the owning row
    * @param cols
@@ -81,8 +81,8 @@ public class TableCell extends ComplexText implements
       }
       throw new IllegalArgumentException(//
           "Start column " + sc + //$NON-NLS-1$
-              " of cell is outside table definition which specifies only " //$NON-NLS-1$
-              + blocked.length + " columns.");//$NON-NLS-1$
+          " of cell is outside table definition which specifies only " //$NON-NLS-1$
+          + blocked.length + " columns.");//$NON-NLS-1$
     }
 
     ec = end = (sc + cols);
@@ -110,7 +110,7 @@ public class TableCell extends ComplexText implements
       if ((cellDefCnt = Table._checkDef(def)) > 1) {
         throw new IllegalArgumentException(//
             "Only single regular cells are permitted, but "//$NON-NLS-1$
-                + def + " contains " + cellDefCnt); //$NON-NLS-1$
+            + def + " contains " + cellDefCnt); //$NON-NLS-1$
       }
       this.m_def = def;
       this.m_ofs = 0;
@@ -142,7 +142,7 @@ public class TableCell extends ComplexText implements
   /**
    * Get the number of columns skipped before this cell begins. These
    * columns may be occupied by multi-row cells coming from above.
-   * 
+   *
    * @return the number of skipped columns
    */
   public final int getSkippedColumns() {
@@ -152,7 +152,7 @@ public class TableCell extends ComplexText implements
   /**
    * Get the number of columns spanned by this cell:
    * <code>{@link #getEndColumn()}-{@link #getStartColumn()}</code>
-   * 
+   *
    * @return the number of columns spanned by this cell
    * @see #getStartColumn()
    * @see #getEndColumn()
@@ -163,7 +163,7 @@ public class TableCell extends ComplexText implements
 
   /**
    * Get the start column index (inclusive, 0-based)
-   * 
+   *
    * @return the start column index
    * @see #getColumnSpan()
    * @see #getEndColumn()
@@ -174,7 +174,7 @@ public class TableCell extends ComplexText implements
 
   /**
    * Get the end column index (exclusive, 0-based)
-   * 
+   *
    * @return the end column index
    * @see #getColumnSpan()
    * @see #getStartColumn()
@@ -186,7 +186,7 @@ public class TableCell extends ComplexText implements
   /**
    * Get the number of rows spanned by this cell:
    * <code>{@link #getEndRow()}-{@link #getStartRow()}</code>
-   * 
+   *
    * @return the number of rows spanned by this cell
    * @see #getStartRow()
    * @see #getEndRow()
@@ -197,7 +197,7 @@ public class TableCell extends ComplexText implements
 
   /**
    * Get the start row index (inclusive, 0-based)
-   * 
+   *
    * @return the start row index
    * @see #getRowSpan()
    * @see #getEndRow()
@@ -208,7 +208,7 @@ public class TableCell extends ComplexText implements
 
   /**
    * Get the end row index (exclusive, 0-based)
-   * 
+   *
    * @return the end row index
    * @see #getRowSpan()
    * @see #getStartRow()
@@ -219,7 +219,7 @@ public class TableCell extends ComplexText implements
 
   /**
    * Iterate over the table cell definition elements
-   * 
+   *
    * @return an iterator over the table cell definition elements
    */
   @Override
@@ -231,7 +231,7 @@ public class TableCell extends ComplexText implements
   /**
    * Returns {@code true} if this table cells has an irregular definition,
    * that is, is not a normal table cell
-   * 
+   *
    * @return {@code true} if this table cells has an irregular definition,
    *         that is, is not a normal table cell &mdash; {@code false}
    *         otherwise, i.e., if the cell is a normal table cell

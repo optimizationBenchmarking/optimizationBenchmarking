@@ -14,37 +14,37 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 final class _XHTML10FigureSeries extends FigureSeries {
   /** the start of the float */
   private static final char[] SUBFIGURE_TABLE_BEGIN = { '<', 't', 'a',
-      'b', 'l', 'e', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u',
-      'b', 'f', 'i', 'g', 'u', 'r', 'e', '"', '>' };
+    'b', 'l', 'e', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u',
+    'b', 'f', 'i', 'g', 'u', 'r', 'e', '"', '>' };
 
   /** the start of the float tr caption */
   private static final char[] SUBFIGURE_TR_CAPTION_BEGIN = { '<', 't',
-      'r', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b', 'f',
-      'i', 'g', 'u', 'r', 'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>' };
+    'r', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b', 'f',
+    'i', 'g', 'u', 'r', 'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>' };
   /** the start of the float tr body */
   private static final char[] SUBFIGURE_TR_BODY_BEGIN = { '<', 't', 'r',
-      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b', 'f', 'i',
-      'g', 'u', 'r', 'e', 'B', 'o', 'd', 'y', '"', '>' };
+    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b', 'f', 'i',
+    'g', 'u', 'r', 'e', 'B', 'o', 'd', 'y', '"', '>' };
   /** the start of the float td */
   private static final char[] SUBFIGURE_TD_CAPTION_SPAN_BEGIN = { '<',
-      't', 'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b',
-      'f', 'i', 'g', 'u', 'r', 'e', 'C', 'a', 'p', 't', 'i', 'o', 'n',
-      '"', '>', '<', 's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's',
-      '=', '"', 'c', 'a', 'p', 't', 'i', 'o', 'n', 'T', 'i', 't', 'l',
-      'e', '"', '>', 'F', 'i', 'g', '.', '&', 'n', 'b', 's', 'p', ';' };
+    't', 'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b',
+    'f', 'i', 'g', 'u', 'r', 'e', 'C', 'a', 'p', 't', 'i', 'o', 'n',
+    '"', '>', '<', 's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's',
+    '=', '"', 'c', 'a', 'p', 't', 'i', 'o', 'n', 'T', 'i', 't', 'l',
+    'e', '"', '>', 'F', 'i', 'g', '.', '&', 'n', 'b', 's', 'p', ';' };
   /** the start of the float td */
   private static final char[] SUBFIGURE_TD_CAPTION_EMPTY = { '<', 't',
-      'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b', 'f',
-      'i', 'g', 'u', 'r', 'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"',
-      '/', '>' };
+    'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b', 'f',
+    'i', 'g', 'u', 'r', 'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"',
+    '/', '>' };
   /** the start of the float body td */
   private static final char[] SUBFIGURE_TD_BODY_BEGIN = { '<', 't', 'd',
-      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b', 'f', 'i',
-      'g', 'u', 'r', 'e', 'B', 'o', 'd', 'y', '"', '>' };
+    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b', 'f', 'i',
+    'g', 'u', 'r', 'e', 'B', 'o', 'd', 'y', '"', '>' };
   /** the start of the float body td */
   private static final char[] SUBFIGURE_TD_BODY_EMPTY = { '<', 't', 'd',
-      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b', 'f', 'i',
-      'g', 'u', 'r', 'e', 'B', 'o', 'd', 'y', '"', '/', '>' };
+    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'u', 'b', 'f', 'i',
+    'g', 'u', 'r', 'e', 'B', 'o', 'd', 'y', '"', '/', '>' };
 
   /** the sub-figures */
   private final _XHTML10SubFigureDesc[] m_subFigs;
@@ -57,7 +57,7 @@ final class _XHTML10FigureSeries extends FigureSeries {
 
   /**
    * Create a new figure series
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index
@@ -80,7 +80,7 @@ final class _XHTML10FigureSeries extends FigureSeries {
 
   /**
    * a sub-figure image has been created
-   * 
+   *
    * @param desc
    *          the sub-figure description
    */

@@ -11,7 +11,7 @@ public abstract class LaTeXJob extends ToolJob implements Callable<Void> {
 
   /**
    * Create the LaTeX job
-   * 
+   *
    * @param logger
    *          the logger
    */
@@ -25,7 +25,7 @@ public abstract class LaTeXJob extends ToolJob implements Callable<Void> {
    * {@code false} is returned, this job does basically nothing if
    * executed. The reason may be that no suitable tool chain was found
    * which can deal with the specified requirements.
-   * 
+   *
    * @return {@code true} if this job can (probably) compile the supplied
    *         documents to a PDF, {@code false} if it does nothing
    */

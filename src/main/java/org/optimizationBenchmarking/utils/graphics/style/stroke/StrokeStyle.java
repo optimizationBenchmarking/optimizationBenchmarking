@@ -25,7 +25,7 @@ public final class StrokeStyle extends BasicStroke implements IStyle {
 
   /**
    * Constructs a new {@code StrokeStyle} with the specified attributes.
-   * 
+   *
    * @param width
    *          the width of this {@code StrokeStyle}. The width must be
    *          greater than or equal to {@code 0.0f}. If width is set to
@@ -46,7 +46,7 @@ public final class StrokeStyle extends BasicStroke implements IStyle {
 
   /**
    * Constructs a new {@code StrokeStyle} with the specified attributes.
-   * 
+   *
    * @param width
    *          the width of this {@code StrokeStyle}. The width must be
    *          greater than or equal to {@code 0.0f}. If width is set to
@@ -77,20 +77,20 @@ public final class StrokeStyle extends BasicStroke implements IStyle {
     if (this.m_name == null) {
       throw new IllegalArgumentException(//
           "Stroke name must not be empty or null, but is '" + //$NON-NLS-1$
-              name + "'.");//$NON-NLS-1$
+          name + "'.");//$NON-NLS-1$
     }
 
     this.m_id = TextUtils.prepare(id);
     if (this.m_id == null) {
       throw new IllegalArgumentException(//
           "Stroke id must not be empty or null, but is '" + //$NON-NLS-1$
-              id + "'.");//$NON-NLS-1$
+          id + "'.");//$NON-NLS-1$
     }
   }
 
   /**
    * Get the name of this stroke style
-   * 
+   *
    * @return the name of this stroke style
    */
   @Override

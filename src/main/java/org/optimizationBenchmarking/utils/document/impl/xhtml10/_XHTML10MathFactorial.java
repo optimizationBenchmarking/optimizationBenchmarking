@@ -9,7 +9,7 @@ final class _XHTML10MathFactorial extends MathFactorial {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

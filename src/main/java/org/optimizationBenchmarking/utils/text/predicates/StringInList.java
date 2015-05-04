@@ -11,12 +11,12 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
 
 /**
  * check whether a string is in a list
- * 
+ *
  * @param <T>
  *          the object type
  */
 public class StringInList<T> extends HashObject implements IPredicate<T>,
-    Serializable {
+Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public class StringInList<T> extends HashObject implements IPredicate<T>,
 
   /**
    * Create the predicate
-   * 
+   *
    * @param list
    *          the string list
    */
@@ -49,7 +49,7 @@ public class StringInList<T> extends HashObject implements IPredicate<T>,
 
   /**
    * Create the predicate
-   * 
+   *
    * @param list
    *          the string list
    */
@@ -60,7 +60,7 @@ public class StringInList<T> extends HashObject implements IPredicate<T>,
 
   /**
    * get the list
-   * 
+   *
    * @param list
    *          the input list
    * @return the list to use
@@ -75,7 +75,7 @@ public class StringInList<T> extends HashObject implements IPredicate<T>,
 
   /**
    * get the string value of an object
-   * 
+   *
    * @param object
    *          the object
    * @return the string value

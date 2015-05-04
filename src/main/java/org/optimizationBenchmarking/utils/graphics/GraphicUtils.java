@@ -61,7 +61,7 @@ public final class GraphicUtils {
 
   /**
    * Set the default rendering hints
-   * 
+   *
    * @param g
    *          the graphic to initialize
    */
@@ -73,7 +73,7 @@ public final class GraphicUtils {
 
   /**
    * Create the default rendering hints
-   * 
+   *
    * @return a default set of rendering hints
    */
   public static final RenderingHints createDefaultRenderingHints() {
@@ -101,7 +101,7 @@ public final class GraphicUtils {
 
     /**
      * create the hint holder
-     * 
+     *
      * @param key
      *          the key
      * @param value

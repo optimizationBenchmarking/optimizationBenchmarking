@@ -9,20 +9,20 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a bibliographic record describing an author */
 public class BibAuthor extends _BibElement<BibAuthor> implements
-    ISequenceable {
+ISequenceable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /**
    * the personal name
-   * 
+   *
    * @serial a string
    */
   private final String m_personalName;
 
   /**
    * the family name
-   * 
+   *
    * @serial a string
    */
   private final String m_familyName;
@@ -30,14 +30,14 @@ public class BibAuthor extends _BibElement<BibAuthor> implements
   /**
    * the full name of the author, in case that there is 1:1 English
    * transcript of the name
-   * 
+   *
    * @serial a string
    */
   private final String m_originalSpelling;
 
   /**
    * Create the bibliography author.
-   * 
+   *
    * @param personalName
    *          the personal name
    * @param familyName
@@ -49,7 +49,7 @@ public class BibAuthor extends _BibElement<BibAuthor> implements
 
   /**
    * Create the bibliography author.
-   * 
+   *
    * @param personalName
    *          the personal name
    * @param familyName
@@ -66,7 +66,7 @@ public class BibAuthor extends _BibElement<BibAuthor> implements
 
   /**
    * Create the bibliography author.
-   * 
+   *
    * @param direct
    *          a placeholder parameter
    * @param personalName
@@ -106,7 +106,7 @@ public class BibAuthor extends _BibElement<BibAuthor> implements
   /**
    * get the personal (given, first) name of this author (or editor,
    * supervisor, &hellip;)
-   * 
+   *
    * @return the personal (given, first) name of this author (or editor,
    *         supervisor, &hellip;)
    */
@@ -116,7 +116,7 @@ public class BibAuthor extends _BibElement<BibAuthor> implements
 
   /**
    * get the family name of this author (or editor, supervisor, &hellip;)
-   * 
+   *
    * @return the family name of this author (or editor, supervisor,
    *         &hellip;)
    */
@@ -128,7 +128,7 @@ public class BibAuthor extends _BibElement<BibAuthor> implements
    * Get the full name of the author, written in an obscure language with
    * no 1:1 transcription to English, Will be {@code null} if the author's
    * name stems from a normal language.
-   * 
+   *
    * @return the full name of the author, written in an obscure language
    *         with no 1:1 transcription to English, {@code null} if the
    *         author's name stems from a normal language.
@@ -151,7 +151,7 @@ public class BibAuthor extends _BibElement<BibAuthor> implements
       b = ((BibAuthor) o);
       return (EComparison.equals(this.m_familyName, b.m_familyName) && //
           EComparison.equals(this.m_personalName, b.m_personalName) && //
-      EComparison.equals(this.m_originalSpelling, b.m_originalSpelling));
+          EComparison.equals(this.m_originalSpelling, b.m_originalSpelling));
     }
     return false;
   }

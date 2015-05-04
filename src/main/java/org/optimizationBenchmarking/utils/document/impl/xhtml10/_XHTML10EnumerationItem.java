@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.EnumerationItem;
 final class _XHTML10EnumerationItem extends EnumerationItem {
   /**
    * Create a new enumeration item
-   * 
+   *
    * @param owner
    *          the owning text
    */

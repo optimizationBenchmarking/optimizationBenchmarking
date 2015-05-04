@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 
 /**
  * A stream input job builder.
- * 
+ *
  * @param <D>
  *          the data type which can be stored
  */
@@ -72,7 +72,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Add a stream to read from. The stream may or may not be closed upon
    * termination.
-   * 
+   *
    * @param stream
    *          the stream to read the input from
    * @param encoding
@@ -91,7 +91,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    * Add a stream to read from, using the default encoding and expecting no
    * Archive compression. The stream may or may not be closed upon
    * termination.
-   * 
+   *
    * @param stream
    *          the stream to read the input from
    * @return this builder
@@ -101,7 +101,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
 
   /**
    * Add an input resource
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -122,7 +122,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Add an input resource, using the default encoding and expecting no
    * Archive compression.
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -134,7 +134,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
 
   /**
    * Add an input resource
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -155,7 +155,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Add an input resource, using the default encoding and expecting no
    * Archive compression.
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -167,7 +167,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
 
   /**
    * Add a URI to read from.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @param encoding
@@ -184,7 +184,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Add a URI to read from, using the default encoding and expecting no
    * Archive compression.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @return this builder
@@ -193,7 +193,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
 
   /**
    * Add a URL to read from.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @param encoding
@@ -210,7 +210,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Add a URL to read from, using the default encoding and expecting no
    * Archive compression.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @return this builder
@@ -219,7 +219,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
 
   /**
    * Add a URI to read from.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @param encoding
@@ -236,7 +236,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Add a URI to read from, using the default encoding and expecting no
    * Archive compression.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @return this builder
@@ -245,7 +245,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
 
   /**
    * Add a URL to read from.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @param encoding
@@ -262,7 +262,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Add a URL to read from, using the default encoding and expecting no
    * Archive compression.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @return this builder
@@ -273,7 +273,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    * Equivalent to
    * {@link #addStream(InputStream, StreamEncoding, EArchiveType)
    * addStream(stream, encoding, archiveType)}.
-   * 
+   *
    * @param stream
    *          the stream to read the input from
    * @param encoding
@@ -290,7 +290,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    * Equivalent to
    * {@link #addStream(InputStream, StreamEncoding, EArchiveType)
    * addStream(stream, null, archiveType)}.
-   * 
+   *
    * @param stream
    *          the stream to read the input from
    * @return this builder
@@ -303,7 +303,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    * Equivalent to
    * {@link #addResource(Class, String, StreamEncoding, EArchiveType)
    * addResource(clazz, name, encoding, archiveType)}.
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -322,7 +322,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    * Equivalent to
    * {@link #addResource(Class, String, StreamEncoding, EArchiveType)
    * addResource(clazz, name, null, archiveType)}.
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -338,7 +338,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    * Equivalent to
    * {@link #addResource(String, String, StreamEncoding, EArchiveType)
    * addResource(clazz, name, encoding, archiveType)}.
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -357,7 +357,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
    * Equivalent to
    * {@link #addResource(String, String, StreamEncoding, EArchiveType)
    * addResource(clazz, name, null, archiveType)}.
-   * 
+   *
    * @param clazz
    *          the class from which the resource should be loaded
    * @param name
@@ -371,7 +371,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Equivalent to {@link #addURI(URI, StreamEncoding, EArchiveType)
    * addURI(uri, encoding, archiveType)}.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @param encoding
@@ -386,7 +386,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Equivalent to {@link #addURI(URI, StreamEncoding, EArchiveType)
    * addURI(uri, null, archiveType)}.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @return this builder
@@ -398,7 +398,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Equivalent to {@link #addURL(URL, StreamEncoding, EArchiveType)
    * addURL(url, encoding, archiveType)}.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @param encoding
@@ -413,7 +413,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Equivalent to {@link #addURL(URL, StreamEncoding, EArchiveType)
    * addURL(url, null, archiveType)}.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @return this builder
@@ -425,7 +425,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Equivalent to {@link #addURI(String, StreamEncoding, EArchiveType)
    * addURI(uri, encoding, archiveType)}.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @param encoding
@@ -441,7 +441,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Equivalent to {@link #addURI(String, StreamEncoding, EArchiveType)
    * addURI(uri, null, archiveType)}.
-   * 
+   *
    * @param uri
    *          the URI to read the input from
    * @return this builder
@@ -453,7 +453,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Equivalent to {@link #addURL(URL, StreamEncoding, EArchiveType)
    * addURL(url, encoding, archiveType)}.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @param encoding
@@ -469,7 +469,7 @@ public interface IStreamInputJobBuilder<D> extends IFileInputJobBuilder<D> {
   /**
    * Equivalent to {@link #addURL(URL, StreamEncoding, EArchiveType)
    * addURL(url, null, archiveType)}.
-   * 
+   *
    * @param url
    *          the URL to read the input from
    * @return this builder

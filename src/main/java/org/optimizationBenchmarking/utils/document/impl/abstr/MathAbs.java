@@ -5,7 +5,7 @@ public class MathAbs extends MathFunction {
 
   /**
    * Create a absolute value function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

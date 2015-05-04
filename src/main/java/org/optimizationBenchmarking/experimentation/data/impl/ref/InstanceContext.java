@@ -29,7 +29,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * create
-   * 
+   *
    * @param element
    *          the owning element
    * @param builder
@@ -57,7 +57,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Get the experiment set builder owning this dimension context
-   * 
+   *
    * @return the experiment set builder owning this dimension context
    */
   public final ExperimentSetContext getBuilder() {
@@ -66,7 +66,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Validate a given boundary.
-   * 
+   *
    * @param bound
    *          the boundary
    * @param name
@@ -84,7 +84,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
     if (bound == null) {
       throw new IllegalArgumentException(//
           "Boundaries must not be null, but instance '" + name + //$NON-NLS-1$
-              "' has at least one null boundary."); //$NON-NLS-1$
+          "' has at least one null boundary."); //$NON-NLS-1$
     }
 
     if (dim != null) {
@@ -103,13 +103,13 @@ public final class InstanceContext extends _NamedContext<Instance> {
         if (l1 <= Long.MIN_VALUE) {
           throw new IllegalArgumentException(//
               "Integer upper boundaries cannot be " + //$NON-NLS-1$
-                  Long.MIN_VALUE);
+              Long.MIN_VALUE);
         }
       } else {
         if (l1 >= Long.MAX_VALUE) {
           throw new IllegalArgumentException(//
               "Integer lower boundaries cannot be " + //$NON-NLS-1$
-                  Long.MAX_VALUE);
+              Long.MAX_VALUE);
         }
       }
 
@@ -137,13 +137,13 @@ public final class InstanceContext extends _NamedContext<Instance> {
         if ((d1 <= Double.NEGATIVE_INFINITY) || (d1 != d1)) {
           throw new IllegalArgumentException(//
               "Float upper boundaries cannot be NaN or negative infinity, but " + //$NON-NLS-1$
-                  d1 + " was provided."); //$NON-NLS-1$
+              d1 + " was provided."); //$NON-NLS-1$
         }
       } else {
         if ((d1 >= Double.POSITIVE_INFINITY) || (d1 != d1)) {
           throw new IllegalArgumentException(//
               "Float lower boundaries cannot be NaN or positive infinity, but " + //$NON-NLS-1$
-                  d1 + " was provided."); //$NON-NLS-1$
+              d1 + " was provided."); //$NON-NLS-1$
         }
       }
 
@@ -166,14 +166,14 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
     throw new IllegalArgumentException(//
         "Class " + TextUtils.className(bound.getClass()) + //$NON-NLS-1$
-            " is not allowed for a boundary, but '" + bound + //$NON-NLS-1$
-            "', which is an instance of that class, was provided."); //$NON-NLS-1$
+        " is not allowed for a boundary, but '" + bound + //$NON-NLS-1$
+        "', which is an instance of that class, was provided."); //$NON-NLS-1$
 
   }
 
   /**
    * get the dimension set
-   * 
+   *
    * @return the dimension set
    */
   final DimensionSet _getDimensionSet() {
@@ -182,7 +182,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Define a feature with a given name and description
-   * 
+   *
    * @param name
    *          the feature name
    * @param desc
@@ -196,7 +196,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set a feature value.
-   * 
+   *
    * @param featureName
    *          the feature name
    * @param featureDescription
@@ -216,7 +216,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set a feature value.
-   * 
+   *
    * @param featureName
    *          the feature name
    * @param featureValue
@@ -232,7 +232,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set a feature value.
-   * 
+   *
    * @param featureName
    *          the feature name
    * @param featureValue
@@ -253,7 +253,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * extract and verify a dimension index
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the index
@@ -285,7 +285,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
     throw new IllegalArgumentException(((((((((("Dimension '" + dim)//$NON-NLS-1$
         + "' is not in the current current dimension set) '" //$NON-NLS-1$
-    + dims) + "' where dimension '") //$NON-NLS-1$
+        + dims) + "' where dimension '") //$NON-NLS-1$
         + exp) + "' is at position ")//$NON-NLS-1$
         + idx) + " instead in instance '") + //$NON-NLS-1$
         this.getName()) + '\'') + '.');
@@ -294,7 +294,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Parse a boundary to a number
-   * 
+   *
    * @param bound
    *          the boundary
    * @return the number
@@ -424,7 +424,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Get the lower boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the lower bound
@@ -435,7 +435,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set the lower boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound
@@ -465,7 +465,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set the lower boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound
@@ -494,7 +494,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Get the upper boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the upper bound
@@ -505,7 +505,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set the upper boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound
@@ -536,7 +536,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
   /**
    * Set the upper boundary for the given dimension
-   * 
+   *
    * @param dim
    *          the dimension
    * @param bound

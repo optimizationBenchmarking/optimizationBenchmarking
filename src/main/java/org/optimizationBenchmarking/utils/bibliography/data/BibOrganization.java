@@ -16,27 +16,27 @@ public class BibOrganization extends _BibElement<BibOrganization> {
 
   /**
    * the organization's name
-   * 
+   *
    * @serial the field
    */
   private final String m_name;
   /**
    * the organization's address
-   * 
+   *
    * @serial serial field
    */
   final String m_address;
   /**
    * the full name and address of the organization, in case that there is
    * 1:1 English transcript of the name
-   * 
+   *
    * @serial a string
    */
   private final String m_originalSpelling;
 
   /**
    * Create the organization record
-   * 
+   *
    * @param name
    *          the name
    * @param address
@@ -52,7 +52,7 @@ public class BibOrganization extends _BibElement<BibOrganization> {
 
   /**
    * Create the organization record
-   * 
+   *
    * @param direct
    *          direct?
    * @param name
@@ -100,7 +100,7 @@ public class BibOrganization extends _BibElement<BibOrganization> {
 
   /**
    * Get the organization's name
-   * 
+   *
    * @return the organization's name
    */
   public final String getName() {
@@ -109,7 +109,7 @@ public class BibOrganization extends _BibElement<BibOrganization> {
 
   /**
    * Get the organization's address
-   * 
+   *
    * @return the organization's address
    */
   public final String getAddress() {
@@ -119,7 +119,7 @@ public class BibOrganization extends _BibElement<BibOrganization> {
   /**
    * Get the full name and address of the organization, in case that there
    * is 1:1 English transcript of the name
-   * 
+   *
    * @return the full name and address of the organization, in case that
    *         there is 1:1 English transcript of the name
    */
@@ -139,7 +139,7 @@ public class BibOrganization extends _BibElement<BibOrganization> {
       x = ((BibOrganization) r);
 
       return (EComparison.equals(this.m_name, x.m_name) && //
-      EComparison.equals(this.m_address, x.m_address));
+          EComparison.equals(this.m_address, x.m_address));
 
     }
 

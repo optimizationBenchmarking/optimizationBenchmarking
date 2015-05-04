@@ -55,31 +55,31 @@ public enum FontPaletteXML implements IXMLFileType {
 
   /** the font families */
   private static final String[] FONT_FAMILY_NAMES = {//
-  "serif", //$NON-NLS-1$
-      "sansSerif",//$NON-NLS-1$
-      "monospaced"//$NON-NLS-1$
+    "serif", //$NON-NLS-1$
+    "sansSerif",//$NON-NLS-1$
+    "monospaced"//$NON-NLS-1$
   };
 
   /** the font family values */
   private static final EFontFamily[] FONT_FAMILY_VALUES = { //
-  EFontFamily.SERIF,//
-      EFontFamily.SANS_SERIF,//
-      EFontFamily.MONOSPACED };
+    EFontFamily.SERIF,//
+    EFontFamily.SANS_SERIF,//
+    EFontFamily.MONOSPACED };
 
   /** the font types */
   private static final String[] FONT_TYPE_NAMES = {//
-  "trueType", //$NON-NLS-1$
-      "type1",//$NON-NLS-1$
+    "trueType", //$NON-NLS-1$
+    "type1",//$NON-NLS-1$
   };
 
   /** the font type values */
   private static final EFontType[] FONT_TYPE_VALUES = { //
-  EFontType.TRUE_TYPE,//
-      EFontType.TYPE_1 };
+    EFontType.TRUE_TYPE,//
+    EFontType.TYPE_1 };
 
   /**
    * Parse the font family
-   * 
+   *
    * @param string
    *          the font family string
    * @return the font family
@@ -104,7 +104,7 @@ public enum FontPaletteXML implements IXMLFileType {
 
   /**
    * Parse the font type
-   * 
+   *
    * @param string
    *          the font type string
    * @return the font type, or {@code null} if no type was specified

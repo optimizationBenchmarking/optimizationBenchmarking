@@ -13,7 +13,7 @@ public class AllExamples {
 
   /**
    * The main method
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Throwable

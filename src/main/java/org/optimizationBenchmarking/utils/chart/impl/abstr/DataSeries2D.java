@@ -30,7 +30,7 @@ public class DataSeries2D extends DataSeries implements IDataSeries2D {
 
   /**
    * create the 2-dimensional data
-   * 
+   *
    * @param owner
    *          the owner
    * @param id
@@ -48,7 +48,7 @@ public class DataSeries2D extends DataSeries implements IDataSeries2D {
       case FLAG_HAS_START: {
         append.append("startSet");break;} //$NON-NLS-1$
       case FLAG_HAS_END: {
-        append.append("endSet");break;} //$NON-NLS-1$      
+        append.append("endSet");break;} //$NON-NLS-1$
       default: {
         super.fsmFlagsAppendName(flagValue, flagIndex, append);
       }

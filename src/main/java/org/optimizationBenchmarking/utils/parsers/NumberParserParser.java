@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** A parser for number parsers */
 public final class NumberParserParser extends
-    InstanceParser<NumberParser<Number>> {
+InstanceParser<NumberParser<Number>> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ public final class NumberParserParser extends
 
   /**
    * Try to obtain the parser via reflection.
-   * 
+   *
    * @param parserClass
    *          the parser class: must take two numbers as parameter
    * @param lowerBound
@@ -63,7 +63,7 @@ public final class NumberParserParser extends
           } catch (final Throwable t4) {
             re = new RuntimeException(//
                 "The lower bound string '" + lowerBound + //$NON-NLS-1$
-                    "' is not a number."); //$NON-NLS-1$
+                "' is not a number."); //$NON-NLS-1$
             re.addSuppressed(t1);
             re.addSuppressed(t2);
             re.addSuppressed(t3);
@@ -88,7 +88,7 @@ public final class NumberParserParser extends
           } catch (final Throwable t4) {
             re = new RuntimeException(//
                 "The upper bound string '" + upperBound + //$NON-NLS-1$
-                    "' is not a number."); //$NON-NLS-1$
+                "' is not a number."); //$NON-NLS-1$
             re.addSuppressed(t1);
             re.addSuppressed(t2);
             re.addSuppressed(t3);
@@ -133,7 +133,7 @@ public final class NumberParserParser extends
 
   /**
    * Try to obtain the parser via reflection.
-   * 
+   *
    * @param parserClass
    *          the parser class: must take two numbers as parameter
    * @param lowerBound
@@ -197,7 +197,7 @@ public final class NumberParserParser extends
 
   /**
    * Get the singleton instance of this parser
-   * 
+   *
    * @return the document driver parser
    */
   public static final NumberParserParser getInstance() {

@@ -55,80 +55,80 @@ public enum ETextCase {
    * http://www.grammar-monster.com/lessons/capital_letters_title_case.htm
    */
   private static final char[][] IGNORE = {//
-  { 'a', },//
-      { 'a', 'b', 'o', 'u', 't', },//
-      { 'a', 'b', 'o', 'v', 'e', },//
-      { 'a', 'c', 'r', 'o', 's', 's', },//
-      { 'a', 'f', 't', 'e', 'r', },//
-      { 'a', 'g', 'a', 'i', 'n', 's', 't', },//
-      { 'a', 'l', 'o', 'n', 'g', },//
-      { 'a', 'l', 't', 'h', 'o', 'u', 'g', 'h', },//
-      { 'a', 'm', 'o', 'n', 'g', },//
-      { 'a', 'n', },//
-      { 'a', 'n', 'd', },//
-      { 'a', 'r', 'o', 'u', 'n', 'd', },//
-      { 'a', 's', },//
-      { 'a', 't', },//
-      { 'b', 'e', 'c', 'a', 'u', 's', 'e', },//
-      { 'b', 'e', 'f', 'o', 'r', 'e', },//
-      { 'b', 'e', 'h', 'i', 'n', 'd', },//
-      { 'b', 'e', 'l', 'o', 'w', },//
-      { 'b', 'e', 'n', 'e', 'a', 't', 'h', },//
-      { 'b', 'e', 's', 'i', 'd', 'e', },//
-      { 'b', 'e', 't', 'w', 'e', 'e', 'n', },//
-      { 'b', 'e', 'y', 'o', 'n', 'd', },//
-      { 'b', 'u', 't', },//
-      { 'b', 'y', },//
-      { 'd', 'o', 'w', 'n', },//
-      { 'd', 'u', 'r', 'i', 'n', 'g', },//
-      { 'e', 'i', 't', 'h', 'e', 'r', },//
-      { 'e', 'x', 'c', 'e', 'p', 't', },//
-      { 'f', 'o', 'r', },//
-      { 'f', 'r', 'o', 'm', },//
-      { 'i', 'f', },//
-      { 'i', 'n', },//
-      { 'i', 'n', 's', 'i', 'd', 'e', },//
-      { 'i', 'n', 't', 'o', },//
-      { 'l', 'i', 'k', 'e', },//
-      { 'n', 'e', 'a', 'r', },//
-      { 'n', 'e', 'i', 't', 'h', 'e', 'r', },//
-      { 'n', 'o', 'r', },//
-      { 'o', 'f', },//
-      { 'o', 'f', 'f', },//
-      { 'o', 'n', },//
-      { 'o', 'r', },//
-      { 'o', 'v', 'e', 'r' },//
-      { 's', 'i', 'n', 'c', 'e', },//
-      { 's', 'o', },//
-      { 's', 'o', 'o', 'n', },//
-      { 't', 'h', 'a', 'n', },//
-      { 't', 'h', 'a', 't', },//
-      { 't', 'h', 'e', },//
-      { 't', 'h', 'o', 'u', 'g', 'h', },//
-      { 't', 'h', 'r', 'o', 'u', 'g', 'h', },//
-      { 't', 'o', },//
-      { 't', 'o', 'w', 'a', 'r', 'd', },//
-      { 'u', 'n', 'd', 'e', 'r', },//
-      { 'u', 'n', 't', 'i', 'l', },//
-      { 'u', 'p', },//
-      { 'u', 'p', 'o', 'n', },//
-      { 'w', 'h', 'e', 'n', },//
-      { 'w', 'h', 'e', 'n', 'e', 'v', 'e', 'r', },//
-      { 'w', 'h', 'e', 'r', 'e', },//
-      { 'w', 'h', 'e', 'r', 'e', 'a', 's', },//
-      { 'w', 'h', 'e', 'r', 'e', 'v', 'e', 'r', },//
-      { 'w', 'h', 'e', 't', 'h', 'e', 'r', },//
-      { 'w', 'h', 'i', 'l', 'e', },//
-      { 'w', 'h', 'y', },//
-      { 'w', 'i', 't', 'h', },//
-      { 'y', 'e', 't', } };
+    { 'a', },//
+    { 'a', 'b', 'o', 'u', 't', },//
+    { 'a', 'b', 'o', 'v', 'e', },//
+    { 'a', 'c', 'r', 'o', 's', 's', },//
+    { 'a', 'f', 't', 'e', 'r', },//
+    { 'a', 'g', 'a', 'i', 'n', 's', 't', },//
+    { 'a', 'l', 'o', 'n', 'g', },//
+    { 'a', 'l', 't', 'h', 'o', 'u', 'g', 'h', },//
+    { 'a', 'm', 'o', 'n', 'g', },//
+    { 'a', 'n', },//
+    { 'a', 'n', 'd', },//
+    { 'a', 'r', 'o', 'u', 'n', 'd', },//
+    { 'a', 's', },//
+    { 'a', 't', },//
+    { 'b', 'e', 'c', 'a', 'u', 's', 'e', },//
+    { 'b', 'e', 'f', 'o', 'r', 'e', },//
+    { 'b', 'e', 'h', 'i', 'n', 'd', },//
+    { 'b', 'e', 'l', 'o', 'w', },//
+    { 'b', 'e', 'n', 'e', 'a', 't', 'h', },//
+    { 'b', 'e', 's', 'i', 'd', 'e', },//
+    { 'b', 'e', 't', 'w', 'e', 'e', 'n', },//
+    { 'b', 'e', 'y', 'o', 'n', 'd', },//
+    { 'b', 'u', 't', },//
+    { 'b', 'y', },//
+    { 'd', 'o', 'w', 'n', },//
+    { 'd', 'u', 'r', 'i', 'n', 'g', },//
+    { 'e', 'i', 't', 'h', 'e', 'r', },//
+    { 'e', 'x', 'c', 'e', 'p', 't', },//
+    { 'f', 'o', 'r', },//
+    { 'f', 'r', 'o', 'm', },//
+    { 'i', 'f', },//
+    { 'i', 'n', },//
+    { 'i', 'n', 's', 'i', 'd', 'e', },//
+    { 'i', 'n', 't', 'o', },//
+    { 'l', 'i', 'k', 'e', },//
+    { 'n', 'e', 'a', 'r', },//
+    { 'n', 'e', 'i', 't', 'h', 'e', 'r', },//
+    { 'n', 'o', 'r', },//
+    { 'o', 'f', },//
+    { 'o', 'f', 'f', },//
+    { 'o', 'n', },//
+    { 'o', 'r', },//
+    { 'o', 'v', 'e', 'r' },//
+    { 's', 'i', 'n', 'c', 'e', },//
+    { 's', 'o', },//
+    { 's', 'o', 'o', 'n', },//
+    { 't', 'h', 'a', 'n', },//
+    { 't', 'h', 'a', 't', },//
+    { 't', 'h', 'e', },//
+    { 't', 'h', 'o', 'u', 'g', 'h', },//
+    { 't', 'h', 'r', 'o', 'u', 'g', 'h', },//
+    { 't', 'o', },//
+    { 't', 'o', 'w', 'a', 'r', 'd', },//
+    { 'u', 'n', 'd', 'e', 'r', },//
+    { 'u', 'n', 't', 'i', 'l', },//
+    { 'u', 'p', },//
+    { 'u', 'p', 'o', 'n', },//
+    { 'w', 'h', 'e', 'n', },//
+    { 'w', 'h', 'e', 'n', 'e', 'v', 'e', 'r', },//
+    { 'w', 'h', 'e', 'r', 'e', },//
+    { 'w', 'h', 'e', 'r', 'e', 'a', 's', },//
+    { 'w', 'h', 'e', 'r', 'e', 'v', 'e', 'r', },//
+    { 'w', 'h', 'e', 't', 'h', 'e', 'r', },//
+    { 'w', 'h', 'i', 'l', 'e', },//
+    { 'w', 'h', 'y', },//
+    { 'w', 'i', 't', 'h', },//
+    { 'y', 'e', 't', } };
 
   /** the next text case */
   private final ETextCase m_next;
 
   /**
    * create the text case
-   * 
+   *
    * @param next
    *          the next case
    */
@@ -138,7 +138,7 @@ public enum ETextCase {
 
   /**
    * Obtain the text case for the next word
-   * 
+   *
    * @return the text case for the next word
    */
   public final ETextCase nextCase() {
@@ -147,7 +147,7 @@ public enum ETextCase {
 
   /**
    * Adjust the case of the first character in a word
-   * 
+   *
    * @param ch
    *          the first character of a word
    * @return the character as it can be printed
@@ -158,7 +158,7 @@ public enum ETextCase {
 
   /**
    * get the title case of a character
-   * 
+   *
    * @param ch
    *          the character
    * @return the title case of that character
@@ -180,7 +180,7 @@ public enum ETextCase {
 
   /**
    * get the upper case of a character
-   * 
+   *
    * @param ch
    *          the character
    * @return the upper case of that character
@@ -205,7 +205,7 @@ public enum ETextCase {
    * it is clear that there is at most one word in the string {@code word},
    * use {@link #appendWords(String, ITextOutput)} otherwise. The word must
    * be in lower case.
-   * 
+   *
    * @param word
    *          the word to append
    * @param textOut
@@ -242,7 +242,7 @@ public enum ETextCase {
 
   /**
    * Compare a word to a character array
-   * 
+   *
    * @param word
    *          the word
    * @param data
@@ -271,7 +271,7 @@ public enum ETextCase {
 
   /**
    * Compare a word to a character array
-   * 
+   *
    * @param word
    *          the word
    * @param data
@@ -300,7 +300,7 @@ public enum ETextCase {
 
   /**
    * check whether a word can be ignored.
-   * 
+   *
    * @param word
    *          the word
    * @return {@code true} if it cannot be ignored inside a title,
@@ -331,7 +331,7 @@ public enum ETextCase {
 
   /**
    * check whether a word can be ignored.
-   * 
+   *
    * @param word
    *          the word
    * @return {@code true} if it cannot be ignored inside a title,
@@ -363,7 +363,7 @@ public enum ETextCase {
   /**
    * Append a string potentially containing more than one word to the given
    * text output. The words must be in lower case.
-   * 
+   *
    * @param words
    *          the words to append
    * @param textOut
@@ -395,7 +395,7 @@ public enum ETextCase {
   /**
    * Append a single word to the given text output. The word must be in
    * lower case.
-   * 
+   *
    * @param word
    *          the word to append
    * @param textOut
@@ -433,7 +433,7 @@ public enum ETextCase {
   /**
    * Ensure that the a text case is not {@code null}, return the default
    * text case if it is.
-   * 
+   *
    * @param textCase
    *          the text case
    * @return {@code textCase} if {@code textCase != null},

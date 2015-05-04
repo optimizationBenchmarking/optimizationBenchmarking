@@ -58,7 +58,7 @@ enum _ERandomDocumentExampleElements {
 
   /**
    * create with label type
-   * 
+   *
    * @param label
    *          the label type
    */

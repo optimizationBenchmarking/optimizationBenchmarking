@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  * A job builder for creating java code on the fly.
  */
 public final class JavaCompilerJobBuilder extends
-    ToolJobBuilder<JavaCompilerJob, JavaCompilerJobBuilder> {
+ToolJobBuilder<JavaCompilerJob, JavaCompilerJobBuilder> {
 
   /** the files to compile */
   private final HashMap<String, JavaFileObject> m_files;
@@ -24,7 +24,7 @@ public final class JavaCompilerJobBuilder extends
 
   /**
    * Add a class to this java compiler job
-   * 
+   *
    * @param name
    *          the class name
    * @param body
@@ -44,14 +44,14 @@ public final class JavaCompilerJobBuilder extends
     if (body == null) {
       throw new IllegalArgumentException(//
           "Class '" + name + //$NON-NLS-1$
-              "' cannot have a null body."); //$NON-NLS-1$
+          "' cannot have a null body."); //$NON-NLS-1$
     }
     useBody = TextUtils.prepare(body.toString());
     if (useBody == null) {
       throw new IllegalArgumentException(//
           "The characer sequence holding the body of class '" + name + //$NON-NLS-1$
-              "' returns the invalid body '" + useBody//$NON-NLS-1$
-              + "' from toString()."); //$NON-NLS-1$
+          "' returns the invalid body '" + useBody//$NON-NLS-1$
+          + "' from toString()."); //$NON-NLS-1$
 
     }
     synchronized (this.m_files) {
@@ -68,7 +68,7 @@ public final class JavaCompilerJobBuilder extends
 
   /**
    * Create the java compiler job
-   * 
+   *
    * @return the java compiler job
    */
   @Override

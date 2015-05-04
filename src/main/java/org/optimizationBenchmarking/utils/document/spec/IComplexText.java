@@ -13,7 +13,7 @@ public interface IComplexText extends IPlainText {
   /**
    * Write some text in a given style. A common use case is to emphasize
    * text.
-   * 
+   *
    * @param style
    *          the style to be used, must have been obtained from the owning
    *          section
@@ -25,7 +25,7 @@ public interface IComplexText extends IPlainText {
 
   /**
    * Write some subscript text.
-   * 
+   *
    * @return an instance of
    *         {@link org.optimizationBenchmarking.utils.document.spec.IPlainText}
    *         whose text will be subscript.
@@ -34,7 +34,7 @@ public interface IComplexText extends IPlainText {
 
   /**
    * Write some subscript text.
-   * 
+   *
    * @return an instance of
    *         {@link org.optimizationBenchmarking.utils.document.spec.IPlainText}
    *         whose text will be subscript.
@@ -43,28 +43,28 @@ public interface IComplexText extends IPlainText {
 
   /**
    * Obtain an in-line math context
-   * 
+   *
    * @return the in-line math context
    */
   public abstract IMath inlineMath();
 
   /**
    * Obtain an in-line code context
-   * 
+   *
    * @return the in-line code context
    */
   public abstract IText inlineCode();
 
   /**
    * Obtain an in-line emphasize text destination
-   * 
+   *
    * @return the in-line emphasize text destination
    */
   public abstract IPlainText emphasize();
 
   /**
    * Cite a set of bibliographic elements.
-   * 
+   *
    * @param citationMode
    *          the citation mode
    * @param textCase
@@ -80,7 +80,7 @@ public interface IComplexText extends IPlainText {
 
   /**
    * reference a set of labels
-   * 
+   *
    * @param textCase
    *          the text case
    * @param sequenceMode

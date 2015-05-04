@@ -10,12 +10,12 @@ final class _LaTeXFigureSeries extends FigureSeries {
 
   /** begin figure series */
   private static final char[] FIGURE_SERIES_BEGIN = { '\\', 'f', 'i', 'g',
-      'u', 'r', 'e', 'S', 'e', 'r', 'i', 'e', 's', 'F', 'l', 'o', 'a',
-      't', '{' };
+    'u', 'r', 'e', 'S', 'e', 'r', 'i', 'e', 's', 'F', 'l', 'o', 'a',
+    't', '{' };
 
   /**
    * Create a new figure series
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index

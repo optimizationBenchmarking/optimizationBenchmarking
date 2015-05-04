@@ -18,7 +18,7 @@ public final class ExampleNamespace {
 
   /**
    * Create an example attribute
-   * 
+   *
    * @param _uri
    *          the namespace uri
    * @param _prefix

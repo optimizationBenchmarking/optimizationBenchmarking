@@ -69,7 +69,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /**
    * create
-   * 
+   *
    * @param process
    *          the process
    * @param log
@@ -124,7 +124,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /**
    * Wait until the process has finished and obtain its return value.
-   * 
+   *
    * @return the return value
    */
   public final int waitFor() {
@@ -137,7 +137,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /**
    * Terminate the process if it is still alive
-   * 
+   *
    * @param kill
    *          should we use force?
    * @return the process' return value
@@ -370,7 +370,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /**
    * Terminate the process if it is still alive
-   * 
+   *
    * @throws IOException
    *           if i/o fails
    */
@@ -381,7 +381,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /**
    * Get the standard-output stream of the process
-   * 
+   *
    * @return the standard-output stream of the process
    */
   public final InputStream getStdOut() {
@@ -390,7 +390,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /**
    * Get the standard-error stream of the process
-   * 
+   *
    * @return the standard-error stream of the process
    */
   public final InputStream getStdError() {
@@ -399,7 +399,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /**
    * Get the standard-input stream of the process
-   * 
+   *
    * @return the standard-input stream of the process
    */
   public final OutputStream getStdIn() {
@@ -408,7 +408,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /**
    * Add an error
-   * 
+   *
    * @param t
    *          the error
    */
@@ -420,7 +420,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /** the internal exception handler for worker threads */
   private final class __UncaughtExceptionHandler implements
-      UncaughtExceptionHandler {
+  UncaughtExceptionHandler {
 
     /** create */
     __UncaughtExceptionHandler() {

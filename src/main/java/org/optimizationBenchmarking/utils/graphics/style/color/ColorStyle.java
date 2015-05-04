@@ -25,7 +25,7 @@ public class ColorStyle extends Color implements IStyle {
 
   /**
    * create the color style
-   * 
+   *
    * @param rgb
    *          the rgb color value
    * @param name
@@ -37,7 +37,7 @@ public class ColorStyle extends Color implements IStyle {
 
   /**
    * create the color style
-   * 
+   *
    * @param name
    *          the color name
    * @param rgb
@@ -54,7 +54,7 @@ public class ColorStyle extends Color implements IStyle {
     if (name == null) {
       throw new IllegalArgumentException(//
           "Name must not be empty or null, but is '" //$NON-NLS-1$
-              + name + '\'');
+          + name + '\'');
     }
     this.m_name = name;
 
@@ -73,7 +73,7 @@ public class ColorStyle extends Color implements IStyle {
 
   /**
    * Get the color's name
-   * 
+   *
    * @return the color's name
    */
   @Override

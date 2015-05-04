@@ -10,7 +10,7 @@ public class XMLBase extends HierarchicalText {
 
   /**
    * Create the hierarchical XMLFileType writer
-   * 
+   *
    * @param owner
    *          the owning hierarchical fsm
    * @param out
@@ -22,7 +22,7 @@ public class XMLBase extends HierarchicalText {
 
   /**
    * Create a new xml element.
-   * 
+   *
    * @return the element record
    */
   public final XMLElement element() {

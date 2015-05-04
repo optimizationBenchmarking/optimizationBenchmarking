@@ -8,7 +8,7 @@ import test.junit.org.optimizationBenchmarking.utils.math.matrix.MatrixTest;
 
 /**
  * A test for matrix data structures.
- * 
+ *
  * @param <MT>
  *          the matrix type
  */
@@ -17,7 +17,7 @@ final class _MatrixTest<MT extends IMatrix> extends MatrixTest<MT> {
 
   /**
    * Create the matrix test
-   * 
+   *
    * @param owner
    *          the owner
    * @param isSingleton

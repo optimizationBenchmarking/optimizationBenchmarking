@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 public class TableCaption extends ComplexText {
   /**
    * create the caption
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -16,7 +16,7 @@ public class TableCaption extends ComplexText {
 
   /**
    * Get the owning table
-   * 
+   *
    * @return the owning table
    */
   @Override

@@ -201,7 +201,7 @@ public enum EGraphicFormat implements IFileType {
 
   /** The set of graphic formats. */
   public static final ArraySetView<EGraphicFormat> INSTANCES = //
-  new ArraySetView<>(EGraphicFormat.values());
+      new ArraySetView<>(EGraphicFormat.values());
 
   /** is this a vector graphic format? */
   private final boolean m_isVector;
@@ -217,7 +217,7 @@ public enum EGraphicFormat implements IFileType {
 
   /**
    * Create the graphics format specifier
-   * 
+   *
    * @param name
    *          the file type's name
    * @param isVector
@@ -237,7 +237,7 @@ public enum EGraphicFormat implements IFileType {
 
   /**
    * Get the default driver of this format
-   * 
+   *
    * @return the default driver of this format
    */
   public IGraphicDriver getDefaultDriver() {
@@ -260,7 +260,7 @@ public enum EGraphicFormat implements IFileType {
    * are rendered into it. A pixel graphic cannot exceed a given maximum
    * size regardless.
    * </p>
-   * 
+   *
    * @return {@code true} if the format is a vector graphic, {@code false}
    *         if it is a pixel graphic
    */

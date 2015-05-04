@@ -13,7 +13,7 @@ final class _XHTML10TableHeaderCell extends TableHeaderCell {
 
   /**
    * Create a header cell of a table
-   * 
+   *
    * @param owner
    *          the owning row
    * @param cols

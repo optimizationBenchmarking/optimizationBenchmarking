@@ -10,7 +10,7 @@ final class _RethrowModeRethrowAsThrowable extends RethrowMode<Throwable> {
   private static final long serialVersionUID = 1L;
   /** the synthetic message */
   private static final String SYNTHETIC_MSG = //
-  "This is a synthetic instance of java.lang.Throwable generated to wrap one or multiple real exceptions. See the causing and suppressed errors to find the real cause."; //$NON-NLS-1$
+      "This is a synthetic instance of java.lang.Throwable generated to wrap one or multiple real exceptions. See the causing and suppressed errors to find the real cause."; //$NON-NLS-1$
 
   /** create */
   _RethrowModeRethrowAsThrowable() {
@@ -75,7 +75,7 @@ final class _RethrowModeRethrowAsThrowable extends RethrowMode<Throwable> {
 
   /**
    * read-resolve
-   * 
+   *
    * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_THROWABLE}
    */
   private final Object readResolve() {
@@ -84,7 +84,7 @@ final class _RethrowModeRethrowAsThrowable extends RethrowMode<Throwable> {
 
   /**
    * write-replace
-   * 
+   *
    * @return {@link org.optimizationBenchmarking.utils.error.RethrowMode#AS_THROWABLE}
    */
   private final Object writeReplace() {

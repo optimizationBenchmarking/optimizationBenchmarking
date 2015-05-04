@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 
 /**
  * A text input job builder.
- * 
+ *
  * @param <D>
  *          the data type which can be stored
  */
@@ -141,7 +141,7 @@ public interface ITextInputJobBuilder<D> extends IStreamInputJobBuilder<D> {
 
   /**
    * Add a reader to read input from
-   * 
+   *
    * @param reader
    *          the reader to add
    * @return this builder

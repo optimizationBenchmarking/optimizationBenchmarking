@@ -20,7 +20,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * create the author builder
-   * 
+   *
    * @param owner
    *          the owning fsm
    * @param consumer
@@ -52,7 +52,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
   /**
    * Register a bibliography record: Each bibliography record created
    * somewhere in the bibliography
-   * 
+   *
    * @param element
    *          the element to register
    * @param mustClone
@@ -85,7 +85,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Add a bibliography record
-   * 
+   *
    * @param element
    *          the element to register
    * @param mustClone
@@ -151,7 +151,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
   /**
    * Add a sub-bibliography: This can be used for building references in a
    * bibliography
-   * 
+   *
    * @param consumer
    *          a non-{@code null} interface to consume bibliographies
    * @return the sub-bibliography builder
@@ -164,7 +164,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Build a website record
-   * 
+   *
    * @return the website record builder
    */
   public synchronized final BibWebsiteBuilder website() {
@@ -174,7 +174,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Build a article record
-   * 
+   *
    * @return the article record builder
    */
   public synchronized final BibArticleBuilder article() {
@@ -184,7 +184,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Build a thesis record
-   * 
+   *
    * @return the thesis record builder
    */
   public synchronized final BibThesisBuilder thesis() {
@@ -194,7 +194,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Build a technical report
-   * 
+   *
    * @return the technical report record builder
    */
   public synchronized final BibTechReportBuilder techReport() {
@@ -204,7 +204,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Build a book record
-   * 
+   *
    * @return the book record builder
    */
   public synchronized final BibBookBuilder book() {
@@ -214,7 +214,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Build a proceedings record
-   * 
+   *
    * @return the proceedings record builder
    */
   public synchronized final BibProceedingsBuilder proceedings() {
@@ -224,7 +224,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Build an in-proceedings record
-   * 
+   *
    * @return the in-proceedings record builder
    */
   public synchronized final BibInProceedingsBuilder inProceedings() {
@@ -234,7 +234,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Build an in-collection record
-   * 
+   *
    * @return the in-collection record builder
    */
   public synchronized final BibInCollectionBuilder inCollection() {
@@ -289,7 +289,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Add a set of bibliographic records
-   * 
+   *
    * @param recs
    *          the set of records to add
    */
@@ -303,7 +303,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Add a set of bibliographic records
-   * 
+   *
    * @param recs
    *          the set of records to add
    */
@@ -317,7 +317,7 @@ public class BibliographyBuilder extends BuilderFSM<Bibliography> {
 
   /**
    * Add a bibliographic record
-   * 
+   *
    * @param rec
    *          the record to add
    */

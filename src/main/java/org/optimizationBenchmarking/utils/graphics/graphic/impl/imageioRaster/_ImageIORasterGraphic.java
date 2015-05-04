@@ -45,7 +45,7 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
 
   /**
    * instantiate
-   * 
+   *
    * @param path
    *          the path
    * @param logger
@@ -87,7 +87,7 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
 
   /**
    * Does this image set up image meta data?
-   * 
+   *
    * @return {@code true} if and only if the image can setup image meta
    *         data
    */
@@ -97,13 +97,12 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
 
   /**
    * Setup the image meta data
-   * 
+   *
    * @param metaData
-   *          the metadata
+   *          the meta data
    * @throws IIOInvalidTreeException
    *           if something goes wrong
    */
-  @SuppressWarnings("unused")
   void _setupImageMetadata(final IIOMetadata metaData)
       throws IIOInvalidTreeException {
     //
@@ -111,7 +110,7 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
 
   /**
    * Setup the image writer parameters
-   * 
+   *
    * @param params
    *          the parameters
    */
@@ -121,7 +120,7 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
 
   /**
    * Does this image set up image writer parameters?
-   * 
+   *
    * @return {@code true} if and only if the image can setup image writer
    *         parameters
    */
@@ -131,7 +130,7 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
 
   /**
    * Get the image writer SPI
-   * 
+   *
    * @return the image writer spi
    */
   abstract ImageWriterSpi _getImageWriterSPI();
@@ -168,7 +167,7 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
             if (canUseMeta
                 && (imageWriterParams != null)
                 && ((typeSpecifier = ImageTypeSpecifier
-                    .createFromBufferedImageType(//
+                .createFromBufferedImageType(//
                     this.m_img.getType())) != null)) {
               metaData = writer.getDefaultImageMetadata(typeSpecifier,
                   imageWriterParams);

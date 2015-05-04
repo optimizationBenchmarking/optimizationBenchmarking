@@ -25,7 +25,7 @@ public enum BibliographyXML implements IXMLFileType {
 
   /** the namespace uri as string */
   static final String NAMESPACE = //
-  BibliographyXML.NAMESPACE_URI.toString();
+      BibliographyXML.NAMESPACE_URI.toString();
 
   /** the person element */
   static final String ELEMENT_PERSON = "person"; //$NON-NLS-1$

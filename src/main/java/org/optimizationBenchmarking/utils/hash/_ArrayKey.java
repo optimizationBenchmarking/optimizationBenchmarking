@@ -18,7 +18,7 @@ final class _ArrayKey {
 
   /**
    * create
-   * 
+   *
    * @param o
    *          the object
    */

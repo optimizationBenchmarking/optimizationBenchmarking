@@ -8,7 +8,7 @@ public final class BibInCollectionBuilder extends BibInBookBuilder {
 
   /**
    * create the in-proceedings builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -19,7 +19,7 @@ public final class BibInCollectionBuilder extends BibInBookBuilder {
 
   /**
    * Set the book
-   * 
+   *
    * @param book
    *          the proceedings
    */
@@ -29,7 +29,7 @@ public final class BibInCollectionBuilder extends BibInBookBuilder {
 
   /**
    * Build the book
-   * 
+   *
    * @return the book builder
    */
   public synchronized final BibBookBuilder book() {

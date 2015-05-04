@@ -9,7 +9,7 @@ public interface IFileProducerJobBuilder extends IToolJobBuilder {
 
   /**
    * Set the listener to receive a notification about the produced files
-   * 
+   *
    * @param listener
    *          the listener
    * @return this file producer builder, for chaining purposes

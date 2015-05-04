@@ -21,9 +21,9 @@ import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 final class RExpression extends _RExpressionScope implements IExpression {
 
   /** the negative infinity */
-  static final String NEGATIVE_INFINITY = "-Inf"; //$NON-NLS-1$  
+  static final String NEGATIVE_INFINITY = "-Inf"; //$NON-NLS-1$
   /** the positive infinity */
-  static final String POSITIVE_INFINITY = "Inf"; //$NON-NLS-1$  
+  static final String POSITIVE_INFINITY = "Inf"; //$NON-NLS-1$
   /** the nan */
   static final String NAN = "NaN"; //$NON-NLS-1$
   /** the {@code true} */
@@ -33,7 +33,7 @@ final class RExpression extends _RExpressionScope implements IExpression {
 
   /**
    * create the R expression
-   * 
+   *
    * @param owner
    *          the owner
    * @param engine
@@ -47,7 +47,7 @@ final class RExpression extends _RExpressionScope implements IExpression {
 
   /**
    * convert a long to a string
-   * 
+   *
    * @param l
    *          the long
    * @return the string
@@ -58,7 +58,7 @@ final class RExpression extends _RExpressionScope implements IExpression {
 
   /**
    * convert a double to a string
-   * 
+   *
    * @param d
    *          the double
    * @return the string
@@ -79,7 +79,7 @@ final class RExpression extends _RExpressionScope implements IExpression {
 
   /**
    * write a vector
-   * 
+   *
    * @param matrix
    *          the matrix
    * @param m
@@ -200,8 +200,8 @@ final class RExpression extends _RExpressionScope implements IExpression {
     n = vector.n();
     if ((m != 1) && (n != 1)) {
       throw new IllegalArgumentException(
-          ((("A vector must be a matrix with either only one row or only one column, but you passed in a "//$NON-NLS-1$ 
-          + m) + 'x') + n)
+          ((("A vector must be a matrix with either only one row or only one column, but you passed in a "//$NON-NLS-1$
+              + m) + 'x') + n)
               + " matrix.");//$NON-NLS-1$
     }
     try {
@@ -263,7 +263,7 @@ final class RExpression extends _RExpressionScope implements IExpression {
     if (s == null) {
       throw new IllegalArgumentException(//
           "Function name must not be null or empty, but is: '" //$NON-NLS-1$
-              + name + '\'');
+          + name + '\'');
     }
     return new _RNamedFunction(name, null, this, this.m_engine);
   }

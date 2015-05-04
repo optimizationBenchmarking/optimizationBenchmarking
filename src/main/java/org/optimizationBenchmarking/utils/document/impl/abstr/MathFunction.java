@@ -18,7 +18,7 @@ public abstract class MathFunction extends BasicMath {
 
   /**
    * Create a document part.
-   * 
+   *
    * @param owner
    *          the owning FSM
    * @param minArgs
@@ -67,7 +67,7 @@ public abstract class MathFunction extends BasicMath {
 
   /**
    * Render the output
-   * 
+   *
    * @param data
    *          the data
    * @param size

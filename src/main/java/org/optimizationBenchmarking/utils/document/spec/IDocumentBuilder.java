@@ -41,7 +41,7 @@ public interface IDocumentBuilder extends IDocumentProducerJobBuilder {
    * Set the <a href="http://en.wikipedia.org/wiki/Dots_per_inch">dots
    * per-inch</a> for the document and its graphics. Not all document
    * drivers may support this property.
-   * 
+   *
    * @param dotsPerInch
    *          the dots per inch, must be between {@code 26} and
    *          {@code 100000}
@@ -59,7 +59,7 @@ public interface IDocumentBuilder extends IDocumentProducerJobBuilder {
    * a stream. You can still use all colors during the process of creating
    * the document, they may just be transformed to the chosen model at the
    * end.
-   * 
+   *
    * @param colorModel
    *          the color model
    * @return this builder
@@ -74,7 +74,7 @@ public interface IDocumentBuilder extends IDocumentProducerJobBuilder {
    * quality} of the document and its graphics. {@code 0} means that focus
    * is on small size and encoding speed, {@code 1} means that focus is on
    * rendering quality.
-   * 
+   *
    * @param quality
    *          the quality, must be in {@code [0,1]}
    * @return this builder
@@ -86,7 +86,7 @@ public interface IDocumentBuilder extends IDocumentProducerJobBuilder {
    * Set the graphic driver to be used for creating the
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic
    * graphics} inside the document.
-   * 
+   *
    * @param driver
    *          the graphic driver
    * @return this builder
@@ -98,7 +98,7 @@ public interface IDocumentBuilder extends IDocumentProducerJobBuilder {
    * Set the chart driver for creating
    * {@link org.optimizationBenchmarking.utils.chart.spec.IChartDriver#use()
    * charts}.
-   * 
+   *
    * @param driver
    *          the chart driver
    * @return this builder
@@ -107,7 +107,7 @@ public interface IDocumentBuilder extends IDocumentProducerJobBuilder {
 
   /**
    * Create the document
-   * 
+   *
    * @return the document
    */
   @Override

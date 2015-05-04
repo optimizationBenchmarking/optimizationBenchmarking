@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A java file object backed by strings in memory. */
 final class _CharSequenceJavaFileObject extends SimpleJavaFileObject
-    implements ITextable {
+implements ITextable {
 
   /** the class name */
   private final String m_className;
@@ -21,7 +21,7 @@ final class _CharSequenceJavaFileObject extends SimpleJavaFileObject
    * This constructor will store the source code in the internal "content"
    * variable and register it as a source code, using a URI containing the
    * class full name
-   * 
+   *
    * @param className
    *          name of the public class in the source code
    * @param content

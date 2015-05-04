@@ -25,7 +25,7 @@ import java.io.Flushable;
  * wrapped} around an instance of that interface, it will not necessarily
  * propagate any closing when being closed.
  * </p>
- * 
+ *
  * @author Thomas Weise
  */
 public interface ITextOutput extends Appendable, Flushable {
@@ -47,7 +47,7 @@ public interface ITextOutput extends Appendable, Flushable {
    * Append a string. Passing {@code null} to this method may potentially
    * throw an exception. In this aspect, this method behaves differently
    * from {@link #append(CharSequence)}.
-   * 
+   *
    * @param s
    *          the string
    */
@@ -57,7 +57,7 @@ public interface ITextOutput extends Appendable, Flushable {
    * Append a sub-sequence of a string. Passing {@code null} to this method
    * may potentially throw an exception. In this aspect, this method
    * behaves differently from {@link #append(CharSequence,int,int)}.
-   * 
+   *
    * @param s
    *          the string
    * @param start
@@ -70,7 +70,7 @@ public interface ITextOutput extends Appendable, Flushable {
 
   /**
    * Write some characters.
-   * 
+   *
    * @param chars
    *          the characters
    */
@@ -78,7 +78,7 @@ public interface ITextOutput extends Appendable, Flushable {
 
   /**
    * Append a sub-sequence of a character array.
-   * 
+   *
    * @param chars
    *          the char array
    * @param start
@@ -91,7 +91,7 @@ public interface ITextOutput extends Appendable, Flushable {
 
   /**
    * append a byte
-   * 
+   *
    * @param v
    *          the byte
    */
@@ -99,7 +99,7 @@ public interface ITextOutput extends Appendable, Flushable {
 
   /**
    * append a short
-   * 
+   *
    * @param v
    *          the short
    */
@@ -107,7 +107,7 @@ public interface ITextOutput extends Appendable, Flushable {
 
   /**
    * append an integer
-   * 
+   *
    * @param v
    *          the int
    */
@@ -115,7 +115,7 @@ public interface ITextOutput extends Appendable, Flushable {
 
   /**
    * append a long
-   * 
+   *
    * @param v
    *          the long
    */
@@ -123,7 +123,7 @@ public interface ITextOutput extends Appendable, Flushable {
 
   /**
    * append a float
-   * 
+   *
    * @param v
    *          the float
    */
@@ -131,7 +131,7 @@ public interface ITextOutput extends Appendable, Flushable {
 
   /**
    * append a double
-   * 
+   *
    * @param v
    *          the double
    */
@@ -139,7 +139,7 @@ public interface ITextOutput extends Appendable, Flushable {
 
   /**
    * append a boolean
-   * 
+   *
    * @param v
    *          the boolean
    */
@@ -147,7 +147,7 @@ public interface ITextOutput extends Appendable, Flushable {
 
   /**
    * Append an object
-   * 
+   *
    * @param o
    *          the object to append
    */

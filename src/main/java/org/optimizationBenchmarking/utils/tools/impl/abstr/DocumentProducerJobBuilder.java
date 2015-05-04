@@ -12,14 +12,14 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
 
 /**
  * The base class for file producer job builders
- * 
+ *
  * @param <J>
  *          the job type
  * @param <R>
  *          the return type of the setter methods
  */
 public abstract class DocumentProducerJobBuilder<J extends IToolJob, R extends DocumentProducerJobBuilder<J, R>>
-    extends ToolJobBuilder<J, R> implements IDocumentProducerJobBuilder {
+extends ToolJobBuilder<J, R> implements IDocumentProducerJobBuilder {
 
   /** the output folder */
   public static final String PARAM_OUTPUT_FOLDER = "output"; //$NON-NLS-1$
@@ -85,7 +85,7 @@ public abstract class DocumentProducerJobBuilder<J extends IToolJob, R extends D
 
   /**
    * Get the file producer listener
-   * 
+   *
    * @return the file producer listener
    */
   public final IFileProducerListener getFileProducerListener() {
@@ -102,7 +102,7 @@ public abstract class DocumentProducerJobBuilder<J extends IToolJob, R extends D
     if (p == null) {
       throw new IllegalArgumentException(//
           "The base path for a file producer cannot be set to something equivalent to null, but '" //$NON-NLS-1$
-              + basePath + "' is.");//$NON-NLS-1$
+          + basePath + "' is.");//$NON-NLS-1$
     }
     this.m_basePath = p;
     return ((R) this);
@@ -110,7 +110,7 @@ public abstract class DocumentProducerJobBuilder<J extends IToolJob, R extends D
 
   /**
    * Get the base path
-   * 
+   *
    * @return the base path
    */
   public final Path getBasePath() {
@@ -127,7 +127,7 @@ public abstract class DocumentProducerJobBuilder<J extends IToolJob, R extends D
     if (s == null) {
       throw new IllegalArgumentException(//
           "The main document name suggestion cannot be empty, but '" + //$NON-NLS-1$
-              name + "' is equivalent to an empty name.");//$NON-NLS-1$
+          name + "' is equivalent to an empty name.");//$NON-NLS-1$
     }
     this.m_mainDocumentNameSuggestion = s;
     return ((R) this);
@@ -135,7 +135,7 @@ public abstract class DocumentProducerJobBuilder<J extends IToolJob, R extends D
 
   /**
    * Get the main document name suggestion
-   * 
+   *
    * @return the main document name suggestion
    */
   public final String getMainDocumentNameSuggestion() {

@@ -46,7 +46,7 @@ final class _RandomDocumentExampleTermination extends Thread {
 
   /**
    * create
-   * 
+   *
    * @param autoAllocatedLabels
    *          the list of auto-allocated labels
    * @param maxTime
@@ -76,7 +76,7 @@ final class _RandomDocumentExampleTermination extends Thread {
 
   /**
    * set the maximum section depth
-   * 
+   *
    * @param maxDepth
    *          the max depth
    */
@@ -89,7 +89,7 @@ final class _RandomDocumentExampleTermination extends Thread {
 
   /**
    * get a label
-   * 
+   *
    * @param type
    *          the label type
    * @param rand
@@ -123,7 +123,7 @@ final class _RandomDocumentExampleTermination extends Thread {
 
   /**
    * An element has been done
-   * 
+   *
    * @param element
    *          the element
    */
@@ -211,7 +211,7 @@ final class _RandomDocumentExampleTermination extends Thread {
 
   /**
    * should we continue or terminate ?
-   * 
+   *
    * @return {@code true} if we should continue, {@code false} otherwise
    */
   final boolean _continue() {
@@ -244,7 +244,7 @@ final class _RandomDocumentExampleTermination extends Thread {
 
   /**
    * did we complete all elements?
-   * 
+   *
    * @return {@code true} if we have completed all elements, {@code false}
    *         otherwise
    */
@@ -262,13 +262,14 @@ final class _RandomDocumentExampleTermination extends Thread {
    * {@link org.optimizationBenchmarking.utils.document.spec.ELabelType#SUBFIGURE}
    * , return it. Otherwise, repeat with the next random element. If
    * nothing could be found, return a randomly chosen element.
-   * 
+   *
    * @param rand
    *          the randomizer
    * @param from
    *          the set of elements to choose from
    * @return the element
    */
+  @SuppressWarnings("fallthrough")
   final _ERandomDocumentExampleElements _suggest(final Random rand,
       final _ERandomDocumentExampleElements... from) {
     final _ERandomDocumentExampleElements[] choose;
@@ -298,7 +299,7 @@ final class _RandomDocumentExampleTermination extends Thread {
           }
           if (chosen == _ERandomDocumentExampleElements.FIGURE_SERIES) {
             if (!(this.m_autoAllocatedLabels[ELabelType.SUBFIGURE
-                .ordinal()].isEmpty())) {
+                                             .ordinal()].isEmpty())) {
               return chosen;
             }
           }
@@ -311,6 +312,7 @@ final class _RandomDocumentExampleTermination extends Thread {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("fallthrough")
   @Override
   public final void run() {
     long time;

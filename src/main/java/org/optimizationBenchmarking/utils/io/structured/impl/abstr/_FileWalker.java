@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 
 /**
  * the internal file walker
- * 
+ *
  * @param <L>
  *          the loader type
  */
@@ -31,7 +31,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the load context
    * @param log
@@ -68,7 +68,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
       enter = false;
       this.m_log.handleError(throwable,
           ((("Error when entering directory '" //$NON-NLS-1$
-          + dir) + '\'') + '.'));
+              + dir) + '\'') + '.'));
     }
 
     logger = this.m_log.getLogger();
@@ -108,7 +108,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
         load = false;
         this.m_log.handleError(throwable,
             (("Error when checking whether file '" + file) + //$NON-NLS-1$
-            "' is loadable.")); //$NON-NLS-1$
+                "' is loadable.")); //$NON-NLS-1$
       }
     }
 
@@ -118,7 +118,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
       if ((logger != null) && (logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
         logger.log(IOTool.FINER_LOG_LEVEL,//
             ((("Begin loading file '" + //$NON-NLS-1$
-            file) + '\'') + '.'));
+                file) + '\'') + '.'));
       }
 
       try {
@@ -127,19 +127,19 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
       } catch (final Throwable throwable) {
         this.m_log.handleError(throwable,
             ((("Error when loading file '" + file) + //$NON-NLS-1$
-            '\'') + '.'));
+                '\'') + '.'));
       }
 
       if ((logger != null) && (logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
         logger.log(IOTool.FINER_LOG_LEVEL,//
             ((("Finished loading file '" + //$NON-NLS-1$
-            file) + '\'') + '.'));
+                file) + '\'') + '.'));
       }
     } else {
       if ((logger != null) && (logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
         logger.log(IOTool.FINER_LOG_LEVEL,//
             ((("Skipping file '" + //$NON-NLS-1$
-            file) + '\'') + '.'));
+                file) + '\'') + '.'));
       }
     }
 
@@ -152,7 +152,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
       final IOException exc) throws IOException {
     this.m_log.handleError(exc,
         ((("An error has occured when visiting element '" + //$NON-NLS-1$
-        file) + '\'') + '.'));
+            file) + '\'') + '.'));
     return FileVisitResult.CONTINUE;
   }
 
@@ -167,7 +167,7 @@ final class _FileWalker<L> extends SimpleFileVisitor<Path> {
     } catch (final Throwable throwable) {
       this.m_log.handleError(throwable,
           ((("Error when leaving directory '" //$NON-NLS-1$
-          + dir) + '\'') + '.'));
+              + dir) + '\'') + '.'));
     }
 
     logger = this.m_log.getLogger();

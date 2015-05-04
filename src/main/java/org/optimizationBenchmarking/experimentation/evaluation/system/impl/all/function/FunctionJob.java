@@ -93,7 +93,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Create the function job
-   * 
+   *
    * @param data
    *          the data
    * @param logger
@@ -122,8 +122,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
     this.m_showAxisTitles = config.getBoolean(
         FunctionJob.PARAM_PRINT_AXIS_TITLES, this
-            .getDefaultShowAxisTitles(data, this.m_figureSize,
-                this.m_makeLegendFigure));
+        .getDefaultShowAxisTitles(data, this.m_figureSize,
+            this.m_makeLegendFigure));
 
     this.m_clusterer = this.configureClustering(data, config);
 
@@ -135,7 +135,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the function to be plotted
-   * 
+   *
    * @return the function to be plotted
    */
   public final FunctionAttribute<? super IExperiment> getFunction() {
@@ -145,7 +145,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
   /**
    * Get the clustering algorithm to be used, or {@code null} if no
    * clustering should be performed.
-   * 
+   *
    * @return the clustering algorithm to be used, or {@code null} if no
    *         clustering should be performed
    */
@@ -155,7 +155,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the figure size of this function job.
-   * 
+   *
    * @return the figure size of this function job
    */
   public final EFigureSize getFigureSize() {
@@ -164,7 +164,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Will this job include dedicated legend figures?
-   * 
+   *
    * @return {@code true} if the each figure also contains a dedicated
    *         legend figure, {@code false} if no dedicated legend is painted
    *         (i.e., each figure contains a legend).
@@ -175,7 +175,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Will there be axis titles?
-   * 
+   *
    * @return {@code true} if the each figure contains axis titles,
    *         {@code false} if no axis titles are shown (except for in a
    *         potential {@link #hasLegendFigure() legend figure}
@@ -186,7 +186,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the default figure size
-   * 
+   *
    * @param data
    *          the experiment set
    * @return the default figure size
@@ -208,7 +208,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
   /**
    * Get the default value for deciding whether a legend figure should be
    * made.
-   * 
+   *
    * @param data
    *          the experiment set
    * @param figureSize
@@ -245,7 +245,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
   /**
    * Get the default value for deciding whether axis titles should be
    * included in the figure.
-   * 
+   *
    * @param data
    *          the experiment set
    * @param figureSize
@@ -274,7 +274,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the function attribute used to obtain the function data
-   * 
+   *
    * @param data
    *          the data
    * @param config
@@ -286,7 +286,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Obtain the attribute used to get the clustering
-   * 
+   *
    * @param data
    *          the data
    * @param config
@@ -305,7 +305,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Obtain a suggestion for the path to store the sub-figures in
-   * 
+   *
    * @return a suggestion for the path to store the sub-figures in
    */
   protected String getFunctionPathComponentSuggestion() {
@@ -314,7 +314,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the title font of the x-axis. Returns {@code null} to use default.
-   * 
+   *
    * @return the title font of the x-axis, or {@code null} for default
    */
   protected FontStyle getXAxisTitleFont() {
@@ -323,7 +323,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the tick font of the x-axis. Returns {@code null} to use default.
-   * 
+   *
    * @return the tick font of the x-axis, or {@code null} for default
    */
   protected FontStyle getXAxisTickFont() {
@@ -332,7 +332,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the color of the x-axis. Returns {@code null} to use default.
-   * 
+   *
    * @return the color of the x-axis, or {@code null} for default
    */
   protected ColorStyle getXAxisColor() {
@@ -341,7 +341,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the stroke of the x-axis. Returns {@code null} to use default.
-   * 
+   *
    * @return the stroke of the x-axis, or {@code null} for default
    */
   protected StrokeStyle getXAxisStroke() {
@@ -352,7 +352,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
    * Get an aggregate to be used to determine the minimum value of the
    * x-axis. If this method returns {@code null}, the fixed value returned
    * by {@link #getXAxisMinimumValue()} is used as minimum for the x-axis.
-   * 
+   *
    * @return the aggregate
    * @see #getXAxisMinimumValue()
    */
@@ -363,7 +363,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
   /**
    * Get a fixed minimum value for the x-axis. This method is only called
    * if {@link #getXAxisMinimumAggregate()} returns {@code null}.
-   * 
+   *
    * @return a {@code double} value representing the minimum value for the
    *         x-axis
    * @see #getXAxisMinimumAggregate()
@@ -376,7 +376,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
    * Get an aggregate to be used to determine the maximum value of the
    * x-axis. If this method returns {@code null}, the fixed value returned
    * by {@link #getXAxisMaximumValue()} is used as maximum for the x-axis.
-   * 
+   *
    * @return the aggregate
    * @see #getXAxisMaximumValue()
    */
@@ -387,7 +387,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
   /**
    * Get a fixed maximum value for the x-axis. This method is only called
    * if {@link #getXAxisMaximumAggregate()} returns {@code null}.
-   * 
+   *
    * @return a {@code double} value representing the maximum value for the
    *         x-axis
    * @see #getXAxisMaximumAggregate()
@@ -398,7 +398,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the title font of the y-axis. Returns {@code null} to use default.
-   * 
+   *
    * @return the title font of the y-axis, or {@code null} for default
    */
   protected FontStyle getYAxisTitleFont() {
@@ -407,7 +407,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the tick font of the y-axis. Returns {@code null} to use default.
-   * 
+   *
    * @return the tick font of the y-axis, or {@code null} for default
    */
   protected FontStyle getYAxisTickFont() {
@@ -416,7 +416,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the color of the y-axis. Returns {@code null} to use default.
-   * 
+   *
    * @return the color of the y-axis, or {@code null} for default
    */
   protected ColorStyle getYAxisColor() {
@@ -425,7 +425,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the stroke of the y-axis. Returns {@code null} to use default.
-   * 
+   *
    * @return the stroke of the y-axis, or {@code null} for default
    */
   protected StrokeStyle getYAxisStroke() {
@@ -436,7 +436,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
    * Get an aggregate to be used to determine the minimum value of the
    * y-axis. If this method returns {@code null}, the fixed value returned
    * by {@link #getYAxisMinimumValue()} is used as minimum for the y-axis.
-   * 
+   *
    * @return the aggregate
    * @see #getYAxisMinimumValue()
    */
@@ -447,7 +447,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
   /**
    * Get a fixed minimum value for the y-axis. This method is only called
    * if {@link #getYAxisMinimumAggregate()} returns {@code null}.
-   * 
+   *
    * @return a {@code double} value representing the minimum value for the
    *         y-axis
    * @see #getYAxisMinimumAggregate()
@@ -460,7 +460,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
    * Get an aggregate to be used to determine the maximum value of the
    * y-axis. If this method returns {@code null}, the fixed value returned
    * by {@link #getYAxisMaximumValue()} is used as maximum for the y-axis.
-   * 
+   *
    * @return the aggregate
    * @see #getYAxisMaximumValue()
    */
@@ -471,7 +471,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
   /**
    * Get a fixed maximum value for the y-axis. This method is only called
    * if {@link #getYAxisMaximumAggregate()} returns {@code null}.
-   * 
+   *
    * @return a {@code double} value representing the maximum value for the
    *         y-axis
    * @see #getYAxisMaximumAggregate()
@@ -482,7 +482,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get an optional starting point for a given experiment function.
-   * 
+   *
    * @param function
    *          the experiment function data
    * @param xyDest
@@ -498,7 +498,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get an optional end point for a given experiment function.
-   * 
+   *
    * @param function
    *          the experiment function data
    * @param xyDest
@@ -513,7 +513,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the color to use for a given experiment.
-   * 
+   *
    * @param function
    *          the experiment function data
    * @param styles
@@ -527,7 +527,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the stroke to use for a given experiment.
-   * 
+   *
    * @param function
    *          the experiment function data
    * @param styles
@@ -542,7 +542,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the font to use for a given experiment.
-   * 
+   *
    * @param function
    *          the experiment function data
    * @param styles
@@ -557,7 +557,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the title to use for a given experiment.
-   * 
+   *
    * @param function
    *          the experiment function data
    * @return the title to use for the experiment
@@ -568,7 +568,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get the line type to use for a given experiment.
-   * 
+   *
    * @param function
    *          the experiment function data
    * @return the line type to use for the line
@@ -580,7 +580,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * draw the line chart
-   * 
+   *
    * @param chart
    *          the chart
    * @param data
@@ -752,7 +752,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Print the plots into a section body
-   * 
+   *
    * @param data
    *          the data
    * @param body
@@ -779,7 +779,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
     if (data == null) {
       throw new IllegalArgumentException(//
-          "Function data is null, which means we cannot draw any diagram."); //$NON-NLS-1$      
+          "Function data is null, which means we cannot draw any diagram."); //$NON-NLS-1$
     }
 
     path = this.getFunctionPathComponentSuggestion();
@@ -861,7 +861,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
             try (final IComplexText caption = figure.caption()) {
               caption.append(//
-                  "Legend for all sub-figures of this figure.");//$NON-NLS-1$              
+                  "Legend for all sub-figures of this figure.");//$NON-NLS-1$
             }
             try (final ILineChart2D lines = figure.lineChart2D()) {
               lines.setLegendMode(ELegendMode.CHART_IS_LEGEND);
@@ -893,8 +893,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
             try (final ILineChart2D lines = figure.lineChart2D()) {
               lines.setLegendMode(this.m_makeLegendFigure//
-              ? ELegendMode.HIDE_COMPLETE_LEGEND//
-                  : ELegendMode.SHOW_COMPLETE_LEGEND);
+                  ? ELegendMode.HIDE_COMPLETE_LEGEND//
+                      : ELegendMode.SHOW_COMPLETE_LEGEND);
               this.__drawChart(lines, experimentSetFunctions2,
                   (!(this.m_makeLegendFigure)),
                   (!(this.m_makeLegendFigure)), styles);
@@ -912,7 +912,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Make the title
-   * 
+   *
    * @param title
    *          the title destination
    */
@@ -922,7 +922,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * log that a figure is painted
-   * 
+   *
    * @param logger
    *          the logger
    * @param index
@@ -942,7 +942,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Perform the main process: Paint the figures, write the text.
-   * 
+   *
    * @param data
    *          the data, or {@code null} if no data exists to draw
    *          reasonable diagrams
@@ -986,7 +986,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Make the data for a given experiment set
-   * 
+   *
    * @param logger
    *          the logger
    * @param set
@@ -1051,7 +1051,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Make the functions over the experiment sets.
-   * 
+   *
    * @param set
    *          the experiment set
    * @param cluster

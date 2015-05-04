@@ -28,7 +28,7 @@ public final class MatrixBuilder implements IAggregate {
 
   /**
    * create the matrix builder
-   * 
+   *
    * @param expectedType
    *          the expected numerical type
    * @param expectedSize
@@ -73,14 +73,14 @@ public final class MatrixBuilder implements IAggregate {
       default: {
         throw new IllegalArgumentException(//
             "Unsupported matrix element type: " + //$NON-NLS-1$
-                expectedType);
+            expectedType);
       }
     }
   }
 
   /**
    * create the matrix builder
-   * 
+   *
    * @param expectedSize
    *          the expected size
    */
@@ -95,7 +95,7 @@ public final class MatrixBuilder implements IAggregate {
 
   /**
    * create the matrix builder
-   * 
+   *
    * @param expectedType
    *          the expected numerical type
    */
@@ -105,7 +105,7 @@ public final class MatrixBuilder implements IAggregate {
 
   /**
    * set m
-   * 
+   *
    * @param m
    *          the m
    */
@@ -127,10 +127,10 @@ public final class MatrixBuilder implements IAggregate {
       if (this.m_size > (maxSize = (m * this.m_n))) {
         throw new IllegalArgumentException(//
             "Cannot set m to " + m + //$NON-NLS-1$
-                " since n is " + this.m_n + //$NON-NLS-1$
-                ", i.e., maxSize=" + maxSize + //$NON-NLS-1$
-                ", which would be less than the number " + this.m_size + //$NON-NLS-1$
-                " of already stored elements."); //$NON-NLS-1$
+            " since n is " + this.m_n + //$NON-NLS-1$
+            ", i.e., maxSize=" + maxSize + //$NON-NLS-1$
+            ", which would be less than the number " + this.m_size + //$NON-NLS-1$
+            " of already stored elements."); //$NON-NLS-1$
       }
       this.m_maxSize = maxSize;
       this.m_array._setMaxSize(this.m_size, maxSize);
@@ -140,7 +140,7 @@ public final class MatrixBuilder implements IAggregate {
 
   /**
    * set n
-   * 
+   *
    * @param n
    *          the n
    */
@@ -162,10 +162,10 @@ public final class MatrixBuilder implements IAggregate {
       if (this.m_size > (maxSize = (n * this.m_m))) {
         throw new IllegalArgumentException(//
             "Cannot set n to " + n + //$NON-NLS-1$
-                " since m is " + this.m_m + //$NON-NLS-1$
-                ", i.e., maxSize=" + maxSize + //$NON-NLS-1$
-                ", which would be less than the number " + this.m_size + //$NON-NLS-1$
-                " of already stored elements."); //$NON-NLS-1$
+            " since m is " + this.m_m + //$NON-NLS-1$
+            ", i.e., maxSize=" + maxSize + //$NON-NLS-1$
+            ", which would be less than the number " + this.m_size + //$NON-NLS-1$
+            " of already stored elements."); //$NON-NLS-1$
       }
       this.m_maxSize = maxSize;
       this.m_array._setMaxSize(this.m_size, maxSize);
@@ -175,7 +175,7 @@ public final class MatrixBuilder implements IAggregate {
 
   /**
    * Increase the size by {@code 1}
-   * 
+   *
    * @return the size
    */
   private final int __incSize() {
@@ -225,7 +225,7 @@ public final class MatrixBuilder implements IAggregate {
 
   /**
    * Append a given string
-   * 
+   *
    * @param str
    *          the string
    */
@@ -239,7 +239,7 @@ public final class MatrixBuilder implements IAggregate {
 
   /**
    * Make the matrix
-   * 
+   *
    * @return the matrix
    */
   public final IMatrix make() {
@@ -293,7 +293,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * add a byte
-     * 
+     *
      * @param v
      *          the byte
      * @param size
@@ -304,7 +304,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * add a short
-     * 
+     *
      * @param v
      *          the short
      * @param size
@@ -315,7 +315,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * add a int
-     * 
+     *
      * @param v
      *          the int
      * @param size
@@ -326,7 +326,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * add a long
-     * 
+     *
      * @param v
      *          the long
      * @param size
@@ -337,7 +337,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * add a float
-     * 
+     *
      * @param v
      *          the float
      * @param size
@@ -348,7 +348,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * add a double
-     * 
+     *
      * @param v
      *          the double
      * @param size
@@ -359,7 +359,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * make the matrix
-     * 
+     *
      * @param m
      *          the m
      * @param n
@@ -370,7 +370,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * set the maximum size
-     * 
+     *
      * @param curSize
      *          the current size
      * @param maxSize
@@ -387,7 +387,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * create the array
-     * 
+     *
      * @param data
      *          the data
      */
@@ -475,7 +475,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * create the array
-     * 
+     *
      * @param data
      *          the data
      */
@@ -548,7 +548,7 @@ public final class MatrixBuilder implements IAggregate {
         for (i = size; (--i) >= 0;) {
           l = longData[i];
           if ((NumericalTypes.getBestFloatingPointRepresentation(l) & //
-          NumericalTypes.IS_FLOAT) == 0) {
+              NumericalTypes.IS_FLOAT) == 0) {
             break tryFloats;
           }
           floatData[i] = l;
@@ -626,7 +626,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * create the array
-     * 
+     *
      * @param data
      *          the data
      */
@@ -667,7 +667,7 @@ public final class MatrixBuilder implements IAggregate {
     @Override
     final _Array _append(final long v, final int size) {
       if ((NumericalTypes.getTypes(v) & //
-      NumericalTypes.IS_FLOAT) == 0) {
+          NumericalTypes.IS_FLOAT) == 0) {
         return this._append(((double) v), size);
       }
       return this._append(((float) v), size);
@@ -706,7 +706,7 @@ public final class MatrixBuilder implements IAggregate {
       }
 
       if ((NumericalTypes.getTypes(v) & //
-      NumericalTypes.IS_FLOAT) != 0) {
+          NumericalTypes.IS_FLOAT) != 0) {
         return this._append(((float) v), size);
       }
 
@@ -744,7 +744,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * create the array
-     * 
+     *
      * @param data
      *          the data
      */
@@ -837,7 +837,7 @@ public final class MatrixBuilder implements IAggregate {
         for (i = size; (--i) >= 0;) {
           val = intData[i];
           if ((NumericalTypes.getBestFloatingPointRepresentation(val) //
-          & NumericalTypes.IS_FLOAT) == 0) {
+              & NumericalTypes.IS_FLOAT) == 0) {
             break tryFloats;
           }
           floatData[i] = val;
@@ -919,7 +919,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * create the array
-     * 
+     *
      * @param data
      *          the data
      */
@@ -1104,7 +1104,7 @@ public final class MatrixBuilder implements IAggregate {
 
     /**
      * create the array
-     * 
+     *
      * @param data
      *          the data
      */

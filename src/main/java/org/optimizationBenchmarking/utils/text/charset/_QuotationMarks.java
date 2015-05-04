@@ -12,7 +12,7 @@ final class _QuotationMarks extends ArraySetView<QuotationMarks> {
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the data
    */
@@ -22,7 +22,7 @@ final class _QuotationMarks extends ArraySetView<QuotationMarks> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   final Object writeReplace() {
@@ -31,7 +31,7 @@ final class _QuotationMarks extends ArraySetView<QuotationMarks> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   final Object readResolve() {

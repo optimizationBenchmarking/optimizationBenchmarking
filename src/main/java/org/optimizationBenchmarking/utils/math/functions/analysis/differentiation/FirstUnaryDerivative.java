@@ -16,7 +16,7 @@ public final class FirstUnaryDerivative extends BasicUnaryDerivative {
 
   /**
    * Create
-   * 
+   *
    * @param f
    *          the function
    */
@@ -44,6 +44,6 @@ public final class FirstUnaryDerivative extends BasicUnaryDerivative {
 
     return (((((-f.computeAsDouble(x1 + th)) + (8d * f.computeAsDouble(x1
         + h))) - (8d * f.computeAsDouble(x1 - h))) + (f.computeAsDouble(x1
-        - th))) / (12d * h));
+            - th))) / (12d * h));
   }
 }

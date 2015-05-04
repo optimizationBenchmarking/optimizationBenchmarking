@@ -7,21 +7,21 @@ import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
 
 /**
  * a selection of elements
- * 
+ *
  * @param <ST>
  *          the set type
  * @param <ET>
  *          the element type
  */
 abstract class _PlainSelection<ST extends IElementSet, ET extends IDataElement>
-    extends _Selection<ST, ET> {
+extends _Selection<ST, ET> {
 
   /** the selection */
   HashSet<ET> m_selection;
 
   /**
    * create the selection
-   * 
+   *
    * @param set
    *          the set to select from
    */

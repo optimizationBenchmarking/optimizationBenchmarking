@@ -12,7 +12,7 @@ public class Figure extends BasicFigure {
 
   /**
    * Create a figure
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index
@@ -37,7 +37,7 @@ public class Figure extends BasicFigure {
 
   /**
    * Get the owning section body
-   * 
+   *
    * @return the owning section body
    */
   @Override

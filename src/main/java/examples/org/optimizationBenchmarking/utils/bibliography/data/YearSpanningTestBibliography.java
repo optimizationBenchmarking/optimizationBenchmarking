@@ -15,11 +15,11 @@ import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
  * two years.
  */
 public final class YearSpanningTestBibliography extends
-    BibliographyExample {
+BibliographyExample {
 
   /**
    * create my bibliography
-   * 
+   *
    * @return the bibliography
    */
   @Override
@@ -35,7 +35,7 @@ public final class YearSpanningTestBibliography extends
 
   /**
    * make paper YEAR
-   * 
+   *
    * @param bb
    *          the builder
    */
@@ -91,7 +91,7 @@ public final class YearSpanningTestBibliography extends
 
   /**
    * The main routine, printing the bibliography
-   * 
+   *
    * @param args
    *          the command line arguments: ignored
    */

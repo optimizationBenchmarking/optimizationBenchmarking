@@ -10,8 +10,8 @@ import test.junit.org.optimizationBenchmarking.utils.collections.MapTest;
  * behavior of Java's map collection classes.
  */
 public class ObjectMapTest
-    extends
-    MapTest<Object, Object, ObjectMap<Object, Object, ChainedMapEntry<Object, Object>>> {
+extends
+MapTest<Object, Object, ObjectMap<Object, Object, ChainedMapEntry<Object, Object>>> {
 
   /** create */
   public ObjectMapTest() {
@@ -20,7 +20,7 @@ public class ObjectMapTest
 
   /**
    * create
-   * 
+   *
    * @param map
    *          the map
    */

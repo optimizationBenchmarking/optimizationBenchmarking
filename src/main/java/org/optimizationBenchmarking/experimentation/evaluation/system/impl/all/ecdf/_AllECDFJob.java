@@ -20,7 +20,7 @@ final class _AllECDFJob extends FunctionJob {
 
   /**
    * Create the ECDF job
-   * 
+   *
    * @param data
    *          the data
    * @param logger

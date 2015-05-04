@@ -8,16 +8,16 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10MathPow extends MathPow {
   /** the overlined cell */
   private final static char[] EXP_TD = { '<', 't', 'd', ' ', 'c', 'l',
-      'a', 's', 's', '=', '"', 'm', 'a', 't', 'h', 'E', 'x', 'p', '"',
-      ' ', 'r', 'o', 'w', 's', 'p', 'a', 'n', '=', '"', '2', '"', '>' };
+    'a', 's', 's', '=', '"', 'm', 'a', 't', 'h', 'E', 'x', 'p', '"',
+    ' ', 'r', 'o', 'w', 's', 'p', 'a', 'n', '=', '"', '2', '"', '>' };
   /** the power tr */
   private final static char[] POWR_TR = { '<', 't', 'r', ' ', 'c', 'l',
-      'a', 's', 's', '=', '"', 'm', 'a', 't', 'h', 'P', 'o', 'w', 'T',
-      'R', '"', '>' };
+    'a', 's', 's', '=', '"', 'm', 'a', 't', 'h', 'P', 'o', 'w', 'T',
+    'R', '"', '>' };
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

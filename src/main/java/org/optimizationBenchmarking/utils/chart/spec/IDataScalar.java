@@ -5,7 +5,7 @@ public interface IDataScalar extends IDataElement {
 
   /**
    * Set the value of the scalar data as {@code double}
-   * 
+   *
    * @param value
    *          the value
    */
@@ -13,7 +13,7 @@ public interface IDataScalar extends IDataElement {
 
   /**
    * Set the value of the scalar data as {@code long}
-   * 
+   *
    * @param value
    *          the value
    */

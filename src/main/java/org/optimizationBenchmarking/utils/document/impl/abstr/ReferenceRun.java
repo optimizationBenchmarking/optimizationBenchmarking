@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link #getType() type text}.
  */
 public class ReferenceRun extends ArrayListView<Label> implements
-    ISequenceable {
+ISequenceable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ public class ReferenceRun extends ArrayListView<Label> implements
 
   /**
    * Create the reference item
-   * 
+   *
    * @param type
    *          the type
    * @param seq
@@ -41,7 +41,7 @@ public class ReferenceRun extends ArrayListView<Label> implements
 
   /**
    * Get the reference type
-   * 
+   *
    * @return the reference type
    */
   public final String getType() {
@@ -50,7 +50,7 @@ public class ReferenceRun extends ArrayListView<Label> implements
 
   /**
    * Get the sequence mode
-   * 
+   *
    * @return the sequence mode
    */
   public final ESequenceMode getSequenceMode() {

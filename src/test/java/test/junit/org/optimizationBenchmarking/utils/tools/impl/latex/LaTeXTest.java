@@ -50,7 +50,7 @@ public class LaTeXTest extends ToolTest<LaTeX> {
 
   /**
    * create a simple example
-   * 
+   *
    * @param graphicFormat
    *          a graphic format to include (or {@code null} if none is
    *          needed
@@ -82,11 +82,11 @@ public class LaTeXTest extends ToolTest<LaTeX> {
         bib = new RandomBibliography().createBibliography();
 
         bibOut.use()//
-            .setSource(bib)//
-            .setPath(temp.getPath()//
-                .resolve(LaTeXTest.BIB_FILE + '.'//
-                    + ELaTeXFileType.BIB.getDefaultSuffix()))//
-            .create().call();
+        .setSource(bib)//
+        .setPath(temp.getPath()//
+            .resolve(LaTeXTest.BIB_FILE + '.'//
+                + ELaTeXFileType.BIB.getDefaultSuffix()))//
+                .create().call();
       }
 
       graphic = null;
@@ -170,20 +170,20 @@ public class LaTeXTest extends ToolTest<LaTeX> {
               bw.write("\\end{center}%");//$NON-NLS-1$
 
               bw.newLine();
-              bw.write("\\end{figure}%");//$NON-NLS-1$ 
+              bw.write("\\end{figure}%");//$NON-NLS-1$
 
               bw.newLine();
             }
 
             bw.newLine();
             bw.write(//
-            "blablablabla blablablabla ");//$NON-NLS-1$
+                "blablablabla blablablabla ");//$NON-NLS-1$
             bw.write(//
-            "blablablabla blablablabla ");//$NON-NLS-1$
+                "blablablabla blablablabla ");//$NON-NLS-1$
             bw.write(//
-            "blablablabla blablablabla ");//$NON-NLS-1$
+                "blablablabla blablablabla ");//$NON-NLS-1$
             bw.write(//
-            "blablablabla blablablabla ");//$NON-NLS-1$
+                "blablablabla blablablabla ");//$NON-NLS-1$
 
             if (bib != null) {
               bw.write("\\cite{");//$NON-NLS-1$

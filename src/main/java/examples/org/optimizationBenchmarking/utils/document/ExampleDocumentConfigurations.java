@@ -72,7 +72,7 @@ public final class ExampleDocumentConfigurations {
 
   /**
    * make the configurations
-   * 
+   *
    * @return the list view
    */
   private static final ArrayListView<DocumentConfiguration> __makeAll() {
@@ -89,7 +89,7 @@ public final class ExampleDocumentConfigurations {
 
   /**
    * Get the key for the given level
-   * 
+   *
    * @param level
    *          the level
    * @param config
@@ -190,7 +190,7 @@ public final class ExampleDocumentConfigurations {
 
   /**
    * add the xhtml drivers
-   * 
+   *
    * @param add
    *          the collection to add to
    */
@@ -230,7 +230,7 @@ public final class ExampleDocumentConfigurations {
 
   /**
    * add the LaTeX drivers
-   * 
+   *
    * @param add
    *          the collection to add to
    */
@@ -275,7 +275,7 @@ public final class ExampleDocumentConfigurations {
 
   /**
    * Create a collection of unique document configurations
-   * 
+   *
    * @param allConfigs
    *          the list of all configurations
    * @param uniqueLevel
@@ -305,17 +305,17 @@ public final class ExampleDocumentConfigurations {
 
         if (uniqueLevel >= ExampleDocumentConfigurations.LEVEL_MIN) {
           uniqueCheck: {
-            for (level = uniqueLevel; level >= ExampleDocumentConfigurations.LEVEL_MIN; level--) {
-              key = allKeys[level
-                  - ExampleDocumentConfigurations.LEVEL_MIN];
-              if (key != null) {
-                if (!(all.contains(key))) {
-                  break uniqueCheck;
-                }
+          for (level = uniqueLevel; level >= ExampleDocumentConfigurations.LEVEL_MIN; level--) {
+            key = allKeys[level
+                          - ExampleDocumentConfigurations.LEVEL_MIN];
+            if (key != null) {
+              if (!(all.contains(key))) {
+                break uniqueCheck;
               }
             }
-            continue checkSingleConfig;
           }
+          continue checkSingleConfig;
+        }
         }
 
         for (level = mode; level > uniqueLevel; level--) {

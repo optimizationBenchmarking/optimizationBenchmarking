@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.hash.HashObject;
  * A predicate defined on numbers.
  */
 public abstract class NumberPredicate extends HashObject implements
-    IPredicate<Number> {
+IPredicate<Number> {
 
   /** create the number predicate */
   protected NumberPredicate() {
@@ -15,7 +15,7 @@ public abstract class NumberPredicate extends HashObject implements
 
   /**
    * Check a byte
-   * 
+   *
    * @param v
    *          the byte value
    * @return {@code true} if the predicate matches, {@code false} otherwise
@@ -26,7 +26,7 @@ public abstract class NumberPredicate extends HashObject implements
 
   /**
    * Check a short
-   * 
+   *
    * @param v
    *          the short value
    * @return {@code true} if the predicate matches, {@code false} otherwise
@@ -37,7 +37,7 @@ public abstract class NumberPredicate extends HashObject implements
 
   /**
    * Check an int
-   * 
+   *
    * @param v
    *          the int value
    * @return {@code true} if the predicate matches, {@code false} otherwise
@@ -48,7 +48,7 @@ public abstract class NumberPredicate extends HashObject implements
 
   /**
    * Check a long
-   * 
+   *
    * @param v
    *          the long value
    * @return {@code true} if the predicate matches, {@code false} otherwise
@@ -59,7 +59,7 @@ public abstract class NumberPredicate extends HashObject implements
 
   /**
    * Check a float
-   * 
+   *
    * @param v
    *          the float value
    * @return {@code true} if the predicate matches, {@code false} otherwise
@@ -70,7 +70,7 @@ public abstract class NumberPredicate extends HashObject implements
 
   /**
    * Check a double
-   * 
+   *
    * @param v
    *          the double value
    * @return {@code true} if the predicate matches, {@code false} otherwise

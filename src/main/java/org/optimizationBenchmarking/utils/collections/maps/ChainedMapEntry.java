@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.collections.maps;
 
 /**
  * the linked map entry
- * 
+ *
  * @param <K>
  *          the key type
  * @param <V>

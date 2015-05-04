@@ -8,7 +8,7 @@ public class MathNumber extends Text {
 
   /**
    * Create a text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

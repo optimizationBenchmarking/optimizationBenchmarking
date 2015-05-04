@@ -25,7 +25,7 @@ final class _XHTML10SubFigureDesc {
 
   /**
    * Create the sub-figure descriptor
-   * 
+   *
    * @param caption
    *          the caption
    * @param size

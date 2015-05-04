@@ -14,13 +14,13 @@ public class AllChartExamples {
   public static final ArrayListView<ChartExample> ALL_CHART_EXAMPLES//
   = new ArrayListView<>(new ChartExample[] {//
       RandomLineChart2DExample.INSTANCE,//
-          SimpleLineChart2DExample.INSTANCE,//
-          SimplePieChartExample.INSTANCE,//
-      });
+      SimpleLineChart2DExample.INSTANCE,//
+      SimplePieChartExample.INSTANCE,//
+  });
 
   /**
    * The main method
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Throwable

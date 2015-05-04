@@ -6,14 +6,14 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** A feature. */
 public final class Feature extends Property<FeatureValue> implements
-    IFeature {
+IFeature {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /**
    * create
-   * 
+   *
    * @param name
    *          the feature name
    * @param desc
@@ -41,7 +41,7 @@ public final class Feature extends Property<FeatureValue> implements
   /**
    * Get the value of this property for the given
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Instance}
-   * 
+   *
    * @param instance
    *          the instance to get the property value of
    * @return the property value
@@ -49,16 +49,16 @@ public final class Feature extends Property<FeatureValue> implements
   public final Object get(final Instance instance) {
     if (instance == null) {
       throw new IllegalArgumentException(//
-          "Cannot get value of parameter '"//$NON-NLS-1$ 
-              + this.getName() + //
-              "' for null instance."); //$NON-NLS-1$
+          "Cannot get value of parameter '"//$NON-NLS-1$
+          + this.getName() + //
+          "' for null instance."); //$NON-NLS-1$
     }
     return instance.getFeatureSetting().get(this);
   }
 
   /**
    * Get the value of this parameter for the given element
-   * 
+   *
    * @param element
    *          the element to get the parameter value of, must be an
    *          instance, or else {@link IllegalArgumentException}
@@ -74,9 +74,9 @@ public final class Feature extends Property<FeatureValue> implements
     }
     throw new IllegalArgumentException(//
         "Cannot get value of parameter '" //$NON-NLS-1$
-            + this.getName() + //
-            "' for data element '"//$NON-NLS-1$ 
-            + element + //
-            "' - only instances can have parameter values.");//$NON-NLS-1$
+        + this.getName() + //
+        "' for data element '"//$NON-NLS-1$
+        + element + //
+        "' - only instances can have parameter values.");//$NON-NLS-1$
   }
 }

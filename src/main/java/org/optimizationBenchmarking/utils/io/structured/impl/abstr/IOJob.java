@@ -31,7 +31,7 @@ public class IOJob extends ToolJob {
 
   /**
    * create the _IOJob
-   * 
+   *
    * @param logger
    *          the logger
    * @param tool
@@ -51,7 +51,7 @@ public class IOJob extends ToolJob {
 
   /**
    * append this job's id
-   * 
+   *
    * @param textOut
    *          the text buffer
    */
@@ -67,7 +67,7 @@ public class IOJob extends ToolJob {
 
   /**
    * Can we log something at the given level
-   * 
+   *
    * @param level
    *          the level
    * @return {@code true} if we can, {@code false} if we cannot
@@ -80,7 +80,7 @@ public class IOJob extends ToolJob {
 
   /**
    * Handle an error
-   * 
+   *
    * @param throwable
    *          the error
    * @param message
@@ -102,10 +102,10 @@ public class IOJob extends ToolJob {
     }
 
     if ((o = this.m_current) != null) {
-      msg += ((((" Possible source of error: '" + //$NON-NLS-1$ 
-      o) + "' of class ") + //$NON-NLS-1$
-      TextUtils.className(o.getClass())) + //
-      " (but this information may not be reliable).");//$NON-NLS-1$
+      msg += ((((" Possible source of error: '" + //$NON-NLS-1$
+          o) + "' of class ") + //$NON-NLS-1$
+          TextUtils.className(o.getClass())) + //
+          " (but this information may not be reliable).");//$NON-NLS-1$
     }
 
     ErrorUtils.logError(this.getLogger(), msg, throwable, true,
@@ -114,7 +114,7 @@ public class IOJob extends ToolJob {
 
   /**
    * Get the id
-   * 
+   *
    * @return the id
    */
   final String _id() {
@@ -133,7 +133,7 @@ public class IOJob extends ToolJob {
   /**
    * Get the token returned by
    * {@link org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool#before(IOJob, Object)}
-   * 
+   *
    * @return the token
    */
   public final Object getToken() {

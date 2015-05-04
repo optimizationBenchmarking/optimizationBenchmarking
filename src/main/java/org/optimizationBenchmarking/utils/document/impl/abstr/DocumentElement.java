@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.FileCollector;
  * The base object for the document API.
  */
 public abstract class DocumentElement extends HierarchicalText implements
-    IDocumentElement {
+IDocumentElement {
 
   /** the state after opening */
   static final int STATE_ALIFE = (FSM.STATE_NOTHING + 1);
@@ -28,7 +28,7 @@ public abstract class DocumentElement extends HierarchicalText implements
 
   /**
    * Create a document element.
-   * 
+   *
    * @param driver
    *          the driver
    * @param out
@@ -46,7 +46,7 @@ public abstract class DocumentElement extends HierarchicalText implements
 
   /**
    * Create a document element.
-   * 
+   *
    * @param owner
    *          the owning element
    */
@@ -58,7 +58,7 @@ public abstract class DocumentElement extends HierarchicalText implements
   /**
    * Obtain the logger to which logging information can be written, or
    * {@code null} if no logging information should be produced
-   * 
+   *
    * @return the logger to receive progress information, or {@code null} if
    *         no progress information should be logged
    */
@@ -66,7 +66,7 @@ public abstract class DocumentElement extends HierarchicalText implements
 
   /**
    * get the owner
-   * 
+   *
    * @return the owner
    */
   final DocumentElement _owner() {
@@ -75,7 +75,7 @@ public abstract class DocumentElement extends HierarchicalText implements
 
   /**
    * get the raw, unencoded text output
-   * 
+   *
    * @return the text output
    */
   final ITextOutput _raw() {
@@ -84,7 +84,7 @@ public abstract class DocumentElement extends HierarchicalText implements
 
   /**
    * Obtain the document driver
-   * 
+   *
    * @return the document driver
    */
   protected final DocumentDriver getDriver() {
@@ -123,7 +123,7 @@ public abstract class DocumentElement extends HierarchicalText implements
    * {@link org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener}
    * which forwards all produced files to the main file collection of the
    * document-
-   * 
+   *
    * @return a file producer listener which appends all received
    *         notifications to the document
    */
@@ -131,7 +131,7 @@ public abstract class DocumentElement extends HierarchicalText implements
 
   /**
    * Notify the document that a given style has been used.
-   * 
+   *
    * @param style
    *          the style which has been used
    */

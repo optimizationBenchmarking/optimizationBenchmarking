@@ -79,7 +79,7 @@ class _EvaluationSetup {
 
   /**
    * Assign this object to another one
-   * 
+   *
    * @param copyFrom
    *          the object to copy from
    */
@@ -134,7 +134,7 @@ class _EvaluationSetup {
   /**
    * Set the baseline configuration for all added modules which do not have
    * an own configuration.
-   * 
+   *
    * @param config
    *          the configuration
    */
@@ -146,7 +146,7 @@ class _EvaluationSetup {
 
   /**
    * Get the base configuration
-   * 
+   *
    * @return the base configuration
    */
   final Configuration _getBaseConfiguration() {
@@ -155,7 +155,7 @@ class _EvaluationSetup {
 
   /**
    * do set the baseline configuration
-   * 
+   *
    * @param config
    *          the configuration
    */
@@ -171,15 +171,15 @@ class _EvaluationSetup {
 
         hasModule: {
           checkNoModule: {
-            for (final ArrayList<_ModuleEntry> module : this.m_modules) {
-              if (!(module.isEmpty())) {
-                break checkNoModule;
-              }
+          for (final ArrayList<_ModuleEntry> module : this.m_modules) {
+            if (!(module.isEmpty())) {
+              break checkNoModule;
             }
-            break hasModule;
           }
-          throw new IllegalStateException(//
-              "Cannot set baseline configuration after adding modules.");//$NON-NLS-1$
+          break hasModule;
+        }
+        throw new IllegalStateException(//
+            "Cannot set baseline configuration after adding modules.");//$NON-NLS-1$
         }
 
         this.m_baseConfiguration = config;
@@ -189,7 +189,7 @@ class _EvaluationSetup {
 
   /**
    * Check whether a configuration is valid
-   * 
+   *
    * @param config
    *          the configuration
    */
@@ -202,7 +202,7 @@ class _EvaluationSetup {
 
   /**
    * Add a module to the setup
-   * 
+   *
    * @param module
    *          the module to add
    * @param config
@@ -232,7 +232,7 @@ class _EvaluationSetup {
 
   /**
    * Get the modules which have already been configured
-   * 
+   *
    * @return the modules
    */
   final ArrayList<_ModuleEntry>[] _getModules() {
@@ -241,7 +241,7 @@ class _EvaluationSetup {
 
   /**
    * take the configured list of modules
-   * 
+   *
    * @return the modules
    */
   final ArrayList<_ModuleEntry>[] _takeModules() {
@@ -261,7 +261,7 @@ class _EvaluationSetup {
 
   /**
    * Get the proper configuration to use for a module to be added
-   * 
+   *
    * @param config
    *          the configuration
    * @return the configuration to use
@@ -287,7 +287,7 @@ class _EvaluationSetup {
 
   /**
    * check whether an evaluator module can be used
-   * 
+   *
    * @param module
    *          the module
    * @return the module type
@@ -334,7 +334,7 @@ class _EvaluationSetup {
 
   /**
    * check whether the data to be evaluated can be used
-   * 
+   *
    * @param data
    *          the data
    */
@@ -369,7 +369,7 @@ class _EvaluationSetup {
 
   /**
    * Set the experiment data to be evaluated
-   * 
+   *
    * @param data
    *          the data
    */
@@ -380,7 +380,7 @@ class _EvaluationSetup {
 
   /**
    * Set the input for the experiment evaluation process
-   * 
+   *
    * @param input
    *          the input
    */
@@ -393,7 +393,7 @@ class _EvaluationSetup {
 
   /**
    * Get the evaluation input
-   * 
+   *
    * @return the evaluation input
    */
   final IEvaluationInput _getInput() {
@@ -402,7 +402,7 @@ class _EvaluationSetup {
 
   /**
    * Take the evaluation input
-   * 
+   *
    * @return the evaluation input
    */
   final IEvaluationInput _takeInput() {
@@ -422,7 +422,7 @@ class _EvaluationSetup {
 
   /**
    * check the evaluation input
-   * 
+   *
    * @param input
    *          the input
    */
@@ -435,7 +435,7 @@ class _EvaluationSetup {
 
   /**
    * check whether a document can be used for output
-   * 
+   *
    * @param doc
    *          the document
    */
@@ -447,7 +447,7 @@ class _EvaluationSetup {
 
   /**
    * Set the document to write the evaluation result to
-   * 
+   *
    * @param doc
    *          the document
    */
@@ -458,7 +458,7 @@ class _EvaluationSetup {
 
   /**
    * Set the output to store the evaluation result to
-   * 
+   *
    * @param output
    *          the output
    */
@@ -471,7 +471,7 @@ class _EvaluationSetup {
 
   /**
    * Get the evaluation output
-   * 
+   *
    * @return the evaluation output
    */
   final IEvaluationOutput _getOutput() {
@@ -480,7 +480,7 @@ class _EvaluationSetup {
 
   /**
    * take the output
-   * 
+   *
    * @return the output
    */
   final IEvaluationOutput _takeOutput() {
@@ -501,7 +501,7 @@ class _EvaluationSetup {
 
   /**
    * Check the evaluation output
-   * 
+   *
    * @param output
    *          the output
    */
@@ -514,7 +514,7 @@ class _EvaluationSetup {
 
   /**
    * configure
-   * 
+   *
    * @param config
    *          the configuration
    */
@@ -536,7 +536,7 @@ class _EvaluationSetup {
 
   /**
    * Get the configuration
-   * 
+   *
    * @return the configuration
    */
   final Configuration _getConfiguration() {
@@ -545,7 +545,7 @@ class _EvaluationSetup {
 
   /**
    * check an author set
-   * 
+   *
    * @param authors
    *          the author set
    */
@@ -560,7 +560,7 @@ class _EvaluationSetup {
 
   /**
    * Set the authors for the output document
-   * 
+   *
    * @param authors
    *          the authors for the output document
    */
@@ -573,7 +573,7 @@ class _EvaluationSetup {
 
   /**
    * Get the authors
-   * 
+   *
    * @return the authors
    */
   final BibAuthors _getAuthors() {
@@ -582,7 +582,7 @@ class _EvaluationSetup {
 
   /**
    * Take the authors
-   * 
+   *
    * @return the authors
    */
   final BibAuthors _takeAuthors() {
@@ -598,7 +598,7 @@ class _EvaluationSetup {
 
   /**
    * Set the logger
-   * 
+   *
    * @param logger
    *          the logger
    */
@@ -610,7 +610,7 @@ class _EvaluationSetup {
 
   /**
    * Get the logger
-   * 
+   *
    * @return the logger
    */
   final Logger _getLogger() {

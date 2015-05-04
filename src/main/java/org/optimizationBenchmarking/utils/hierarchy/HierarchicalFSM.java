@@ -135,7 +135,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * the element has been opened
-   * 
+   *
    * @see #open()
    */
   private static final int STATE_OPENED = (HierarchicalFSM.STATE_AFTER_AFTER_CHILD_OPENED_CHILD + 1);
@@ -185,68 +185,68 @@ public class HierarchicalFSM extends FSM implements Closeable {
     STATE_DESCS = new String[HierarchicalFSM.STATE_NAMES.length];
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_NEW] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_NEW] = "NEW") + //$NON-NLS-1$
-    ": The element has just has been created and is in the 'new' state, i.e., no API method has yet been invoked on it. In particular, the open() method has not yet been called."); //$NON-NLS-1$
+        ": The element has just has been created and is in the 'new' state, i.e., no API method has yet been invoked on it. In particular, the open() method has not yet been called."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_OPEN_BEGIN] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_OPEN_BEGIN] = "OPEN_BEGIN") + //$NON-NLS-1$
-    ": The element has just entered its 'open' method."); //$NON-NLS-1$
+        ": The element has just entered its 'open' method."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_BEFORE_BEFORE_CHILD_OPENS_CHILD_A] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_BEFORE_BEFORE_CHILD_OPENS_CHILD_A] = "BEFORE_BEFORE_CHILD_OPENS_CHILD_A") + //$NON-NLS-1$
-    ": The element is a child element with a non-null owner and it is waiting for its owner to invoke the 'beforeChildOpens' method."); //$NON-NLS-1$
+        ": The element is a child element with a non-null owner and it is waiting for its owner to invoke the 'beforeChildOpens' method."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_BEFORE_BEFORE_CHILD_OPENS_CHILD_B] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_BEFORE_BEFORE_CHILD_OPENS_CHILD_B] = "BEFORE_BEFORE_CHILD_OPENS_CHILD_B") + //$NON-NLS-1$
-    ": The element is a child element with a non-null owner and it is waiting for its owner to complete the 'beforeChildOpens' method."); //$NON-NLS-1$
+        ": The element is a child element with a non-null owner and it is waiting for its owner to complete the 'beforeChildOpens' method."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_AFTER_BEFORE_CHILD_OPENS_CHILD] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_AFTER_BEFORE_CHILD_OPENS_CHILD] = "AFTER_BEFORE_CHILD_OPENS_CHILD") + //$NON-NLS-1$
-    ": The element is a child element with a non-null owner and its owner has just completed its 'beforeChildOpens' method."); //$NON-NLS-1$
+        ": The element is a child element with a non-null owner and its owner has just completed its 'beforeChildOpens' method."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_AFTER_ON_OPEN] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_AFTER_ON_OPEN] = "AFTER_ON_OPEN") + //$NON-NLS-1$
-    ": The element has just completed its 'onOpen' method."); //$NON-NLS-1$
+        ": The element has just completed its 'onOpen' method."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_AFTER_AFTER_CHILD_OPENED_CHILD] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_AFTER_AFTER_CHILD_OPENED_CHILD] = "AFTER_AFTER_CHILD_OPENED_CHILD") + //$NON-NLS-1$
-    ": The element is a child element with a non-null owner and its owner has just completed its 'afterChildOpened' method."); //$NON-NLS-1$
+        ": The element is a child element with a non-null owner and its owner has just completed its 'afterChildOpened' method."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_OPENED] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_OPENED] = "OPENED") + //$NON-NLS-1$
-    "OPENED: The element has completed its 'open' method."); //$NON-NLS-1$
+        "OPENED: The element has completed its 'open' method."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_BEFORE_BEFORE_CHILD_OPENS_OWNER] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_BEFORE_BEFORE_CHILD_OPENS_OWNER] = "BEFORE_BEFORE_CHILD_OPENS_OWNER") + //$NON-NLS-1$
-    ": The element is an owner element which is about to invoke its 'beforeChildOpens' method on a child element (which is about to be opened)."); //$NON-NLS-1$
+        ": The element is an owner element which is about to invoke its 'beforeChildOpens' method on a child element (which is about to be opened)."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_AFTER_BEFORE_CHILD_OPENS_OWNER_A] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_AFTER_BEFORE_CHILD_OPENS_OWNER_A] = //
-    "AFTER_BEFORE_CHILD_OPENS_OWNER_A") + //$NON-NLS-1$
-    ": The element is an owner element which has just finished to invoking its 'beforeChildOpens' method on a child element (which is about to be opened)."); //$NON-NLS-1$
+        "AFTER_BEFORE_CHILD_OPENS_OWNER_A") + //$NON-NLS-1$
+        ": The element is an owner element which has just finished to invoking its 'beforeChildOpens' method on a child element (which is about to be opened)."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_AFTER_BEFORE_CHILD_OPENS_OWNER_A] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_AFTER_BEFORE_CHILD_OPENS_OWNER_A] = "AFTER_BEFORE_CHILD_OPENS_OWNER_B") + //$NON-NLS-1$
-    ": The element is an owner element which has just finished to invoking its 'beforeChildOpens' method on a child element (which is about to be opened) and enqueued the child into its child queue."); //$NON-NLS-1$
+        ": The element is an owner element which has just finished to invoking its 'beforeChildOpens' method on a child element (which is about to be opened) and enqueued the child into its child queue."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_BEFORE_AFTER_CHILD_OPENED_OWNER] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_BEFORE_AFTER_CHILD_OPENED_OWNER] = "BEFORE_AFTER_CHILD_OPENED_OWNER") + //$NON-NLS-1$
-    ": The element is an owner element which is about to invoke its 'afterChildOpened' method on a child element (which just has been opened)."); //$NON-NLS-1$
+        ": The element is an owner element which is about to invoke its 'afterChildOpened' method on a child element (which just has been opened)."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_AFTER_AFTER_CHILD_OPENED_OWNER] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_AFTER_AFTER_CHILD_OPENED_OWNER] = "AFTER_AFTER_CHILD_OPENED_OWNER") + //$NON-NLS-1$
-    ": The element is an owner element which has just completed invoking its 'afterChildOpened' method on a child element (which just has been opened)."); //$NON-NLS-1$
+        ": The element is an owner element which has just completed invoking its 'afterChildOpened' method on a child element (which just has been opened)."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_BEFORE_AFTER_CHILD_CLOSED_OWNER] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_BEFORE_AFTER_CHILD_CLOSED_OWNER] = "BEFORE_AFTER_CHILD_CLOSED_OWNER") + //$NON-NLS-1$
-    ": The element is an owner element which is just about to invoke its 'afterChildClosed' method on a child element (which just has been closed)."); //$NON-NLS-1$
+        ": The element is an owner element which is just about to invoke its 'afterChildClosed' method on a child element (which just has been closed)."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_AFTER_AFTER_CHILD_CLOSED_OWNER] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_AFTER_AFTER_CHILD_CLOSED_OWNER] = "AFTER_AFTER_CHILD_CLOSED_OWNER") + //$NON-NLS-1$
-    ": The element is an owner element which is has just finished invoking its 'afterChildClosed' method on a child element (which just has been closed)."); //$NON-NLS-1$
+        ": The element is an owner element which is has just finished invoking its 'afterChildClosed' method on a child element (which just has been closed)."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_CLOSE_BEGIN] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_CLOSE_BEGIN] = "CLOSE_BEGIN") + //$NON-NLS-1$
-    ": The element has just begun its process of closing and disposal, i.e., for which 'close' was invoked."); //$NON-NLS-1$
+        ": The element has just begun its process of closing and disposal, i.e., for which 'close' was invoked."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_BEFORE_ON_CLOSE] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_BEFORE_ON_CLOSE] = "BEFORE_ON_CLOSE") + //$NON-NLS-1$
-    ": The element is about to call its 'onClose' method."); //$NON-NLS-1$
+        ": The element is about to call its 'onClose' method."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_AFTER_ON_CLOSE] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_AFTER_ON_CLOSE] = "AFTER_ON_CLOSE") + //$NON-NLS-1$
-    ": The element has just completed its 'onClose' method."); //$NON-NLS-1$
+        ": The element has just completed its 'onClose' method."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_BEFORE_AFTER_CHILD_CLOSED_CHILD] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_BEFORE_AFTER_CHILD_CLOSED_CHILD] = "BEFORE_AFTER_CHILD_CLOSED_CHILD") + //$NON-NLS-1$
-    ": The element is a child element with a non-null owner and this owning element is about to invoke its 'afterChildClosed' method on this child."); //$NON-NLS-1$
+        ": The element is a child element with a non-null owner and this owning element is about to invoke its 'afterChildClosed' method on this child."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_AFTER_AFTER_CHILD_CLOSED_CHILD] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_AFTER_AFTER_CHILD_CLOSED_CHILD] = "AFTER_AFTER_CHILD_CLOSED_CHILD") + //$NON-NLS-1$
-    ": The element is a child element with a non-null owner and this owning element has finished invoking its 'afterChildClosed' method on this child."); //$NON-NLS-1$
+        ": The element is a child element with a non-null owner and this owning element has finished invoking its 'afterChildClosed' method on this child."); //$NON-NLS-1$
 
     HierarchicalFSM.STATE_DESCS[HierarchicalFSM.STATE_CLOSED] = ((HierarchicalFSM.STATE_NAMES[HierarchicalFSM.STATE_CLOSED] = "CLOSED") + //$NON-NLS-1$
-    ": The element has completed its live cycle. Its 'close' method has successfully been invoked and if it has an owner element, that owner element has completed its 'onChildClosed' method successful as well. There should be no more reference to this object and it should be about getting garbage-collected."); //$NON-NLS-1$
+        ": The element has completed its live cycle. Its 'close' method has successfully been invoked and if it has an owner element, that owner element has completed its 'onChildClosed' method successful as well. There should be no more reference to this object and it should be about getting garbage-collected."); //$NON-NLS-1$
 
   }
 
@@ -264,7 +264,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owning element
    */
@@ -290,7 +290,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Get the owner
-   * 
+   *
    * @return the owner
    */
   protected HierarchicalFSM getOwner() {
@@ -318,7 +318,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * assert that we are in a given state
-   * 
+   *
    * @param shouldState
    *          the state we should be in
    */
@@ -382,7 +382,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
   /**
    * This method is called at most once for any child hierarchy element
    * that is opened.
-   * 
+   *
    * @param child
    *          the child that is about to be opened
    * @param hasOtherChildren
@@ -415,7 +415,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Called before a child can execute its onOpen method
-   * 
+   *
    * @param element
    *          the child element
    * @return {@code true} if and only if there are other open children,
@@ -496,7 +496,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
   /**
    * This method is called at most once for any child hierarchy element
    * that is opened.
-   * 
+   *
    * @param child
    *          the child that is about to be opened
    * @param hasOtherChildren
@@ -528,7 +528,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Called after a child can execute its onOpen method
-   * 
+   *
    * @param element
    *          the child element
    * @param hasOtherChildren
@@ -555,7 +555,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
   /**
    * This method is invoked after a child has been closed, and in the same
    * sequence in which children are opened.
-   * 
+   *
    * @param child
    *          the child element
    */
@@ -622,9 +622,9 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
     if (error != null) {
       RethrowMode.AS_RUNTIME_EXCEPTION
-          .rethrow(//
-              "Error(s) during flushing the closed children of hierarchical finite state machine " //$NON-NLS-1$
-                  + this, true, error);
+      .rethrow(//
+          "Error(s) during flushing the closed children of hierarchical finite state machine " //$NON-NLS-1$
+          + this, true, error);
     }
   }
 
@@ -684,7 +684,7 @@ public class HierarchicalFSM extends FSM implements Closeable {
 
   /**
    * Throw an error indicating that the given child is not allowed.
-   * 
+   *
    * @param child
    *          the child
    */

@@ -61,7 +61,7 @@ public enum EBibMonth {
 
   /**
    * create
-   * 
+   *
    * @param sh
    *          the short name
    * @param lo
@@ -77,7 +77,7 @@ public enum EBibMonth {
 
   /**
    * Get the short name
-   * 
+   *
    * @return the short name
    */
   public final String getShortName() {
@@ -86,7 +86,7 @@ public enum EBibMonth {
 
   /**
    * Get the long name
-   * 
+   *
    * @return the long name
    */
   public final String getLongName() {

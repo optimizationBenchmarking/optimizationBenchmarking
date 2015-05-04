@@ -7,7 +7,7 @@ public class MathName extends Text implements IMathName {
 
   /**
    * Create a text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

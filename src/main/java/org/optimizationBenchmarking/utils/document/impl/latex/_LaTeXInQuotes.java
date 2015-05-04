@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXInQuotes extends InQuotes {
   /**
    * create the in-quotes element
-   * 
+   *
    * @param owner
    *          the owner
    */

@@ -4,7 +4,7 @@ package org.optimizationBenchmarking.utils.chart.spec;
 public interface IChart extends ITitledElement {
   /**
    * set the title of the chart
-   * 
+   *
    * @param title
    *          the title
    */
@@ -13,7 +13,7 @@ public interface IChart extends ITitledElement {
 
   /**
    * Set the legend mode of the diagram
-   * 
+   *
    * @param legendMode
    *          the legend mode
    */

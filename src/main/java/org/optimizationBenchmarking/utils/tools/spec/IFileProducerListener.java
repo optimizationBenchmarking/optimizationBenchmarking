@@ -30,7 +30,7 @@ public interface IFileProducerListener {
    * interface for each process or resource you listen to so that you know
    * where the event comes from.
    * </p>
-   * 
+   *
    * @param result
    *          the list of files created during the object construction
    */

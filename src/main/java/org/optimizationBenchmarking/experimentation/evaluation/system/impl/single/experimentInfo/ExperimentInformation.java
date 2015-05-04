@@ -26,7 +26,7 @@ public final class ExperimentInformation extends ExperimentModule {
 
   /**
    * Get the globally shared instance of the experiment information module
-   * 
+   *
    * @return the globally shared instance of the experiment information
    *         module
    */

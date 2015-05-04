@@ -60,7 +60,7 @@ public class StreamEncodingParser extends Parser<StreamEncoding<?, ?>> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -69,7 +69,7 @@ public class StreamEncodingParser extends Parser<StreamEncoding<?, ?>> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

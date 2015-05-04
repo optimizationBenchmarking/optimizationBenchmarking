@@ -11,7 +11,7 @@ public class SimpleLSResourceResolver implements LSResourceResolver {
 
   /**
    * create
-   * 
+   *
    * @param del
    *          the delegate
    */

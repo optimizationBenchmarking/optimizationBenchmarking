@@ -449,7 +449,7 @@ public final class Characters extends ArraySetView<Char> {
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the data
    */
@@ -485,7 +485,7 @@ public final class Characters extends ArraySetView<Char> {
 
   /**
    * Get the char constant fitting to a given character
-   * 
+   *
    * @param character
    *          the character
    * @return the char constant fitting to {@code character}, or
@@ -523,7 +523,7 @@ public final class Characters extends ArraySetView<Char> {
 
   /**
    * Get the escaped char constant fitting to a given string
-   * 
+   *
    * @param escape
    *          the escape sequence
    * @return the escaped char constant fitting to {@code escape}, or
@@ -538,7 +538,7 @@ public final class Characters extends ArraySetView<Char> {
 
   /**
    * Get the escaped character
-   * 
+   *
    * @param afterBackslash
    *          the char following a backslash
    * @return the escaped char, or {@code null} if none was found
@@ -570,7 +570,7 @@ public final class Characters extends ArraySetView<Char> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -579,7 +579,7 @@ public final class Characters extends ArraySetView<Char> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

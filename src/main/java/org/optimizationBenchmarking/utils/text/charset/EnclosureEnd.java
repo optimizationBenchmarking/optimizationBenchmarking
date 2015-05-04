@@ -16,7 +16,7 @@ public abstract class EnclosureEnd extends Char {
 
   /**
    * create
-   * 
+   *
    * @param chr
    *          the character
    * @param isOpening
@@ -33,7 +33,7 @@ public abstract class EnclosureEnd extends Char {
 
   /**
    * Can this enclosure end open the enclosure?
-   * 
+   *
    * @return {@code true} if this enclosure end can be at the beginning of
    *         the enclosure, {@code false} otherwise
    */
@@ -43,7 +43,7 @@ public abstract class EnclosureEnd extends Char {
 
   /**
    * Can this enclosure end close the enclosure?
-   * 
+   *
    * @return {@code true} if this enclosure end can be at the end of the
    *         enclosure, {@code false} otherwise
    */
@@ -53,14 +53,14 @@ public abstract class EnclosureEnd extends Char {
 
   /**
    * Get the (default) other end of this enclosure
-   * 
+   *
    * @return the (default) other end of this enclosure
    */
   public abstract EnclosureEnd getOtherEnd();
 
   /**
    * Get the owner of this enclosure
-   * 
+   *
    * @return the owner of this enclosure
    */
   public abstract Enclosure getOwner();
@@ -68,7 +68,7 @@ public abstract class EnclosureEnd extends Char {
   /**
    * Check if the other enclosure end can end an enclosure starting with
    * this enclosure end
-   * 
+   *
    * @param other
    *          the other character
    * @return {@code true} if and only if the other enclosure end can end an
@@ -80,7 +80,7 @@ public abstract class EnclosureEnd extends Char {
   /**
    * Check if the other enclosure end can start an enclosure ending with
    * this enclosure end
-   * 
+   *
    * @param other
    *          the other character
    * @return {@code true} if and only if the other enclosure end can start

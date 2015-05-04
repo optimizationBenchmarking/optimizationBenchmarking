@@ -8,7 +8,7 @@ final class _LaTeXDocumentTitle extends DocumentTitle {
 
   /**
    * Create a document title.
-   * 
+   *
    * @param owner
    *          the owning document header
    */

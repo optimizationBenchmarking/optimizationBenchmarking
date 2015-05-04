@@ -9,7 +9,7 @@ final class _LaTeXMathFactorial extends MathFactorial {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

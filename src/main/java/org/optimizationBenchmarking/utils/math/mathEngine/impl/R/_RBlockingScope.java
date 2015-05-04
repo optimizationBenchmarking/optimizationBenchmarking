@@ -19,7 +19,7 @@ abstract class _RBlockingScope extends _RScope {
 
   /**
    * create the {@code R}-scope
-   * 
+   *
    * @param owner
    *          the owner
    * @param engine

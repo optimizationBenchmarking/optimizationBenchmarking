@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXTableFooter extends TableFooter {
   /**
    * Create a footer of a table
-   * 
+   *
    * @param owner
    *          the owning table
    */

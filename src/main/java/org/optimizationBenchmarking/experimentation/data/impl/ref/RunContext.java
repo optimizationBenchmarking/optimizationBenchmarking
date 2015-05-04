@@ -14,7 +14,7 @@ public final class RunContext extends _Context<Run> {
 
   /**
    * create the run context
-   * 
+   *
    * @param context
    *          the context
    * @param ownerProps
@@ -38,7 +38,7 @@ public final class RunContext extends _Context<Run> {
 
   /**
    * get the dimension set
-   * 
+   *
    * @return the dimension set
    */
   final DimensionSet _getDimensionSet() {
@@ -47,7 +47,7 @@ public final class RunContext extends _Context<Run> {
 
   /**
    * Add a data point to this run
-   * 
+   *
    * @param point
    *          the data point to be added
    */
@@ -62,35 +62,35 @@ public final class RunContext extends _Context<Run> {
 
   /**
    * Decode a string to a data point and add it to the run
-   * 
+   *
    * @param string
    *          the string
    */
   public final void addDataPoint(final String string) {
     this.addDataPoint(//
-    this._getDimensionSet().getDataFactory().parseString(string));
+        this._getDimensionSet().getDataFactory().parseString(string));
   }
 
   /**
    * Decode a list of numbers to a data point and add it to the run
-   * 
+   *
    * @param numbers
    *          the numbers to add
    */
   public final void addDataPoint(final Number... numbers) {
     this.addDataPoint(//
-    this._getDimensionSet().getDataFactory().parseNumbers(numbers));
+        this._getDimensionSet().getDataFactory().parseNumbers(numbers));
   }
 
   /**
    * Decode a raw object to a data point and add it to the run
-   * 
+   *
    * @param rawObject
    *          the raw object to add
    */
   public final void addDataPoint(final Object rawObject) {
     this.addDataPoint(//
-    this._getDimensionSet().getDataFactory().parseObject(rawObject));
+        this._getDimensionSet().getDataFactory().parseObject(rawObject));
   }
 
   /** {@inheritDoc} */
@@ -137,7 +137,7 @@ public final class RunContext extends _Context<Run> {
 
   /**
    * Define a parameter with a given name and description
-   * 
+   *
    * @param name
    *          the parameter name
    * @param desc
@@ -151,7 +151,7 @@ public final class RunContext extends _Context<Run> {
 
   /**
    * Set a parameter value.
-   * 
+   *
    * @param parameterName
    *          the parameter name
    * @param parameterDescription
@@ -171,7 +171,7 @@ public final class RunContext extends _Context<Run> {
 
   /**
    * Set a parameter value.
-   * 
+   *
    * @param parameterName
    *          the parameter name
    * @param parameterValue
@@ -187,7 +187,7 @@ public final class RunContext extends _Context<Run> {
 
   /**
    * Set a parameter value.
-   * 
+   *
    * @param parameterName
    *          the parameter name
    * @param parameterValue

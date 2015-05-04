@@ -19,7 +19,7 @@ public interface ITool extends ITextable {
    * program (or library) has successfully been located (or loaded). If the
    * tool cannot be used because whatever requirement for it cannot be met,
    * this method returns {@code false}.
-   * 
+   *
    * @return {@code true} if the tool can be used, {@code false} otherwise
    * @see #use()
    */
@@ -31,7 +31,7 @@ public interface ITool extends ITextable {
    * words: if {@link #canUse()} returns {@code false}, this method throws
    * an exception. If {@link #canUse()} returns {@code true}, this method
    * does nothing.
-   * 
+   *
    * @throws UnsupportedOperationException
    *           if {@link #canUse()} returns {@code false}.
    */
@@ -60,7 +60,7 @@ public interface ITool extends ITextable {
    * invoking the method {@link #use()}. {@link #use()} will return an
    * object which represents a setup builder for single usage of the tool.
    * </p>
-   * 
+   *
    * @return a (builder) object representing a single usage of this tool
    * @throws UnsupportedOperationException
    *           if {@link #canUse()} returns {@code false}
@@ -70,7 +70,7 @@ public interface ITool extends ITextable {
 
   /**
    * Write the human-readable, unique name of this tool.
-   * 
+   *
    * @param textOut
    *          the
    *          {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
@@ -83,7 +83,7 @@ public interface ITool extends ITextable {
 
   /**
    * Get the human-readable, unique name of this tool
-   * 
+   *
    * @return the human-readable, unique name of this tool
    * @see #toText(ITextOutput)
    */

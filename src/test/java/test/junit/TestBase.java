@@ -24,7 +24,7 @@ public class TestBase {
 
   /**
    * Serialize {@code o}, then deserialize it
-   * 
+   *
    * @param o
    *          the object
    * @return the de-serialized serialized version
@@ -64,7 +64,7 @@ public class TestBase {
 
   /**
    * Get a logger which discards all its log output
-   * 
+   *
    * @return the logger
    */
   public static final Logger getNullLogger() {

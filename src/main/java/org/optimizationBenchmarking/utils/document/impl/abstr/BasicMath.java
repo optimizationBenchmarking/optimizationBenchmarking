@@ -11,7 +11,7 @@ public abstract class BasicMath extends DocumentPart implements IMath {
 
   /**
    * Create a mathematics output.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -28,22 +28,22 @@ public abstract class BasicMath extends DocumentPart implements IMath {
     if ((++this.m_size) > (max = this.maxArgs())) {
       throw new IllegalStateException(//
           "An instance of " + this.getClass().getSimpleName() + //$NON-NLS-1$
-              " can have at most " + max + //$NON-NLS-1$
-              " arguments, but you tried to create the " + //$NON-NLS-1$ 
-              this.m_size + "th one."); //$NON-NLS-1$          
+          " can have at most " + max + //$NON-NLS-1$
+          " arguments, but you tried to create the " + //$NON-NLS-1$
+          this.m_size + "th one."); //$NON-NLS-1$
     }
   }
 
   /**
    * Get the minimum number of arguments of this math context.
-   * 
+   *
    * @return the minimum number of arguments
    */
   abstract int minArgs();
 
   /**
    * Get the maximum number of arguments of this math context.
-   * 
+   *
    * @return the maximum number of arguments
    */
   abstract int maxArgs();
@@ -51,7 +51,7 @@ public abstract class BasicMath extends DocumentPart implements IMath {
   /**
    * Obtain the current number of nested elements (arguments) of this math
    * context.
-   * 
+   *
    * @return the current number of nested elements (arguments) of this math
    *         context
    */
@@ -246,8 +246,8 @@ public abstract class BasicMath extends DocumentPart implements IMath {
     if (this.m_size < min) {
       throw new IllegalStateException(//
           "An instance of " + this.getClass().getSimpleName() + //$NON-NLS-1$
-              " must have at least " + min + //$NON-NLS-1$
-              " arguments, but has only " + this.m_size); //$NON-NLS-1$
+          " must have at least " + min + //$NON-NLS-1$
+          " arguments, but has only " + this.m_size); //$NON-NLS-1$
     }
 
     super.onClose();

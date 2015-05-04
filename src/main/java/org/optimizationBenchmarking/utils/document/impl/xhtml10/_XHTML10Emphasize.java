@@ -12,7 +12,7 @@ final class _XHTML10Emphasize extends Emphasize {
 
   /**
    * create the inline code element
-   * 
+   *
    * @param owner
    *          the owner
    */

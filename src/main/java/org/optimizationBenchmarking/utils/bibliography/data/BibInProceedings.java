@@ -14,7 +14,7 @@ public class BibInProceedings extends BibInBook {
   /**
    * Create a new bibliography record for papers that appeared in
    * proceedings
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -43,7 +43,7 @@ public class BibInProceedings extends BibInBook {
   /**
    * Create a new bibliography record for papers that appeared in
    * proceedings
-   * 
+   *
    * @param authors
    *          the authors
    * @param title

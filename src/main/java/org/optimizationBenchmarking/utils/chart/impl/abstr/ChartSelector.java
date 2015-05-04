@@ -21,7 +21,7 @@ public class ChartSelector extends ToolJob implements IChartSelector {
 
   /**
    * create the chart selector
-   * 
+   *
    * @param builder
    *          the chart builder
    */
@@ -32,7 +32,7 @@ public class ChartSelector extends ToolJob implements IChartSelector {
 
   /**
    * create the chart selector
-   * 
+   *
    * @param graphic
    *          the graphic
    * @param styleSet
@@ -55,7 +55,7 @@ public class ChartSelector extends ToolJob implements IChartSelector {
 
   /**
    * get the logger
-   * 
+   *
    * @return the logger
    */
   final Logger _getLogger() {
@@ -64,7 +64,7 @@ public class ChartSelector extends ToolJob implements IChartSelector {
 
   /**
    * Get the graphic to draw the chart on
-   * 
+   *
    * @return the graphic to draw the chart on
    */
   protected final Graphic getGraphic() {
@@ -73,7 +73,7 @@ public class ChartSelector extends ToolJob implements IChartSelector {
 
   /**
    * Get the style set to be used for the chart
-   * 
+   *
    * @return the style set to be used for the chart
    */
   protected final StyleSet getStyleSet() {
@@ -82,7 +82,7 @@ public class ChartSelector extends ToolJob implements IChartSelector {
 
   /**
    * Get the chart driver
-   * 
+   *
    * @return the chart driver
    */
   public final ChartDriver getChartDriver() {

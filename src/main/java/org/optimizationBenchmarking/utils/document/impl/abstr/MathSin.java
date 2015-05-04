@@ -5,7 +5,7 @@ public class MathSin extends MathFunction {
 
   /**
    * Create an sin function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

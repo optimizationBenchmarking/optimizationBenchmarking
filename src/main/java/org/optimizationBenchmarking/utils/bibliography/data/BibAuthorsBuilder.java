@@ -23,7 +23,7 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
 
   /**
    * create the authors builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -33,7 +33,7 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
 
   /**
    * create the author builder
-   * 
+   *
    * @param tag
    *          the tag
    * @param owner
@@ -48,7 +48,7 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
 
   /**
    * Add a given author to this author list
-   * 
+   *
    * @param author
    *          the author to add
    */
@@ -70,8 +70,8 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
       if (EComparison.equals(data[i], author)) {
         throw new IllegalArgumentException(//
             "An author set cannot contain two equal elements, so you cannot add element '" //$NON-NLS-1$
-                + author + "', which already exists at index " //$NON-NLS-1$
-                + i);
+            + author + "', which already exists at index " //$NON-NLS-1$
+            + i);
       }
     }
 
@@ -87,7 +87,7 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
 
   /**
    * Add a set of authors
-   * 
+   *
    * @param authors
    *          the authors to add
    */
@@ -135,7 +135,7 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
 
   /**
    * Create a new author builder
-   * 
+   *
    * @return the new author builder
    */
   public final BibAuthorBuilder author() {

@@ -33,7 +33,7 @@ public enum ELabelType {
 
   /** the instances */
   public static final ArraySetView<ELabelType> INSTANCES = //
-  new ArraySetView<>(ELabelType.values());
+      new ArraySetView<>(ELabelType.values());
 
   /** the prefix */
   private final char m_prefix;
@@ -43,7 +43,7 @@ public enum ELabelType {
 
   /**
    * create the label type
-   * 
+   *
    * @param p
    *          the prefix char
    * @param name
@@ -56,7 +56,7 @@ public enum ELabelType {
 
   /**
    * Get the name of the label type
-   * 
+   *
    * @return the name of the label type
    */
   public final String getName() {
@@ -65,7 +65,7 @@ public enum ELabelType {
 
   /**
    * Get the prefix character for labels
-   * 
+   *
    * @return the prefix character for labels
    */
   public final char getLabelPrefixChar() {

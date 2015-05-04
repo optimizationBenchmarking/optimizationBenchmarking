@@ -19,7 +19,7 @@ final class _Variable implements IVariable {
 
   /**
    * create a new variable
-   * 
+   *
    * @param name
    *          the name of the variable
    * @param engine

@@ -34,7 +34,7 @@ public class Rational extends BasicNumber {
 
   /**
    * create
-   * 
+   *
    * @param up
    *          the up
    * @param down
@@ -48,7 +48,7 @@ public class Rational extends BasicNumber {
 
   /**
    * Create a long fraction
-   * 
+   *
    * @param up
    *          the up
    * @param down
@@ -61,7 +61,7 @@ public class Rational extends BasicNumber {
 
   /**
    * Create a long fraction
-   * 
+   *
    * @param number
    *          the number
    * @return the fraction, or {@link #NaN} if the number cannot be
@@ -146,39 +146,39 @@ public class Rational extends BasicNumber {
         break inner;
       }
 
-      inner: for (;;) {
-        inv = (b_dbl - frac);
-        check = (1d / inv);
-        if (check < Long.MAX_VALUE) {
-          temp1 = ((long) check);
-          if ((1d / temp1) != inv) {
-            temp1++;
-          }
+    inner: for (;;) {
+      inv = (b_dbl - frac);
+      check = (1d / inv);
+      if (check < Long.MAX_VALUE) {
+        temp1 = ((long) check);
+        if ((1d / temp1) != inv) {
+          temp1++;
+        }
 
-          if (temp1 > 1L) {
-            temp2 = Rational.__mulNonZero(b_up, temp1);
-            if ((temp2 > 0L) || (b_up == 0L)) {
-              temp2 -= b_down;
-              if (temp2 > 0L) {
-                temp1 = Rational.__mulNonZero(b_down, temp1);
-                if (temp1 > 0L) {
-                  gcd = GCD.INSTANCE.computeAsLong(temp2, temp1);
-                  if (gcd > 0) {
-                    b_up = (temp2 / gcd);
-                    b_down = (temp1 / gcd);
-                    b_dbl = (b_up / ((double) b_down));
-                    if (/* Math.abs(b_dbl - frac) <= 1e-13d */b_dbl == frac) {
-                      return Rational.__combine(b_up, b_down, integer);
-                    }
-                    continue inner;
+        if (temp1 > 1L) {
+          temp2 = Rational.__mulNonZero(b_up, temp1);
+          if ((temp2 > 0L) || (b_up == 0L)) {
+            temp2 -= b_down;
+            if (temp2 > 0L) {
+              temp1 = Rational.__mulNonZero(b_down, temp1);
+              if (temp1 > 0L) {
+                gcd = GCD.INSTANCE.computeAsLong(temp2, temp1);
+                if (gcd > 0) {
+                  b_up = (temp2 / gcd);
+                  b_down = (temp1 / gcd);
+                  b_dbl = (b_up / ((double) b_down));
+                  if (/* Math.abs(b_dbl - frac) <= 1e-13d */b_dbl == frac) {
+                    return Rational.__combine(b_up, b_down, integer);
                   }
+                  continue inner;
                 }
               }
             }
           }
         }
-        break inner;
       }
+      break inner;
+    }
 
       temp2 = Rational.__mulNonZero(a_up, b_down);
       if (temp2 <= 0L) {
@@ -207,7 +207,7 @@ public class Rational extends BasicNumber {
 
       check = (mid_up / ((double) mid_down));
       if (/** Math.abs(check - frac) <= 1e-13d */
-      check == frac) {
+          check == frac) {
         return Rational.__combine(mid_up, mid_down, integer);
       }
       if (check < frac) {
@@ -232,7 +232,7 @@ public class Rational extends BasicNumber {
 
   /**
    * make the result
-   * 
+   *
    * @param up
    *          the up
    * @param down
@@ -258,7 +258,7 @@ public class Rational extends BasicNumber {
 
   /**
    * Create a long fraction
-   * 
+   *
    * @param up
    *          the up
    * @param down
@@ -324,7 +324,7 @@ public class Rational extends BasicNumber {
 
   /**
    * Get the sign of this fraction
-   * 
+   *
    * @return the sign of this fraction
    */
   @Override
@@ -355,7 +355,7 @@ public class Rational extends BasicNumber {
 
   /**
    * l + 1
-   * 
+   *
    * @param l
    *          the number
    * @return the bounded increment
@@ -366,7 +366,7 @@ public class Rational extends BasicNumber {
 
   /**
    * l - 1
-   * 
+   *
    * @param l
    *          the number
    * @return the bounded decrement
@@ -377,7 +377,7 @@ public class Rational extends BasicNumber {
 
   /**
    * Obtain a long value representing this number
-   * 
+   *
    * @param round
    *          the rounding mode
    * @return the long value
@@ -453,7 +453,7 @@ public class Rational extends BasicNumber {
 
   /**
    * multiply with a double
-   * 
+   *
    * @param d
    *          the double value
    * @return the return value
@@ -471,7 +471,7 @@ public class Rational extends BasicNumber {
 
   /**
    * multiply with a long
-   * 
+   *
    * @param in
    *          the input value
    * @return the return value
@@ -482,7 +482,7 @@ public class Rational extends BasicNumber {
 
   /**
    * invert a fraction
-   * 
+   *
    * @return the inverse
    */
   public final Rational inverse() {
@@ -491,7 +491,7 @@ public class Rational extends BasicNumber {
 
   /**
    * Multiply two long integers, checking for overflow.
-   * 
+   *
    * @param a
    *          first value
    * @param b
@@ -525,7 +525,7 @@ public class Rational extends BasicNumber {
 
   /**
    * multiply
-   * 
+   *
    * @param b
    *          the other fraction
    * @return the result
@@ -602,7 +602,7 @@ public class Rational extends BasicNumber {
 
   /**
    * divide two fractions
-   * 
+   *
    * @param b
    *          the second fraction
    * @return the division result
@@ -646,9 +646,9 @@ public class Rational extends BasicNumber {
     down = this.m_down;
     if (down == 0L) {
       textOut.append(BasicNumber.STATE_NAMES[//
-          (this.m_up < 0L) ? BasicNumber.STATE_NEGATIVE_INFINITY
-              : ((this.m_up > 0L) ? BasicNumber.STATE_POSITIVE_INFINITY
-                  : BasicNumber.STATE_NAN)]);
+                                             (this.m_up < 0L) ? BasicNumber.STATE_NEGATIVE_INFINITY
+                                                 : ((this.m_up > 0L) ? BasicNumber.STATE_POSITIVE_INFINITY
+                                                     : BasicNumber.STATE_NAN)]);
     } else {
       textOut.append(this.m_up);
       if (down != 1L) {
@@ -660,7 +660,7 @@ public class Rational extends BasicNumber {
 
   /**
    * Try to multiply with a big decimal value
-   * 
+   *
    * @param b
    *          the value
    * @return the result

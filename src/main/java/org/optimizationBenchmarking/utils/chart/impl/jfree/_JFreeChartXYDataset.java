@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** a 2D line for jfreechart */
 final class _JFreeChartXYDataset extends
-    _JFreeChartDataset<CompiledLine2D> implements XYDataset {
+_JFreeChartDataset<CompiledLine2D> implements XYDataset {
 
   /** the shortcut to the data matrices */
   private final IMatrix[] m_matrices;
@@ -19,7 +19,7 @@ final class _JFreeChartXYDataset extends
 
   /**
    * create the line dataset
-   * 
+   *
    * @param lines
    *          the lines
    */
@@ -132,7 +132,7 @@ final class _JFreeChartXYDataset extends
 
   /**
    * get the index along the x-axis
-   * 
+   *
    * @param series
    *          the series
    * @param item
@@ -155,7 +155,7 @@ final class _JFreeChartXYDataset extends
 
   /**
    * get the index along the y-axis
-   * 
+   *
    * @param series
    *          the series
    * @param item
@@ -196,6 +196,7 @@ final class _JFreeChartXYDataset extends
     return Double.valueOf(this.getYValue(series, item));
   }
 
+  /** {@inheritDoc} */
   @Override
   public final double getYValue(final int series, final int item) {
     return _JFreeChartDataset._f(this.m_matrices[series].getDouble(

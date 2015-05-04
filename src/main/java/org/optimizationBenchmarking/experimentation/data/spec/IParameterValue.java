@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.experimentation.data.spec;
 public interface IParameterValue extends IPropertyValue {
   /**
    * get the owning parameter
-   * 
+   *
    * @return the owning parameter
    */
   @Override
@@ -14,7 +14,7 @@ public interface IParameterValue extends IPropertyValue {
 
   /**
    * Is this parameter value unspecified?
-   * 
+   *
    * @return {@code true} if and only if the parameter value is
    *         unspecified, {@code false} otherwise
    */

@@ -5,14 +5,14 @@ import java.io.Reader;
 
 /** an encoded buffered reader */
 final class _EncodedBufferedReader extends BufferedReader implements
-    IStreamEncoded {
+IStreamEncoded {
 
   /** the encoding */
   private final StreamEncoding<?, ?> m_encoding;
 
   /**
    * create
-   * 
+   *
    * @param r
    *          the reader
    * @param e

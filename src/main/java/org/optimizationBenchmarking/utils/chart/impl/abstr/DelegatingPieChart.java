@@ -18,7 +18,7 @@ public class DelegatingPieChart implements IPieChart {
 
   /**
    * create the delegating pie chart
-   * 
+   *
    * @param chart
    *          the chart
    */

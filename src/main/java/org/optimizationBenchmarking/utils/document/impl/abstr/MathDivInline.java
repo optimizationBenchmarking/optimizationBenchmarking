@@ -5,7 +5,7 @@ public class MathDivInline extends MathFunction {
 
   /**
    * Create an inline div function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

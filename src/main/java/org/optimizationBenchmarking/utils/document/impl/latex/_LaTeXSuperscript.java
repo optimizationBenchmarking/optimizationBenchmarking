@@ -8,12 +8,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXSuperscript extends Superscript {
   /** the superscript command in text */
   private static final char[] TEXT_SUPERSCRIPT = { '{', '\\', 't', 'e',
-      'x', 't', 's', 'u', 'p', 'e', 'r', 's', 'c', 'r', 'i', 'p', 't',
-      '{', };
+    'x', 't', 's', 'u', 'p', 'e', 'r', 's', 'c', 'r', 'i', 'p', 't',
+    '{', };
 
   /**
    * create the superscript element
-   * 
+   *
    * @param owner
    *          the owner
    */

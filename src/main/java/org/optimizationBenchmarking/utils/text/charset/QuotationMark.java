@@ -4,14 +4,14 @@ package org.optimizationBenchmarking.utils.text.charset;
  * the internal base class for enclosures
  */
 public class QuotationMark extends
-    _EnclosureEnd<QuotationMarks, QuotationMark> {
+_EnclosureEnd<QuotationMarks, QuotationMark> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /**
    * create
-   * 
+   *
    * @param chr
    *          the character
    * @param isOpening
@@ -26,7 +26,7 @@ public class QuotationMark extends
 
   /**
    * Get the dash count of this quotation mark
-   * 
+   *
    * @return the dash count of this quotation mark
    */
   public final int getDashCount() {

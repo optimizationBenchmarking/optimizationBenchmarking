@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * The default map. This code basically corresponds to
  * {@link java.util.HashMap} , but it allows us to define the internal
  * entry data structures freely.
- * 
+ *
  * @param <K>
  *          the key type
  * @param <V>
@@ -22,7 +22,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  *          the entry type
  */
 public class ObjectMap<K, V, NT extends ChainedMapEntry<K, V>> extends
-    BasicMap<K, V, NT> {
+BasicMap<K, V, NT> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -62,7 +62,7 @@ public class ObjectMap<K, V, NT extends ChainedMapEntry<K, V>> extends
   /**
    * Constructs an empty {@code ObjectMap} with enough capacity to hold the
    * specified initial size.
-   * 
+   *
    * @param allocateForSize
    *          the number of elements we expect to be added soon
    */
@@ -84,7 +84,7 @@ public class ObjectMap<K, V, NT extends ChainedMapEntry<K, V>> extends
 
   /**
    * Compute the hash code
-   * 
+   *
    * @param b
    *          the data
    * @return the hash
@@ -102,7 +102,7 @@ public class ObjectMap<K, V, NT extends ChainedMapEntry<K, V>> extends
 
   /**
    * Returns index for hash code h.
-   * 
+   *
    * @param h
    *          the hash code
    * @param length
@@ -115,7 +115,7 @@ public class ObjectMap<K, V, NT extends ChainedMapEntry<K, V>> extends
 
   /**
    * Compute the resize threshold belonging to a given table capacity.
-   * 
+   *
    * @param capacity
    *          the table capacity
    * @return the threshold
@@ -129,7 +129,7 @@ public class ObjectMap<K, V, NT extends ChainedMapEntry<K, V>> extends
    * Calculate the capacity needed to facilitate {@code size} elements in
    * the table without violating the
    * {@link #_getThresholdFromCapacity(int) threshold}
-   * 
+   *
    * @param size
    *          the number of elements
    * @return the capacity
@@ -229,7 +229,7 @@ public class ObjectMap<K, V, NT extends ChainedMapEntry<K, V>> extends
    * MAXIMUM_CAPACITY, this method does not resize the map, but sets
    * threshold to Integer.MAX_VALUE. This has the effect of preventing
    * future calls.
-   * 
+   *
    * @param newCapacity
    *          the new capacity, MUST be a power of two; must be greater
    *          than current capacity unless current capacity is
@@ -403,7 +403,7 @@ public class ObjectMap<K, V, NT extends ChainedMapEntry<K, V>> extends
 
   /**
    * write this object
-   * 
+   *
    * @param s
    *          the stream
    * @throws IOException
@@ -427,7 +427,7 @@ public class ObjectMap<K, V, NT extends ChainedMapEntry<K, V>> extends
 
   /**
    * read this object
-   * 
+   *
    * @param stream
    *          the stream
    * @throws IOException

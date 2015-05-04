@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * A set of property value groups.
  */
 public abstract class PropertyValueGroups extends DataElement implements
-    IClustering {
+IClustering {
 
   /** the property */
   final IProperty m_property;
@@ -29,7 +29,7 @@ public abstract class PropertyValueGroups extends DataElement implements
 
   /**
    * create the property value groups
-   * 
+   *
    * @param groups
    *          the groups
    * @param property
@@ -89,7 +89,7 @@ public abstract class PropertyValueGroups extends DataElement implements
 
   /**
    * create the group
-   * 
+   *
    * @param group
    *          the group data
    * @return the group
@@ -110,7 +110,7 @@ public abstract class PropertyValueGroups extends DataElement implements
    * parameters}, this method might either return {@code null} (in case
    * that all experiments have this parameter value specified) or a group
    * with the distinct, unspecified value.
-   * 
+   *
    * @return the distinct value group holding all elements for which the
    *         property is not specified, or {@code null} if all elements
    *         have the property value specified
@@ -121,7 +121,7 @@ public abstract class PropertyValueGroups extends DataElement implements
 
   /**
    * Get the grouping mode
-   * 
+   *
    * @return the grouping mode
    */
   public final EGroupingMode getGroupingMode() {
@@ -130,7 +130,7 @@ public abstract class PropertyValueGroups extends DataElement implements
 
   /**
    * Get the property groups
-   * 
+   *
    * @return the property groups
    */
   @Override

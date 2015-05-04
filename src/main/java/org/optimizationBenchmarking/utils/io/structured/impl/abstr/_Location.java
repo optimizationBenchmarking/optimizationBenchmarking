@@ -32,7 +32,7 @@ class _Location {
 
   /**
    * create the location record
-   * 
+   *
    * @param location1
    *          the first location
    * @param location2
@@ -54,7 +54,7 @@ class _Location {
 
   /**
    * Append a location to a given memory text output
-   * 
+   *
    * @param location
    *          the location
    * @param text
@@ -88,7 +88,7 @@ class _Location {
 
   /**
    * set the location
-   * 
+   *
    * @param location1
    *          the first location
    * @param location2
@@ -108,7 +108,7 @@ class _Location {
         text.append(')');
       }
 
-      text.append(" and cannot be set to an instance of "); //$NON-NLS-1$      
+      text.append(" and cannot be set to an instance of "); //$NON-NLS-1$
       text.append(location1.getClass().getSimpleName());
       if (location2 != null) {
         text.append(' ');
@@ -116,7 +116,7 @@ class _Location {
         text.append(location2.getClass().getSimpleName());
         text.append(')');
       }
-      text.append(" anymore."); //$NON-NLS-1$   
+      text.append(" anymore."); //$NON-NLS-1$
       throw new IllegalStateException(text.toString());
 
     }

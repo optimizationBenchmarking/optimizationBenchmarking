@@ -13,7 +13,7 @@ final class _NumberStatus {
 
   /**
    * Create the number status record
-   * 
+   *
    * @param textCase
    *          the number status record
    */

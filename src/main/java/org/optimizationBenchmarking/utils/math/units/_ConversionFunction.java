@@ -57,7 +57,7 @@ class _ConversionFunction extends UnaryFunction {
 
   /**
    * Get a conversion function with the given factor.
-   * 
+   *
    * @param n
    *          the number
    * @return the function

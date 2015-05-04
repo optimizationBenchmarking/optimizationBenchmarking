@@ -29,7 +29,7 @@ public final class RunR implements Runnable {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          passed to configuration
    * @throws Throwable
@@ -55,6 +55,7 @@ public final class RunR implements Runnable {
     super();
   }
 
+  /** {@inheritDoc} */
   @Override
   public void run() {
     IMatrix input, output;

@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXEnumerationItem extends EnumerationItem {
   /**
    * Create a new enumeration item
-   * 
+   *
    * @param owner
    *          the owning text
    */

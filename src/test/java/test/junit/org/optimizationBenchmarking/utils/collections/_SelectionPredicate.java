@@ -16,7 +16,7 @@ final class _SelectionPredicate implements IPredicate<Object> {
 
   /**
    * create
-   * 
+   *
    * @param size
    *          the size
    */

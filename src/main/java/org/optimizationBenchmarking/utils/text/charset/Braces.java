@@ -130,7 +130,7 @@ public final class Braces extends _Enclosure<Brace> {
 
   /**
    * Create
-   * 
+   *
    * @param begin
    *          the beginning character
    * @param end

@@ -8,7 +8,7 @@ public class BibBookBuilder extends BibBookRecordBuilder {
 
   /**
    * create the book builder
-   * 
+   *
    * @param owner
    *          the owner
    */

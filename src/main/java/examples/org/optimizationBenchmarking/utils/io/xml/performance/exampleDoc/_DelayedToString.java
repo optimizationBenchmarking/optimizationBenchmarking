@@ -14,7 +14,7 @@ final class _DelayedToString {
 
   /**
    * create the object
-   * 
+   *
    * @param object
    *          the object
    * @param delay

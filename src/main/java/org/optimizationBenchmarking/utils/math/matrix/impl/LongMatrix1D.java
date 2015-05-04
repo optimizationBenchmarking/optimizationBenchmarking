@@ -19,7 +19,7 @@ public class LongMatrix1D extends AbstractMatrix {
 
   /**
    * create the matrix
-   * 
+   *
    * @param data
    *          the data
    * @param m

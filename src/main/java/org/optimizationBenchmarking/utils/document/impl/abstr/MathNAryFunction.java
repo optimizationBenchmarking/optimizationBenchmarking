@@ -16,7 +16,7 @@ public class MathNAryFunction extends MathFunction {
 
   /**
    * Create a absolute value function
-   * 
+   *
    * @param owner
    *          the owning FSM
    * @param name
@@ -34,7 +34,7 @@ public class MathNAryFunction extends MathFunction {
     if (this.m_name == null) {
       throw new IllegalArgumentException(//
           "Name of n-ary mathematical must not be null, empty, or just consist of white space, but '" //$NON-NLS-1$
-              + name + "' does.");//$NON-NLS-1$
+          + name + "' does.");//$NON-NLS-1$
     }
 
     this.m_needsBrace = (maxArity > 1);
@@ -48,7 +48,7 @@ public class MathNAryFunction extends MathFunction {
 
   /**
    * Get the name of the function
-   * 
+   *
    * @return the name of the function
    */
   protected final String getName() {
@@ -58,7 +58,7 @@ public class MathNAryFunction extends MathFunction {
   /**
    * Get the brace index. This function will only return a valid value if
    * <code>{@link #needsBraces()}==true</code>.
-   * 
+   *
    * @return the brace index
    */
   protected final int getBraceIndex() {
@@ -67,7 +67,7 @@ public class MathNAryFunction extends MathFunction {
 
   /**
    * Do we need to put braces around the function's arguments?
-   * 
+   *
    * @return {@code true} if we need to put braces around the arguments,
    *         {@code false} otherwise
    */

@@ -23,7 +23,7 @@ public final class ExampleMaker {
 
   /**
    * The main routine
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Exception
@@ -43,13 +43,13 @@ public final class ExampleMaker {
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info(//
           "Now beginning to build static LaTeX examples to" + //$NON-NLS-1$
-              dest);
+          dest);
     }
 
     try {
       Files.createDirectories(dest);
     } catch (final Throwable t) {
-      ErrorUtils.logError(logger, "Error creating destination directory.",//$NON-NLS-1$ 
+      ErrorUtils.logError(logger, "Error creating destination directory.",//$NON-NLS-1$
           t, false, RethrowMode.DONT_RETHROW);
     }
 
@@ -68,7 +68,7 @@ public final class ExampleMaker {
 
   /**
    * Make the example
-   * 
+   *
    * @param logger
    *          the logger
    * @param resource
@@ -98,8 +98,8 @@ public final class ExampleMaker {
 
       try {
         LaTeX.getInstance().use()
-            .setFileProducerListener(new FinishedPrinter())
-            .setMainFile(dest).setLogger(logger).create().call();
+        .setFileProducerListener(new FinishedPrinter())
+        .setMainFile(dest).setLogger(logger).create().call();
       } catch (final IOException ioe) {
         ErrorUtils.logError(logger, "Error when compiling document.", //$NON-NLS-1$
             ioe, false, RethrowMode.DONT_RETHROW);

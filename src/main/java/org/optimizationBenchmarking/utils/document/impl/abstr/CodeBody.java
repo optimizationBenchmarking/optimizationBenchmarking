@@ -5,7 +5,7 @@ public class CodeBody extends Text {
 
   /**
    * Create a code block text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

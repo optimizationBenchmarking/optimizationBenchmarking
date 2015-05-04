@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * interface.
  */
 public abstract class AbstractInstanceRuns extends AbstractElementSet
-    implements IInstanceRuns {
+implements IInstanceRuns {
 
   /** the owner */
   IExperiment m_owner;
@@ -22,7 +22,7 @@ public abstract class AbstractInstanceRuns extends AbstractElementSet
    * later set it via
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperiment#own(AbstractInstanceRuns)}
    * .
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -35,7 +35,7 @@ public abstract class AbstractInstanceRuns extends AbstractElementSet
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractRun}
    * .
-   * 
+   *
    * @param run
    *          the run to own
    */

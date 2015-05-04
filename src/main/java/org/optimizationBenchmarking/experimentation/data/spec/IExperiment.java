@@ -9,7 +9,7 @@ public interface IExperiment extends INamedElement, IElementSet {
 
   /**
    * Get the owning experiment set
-   * 
+   *
    * @return the owning experiment set
    */
   @Override
@@ -17,7 +17,7 @@ public interface IExperiment extends INamedElement, IElementSet {
 
   /**
    * Get the instance runs of this experiment
-   * 
+   *
    * @return the instance runs of this experiment
    */
   @Override
@@ -25,7 +25,7 @@ public interface IExperiment extends INamedElement, IElementSet {
 
   /**
    * Get the parameter map.
-   * 
+   *
    * @return the parameter map.
    */
   public abstract IParameterSetting getParameterSetting();

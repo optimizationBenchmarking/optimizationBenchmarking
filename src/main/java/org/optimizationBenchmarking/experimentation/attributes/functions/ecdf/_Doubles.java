@@ -14,7 +14,7 @@ abstract class _Doubles extends _List {
 
   /**
    * create the {@code double} list
-   * 
+   *
    * @param timeDim
    *          the time dimension
    * @param goalIndex
@@ -27,7 +27,7 @@ abstract class _Doubles extends _List {
 
   /**
    * add an element
-   * 
+   *
    * @param data
    *          the element
    */
@@ -79,8 +79,8 @@ abstract class _Doubles extends _List {
           break add;
         }
       }
-      this._add(earliest);
-      offset = (-1);
+    this._add(earliest);
+    offset = (-1);
     }
 
     // Sort the data points in ascending order.

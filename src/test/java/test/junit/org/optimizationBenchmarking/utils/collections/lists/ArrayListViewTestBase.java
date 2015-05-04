@@ -10,7 +10,7 @@ import test.junit.org.optimizationBenchmarking.utils.collections.BasicListTest;
 
 /**
  * a test for collection classes
- * 
+ *
  * @param <ET>
  *          the element type
  * @param <T>
@@ -18,7 +18,7 @@ import test.junit.org.optimizationBenchmarking.utils.collections.BasicListTest;
  */
 @Ignore
 public class ArrayListViewTestBase<ET, T extends ArrayListView<ET>>
-    extends BasicListTest<ET, ET[], T> {
+extends BasicListTest<ET, ET[], T> {
 
   /** create */
   public ArrayListViewTestBase() {
@@ -27,7 +27,7 @@ public class ArrayListViewTestBase<ET, T extends ArrayListView<ET>>
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    * @param isSingleton
@@ -60,7 +60,7 @@ public class ArrayListViewTestBase<ET, T extends ArrayListView<ET>>
 
   /**
    * create a random but sorted list of objects
-   * 
+   *
    * @return the random sorted list of objects
    */
   static final Object[] _randomList() {

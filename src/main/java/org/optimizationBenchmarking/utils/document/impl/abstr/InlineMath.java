@@ -5,7 +5,7 @@ public class InlineMath extends BasicMath {
 
   /**
    * Create an in-line mathematics output.
-   * 
+   *
    * @param owner
    *          the owning complex text
    */

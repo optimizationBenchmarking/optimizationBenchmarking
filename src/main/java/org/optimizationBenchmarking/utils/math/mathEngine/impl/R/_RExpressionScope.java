@@ -12,7 +12,7 @@ abstract class _RExpressionScope extends _RScope {
 
   /**
    * create the R expression
-   * 
+   *
    * @param owner
    *          the owner
    * @param engine
@@ -48,7 +48,7 @@ abstract class _RExpressionScope extends _RScope {
 
   /**
    * set the type of the expression
-   * 
+   *
    * @param type
    *          the type
    */

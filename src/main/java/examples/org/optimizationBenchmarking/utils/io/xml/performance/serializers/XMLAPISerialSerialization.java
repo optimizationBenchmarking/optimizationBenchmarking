@@ -39,7 +39,7 @@ public class XMLAPISerialSerialization extends SerializationMethod {
 
   /**
    * write an element
-   * 
+   *
    * @param dest
    *          the destination element
    * @param e
@@ -76,7 +76,7 @@ public class XMLAPISerialSerialization extends SerializationMethod {
 
   /**
    * The main method
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Exception

@@ -17,8 +17,8 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * A builder for LaTeX jobs.
  */
 public class LaTeXJobBuilder extends
-    ConfigurableToolJobBuilder<LaTeXJob, LaTeXJobBuilder> implements
-    IFileProducerJobBuilder {
+ConfigurableToolJobBuilder<LaTeXJob, LaTeXJobBuilder> implements
+IFileProducerJobBuilder {
 
   /** the source file */
   public static final String PARAM_MAIN = "latexSource"; //$NON-NLS-1$
@@ -79,7 +79,7 @@ public class LaTeXJobBuilder extends
 
   /**
    * find a format
-   * 
+   *
    * @param string
    *          the string
    * @return the format
@@ -133,7 +133,7 @@ public class LaTeXJobBuilder extends
 
   /**
    * Require a given file type
-   * 
+   *
    * @param type
    *          the type
    * @return this builder
@@ -159,7 +159,7 @@ public class LaTeXJobBuilder extends
 
   /**
    * Set the main file for the LaTeX compilation
-   * 
+   *
    * @param path
    *          the path
    * @return the builder
@@ -176,13 +176,13 @@ public class LaTeXJobBuilder extends
     if (normalized == null) {
       throw new IllegalArgumentException(//
           "Normalized path to main LaTeX file (" //$NON-NLS-1$
-              + path + ") cannot be null.");//$NON-NLS-1$
+          + path + ") cannot be null.");//$NON-NLS-1$
     }
 
     if (!(Files.exists(normalized))) {
       throw new IllegalArgumentException(//
           "Main LaTeX file (" //$NON-NLS-1$
-              + normalized + ") must exist.");//$NON-NLS-1$
+          + normalized + ") must exist.");//$NON-NLS-1$
     }
 
     try {
@@ -226,7 +226,7 @@ public class LaTeXJobBuilder extends
 
   /**
    * Build the main job and make it ready for execution.
-   * 
+   *
    * @return the main job
    */
   @Override

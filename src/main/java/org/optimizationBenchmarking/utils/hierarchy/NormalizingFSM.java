@@ -17,7 +17,7 @@ public class NormalizingFSM extends HierarchicalFSM {
 
   /**
    * Create
-   * 
+   *
    * @param owner
    *          the owning fsm
    */
@@ -28,7 +28,7 @@ public class NormalizingFSM extends HierarchicalFSM {
   /**
    * Normalize a given object instance without querying a potential owning
    * {@link NormalizingFSM} for its opinion.
-   * 
+   *
    * @param input
    *          the input object instance
    * @param flags
@@ -271,7 +271,7 @@ public class NormalizingFSM extends HierarchicalFSM {
    * maintain, e.g., a {@link java.util.HashMap} to ensure that all
    * {@link java.lang.Object#equals(Object) equal} objects are mapped to
    * the same object instance.
-   * 
+   *
    * @param input
    *          the input object instance
    * @return the normalized instance
@@ -287,7 +287,7 @@ public class NormalizingFSM extends HierarchicalFSM {
    * normalization information for future calls. This method will result in
    * an object which is as canonical as possible without creating
    * additional object references.
-   * 
+   *
    * @param input
    *          the input object to be normalized
    * @return the normalization result
@@ -306,7 +306,7 @@ public class NormalizingFSM extends HierarchicalFSM {
    * &quot;persistent&quot; and to always return the exactly same object
    * when called with equal input instances. The current implementation
    * here just returns the {@code input} object directly.
-   * 
+   *
    * @param input
    *          the input object
    * @return the result

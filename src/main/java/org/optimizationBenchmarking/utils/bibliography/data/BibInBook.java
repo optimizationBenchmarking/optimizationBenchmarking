@@ -29,7 +29,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Create a new bibliography record for things that are parts of book
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -72,9 +72,9 @@ public class BibInBook extends BibRecord {
         if (i > j) {
           throw new IllegalArgumentException(//
               "Start page cannot be greater than end page, but start page '"//$NON-NLS-1$
-                  + this.m_startPage + "' is " //$NON-NLS-1$
-                  + i + " and end page '" //$NON-NLS-1$
-                  + this.m_endPage + "' is " + j); //$NON-NLS-1$
+              + this.m_startPage + "' is " //$NON-NLS-1$
+              + i + " and end page '" //$NON-NLS-1$
+              + this.m_endPage + "' is " + j); //$NON-NLS-1$
         }
       } catch (final NumberFormatException x) {
         // ignore
@@ -97,15 +97,15 @@ public class BibInBook extends BibRecord {
     return HashUtils.combineHashes(HashUtils.combineHashes(//
         HashUtils.combineHashes(super.calcHashCode(),//
             HashUtils.hashCode(this.m_book)),//
-        HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_startPage),//
-            HashUtils.hashCode(this.m_endPage))),//
-        HashUtils.hashCode(this.m_chapter));
+            HashUtils.combineHashes(//
+                HashUtils.hashCode(this.m_startPage),//
+                HashUtils.hashCode(this.m_endPage))),//
+                HashUtils.hashCode(this.m_chapter));
   }
 
   /**
    * Get the book containing this chapter or paper
-   * 
+   *
    * @return the bibliography editors
    */
   public BibBookRecord getBook() {
@@ -114,7 +114,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the start page
-   * 
+   *
    * @return the start page
    */
   public final String getStartPage() {
@@ -123,7 +123,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the end page
-   * 
+   *
    * @return the end page
    */
   public final String getEndPage() {
@@ -132,7 +132,7 @@ public class BibInBook extends BibRecord {
 
   /**
    * Get the chapter
-   * 
+   *
    * @return the chapter
    */
   public final String getChapter() {
@@ -150,7 +150,7 @@ public class BibInBook extends BibRecord {
       return (EComparison.equals(this.m_book, x.m_book) && //
           EComparison.equals(this.m_startPage, x.m_startPage) && //
           EComparison.equals(this.m_endPage, x.m_endPage) && //
-      EComparison.equals(this.m_chapter, x.m_chapter));
+          EComparison.equals(this.m_chapter, x.m_chapter));
     }
 
     return false;

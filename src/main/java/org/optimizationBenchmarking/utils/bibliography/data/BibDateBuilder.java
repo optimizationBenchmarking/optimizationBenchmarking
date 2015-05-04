@@ -45,7 +45,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * create the author builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -55,7 +55,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * create the author builder
-   * 
+   *
    * @param owner
    *          the owner
    * @param tag
@@ -98,7 +98,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the year
-   * 
+   *
    * @param year
    *          the year
    */
@@ -116,7 +116,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the year
-   * 
+   *
    * @param year
    *          the year
    */
@@ -126,7 +126,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the month
-   * 
+   *
    * @param month
    *          the month
    */
@@ -144,7 +144,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the month
-   * 
+   *
    * @param month
    *          the month
    */
@@ -156,7 +156,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
     if (m == null) {
       throw new IllegalArgumentException(//
           "Month strings must not be null or empty, but '" //$NON-NLS-1$
-              + month + "' is."); //$NON-NLS-1$
+          + month + "' is."); //$NON-NLS-1$
     }
 
     res = null;
@@ -187,7 +187,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the quarter
-   * 
+   *
    * @param quarter
    *          the quarter
    */
@@ -206,7 +206,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the quarter
-   * 
+   *
    * @param quarter
    *          the quarter
    */
@@ -218,7 +218,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
     if (m == null) {
       throw new IllegalArgumentException(//
           "Quarter strings must not be null or empty, but '" //$NON-NLS-1$
-              + quarter + "' is."); //$NON-NLS-1$
+          + quarter + "' is."); //$NON-NLS-1$
     }
 
     res = null;
@@ -250,7 +250,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the day
-   * 
+   *
    * @param day
    *          the day
    */
@@ -268,7 +268,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the day
-   * 
+   *
    * @param day
    *          the day
    */
@@ -278,7 +278,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the whole data from a given date object
-   * 
+   *
    * @param date
    *          the date object
    */
@@ -288,7 +288,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the fields from a time stamp
-   * 
+   *
    * @param time
    *          a time stamp
    */
@@ -309,7 +309,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
 
   /**
    * Set the whole data from a given calendar
-   * 
+   *
    * @param cal
    *          the calendar
    */

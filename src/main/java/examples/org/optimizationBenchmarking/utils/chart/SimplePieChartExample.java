@@ -25,7 +25,7 @@ public class SimplePieChartExample extends ChartExample {
 
   /**
    * run the example: there are problems with the different output
-   * 
+   *
    * @param args
    *          the arguments
    * @throws IOException
@@ -94,7 +94,7 @@ public class SimplePieChartExample extends ChartExample {
 
   /**
    * make a pie slice
-   * 
+   *
    * @param chart
    *          the chart
    * @param color

@@ -13,7 +13,7 @@ final class _XHTML10Enumeration extends Enumeration {
 
   /**
    * Create a new enumeration
-   * 
+   *
    * @param owner
    *          the owning text
    */

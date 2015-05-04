@@ -8,11 +8,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXSubscript extends Subscript {
   /** the subscript command in text */
   private static final char[] TEXT_SUBSCRIPT = { '{', '\\', 't', 'e', 'x',
-      't', 's', 'u', 'b', 's', 'c', 'r', 'i', 'p', 't', '{', };
+    't', 's', 'u', 'b', 's', 'c', 'r', 'i', 'p', 't', '{', };
 
   /**
    * create the subscript element
-   * 
+   *
    * @param owner
    *          the owner
    */

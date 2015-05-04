@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /** A context for instance sets. */
 final class _InstanceSetContext extends
-    _HierarchicalCollection<Instance, InstanceContext, InstanceSet> {
+_HierarchicalCollection<Instance, InstanceContext, InstanceSet> {
 
   /** the feature manager */
   private volatile _FeaturesBuilder m_featureSetBuilder;
@@ -14,7 +14,7 @@ final class _InstanceSetContext extends
 
   /**
    * create
-   * 
+   *
    * @param element
    *          the owning element
    */
@@ -38,7 +38,7 @@ final class _InstanceSetContext extends
 
   /**
    * Define a feature with a given name and description
-   * 
+   *
    * @param name
    *          the feature name
    * @param desc
@@ -51,7 +51,7 @@ final class _InstanceSetContext extends
 
   /**
    * Create the instance context
-   * 
+   *
    * @return the instance context
    */
   final synchronized InstanceContext _createInstance() {
@@ -61,7 +61,7 @@ final class _InstanceSetContext extends
 
   /**
    * get the dimension set
-   * 
+   *
    * @return the dimension set
    */
   final DimensionSet _getDimensionSet() {
@@ -76,7 +76,7 @@ final class _InstanceSetContext extends
 
   /**
    * get the feature set
-   * 
+   *
    * @return the feature set
    */
   final synchronized FeatureSet _getFeatureSet() {

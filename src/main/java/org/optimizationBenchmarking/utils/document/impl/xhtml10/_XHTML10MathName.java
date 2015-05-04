@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.MathName;
 final class _XHTML10MathName extends MathName {
   /**
    * create the mathematical name element
-   * 
+   *
    * @param owner
    *          the owner
    */

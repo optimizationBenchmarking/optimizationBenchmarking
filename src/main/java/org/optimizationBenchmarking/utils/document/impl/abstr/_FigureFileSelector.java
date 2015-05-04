@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
 
 /** a figure file selector */
 final class _FigureFileSelector implements
-    IPredicate<Map.Entry<Path, IFileType>> {
+IPredicate<Map.Entry<Path, IFileType>> {
 
   /** create */
   static final _FigureFileSelector INSTANCE = new _FigureFileSelector();

@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * An XMLFileType I/O job builder.
- * 
+ *
  * @param <D>
  *          the data type which can be stored
  */
@@ -110,7 +110,7 @@ public interface IXMLOutputJobBuilder<D> extends ITextOutputJobBuilder<D> {
    * The the {@link org.optimizationBenchmarking.utils.io.xml.XMLBase} to
    * store the XMLFileType output to. The XMLBase may or may not be closed
    * when the output is finished.
-   * 
+   *
    * @param xmlBase
    *          the xmlBase
    * @return this builder

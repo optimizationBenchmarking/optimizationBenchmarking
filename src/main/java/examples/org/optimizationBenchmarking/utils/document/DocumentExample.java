@@ -19,7 +19,7 @@ public abstract class DocumentExample implements Runnable {
 
   /**
    * create
-   * 
+   *
    * @param doc
    *          the document
    */
@@ -30,7 +30,7 @@ public abstract class DocumentExample implements Runnable {
 
   /**
    * get the logger
-   * 
+   *
    * @return the logger to use
    */
   static final Logger _getLogger() {

@@ -10,12 +10,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * A tool for generating XMLFileType output
- * 
+ *
  * @param <S>
  *          the source type
  */
 public class XMLOutputTool<S> extends TextOutputTool<S> implements
-    IXMLOutputTool<S> {
+IXMLOutputTool<S> {
 
   /** create */
   protected XMLOutputTool() {
@@ -48,7 +48,7 @@ public class XMLOutputTool<S> extends TextOutputTool<S> implements
 
   /**
    * Store the data element to an XMLFileType document or document fragment
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data

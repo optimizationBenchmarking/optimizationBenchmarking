@@ -12,7 +12,7 @@ public interface IEvaluator extends IConfigurableJobTool {
 
   /**
    * Create a builder for a new evaluation process
-   * 
+   *
    * @return the evaluation process builder
    */
   @Override

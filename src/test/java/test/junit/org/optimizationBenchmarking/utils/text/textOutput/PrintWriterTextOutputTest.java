@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
  */
 public class PrintWriterTextOutputTest extends
-    TextOutputTest<StringWriter> {
+TextOutputTest<StringWriter> {
 
   /** create */
   public PrintWriterTextOutputTest() {

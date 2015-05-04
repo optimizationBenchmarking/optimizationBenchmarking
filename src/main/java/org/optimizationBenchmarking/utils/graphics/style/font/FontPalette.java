@@ -24,7 +24,7 @@ public class FontPalette extends Palette<FontStyle> {
 
   /**
    * create the palette
-   * 
+   *
    * @param def
    *          the default font style
    * @param emph
@@ -58,7 +58,7 @@ public class FontPalette extends Palette<FontStyle> {
 
   /**
    * Check the default font style
-   * 
+   *
    * @param s
    *          the default font style
    */
@@ -71,7 +71,7 @@ public class FontPalette extends Palette<FontStyle> {
 
   /**
    * Check the code font style
-   * 
+   *
    * @param s
    *          the code font style
    */
@@ -86,14 +86,14 @@ public class FontPalette extends Palette<FontStyle> {
     if ((f = s.getFamily()) != EFontFamily.MONOSPACED) {
       throw new IllegalArgumentException(//
           "The code font family must be " + //$NON-NLS-1$
-              EFontFamily.MONOSPACED + " but is " + f);//$NON-NLS-1$
+          EFontFamily.MONOSPACED + " but is " + f);//$NON-NLS-1$
 
     }
   }
 
   /**
    * Check the emphasize font style
-   * 
+   *
    * @param s
    *          the code emphasize style
    */
@@ -106,14 +106,14 @@ public class FontPalette extends Palette<FontStyle> {
     if (s.getFamily() == EFontFamily.MONOSPACED) {
       throw new IllegalArgumentException(//
           "The emphasize font family must not be " + //$NON-NLS-1$
-              EFontFamily.MONOSPACED + " but is.");//$NON-NLS-1$
+          EFontFamily.MONOSPACED + " but is.");//$NON-NLS-1$
 
     }
   }
 
   /**
    * Find the font style most similar to a given setup
-   * 
+   *
    * @param family
    *          the font family
    * @param bold
@@ -171,7 +171,7 @@ public class FontPalette extends Palette<FontStyle> {
 
   /**
    * Get the default font style
-   * 
+   *
    * @return the default font style
    */
   public final FontStyle getDefaultFont() {
@@ -180,7 +180,7 @@ public class FontPalette extends Palette<FontStyle> {
 
   /**
    * Get the emphasize font style
-   * 
+   *
    * @return the emphasize font style
    */
   public final FontStyle getEmphFont() {
@@ -189,7 +189,7 @@ public class FontPalette extends Palette<FontStyle> {
 
   /**
    * Get the code font style
-   * 
+   *
    * @return the code font style
    */
   public final FontStyle getCodeFont() {
@@ -208,8 +208,8 @@ public class FontPalette extends Palette<FontStyle> {
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.calcHashCode(),
             HashUtils.hashCode(this.m_default)),
-        HashUtils.combineHashes(HashUtils.hashCode(this.m_emph),
-            HashUtils.hashCode(this.m_code)));
+            HashUtils.combineHashes(HashUtils.hashCode(this.m_emph),
+                HashUtils.hashCode(this.m_code)));
   }
 
   /** {@inheritDoc} */
@@ -224,7 +224,7 @@ public class FontPalette extends Palette<FontStyle> {
       return (EComparison.equals(this.m_default, other.m_default) && //
           EComparison.equals(this.m_emph, other.m_emph) && //
           EComparison.equals(this.m_code, other.m_code) && //
-      super.equals(o));
+          super.equals(o));
     }
     return false;
   }

@@ -52,7 +52,7 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
 
   /**
    * Create the ECDF attribute
-   * 
+   *
    * @param timeDim
    *          the time dimension
    * @param goalDim
@@ -67,10 +67,10 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
     if ((timeDim == null) || (goalDim == null) || (goalValue == null)) {
       throw new IllegalArgumentException(//
           "Cannot compute ECDF for time dimension "//$NON-NLS-1$
-              + timeDim + //
-              ", goal dimension" //$NON-NLS-1$
-              + goalDim + //
-              ", and goal value " + goalValue);//$NON-NLS-1$
+          + timeDim + //
+          ", goal dimension" //$NON-NLS-1$
+          + goalDim + //
+          ", and goal value " + goalValue);//$NON-NLS-1$
     }
 
     this.m_timeDim = timeDim;
@@ -112,9 +112,9 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.m_timeIndex),//
             HashUtils.hashCode(this.m_goalIndex)),//
-        (this.m_useLongGoal//
-        ? HashUtils.hashCode(this.m_goalValueLong)//
-            : HashUtils.hashCode(this.m_goalValueDouble)));//
+            (this.m_useLongGoal//
+                ? HashUtils.hashCode(this.m_goalValueLong)//
+                    : HashUtils.hashCode(this.m_goalValueDouble)));//
   }
 
   /** {@inheritDoc} */
@@ -148,7 +148,7 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
 
   /**
    * convert a {@code double} goal value to a {@code long}
-   * 
+   *
    * @param d
    *          the goal value
    * @param goalDim
@@ -179,7 +179,7 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
 
   /**
    * Compute the raw matrix for an instance run set
-   * 
+   *
    * @param data
    *          the data the instance runs
    * @return the raw matrix
@@ -213,7 +213,7 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
 
   /**
    * Join a set of matrices
-   * 
+   *
    * @param matrices
    *          the set of matrices
    * @return the joined matrix
@@ -253,7 +253,7 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
 
   /**
    * Compute the raw matrix for a given experiment
-   * 
+   *
    * @param data
    *          the experiment data
    * @return the raw matrix
@@ -276,7 +276,7 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
 
   /**
    * Compute the raw matrix for a given experiment set
-   * 
+   *
    * @param data
    *          the experiment set data
    * @return the raw matrix
@@ -312,7 +312,7 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
 
     throw new IllegalArgumentException(//
         "ECDF can only be computed over an IExperimentSet, IExperiment, or IInstanceRuns, but you provided " //$NON-NLS-1$
-            + ((data != null)//
+        + ((data != null)//
             ? (TextUtils.className(data.getClass()) + '.')//
                 : "null."));//$NON-NLS-1$
 

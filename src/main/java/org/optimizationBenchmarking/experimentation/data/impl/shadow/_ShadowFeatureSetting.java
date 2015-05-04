@@ -12,7 +12,7 @@ final class _ShadowFeatureSetting extends AbstractFeatureSetting {
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the data
    */

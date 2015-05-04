@@ -17,49 +17,49 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * the editors
-   * 
+   *
    * @serial serial field
    */
   private final BibAuthors m_editors;
 
   /**
    * the series
-   * 
+   *
    * @serial serial field
    */
   private final String m_series;
 
   /**
    * the volume
-   * 
+   *
    * @serial serial field
    */
   private final String m_volume;
 
   /**
    * the edition
-   * 
+   *
    * @serial serial field
    */
   private final String m_edition;
 
   /**
    * the isbn
-   * 
+   *
    * @serial a string
    */
   private final String m_isbn;
 
   /**
    * the issn of the series
-   * 
+   *
    * @serial an issn
    */
   private final String m_issn;
 
   /**
    * Create a new bibliography record
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -145,16 +145,16 @@ public class BibBookRecord extends BibRecordWithPublisher {
         HashUtils.combineHashes(
             HashUtils.combineHashes(super.calcHashCode(),
                 HashUtils.hashCode(this.m_edition)),
-            HashUtils.hashCode(this.m_editors)),//
-        HashUtils.combineHashes(HashUtils.hashCode(this.m_series),
-            HashUtils.combineHashes(HashUtils.hashCode(this.m_issn),
-                HashUtils.hashCode(this.m_volume)))),//
-        HashUtils.hashCode(this.m_isbn));
+                HashUtils.hashCode(this.m_editors)),//
+                HashUtils.combineHashes(HashUtils.hashCode(this.m_series),
+                    HashUtils.combineHashes(HashUtils.hashCode(this.m_issn),
+                        HashUtils.hashCode(this.m_volume)))),//
+                        HashUtils.hashCode(this.m_isbn));
   }
 
   /**
    * Get the bibliography editors
-   * 
+   *
    * @return the bibliography editors
    */
   public final BibAuthors getEditors() {
@@ -163,7 +163,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the series
-   * 
+   *
    * @return the series
    */
   public final String getSeries() {
@@ -172,7 +172,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the isbn
-   * 
+   *
    * @return the isbn
    */
   public final String getISBN() {
@@ -181,7 +181,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the issn
-   * 
+   *
    * @return the issn
    */
   public final String getISSN() {
@@ -190,7 +190,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the volume
-   * 
+   *
    * @return the volume
    */
   public final String getVolume() {
@@ -199,7 +199,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
   /**
    * Get the edition
-   * 
+   *
    * @return the edition
    */
   public final String getEdition() {
@@ -216,7 +216,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
       return (EComparison.equals(this.m_edition, x.m_edition) && //
           EComparison.equals(this.m_series, x.m_series) && //
-      EComparison.equals(this.m_volume, x.m_volume));
+          EComparison.equals(this.m_volume, x.m_volume));
 
     }
 

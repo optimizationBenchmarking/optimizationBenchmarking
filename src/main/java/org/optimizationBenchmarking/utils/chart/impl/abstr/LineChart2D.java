@@ -40,7 +40,7 @@ public class LineChart2D extends Chart implements ILineChart2D {
 
   /**
    * create the line chart
-   * 
+   *
    * @param selector
    *          the selector
    */
@@ -51,7 +51,7 @@ public class LineChart2D extends Chart implements ILineChart2D {
 
   /**
    * create the line chart
-   * 
+   *
    * @param graphic
    *          the graphic
    * @param styles
@@ -76,7 +76,7 @@ public class LineChart2D extends Chart implements ILineChart2D {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_HAS_X_AXIS: {
-        append.append("xAxisSet");break;} //$NON-NLS-1$      
+        append.append("xAxisSet");break;} //$NON-NLS-1$
       case FLAG_HAS_Y_AXIS: {
         append.append("yAxisSet");break;} //$NON-NLS-1$
       case FLAG_HAS_LINE: {
@@ -89,7 +89,7 @@ public class LineChart2D extends Chart implements ILineChart2D {
 
   /**
    * Add a new line
-   * 
+   *
    * @param line
    *          the line
    */
@@ -175,9 +175,9 @@ public class LineChart2D extends Chart implements ILineChart2D {
       this.m_driver.renderLineChart2D(chart, graphic, logger);
     } catch (final Throwable error) {
       ErrorUtils
-          .logError(
-              logger,
-              ("Unrecoverable error during rendering of compiled 2D line chart #" //$NON-NLS-1$
+      .logError(
+          logger,
+          ("Unrecoverable error during rendering of compiled 2D line chart #" //$NON-NLS-1$
               + this._id()), error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     } finally {
       this.m_lines = null;

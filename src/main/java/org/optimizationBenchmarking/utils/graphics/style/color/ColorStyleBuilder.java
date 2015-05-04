@@ -18,7 +18,7 @@ public class ColorStyleBuilder extends PaletteElementBuilder<ColorStyle> {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owning palette builder
    */
@@ -34,7 +34,7 @@ public class ColorStyleBuilder extends PaletteElementBuilder<ColorStyle> {
 
   /**
    * Set the name of the color
-   * 
+   *
    * @param name
    *          the name of the color
    */
@@ -49,13 +49,13 @@ public class ColorStyleBuilder extends PaletteElementBuilder<ColorStyle> {
     } else {
       throw new IllegalArgumentException(//
           "Name must not be null or empty, but is '" //$NON-NLS-1$
-              + name + '\'');
+          + name + '\'');
     }
   }
 
   /**
    * Set the rgb value of this color builder
-   * 
+   *
    * @param rgb
    *          the rgb value
    */
@@ -66,7 +66,7 @@ public class ColorStyleBuilder extends PaletteElementBuilder<ColorStyle> {
 
   /**
    * check an rgb value
-   * 
+   *
    * @param rgb
    *          the rgb value
    * @return the check result

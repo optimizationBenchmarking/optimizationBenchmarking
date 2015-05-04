@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 public class TableFooterRow extends TableRow {
   /**
    * Create the table footer row
-   * 
+   *
    * @param owner
    *          the owning table footer
    */

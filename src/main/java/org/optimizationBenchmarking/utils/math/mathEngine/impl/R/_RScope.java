@@ -14,7 +14,7 @@ abstract class _RScope extends HierarchicalFSM {
 
   /**
    * create the {@code R}-scope
-   * 
+   *
    * @param owner
    *          the owner
    * @param engine
@@ -38,7 +38,7 @@ abstract class _RScope extends HierarchicalFSM {
   /**
    * A given path must be deleted once the end of the owning scope is
    * reached
-   * 
+   *
    * @param path
    *          the path to delete
    */
@@ -52,7 +52,7 @@ abstract class _RScope extends HierarchicalFSM {
     } else {
       throw new IllegalStateException(
           "Top level R scope with no idea how to delete path '" //$NON-NLS-1$
-              + path + '\'');
+          + path + '\'');
     }
   }
 }

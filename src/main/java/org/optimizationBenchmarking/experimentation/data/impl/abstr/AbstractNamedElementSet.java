@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * interface.
  */
 public class AbstractNamedElementSet extends AbstractElementSet implements
-    INamedElementSet {
+INamedElementSet {
 
   /** create */
   protected AbstractNamedElementSet() {

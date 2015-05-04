@@ -12,7 +12,7 @@ public interface IPropertySet extends INamedElementSet {
 
   /**
    * Get the owning experiment set
-   * 
+   *
    * @return the owning experiment set
    */
   @Override
@@ -20,7 +20,7 @@ public interface IPropertySet extends INamedElementSet {
 
   /**
    * Get the properties of this property set
-   * 
+   *
    * @return the properties of this property set
    */
   @Override
@@ -28,7 +28,7 @@ public interface IPropertySet extends INamedElementSet {
 
   /**
    * Obtain a property fitting to a given name
-   * 
+   *
    * @param name
    *          the property name
    * @return the property, or {@code null} if none could be found
@@ -41,7 +41,7 @@ public interface IPropertySet extends INamedElementSet {
    * values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the set of property values
    * @return the property setting
@@ -55,7 +55,7 @@ public interface IPropertySet extends INamedElementSet {
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the property setting
@@ -69,7 +69,7 @@ public interface IPropertySet extends INamedElementSet {
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the property setting
@@ -83,7 +83,7 @@ public interface IPropertySet extends INamedElementSet {
    * as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the mapping of names to values
    * @return the property setting
@@ -96,7 +96,7 @@ public interface IPropertySet extends INamedElementSet {
    * values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the set of property values
    * @return the property setting

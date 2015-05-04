@@ -23,14 +23,14 @@ public abstract class MathematicalFunctionTest extends TestBase {
 
   /**
    * Get the mathematical function to test
-   * 
+   *
    * @return the mathematical function to test
    */
   public abstract MathematicalFunction getFunction();
 
   /**
    * Get the test cases to be used to test the function
-   * 
+   *
    * @return the test cases
    */
   public TestCase[] getTestCases() {
@@ -40,7 +40,7 @@ public abstract class MathematicalFunctionTest extends TestBase {
   /**
    * Is this operator commutative? Example: {@code a*b = b*a}, i.e.,
    * multiplication is commutative. Division is not, as {@code a/b != b/a}.
-   * 
+   *
    * @return {@code true} if it is, {@code false} if not
    */
   protected boolean isCommutative() {

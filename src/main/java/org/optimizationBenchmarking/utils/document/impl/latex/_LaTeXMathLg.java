@@ -8,11 +8,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXMathLg extends MathLg {
   /** the begin decadic logarithm */
   private static final char[] LG_BEGIN = { '{', '\\', 'l', 'o', 'g', '_',
-      '{', '1', '0', '}', '{', };
+    '{', '1', '0', '}', '{', };
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

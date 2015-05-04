@@ -13,7 +13,7 @@ public class Bibliography extends _BibSet<BibRecord, Bibliography> {
 
   /**
    * create the bib set
-   * 
+   *
    * @param data
    *          the data of the set
    */
@@ -23,7 +23,7 @@ public class Bibliography extends _BibSet<BibRecord, Bibliography> {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data of the set
    * @param check
@@ -35,7 +35,7 @@ public class Bibliography extends _BibSet<BibRecord, Bibliography> {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data of the set
    * @param cannotBeEmpty

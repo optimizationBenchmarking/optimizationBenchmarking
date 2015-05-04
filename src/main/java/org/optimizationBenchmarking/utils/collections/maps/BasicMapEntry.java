@@ -13,14 +13,14 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * A basic implementation of the {@link java.util.Map.Entry} interface
  * which leaves all value-related information abstract but provides methods
  * for hash codes and equality checking.
- * 
+ *
  * @param <K>
  *          the key type
  * @param <V>
  *          the value type
  */
 public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
-    Serializable, Cloneable, ITextable {
+Serializable, Cloneable, ITextable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
 
   /**
    * Set the key of this association
-   * 
+   *
    * @param key
    *          the key
    */
@@ -63,7 +63,7 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
   @Override
   public int hashCode() {
     return (HashUtils.hashCode(this.getKey()) ^ //
-    HashUtils.hashCode(this.getValue()));
+        HashUtils.hashCode(this.getValue()));
   }
 
   /** {@inheritDoc} */
@@ -81,11 +81,11 @@ public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
       e = ((Map.Entry) o);
 
       return ((((o1 = this.getKey()) == null)//
-      ? (e.getKey() == null)//
-          : (o1.equals(e.getKey()))) && //
-      (((o1 = this.getValue()) == null)//
-      ? (e.getValue() == null)//
-          : (o1.equals(e.getValue()))));
+          ? (e.getKey() == null)//
+              : (o1.equals(e.getKey()))) && //
+              (((o1 = this.getValue()) == null)//
+                  ? (e.getValue() == null)//
+                      : (o1.equals(e.getValue()))));
     }
 
     return false;

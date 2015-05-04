@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
 
 /** The tool job builder for experiment sets */
 public final class ExperimentDataJobBuilder extends
-    ToolJobBuilder<ExperimentSetContext, ExperimentDataJobBuilder> {
+ToolJobBuilder<ExperimentSetContext, ExperimentDataJobBuilder> {
 
   /** create */
   ExperimentDataJobBuilder() {

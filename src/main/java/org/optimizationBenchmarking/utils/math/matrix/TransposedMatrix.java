@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.math.matrix;
 
 /**
  * A class for matrix columns
- * 
+ *
  * @param <OT>
  *          the owning matrix type
  */
@@ -13,7 +13,7 @@ public class TransposedMatrix<OT extends IMatrix> extends AbstractMatrix {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owning matrix
    */

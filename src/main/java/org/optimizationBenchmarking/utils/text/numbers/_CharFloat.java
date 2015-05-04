@@ -25,7 +25,7 @@ final class _CharFloat implements Cloneable {
 
   /**
    * create the character representation from a string
-   * 
+   *
    * @param string
    *          the string
    */
@@ -166,7 +166,7 @@ final class _CharFloat implements Cloneable {
 
   /**
    * increase or decrease by 1
-   * 
+   *
    * @param carry
    *          either 1 or -1
    * @return {@code true} if the float is still valid

@@ -5,7 +5,7 @@ public class MathMul extends MathFunction {
 
   /**
    * Create an mul function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

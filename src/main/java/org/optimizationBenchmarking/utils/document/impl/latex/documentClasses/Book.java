@@ -26,7 +26,7 @@ public final class Book extends LaTeXDocumentClass {
         LaTeXDefaultFontPalette.getInstance(),// fonts
         ELaTeXSection.CHAPTER,// highest supported section type
         ELaTeXSection.SUBPARAGRAPH// lowest supported section type
-    );
+        );
   }
 
   /** {@inheritDoc} */
@@ -43,7 +43,7 @@ public final class Book extends LaTeXDocumentClass {
 
   /**
    * get the globally shared instance of the {@code book} document class
-   * 
+   *
    * @return the {@code book} document class
    */
   public static final Book getInstance() {

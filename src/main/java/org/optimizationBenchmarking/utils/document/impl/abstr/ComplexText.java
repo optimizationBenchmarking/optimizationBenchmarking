@@ -19,7 +19,7 @@ public class ComplexText extends PlainText implements IComplexText {
 
   /**
    * Create a text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -99,7 +99,7 @@ public class ComplexText extends PlainText implements IComplexText {
    * {@link org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder}
    * has been closed. The standard implementation defers control to the
    * cite method of the driver.
-   * 
+   *
    * @param bib
    *          the bibliography
    * @param citationMode
@@ -143,7 +143,7 @@ public class ComplexText extends PlainText implements IComplexText {
 
   /** the bibliography consumer */
   private final class _BibliographyConsumer implements
-      IBibliographyConsumer {
+  IBibliographyConsumer {
 
     /** the citation mode */
     private final ECitationMode m_citationMode;
@@ -156,7 +156,7 @@ public class ComplexText extends PlainText implements IComplexText {
 
     /**
      * create
-     * 
+     *
      * @param citationMode
      *          the citation mode
      * @param textCase

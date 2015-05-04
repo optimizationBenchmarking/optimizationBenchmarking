@@ -6,7 +6,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 public class CodeCaption extends ComplexText {
   /**
    * create the caption
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -16,7 +16,7 @@ public class CodeCaption extends ComplexText {
 
   /**
    * Get the owning code block
-   * 
+   *
    * @return the owning code block
    */
   @Override

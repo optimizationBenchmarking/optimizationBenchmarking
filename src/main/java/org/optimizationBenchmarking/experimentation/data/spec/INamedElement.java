@@ -6,14 +6,14 @@ package org.optimizationBenchmarking.experimentation.data.spec;
 public interface INamedElement extends IDataElement, ISemanticComponent {
   /**
    * Obtain the name of this object.
-   * 
+   *
    * @return the name of this object.
    */
   public abstract String getName();
 
   /**
    * Obtain the description of this object.
-   * 
+   *
    * @return the description of this object, or {@code null} if none is
    *         specified
    */

@@ -11,12 +11,12 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IStreamInputTool;
 
 /**
  * A tool for reading stream input
- * 
+ *
  * @param <S>
  *          the destination type
  */
 public class StreamInputTool<S> extends FileInputTool<S> implements
-    IStreamInputTool<S> {
+IStreamInputTool<S> {
 
   /** create */
   protected StreamInputTool() {
@@ -39,7 +39,7 @@ public class StreamInputTool<S> extends FileInputTool<S> implements
 
   /**
    * Handle a stream
-   * 
+   *
    * @param job
    *          the job where logging info can be written
    * @param data
@@ -54,7 +54,7 @@ public class StreamInputTool<S> extends FileInputTool<S> implements
   @Override
   protected void stream(final IOJob job, final S data,
       final InputStream stream, final StreamEncoding<?, ?> encoding)
-      throws Throwable {
+          throws Throwable {
     //
   }
 

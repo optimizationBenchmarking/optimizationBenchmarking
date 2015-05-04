@@ -33,7 +33,7 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
     FigureSeries.STATE_NAMES[FigureSeries.STATE_CAPTION_CREATED] = "captionCreated"; //$NON-NLS-1$
     FigureSeries.STATE_NAMES[FigureSeries.STATE_CAPTION_BEFORE_OPEN] = "captionBeforeOpen"; //$NON-NLS-1$
     FigureSeries.STATE_NAMES[FigureSeries.STATE_CAPTION_OPENED] = "captionOpened"; //$NON-NLS-1$
-    FigureSeries.STATE_NAMES[FigureSeries.STATE_CAPTION_CLOSED] = "captionClosed"; //$NON-NLS-1$    
+    FigureSeries.STATE_NAMES[FigureSeries.STATE_CAPTION_CLOSED] = "captionClosed"; //$NON-NLS-1$
   }
 
   /** the current sub-figure index */
@@ -50,7 +50,7 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
 
   /**
    * Create a figure series
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index
@@ -74,15 +74,15 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
     this.m_size = size;
     this.m_folder = PathUtils.normalize(this.m_doc.m_basePath.resolve(
         BasicFigure.GRAPHICS_OFFSET).resolve(
-        (path == null) ? this.m_globalID : //
-            PathUtils.sanitizePathComponent(path)));
+            (path == null) ? this.m_globalID : //
+              PathUtils.sanitizePathComponent(path)));
     this.m_figuresPerRow = Math.max(1, this.getDocument()
         .getFiguresPerRow(size));
   }
 
   /**
    * Get the number of figures per row
-   * 
+   *
    * @return the number of figures per row
    */
   public final int getFiguresPerRow() {
@@ -103,7 +103,7 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
 
   /**
    * Obtain the size of this figure, relative to the parent document
-   * 
+   *
    * @return the size of this figure
    */
   public final EFigureSize getSize() {
@@ -112,7 +112,7 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
 
   /**
    * Get the owning section body
-   * 
+   *
    * @return the owning section body
    */
   @Override
@@ -217,7 +217,7 @@ public class FigureSeries extends ComplexObject implements IFigureSeries {
 
   /**
    * Get the (current) number of sub-figures
-   * 
+   *
    * @return the (current) number of sub-figures
    */
   public final int getFigureCount() {

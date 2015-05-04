@@ -498,7 +498,7 @@ public enum EComparison {
 
   /**
    * create
-   * 
+   *
    * @param name
    *          the name
    */
@@ -511,7 +511,7 @@ public enum EComparison {
    * {@code [relation]} in the following sentence {@code "x [relation] y}
    * in the case that {@link #compare(Object, Object) compare(X, Y)}
    * returns {@code true}.
-   * 
+   *
    * @return a string properly representing the comparison relationship
    */
   @Override
@@ -521,7 +521,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -532,7 +532,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -543,7 +543,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -554,7 +554,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -565,7 +565,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -576,7 +576,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -587,7 +587,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first object
    * @param b
@@ -598,7 +598,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first boolean
    * @param b
@@ -609,7 +609,7 @@ public enum EComparison {
 
   /**
    * compare {@code a} and {@code b}.
-   * 
+   *
    * @param a
    *          the first character
    * @param b
@@ -626,7 +626,7 @@ public enum EComparison {
    * <code>{@link java.lang.Double#doubleToLongBits(double) Double.doubleToLongBits(-0d)==-9223372036854775808}</code>
    * . <code>equals(0d, -0d) == true</code>. {@link java.lang.Double#NaN}
    * values are treated as equal to each other.
-   * 
+   *
    * @param a
    *          the first {@code double}
    * @param b
@@ -661,9 +661,9 @@ public enum EComparison {
 
     throw new IllegalStateException(//
         ("Impossible error occured: compare " //$NON-NLS-1$
-        + (a + " (" + (Double.doubleToRawLongBits(a) + //$NON-NLS-1$
-        (") with " + (b + //$NON-NLS-1$
-        (" (" + Double.doubleToRawLongBits(b))))))) + ')'); //$NON-NLS-1$
+            + (a + " (" + (Double.doubleToRawLongBits(a) + //$NON-NLS-1$
+                (") with " + (b + //$NON-NLS-1$
+                    (" (" + Double.doubleToRawLongBits(b))))))) + ')'); //$NON-NLS-1$
   }
 
   /**
@@ -674,7 +674,7 @@ public enum EComparison {
    * <code>{@link java.lang.Float#floatToIntBits(float) Float.floatToLongBits(-0d)==-9223372036854775808}</code>
    * . <code>equals(0d, -0d) == true</code>. {@link java.lang.Float#NaN}
    * values are treated as equal to each other.
-   * 
+   *
    * @param a
    *          the first {@code float}
    * @param b
@@ -709,14 +709,14 @@ public enum EComparison {
 
     throw new IllegalStateException(//
         ("Impossible error occured: compare " //$NON-NLS-1$
-        + (a + " (" + (Float.floatToRawIntBits(a) + //$NON-NLS-1$
-        (") with " + (b + //$NON-NLS-1$
-        (" (" + Float.floatToRawIntBits(b))))))) + ')'); //$NON-NLS-1$
+            + (a + " (" + (Float.floatToRawIntBits(a) + //$NON-NLS-1$
+                (") with " + (b + //$NON-NLS-1$
+                    (" (" + Float.floatToRawIntBits(b))))))) + ')'); //$NON-NLS-1$
   }
 
   /**
    * Does one object equal another one.
-   * 
+   *
    * @param a
    *          the first object
    * @param b
@@ -738,7 +738,7 @@ public enum EComparison {
 
   /**
    * Compare whether two comparable objects
-   * 
+   *
    * @param a
    *          the first object
    * @param b
@@ -762,7 +762,7 @@ public enum EComparison {
 
   /**
    * Compare two numbers
-   * 
+   *
    * @param a
    *          the first number
    * @param b
@@ -793,7 +793,7 @@ public enum EComparison {
         && ((b instanceof Byte) || //
             (b instanceof Short) || //
             (b instanceof Integer) || //
-        (b instanceof Long))) {
+            (b instanceof Long))) {
       return Long.compare(a.longValue(), b.longValue());
     }
 
@@ -802,7 +802,7 @@ public enum EComparison {
 
   /**
    * Compare one object to another one
-   * 
+   *
    * @param a
    *          the first object
    * @param b

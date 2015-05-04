@@ -20,7 +20,7 @@ public abstract class SerializationMethod {
 
   /**
    * Store an example document into a writer
-   * 
+   *
    * @param doc
    *          the document
    * @param out
@@ -33,7 +33,7 @@ public abstract class SerializationMethod {
 
   /**
    * Print an xml document
-   * 
+   *
    * @param doc
    *          the document
    * @throws Exception

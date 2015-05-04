@@ -7,14 +7,14 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJobBuilder;
 
 /**
  * The base class for tool job builders
- * 
+ *
  * @param <J>
  *          the job type
  * @param <R>
  *          the return type of the setter methods
  */
 public abstract class ToolJobBuilder<J extends IToolJob, R extends ToolJobBuilder<J, R>>
-    implements IToolJobBuilder {
+implements IToolJobBuilder {
 
   /** the logger */
   Logger m_logger;
@@ -34,7 +34,7 @@ public abstract class ToolJobBuilder<J extends IToolJob, R extends ToolJobBuilde
 
   /**
    * Get the logger
-   * 
+   *
    * @return the logger
    */
   public final Logger getLogger() {
@@ -44,7 +44,7 @@ public abstract class ToolJobBuilder<J extends IToolJob, R extends ToolJobBuilde
   /**
    * Check whether all fields have been set correctly. This method must be
    * called by {@link #create()}
-   * 
+   *
    * @throws IllegalArgumentException
    *           otherwise
    */
@@ -57,7 +57,7 @@ public abstract class ToolJobBuilder<J extends IToolJob, R extends ToolJobBuilde
    * this method should first call {@link #validate()} before doing
    * anything else. If {@link #validate()} did not throw an error, it
    * should create the job.
-   * 
+   *
    * @return the job
    * @throws Exception
    *           if something goes wrong

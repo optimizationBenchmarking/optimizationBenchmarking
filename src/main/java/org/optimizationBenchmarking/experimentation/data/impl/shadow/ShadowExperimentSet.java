@@ -17,13 +17,13 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * with a different owner and potentially different attributes. If all
  * associated data of this element is the same, it will delegate
  * attribute-based computations to that experiment set.
- * 
+ *
  * @param <OT>
  *          the owner type
  */
 public class ShadowExperimentSet<OT extends IDataElement> extends //
-    _ShadowNamedElementSet<OT, IExperimentSet, IExperiment> implements
-    IExperimentSet {
+_ShadowNamedElementSet<OT, IExperimentSet, IExperiment> implements
+IExperimentSet {
 
   /** the dimensions */
   private IDimensionSet m_dimensions;
@@ -39,7 +39,7 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
 
   /**
    * create the shadow experiment set
-   * 
+   *
    * @param owner
    *          the owning element set
    * @param shadow
@@ -54,7 +54,7 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
 
   /**
    * create the shadow experiment set
-   * 
+   *
    * @param owner
    *          the owning element set
    * @param shadow
@@ -112,7 +112,7 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
 
   /**
    * Create an experiment set from a selection
-   * 
+   *
    * @param owner
    *          the owner
    * @param selection
@@ -127,7 +127,7 @@ public class ShadowExperimentSet<OT extends IDataElement> extends //
 
   /**
    * Create an experiment set from a data selection
-   * 
+   *
    * @param owner
    *          the owner
    * @param selection

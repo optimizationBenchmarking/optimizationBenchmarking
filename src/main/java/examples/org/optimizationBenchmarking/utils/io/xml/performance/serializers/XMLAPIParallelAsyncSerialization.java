@@ -27,7 +27,7 @@ public class XMLAPIParallelAsyncSerialization extends SerializationMethod {
 
   /**
    * create the serialization method
-   * 
+   *
    * @param threads
    *          the number of threads to allocate
    */
@@ -64,7 +64,7 @@ public class XMLAPIParallelAsyncSerialization extends SerializationMethod {
 
   /**
    * The main method
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Exception

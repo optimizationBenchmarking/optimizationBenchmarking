@@ -8,11 +8,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10MathTan extends MathTan {
   /** the operator */
   private final static char[] OP = new char[] { 't', 'a', 'n', '&', 'n',
-      'b', 's', 'p', ';' };
+    'b', 's', 'p', ';' };
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

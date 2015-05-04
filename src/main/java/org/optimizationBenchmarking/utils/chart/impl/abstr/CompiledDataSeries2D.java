@@ -11,7 +11,7 @@ public class CompiledDataSeries2D extends CompiledDataSeries {
 
   /**
    * Create a data series
-   * 
+   *
    * @param id
    *          the id
    * @param title
@@ -51,7 +51,7 @@ public class CompiledDataSeries2D extends CompiledDataSeries {
 
   /**
    * check a given matrix
-   * 
+   *
    * @param data
    *          the matrix
    * @return the matrix
@@ -61,7 +61,7 @@ public class CompiledDataSeries2D extends CompiledDataSeries {
     if (data.n() != 2) {
       throw new IllegalArgumentException(
           "A matrix for 2D-lines must have 2 columns, but this matrix has " //$NON-NLS-1$
-              + data.n());
+          + data.n());
     }
     return data;
   }

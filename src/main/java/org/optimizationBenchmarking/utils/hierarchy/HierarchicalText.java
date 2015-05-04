@@ -38,7 +38,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
 
   /**
    * Create the hierarchical {@link java.lang.Appendable}
-   * 
+   *
    * @param owner
    *          the owning hierarchical fsm
    * @param out
@@ -112,7 +112,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
    * <em>may</em> either be buffered as described above, or use this text's
    * output stream directly as well. There can only be at most one child
    * text sharing its text output stream with this text.
-   * 
+   *
    * @param child
    *          the child element
    * @return {@code true} if the child must be buffered, {@code false}
@@ -181,7 +181,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
    * {@code #mustChildBeBuffered(HierarchicalText)} in order to provide a
    * way to always cache the output of certain objects for later use.
    * </p>
-   * 
+   *
    * @param child
    *          the child text
    * @param out
@@ -202,7 +202,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
 
   /**
    * Obtain the encoding of the underlying {@link java.lang.Appendable}
-   * 
+   *
    * @return the encoding
    */
   protected StreamEncoding<?, ?> getStreamEncoding() {
@@ -218,7 +218,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
    * . This method must be called in a synchronized block and the returned
    * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    * must only be used inside that block.
-   * 
+   *
    * @return the
    *         {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    */
@@ -229,7 +229,7 @@ public abstract class HierarchicalText extends HierarchicalFSM {
   /**
    * Check if the given text output {@code to} is the same as the
    * {@link #m_out text output} used by this object.
-   * 
+   *
    * @param to
    *          the text output
    * @return {@code true} if this object writes to the same destination as

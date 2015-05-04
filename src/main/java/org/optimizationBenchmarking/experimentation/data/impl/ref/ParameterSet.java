@@ -6,8 +6,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IParameterSet;
 
 /** The parameter set. */
 public final class ParameterSet extends
-    _PropertySet<ParameterValue, Parameter, ParameterSetting> implements
-    IParameterSet {
+_PropertySet<ParameterValue, Parameter, ParameterSetting> implements
+IParameterSet {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -17,7 +17,7 @@ public final class ParameterSet extends
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the instances
    */

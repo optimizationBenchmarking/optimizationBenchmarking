@@ -19,18 +19,18 @@ final class _LaTeXFigure extends Figure {
 
   /** begin column-wide figure */
   private static final char[] FIGURE_COL_WIDE_BEGIN = { '\\', 'b', 'e',
-      'g', 'i', 'n', '{', 'f', 'i', 'g', 'u', 'r', 'e', '}', '[', 't',
-      'b', ']' };
+    'g', 'i', 'n', '{', 'f', 'i', 'g', 'u', 'r', 'e', '}', '[', 't',
+    'b', ']' };
   /** end column-wide figure */
   private static final char[] FIGURE_COL_WIDE_END = { '\\', 'e', 'n', 'd',
-      '{', 'f', 'i', 'g', 'u', 'r', 'e', '}' };
+    '{', 'f', 'i', 'g', 'u', 'r', 'e', '}' };
   /** begin a page-wide figure */
   private static final char[] FIGURE_PAGE_WIDE_BEGIN = { '\\', 'b', 'e',
-      'g', 'i', 'n', '{', 'f', 'i', 'g', 'u', 'r', 'e', '*', '}', '[',
-      't', 'b', ']' };
+    'g', 'i', 'n', '{', 'f', 'i', 'g', 'u', 'r', 'e', '*', '}', '[',
+    't', 'b', ']' };
   /** end a page-wide figure */
   private static final char[] FIGURE_PAGE_WIDE_END = { '\\', 'e', 'n',
-      'd', '{', 'f', 'i', 'g', 'u', 'r', 'e', '*', '}' };
+    'd', '{', 'f', 'i', 'g', 'u', 'r', 'e', '*', '}' };
 
   /** are we using the page wide version? */
   private boolean m_pageWide;
@@ -40,7 +40,7 @@ final class _LaTeXFigure extends Figure {
 
   /**
    * Create a new figure
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index
@@ -93,7 +93,7 @@ final class _LaTeXFigure extends Figure {
     LaTeXDriver._endLine(out);
 
     this.m_pageWide = (this.getSize().spansAllColumns() && //
-    (doc.m_class.getColumnCount() > 1));
+        (doc.m_class.getColumnCount() > 1));
     out.append(this.m_pageWide ? _LaTeXFigure.FIGURE_PAGE_WIDE_BEGIN
         : _LaTeXFigure.FIGURE_COL_WIDE_BEGIN);
     LaTeXDriver._endLine(out);

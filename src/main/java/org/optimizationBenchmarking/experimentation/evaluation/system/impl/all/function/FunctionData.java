@@ -12,7 +12,7 @@ public final class FunctionData {
 
   /**
    * Create the data
-   * 
+   *
    * @param clustering
    *          the clustering
    * @param functions
@@ -27,7 +27,7 @@ public final class FunctionData {
 
   /**
    * Obtain the clustering, if any was defined, or {@code null} otherwise
-   * 
+   *
    * @return the clustering, if any was defined, or {@code null} otherwise
    */
   public final IClustering getClustering() {
@@ -37,7 +37,7 @@ public final class FunctionData {
   /**
    * Obtain the experiment set functions. The returned list is guaranteed
    * to contain at least one element.
-   * 
+   *
    * @return the data
    */
   public final ArrayListView<ExperimentSetFunctions> getData() {

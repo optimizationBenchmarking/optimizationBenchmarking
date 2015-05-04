@@ -15,7 +15,7 @@ final class _AutoLabel implements Serializable, ILabel {
 
   /**
    * read resolve
-   * 
+   *
    * @return the resolved object
    */
   private final Object readResolve() {
@@ -24,7 +24,7 @@ final class _AutoLabel implements Serializable, ILabel {
 
   /**
    * write replace
-   * 
+   *
    * @return the replace object
    */
   private final Object writeReplace() {

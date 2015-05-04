@@ -160,7 +160,7 @@ public final class QuotationMarks extends _Enclosure<QuotationMark> {
 
   /**
    * Create
-   * 
+   *
    * @param begin
    *          the beginning character
    * @param end
@@ -176,7 +176,7 @@ public final class QuotationMarks extends _Enclosure<QuotationMark> {
 
   /**
    * Get the dash count of the quote
-   * 
+   *
    * @return the dash count of the quote
    */
   public final int getDashCount() {

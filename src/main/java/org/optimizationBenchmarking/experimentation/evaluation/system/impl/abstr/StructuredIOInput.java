@@ -21,7 +21,7 @@ public class StructuredIOInput implements IEvaluationInput {
 
   /**
    * create
-   * 
+   *
    * @param builder
    *          the job builder
    * @param logger

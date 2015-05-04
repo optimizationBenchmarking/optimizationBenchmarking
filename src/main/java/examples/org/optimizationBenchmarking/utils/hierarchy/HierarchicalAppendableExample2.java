@@ -12,7 +12,7 @@ public final class HierarchicalAppendableExample2 {
 
   /**
    * The main method
-   * 
+   *
    * @param args
    *          the command line arguments: ignored
    */

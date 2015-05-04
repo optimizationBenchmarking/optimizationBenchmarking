@@ -17,44 +17,44 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * paper, chapter, or even a website.
  */
 public abstract class BibRecord extends _BibElement<BibRecord> implements
-    Cloneable {
+Cloneable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
   /** the key prefix */
   private static final char[] KEY_PREFIX = { 'b',
-      ELabelType.LABEL_PREFIX_SEPARATOR };
+    ELabelType.LABEL_PREFIX_SEPARATOR };
   /**
    * the authors
-   * 
+   *
    * @serial serial field
    */
   final BibAuthors m_authors;
 
   /**
    * the title
-   * 
+   *
    * @serial serial field
    */
   final String m_title;
 
   /**
    * the start date
-   * 
+   *
    * @serial serial field
    */
   final BibDate m_date;
 
   /**
    * the url
-   * 
+   *
    * @serial serial field
    */
   final URI m_url;
 
   /**
    * the doi
-   * 
+   *
    * @serial serial field
    */
   final String m_doi;
@@ -70,7 +70,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * Create a new bibliography record
-   * 
+   *
    * @param authors
    *          the authors
    * @param title
@@ -103,7 +103,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
     if (this.m_title == null) {
       throw new IllegalArgumentException(//
           "DocumentTitle must not be empty or null, but '" + //$NON-NLS-1$
-              title + "' is."); //$NON-NLS-1$
+          title + "' is."); //$NON-NLS-1$
     }
 
     this.m_doi = (direct ? doi : BibRecord._makeDOI(doi));
@@ -123,7 +123,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
    * {@link org.optimizationBenchmarking.utils.bibliography.data.BibInProceedings
    * in-proceedings} record, does not have a unique key or id, in which
    * case this method will return {@code null}.
-   * 
+   *
    * @return the key, or {@code null} if no key is defined for the record
    * @see #getID()
    */
@@ -133,7 +133,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * Clone this element and reset its id and key.
-   * 
+   *
    * @return the clone
    * @see #getID()
    * @see #getKey()
@@ -146,9 +146,9 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
       r = ((BibRecord) (super.clone()));
     } catch (final CloneNotSupportedException cnse) {
       RethrowMode.AS_RUNTIME_EXCEPTION
-          .rethrow(//
-              "Error while cloning bibliographic record: This should never happen.", //$NON-NLS-1$
-              true, cnse);
+      .rethrow(//
+          "Error while cloning bibliographic record: This should never happen.", //$NON-NLS-1$
+          true, cnse);
       return null; // can never be reached
     }
 
@@ -159,7 +159,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * Set the id of this bibliography record
-   * 
+   *
    * @param id
    *          the id
    * @see #getID()
@@ -194,7 +194,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
    * in-proceedings} record, may not have a unique id, in which case this
    * method will return {@code -1}.
    * </p>
-   * 
+   *
    * @return the unique ID of this element.
    * @see #getKey()
    */
@@ -204,7 +204,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * make a doi
-   * 
+   *
    * @param doi
    *          the doi
    * @return the doi string
@@ -228,7 +228,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * make an url
-   * 
+   *
    * @param u
    *          the url
    * @return the improved url
@@ -247,7 +247,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * Get the bibliography authors
-   * 
+   *
    * @return the bibliography authors
    */
   public final BibAuthors getAuthors() {
@@ -256,7 +256,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * Get the title
-   * 
+   *
    * @return the title
    */
   public final String getTitle() {
@@ -265,7 +265,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * Get the doi
-   * 
+   *
    * @return the doi
    */
   public final String getDOI() {
@@ -274,7 +274,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * Get the url
-   * 
+   *
    * @return the url
    */
   public final URI getURL() {
@@ -302,7 +302,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * compare to another bib record
-   * 
+   *
    * @param r
    *          the bib record
    * @return {@code true} if this object is the
@@ -312,7 +312,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
         EComparison.equals(this.m_title, r.m_title) && //
         EComparison.equals(this.m_date, r.m_date) && //
         EComparison.equals(this.m_url, r.m_url) && //
-    EComparison.equals(this.m_doi, r.m_doi));
+        EComparison.equals(this.m_doi, r.m_doi));
   }
 
   /** {@inheritDoc} */
@@ -323,13 +323,13 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.m_authors),//
             HashUtils.hashCode(this.m_date)),//
-        HashUtils.combineHashes(
-        //
             HashUtils.combineHashes(
                 //
-                HashUtils.hashCode(this.m_title),
-                HashUtils.hashCode(this.m_url)),//
-            HashUtils.hashCode(this.m_doi)));
+                HashUtils.combineHashes(
+                    //
+                    HashUtils.hashCode(this.m_title),
+                    HashUtils.hashCode(this.m_url)),//
+                    HashUtils.hashCode(this.m_doi)));
   }
 
   /** {@inheritDoc} */
@@ -370,7 +370,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * compare the rest of the bib record
-   * 
+   *
    * @param o
    *          the other bib record
    * @return the result
@@ -410,7 +410,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
 
   /**
    * Get the year of this publication
-   * 
+   *
    * @return the year associated with this publication
    */
   public final int getYear() {

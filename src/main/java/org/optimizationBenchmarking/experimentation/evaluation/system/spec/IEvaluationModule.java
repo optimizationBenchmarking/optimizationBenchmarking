@@ -8,7 +8,7 @@ public interface IEvaluationModule extends ITool {
   /**
    * Get a list of other modules which must also be executed if this module
    * is executed.
-   * 
+   *
    * @return an {@link java.lang.Iterable} with the required modules (may
    *         be {@code null} or an empty list if none are required)
    */
@@ -29,7 +29,7 @@ public interface IEvaluationModule extends ITool {
    * parallelism or general structural constraints, some order suggestions
    * will be violated.
    * </p>
-   * 
+   *
    * @param other
    *          the other module to compare with
    * @return the relationship be between this module and the specified

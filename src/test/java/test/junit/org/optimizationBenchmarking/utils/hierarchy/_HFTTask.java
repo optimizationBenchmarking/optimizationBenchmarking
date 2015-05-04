@@ -28,7 +28,7 @@ final class _HFTTask extends RecursiveAction {
 
   /**
    * create
-   * 
+   *
    * @param root
    *          the root object
    * @param owner
@@ -123,11 +123,11 @@ final class _HFTTask extends RecursiveAction {
           }
         }
 
-        if (l != null) {
-          for (final Future<Void> y : l) {
-            y.get();
-          }
+      if (l != null) {
+        for (final Future<Void> y : l) {
+          y.get();
         }
+      }
 
       }
     } catch (final Throwable e) {

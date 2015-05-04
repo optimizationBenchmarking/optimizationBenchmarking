@@ -42,7 +42,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * create the author builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -90,7 +90,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * Create the authors setter
-   * 
+   *
    * @return the authors setter
    */
   public synchronized final BibAuthorsBuilder setAuthors() {
@@ -101,7 +101,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * Set the authors
-   * 
+   *
    * @param authors
    *          the authors list
    */
@@ -119,7 +119,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * Create the date setter
-   * 
+   *
    * @return the date setter
    */
   synchronized BibDateBuilder date() {
@@ -130,7 +130,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * Set the date
-   * 
+   *
    * @param date
    *          the date
    */
@@ -147,7 +147,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * Set the title
-   * 
+   *
    * @param title
    *          the title
    */
@@ -159,13 +159,13 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     if ((this.m_title = this.normalize(title)) == null) {
       throw new IllegalArgumentException(//
           "DocumentTitle cannot be empty or null, but '" //$NON-NLS-1$
-              + title + "' is."); //$NON-NLS-1$
+          + title + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the url
-   * 
+   *
    * @param url
    *          the url
    */
@@ -182,7 +182,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * Set the url
-   * 
+   *
    * @param url
    *          the url
    */
@@ -194,7 +194,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     } catch (final Throwable t) {
       RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while converting document URL '" //$NON-NLS-1$
-              + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
+          + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
           true, t);
       return;
     }
@@ -204,7 +204,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * Set the url
-   * 
+   *
    * @param url
    *          the url
    */
@@ -216,7 +216,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     } catch (final Throwable t) {
       RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while converting document URL string '"//$NON-NLS-1$
-              + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
+          + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
           true, t);
       return;
     }
@@ -226,7 +226,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * Set the doi
-   * 
+   *
    * @param doi
    *          the title
    */
@@ -238,7 +238,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     if ((this.m_doi = this.normalize(BibRecord._makeDOI(doi))) == null) {
       throw new IllegalArgumentException(//
           "DOI cannot be set to empty or null, but '" //$NON-NLS-1$
-              + doi + "' is."); //$NON-NLS-1$
+          + doi + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -258,7 +258,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * handle before child opens
-   * 
+   *
    * @param child
    *          the child
    */
@@ -268,7 +268,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * handle a date with a given tag
-   * 
+   *
    * @param date
    *          the date
    * @param tag
@@ -285,7 +285,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * handle a author set with a given tag
-   * 
+   *
    * @param authors
    *          the authors
    * @param tag
@@ -324,7 +324,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * handle after child closed
-   * 
+   *
    * @param child
    *          the child
    */
@@ -334,14 +334,14 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
 
   /**
    * Build the product of this builder
-   * 
+   *
    * @return the product
    */
   abstract BibRecord _doCompile();
 
   /**
    * Add a bib record
-   * 
+   *
    * @param rec
    *          the record
    * @param canAdd

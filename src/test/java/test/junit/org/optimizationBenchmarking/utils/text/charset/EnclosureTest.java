@@ -10,13 +10,13 @@ import test.junit.org.optimizationBenchmarking.utils.collections.lists.ArraySetV
 
 /**
  * test the enclosures
- * 
+ *
  * @param <T>
  *          the enclosure test
  */
 @Ignore
 public class EnclosureTest<T extends Enclosure> extends
-    ArraySetViewTestBase<T, ArraySetView<T>> {
+ArraySetViewTestBase<T, ArraySetView<T>> {
 
   /** create */
   public EnclosureTest() {

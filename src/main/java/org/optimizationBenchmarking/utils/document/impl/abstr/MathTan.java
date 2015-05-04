@@ -5,7 +5,7 @@ public class MathTan extends MathFunction {
 
   /**
    * Create an tan function
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

@@ -19,7 +19,7 @@ final class _ImageIOBMPGraphic extends _ImageIORasterGraphic {
 
   /**
    * instantiate
-   * 
+   *
    * @param path
    *          the path
    * @param logger

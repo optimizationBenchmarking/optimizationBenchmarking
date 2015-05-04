@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A store for the configuration of a document */
 public class DocumentConfigurationBuilder extends
-    GraphicConfigurationBuilder {
+GraphicConfigurationBuilder {
 
   /** the chart driver */
   public static final String PARAM_CHART_DRIVER = "chartDriver"; //$NON-NLS-1$
@@ -34,7 +34,7 @@ public class DocumentConfigurationBuilder extends
 
   /**
    * create
-   * 
+   *
    * @param driver
    *          the document driver
    */
@@ -48,7 +48,7 @@ public class DocumentConfigurationBuilder extends
 
   /**
    * Assign to another configuration or configuration builder
-   * 
+   *
    * @param copyFrom
    *          the configuration to copy from
    */
@@ -110,7 +110,7 @@ public class DocumentConfigurationBuilder extends
    * configuration context}, but does not overwrite the document driver
    * setting. Using this method makes sense in sub-classes which require
    * certain document drivers.
-   * 
+   *
    * @param config
    *          the configuration
    */
@@ -136,7 +136,7 @@ public class DocumentConfigurationBuilder extends
 
   /**
    * get the immutable graphic configuration
-   * 
+   *
    * @return the immutable graphic configuration
    */
   final GraphicConfiguration _graphicConfig() {
@@ -145,7 +145,7 @@ public class DocumentConfigurationBuilder extends
 
   /**
    * Set the chart driver
-   * 
+   *
    * @param driver
    *          the chart driver
    */
@@ -156,7 +156,7 @@ public class DocumentConfigurationBuilder extends
 
   /**
    * Get the chart driver
-   * 
+   *
    * @return the chart driver
    */
   public final IChartDriver getChartDriver() {
@@ -168,7 +168,7 @@ public class DocumentConfigurationBuilder extends
 
   /**
    * Set the document driver
-   * 
+   *
    * @param driver
    *          the document driver
    */
@@ -199,7 +199,7 @@ public class DocumentConfigurationBuilder extends
 
   /**
    * Get the document driver
-   * 
+   *
    * @return the document driver
    */
   public final IDocumentDriver getDocumentDriver() {
@@ -220,7 +220,7 @@ public class DocumentConfigurationBuilder extends
         config = ((DocumentConfiguration) o);
         return (EComparison.equals(this.m_chartDriver,
             config.getChartDriver()) && EComparison.equals(
-            this.m_documentDriver, config.getDocumentDriver()));
+                this.m_documentDriver, config.getDocumentDriver()));
       }
     } else {
       if (o instanceof DocumentConfigurationBuilder) {
@@ -228,7 +228,7 @@ public class DocumentConfigurationBuilder extends
           builder = ((DocumentConfigurationBuilder) o);
           return (EComparison.equals(this.m_chartDriver,
               builder.m_chartDriver) && EComparison.equals(
-              this.m_documentDriver, builder.m_documentDriver));
+                  this.m_documentDriver, builder.m_documentDriver));
         }
       }
     }

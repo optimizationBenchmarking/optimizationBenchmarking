@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * A builder for font palettes.
  */
 public class FontPaletteBuilder extends
-    PaletteBuilder<FontStyle, FontPalette> {
+PaletteBuilder<FontStyle, FontPalette> {
 
   /** did we set the default font */
   private static final int FLAG_HAS_DEFAULT = (PaletteBuilder.FLAG_HAS_ELEMENTS << 1);
@@ -60,7 +60,7 @@ public class FontPaletteBuilder extends
 
   /**
    * Set the default font style
-   * 
+   *
    * @param style
    *          the default font style
    */
@@ -74,7 +74,7 @@ public class FontPaletteBuilder extends
 
   /**
    * Set the emph style
-   * 
+   *
    * @param style
    *          the emph font style
    */
@@ -88,7 +88,7 @@ public class FontPaletteBuilder extends
 
   /**
    * Set the code style
-   * 
+   *
    * @param style
    *          the code font style
    */
@@ -102,7 +102,7 @@ public class FontPaletteBuilder extends
 
   /**
    * create a builder
-   * 
+   *
    * @param id
    *          the id
    * @param idStr
@@ -122,7 +122,7 @@ public class FontPaletteBuilder extends
 
   /**
    * Set the default font style
-   * 
+   *
    * @return the builder for the default font style
    */
   public synchronized final FontStyleBuilder setDefaultFont() {
@@ -132,7 +132,7 @@ public class FontPaletteBuilder extends
 
   /**
    * Set the emphasize font style
-   * 
+   *
    * @return the builder for the emphasize font style
    */
   public synchronized final FontStyleBuilder setEmphFont() {
@@ -142,7 +142,7 @@ public class FontPaletteBuilder extends
 
   /**
    * Set the code font style
-   * 
+   *
    * @return the builder for the code font style
    */
   public synchronized final FontStyleBuilder setCodeFont() {
@@ -162,7 +162,7 @@ public class FontPaletteBuilder extends
 
   /**
    * Create the font palette
-   * 
+   *
    * @param def
    *          the default
    * @param emph

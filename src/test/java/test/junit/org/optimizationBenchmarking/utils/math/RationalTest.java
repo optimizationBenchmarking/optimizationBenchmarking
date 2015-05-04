@@ -146,7 +146,7 @@ public class RationalTest {
       for (j = (-100); j <= 100; j++) {
         Assert.assertEquals(//
             (((double) i) / ((double) j)), Rational.valueOf(i, j)
-                .doubleValue(), 1e-9);
+            .doubleValue(), 1e-9);
 
       }
     }

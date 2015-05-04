@@ -13,7 +13,7 @@ public final class ErrorUtils {
   /**
    * Turn a non-{@code null} object into an instance of
    * {@link java.lang.Throwable}.
-   * 
+   *
    * @param object
    *          the object
    * @return the {@link java.lang.Throwable}
@@ -26,8 +26,8 @@ public final class ErrorUtils {
 
     return new IllegalArgumentException(
         (((("Can only aggregate errors or aggregation handles, but tried to aggregate an instance of " + //$NON-NLS-1$
-        TextUtils.className(object.getClass())) + " with String representation '") + object.toString()) + //$NON-NLS-1$
-        '\'') + '.');
+            TextUtils.className(object.getClass())) + " with String representation '") + object.toString()) + //$NON-NLS-1$
+            '\'') + '.');
   }
 
   /**
@@ -55,7 +55,7 @@ public final class ErrorUtils {
    * -family of functions as well as by the instances of
    * {@link org.optimizationBenchmarking.utils.error.RethrowMode}.
    * </p>
-   * 
+   *
    * @param aggregationHandleOrError1
    *          The first error (instance of {@link java.lang.Throwable}) or
    *          aggregation handle, or {@code null} if no error was
@@ -173,7 +173,7 @@ public final class ErrorUtils {
    * {@code "An error has been detected while reading the file foo.txt"},
    * {@code forceLog} should be {@code true}.
    * </p>
-   * 
+   *
    * @param logger
    *          the logger to log to
    * @param message
@@ -253,7 +253,7 @@ public final class ErrorUtils {
    * {@code "An error has been detected while reading the file foo.txt"},
    * {@code forceLog} should be {@code true}.
    * </p>
-   * 
+   *
    * @param logger
    *          the logger to log to
    * @param level
@@ -309,7 +309,7 @@ public final class ErrorUtils {
           logger.log(useLevel, msg, error);
         } catch (final Throwable t) {
           throw new RuntimeException(((//
-              "Error when logging error message '"//$NON-NLS-1$ 
+              "Error when logging error message '"//$NON-NLS-1$
               + msg) + '\'') + '.');
         } finally {
           _LoggedSentinel._markAsLogged(error, msg, logger, useLevel);

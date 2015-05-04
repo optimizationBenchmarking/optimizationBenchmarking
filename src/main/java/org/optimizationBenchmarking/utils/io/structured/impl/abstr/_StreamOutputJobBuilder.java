@@ -8,19 +8,19 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IStreamOutputJobBui
 
 /**
  * The class for building stream IO jobs
- * 
+ *
  * @param <DT>
  *          the source data type
  * @param <JBT>
  *          the job builder type
  */
 class _StreamOutputJobBuilder<DT, JBT extends _StreamOutputJobBuilder<DT, JBT>>
-    extends _FileOutputJobBuilder<DT, JBT> implements
-    IStreamOutputJobBuilder<DT> {
+extends _FileOutputJobBuilder<DT, JBT> implements
+IStreamOutputJobBuilder<DT> {
 
   /**
    * create the job builder
-   * 
+   *
    * @param tool
    *          the owning tool
    */

@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * such as books, collections, and proceedings.
  */
 public abstract class BibBookRecordBuilder extends
-    BibRecordWithPublisherBuilder {
+BibRecordWithPublisherBuilder {
 
   /** the editors have been set */
   private static final int FLAG_EDITORS_SET = (BibRecordWithPublisherBuilder.FLAG_PUBLISHER_LAST << 1);
@@ -46,7 +46,7 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * create the website builder
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -92,7 +92,7 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the series
-   * 
+   *
    * @param series
    *          the series
    */
@@ -104,13 +104,13 @@ public abstract class BibBookRecordBuilder extends
     if ((this.m_series = this.normalize(series)) == null) {
       throw new IllegalArgumentException(//
           "Series name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + series + "' is."); //$NON-NLS-1$
+          + series + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the volume
-   * 
+   *
    * @param volume
    *          the volume
    */
@@ -122,13 +122,13 @@ public abstract class BibBookRecordBuilder extends
     if ((this.m_volume = this.normalize(volume)) == null) {
       throw new IllegalArgumentException(//
           "Volume name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + volume + "' is."); //$NON-NLS-1$
+          + volume + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the edition
-   * 
+   *
    * @param edition
    *          the edition
    */
@@ -140,13 +140,13 @@ public abstract class BibBookRecordBuilder extends
     if ((this.m_edition = this.normalize(edition)) == null) {
       throw new IllegalArgumentException(//
           "Edition name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + edition + "' is."); //$NON-NLS-1$
+          + edition + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Set the issn
-   * 
+   *
    * @param issn
    *          the issn
    */
@@ -158,13 +158,13 @@ public abstract class BibBookRecordBuilder extends
     if ((this.m_issn = this.normalize(issn)) == null) {
       throw new IllegalArgumentException(//
           "ISSN name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + issn + "' is."); //$NON-NLS-1$
+          + issn + "' is."); //$NON-NLS-1$
     }
   }
 
   /**
    * Create the editors setter
-   * 
+   *
    * @return the editors setter
    */
   public synchronized final BibAuthorsBuilder setEditors() {
@@ -175,7 +175,7 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the editors
-   * 
+   *
    * @param editors
    *          the editors list
    */
@@ -202,7 +202,7 @@ public abstract class BibBookRecordBuilder extends
 
   /**
    * Set the isbn
-   * 
+   *
    * @param isbn
    *          the isbn
    */
@@ -214,7 +214,7 @@ public abstract class BibBookRecordBuilder extends
     if ((this.m_isbn = this.normalize(isbn)) == null) {
       throw new IllegalArgumentException(//
           "ISBN name cannot be set to empty or null, but '" //$NON-NLS-1$
-              + isbn + "' is."); //$NON-NLS-1$
+          + isbn + "' is."); //$NON-NLS-1$
     }
   }
 

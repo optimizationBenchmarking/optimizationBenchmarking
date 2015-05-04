@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** a graphic driver parser */
 public final class GraphicDriverParser extends
-    InstanceParser<IGraphicDriver> {
+InstanceParser<IGraphicDriver> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public final class GraphicDriverParser extends
 
   /**
    * get the prefixes
-   * 
+   *
    * @return the path prefixes
    */
   private static final String[] __prefixes() {
@@ -56,8 +56,8 @@ public final class GraphicDriverParser extends
       } catch (final Exception exception2) {
         RethrowMode.AS_UNSUPPORTED_OPERATION_EXCEPTION.rethrow(
             ((("Could not find graphic driver fitting to string '" //$NON-NLS-1$
-            + string) + '\'') + '.'), false,
-            ErrorUtils.aggregateError(exception, exception2));
+                + string) + '\'') + '.'), false,
+                ErrorUtils.aggregateError(exception, exception2));
         return null;// never reached
       }
     }
@@ -74,8 +74,8 @@ public final class GraphicDriverParser extends
       } catch (final Exception exception2) {
         RethrowMode.AS_UNSUPPORTED_OPERATION_EXCEPTION.rethrow(
             ((("Could not find graphic driver fitting to object '" //$NON-NLS-1$
-            + o) + '\'') + '.'), false,
-            ErrorUtils.aggregateError(exception, exception2));
+                + o) + '\'') + '.'), false,
+                ErrorUtils.aggregateError(exception, exception2));
         return null;// never reached
       }
     }
@@ -83,7 +83,7 @@ public final class GraphicDriverParser extends
 
   /**
    * Get the singleton instance of this parser
-   * 
+   *
    * @return the graphic driver parser
    */
   public static final GraphicDriverParser getInstance() {
@@ -98,7 +98,7 @@ public final class GraphicDriverParser extends
    * with the singleton instance {@link #getInstance()} for serialization,
    * i.e., when the instance is written with
    * {@link java.io.ObjectOutputStream#writeObject(Object)}.
-   * 
+   *
    * @return the replacement instance (always {@link #getInstance()})
    */
   private final Object writeReplace() {
@@ -110,7 +110,7 @@ public final class GraphicDriverParser extends
    * with the singleton instance {@link #getInstance()} after
    * serialization, i.e., when the instance is read with
    * {@link java.io.ObjectInputStream#readObject()}.
-   * 
+   *
    * @return the replacement instance (always {@link #getInstance()})
    */
   private final Object readResolve() {

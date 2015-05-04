@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * element set with a different owner and potentially different attributes.
  * If all associated data of this element is the same, it will delegate
  * attribute-based computations to that named element set.
- * 
+ *
  * @param <OT>
  *          the owner type
  * @param <ST>
@@ -22,11 +22,11 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  */
 abstract class _ShadowNamedElementSet<OT extends IDataElement, ST extends INamedElementSet, //
 PT extends INamedElement> extends //
-    _ShadowElementSet<OT, ST, PT> implements INamedElementSet {
+_ShadowElementSet<OT, ST, PT> implements INamedElementSet {
 
   /**
    * create the shadow named element set
-   * 
+   *
    * @param owner
    *          the owning element
    * @param shadow

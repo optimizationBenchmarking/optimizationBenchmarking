@@ -16,7 +16,7 @@ public final class DocumentEvaluationOutput implements IEvaluationOutput {
 
   /**
    * create
-   * 
+   *
    * @param doc
    *          the document
    */

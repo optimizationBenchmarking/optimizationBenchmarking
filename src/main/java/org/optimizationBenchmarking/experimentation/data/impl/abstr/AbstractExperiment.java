@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * interface.
  */
 public class AbstractExperiment extends AbstractElementSet implements
-    IExperiment {
+IExperiment {
 
   /** the owner */
   IExperimentSet m_owner;
@@ -28,7 +28,7 @@ public class AbstractExperiment extends AbstractElementSet implements
    * set it via
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractExperimentSet#own(AbstractExperiment)}
    * .
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -41,7 +41,7 @@ public class AbstractExperiment extends AbstractElementSet implements
    * Own an
    * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractInstanceRuns}
    * .
-   * 
+   *
    * @param runs
    *          the runs to own
    */

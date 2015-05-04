@@ -20,7 +20,7 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
 
   /**
    * Create the table row
-   * 
+   *
    * @param owner
    *          the owning table section
    */
@@ -36,15 +36,15 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
     }
     if (this.m_totalIndex < this.m_index) {
       throw new IllegalArgumentException(//
-          "Table row total index cannot be less than row index, but " + //$NON-NLS-1$ 
-              this.m_totalIndex + " is less than " + this.m_index); //$NON-NLS-1$
+          "Table row total index cannot be less than row index, but " + //$NON-NLS-1$
+          this.m_totalIndex + " is less than " + this.m_index); //$NON-NLS-1$
     }
 
   }
 
   /**
    * Get (and clear) the separator flag
-   * 
+   *
    * @return {@code true} if a separator should be printed, {@code false}
    *         otherwise
    */
@@ -54,7 +54,7 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
 
   /**
    * Get the index of this row within its section (1-based)
-   * 
+   *
    * @return the index of this row within its section
    */
   public final int getIndex() {
@@ -63,7 +63,7 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
 
   /**
    * Get the total index of this row (1-based)
-   * 
+   *
    * @return the total index of this row
    */
   public final int getTotalIndex() {
@@ -78,7 +78,7 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
 
   /**
    * Create a new table cell
-   * 
+   *
    * @param rowSpan
    *          the number of rows the cell should span
    * @param colSpan
@@ -119,7 +119,7 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
     if (this.m_nextCol < b.length) {
       throw new IllegalStateException(//
           "Row should have " + b.length + //$NON-NLS-1$
-              " cells, but has only " + this.m_nextCol); //$NON-NLS-1$
+          " cells, but has only " + this.m_nextCol); //$NON-NLS-1$
     }
     super.onClose();
   }

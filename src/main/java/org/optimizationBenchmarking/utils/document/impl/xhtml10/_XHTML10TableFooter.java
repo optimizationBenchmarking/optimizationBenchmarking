@@ -6,14 +6,14 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableFooter;
 final class _XHTML10TableFooter extends TableFooter {
   /** the start of table foot */
   private static final char[] TAB_FOOT_BEGIN = { '<', 't', 'f', 'o', 'o',
-      't', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', '"', '>' };
+    't', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', '"', '>' };
   /** the end of the table foot */
   private static final char[] TAB_FOOT_END = { '<', '/', 't', 'f', 'o',
-      'o', 't', '>' };
+    'o', 't', '>' };
 
   /**
    * Create a footer of a table
-   * 
+   *
    * @param owner
    *          the owning table
    */

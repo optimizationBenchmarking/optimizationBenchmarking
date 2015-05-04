@@ -33,7 +33,7 @@ public class PathParser extends Parser<Path> {
   /** {@inheritDoc} */
   @Override
   public Path parseString(final String string) throws IOException,
-      SecurityException {
+  SecurityException {
     final Path f;
 
     f = PathUtils.normalize(Paths.get(string));
@@ -53,7 +53,7 @@ public class PathParser extends Parser<Path> {
   /** {@inheritDoc} */
   @Override
   public final Path parseObject(final Object o) throws IOException,
-      SecurityException, URISyntaxException {
+  SecurityException, URISyntaxException {
     Path ret;
     URI uri;
 
@@ -93,7 +93,7 @@ public class PathParser extends Parser<Path> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -102,7 +102,7 @@ public class PathParser extends Parser<Path> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

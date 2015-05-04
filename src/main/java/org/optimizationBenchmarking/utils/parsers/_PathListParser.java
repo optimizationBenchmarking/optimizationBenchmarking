@@ -15,7 +15,7 @@ final class _PathListParser extends ListParser<Path> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -24,7 +24,7 @@ final class _PathListParser extends ListParser<Path> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * The base class for all chart items.
  */
 public abstract class ChartElement extends HierarchicalFSM implements
-    IChartElement {
+IChartElement {
 
   /** the state that the element is alive */
   static final int STATE_ALIVE = 0;
@@ -19,7 +19,7 @@ public abstract class ChartElement extends HierarchicalFSM implements
 
   /**
    * create the chart item
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -29,7 +29,7 @@ public abstract class ChartElement extends HierarchicalFSM implements
 
   /**
    * Get the logger
-   * 
+   *
    * @return the logger
    */
   @SuppressWarnings("resource")
@@ -57,9 +57,9 @@ public abstract class ChartElement extends HierarchicalFSM implements
       final MemoryTextOutput sb) {
     switch (state) {
       case STATE_ALIVE: {
-        sb.append("alive");} //$NON-NLS-1$
+        sb.append("alive");return;} //$NON-NLS-1$
       case STATE_DEAD: {
-        sb.append("dead");} //$NON-NLS-1$
+        sb.append("dead");return;} //$NON-NLS-1$
       default: {
         super.fsmStateAppendName(state, sb);
       }

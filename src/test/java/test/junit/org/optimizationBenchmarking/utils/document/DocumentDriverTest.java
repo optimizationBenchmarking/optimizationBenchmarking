@@ -27,11 +27,11 @@ import examples.org.optimizationBenchmarking.utils.document.TemplateDocumentExam
 /** A test of a document driver */
 @Ignore
 public abstract class DocumentDriverTest extends
-    InstanceTest<DocumentConfiguration> {
+InstanceTest<DocumentConfiguration> {
 
   /**
    * create
-   * 
+   *
    * @param config
    *          the configuration
    */
@@ -42,14 +42,14 @@ public abstract class DocumentDriverTest extends
   /**
    * Get the required file types, i.e., the file types which should be
    * produced
-   * 
+   *
    * @return the file types which should be produced
    */
   protected abstract IFileType[] getRequiredTypes();
 
   /**
    * test the document driver for creating random documents
-   * 
+   *
    * @param service
    *          the service
    * @param r
@@ -105,7 +105,7 @@ public abstract class DocumentDriverTest extends
 
   /**
    * test the document driver for creating template-based documents
-   * 
+   *
    * @param service
    *          the service
    * @throws IOException
@@ -158,7 +158,7 @@ public abstract class DocumentDriverTest extends
 
   /**
    * Test the serial generation of documents
-   * 
+   *
    * @throws Throwable
    *           if something goes wrong
    */
@@ -170,7 +170,7 @@ public abstract class DocumentDriverTest extends
 
   /**
    * test the document driver
-   * 
+   *
    * @param proc
    *          the processors
    * @param fifo
@@ -202,7 +202,7 @@ public abstract class DocumentDriverTest extends
 
   /**
    * Test the fifo parallel generation of documents with 1 processor
-   * 
+   *
    * @throws Throwable
    *           if something goes wrong
    */
@@ -213,7 +213,7 @@ public abstract class DocumentDriverTest extends
 
   /**
    * Test the default parallel generation of documents with 1 processor
-   * 
+   *
    * @throws Throwable
    *           if something goes wrong
    */
@@ -224,7 +224,7 @@ public abstract class DocumentDriverTest extends
 
   /**
    * Test the fifo parallel generation of documents with 2 processors
-   * 
+   *
    * @throws Throwable
    *           if something goes wrong
    */
@@ -235,7 +235,7 @@ public abstract class DocumentDriverTest extends
 
   /**
    * Test the default parallel generation of documents with 2 processors
-   * 
+   *
    * @throws Throwable
    *           if something goes wrong
    */
@@ -246,7 +246,7 @@ public abstract class DocumentDriverTest extends
 
   /**
    * Test the fifo parallel generation of documents with 3 processors
-   * 
+   *
    * @throws Throwable
    *           if something goes wrong
    */
@@ -257,7 +257,7 @@ public abstract class DocumentDriverTest extends
 
   /**
    * Test the default parallel generation of documents with 3 processors
-   * 
+   *
    * @throws Throwable
    *           if something goes wrong
    */
@@ -268,7 +268,7 @@ public abstract class DocumentDriverTest extends
 
   /**
    * Get the document driver
-   * 
+   *
    * @return the document driver
    */
   final IDocumentDriver _getDocumentDriver() {

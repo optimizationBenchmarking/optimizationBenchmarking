@@ -39,7 +39,7 @@ public class ProducedFileSet extends _FileSet {
 
   /**
    * Get the set of files produced until now.
-   * 
+   *
    * @return the set of files produced until now
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -8,12 +8,12 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 /**
  * The base class for iterators that unites the behavior of both, the
  * {@link java.util.Iterator} and {@link java.util.Enumeration} interface.
- * 
+ *
  * @param <T>
  *          the type to iterate about
  */
 public class BasicIterator<T> extends BasicEnumeration<T> implements
-    Iterator<T> {
+Iterator<T> {
 
   /** an iterator iterating over nothing */
   public static final BasicIterator<Object> EMPTY_ITERATOR = new BasicIterator<>();
@@ -46,8 +46,8 @@ public class BasicIterator<T> extends BasicEnumeration<T> implements
   public T next() {
     throw new NoSuchElementException(
         "The iterator of type " + TextUtils.className(this.getClass()) + //$NON-NLS-1$
-            " does not contain another element. You should have checked hasNext() before invoking next()."//$NON-NLS-1$
-    );
+        " does not contain another element. You should have checked hasNext() before invoking next()."//$NON-NLS-1$
+        );
   }
 
   /** {@inheritDoc} */
@@ -55,8 +55,8 @@ public class BasicIterator<T> extends BasicEnumeration<T> implements
   public void remove() {
     throw new NoSuchElementException(
         "The iterator of type " + TextUtils.className(this.getClass()) + //$NON-NLS-1$
-            " does not allow removing the current element (or maybe you did not call next() before remove())."//$NON-NLS-1$
-    );
+        " does not allow removing the current element (or maybe you did not call next() before remove())."//$NON-NLS-1$
+        );
   }
 
 }

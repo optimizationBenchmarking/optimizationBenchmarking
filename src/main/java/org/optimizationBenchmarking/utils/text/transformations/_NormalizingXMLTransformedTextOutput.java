@@ -10,18 +10,18 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
  * which first normalizes a text and then transforms it to XMLFileType
  * entities and writes it to its output.
- * 
+ *
  * @author Thomas Weise
  */
 final class _NormalizingXMLTransformedTextOutput extends
-    _XMLTransformedTextOutput {
+_XMLTransformedTextOutput {
 
   /** the normalizer form */
   private final Normalizer.Form m_form;
 
   /**
    * create the transformed text output
-   * 
+   *
    * @param out
    *          the wrapped output
    * @param form

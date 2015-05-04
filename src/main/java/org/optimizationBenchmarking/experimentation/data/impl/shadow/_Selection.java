@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
 
 /**
  * a selection of elements
- * 
+ *
  * @param <ST>
  *          the set type
  * @param <ET>
@@ -20,7 +20,7 @@ abstract class _Selection<ST extends IElementSet, ET extends IDataElement> {
 
   /**
    * create the selection
-   * 
+   *
    * @param set
    *          the set to select from
    */
@@ -36,7 +36,7 @@ abstract class _Selection<ST extends IElementSet, ET extends IDataElement> {
 
   /**
    * Check whether an element can be added
-   * 
+   *
    * @param value
    *          the element to check
    * @return {@code true} if the element can be added, {@code false}
@@ -64,7 +64,7 @@ abstract class _Selection<ST extends IElementSet, ET extends IDataElement> {
 
   /**
    * add a value
-   * 
+   *
    * @param value
    *          the value to add
    * @return {@code true} if something changed because of the addition
@@ -73,7 +73,7 @@ abstract class _Selection<ST extends IElementSet, ET extends IDataElement> {
 
   /**
    * add a list of elements
-   * 
+   *
    * @param list
    *          the list
    */
@@ -89,7 +89,7 @@ abstract class _Selection<ST extends IElementSet, ET extends IDataElement> {
 
   /**
    * create the set
-   * 
+   *
    * @return the compiled set, {@code null} if the compiled set would be
    *         empty can can be omitted, or the {@link #m_set original} if
    *         the set can be shadowed on demand
@@ -98,7 +98,7 @@ abstract class _Selection<ST extends IElementSet, ET extends IDataElement> {
 
   /**
    * Shadow a given element
-   * 
+   *
    * @param original
    *          the original
    * @param elements

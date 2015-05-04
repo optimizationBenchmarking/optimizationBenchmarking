@@ -33,12 +33,12 @@ public class ColorPaletteExample {
   /** the palettes to print */
   public static final ArrayListView<ColorPalette> PALETTES = new ArrayListView<>(
       new ColorPalette[] {//
-      DefaultColorPalette.getInstance(), JavaDefaultPalette.getInstance(),
+          DefaultColorPalette.getInstance(), JavaDefaultPalette.getInstance(),
           DefaultGrayPalette.getInstance(), HTML401Palette.getInstance() });
 
   /**
    * run the example: there are problems with the pdf output
-   * 
+   *
    * @param args
    *          the arguments
    * @throws IOException
@@ -60,10 +60,10 @@ public class ColorPaletteExample {
       sub = dir.resolve("example_" + (++j)); //$NON-NLS-1$
       for (final GraphicConfiguration d : ExampleGraphicConfigurations.CONFIGURATIONS) {
         ColorPaletteExample
-            .__paint(
-                sub,
-                ((((ColorPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
-                    + d.toString() + '_' + p.getClass().getSimpleName()),
+        .__paint(
+            sub,
+            ((((ColorPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
+                + d.toString() + '_' + p.getClass().getSimpleName()),
                 d, p);
       }
     }
@@ -71,7 +71,7 @@ public class ColorPaletteExample {
 
   /**
    * paint the palette
-   * 
+   *
    * @param dir
    *          the directory
    * @param name

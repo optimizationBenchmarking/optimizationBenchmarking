@@ -45,9 +45,9 @@ public class XMLDOMSerialization extends SerializationMethod {
       b = TransformerFactory.newInstance().newTransformer();
     } catch (final Throwable t) {
       RethrowMode.AS_RUNTIME_EXCEPTION
-          .rethrow(//
-              "Error while trying to obtain XMLFileType DOM transformer or document builder.",//$NON-NLS-1$
-              true, t);
+      .rethrow(//
+          "Error while trying to obtain XMLFileType DOM transformer or document builder.",//$NON-NLS-1$
+          true, t);
     }
     this.m_builder = a;
     this.m_transformer = b;
@@ -81,7 +81,7 @@ public class XMLDOMSerialization extends SerializationMethod {
 
   /**
    * write an element
-   * 
+   *
    * @param doc
    *          the document
    * @param dest
@@ -122,7 +122,7 @@ public class XMLDOMSerialization extends SerializationMethod {
 
   /**
    * The main method
-   * 
+   *
    * @param args
    *          the command line arguments
    * @throws Exception

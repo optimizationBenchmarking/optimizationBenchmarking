@@ -15,12 +15,12 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * An abstract implementation of the
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IPropertySet}
  * interface.
- * 
+ *
  * @param <ST>
  *          the setting type
  */
 abstract class _AbstractPropertySet<ST extends IPropertySetting> extends
-    AbstractNamedElementSet implements IPropertySet {
+AbstractNamedElementSet implements IPropertySet {
 
   /** the owning experiment set */
   IExperimentSet m_owner;
@@ -28,7 +28,7 @@ abstract class _AbstractPropertySet<ST extends IPropertySetting> extends
   /**
    * Create the abstract property set. If {@code owner==null}, you must
    * later set it.
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -39,7 +39,7 @@ abstract class _AbstractPropertySet<ST extends IPropertySetting> extends
 
   /**
    * Create an empty setting
-   * 
+   *
    * @return the empty setting
    */
   abstract ST _createEmpty();
@@ -105,6 +105,7 @@ abstract class _AbstractPropertySet<ST extends IPropertySetting> extends
     throw new UnsupportedOperationException();
   }
 
+  /** {@inheritDoc} */
   @Override
   public ST createSettingFromValues(final IPropertyValue... values) {
     if ((this.getData().isEmpty()) || (values == null)

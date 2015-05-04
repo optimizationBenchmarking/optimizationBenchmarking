@@ -11,7 +11,7 @@ public interface IMathEngine extends IToolJob, IMathEngineScope {
 
   /**
    * Assign the value of a variable
-   * 
+   *
    * @param variable
    *          the variable
    * @return the assignment
@@ -21,14 +21,14 @@ public interface IMathEngine extends IToolJob, IMathEngineScope {
   /**
    * Create an assignment which automatically also creates the variable to
    * be assigned
-   * 
+   *
    * @return the assignment
    */
   public abstract IAssignment assign();
 
   /**
    * Dispose a variable, i.e., free the memory allocated to it
-   * 
+   *
    * @param var
    *          the variable to dispose of
    */
@@ -36,7 +36,7 @@ public interface IMathEngine extends IToolJob, IMathEngineScope {
 
   /**
    * Read the value of a variable as matrix
-   * 
+   *
    * @param variable
    *          the variable
    * @return the value as matrix
@@ -45,7 +45,7 @@ public interface IMathEngine extends IToolJob, IMathEngineScope {
 
   /**
    * Read the value of a variable as {@code double}
-   * 
+   *
    * @param variable
    *          the variable
    * @return the value as {@code double}
@@ -54,7 +54,7 @@ public interface IMathEngine extends IToolJob, IMathEngineScope {
 
   /**
    * Read the value of a variable as {@code long}
-   * 
+   *
    * @param variable
    *          the variable
    * @return the value as {@code long}
@@ -63,7 +63,7 @@ public interface IMathEngine extends IToolJob, IMathEngineScope {
 
   /**
    * Read the value of a variable as {@code boolean}
-   * 
+   *
    * @param variable
    *          the variable
    * @return the value as {@code boolean}

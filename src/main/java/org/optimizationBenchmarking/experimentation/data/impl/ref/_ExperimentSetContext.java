@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /** A context for creating experiments. */
 final class _ExperimentSetContext extends
-    _HierarchicalCollection<Experiment, ExperimentContext, ExperimentSet> {
+_HierarchicalCollection<Experiment, ExperimentContext, ExperimentSet> {
 
   /** the parameter manager */
   private volatile _ParametersBuilder m_params;
@@ -16,7 +16,7 @@ final class _ExperimentSetContext extends
 
   /**
    * create the experiment set context
-   * 
+   *
    * @param builder
    *          the experiment builder
    */
@@ -34,7 +34,7 @@ final class _ExperimentSetContext extends
 
   /**
    * get the dimension set
-   * 
+   *
    * @return the dimension set
    */
   final DimensionSet _getDimensionSet() {
@@ -43,7 +43,7 @@ final class _ExperimentSetContext extends
 
   /**
    * get the instance set
-   * 
+   *
    * @return the instance set
    */
   final InstanceSet _getInstanceSet() {
@@ -52,7 +52,7 @@ final class _ExperimentSetContext extends
 
   /**
    * get the feature set
-   * 
+   *
    * @return the feature set
    */
   final FeatureSet _getFeatureSet() {
@@ -61,7 +61,7 @@ final class _ExperimentSetContext extends
 
   /**
    * get the parameter set
-   * 
+   *
    * @return the parameter set
    */
   synchronized final ParameterSet _getParameterSet() {
@@ -72,7 +72,7 @@ final class _ExperimentSetContext extends
 
   /**
    * Create an experiment context
-   * 
+   *
    * @return the experiment context
    */
   synchronized final ExperimentContext _createExperiment() {
@@ -95,7 +95,7 @@ final class _ExperimentSetContext extends
 
   /**
    * Define a parameter with a given name and description
-   * 
+   *
    * @param name
    *          the parameter name
    * @param desc

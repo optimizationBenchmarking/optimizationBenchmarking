@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * an internal iterator class
- * 
+ *
  * @param <ET>
  *          the element type
  */
@@ -30,7 +30,7 @@ class _Itr<ET> extends BasicIterator<ET> {
 
   /**
    * Create
-   * 
+   *
    * @param list
    *          the list
    */

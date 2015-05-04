@@ -7,12 +7,12 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 
 /**
  * An internal base-class for evaluation modules.
- * 
+ *
  * @param <DT>
  *          the data set type
  */
 abstract class _EvaluationModule<DT extends IElementSet> extends
-    EvaluationModule {
+EvaluationModule {
 
   /** create the module */
   _EvaluationModule() {
@@ -21,7 +21,7 @@ abstract class _EvaluationModule<DT extends IElementSet> extends
 
   /**
    * Create the evaluation job
-   * 
+   *
    * @param data
    *          the data
    * @param config

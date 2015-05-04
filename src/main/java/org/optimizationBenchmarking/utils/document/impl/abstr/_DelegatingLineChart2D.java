@@ -12,7 +12,7 @@ final class _DelegatingLineChart2D extends DelegatingLineChart2D {
 
   /**
    * create the delegating 2D line chart
-   * 
+   *
    * @param graphic
    *          the graphic
    * @param chart

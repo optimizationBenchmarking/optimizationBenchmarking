@@ -7,19 +7,19 @@ import org.optimizationBenchmarking.utils.io.structured.spec.ITextInputJobBuilde
 
 /**
  * The class for building text input jobs
- * 
+ *
  * @param <DT>
  *          the source data type
  * @param <JBT>
  *          the job builder type
  */
 class _TextInputJobBuilder<DT, JBT extends _TextInputJobBuilder<DT, JBT>>
-    extends _StreamInputJobBuilder<DT, JBT> implements
-    ITextInputJobBuilder<DT> {
+extends _StreamInputJobBuilder<DT, JBT> implements
+ITextInputJobBuilder<DT> {
 
   /**
    * create the job builder
-   * 
+   *
    * @param tool
    *          the owning tool
    */

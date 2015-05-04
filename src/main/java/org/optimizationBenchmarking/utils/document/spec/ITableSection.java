@@ -7,7 +7,7 @@ public interface ITableSection extends IDocumentElement {
 
   /**
    * create a new table row
-   * 
+   *
    * @return the table row to write to
    */
   public abstract ITableRow row();

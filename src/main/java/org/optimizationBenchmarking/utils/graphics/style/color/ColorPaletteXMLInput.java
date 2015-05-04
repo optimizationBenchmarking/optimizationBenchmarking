@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 
 /** the color palette xml input driver */
 public final class ColorPaletteXMLInput extends
-    XMLInputTool<ColorPaletteBuilder> {
+XMLInputTool<ColorPaletteBuilder> {
 
   /** create */
   ColorPaletteXMLInput() {
@@ -53,9 +53,9 @@ public final class ColorPaletteXMLInput extends
 
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
-          .rethrow(//
-              "Error during loading of the XML Schema for the color style palette XMLFileType.", //$NON-NLS-1$
-              true, rec);
+      .rethrow(//
+          "Error during loading of the XML Schema for the color style palette XMLFileType.", //$NON-NLS-1$
+          true, rec);
     }
   }
 
@@ -74,7 +74,7 @@ public final class ColorPaletteXMLInput extends
 
   /**
    * get the instance of the {@link ColorPaletteXMLInput}
-   * 
+   *
    * @return the instance of the {@link ColorPaletteXMLInput}
    */
   public static final ColorPaletteXMLInput getInstance() {

@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.SectionBody;
 final class _LaTeXSectionBody extends SectionBody {
   /**
    * create the section body
-   * 
+   *
    * @param owner
    *          the owner
    */

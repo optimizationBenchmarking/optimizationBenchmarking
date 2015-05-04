@@ -12,7 +12,7 @@ public abstract class ToolJob implements IToolJob {
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger to use, or {@code null} if no logging information
    *          should be created
@@ -24,7 +24,7 @@ public abstract class ToolJob implements IToolJob {
 
   /**
    * Get the logger of this job
-   * 
+   *
    * @return the logger of this job
    */
   protected Logger getLogger() {
@@ -33,7 +33,7 @@ public abstract class ToolJob implements IToolJob {
 
   /**
    * create
-   * 
+   *
    * @param builder
    *          the builder
    */

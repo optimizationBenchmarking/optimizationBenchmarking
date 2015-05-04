@@ -12,7 +12,7 @@ final class _XHTML10MathLn extends MathLn {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

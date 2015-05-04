@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * information such as the title or authors of the document.
  */
 public class DocumentHeader extends DocumentPart implements
-    IDocumentHeader {
+IDocumentHeader {
 
   /** an title has been created */
   private static final int STATE_TITLE_CREATED = (DocumentElement.STATE_MAX_ELEMENT + 1);
@@ -84,12 +84,12 @@ public class DocumentHeader extends DocumentPart implements
     DocumentHeader.STATE_NAMES[DocumentHeader.STATE_SUMMARY_BEFORE_OPEN] = "summaryBeforeOpen"; //$NON-NLS-1$
     DocumentHeader.STATE_NAMES[DocumentHeader.STATE_SUMMARY_AFTER_OPEN] = "summaryOpened"; //$NON-NLS-1$
     DocumentHeader.STATE_NAMES[DocumentHeader.STATE_SUMMARY_CLOSED] = "summaryClosed"; //$NON-NLS-1$
-    DocumentHeader.STATE_NAMES[DocumentHeader.STATE_HEADER_FINALIZED] = "headerFinalized"; //$NON-NLS-1$  
+    DocumentHeader.STATE_NAMES[DocumentHeader.STATE_HEADER_FINALIZED] = "headerFinalized"; //$NON-NLS-1$
   }
 
   /**
    * Create a new document header
-   * 
+   *
    * @param owner
    *          the owning document
    */
@@ -119,7 +119,7 @@ public class DocumentHeader extends DocumentPart implements
 
   /**
    * Set the authors
-   * 
+   *
    * @param authors
    *          the authors
    */
@@ -131,7 +131,7 @@ public class DocumentHeader extends DocumentPart implements
 
   /**
    * Set the authors
-   * 
+   *
    * @param authors
    *          the authors
    */
@@ -158,7 +158,7 @@ public class DocumentHeader extends DocumentPart implements
 
   /**
    * Set the date
-   * 
+   *
    * @param date
    *          the date
    */
@@ -170,7 +170,7 @@ public class DocumentHeader extends DocumentPart implements
 
   /**
    * Set the date
-   * 
+   *
    * @param date
    *          the date
    */
@@ -338,7 +338,7 @@ public class DocumentHeader extends DocumentPart implements
 
   /**
    * Get the owning document
-   * 
+   *
    * @return the owning document
    */
   @Override

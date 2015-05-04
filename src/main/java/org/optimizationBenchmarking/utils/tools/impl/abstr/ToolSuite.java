@@ -68,8 +68,8 @@ public abstract class ToolSuite extends Tool {
       ErrorUtils.logError(
           Configuration.getGlobalLogger(),
           (("Error while loading the properties of " + //$NON-NLS-1$
-          TextUtils.className(clazz)) + '.'), error, true,
-          RethrowMode.DONT_RETHROW);
+              TextUtils.className(clazz)) + '.'), error, true,
+              RethrowMode.DONT_RETHROW);
     }
 
     this.m_projectVersion = TextUtils.prepare(properties.getProperty(//
@@ -117,7 +117,7 @@ public abstract class ToolSuite extends Tool {
 
   /**
    * Get the version of this tool suite
-   * 
+   *
    * @return the version of this tool suite
    */
   public synchronized final String getProjectVersion() {
@@ -129,7 +129,7 @@ public abstract class ToolSuite extends Tool {
 
   /**
    * Get the name of this tool suite
-   * 
+   *
    * @return the name of this tool suite
    */
   public synchronized final String getProjectName() {
@@ -141,7 +141,7 @@ public abstract class ToolSuite extends Tool {
 
   /**
    * Get the name of this tool suite
-   * 
+   *
    * @return the name of this tool suite
    */
   @Override
@@ -151,7 +151,7 @@ public abstract class ToolSuite extends Tool {
 
   /**
    * Get the PROJECT_JDK version for this tool suite
-   * 
+   *
    * @return the PROJECT_JDK version for this tool suite
    */
   public synchronized final String getProjectJDK() {
@@ -163,7 +163,7 @@ public abstract class ToolSuite extends Tool {
 
   /**
    * Get the project url for this tool suite
-   * 
+   *
    * @return the project url for this tool suite
    */
   public synchronized final String getProjectURL() {
@@ -175,7 +175,7 @@ public abstract class ToolSuite extends Tool {
 
   /**
    * Get the contact url for this tool suite
-   * 
+   *
    * @return the contact url for this tool suite
    */
   public synchronized final String getContactURL() {
@@ -187,7 +187,7 @@ public abstract class ToolSuite extends Tool {
 
   /**
    * Get the contact name for this tool suite
-   * 
+   *
    * @return the contact name for this tool suite
    */
   public synchronized final String getContactName() {
@@ -199,7 +199,7 @@ public abstract class ToolSuite extends Tool {
 
   /**
    * Get the contact email for this tool suite
-   * 
+   *
    * @return the contact email for this tool suite
    */
   public synchronized final String getContactEmail() {

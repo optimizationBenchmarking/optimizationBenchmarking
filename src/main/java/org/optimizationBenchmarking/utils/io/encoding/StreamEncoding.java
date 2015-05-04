@@ -25,14 +25,14 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * The base class for encodings.
- * 
+ *
  * @param <IST>
  *          the input stream type
  * @param <OST>
  *          the output stream type
  */
 public abstract class StreamEncoding<IST extends Closeable, OST extends Closeable>
-    extends HashObject implements Serializable {
+extends HashObject implements Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -45,15 +45,15 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /** the unknown encoding */
   public static final StreamEncoding<Closeable, Closeable> UNKNOWN = //
-  new _UnknownEncoding();
+      new _UnknownEncoding();
 
   /** the binary encoding */
   public static final StreamEncoding<InputStream, OutputStream> BINARY = //
-  new _UnknownBinaryEncoding();
+      new _UnknownBinaryEncoding();
 
   /** the text encoding */
   public static final StreamEncoding<BufferedReader, BufferedWriter> TEXT = //
-  new _UnknownTextEncoding();
+      new _UnknownTextEncoding();
 
   /** the <a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a> encoding */
   private static final TextEncoding ASCII;
@@ -163,7 +163,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * Get the <a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a> text
    * encoding
-   * 
+   *
    * @return the <a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a>
    *         text encoding
    */
@@ -174,7 +174,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * Get the <a href="http://en.wikipedia.org/wiki/Windows-1252">Windows
    * Codepage 1252</a> encoding
-   * 
+   *
    * @return the <a
    *         href="http://en.wikipedia.org/wiki/Windows-1252">Windows
    *         Codepage 1252</a> encoding
@@ -186,7 +186,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * Get the <a href="http://en.wikipedia.org/wiki/Big-5">Big-5</a>
    * encoding
-   * 
+   *
    * @return the <a href="http://en.wikipedia.org/wiki/Big-5">Big-5</a>
    *         encoding
    */
@@ -196,7 +196,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Get the <a href="http://en.wikipedia.org/wiki/GBK">GBK</a> encoding
-   * 
+   *
    * @return the <a href="http://en.wikipedia.org/wiki/GBK">GBK</a>
    *         encoding
    */
@@ -207,7 +207,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * get the <a href="http://en.wikipedia.org/wiki/GB_2312">GB 2312</a>
    * encoding
-   * 
+   *
    * @return the <a href="http://en.wikipedia.org/wiki/GB_2312">GB 2312</a>
    *         encoding
    */
@@ -218,7 +218,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * get the <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a>
    * encoding
-   * 
+   *
    * @return the <a href="http://en.wikipedia.org/wiki/UTF-8">UTF-8</a>
    *         encoding
    */
@@ -229,7 +229,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * get the <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a> Big
    * Endian encoding
-   * 
+   *
    * @return the <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a>
    *         Big Endian encoding
    */
@@ -240,7 +240,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * get the <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a>
    * Little Endian encoding
-   * 
+   *
    * @return the <a href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a>
    *         Little Endian encoding
    */
@@ -251,7 +251,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * get the <a href="http://en.wikipedia.org/wiki/GB18030">GB18030</a>
    * encoding
-   * 
+   *
    * @return the <a href="http://en.wikipedia.org/wiki/GB18030">GB18030</a>
    *         encoding
    */
@@ -263,7 +263,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    * get the <a
    * href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a>
    * encoding
-   * 
+   *
    * @return the <a
    *         href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859
    *         -1</a> encoding
@@ -274,7 +274,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * The default text encoding
-   * 
+   *
    * @return the default text encoding
    */
   public static final TextEncoding getDefaultTextEncoding() {
@@ -286,7 +286,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * create the encoding
-   * 
+   *
    * @param standardName
    *          the standard name
    * @param autoRegister
@@ -298,7 +298,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
     if ((this.m_name = TextUtils.prepare(standardName)) == null) {
       throw new IllegalArgumentException(//
           "Standard name must not be null or empty, but is '" //$NON-NLS-1$
-              + standardName + '\'');
+          + standardName + '\'');
     }
     if (autoRegister) {
       this.register(this.m_name);
@@ -307,7 +307,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * register this encoding under a set of names
-   * 
+   *
    * @param names
    *          the names
    */
@@ -317,7 +317,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
         if (StreamEncoding.ENCODINGS.containsKey(s)) {
           throw new IllegalStateException(//
               "There is already an encoding under name '" + s + //$NON-NLS-1$
-                  "'."); //$NON-NLS-1$
+              "'."); //$NON-NLS-1$
         }
       }
 
@@ -329,7 +329,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap an input stream into a stream representing this encoding
-   * 
+   *
    * @param input
    *          the input stream to wrap
    * @return the wrapped stream
@@ -342,7 +342,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap an output stream into a stream representing this encoding
-   * 
+   *
    * @param output
    *          the output stream to wrap
    * @return the wrapped stream
@@ -356,7 +356,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap a reader into a stream representing this encoding
-   * 
+   *
    * @param input
    *          the reader to wrap
    * @return the wrapped stream
@@ -367,7 +367,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Wrap a writer into a stream representing this encoding
-   * 
+   *
    * @param output
    *          the writer to wrap
    * @return the wrapped stream
@@ -378,21 +378,21 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Get the class of the output wrappers
-   * 
+   *
    * @return the class of the output wrappers
    */
   public abstract Class<OST> getOutputClass();
 
   /**
    * Get the class of the input wrappers
-   * 
+   *
    * @return the class of the input wrappers
    */
   public abstract Class<IST> getInputClass();
 
   /**
    * Get the name
-   * 
+   *
    * @return the name of the stream encoding
    */
   public final String name() {
@@ -401,7 +401,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   Object writeReplace() {
@@ -417,7 +417,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   Object readResolve() {
@@ -455,7 +455,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Try to get the encoding of a given object
-   * 
+   *
    * @param o
    *          the object
    * @return the encoding, or {@link #UNKNOWN} if none could be found
@@ -518,7 +518,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * Open a reader on top of a given stream, taking the given encoding as
    * encoding suggestion
-   * 
+   *
    * @param stream
    *          the input stream
    * @param encoding
@@ -544,7 +544,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * Wrap an input stream into another input stream, if the given encoding
    * suggests doing so
-   * 
+   *
    * @param stream
    *          the input stream
    * @param encoding
@@ -555,7 +555,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    */
   public static final InputStream openInputStream(
       final InputStream stream, final StreamEncoding<?, ?> encoding)
-      throws IOException {
+          throws IOException {
     final Class<?> clazz;
 
     if ((encoding != null) && (encoding != StreamEncoding.BINARY)
@@ -571,7 +571,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * Open a writer on top of a given stream, taking the given encoding as
    * encoding suggestion
-   * 
+   *
    * @param stream
    *          the output stream
    * @param encoding
@@ -597,7 +597,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /**
    * Wrap an output stream into another output stream, if the given
    * encoding suggests doing so
-   * 
+   *
    * @param stream
    *          the output stream
    * @param encoding
@@ -608,7 +608,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
    */
   public static final OutputStream openOutputStream(
       final OutputStream stream, final StreamEncoding<?, ?> encoding)
-      throws IOException {
+          throws IOException {
     final Class<?> clazz;
 
     if ((encoding != null) && (encoding != StreamEncoding.BINARY)
@@ -623,7 +623,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Obtain a text encoding identified by a given string
-   * 
+   *
    * @param s
    *          the string
    * @return the corresponding encoding
@@ -670,7 +670,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Extract an encoding from a print stream
-   * 
+   *
    * @param wr
    *          The print stream to get the encoding of.
    * @return The historical name of this encoding, or possibly
@@ -710,7 +710,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Extract an encoding from a writer
-   * 
+   *
    * @param wr
    *          The writer to get the encoding of.
    * @return The historical name of this encoding, or possibly
@@ -769,7 +769,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
 
   /**
    * Extract an encoding from a reader
-   * 
+   *
    * @param r
    *          The reader to get the encoding of.
    * @return The historical name of this encoding, or possibly

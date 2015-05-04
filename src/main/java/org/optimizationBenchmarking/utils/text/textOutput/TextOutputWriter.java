@@ -15,7 +15,7 @@ public final class TextOutputWriter extends Writer {
 
   /**
    * Create a wrapped text output
-   * 
+   *
    * @param out
    *          the output
    */
@@ -89,7 +89,7 @@ public final class TextOutputWriter extends Writer {
 
   /**
    * Wrap a given text output interface into a writer
-   * 
+   *
    * @param out
    *          the interface to be wrapped
    * @return the writer

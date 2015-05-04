@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.FigureCaption;
 final class _XHTML10FigureCaption extends FigureCaption {
   /**
    * Create a new figure caption
-   * 
+   *
    * @param owner
    *          the owner
    */

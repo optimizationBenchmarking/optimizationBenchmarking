@@ -29,7 +29,7 @@ public class StrictShortParser extends NumberParser<Short> {
 
   /**
    * Validate the parsing result
-   * 
+   *
    * @param value
    *          the parsing result
    * @throws IllegalArgumentException
@@ -42,7 +42,7 @@ public class StrictShortParser extends NumberParser<Short> {
 
   /**
    * Parse the string
-   * 
+   *
    * @param string
    *          the string
    * @return the return type
@@ -90,7 +90,7 @@ public class StrictShortParser extends NumberParser<Short> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -99,7 +99,7 @@ public class StrictShortParser extends NumberParser<Short> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {
@@ -149,8 +149,8 @@ public class StrictShortParser extends NumberParser<Short> {
     if ((d < Short.MIN_VALUE) || (d > Short.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((d + " is not a valid short value, since it is out of the range ") + //$NON-NLS-1$
-          Short.MIN_VALUE) + "..") + //$NON-NLS-1$
-          Short.MAX_VALUE) + '.');
+              Short.MIN_VALUE) + "..") + //$NON-NLS-1$
+              Short.MAX_VALUE) + '.');
     }
 
     b = ((short) d);
@@ -167,8 +167,8 @@ public class StrictShortParser extends NumberParser<Short> {
     if ((l < Short.MIN_VALUE) || (l > Short.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((l + " is not a valid short value, since it is out of the range ") + //$NON-NLS-1$
-          Short.MIN_VALUE) + "..") + //$NON-NLS-1$
-          Short.MAX_VALUE) + '.');
+              Short.MIN_VALUE) + "..") + //$NON-NLS-1$
+              Short.MAX_VALUE) + '.');
     }
     this.validateShort((short) l);
   }

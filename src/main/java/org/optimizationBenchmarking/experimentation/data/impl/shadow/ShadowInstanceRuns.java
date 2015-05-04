@@ -15,15 +15,15 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * attribute-based computations to that instance run set.
  */
 public class ShadowInstanceRuns extends //
-    _ShadowElementSet<IExperiment, IInstanceRuns, IRun> implements
-    IInstanceRuns {
+_ShadowElementSet<IExperiment, IInstanceRuns, IRun> implements
+IInstanceRuns {
 
   /** the instance */
   private IInstance m_instance;
 
   /**
    * create the shadow instance runs
-   * 
+   *
    * @param owner
    *          the owning element
    * @param shadow

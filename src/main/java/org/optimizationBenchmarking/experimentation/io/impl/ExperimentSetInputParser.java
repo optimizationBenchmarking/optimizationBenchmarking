@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
  * A parser for experiment set input drivers.
  */
 public final class ExperimentSetInputParser extends
-    InstanceParser<IExperimentSetInput> {
+InstanceParser<IExperimentSetInput> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public final class ExperimentSetInputParser extends
 
   /**
    * get the prefixes
-   * 
+   *
    * @return the path prefixes
    */
   private static final String[] __prefixes() {
@@ -37,7 +37,7 @@ public final class ExperimentSetInputParser extends
         ExperimentSetInputParser.class, paths);
     ReflectionUtils.addPackageOfClassToPrefixList(EDIInput.class, paths);
     ReflectionUtils
-        .addPackageOfClassToPrefixList(CSVEDIInput.class, paths);
+    .addPackageOfClassToPrefixList(CSVEDIInput.class, paths);
     ReflectionUtils.addPackageOfClassToPrefixList(TSPSuiteInput.class,
         paths);
     ReflectionUtils.addPackageOfClassToPrefixList(BBOBInput.class, paths);
@@ -75,7 +75,7 @@ public final class ExperimentSetInputParser extends
 
   /**
    * Get the singleton instance of this parser
-   * 
+   *
    * @return the tsp suite input driver parser
    */
   public static final ExperimentSetInputParser getInstance() {

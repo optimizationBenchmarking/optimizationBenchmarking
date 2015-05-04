@@ -25,7 +25,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * </p>
  */
 final class _JFreeChartXYLineAndShapeRenderer extends
-    XYLineAndShapeRenderer implements DrawingSupplier {
+XYLineAndShapeRenderer implements DrawingSupplier {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
 
   /**
    * create
-   * 
+   *
    * @param dataElements
    *          the dataElements
    */
@@ -51,7 +51,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
 
   /**
    * Get the paint for the given item
-   * 
+   *
    * @param row
    *          the row (series)
    * @param column
@@ -65,7 +65,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
 
   /**
    * Get the series paint for the given series
-   * 
+   *
    * @param series
    *          the series
    * @return the paint
@@ -77,7 +77,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
 
   /**
    * Get the stroke for the given item
-   * 
+   *
    * @param row
    *          the row (series)
    * @param column
@@ -91,7 +91,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
 
   /**
    * Get the series stroke for the given series
-   * 
+   *
    * @param series
    *          the series
    * @return the stroke
@@ -145,7 +145,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
 
   /**
    * Returns always {@code null}
-   * 
+   *
    * @return {@code null}
    */
   @Override
@@ -155,7 +155,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
 
   /**
    * Returns always {@code this}
-   * 
+   *
    * @return {@code this}
    */
   @Override
@@ -165,7 +165,7 @@ final class _JFreeChartXYLineAndShapeRenderer extends
 
   /**
    * Returns always {@code false}
-   * 
+   *
    * @return {@code false}
    */
   @Override

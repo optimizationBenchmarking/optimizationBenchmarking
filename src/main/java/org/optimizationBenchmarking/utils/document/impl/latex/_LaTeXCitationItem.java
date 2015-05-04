@@ -15,11 +15,11 @@ final class _LaTeXCitationItem extends CitationItem {
 
   /** the no-citation begin */
   static final char[] NOCITE_BEGIN = { '{', '\\', 'n', 'o', 'c', 'i', 't',
-      'e', '{' };
+    'e', '{' };
 
   /**
    * Create the bibliographic record
-   * 
+   *
    * @param record
    *          the bibliographic record
    * @param mode

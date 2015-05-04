@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 public abstract class AppendixJob extends _EvaluationJob<IExperimentSet> {
   /**
    * Create the appendix evaluation job
-   * 
+   *
    * @param data
    *          the data
    * @param logger

@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * <p>
  * A set of data elements with a unique ID.
  * </p>
- * 
+ *
  * @param <DT>
  *          the type
  */
@@ -24,7 +24,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
 
   /**
    * Create a data set with the given data
-   * 
+   *
    * @param owner
    *          the owning element, or {@code null} if none needs to be set
    * @param data
@@ -37,7 +37,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data of the set
    * @param clone
@@ -61,7 +61,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
     if (data.length <= 0) {
       throw new IllegalArgumentException(//
           TextUtils.className(this.getClass())//
-              + " must contain at least one element."); //$NON-NLS-1$
+          + " must contain at least one element."); //$NON-NLS-1$
     }
 
     mdata = (clone ? data.clone() : data);
@@ -87,7 +87,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
 
   /**
    * Obtain the data
-   * 
+   *
    * @return the data array
    */
   public final ArraySetView<DT> getData() {
@@ -97,7 +97,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
   /**
    * Mark {@code element} as owned by this element and located at
    * {@code index}
-   * 
+   *
    * @param element
    *          the owned element
    * @param index
@@ -106,7 +106,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
   void _setOwnerOfElement(final DT element, final int index) {
     throw new UnsupportedOperationException(//
         TextUtils.className(this.getClass())
-            + (((" does not know how to become an owner of '" + //$NON-NLS-1$
+        + (((" does not know how to become an owner of '" + //$NON-NLS-1$
             element) + "' at index ") + index) + '.'); //$NON-NLS-1$
   }
 
@@ -116,7 +116,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
    * as possible when it comes to creating our experiment evaluation data
    * structures, since any mistake may have severe impact on the evaluation
    * results we can get...
-   * 
+   *
    * @param element
    *          the single element to validate
    * @param index
@@ -129,7 +129,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
     if (element == null) {
       throw new IllegalArgumentException(//
           "No element in an instance of " + //$NON-NLS-1$
-              TextUtils.className(this.getClass()) + " can be null."); //$NON-NLS-1$
+          TextUtils.className(this.getClass()) + " can be null."); //$NON-NLS-1$
     }
     if (element == this) {
       throw new IllegalArgumentException("An instance of " + //$NON-NLS-1$
@@ -148,7 +148,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
    * Validate two supposedly different elements to be included in this set.
    * Element {@code before} is located before element {@code after} in this
    * set.
-   * 
+   *
    * @param before
    *          the first element to validate
    * @param after
@@ -188,13 +188,13 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
     if ((cra > 0) || (crb < 0)) {
       throw new IllegalStateException(
           "Element '" + before + //$NON-NLS-1$
-              "' should come after element '" //$NON-NLS-1$
-              + after
-              + "' according to the " + //$NON-NLS-1$
-              TextUtils.className(Comparable.class)
-              + //
-              "-implementations of these elements, but it comes before in an instance of" + //$NON-NLS-1$
-              TextUtils.className(this.getClass()) + '.');
+          "' should come after element '" //$NON-NLS-1$
+          + after
+          + "' according to the " + //$NON-NLS-1$
+          TextUtils.className(Comparable.class)
+          + //
+          "-implementations of these elements, but it comes before in an instance of" + //$NON-NLS-1$
+          TextUtils.className(this.getClass()) + '.');
     }
 
     if ((cra == 0) || (crb == 0)) {

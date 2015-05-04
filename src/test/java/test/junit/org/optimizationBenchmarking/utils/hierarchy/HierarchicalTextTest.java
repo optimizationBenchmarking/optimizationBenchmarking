@@ -46,7 +46,7 @@ public class HierarchicalTextTest extends _HierarchicalTest {
       wt.start();
       fjp = (fifo ? new ForkJoinPool(n,
           ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, true)
-          : new ForkJoinPool(n));
+      : new ForkJoinPool(n));
 
       try (HierarchicalTextOutput d = new HierarchicalTextOutput(sb)) {
         t = new _HTTask(wt, d, 0, delayMode);
@@ -68,7 +68,7 @@ public class HierarchicalTextTest extends _HierarchicalTest {
 
   /**
    * check if a string is contained in a given string builder
-   * 
+   *
    * @param s
    *          the string
    * @param sb

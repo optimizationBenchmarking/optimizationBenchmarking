@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * A group of data elements belonging to an unspecified parameter value
  */
 public final class UnspecifiedValueGroup extends
-    PropertyValueGroup<PropertyValueGroups> {
+PropertyValueGroup<PropertyValueGroups> {
 
   /** the unspecified string: {@value} */
   private static final String UNSPECIFIED = "unspecified"; //$NON-NLS-1$
@@ -21,7 +21,7 @@ public final class UnspecifiedValueGroup extends
 
   /**
    * create the distinct value group
-   * 
+   *
    * @param owner
    *          the owning element set
    * @param selection
@@ -43,7 +43,7 @@ public final class UnspecifiedValueGroup extends
 
   /**
    * Obtain the property value common to all data elements in this group
-   * 
+   *
    * @return the property value common to all data elements in this group
    */
   public final Object getValue() {

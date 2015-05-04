@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
  * The basic interface for the builder for a file producing job.
  */
 public interface IDocumentProducerJobBuilder extends
-    IFileProducerJobBuilder, IConfigurableToolJobBuilder {
+IFileProducerJobBuilder, IConfigurableToolJobBuilder {
 
   /** {@inheritDoc} */
   @Override
@@ -18,7 +18,7 @@ public interface IDocumentProducerJobBuilder extends
 
   /**
    * Set the basic path in which the file(s) should be produced
-   * 
+   *
    * @param basePath
    *          the basic path in which the file(s) should be produced
    * @return this file producer builder, for chaining purposes
@@ -28,7 +28,7 @@ public interface IDocumentProducerJobBuilder extends
 
   /**
    * Set the base name for the main output document
-   * 
+   *
    * @param name
    *          the base name for the main output document
    * @return this file producer builder, for chaining purposes

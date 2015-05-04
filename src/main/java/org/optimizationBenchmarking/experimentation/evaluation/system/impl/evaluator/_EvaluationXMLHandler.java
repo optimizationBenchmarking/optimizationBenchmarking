@@ -39,7 +39,7 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
 
   /**
    * Create
-   * 
+   *
    * @param owner
    *          the owning handler, or {@code null} if not used
    * @param dest
@@ -206,8 +206,8 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
             } catch (final Exception roe) {
               throw new IllegalArgumentException(
                   (("Could not load module '" + this.m_module) + //$NON-NLS-1$
-                  "' defined in evaluation configuration XMLFileType file."), //$NON-NLS-1$
-                  roe);
+                      "' defined in evaluation configuration XMLFileType file."), //$NON-NLS-1$
+                      roe);
             }
             this.m_module = null;
 
@@ -243,7 +243,7 @@ final class _EvaluationXMLHandler extends DelegatingHandler {
     if (this.m_state == _EvaluationXMLHandler.STATE_IN_EVALUATION) {
       if (this.m_configBuilder != null) {
         this.m_dest
-            ._setBaseConfiguration(this.m_configBuilder.getResult());
+        ._setBaseConfiguration(this.m_configBuilder.getResult());
         this.m_configBuilder = null;
         return;
       }

@@ -46,7 +46,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
   /**
    * Get the instance of the {@link EDIOutput}
-   * 
+   *
    * @return the instance of the {@link EDIOutput}
    */
   public static final EDIOutput getInstance() {
@@ -56,15 +56,15 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
   /** {@inheritDoc} */
   @Override
   protected final String getDefaultPlainOutputFileName() {
-    return ("experiments." + //$NON-NLS-1$ 
-    EDI.EDI_XML.getDefaultSuffix());
+    return ("experiments." + //$NON-NLS-1$
+        EDI.EDI_XML.getDefaultSuffix());
   }
 
   /** {@inheritDoc} */
   @Override
   protected final void file(final IOJob job, final Object data,
       final Path file, final StreamEncoding<?, ?> encoding)
-      throws Throwable {
+          throws Throwable {
     super.file(job, data, file, encoding);
     if (Files.exists(file)) {
       this.addFile(job, file, EDI.EDI_XML);
@@ -84,7 +84,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
   /**
    * Write some experiment data structure
-   * 
+   *
    * @param data
    *          the data
    * @param root
@@ -109,7 +109,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
           "Begin writing instance of " + //$NON-NLS-1$
-              TextUtils.className(data.getClass()));
+          TextUtils.className(data.getClass()));
     }
     write: {
       if (data instanceof IExperimentSet) {
@@ -154,13 +154,13 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
           "Finished writing instance of " + //$NON-NLS-1$
-              TextUtils.className(data.getClass()));
+          TextUtils.className(data.getClass()));
     }
   }
 
   /**
    * Write an experiment set
-   * 
+   *
    * @param experimentSet
    *          the experiment set
    * @param dest
@@ -180,7 +180,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
     }
 
     EDIOutput
-        .__writeDimensionSet(experimentSet.getDimensions(), dest, job);
+    .__writeDimensionSet(experimentSet.getDimensions(), dest, job);
     EDIOutput.__writeInstanceSet(experimentSet.getInstances(), dest, job);
     EDIOutput.__writeExperiments(experimentSet.getData(), dest, job);
 
@@ -192,7 +192,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
   /**
    * Write an dimension set
-   * 
+   *
    * @param dimensionSet
    *          the dimension set
    * @param dest
@@ -335,7 +335,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
   /**
    * Write an instance set
-   * 
+   *
    * @param instances
    *          the instance set
    * @param dest
@@ -477,7 +477,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
   /**
    * Write the experiments
-   * 
+   *
    * @param experiment
    *          the experiment
    * @param dest
@@ -561,8 +561,8 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
               EDI.ELEMENT_INSTANCE_RUNS);
 
           instanceRunsXML
-              .attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_INSTANCE,
-                  instanceRuns.getInstance().getName());
+          .attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_INSTANCE,
+              instanceRuns.getInstance().getName());
           for (final IRun run : instanceRuns.getData()) {
             try (final XMLElement runXML = instanceRunsXML.element()) {
               runXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_RUN);
@@ -579,12 +579,12 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
                     } else {
                       try (final XMLElement valueXML = pointXML.element()) {
                         valueXML
-                            .name(EDI.NAMESPACE_URI, EDI.ELEMENT_FLOAT);
+                        .name(EDI.NAMESPACE_URI, EDI.ELEMENT_FLOAT);
                         valueXML.textRaw()
-                            .append(
-                                XMLNumberAppender.INSTANCE.toString(
-                                    point.getDouble(i),
-                                    ETextCase.IN_SENTENCE));
+                        .append(
+                            XMLNumberAppender.INSTANCE.toString(
+                                point.getDouble(i),
+                                ETextCase.IN_SENTENCE));
 
                       }
                     }
@@ -609,7 +609,7 @@ public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
 
   /**
    * Write the experiments
-   * 
+   *
    * @param es
    *          the experiments
    * @param dest

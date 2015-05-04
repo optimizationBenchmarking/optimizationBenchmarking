@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentSummary;
 final class _XHTML10DocumentSummary extends DocumentSummary {
   /**
    * Create a document summary.
-   * 
+   *
    * @param owner
    *          the owning document header
    */

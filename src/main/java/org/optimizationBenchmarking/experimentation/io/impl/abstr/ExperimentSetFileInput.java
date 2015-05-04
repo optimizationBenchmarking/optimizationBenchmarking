@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.FileInputTool
  * A file-based experiment input tool.
  */
 public class ExperimentSetFileInput extends
-    FileInputTool<ExperimentSetContext> implements IExperimentSetInput {
+FileInputTool<ExperimentSetContext> implements IExperimentSetInput {
 
   /** create */
   protected ExperimentSetFileInput() {

@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /**
  * A parser for a numerical type.
- * 
+ *
  * @param <N>
  *          the numerical type
  */
@@ -28,7 +28,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
   /**
    * Are the boundaries of the valid numerical range of this parser integer
    * valued?
-   * 
+   *
    * @return {@code true} if the bounds of the valid numerical range of
    *         this parser are integer values, {@code false} if they are
    *         floating point numbers
@@ -42,7 +42,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
    * bound directly. Otherwise, the lowest boundary value is returned which
    * would pass {@link #validateDouble(double)} and
    * {@link #validateLong(long)}
-   * 
+   *
    * @return the lower bound of the numerical range of this parser as
    *         {@code long}.
    */
@@ -55,7 +55,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
    * bound directly. Otherwise, the highest boundary value is returned
    * which would pass {@link #validateDouble(double)} and
    * {@link #validateLong(long)}
-   * 
+   *
    * @return the upper bound of the numerical range of this parser as
    *         {@code long}.
    */
@@ -69,7 +69,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
    * {@link #validateDouble(double)} and {@link #validateLong(long)}.
    * Otherwise (the bounds are floating point numbers}, the boundary will
    * be returned directly.
-   * 
+   *
    * @return the lower bound of the numerical range of this parser as
    *         {@code double}.
    */
@@ -83,7 +83,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
    * {@link #validateDouble(double)} and {@link #validateLong(long)}.
    * Otherwise (the bounds are floating point numbers}, the boundary will
    * be returned directly.
-   * 
+   *
    * @return the upper bound of the numerical range of this parser as
    *         {@code double}.
    */
@@ -92,7 +92,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
   /**
    * Validate whether the given {@code double} value {@code d} is within
    * the valid numerical range of this parser.
-   * 
+   *
    * @param d
    *          the {@code double} value to check
    * @throws IllegalArgumentException
@@ -103,7 +103,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
   /**
    * Validate whether the given {@code long} value {@code l} is within the
    * valid numerical range of this parser.
-   * 
+   *
    * @param l
    *          the {@code long} value to check
    * @throws IllegalArgumentException
@@ -113,7 +113,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
 
   /**
    * Create a number parser for the given type and bounds
-   * 
+   *
    * @param type
    *          the type
    * @param lowerBound
@@ -216,7 +216,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
       default: {
         throw new IllegalArgumentException(//
             "Cannot create a number parser for type " + //$NON-NLS-1$
-                type);
+            type);
       }
     }
 

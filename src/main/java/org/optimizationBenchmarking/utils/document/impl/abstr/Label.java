@@ -25,7 +25,7 @@ public class Label implements ILabel, ISequenceable, ITextable {
 
   /**
    * create a label
-   * 
+   *
    * @param owner
    *          the owner
    * @param type
@@ -58,7 +58,7 @@ public class Label implements ILabel, ISequenceable, ITextable {
 
   /**
    * Get the label type
-   * 
+   *
    * @return the label type
    */
   public final ELabelType getType() {
@@ -67,7 +67,7 @@ public class Label implements ILabel, ISequenceable, ITextable {
 
   /**
    * Get the label mark
-   * 
+   *
    * @return the label mark
    */
   public final String getLabelMark() {
@@ -76,7 +76,7 @@ public class Label implements ILabel, ISequenceable, ITextable {
 
   /**
    * Get the reference text
-   * 
+   *
    * @return the reference text
    */
   public final String getReferenceText() {
@@ -85,7 +85,7 @@ public class Label implements ILabel, ISequenceable, ITextable {
 
   /**
    * write this label to a sequence
-   * 
+   *
    * @param isFirstInSequence
    *          is this the first sequence item?
    * @param isLastInSequence

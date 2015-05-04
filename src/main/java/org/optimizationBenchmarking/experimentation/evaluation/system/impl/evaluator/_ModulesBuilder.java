@@ -23,7 +23,7 @@ final class _ModulesBuilder {
 
   /**
    * Build the module hierarchy
-   * 
+   *
    * @param setup
    *          the setup
    * @param data
@@ -55,8 +55,8 @@ final class _ModulesBuilder {
     if (allModules.length != _EvaluationSetup.TYPE_COUNT) {
       throw new IllegalArgumentException(//
           "Module list array length is " + //$NON-NLS-1$
-              allModules.length + " but should be "//$NON-NLS-1$
-              + _EvaluationSetup.TYPE_COUNT);
+          allModules.length + " but should be "//$NON-NLS-1$
+          + _EvaluationSetup.TYPE_COUNT);
     }
 
     // Check whether we have at least one module.
@@ -66,7 +66,7 @@ final class _ModulesBuilder {
       if (list == null) {
         throw new IllegalArgumentException(
             "List of " + _ModulesBuilder.MODULE_TYPES[i] + //$NON-NLS-1$
-                " is null.");//$NON-NLS-1$
+            " is null.");//$NON-NLS-1$
       }
       if (list.isEmpty()) {
         allModules[i] = null;
@@ -162,7 +162,7 @@ final class _ModulesBuilder {
 
   /**
    * Build the containment and order hierarchy of a list of modules
-   * 
+   *
    * @param entries
    *          the module entries
    * @return the order and containment hierarchies
@@ -270,7 +270,7 @@ final class _ModulesBuilder {
 
   /**
    * create the hierarchy of modules
-   * 
+   *
    * @param logger
    *          the logger
    * @param modules
@@ -390,7 +390,7 @@ final class _ModulesBuilder {
 
   /**
    * Compute all the transitive relations
-   * 
+   *
    * @param relations
    *          the relations array
    * @param modules
@@ -441,7 +441,7 @@ final class _ModulesBuilder {
 
   /**
    * An order error has occurred
-   * 
+   *
    * @param a
    *          the first module
    * @param b
@@ -458,7 +458,7 @@ final class _ModulesBuilder {
 
   /**
    * A containment error has occurred
-   * 
+   *
    * @param a
    *          the first module
    * @param b

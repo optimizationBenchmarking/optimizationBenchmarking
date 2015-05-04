@@ -32,7 +32,7 @@ public final class ExperimentDataTool extends Tool {
 
   /**
    * Get the globally shared experiment data tool instance
-   * 
+   *
    * @return the globally shared experiment data tool instance
    */
   public static final ExperimentDataTool getInstance() {

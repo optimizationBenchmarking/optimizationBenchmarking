@@ -18,7 +18,7 @@ public class ChainedUnary extends UnaryFunction {
 
   /**
    * Create
-   * 
+   *
    * @param inner
    *          the inner function
    * @param outer
@@ -60,7 +60,7 @@ public class ChainedUnary extends UnaryFunction {
 
   /**
    * Chain a function through another one
-   * 
+   *
    * @param inner
    *          the inner function
    * @param outer

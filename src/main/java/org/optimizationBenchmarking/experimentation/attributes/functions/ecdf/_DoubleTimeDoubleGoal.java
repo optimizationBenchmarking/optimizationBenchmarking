@@ -12,7 +12,7 @@ final class _DoubleTimeDoubleGoal extends _Doubles {
 
   /**
    * create the {@code double} list
-   * 
+   *
    * @param timeDim
    *          the time dimension
    * @param goalIndex

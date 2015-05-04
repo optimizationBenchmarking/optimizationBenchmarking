@@ -7,7 +7,7 @@ public interface IInstance extends INamedElement {
 
   /**
    * Get the owning instance set
-   * 
+   *
    * @return the owning instance set
    */
   @Override
@@ -15,7 +15,7 @@ public interface IInstance extends INamedElement {
 
   /**
    * Get the features of this instance
-   * 
+   *
    * @return the features of this instance
    */
   public abstract IFeatureSetting getFeatureSetting();
@@ -23,7 +23,7 @@ public interface IInstance extends INamedElement {
   /**
    * Get the upper boundary of a given dimension for this benchmark
    * instance
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the upper boundary for dimension {@code dim} for this
@@ -34,7 +34,7 @@ public interface IInstance extends INamedElement {
   /**
    * Get the lower boundary of a given dimension for this benchmark
    * instance
-   * 
+   *
    * @param dim
    *          the dimension
    * @return the lower boundary for dimension {@code dim} for this

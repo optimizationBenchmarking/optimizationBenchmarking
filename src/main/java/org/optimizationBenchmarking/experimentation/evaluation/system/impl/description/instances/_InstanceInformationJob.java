@@ -41,7 +41,7 @@ final class _InstanceInformationJob extends DescriptionJob {
 
   /**
    * Create the instance information job
-   * 
+   *
    * @param data
    *          the data
    * @param logger
@@ -75,7 +75,7 @@ final class _InstanceInformationJob extends DescriptionJob {
 
   /**
    * Make the feature figure series
-   * 
+   *
    * @param data
    *          the data
    * @param section

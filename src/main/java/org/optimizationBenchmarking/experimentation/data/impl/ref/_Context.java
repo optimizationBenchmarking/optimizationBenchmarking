@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * the hierarchical context root
- * 
+ *
  * @param <RT>
  *          the result type
  */
@@ -23,10 +23,10 @@ class _Context<RT> extends _FSM {
 
   /** the state names */
   private static final String[] STATE_NAMES = { null,
-      _FSM.STATE_OPEN_NAME,//
-      "closed",//$NON-NLS-1$
-      "compiling",//$NON-NLS-1$
-      "compiled"//$NON-NLS-1$
+    _FSM.STATE_OPEN_NAME,//
+    "closed",//$NON-NLS-1$
+    "compiling",//$NON-NLS-1$
+    "compiled"//$NON-NLS-1$
   };
 
   /** the compiled result */
@@ -34,7 +34,7 @@ class _Context<RT> extends _FSM {
 
   /**
    * create
-   * 
+   *
    * @param owner
    *          the owner
    */
@@ -51,7 +51,7 @@ class _Context<RT> extends _FSM {
 
   /**
    * compile and return the compilation result
-   * 
+   *
    * @return the compilation result
    */
   RT _doCompile() {
@@ -60,7 +60,7 @@ class _Context<RT> extends _FSM {
 
   /**
    * compile and return the compilation result
-   * 
+   *
    * @return the compilation result
    */
   synchronized final RT _compile() {
@@ -81,7 +81,7 @@ class _Context<RT> extends _FSM {
 
   /**
    * Get the result of the compilation procedure
-   * 
+   *
    * @return the result of the compilation procedure
    */
   synchronized final RT _getCompiled() {

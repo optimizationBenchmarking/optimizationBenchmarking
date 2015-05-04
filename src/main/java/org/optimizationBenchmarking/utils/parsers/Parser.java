@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * A parser for a given type
- * 
+ *
  * @param <T>
  *          the type to be parsed
  */
@@ -20,14 +20,14 @@ public abstract class Parser<T> implements Serializable {
 
   /**
    * Get the output type class
-   * 
+   *
    * @return the output type class
    */
   public abstract Class<T> getOutputClass();
 
   /**
    * Parse the string
-   * 
+   *
    * @param string
    *          the string
    * @return the return type
@@ -45,7 +45,7 @@ public abstract class Parser<T> implements Serializable {
 
   /**
    * Parse a given object
-   * 
+   *
    * @param o
    *          the object
    * @return the parse result
@@ -74,7 +74,7 @@ public abstract class Parser<T> implements Serializable {
    * Alternatively, this method must be overridden as final and delegate to
    * another method &mdash; then all parse methods must pipe their results
    * either through this other method or through this method here.
-   * 
+   *
    * @param instance
    *          the object instance
    * @throws Exception

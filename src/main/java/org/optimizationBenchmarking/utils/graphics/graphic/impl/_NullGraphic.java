@@ -75,7 +75,7 @@ final class _NullGraphic extends Graphic {
 
   /**
    * create the null graphic
-   * 
+   *
    * @param logger
    *          the logger
    * @param listener
@@ -98,7 +98,7 @@ final class _NullGraphic extends Graphic {
 
   /**
    * get the font render context
-   * 
+   *
    * @return the font render context
    */
   static final FontRenderContext _frc() {
@@ -110,7 +110,7 @@ final class _NullGraphic extends Graphic {
 
   /**
    * get the basic stroke
-   * 
+   *
    * @return the basic stroke
    */
   private static final Stroke __bs() {
@@ -123,7 +123,7 @@ final class _NullGraphic extends Graphic {
 
   /**
    * get the basic composite
-   * 
+   *
    * @return the basic composite
    */
   private static final Composite __bc() {
@@ -136,7 +136,7 @@ final class _NullGraphic extends Graphic {
 
   /**
    * get the default font
-   * 
+   *
    * @return the default font
    */
   private static final Font __f() {
@@ -299,7 +299,7 @@ final class _NullGraphic extends Graphic {
 
   /**
    * get the affine transform
-   * 
+   *
    * @return the transform
    */
   private final AffineTransform __gt() {
@@ -968,7 +968,7 @@ final class _NullGraphic extends Graphic {
 
     /**
      * create
-     * 
+     *
      * @param f
      *          the font
      */

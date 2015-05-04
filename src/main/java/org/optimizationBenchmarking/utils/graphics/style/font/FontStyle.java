@@ -76,7 +76,7 @@ public final class FontStyle extends FontProperties implements IStyle {
 
   /**
    * Create a new font style
-   * 
+   *
    * @param family
    *          the font family
    * @param size
@@ -106,14 +106,14 @@ public final class FontStyle extends FontProperties implements IStyle {
     super(
         //
         (isItalic ? FontProperties.FONT_FLAG_ITALIC : 0)
-            | (isBold ? FontProperties.FONT_FLAG_BOLD : 0)
-            | (isUnderlined ? FontProperties.FONT_FLAG_UNDERLINED : 0)
-            | ((family == EFontFamily.MONOSPACED) ? FontProperties.FONT_FLAG_MONOSPACE
-                : ((family == EFontFamily.SANS_SERIF) ? FontProperties.FONT_FLAG_SANS_SERIF
-                    : ((family == EFontFamily.SERIF) ? FontProperties.FONT_FLAG_SERIF
-                        : ((family == EFontFamily.DIALOG) ? FontProperties.FONT_FLAG_DIALOG
-                            : ((family == EFontFamily.DIALOG_INPUT) ? FontProperties.FONT_FLAG_DIALOG_INPUT
-                                : 0))))));
+        | (isBold ? FontProperties.FONT_FLAG_BOLD : 0)
+        | (isUnderlined ? FontProperties.FONT_FLAG_UNDERLINED : 0)
+        | ((family == EFontFamily.MONOSPACED) ? FontProperties.FONT_FLAG_MONOSPACE
+            : ((family == EFontFamily.SANS_SERIF) ? FontProperties.FONT_FLAG_SANS_SERIF
+                : ((family == EFontFamily.SERIF) ? FontProperties.FONT_FLAG_SERIF
+                    : ((family == EFontFamily.DIALOG) ? FontProperties.FONT_FLAG_DIALOG
+                        : ((family == EFontFamily.DIALOG_INPUT) ? FontProperties.FONT_FLAG_DIALOG_INPUT
+                            : 0))))));
 
     FontStyleBuilder._checkFontFamily(family);
     FontStyleBuilder._checkSize(size);
@@ -132,7 +132,7 @@ public final class FontStyle extends FontProperties implements IStyle {
     if (id == null) {
       throw new IllegalArgumentException(//
           "ID must not be null or empty, but is '" //$NON-NLS-1$
-              + id + '\'');
+          + id + '\'');
     }
 
     this.m_size = size;
@@ -146,7 +146,7 @@ public final class FontStyle extends FontProperties implements IStyle {
    * Returns a string identifying the resource the font was loaded from, or
    * {@code null} if the font was not obtained from any resource but is
    * system native
-   * 
+   *
    * @return the resource identifier
    */
   public final String getResourceName() {
@@ -156,7 +156,7 @@ public final class FontStyle extends FontProperties implements IStyle {
   /**
    * Get the type of the font resource which was loaded, or {@code null} if
    * the font was not obtained from any resource but is system native
-   * 
+   *
    * @return the font type
    */
   public final EFontType getResourceType() {
@@ -188,14 +188,14 @@ public final class FontStyle extends FontProperties implements IStyle {
       t = ((FontStyle) o);
       return ((this.m_flags == t.m_flags) && //
           (this.m_size == t.m_size) && //
-      (EComparison.equals(this.m_font, t.m_font)));
+          (EComparison.equals(this.m_font, t.m_font)));
     }
     return false;
   }
 
   /**
    * Get the size of this font
-   * 
+   *
    * @return the size of this font
    */
   public final int getSize() {
@@ -206,7 +206,7 @@ public final class FontStyle extends FontProperties implements IStyle {
    * Get a concrete font which is a best fit to this font definition. This
    * font may differ from the specification of the style and may be a
    * platform-based closest match.
-   * 
+   *
    * @return the font belonging to this font style
    */
   public final Font getFont() {
@@ -223,7 +223,7 @@ public final class FontStyle extends FontProperties implements IStyle {
    * create the same physical appearance. The earlier the element in the
    * list which could finally be loaded, the more similar the appearance
    * should be.
-   * 
+   *
    * @return the list of font name or face choices
    */
   public final ArrayListView<String> getFaceChoices() {
@@ -369,7 +369,7 @@ public final class FontStyle extends FontProperties implements IStyle {
 
   /**
    * get the distance between a font style and a given setup
-   * 
+   *
    * @param family
    *          the font family
    * @param bold

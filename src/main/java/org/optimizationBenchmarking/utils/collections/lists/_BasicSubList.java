@@ -4,14 +4,14 @@ import java.util.Collection;
 
 /**
  * The base class for sub lists
- * 
+ *
  * @param <ET>
  *          the element type
  * @param <LT>
  *          the list type
  */
 final class _BasicSubList<ET, LT extends BasicList<ET>> extends
-    BasicList<ET> {
+BasicList<ET> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ final class _BasicSubList<ET, LT extends BasicList<ET>> extends
 
   /**
    * Instantiate the list base
-   * 
+   *
    * @param list
    *          the list to represent
    * @param index

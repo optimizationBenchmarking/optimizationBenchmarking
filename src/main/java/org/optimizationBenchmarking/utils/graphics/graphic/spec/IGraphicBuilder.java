@@ -36,7 +36,7 @@ public interface IGraphicBuilder extends IDocumentProducerJobBuilder {
 
   /**
    * Set the size of the graphic
-   * 
+   *
    * @param size
    *          the physical dimensions, i.e., the graphic's size
    * @return this builder, for chaining purposes
@@ -72,7 +72,7 @@ public interface IGraphicBuilder extends IDocumentProducerJobBuilder {
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#DEFAULT_DPI
    * default value} for DPI is used.
    * </p>
-   * 
+   *
    * @param dotsPerInch
    *          the dots per inch, must be between {@code 26} and
    *          {@code 100000}
@@ -113,7 +113,7 @@ public interface IGraphicBuilder extends IDocumentProducerJobBuilder {
    * {@link org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#DEFAULT_COLOR_MODEL
    * default color model} is used.
    * </p>
-   * 
+   *
    * @param colorModel
    *          the color model
    * @return this builder
@@ -134,7 +134,7 @@ public interface IGraphicBuilder extends IDocumentProducerJobBuilder {
    * {@value org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat#DEFAULT_QUALITY}
    * .
    * </p>
-   * 
+   *
    * @param quality
    *          the quality of the produced image
    * @return this builder
@@ -143,7 +143,7 @@ public interface IGraphicBuilder extends IDocumentProducerJobBuilder {
 
   /**
    * Create the graphic
-   * 
+   *
    * @return the graphic
    */
   @Override

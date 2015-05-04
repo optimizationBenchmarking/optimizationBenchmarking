@@ -17,7 +17,7 @@ public class DataScalar extends DataElement implements IDataScalar {
 
   /**
    * create the scalar data
-   * 
+   *
    * @param owner
    *          the owner
    * @param id

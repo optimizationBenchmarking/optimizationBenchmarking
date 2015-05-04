@@ -41,7 +41,7 @@ public enum EScreenSize implements IMedium {
 
   /** the set of screen sizes */
   public static final ArraySetView<EScreenSize> INSTANCES = //
-  new ArraySetView<>(EScreenSize.values());
+      new ArraySetView<>(EScreenSize.values());
 
   /** the width */
   private final int m_width;
@@ -50,7 +50,7 @@ public enum EScreenSize implements IMedium {
 
   /**
    * create the screen size
-   * 
+   *
    * @param width
    *          the width
    * @param height
@@ -63,7 +63,7 @@ public enum EScreenSize implements IMedium {
 
   /**
    * Get the screen width
-   * 
+   *
    * @return the screen width
    */
   public final int getWidth() {
@@ -72,7 +72,7 @@ public enum EScreenSize implements IMedium {
 
   /**
    * Get the screen height
-   * 
+   *
    * @return the screen height
    */
   public final int getHeight() {
@@ -82,7 +82,7 @@ public enum EScreenSize implements IMedium {
   /**
    * Obtain the physical dimensions of this screen size if the given
    * {@code dpi}s are assumed
-   * 
+   *
    * @param dpi
    *          the dots (pixels) per inch
    * @return the dimension

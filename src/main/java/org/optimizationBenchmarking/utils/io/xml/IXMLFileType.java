@@ -13,7 +13,7 @@ public interface IXMLFileType extends IFileType {
 
   /**
    * Return the namespace {@link java.net.URI URI}
-   * 
+   *
    * @return the namespace {@link java.net.URI URI}
    * @see #getNamespace()
    * @see #getSchemaSource()
@@ -22,7 +22,7 @@ public interface IXMLFileType extends IFileType {
 
   /**
    * Get the namespace as string
-   * 
+   *
    * @return the namespace as string
    * @see #getNamespaceURI()
    */
@@ -35,7 +35,7 @@ public interface IXMLFileType extends IFileType {
    * type. However, if the schema is present as resource, the URL could
    * also point to the resource holding the schema. Then the schema can be
    * loaded without requiring an internet connection.
-   * 
+   *
    * @return the schema URL
    * @throws IOException
    *           if i/o fails

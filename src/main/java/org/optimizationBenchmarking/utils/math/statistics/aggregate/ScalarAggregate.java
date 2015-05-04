@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.math.BasicNumber;
  * An aggregate with a single, scale result.
  */
 public abstract class ScalarAggregate extends _StatefulNumber implements
-    IAggregate {
+IAggregate {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -20,7 +20,7 @@ public abstract class ScalarAggregate extends _StatefulNumber implements
    * Visit a given {@code long}. By default, this method forwards to
    * {@link #append(double)}, but it may be overridden to do some special
    * computation for {@code long} values.
-   * 
+   *
    * @param value
    *          the value to visit
    */
@@ -31,7 +31,7 @@ public abstract class ScalarAggregate extends _StatefulNumber implements
    * Visit a given {@code int}. By default, this method forwards to
    * {@link #append(long)}, but it may be overridden to do some special
    * computation for {@code int} values.
-   * 
+   *
    * @param value
    *          the value to visit
    */
@@ -44,7 +44,7 @@ public abstract class ScalarAggregate extends _StatefulNumber implements
    * Visit a given {@code short}. By default, this method forwards to
    * {@link #append(long)}, but it may be overridden to do some special
    * computation for {@code short} values.
-   * 
+   *
    * @param value
    *          the value to visit
    */
@@ -57,7 +57,7 @@ public abstract class ScalarAggregate extends _StatefulNumber implements
    * Visit a given {@code byte}. By default, this method forwards to
    * {@link #append(long)}, but it may be overridden to do some special
    * computation for {@code byte} values.
-   * 
+   *
    * @param value
    *          the value to visit
    */

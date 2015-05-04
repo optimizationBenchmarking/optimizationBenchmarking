@@ -30,7 +30,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
  * <p>
  * The pie chart as JFreeChar-facade.
  * </p>
- * 
+ *
  * @param <C>
  *          the chart type
  * @param <D>
@@ -71,10 +71,11 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
 
   /**
    * Create a new line chart
-   * 
+   *
    * @param chart
    *          the chart to paint
    */
+  @SuppressWarnings("unchecked")
   _JFreeChartRenderer(final C chart) {
     super();
 
@@ -111,7 +112,7 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
 
   /**
    * create the data set
-   * 
+   *
    * @param chart
    *          the chart
    * @return the data set
@@ -120,7 +121,7 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
 
   /**
    * create the chart
-   * 
+   *
    * @param dataset
    *          the data set
    * @param chart
@@ -131,7 +132,7 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
 
   /**
    * Render this chart
-   * 
+   *
    * @param graphic
    *          the graphic to render on
    */
@@ -148,7 +149,7 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
 
   /**
    * Render this chart
-   * 
+   *
    * @param graphic
    *          the graphic to render on
    * @param bounds
@@ -175,7 +176,7 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
 
   /**
    * paint the plot as legend
-   * 
+   *
    * @param graphics
    *          the graphics
    * @param bounds
@@ -198,7 +199,7 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
 
   /**
    * Get the vertical alignment for legends
-   * 
+   *
    * @return the vertical alignment for legends
    */
   VerticalAlignment _getLegendVerticalAlignment() {
@@ -207,7 +208,7 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
 
   /**
    * Calculate bounds for a legend from a bounding rectangle
-   * 
+   *
    * @param bounds
    *          the bounds
    * @return the legend bounds
@@ -229,7 +230,7 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
 
   /**
    * Creates a rectangle that is aligned to the frame.
-   * 
+   *
    * @param dimensions
    *          the dimensions for the rectangle.
    * @param frame
@@ -272,7 +273,7 @@ abstract class _JFreeChartRenderer<C extends CompiledChart, D extends Dataset, P
 
   /**
    * paint a legend
-   * 
+   *
    * @param legend
    *          the legend
    * @param graphics

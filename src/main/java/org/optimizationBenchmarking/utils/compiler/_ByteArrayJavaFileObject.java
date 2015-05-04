@@ -19,7 +19,7 @@ final class _ByteArrayJavaFileObject extends SimpleJavaFileObject {
   /**
    * Registers the compiled class object under URI containing the class
    * full name
-   * 
+   *
    * @param name
    *          Full name of the compiled class
    * @param dkind
@@ -34,7 +34,7 @@ final class _ByteArrayJavaFileObject extends SimpleJavaFileObject {
   /**
    * Will be used by our file manager to get the byte code that can be put
    * into memory to instantiate our class
-   * 
+   *
    * @return compiled byte code
    */
   public final synchronized byte[] getBytes() {

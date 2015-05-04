@@ -21,7 +21,7 @@ abstract class _WorkerThread extends Thread {
 
   /**
    * create
-   * 
+   *
    * @param name
    *          the thread's name
    * @param log
@@ -32,8 +32,8 @@ abstract class _WorkerThread extends Thread {
     this.m_log = log;
 
     try {// Worker threads can have a low priority. They are only
-         // _required_ to do stuff when the main threads are blocked.
-         // Otherwise, they _may_ do stuff.
+      // _required_ to do stuff when the main threads are blocked.
+      // Otherwise, they _may_ do stuff.
       this.setPriority(Thread.MIN_PRIORITY);
     } catch (final Throwable t) {
       // if we cannot set the priority, it is also OK

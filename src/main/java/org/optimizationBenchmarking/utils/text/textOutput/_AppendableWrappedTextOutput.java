@@ -5,11 +5,11 @@ package org.optimizationBenchmarking.utils.text.textOutput;
  * {@link java.lang.Appendable}.
  */
 final class _AppendableWrappedTextOutput extends
-    _AppendableWrappedTextOutputBase<Appendable> {
+_AppendableWrappedTextOutputBase<Appendable> {
 
   /**
    * Create a wrapped text output
-   * 
+   *
    * @param out
    *          the output
    */

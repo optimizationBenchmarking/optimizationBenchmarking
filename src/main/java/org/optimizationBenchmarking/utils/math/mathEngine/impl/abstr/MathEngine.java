@@ -17,7 +17,7 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
 
   /**
    * create
-   * 
+   *
    * @param logger
    *          the logger to write log information to, or {@code null} if no
    *          log output should be created
@@ -28,18 +28,17 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
 
   /**
    * do close
-   * 
+   *
    * @throws IOException
    *           if it must
    */
-  @SuppressWarnings("unused")
   protected void doClose() throws IOException {
     //
   }
 
   /**
    * Close the engine
-   * 
+   *
    * @throws IOException
    *           if it must
    */
@@ -61,7 +60,7 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
 
   /**
    * Create a variable
-   * 
+   *
    * @return the variable
    */
   protected final IVariable variableCreate() {
@@ -76,7 +75,7 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
 
   /**
    * validate a variable
-   * 
+   *
    * @param variable
    *          the variable
    * @return the variable
@@ -99,12 +98,12 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
     if (var.m_deleted) {
       throw new IllegalArgumentException(//
           "_Variable " + //$NON-NLS-1$
-              var.m_id + " has already been deleted");//$NON-NLS-1$
+          var.m_id + " has already been deleted");//$NON-NLS-1$
     }
     if (var.m_engine != this) {
       throw new IllegalArgumentException(//
           "_Variable " + //$NON-NLS-1$
-              var.m_id + " is owned by another engine."); //$NON-NLS-1$
+          var.m_id + " is owned by another engine."); //$NON-NLS-1$
     }
     this.checkState();
     return var;
@@ -112,7 +111,7 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
 
   /**
    * Use the variable: get its name
-   * 
+   *
    * @param variable
    *          the variable
    * @return the variable's name
@@ -123,7 +122,7 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
 
   /**
    * Use the variable: get its type
-   * 
+   *
    * @param variable
    *          the variable
    * @return the variable's type
@@ -134,7 +133,7 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
 
   /**
    * Set the type of a variable
-   * 
+   *
    * @param variable
    *          the variable
    * @param type
@@ -147,7 +146,7 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
 
   /**
    * Delete a variable
-   * 
+   *
    * @param variable
    *          the variable
    */

@@ -27,7 +27,7 @@ abstract class _List {
 
   /**
    * create the {@code long} list
-   * 
+   *
    * @param timeDim
    *          the time dimension
    * @param goalIndex
@@ -43,7 +43,7 @@ abstract class _List {
 
   /**
    * add a run
-   * 
+   *
    * @param run
    *          the run to add
    */
@@ -51,7 +51,7 @@ abstract class _List {
 
   /**
    * Convert the data to a matrix
-   * 
+   *
    * @return the matrix
    */
   abstract DoubleMatrix1D _toMatrix();

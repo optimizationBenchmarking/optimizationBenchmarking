@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 public class TableHeaderRow extends TableRow {
   /**
    * Create the table header row
-   * 
+   *
    * @param owner
    *          the owning table header
    */

@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
 
 /**
  * the hash map iterator
- * 
+ *
  * @param <K>
  *          the key type
  * @param <V>
@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
  *          the entry type
  */
 final class _ObjectMapIterator<K, V, NT extends ChainedMapEntry<K, V>>
-    extends BasicIterator<NT> {
+extends BasicIterator<NT> {
 
   /** the map */
   private final ObjectMap<K, V, NT> m_map;
@@ -31,7 +31,7 @@ final class _ObjectMapIterator<K, V, NT extends ChainedMapEntry<K, V>>
 
   /**
    * the iterator
-   * 
+   *
    * @param map
    *          the map
    */
@@ -72,7 +72,7 @@ final class _ObjectMapIterator<K, V, NT extends ChainedMapEntry<K, V>>
     if ((this.m_next = e.m_next) == null) {
       t = this.m_map.m_table;
       while (((this.m_index < t.length) && //
-      (((this.m_next = (t[this.m_index++]))) == null))) {//
+          (((this.m_next = (t[this.m_index++]))) == null))) {//
       }
     }
     this.m_current = e;

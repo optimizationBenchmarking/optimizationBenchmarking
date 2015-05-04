@@ -7,25 +7,25 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
 
 /**
  * The negation of a condition
- * 
+ *
  * @param <T>
  *          the element type this condition applies to.
  */
 public final class NotPredicate<T> extends HashObject implements
-    IPredicate<T>, Serializable {
+IPredicate<T>, Serializable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /**
    * the predicate to negate
-   * 
+   *
    * @serial the predicate to negate (must not be {@code null}
    */
   private final IPredicate<? super T> m_c;
 
   /**
    * The condition
-   * 
+   *
    * @param c
    *          the predicate to negate (must not be {@code null}
    */

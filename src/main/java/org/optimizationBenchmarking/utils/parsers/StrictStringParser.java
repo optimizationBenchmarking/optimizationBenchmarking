@@ -26,7 +26,7 @@ public class StrictStringParser extends Parser<String> {
 
   /**
    * parse the string, but don't validate yet
-   * 
+   *
    * @param string
    *          the string
    * @return the result
@@ -92,7 +92,7 @@ public class StrictStringParser extends Parser<String> {
               val += code;
               data[i] = ((char) (val));
               System
-                  .arraycopy(data, (i + 6), data, (i + 1), (end - i - 6));
+              .arraycopy(data, (i + 6), data, (i + 1), (end - i - 6));
               end -= 5;
             }
             continue;
@@ -175,14 +175,14 @@ public class StrictStringParser extends Parser<String> {
     final String ret;
 
     ret = ((o == null) ? EmptyUtils.EMPTY_STRING : //
-        this.__parseString(String.valueOf(o)));
+      this.__parseString(String.valueOf(o)));
     this.validate(ret);
     return ret;
   }
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -191,7 +191,7 @@ public class StrictStringParser extends Parser<String> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

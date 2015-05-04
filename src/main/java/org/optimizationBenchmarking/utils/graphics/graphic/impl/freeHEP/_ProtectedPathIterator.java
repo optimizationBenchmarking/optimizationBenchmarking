@@ -10,7 +10,7 @@ final class _ProtectedPathIterator implements PathIterator {
 
   /**
    * create
-   * 
+   *
    * @param p
    *          the iterator wrap
    */

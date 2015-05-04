@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
  * A section of a table, such as a table body, header, or footer
  */
 public abstract class TableSection extends DocumentPart implements
-    ITableSection {
+ITableSection {
 
   /** the total number of rows */
   int m_rowCount;
@@ -23,7 +23,7 @@ public abstract class TableSection extends DocumentPart implements
 
   /**
    * Create a table section
-   * 
+   *
    * @param owner
    *          the owning FSM
    */
@@ -35,7 +35,7 @@ public abstract class TableSection extends DocumentPart implements
 
   /**
    * Get the current number of rows in this table section
-   * 
+   *
    * @return the current number of rows in this table section
    */
   public final int getRowCount() {
@@ -50,7 +50,7 @@ public abstract class TableSection extends DocumentPart implements
 
   /**
    * Create a table row
-   * 
+   *
    * @return the new row
    */
   abstract TableRow createRow();
@@ -80,7 +80,7 @@ public abstract class TableSection extends DocumentPart implements
       if (b != this.m_rowCount) {
         throw new IllegalStateException(//
             "Inconsistency of table cells row span allocation: Table section ends after row " //$NON-NLS-1$
-                + this.m_rowCount + " but one cell spans to row " + b); //$NON-NLS-1$
+            + this.m_rowCount + " but one cell spans to row " + b); //$NON-NLS-1$
       }
     }
 
@@ -132,7 +132,7 @@ public abstract class TableSection extends DocumentPart implements
 
   /**
    * Get (and clear) the separator flag
-   * 
+   *
    * @return {@code true} if a separator should be printed, {@code false}
    *         otherwise
    */

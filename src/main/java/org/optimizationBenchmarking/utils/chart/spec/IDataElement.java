@@ -8,7 +8,7 @@ public interface IDataElement extends ITitledElement {
 
   /**
    * Set the color of the data element.
-   * 
+   *
    * @param color
    *          the color
    */
@@ -17,7 +17,7 @@ public interface IDataElement extends ITitledElement {
   /**
    * Set the stroke of the data element. If you do not set a stroke, a
    * default stroke will be used.
-   * 
+   *
    * @param stroke
    *          the stroke
    */

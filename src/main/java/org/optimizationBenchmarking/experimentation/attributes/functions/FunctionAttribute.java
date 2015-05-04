@@ -13,16 +13,16 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * An attribute which computes a function over a given data set.
- * 
+ *
  * @param <DT>
  *          the data type
  */
 public abstract class FunctionAttribute<DT extends IElementSet> extends
-    Attribute<DT, IMatrix> implements ISemanticComponent {
+Attribute<DT, IMatrix> implements ISemanticComponent {
 
   /**
    * Create the function attribute
-   * 
+   *
    * @param type
    *          the attribute type
    */
@@ -58,7 +58,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
 
   /**
    * Append a long version of the name of this function
-   * 
+   *
    * @param textOut
    *          the text output device
    * @param textCase
@@ -74,7 +74,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * Append the title of the x-axis to a text output device. Do the work of
    * {@link #appendXAxisTitle(ITextOutput, ETextCase)} in case its
    * parameter is a plain text output.
-   * 
+   *
    * @param textOut
    *          the text output device
    * @param textCase
@@ -92,7 +92,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * {@link #appendXAxisTitle(ITextOutput, ETextCase)} in case its
    * parameter is an instance of
    * {@link org.optimizationBenchmarking.utils.document.spec.IMath}.
-   * 
+   *
    * @param math
    *          the mathematics output device
    */
@@ -107,7 +107,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * {@link org.optimizationBenchmarking.utils.document.spec.IComplexText},
    * in which case this function may use all the capabilities of this
    * interface, foremost the ability to include mathematical formulas.
-   * 
+   *
    * @param textOut
    *          the text output to append the axis title to, potentially an
    *          instance of
@@ -135,7 +135,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * Append the title of the y-axis to a text output device. Do the work of
    * {@link #appendYAxisTitle(ITextOutput, ETextCase)} in case its
    * parameter is a plain text output.
-   * 
+   *
    * @param textOut
    *          the text output device
    * @param textCase
@@ -153,7 +153,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * {@link #appendYAxisTitle(ITextOutput, ETextCase)} in case its
    * parameter is an instance of
    * {@link org.optimizationBenchmarking.utils.document.spec.IMath}.
-   * 
+   *
    * @param math
    *          the mathematics output device
    */
@@ -168,7 +168,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * {@link org.optimizationBenchmarking.utils.document.spec.IComplexText},
    * in which case this function may use all the capabilities of this
    * interface, foremost the ability to include mathematical formulas.
-   * 
+   *
    * @param textOut
    *          the text output to append the axis title to, potentially an
    *          instance of

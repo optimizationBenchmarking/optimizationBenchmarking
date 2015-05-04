@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentBody;
 final class _LaTeXDocumentBody extends DocumentBody {
   /**
    * Create a document body
-   * 
+   *
    * @param owner
    *          the owning document
    */

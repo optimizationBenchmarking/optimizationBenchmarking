@@ -12,7 +12,7 @@ final class _XHTML10Superscript extends Superscript {
 
   /**
    * create the superscript element
-   * 
+   *
    * @param owner
    *          the owner
    */

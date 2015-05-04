@@ -19,7 +19,7 @@ final class _ProducerConsumerInputStream extends InputStream {
 
   /**
    * Create the stream
-   * 
+   *
    * @param buffer
    *          the buffer to read from
    */

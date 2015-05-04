@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 public class TableBody extends TableSection {
   /**
    * Create a table body
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

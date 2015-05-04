@@ -5,7 +5,7 @@ public class Subscript extends PlainText {
 
   /**
    * Create a sub-script text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    */

@@ -14,7 +14,7 @@ public final class ExperimentFunction {
 
   /**
    * Create the experiment function
-   * 
+   *
    * @param experiment
    *          the experiment
    * @param function
@@ -28,7 +28,7 @@ public final class ExperimentFunction {
 
   /**
    * Get the experiment.
-   * 
+   *
    * @return the experiment from which the {@link #getFunction() function}
    *         was computed
    */
@@ -38,7 +38,7 @@ public final class ExperimentFunction {
 
   /**
    * Get the function
-   * 
+   *
    * @return the function over the {@link #getExperiment() experiment}
    */
   public final IMatrix getFunction() {

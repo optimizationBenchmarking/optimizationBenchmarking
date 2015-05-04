@@ -29,7 +29,7 @@ final class _WrappedMatrix2D extends AbstractMatrix {
 
   /**
    * create
-   * 
+   *
    * @param matrix
    *          the matrix to wrap
    * @param hasStart
@@ -78,7 +78,7 @@ final class _WrappedMatrix2D extends AbstractMatrix {
 
   /**
    * assert whether or not a coordinate is valid
-   * 
+   *
    * @param v
    *          the coordinate
    */
@@ -237,6 +237,6 @@ final class _WrappedMatrix2D extends AbstractMatrix {
     }
     throw new IllegalArgumentException(//
         ((("Invalid row index: " + row) + //$NON-NLS-1$
-        ", must be in (0, ") + this.m()) + '.');//$NON-NLS-1$        
+            ", must be in (0, ") + this.m()) + '.');//$NON-NLS-1$
   }
 }

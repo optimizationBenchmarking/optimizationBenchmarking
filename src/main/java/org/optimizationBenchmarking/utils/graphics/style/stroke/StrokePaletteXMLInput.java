@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 
 /** the stroke palette xml input driver */
 public final class StrokePaletteXMLInput extends
-    XMLInputTool<StrokePaletteBuilder> {
+XMLInputTool<StrokePaletteBuilder> {
 
   /** create */
   StrokePaletteXMLInput() {
@@ -53,9 +53,9 @@ public final class StrokePaletteXMLInput extends
 
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
-          .rethrow(//
-              "Error during loading of XML Schema for the stroke palette xml.", //$NON-NLS-1$
-              true, rec);
+      .rethrow(//
+          "Error during loading of XML Schema for the stroke palette xml.", //$NON-NLS-1$
+          true, rec);
     }
   }
 
@@ -74,7 +74,7 @@ public final class StrokePaletteXMLInput extends
 
   /**
    * get the instance of the {@link StrokePaletteXMLInput}
-   * 
+   *
    * @return the instance of the {@link StrokePaletteXMLInput}
    */
   public static final StrokePaletteXMLInput getInstance() {

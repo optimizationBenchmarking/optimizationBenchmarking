@@ -5,13 +5,13 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IDesc
 
 /** The description job builder implementation */
 final class _DescriptionJobBuilder
-    extends
-    _EvaluationJobBuilder<IExperimentSet, DescriptionModule, DescriptionJob, _DescriptionJobBuilder>
-    implements IDescriptionJobBuilder {
+extends
+_EvaluationJobBuilder<IExperimentSet, DescriptionModule, DescriptionJob, _DescriptionJobBuilder>
+implements IDescriptionJobBuilder {
 
   /**
    * create the job builder
-   * 
+   *
    * @param module
    *          the module
    */

@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a character sequence based on a char array */
 public final class CharArrayCharSequence implements CharSequence,
-    ITextable {
+ITextable {
 
   /** the data */
   private final char[] m_data;
@@ -17,7 +17,7 @@ public final class CharArrayCharSequence implements CharSequence,
 
   /**
    * Instantiate
-   * 
+   *
    * @param data
    *          the data
    * @param start
@@ -45,7 +45,7 @@ public final class CharArrayCharSequence implements CharSequence,
 
   /**
    * Instantiate
-   * 
+   *
    * @param data
    *          the data
    */
@@ -93,7 +93,7 @@ public final class CharArrayCharSequence implements CharSequence,
 
   /**
    * Copy the characters of this sequence to a given array
-   * 
+   *
    * @param srcStart
    *          the inclusive start index inside in this sequence
    * @param srcEnd

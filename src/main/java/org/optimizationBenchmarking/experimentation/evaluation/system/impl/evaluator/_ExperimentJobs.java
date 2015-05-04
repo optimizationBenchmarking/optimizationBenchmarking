@@ -12,7 +12,7 @@ final class _ExperimentJobs extends _PartJob {
 
   /**
    * create the experiment statistics module
-   * 
+   *
    * @param data
    *          the data
    * @param logger

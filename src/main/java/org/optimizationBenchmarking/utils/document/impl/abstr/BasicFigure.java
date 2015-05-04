@@ -53,9 +53,9 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
     BasicFigure.STATE_NAMES[BasicFigure.STATE_CAPTION_CREATED] = "captionCreated"; //$NON-NLS-1$
     BasicFigure.STATE_NAMES[BasicFigure.STATE_CAPTION_BEFORE_OPEN] = "captionBeforeOpen"; //$NON-NLS-1$
     BasicFigure.STATE_NAMES[BasicFigure.STATE_CAPTION_OPENED] = "captionOpened"; //$NON-NLS-1$
-    BasicFigure.STATE_NAMES[BasicFigure.STATE_CAPTION_CLOSED] = "captionClosed"; //$NON-NLS-1$    
+    BasicFigure.STATE_NAMES[BasicFigure.STATE_CAPTION_CLOSED] = "captionClosed"; //$NON-NLS-1$
     BasicFigure.STATE_NAMES[BasicFigure.STATE_GRAPHIC_CREATED] = "graphicCreated"; //$NON-NLS-1$
-    BasicFigure.STATE_NAMES[BasicFigure.STATE_GRAPHIC_CLOSED] = "graphicClosed"; //$NON-NLS-1$    
+    BasicFigure.STATE_NAMES[BasicFigure.STATE_GRAPHIC_CLOSED] = "graphicClosed"; //$NON-NLS-1$
   }
 
   /** the default figure path offset for graphics */
@@ -78,7 +78,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
   /**
    * Create a figure
-   * 
+   *
    * @param owner
    *          the owning section body
    * @param index
@@ -113,8 +113,8 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
         this.m_suggestion = rpath;
       } else {
         throw new IllegalArgumentException(//
-            "The owner of a figure must be either a section body or a figure series, but you specified a "//$NON-NLS-1$ 
-                + owner);
+            "The owner of a figure must be either a section body or a figure series, but you specified a "//$NON-NLS-1$
+            + owner);
       }
     }
 
@@ -135,7 +135,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
   /**
    * Obtain the size of this figure, relative to the parent document
-   * 
+   *
    * @return the size of this figure
    */
   public final EFigureSize getSize() {
@@ -144,7 +144,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
   /**
    * Create the figure caption
-   * 
+   *
    * @return the figure caption
    */
   abstract BasicFigureCaption createCaption();
@@ -204,7 +204,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
   /**
    * This method is called when the figure is closed, one single time
-   * 
+   *
    * @param size
    *          the figure size
    * @param files
@@ -235,7 +235,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
   /**
    * the graphic of this figure has been closed
-   * 
+   *
    * @param result
    *          the result files
    */
@@ -306,7 +306,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
   /**
    * Create the graphic
-   * 
+   *
    * @return the graphic
    */
   private final Graphic __graphic() {

@@ -222,7 +222,7 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * </ol>
  */
 public abstract class MatrixIterator2D extends AbstractMatrix implements
-    Iterator<Number> {
+Iterator<Number> {
 
   /** the matrices to iterate over */
   final IMatrix[] m_matrices;
@@ -247,7 +247,7 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
 
   /**
    * Create a new 2d matrix iterator
-   * 
+   *
    * @param matrices
    *          the list of matrices
    * @param xDim
@@ -267,7 +267,7 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
 
   /**
    * Check a {@code double} and throw an exception if we encounter NaN
-   * 
+   *
    * @param d
    *          the double
    * @return {@code d}
@@ -281,7 +281,7 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
 
   /**
    * Create the iterator to iterate over a set of matrices.
-   * 
+   *
    * @param xDim
    *          the {@code x}-dimension
    * @param yDim
@@ -312,7 +312,7 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
       if (matrix == null) {
         throw new IllegalArgumentException(//
             "Matrix " + i + //$NON-NLS-1$
-                " cannot be null.");//$NON-NLS-1$
+            " cannot be null.");//$NON-NLS-1$
       }
 
       try {
@@ -346,7 +346,7 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
    * Get the maximum value that {@link #n()} can take on in the case that
    * data is available from matrices for a given value of {@link #next() x}
    * .
-   * 
+   *
    * @return the maximum value of {@link #n()}
    */
   public final int nMax() {
@@ -355,7 +355,7 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
 
   /**
    * there is always exactly one row in this matrix
-   * 
+   *
    * @return 1
    */
   @Override
@@ -366,7 +366,7 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
   /**
    * Get the current number of columns. This may be less than
    * {@link #nMax()} but is always <code>&gt;0</code>.
-   * 
+   *
    * @return the current number of columns
    */
   @Override
@@ -391,26 +391,26 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
    * Obtain the next value of the {@code x} coordinate. Only after this
    * method has been called, the common matrix operations are permissible
    * on this instance.
-   * 
+   *
    * @return the next value of the {@code x} coordinate
    */
   @Override
   public final BasicNumber next() {
     check: {
-      if (this.m_hasNext) {
-        break check;
-      }
-      this._findNext();
-      if (this.m_hasNext) {
-        break check;
-      }
-      throw new NoSuchElementException(//
-          "The MatrixIterator2D does not contain another element. You should have checked hasNext() before invoking next()."//$NON-NLS-1$
-      );
+    if (this.m_hasNext) {
+      break check;
     }
-    this.m_hasNext = false;
+    this._findNext();
+    if (this.m_hasNext) {
+      break check;
+    }
+    throw new NoSuchElementException(//
+        "The MatrixIterator2D does not contain another element. You should have checked hasNext() before invoking next()."//$NON-NLS-1$
+        );
+  }
+  this.m_hasNext = false;
 
-    return this.m_x;
+  return this.m_x;
   }
 
   /** {@inheritDoc} */

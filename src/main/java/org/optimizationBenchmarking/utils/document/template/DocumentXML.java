@@ -42,11 +42,11 @@ public enum DocumentXML implements IXMLFileType {
   static final String ELEMENT_BR = "br"; //$NON-NLS-1$
 
   /** the byte element */
-  static final String ELEMENT_BYTE = "byte"; //$NON-NLS-1$  
+  static final String ELEMENT_BYTE = "byte"; //$NON-NLS-1$
   /** the short element */
-  static final String ELEMENT_SHORT = "short"; //$NON-NLS-1$  
+  static final String ELEMENT_SHORT = "short"; //$NON-NLS-1$
   /** the int element */
-  static final String ELEMENT_INT = "int"; //$NON-NLS-1$  
+  static final String ELEMENT_INT = "int"; //$NON-NLS-1$
   /** the long element */
   static final String ELEMENT_LONG = "long"; //$NON-NLS-1$
   /** the float element */
@@ -127,7 +127,7 @@ public enum DocumentXML implements IXMLFileType {
     DocumentXML.VAL_CITATION_MODE[ECitationMode.ID.ordinal()] = "id";//$NON-NLS-1$
     DocumentXML.VAL_CITATION_MODE[ECitationMode.AUTHORS_AND_ID.ordinal()] = "authorsAndID";//$NON-NLS-1$
     DocumentXML.VAL_CITATION_MODE[ECitationMode.AUTHORS_AND_YEAR.ordinal()] = "authorsAndYear";//$NON-NLS-1$
-    DocumentXML.VAL_CITATION_MODE[ECitationMode.AUTHORS.ordinal()] = "authors";//$NON-NLS-1$         
+    DocumentXML.VAL_CITATION_MODE[ECitationMode.AUTHORS.ordinal()] = "authors";//$NON-NLS-1$
     DocumentXML.VAL_CITATION_MODE[ECitationMode.TITLE.ordinal()] = "title";//$NON-NLS-1$
   }
 
@@ -231,7 +231,7 @@ public enum DocumentXML implements IXMLFileType {
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_EQUIVALENT.ordinal()] = "nequiv"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_APPROXIMATELY.ordinal()] = "napprox"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_APPROXIMATELY_EQUAL
-        .ordinal()] = "napproxe"; //$NON-NLS-1$
+                            .ordinal()] = "napproxe"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_PROPROTIONAL_TO.ordinal()] = "nprop"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.ELEMENT_OF.ordinal()] = "in"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_ELEMENT_OF.ordinal()] = "nin"; //$NON-NLS-1$
@@ -239,19 +239,19 @@ public enum DocumentXML implements IXMLFileType {
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_SUBSET_OF.ordinal()] = "nsubset"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.SUBSET_OF_OR_EQUAL.ordinal()] = "subsete"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_SUBSET_OF_OR_EQUAL
-        .ordinal()] = "nsubsete"; //$NON-NLS-1$
+                            .ordinal()] = "nsubsete"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.DEFINED_AS.ordinal()] = "def"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.APPROXIMATED_AS.ordinal()] = "estim"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.PRECEDES.ordinal()] = "pred"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_PRECEDES.ordinal()] = "npred"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.PRECEDES_OR_EQUAL.ordinal()] = "prede"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_PRECEDES_OR_EQUAL
-        .ordinal()] = "npred"; //$NON-NLS-1$
+                            .ordinal()] = "npred"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.SUCCEEDS.ordinal()] = "succ"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_SUCCEEDS.ordinal()] = "nsucc"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.SUCCEEDS_OR_EQUAL.ordinal()] = "succe"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_SUCCEEDS_OR_EQUAL
-        .ordinal()] = "nsucce"; //$NON-NLS-1$
+                            .ordinal()] = "nsucce"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.SIMILAR.ordinal()] = "sim"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_SIMILAR.ordinal()] = "nsim"; //$NON-NLS-1$
 
@@ -274,7 +274,7 @@ public enum DocumentXML implements IXMLFileType {
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_EQUIVALENT.ordinal()] = "\u2262"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_APPROXIMATELY.ordinal()] = "\u2249"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_APPROXIMATELY_EQUAL
-        .ordinal()] = "\u2247"; //$NON-NLS-1$
+                             .ordinal()] = "\u2247"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_PROPROTIONAL_TO.ordinal()] = "\u00ac\u221d"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.ELEMENT_OF.ordinal()] = "\u2208"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_ELEMENT_OF.ordinal()] = "\u2209"; //$NON-NLS-1$
@@ -282,26 +282,26 @@ public enum DocumentXML implements IXMLFileType {
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUBSET_OF.ordinal()] = "\u2284"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.SUBSET_OF_OR_EQUAL.ordinal()] = "\u2286"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUBSET_OF_OR_EQUAL
-        .ordinal()] = "\u2288"; //$NON-NLS-1$
+                             .ordinal()] = "\u2288"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.DEFINED_AS.ordinal()] = "\u225c"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.APPROXIMATED_AS.ordinal()] = "\u2259"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.PRECEDES.ordinal()] = "\u227a"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_PRECEDES.ordinal()] = "\u2280"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.PRECEDES_OR_EQUAL.ordinal()] = "\u227c"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_PRECEDES_OR_EQUAL
-        .ordinal()] = "\u22e0"; //$NON-NLS-1$
+                             .ordinal()] = "\u22e0"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.SUCCEEDS.ordinal()] = "\u227b"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUCCEEDS.ordinal()] = "\u2281"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.SUCCEEDS_OR_EQUAL.ordinal()] = "\u227d"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUCCEEDS_OR_EQUAL
-        .ordinal()] = "\u22e1"; //$NON-NLS-1$
+                             .ordinal()] = "\u22e1"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.SIMILAR.ordinal()] = "\u223c"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SIMILAR.ordinal()] = "\u2242"; //$NON-NLS-1$
   }
 
   /**
    * Get the text case
-   * 
+   *
    * @param string
    *          the name of the text
    * @param defaultCase
@@ -324,13 +324,13 @@ public enum DocumentXML implements IXMLFileType {
 
     throw new IllegalArgumentException(//
         "Text case '" + string + //$NON-NLS-1$
-            "' is unknown. Valid values are " + //$NON-NLS-1$
-            Arrays.toString(DocumentXML.VAL_TEXT_CASE) + '.');
+        "' is unknown. Valid values are " + //$NON-NLS-1$
+        Arrays.toString(DocumentXML.VAL_TEXT_CASE) + '.');
   }
 
   /**
    * Get the sequence mode
-   * 
+   *
    * @param string
    *          the name of the sequence mode
    * @param defaultMode
@@ -353,13 +353,13 @@ public enum DocumentXML implements IXMLFileType {
 
     throw new IllegalArgumentException(//
         "Sequence mode '" + string + //$NON-NLS-1$
-            "' is unknown. Valid values are " + //$NON-NLS-1$
-            Arrays.toString(DocumentXML.VAL_SEQUENCE_MODE) + '.');
+        "' is unknown. Valid values are " + //$NON-NLS-1$
+        Arrays.toString(DocumentXML.VAL_SEQUENCE_MODE) + '.');
   }
 
   /**
    * Get the citation mode
-   * 
+   *
    * @param string
    *          the name of the citation mode
    * @param defaultMode
@@ -382,13 +382,13 @@ public enum DocumentXML implements IXMLFileType {
 
     throw new IllegalArgumentException(//
         "Citation mode '" + string + //$NON-NLS-1$
-            "' is unknown. Valid values are " + //$NON-NLS-1$
-            Arrays.toString(DocumentXML.VAL_CITATION_MODE) + '.');
+        "' is unknown. Valid values are " + //$NON-NLS-1$
+        Arrays.toString(DocumentXML.VAL_CITATION_MODE) + '.');
   }
 
   /**
    * Get the comparison operator
-   * 
+   *
    * @param string
    *          the name of the comparison operator
    * @return the parsed comparison operator
@@ -412,9 +412,9 @@ public enum DocumentXML implements IXMLFileType {
 
     throw new IllegalArgumentException(//
         "Comparison operator '" + string + //$NON-NLS-1$
-            "' is unknown. Valid values are " + //$NON-NLS-1$
-            Arrays.toString(DocumentXML.VAL_COMP_OP) + " and " + //$NON-NLS-1$
-            Arrays.toString(DocumentXML.VAL_COMP_OP2) + +'.');
+        "' is unknown. Valid values are " + //$NON-NLS-1$
+        Arrays.toString(DocumentXML.VAL_COMP_OP) + " and " + //$NON-NLS-1$
+        Arrays.toString(DocumentXML.VAL_COMP_OP2) + +'.');
   }
 
   /** {@inheritDoc} */

@@ -6,10 +6,10 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** The basic interface for data points. */
 public interface IDataPoint extends IMatrix, List<Number>,
-    Comparable<IDataPoint> {
+Comparable<IDataPoint> {
   /**
    * Get the value at index {@code index}, as {@code double}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code double}
@@ -18,7 +18,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
 
   /**
    * Get the value at index {@code index}, as {@code float}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code float}
@@ -27,7 +27,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
 
   /**
    * Get the value at index {@code index}, as {@code long}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code long}
@@ -36,7 +36,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
 
   /**
    * Get the value at index {@code index}, as {@code int}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code int}
@@ -45,7 +45,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
 
   /**
    * Get the value at index {@code index}, as {@code short}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code short}
@@ -54,7 +54,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
 
   /**
    * Get the value at index {@code index}, as {@code byte}.
-   * 
+   *
    * @param index
    *          the index
    * @return the value at that index, as {@code byte}
@@ -63,7 +63,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
 
   /**
    * Get the value at the given {@code dimension}
-   * 
+   *
    * @param dimension
    *          the dimension
    * @return the number
@@ -73,7 +73,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
 
   /**
    * store the data of this point into the destination {@code double} array
-   * 
+   *
    * @param dest
    *          the destination {@code double} array
    * @param destStart
@@ -83,7 +83,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
 
   /**
    * store the data of this point into the destination {@code long} array
-   * 
+   *
    * @param dest
    *          the destination {@code long} array
    * @param destStart
@@ -93,7 +93,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
 
   /**
    * store the data of this point into the destination {@code int} array
-   * 
+   *
    * @param dest
    *          the destination {@code int} array
    * @param destStart
@@ -104,7 +104,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
   /**
    * A data point is a row vector (or row matrix) with {@link #m() m}=1
    * rows.
-   * 
+   *
    * @return 1
    */
   @Override
@@ -113,7 +113,7 @@ public interface IDataPoint extends IMatrix, List<Number>,
   /**
    * A data point is a row vector (or row matrix) with {@link #size()}
    * columns.
-   * 
+   *
    * @return the same as {@link #size()}
    * @see #m()
    * @see #size()

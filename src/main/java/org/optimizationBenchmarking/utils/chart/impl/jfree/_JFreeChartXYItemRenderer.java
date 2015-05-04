@@ -49,7 +49,7 @@ public class _JFreeChartXYItemRenderer implements XYItemRenderer {
 
   /**
    * create a wrapped renderer
-   * 
+   *
    * @param out
    *          the output renderer
    */
@@ -258,7 +258,7 @@ public class _JFreeChartXYItemRenderer implements XYItemRenderer {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @deprecated deprecated
    */
   @SuppressWarnings("deprecation")
@@ -283,7 +283,7 @@ public class _JFreeChartXYItemRenderer implements XYItemRenderer {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @deprecated deprecated
    */
   @SuppressWarnings("deprecation")
@@ -349,7 +349,7 @@ public class _JFreeChartXYItemRenderer implements XYItemRenderer {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @deprecated deprecated
    */
   @SuppressWarnings("deprecation")
@@ -380,7 +380,7 @@ public class _JFreeChartXYItemRenderer implements XYItemRenderer {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @deprecated deprecated
    */
   @SuppressWarnings("deprecation")
@@ -468,7 +468,7 @@ public class _JFreeChartXYItemRenderer implements XYItemRenderer {
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @deprecated deprecated
    */
   @SuppressWarnings("deprecation")

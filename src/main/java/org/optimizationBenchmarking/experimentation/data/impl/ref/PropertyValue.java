@@ -11,12 +11,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * instance feature values} and
  * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.ParameterValue
  * experiment parameter values}.
- * 
+ *
  * @param <OT>
  *          the owner type
  */
 public abstract class PropertyValue<OT extends Property<?>> extends
-    _NamedIDObject implements IPropertyValue, Map.Entry<OT, Object> {
+_NamedIDObject implements IPropertyValue, Map.Entry<OT, Object> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public abstract class PropertyValue<OT extends Property<?>> extends
 
   /**
    * Create the parameter value
-   * 
+   *
    * @param name
    *          the string representation of this value
    * @param desc
@@ -38,13 +38,13 @@ public abstract class PropertyValue<OT extends Property<?>> extends
     if (value == null) {
       throw new IllegalArgumentException(//
           "Property value must not be null, but '" + name + //$NON-NLS-1$
-              "' is evaluated to null."); //$NON-NLS-1$
+          "' is evaluated to null."); //$NON-NLS-1$
     }
     this.m_value = value;
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("incomplete-switch")
+  @SuppressWarnings({ "incomplete-switch", "unchecked" })
   @Override
   protected final Object readResolve() {
     if (this.m_owner != null) {
@@ -62,12 +62,14 @@ public abstract class PropertyValue<OT extends Property<?>> extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("unchecked")
   public final OT getKey() {
     return ((OT) (this.m_owner));
   }
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("unchecked")
   public final OT getOwner() {
     return ((OT) (this.m_owner));
   }
@@ -101,6 +103,7 @@ public abstract class PropertyValue<OT extends Property<?>> extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("unchecked")
   public final String toString() {
     return (((OT) (this.m_owner)).getName() + '=' + this.m_value);
   }
@@ -113,6 +116,7 @@ public abstract class PropertyValue<OT extends Property<?>> extends
 
   /** {@inheritDoc} */
   @Override
+  @SuppressWarnings("unchecked")
   public void toText(final ITextOutput textOut) {
     textOut.append(((OT) (this.m_owner)).getName());
     textOut.append('=');

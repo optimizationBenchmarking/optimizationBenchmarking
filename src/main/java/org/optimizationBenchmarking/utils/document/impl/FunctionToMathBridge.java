@@ -54,7 +54,7 @@ public final class FunctionToMathBridge {
    * interface. Even if {@code function==null}, a new instance of
    * {@link org.optimizationBenchmarking.utils.document.spec.IMath} will be
    * returned. This instance will simply delegate to {@code math}.
-   * 
+   *
    * @param function
    *          the function
    * @param math
@@ -68,7 +68,7 @@ public final class FunctionToMathBridge {
     if (math == null) {
       throw new IllegalArgumentException(//
           "Math interface cannot be null when trying to represent mathematical function "//$NON-NLS-1$
-              + function);
+          + function);
     }
 
     if (function == null) {
@@ -163,7 +163,7 @@ public final class FunctionToMathBridge {
 
     /**
      * create the never closing math
-     * 
+     *
      * @param orig
      *          the original
      */

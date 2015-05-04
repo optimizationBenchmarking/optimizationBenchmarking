@@ -20,7 +20,7 @@ public final class HTML401Palette extends ColorPalette {
 
   /**
    * Get an instance of the html 401 palette
-   * 
+   *
    * @return the html 401 palette
    */
   public static final HTML401Palette getInstance() {
@@ -29,7 +29,7 @@ public final class HTML401Palette extends ColorPalette {
 
   /**
    * instantiate
-   * 
+   *
    * @param data
    *          the data
    */
@@ -39,7 +39,7 @@ public final class HTML401Palette extends ColorPalette {
 
   /**
    * read resolve
-   * 
+   *
    * @return {@link #getInstance()}
    */
   private final Object readResolve() {
@@ -48,7 +48,7 @@ public final class HTML401Palette extends ColorPalette {
 
   /**
    * write replace
-   * 
+   *
    * @return {@link #getInstance()}
    */
   private final Object writeReplace() {
@@ -57,7 +57,7 @@ public final class HTML401Palette extends ColorPalette {
 
   /** the default palette builder */
   private static final class __DefaultHTML401PaletteBuilder extends
-      ColorPaletteBuilder {
+  ColorPaletteBuilder {
     /** the default palette builder */
     __DefaultHTML401PaletteBuilder() {
       super();
@@ -88,18 +88,18 @@ public final class HTML401Palette extends ColorPalette {
       logger = Configuration.getGlobalLogger();
       try (final __DefaultHTML401PaletteBuilder cspb = new __DefaultHTML401PaletteBuilder()) {
         ColorPaletteXMLInput
-            .getInstance()
-            .use()
-            .setLogger(logger)
-            .setDestination(cspb)
-            .addResource(HTML401Palette.class, "html401.colorPalette").create().call(); //$NON-NLS-1$
+        .getInstance()
+        .use()
+        .setLogger(logger)
+        .setDestination(cspb)
+        .addResource(HTML401Palette.class, "html401.colorPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         ErrorUtils
-            .logError(
-                logger,
-                "Error while loading the HTML 4.01 color palette. This palette will not be available.",//$NON-NLS-1$
-                t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+        .logError(
+            logger,
+            "Error while loading the HTML 4.01 color palette. This palette will not be available.",//$NON-NLS-1$
+            t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
       }
 
       INSTANCE = ((HTML401Palette) pal);

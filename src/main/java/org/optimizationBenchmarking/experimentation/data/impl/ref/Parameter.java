@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** A parameter. */
 public final class Parameter extends Property<ParameterValue> implements
-    IParameter {
+IParameter {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public final class Parameter extends Property<ParameterValue> implements
 
   /**
    * create
-   * 
+   *
    * @param name
    *          the parameter name
    * @param desc
@@ -70,7 +70,7 @@ public final class Parameter extends Property<ParameterValue> implements
    * Obtain the parameter value record indicating an unspecified value, or
    * {@code null} if all experiments have a specific value for this
    * parameter.
-   * 
+   *
    * @return the parameter value record indicating an unspecified value, or
    *         {@code null} if all experiments have a specific value for this
    *         parameter.
@@ -89,7 +89,7 @@ public final class Parameter extends Property<ParameterValue> implements
   /**
    * Get the value of this property for the given
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Experiment}
-   * 
+   *
    * @param experiment
    *          the experiment to get the property value of
    * @return the property value
@@ -97,16 +97,16 @@ public final class Parameter extends Property<ParameterValue> implements
   public final Object get(final Experiment experiment) {
     if (experiment == null) {
       throw new IllegalArgumentException(//
-          "Cannot get value of parameter '"//$NON-NLS-1$ 
-              + this.getName() + //
-              "' for null experiment."); //$NON-NLS-1$
+          "Cannot get value of parameter '"//$NON-NLS-1$
+          + this.getName() + //
+          "' for null experiment."); //$NON-NLS-1$
     }
     return experiment.getParameterSetting().get(this);
   }
 
   /**
    * Get the value of this parameter for the given element
-   * 
+   *
    * @param element
    *          the element to get the parameter value of, must be an
    *          experiment, or else {@link IllegalArgumentException}
@@ -122,10 +122,10 @@ public final class Parameter extends Property<ParameterValue> implements
     }
     throw new IllegalArgumentException(//
         "Cannot get value of parameter '" //$NON-NLS-1$
-            + this.getName() + //
-            "' for data element '"//$NON-NLS-1$ 
-            + element + //
-            "' - only experiments can have parameter values.");//$NON-NLS-1$
+        + this.getName() + //
+        "' for data element '"//$NON-NLS-1$
+        + element + //
+        "' - only experiments can have parameter values.");//$NON-NLS-1$
   }
 
 }

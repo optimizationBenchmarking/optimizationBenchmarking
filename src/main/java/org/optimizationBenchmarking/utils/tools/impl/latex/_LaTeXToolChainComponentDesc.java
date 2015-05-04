@@ -12,14 +12,14 @@ abstract class _LaTeXToolChainComponentDesc {
 
   /**
    * get the component
-   * 
+   *
    * @return the component
    */
   abstract _LaTeXToolChainComponent _getComponent();
 
   /**
    * Does this component support the given file type as input?
-   * 
+   *
    * @param type
    *          the file type
    * @return {@code true} if the component supports the file type,

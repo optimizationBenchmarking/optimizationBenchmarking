@@ -53,7 +53,7 @@ public class LoggerParser extends Parser<Logger> {
 
   /**
    * create a logger from a string list
-   * 
+   *
    * @param data
    *          the data
    * @return the logger
@@ -204,7 +204,7 @@ public class LoggerParser extends Parser<Logger> {
 
   /**
    * write replace
-   * 
+   *
    * @return the replacement
    */
   private final Object writeReplace() {
@@ -213,7 +213,7 @@ public class LoggerParser extends Parser<Logger> {
 
   /**
    * read resolve
-   * 
+   *
    * @return the replacement
    */
   private final Object readResolve() {

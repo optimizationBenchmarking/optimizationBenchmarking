@@ -12,7 +12,7 @@ public interface IEvaluationJob extends IToolJob {
   /**
    * Initialize the document before any computation is performed. In this
    * method you can, for instance, allocate labels in the document.
-   * 
+   *
    * @param document
    *          the document
    */
@@ -22,7 +22,7 @@ public interface IEvaluationJob extends IToolJob {
    * Adds text into the document summary (i.e, the abstract), if any. This
    * happens before any calculation takes place. Any summary text should be
    * preceded by a space.
-   * 
+   *
    * @param summary
    *          the summary
    */
@@ -33,7 +33,7 @@ public interface IEvaluationJob extends IToolJob {
    * the provided
    * {@link org.optimizationBenchmarking.utils.document.spec.ISectionContainer
    * sectionContainer} and writing some results into this section.
-   * 
+   *
    * @param sectionContainer
    *          the section container
    */

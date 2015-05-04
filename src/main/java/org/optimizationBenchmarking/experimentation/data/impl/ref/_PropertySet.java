@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 
 /**
  * The property set.
- * 
+ *
  * @param <PVT>
  *          the property value type
  * @param <PT>
@@ -21,7 +21,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 abstract class _PropertySet<PVT extends PropertyValue<?>, //
 PT extends Property<PVT>, //
 PST extends IPropertySetting> //
-    extends _IDObjectSet<PT> implements IPropertySet {
+extends _IDObjectSet<PT> implements IPropertySet {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ PST extends IPropertySetting> //
 
   /**
    * create
-   * 
+   *
    * @param data
    *          the instances
    */
@@ -43,7 +43,7 @@ PST extends IPropertySetting> //
 
   /**
    * Obtain a property fitting to a given name
-   * 
+   *
    * @param name
    *          the property name
    * @return the property, or {@code null} if none could be found
@@ -120,7 +120,7 @@ PST extends IPropertySetting> //
 
   /**
    * create the settings object
-   * 
+   *
    * @param values
    *          the values
    * @param isGeneralized
@@ -136,7 +136,7 @@ PST extends IPropertySetting> //
    * All values not contained in {@code values} are considered as
    * {@link org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter#getGeneralized()
    * generalized}
-   * 
+   *
    * @param values
    *          the set of parameter values
    * @param fillGeneral
@@ -167,7 +167,7 @@ PST extends IPropertySetting> //
         }
         throw new IllegalArgumentException(//
             "Property value must not be null, but the " + //$NON-NLS-1$
-                count + "th specified value is."); //$NON-NLS-1$
+            count + "th specified value is."); //$NON-NLS-1$
       }
       valueParameter = ((Property) (v.m_owner));
       valueParameterId = valueParameter.m_id;
@@ -175,23 +175,23 @@ PST extends IPropertySetting> //
       if ((valueParameterId < 0) && (valueParameterId >= data.length)) {
         throw new IllegalArgumentException(//
             "Property value '" + v + //$NON-NLS-1$
-                "' is not allowed since its owning property '"//$NON-NLS-1$
-                + valueParameter + "' has an illegal id."); //$NON-NLS-1$
+            "' is not allowed since its owning property '"//$NON-NLS-1$
+            + valueParameter + "' has an illegal id."); //$NON-NLS-1$
       }
       if (data[valueParameterId] != valueParameter) {
         throw new IllegalArgumentException(//
             "Property value '" + v + //$NON-NLS-1$
-                "' is not allowed since its owning property '"//$NON-NLS-1$
-                + valueParameter
-                + "' has an id which belongs to the different property ('" + //$NON-NLS-1$
-                data[valueParameterId] + "')."); //$NON-NLS-1$
+            "' is not allowed since its owning property '"//$NON-NLS-1$
+            + valueParameter
+            + "' has an id which belongs to the different property ('" + //$NON-NLS-1$
+            data[valueParameterId] + "')."); //$NON-NLS-1$
       }
 
       if ((ps[valueParameterId] != null) && (ps[valueParameterId] != v)) {
         throw new IllegalArgumentException(
             (((((("Two values have been provided for property '" + //$NON-NLS-1$
-            v.m_owner) + "': '") + ps[valueParameterId]) + //$NON-NLS-1$
-            "' and '") + v) + '\'') + '.'); //$NON-NLS-1$
+                v.m_owner) + "': '") + ps[valueParameterId]) + //$NON-NLS-1$
+                "' and '") + v) + '\'') + '.'); //$NON-NLS-1$
       }
 
       valueId = v.m_id;
@@ -216,16 +216,16 @@ PST extends IPropertySetting> //
               || (valueId >= (valueParameter.m_values.length))) {
             throw new IllegalArgumentException(
                 ((((((("The id " + valueId) + //$NON-NLS-1$
-                " of value '") + v) + //$NON-NLS-1$
-                "' of property '") + v.m_owner) + //$NON-NLS-1$
-                "' has is invalid, valid ids of that property are in 0..") //$NON-NLS-1$
-                + (valueParameter.m_values.length - 1)) + '.');
+                    " of value '") + v) + //$NON-NLS-1$
+                    "' of property '") + v.m_owner) + //$NON-NLS-1$
+                    "' has is invalid, valid ids of that property are in 0..") //$NON-NLS-1$
+                    + (valueParameter.m_values.length - 1)) + '.');
           }
           if (valueParameter.m_values[valueId] != v) {
             throw new IllegalArgumentException(
                 (("Value '" + v + "' of property '" + v.m_owner + //$NON-NLS-1$ //$NON-NLS-2$
                     "' has an invalid id which is already occupied by value '" + //$NON-NLS-1$
-                valueParameter.m_values[valueId]) + '\'') + '.');
+                    valueParameter.m_values[valueId]) + '\'') + '.');
           }
         }
       }
@@ -244,7 +244,7 @@ PST extends IPropertySetting> //
       for (final PropertyValue<?> p : ps) {
         if (p == null) {
           if ((ps[count] = (fillGeneral ? data[count].m_general : //
-              data[count].getUnspecified())) == null) {
+            data[count].getUnspecified())) == null) {
             throw new IllegalArgumentException(//
                 "Error when filling undefined property values."); //$NON-NLS-1$
           }

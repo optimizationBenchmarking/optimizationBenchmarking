@@ -40,7 +40,7 @@ public class StyledText extends ComplexText {
 
   /**
    * Create a text.
-   * 
+   *
    * @param owner
    *          the owning FSM
    * @param style
@@ -89,7 +89,7 @@ public class StyledText extends ComplexText {
 
   /**
    * Get the style of this text
-   * 
+   *
    * @return the style of this text
    */
   protected final IStyle getStyle() {
@@ -98,7 +98,7 @@ public class StyledText extends ComplexText {
 
   /**
    * begin a color style
-   * 
+   *
    * @param color
    *          the color style
    * @param out
@@ -110,7 +110,7 @@ public class StyledText extends ComplexText {
 
   /**
    * end a color style
-   * 
+   *
    * @param color
    *          the color style
    * @param out
@@ -122,7 +122,7 @@ public class StyledText extends ComplexText {
 
   /**
    * begin white
-   * 
+   *
    * @param color
    *          the white color style
    * @param out
@@ -134,7 +134,7 @@ public class StyledText extends ComplexText {
 
   /**
    * end white
-   * 
+   *
    * @param color
    *          the white color style
    * @param out
@@ -146,7 +146,7 @@ public class StyledText extends ComplexText {
 
   /**
    * begin black
-   * 
+   *
    * @param color
    *          the black color style
    * @param out
@@ -158,7 +158,7 @@ public class StyledText extends ComplexText {
 
   /**
    * end black
-   * 
+   *
    * @param color
    *          the black color style
    * @param out
@@ -170,7 +170,7 @@ public class StyledText extends ComplexText {
 
   /**
    * begin a font style
-   * 
+   *
    * @param font
    *          the font style
    * @param out
@@ -182,7 +182,7 @@ public class StyledText extends ComplexText {
 
   /**
    * end a font style
-   * 
+   *
    * @param font
    *          the font style
    * @param out
@@ -194,7 +194,7 @@ public class StyledText extends ComplexText {
 
   /**
    * begin a code style
-   * 
+   *
    * @param font
    *          the code style
    * @param out
@@ -206,7 +206,7 @@ public class StyledText extends ComplexText {
 
   /**
    * end a code style
-   * 
+   *
    * @param font
    *          the code style
    * @param out
@@ -218,7 +218,7 @@ public class StyledText extends ComplexText {
 
   /**
    * begin a emph style
-   * 
+   *
    * @param font
    *          the emph style
    * @param out
@@ -230,7 +230,7 @@ public class StyledText extends ComplexText {
 
   /**
    * end a emph style
-   * 
+   *
    * @param font
    *          the emph style
    * @param out
@@ -242,7 +242,7 @@ public class StyledText extends ComplexText {
 
   /**
    * begin a normal text style
-   * 
+   *
    * @param font
    *          the normal text style
    * @param out
@@ -255,7 +255,7 @@ public class StyledText extends ComplexText {
 
   /**
    * end a normal text style
-   * 
+   *
    * @param font
    *          the normal text style
    * @param out
@@ -267,7 +267,7 @@ public class StyledText extends ComplexText {
 
   /**
    * begin an odd style
-   * 
+   *
    * @param odd
    *          the odd style
    * @param out
@@ -279,7 +279,7 @@ public class StyledText extends ComplexText {
 
   /**
    * end a odd style
-   * 
+   *
    * @param odd
    *          the odd style
    * @param out
@@ -291,7 +291,7 @@ public class StyledText extends ComplexText {
 
   /**
    * forbid a given style
-   * 
+   *
    * @param style
    *          the style
    * @param throwIllegal

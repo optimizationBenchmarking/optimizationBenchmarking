@@ -7,11 +7,11 @@ import java.io.PrintWriter;
  * {@link java.io.PrintWriter}.
  */
 final class _PrintWriterWrappedTextOutput extends
-    _AppendableWrappedTextOutputBase<PrintWriter> {
+_AppendableWrappedTextOutputBase<PrintWriter> {
 
   /**
    * Create a wrapped text output
-   * 
+   *
    * @param out
    *          the output
    */

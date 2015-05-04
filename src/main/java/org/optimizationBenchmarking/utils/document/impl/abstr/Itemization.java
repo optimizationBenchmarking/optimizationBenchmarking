@@ -12,7 +12,7 @@ public class Itemization extends List<ItemizationItem> {
 
   /**
    * Create a new itemization
-   * 
+   *
    * @param owner
    *          the owning text
    */
@@ -24,19 +24,19 @@ public class Itemization extends List<ItemizationItem> {
 
     outer: {
       inner: {
-        for (o = owner; o != null;) {
-          if (o instanceof Itemization) {
-            this.m_itemDepth = (1 + (((Itemization) o).m_itemDepth));
-            break outer;
-          }
-          if (o instanceof DocumentElement) {
-            o = ((DocumentElement) o)._owner();
-          } else {
-            break inner;
-          }
+      for (o = owner; o != null;) {
+        if (o instanceof Itemization) {
+          this.m_itemDepth = (1 + (((Itemization) o).m_itemDepth));
+          break outer;
+        }
+        if (o instanceof DocumentElement) {
+          o = ((DocumentElement) o)._owner();
+        } else {
+          break inner;
         }
       }
-      this.m_itemDepth = 0;
+    }
+    this.m_itemDepth = 0;
     }
 
   }
@@ -44,7 +44,7 @@ public class Itemization extends List<ItemizationItem> {
   /**
    * Obtain the number of itemizations into which this itemizations is
    * nested.
-   * 
+   *
    * @return the number of "outer" itemizations into which this
    *         itemizations is embedded, or {@code 0} if this is a top-level
    *         itemizations

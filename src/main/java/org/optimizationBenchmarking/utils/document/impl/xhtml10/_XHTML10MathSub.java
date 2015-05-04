@@ -9,7 +9,7 @@ final class _XHTML10MathSub extends MathSub {
 
   /**
    * Create a new mathematical function
-   * 
+   *
    * @param owner
    *          the owning text
    */

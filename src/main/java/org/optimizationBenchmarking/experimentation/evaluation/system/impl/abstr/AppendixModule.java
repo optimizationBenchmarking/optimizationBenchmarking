@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
  * The abstract basic implementation for appendix modules.
  */
 public abstract class AppendixModule extends
-    _EvaluationModule<IExperimentSet> implements IAppendixModule {
+_EvaluationModule<IExperimentSet> implements IAppendixModule {
 
   /** create */
   protected AppendixModule() {
@@ -27,7 +27,7 @@ public abstract class AppendixModule extends
 
   /**
    * Create the appendix job.
-   * 
+   *
    * @param data
    *          the experiment set to be processed by the job
    * @param config

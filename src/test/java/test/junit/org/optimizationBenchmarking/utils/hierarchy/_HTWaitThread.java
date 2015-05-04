@@ -19,7 +19,7 @@ final class _HTWaitThread extends Thread {
 
   /**
    * create
-   * 
+   *
    * @param end
    *          the end time
    */
@@ -50,7 +50,7 @@ final class _HTWaitThread extends Thread {
 
   /**
    * add a text
-   * 
+   *
    * @param text
    *          the text to add
    */
@@ -60,7 +60,7 @@ final class _HTWaitThread extends Thread {
 
   /**
    * Get the text
-   * 
+   *
    * @return the texts
    */
   final Iterable<String> _texts() {

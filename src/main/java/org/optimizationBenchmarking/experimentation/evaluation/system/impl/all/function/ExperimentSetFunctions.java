@@ -18,7 +18,7 @@ public final class ExperimentSetFunctions {
 
   /**
    * create the experiment set functions
-   * 
+   *
    * @param set
    *          the experiment set
    * @param cluster
@@ -37,7 +37,7 @@ public final class ExperimentSetFunctions {
 
   /**
    * Obtain the experiment set
-   * 
+   *
    * @return the experiment set
    */
   public final IExperimentSet getExperimentSet() {
@@ -48,7 +48,7 @@ public final class ExperimentSetFunctions {
    * In case that the {@link #getExperimentSet() experiment set}
    * corresponds to a cluster, obtain the cluster &ndash; otherwise, return
    * {@code null}
-   * 
+   *
    * @return the cluster corresponding to the experiment set, or
    *         {@code null} if it does not correspond to a cluster
    */
@@ -61,7 +61,7 @@ public final class ExperimentSetFunctions {
    * contain at least one element. Furthermore, the functions of the
    * elements in the returned list have at least two different {@code x}
    * and two different {@code y} coordinates.
-   * 
+   *
    * @return the experiment functions
    */
   public final ArrayListView<ExperimentFunction> getData() {

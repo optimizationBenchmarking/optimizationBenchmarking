@@ -15,7 +15,7 @@ public interface IToolJobBuilder {
    * once. Once a {@link java.util.logging.Logger logger} has been set, it
    * cannot be changed. If you do not want the tool usage to produce
    * logging information, simply do not call this method.
-   * 
+   *
    * @param logger
    *          the logger, must never be {@code null}
    * @return this job builder (for chaining purposes)
@@ -40,7 +40,7 @@ public interface IToolJobBuilder {
    * e.g., instances of {@link java.util.concurrent.Callable} or documents
    * or graphics which can be edited or something.
    * </p>
-   * 
+   *
    * @return the job
    * @throws Exception
    *           if job creation failed

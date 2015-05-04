@@ -15,7 +15,7 @@ final class _ProtectedShape implements Shape {
 
   /**
    * create the protected shape
-   * 
+   *
    * @param s
    *          the protected shape
    */

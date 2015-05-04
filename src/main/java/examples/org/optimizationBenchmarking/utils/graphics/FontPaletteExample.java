@@ -29,7 +29,7 @@ public class FontPaletteExample {
 
   /**
    * run the example: there are problems with the pdf output
-   * 
+   *
    * @param args
    *          the arguments
    * @throws IOException
@@ -51,17 +51,17 @@ public class FontPaletteExample {
       sub = dir.resolve("example_" + (++j));//$NON-NLS-1$
       for (final GraphicConfiguration d : ExampleGraphicConfigurations.CONFIGURATIONS) {
         FontPaletteExample
-            .__paint(
-                sub,
-                (((FontPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
-                    + (d.toString()), d, p);
+        .__paint(
+            sub,
+            (((FontPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
+            + (d.toString()), d, p);
       }
     }
   }
 
   /**
    * paint the palette
-   * 
+   *
    * @param dir
    *          the directory
    * @param name
