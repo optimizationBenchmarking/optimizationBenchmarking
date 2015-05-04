@@ -82,11 +82,11 @@ public class LaTeXTest extends ToolTest<LaTeX> {
         bib = new RandomBibliography().createBibliography();
 
         bibOut.use()//
-        .setSource(bib)//
-        .setPath(temp.getPath()//
-            .resolve(LaTeXTest.BIB_FILE + '.'//
-                + ELaTeXFileType.BIB.getDefaultSuffix()))//
-                .create().call();
+            .setSource(bib)//
+            .setPath(temp.getPath()//
+                .resolve(LaTeXTest.BIB_FILE + '.'//
+                    + ELaTeXFileType.BIB.getDefaultSuffix()))//
+            .create().call();
       }
 
       graphic = null;
@@ -177,13 +177,13 @@ public class LaTeXTest extends ToolTest<LaTeX> {
 
             bw.newLine();
             bw.write(//
-                "blablablabla blablablabla ");//$NON-NLS-1$
+            "blablablabla blablablabla ");//$NON-NLS-1$
             bw.write(//
-                "blablablabla blablablabla ");//$NON-NLS-1$
+            "blablablabla blablablabla ");//$NON-NLS-1$
             bw.write(//
-                "blablablabla blablablabla ");//$NON-NLS-1$
+            "blablablabla blablablabla ");//$NON-NLS-1$
             bw.write(//
-                "blablablabla blablablabla ");//$NON-NLS-1$
+            "blablablabla blablablabla ");//$NON-NLS-1$
 
             if (bib != null) {
               bw.write("\\cite{");//$NON-NLS-1$

@@ -51,8 +51,8 @@ abstract class _PropertyFSMRecord {
       this.m_dead = true;
       throw new IllegalStateException(
           "Properties '" + this.m_propertyName + //$NON-NLS-1$
-          "' and '" + //$NON-NLS-1$
-          propertyName + "' cannot be merged."); //$NON-NLS-1$
+              "' and '" + //$NON-NLS-1$
+              propertyName + "' cannot be merged."); //$NON-NLS-1$
     }
   }
 

@@ -92,7 +92,7 @@ public class StrictStringParser extends Parser<String> {
               val += code;
               data[i] = ((char) (val));
               System
-              .arraycopy(data, (i + 6), data, (i + 1), (end - i - 6));
+                  .arraycopy(data, (i + 6), data, (i + 1), (end - i - 6));
               end -= 5;
             }
             continue;
@@ -175,7 +175,7 @@ public class StrictStringParser extends Parser<String> {
     final String ret;
 
     ret = ((o == null) ? EmptyUtils.EMPTY_STRING : //
-      this.__parseString(String.valueOf(o)));
+        this.__parseString(String.valueOf(o)));
     this.validate(ret);
     return ret;
   }

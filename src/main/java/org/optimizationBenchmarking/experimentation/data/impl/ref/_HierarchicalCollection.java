@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
  *          the result of processing the collection
  */
 abstract class _HierarchicalCollection<CCT, CET extends _Context<CCT>, RT>
-extends _Context<RT> {
+    extends _Context<RT> {
 
   /** the collection */
   private volatile ArrayList<Object> m_collection;

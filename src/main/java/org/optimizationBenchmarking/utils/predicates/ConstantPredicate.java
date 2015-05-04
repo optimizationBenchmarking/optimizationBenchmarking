@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  * A condition that is constant.
  */
 public final class ConstantPredicate extends HashObject implements
-IPredicate<Object>, Serializable {
+    IPredicate<Object>, Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

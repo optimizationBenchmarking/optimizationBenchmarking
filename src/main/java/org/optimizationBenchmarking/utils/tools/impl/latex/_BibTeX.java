@@ -38,19 +38,19 @@ final class _BibTeX extends _LaTeXToolChainComponent {
     path = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "bibtex",//$NON-NLS-1$
             "bibtex.original" //$NON-NLS-1$
-            ), CanExecutePredicate.INSTANCE),//
-            IsFilePredicate.INSTANCE, null);
+        ), CanExecutePredicate.INSTANCE),//
+        IsFilePredicate.INSTANCE, null);
     if (path == null) {
       path = PathUtils.findFirstInPath(new AndPredicate<>(
           new FileNamePredicate(true, "miktex-bibtex" //$NON-NLS-1$
-              ), CanExecutePredicate.INSTANCE),//
-              IsFilePredicate.INSTANCE, null);
+          ), CanExecutePredicate.INSTANCE),//
+          IsFilePredicate.INSTANCE, null);
     }
     this.m_executable = path;
 
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config((path != null) ? //
-          ("BibTeX executable '" + path + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
+      ("BibTeX executable '" + path + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
           "No BibTeX executable found.");//$NON-NLS-1$
     }
   }
@@ -108,7 +108,7 @@ final class _BibTeX extends _LaTeXToolChainComponent {
 
     if (this._getFile(job, ELaTeXFileType.BBL, true,
         " This could mean that the main document contains no citations.")//$NON-NLS-1$
-        != null) {
+    != null) {
       if ((logger != null) && (logger.isLoggable(Level.FINE))) {
         logger.fine(//
             (("Finished applying BibTeX to '" + aux) + '\'') + '.'); //$NON-NLS-1$
@@ -133,7 +133,7 @@ final class _BibTeX extends _LaTeXToolChainComponent {
 
   /** the description */
   private static final class __BibTeXDesc extends
-  _LaTeXToolChainComponentDesc {
+      _LaTeXToolChainComponentDesc {
 
     /** the description */
     static final _LaTeXToolChainComponentDesc DESC = new __BibTeXDesc();

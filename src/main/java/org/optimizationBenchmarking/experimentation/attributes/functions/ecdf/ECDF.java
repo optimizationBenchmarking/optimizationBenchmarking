@@ -76,7 +76,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     if (o instanceof ECDF) {
       other = ((ECDF) o);
       return (EComparison.equals(this.m_raw, other.m_raw) && //
-          EComparison.equals(this.m_timeTransform, other.m_timeTransform));
+      EComparison.equals(this.m_timeTransform, other.m_timeTransform));
     }
 
     return false;

@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.FileOutputToo
  *          the experiment data type supported for output
  */
 public class ExperimentSetFileOutput<T> extends FileOutputTool<T>
-implements IExperimentSetOutput<T> {
+    implements IExperimentSetOutput<T> {
 
   /** create */
   protected ExperimentSetFileOutput() {

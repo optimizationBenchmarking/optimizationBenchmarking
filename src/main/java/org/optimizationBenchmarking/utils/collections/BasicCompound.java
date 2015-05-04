@@ -24,7 +24,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  *          the element type
  */
 public class BasicCompound<ET> implements Serializable, Iterable<ET>,
-ITextable {
+    ITextable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

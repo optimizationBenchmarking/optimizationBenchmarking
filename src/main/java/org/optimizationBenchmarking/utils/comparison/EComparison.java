@@ -661,9 +661,9 @@ public enum EComparison {
 
     throw new IllegalStateException(//
         ("Impossible error occured: compare " //$NON-NLS-1$
-            + (a + " (" + (Double.doubleToRawLongBits(a) + //$NON-NLS-1$
-                (") with " + (b + //$NON-NLS-1$
-                    (" (" + Double.doubleToRawLongBits(b))))))) + ')'); //$NON-NLS-1$
+        + (a + " (" + (Double.doubleToRawLongBits(a) + //$NON-NLS-1$
+        (") with " + (b + //$NON-NLS-1$
+        (" (" + Double.doubleToRawLongBits(b))))))) + ')'); //$NON-NLS-1$
   }
 
   /**
@@ -709,9 +709,9 @@ public enum EComparison {
 
     throw new IllegalStateException(//
         ("Impossible error occured: compare " //$NON-NLS-1$
-            + (a + " (" + (Float.floatToRawIntBits(a) + //$NON-NLS-1$
-                (") with " + (b + //$NON-NLS-1$
-                    (" (" + Float.floatToRawIntBits(b))))))) + ')'); //$NON-NLS-1$
+        + (a + " (" + (Float.floatToRawIntBits(a) + //$NON-NLS-1$
+        (") with " + (b + //$NON-NLS-1$
+        (" (" + Float.floatToRawIntBits(b))))))) + ')'); //$NON-NLS-1$
   }
 
   /**
@@ -793,7 +793,7 @@ public enum EComparison {
         && ((b instanceof Byte) || //
             (b instanceof Short) || //
             (b instanceof Integer) || //
-            (b instanceof Long))) {
+        (b instanceof Long))) {
       return Long.compare(a.longValue(), b.longValue());
     }
 

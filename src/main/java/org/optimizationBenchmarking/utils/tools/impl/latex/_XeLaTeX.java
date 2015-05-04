@@ -41,8 +41,8 @@ final class _XeLaTeX extends _LaTeXToolChainComponent {
 
     this.m_executable = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "xelatex" //$NON-NLS-1$
-            ), CanExecutePredicate.INSTANCE),//
-            IsFilePredicate.INSTANCE, null);
+        ), CanExecutePredicate.INSTANCE),//
+        IsFilePredicate.INSTANCE, null);
     arg = null;
     try {
       arg = _LaTeXToolChainComponent._getArgs(this.m_executable, "-help", //$NON-NLS-1$
@@ -54,9 +54,9 @@ final class _XeLaTeX extends _LaTeXToolChainComponent {
 
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config((this.m_executable != null) ? //
-          ("XeLaTeX executable '" + this.m_executable + //$NON-NLS-1$
-              "' found.")//$NON-NLS-1$
-              : "No XeLaTeX executable found.");//$NON-NLS-1$
+      ("XeLaTeX executable '" + this.m_executable + //$NON-NLS-1$
+      "' found.")//$NON-NLS-1$
+          : "No XeLaTeX executable found.");//$NON-NLS-1$
     }
   }
 
@@ -123,7 +123,7 @@ final class _XeLaTeX extends _LaTeXToolChainComponent {
             ELaTeXFileType.AUX,
             true,
             " This could mean that the latex document does not contain any label, citation, or section."//$NON-NLS-1$
-            ) == null) {
+        ) == null) {
       ok = false;
     }
     if (this
@@ -132,7 +132,7 @@ final class _XeLaTeX extends _LaTeXToolChainComponent {
             ELaTeXFileType.PDF,
             true,
             " This could mean that the latex document does not produce any pdf output."//$NON-NLS-1$
-            ) == null) {
+        ) == null) {
       ok = false;
     }
 
@@ -161,7 +161,7 @@ final class _XeLaTeX extends _LaTeXToolChainComponent {
 
   /** the description */
   private static final class __XeLaTeXDesc extends
-  _LaTeXToolChainComponentDesc {
+      _LaTeXToolChainComponentDesc {
 
     /** the description */
     static final _LaTeXToolChainComponentDesc DESC = new __XeLaTeXDesc();

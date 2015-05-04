@@ -7,7 +7,7 @@ import java.util.Map;
  * A property setting defines a specific setting of property values.
  */
 public interface IPropertySetting extends Map<IProperty, Object>,
-Comparable<IPropertySetting> {
+    Comparable<IPropertySetting> {
 
   /**
    * Iterate over the property values in this setting.

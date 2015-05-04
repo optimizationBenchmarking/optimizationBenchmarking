@@ -455,7 +455,7 @@ public class FontProperties extends HashObject {
 
   /** the internal font flag class */
   private static final class __FontFlags extends FontProperties implements
-  Comparable<__FontFlags> {
+      Comparable<__FontFlags> {
 
     /** the array with the font flags */
     static final __FontFlags[] FLAGS;
@@ -467,7 +467,7 @@ public class FontProperties extends HashObject {
 
       al = new ArrayList<>();
       try (final InputStream is = //
-          FontProperties.class.getResourceAsStream("knownFonts.txt")) { //$NON-NLS-1$
+      FontProperties.class.getResourceAsStream("knownFonts.txt")) { //$NON-NLS-1$
         try (final InputStreamReader isr = new InputStreamReader(is)) {
           try (final BufferedReader br = new BufferedReader(isr)) {
             while ((s = br.readLine()) != null) {

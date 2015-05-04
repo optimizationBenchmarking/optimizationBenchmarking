@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the data type
  */
 public abstract class FunctionAttribute<DT extends IElementSet> extends
-Attribute<DT, IMatrix> implements ISemanticComponent {
+    Attribute<DT, IMatrix> implements ISemanticComponent {
 
   /**
    * Create the function attribute

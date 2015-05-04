@@ -130,7 +130,7 @@ public class PieChart extends Chart implements IPieChart {
       chart = new CompiledPieChart(this.m_title, titleFont,
           this.m_legendMode, new ArrayListView<>(
               this.m_slices.toArray(new CompiledDataScalar[this.m_slices
-                                                           .size()])));
+                  .size()])));
 
       this.m_slices = null;
 
@@ -142,7 +142,7 @@ public class PieChart extends Chart implements IPieChart {
     } catch (final Throwable error) {
       ErrorUtils.logError(logger,
           ("Unrecoverable error during rendering of compiled pie chart #" //$NON-NLS-1$
-              + this._id()), error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+          + this._id()), error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     } finally {
       this.m_slices = null;
       chart = null;

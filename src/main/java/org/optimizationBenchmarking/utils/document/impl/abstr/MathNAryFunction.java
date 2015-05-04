@@ -34,7 +34,7 @@ public class MathNAryFunction extends MathFunction {
     if (this.m_name == null) {
       throw new IllegalArgumentException(//
           "Name of n-ary mathematical must not be null, empty, or just consist of white space, but '" //$NON-NLS-1$
-          + name + "' does.");//$NON-NLS-1$
+              + name + "' does.");//$NON-NLS-1$
     }
 
     this.m_needsBrace = (maxArity > 1);

@@ -67,10 +67,10 @@ final class _BufferToOutputStream extends _WorkerThread {
       }
     } catch (final Throwable t) {
       ErrorUtils
-      .logError(
-          this.m_log,
-          "Error during shoveling bytes from byte buffer to external process.", //$NON-NLS-1$
-          t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+          .logError(
+              this.m_log,
+              "Error during shoveling bytes from byte buffer to external process.", //$NON-NLS-1$
+              t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
 }

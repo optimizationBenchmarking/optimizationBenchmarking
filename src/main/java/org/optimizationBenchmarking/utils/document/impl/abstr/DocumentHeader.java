@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * information such as the title or authors of the document.
  */
 public class DocumentHeader extends DocumentPart implements
-IDocumentHeader {
+    IDocumentHeader {
 
   /** an title has been created */
   private static final int STATE_TITLE_CREATED = (DocumentElement.STATE_MAX_ELEMENT + 1);

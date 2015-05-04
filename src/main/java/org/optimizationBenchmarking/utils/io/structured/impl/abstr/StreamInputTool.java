@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IStreamInputTool;
  *          the destination type
  */
 public class StreamInputTool<S> extends FileInputTool<S> implements
-IStreamInputTool<S> {
+    IStreamInputTool<S> {
 
   /** create */
   protected StreamInputTool() {
@@ -54,7 +54,7 @@ IStreamInputTool<S> {
   @Override
   protected void stream(final IOJob job, final S data,
       final InputStream stream, final StreamEncoding<?, ?> encoding)
-          throws Throwable {
+      throws Throwable {
     //
   }
 

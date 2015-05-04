@@ -16,7 +16,7 @@ package org.optimizationBenchmarking.utils.parallel;
  * </p>
  */
 public final class ByteProducerConsumerBuffer extends
-ProducerConsumerBuffer<byte[]> {
+    ProducerConsumerBuffer<byte[]> {
 
   /** Create the buffer */
   public ByteProducerConsumerBuffer() {

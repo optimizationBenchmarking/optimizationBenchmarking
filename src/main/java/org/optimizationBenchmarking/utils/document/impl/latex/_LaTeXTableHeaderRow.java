@@ -8,9 +8,9 @@ final class _LaTeXTableHeaderRow extends TableHeaderRow {
 
   /** the row color for table headers and footers */
   static final char[] ROW_COLOR = { '\\', 'r', 'o', 'w', 'c', 'o', 'l',
-    'o', 'r', '{', 't', 'a', 'b', 'l', 'e', 'H', 'e', 'a', 'd', 'e',
-    'r', 'F', 'o', 'o', 't', 'e', 'r', 'B', 'a', 'c', 'k', 'g', 'r',
-    'o', 'u', 'n', 'd', 'C', 'o', 'l', 'o', 'r', '}', };
+      'o', 'r', '{', 't', 'a', 'b', 'l', 'e', 'H', 'e', 'a', 'd', 'e',
+      'r', 'F', 'o', 'o', 't', 'e', 'r', 'B', 'a', 'c', 'k', 'g', 'r',
+      'o', 'u', 'n', 'd', 'C', 'o', 'l', 'o', 'r', '}', };
 
   /**
    * Create a row of a header of a table

@@ -54,8 +54,8 @@ public final class FreeHEPEMFGraphicDriver extends AbstractGraphicDriver {
     if (this.m_error != null) {
       throw new UnsupportedOperationException(
           ("Cannot use " + //$NON-NLS-1$
-              TextUtils.className(FreeHEPEMFGraphicDriver.class)),
-              this.m_error);
+          TextUtils.className(FreeHEPEMFGraphicDriver.class)),
+          this.m_error);
     }
     super.checkCanUse();
   }

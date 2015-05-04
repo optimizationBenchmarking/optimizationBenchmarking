@@ -53,7 +53,7 @@ final class _InputJob extends _IOJob {
     if ((logger != null) && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
       logger.log(IOTool.DEFAULT_LOG_LEVEL,//
           ("Begin loading data from " + sources.length + //$NON-NLS-1$
-              " sources."));//$NON-NLS-1$
+          " sources."));//$NON-NLS-1$
     }
 
     tool = ((FileInputTool) (this.m_tool));
@@ -68,7 +68,7 @@ final class _InputJob extends _IOJob {
     if ((logger != null) && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
       logger.log(IOTool.DEFAULT_LOG_LEVEL,//
           ("Finished loading data from " + sources.length + //$NON-NLS-1$
-              " sources."));//$NON-NLS-1$
+          " sources."));//$NON-NLS-1$
     }
   }
 

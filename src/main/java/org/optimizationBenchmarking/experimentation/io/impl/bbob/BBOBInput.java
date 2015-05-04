@@ -64,7 +64,7 @@ public class BBOBInput extends ExperimentSetFileInput {
 
   /** the dimensions */
   static final byte[] DIMENSIONS = new byte[] { (byte) 2, (byte) 3,
-    (byte) 5, (byte) 10, (byte) 20, (byte) 40, };
+      (byte) 5, (byte) 10, (byte) 20, (byte) 40, };
 
   /** create */
   BBOBInput() {
@@ -100,7 +100,7 @@ public class BBOBInput extends ExperimentSetFileInput {
     try (final DimensionContext d = esb.createDimension()) {
       d.setName("F"); //$NON-NLS-1$
       d.setDescription(//
-          "the best objective value - F_opt"); //$NON-NLS-1$
+      "the best objective value - F_opt"); //$NON-NLS-1$
       d.setDirection(EDimensionDirection.DECREASING);
       d.setType(EDimensionType.QUALITY_PROBLEM_DEPENDENT);
       d.setParser(new BoundedDoubleParser(0d, Double.MAX_VALUE));

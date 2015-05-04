@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** A class for creating experiment sets */
 public abstract class ExperimentSetCreator implements IEvaluationInput,
-Runnable {
+    Runnable {
 
   /** the logger */
   private final Logger m_logger;

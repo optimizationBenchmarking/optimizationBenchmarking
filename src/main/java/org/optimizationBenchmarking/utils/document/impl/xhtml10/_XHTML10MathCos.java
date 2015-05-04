@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10MathCos extends MathCos {
   /** the operator */
   private final static char[] OP = new char[] { 'c', 'o', 's', '&', 'n',
-    'b', 's', 'p', ';' };
+      'b', 's', 'p', ';' };
 
   /**
    * Create a new mathematical function

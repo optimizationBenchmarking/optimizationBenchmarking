@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * (graphics)
  */
 final class _FreeHEPSVGGraphicWrapper extends
-_FreeHEPAbstractVectorGraphicsProxy<_FreeHEPSVGGraphic> {
+    _FreeHEPAbstractVectorGraphicsProxy<_FreeHEPSVGGraphic> {
 
   /** the graphic format */
   private final EGraphicFormat m_format;

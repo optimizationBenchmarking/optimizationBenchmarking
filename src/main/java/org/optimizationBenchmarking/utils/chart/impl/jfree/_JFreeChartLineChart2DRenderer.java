@@ -29,7 +29,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * </p>
  */
 final class _JFreeChartLineChart2DRenderer extends
-_JFreeChartRenderer<CompiledLineChart2D, _JFreeChartXYDataset, XYPlot> {
+    _JFreeChartRenderer<CompiledLineChart2D, _JFreeChartXYDataset, XYPlot> {
 
   /** the tick unit source */
   private static final TickUnitSource UNITS = NumberAxis
@@ -146,7 +146,7 @@ _JFreeChartRenderer<CompiledLineChart2D, _JFreeChartXYDataset, XYPlot> {
               false, _JFreeChartRenderer.EMPTY_SHAPE,// line
               line.getStroke(),//
               line.getColor()//
-              );
+          );
           legendItem.setLabelFont(line.getTitleFont());
           legendItem.setLabelPaint(line.getColor());
           legendItem.setLineVisible(true);
@@ -205,7 +205,7 @@ _JFreeChartRenderer<CompiledLineChart2D, _JFreeChartXYDataset, XYPlot> {
           new Rectangle2D.Double(render.m_minX, render.m_minY,//
               (render.m_maxX - render.m_minX),//
               (render.m_maxY - render.m_minY)),//
-              VerticalAlignment.TOP);
+          VerticalAlignment.TOP);
     } finally {
       this.m_plot.setRenderer(old);
     }

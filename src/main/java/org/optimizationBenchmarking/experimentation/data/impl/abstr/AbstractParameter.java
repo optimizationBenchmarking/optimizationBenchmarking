@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * interface.
  */
 public class AbstractParameter extends AbstractProperty implements
-IParameter {
+    IParameter {
 
   /** the owner */
   IParameterSet m_owner;

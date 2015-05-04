@@ -17,13 +17,13 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * paper, chapter, or even a website.
  */
 public abstract class BibRecord extends _BibElement<BibRecord> implements
-Cloneable {
+    Cloneable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
   /** the key prefix */
   private static final char[] KEY_PREFIX = { 'b',
-    ELabelType.LABEL_PREFIX_SEPARATOR };
+      ELabelType.LABEL_PREFIX_SEPARATOR };
   /**
    * the authors
    *
@@ -103,7 +103,7 @@ Cloneable {
     if (this.m_title == null) {
       throw new IllegalArgumentException(//
           "DocumentTitle must not be empty or null, but '" + //$NON-NLS-1$
-          title + "' is."); //$NON-NLS-1$
+              title + "' is."); //$NON-NLS-1$
     }
 
     this.m_doi = (direct ? doi : BibRecord._makeDOI(doi));
@@ -146,9 +146,9 @@ Cloneable {
       r = ((BibRecord) (super.clone()));
     } catch (final CloneNotSupportedException cnse) {
       RethrowMode.AS_RUNTIME_EXCEPTION
-      .rethrow(//
-          "Error while cloning bibliographic record: This should never happen.", //$NON-NLS-1$
-          true, cnse);
+          .rethrow(//
+              "Error while cloning bibliographic record: This should never happen.", //$NON-NLS-1$
+              true, cnse);
       return null; // can never be reached
     }
 
@@ -312,7 +312,7 @@ Cloneable {
         EComparison.equals(this.m_title, r.m_title) && //
         EComparison.equals(this.m_date, r.m_date) && //
         EComparison.equals(this.m_url, r.m_url) && //
-        EComparison.equals(this.m_doi, r.m_doi));
+    EComparison.equals(this.m_doi, r.m_doi));
   }
 
   /** {@inheritDoc} */
@@ -323,13 +323,13 @@ Cloneable {
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.m_authors),//
             HashUtils.hashCode(this.m_date)),//
+        HashUtils.combineHashes(
+        //
             HashUtils.combineHashes(
                 //
-                HashUtils.combineHashes(
-                    //
-                    HashUtils.hashCode(this.m_title),
-                    HashUtils.hashCode(this.m_url)),//
-                    HashUtils.hashCode(this.m_doi)));
+                HashUtils.hashCode(this.m_title),
+                HashUtils.hashCode(this.m_url)),//
+            HashUtils.hashCode(this.m_doi)));
   }
 
   /** {@inheritDoc} */

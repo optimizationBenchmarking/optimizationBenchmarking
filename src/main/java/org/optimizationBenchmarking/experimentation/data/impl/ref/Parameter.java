@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** A parameter. */
 public final class Parameter extends Property<ParameterValue> implements
-IParameter {
+    IParameter {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -98,8 +98,8 @@ IParameter {
     if (experiment == null) {
       throw new IllegalArgumentException(//
           "Cannot get value of parameter '"//$NON-NLS-1$
-          + this.getName() + //
-          "' for null experiment."); //$NON-NLS-1$
+              + this.getName() + //
+              "' for null experiment."); //$NON-NLS-1$
     }
     return experiment.getParameterSetting().get(this);
   }
@@ -122,10 +122,10 @@ IParameter {
     }
     throw new IllegalArgumentException(//
         "Cannot get value of parameter '" //$NON-NLS-1$
-        + this.getName() + //
-        "' for data element '"//$NON-NLS-1$
-        + element + //
-        "' - only experiments can have parameter values.");//$NON-NLS-1$
+            + this.getName() + //
+            "' for data element '"//$NON-NLS-1$
+            + element + //
+            "' - only experiments can have parameter values.");//$NON-NLS-1$
   }
 
 }

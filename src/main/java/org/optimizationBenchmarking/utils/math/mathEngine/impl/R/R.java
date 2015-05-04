@@ -120,13 +120,13 @@ public final class R extends MathEngineTool {
         r = PathUtils.findFirstInPath(//
             new AndPredicate<>(//
                 new FileNamePredicate(true, new String[] { "R",//$NON-NLS-1$
-                "Rterm" }),//$NON-NLS-1$
+                    "Rterm" }),//$NON-NLS-1$
                 new AndPredicate<>(
                     //
                     CanExecutePredicate.INSTANCE,
                     new _RAtLeastVersion3Criterion())),//
-                    IsFilePredicate.INSTANCE, //
-                    list.toArray(new Path[list.size()]));
+            IsFilePredicate.INSTANCE, //
+            list.toArray(new Path[list.size()]));
 
         if (r != null) {
           builder = exec.use();
@@ -144,7 +144,7 @@ public final class R extends MathEngineTool {
                 enc = "--encoding";//$NON-NLS-1$
 
                 wantedParams = new String[] {//
-                    "--vanilla", //$NON-NLS-1$
+                "--vanilla", //$NON-NLS-1$
                     "--slave", //$NON-NLS-1$
                     "--no-readline", //$NON-NLS-1$
                     "--no-save", //$NON-NLS-1$
@@ -190,8 +190,8 @@ public final class R extends MathEngineTool {
 
     this.m_rBinary = r;
     this.m_params = (((params != null) && ((size = params.size()) > 0))//
-        ? params.toArray(new String[size])
-            : EmptyUtils.EMPTY_STRINGS);
+    ? params.toArray(new String[size])
+        : EmptyUtils.EMPTY_STRINGS);
 
   }
 

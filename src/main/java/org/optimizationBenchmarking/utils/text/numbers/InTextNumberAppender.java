@@ -13,18 +13,18 @@ public final class InTextNumberAppender extends NumberAppender {
 
   /** the small numbers */
   static final String[] SMALL_NUMBERS = { "zero", //$NON-NLS-1$
-    "one",//$NON-NLS-1$
-    "two",//$NON-NLS-1$
-    "three",//$NON-NLS-1$
-    "four",//$NON-NLS-1$
-    "five",//$NON-NLS-1$
-    "six",//$NON-NLS-1$
-    "seven",//$NON-NLS-1$
-    "eight",//$NON-NLS-1$
-    "nine",//$NON-NLS-1$
-    "ten",//$NON-NLS-1$
-    "eleven",//$NON-NLS-1$
-    "twelve"//$NON-NLS-1$
+      "one",//$NON-NLS-1$
+      "two",//$NON-NLS-1$
+      "three",//$NON-NLS-1$
+      "four",//$NON-NLS-1$
+      "five",//$NON-NLS-1$
+      "six",//$NON-NLS-1$
+      "seven",//$NON-NLS-1$
+      "eight",//$NON-NLS-1$
+      "nine",//$NON-NLS-1$
+      "ten",//$NON-NLS-1$
+      "eleven",//$NON-NLS-1$
+      "twelve"//$NON-NLS-1$
   };
 
   /** the globally shared instance of the in-text number appender */

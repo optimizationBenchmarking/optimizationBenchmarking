@@ -30,7 +30,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 abstract class _ShadowPropertySet<ST extends IPropertySet, //
 PT extends IProperty, //
 PST extends IPropertySetting> extends //
-_ShadowNamedElementSet<IExperimentSet, ST, PT> implements IPropertySet {
+    _ShadowNamedElementSet<IExperimentSet, ST, PT> implements IPropertySet {
 
   /**
    * create the shadow property
@@ -111,14 +111,14 @@ _ShadowNamedElementSet<IExperimentSet, ST, PT> implements IPropertySet {
         if (pv == null) {
           throw new IllegalArgumentException(((//
               "Could not find value '" //$NON-NLS-1$
-              + value + " of property '"//$NON-NLS-1$
+                  + value + " of property '"//$NON-NLS-1$
               + name) + '\'') + '.');
         }
         list.add(pv);
       } else {
         throw new IllegalArgumentException(//
             "Property value for property '" //$NON-NLS-1$
-            + name + "' defined more than once."); //$NON-NLS-1$
+                + name + "' defined more than once."); //$NON-NLS-1$
       }
     }
 

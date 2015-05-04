@@ -9,7 +9,7 @@ final class _XHTML10MathLog extends MathLog {
 
   /** the operator */
   private final static char[] OP = new char[] { 'l', 'o', 'g', '<', 's',
-    'u', 'b', '>' };
+      'u', 'b', '>' };
 
   /**
    * Create a new mathematical function

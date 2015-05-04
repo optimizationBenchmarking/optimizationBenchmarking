@@ -9,12 +9,12 @@ final class _XHTML10CodeCaption extends CodeCaption {
 
   /** the start of the code tr caption */
   private static final char[] CODE_TR_TD_CAPTION_BEGIN = { '<', 't', 'r',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'o', 'd', 'e', '"',
-    '>', '<', 't', 'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c',
-    'o', 'd', 'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>', '<',
-    's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c',
-    'a', 'p', 't', 'i', 'o', 'n', 'T', 'i', 't', 'l', 'e', '"', '>',
-    'L', 'i', 's', 't', 'i', 'n', 'g', '&', 'n', 'b', 's', 'p', ';' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'o', 'd', 'e', '"',
+      '>', '<', 't', 'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c',
+      'o', 'd', 'e', 'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>', '<',
+      's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c',
+      'a', 'p', 't', 'i', 'o', 'n', 'T', 'i', 't', 'l', 'e', '"', '>',
+      'L', 'i', 's', 't', 'i', 'n', 'g', '&', 'n', 'b', 's', 'p', ';' };
 
   /**
    * create the code caption

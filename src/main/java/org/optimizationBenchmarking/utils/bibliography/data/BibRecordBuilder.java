@@ -159,7 +159,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     if ((this.m_title = this.normalize(title)) == null) {
       throw new IllegalArgumentException(//
           "DocumentTitle cannot be empty or null, but '" //$NON-NLS-1$
-          + title + "' is."); //$NON-NLS-1$
+              + title + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -194,7 +194,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     } catch (final Throwable t) {
       RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while converting document URL '" //$NON-NLS-1$
-          + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
+              + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
           true, t);
       return;
     }
@@ -216,7 +216,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     } catch (final Throwable t) {
       RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
           "Error while converting document URL string '"//$NON-NLS-1$
-          + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
+              + url + "' to URI for bibliograpy record.", //$NON-NLS-1$
           true, t);
       return;
     }
@@ -238,7 +238,7 @@ public abstract class BibRecordBuilder extends BuilderFSM<BibRecord> {
     if ((this.m_doi = this.normalize(BibRecord._makeDOI(doi))) == null) {
       throw new IllegalArgumentException(//
           "DOI cannot be set to empty or null, but '" //$NON-NLS-1$
-          + doi + "' is."); //$NON-NLS-1$
+              + doi + "' is."); //$NON-NLS-1$
     }
   }
 

@@ -67,7 +67,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
     if ((this.m_school = this.normalize(school)) == null) {
       throw new IllegalArgumentException(//
           "School  cannot be set to empty or null, but '" //$NON-NLS-1$
-          + school + "' is."); //$NON-NLS-1$
+              + school + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -123,7 +123,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
     if (m == null) {
       throw new IllegalArgumentException(//
           "Type strings must not be null or empty, but '" //$NON-NLS-1$
-          + type + "' is."); //$NON-NLS-1$
+              + type + "' is."); //$NON-NLS-1$
     }
 
     res = null;

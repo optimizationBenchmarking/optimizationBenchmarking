@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
  *          the element type
  */
 public class BasicList<ET> extends BasicCollection<ET> implements
-List<ET>, RandomAccess {
+    List<ET>, RandomAccess {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -103,8 +103,8 @@ List<ET>, RandomAccess {
   public ET set(final int index, final ET element) {
     throw new UnsupportedOperationException(//
         "Cannot set element " + element + //$NON-NLS-1$
-        " at index " + index //$NON-NLS-1$
-        );
+            " at index " + index //$NON-NLS-1$
+    );
   }
 
   /** {@inheritDoc} */
@@ -112,8 +112,8 @@ List<ET>, RandomAccess {
   public void add(final int index, final ET element) {
     throw new UnsupportedOperationException(//
         "Cannot add element " + element + //$NON-NLS-1$
-        " at index " + index//$NON-NLS-1$
-        );
+            " at index " + index//$NON-NLS-1$
+    );
   }
 
   /** {@inheritDoc} */
@@ -133,7 +133,7 @@ List<ET>, RandomAccess {
   public ET remove(final int index) {
     throw new UnsupportedOperationException(//
         "Cannot remove element at index " + index //$NON-NLS-1$
-        );
+    );
   }
 
   /** {@inheritDoc} */

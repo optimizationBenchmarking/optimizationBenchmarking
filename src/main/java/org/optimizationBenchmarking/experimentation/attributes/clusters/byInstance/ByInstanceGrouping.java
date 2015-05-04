@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
  * An attribute for splitting and grouping experiments by single instances.
  */
 public final class ByInstanceGrouping extends
-Attribute<IExperimentSet, IClustering> {
+    Attribute<IExperimentSet, IClustering> {
 
   /** a parameter that can be used to group information by instance */
   public static final String PARAM_BY_INSTANCE = "byInstance"; //$NON-NLS-1$

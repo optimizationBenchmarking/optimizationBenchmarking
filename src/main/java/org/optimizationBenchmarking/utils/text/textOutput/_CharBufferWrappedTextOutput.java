@@ -7,7 +7,7 @@ import java.nio.CharBuffer;
  * {@link java.nio.CharBuffer}.
  */
 class _CharBufferWrappedTextOutput extends
-_AppendableWrappedTextOutputBase<CharBuffer> {
+    _AppendableWrappedTextOutputBase<CharBuffer> {
 
   /**
    * Create a wrapped text output

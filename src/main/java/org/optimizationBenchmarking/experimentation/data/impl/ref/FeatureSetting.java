@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 
 /** a concrete feature setting */
 public final class FeatureSetting extends
-_PropertySetting<FeatureValue, Feature> implements IFeatureSetting {
+    _PropertySetting<FeatureValue, Feature> implements IFeatureSetting {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

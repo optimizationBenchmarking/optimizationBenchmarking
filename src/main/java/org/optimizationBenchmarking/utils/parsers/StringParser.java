@@ -202,7 +202,7 @@ public class StringParser extends Parser<String> {
     final String ret;
 
     ret = ((o == null) ? EmptyUtils.EMPTY_STRING : //
-      this.__parseString(String.valueOf(o)));
+        this.__parseString(String.valueOf(o)));
     this.validate(ret);
     return ret;
   }

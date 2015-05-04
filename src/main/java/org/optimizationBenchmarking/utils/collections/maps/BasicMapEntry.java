@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  *          the value type
  */
 public abstract class BasicMapEntry<K, V> implements Map.Entry<K, V>,
-Serializable, Cloneable, ITextable {
+    Serializable, Cloneable, ITextable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -63,7 +63,7 @@ Serializable, Cloneable, ITextable {
   @Override
   public int hashCode() {
     return (HashUtils.hashCode(this.getKey()) ^ //
-        HashUtils.hashCode(this.getValue()));
+    HashUtils.hashCode(this.getValue()));
   }
 
   /** {@inheritDoc} */
@@ -81,11 +81,11 @@ Serializable, Cloneable, ITextable {
       e = ((Map.Entry) o);
 
       return ((((o1 = this.getKey()) == null)//
-          ? (e.getKey() == null)//
-              : (o1.equals(e.getKey()))) && //
-              (((o1 = this.getValue()) == null)//
-                  ? (e.getValue() == null)//
-                      : (o1.equals(e.getValue()))));
+      ? (e.getKey() == null)//
+          : (o1.equals(e.getKey()))) && //
+      (((o1 = this.getValue()) == null)//
+      ? (e.getValue() == null)//
+          : (o1.equals(e.getValue()))));
     }
 
     return false;

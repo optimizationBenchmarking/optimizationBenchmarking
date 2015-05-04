@@ -122,8 +122,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
     this.m_showAxisTitles = config.getBoolean(
         FunctionJob.PARAM_PRINT_AXIS_TITLES, this
-        .getDefaultShowAxisTitles(data, this.m_figureSize,
-            this.m_makeLegendFigure));
+            .getDefaultShowAxisTitles(data, this.m_figureSize,
+                this.m_makeLegendFigure));
 
     this.m_clusterer = this.configureClustering(data, config);
 
@@ -893,8 +893,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
             try (final ILineChart2D lines = figure.lineChart2D()) {
               lines.setLegendMode(this.m_makeLegendFigure//
-                  ? ELegendMode.HIDE_COMPLETE_LEGEND//
-                      : ELegendMode.SHOW_COMPLETE_LEGEND);
+              ? ELegendMode.HIDE_COMPLETE_LEGEND//
+                  : ELegendMode.SHOW_COMPLETE_LEGEND);
               this.__drawChart(lines, experimentSetFunctions2,
                   (!(this.m_makeLegendFigure)),
                   (!(this.m_makeLegendFigure)), styles);

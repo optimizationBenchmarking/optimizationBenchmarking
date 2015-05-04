@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 
 /** a selection of instances */
 final class _InstanceSelection extends
-_PlainSelection<IInstanceSet, IInstance> {
+    _PlainSelection<IInstanceSet, IInstance> {
 
   /**
    * Create the instance selection

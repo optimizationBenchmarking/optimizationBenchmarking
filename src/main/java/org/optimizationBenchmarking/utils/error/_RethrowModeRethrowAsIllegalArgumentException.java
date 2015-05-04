@@ -5,7 +5,7 @@ package org.optimizationBenchmarking.utils.error;
  * {@link java.lang.IllegalArgumentException}.
  */
 final class _RethrowModeRethrowAsIllegalArgumentException extends
-RethrowMode<IllegalArgumentException> {
+    RethrowMode<IllegalArgumentException> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ RethrowMode<IllegalArgumentException> {
     IllegalArgumentException re;
 
     useMessage = ((message != null) ? //
-        (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
+    (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
         : RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG);
 
     if (handle == null) {

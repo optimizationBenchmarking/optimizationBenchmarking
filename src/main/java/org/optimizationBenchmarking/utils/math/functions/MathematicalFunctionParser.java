@@ -46,7 +46,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** A parser for mathematical functionsdrivers. */
 public final class MathematicalFunctionParser extends
-InstanceParser<MathematicalFunction> {
+    InstanceParser<MathematicalFunction> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

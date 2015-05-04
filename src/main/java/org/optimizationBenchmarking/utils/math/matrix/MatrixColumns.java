@@ -77,7 +77,7 @@ public class MatrixColumns<OT extends IMatrix> extends AbstractMatrix {
     }
 
     return ((e && (cc.length == c.length)) ? this : //
-      this.m_owner.selectColumns(d ? cols : cc));
+        this.m_owner.selectColumns(d ? cols : cc));
   }
 
   /** {@inheritDoc} */

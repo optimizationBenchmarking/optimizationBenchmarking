@@ -74,19 +74,19 @@ public class HashUtilsTest {
 
     j = 0;
     Assert
-    .assertEquals(Short.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Short.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = 1;
     Assert
-    .assertEquals(Short.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Short.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (-1);
     Assert
-    .assertEquals(Short.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Short.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = Short.MAX_VALUE;
     Assert
-    .assertEquals(Short.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Short.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = Short.MIN_VALUE;
     Assert
-    .assertEquals(Short.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Short.valueOf(j).hashCode(), HashUtils.hashCode(j));
 
     r = new Random();
     for (i = 1000; (--i) >= 0;) {
@@ -131,61 +131,61 @@ public class HashUtilsTest {
 
     j = 0;
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = 1;
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (-1);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = Float.MAX_VALUE;
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = Float.MIN_VALUE;
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = Float.MIN_NORMAL;
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (-Float.MAX_VALUE);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (-Float.MIN_NORMAL);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (-Float.MIN_NORMAL);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = Float.POSITIVE_INFINITY;
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = Float.NEGATIVE_INFINITY;
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = Float.NaN;
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (-Float.NaN);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (1f / 0f);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (-1f / 0f);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (0f / 0f);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (-0f / 0f);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (0f);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
     j = (-0f);
     Assert
-    .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
+        .assertEquals(Float.valueOf(j).hashCode(), HashUtils.hashCode(j));
 
     r = new Random();
     for (i = 1000; (--i) >= 0;) {

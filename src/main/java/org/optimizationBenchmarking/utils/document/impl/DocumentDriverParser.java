@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** A parser for document drivers. */
 public final class DocumentDriverParser extends
-InstanceParser<IDocumentDriver> {
+    InstanceParser<IDocumentDriver> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

@@ -23,10 +23,10 @@ class _Context<RT> extends _FSM {
 
   /** the state names */
   private static final String[] STATE_NAMES = { null,
-    _FSM.STATE_OPEN_NAME,//
-    "closed",//$NON-NLS-1$
-    "compiling",//$NON-NLS-1$
-    "compiled"//$NON-NLS-1$
+      _FSM.STATE_OPEN_NAME,//
+      "closed",//$NON-NLS-1$
+      "compiling",//$NON-NLS-1$
+      "compiled"//$NON-NLS-1$
   };
 
   /** the compiled result */

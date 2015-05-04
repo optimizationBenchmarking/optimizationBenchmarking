@@ -89,9 +89,9 @@ final class _TestAggregateA implements IAggregate {
 
     throw new AssertionError(//
         "(" + //$NON-NLS-1$
-        a + " != " + b + ") && (" + //$NON-NLS-1$//$NON-NLS-2$
-        a + " != " + c + ") && (" + //$NON-NLS-1$//$NON-NLS-2$
-        a + " != " + d + ") && (" + //$NON-NLS-1$//$NON-NLS-2$
-        a + " != " + e + ")"); //$NON-NLS-1$//$NON-NLS-2$
+            a + " != " + b + ") && (" + //$NON-NLS-1$//$NON-NLS-2$
+            a + " != " + c + ") && (" + //$NON-NLS-1$//$NON-NLS-2$
+            a + " != " + d + ") && (" + //$NON-NLS-1$//$NON-NLS-2$
+            a + " != " + e + ")"); //$NON-NLS-1$//$NON-NLS-2$
   }
 }

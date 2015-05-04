@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 
 /** A class for creating in parallel sets */
 public final class RandomTSPSuiteParallelExample extends
-RandomParallelExample {
+    RandomParallelExample {
 
   /**
    * create

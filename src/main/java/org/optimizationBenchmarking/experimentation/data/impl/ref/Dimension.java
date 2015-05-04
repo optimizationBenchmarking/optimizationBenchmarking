@@ -69,15 +69,15 @@ public class Dimension extends _NamedIDObject implements IDimension {
     if (type.isInteger() != parser.areBoundsInteger()) {
       throw new IllegalArgumentException(
           "The isInteger feature of the dimension type must fit to the integer feature of the parser's bounds. However, the dimension type is " //$NON-NLS-1$
-          + type
-          + " with the isInteger feature "//$NON-NLS-1$
-          + type.isInteger()
-          + " and the parser ("//$NON-NLS-1$
-          + TextUtils.className(parser.getClass())
-          + " for "//$NON-NLS-1$
-          + TextUtils.className(parser.getOutputClass())
-          + ") has the areBoundsInteger feature "//$NON-NLS-1$
-          + parser.areBoundsInteger() + '.');
+              + type
+              + " with the isInteger feature "//$NON-NLS-1$
+              + type.isInteger()
+              + " and the parser ("//$NON-NLS-1$
+              + TextUtils.className(parser.getClass())
+              + " for "//$NON-NLS-1$
+              + TextUtils.className(parser.getOutputClass())
+              + ") has the areBoundsInteger feature "//$NON-NLS-1$
+              + parser.areBoundsInteger() + '.');
     }
 
     if (dimType == null) {
@@ -135,7 +135,7 @@ public class Dimension extends _NamedIDObject implements IDimension {
       default: {
         throw new IllegalArgumentException(
             (((("Invalid type '" + this.m_primitiveType) + //$NON-NLS-1$
-                "' for dimension '") + this.getName()) + '\'') + '.'); //$NON-NLS-1$
+            "' for dimension '") + this.getName()) + '\'') + '.'); //$NON-NLS-1$
       }
     }
   }

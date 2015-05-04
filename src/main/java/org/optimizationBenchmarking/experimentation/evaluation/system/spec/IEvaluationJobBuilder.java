@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJobBuilder;
  * A job builder for evaluation jobs.
  */
 public interface IEvaluationJobBuilder extends IToolJobBuilder,
-IConfigurable {
+    IConfigurable {
 
   /** {@inheritDoc} */
   @Override

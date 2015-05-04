@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  *          the element type
  */
 public class StringMap<ET> extends
-ObjectMap<String, ET, ObjectMapEntry<String, ET>> {
+    ObjectMap<String, ET, ObjectMapEntry<String, ET>> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

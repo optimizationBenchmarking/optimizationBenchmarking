@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
  * interface.
  */
 public class AbstractFeatureSetting extends AbstractPropertySetting
-implements IFeatureSetting {
+    implements IFeatureSetting {
 
   /**
    * Create the abstract property setting

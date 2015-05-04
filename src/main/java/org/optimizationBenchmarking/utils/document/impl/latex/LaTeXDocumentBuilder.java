@@ -52,7 +52,7 @@ public final class LaTeXDocumentBuilder extends DocumentBuilder {
    */
   public final void setDocumentClass(final LaTeXDocumentClass documentClass) {
     ((LaTeXConfigurationBuilder) (this.getConfigurationBuilder()))
-    .setDocumentClass(documentClass);
+        .setDocumentClass(documentClass);
   }
 
   /** {@inheritDoc} */

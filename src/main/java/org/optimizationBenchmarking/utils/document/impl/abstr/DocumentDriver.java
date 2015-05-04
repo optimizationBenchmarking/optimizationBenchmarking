@@ -24,7 +24,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerTool;
 
 /** A document driver. */
 public abstract class DocumentDriver extends DocumentProducerTool
-implements IDocumentDriver {
+    implements IDocumentDriver {
 
   /** create the document driver */
   protected DocumentDriver() {
@@ -1171,7 +1171,7 @@ implements IDocumentDriver {
         if (a.equals(labels[j])) {
           throw new IllegalArgumentException(//
               "The same label must not appear twice in a reference, but '" //$NON-NLS-1$
-              + a + "' does."); //$NON-NLS-1$
+                  + a + "' does."); //$NON-NLS-1$
         }
       }
 

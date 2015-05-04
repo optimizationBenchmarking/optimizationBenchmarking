@@ -20,47 +20,47 @@ final class _XHTML10Figure extends Figure {
 
   /** the start of the float */
   static final char[] FIGURE_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ', 'c',
-    'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', '"',
-    '>', };
+      'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', '"',
+      '>', };
 
   /** the start of the float */
   static final char[] FIGURE_TABLE_BEGIN = { '<', 't', 'a', 'b', 'l', 'e',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r',
-    'e', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r',
+      'e', '"', '>' };
 
   /** the start of the float tr caption */
   static final char[] FIGURE_TR_CAPTION_BEGIN = { '<', 't', 'r', ' ', 'c',
-    'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', 'C',
-    'a', 'p', 't', 'i', 'o', 'n', '"', '>' };
+      'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', 'C',
+      'a', 'p', 't', 'i', 'o', 'n', '"', '>' };
   /** the start of the float tr body */
   static final char[] FIGURE_TR_BODY_BEGIN = { '<', 't', 'r', ' ', 'c',
-    'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', 'B',
-    'o', 'd', 'y', '"', '>' };
+      'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', 'B',
+      'o', 'd', 'y', '"', '>' };
   /** the start of the float td */
   static final char[] FIGURE_TD_CAPTION_SPAN_BEGIN = { '<', 't', 'd', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e',
-    'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>', '<', 's', 'p', 'a',
-    'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'a', 'p', 't',
-    'i', 'o', 'n', 'T', 'i', 't', 'l', 'e', '"', '>', 'F', 'i', 'g',
-    '.', '&', 'n', 'b', 's', 'p', ';' };
+      'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e',
+      'C', 'a', 'p', 't', 'i', 'o', 'n', '"', '>', '<', 's', 'p', 'a',
+      'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'a', 'p', 't',
+      'i', 'o', 'n', 'T', 'i', 't', 'l', 'e', '"', '>', 'F', 'i', 'g',
+      '.', '&', 'n', 'b', 's', 'p', ';' };
   /** the start of the float body td */
   static final char[] FIGURE_TD_BODY_BEGIN = { '<', 't', 'd', ' ', 'c',
-    'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', 'B',
-    'o', 'd', 'y', '"', '>' };
+      'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e', 'B',
+      'o', 'd', 'y', '"', '>' };
 
   /** the start figure image: uri follows */
   private static final char[] FIGURE_IMG_URI = { '<', 'i', 'm', 'g', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e',
-    '"', ' ', 's', 'r', 'c', '=', '"' };
+      'c', 'l', 'a', 's', 's', '=', '"', 'f', 'i', 'g', 'u', 'r', 'e',
+      '"', ' ', 's', 'r', 'c', '=', '"' };
   /** the start figure image width: width follows */
   private static final char[] FIGURE_IMG_WIDTH = { '"', ' ', 's', 't',
-    'y', 'l', 'e', '=', '"', 'w', 'i', 'd', 't', 'h', ':', };
+      'y', 'l', 'e', '=', '"', 'w', 'i', 'd', 't', 'h', ':', };
   /** the start figure image height: height will follow */
   private static final char[] FIGURE_IMG_HEIGHT = { 'p', 't', ';', 'h',
-    'e', 'i', 'g', 'h', 't', ':', };
+      'e', 'i', 'g', 'h', 't', ':', };
   /** the start figure image: alt will follow */
   private static final char[] FIGURE_IMG_ALT = { 'p', 't', '"', ' ', 'a',
-    'l', 't', '=', '"' };
+      'l', 't', '=', '"' };
 
   /** the caption */
   private char[] m_caption;

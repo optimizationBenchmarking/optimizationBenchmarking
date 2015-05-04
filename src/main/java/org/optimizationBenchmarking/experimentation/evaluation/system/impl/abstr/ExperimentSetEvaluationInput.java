@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEval
  * .
  */
 public final class ExperimentSetEvaluationInput implements
-IEvaluationInput {
+    IEvaluationInput {
 
   /** the wrapped data set */
   private volatile IExperimentSet m_data;

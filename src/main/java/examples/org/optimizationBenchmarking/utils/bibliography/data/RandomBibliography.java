@@ -32,27 +32,27 @@ public final class RandomBibliography extends BibliographyExample {
 
   /** the character ranges */
   private static final char[][] RANGES = { //
-    { '\u03a0', '\u03f3' },//
-    { '\u0410', '\u044f' },//
-    { '\u0531', '\u0556' },//
-    { '\u05d0', '\u05ea' },//
-    { '\u0621', '\u064a' },//
-    { '\u0905', '\u0939' },//
-    { '\u0985', '\u09b9' },//
-    { '\u0a05', '\u0a39' },//
-    { '\u0a85', '\u0ab9' },//
-    { '\u0b05', '\u0b39' },//
-    { '\u0b85', '\u0bb9' },//
-    { '\u0c05', '\u0c39' },//
-    { '\u0c85', '\u0cb9' },//
-    { '\u0d05', '\u0d39' },//
-    { '\u0e01', '\u0e2e' },//
-    { '\u0e81', '\u0eae' },//
-    { '\u0f40', '\u0f69' },//
-    { '\u10a0', '\u10f6' },//
-    { '\uac00', '\ud768' },//
-    { '\u3041', '\u3357' },//
-    { '\u4e00', '\u9fa5' },//
+  { '\u03a0', '\u03f3' },//
+      { '\u0410', '\u044f' },//
+      { '\u0531', '\u0556' },//
+      { '\u05d0', '\u05ea' },//
+      { '\u0621', '\u064a' },//
+      { '\u0905', '\u0939' },//
+      { '\u0985', '\u09b9' },//
+      { '\u0a05', '\u0a39' },//
+      { '\u0a85', '\u0ab9' },//
+      { '\u0b05', '\u0b39' },//
+      { '\u0b85', '\u0bb9' },//
+      { '\u0c05', '\u0c39' },//
+      { '\u0c85', '\u0cb9' },//
+      { '\u0d05', '\u0d39' },//
+      { '\u0e01', '\u0e2e' },//
+      { '\u0e81', '\u0eae' },//
+      { '\u0f40', '\u0f69' },//
+      { '\u10a0', '\u10f6' },//
+      { '\uac00', '\ud768' },//
+      { '\u3041', '\u3357' },//
+      { '\u4e00', '\u9fa5' },//
   };
 
   /**
@@ -397,7 +397,7 @@ public final class RandomBibliography extends BibliographyExample {
 
     r = this.m_rand;
     range = RandomBibliography.RANGES[r
-                                      .nextInt(RandomBibliography.RANGES.length)];
+        .nextInt(RandomBibliography.RANGES.length)];
     sb = new StringBuilder();
 
     prev = 0;

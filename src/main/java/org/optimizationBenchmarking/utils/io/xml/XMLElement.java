@@ -262,10 +262,10 @@ public final class XMLElement extends XMLBase {
         default: {
           sb = new MemoryTextOutput();
           sb.append(//
-              "We should have never gotten here, old state "); //$NON-NLS-1$
+          "We should have never gotten here, old state "); //$NON-NLS-1$
           this.fsmStateAppendName(oldState, sb);
           sb.append(//
-              " is unknown or inconsistent and cannot be left for target state "); //$NON-NLS-1$
+          " is unknown or inconsistent and cannot be left for target state "); //$NON-NLS-1$
           this.fsmStateAppendName(targetState, sb);
           sb.append('.');
           throw new IllegalStateException(sb.toString());
@@ -493,16 +493,16 @@ public final class XMLElement extends XMLBase {
     if (namespaceURI == null) {
       throw new IllegalArgumentException(//
           "Cannot set prefix '" + prefix + //$NON-NLS-1$
-          "' for null namespace URI in '" + this + //$NON-NLS-1$
-          "'."); //$NON-NLS-1$
+              "' for null namespace URI in '" + this + //$NON-NLS-1$
+              "'."); //$NON-NLS-1$
     }
 
     pf = TextUtils.normalize(prefix);
     if (pf == null) {
       throw new IllegalArgumentException(//
           "Namespace prefix must not be empty or null, but prefix for namespace '"//$NON-NLS-1$
-          + namespaceURI + "' is '" + prefix + //$NON-NLS-1$
-          "' in '" + this + "'."); //$NON-NLS-1$//$NON-NLS-2$
+              + namespaceURI + "' is '" + prefix + //$NON-NLS-1$
+              "' in '" + this + "'."); //$NON-NLS-1$//$NON-NLS-2$
     }
 
     this.fsmStateAssertAndSet(EComparison.LESS_OR_EQUAL,
@@ -520,7 +520,7 @@ public final class XMLElement extends XMLBase {
       if (definition != null) {
         if (this.getOwner() instanceof XMLElement) {
           this.m_namespaces = nss = //
-              ((HashMap<Object, _Namespace>) (nss.clone()));
+          ((HashMap<Object, _Namespace>) (nss.clone()));
         }
 
         nss.put(namespaceURI, definition);
@@ -534,10 +534,10 @@ public final class XMLElement extends XMLBase {
       }
       throw new IllegalArgumentException(//
           "Prefix '" + prefix + //$NON-NLS-1$
-          "' has already been assigned to namespace URI '"//$NON-NLS-1$
-          + definition.m_uri
-          + "' so it cannot be assigned to URI '" + namespaceURI + //$NON-NLS-1$
-          "' in '" + this + "'."); //$NON-NLS-1$//$NON-NLS-2$
+              "' has already been assigned to namespace URI '"//$NON-NLS-1$
+              + definition.m_uri
+              + "' so it cannot be assigned to URI '" + namespaceURI + //$NON-NLS-1$
+              "' in '" + this + "'."); //$NON-NLS-1$//$NON-NLS-2$
     }
 
     if (this.getOwner() instanceof XMLElement) {

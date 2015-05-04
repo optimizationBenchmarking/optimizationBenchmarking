@@ -59,8 +59,8 @@ public class TitledElement extends ChartElement implements ITitledElement {
     if (this.m_title == null) {
       throw new IllegalArgumentException(//
           "Title cannot be set to null or empty string, but was set to '"//$NON-NLS-1$
-          + title + //
-          "'. If you don't want to specify a title, don't set it."); //$NON-NLS-1$
+              + title + //
+              "'. If you don't want to specify a title, don't set it."); //$NON-NLS-1$
     }
   }
 

@@ -32,7 +32,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  *          the output stream type
  */
 public abstract class StreamEncoding<IST extends Closeable, OST extends Closeable>
-extends HashObject implements Serializable {
+    extends HashObject implements Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -45,15 +45,15 @@ extends HashObject implements Serializable {
 
   /** the unknown encoding */
   public static final StreamEncoding<Closeable, Closeable> UNKNOWN = //
-      new _UnknownEncoding();
+  new _UnknownEncoding();
 
   /** the binary encoding */
   public static final StreamEncoding<InputStream, OutputStream> BINARY = //
-      new _UnknownBinaryEncoding();
+  new _UnknownBinaryEncoding();
 
   /** the text encoding */
   public static final StreamEncoding<BufferedReader, BufferedWriter> TEXT = //
-      new _UnknownTextEncoding();
+  new _UnknownTextEncoding();
 
   /** the <a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a> encoding */
   private static final TextEncoding ASCII;
@@ -298,7 +298,7 @@ extends HashObject implements Serializable {
     if ((this.m_name = TextUtils.prepare(standardName)) == null) {
       throw new IllegalArgumentException(//
           "Standard name must not be null or empty, but is '" //$NON-NLS-1$
-          + standardName + '\'');
+              + standardName + '\'');
     }
     if (autoRegister) {
       this.register(this.m_name);
@@ -317,7 +317,7 @@ extends HashObject implements Serializable {
         if (StreamEncoding.ENCODINGS.containsKey(s)) {
           throw new IllegalStateException(//
               "There is already an encoding under name '" + s + //$NON-NLS-1$
-              "'."); //$NON-NLS-1$
+                  "'."); //$NON-NLS-1$
         }
       }
 
@@ -555,7 +555,7 @@ extends HashObject implements Serializable {
    */
   public static final InputStream openInputStream(
       final InputStream stream, final StreamEncoding<?, ?> encoding)
-          throws IOException {
+      throws IOException {
     final Class<?> clazz;
 
     if ((encoding != null) && (encoding != StreamEncoding.BINARY)
@@ -608,7 +608,7 @@ extends HashObject implements Serializable {
    */
   public static final OutputStream openOutputStream(
       final OutputStream stream, final StreamEncoding<?, ?> encoding)
-          throws IOException {
+      throws IOException {
     final Class<?> clazz;
 
     if ((encoding != null) && (encoding != StreamEncoding.BINARY)

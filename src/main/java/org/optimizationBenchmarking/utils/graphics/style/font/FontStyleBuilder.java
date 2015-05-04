@@ -29,7 +29,7 @@ import org.optimizationBenchmarking.utils.text.transformations.NormalCharTransfo
 
 /** A builder for font styles */
 public final class FontStyleBuilder extends
-PaletteElementBuilder<FontStyle> {
+    PaletteElementBuilder<FontStyle> {
 
   /** the font attributes */
   private static final HashMap<TextAttribute, Object> FONT_ATTRIBUTES;
@@ -376,8 +376,8 @@ PaletteElementBuilder<FontStyle> {
       if (fontNameLength >= nameLength) {
 
         shorter = ((fontNameLength > nameLength)//
-            ? fontName.substring(0, nameLength)//
-                : fontName);
+        ? fontName.substring(0, nameLength)//
+            : fontName);
         if (shorter.equalsIgnoreCase(name)) {
           return true;
         }
@@ -388,8 +388,8 @@ PaletteElementBuilder<FontStyle> {
         fontNameLength = fontName.length();
         if (fontNameLength >= nameLength) {
           shorter = ((fontNameLength > nameLength)//
-              ? fontName.substring(0, nameLength)//
-                  : fontName);
+          ? fontName.substring(0, nameLength)//
+              : fontName);
           if (shorter.equalsIgnoreCase(name)) {
             return true;
           }
@@ -400,8 +400,8 @@ PaletteElementBuilder<FontStyle> {
           fontNameLength = fontName.length();
           if (fontNameLength >= nameLength) {
             shorter = ((fontNameLength > nameLength)//
-                ? fontName.substring(0, nameLength)//
-                    : fontName);
+            ? fontName.substring(0, nameLength)//
+                : fontName);
             if (shorter.equalsIgnoreCase(name)) {
               return true;
             }
@@ -506,12 +506,12 @@ PaletteElementBuilder<FontStyle> {
                   if (font != null) {
                     try {
                       GraphicsEnvironment.getLocalGraphicsEnvironment()
-                      .registerFont(font);
+                          .registerFont(font);
                     } catch (final Throwable ignore) {
                       ErrorUtils.logError(Configuration.getGlobalLogger(),
                           "Ignorable error during the attempt to register font '"//$NON-NLS-1$
-                          + font + //
-                          "' with the local graphics environment.", //$NON-NLS-1$
+                              + font + //
+                              "' with the local graphics environment.", //$NON-NLS-1$
                           ignore, false, RethrowMode.DONT_RETHROW);
                     }
                     if (FontStyleBuilder
@@ -530,10 +530,10 @@ PaletteElementBuilder<FontStyle> {
           }
         } catch (final Throwable error) {
           ErrorUtils
-          .logError(
-              Configuration.getGlobalLogger(),
-              "Strange but ignorable error during the creation of a font style detected.", //$NON-NLS-1$
-              error, true, RethrowMode.DONT_RETHROW);
+              .logError(
+                  Configuration.getGlobalLogger(),
+                  "Strange but ignorable error during the creation of a font style detected.", //$NON-NLS-1$
+                  error, true, RethrowMode.DONT_RETHROW);
         }
       }
 

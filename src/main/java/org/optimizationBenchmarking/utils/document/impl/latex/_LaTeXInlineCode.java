@@ -11,7 +11,7 @@ final class _LaTeXInlineCode extends InlineCode {
 
   /** the listing begin */
   private static final char[] BEGIN_INLINE_LISTING = { '\\', 'l', 's',
-    't', 'i', 'n', 'l', 'i', 'n', 'e' };
+      't', 'i', 'n', 'l', 'i', 'n', 'e' };
 
   /** the body */
   private final MemoryTextOutput m_body;
@@ -215,8 +215,8 @@ final class _LaTeXInlineCode extends InlineCode {
     if (delim >= 128) {
       throw new IllegalArgumentException(//
           "The inline code '" //$NON-NLS-1$
-          + this.m_body + //
-          "' cannot be included in the LaTeX document as it includes all characters which could be used as delimiters."); //$NON-NLS-1$
+              + this.m_body + //
+              "' cannot be included in the LaTeX document as it includes all characters which could be used as delimiters."); //$NON-NLS-1$
     }
 
     out = this.getTextOutput();

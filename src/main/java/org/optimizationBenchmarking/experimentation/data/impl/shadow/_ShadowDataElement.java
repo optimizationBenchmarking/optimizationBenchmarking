@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  *          the shadow type
  */
 class _ShadowDataElement<OT extends IDataElement, ST extends IDataElement>
-extends DataElement implements Comparable<_ShadowDataElement<OT, ST>> {
+    extends DataElement implements Comparable<_ShadowDataElement<OT, ST>> {
 
   /** the owner */
   OT m_owner;
@@ -71,8 +71,8 @@ extends DataElement implements Comparable<_ShadowDataElement<OT, ST>> {
     if (this.m_owner != null) {
       throw new IllegalStateException(//
           "Instance of "//$NON-NLS-1$
-          + TextUtils.className(this.getClass()) + //
-          " already has an owner.");//$NON-NLS-1$
+              + TextUtils.className(this.getClass()) + //
+              " already has an owner.");//$NON-NLS-1$
     }
     this.m_owner = owner;
   }

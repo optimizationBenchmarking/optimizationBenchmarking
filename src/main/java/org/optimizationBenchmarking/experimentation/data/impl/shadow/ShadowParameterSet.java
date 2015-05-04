@@ -16,8 +16,8 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * attribute-based computations to that parameter set.
  */
 public class ShadowParameterSet extends
-_ShadowPropertySet<IParameterSet, IParameter, IParameterSetting>
-implements IParameterSet {
+    _ShadowPropertySet<IParameterSet, IParameter, IParameterSetting>
+    implements IParameterSet {
   /**
    * create the shadow parameter set
    *

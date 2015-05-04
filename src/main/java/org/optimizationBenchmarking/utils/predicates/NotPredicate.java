@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  *          the element type this condition applies to.
  */
 public final class NotPredicate<T> extends HashObject implements
-IPredicate<T>, Serializable {
+    IPredicate<T>, Serializable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

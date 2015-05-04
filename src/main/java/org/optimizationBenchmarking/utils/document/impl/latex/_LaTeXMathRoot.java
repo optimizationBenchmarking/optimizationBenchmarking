@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXMathRoot extends MathRoot {
   /** the root */
   private static final char[] ROOT = { '{', '\\', 's', 'q', 'r', 't', '[',
-    '{', };
+      '{', };
 
   /**
    * Create a new mathematical function

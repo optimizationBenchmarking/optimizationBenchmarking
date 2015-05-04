@@ -29,11 +29,11 @@ public final class CSVEDIExample extends ExperimentSetCreator {
         this.getLogger())) {
 
       CSVEDIInput
-      .getInstance()
-      .use()
-      .setDestination(ec)
-      .addArchiveResource(CSVEDIExample.class,
-          "csvEdiExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$
+          .getInstance()
+          .use()
+          .setDestination(ec)
+          .addArchiveResource(CSVEDIExample.class,
+              "csvEdiExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$
           .create().call();
       return ec.create();
     }

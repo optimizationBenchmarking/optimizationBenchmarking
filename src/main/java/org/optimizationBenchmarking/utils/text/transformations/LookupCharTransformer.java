@@ -158,7 +158,7 @@ public class LookupCharTransformer extends CharTransformer {
               }
               default: {
                 nextState = (((chrB == chrA) && (b.length() <= 1)) ? //
-                    LookupCharTransformer.STATE_DIRECT
+                LookupCharTransformer.STATE_DIRECT
                     : ((byte) (-1)));
               }
             }
@@ -228,8 +228,8 @@ public class LookupCharTransformer extends CharTransformer {
         if (cur == last) {
           throw new IllegalArgumentException(//
               "Double mapping for char " + cur + //$NON-NLS-1$
-              "(0x" + Integer.toHexString(cur) + //$NON-NLS-1$
-              "): " + Arrays.toString(ch)); //$NON-NLS-1$
+                  "(0x" + Integer.toHexString(cur) + //$NON-NLS-1$
+                  "): " + Arrays.toString(ch)); //$NON-NLS-1$
         }
         last = cur;
       }

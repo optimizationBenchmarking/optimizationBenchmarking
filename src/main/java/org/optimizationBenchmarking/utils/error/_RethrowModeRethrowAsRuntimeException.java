@@ -5,7 +5,7 @@ package org.optimizationBenchmarking.utils.error;
  * {@link java.lang.RuntimeException}.
  */
 final class _RethrowModeRethrowAsRuntimeException extends
-RethrowMode<RuntimeException> {
+    RethrowMode<RuntimeException> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ RethrowMode<RuntimeException> {
     RuntimeException re;
 
     useMessage = ((message != null) ? //
-        (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
+    (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
         : RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG);
 
     if (handle == null) {

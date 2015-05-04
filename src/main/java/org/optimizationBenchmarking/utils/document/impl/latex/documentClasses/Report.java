@@ -26,7 +26,7 @@ public final class Report extends LaTeXDocumentClass {
         LaTeXDefaultFontPalette.getInstance(),// fonts
         ELaTeXSection.CHAPTER,// highest supported section type
         ELaTeXSection.SUBPARAGRAPH// lowest supported section type
-        );
+    );
   }
 
   /**

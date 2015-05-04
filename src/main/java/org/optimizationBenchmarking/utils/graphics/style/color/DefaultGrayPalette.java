@@ -53,7 +53,7 @@ public final class DefaultGrayPalette extends ColorPalette {
 
   /** the default palette builder */
   private static final class __DefaultGrayPaletteBuilder extends
-  ColorPaletteBuilder {
+      ColorPaletteBuilder {
     /** the default palette builder */
     __DefaultGrayPaletteBuilder() {
       super();
@@ -64,7 +64,7 @@ public final class DefaultGrayPalette extends ColorPalette {
     protected final DefaultGrayPalette createPalette(
         final ArrayList<ColorStyle> data) {
       return new DefaultGrayPalette(data.toArray(new ColorStyle[data
-                                                                .size()]));
+          .size()]));
     }
   }
 
@@ -82,19 +82,19 @@ public final class DefaultGrayPalette extends ColorPalette {
       logger = Configuration.getGlobalLogger();
       try (final __DefaultGrayPaletteBuilder cspb = new __DefaultGrayPaletteBuilder()) {
         ColorPaletteXMLInput
-        .getInstance()
-        .use()
-        .setLogger(logger)
-        .setDestination(cspb)
-        .addResource(DefaultGrayPalette.class,
-            "defaultGray.colorPalette").create().call(); //$NON-NLS-1$
+            .getInstance()
+            .use()
+            .setLogger(logger)
+            .setDestination(cspb)
+            .addResource(DefaultGrayPalette.class,
+                "defaultGray.colorPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         ErrorUtils
-        .logError(
-            logger,
-            "Error while loading the default gray palette. This palette will not be available.",//$NON-NLS-1$
-            t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+            .logError(
+                logger,
+                "Error while loading the default gray palette. This palette will not be available.",//$NON-NLS-1$
+                t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
       }
 
       INSTANCE = ((DefaultGrayPalette) pal);

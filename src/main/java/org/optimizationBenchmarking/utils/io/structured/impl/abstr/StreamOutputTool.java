@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IStreamOutputTool;
  *          the source type
  */
 public class StreamOutputTool<S> extends FileOutputTool<S> implements
-IStreamOutputTool<S> {
+    IStreamOutputTool<S> {
 
   /** create */
   protected StreamOutputTool() {
@@ -47,7 +47,7 @@ IStreamOutputTool<S> {
   final void _path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-          throws Throwable {
+      throws Throwable {
     final Path file;
     final _OutputJob outJob;
     final Object oldCur, oldCur2;
@@ -62,15 +62,15 @@ IStreamOutputTool<S> {
         file = PathUtils.createPathInside(
             path,
             ((archiveType != null) ? //
-                (this.getArchiveFallbackFileName() + '.' + archiveType
-                    .getDefaultSuffix()) : //
-                      this.getDefaultPlainOutputFileName()));
+            (this.getArchiveFallbackFileName() + '.' + archiveType
+                .getDefaultSuffix()) : //
+                this.getDefaultPlainOutputFileName()));
         if ((logger != null)
             && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
           logger.log(IOTool.DEFAULT_LOG_LEVEL,//
               (((("Path '" + path) + //$NON-NLS-1$
-                  "' identifies a directory, creating file '") //$NON-NLS-1$
-                  + file) + "' for output."));//$NON-NLS-1$
+              "' identifies a directory, creating file '") //$NON-NLS-1$
+              + file) + "' for output."));//$NON-NLS-1$
         }
       } else {
         file = path;
@@ -160,8 +160,8 @@ IStreamOutputTool<S> {
           && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
         logger.log(IOTool.DEFAULT_LOG_LEVEL,//
             (((("Creating " + archiveType.getName()) + //$NON-NLS-1$
-                " output with file '") + name)//$NON-NLS-1$
-                + "' as the data (and only) file in the compressed stream.")); //$NON-NLS-1$
+            " output with file '") + name)//$NON-NLS-1$
+            + "' as the data (and only) file in the compressed stream.")); //$NON-NLS-1$
       }
       try (final OutputStream output = archiveType.compressStream(stream,
           this.getArchiveFallbackFileName())) {
@@ -188,7 +188,7 @@ IStreamOutputTool<S> {
    */
   private final void __stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding)
-          throws Throwable {
+      throws Throwable {
     final Logger logger;
     Class<?> clazz;
 
@@ -202,7 +202,7 @@ IStreamOutputTool<S> {
       if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
         logger.log(IOTool.FINE_LOG_LEVEL,//
             ("Using byte stream encoding " + //$NON-NLS-1$
-                encoding.name()));
+            encoding.name()));
       }
       try (OutputStream encoded = ((OutputStream) (encoding
           .wrapOutputStream(stream)))) {
@@ -229,7 +229,7 @@ IStreamOutputTool<S> {
    */
   protected void stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding)
-          throws Throwable {
+      throws Throwable {
     //
   }
 

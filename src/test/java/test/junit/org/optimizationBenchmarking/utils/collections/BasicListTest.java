@@ -24,7 +24,7 @@ import test.junit.InstanceTest;
  */
 @Ignore
 public class BasicListTest<ET, AT, T extends BasicList<ET>> extends
-ListTest<ET, T> {
+    ListTest<ET, T> {
 
   /** create */
   public BasicListTest() {

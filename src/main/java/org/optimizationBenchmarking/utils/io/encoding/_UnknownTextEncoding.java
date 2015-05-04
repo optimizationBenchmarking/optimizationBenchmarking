@@ -14,7 +14,7 @@ import java.io.Writer;
  * An unknown text encoding.
  */
 final class _UnknownTextEncoding extends
-StreamEncoding<BufferedReader, BufferedWriter> {
+    StreamEncoding<BufferedReader, BufferedWriter> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

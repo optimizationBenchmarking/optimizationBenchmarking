@@ -54,8 +54,8 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
     }
     throw new UnsupportedOperationException(//
         "Cannot add elements " + c + //$NON-NLS-1$
-        " to this list."//$NON-NLS-1$
-        );
+            " to this list."//$NON-NLS-1$
+    );
   }
 
   /** {@inheritDoc} */
@@ -67,8 +67,8 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
     }
     throw new UnsupportedOperationException(//
         "Cannot add elements " + c + //$NON-NLS-1$
-        "at index " + index//$NON-NLS-1$
-        );
+            "at index " + index//$NON-NLS-1$
+    );
   }
 
   /** {@inheritDoc} */
@@ -78,7 +78,7 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
       if (this.contains(o)) {
         throw new UnsupportedOperationException(//
             "Cannot remove elements " + c //$NON-NLS-1$
-            );
+        );
       }
     }
     return false;
@@ -91,7 +91,7 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
       if (!(c.contains(o))) {
         throw new UnsupportedOperationException(//
             "Cannot retain the elements " + c //$NON-NLS-1$
-            );
+        );
       }
     }
     return false;
@@ -103,7 +103,7 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
     if (this.size() > 0) {
       throw new UnsupportedOperationException(//
           "Cannot clear this list."//$NON-NLS-1$
-          );
+      );
     }
   }
 
@@ -112,8 +112,8 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
   public final Number set(final int index, final Number element) {
     throw new UnsupportedOperationException(//
         "Cannot set element " + element + //$NON-NLS-1$
-        " at index " + index//$NON-NLS-1$
-        );
+            " at index " + index//$NON-NLS-1$
+    );
   }
 
   /** {@inheritDoc} */
@@ -121,8 +121,8 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
   public final void add(final int index, final Number element) {
     throw new UnsupportedOperationException(//
         "Cannot add element " + element + //$NON-NLS-1$
-        " at index " + index//$NON-NLS-1$
-        );
+            " at index " + index//$NON-NLS-1$
+    );
   }
 
   /** {@inheritDoc} */
@@ -130,7 +130,7 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
   public final boolean add(final Number element) {
     throw new UnsupportedOperationException(//
         "Cannot add element " + element//$NON-NLS-1$
-        );
+    );
   }
 
   /** {@inheritDoc} */
@@ -142,8 +142,8 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
     if (i >= 0) {
       throw new UnsupportedOperationException(//
           "Cannot remove element " + o + //$NON-NLS-1$
-          ", which is at index " + i//$NON-NLS-1$
-          );
+              ", which is at index " + i//$NON-NLS-1$
+      );
     }
     return false;
   }
@@ -153,7 +153,7 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
   public final Number remove(final int index) {
     throw new UnsupportedOperationException(//
         "Cannot remove the element at index " + index//$NON-NLS-1$
-        );
+    );
   }
 
   /** {@inheritDoc} */
@@ -162,8 +162,8 @@ public abstract class DataPoint extends NumberList implements IDataPoint {
     if (toIndex > fromIndex) {
       throw new UnsupportedOperationException(
           "Cannot remove range [" + fromIndex + //$NON-NLS-1$
-          ", " + toIndex + ")." //$NON-NLS-1$ //$NON-NLS-2$
-          );
+              ", " + toIndex + ")." //$NON-NLS-1$ //$NON-NLS-2$
+      );
     }
   }
 

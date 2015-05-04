@@ -80,12 +80,12 @@ public class LaTeXDocumentClass extends PageDimension {
     if ((this.m_class = TextUtils.normalize(clazz)) == null) {
       throw new IllegalArgumentException(//
           "Document class name cannot be empty or null, but is '" //$NON-NLS-1$
-          + clazz + '\'');
+              + clazz + '\'');
     }
     if ((this.m_bibStyle = TextUtils.normalize(bibStyle)) == null) {
       throw new IllegalArgumentException(//
           "Bibliography style cannot be empty or null, but is '" //$NON-NLS-1$
-          + bibStyle + '\'');
+              + bibStyle + '\'');
     }
     if (paperSize == null) {
       throw new IllegalArgumentException(//
@@ -111,9 +111,9 @@ public class LaTeXDocumentClass extends PageDimension {
     if (this.m_highest.ordinal() > this.m_lowest.ordinal()) {
       throw new IllegalArgumentException(//
           "If the highest supported document section type is " //$NON-NLS-1$
-          + this.m_highest
-          + ", then the lowest supported document section type cannot be " //$NON-NLS-1$
-          + this.m_lowest + ", since this is 'semantically bigger'."); //$NON-NLS-1$
+              + this.m_highest
+              + ", then the lowest supported document section type cannot be " //$NON-NLS-1$
+              + this.m_lowest + ", since this is 'semantically bigger'."); //$NON-NLS-1$
     }
   }
 
@@ -205,15 +205,15 @@ public class LaTeXDocumentClass extends PageDimension {
             HashUtils.combineHashes(//
                 HashUtils.hashCode(this.m_class),//
                 HashUtils.hashCode(this.m_classParams))),//
-                HashUtils.combineHashes(
-                    //
-                    HashUtils.combineHashes(//
-                        HashUtils.hashCode(this.m_bibStyle),//
-                        HashUtils.hashCode(this.m_fonts)), //
-                        HashUtils.combineHashes(
-                            //
-                            HashUtils.hashCode(this.m_highest),
-                            HashUtils.hashCode(this.m_lowest))));
+        HashUtils.combineHashes(
+            //
+            HashUtils.combineHashes(//
+                HashUtils.hashCode(this.m_bibStyle),//
+                HashUtils.hashCode(this.m_fonts)), //
+            HashUtils.combineHashes(
+                //
+                HashUtils.hashCode(this.m_highest),
+                HashUtils.hashCode(this.m_lowest))));
   }
 
   /** {@inheritDoc} */
@@ -234,7 +234,7 @@ public class LaTeXDocumentClass extends PageDimension {
           EComparison.equals(this.m_fonts, c.m_fonts) && //
           EComparison.equals(this.m_highest, c.m_highest) && //
           EComparison.equals(this.m_lowest, c.m_lowest) && //
-          super.equals(o));
+      super.equals(o));
     }
     return false;
   }

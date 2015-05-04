@@ -54,7 +54,7 @@ public class ColorStyle extends Color implements IStyle {
     if (name == null) {
       throw new IllegalArgumentException(//
           "Name must not be empty or null, but is '" //$NON-NLS-1$
-          + name + '\'');
+              + name + '\'');
     }
     this.m_name = name;
 

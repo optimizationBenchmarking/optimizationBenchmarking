@@ -24,19 +24,19 @@ public class Enumeration extends List<EnumerationItem> {
 
     outer: {
       inner: {
-      for (o = owner; o != null;) {
-        if (o instanceof Enumeration) {
-          this.m_enumDepth = (1 + (((Enumeration) o).m_enumDepth));
-          break outer;
-        }
-        if (o instanceof DocumentElement) {
-          o = ((DocumentElement) o)._owner();
-        } else {
-          break inner;
+        for (o = owner; o != null;) {
+          if (o instanceof Enumeration) {
+            this.m_enumDepth = (1 + (((Enumeration) o).m_enumDepth));
+            break outer;
+          }
+          if (o instanceof DocumentElement) {
+            o = ((DocumentElement) o)._owner();
+          } else {
+            break inner;
+          }
         }
       }
-    }
-    this.m_enumDepth = 0;
+      this.m_enumDepth = 0;
     }
 
   }

@@ -33,7 +33,7 @@ public class ColorPaletteExample {
   /** the palettes to print */
   public static final ArrayListView<ColorPalette> PALETTES = new ArrayListView<>(
       new ColorPalette[] {//
-          DefaultColorPalette.getInstance(), JavaDefaultPalette.getInstance(),
+      DefaultColorPalette.getInstance(), JavaDefaultPalette.getInstance(),
           DefaultGrayPalette.getInstance(), HTML401Palette.getInstance() });
 
   /**
@@ -60,10 +60,10 @@ public class ColorPaletteExample {
       sub = dir.resolve("example_" + (++j)); //$NON-NLS-1$
       for (final GraphicConfiguration d : ExampleGraphicConfigurations.CONFIGURATIONS) {
         ColorPaletteExample
-        .__paint(
-            sub,
-            ((((ColorPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
-                + d.toString() + '_' + p.getClass().getSimpleName()),
+            .__paint(
+                sub,
+                ((((ColorPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
+                    + d.toString() + '_' + p.getClass().getSimpleName()),
                 d, p);
       }
     }

@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  * A builder for creating the chart selector.
  */
 public class ChartBuilder extends
-ToolJobBuilder<ChartSelector, ChartBuilder> implements IChartBuilder {
+    ToolJobBuilder<ChartSelector, ChartBuilder> implements IChartBuilder {
 
   /** the chart driver */
   private final ChartDriver m_driver;

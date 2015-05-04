@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * may be used by subclasses to express their numerical state.
  */
 public abstract class BasicNumber extends Number implements
-Comparable<Number>, ITextable {
+    Comparable<Number>, ITextable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -81,13 +81,13 @@ Comparable<Number>, ITextable {
 
   /** the state names */
   static final String[] STATE_NAMES = {
-    "empty", //$NON-NLS-1$
-    null, null,
-    "overflow",//$NON-NLS-1$
-    Double.toString(Double.POSITIVE_INFINITY),
-    "underflow",//$NON-NLS-1$
-    Double.toString(Double.NEGATIVE_INFINITY),
-    Double.toString(Double.NaN), };
+      "empty", //$NON-NLS-1$
+      null, null,
+      "overflow",//$NON-NLS-1$
+      Double.toString(Double.POSITIVE_INFINITY),
+      "underflow",//$NON-NLS-1$
+      Double.toString(Double.NEGATIVE_INFINITY),
+      Double.toString(Double.NaN), };
 
   /** create */
   protected BasicNumber() {

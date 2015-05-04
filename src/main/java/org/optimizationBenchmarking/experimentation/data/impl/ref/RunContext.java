@@ -68,7 +68,7 @@ public final class RunContext extends _Context<Run> {
    */
   public final void addDataPoint(final String string) {
     this.addDataPoint(//
-        this._getDimensionSet().getDataFactory().parseString(string));
+    this._getDimensionSet().getDataFactory().parseString(string));
   }
 
   /**
@@ -79,7 +79,7 @@ public final class RunContext extends _Context<Run> {
    */
   public final void addDataPoint(final Number... numbers) {
     this.addDataPoint(//
-        this._getDimensionSet().getDataFactory().parseNumbers(numbers));
+    this._getDimensionSet().getDataFactory().parseNumbers(numbers));
   }
 
   /**
@@ -90,7 +90,7 @@ public final class RunContext extends _Context<Run> {
    */
   public final void addDataPoint(final Object rawObject) {
     this.addDataPoint(//
-        this._getDimensionSet().getDataFactory().parseObject(rawObject));
+    this._getDimensionSet().getDataFactory().parseObject(rawObject));
   }
 
   /** {@inheritDoc} */

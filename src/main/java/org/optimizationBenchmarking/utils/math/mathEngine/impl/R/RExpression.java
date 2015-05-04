@@ -201,7 +201,7 @@ final class RExpression extends _RExpressionScope implements IExpression {
     if ((m != 1) && (n != 1)) {
       throw new IllegalArgumentException(
           ((("A vector must be a matrix with either only one row or only one column, but you passed in a "//$NON-NLS-1$
-              + m) + 'x') + n)
+          + m) + 'x') + n)
               + " matrix.");//$NON-NLS-1$
     }
     try {
@@ -263,7 +263,7 @@ final class RExpression extends _RExpressionScope implements IExpression {
     if (s == null) {
       throw new IllegalArgumentException(//
           "Function name must not be null or empty, but is: '" //$NON-NLS-1$
-          + name + '\'');
+              + name + '\'');
     }
     return new _RNamedFunction(name, null, this, this.m_engine);
   }

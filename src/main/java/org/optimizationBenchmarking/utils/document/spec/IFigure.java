@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
  * The interface to create and draw on figures.
  */
 public interface IFigure extends IDocumentElement, ILabeledObject,
-IChartSelector {
+    IChartSelector {
 
   /**
    * write the figure caption

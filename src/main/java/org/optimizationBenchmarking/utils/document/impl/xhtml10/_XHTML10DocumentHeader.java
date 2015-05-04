@@ -16,59 +16,59 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 final class _XHTML10DocumentHeader extends DocumentHeader {
   /** the title start */
   private static final char[] TITLE_BEGIN = { '<', 't', 'i', 't', 'l',
-    'e', '>' };
+      'e', '>' };
   /** the title end */
   private static final char[] TITLE_END = { '<', '/', 't', 'i', 't', 'l',
-    'e', '>' };
+      'e', '>' };
   /** the meta author data */
   private static final char[] META_AUTHORS = { '<', 'm', 'e', 't', 'a',
-    ' ', 'n', 'a', 'm', 'e', '=', '"', 'a', 'u', 't', 'h', 'o', 'r',
-    '"', ' ', 'c', 'o', 'n', 't', 'e', 'n', 't', '=', '"' };
+      ' ', 'n', 'a', 'm', 'e', '=', '"', 'a', 'u', 't', 'h', 'o', 'r',
+      '"', ' ', 'c', 'o', 'n', 't', 'e', 'n', 't', '=', '"' };
   /** the meta creator data */
   private static final char[] META_CREATOR = { '<', 'm', 'e', 't', 'a',
-    ' ', 'n', 'a', 'm', 'e', '=', '"', 'D', 'C', '.', 'C', 'r', 'e',
-    'a', 't', 'o', 'r', '"', ' ', 'c', 'o', 'n', 't', 'e', 'n', 't',
-    '=', '"' };
+      ' ', 'n', 'a', 'm', 'e', '=', '"', 'D', 'C', '.', 'C', 'r', 'e',
+      'a', 't', 'o', 'r', '"', ' ', 'c', 'o', 'n', 't', 'e', 'n', 't',
+      '=', '"' };
   /** the meta language data */
   private static final char[] META_LANG_EN = { '<', 'm', 'e', 't', 'a',
-    ' ', 'n', 'a', 'm', 'e', '=', '"', 'D', 'C', '.', 'L', 'a', 'n',
-    'g', 'u', 'a', 'g', 'e', '"', ' ', 'c', 'o', 'n', 't', 'e', 'n',
-    't', '=', '"', 'e', 'n', '"', '/', '>', };
+      ' ', 'n', 'a', 'm', 'e', '=', '"', 'D', 'C', '.', 'L', 'a', 'n',
+      'g', 'u', 'a', 'g', 'e', '"', ' ', 'c', 'o', 'n', 't', 'e', 'n',
+      't', '=', '"', 'e', 'n', '"', '/', '>', };
   /** the meta date data */
   private static final char[] META_DATE = { '<', 'm', 'e', 't', 'a', ' ',
-    'n', 'a', 'm', 'e', '=', '"', 'D', 'C', '.', 'D', 'a', 't', 'e',
-    '"', ' ', 'c', 'o', 'n', 't', 'e', 'n', 't', '=', '"', };
+      'n', 'a', 'm', 'e', '=', '"', 'D', 'C', '.', 'D', 'a', 't', 'e',
+      '"', ' ', 'c', 'o', 'n', 't', 'e', 'n', 't', '=', '"', };
   /** the meta description data */
   private static final char[] META_DESC = { '<', 'm', 'e', 't', 'a', ' ',
-    'n', 'a', 'm', 'e', '=', '"', 'D', 'C', '.', 'D', 'e', 's', 'c',
-    'r', 'i', 'p', 't', 'i', 'o', 'n', '"', ' ', 'c', 'o', 'n', 't',
-    'e', 'n', 't', '=', '"', };
+      'n', 'a', 'm', 'e', '=', '"', 'D', 'C', '.', 'D', 'e', 's', 'c',
+      'r', 'i', 'p', 't', 'i', 'o', 'n', '"', ' ', 'c', 'o', 'n', 't',
+      'e', 'n', 't', '=', '"', };
   /** the meta title data */
   private static final char[] META_TITLE = { '<', 'm', 'e', 't', 'a', ' ',
-    'n', 'a', 'm', 'e', '=', '"', 'D', 'C', '.', 'T', 'i', 't', 'l',
-    'e', '"', ' ', 'c', 'o', 'n', 't', 'e', 'n', 't', '=', '"' };
+      'n', 'a', 'm', 'e', '=', '"', 'D', 'C', '.', 'T', 'i', 't', 'l',
+      'e', '"', ' ', 'c', 'o', 'n', 't', 'e', 'n', 't', '=', '"' };
 
   /** the header end and body begins */
   private static final char[] HEADER_END_BODY_BEGINS = { '<', '/', 'h',
-    'e', 'a', 'd', '>', '<', 'b', 'o', 'd', 'y', '>' };
+      'e', 'a', 'd', '>', '<', 'b', 'o', 'd', 'y', '>' };
 
   /** the authors start */
   private static final char[] AUTHORS_DIV_BEGIN = { '<', 'd', 'i', 'v',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'a', 'u', 't', 'h', 'o',
-    'r', 's', '"', '>', 'b', 'y', '&', 'n', 'b', 's', 'p', ';' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'a', 'u', 't', 'h', 'o',
+      'r', 's', '"', '>', 'b', 'y', '&', 'n', 'b', 's', 'p', ';' };
   /** the date start */
   private static final char[] DATE_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 'd', 'a', 't', 'e', '"', '>',
-    'o', 'n', '&', 'n', 'b', 's', 'p', ';' };
+      'c', 'l', 'a', 's', 's', '=', '"', 'd', 'a', 't', 'e', '"', '>',
+      'o', 'n', '&', 'n', 'b', 's', 'p', ';' };
 
   /** the abstract start */
   private static final char[] ABSTRACT_DIV_BEGIN = { '<', 'd', 'i', 'v',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'a', 'b', 's', 't', 'r',
-    'a', 'c', 't', '"', '>', '<', 's', 'p', 'a', 'n', ' ', 'c', 'l',
-    'a', 's', 's', '=', '"', 'a', 'b', 's', 't', 'r', 'a', 'c', 't',
-    'T', 'i', 't', 'l', 'e', '"', '>', 'A', 'b', 's', 't', 'r', 'a',
-    'c', 't', '.', '<', '/', 's', 'p', 'a', 'n', '>', '&', 'n', 'b',
-    's', 'p', ';' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'a', 'b', 's', 't', 'r',
+      'a', 'c', 't', '"', '>', '<', 's', 'p', 'a', 'n', ' ', 'c', 'l',
+      'a', 's', 's', '=', '"', 'a', 'b', 's', 't', 'r', 'a', 'c', 't',
+      'T', 'i', 't', 'l', 'e', '"', '>', 'A', 'b', 's', 't', 'r', 'a',
+      'c', 't', '.', '<', '/', 's', 'p', 'a', 'n', '>', '&', 'n', 'b',
+      's', 'p', ';' };
 
   /** the title */
   private char[] m_title;

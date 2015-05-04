@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** a 2D line for jfreechart */
 final class _JFreeChartXYDataset extends
-_JFreeChartDataset<CompiledLine2D> implements XYDataset {
+    _JFreeChartDataset<CompiledLine2D> implements XYDataset {
 
   /** the shortcut to the data matrices */
   private final IMatrix[] m_matrices;

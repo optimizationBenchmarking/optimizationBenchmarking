@@ -14,7 +14,7 @@ final class _LaTeXDocumentHeader extends DocumentHeader {
 
   /** start the document */
   private static final char[] DOCUMENT_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-    'n', '{', 'd', 'o', 'c', 'u', 'm', 'e', 'n', 't', '}' };
+      'n', '{', 'd', 'o', 'c', 'u', 'm', 'e', 'n', 't', '}' };
 
   /** the summary */
   private char[] m_summary;

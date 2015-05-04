@@ -136,8 +136,8 @@ public class StrictLongParser extends NumberParser<Long> {
     if ((d < Long.MIN_VALUE) || (d > Long.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((d + " is not a valid long value, since it is out of the range ") + //$NON-NLS-1$
-              Long.MIN_VALUE) + "..") + //$NON-NLS-1$
-              Long.MAX_VALUE) + '.');
+          Long.MIN_VALUE) + "..") + //$NON-NLS-1$
+          Long.MAX_VALUE) + '.');
     }
 
     b = ((long) d);

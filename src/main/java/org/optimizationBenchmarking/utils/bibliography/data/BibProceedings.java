@@ -108,7 +108,7 @@ public class BibProceedings extends BibBook {
     }
 
     this.m_endDate = ((endDate != null) ? //
-        ((endDate.equals(startDate)) ? startDate : endDate)//
+    ((endDate.equals(startDate)) ? startDate : endDate)//
         : startDate);
     if (this.m_endDate.hashCode() < startDate.hashCode()) {
       throw new IllegalArgumentException(//
@@ -122,7 +122,7 @@ public class BibProceedings extends BibBook {
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.calcHashCode(),
             HashUtils.hashCode(this.m_endDate)),
-            HashUtils.hashCode(this.m_location));
+        HashUtils.hashCode(this.m_location));
   }
 
   /**
@@ -161,7 +161,7 @@ public class BibProceedings extends BibBook {
       x = ((BibProceedings) r);
 
       return (EComparison.equals(this.m_location, x.m_location) && //
-          EComparison.equals(this.m_endDate, x.m_endDate));
+      EComparison.equals(this.m_endDate, x.m_endDate));
     }
 
     return false;

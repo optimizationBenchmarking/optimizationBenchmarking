@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
  * A condition checking whether a collection is empty.
  */
 public final class NotEmptyPredicate implements IPredicate<Collection<?>>,
-Serializable {
+    Serializable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

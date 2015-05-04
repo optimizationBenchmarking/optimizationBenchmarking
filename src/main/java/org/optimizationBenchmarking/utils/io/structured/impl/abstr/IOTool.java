@@ -158,7 +158,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
   void _checkRawStreams() {
     throw new UnsupportedOperationException(//
         this.getClass().getSimpleName() + //
-        " cannot deal with raw (uncompressed) streams, only with files and folders."); //$NON-NLS-1$
+            " cannot deal with raw (uncompressed) streams, only with files and folders."); //$NON-NLS-1$
   }
 
   /**
@@ -319,7 +319,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
     if (prepared == null) {
       throw new IllegalArgumentException(//
           "File name cannot be null, empty, or only composed of white spaces, but '" //$NON-NLS-1$
-          + file + "' is.");//$NON-NLS-1$
+              + file + "' is.");//$NON-NLS-1$
     }
 
     this.__fileFile(job, data, new File(prepared), encoding, archiveType);
@@ -495,7 +495,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
         throw new IOException(
             ("Error when trying to read attributes of input path '" + //$NON-NLS-1$
                 path + "' (maybe the path does not exist?)."),//$NON-NLS-1$
-                ioe);
+            ioe);
       }
     }
 
@@ -503,7 +503,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
     if ((logger != null) && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
       logger.log(IOTool.DEFAULT_LOG_LEVEL,//
           (input ? //
-              "Reading input from Path '" : //$NON-NLS-1$
+          "Reading input from Path '" : //$NON-NLS-1$
               "Writing output ot Path '") + //$NON-NLS-1$
               path + "' with attributes " + attributes);//$NON-NLS-1$
     }
@@ -531,7 +531,7 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
   void _path(final IOJob job, final D data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-          throws Throwable {
+      throws Throwable {
     if (archiveType != null) {
       throw new IllegalStateException(//
           "Can only handle uncompressed paths here."); //$NON-NLS-1$

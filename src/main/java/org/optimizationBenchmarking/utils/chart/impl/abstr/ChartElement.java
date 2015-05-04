@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * The base class for all chart items.
  */
 public abstract class ChartElement extends HierarchicalFSM implements
-IChartElement {
+    IChartElement {
 
   /** the state that the element is alive */
   static final int STATE_ALIVE = 0;

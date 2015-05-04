@@ -9,10 +9,10 @@ final class _LaTeXEnumeration extends Enumeration {
 
   /** the begin enumerate */
   private static final char[] ENUMERATE_BEGIN = { '\\', 'b', 'e', 'g',
-    'i', 'n', '{', 'e', 'n', 'u', 'm', 'e', 'r', 'a', 't', 'e', '}' };
+      'i', 'n', '{', 'e', 'n', 'u', 'm', 'e', 'r', 'a', 't', 'e', '}' };
   /** the end enumerate */
   private static final char[] ENUMERATE_END = { '\\', 'e', 'n', 'd', '{',
-    'e', 'n', 'u', 'm', 'e', 'r', 'a', 't', 'e', '}' };
+      'e', 'n', 'u', 'm', 'e', 'r', 'a', 't', 'e', '}' };
 
   /**
    * Create a new enumeration

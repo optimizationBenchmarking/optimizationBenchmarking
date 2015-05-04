@@ -70,8 +70,8 @@ public final class BibAuthorsBuilder extends BuilderFSM<BibAuthors> {
       if (EComparison.equals(data[i], author)) {
         throw new IllegalArgumentException(//
             "An author set cannot contain two equal elements, so you cannot add element '" //$NON-NLS-1$
-            + author + "', which already exists at index " //$NON-NLS-1$
-            + i);
+                + author + "', which already exists at index " //$NON-NLS-1$
+                + i);
       }
     }
 

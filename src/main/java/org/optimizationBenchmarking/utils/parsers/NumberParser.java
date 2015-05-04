@@ -216,7 +216,7 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
       default: {
         throw new IllegalArgumentException(//
             "Cannot create a number parser for type " + //$NON-NLS-1$
-            type);
+                type);
       }
     }
 

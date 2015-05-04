@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  *          the item type
  */
 public abstract class List<IT extends ListItem> extends DocumentPart
-implements IList {
+    implements IList {
 
   /** does this list have an item? */
   private static final int FLAG_HAS_ITEM = (FSM.FLAG_NOTHING + 1);
@@ -40,22 +40,22 @@ implements IList {
     add = 0;
     outer: {
       inner: {
-      for (o = owner; o != null;) {
-        if (o instanceof List) {
-          add += (1 + (((List) o).m_listDepth));
-          break outer;
-        }
-        if (o instanceof IList) {
-          add++;
-        }
+        for (o = owner; o != null;) {
+          if (o instanceof List) {
+            add += (1 + (((List) o).m_listDepth));
+            break outer;
+          }
+          if (o instanceof IList) {
+            add++;
+          }
 
-        if (o instanceof DocumentElement) {
-          o = ((DocumentElement) o)._owner();
-        } else {
-          break inner;
+          if (o instanceof DocumentElement) {
+            o = ((DocumentElement) o)._owner();
+          } else {
+            break inner;
+          }
         }
       }
-    }
     }
 
     this.m_listDepth = add;

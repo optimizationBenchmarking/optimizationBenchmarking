@@ -9,13 +9,13 @@ public class TimingTest {
 
   /** the available serialization methods */
   public static final SerializationMethod[] METHODS = {
-    new XMLStreamWriterSerialization(),//
-    new XMLAPISerialSerialization(),//
+      new XMLStreamWriterSerialization(),//
+      new XMLAPISerialSerialization(),//
   };
 
   /** the numbers of nodes */
   public static final int[] NODE_NUMBERS = { 100, 1000, 10000, 100000,
-    1000000, 10000000 };
+      1000000, 10000000 };
 
   /** the number of runs per experiment */
   public static final int RUNS_PER_EXPERIMENT = 1000;

@@ -6,8 +6,8 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.SectionBody;
 final class _XHTML10SectionBody extends SectionBody {
   /** the start of the section body div */
   private static final char[] SECTION_BODY_DIV_BEGIN = { '<', 'd', 'i',
-    'v', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't',
-    'i', 'o', 'n', 'B', 'o', 'd', 'y', '"', '>' };
+      'v', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't',
+      'i', 'o', 'n', 'B', 'o', 'd', 'y', '"', '>' };
 
   /**
    * create the section body
@@ -25,7 +25,7 @@ final class _XHTML10SectionBody extends SectionBody {
   protected synchronized final void onOpen() {
     super.onOpen();
     this.getTextOutput()
-    .append(_XHTML10SectionBody.SECTION_BODY_DIV_BEGIN);
+        .append(_XHTML10SectionBody.SECTION_BODY_DIV_BEGIN);
   }
 
   /** {@inheritDoc} */

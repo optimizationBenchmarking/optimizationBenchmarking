@@ -9,7 +9,7 @@ package org.optimizationBenchmarking.utils.text.charset;
  *          the other end type
  */
 abstract class _EnclosureEnd<OT extends _Enclosure<T>, T extends _EnclosureEnd<OT, T>>
-extends EnclosureEnd {
+    extends EnclosureEnd {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

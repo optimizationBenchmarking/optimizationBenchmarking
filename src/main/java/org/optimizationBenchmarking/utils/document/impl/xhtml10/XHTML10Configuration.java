@@ -85,7 +85,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.hashCode(),
             HashUtils.hashCode(this.m_fonts)),
-            HashUtils.hashCode(this.m_size));
+        HashUtils.hashCode(this.m_size));
   }
 
   /** {@inheritDoc} */
@@ -109,7 +109,7 @@ public class XHTML10Configuration extends DocumentConfiguration {
           builder = ((XHTML10ConfigurationBuilder) o);
           return (EComparison.equals(this.m_fonts,
               builder.getFontPalette()) && EComparison.equals(this.m_size,
-                  builder.getScreenSize()));
+              builder.getScreenSize()));
         }
       }
     }

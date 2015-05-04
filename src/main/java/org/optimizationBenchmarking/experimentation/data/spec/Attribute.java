@@ -24,7 +24,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  *          the result type of the attribute
  */
 public abstract class Attribute<ST extends IDataElement, RT> extends
-HashObject {
+    HashObject {
 
   /** the attribute type */
   final EAttributeType m_type;
@@ -72,11 +72,11 @@ HashObject {
     }
     throw new IllegalArgumentException(
         "All elements of the experiment API which can have attributes must be instances of " //$NON-NLS-1$
-        + TextUtils.className(DataElement.class) + //
-        " but you supplied "//$NON-NLS-1$
-        + ((data == null) ? "null" : //$NON-NLS-1$
-          " an instance of " //$NON-NLS-1$
-          + TextUtils.className(data.getClass())) + '.');//
+            + TextUtils.className(DataElement.class) + //
+            " but you supplied "//$NON-NLS-1$
+            + ((data == null) ? "null" : //$NON-NLS-1$
+                " an instance of " //$NON-NLS-1$
+                    + TextUtils.className(data.getClass())) + '.');//
   }
 
 }

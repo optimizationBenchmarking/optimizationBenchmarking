@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
  * interface.
  */
 public abstract class AbstractPropertyValue extends AbstractNamedElement
-implements IPropertyValue {
+    implements IPropertyValue {
 
   /** Create the property. */
   protected AbstractPropertyValue() {

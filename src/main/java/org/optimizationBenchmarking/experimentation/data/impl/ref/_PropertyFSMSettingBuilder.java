@@ -9,8 +9,8 @@ import java.util.HashMap;
  *          the property settings type
  */
 class _PropertyFSMSettingBuilder<PST extends _PropertySetting<?, ?>>
-extends
-_PropertyFSM<_PropertyFSMSettingRecord, HashMap<String, Object>, PST, _PropertyFSM<?, ?, ?, ?>> {
+    extends
+    _PropertyFSM<_PropertyFSMSettingRecord, HashMap<String, Object>, PST, _PropertyFSM<?, ?, ?, ?>> {
 
   /**
    * create

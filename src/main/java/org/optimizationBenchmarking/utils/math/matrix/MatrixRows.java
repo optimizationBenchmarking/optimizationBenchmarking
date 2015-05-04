@@ -76,7 +76,7 @@ public class MatrixRows<OT extends IMatrix> extends AbstractMatrix {
     }
 
     return ((e && (cc.length == c.length)) ? this : //
-      this.m_owner.selectRows(d ? rows : cc));
+        this.m_owner.selectRows(d ? rows : cc));
   }
 
   /** {@inheritDoc} */

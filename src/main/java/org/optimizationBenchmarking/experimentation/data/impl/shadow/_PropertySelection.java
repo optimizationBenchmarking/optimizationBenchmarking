@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
  *          the property value type
  */
 abstract class _PropertySelection<PST extends IPropertySet, PT extends IProperty, PVT extends IPropertyValue>
-extends _MappedSelection<PST, PT, PVT> {
+    extends _MappedSelection<PST, PT, PVT> {
 
   /**
    * create the property selection

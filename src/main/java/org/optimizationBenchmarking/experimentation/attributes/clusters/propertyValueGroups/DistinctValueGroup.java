@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * value.
  */
 public final class DistinctValueGroup extends
-PropertyValueGroup<DistinctValueGroups> {
+    PropertyValueGroup<DistinctValueGroups> {
 
   /** the singular property value */
   private final Object m_value;

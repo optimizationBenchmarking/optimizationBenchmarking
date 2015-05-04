@@ -69,7 +69,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IConfigurableJobTool;
  * </p>
  */
 public class LaTeX extends FileProducerTool implements
-IConfigurableJobTool {
+    IConfigurableJobTool {
 
   /** create */
   LaTeX() {
@@ -141,7 +141,7 @@ IConfigurableJobTool {
 
     throw new IllegalArgumentException(
         (("No LaTeX tool chain can be required to understand type '" //$NON-NLS-1$
-            + type) + '\'') + '.');
+        + type) + '\'') + '.');
   }
 
   /**

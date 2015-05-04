@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * @author Thomas Weise
  */
 final class _NormalizingXMLTransformedTextOutput extends
-_XMLTransformedTextOutput {
+    _XMLTransformedTextOutput {
 
   /** the normalizer form */
   private final Normalizer.Form m_form;

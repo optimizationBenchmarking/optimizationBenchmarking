@@ -19,14 +19,14 @@ public enum ESequenceMode {
   /** A sequence of the type {@code "neither a, b, nor c"}. */
   NEITHER_NOR(new char[] { 'n', 'e', 'i', 't', 'h', 'e', 'r' },
       new char[] { 'n', 'o', 'r' }),
-      /** A sequence of the type {@code "from a to c"}. */
-      FROM_TO(new char[] { 'f', 'r', 'o', 'm' }, new char[] { 't', 'o' }),
-      /**
-       * A sequence which consists of at most three elements concatenated in
-       * {@link #AND} style. If there are more than three elements, then only
-       * one element is printed, followed by {@code et al.}.
-       */
-      ET_AL(null, AND.m_end) {
+  /** A sequence of the type {@code "from a to c"}. */
+  FROM_TO(new char[] { 'f', 'r', 'o', 'm' }, new char[] { 't', 'o' }),
+  /**
+   * A sequence which consists of at most three elements concatenated in
+   * {@link #AND} style. If there are more than three elements, then only
+   * one element is printed, followed by {@code et al.}.
+   */
+  ET_AL(null, AND.m_end) {
     /** {@inheritDoc} */
     @Override
     final void _appendSequence(final char sep, final ETextCase textCase,
@@ -254,20 +254,20 @@ public enum ESequenceMode {
     mark = this.m_start;
     if (mark != null) {
       app: {
-      if ((useCase == ETextCase.AT_SENTENCE_START)
-          || (useCase == ETextCase.AT_TITLE_START)) {
-        lower = mark[0];
-        upper = useCase.adjustCaseOfFirstCharInWord(lower);
-        if (lower != upper) {
-          dest.append(upper);
-          dest.append(mark, 1, mark.length);
-          break app;
+        if ((useCase == ETextCase.AT_SENTENCE_START)
+            || (useCase == ETextCase.AT_TITLE_START)) {
+          lower = mark[0];
+          upper = useCase.adjustCaseOfFirstCharInWord(lower);
+          if (lower != upper) {
+            dest.append(upper);
+            dest.append(mark, 1, mark.length);
+            break app;
+          }
         }
+        dest.append(mark);
       }
-      dest.append(mark);
-    }
-    dest.append(' ');
-    useCase = useCase.nextCase();
+      dest.append(' ');
+      useCase = useCase.nextCase();
     }
     ESequenceMode.__append(ESequenceMode._next(iterator), true, false,
         useCase, dest);

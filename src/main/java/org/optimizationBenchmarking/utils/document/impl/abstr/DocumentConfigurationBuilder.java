@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A store for the configuration of a document */
 public class DocumentConfigurationBuilder extends
-GraphicConfigurationBuilder {
+    GraphicConfigurationBuilder {
 
   /** the chart driver */
   public static final String PARAM_CHART_DRIVER = "chartDriver"; //$NON-NLS-1$
@@ -220,7 +220,7 @@ GraphicConfigurationBuilder {
         config = ((DocumentConfiguration) o);
         return (EComparison.equals(this.m_chartDriver,
             config.getChartDriver()) && EComparison.equals(
-                this.m_documentDriver, config.getDocumentDriver()));
+            this.m_documentDriver, config.getDocumentDriver()));
       }
     } else {
       if (o instanceof DocumentConfigurationBuilder) {
@@ -228,7 +228,7 @@ GraphicConfigurationBuilder {
           builder = ((DocumentConfigurationBuilder) o);
           return (EComparison.equals(this.m_chartDriver,
               builder.m_chartDriver) && EComparison.equals(
-                  this.m_documentDriver, builder.m_documentDriver));
+              this.m_documentDriver, builder.m_documentDriver));
         }
       }
     }

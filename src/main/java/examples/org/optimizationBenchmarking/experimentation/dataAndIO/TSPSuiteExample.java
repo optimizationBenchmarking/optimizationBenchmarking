@@ -28,11 +28,11 @@ public final class TSPSuiteExample extends ExperimentSetCreator {
         this.getLogger())) {
 
       TSPSuiteInput
-      .getInstance()
-      .use()
-      .setDestination(esc)
-      .addArchiveResource(TSPSuiteExample.class,
-          "tspSuiteExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$
+          .getInstance()
+          .use()
+          .setDestination(esc)
+          .addArchiveResource(TSPSuiteExample.class,
+              "tspSuiteExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$
           .create().call();
 
       return esc.create();

@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * The base class for sections, tables, and figures
  */
 public abstract class ComplexObject extends DocumentPart implements
-ILabeledObject {
+    ILabeledObject {
 
   /** the package */
   private static final Package LOG_PACKAGE = ComplexObject.class
@@ -51,7 +51,7 @@ ILabeledObject {
     if (index <= 0) {
       throw new IllegalArgumentException(//
           "Object index must be greater than 0, but is " //$NON-NLS-1$
-          + index);
+              + index);
     }
 
     this._constructorHook(owner);

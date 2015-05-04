@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 /** an internal sorter class */
 final class _CharTransformerSorter implements Comparator<char[]>,
-Serializable {
+    Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

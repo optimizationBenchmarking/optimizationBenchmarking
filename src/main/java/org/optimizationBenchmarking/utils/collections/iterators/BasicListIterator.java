@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  *          the type to iterate about
  */
 public class BasicListIterator<T> extends BasicIterator<T> implements
-ListIterator<T> {
+    ListIterator<T> {
   /** a list iterator iterating over nothing */
   public static final BasicListIterator<Object> EMPTY_LIST_ITERATOR = new BasicListIterator<>();
 
@@ -33,7 +33,7 @@ ListIterator<T> {
   public T previous() {
     throw new NoSuchElementException(//
         "There is no previous element."//$NON-NLS-1$
-        );
+    );
   }
 
   /** {@inheritDoc} */

@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
  *          the sub-element type
  */
 abstract class _MappedSelection<ST extends IElementSet, ET extends IElementSet, SET extends IDataElement>
-extends _Selection<ST, ET> {
+    extends _Selection<ST, ET> {
 
   /** the selection */
   HashMap<ET, Object> m_selection;

@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
  * A parameter value.
  */
 public final class ParameterValue extends PropertyValue<Parameter>
-implements IParameterValue {
+    implements IParameterValue {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

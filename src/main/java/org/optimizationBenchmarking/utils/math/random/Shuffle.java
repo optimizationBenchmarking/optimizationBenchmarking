@@ -66,8 +66,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-          " invalid for shuffling byte array of length "//$NON-NLS-1$
-          + length);
+              " invalid for shuffling byte array of length "//$NON-NLS-1$
+              + length);
     }
 
     if (length <= 1) {
@@ -243,8 +243,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-          " invalid for shuffling short array of length "//$NON-NLS-1$
-          + length);
+              " invalid for shuffling short array of length "//$NON-NLS-1$
+              + length);
     }
 
     if (length <= 1) {
@@ -420,8 +420,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-          " invalid for shuffling int array of length "//$NON-NLS-1$
-          + length);
+              " invalid for shuffling int array of length "//$NON-NLS-1$
+              + length);
     }
 
     if (length <= 1) {
@@ -596,8 +596,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-          " invalid for shuffling long array of length "//$NON-NLS-1$
-          + length);
+              " invalid for shuffling long array of length "//$NON-NLS-1$
+              + length);
     }
 
     if (length <= 1) {
@@ -775,8 +775,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-          " invalid for shuffling float array of length "//$NON-NLS-1$
-          + length);
+              " invalid for shuffling float array of length "//$NON-NLS-1$
+              + length);
     }
 
     if (length <= 1) {
@@ -952,8 +952,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-          " invalid for shuffling double array of length "//$NON-NLS-1$
-          + length);
+              " invalid for shuffling double array of length "//$NON-NLS-1$
+              + length);
     }
 
     if (length <= 1) {
@@ -1130,8 +1130,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-          " invalid for shuffling boolean array of length "//$NON-NLS-1$
-          + length);
+              " invalid for shuffling boolean array of length "//$NON-NLS-1$
+              + length);
     }
 
     if (length <= 1) {
@@ -1310,8 +1310,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-          " invalid for shuffling char array of length "//$NON-NLS-1$
-          + length);
+              " invalid for shuffling char array of length "//$NON-NLS-1$
+              + length);
     }
 
     if (length <= 1) {
@@ -1487,8 +1487,8 @@ public class Shuffle {
     if ((start >= (length = array.length)) || (start < 0)) {
       throw new IllegalArgumentException(//
           "Start index " + start + //$NON-NLS-1$
-          " invalid for shuffling java.lang.Object array of length "//$NON-NLS-1$
-          + length);
+              " invalid for shuffling java.lang.Object array of length "//$NON-NLS-1$
+              + length);
     }
 
     if (length <= 1) {

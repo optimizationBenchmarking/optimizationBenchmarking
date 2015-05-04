@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** The parser for evaluation modules */
 public class EvaluationModuleParser extends
-InstanceParser<IEvaluationModule> {
+    InstanceParser<IEvaluationModule> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

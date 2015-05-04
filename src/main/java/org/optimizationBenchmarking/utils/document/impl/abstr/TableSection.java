@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
  * A section of a table, such as a table body, header, or footer
  */
 public abstract class TableSection extends DocumentPart implements
-ITableSection {
+    ITableSection {
 
   /** the total number of rows */
   int m_rowCount;
@@ -80,7 +80,7 @@ ITableSection {
       if (b != this.m_rowCount) {
         throw new IllegalStateException(//
             "Inconsistency of table cells row span allocation: Table section ends after row " //$NON-NLS-1$
-            + this.m_rowCount + " but one cell spans to row " + b); //$NON-NLS-1$
+                + this.m_rowCount + " but one cell spans to row " + b); //$NON-NLS-1$
       }
     }
 

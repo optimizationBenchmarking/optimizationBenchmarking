@@ -175,11 +175,11 @@ public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
             && (!((entry instanceof Serializable)//
                 || (entry instanceof Externalizable) || //
                 (((key = entry.getKey()) != null) && //
-                    (!((key instanceof Serializable) || //
-                        (key instanceof Externalizable)))) || //
-                        (((value = entry.getValue()) != null) && //
-                            (!((value instanceof Serializable) || //
-                                (value instanceof Externalizable))))))) {
+                (!((key instanceof Serializable) || //
+                (key instanceof Externalizable)))) || //
+            (((value = entry.getValue()) != null) && //
+            (!((value instanceof Serializable) || //
+            (value instanceof Externalizable))))))) {
           return;
         }
       }
@@ -379,11 +379,11 @@ public class MapTest<K, V, MT extends Map<K, V>> extends InstanceTest<MT> {
    */
   private final void __testCollectionFaces(final MT map) {
     new CollectionTest<>(null, map.keySet(), false, false)
-    .validateInstance();
+        .validateInstance();
     new CollectionTest<>(null, map.values(), false, false)
-    .validateInstance();
+        .validateInstance();
     new CollectionTest<>(null, map.entrySet(), false, false)
-    .validateInstance();
+        .validateInstance();
   }
 
   /** {@inheritDoc} */

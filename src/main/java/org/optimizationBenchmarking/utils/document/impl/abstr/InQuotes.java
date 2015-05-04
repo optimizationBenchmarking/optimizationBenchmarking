@@ -7,8 +7,8 @@ public class InQuotes extends PlainText {
 
   /** the marks */
   private static final QuotationMarks[] MARKS = {
-    QuotationMarks.DEFAULT_DOUBLE, QuotationMarks.DEFAULT_SINGLE,
-    QuotationMarks.ANGLE_DOUBLE, QuotationMarks.ANGLE_SINGLE, };
+      QuotationMarks.DEFAULT_DOUBLE, QuotationMarks.DEFAULT_SINGLE,
+      QuotationMarks.ANGLE_DOUBLE, QuotationMarks.ANGLE_SINGLE, };
 
   /** the marks */
   private final int m_marks;

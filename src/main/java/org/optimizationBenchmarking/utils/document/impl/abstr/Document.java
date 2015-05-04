@@ -246,8 +246,8 @@ public class Document extends DocumentElement implements IDocument {
       if (r.m_type != type) {
         throw new IllegalArgumentException(//
             "A label of type '" + r.m_type + //$NON-NLS-1$
-            "' cannot be used to label an '" + //$NON-NLS-1$
-            type + "'."); //$NON-NLS-1$
+                "' cannot be used to label an '" + //$NON-NLS-1$
+                type + "'."); //$NON-NLS-1$
       }
       this.__setReferenceText(r, text);
       return r;
@@ -255,9 +255,9 @@ public class Document extends DocumentElement implements IDocument {
 
     throw new IllegalArgumentException(//
         "Invalid label: '" + label + //$NON-NLS-1$
-        "', only " + TextUtils.className(ELabelType.class) + //$NON-NLS-1$
-        ".AUTO and instances of " + TextUtils.className(Label.class) + //$NON-NLS-1$
-        " permitted."); //$NON-NLS-1$
+            "', only " + TextUtils.className(ELabelType.class) + //$NON-NLS-1$
+            ".AUTO and instances of " + TextUtils.className(Label.class) + //$NON-NLS-1$
+            " permitted."); //$NON-NLS-1$
   }
 
   /**
@@ -509,7 +509,7 @@ public class Document extends DocumentElement implements IDocument {
     if (s == null) {
       this.m_docName = s = (" document '" + //$NON-NLS-1$
           this.m_documentPath + "' of type " + //$NON-NLS-1$
-          TextUtils.className(this.m_driver.getClass()));
+      TextUtils.className(this.m_driver.getClass()));
     }
     return s;
   }

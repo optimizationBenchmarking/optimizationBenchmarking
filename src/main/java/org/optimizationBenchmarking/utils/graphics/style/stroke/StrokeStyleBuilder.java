@@ -71,7 +71,7 @@ public class StrokeStyleBuilder extends PaletteElementBuilder<StrokeStyle> {
     if (s == null) {
       throw new IllegalArgumentException(//
           "Name must not be null or empty, but is '" //$NON-NLS-1$
-          + name + '\'');
+              + name + '\'');
     }
     this.m_name = name;
 
@@ -111,7 +111,7 @@ public class StrokeStyleBuilder extends PaletteElementBuilder<StrokeStyle> {
     if (dash < 0f) {
       throw new IllegalArgumentException(//
           "Dash element must not be negative, but " + //$NON-NLS-1$
-          dash + " is."); //$NON-NLS-1$
+              dash + " is."); //$NON-NLS-1$
     }
 
     z = this.m_dash;

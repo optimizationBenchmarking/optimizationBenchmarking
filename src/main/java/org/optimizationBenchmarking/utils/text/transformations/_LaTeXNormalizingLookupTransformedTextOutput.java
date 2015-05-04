@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * @author Thomas Weise
  */
 class _LaTeXNormalizingLookupTransformedTextOutput extends
-_NormalizingLookupTransformedTextOutput {
+    _NormalizingLookupTransformedTextOutput {
 
   /**
    * create the transformed text output

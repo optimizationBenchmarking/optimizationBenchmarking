@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * interface.
  */
 public class AbstractDimensionSet extends AbstractNamedElementSet
-implements IDimensionSet {
+    implements IDimensionSet {
 
   /** the owning experiment set */
   IExperimentSet m_owner;

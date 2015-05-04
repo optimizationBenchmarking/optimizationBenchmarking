@@ -56,7 +56,7 @@ public abstract class MathematicalFunction implements Serializable {
   final void _throwIllegalNaN() {
     throw new IllegalArgumentException(//
         "The integer-based '" + this.toString() + //$NON-NLS-1$
-        "' delegate to a real-valued calculation has returned NaN."); //$NON-NLS-1$
+            "' delegate to a real-valued calculation has returned NaN."); //$NON-NLS-1$
   }
 
   /**
@@ -75,17 +75,17 @@ public abstract class MathematicalFunction implements Serializable {
     if (length < x) {
       throw new IllegalArgumentException(//
           "The function '" + this.toString() + //$NON-NLS-1$
-          "' requires at least " + x + //$NON-NLS-1$
-          " parameters, but was invoked with " + length + //$NON-NLS-1$
-          " arguments."); //$NON-NLS-1$
+              "' requires at least " + x + //$NON-NLS-1$
+              " parameters, but was invoked with " + length + //$NON-NLS-1$
+              " arguments."); //$NON-NLS-1$
     }
     x = this.getMaxArity();
     if (length < x) {
       throw new IllegalArgumentException(//
           "The function '" + this.toString() + //$NON-NLS-1$
-          "' allows at most " + x + //$NON-NLS-1$
-          " parameters, but was invoked with " + length + //$NON-NLS-1$
-          " arguments."); //$NON-NLS-1$
+              "' allows at most " + x + //$NON-NLS-1$
+              " parameters, but was invoked with " + length + //$NON-NLS-1$
+              " arguments."); //$NON-NLS-1$
     }
   }
 
@@ -417,7 +417,7 @@ public abstract class MathematicalFunction implements Serializable {
   @Override
   public boolean equals(final Object o) {
     return ((o == this) || //
-        ((o != null) && (this.getClass() == o.getClass())));
+    ((o != null) && (this.getClass() == o.getClass())));
   }
 
   /**

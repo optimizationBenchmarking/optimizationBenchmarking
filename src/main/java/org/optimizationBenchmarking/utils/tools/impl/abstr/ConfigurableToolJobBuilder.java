@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
  *          the return type of the setter methods
  */
 public abstract class ConfigurableToolJobBuilder<J extends IToolJob, R extends ConfigurableToolJobBuilder<J, R>>
-extends ToolJobBuilder<J, R> implements IConfigurableToolJobBuilder {
+    extends ToolJobBuilder<J, R> implements IConfigurableToolJobBuilder {
 
   /** create the tool job builder */
   protected ConfigurableToolJobBuilder() {

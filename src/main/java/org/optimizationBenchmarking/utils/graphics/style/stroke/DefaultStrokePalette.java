@@ -59,7 +59,7 @@ public final class DefaultStrokePalette extends StrokePalette {
 
   /** the default palette builder */
   private static final class __DefaultStrokePaletteBuilder extends
-  StrokePaletteBuilder {
+      StrokePaletteBuilder {
     /** the default palette builder */
     __DefaultStrokePaletteBuilder() {
       super();
@@ -88,19 +88,19 @@ public final class DefaultStrokePalette extends StrokePalette {
       logger = Configuration.getGlobalLogger();
       try (final __DefaultStrokePaletteBuilder cspb = new __DefaultStrokePaletteBuilder()) {
         StrokePaletteXMLInput
-        .getInstance()
-        .use()
-        .setLogger(logger)
-        .setDestination(cspb)
-        .addResource(DefaultStrokePalette.class,
-            "default.strokePalette").create().call(); //$NON-NLS-1$
+            .getInstance()
+            .use()
+            .setLogger(logger)
+            .setDestination(cspb)
+            .addResource(DefaultStrokePalette.class,
+                "default.strokePalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         ErrorUtils
-        .logError(
-            logger,
-            "Error while loading the default stroke palette. This palette will not be available.",//$NON-NLS-1$
-            t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+            .logError(
+                logger,
+                "Error while loading the default stroke palette. This palette will not be available.",//$NON-NLS-1$
+                t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
       }
 
       INSTANCE = ((DefaultStrokePalette) pal);

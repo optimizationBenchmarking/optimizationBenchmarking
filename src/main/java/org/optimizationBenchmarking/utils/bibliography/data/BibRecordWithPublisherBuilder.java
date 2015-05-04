@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for bibliographic records with publishers. */
 public abstract class BibRecordWithPublisherBuilder extends
-BibRecordBuilder {
+    BibRecordBuilder {
 
   /** the publisher has been set */
   static final int FLAG_PUBLISHER_SET = (BibRecordBuilder.FLAG_RECORD_LAST << 1);
@@ -58,7 +58,7 @@ BibRecordBuilder {
     if ((this.m_publisher = this.normalize(publisher)) == null) {
       throw new IllegalArgumentException(//
           "Publisher  cannot be set to empty or null, but '" //$NON-NLS-1$
-          + publisher + "' is."); //$NON-NLS-1$
+              + publisher + "' is."); //$NON-NLS-1$
     }
   }
 

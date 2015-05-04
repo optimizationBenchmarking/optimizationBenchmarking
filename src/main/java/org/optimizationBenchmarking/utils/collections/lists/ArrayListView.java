@@ -40,8 +40,8 @@ public class ArrayListView<DT> extends BasicList<DT> {
     if (data == null) {
       throw new IllegalArgumentException(//
           "Data (element array) passed to the constructor of " + //$NON-NLS-1$
-          TextUtils.className(this.getClass()) + //
-          " must not be null."); //$NON-NLS-1$
+              TextUtils.className(this.getClass()) + //
+              " must not be null."); //$NON-NLS-1$
     }
 
     this.m_data = data;
@@ -99,8 +99,8 @@ public class ArrayListView<DT> extends BasicList<DT> {
     len = this.m_data.length;
 
     out = ((a.length >= len) ? a : //
-      ((T[]) (java.lang.reflect.Array.newInstance(//
-          a.getClass().getComponentType(), len))));
+        ((T[]) (java.lang.reflect.Array.newInstance(//
+            a.getClass().getComponentType(), len))));
     System.arraycopy(this.m_data, 0, out, 0, len);
     if (len < out.length) {
       out[len] = null;
@@ -127,8 +127,8 @@ public class ArrayListView<DT> extends BasicList<DT> {
     }
     throw new UnsupportedOperationException(//
         "Cannot add elements " + c + //$NON-NLS-1$
-        " to this list."//$NON-NLS-1$
-        );
+            " to this list."//$NON-NLS-1$
+    );
   }
 
   /** {@inheritDoc} */
@@ -140,8 +140,8 @@ public class ArrayListView<DT> extends BasicList<DT> {
     }
     throw new UnsupportedOperationException(//
         "Cannot add elements " + c + //$NON-NLS-1$
-        "at index " + index//$NON-NLS-1$
-        );
+            "at index " + index//$NON-NLS-1$
+    );
   }
 
   /** {@inheritDoc} */
@@ -151,7 +151,7 @@ public class ArrayListView<DT> extends BasicList<DT> {
       if (this.contains(o)) {
         throw new UnsupportedOperationException(//
             "Cannot remove elements " + c //$NON-NLS-1$
-            );
+        );
       }
     }
     return false;
@@ -164,7 +164,7 @@ public class ArrayListView<DT> extends BasicList<DT> {
       if (!(c.contains(o))) {
         throw new UnsupportedOperationException(//
             "Cannot retain the elements " + c //$NON-NLS-1$
-            );
+        );
       }
     }
     return false;
@@ -176,7 +176,7 @@ public class ArrayListView<DT> extends BasicList<DT> {
     if (this.m_data.length > 0) {
       throw new UnsupportedOperationException(//
           "Cannot clear this list."//$NON-NLS-1$
-          );
+      );
     }
   }
 
@@ -185,8 +185,8 @@ public class ArrayListView<DT> extends BasicList<DT> {
   public final DT set(final int index, final DT element) {
     throw new UnsupportedOperationException(//
         "Cannot set element " + element + //$NON-NLS-1$
-        " at index " + index//$NON-NLS-1$
-        );
+            " at index " + index//$NON-NLS-1$
+    );
   }
 
   /** {@inheritDoc} */
@@ -194,8 +194,8 @@ public class ArrayListView<DT> extends BasicList<DT> {
   public final void add(final int index, final DT element) {
     throw new UnsupportedOperationException(//
         "Cannot add element " + element + //$NON-NLS-1$
-        " at index " + index//$NON-NLS-1$
-        );
+            " at index " + index//$NON-NLS-1$
+    );
   }
 
   /** {@inheritDoc} */
@@ -203,7 +203,7 @@ public class ArrayListView<DT> extends BasicList<DT> {
   public final boolean add(final DT element) {
     throw new UnsupportedOperationException(//
         "Cannot add element " + element//$NON-NLS-1$
-        );
+    );
   }
 
   /** {@inheritDoc} */
@@ -215,8 +215,8 @@ public class ArrayListView<DT> extends BasicList<DT> {
     if (i >= 0) {
       throw new UnsupportedOperationException(//
           "Cannot remove element " + o + //$NON-NLS-1$
-          ", which is at index " + i//$NON-NLS-1$
-          );
+              ", which is at index " + i//$NON-NLS-1$
+      );
     }
     return false;
   }
@@ -226,7 +226,7 @@ public class ArrayListView<DT> extends BasicList<DT> {
   public final DT remove(final int index) {
     throw new UnsupportedOperationException(//
         "Cannot remove the element at index " + index//$NON-NLS-1$
-        );
+    );
   }
 
   /** {@inheritDoc} */

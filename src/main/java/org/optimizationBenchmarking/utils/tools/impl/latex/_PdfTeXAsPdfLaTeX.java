@@ -60,13 +60,13 @@ final class _PdfTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
         if ((arg1 = args[0]) == null) {
           throw new IllegalStateException(
               "PdfTeX binary '" + exec//$NON-NLS-1$
-              + "' does not offer option 'output-format' when asked via '-help'.");//$NON-NLS-1$
+                  + "' does not offer option 'output-format' when asked via '-help'.");//$NON-NLS-1$
         }
 
         if ((arg2 = args[1]) == null) {
           throw new IllegalStateException(//
               "PdfTeX binary '" + exec + //$NON-NLS-1$
-              "' does not offer option 'progname' when asked via '-help'.");//$NON-NLS-1$
+                  "' does not offer option 'progname' when asked via '-help'.");//$NON-NLS-1$
         }
 
         arg3 = args[2];
@@ -87,9 +87,9 @@ final class _PdfTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
 
     if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
       logger.config((this.m_executable != null) ? //
-          ("PdfTeX executable '" + this.m_executable + //$NON-NLS-1$
-              "' which can be used as PdfLaTeX found.")//$NON-NLS-1$
-              : "No PdfTeX executable which can be used as PdfLaTeX found.");//$NON-NLS-1$
+      ("PdfTeX executable '" + this.m_executable + //$NON-NLS-1$
+      "' which can be used as PdfLaTeX found.")//$NON-NLS-1$
+          : "No PdfTeX executable which can be used as PdfLaTeX found.");//$NON-NLS-1$
     }
   }
 
@@ -169,7 +169,7 @@ final class _PdfTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
             ELaTeXFileType.AUX,
             true,
             " This could mean that the latex document does not contain any label, citation, or section."//$NON-NLS-1$
-            ) == null) {
+        ) == null) {
       ok = false;
     }
     if (this
@@ -178,7 +178,7 @@ final class _PdfTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
             ELaTeXFileType.PDF,
             true,
             " This could mean that the latex document does not produce any pdf output."//$NON-NLS-1$
-            ) == null) {
+        ) == null) {
       ok = false;
     }
 
@@ -207,7 +207,7 @@ final class _PdfTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
 
   /** the description */
   private static final class __PdfTeXAsPdfLaTeXDesc extends
-  _LaTeXToolChainComponentDesc {
+      _LaTeXToolChainComponentDesc {
 
     /** the description */
     static final _LaTeXToolChainComponentDesc DESC = new __PdfTeXAsPdfLaTeXDesc();

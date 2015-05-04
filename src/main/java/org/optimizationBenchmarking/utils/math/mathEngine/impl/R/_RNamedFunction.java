@@ -85,7 +85,7 @@ final class _RNamedFunction extends _RExpressionScope implements IFunction {
           if (cc > this.m_infix.length) {
             throw new IllegalStateException(//
                 "Too many parameters, can only accept " //$NON-NLS-1$
-                + cc);
+                    + cc);
           }
           out.write(this.m_infix[cc - 1]);
         }

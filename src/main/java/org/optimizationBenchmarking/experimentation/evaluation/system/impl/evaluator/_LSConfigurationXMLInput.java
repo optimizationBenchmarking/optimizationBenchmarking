@@ -31,9 +31,9 @@ final class _LSConfigurationXMLInput extends SimpleLSInput {
       return ConfigurationXML.CONFIG_XML.getSchemaSource().openStream();
     } catch (final Throwable tt) {
       RethrowMode.AS_RUNTIME_EXCEPTION
-      .rethrow(//
-          "Error while creating input stream to Configuration XML Schema.", //$NON-NLS-1$
-          true, tt);
+          .rethrow(//
+              "Error while creating input stream to Configuration XML Schema.", //$NON-NLS-1$
+              true, tt);
       return null;
     }
   }

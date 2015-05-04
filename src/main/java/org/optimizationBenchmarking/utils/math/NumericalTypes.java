@@ -129,7 +129,7 @@ public final class NumericalTypes {
       }
     } else {
       res = (NumericalTypes.getTypes(number.longValue()) & //
-          NumericalTypes.getTypes(number.doubleValue()));
+      NumericalTypes.getTypes(number.doubleValue()));
     }
     return ((res != 0) ? res : NumericalTypes.IS_DOUBLE);
   }

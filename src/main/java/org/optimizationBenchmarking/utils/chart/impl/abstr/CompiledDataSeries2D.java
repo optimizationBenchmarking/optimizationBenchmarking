@@ -61,7 +61,7 @@ public class CompiledDataSeries2D extends CompiledDataSeries {
     if (data.n() != 2) {
       throw new IllegalArgumentException(
           "A matrix for 2D-lines must have 2 columns, but this matrix has " //$NON-NLS-1$
-          + data.n());
+              + data.n());
     }
     return data;
   }

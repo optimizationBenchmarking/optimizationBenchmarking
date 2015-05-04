@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
  * interface.
  */
 public class AbstractParameterValue extends AbstractPropertyValue
-implements IParameterValue {
+    implements IParameterValue {
 
   /** the owning feature */
   IParameter m_owner;

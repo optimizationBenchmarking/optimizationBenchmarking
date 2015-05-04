@@ -41,7 +41,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  *          the proxied type
  */
 abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
-extends SimplifyingGraphicProxy<T> {
+    extends SimplifyingGraphicProxy<T> {
 
   /** the maximum permissible coordinate as integer */
   private static final int MAX_COORD_I = ((((1 << 22) - 3) >> 1) - 3);
@@ -352,10 +352,10 @@ extends SimplifyingGraphicProxy<T> {
   protected final void flushDrawPolyline(final double[] xPoints,
       final double[] yPoints, final int nPoints) {
     this.m_out
-    .drawPolyline(
-        _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
-        _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
-        nPoints);
+        .drawPolyline(
+            _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
+            _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
+            nPoints);
   }
 
   /** {@inheritDoc} */
@@ -363,10 +363,10 @@ extends SimplifyingGraphicProxy<T> {
   protected final void doFillPolygon(final double[] xPoints,
       final double[] yPoints, final int nPoints) {
     this.m_out
-    .fillPolygon(
-        _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
-        _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
-        nPoints);
+        .fillPolygon(
+            _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
+            _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
+            nPoints);
   }
 
   /** {@inheritDoc} */
@@ -435,7 +435,7 @@ extends SimplifyingGraphicProxy<T> {
             _FreeHEPAbstractVectorGraphicsProxy._f(yCoord),
             _FreeHEPAbstractVectorGraphicsProxy._f(startX
                 + bounds.getWidth()),
-                _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
+            _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
       } finally {
         this.setStroke(old);
       }
@@ -486,7 +486,7 @@ extends SimplifyingGraphicProxy<T> {
             _FreeHEPAbstractVectorGraphicsProxy._f(yCoord),
             _FreeHEPAbstractVectorGraphicsProxy._f(startX
                 + bounds.getWidth()),
-                _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
+            _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
       } finally {
         this.setStroke(old);
       }
@@ -742,10 +742,10 @@ extends SimplifyingGraphicProxy<T> {
   protected final void flushDrawPolyline(final int xPoints[],
       final int yPoints[], final int nPoints) {
     this.m_out
-    .drawPolyline(
-        _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
-        _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
-        nPoints);
+        .drawPolyline(
+            _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
+            _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
+            nPoints);
   }
 
   /** {@inheritDoc} */

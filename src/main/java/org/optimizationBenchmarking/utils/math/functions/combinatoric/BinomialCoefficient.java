@@ -67,7 +67,7 @@ public final class BinomialCoefficient extends BinaryFunction {
       ni = ((int) n);
       ki = ((int) k);
       return ((Factorial.FACTORIALS[ni] / Factorial.FACTORIALS[ki]) / //
-          Factorial.FACTORIALS[ni - ki]);
+      Factorial.FACTORIALS[ni - ki]);
     }
 
     g = (n >>> 1);

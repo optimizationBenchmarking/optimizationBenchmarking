@@ -19,7 +19,7 @@ public class Example1MultiShadowTest extends ExperimentSetTest {
 
   /** wrap an experiment set creator */
   private static final class __ExperimentSet1CreatorWrapper extends
-  ExperimentSetCreator {
+      ExperimentSetCreator {
 
     /** the example */
     private final Example1 m_example1;

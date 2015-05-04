@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
  *          the return type of the setter methods
  */
 public abstract class DocumentProducerJobBuilder<J extends IToolJob, R extends DocumentProducerJobBuilder<J, R>>
-extends ToolJobBuilder<J, R> implements IDocumentProducerJobBuilder {
+    extends ToolJobBuilder<J, R> implements IDocumentProducerJobBuilder {
 
   /** the output folder */
   public static final String PARAM_OUTPUT_FOLDER = "output"; //$NON-NLS-1$
@@ -102,7 +102,7 @@ extends ToolJobBuilder<J, R> implements IDocumentProducerJobBuilder {
     if (p == null) {
       throw new IllegalArgumentException(//
           "The base path for a file producer cannot be set to something equivalent to null, but '" //$NON-NLS-1$
-          + basePath + "' is.");//$NON-NLS-1$
+              + basePath + "' is.");//$NON-NLS-1$
     }
     this.m_basePath = p;
     return ((R) this);
@@ -127,7 +127,7 @@ extends ToolJobBuilder<J, R> implements IDocumentProducerJobBuilder {
     if (s == null) {
       throw new IllegalArgumentException(//
           "The main document name suggestion cannot be empty, but '" + //$NON-NLS-1$
-          name + "' is equivalent to an empty name.");//$NON-NLS-1$
+              name + "' is equivalent to an empty name.");//$NON-NLS-1$
     }
     this.m_mainDocumentNameSuggestion = s;
     return ((R) this);

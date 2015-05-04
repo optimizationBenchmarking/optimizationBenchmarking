@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the source type
  */
 public class TextOutputTool<S> extends StreamOutputTool<S> implements
-ITextOutputTool<S> {
+    ITextOutputTool<S> {
 
   /** create */
   protected TextOutputTool() {
@@ -111,7 +111,7 @@ ITextOutputTool<S> {
   @Override
   protected void stream(final IOJob job, final S data,
       final OutputStream stream, final StreamEncoding<?, ?> encoding)
-          throws Throwable {
+      throws Throwable {
     final Logger logger;
     Class<?> clazz;
 
@@ -125,7 +125,7 @@ ITextOutputTool<S> {
       if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
         logger.log(IOTool.FINE_LOG_LEVEL,//
             ("Using text encoding " //$NON-NLS-1$
-                + encoding.name()));
+            + encoding.name()));
       }
       try (final Writer writer = ((Writer) (encoding
           .wrapOutputStream(stream)))) {

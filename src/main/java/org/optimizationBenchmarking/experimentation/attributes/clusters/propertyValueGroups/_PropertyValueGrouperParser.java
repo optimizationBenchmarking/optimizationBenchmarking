@@ -39,7 +39,7 @@ import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterato
  * </dl>
  */
 final class _PropertyValueGrouperParser extends
-Parser<PropertyValueGrouper> {
+    Parser<PropertyValueGrouper> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -98,13 +98,13 @@ Parser<PropertyValueGrouper> {
     }
 
     mode = defMode = //
-        PropertyValueGrouper.DEFAULT_GROUPER.getGroupingMode();
+    PropertyValueGrouper.DEFAULT_GROUPER.getGroupingMode();
     minGroups = defMinGroups = //
-        PropertyValueGrouper.DEFAULT_GROUPER.getMinGroups();
+    PropertyValueGrouper.DEFAULT_GROUPER.getMinGroups();
     maxGroups = defMaxGroups = //
-        PropertyValueGrouper.DEFAULT_GROUPER.getMaxGroups();
+    PropertyValueGrouper.DEFAULT_GROUPER.getMaxGroups();
     param = defParam = //
-        PropertyValueGrouper.DEFAULT_GROUPER.getGroupingParameter();
+    PropertyValueGrouper.DEFAULT_GROUPER.getGroupingParameter();
 
     try {
       iterator = new WordBasedStringIterator(use);
@@ -160,7 +160,7 @@ Parser<PropertyValueGrouper> {
           if (maxGroups < minGroups) {
             throw new IllegalArgumentException(//
                 "The maximum number of groups cannot be less than the minimum number of groups, but you specified "//$NON-NLS-1$
-                + maxGroups + " and " + minGroups + ", respectively.");//$NON-NLS-1$//$NON-NLS-2$
+                    + maxGroups + " and " + minGroups + ", respectively.");//$NON-NLS-1$//$NON-NLS-2$
           }
 
           if (iterator.hasNext()) {

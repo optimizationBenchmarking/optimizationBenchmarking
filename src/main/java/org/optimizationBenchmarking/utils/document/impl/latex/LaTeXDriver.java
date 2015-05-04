@@ -60,18 +60,18 @@ public final class LaTeXDriver extends DocumentDriver {
   private static final char[] LABEL = { '\\', 'l', 'a', 'b', 'e', 'l', '{' };
   /** the enforced referencable command */
   private static final char[] PHANTOMSECTION = { '{', '\\', 'p', 'h', 'a',
-    'n', 't', 'o', 'm', 's', 'e', 'c', 't', 'i', 'o', 'n', '}' };
+      'n', 't', 'o', 'm', 's', 'e', 'c', 't', 'i', 'o', 'n', '}' };
 
   /** begin the center environment */
   static final char[] CENTER_BEGIN = { '\\', 'b', 'e', 'g', 'i', 'n', '{',
-    'c', 'e', 'n', 't', 'e', 'r', '}' };
+      'c', 'e', 'n', 't', 'e', 'r', '}' };
   /** end the center environment */
   static final char[] CENTER_END = { '\\', 'e', 'n', 'd', '{', 'c', 'e',
-    'n', 't', 'e', 'r', '}' };
+      'n', 't', 'e', 'r', '}' };
 
   /** the caption */
   static final char[] CAPTION_BEGIN = { '\\', 'c', 'a', 'p', 't', 'i',
-    'o', 'n', '{' };
+      'o', 'n', '{' };
 
   /** the citation begin */
   static final char[] CITE_BEGIN = { '{', '\\', 'c', 'i', 't', 'e', '{' };
@@ -674,7 +674,7 @@ public final class LaTeXDriver extends DocumentDriver {
 
     format = driver.getFileType();
     if (_LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[//
-                                                               format.ordinal()]) {
+    format.ordinal()]) {
       return;
     }
 
@@ -752,11 +752,11 @@ public final class LaTeXDriver extends DocumentDriver {
 
     static {
       SUPPORTED_GRAPHIC_FORMATS = new boolean[EGraphicFormat.INSTANCES
-                                              .size()];
+          .size()];
       for (final EGraphicFormat format : LaTeX
           .getAllSupportedGraphicFormats()) {
         _LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[format
-                                                               .ordinal()] = true;
+            .ordinal()] = true;
       }
     }
   }
@@ -781,7 +781,7 @@ public final class LaTeXDriver extends DocumentDriver {
           EGraphicFormat.SVGZ, EGraphicFormat.EMF, EGraphicFormat.PNG,
           EGraphicFormat.BMP, EGraphicFormat.GIF, EGraphicFormat.JPEG, }) {
         if (_LaTeXSupportedFormatsLoader.SUPPORTED_GRAPHIC_FORMATS[//
-                                                                   format.ordinal()]) {
+        format.ordinal()]) {
           try {
             driver = format.getDefaultDriver();
             driver.checkCanUse();

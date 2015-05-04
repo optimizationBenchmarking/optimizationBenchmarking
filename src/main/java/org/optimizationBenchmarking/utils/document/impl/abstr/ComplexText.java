@@ -143,7 +143,7 @@ public class ComplexText extends PlainText implements IComplexText {
 
   /** the bibliography consumer */
   private final class _BibliographyConsumer implements
-  IBibliographyConsumer {
+      IBibliographyConsumer {
 
     /** the citation mode */
     private final ECitationMode m_citationMode;

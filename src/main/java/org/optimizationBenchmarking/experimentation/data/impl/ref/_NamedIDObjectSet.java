@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the type
  */
 abstract class _NamedIDObjectSet<DT extends _IDObject> extends
-_IDObjectSet<DT> {
+    _IDObjectSet<DT> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -42,8 +42,8 @@ _IDObjectSet<DT> {
     if ((this.m_name = TextUtils.normalize(name)) == null) {
       throw new IllegalArgumentException(//
           "Instances of " + TextUtils.className(this.getClass()) + //$NON-NLS-1$
-          " must have a non-empty name, but name '" + //$NON-NLS-1$
-          name + "' was provided."); //$NON-NLS-1$
+              " must have a non-empty name, but name '" + //$NON-NLS-1$
+              name + "' was provided."); //$NON-NLS-1$
 
     }
     this.m_description = TextUtils.normalize(desc);

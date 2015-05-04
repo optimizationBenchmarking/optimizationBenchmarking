@@ -53,9 +53,9 @@ public abstract class EDIInputToolBase extends ExperimentSetXMLInput {
 
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
-      .rethrow(//
-          "Error while loading XML Schema for Experiment Data Interchange (EDI).",//$NON-NLS-1$
-          true, rec);
+          .rethrow(//
+              "Error while loading XML Schema for Experiment Data Interchange (EDI).",//$NON-NLS-1$
+              true, rec);
     }
   }
 
@@ -94,15 +94,15 @@ public abstract class EDIInputToolBase extends ExperimentSetXMLInput {
     lm3 = (n.charAt(--len));
 
     return (((lm3 == '.') && (//
-        (((lm2 == 'x') || (lm2 == 'X'))//
-            && ((lm1 == 'm') || (lm1 == 'M'))//
-            && ((lm0 == 'l') || (lm0 == 'L'))) || //
-            (((lm2 == 'e') || (lm2 == 'E'))//
-                && ((lm1 == 'd') || (lm1 == 'D'))//
-                && ((lm0 == 'i') || (lm0 == 'I'))))) || //
-                ((lm2 == EDI.SUFFIX_CHARS[0])//
-                    && (lm1 == EDI.SUFFIX_CHARS[1])//
-                    && (lm0 == EDI.SUFFIX_CHARS[2])));
+    (((lm2 == 'x') || (lm2 == 'X'))//
+        && ((lm1 == 'm') || (lm1 == 'M'))//
+    && ((lm0 == 'l') || (lm0 == 'L'))) || //
+    (((lm2 == 'e') || (lm2 == 'E'))//
+        && ((lm1 == 'd') || (lm1 == 'D'))//
+    && ((lm0 == 'i') || (lm0 == 'I'))))) || //
+    ((lm2 == EDI.SUFFIX_CHARS[0])//
+        && (lm1 == EDI.SUFFIX_CHARS[1])//
+    && (lm0 == EDI.SUFFIX_CHARS[2])));
   }
 
   /** {@inheritDoc} */

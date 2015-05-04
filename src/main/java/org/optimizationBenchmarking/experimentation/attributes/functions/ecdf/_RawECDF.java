@@ -67,10 +67,10 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
     if ((timeDim == null) || (goalDim == null) || (goalValue == null)) {
       throw new IllegalArgumentException(//
           "Cannot compute ECDF for time dimension "//$NON-NLS-1$
-          + timeDim + //
-          ", goal dimension" //$NON-NLS-1$
-          + goalDim + //
-          ", and goal value " + goalValue);//$NON-NLS-1$
+              + timeDim + //
+              ", goal dimension" //$NON-NLS-1$
+              + goalDim + //
+              ", and goal value " + goalValue);//$NON-NLS-1$
     }
 
     this.m_timeDim = timeDim;
@@ -112,9 +112,9 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.m_timeIndex),//
             HashUtils.hashCode(this.m_goalIndex)),//
-            (this.m_useLongGoal//
-                ? HashUtils.hashCode(this.m_goalValueLong)//
-                    : HashUtils.hashCode(this.m_goalValueDouble)));//
+        (this.m_useLongGoal//
+        ? HashUtils.hashCode(this.m_goalValueLong)//
+            : HashUtils.hashCode(this.m_goalValueDouble)));//
   }
 
   /** {@inheritDoc} */
@@ -312,7 +312,7 @@ final class _RawECDF extends Attribute<IElementSet, IMatrix> {
 
     throw new IllegalArgumentException(//
         "ECDF can only be computed over an IExperimentSet, IExperiment, or IInstanceRuns, but you provided " //$NON-NLS-1$
-        + ((data != null)//
+            + ((data != null)//
             ? (TextUtils.className(data.getClass()) + '.')//
                 : "null."));//$NON-NLS-1$
 

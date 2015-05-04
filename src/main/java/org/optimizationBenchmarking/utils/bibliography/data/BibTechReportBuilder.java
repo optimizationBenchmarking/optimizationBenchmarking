@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for a bibliographic record for a technical report. */
 public final class BibTechReportBuilder extends
-BibRecordWithPublisherBuilder {
+    BibRecordWithPublisherBuilder {
 
   /** the series has been set */
   private static final int FLAG_SERIES_SET = (BibRecordWithPublisherBuilder.FLAG_PUBLISHER_LAST << 1);
@@ -87,7 +87,7 @@ BibRecordWithPublisherBuilder {
     if ((this.m_series = this.normalize(series)) == null) {
       throw new IllegalArgumentException(//
           "Series cannot be set to empty or null, but '" //$NON-NLS-1$
-          + series + "' is."); //$NON-NLS-1$
+              + series + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -105,7 +105,7 @@ BibRecordWithPublisherBuilder {
     if ((this.m_number = this.normalize(number)) == null) {
       throw new IllegalArgumentException(//
           "Number cannot be set to empty or null, but '" //$NON-NLS-1$
-          + number + "' is."); //$NON-NLS-1$
+              + number + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -123,7 +123,7 @@ BibRecordWithPublisherBuilder {
     if ((this.m_issn = this.normalize(issn)) == null) {
       throw new IllegalArgumentException(//
           "ISSN cannot be set to empty or null, but '" //$NON-NLS-1$
-          + issn + "' is."); //$NON-NLS-1$
+              + issn + "' is."); //$NON-NLS-1$
     }
   }
 

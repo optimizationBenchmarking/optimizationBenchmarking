@@ -22,7 +22,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  */
 abstract class _ShadowNamedElementSet<OT extends IDataElement, ST extends INamedElementSet, //
 PT extends INamedElement> extends //
-_ShadowElementSet<OT, ST, PT> implements INamedElementSet {
+    _ShadowElementSet<OT, ST, PT> implements INamedElementSet {
 
   /**
    * create the shadow named element set

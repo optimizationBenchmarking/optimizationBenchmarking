@@ -41,7 +41,7 @@ public class HierarchicalFSMTest extends _HierarchicalTest {
       wt.start();
       fjp = (fifo ? new ForkJoinPool(n,
           ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, true)
-      : new ForkJoinPool(n));
+          : new ForkJoinPool(n));
 
       try (_HFTDummyHierarchicalFSM d = new _HFTDummyHierarchicalFSM(null)) {
         t = new _HFTTask(wt, d, 0, delayMode);

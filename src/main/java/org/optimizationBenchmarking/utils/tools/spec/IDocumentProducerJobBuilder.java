@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
  * The basic interface for the builder for a file producing job.
  */
 public interface IDocumentProducerJobBuilder extends
-IFileProducerJobBuilder, IConfigurableToolJobBuilder {
+    IFileProducerJobBuilder, IConfigurableToolJobBuilder {
 
   /** {@inheritDoc} */
   @Override

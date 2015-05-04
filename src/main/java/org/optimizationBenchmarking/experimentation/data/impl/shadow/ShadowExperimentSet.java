@@ -22,8 +22,8 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  *          the owner type
  */
 public class ShadowExperimentSet<OT extends IDataElement> extends //
-_ShadowNamedElementSet<OT, IExperimentSet, IExperiment> implements
-IExperimentSet {
+    _ShadowNamedElementSet<OT, IExperimentSet, IExperiment> implements
+    IExperimentSet {
 
   /** the dimensions */
   private IDimensionSet m_dimensions;

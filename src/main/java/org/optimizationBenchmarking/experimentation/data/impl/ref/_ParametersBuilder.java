@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
  * a manager for properties
  */
 final class _ParametersBuilder extends
-_PropertyFSMPropertiesBuilder<ParameterValue, Parameter, ParameterSet> {
+    _PropertyFSMPropertiesBuilder<ParameterValue, Parameter, ParameterSet> {
 
   /**
    * create
@@ -36,16 +36,16 @@ _PropertyFSMPropertiesBuilder<ParameterValue, Parameter, ParameterSet> {
         primitiveType,
         values,//
         (hasUnspecified ? //
-            new ParameterValue(
-                _PropertyValueUnspecified.NAME,//
-                "The unspecified parameter value, used when settings do not specify the value.", //$NON-NLS-1$
-                _PropertyValueUnspecified.INSTANCE)//
-        : null),//
+        new ParameterValue(
+            _PropertyValueUnspecified.NAME,//
+            "The unspecified parameter value, used when settings do not specify the value.", //$NON-NLS-1$
+            _PropertyValueUnspecified.INSTANCE)//
+            : null),//
         new ParameterValue(
             _PropertyValueGeneralized.NAME,//
             "The generalized parameter value which can stand for any other parameter value.", //$NON-NLS-1$
             _PropertyValueGeneralized.INSTANCE)//
-        );
+    );
   }
 
   /** {@inheritDoc} */

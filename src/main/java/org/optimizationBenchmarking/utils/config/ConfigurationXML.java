@@ -30,8 +30,8 @@ public enum ConfigurationXML implements IXMLFileType {
   static final String ELEMENT_CONFIGURATION_ROOT = "configuration"; //$NON-NLS-1$
   /** the namespace */
   static final URI NAMESPACE_URI = //
-      URI.create(//
-          "http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd").normalize(); //$NON-NLS-1$
+  URI.create(//
+      "http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd").normalize(); //$NON-NLS-1$
   /** the namespace string */
   static final String NAMESPACE = ConfigurationXML.NAMESPACE_URI
       .toString();

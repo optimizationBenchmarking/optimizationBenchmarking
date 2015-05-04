@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * An object which can help to select data.
  */
 public class DataSelection extends
-_MappedSelection<IExperimentSet, IExperiment, IInstanceRuns> {
+    _MappedSelection<IExperimentSet, IExperiment, IInstanceRuns> {
 
   /** the selected features */
   private final _FeatureSelection m_features;
@@ -212,7 +212,7 @@ _MappedSelection<IExperimentSet, IExperiment, IInstanceRuns> {
       } else {
         throw new IllegalArgumentException(//
             "Property value must either be a feature or a parameter value, but is" //$NON-NLS-1$
-            + value);
+                + value);
       }
     }
   }
@@ -236,7 +236,7 @@ _MappedSelection<IExperimentSet, IExperiment, IInstanceRuns> {
       } else {
         throw new IllegalArgumentException(//
             "Property must eithe be a feature or a parameter, but is " //$NON-NLS-1$
-            + property);
+                + property);
       }
     }
   }

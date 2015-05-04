@@ -148,7 +148,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
    */
   public final void setParser(
       final Class<? extends NumberParser<?>> parserClass,
-          final Number lowerBound, final Number upperBound) {
+      final Number lowerBound, final Number upperBound) {
     final NumberParser<?> parser;
 
     try {

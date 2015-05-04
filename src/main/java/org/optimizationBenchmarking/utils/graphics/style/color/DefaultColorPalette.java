@@ -53,7 +53,7 @@ public final class DefaultColorPalette extends ColorPalette {
 
   /** the default palette builder */
   private static final class __DefaultColorPaletteBuilder extends
-  ColorPaletteBuilder {
+      ColorPaletteBuilder {
     /** the default palette builder */
     __DefaultColorPaletteBuilder() {
       super();
@@ -64,7 +64,7 @@ public final class DefaultColorPalette extends ColorPalette {
     protected final DefaultColorPalette createPalette(
         final ArrayList<ColorStyle> data) {
       return new DefaultColorPalette(data.toArray(new ColorStyle[data
-                                                                 .size()]));
+          .size()]));
     }
   }
 
@@ -82,19 +82,19 @@ public final class DefaultColorPalette extends ColorPalette {
       logger = Configuration.getGlobalLogger();
       try (final __DefaultColorPaletteBuilder cspb = new __DefaultColorPaletteBuilder()) {
         ColorPaletteXMLInput
-        .getInstance()
-        .use()
-        .setLogger(logger)
-        .setDestination(cspb)
-        .addResource(DefaultColorPalette.class,
-            "defaultColor.colorPalette").create().call(); //$NON-NLS-1$
+            .getInstance()
+            .use()
+            .setLogger(logger)
+            .setDestination(cspb)
+            .addResource(DefaultColorPalette.class,
+                "defaultColor.colorPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         ErrorUtils
-        .logError(
-            logger,//
-            "Error while loading the default color palette. This will have severe (as in 'deadly') implications on graphics or documents depending on it.",//$NON-NLS-1$,
-            t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+            .logError(
+                logger,//
+                "Error while loading the default color palette. This will have severe (as in 'deadly') implications on graphics or documents depending on it.",//$NON-NLS-1$,
+                t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
 
       }
 

@@ -37,8 +37,8 @@ public final class ATanh extends UnaryFunction {
         Sub.INSTANCE.computeAsDouble(//
             Ln.INSTANCE.computeAsDouble(//
                 Add.INSTANCE.computeAsDouble(1d, inv)),//
-                Ln.INSTANCE.computeAsDouble(//
-                    Sub.INSTANCE.computeAsDouble(1d, inv))));
+            Ln.INSTANCE.computeAsDouble(//
+                Sub.INSTANCE.computeAsDouble(1d, inv))));
 
   }
 

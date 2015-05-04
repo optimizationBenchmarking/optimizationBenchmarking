@@ -56,22 +56,22 @@ public final class Instance extends _NamedIDObject implements IInstance {
     if ((upper == null) || (upper.length < 1)) {
       throw new IllegalArgumentException(
           ("There must be at least one upper bound for one dimension for instance '" + //$NON-NLS-1$
-              n)
+          n)
               + "' but there is none."); //$NON-NLS-1$
     }
     if ((lower == null) || (lower.length < 1)) {
       throw new IllegalArgumentException(
           ("There must be at least one lower bound for one dimension for instance '" + //$NON-NLS-1$
-              n)
+          n)
               + "' but there is none."); //$NON-NLS-1$
     }
 
     if (lower.length != upper.length) {
       throw new IllegalArgumentException(
           ((((("There are " + lower.length) + //$NON-NLS-1$
-              " lower bounds but ") + upper.length) + //$NON-NLS-1$
-              " upper bounds for instance '") + //$NON-NLS-1$
-              n) + '.');
+          " lower bounds but ") + upper.length) + //$NON-NLS-1$
+          " upper bounds for instance '") + //$NON-NLS-1$
+          n) + '.');
     }
 
     for (final Number b : upper) {
@@ -148,8 +148,8 @@ public final class Instance extends _NamedIDObject implements IInstance {
     if (i != this.m_lower.length) {
       throw new IllegalArgumentException(
           "Invalid dimension of data point " //$NON-NLS-1$
-          + p + ": must have " //$NON-NLS-1$
-          + this.m_lower.length + " dimensions, but has " + i); //$NON-NLS-1$
+              + p + ": must have " //$NON-NLS-1$
+              + this.m_lower.length + " dimensions, but has " + i); //$NON-NLS-1$
     }
 
     for (; (--i) >= 0;) {
@@ -157,10 +157,10 @@ public final class Instance extends _NamedIDObject implements IInstance {
       u = this.m_upper[i];
 
       if ((((l instanceof Double) || (l instanceof Float)) ? //
-          (l.doubleValue() > p.getDouble(i))//
+      (l.doubleValue() > p.getDouble(i))//
           : (l.longValue() > p.getLong(i))) || //
           (((u instanceof Double) || (u instanceof Float)) ? //
-              (u.doubleValue() < p.getDouble(i))//
+          (u.doubleValue() < p.getDouble(i))//
               : (u.longValue() < p.getLong(i)))) {
         throw new IllegalArgumentException(((((((((//
             "Dimension " + i) + //$NON-NLS-1$

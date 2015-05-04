@@ -175,9 +175,9 @@ public class LineChart2D extends Chart implements ILineChart2D {
       this.m_driver.renderLineChart2D(chart, graphic, logger);
     } catch (final Throwable error) {
       ErrorUtils
-      .logError(
-          logger,
-          ("Unrecoverable error during rendering of compiled 2D line chart #" //$NON-NLS-1$
+          .logError(
+              logger,
+              ("Unrecoverable error during rendering of compiled 2D line chart #" //$NON-NLS-1$
               + this._id()), error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
     } finally {
       this.m_lines = null;

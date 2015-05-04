@@ -103,9 +103,9 @@ public class IOJob extends ToolJob {
 
     if ((o = this.m_current) != null) {
       msg += ((((" Possible source of error: '" + //$NON-NLS-1$
-          o) + "' of class ") + //$NON-NLS-1$
-          TextUtils.className(o.getClass())) + //
-          " (but this information may not be reliable).");//$NON-NLS-1$
+      o) + "' of class ") + //$NON-NLS-1$
+      TextUtils.className(o.getClass())) + //
+      " (but this information may not be reliable).");//$NON-NLS-1$
     }
 
     ErrorUtils.logError(this.getLogger(), msg, throwable, true,

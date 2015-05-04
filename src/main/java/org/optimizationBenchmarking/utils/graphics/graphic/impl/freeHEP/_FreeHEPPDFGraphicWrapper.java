@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * graphic
  */
 final class _FreeHEPPDFGraphicWrapper extends
-_FreeHEPAbstractVectorGraphicsProxy<_FreeHEPPDFGraphic> {
+    _FreeHEPAbstractVectorGraphicsProxy<_FreeHEPPDFGraphic> {
 
   /**
    * instantiate

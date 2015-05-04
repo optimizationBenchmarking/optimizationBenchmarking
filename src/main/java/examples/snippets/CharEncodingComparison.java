@@ -21,80 +21,80 @@ public final class CharEncodingComparison {
 
   /** A list of the encodings to test compare. */
   private static final String[] ENCODINGS = { "UTF-8",//$NON-NLS-1$
-    "ISO-8859-1",//$NON-NLS-1$
-    "Windows-1252",//$NON-NLS-1$
-    "US-ASCII",//$NON-NLS-1$
-    "CP1047",//$NON-NLS-1$
-    "GB2312",//$NON-NLS-1$
-    "GBK",//$NON-NLS-1$
-    "GB18030",//$NON-NLS-1$
-    "Big5",//$NON-NLS-1$
-    "UTF-16LE",//$NON-NLS-1$
-    "UTF-16BE",//$NON-NLS-1$
-    "UTF-32LE",//$NON-NLS-1$
-    "UTF-32BE",//$NON-NLS-1$
+      "ISO-8859-1",//$NON-NLS-1$
+      "Windows-1252",//$NON-NLS-1$
+      "US-ASCII",//$NON-NLS-1$
+      "CP1047",//$NON-NLS-1$
+      "GB2312",//$NON-NLS-1$
+      "GBK",//$NON-NLS-1$
+      "GB18030",//$NON-NLS-1$
+      "Big5",//$NON-NLS-1$
+      "UTF-16LE",//$NON-NLS-1$
+      "UTF-16BE",//$NON-NLS-1$
+      "UTF-32LE",//$NON-NLS-1$
+      "UTF-32BE",//$NON-NLS-1$
   };
 
   /**
    * Links to websites describing the {@link #ENCODINGS encodings} to test.
    */
   private static final String[] ENCODINGS_LINKS = {
-    "http://en.wikipedia.org/wiki/UTF-8",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/ISO/IEC_8859-1",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/Windows-1252",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/ASCII",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/EBCDIC_1047",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/GB_2312",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/GBK",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/GB18030",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/Big-5",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/UTF-16",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/UTF-16",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/UTF-32",//$NON-NLS-1$
-    "http://en.wikipedia.org/wiki/UTF-32",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/UTF-8",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/ISO/IEC_8859-1",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/Windows-1252",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/ASCII",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/EBCDIC_1047",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/GB_2312",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/GBK",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/GB18030",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/Big-5",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/UTF-16",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/UTF-16",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/UTF-32",//$NON-NLS-1$
+      "http://en.wikipedia.org/wiki/UTF-32",//$NON-NLS-1$
   };
 
   /** the hex encoding */
   private static final char[] HEX = { '0', '1', '2', '3', '4', '5', '6',
-    '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+      '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
   /**
    * Some standard names for characters with low code points, i.e., the
    * control characters {@code 0} to {@code 31}, plus the space character.
    */
   private static final String[] FIXED_NAMES = { "NUL",//$NON-NLS-1$
-    "SOH",//$NON-NLS-1$
-    "STX",//$NON-NLS-1$
-    "ETX",//$NON-NLS-1$
-    "EOT",//$NON-NLS-1$
-    "ENQ",//$NON-NLS-1$
-    "ACK",//$NON-NLS-1$
-    "BEL",//$NON-NLS-1$
-    "BS",//$NON-NLS-1$
-    "HT",//$NON-NLS-1$
-    "LF",//$NON-NLS-1$
-    "VT",//$NON-NLS-1$
-    "FF",//$NON-NLS-1$
-    "CR",//$NON-NLS-1$
-    "SO",//$NON-NLS-1$
-    "SI",//$NON-NLS-1$
-    "DLE",//$NON-NLS-1$
-    "DC1",//$NON-NLS-1$
-    "DC2",//$NON-NLS-1$
-    "DC3",//$NON-NLS-1$
-    "DC4",//$NON-NLS-1$
-    "NAK",//$NON-NLS-1$
-    "SYN",//$NON-NLS-1$
-    "ETB",//$NON-NLS-1$
-    "CAN",//$NON-NLS-1$
-    "EM",//$NON-NLS-1$
-    "SUB",//$NON-NLS-1$
-    "ESC",//$NON-NLS-1$
-    "FS",//$NON-NLS-1$
-    "GS",//$NON-NLS-1$
-    "RS",//$NON-NLS-1$
-    "US",//$NON-NLS-1$
-    "SPACE",//$NON-NLS-1$
+      "SOH",//$NON-NLS-1$
+      "STX",//$NON-NLS-1$
+      "ETX",//$NON-NLS-1$
+      "EOT",//$NON-NLS-1$
+      "ENQ",//$NON-NLS-1$
+      "ACK",//$NON-NLS-1$
+      "BEL",//$NON-NLS-1$
+      "BS",//$NON-NLS-1$
+      "HT",//$NON-NLS-1$
+      "LF",//$NON-NLS-1$
+      "VT",//$NON-NLS-1$
+      "FF",//$NON-NLS-1$
+      "CR",//$NON-NLS-1$
+      "SO",//$NON-NLS-1$
+      "SI",//$NON-NLS-1$
+      "DLE",//$NON-NLS-1$
+      "DC1",//$NON-NLS-1$
+      "DC2",//$NON-NLS-1$
+      "DC3",//$NON-NLS-1$
+      "DC4",//$NON-NLS-1$
+      "NAK",//$NON-NLS-1$
+      "SYN",//$NON-NLS-1$
+      "ETB",//$NON-NLS-1$
+      "CAN",//$NON-NLS-1$
+      "EM",//$NON-NLS-1$
+      "SUB",//$NON-NLS-1$
+      "ESC",//$NON-NLS-1$
+      "FS",//$NON-NLS-1$
+      "GS",//$NON-NLS-1$
+      "RS",//$NON-NLS-1$
+      "US",//$NON-NLS-1$
+      "SPACE",//$NON-NLS-1$
   };
 
   /**

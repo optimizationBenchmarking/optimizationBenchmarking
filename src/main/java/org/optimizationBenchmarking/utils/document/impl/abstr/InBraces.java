@@ -7,7 +7,7 @@ public class InBraces extends PlainText {
 
   /** the marks */
   private static final Braces[] BRACES = { Braces.PARENTHESES,
-    Braces.BRACKETS, Braces.CURLY_BRACES, Braces.ANGLE, Braces.CHEVRON };
+      Braces.BRACKETS, Braces.CURLY_BRACES, Braces.ANGLE, Braces.CHEVRON };
 
   /** the marks */
   private final int m_braces;

@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a bibliographic record describing an author */
 public class BibAuthor extends _BibElement<BibAuthor> implements
-ISequenceable {
+    ISequenceable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -151,7 +151,7 @@ ISequenceable {
       b = ((BibAuthor) o);
       return (EComparison.equals(this.m_familyName, b.m_familyName) && //
           EComparison.equals(this.m_personalName, b.m_personalName) && //
-          EComparison.equals(this.m_originalSpelling, b.m_originalSpelling));
+      EComparison.equals(this.m_originalSpelling, b.m_originalSpelling));
     }
     return false;
   }

@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A context for creating experiment sets. */
 public final class ExperimentContext extends
-_HierarchicalCollection<InstanceRuns, InstanceRunsContext, Experiment> {
+    _HierarchicalCollection<InstanceRuns, InstanceRunsContext, Experiment> {
 
   /** we have a name */
   private static final int FLAG_HAS_NAME = (FSM.FLAG_NOTHING + 1);
@@ -174,8 +174,8 @@ _HierarchicalCollection<InstanceRuns, InstanceRunsContext, Experiment> {
     if (b == null) {
       throw new IllegalArgumentException(//
           "A name must not normalize to null, buth the name '" //$NON-NLS-1$
-          + a + "' of " + this + //$NON-NLS-1$
-          " does."); //$NON-NLS-1$
+              + a + "' of " + this + //$NON-NLS-1$
+              " does."); //$NON-NLS-1$
     }
 
     if (c != null) {
@@ -184,8 +184,8 @@ _HierarchicalCollection<InstanceRuns, InstanceRunsContext, Experiment> {
       if (d == null) {
         throw new IllegalArgumentException(//
             "A non-empty descriptionmust not normalize to null, buth the description '" //$NON-NLS-1$
-            + c + "' of " + this + //$NON-NLS-1$
-            " does."); //$NON-NLS-1$
+                + c + "' of " + this + //$NON-NLS-1$
+                " does."); //$NON-NLS-1$
       }
     } else {
       d = null;

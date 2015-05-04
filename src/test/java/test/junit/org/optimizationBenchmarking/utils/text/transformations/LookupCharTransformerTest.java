@@ -55,8 +55,8 @@ public class LookupCharTransformerTest extends CharTransformerTest {
     Assert.assertEquals(
         "blablabla", t.transform("J", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$//$NON-NLS-2$
     Assert
-    .assertEquals(
-        "this\\is\\a\\k", t.transform("K", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$//$NON-NLS-2$
+        .assertEquals(
+            "this\\is\\a\\k", t.transform("K", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$//$NON-NLS-2$
 
     Assert.assertEquals(
         "a", t.transform("a", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$//$NON-NLS-2$
@@ -79,8 +79,8 @@ public class LookupCharTransformerTest extends CharTransformerTest {
     Assert.assertEquals(
         "blablabla", t.transform("j", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$//$NON-NLS-2$
     Assert
-    .assertEquals(
-        "this\\is\\a\\k", t.transform("k", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$//$NON-NLS-2$
+        .assertEquals(
+            "this\\is\\a\\k", t.transform("k", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$//$NON-NLS-2$
   }
 
   /**
@@ -99,28 +99,28 @@ public class LookupCharTransformerTest extends CharTransformerTest {
             " ABCDEFGHIJKabcdefghijk", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$/
 
     Assert
-    .assertEquals(
-        "A A AAAAA AAAAAAAA CCAAAAACAAA", //$NON-NLS-1$/
-        t.transform(
-            "ABABAAAAABAAAAAAAABCCAAAAACAAA", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$/
+        .assertEquals(
+            "A A AAAAA AAAAAAAA CCAAAAACAAA", //$NON-NLS-1$/
+            t.transform(
+                "ABABAAAAABAAAAAAAABCCAAAAACAAA", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$/
 
     Assert
-    .assertEquals(
-        "A A AAAAA AAAAAAAA CCAAAAACAAAC", //$NON-NLS-1$/
-        t.transform(
-            "ABABAAAAABAAAAAAAABCCAAAAACAAAC", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$
+        .assertEquals(
+            "A A AAAAA AAAAAAAA CCAAAAACAAAC", //$NON-NLS-1$/
+            t.transform(
+                "ABABAAAAABAAAAAAAABCCAAAAACAAAC", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$
 
     Assert
-    .assertEquals(
-        "A A AAAAA AAAAAAAA CCAAAAACAAA ", //$NON-NLS-1$/
-        t.transform(
-            "ABABAAAAABAAAAAAAABCCAAAAACAAAB", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$/
+        .assertEquals(
+            "A A AAAAA AAAAAAAA CCAAAAACAAA ", //$NON-NLS-1$/
+            t.transform(
+                "ABABAAAAABAAAAAAAABCCAAAAACAAAB", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$/
 
     Assert
-    .assertEquals(
-        "a a aaaaa aaaaaaaa ccaaaaacaaa", //$NON-NLS-1$/
-        t.transform(
-            "abaBaaaaaBaaaaaaaabccaaaaacaaa", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$/
+        .assertEquals(
+            "a a aaaaa aaaaaaaa ccaaaaacaaa", //$NON-NLS-1$/
+            t.transform(
+                "abaBaaaaaBaaaaaaaabccaaaaacaaa", TextUtils.DEFAULT_NORMALIZER_FORM)); //$NON-NLS-1$/
   }
 
   // hyphenation is no deprecated

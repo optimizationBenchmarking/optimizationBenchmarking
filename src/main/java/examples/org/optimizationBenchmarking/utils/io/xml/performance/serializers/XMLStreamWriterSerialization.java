@@ -78,7 +78,7 @@ public class XMLStreamWriterSerialization extends SerializationMethod {
    */
   private static final void __writeElement(final XMLStreamWriter w,
       final ExampleElement e, final ExampleNamespace[] ns)
-          throws Exception {
+      throws Exception {
 
     w.writeStartElement(e.namespace.uriString, e.name);
     for (final ExampleNamespace n : ns) {

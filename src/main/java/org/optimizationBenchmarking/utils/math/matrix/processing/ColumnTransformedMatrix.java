@@ -44,10 +44,10 @@ public class ColumnTransformedMatrix extends AbstractMatrix {
     if (n != transformation.length) {
       throw new IllegalArgumentException(//
           "Number of transformation functions (" //$NON-NLS-1$
-          + transformation.length + //
-          ") must equal number of columns ("//$NON-NLS-1$
-          + n + //
-          ") but does not.");//$NON-NLS-1$
+              + transformation.length + //
+              ") must equal number of columns ("//$NON-NLS-1$
+              + n + //
+              ") but does not.");//$NON-NLS-1$
     }
 
     this.m_functions = transformation.clone();

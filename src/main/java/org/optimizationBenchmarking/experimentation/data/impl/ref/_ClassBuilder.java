@@ -38,7 +38,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * data elements on-the-fly.
  */
 final class _ClassBuilder implements Callable<Parser<DataPoint>>,
-Comparator<Dimension> {
+    Comparator<Dimension> {
 
   /** the counter */
   private static volatile long s_counter = 0L;
@@ -176,14 +176,14 @@ Comparator<Dimension> {
     int i;
 
     sb.append(//
-        "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
+    "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
     sb.append(" extends "); //$NON-NLS-1$
     sb.append(DataPoint.class.getCanonicalName());
     sb.append('{');
 
     sb.append(// serial version uid
-        "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
+    "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
 
     // declare fields: all private and final
     i = 0;
@@ -273,9 +273,9 @@ Comparator<Dimension> {
 
         sb.append("default: {"); //$NON-NLS-1$
         sb.append(//
-            "throw new IndexOutOfBoundsException(\"Index \" + index "); //$NON-NLS-1$
+        "throw new IndexOutOfBoundsException(\"Index \" + index "); //$NON-NLS-1$
         sb.append(//
-            " + \" is out of the value range 0..."); //$NON-NLS-1$
+        " + \" is out of the value range 0..."); //$NON-NLS-1$
         sb.append(this.m_primitiveTypes.length - 1);
         sb.append(".\"); } } }"); //$NON-NLS-1$
       }
@@ -285,7 +285,7 @@ Comparator<Dimension> {
     sb.append("@Override public final "); //$NON-NLS-1$
     sb.append(Number.class.getCanonicalName());
     sb.append(//
-        " get(final int index) { switch(index) {"); //$NON-NLS-1$
+    " get(final int index) { switch(index) {"); //$NON-NLS-1$
 
     i = 0;
     for (final EPrimitiveType type2 : this.m_primitiveTypes) {
@@ -300,9 +300,9 @@ Comparator<Dimension> {
 
     sb.append("default: {"); //$NON-NLS-1$
     sb.append(//
-        "throw new IndexOutOfBoundsException(\"Index \" + index "); //$NON-NLS-1$
+    "throw new IndexOutOfBoundsException(\"Index \" + index "); //$NON-NLS-1$
     sb.append(//
-        " + \" is out of the value range 0..."); //$NON-NLS-1$
+    " + \" is out of the value range 0..."); //$NON-NLS-1$
     sb.append(this.m_primitiveTypes.length - 1);
     sb.append(".\"); } } }"); //$NON-NLS-1$
   }
@@ -370,7 +370,7 @@ Comparator<Dimension> {
     int i, z;
 
     sb.append(//
-        "@Override public final int hashCode() { return "); //$NON-NLS-1$
+    "@Override public final int hashCode() { return "); //$NON-NLS-1$
 
     z = (this.m_primitiveTypes.length - 1);
     for (i = 0; i <= z; i++) {
@@ -405,10 +405,10 @@ Comparator<Dimension> {
     int i;
 
     sb.append(//
-        "@Override public final boolean equals(final Object o) { "); //$NON-NLS-1$
+    "@Override public final boolean equals(final Object o) { "); //$NON-NLS-1$
 
     sb.append(//
-        "if(o == this) { return true; } "); //$NON-NLS-1$
+    "if(o == this) { return true; } "); //$NON-NLS-1$
 
     sb.append("if(o instanceof "); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
@@ -522,7 +522,7 @@ Comparator<Dimension> {
     Arrays.sort(dims, this);
 
     sb.append(//
-        "@Override public final int compareTo(final "); //$NON-NLS-1$
+    "@Override public final int compareTo(final "); //$NON-NLS-1$
     sb.append(IDataPoint.class.getCanonicalName());
     sb.append(" o) {if(o == this) {return 0;} "); //$NON-NLS-1$
 
@@ -615,7 +615,7 @@ Comparator<Dimension> {
     EDimensionDirection dir;
 
     sb.append(//
-        "@Override public final void validateAfter(final "); //$NON-NLS-1$
+    "@Override public final void validateAfter(final "); //$NON-NLS-1$
     sb.append(DataPoint.class.getCanonicalName());
     sb.append(" before) {boolean later = false; String reason = null; final "); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
@@ -644,7 +644,7 @@ Comparator<Dimension> {
       }
 
       sb.append(//
-          " than the value of the same dimension in the previous data point, but \" + this.m"); //$NON-NLS-1$
+      " than the value of the same dimension in the previous data point, but \" + this.m"); //$NON-NLS-1$
       sb.append(d.getIndex());
       sb.append(" + \""); //$NON-NLS-1$
       sb.append(dir.isIncreasing() ? '<' : '>');
@@ -664,11 +664,11 @@ Comparator<Dimension> {
     }
 
     sb.append(//
-        " if(later) { return; } reason = \"The data points must differ in at least one dimension.\";}"); //$NON-NLS-1$
+    " if(later) { return; } reason = \"The data points must differ in at least one dimension.\";}"); //$NON-NLS-1$
     sb.append(//
-        "throw new IllegalStateException(\" Data point \" + "); //$NON-NLS-1$
+    "throw new IllegalStateException(\" Data point \" + "); //$NON-NLS-1$
     sb.append(//
-        "this.toString() + \" cannot follow the data point \" + "); //$NON-NLS-1$
+    "this.toString() + \" cannot follow the data point \" + "); //$NON-NLS-1$
     sb.append("c.toString() + \": \" + reason); }"); //$NON-NLS-1$
   }
 
@@ -683,7 +683,7 @@ Comparator<Dimension> {
 
     sb = new MemoryTextOutput();
     sb.append(//
-        "@Override public final int n() { return "); //$NON-NLS-1$
+    "@Override public final int n() { return "); //$NON-NLS-1$
     sb.append(this.m_parsers.length);
     sb.append(';');
     sb.append('}');
@@ -703,7 +703,7 @@ Comparator<Dimension> {
 
     if (floats.size() <= 0) {
       sb.append(//
-          "@Override public final boolean isIntegerMatrix() { return true; }"); //$NON-NLS-1$
+      "@Override public final boolean isIntegerMatrix() { return true; }"); //$NON-NLS-1$
       this.m_matrixChoice = Boolean.TRUE;
     } else {
       if (ints.size() <= 0) {
@@ -745,14 +745,14 @@ Comparator<Dimension> {
     for (final EPrimitiveType pt : new EPrimitiveType[] {
         EPrimitiveType.DOUBLE, EPrimitiveType.LONG }) {
       sb.append(//
-          "@Override public final "); //$NON-NLS-1$
+      "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
-          "if(row == 0) { switch(column) {"); //$NON-NLS-1$
+      "if(row == 0) { switch(column) {"); //$NON-NLS-1$
 
       for (i = 0; i < this.m_primitiveTypes.length; i++) {
         sb.append("case "); //$NON-NLS-1$
@@ -770,12 +770,12 @@ Comparator<Dimension> {
       }
 
       sb.append(//
-          "} } throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
+      "} } throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
       sb.append(//
-          "',') + column + \") is invalid, the valid index range is (0, 0.."); //$NON-NLS-1$
+      "',') + column + \") is invalid, the valid index range is (0, 0.."); //$NON-NLS-1$
       sb.append(this.m_primitiveTypes.length - 1);
       sb.append(").\"); }"); //$NON-NLS-1$
     }
@@ -791,7 +791,7 @@ Comparator<Dimension> {
     int i;
 
     sb.append(//
-        "@Override public final void aggregateColumn(final int column, final ");//$NON-NLS-1$
+    "@Override public final void aggregateColumn(final int column, final ");//$NON-NLS-1$
     sb.append(IAggregate.class.getCanonicalName());
     sb.append("  aggregate) {  switch(column) {"); //$NON-NLS-1$
     for (i = 0; i < this.m_primitiveTypes.length; i++) {
@@ -802,12 +802,12 @@ Comparator<Dimension> {
       sb.append("); return; }"); //$NON-NLS-1$
     }
     sb.append(//
-        "} throw new IndexOutOfBoundsException((\"Matrix access aggregateColumn(\" + column) + \") is invalid, the valid index range is 0.."); //$NON-NLS-1$
+    "} throw new IndexOutOfBoundsException((\"Matrix access aggregateColumn(\" + column) + \") is invalid, the valid index range is 0.."); //$NON-NLS-1$
     sb.append(this.m_primitiveTypes.length - 1);
     sb.append(".\"); }"); //$NON-NLS-1$
 
     sb.append(//
-        "@Override public final void aggregateRow(final int row, final ");//$NON-NLS-1$
+    "@Override public final void aggregateRow(final int row, final ");//$NON-NLS-1$
     sb.append(IAggregate.class.getCanonicalName());
     sb.append("  aggregate) {  if(row == 0) {"); //$NON-NLS-1$
     for (i = 0; i < this.m_primitiveTypes.length; i++) {
@@ -816,7 +816,7 @@ Comparator<Dimension> {
       sb.append(");"); //$NON-NLS-1$
     }
     sb.append(//
-        " } else { throw new IndexOutOfBoundsException((\"Matrix access aggregateRow(\" + row) + \") is invalid, only 0 is a valid index.\");} }"); //$NON-NLS-1$
+    " } else { throw new IndexOutOfBoundsException((\"Matrix access aggregateRow(\" + row) + \") is invalid, only 0 is a valid index.\");} }"); //$NON-NLS-1$
   }
 
   /**
@@ -971,7 +971,7 @@ Comparator<Dimension> {
     int i;
 
     sb.append(//
-        "@Override public final boolean visit(final "); //$NON-NLS-1$
+    "@Override public final boolean visit(final "); //$NON-NLS-1$
     sb.append(IVisitor.class.getCanonicalName());
     sb.append("<? super "); //$NON-NLS-1$
     sb.append(Number.class.getCanonicalName());
@@ -1010,7 +1010,7 @@ Comparator<Dimension> {
     int i;
 
     sb.append(//
-        "@Override public final boolean hasAny(final "); //$NON-NLS-1$
+    "@Override public final boolean hasAny(final "); //$NON-NLS-1$
     sb.append(IPredicate.class.getCanonicalName());
     sb.append("<? super "); //$NON-NLS-1$
     sb.append(Number.class.getCanonicalName());
@@ -1143,14 +1143,14 @@ Comparator<Dimension> {
     int i;
 
     sb.append(//
-        "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) public final class "); //$NON-NLS-1$
+    "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) public final class "); //$NON-NLS-1$
     sb.append(this.m_factoryClass);
     sb.append(" extends "); //$NON-NLS-1$
     sb.append(DataFactory.class.getCanonicalName());
     sb.append('{');
 
     sb.append(// serial version uid
-        "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
+    "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
 
     // declare fields: all private and final
     i = 0;
@@ -1380,7 +1380,7 @@ Comparator<Dimension> {
    */
   private final void __factoryCreateRun(final MemoryTextOutput sb) {
     sb.append(//
-        "@Override public final "); //$NON-NLS-1$
+    "@Override public final "); //$NON-NLS-1$
     sb.append(Run.class.getCanonicalName());
     sb.append(" createRun(final "); //$NON-NLS-1$
     sb.append(Instance.class.getCanonicalName());
@@ -1395,7 +1395,7 @@ Comparator<Dimension> {
     sb.append("[points.size()]); for("); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
     sb.append(//
-        " next : data) { instance.validateDataPoint(next); } return new "); //$NON-NLS-1$
+    " next : data) { instance.validateDataPoint(next); } return new "); //$NON-NLS-1$
     sb.append(this.m_runClass);
     sb.append("(data); }"); //$NON-NLS-1$
   }
@@ -1436,14 +1436,14 @@ Comparator<Dimension> {
   private final void __runClassHead(final MemoryTextOutput sb) {
 
     sb.append(//
-        "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
+    "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
     sb.append(this.m_runClass);
     sb.append(" extends "); //$NON-NLS-1$
     sb.append(Run.class.getCanonicalName());
     sb.append('{');
 
     sb.append(// serial version uid
-        "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
+    "private static final long serialVersionUID = 1L;"); //$NON-NLS-1$
 
     sb.append("final "); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
@@ -1474,19 +1474,19 @@ Comparator<Dimension> {
     String s;
 
     sb.append(//
-        "@Override public final int m() { return this.points.length; }"); //$NON-NLS-1$
+    "@Override public final int m() { return this.points.length; }"); //$NON-NLS-1$
 
     for (final EPrimitiveType pt : new EPrimitiveType[] {
         EPrimitiveType.DOUBLE, EPrimitiveType.LONG }) {
       sb.append(//
-          "@Override public final "); //$NON-NLS-1$
+      "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
-          " switch(column) {"); //$NON-NLS-1$
+      " switch(column) {"); //$NON-NLS-1$
 
       for (i = 0; i < this.m_primitiveTypes.length; i++) {
         sb.append("case "); //$NON-NLS-1$
@@ -1504,14 +1504,14 @@ Comparator<Dimension> {
       }
 
       sb.append(//
-          "} throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
+      "} throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
       sb.append(//
-          "',') + column + \") is invalid, the valid index range is (0..\" + "); //$NON-NLS-1$
+      "',') + column + \") is invalid, the valid index range is (0..\" + "); //$NON-NLS-1$
       sb.append(//
-          "(this.points.length-1) + \", 0.."); //$NON-NLS-1$
+      "(this.points.length-1) + \", 0.."); //$NON-NLS-1$
       sb.append(this.m_primitiveTypes.length - 1);
       sb.append(").\"); }"); //$NON-NLS-1$
     }
@@ -1526,10 +1526,10 @@ Comparator<Dimension> {
   private final void __runIMatrixSelect(final MemoryTextOutput sb) {
 
     sb.append(//
-        "@Override public final "); //$NON-NLS-1$
+    "@Override public final "); //$NON-NLS-1$
     sb.append(IMatrix.class.getCanonicalName());
     sb.append(//
-        " selectColumns(final int... cols) {"); //$NON-NLS-1$
+    " selectColumns(final int... cols) {"); //$NON-NLS-1$
     sb.append("int i;"); //$NON-NLS-1$
     sb.append("checker: {"); //$NON-NLS-1$
     sb.append("i = 0;"); //$NON-NLS-1$
@@ -1547,10 +1547,10 @@ Comparator<Dimension> {
     sb.append("(this, cols);}"); //$NON-NLS-1$
 
     sb.append(//
-        "@Override public final "); //$NON-NLS-1$
+    "@Override public final "); //$NON-NLS-1$
     sb.append(IMatrix.class.getCanonicalName());
     sb.append(//
-        " selectRows(final int... rows) { if(rows.length<=0) { return this.points[rows[0]]; } return super.selectRows(rows); }"); //$NON-NLS-1$
+    " selectRows(final int... rows) { if(rows.length<=0) { return this.points[rows[0]]; } return super.selectRows(rows); }"); //$NON-NLS-1$
   }
 
   /**
@@ -1563,7 +1563,7 @@ Comparator<Dimension> {
     int i;
 
     sb.append(//
-        "@Override public final void aggregateColumn(final int column, final ");//$NON-NLS-1$
+    "@Override public final void aggregateColumn(final int column, final ");//$NON-NLS-1$
     sb.append(IAggregate.class.getCanonicalName());
     sb.append("  aggregate) {  switch(column) {"); //$NON-NLS-1$
     for (i = 0; i < this.m_primitiveTypes.length; i++) {
@@ -1577,12 +1577,12 @@ Comparator<Dimension> {
       sb.append("); } return; }"); //$NON-NLS-1$
     }
     sb.append(//
-        "} throw new IndexOutOfBoundsException((\"Matrix access aggregateColumn(\" + column) + \") is invalid, the valid index range is 0.."); //$NON-NLS-1$
+    "} throw new IndexOutOfBoundsException((\"Matrix access aggregateColumn(\" + column) + \") is invalid, the valid index range is 0.."); //$NON-NLS-1$
     sb.append(this.m_primitiveTypes.length - 1);
     sb.append(".\"); }"); //$NON-NLS-1$
 
     sb.append(//
-        "@Override public final void aggregateRow(final int row, final ");//$NON-NLS-1$
+    "@Override public final void aggregateRow(final int row, final ");//$NON-NLS-1$
     sb.append(IAggregate.class.getCanonicalName());
     sb.append("  aggregate) {  final "); //$NON-NLS-1$
     sb.append(this.m_dataPointClass);
@@ -1653,7 +1653,7 @@ Comparator<Dimension> {
       sb.append(";int low, sh, high, mid"); //$NON-NLS-1$
       if (!(dir.isStrict())) {
         sb.append(//
-            ", i"); //$NON-NLS-1$
+        ", i"); //$NON-NLS-1$
       }
 
       sb.append("; low = 0;"); //$NON-NLS-1$
@@ -1742,12 +1742,12 @@ Comparator<Dimension> {
       sb.append("}"); //$NON-NLS-1$
 
       sb.append(//
-          " throw new IndexOutOfBoundsException(\"Column \" + "); //$NON-NLS-1$
+      " throw new IndexOutOfBoundsException(\"Column \" + "); //$NON-NLS-1$
       sb.append(//
-          "column + \" is invalid, valid indexes are in 0.."); //$NON-NLS-1$
+      "column + \" is invalid, valid indexes are in 0.."); //$NON-NLS-1$
       sb.append(this.m_parsers.length - 1);
       sb.append(//
-          ".\");"); //$NON-NLS-1$
+      ".\");"); //$NON-NLS-1$
       sb.append("}"); //$NON-NLS-1$
     }
 
@@ -1789,14 +1789,14 @@ Comparator<Dimension> {
     for (final EPrimitiveType pt : new EPrimitiveType[] {
         EPrimitiveType.DOUBLE, EPrimitiveType.LONG }) {
       sb.append(//
-          "@Override public final "); //$NON-NLS-1$
+      "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
-          " switch(this.m_cols[column]) {"); //$NON-NLS-1$
+      " switch(this.m_cols[column]) {"); //$NON-NLS-1$
 
       for (i = 0; i < this.m_primitiveTypes.length; i++) {
         sb.append("case "); //$NON-NLS-1$
@@ -1814,21 +1814,21 @@ Comparator<Dimension> {
       }
 
       sb.append(//
-          "} throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
+      "} throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
 
       sb.append(//
-          "',') + column + \") is invalid, the valid index range is (0..\" + "); //$NON-NLS-1$
+      "',') + column + \") is invalid, the valid index range is (0..\" + "); //$NON-NLS-1$
       sb.append(//
-          "(this.points.length-1) + \", 0.."); //$NON-NLS-1$
+      "(this.points.length-1) + \", 0.."); //$NON-NLS-1$
       sb.append(this.m_primitiveTypes.length - 1);
       sb.append(").\"); }"); //$NON-NLS-1$
     }
 
     sb.append(//
-        "@Override public final "); //$NON-NLS-1$
+    "@Override public final "); //$NON-NLS-1$
     sb.append(this.m_runColumnsClass);
     sb.append(" copy() { return this; }"); //$NON-NLS-1$
   }
@@ -1846,7 +1846,7 @@ Comparator<Dimension> {
     sb.append('<');
     sb.append(IMatrix.class.getCanonicalName());
     sb.append(//
-        "> iterateRows() { if (this.points.length <= 1) { return new "); //$NON-NLS-1$"
+    "> iterateRows() { if (this.points.length <= 1) { return new "); //$NON-NLS-1$"
     sb.append(InstanceIterator.class.getCanonicalName());
     sb.append('<');
     sb.append(IMatrix.class.getCanonicalName());
@@ -1868,7 +1868,7 @@ Comparator<Dimension> {
   private final void __runColumnsClassHead(final MemoryTextOutput sb) {
 
     sb.append(//
-        "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
+    "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
     sb.append(this.m_runColumnsClass);
     sb.append(" extends "); //$NON-NLS-1$
     sb.append(MatrixColumns.class.getCanonicalName());
@@ -1900,7 +1900,7 @@ Comparator<Dimension> {
     sb.append("(final "); //$NON-NLS-1$
     sb.append(this.m_runClass);
     sb.append(//
-        " owner, final int[] cols) { super(owner, cols); this.points = owner.points; "); //$NON-NLS-1$
+    " owner, final int[] cols) { super(owner, cols); this.points = owner.points; "); //$NON-NLS-1$
 
     if (!(this.m_matrixChoice instanceof Boolean)) {
       sb.append("checkIsFloat:{checkIsInt: { for(int i: cols) {if "); //$NON-NLS-1$
@@ -1908,7 +1908,7 @@ Comparator<Dimension> {
       s = ((String) (this.m_matrixChoice)).replace('@', 'i');
       sb.append(s);
       sb.append(//
-          " {continue; } break checkIsInt; } this.isInt=true;break checkIsFloat; } this.isInt=false;}"); //$NON-NLS-1$
+      " {continue; } break checkIsInt; } this.isInt=true;break checkIsFloat; } this.isInt=false;}"); //$NON-NLS-1$
     }
 
     sb.append('}');
@@ -1956,7 +1956,7 @@ Comparator<Dimension> {
       final MemoryTextOutput sb) {
 
     sb.append(//
-        "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
+    "@SuppressWarnings({\"unchecked\", \"rawtypes\", \"nls\", \"javadoc\"}) final class "); //$NON-NLS-1$
     sb.append(this.m_runColumnsRowIteratorClass);
     sb.append(" extends "); //$NON-NLS-1$
     sb.append(MatrixRowIterator.class.getCanonicalName());
@@ -1996,7 +1996,7 @@ Comparator<Dimension> {
     }
 
     sb.append(//
-        ") { super(owner); this.points = owner.points; "); //$NON-NLS-1$
+    ") { super(owner); this.points = owner.points; "); //$NON-NLS-1$
 
     if (!(this.m_matrixChoice instanceof Boolean)) {
       sb.append("this.isInt = isi;"); //$NON-NLS-1$
@@ -2031,14 +2031,14 @@ Comparator<Dimension> {
     for (final EPrimitiveType pt : new EPrimitiveType[] {
         EPrimitiveType.DOUBLE, EPrimitiveType.LONG }) {
       sb.append(//
-          "@Override public final "); //$NON-NLS-1$
+      "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
-          "if(row == 0) { switch(this.cols[column]) {"); //$NON-NLS-1$
+      "if(row == 0) { switch(this.cols[column]) {"); //$NON-NLS-1$
 
       for (i = 0; i < this.m_primitiveTypes.length; i++) {
         sb.append("case "); //$NON-NLS-1$
@@ -2056,15 +2056,15 @@ Comparator<Dimension> {
       }
 
       sb.append(//
-          "} } throw new IndexOutOfBoundsException((((\"Matrix access get"); //$NON-NLS-1$
+      "} } throw new IndexOutOfBoundsException((((\"Matrix access get"); //$NON-NLS-1$
       sb.append(Character.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
 
       sb.append(//
-          "',') + column + \") is invalid, the valid index range is (0, 0..\""); //$NON-NLS-1$
+      "',') + column + \") is invalid, the valid index range is (0, 0..\""); //$NON-NLS-1$
       sb.append(//
-          " + (this.cols.length - 1)) + ')'); }"); //$NON-NLS-1$
+      " + (this.cols.length - 1)) + ')'); }"); //$NON-NLS-1$
     }
   }
 

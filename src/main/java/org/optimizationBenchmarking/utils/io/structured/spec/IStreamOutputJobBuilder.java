@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  *          the data type which can be stored
  */
 public interface IStreamOutputJobBuilder<D> extends
-IFileOutputJobBuilder<D> {
+    IFileOutputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override

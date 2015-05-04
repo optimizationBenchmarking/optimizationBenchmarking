@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  * A builder for external processes.
  */
 public final class ExternalProcessBuilder extends
-ToolJobBuilder<ExternalProcess, ExternalProcessBuilder> {
+    ToolJobBuilder<ExternalProcess, ExternalProcessBuilder> {
 
   /** an atomic process counter */
   private static final AtomicLong PROC_ID = new AtomicLong();
@@ -314,14 +314,14 @@ ToolJobBuilder<ExternalProcess, ExternalProcessBuilder> {
       if (this.m_stderr != this.m_stdout) {
         throw new IllegalStateException(//
             "If you merge stdout and stderr, they cannot have different stream modes, but stdout has " + //$NON-NLS-1$
-            this.m_stdout + " and stderr has " //$NON-NLS-1$
-            + this.m_stderr);
+                this.m_stdout + " and stderr has " //$NON-NLS-1$
+                + this.m_stderr);
       }
       if (!(EComparison.equals(err, out))) {
         throw new IllegalStateException(//
             "If you merge stdout and stderr, they cannot have different redirects, but stdout has " + //$NON-NLS-1$
-            this.m_pb.redirectOutput() + " and stderr has " //$NON-NLS-1$
-            + this.m_pb.redirectError());
+                this.m_pb.redirectOutput() + " and stderr has " //$NON-NLS-1$
+                + this.m_pb.redirectError());
       }
     } else {
       if ((((t1 = out.type()) == Redirect.Type.APPEND) || (t1 == Redirect.Type.WRITE))
@@ -329,9 +329,9 @@ ToolJobBuilder<ExternalProcess, ExternalProcessBuilder> {
           && EComparison.equals((f = out.file()), err.file())) {
         throw new IllegalStateException(//
             "If you do not merge stdout and stderr, they cannot be redirected to the same file " + //$NON-NLS-1$
-            t1 + " and stderr has " //$NON-NLS-1$
-            + t2 + " and both redirect to '" + //$NON-NLS-1$
-            f + '\'');
+                t1 + " and stderr has " //$NON-NLS-1$
+                + t2 + " and both redirect to '" + //$NON-NLS-1$
+                f + '\'');
       }
     }
   }

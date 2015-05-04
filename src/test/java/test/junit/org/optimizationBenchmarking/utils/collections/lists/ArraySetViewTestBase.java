@@ -17,7 +17,7 @@ import test.junit.InstanceTest;
  */
 @Ignore
 public class ArraySetViewTestBase<ET, T extends ArraySetView<ET>> extends
-ArrayListViewTestBase<ET, T> {
+    ArrayListViewTestBase<ET, T> {
 
   /** create */
   public ArraySetViewTestBase() {

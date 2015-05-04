@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
  * A table cell
  */
 public class TableCell extends ComplexText implements
-Iterable<ETableCellDef> {
+    Iterable<ETableCellDef> {
 
   /** the start column (inclusive) */
   private final int m_startCol;
@@ -81,8 +81,8 @@ Iterable<ETableCellDef> {
       }
       throw new IllegalArgumentException(//
           "Start column " + sc + //$NON-NLS-1$
-          " of cell is outside table definition which specifies only " //$NON-NLS-1$
-          + blocked.length + " columns.");//$NON-NLS-1$
+              " of cell is outside table definition which specifies only " //$NON-NLS-1$
+              + blocked.length + " columns.");//$NON-NLS-1$
     }
 
     ec = end = (sc + cols);
@@ -110,7 +110,7 @@ Iterable<ETableCellDef> {
       if ((cellDefCnt = Table._checkDef(def)) > 1) {
         throw new IllegalArgumentException(//
             "Only single regular cells are permitted, but "//$NON-NLS-1$
-            + def + " contains " + cellDefCnt); //$NON-NLS-1$
+                + def + " contains " + cellDefCnt); //$NON-NLS-1$
       }
       this.m_def = def;
       this.m_ofs = 0;

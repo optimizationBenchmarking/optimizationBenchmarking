@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  *          the element type
  */
 public class BasicCollection<ET> extends BasicCompound<ET> implements
-Collection<ET> {
+    Collection<ET> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

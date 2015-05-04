@@ -8,7 +8,7 @@ final class _LaTeXTableHeader extends TableHeader {
 
   /** begin the tabular */
   private static final char[] TABULAR_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-    'n', '{', 't', 'a', 'b', 'u', 'l', 'a', 'r', '}', '{' };
+      'n', '{', 't', 'a', 'b', 'u', 'l', 'a', 'r', '}', '{' };
 
   /**
    * Create a header of a table

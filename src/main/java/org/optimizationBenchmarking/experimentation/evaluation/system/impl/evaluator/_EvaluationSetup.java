@@ -171,15 +171,15 @@ class _EvaluationSetup {
 
         hasModule: {
           checkNoModule: {
-          for (final ArrayList<_ModuleEntry> module : this.m_modules) {
-            if (!(module.isEmpty())) {
-              break checkNoModule;
+            for (final ArrayList<_ModuleEntry> module : this.m_modules) {
+              if (!(module.isEmpty())) {
+                break checkNoModule;
+              }
             }
+            break hasModule;
           }
-          break hasModule;
-        }
-        throw new IllegalStateException(//
-            "Cannot set baseline configuration after adding modules.");//$NON-NLS-1$
+          throw new IllegalStateException(//
+              "Cannot set baseline configuration after adding modules.");//$NON-NLS-1$
         }
 
         this.m_baseConfiguration = config;

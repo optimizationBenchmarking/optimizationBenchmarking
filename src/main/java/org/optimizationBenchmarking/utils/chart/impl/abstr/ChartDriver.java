@@ -399,7 +399,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
         Math.min(thickWidth,//
             ((float) (0.01d * Math.round(100d * //
                 ((0.65d * defaultWidth) + //
-                    (0.35d * thickWidth)))))));
+                (0.35d * thickWidth)))))));
 
     return new BasicStroke(goalWidth, defaultStroke.getEndCap(),
         defaultStroke.getLineJoin(), defaultStroke.getMiterLimit());
@@ -589,7 +589,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
       if (o instanceof __FontKey) {
         fk = ((__FontKey) o);
         return ((fk.m_hash == this.m_hash) && //
-            (this.m_fontName.equals(fk.m_fontName)));
+        (this.m_fontName.equals(fk.m_fontName)));
       }
 
       return false;

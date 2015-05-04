@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
  * computations to that dimension.
  */
 public class ShadowDimension extends
-_ShadowNamedElement<IDimensionSet, IDimension> implements IDimension {
+    _ShadowNamedElement<IDimensionSet, IDimension> implements IDimension {
 
   /**
    * create the shadow dimension

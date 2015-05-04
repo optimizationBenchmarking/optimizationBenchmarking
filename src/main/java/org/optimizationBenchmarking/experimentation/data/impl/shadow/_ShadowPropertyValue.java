@@ -18,8 +18,8 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  *          the shadow type
  */
 class _ShadowPropertyValue<OT extends IProperty, ST extends IPropertyValue>
-extends _ShadowNamedElement<OT, ST> implements IPropertyValue,
-Map.Entry<IProperty, Object> {
+    extends _ShadowNamedElement<OT, ST> implements IPropertyValue,
+    Map.Entry<IProperty, Object> {
 
   /**
    * create the shadow property value

@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
  *          the element type
  */
 public abstract class PaletteElementBuilder<ET extends IStyle> extends
-BuilderFSM<ET> {
+    BuilderFSM<ET> {
 
   /**
    * Create the palette element builder

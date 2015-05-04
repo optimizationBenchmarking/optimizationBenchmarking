@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link #getType() type text}.
  */
 public class ReferenceRun extends ArrayListView<Label> implements
-ISequenceable {
+    ISequenceable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

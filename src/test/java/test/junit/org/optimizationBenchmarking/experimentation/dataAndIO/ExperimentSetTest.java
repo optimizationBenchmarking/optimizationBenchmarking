@@ -266,12 +266,12 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
                 if (x.getDouble(index) != dp.getDouble(dim.getIndex())) {
                   Assert.fail(//
                       "Direct search for floating point value " + //$NON-NLS-1$
-                      x.getDouble(index) + //
-                      " for dimension " + dim + //$NON-NLS-1$
-                      " at index " + index + //$NON-NLS-1$
-                      " returned data point " + dp + //$NON-NLS-1$
-                      " instead of the expected " //$NON-NLS-1$
-                      + x);
+                          x.getDouble(index) + //
+                          " for dimension " + dim + //$NON-NLS-1$
+                          " at index " + index + //$NON-NLS-1$
+                          " returned data point " + dp + //$NON-NLS-1$
+                          " instead of the expected " //$NON-NLS-1$
+                          + x);
 
                 }
               } else {
@@ -279,12 +279,12 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
                 if (x.getLong(index) != dp.getLong(index)) {
                   Assert.fail(//
                       "Direct search for long value " + //$NON-NLS-1$
-                      x.getLong(index) + //
-                      " for dimension " + dim + //$NON-NLS-1$
-                      " at index " + index + //$NON-NLS-1$
-                      " returned data point " + dp + //$NON-NLS-1$
-                      " instead of the expected " //$NON-NLS-1$
-                      + x);
+                          x.getLong(index) + //
+                          " for dimension " + dim + //$NON-NLS-1$
+                          " at index " + index + //$NON-NLS-1$
+                          " returned data point " + dp + //$NON-NLS-1$
+                          " instead of the expected " //$NON-NLS-1$
+                          + x);
                 }
               }
 
@@ -626,29 +626,29 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
 
     } else {
       checkString: {
-      if (a instanceof String) {
-        s1 = ((String) a);
-      } else {
-        if (a instanceof Character) {
-          s1 = a.toString();
+        if (a instanceof String) {
+          s1 = ((String) a);
         } else {
-          break checkString;
+          if (a instanceof Character) {
+            s1 = a.toString();
+          } else {
+            break checkString;
+          }
         }
-      }
 
-      if (b instanceof String) {
-        s2 = ((String) b);
-      } else {
-        if (b instanceof Character) {
-          s2 = b.toString();
+        if (b instanceof String) {
+          s2 = ((String) b);
         } else {
-          break checkString;
+          if (b instanceof Character) {
+            s2 = b.toString();
+          } else {
+            break checkString;
+          }
         }
-      }
 
-      Assert.assertEquals(s1, s2);
-      return;
-    }
+        Assert.assertEquals(s1, s2);
+        return;
+      }
     }
 
     Assert.assertEquals(a, b);
@@ -700,7 +700,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
       iae = ia.get(si);
       ibe = ib.get(si);
       ExperimentSetTest
-      ._assertEquals(iae.getInstance(), ibe.getInstance());
+          ._assertEquals(iae.getInstance(), ibe.getInstance());
       ra = iae.getData();
       rb = ibe.getData();
       sr = ra.size();

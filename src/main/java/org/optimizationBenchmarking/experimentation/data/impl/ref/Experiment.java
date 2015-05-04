@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** The experiment. */
 public final class Experiment extends _IDObjectSet<InstanceRuns> implements
-IExperiment {
+    IExperiment {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -58,7 +58,7 @@ IExperiment {
     if (n == null) {
       throw new IllegalArgumentException(//
           "Experiments must have a non-empty name, but name '" + //$NON-NLS-1$
-          name + "' was provided."); //$NON-NLS-1$
+              name + "' was provided."); //$NON-NLS-1$
 
     }
     this.m_name = n;
@@ -86,9 +86,9 @@ IExperiment {
     if (before.m_inst.equals(after.m_inst)) {
       throw new IllegalArgumentException(
           (((((("An experiment cannot contain more than one run set for a given instance, but run set '" //$NON-NLS-1$
-              + before) + "' and '") + //$NON-NLS-1$
-              after) + "' are both for instance '") + //$NON-NLS-1$
-              before.m_inst) + '\'') + '.');
+          + before) + "' and '") + //$NON-NLS-1$
+          after) + "' are both for instance '") + //$NON-NLS-1$
+          before.m_inst) + '\'') + '.');
     }
   }
 

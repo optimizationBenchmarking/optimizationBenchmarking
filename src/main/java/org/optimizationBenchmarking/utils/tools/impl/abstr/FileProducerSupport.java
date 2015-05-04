@@ -71,7 +71,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * </p>
  */
 public final class FileProducerSupport extends _FileSet implements
-Closeable {
+    Closeable {
 
   /**
    * the map of files if more than one was produced (otherwise,

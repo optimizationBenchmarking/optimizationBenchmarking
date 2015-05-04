@@ -66,7 +66,7 @@ public final class LaTeXDefaultFontPalette extends FontPalette {
 
   /** the default LaTeX font palette builder */
   private static final class __LaTeXDefaultFontPaletteBuilder extends
-  FontPaletteBuilder {
+      FontPaletteBuilder {
     /** the efault LaTeX font palette builder */
     __LaTeXDefaultFontPaletteBuilder() {
       super();
@@ -100,22 +100,22 @@ public final class LaTeXDefaultFontPalette extends FontPalette {
       logger = Configuration.getGlobalLogger();
       try (final __LaTeXDefaultFontPaletteBuilder cspb = new __LaTeXDefaultFontPaletteBuilder()) {
         FontPaletteXMLInput
-        .getInstance()
-        .use()
-        .setLogger(Configuration.getGlobalLogger())
-        .setDestination(cspb)
-        .addResource(LaTeXDefaultFontPalette.class,
-            "latex.fontPalette").create().call(); //$NON-NLS-1$
+            .getInstance()
+            .use()
+            .setLogger(Configuration.getGlobalLogger())
+            .setDestination(cspb)
+            .addResource(LaTeXDefaultFontPalette.class,
+                "latex.fontPalette").create().call(); //$NON-NLS-1$
         pal = cspb.getResult();
       } catch (final Throwable t) {
         error = t;
         pal = null;
         try {
           ErrorUtils
-          .logError(
-              logger, //
-              "Error while loading the default font palette for the LaTeX Document Driver. This will creating LaTeX documents using this palette impossible.",//$NON-NLS-1$ error, true);
-              error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+              .logError(
+                  logger, //
+                  "Error while loading the default font palette for the LaTeX Document Driver. This will creating LaTeX documents using this palette impossible.",//$NON-NLS-1$ error, true);
+                  error, true, RethrowMode.AS_RUNTIME_EXCEPTION);
         } catch (final Throwable a) {
           error = a;
         }

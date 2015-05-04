@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  *          the writer type
  */
 class _WriterWrappedTextOutputBase<W extends Writer> extends
-_AppendableWrappedTextOutputBase<W> {
+    _AppendableWrappedTextOutputBase<W> {
 
   /**
    * Create a wrapped text output

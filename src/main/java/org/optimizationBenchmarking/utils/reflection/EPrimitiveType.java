@@ -26,33 +26,33 @@ public enum EPrimitiveType {
   BOOLEAN(boolean.class, Boolean.class, 1,
       StrictBooleanParser.STRICT_INSTANCE, BooleanParser.INSTANCE),
 
-      /** the boolean type class */
-      CHAR(char.class, Character.class, 2, StrictCharParser.STRICT_INSTANCE,
-          CharParser.INSTANCE),
+  /** the boolean type class */
+  CHAR(char.class, Character.class, 2, StrictCharParser.STRICT_INSTANCE,
+      CharParser.INSTANCE),
 
-          /** the byte type class */
-          BYTE(byte.class, Byte.class, 4, StrictByteParser.STRICT_INSTANCE,
-              ByteParser.INSTANCE),
+  /** the byte type class */
+  BYTE(byte.class, Byte.class, 4, StrictByteParser.STRICT_INSTANCE,
+      ByteParser.INSTANCE),
 
-              /** the short type class */
-              SHORT(short.class, Short.class, 4, StrictShortParser.STRICT_INSTANCE,
-                  ShortParser.INSTANCE),
+  /** the short type class */
+  SHORT(short.class, Short.class, 4, StrictShortParser.STRICT_INSTANCE,
+      ShortParser.INSTANCE),
 
-                  /** the int type class */
-                  INT(int.class, Integer.class, 4, StrictIntParser.STRICT_INSTANCE,
-                      IntParser.INSTANCE),
+  /** the int type class */
+  INT(int.class, Integer.class, 4, StrictIntParser.STRICT_INSTANCE,
+      IntParser.INSTANCE),
 
-                      /** the long type class */
-                      LONG(long.class, Long.class, 4, StrictLongParser.STRICT_INSTANCE,
-                          LongParser.INSTANCE),
+  /** the long type class */
+  LONG(long.class, Long.class, 4, StrictLongParser.STRICT_INSTANCE,
+      LongParser.INSTANCE),
 
-                          /** the float type class */
-                          FLOAT(float.class, Float.class, 8, StrictFloatParser.STRICT_INSTANCE,
-                              FloatParser.INSTANCE),
+  /** the float type class */
+  FLOAT(float.class, Float.class, 8, StrictFloatParser.STRICT_INSTANCE,
+      FloatParser.INSTANCE),
 
-                              /** the double type class */
-                              DOUBLE(double.class, Double.class, 8,
-                                  StrictDoubleParser.STRICT_INSTANCE, DoubleParser.INSTANCE), ;
+  /** the double type class */
+  DOUBLE(double.class, Double.class, 8,
+      StrictDoubleParser.STRICT_INSTANCE, DoubleParser.INSTANCE), ;
 
   /** the type */
   private static final EPrimitiveType[] _TYPES = EPrimitiveType.values();

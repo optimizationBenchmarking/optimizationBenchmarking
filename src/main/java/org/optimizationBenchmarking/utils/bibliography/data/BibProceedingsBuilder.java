@@ -125,7 +125,7 @@ public final class BibProceedingsBuilder extends BibBookRecordBuilder {
     if ((this.m_location = this.normalize(location)) == null) {
       throw new IllegalArgumentException(//
           "Location cannot be empty or null, but '" //$NON-NLS-1$
-          + location + "' is."); //$NON-NLS-1$
+              + location + "' is."); //$NON-NLS-1$
     }
   }
 

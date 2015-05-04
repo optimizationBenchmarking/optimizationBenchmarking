@@ -6,10 +6,10 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeader;
 final class _XHTML10TableHeader extends TableHeader {
   /** the start of the table head */
   private static final char[] TAB_HEAD_BEGIN = { '<', 't', 'h', 'e', 'a',
-    'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', '"', '>' };
+      'd', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', '"', '>' };
   /** the end of the table head */
   private static final char[] TAB_HEAD_END = { '<', '/', 't', 'h', 'e',
-    'a', 'd', '>' };
+      'a', 'd', '>' };
 
   /**
    * Create a header of a table

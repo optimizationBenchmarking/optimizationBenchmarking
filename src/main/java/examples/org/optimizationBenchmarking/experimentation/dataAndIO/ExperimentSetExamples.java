@@ -11,13 +11,13 @@ public final class ExperimentSetExamples {
   public static final ArrayListView<Class<? extends ExperimentSetCreator>> EXAMPLES = //
   new ArrayListView(new Class[] {//
       Example1.class,//
-      Example2Random.class,//
-      BBOBExample.class,//
-      CSVEDIExample.class,//
-      TSPSuiteExample.class,//
-      RandomBBOBParallelExample.class,//
-      RandomTSPSuiteParallelExample.class,//
-      RandomParallelExample.class });
+          Example2Random.class,//
+          BBOBExample.class,//
+          CSVEDIExample.class,//
+          TSPSuiteExample.class,//
+          RandomBBOBParallelExample.class,//
+          RandomTSPSuiteParallelExample.class,//
+          RandomParallelExample.class });
 
   /** the forbidden constructor */
   private ExperimentSetExamples() {

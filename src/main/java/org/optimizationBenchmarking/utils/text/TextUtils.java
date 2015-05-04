@@ -72,7 +72,7 @@ public final class TextUtils {
 
     try {
       try (java.io.ByteArrayOutputStream baos = //
-          new java.io.ByteArrayOutputStream(2)) {
+      new java.io.ByteArrayOutputStream(2)) {
         try (java.io.PrintStream ps = new java.io.PrintStream(baos)) {
           ps.println();
           ps.flush();

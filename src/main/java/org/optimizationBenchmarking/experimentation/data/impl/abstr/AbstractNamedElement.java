@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * interface.
  */
 public class AbstractNamedElement extends DataElement implements
-INamedElement {
+    INamedElement {
 
   /** Create the abstract named element. */
   protected AbstractNamedElement() {

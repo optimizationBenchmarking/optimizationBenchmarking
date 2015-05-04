@@ -60,8 +60,8 @@ public class StrictCharParser extends Parser<Character> {
     if (string.length() != 1) {
       throw new IllegalArgumentException(//
           "String '" + string + //$NON-NLS-1$
-          "' must have length 1 to be interpreted as char, but has length " //$NON-NLS-1$
-          + string.length());
+              "' must have length 1 to be interpreted as char, but has length " //$NON-NLS-1$
+              + string.length());
     }
     b = string.charAt(0);
     this.validateChar(b);

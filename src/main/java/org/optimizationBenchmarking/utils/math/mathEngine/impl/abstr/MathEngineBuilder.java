@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  *          the return type of the setter methods
  */
 public abstract class MathEngineBuilder<J extends MathEngine, R extends MathEngineBuilder<J, R>>
-extends ToolJobBuilder<J, R> implements IMathEngineBuilder {
+    extends ToolJobBuilder<J, R> implements IMathEngineBuilder {
 
   /** create */
   protected MathEngineBuilder() {

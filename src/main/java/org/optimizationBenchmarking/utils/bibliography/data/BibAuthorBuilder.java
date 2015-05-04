@@ -84,7 +84,7 @@ public final class BibAuthorBuilder extends BuilderFSM<BibAuthor> {
     if ((this.m_personalName = this.normalize(personalName)) == null) {
       throw new IllegalArgumentException(//
           "Personal name cannot be empty or null, but '" //$NON-NLS-1$
-          + personalName + "' is."); //$NON-NLS-1$
+              + personalName + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -103,7 +103,7 @@ public final class BibAuthorBuilder extends BuilderFSM<BibAuthor> {
     if ((this.m_familyName = this.normalize(familyName)) == null) {
       throw new IllegalArgumentException(//
           "Family name cannot be empty or null, but '" //$NON-NLS-1$
-          + familyName + "' is."); //$NON-NLS-1$
+              + familyName + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -124,8 +124,8 @@ public final class BibAuthorBuilder extends BuilderFSM<BibAuthor> {
     if ((this.m_originalSpelling = this.normalize(originalSpelling)) == null) {
       throw new IllegalArgumentException(//
           "If you set the original name spelling, it cannot be empty or null, but '" //$NON-NLS-1$
-          + originalSpelling
-          + "' is. Maybe you should just not set it?"); //$NON-NLS-1$
+              + originalSpelling
+              + "' is. Maybe you should just not set it?"); //$NON-NLS-1$
     }
   }
 

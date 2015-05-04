@@ -15,12 +15,12 @@ final class _LaTeXSubFigure extends SubFigure {
 
   /** begin a figure series row */
   private static final char[] FIGURE_ROW_BEGIN = { '\\', 'f', 'i', 'g',
-    'u', 'r', 'e', 'S', 'e', 'r', 'i', 'e', 's', 'R', 'o', 'w', '{', };
+      'u', 'r', 'e', 'S', 'e', 'r', 'i', 'e', 's', 'R', 'o', 'w', '{', };
 
   /** begin a figure series cell */
   private static final char[] FIGURE_CELL_BEGIN = { '\\', 'f', 'i', 'g',
-    'u', 'r', 'e', 'S', 'e', 'r', 'i', 'e', 's', 'E', 'l', 'e', 'm',
-    'e', 'n', 't', '{', };
+      'u', 'r', 'e', 'S', 'e', 'r', 'i', 'e', 's', 'E', 'l', 'e', 'm',
+      'e', 'n', 't', '{', };
 
   /**
    * Create a new sub figure

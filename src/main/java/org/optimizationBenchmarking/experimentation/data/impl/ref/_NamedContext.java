@@ -199,8 +199,8 @@ class _NamedContext<RT> extends _Context<RT> {
     if (b == null) {
       throw new IllegalArgumentException(//
           "A name must not normalize to null, buth the name '" //$NON-NLS-1$
-          + a + "' of " + this + //$NON-NLS-1$
-          " does."); //$NON-NLS-1$
+              + a + "' of " + this + //$NON-NLS-1$
+              " does."); //$NON-NLS-1$
     }
 
     if (c != null) {
@@ -209,8 +209,8 @@ class _NamedContext<RT> extends _Context<RT> {
       if (d == null) {
         throw new IllegalArgumentException(//
             "A non-empty descriptionmust not normalize to null, buth the description '" //$NON-NLS-1$
-            + c + "' of " + this + //$NON-NLS-1$
-            " does."); //$NON-NLS-1$
+                + c + "' of " + this + //$NON-NLS-1$
+                " does."); //$NON-NLS-1$
       }
     } else {
       d = null;

@@ -7,7 +7,7 @@ import org.jfree.data.general.PieDataset;
 
 /** the pie null label generator */
 final class _JFreeChartPieNullLabelGenerator implements
-PieSectionLabelGenerator {
+    PieSectionLabelGenerator {
 
   /** create */
   _JFreeChartPieNullLabelGenerator() {

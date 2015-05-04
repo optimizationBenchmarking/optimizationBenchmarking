@@ -21,7 +21,7 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IFileOutputTool;
  *          the source type
  */
 public class FileOutputTool<S> extends IOTool<S> implements
-IFileOutputTool<S> {
+    IFileOutputTool<S> {
 
   /** create */
   protected FileOutputTool() {
@@ -91,7 +91,7 @@ IFileOutputTool<S> {
    */
   void _stream(final IOJob job, final S data, final OutputStream stream,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-          throws Throwable {
+      throws Throwable {
     final Path path;
 
     if (archiveType != null) {
@@ -119,7 +119,7 @@ IFileOutputTool<S> {
   void _path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-          throws Throwable {
+      throws Throwable {
     final Path file, tempDir;
     final _OutputJob outJob;
     final Object oldCur;
@@ -140,8 +140,8 @@ IFileOutputTool<S> {
               && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
             logger.log(IOTool.DEFAULT_LOG_LEVEL,//
                 (((("Path '" + path) + //$NON-NLS-1$
-                    "' identifies a directory, creating archive file '")//$NON-NLS-1$
-                    + file) + "' for output."));//$NON-NLS-1$
+                "' identifies a directory, creating archive file '")//$NON-NLS-1$
+                + file) + "' for output."));//$NON-NLS-1$
           }
         } else {
           file = path;

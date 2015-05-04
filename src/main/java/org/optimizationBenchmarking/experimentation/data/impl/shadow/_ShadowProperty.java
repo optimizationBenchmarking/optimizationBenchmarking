@@ -25,7 +25,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the property value type
  */
 abstract class _ShadowProperty<OT extends IPropertySet, ST extends IProperty, PVT extends IPropertyValue>
-extends _ShadowElementSet<OT, ST, PVT> implements IProperty {
+    extends _ShadowElementSet<OT, ST, PVT> implements IProperty {
 
   /** the general property value type */
   PVT m_general;

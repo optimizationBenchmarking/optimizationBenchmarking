@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  *          the matrix type
  */
 public class MatrixRowIterator<OT extends IMatrix> extends MatrixRows<OT>
-implements Iterator<IMatrix> {
+    implements Iterator<IMatrix> {
 
   /**
    * create
@@ -34,7 +34,7 @@ implements Iterator<IMatrix> {
     if ((++this.m_rows[0]) >= this.m_owner.m()) {
       throw new NoSuchElementException(//
           "End of iteration reached: The matrix has only " + //$NON-NLS-1$
-          this.m_owner.m() + " rows."); //$NON-NLS-1$
+              this.m_owner.m() + " rows."); //$NON-NLS-1$
     }
 
     return this;

@@ -430,10 +430,10 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         default: {
           throw new IllegalArgumentException(//
               "Unknown element with local name '" //$NON-NLS-1$
-              + localName + "' and qualified name '" + //$NON-NLS-1$
-              qName + "' from namespace URI '" + uri + //$NON-NLS-1$
-              "' with attributes " + attributes + //$NON-NLS-1$
-              " detected."); //$NON-NLS-1$
+                  + localName + "' and qualified name '" + //$NON-NLS-1$
+                  qName + "' from namespace URI '" + uri + //$NON-NLS-1$
+                  "' with attributes " + attributes + //$NON-NLS-1$
+                  " detected."); //$NON-NLS-1$
         }
       }
     }
@@ -720,8 +720,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         if (!(object instanceof ILabel)) {
           throw new IllegalArgumentException(//
               "The labels you reference must be instances of ILabel, but property'"//$NON-NLS-1$
-              + string + "' points to an instance of " //$NON-NLS-1$
-              + TextUtils.className(object.getClass()));
+                  + string + "' points to an instance of " //$NON-NLS-1$
+                  + TextUtils.className(object.getClass()));
         }
         this.m_labels.add((ILabel) object);
         return;
@@ -745,7 +745,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
             throw new IllegalArgumentException(//
                 ("Error while parsing String '" + //$NON-NLS-1$
                     string + "' with parser of type " + //$NON-NLS-1$
-                    TextUtils.className(parser.getClass())), e);
+                TextUtils.className(parser.getClass())), e);
           }
 
           this.__formatObject(object, textOut);
@@ -769,7 +769,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
     if (parser != null) {
       throw new IllegalStateException(//
           "Cannot pass an empty string to a parser, but parser of type " //$NON-NLS-1$
-          + TextUtils.className(parser.getClass()) + " set.");//$NON-NLS-1$
+              + TextUtils.className(parser.getClass()) + " set.");//$NON-NLS-1$
     }
   }
 
@@ -876,10 +876,10 @@ public final class DocumentXMLHandler extends DelegatingHandler {
     if (value == null) {
       throw new IllegalArgumentException(//
           "Value attribute '" + //$NON-NLS-1$
-          DocumentXML.ATTR_VALUE_OF + //
-          "' of tag '" + //$NON-NLS-1$
-          DocumentXML.ELEMENT_VALUE + //
-          "' cannot be null or an empty string.");//$NON-NLS-1$
+              DocumentXML.ATTR_VALUE_OF + //
+              "' of tag '" + //$NON-NLS-1$
+              DocumentXML.ELEMENT_VALUE + //
+              "' cannot be null or an empty string.");//$NON-NLS-1$
     }
     object = this.m_properties.get(value);
 
@@ -925,9 +925,9 @@ public final class DocumentXMLHandler extends DelegatingHandler {
 
     throw new IllegalStateException(//
         "The current element must be an instance of " + //$NON-NLS-1$
-        TextUtils.className(clazz) + //
-        " but is instead an instance of "//$NON-NLS-1$
-        + TextUtils.className(element.getClass()));
+            TextUtils.className(clazz) + //
+            " but is instead an instance of "//$NON-NLS-1$
+            + TextUtils.className(element.getClass()));
   }
 
   /**
@@ -982,9 +982,9 @@ public final class DocumentXMLHandler extends DelegatingHandler {
 
     throw new IllegalStateException(//
         "The element to be closed (the current element on top of the stack) must be an instance of " + //$NON-NLS-1$
-        TextUtils.className(clazz) + //
-        " but is instead an instance of "//$NON-NLS-1$
-        + TextUtils.className(element.getClass()));
+            TextUtils.className(clazz) + //
+            " but is instead an instance of "//$NON-NLS-1$
+            + TextUtils.className(element.getClass()));
   }
 
   /**
@@ -1009,7 +1009,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startNBSP(final Attributes attributes) {
     this.__requireCurrentElement(ITextOutput.class)
-    .appendNonBreakingSpace();
+        .appendNonBreakingSpace();
   }
 
   /**
@@ -1041,7 +1041,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
     if (callback == null) {
       throw new IllegalArgumentException(//
           "The callback function '" + callbackKey + //$NON-NLS-1$
-          "' is undefined.");//$NON-NLS-1$
+              "' is undefined.");//$NON-NLS-1$
     }
 
     callback.callback(
@@ -1060,7 +1060,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startQuotes(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IPlainText.class).inQuotes());
+    this.__requireCurrentElement(IPlainText.class).inQuotes());
   }
 
   /**
@@ -1096,7 +1096,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
       } else {
         throw new IllegalStateException(//
             "Only instances of IPlainText or IMath can contain braces elements, but the current element is an instance of " //$NON-NLS-1$
-            + TextUtils.className(element.getClass()));
+                + TextUtils.className(element.getClass()));
       }
     }
   }
@@ -1123,7 +1123,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startEmph(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IComplexText.class).emphasize());
+    this.__requireCurrentElement(IComplexText.class).emphasize());
   }
 
   /**
@@ -1148,7 +1148,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startInlineCode(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IComplexText.class).inlineCode());
+    this.__requireCurrentElement(IComplexText.class).inlineCode());
   }
 
   /**
@@ -1184,7 +1184,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
       } else {
         throw new IllegalStateException(//
             "Only IMathName or IComplexText can contain superscript elements, but the current element is an instance of " //$NON-NLS-1$
-            + TextUtils.className(element.getClass()));
+                + TextUtils.className(element.getClass()));
       }
     }
   }
@@ -1222,7 +1222,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
       } else {
         throw new IllegalStateException(//
             "Only IMathName or IComplexText can contain subscript elements, but the current element is an instance of " //$NON-NLS-1$
-            + TextUtils.className(element.getClass()));
+                + TextUtils.className(element.getClass()));
       }
     }
   }
@@ -1260,13 +1260,13 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         //
         DelegatingHandler.getAttributeNormalized(attr,
             DocumentXML.NAMESPACE, DocumentXML.ATTR_TEXT_CASE),
-            ETextCase.IN_SENTENCE);
+        ETextCase.IN_SENTENCE);
 
     citationMode = DocumentXML._parseCitationMode(
         //
         DelegatingHandler.getAttributeNormalized(attr,
             DocumentXML.NAMESPACE, DocumentXML.ATTR_CITATION_MODE),
-            ECitationMode.ID);
+        ECitationMode.ID);
 
     new BibliographyXMLHandler(this, this.__requireCurrentElement(
         IComplexText.class).cite(citationMode, textCase, sequenceMode));
@@ -1300,9 +1300,9 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         if (!(obj instanceof ILabel)) {
           throw new IllegalArgumentException(//
               "The label attribute of section must point to a property which is either null or an instance of ILabel, but the value of '" //$NON-NLS-1$
-              + prop + //
-              "' is an instance of "//$NON-NLS-1$
-              + TextUtils.className(prop.getClass()));
+                  + prop + //
+                  "' is an instance of "//$NON-NLS-1$
+                  + TextUtils.className(prop.getClass()));
         }
         label = ((ILabel) (obj));
       } else {
@@ -1341,7 +1341,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startSectionTitle(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(ISection.class).title());
+    this.__requireCurrentElement(ISection.class).title());
   }
 
   /**
@@ -1366,7 +1366,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startSectionBody(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(ISection.class).body());
+    this.__requireCurrentElement(ISection.class).body());
   }
 
   /**
@@ -1398,7 +1398,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
     this.m_formatSequenceMode = DocumentXML._parseSequenceMode(
         DelegatingHandler.getAttributeNormalized(attributes,
             DocumentXML.NAMESPACE, DocumentXML.ATTR_SEQUENCE_MODE),
-            ESequenceMode.AND);
+        ESequenceMode.AND);
   }
 
   /**
@@ -1447,7 +1447,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startEnumerate(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IStructuredText.class).enumeration());
+    this.__requireCurrentElement(IStructuredText.class).enumeration());
   }
 
   /**
@@ -1472,7 +1472,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startItemize(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IStructuredText.class).itemization());
+    this.__requireCurrentElement(IStructuredText.class).itemization());
   }
 
   /**
@@ -1497,7 +1497,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startItem(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IList.class).item());
+    this.__requireCurrentElement(IList.class).item());
   }
 
   /**
@@ -1535,8 +1535,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
       if (this.m_formatFormatter == null) {
         throw new IllegalArgumentException(//
             "Formatter property '" + //$NON-NLS-1$
-            DocumentXML.ATTR_FORMAT_PROPERTY + "' has value '" + s + //$NON-NLS-1$
-            "', but no formatter is specified as property under this key."); //$NON-NLS-1$
+                DocumentXML.ATTR_FORMAT_PROPERTY + "' has value '" + s + //$NON-NLS-1$
+                "', but no formatter is specified as property under this key."); //$NON-NLS-1$
       }
     } else {
       s = DelegatingHandler.getAttributeNormalized(atts,
@@ -1551,18 +1551,18 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           } catch (final ReflectiveOperationException y) {
             throw new RuntimeException(//
                 "Error while trying to obtain formatter '" + s //$NON-NLS-1$
-                + "' specified as attribute '" + //$NON-NLS-1$
-                DocumentXML.ATTR_FORMAT_INSTANCE
-                + "' could not be found.");//$NON-NLS-1$
+                    + "' specified as attribute '" + //$NON-NLS-1$
+                    DocumentXML.ATTR_FORMAT_INSTANCE
+                    + "' could not be found.");//$NON-NLS-1$
           }
           if (this.m_formatFormatter != null) {
             this.m_cache.put(s, this.m_formatFormatter);
           } else {
             throw new RuntimeException(//
                 "The formatter '" + s //$NON-NLS-1$
-                + "' specified as attribute '" + //$NON-NLS-1$
-                DocumentXML.ATTR_FORMAT_INSTANCE
-                + "' could not be found.");//$NON-NLS-1$
+                    + "' specified as attribute '" + //$NON-NLS-1$
+                    DocumentXML.ATTR_FORMAT_INSTANCE
+                    + "' could not be found.");//$NON-NLS-1$
           }
         }
       } else {
@@ -1621,8 +1621,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
     if (object == null) {
       throw new IllegalArgumentException(//
           "Object to format with formatter '" + //$NON-NLS-1$
-          format + "' and text case '" + textCase//$NON-NLS-1$
-          + "' cannot be null");//$NON-NLS-1$
+              format + "' and text case '" + textCase//$NON-NLS-1$
+              + "' cannot be null");//$NON-NLS-1$
     }
 
     if (object instanceof Number) {
@@ -1640,8 +1640,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           if (formatted == null) {
             throw new IllegalArgumentException(//
                 "Formatting int value " + i + //$NON-NLS-1$
-                " with DecimalFormat " + format + //$NON-NLS-1$
-                " yields null?");//$NON-NLS-1$
+                    " with DecimalFormat " + format + //$NON-NLS-1$
+                    " yields null?");//$NON-NLS-1$
           }
           dest.append(formatted);
           return;
@@ -1654,8 +1654,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
 
         throw new IllegalArgumentException(//
             "A formatter able to deal with int numbers is required, such as a NumberAppender or DecimalFormat. Null would also be ok, in which case we print the number directly. However, the formatter of type " //$NON-NLS-1$
-            + TextUtils.className(format.getClass()) + //
-            " is not suitable for this purpose.");//$NON-NLS-1$
+                + TextUtils.className(format.getClass()) + //
+                " is not suitable for this purpose.");//$NON-NLS-1$
       }
 
       if (object instanceof Long) {
@@ -1671,8 +1671,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           if (formatted == null) {
             throw new IllegalArgumentException(//
                 "Formatting long value " + l + //$NON-NLS-1$
-                " with DecimalFormat " + format + //$NON-NLS-1$
-                " yields null?");//$NON-NLS-1$
+                    " with DecimalFormat " + format + //$NON-NLS-1$
+                    " yields null?");//$NON-NLS-1$
           }
           dest.append(formatted);
           return;
@@ -1683,8 +1683,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         }
         throw new IllegalArgumentException(//
             "A formatter able to deal with long numbers is required, such as a NumberAppender or DecimalFormat. However, the formatter of type " //$NON-NLS-1$
-            + TextUtils.className(format.getClass()) + //
-            " is not suitable for this purpose.");//$NON-NLS-1$
+                + TextUtils.className(format.getClass()) + //
+                " is not suitable for this purpose.");//$NON-NLS-1$
       }
 
       if (object instanceof Double) {
@@ -1700,8 +1700,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           if (formatted == null) {
             throw new IllegalArgumentException(//
                 "Formatting double value " + d + //$NON-NLS-1$
-                " with DecimalFormat " + format + //$NON-NLS-1$
-                " yields null?");//$NON-NLS-1$
+                    " with DecimalFormat " + format + //$NON-NLS-1$
+                    " yields null?");//$NON-NLS-1$
           }
           dest.append(formatted);
           return;
@@ -1712,8 +1712,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         }
         throw new IllegalArgumentException(//
             "A formatter able to deal with double numbers is required, such as a NumberAppender or DecimalFormat. However, the formatter of type " //$NON-NLS-1$
-            + TextUtils.className(format.getClass()) + //
-            " is not suitable for this purpose.");//$NON-NLS-1$
+                + TextUtils.className(format.getClass()) + //
+                " is not suitable for this purpose.");//$NON-NLS-1$
       }
 
       if (object instanceof Float) {
@@ -1729,8 +1729,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           if (formatted == null) {
             throw new IllegalArgumentException(//
                 "Formatting float value " + f + //$NON-NLS-1$
-                " with DecimalFormat " + format + //$NON-NLS-1$
-                " yields null?");//$NON-NLS-1$
+                    " with DecimalFormat " + format + //$NON-NLS-1$
+                    " yields null?");//$NON-NLS-1$
           }
           dest.append(formatted);
           return;
@@ -1741,8 +1741,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         }
         throw new IllegalArgumentException(//
             "A formatter able to deal with float numbers is required, such as a NumberAppender or DecimalFormat. However, the formatter of type " //$NON-NLS-1$
-            + TextUtils.className(format.getClass()) + //
-            " is not suitable for this purpose.");//$NON-NLS-1$
+                + TextUtils.className(format.getClass()) + //
+                " is not suitable for this purpose.");//$NON-NLS-1$
       }
 
       if (object instanceof Short) {
@@ -1758,8 +1758,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           if (formatted == null) {
             throw new IllegalArgumentException(//
                 "Formatting short value " + s + //$NON-NLS-1$
-                " with DecimalFormat " + format + //$NON-NLS-1$
-                " yields null?");//$NON-NLS-1$
+                    " with DecimalFormat " + format + //$NON-NLS-1$
+                    " yields null?");//$NON-NLS-1$
           }
           dest.append(formatted);
           return;
@@ -1770,8 +1770,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         }
         throw new IllegalArgumentException(//
             "A formatter able to deal with short numbers is required, such as a NumberAppender or DecimalFormat. However, the formatter of type " //$NON-NLS-1$
-            + TextUtils.className(format.getClass()) + //
-            " is not suitable for this purpose.");//$NON-NLS-1$
+                + TextUtils.className(format.getClass()) + //
+                " is not suitable for this purpose.");//$NON-NLS-1$
       }
 
       if (object instanceof Byte) {
@@ -1787,8 +1787,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
           if (formatted == null) {
             throw new IllegalArgumentException(//
                 "Formatting byte value " + b + //$NON-NLS-1$
-                " with DecimalFormat " + format + //$NON-NLS-1$
-                " yields null?");//$NON-NLS-1$
+                    " with DecimalFormat " + format + //$NON-NLS-1$
+                    " yields null?");//$NON-NLS-1$
           }
           dest.append(formatted);
           return;
@@ -1799,8 +1799,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         }
         throw new IllegalArgumentException(//
             "A formatter able to deal with byte numbers is required, such as a NumberAppender or DecimalFormat. However, the formatter of type " //$NON-NLS-1$
-            + TextUtils.className(format.getClass()) + //
-            " is not suitable for this purpose.");//$NON-NLS-1$
+                + TextUtils.className(format.getClass()) + //
+                " is not suitable for this purpose.");//$NON-NLS-1$
       }
 
       // deal with non-standard numbers
@@ -1822,8 +1822,8 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         if (formatted == null) {
           throw new IllegalArgumentException(//
               "Formatting double value " + d + //$NON-NLS-1$
-              " with DecimalFormat " + format + //$NON-NLS-1$
-              " yields null?");//$NON-NLS-1$
+                  " with DecimalFormat " + format + //$NON-NLS-1$
+                  " yields null?");//$NON-NLS-1$
         }
         dest.append(formatted);
         return;
@@ -1831,18 +1831,18 @@ public final class DocumentXMLHandler extends DelegatingHandler {
 
       throw new IllegalArgumentException(//
           "A formatter able to deal with numbers of type " + //$NON-NLS-1$
-          TextUtils.className(object.getClass()) + //
-          " is required, such as a NumberAppender or DecimalFormat. Null would also be ok, in which case we print the number directly. However, the formatter of type " //$NON-NLS-1$
-          + TextUtils.className(format.getClass()) + //
-          " is not suitable for this purpose.");//$NON-NLS-1$
+              TextUtils.className(object.getClass()) + //
+              " is required, such as a NumberAppender or DecimalFormat. Null would also be ok, in which case we print the number directly. However, the formatter of type " //$NON-NLS-1$
+              + TextUtils.className(format.getClass()) + //
+              " is not suitable for this purpose.");//$NON-NLS-1$
     }
 
     if (format != null) {
       throw new IllegalArgumentException(//
           "Object of type " + //$NON-NLS-1$
-          TextUtils.className(object.getClass())//
-          + " cannot be processed by formatter of type " + //$NON-NLS-1$
-          TextUtils.className(format.getClass()));
+              TextUtils.className(object.getClass())//
+              + " cannot be processed by formatter of type " + //$NON-NLS-1$
+              TextUtils.className(format.getClass()));
     }
 
     if (object instanceof ITextable) {
@@ -1903,9 +1903,9 @@ public final class DocumentXMLHandler extends DelegatingHandler {
         if (!(obj instanceof ILabel)) {
           throw new IllegalArgumentException(//
               "The label attribute of equation must point to a property which is either null or an instance of ILabel, but the value of '" //$NON-NLS-1$
-              + prop + //
-              "' is an instance of "//$NON-NLS-1$
-              + TextUtils.className(prop.getClass()));
+                  + prop + //
+                  "' is an instance of "//$NON-NLS-1$
+                  + TextUtils.className(prop.getClass()));
         }
         label = ((ILabel) (obj));
       } else {
@@ -1943,7 +1943,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startInlineMath(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IComplexText.class).inlineMath());
+    this.__requireCurrentElement(IComplexText.class).inlineMath());
   }
 
   /**
@@ -1968,7 +1968,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathAbs(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).abs());
+    this.__requireCurrentElement(IMath.class).abs());
   }
 
   /**
@@ -1993,7 +1993,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathAdd(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).add());
+    this.__requireCurrentElement(IMath.class).add());
   }
 
   /**
@@ -2018,10 +2018,10 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathComp(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).compare(
-            DocumentXML._parseComparisonOperator(DelegatingHandler
-                .getAttributeNormalized(attributes, DocumentXML.NAMESPACE,
-                    DocumentXML.ATTR_MATH_COMP_OP))));
+    this.__requireCurrentElement(IMath.class).compare(
+        DocumentXML._parseComparisonOperator(DelegatingHandler
+            .getAttributeNormalized(attributes, DocumentXML.NAMESPACE,
+                DocumentXML.ATTR_MATH_COMP_OP))));
   }
 
   /**
@@ -2046,7 +2046,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathCos(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).cos());
+    this.__requireCurrentElement(IMath.class).cos());
   }
 
   /**
@@ -2071,7 +2071,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathDiv(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).div());
+    this.__requireCurrentElement(IMath.class).div());
   }
 
   /**
@@ -2096,7 +2096,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathDivInline(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).divInline());
+    this.__requireCurrentElement(IMath.class).divInline());
   }
 
   /**
@@ -2121,7 +2121,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathFactorial(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).factorial());
+    this.__requireCurrentElement(IMath.class).factorial());
   }
 
   /**
@@ -2146,7 +2146,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathLd(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).ld());
+    this.__requireCurrentElement(IMath.class).ld());
   }
 
   /**
@@ -2171,7 +2171,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathLg(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).lg());
+    this.__requireCurrentElement(IMath.class).lg());
   }
 
   /**
@@ -2196,7 +2196,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathLn(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).ln());
+    this.__requireCurrentElement(IMath.class).ln());
   }
 
   /**
@@ -2221,7 +2221,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathLog(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).log());
+    this.__requireCurrentElement(IMath.class).log());
   }
 
   /**
@@ -2246,7 +2246,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathMod(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).mod());
+    this.__requireCurrentElement(IMath.class).mod());
   }
 
   /**
@@ -2271,7 +2271,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathMul(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).mul());
+    this.__requireCurrentElement(IMath.class).mul());
   }
 
   /**
@@ -2296,7 +2296,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathNegate(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).negate());
+    this.__requireCurrentElement(IMath.class).negate());
   }
 
   /**
@@ -2321,7 +2321,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathPow(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).pow());
+    this.__requireCurrentElement(IMath.class).pow());
   }
 
   /**
@@ -2346,7 +2346,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathRoot(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).root());
+    this.__requireCurrentElement(IMath.class).root());
   }
 
   /**
@@ -2371,7 +2371,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathSin(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).sin());
+    this.__requireCurrentElement(IMath.class).sin());
   }
 
   /**
@@ -2396,7 +2396,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathSqrt(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).sqrt());
+    this.__requireCurrentElement(IMath.class).sqrt());
   }
 
   /**
@@ -2421,7 +2421,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathSub(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).sub());
+    this.__requireCurrentElement(IMath.class).sub());
   }
 
   /**
@@ -2446,7 +2446,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathTan(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).tan());
+    this.__requireCurrentElement(IMath.class).tan());
   }
 
   /**
@@ -2471,7 +2471,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathName(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).name());
+    this.__requireCurrentElement(IMath.class).name());
   }
 
   /**
@@ -2496,7 +2496,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathNumber(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).number());
+    this.__requireCurrentElement(IMath.class).number());
   }
 
   /**
@@ -2521,7 +2521,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startMathText(final Attributes attributes) {
     this.__pushElement(//
-        this.__requireCurrentElement(IMath.class).text());
+    this.__requireCurrentElement(IMath.class).text());
   }
 
   /**

@@ -26,7 +26,7 @@ public final class Article extends LaTeXDocumentClass {
         LaTeXDefaultFontPalette.getInstance(),// fonts
         ELaTeXSection.SECTION,// highest supported section type
         ELaTeXSection.SUBPARAGRAPH// lowest supported section type
-        );
+    );
   }
 
   /**

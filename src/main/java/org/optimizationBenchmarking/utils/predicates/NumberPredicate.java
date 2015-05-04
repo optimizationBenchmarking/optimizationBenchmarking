@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.hash.HashObject;
  * A predicate defined on numbers.
  */
 public abstract class NumberPredicate extends HashObject implements
-IPredicate<Number> {
+    IPredicate<Number> {
 
   /** create the number predicate */
   protected NumberPredicate() {

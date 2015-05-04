@@ -83,7 +83,7 @@ public class RandomParallelExample extends RandomExample {
     tasks = new ArrayList<>();
     do {
       tasks
-      .add(new _CreateExperimentOuter(isc, dims, is, params, configs));
+          .add(new _CreateExperimentOuter(isc, dims, is, params, configs));
     } while ((r.nextInt(15) > 0) && ((--z) >= 0));
 
     if (tasks.size() > 0) {

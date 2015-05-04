@@ -16,7 +16,7 @@ import test.junit.org.optimizationBenchmarking.utils.collections.lists.ArraySetV
  */
 @Ignore
 public class EnclosureTest<T extends Enclosure> extends
-ArraySetViewTestBase<T, ArraySetView<T>> {
+    ArraySetViewTestBase<T, ArraySetView<T>> {
 
   /** create */
   public EnclosureTest() {

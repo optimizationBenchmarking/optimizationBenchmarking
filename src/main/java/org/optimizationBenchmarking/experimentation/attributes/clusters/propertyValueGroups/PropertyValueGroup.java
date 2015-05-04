@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  *          the owning groups
  */
 public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
-extends ShadowExperimentSet<OT> implements ICluster {
+    extends ShadowExperimentSet<OT> implements ICluster {
 
   /**
    * create the property value group

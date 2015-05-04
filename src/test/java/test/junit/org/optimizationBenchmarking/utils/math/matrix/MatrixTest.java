@@ -466,8 +466,8 @@ public class MatrixTest<MT extends IMatrix> extends InstanceTest<MT> {
       this.__testSelected(matrix,//
           (rand.nextBoolean() ? matrix.selectColumns(selCols)//
               : matrix.selectRows(selRows)),//
-              selRows, selCols, rand, //
-              (this.isTopLevelTest() ? 6 : 1));
+          selRows, selCols, rand, //
+          (this.isTopLevelTest() ? 6 : 1));
     }
   }
 

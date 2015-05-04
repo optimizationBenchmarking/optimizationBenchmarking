@@ -184,8 +184,8 @@ abstract class _ImageIORasterGraphicDriver extends AbstractGraphicDriver {
     return this._create(
         this.makePath(builder.getBasePath(),
             builder.getMainDocumentNameSuggestion()), builder.getLogger(),
-            builder.getFileProducerListener(), img, g, wPt, hPt, wDPI, hDPI,
-            builder.getQuality());
+        builder.getFileProducerListener(), img, g, wPt, hPt, wDPI, hDPI,
+        builder.getQuality());
   }
 
   /**

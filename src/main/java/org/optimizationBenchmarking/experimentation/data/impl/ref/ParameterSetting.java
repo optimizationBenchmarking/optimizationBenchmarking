@@ -6,8 +6,8 @@ import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 
 /** a concrete parameter setting */
 public final class ParameterSetting extends
-_PropertySetting<ParameterValue, Parameter> implements
-IParameterSetting {
+    _PropertySetting<ParameterValue, Parameter> implements
+    IParameterSetting {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A java file object backed by strings in memory. */
 final class _CharSequenceJavaFileObject extends SimpleJavaFileObject
-implements ITextable {
+    implements ITextable {
 
   /** the class name */
   private final String m_className;

@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.TextOutputWriter;
 
 /** the configuration properties output */
 public final class ConfigurationPropertiesOutput extends
-TextOutputTool<Configuration> {
+    TextOutputTool<Configuration> {
 
   /** create */
   ConfigurationPropertiesOutput() {
@@ -25,7 +25,7 @@ TextOutputTool<Configuration> {
   @Override
   protected final void file(final IOJob job, final Configuration data,
       final Path file, final StreamEncoding<?, ?> encoding)
-          throws Throwable {
+      throws Throwable {
     super.file(job, data, file, encoding);
     if (Files.exists(file)) {
       this.addFile(job, file,
@@ -37,7 +37,7 @@ TextOutputTool<Configuration> {
   @Override
   protected final String getDefaultPlainOutputFileName() {
     return ("config." + //$NON-NLS-1$
-        ConfigurationPropertiesFileType.CONFIG_PROPERTIES.getDefaultSuffix());
+    ConfigurationPropertiesFileType.CONFIG_PROPERTIES.getDefaultSuffix());
   }
 
   /**

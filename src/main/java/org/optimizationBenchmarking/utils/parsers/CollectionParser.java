@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.text.charset.EnclosureEnd;
  *          the collection type
  */
 public abstract class CollectionParser<ET, CT extends Collection<ET>>
-extends Parser<CT> {
+    extends Parser<CT> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -143,22 +143,22 @@ extends Parser<CT> {
           }
         }
 
-      quit = (j >= len);
-      if (quit) {
-        temp = (s.substring(i));
-      } else {
-        temp = (s.substring(i, j));
-      }
+        quit = (j >= len);
+        if (quit) {
+          temp = (s.substring(i));
+        } else {
+          temp = (s.substring(i, j));
+        }
 
-      parsed = parser.parseString(temp);
-      if ((parsed != null) || (!(this.m_ignoreNull))) {
-        list.add(parsed);
-      }
+        parsed = parser.parseString(temp);
+        if ((parsed != null) || (!(this.m_ignoreNull))) {
+          list.add(parsed);
+        }
 
-      if (quit) {
-        break looper;
-      }
-      i = (j + 1);
+        if (quit) {
+          break looper;
+        }
+        i = (j + 1);
       }
     }
 

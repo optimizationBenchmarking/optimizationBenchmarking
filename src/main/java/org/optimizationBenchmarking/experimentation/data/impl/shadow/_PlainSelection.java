@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
  *          the element type
  */
 abstract class _PlainSelection<ST extends IElementSet, ET extends IDataElement>
-extends _Selection<ST, ET> {
+    extends _Selection<ST, ET> {
 
   /** the selection */
   HashSet<ET> m_selection;

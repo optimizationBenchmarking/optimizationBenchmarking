@@ -156,7 +156,7 @@ abstract class _LaTeXToolChainComponent {
    */
   static final String[] _getArgs(final Path executable,
       final String helpOption, final String... patterns)
-          throws IOException {
+      throws IOException {
     final ExternalProcessBuilder builder;
     final String[] retval;
     String pattern;

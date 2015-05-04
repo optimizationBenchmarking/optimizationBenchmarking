@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
  * The base class for math tools
  */
 public abstract class MathEngineTool extends Tool implements
-IMathEngineTool {
+    IMathEngineTool {
 
   /** create */
   protected MathEngineTool() {

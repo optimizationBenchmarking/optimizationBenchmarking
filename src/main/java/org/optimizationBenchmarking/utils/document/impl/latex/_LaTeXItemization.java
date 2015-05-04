@@ -8,10 +8,10 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXItemization extends Itemization {
   /** the begin itemize */
   private static final char[] ITEMIZE_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-    'n', '{', 'i', 't', 'e', 'm', 'i', 'z', 'e', '}' };
+      'n', '{', 'i', 't', 'e', 'm', 'i', 'z', 'e', '}' };
   /** the end itemize */
   private static final char[] ITEMIZE_END = { '\\', 'e', 'n', 'd', '{',
-    'i', 't', 'e', 'm', 'i', 'z', 'e', '}' };
+      'i', 't', 'e', 'm', 'i', 'z', 'e', '}' };
 
   /**
    * Create a new itemization

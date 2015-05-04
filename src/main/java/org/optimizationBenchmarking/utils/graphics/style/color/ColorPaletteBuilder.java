@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
  * A builder for color palettes.
  */
 public class ColorPaletteBuilder extends
-PaletteBuilder<ColorStyle, ColorPalette> {
+    PaletteBuilder<ColorStyle, ColorPalette> {
 
   /** create */
   public ColorPaletteBuilder() {

@@ -52,9 +52,9 @@ public class StrictDoubleParser extends NumberParser<Double> {
     if (hasLong && (l != d)) {
       throw new IllegalArgumentException(//
           "Loss of fidelity when parsing '" + string + //$NON-NLS-1$
-          "' to a double (" + d + //$NON-NLS-1$
-          ") compared to parsing it to a long (" + //$NON-NLS-1$
-          l + ")."); //$NON-NLS-1$
+              "' to a double (" + d + //$NON-NLS-1$
+              ") compared to parsing it to a long (" + //$NON-NLS-1$
+              l + ")."); //$NON-NLS-1$
     }
 
     this.validateDouble(d);

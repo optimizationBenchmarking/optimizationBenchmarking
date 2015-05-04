@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * A builder for font palettes.
  */
 public class FontPaletteBuilder extends
-PaletteBuilder<FontStyle, FontPalette> {
+    PaletteBuilder<FontStyle, FontPalette> {
 
   /** did we set the default font */
   private static final int FLAG_HAS_DEFAULT = (PaletteBuilder.FLAG_HAS_ELEMENTS << 1);

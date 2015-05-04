@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  *          the element type this condition applies to.
  */
 public final class OrPredicate<T> extends HashObject implements
-IPredicate<T>, Serializable {
+    IPredicate<T>, Serializable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -72,7 +72,7 @@ IPredicate<T>, Serializable {
     if (o instanceof OrPredicate) {
       c = ((OrPredicate) o);
       return ((this.m_a.equals(c.m_a) && this.m_a.equals(c.m_b)) || //
-          (this.m_a.equals(c.m_b) && this.m_a.equals(c.m_a)));
+      (this.m_a.equals(c.m_b) && this.m_a.equals(c.m_a)));
     }
     return false;
   }

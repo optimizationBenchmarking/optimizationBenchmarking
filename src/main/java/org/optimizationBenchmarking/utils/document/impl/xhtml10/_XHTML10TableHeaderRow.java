@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableHeaderRow;
 final class _XHTML10TableHeaderRow extends TableHeaderRow {
   /** the start of a normal tr */
   private static final char[] TAB_TR_H_BEGIN = { '<', 't', 'r', ' ', 'c',
-    'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'H', '"', '>' };
+      'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', 'H', '"', '>' };
 
   /**
    * Create a row of a header of a table

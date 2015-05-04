@@ -145,11 +145,11 @@ public class BibBookRecord extends BibRecordWithPublisher {
         HashUtils.combineHashes(
             HashUtils.combineHashes(super.calcHashCode(),
                 HashUtils.hashCode(this.m_edition)),
-                HashUtils.hashCode(this.m_editors)),//
-                HashUtils.combineHashes(HashUtils.hashCode(this.m_series),
-                    HashUtils.combineHashes(HashUtils.hashCode(this.m_issn),
-                        HashUtils.hashCode(this.m_volume)))),//
-                        HashUtils.hashCode(this.m_isbn));
+            HashUtils.hashCode(this.m_editors)),//
+        HashUtils.combineHashes(HashUtils.hashCode(this.m_series),
+            HashUtils.combineHashes(HashUtils.hashCode(this.m_issn),
+                HashUtils.hashCode(this.m_volume)))),//
+        HashUtils.hashCode(this.m_isbn));
   }
 
   /**
@@ -216,7 +216,7 @@ public class BibBookRecord extends BibRecordWithPublisher {
 
       return (EComparison.equals(this.m_edition, x.m_edition) && //
           EComparison.equals(this.m_series, x.m_series) && //
-          EComparison.equals(this.m_volume, x.m_volume));
+      EComparison.equals(this.m_volume, x.m_volume));
 
     }
 

@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 /** A concrete setting of instance features. */
 public interface IFeatureSetting extends IPropertySetting,
-Iterable<IFeatureValue> {
+    Iterable<IFeatureValue> {
 
   /**
    * Iterate over the feature values in this setting.

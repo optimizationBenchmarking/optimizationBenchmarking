@@ -98,12 +98,12 @@ public abstract class MathEngine extends ToolJob implements IMathEngine {
     if (var.m_deleted) {
       throw new IllegalArgumentException(//
           "_Variable " + //$NON-NLS-1$
-          var.m_id + " has already been deleted");//$NON-NLS-1$
+              var.m_id + " has already been deleted");//$NON-NLS-1$
     }
     if (var.m_engine != this) {
       throw new IllegalArgumentException(//
           "_Variable " + //$NON-NLS-1$
-          var.m_id + " is owned by another engine."); //$NON-NLS-1$
+              var.m_id + " is owned by another engine."); //$NON-NLS-1$
     }
     this.checkState();
     return var;

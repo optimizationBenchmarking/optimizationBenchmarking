@@ -61,7 +61,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
     if (data.length <= 0) {
       throw new IllegalArgumentException(//
           TextUtils.className(this.getClass())//
-          + " must contain at least one element."); //$NON-NLS-1$
+              + " must contain at least one element."); //$NON-NLS-1$
     }
 
     mdata = (clone ? data.clone() : data);
@@ -106,7 +106,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
   void _setOwnerOfElement(final DT element, final int index) {
     throw new UnsupportedOperationException(//
         TextUtils.className(this.getClass())
-        + (((" does not know how to become an owner of '" + //$NON-NLS-1$
+            + (((" does not know how to become an owner of '" + //$NON-NLS-1$
             element) + "' at index ") + index) + '.'); //$NON-NLS-1$
   }
 
@@ -129,7 +129,7 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
     if (element == null) {
       throw new IllegalArgumentException(//
           "No element in an instance of " + //$NON-NLS-1$
-          TextUtils.className(this.getClass()) + " can be null."); //$NON-NLS-1$
+              TextUtils.className(this.getClass()) + " can be null."); //$NON-NLS-1$
     }
     if (element == this) {
       throw new IllegalArgumentException("An instance of " + //$NON-NLS-1$
@@ -188,13 +188,13 @@ public class ElementSet<DT extends Comparable<?>> extends _IDObject {
     if ((cra > 0) || (crb < 0)) {
       throw new IllegalStateException(
           "Element '" + before + //$NON-NLS-1$
-          "' should come after element '" //$NON-NLS-1$
-          + after
-          + "' according to the " + //$NON-NLS-1$
-          TextUtils.className(Comparable.class)
-          + //
-          "-implementations of these elements, but it comes before in an instance of" + //$NON-NLS-1$
-          TextUtils.className(this.getClass()) + '.');
+              "' should come after element '" //$NON-NLS-1$
+              + after
+              + "' according to the " + //$NON-NLS-1$
+              TextUtils.className(Comparable.class)
+              + //
+              "-implementations of these elements, but it comes before in an instance of" + //$NON-NLS-1$
+              TextUtils.className(this.getClass()) + '.');
     }
 
     if ((cra == 0) || (crb == 0)) {

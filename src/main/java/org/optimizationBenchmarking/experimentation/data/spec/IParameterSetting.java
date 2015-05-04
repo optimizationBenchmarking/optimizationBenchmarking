@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 /** A concrete setting of experiment parameters. */
 public interface IParameterSetting extends IPropertySetting,
-Iterable<IParameterValue> {
+    Iterable<IParameterValue> {
 
   /**
    * Iterate over the parameter values in this setting.

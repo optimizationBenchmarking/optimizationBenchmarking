@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.FileCollector;
  * The base object for the document API.
  */
 public abstract class DocumentElement extends HierarchicalText implements
-IDocumentElement {
+    IDocumentElement {
 
   /** the state after opening */
   static final int STATE_ALIFE = (FSM.STATE_NOTHING + 1);

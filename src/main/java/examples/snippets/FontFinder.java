@@ -114,7 +114,7 @@ public final class FontFinder {
           try {
             load = new Font(font, //
                 (((style & 1) != 0) ? Font.BOLD : 0) | //
-                (((style & 2) != 0) ? Font.ITALIC : 0), size);
+                    (((style & 2) != 0) ? Font.ITALIC : 0), size);
 
             ff = load.getFontName();
             ff = ff.toLowerCase();

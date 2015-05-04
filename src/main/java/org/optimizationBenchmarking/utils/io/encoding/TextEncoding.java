@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * A text encoding based on some fixed character set.
  */
 public final class TextEncoding extends
-StreamEncoding<BufferedReader, BufferedWriter> {
+    StreamEncoding<BufferedReader, BufferedWriter> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

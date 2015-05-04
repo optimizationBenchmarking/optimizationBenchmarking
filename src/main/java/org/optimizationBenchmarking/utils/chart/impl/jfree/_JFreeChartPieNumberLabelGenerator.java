@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 
 /** the pie label generator */
 final class _JFreeChartPieNumberLabelGenerator extends
-_JFreeChartPieLabelGenerator {
+    _JFreeChartPieLabelGenerator {
 
   /**
    * create*

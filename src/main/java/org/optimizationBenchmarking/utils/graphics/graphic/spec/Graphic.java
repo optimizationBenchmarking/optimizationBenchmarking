@@ -78,7 +78,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
  * </p>
  */
 public abstract class Graphic extends Graphics2D implements Closeable,
-IToolJob {
+    IToolJob {
 
   /** the font attributes */
   private static final Map<TextAttribute, Object> FONT_ATTRIBUTES;
@@ -255,8 +255,8 @@ IToolJob {
    */
   private final String __name() {
     return (((((((((TextUtils.className(this.getClass())) + //
-        '#') + System.identityHashCode(this)) + ' ') + '(') + //
-        this.getGraphicFormat()) + '@') + this.m_path) + ')');
+    '#') + System.identityHashCode(this)) + ' ') + '(') + //
+    this.getGraphicFormat()) + '@') + this.m_path) + ')');
   }
 
   /** {@inheritDoc} */
@@ -941,9 +941,9 @@ IToolJob {
       trafo.invert();
     } catch (final Throwable error) {
       RethrowMode.AS_RUNTIME_EXCEPTION
-      .rethrow(//
-          "Cannot emulate setting transform, as the current transform cannot be inverted.", //$NON-NLS-1$
-          true, error);
+          .rethrow(//
+              "Cannot emulate setting transform, as the current transform cannot be inverted.", //$NON-NLS-1$
+              true, error);
     }
     trafo.concatenate(Tx);
     this.doTransform(trafo);
@@ -1128,7 +1128,7 @@ IToolJob {
     q = this.getClip();
     if ((q == null) || //
         ((!(((rect = q.getBounds2D()).isEmpty()) || //
-            (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
+        (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
       this.before(Graphic.BEFORE_CHANGE_CLIP);
       this.doClipRect(x, y, width, height);
     }
@@ -2535,7 +2535,7 @@ IToolJob {
     q = this.getClip();
     if ((q == null) || //
         ((!(((rect = q.getBounds2D()).isEmpty()) || //
-            (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
+        (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
       this.before(Graphic.BEFORE_CHANGE_CLIP);
 
       if (this.autoConvertCoordinatesToInt()) {

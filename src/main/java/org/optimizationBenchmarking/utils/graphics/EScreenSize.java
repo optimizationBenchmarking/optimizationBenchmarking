@@ -41,7 +41,7 @@ public enum EScreenSize implements IMedium {
 
   /** the set of screen sizes */
   public static final ArraySetView<EScreenSize> INSTANCES = //
-      new ArraySetView<>(EScreenSize.values());
+  new ArraySetView<>(EScreenSize.values());
 
   /** the width */
   private final int m_width;

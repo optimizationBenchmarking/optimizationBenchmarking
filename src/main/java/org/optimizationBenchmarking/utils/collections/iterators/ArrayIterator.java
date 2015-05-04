@@ -88,8 +88,8 @@ public final class ArrayIterator<T> extends BasicListIterator<T> {
     }
     throw new NoSuchElementException(
         "The current position (" + this.m_pos + //$NON-NLS-1$
-        ") is already at the end of the valid range (0.." + //$NON-NLS-1$
-        this.m_size + ")."); //$NON-NLS-1$
+            ") is already at the end of the valid range (0.." + //$NON-NLS-1$
+            this.m_size + ")."); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

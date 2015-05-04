@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXInlineMath extends InlineMath {
   /** begin ensuremath */
   private static final char[] ENSUREMATH_BEGIN = { '{', '\\', 'e', 'n',
-    's', 'u', 'r', 'e', 'm', 'a', 't', 'h', '{' };
+      's', 'u', 'r', 'e', 'm', 'a', 't', 'h', '{' };
 
   /**
    * create the inline math element

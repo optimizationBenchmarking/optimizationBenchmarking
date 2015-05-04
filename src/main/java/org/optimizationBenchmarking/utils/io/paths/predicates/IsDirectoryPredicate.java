@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
  * directory
  */
 public final class IsDirectoryPredicate implements
-IPredicate<BasicFileAttributes>, Serializable {
+    IPredicate<BasicFileAttributes>, Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

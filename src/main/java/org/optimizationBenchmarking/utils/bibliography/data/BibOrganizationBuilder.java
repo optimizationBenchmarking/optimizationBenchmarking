@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for organization objects. */
 public final class BibOrganizationBuilder extends
-BuilderFSM<BibOrganization> {
+    BuilderFSM<BibOrganization> {
 
   /** the organization name has been set */
   private static final int FLAG_NAME_SET = (FSM.FLAG_NOTHING + 1);
@@ -87,7 +87,7 @@ BuilderFSM<BibOrganization> {
     if ((this.m_name = this.normalize(name)) == null) {
       throw new IllegalArgumentException(//
           "Organization name cannot be set to empty or null, but '" //$NON-NLS-1$
-          + name + "' is."); //$NON-NLS-1$
+              + name + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -105,7 +105,7 @@ BuilderFSM<BibOrganization> {
     if ((this.m_originalSpelling = this.normalize(orig)) == null) {
       throw new IllegalArgumentException(//
           "The original spelling of an organization name and address cannot be set to empty or null, but '" //$NON-NLS-1$
-          + orig + "' is."); //$NON-NLS-1$
+              + orig + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -123,7 +123,7 @@ BuilderFSM<BibOrganization> {
     if ((this.m_address = this.normalize(address)) == null) {
       throw new IllegalArgumentException(//
           "Organization address cannot be set to empty or null, but '" //$NON-NLS-1$
-          + address + "' is."); //$NON-NLS-1$
+              + address + "' is."); //$NON-NLS-1$
     }
   }
 

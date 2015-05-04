@@ -86,7 +86,7 @@ public class FontPalette extends Palette<FontStyle> {
     if ((f = s.getFamily()) != EFontFamily.MONOSPACED) {
       throw new IllegalArgumentException(//
           "The code font family must be " + //$NON-NLS-1$
-          EFontFamily.MONOSPACED + " but is " + f);//$NON-NLS-1$
+              EFontFamily.MONOSPACED + " but is " + f);//$NON-NLS-1$
 
     }
   }
@@ -106,7 +106,7 @@ public class FontPalette extends Palette<FontStyle> {
     if (s.getFamily() == EFontFamily.MONOSPACED) {
       throw new IllegalArgumentException(//
           "The emphasize font family must not be " + //$NON-NLS-1$
-          EFontFamily.MONOSPACED + " but is.");//$NON-NLS-1$
+              EFontFamily.MONOSPACED + " but is.");//$NON-NLS-1$
 
     }
   }
@@ -208,8 +208,8 @@ public class FontPalette extends Palette<FontStyle> {
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.calcHashCode(),
             HashUtils.hashCode(this.m_default)),
-            HashUtils.combineHashes(HashUtils.hashCode(this.m_emph),
-                HashUtils.hashCode(this.m_code)));
+        HashUtils.combineHashes(HashUtils.hashCode(this.m_emph),
+            HashUtils.hashCode(this.m_code)));
   }
 
   /** {@inheritDoc} */
@@ -224,7 +224,7 @@ public class FontPalette extends Palette<FontStyle> {
       return (EComparison.equals(this.m_default, other.m_default) && //
           EComparison.equals(this.m_emph, other.m_emph) && //
           EComparison.equals(this.m_code, other.m_code) && //
-          super.equals(o));
+      super.equals(o));
     }
     return false;
   }

@@ -25,7 +25,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * </p>
  */
 final class _JFreeChartXYLineAndShapeRenderer extends
-XYLineAndShapeRenderer implements DrawingSupplier {
+    XYLineAndShapeRenderer implements DrawingSupplier {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

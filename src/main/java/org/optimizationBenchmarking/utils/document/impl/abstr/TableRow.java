@@ -37,7 +37,7 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
     if (this.m_totalIndex < this.m_index) {
       throw new IllegalArgumentException(//
           "Table row total index cannot be less than row index, but " + //$NON-NLS-1$
-          this.m_totalIndex + " is less than " + this.m_index); //$NON-NLS-1$
+              this.m_totalIndex + " is less than " + this.m_index); //$NON-NLS-1$
     }
 
   }
@@ -119,7 +119,7 @@ public abstract class TableRow extends DocumentPart implements ITableRow {
     if (this.m_nextCol < b.length) {
       throw new IllegalStateException(//
           "Row should have " + b.length + //$NON-NLS-1$
-          " cells, but has only " + this.m_nextCol); //$NON-NLS-1$
+              " cells, but has only " + this.m_nextCol); //$NON-NLS-1$
     }
     super.onClose();
   }

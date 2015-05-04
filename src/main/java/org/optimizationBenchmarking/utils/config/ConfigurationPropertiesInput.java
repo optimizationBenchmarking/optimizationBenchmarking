@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.TextInputTool
 
 /** the configuration properties input */
 public final class ConfigurationPropertiesInput extends
-TextInputTool<ConfigurationBuilder> {
+    TextInputTool<ConfigurationBuilder> {
 
   /** create */
   ConfigurationPropertiesInput() {
@@ -28,7 +28,7 @@ TextInputTool<ConfigurationBuilder> {
   @Override
   protected final void reader(final IOJob job,
       final ConfigurationBuilder data, final BufferedReader reader)
-          throws Throwable {
+      throws Throwable {
     Properties pr;
 
     pr = new Properties();

@@ -12,8 +12,8 @@ import org.optimizationBenchmarking.utils.io.xml.XMLBase;
  *          the job builder type
  */
 class _XMLOutputJobBuilder<DT, JBT extends _XMLOutputJobBuilder<DT, JBT>>
-extends _TextOutputJobBuilder<DT, JBT> implements
-IXMLOutputJobBuilder<DT> {
+    extends _TextOutputJobBuilder<DT, JBT> implements
+    IXMLOutputJobBuilder<DT> {
 
   /**
    * create the job builder

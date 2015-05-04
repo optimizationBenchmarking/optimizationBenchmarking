@@ -30,7 +30,7 @@ public class StrokePaletteExample {
   /** the palettes to print */
   public static final ArrayListView<StrokePalette> PALETTES = new ArrayListView<>(
       new StrokePalette[] {//
-          DefaultStrokePalette.getInstance() });
+      DefaultStrokePalette.getInstance() });
 
   /**
    * run the example: there are problems with the pdf output
@@ -56,11 +56,11 @@ public class StrokePaletteExample {
       sub = dir.resolve("example_" + (++j));//$NON-NLS-1$
       for (final StrokePalette p : StrokePaletteExample.PALETTES) {//
         StrokePaletteExample
-        .__paint(
-            sub,
-            ((((StrokePaletteExample.class.getSimpleName() + '_') + (++z)) + '_')
-                + d.getClass().getSimpleName() + '_' + p.getClass()
-                .getSimpleName()), d, p);
+            .__paint(
+                sub,
+                ((((StrokePaletteExample.class.getSimpleName() + '_') + (++z)) + '_')
+                    + d.getClass().getSimpleName() + '_' + p.getClass()
+                    .getSimpleName()), d, p);
       }
     }
   }

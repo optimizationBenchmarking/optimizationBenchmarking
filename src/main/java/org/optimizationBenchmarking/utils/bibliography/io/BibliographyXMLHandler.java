@@ -89,7 +89,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
         } catch (final Throwable t) {
           throw new IllegalArgumentException(//
               ((("Error when trying to load singleton bibliogrphy entry '" //$NON-NLS-1$
-                  + s) + '\'') + '.'), t);
+              + s) + '\'') + '.'), t);
         }
 
         if (reflect instanceof BibRecord) {
@@ -104,7 +104,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
 
         throw new IllegalStateException(//
             "Can use only load bibliography records or iterables of them (such as bibliographies) from Java, but found instance of " + //$NON-NLS-1$
-            TextUtils.className(reflect.getClass()));
+                TextUtils.className(reflect.getClass()));
       }
 
       if (BibliographyXML.ELEMENT_ARTICLE.equalsIgnoreCase(localName)) {
@@ -267,7 +267,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
 
       if (BibliographyXML.ELEMENT_END_DATE.equalsIgnoreCase(localName)) {
         this.m_builders
-        .add(bdb = ((BibProceedingsBuilder) bfsm).endDate());
+            .add(bdb = ((BibProceedingsBuilder) bfsm).endDate());
         BibliographyXMLHandler.__setDateAtts(bdb, attributes);
         return;
       }
@@ -549,20 +549,20 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
             BibliographyXML.ELEMENT_BOOK.equalsIgnoreCase(localName)
             || //
             BibliographyXML.ELEMENT_PROCEEDINGS
-            .equalsIgnoreCase(localName)
+                .equalsIgnoreCase(localName)
             || //
             BibliographyXML.ELEMENT_THESIS.equalsIgnoreCase(localName)
             || //
             BibliographyXML.ELEMENT_WEBSITE.equalsIgnoreCase(localName)
             || //
             BibliographyXML.ELEMENT_TECH_REPORT
-            .equalsIgnoreCase(localName)
+                .equalsIgnoreCase(localName)
             || //
             BibliographyXML.ELEMENT_IN_COLLECTION
-            .equalsIgnoreCase(localName)
+                .equalsIgnoreCase(localName)
             || //
             BibliographyXML.ELEMENT_IN_PROCEEDINGS
-            .equalsIgnoreCase(localName)
+                .equalsIgnoreCase(localName)
             || //
             BibliographyXML.ELEMENT_DATE.equalsIgnoreCase(localName)
             || //
@@ -581,7 +581,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
             BibliographyXML.ELEMENT_LOCATION.equalsIgnoreCase(localName) || //
             BibliographyXML.ELEMENT_SCHOOL.equalsIgnoreCase(localName) || //
             BibliographyXML.ELEMENT_INSTITUTION
-            .equalsIgnoreCase(localName)) {
+                .equalsIgnoreCase(localName)) {
           this.m_builders.remove(this.m_builders.size() - 1).close();
         }
 

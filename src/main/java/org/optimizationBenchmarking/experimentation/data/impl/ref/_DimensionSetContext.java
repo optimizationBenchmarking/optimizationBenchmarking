@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /** A context for dimension sets. */
 final class _DimensionSetContext extends
-_HierarchicalCollection<Dimension, DimensionContext, DimensionSet> {
+    _HierarchicalCollection<Dimension, DimensionContext, DimensionSet> {
 
   /**
    * create

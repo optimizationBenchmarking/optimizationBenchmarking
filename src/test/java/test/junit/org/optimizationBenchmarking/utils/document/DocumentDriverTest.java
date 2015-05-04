@@ -27,7 +27,7 @@ import examples.org.optimizationBenchmarking.utils.document.TemplateDocumentExam
 /** A test of a document driver */
 @Ignore
 public abstract class DocumentDriverTest extends
-InstanceTest<DocumentConfiguration> {
+    InstanceTest<DocumentConfiguration> {
 
   /**
    * create

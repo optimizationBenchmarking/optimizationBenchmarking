@@ -6,10 +6,10 @@ import org.optimizationBenchmarking.utils.document.impl.abstr.TableBody;
 final class _XHTML10TableBody extends TableBody {
   /** the start of table body */
   private static final char[] TAB_BODY_BEGIN = { '<', 't', 'b', 'o', 'd',
-    'y', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', '"', '>' };
+      'y', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'a', 'b', '"', '>' };
   /** the end of the table body */
   private static final char[] TAB_BODY_END = { '<', '/', 't', 'b', 'o',
-    'd', 'y', '>' };
+      'd', 'y', '>' };
 
   /**
    * Create a body of a table

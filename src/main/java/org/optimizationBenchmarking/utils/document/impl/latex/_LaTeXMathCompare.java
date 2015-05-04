@@ -46,12 +46,12 @@ final class _LaTeXMathCompare extends MathCompare {
         '}', '{', '\\', 'n', 'e', 'q', '}', '{', };
     _LaTeXMathCompare.SIGNS[EMathComparison.NOT_EQUIVALENT.ordinal()] = new char[] {
         '}', '{', '\\', 'n', 'o', 't', '\\', 'e', 'q', 'u', 'i', 'v', '}',
-    '{' };
+        '{' };
     _LaTeXMathCompare.SIGNS[EMathComparison.NOT_APPROXIMATELY.ordinal()] = new char[] {
         '}', '{', '\\', 'n', 'o', 't', '\\', 'a', 'p', 'p', 'r', 'o', 'x',
         '}', '{', };
     _LaTeXMathCompare.SIGNS[EMathComparison.NOT_APPROXIMATELY_EQUAL
-                            .ordinal()] = new char[] { '}', '{', '\\', 'n', 'o', 't', '\\',
+        .ordinal()] = new char[] { '}', '{', '\\', 'n', 'o', 't', '\\',
         'a', 'p', 'p', 'r', 'o', 'x', 'e', 'q', '}', '{', };
     _LaTeXMathCompare.SIGNS[EMathComparison.NOT_PROPROTIONAL_TO.ordinal()] = new char[] {
         '}', '{', '\\', 'n', 'o', 't', '\\', 'p', 'r', 'o', 'p', 't', 'o',
@@ -68,11 +68,11 @@ final class _LaTeXMathCompare extends MathCompare {
     _LaTeXMathCompare.SIGNS[EMathComparison.SUBSET_OF_OR_EQUAL.ordinal()] = new char[] {
         '}', '{', '\\', 's', 'u', 'b', 's', 'e', 't', 'e', 'q', '}', '{' };
     _LaTeXMathCompare.SIGNS[EMathComparison.NOT_SUBSET_OF_OR_EQUAL
-                            .ordinal()] = new char[] { '}', '{', '\\', 'n', 's', 'u', 'b',
+        .ordinal()] = new char[] { '}', '{', '\\', 'n', 's', 'u', 'b',
         's', 'e', 't', 'e', 'q', '}', '{' };
     _LaTeXMathCompare.SIGNS[EMathComparison.DEFINED_AS.ordinal()] = new char[] {
         '}', '{', '\\', 't', 'r', 'i', 'a', 'n', 'g', 'l', 'e', 'q', '}',
-    '{' };
+        '{' };
     _LaTeXMathCompare.SIGNS[EMathComparison.APPROXIMATED_AS.ordinal()] = new char[] {
         '}', '{', '\\', 's', 't', 'a', 'c', 'k', 'r', 'e', 'l', '{', '\\',
         'l', 'a', 'n', 'd', '}', '{', '=', '}', '}', '{' };
@@ -83,7 +83,7 @@ final class _LaTeXMathCompare extends MathCompare {
     _LaTeXMathCompare.SIGNS[EMathComparison.PRECEDES_OR_EQUAL.ordinal()] = new char[] {
         '}', '{', '\\', 'p', 'r', 'e', 'c', 'e', 'q', '}', '{' };
     _LaTeXMathCompare.SIGNS[EMathComparison.NOT_PRECEDES_OR_EQUAL
-                            .ordinal()] = new char[] { '}', '{', '\\', 'n', 'p', 'r', 'e',
+        .ordinal()] = new char[] { '}', '{', '\\', 'n', 'p', 'r', 'e',
         'c', 'e', 'q', '}', '{' };
     _LaTeXMathCompare.SIGNS[EMathComparison.SUCCEEDS.ordinal()] = new char[] {
         '}', '{', '\\', 's', 'u', 'c', 'c', '}', '{' };
@@ -92,7 +92,7 @@ final class _LaTeXMathCompare extends MathCompare {
     _LaTeXMathCompare.SIGNS[EMathComparison.SUCCEEDS_OR_EQUAL.ordinal()] = new char[] {
         '}', '{', '\\', 's', 'u', 'c', 'c', 'e', 'q', '}', '{' };
     _LaTeXMathCompare.SIGNS[EMathComparison.NOT_SUCCEEDS_OR_EQUAL
-                            .ordinal()] = new char[] { '}', '{', '\\', 'n', 's', 'u', 'c',
+        .ordinal()] = new char[] { '}', '{', '\\', 'n', 's', 'u', 'c',
         'c', 'e', 'q', '}', '{' };
     _LaTeXMathCompare.SIGNS[EMathComparison.SIMILAR.ordinal()] = new char[] {
         '}', '{', '\\', 's', 'i', 'm', '}', '{' };
@@ -102,22 +102,22 @@ final class _LaTeXMathCompare extends MathCompare {
     NEEDS_AMSSYMB = new boolean[EMathComparison.INSTANCES.size()];
 
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.VERY_MUCH_LESS
-                                    .ordinal()] = true;
+        .ordinal()] = true;
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.VERY_MUCH_GREATER
-                                    .ordinal()] = true;
+        .ordinal()] = true;
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.APPROXIMATELY_EQUAL
-                                    .ordinal()] = true;
+        .ordinal()] = true;
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.NOT_APPROXIMATELY_EQUAL
-                                    .ordinal()] = true;
+        .ordinal()] = true;
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.NOT_SUBSET_OF_OR_EQUAL
-                                    .ordinal()] = true;
+        .ordinal()] = true;
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.DEFINED_AS.ordinal()] = true;
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.NOT_PRECEDES.ordinal()] = true;
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.NOT_PRECEDES_OR_EQUAL
-                                    .ordinal()] = true;
+        .ordinal()] = true;
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.NOT_SUCCEEDS.ordinal()] = true;
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.NOT_SUCCEEDS_OR_EQUAL
-                                    .ordinal()] = true;
+        .ordinal()] = true;
     _LaTeXMathCompare.NEEDS_AMSSYMB[EMathComparison.NOT_SIMILAR.ordinal()] = true;
 
   }

@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** A parser for LaTeX document classes */
 public final class LaTeXDocumentClassParser extends
-InstanceParser<LaTeXDocumentClass> {
+    InstanceParser<LaTeXDocumentClass> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

@@ -131,22 +131,22 @@ public final class CSVEDIInput extends EDIInputToolBase {
     candidates = new LinkedHashSet<>();
     CSVEDIInput.__add(CSVEDIInput.DIMENSIONS_BASE, candidates);
     DIMENSIONS_FILE_CANDIDATES = candidates.toArray(new String[candidates
-                                                               .size()]);
+        .size()]);
 
     candidates.clear();
     CSVEDIInput.__add(CSVEDIInput.INSTANCES_BASE, candidates);
     INSTANCES_FILE_CANDIDATES = candidates.toArray(new String[candidates
-                                                              .size()]);
+        .size()]);
 
     candidates.clear();
     CSVEDIInput.__add(CSVEDIInput.EXPERIMENT_BASE, candidates);
     EXPERIMENT_FILE_CANDIDATES = candidates.toArray(new String[candidates
-                                                               .size()]);
+        .size()]);
   }
 
   /** the comments */
   private static final String[] COMMENTS = { "#", //$NON-NLS-1$
-    "//"//$NON-NLS-1$
+      "//"//$NON-NLS-1$
   };
 
   /**
@@ -225,12 +225,12 @@ public final class CSVEDIInput extends EDIInputToolBase {
     lm3 = (n.charAt(--len));
 
     return (((lm3 == '.') && (//
-        (((lm2 == 'c') || (lm2 == 'C'))//
-            && ((lm1 == 's') || (lm1 == 'S'))//
-            && ((lm0 == 'v') || (lm0 == 'V'))) || //
-            (((lm2 == 't') || (lm2 == 'T'))//
-                && ((lm1 == 'x') || (lm1 == 'X'))//
-                && ((lm0 == 't') || (lm0 == 'T'))))));
+    (((lm2 == 'c') || (lm2 == 'C'))//
+        && ((lm1 == 's') || (lm1 == 'S'))//
+    && ((lm0 == 'v') || (lm0 == 'V'))) || //
+    (((lm2 == 't') || (lm2 == 'T'))//
+        && ((lm1 == 'x') || (lm1 == 'X'))//
+    && ((lm0 == 't') || (lm0 == 'T'))))));
   }
 
   /** {@inheritDoc} */
@@ -239,7 +239,7 @@ public final class CSVEDIInput extends EDIInputToolBase {
       final ExperimentSetContext data, final Path path,
       final BasicFileAttributes attributes) throws Throwable {
     return (super.isFileInDirectoryLoadable(job, data, path, attributes) || //
-        this.isCSV(job, data, path, attributes));
+    this.isCSV(job, data, path, attributes));
   }
 
   /** {@inheritDoc} */
@@ -387,11 +387,11 @@ public final class CSVEDIInput extends EDIInputToolBase {
 
       try (final Reader ir = (((encoding != null) && (Reader.class
           .isAssignableFrom(encoding.getInputClass())))//
-          ? ((Reader) (encoding.wrapInputStream(is)))//
-              : new InputStreamReader(is))) {
+      ? ((Reader) (encoding.wrapInputStream(is)))//
+          : new InputStreamReader(is))) {
         try (final BufferedReader br = ((ir instanceof BufferedReader)//
-            ? ((BufferedReader) ir)//
-                : new BufferedReader(ir))) {
+        ? ((BufferedReader) ir)//
+            : new BufferedReader(ir))) {
           job.runBegin(true);
 
           while ((line = br.readLine()) != null) {

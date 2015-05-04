@@ -43,10 +43,10 @@ public class ColorPaletteXMLHandler extends DelegatingHandler {
 
           builder.setRGB(Integer.parseInt(//
               DelegatingHandler
-              .getAttribute(
-                  attributes,//
-                  ColorPaletteXML.NAMESPACE,
-                  ColorPaletteXML.ATTRIBUTE_RGB), 16));
+                  .getAttribute(
+                      attributes,//
+                      ColorPaletteXML.NAMESPACE,
+                      ColorPaletteXML.ATTRIBUTE_RGB), 16));
 
         }
         return;

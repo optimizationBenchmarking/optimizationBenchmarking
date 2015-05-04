@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * A property based selection.
  */
 public final class PropertyValueSelector extends
-Attribute<IExperimentSet, PropertyValueGroups> {
+    Attribute<IExperimentSet, PropertyValueGroups> {
 
   /** The the group-by parameter: {@value} */
   private static final String PARAM_GROUP_BY = "groupBy"; //$NON-NLS-1$
@@ -68,7 +68,7 @@ Attribute<IExperimentSet, PropertyValueGroups> {
     if (o instanceof PropertyValueSelector) {
       selector = ((PropertyValueSelector) o);
       return (EComparison.equals(this.m_property, selector.m_property) && //
-          EComparison.equals(this.m_grouper, selector.m_grouper));
+      EComparison.equals(this.m_grouper, selector.m_grouper));
     }
     return false;
   }

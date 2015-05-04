@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.math.BasicNumber;
  * An aggregate with a single, scale result.
  */
 public abstract class ScalarAggregate extends _StatefulNumber implements
-IAggregate {
+    IAggregate {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

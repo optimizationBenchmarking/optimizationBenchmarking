@@ -80,25 +80,25 @@ public class StableSumTest {
               SaturatingAdd.INSTANCE.computeAsLong(sum, valueToAdd));
         }
 
-      Assert.assertEquals(testResult,
-          SaturatingAdd.INSTANCE.computeAsLong(sum, valueToAdd));
+        Assert.assertEquals(testResult,
+            SaturatingAdd.INSTANCE.computeAsLong(sum, valueToAdd));
 
-      sum = testResult;
+        sum = testResult;
 
-      doubleVal = valueToAdd;
-      longVal = ((long) doubleVal);
-      if ((doubleVal == valueToAdd) && (longVal == valueToAdd)
-          && (rand.nextBoolean())) {
-        ss.append(doubleVal);
-      } else {
-        ss.append(valueToAdd);
-      }
+        doubleVal = valueToAdd;
+        longVal = ((long) doubleVal);
+        if ((doubleVal == valueToAdd) && (longVal == valueToAdd)
+            && (rand.nextBoolean())) {
+          ss.append(doubleVal);
+        } else {
+          ss.append(valueToAdd);
+        }
 
-      Assert.assertTrue(ss.isInteger());
-      Assert.assertTrue(ss.isReal());
-      Assert.assertNotEquals(ss.getState(), BasicNumber.STATE_EMPTY);
-      Assert.assertEquals(ss.longValue(), sum);
-      Assert.assertEquals(sum, ss.doubleValue(), 0d);
+        Assert.assertTrue(ss.isInteger());
+        Assert.assertTrue(ss.isReal());
+        Assert.assertNotEquals(ss.getState(), BasicNumber.STATE_EMPTY);
+        Assert.assertEquals(ss.longValue(), sum);
+        Assert.assertEquals(sum, ss.doubleValue(), 0d);
       }
     }
   }

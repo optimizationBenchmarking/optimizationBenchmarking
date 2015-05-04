@@ -80,8 +80,8 @@ abstract class _Longs extends _List {
           break add;
         }
       }
-    this._add(earliest);
-    offset = (-1);
+      this._add(earliest);
+      offset = (-1);
     }
 
     // Sort the data points in ascending order.

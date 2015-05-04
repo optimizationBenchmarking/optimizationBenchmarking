@@ -57,15 +57,15 @@ public final class PermutationHashKey implements Cloneable {
   @Override
   public final boolean equals(final Object o) {
     return ((o == this) || //
-        ((o instanceof PermutationHashKey) && //
-            Arrays.equals(this.m_data, ((PermutationHashKey) o).m_data)));
+    ((o instanceof PermutationHashKey) && //
+    Arrays.equals(this.m_data, ((PermutationHashKey) o).m_data)));
   }
 
   /** {@inheritDoc} */
   @Override
   public final String toString() {
     return (this.m_hash + ": " + //$NON-NLS-1$
-        Arrays.toString(this.m_data));
+    Arrays.toString(this.m_data));
   }
 
   /** {@inheritDoc} */

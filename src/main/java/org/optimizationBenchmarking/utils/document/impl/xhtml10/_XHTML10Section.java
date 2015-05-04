@@ -8,8 +8,8 @@ import org.optimizationBenchmarking.utils.document.spec.ILabel;
 final class _XHTML10Section extends Section {
   /** the start of the section div */
   private static final char[] SECTION_DIV_BEGIN = { '<', 'd', 'i', 'v',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i',
-    'o', 'n', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't', 'i',
+      'o', 'n', '"', '>' };
 
   /**
    * Create a new section

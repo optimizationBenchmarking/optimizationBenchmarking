@@ -19,8 +19,8 @@ public enum EDI implements IXMLFileType {
 
   /** the namespace uri */
   static final URI NAMESPACE_URI = //
-      URI.create(
-          "http://www.optimizationBenchmarking.org/formats/experimentDataInterchange/experimentDataInterchange.1.0.xsd").normalize(); //$NON-NLS-1$
+  URI.create(
+      "http://www.optimizationBenchmarking.org/formats/experimentDataInterchange/experimentDataInterchange.1.0.xsd").normalize(); //$NON-NLS-1$
 
   /** the namespace uri */
   static final String NAMESPACE = EDI.NAMESPACE_URI.toString();
@@ -102,46 +102,46 @@ public enum EDI implements IXMLFileType {
 
   static {
     ATTRIBUTE_VALUE_DIMENSION_TYPE = new String[EDimensionType.INSTANCES
-                                                .size()];
+        .size()];
     EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[EDimensionType.RUNTIME_CPU
-                                       .ordinal()] = "runtimeCPU"; //$NON-NLS-1$
+        .ordinal()] = "runtimeCPU"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[EDimensionType.RUNTIME_NORMALIZED
-                                       .ordinal()] = "runtimeNormalized"; //$NON-NLS-1$
+        .ordinal()] = "runtimeNormalized"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[EDimensionType.ITERATION_ALGORITHM_STEP
-                                       .ordinal()] = "iterationAlgorithmStep"; //$NON-NLS-1$
+        .ordinal()] = "iterationAlgorithmStep"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[EDimensionType.ITERATION_FE
-                                       .ordinal()] = "iterationFE"; //$NON-NLS-1$
+        .ordinal()] = "iterationFE"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[EDimensionType.ITERATION_SUB_FE
-                                       .ordinal()] = "iterationSubFE"; //$NON-NLS-1$
+        .ordinal()] = "iterationSubFE"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[EDimensionType.QUALITY_PROBLEM_DEPENDENT
-                                       .ordinal()] = "qualityProblemDependent"; //$NON-NLS-1$
+        .ordinal()] = "qualityProblemDependent"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_TYPE[EDimensionType.QUALITY_PROBLEM_INDEPENDENT
-                                       .ordinal()] = "qualityProblemIndependent"; //$NON-NLS-1$
+        .ordinal()] = "qualityProblemIndependent"; //$NON-NLS-1$
   }
 
   static {
     ATTRIBUTE_VALUE_DIMENSION_DIRECTION = new String[EDimensionDirection.INSTANCES
-                                                     .size()];
+        .size()];
     EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION[EDimensionDirection.DECREASING
-                                            .ordinal()] = "decreasing"; //$NON-NLS-1$
+        .ordinal()] = "decreasing"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION[EDimensionDirection.DECREASING_STRICTLY
-                                            .ordinal()] = "decreasingStrictly"; //$NON-NLS-1$
+        .ordinal()] = "decreasingStrictly"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION[EDimensionDirection.INCREASING
-                                            .ordinal()] = "increasing"; //$NON-NLS-1$
+        .ordinal()] = "increasing"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_DIRECTION[EDimensionDirection.INCREASING_STRICTLY
-                                            .ordinal()] = "increasingStrictly"; //$NON-NLS-1$
+        .ordinal()] = "increasingStrictly"; //$NON-NLS-1$
   }
 
   static {
     ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE = new String[EPrimitiveType.TYPES
-                                                     .size()];
+        .size()];
     EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[EPrimitiveType.BYTE.ordinal()] = "byte"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[EPrimitiveType.SHORT.ordinal()] = "short"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[EPrimitiveType.INT.ordinal()] = "int"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[EPrimitiveType.LONG.ordinal()] = "long"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[EPrimitiveType.FLOAT.ordinal()] = "float"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[EPrimitiveType.DOUBLE
-                                            .ordinal()] = "double"; //$NON-NLS-1$
+        .ordinal()] = "double"; //$NON-NLS-1$
   }
 
   /** the default suffix */

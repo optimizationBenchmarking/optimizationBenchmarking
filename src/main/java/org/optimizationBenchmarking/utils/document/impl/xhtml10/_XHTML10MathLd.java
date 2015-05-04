@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10MathLd extends MathLd {
   /** the operator */
   private final static char[] OP = new char[] { 'l', 'o', 'g', '<', 's',
-    'u', 'b', '>', '2', '<', '/', 's', 'u', 'b', '>', };
+      'u', 'b', '>', '2', '<', '/', 's', 'u', 'b', '>', };
 
   /**
    * Create a new mathematical function

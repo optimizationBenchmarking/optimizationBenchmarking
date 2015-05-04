@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A context for creating instance run sets . */
 public final class InstanceRunsContext extends
-_HierarchicalCollection<Run, RunContext, InstanceRuns> {
+    _HierarchicalCollection<Run, RunContext, InstanceRuns> {
 
   /** we have an instance */
   private static final int FLAG_HAS_INSTANCE = (FSM.FLAG_NOTHING + 1);
@@ -96,7 +96,7 @@ _HierarchicalCollection<Run, RunContext, InstanceRuns> {
     if (i == null) {
       throw new IllegalArgumentException(
           (("No instance matches the string '" + //$NON-NLS-1$
-              inst) + '\'') + '.');
+          inst) + '\'') + '.');
     }
     this.setInstance(i);
   }

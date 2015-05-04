@@ -117,7 +117,7 @@ public class CharTest extends TestBase {
 
       Assert.assertTrue(e.getDashCount() > 0);
       Assert
-      .assertEquals(e.getDashCount(), e.getOtherEnd().getDashCount());
+          .assertEquals(e.getDashCount(), e.getOtherEnd().getDashCount());
     }
   }
 

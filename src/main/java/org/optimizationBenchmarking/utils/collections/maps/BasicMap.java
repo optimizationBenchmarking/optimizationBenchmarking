@@ -25,7 +25,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  *          the entry type
  */
 public class BasicMap<K, V, NT extends BasicMapEntry<K, V>> extends
-AbstractMap<K, V> implements Iterable<NT>, Serializable, Cloneable {
+    AbstractMap<K, V> implements Iterable<NT>, Serializable, Cloneable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

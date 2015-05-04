@@ -131,9 +131,9 @@ public final class MedianFileSize extends SimpleFileVisitor<Path> {
 
     if ((k & 1) == 0) {
       k >>= 1;
-            MedianFileSize.__printlnSize(
-                (mfs.m_sizes[k >> 1] + mfs.m_sizes[1 + (k >> 1)]) >>> 1L,
-                maxLength);
+      MedianFileSize.__printlnSize(
+          (mfs.m_sizes[k >> 1] + mfs.m_sizes[1 + (k >> 1)]) >>> 1L,
+          maxLength);
     } else {
       MedianFileSize.__printlnSize(mfs.m_sizes[k >> 1], maxLength);
     }

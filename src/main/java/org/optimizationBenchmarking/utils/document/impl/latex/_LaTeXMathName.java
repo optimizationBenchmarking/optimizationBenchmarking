@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXMathName extends MathName {
   /** the begin math name */
   private static final char[] NAME_BEGIN = { '{', '\\', 't', 'e', 'x',
-    't', 'i', 't', '{', };
+      't', 'i', 't', '{', };
 
   /**
    * create the mathematical name element

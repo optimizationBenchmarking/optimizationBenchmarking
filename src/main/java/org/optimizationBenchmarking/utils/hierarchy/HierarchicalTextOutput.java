@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * which publishes its API in the dedicated interfaces.
  */
 public class HierarchicalTextOutput extends HierarchicalText implements
-ITextOutput {
+    ITextOutput {
 
   /**
    * Create the hierarchical {@link java.lang.Appendable} with published

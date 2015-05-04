@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.math.mathEngine.spec.IVariable;
  * Assign the value of a variable, or allocate a new variable and assign it
  */
 public final class RAssignment extends _RBlockingScope implements
-IAssignment {
+    IAssignment {
 
   /** the variable to use */
   private final IVariable m_var;
@@ -58,7 +58,7 @@ IAssignment {
     if (!this.m_isAssigned) {
       throw new IllegalStateException(//
           "Variable " + this.m_var + //$NON-NLS-1$
-          " must be assigned.");//$NON-NLS-1$
+              " must be assigned.");//$NON-NLS-1$
     }
 
     out = this.m_engine.m_out;

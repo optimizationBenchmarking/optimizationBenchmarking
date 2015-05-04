@@ -81,7 +81,7 @@ public abstract class ChartExample {
    */
   protected static final ELegendMode randomLegendMode(final Random rand) {
     return ChartExample.LEGEND_MODES[rand
-                                     .nextInt(ChartExample.LEGEND_MODES.length)];
+        .nextInt(ChartExample.LEGEND_MODES.length)];
   }
 
   /**
@@ -93,7 +93,7 @@ public abstract class ChartExample {
    */
   protected static final ELineType randomLineType(final Random rand) {
     return ChartExample.LINE_TYPES[rand
-                                   .nextInt(ChartExample.LINE_TYPES.length)];
+        .nextInt(ChartExample.LINE_TYPES.length)];
   }
 
   /**
@@ -107,10 +107,10 @@ public abstract class ChartExample {
     return new StyleSet(//
         ExampleFontPalettes.PALETTES.get(rand
             .nextInt(ExampleFontPalettes.PALETTES.size())),//
-            ColorPaletteExample.PALETTES.get(rand
-                .nextInt(ColorPaletteExample.PALETTES.size())),//
-                StrokePaletteExample.PALETTES.get(rand
-                    .nextInt(StrokePaletteExample.PALETTES.size())));//
+        ColorPaletteExample.PALETTES.get(rand
+            .nextInt(ColorPaletteExample.PALETTES.size())),//
+        StrokePaletteExample.PALETTES.get(rand
+            .nextInt(StrokePaletteExample.PALETTES.size())));//
   }
 
   /**
@@ -233,7 +233,7 @@ public abstract class ChartExample {
                   sub,//
                   ((((((((this.getClass().getSimpleName() + '_') + example) + '_') + (++z)) + '_') + d
                       .toString()) + '_') + c.getClass().getSimpleName()),//
-                      size, new FinishedPrinter(c, d), logger)) {
+                  size, new FinishedPrinter(c, d), logger)) {
             rand.setSeed(seed);
             this.perform(c.use().setGraphic(g).setLogger(logger)
                 .setStyleSet(styles).create(), styles, rand);

@@ -21,8 +21,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  *          the property value type
  */
 class _PropertySetting<PVT extends PropertyValue<?>, PT extends Property<PVT>>
-extends AbstractMap<IProperty, Object> implements Serializable,
-IPropertySetting {
+    extends AbstractMap<IProperty, Object> implements Serializable,
+    IPropertySetting {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -86,7 +86,7 @@ IPropertySetting {
     return ((value != null)
         && ((p = ((_IDObject) (value.m_owner))) != null)
         && ((id = p.m_id) >= 0) && (id < (pv = this.m_values).length)//
-        && (pv[id] == value));
+    && (pv[id] == value));
   }
 
   /** {@inheritDoc} */
@@ -117,7 +117,7 @@ IPropertySetting {
     return ((object instanceof PropertyValue)//
         && ((p = ((_IDObject) ((paramValue = ((_IDObject) object)).m_owner))) != null)//
         && ((id = p.m_id) >= 0) && (id < (pv = this.m_values).length) && //
-        (pv[id] == paramValue));
+    (pv[id] == paramValue));
   }
 
   /**
@@ -141,7 +141,7 @@ IPropertySetting {
         && (id < (pv = this.m_values).length)
         && ((v = pv[id]).m_owner == property)//
         && ((o = v.m_value) != _PropertyValueGeneralized.INSTANCE) && //
-        (o != _PropertyValueUnspecified.INSTANCE));
+    (o != _PropertyValueUnspecified.INSTANCE));
   }
 
   /** {@inheritDoc} */
@@ -181,7 +181,7 @@ IPropertySetting {
     return ((o instanceof Property) && //
         ((id = (((Property) o).m_id)) >= 0) && //
         (id < (pv = this.m_values).length) && //
-        (pv[id].m_owner == o));
+    (pv[id].m_owner == o));
   }
 
   /** {@inheritDoc} */
@@ -195,7 +195,7 @@ IPropertySetting {
     return ((((key instanceof Property) && //
         ((id = ((Property) key).m_id) >= 0) && //
         (id < (pv = this.m_values).length) && //
-        ((v = pv[id]).m_owner == key))) ? v.m_value : null);
+    ((v = pv[id]).m_owner == key))) ? v.m_value : null);
   }
 
   /** {@inheritDoc} */

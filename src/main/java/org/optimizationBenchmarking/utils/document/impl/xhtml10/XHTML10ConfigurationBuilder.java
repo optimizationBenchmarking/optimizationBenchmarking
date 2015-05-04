@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A configuration builder for XHTML 1.0 documents */
 public class XHTML10ConfigurationBuilder extends
-DocumentConfigurationBuilder {
+    DocumentConfigurationBuilder {
 
   /** the screen size */
   public static final String PARAM_SCREEN_SIZE = "screenSize"; //$NON-NLS-1$
@@ -173,7 +173,7 @@ DocumentConfigurationBuilder {
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.hashCode(),
             HashUtils.hashCode(this.m_fonts)),
-            HashUtils.hashCode(this.m_size));
+        HashUtils.hashCode(this.m_size));
   }
 
   /** {@inheritDoc} */

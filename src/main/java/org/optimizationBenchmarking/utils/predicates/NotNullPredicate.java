@@ -6,7 +6,7 @@ import java.io.Serializable;
  * A predicate that returns the same value for each {@code null} object.
  */
 public final class NotNullPredicate extends Object implements
-IPredicate<Object>, Serializable {
+    IPredicate<Object>, Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

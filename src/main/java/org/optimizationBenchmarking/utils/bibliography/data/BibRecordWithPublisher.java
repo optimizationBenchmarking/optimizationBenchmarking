@@ -53,7 +53,7 @@ public class BibRecordWithPublisher extends BibRecord {
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.calcHashCode(),
             HashUtils.hashCode(this.m_publisher)),
-            HashUtils.hashCode(this.m_publisher));
+        HashUtils.hashCode(this.m_publisher));
   }
 
   /**

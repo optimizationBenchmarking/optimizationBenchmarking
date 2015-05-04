@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *          the type
  */
 public class CollectingVisitor<T> extends ArrayList<T> implements
-IVisitor<T> {
+    IVisitor<T> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

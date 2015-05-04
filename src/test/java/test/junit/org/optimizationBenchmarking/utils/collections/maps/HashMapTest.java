@@ -9,7 +9,7 @@ import test.junit.org.optimizationBenchmarking.utils.collections.MapTest;
  * behavior of Java's map collection classes.
  */
 public class HashMapTest extends
-MapTest<Object, Object, HashMap<Object, Object>> {
+    MapTest<Object, Object, HashMap<Object, Object>> {
 
   /** create */
   public HashMapTest() {

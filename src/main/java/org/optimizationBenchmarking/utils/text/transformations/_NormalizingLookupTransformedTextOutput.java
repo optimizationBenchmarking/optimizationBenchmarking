@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * @author Thomas Weise
  */
 class _NormalizingLookupTransformedTextOutput extends
-_LookupTransformedTextOutput {
+    _LookupTransformedTextOutput {
 
   /** the normalizer form */
   private final Normalizer.Form m_form;

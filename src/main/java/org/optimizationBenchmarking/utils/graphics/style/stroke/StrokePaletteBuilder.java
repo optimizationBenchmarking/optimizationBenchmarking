@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * A builder for stroke palettes.
  */
 public class StrokePaletteBuilder extends
-PaletteBuilder<StrokeStyle, StrokePalette> {
+    PaletteBuilder<StrokeStyle, StrokePalette> {
 
   /** did we set the default stroke */
   private static final int FLAG_HAS_DEFAULT = (PaletteBuilder.FLAG_HAS_ELEMENTS << 1);

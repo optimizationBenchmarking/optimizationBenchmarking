@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
  * that run.
  */
 public class ShadowRun extends _ShadowDataElement<IInstanceRuns, IRun>
-implements IRun {
+    implements IRun {
 
   /**
    * create a delegating run

@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJobBuilder;
  *          the return type of the setter methods
  */
 public abstract class ToolJobBuilder<J extends IToolJob, R extends ToolJobBuilder<J, R>>
-implements IToolJobBuilder {
+    implements IToolJobBuilder {
 
   /** the logger */
   Logger m_logger;

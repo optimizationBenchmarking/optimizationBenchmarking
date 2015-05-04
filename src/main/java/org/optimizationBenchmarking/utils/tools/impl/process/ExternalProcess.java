@@ -420,7 +420,7 @@ public final class ExternalProcess extends ToolJob implements Closeable {
 
   /** the internal exception handler for worker threads */
   private final class __UncaughtExceptionHandler implements
-  UncaughtExceptionHandler {
+      UncaughtExceptionHandler {
 
     /** create */
     __UncaughtExceptionHandler() {

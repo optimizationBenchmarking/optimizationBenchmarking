@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
  * interface.
  */
 public abstract class AbstractProperty extends AbstractNamedElement
-implements IProperty {
+    implements IProperty {
 
   /** Create the property. */
   protected AbstractProperty() {

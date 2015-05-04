@@ -16,8 +16,8 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * computations to that feature set.
  */
 public class ShadowFeatureSet extends
-_ShadowPropertySet<IFeatureSet, IFeature, IFeatureSetting> implements
-IFeatureSet {
+    _ShadowPropertySet<IFeatureSet, IFeature, IFeatureSetting> implements
+    IFeatureSet {
   /**
    * create the shadow feature set
    *

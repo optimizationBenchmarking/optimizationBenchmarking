@@ -27,7 +27,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  *          the destination type
  */
 public class FileInputTool<S> extends IOTool<S> implements
-IFileInputTool<S> {
+    IFileInputTool<S> {
 
   /** create */
   protected FileInputTool() {
@@ -171,8 +171,8 @@ IFileInputTool<S> {
           && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
         logger.log(IOTool.DEFAULT_LOG_LEVEL,//
             "Beginning input from resource '" + //$NON-NLS-1$
-            location.m_location2
-            + "' of class " + location.m_location1); //$NON-NLS-1$
+                location.m_location2
+                + "' of class " + location.m_location1); //$NON-NLS-1$
       }
       this.__resource(job, data, ((Class<?>) (location.m_location1)),
           ((String) (location.m_location2)), location.m_encoding,
@@ -181,8 +181,8 @@ IFileInputTool<S> {
           && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
         logger.log(IOTool.DEFAULT_LOG_LEVEL,//
             "Finished input from resource '" + //$NON-NLS-1$
-            location.m_location2
-            + "' of class " + location.m_location1); //$NON-NLS-1$
+                location.m_location2
+                + "' of class " + location.m_location1); //$NON-NLS-1$
       }
       return;
     }
@@ -200,7 +200,7 @@ IFileInputTool<S> {
               && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
             logger.log(IOTool.DEFAULT_LOG_LEVEL,//
                 "Beginning input from URL specified as String: " + //$NON-NLS-1$
-                location.m_location1);
+                    location.m_location1);
           }
           this.__url(job, data, new URL((String) (location.m_location1)),
               location.m_encoding, location.m_archiveType);
@@ -208,7 +208,7 @@ IFileInputTool<S> {
               && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
             logger.log(IOTool.DEFAULT_LOG_LEVEL,//
                 "Finished input from URL specified as String: " + //$NON-NLS-1$
-                location.m_location1);
+                    location.m_location1);
           }
           return;
         }
@@ -221,7 +221,7 @@ IFileInputTool<S> {
               && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
             logger.log(IOTool.DEFAULT_LOG_LEVEL,//
                 "Beginning input from URI specified as String: " + //$NON-NLS-1$
-                location.m_location1);
+                    location.m_location1);
           }
           this.__uri(job, data, new URI((String) (location.m_location1)),
               location.m_encoding, location.m_archiveType);
@@ -229,7 +229,7 @@ IFileInputTool<S> {
               && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
             logger.log(IOTool.DEFAULT_LOG_LEVEL,//
                 "Finished input from URI specified as String: " + //$NON-NLS-1$
-                location.m_location1);
+                    location.m_location1);
           }
           return;
         }
@@ -243,7 +243,7 @@ IFileInputTool<S> {
             && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
           logger.log(IOTool.DEFAULT_LOG_LEVEL,//
               "Beginning input from Resource specified as String: " + //$NON-NLS-1$
-              location.m_location1 + ':' + location.m_location2);
+                  location.m_location1 + ':' + location.m_location2);
         }
         this.__resource(job, data,
             Class.forName((String) (location.m_location1)),
@@ -253,7 +253,7 @@ IFileInputTool<S> {
             && (logger.isLoggable(IOTool.DEFAULT_LOG_LEVEL))) {
           logger.log(IOTool.DEFAULT_LOG_LEVEL,//
               "Finished input from Resource specified as String: " + //$NON-NLS-1$
-              location.m_location1 + ':' + location.m_location2);
+                  location.m_location1 + ':' + location.m_location2);
         }
         return;
       }
@@ -292,14 +292,14 @@ IFileInputTool<S> {
         logger.log(IOTool.FINE_LOG_LEVEL,//
             ((("Begin decompressing " + type.getName() + //$NON-NLS-1$
                 " to temporary folder '" //$NON-NLS-1$
-                + path) + '\'') + '.'));
+            + path) + '\'') + '.'));
       }
       type.decompressStreamToFolder(stream, path,
           this.getArchiveFallbackFileName());
       if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
         logger.log(IOTool.FINE_LOG_LEVEL,//
             ((("Finished decompressing to temporary folder '" //$NON-NLS-1$
-                + path) + '\'') + '.'));
+            + path) + '\'') + '.'));
       }
       this._path(job, data, path,
           Files.readAttributes(path, BasicFileAttributes.class), encoding,
@@ -328,7 +328,7 @@ IFileInputTool<S> {
   final void _file(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-          throws Throwable {
+      throws Throwable {
     final Object oldCur;
     final Logger logger;
 
@@ -375,7 +375,7 @@ IFileInputTool<S> {
   private final void __resource(final IOJob job, final S data,
       final Class<?> clazz, final String name,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-          throws Throwable {
+      throws Throwable {
     final Object oldCur;
 
     oldCur = job.m_current;
@@ -407,7 +407,7 @@ IFileInputTool<S> {
    */
   private final void __url(final IOJob job, final S data, final URL url,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-          throws Throwable {
+      throws Throwable {
     final Object oldCur;
     oldCur = job.m_current;
     try {
@@ -438,7 +438,7 @@ IFileInputTool<S> {
    */
   private final void __uri(final IOJob job, final S data, final URI uri,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-          throws Throwable {
+      throws Throwable {
     URL url;
     Path path;
     Throwable errorA, errorB, ioError;
@@ -596,7 +596,7 @@ IFileInputTool<S> {
    */
   protected boolean enterDirectory(final IOJob job, final S data,
       final Path path, final BasicFileAttributes attributes)
-          throws Throwable {
+      throws Throwable {
     return true;
   }
 
@@ -619,9 +619,9 @@ IFileInputTool<S> {
    */
   protected boolean isFileInDirectoryLoadable(final IOJob job,
       final S data, final Path path, final BasicFileAttributes attributes)
-          throws Throwable {
+      throws Throwable {
     return ((path != null) && (attributes != null) && //
-        (attributes.isRegularFile()));
+    (attributes.isRegularFile()));
   }
 
   /**
@@ -646,7 +646,7 @@ IFileInputTool<S> {
   final void _path(final IOJob job, final S data, final Path path,
       final BasicFileAttributes attributes,
       final StreamEncoding<?, ?> encoding, final EArchiveType archiveType)
-          throws Throwable {
+      throws Throwable {
 
     final Object oldCur;
     oldCur = job.m_current;

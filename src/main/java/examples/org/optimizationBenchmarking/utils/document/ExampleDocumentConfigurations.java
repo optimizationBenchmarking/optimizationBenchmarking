@@ -305,17 +305,17 @@ public final class ExampleDocumentConfigurations {
 
         if (uniqueLevel >= ExampleDocumentConfigurations.LEVEL_MIN) {
           uniqueCheck: {
-          for (level = uniqueLevel; level >= ExampleDocumentConfigurations.LEVEL_MIN; level--) {
-            key = allKeys[level
-                          - ExampleDocumentConfigurations.LEVEL_MIN];
-            if (key != null) {
-              if (!(all.contains(key))) {
-                break uniqueCheck;
+            for (level = uniqueLevel; level >= ExampleDocumentConfigurations.LEVEL_MIN; level--) {
+              key = allKeys[level
+                  - ExampleDocumentConfigurations.LEVEL_MIN];
+              if (key != null) {
+                if (!(all.contains(key))) {
+                  break uniqueCheck;
+                }
               }
             }
+            continue checkSingleConfig;
           }
-          continue checkSingleConfig;
-        }
         }
 
         for (level = mode; level > uniqueLevel; level--) {

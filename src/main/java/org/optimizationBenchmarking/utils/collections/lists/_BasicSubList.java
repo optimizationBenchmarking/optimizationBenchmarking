@@ -11,7 +11,7 @@ import java.util.Collection;
  *          the list type
  */
 final class _BasicSubList<ET, LT extends BasicList<ET>> extends
-BasicList<ET> {
+    BasicList<ET> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

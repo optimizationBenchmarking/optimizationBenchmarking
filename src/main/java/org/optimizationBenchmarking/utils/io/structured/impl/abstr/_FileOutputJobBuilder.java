@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  *          the job builder type
  */
 class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
-extends _IOJobBuilder<JBT> implements IFileOutputJobBuilder<DT> {
+    extends _IOJobBuilder<JBT> implements IFileOutputJobBuilder<DT> {
 
   /** the source */
   DT m_source;

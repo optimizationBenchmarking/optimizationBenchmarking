@@ -68,7 +68,7 @@ public final class FunctionToMathBridge {
     if (math == null) {
       throw new IllegalArgumentException(//
           "Math interface cannot be null when trying to represent mathematical function "//$NON-NLS-1$
-          + function);
+              + function);
     }
 
     if (function == null) {

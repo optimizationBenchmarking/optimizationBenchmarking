@@ -49,7 +49,7 @@ public class ColorStyleBuilder extends PaletteElementBuilder<ColorStyle> {
     } else {
       throw new IllegalArgumentException(//
           "Name must not be null or empty, but is '" //$NON-NLS-1$
-          + name + '\'');
+              + name + '\'');
     }
   }
 

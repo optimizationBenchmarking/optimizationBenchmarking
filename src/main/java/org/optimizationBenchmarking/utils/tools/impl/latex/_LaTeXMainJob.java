@@ -231,7 +231,7 @@ final class _LaTeXMainJob extends LaTeXJob {
     if (logger != null) {
       document = ((" LaTeX document '" + //$NON-NLS-1$
           (this._getFile(ELaTeXFileType.TEX) + "' in folder '") + //$NON-NLS-1$
-          this.m_directory) + '\'');
+      this.m_directory) + '\'');
     } else {
       document = null;
     }
@@ -336,8 +336,8 @@ final class _LaTeXMainJob extends LaTeXJob {
           } catch (final Throwable ignoreable) {
             ErrorUtils.logError(this.getLogger(), Level.WARNING,
                 (((("Error when trying to delete file '" + //$NON-NLS-1$
-                    path) + "' of type ") + type) + '.'),//$NON-NLS-1$
-                    ignoreable, true, RethrowMode.DONT_RETHROW);
+                path) + "' of type ") + type) + '.'),//$NON-NLS-1$
+                ignoreable, true, RethrowMode.DONT_RETHROW);
           }
         }
       }

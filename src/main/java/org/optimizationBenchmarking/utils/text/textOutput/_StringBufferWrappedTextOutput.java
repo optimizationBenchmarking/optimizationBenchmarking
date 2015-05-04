@@ -5,7 +5,7 @@ package org.optimizationBenchmarking.utils.text.textOutput;
  * {@link java.lang.StringBuffer}.
  */
 final class _StringBufferWrappedTextOutput extends
-_AppendableWrappedTextOutputBase<StringBuffer> {
+    _AppendableWrappedTextOutputBase<StringBuffer> {
 
   /**
    * Create a wrapped text output

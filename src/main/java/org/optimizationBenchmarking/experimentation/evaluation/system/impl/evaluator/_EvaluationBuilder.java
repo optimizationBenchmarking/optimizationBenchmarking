@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.document.spec.IDocument;
 
 /** The evaluation builder */
 final class _EvaluationBuilder extends _EvaluationSetup implements
-IEvaluationBuilder {
+    IEvaluationBuilder {
 
   /** build the evaluation procedure */
   _EvaluationBuilder() {

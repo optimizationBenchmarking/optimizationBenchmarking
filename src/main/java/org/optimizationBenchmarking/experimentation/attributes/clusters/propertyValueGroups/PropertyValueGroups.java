@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
  * A set of property value groups.
  */
 public abstract class PropertyValueGroups extends DataElement implements
-IClustering {
+    IClustering {
 
   /** the property */
   final IProperty m_property;

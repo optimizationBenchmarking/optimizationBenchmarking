@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.text.tokenizers.SeparatorBasedStringIt
  *          the palette type
  */
 public abstract class PaletteBuilder<ET extends IStyle, PT extends Palette<ET>>
-extends BuilderFSM<PT> {
+    extends BuilderFSM<PT> {
 
   /** do we have elements? */
   protected static final int FLAG_HAS_ELEMENTS = (FSM.FLAG_NOTHING + 1);
@@ -81,7 +81,7 @@ extends BuilderFSM<PT> {
     if ((s1 == null) || (s1.length() <= 0)) {
       throw new IllegalArgumentException(//
           "Palette element must not have empty name, but '" //$NON-NLS-1$
-          + t + "' has.");//$NON-NLS-1$
+              + t + "' has.");//$NON-NLS-1$
     }
 
     this.beforeAdd(element);
@@ -97,7 +97,7 @@ extends BuilderFSM<PT> {
       if (String.CASE_INSENSITIVE_ORDER.compare(s1, s2.toString()) == 0) {
         throw new IllegalArgumentException(//
             "No two palette elements must have the same name, but '"//$NON-NLS-1$
-            + s1 + "' and '" + s2 + "' do.");//$NON-NLS-1$//$NON-NLS-2$
+                + s1 + "' and '" + s2 + "' do.");//$NON-NLS-1$//$NON-NLS-2$
       }
     }
 

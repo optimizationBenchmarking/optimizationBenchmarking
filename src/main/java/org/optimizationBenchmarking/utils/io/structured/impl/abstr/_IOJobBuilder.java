@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ConfigurableToolJobBu
  *          the job builder type
  */
 abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
-ConfigurableToolJobBuilder<IIOJob, JBT> implements IIOJobBuilder {
+    ConfigurableToolJobBuilder<IIOJob, JBT> implements IIOJobBuilder {
 
   /** the tool */
   final IOTool<?> m_tool;
@@ -105,7 +105,7 @@ ConfigurableToolJobBuilder<IIOJob, JBT> implements IIOJobBuilder {
 
     throw new UnsupportedOperationException(//
         "Cannot process I/O function '" + function + //$NON-NLS-1$
-        "' with parameter '" + parameter + '\'');//$NON-NLS-1$
+            "' with parameter '" + parameter + '\'');//$NON-NLS-1$
   }
 
   /**

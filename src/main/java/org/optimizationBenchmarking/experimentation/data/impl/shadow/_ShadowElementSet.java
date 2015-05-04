@@ -24,7 +24,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  */
 abstract class _ShadowElementSet<OT extends IDataElement, ST extends IElementSet, //
 PT extends IDataElement> extends //
-_ShadowDataElement<OT, ST> implements IElementSet {
+    _ShadowDataElement<OT, ST> implements IElementSet {
 
   /** the data */
   ArrayListView<? extends PT> m_data;
@@ -99,8 +99,8 @@ _ShadowDataElement<OT, ST> implements IElementSet {
                 }
                 throw new IllegalArgumentException(//
                     "Instance of " //$NON-NLS-1$
-                    + TextUtils.className(spv.getClass()) + //
-                    "without owner encountered."); //$NON-NLS-1$
+                        + TextUtils.className(spv.getClass()) + //
+                        "without owner encountered."); //$NON-NLS-1$
               }
             }
           }

@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.predicates.IPredicate;
  *          the object type
  */
 public class StringInList<T> extends HashObject implements IPredicate<T>,
-Serializable {
+    Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

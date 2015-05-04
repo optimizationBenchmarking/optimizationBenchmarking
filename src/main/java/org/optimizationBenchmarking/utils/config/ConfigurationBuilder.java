@@ -135,7 +135,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
     if (isLocked) {
       throw new IllegalStateException(//
           "There has already been a read access to '" + key + //$NON-NLS-1$
-          "', so it cannot be changed anymore."); //$NON-NLS-1$
+              "', so it cannot be changed anymore."); //$NON-NLS-1$
     }
   }
 

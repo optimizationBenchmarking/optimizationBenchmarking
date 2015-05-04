@@ -13,8 +13,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
  * attribute-based computations to that instance set.
  */
 public class ShadowInstanceSet extends //
-_ShadowNamedElementSet<IExperimentSet, IInstanceSet, IInstance>
-implements IInstanceSet {
+    _ShadowNamedElementSet<IExperimentSet, IInstanceSet, IInstance>
+    implements IInstanceSet {
 
   /**
    * create the shadow instance

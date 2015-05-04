@@ -115,7 +115,7 @@ public final class PathUtils {
           }
 
         }
-        continue outer;
+          continue outer;
       }
       data[index] = '_';
       changed = true;
@@ -173,7 +173,7 @@ public final class PathUtils {
     if (s == null) {
       throw new IllegalArgumentException(//
           "Path cannot be null, empty, or composed only of whitespace but is '" //$NON-NLS-1$
-          + s + "'.");//$NON-NLS-1$
+              + s + "'.");//$NON-NLS-1$
     }
     return PathUtils.normalize(Paths.get(path));
   }
@@ -294,7 +294,7 @@ public final class PathUtils {
     }
 
     message = ("Cannot translate path '" + path + //$NON-NLS-1$
-        "' to a physical file path."); //$NON-NLS-1$;
+    "' to a physical file path."); //$NON-NLS-1$;
     if (error != null) {
       throw new IllegalArgumentException(message, error);
     }
@@ -327,7 +327,7 @@ public final class PathUtils {
     }
     throw new IllegalArgumentException(//
         "Error when obtaining path string from '" + //$NON-NLS-1$
-        path + '\'');
+            path + '\'');
   }
 
   /**
@@ -373,14 +373,14 @@ public final class PathUtils {
       stream = null;
       RethrowMode.AS_IO_EXCEPTION.rethrow(//
           (("Error while trying to open an OutputStream to path '" //$NON-NLS-1$
-              + path) + '\''), true, //
-              ErrorUtils.aggregateError(t3, error));
+          + path) + '\''), true, //
+          ErrorUtils.aggregateError(t3, error));
     }
 
     if (stream == null) {
       throw new IllegalStateException(//
           "Provider did not throw an exception when creating OutputStream for path '"//$NON-NLS-1$
-          + path + "', but returned null."); //$NON-NLS-1$
+              + path + "', but returned null."); //$NON-NLS-1$
     }
     return stream;
   }
@@ -415,7 +415,7 @@ public final class PathUtils {
     if (stream == null) {
       throw new IllegalStateException(//
           "Provider did not throw an exception when creating InputStream for path '"//$NON-NLS-1$
-          + path + "', but returned null."); //$NON-NLS-1$
+              + path + "', but returned null."); //$NON-NLS-1$
     }
     return stream;
   }
@@ -434,7 +434,7 @@ public final class PathUtils {
     if (n == null) {
       throw new IllegalArgumentException(//
           "Name must not be empty or null, but is '" //$NON-NLS-1$
-          + name + '\'');//
+              + name + '\'');//
     }
     return n;
   }
@@ -473,9 +473,9 @@ public final class PathUtils {
 
     throw new IllegalArgumentException(//
         "File '" + child + //$NON-NLS-1$
-        "' is not located inside folder '" + parent + //$NON-NLS-1$
-        "' and thus, the name '" + name + //$NON-NLS-1$
-        "' is invalid.");//$NON-NLS-1$
+            "' is not located inside folder '" + parent + //$NON-NLS-1$
+            "' and thus, the name '" + name + //$NON-NLS-1$
+            "' is invalid.");//$NON-NLS-1$
   }
 
   /**
@@ -850,7 +850,7 @@ public final class PathUtils {
    */
   public static final FileVisitResult visitPath(
       final FileVisitor<Path> visitor, final Path[] visitFirst)
-          throws IOException {
+      throws IOException {
     final __PathVisitor visitorWrapper;
     Path[] pathSet;
     FileVisitResult r;
@@ -1018,7 +1018,7 @@ public final class PathUtils {
           }
 
           for (final String def : new String[] {//
-              "HOME", //$NON-NLS-1$
+          "HOME", //$NON-NLS-1$
               "HOMEPATH", //$NON-NLS-1$
               "USERPROFILE", //$NON-NLS-1$
           }) {
@@ -1066,7 +1066,7 @@ public final class PathUtils {
 
       // get path lists from environment variables or java configuration
       for (final String key : new String[] {//
-          Configuration.PARAM_PATH,// PATH
+      Configuration.PARAM_PATH,// PATH
           "java.class.path",// class path //$NON-NLS-1$
           "classpath",//environment class path //$NON-NLS-1$
           "java.library.path",//path to native libraries//$NON-NLS-1$
@@ -1081,7 +1081,7 @@ public final class PathUtils {
 
       // add paths from environment variables or java config
       for (final String key : new String[] {//
-          "ProgramFiles", //$NON-NLS-1$
+      "ProgramFiles", //$NON-NLS-1$
           "ProgramFiles(x86)", //$NON-NLS-1$
           "ProgramW6432)", //$NON-NLS-1$
           "CommonProgramFiles", //$NON-NLS-1$
@@ -1100,7 +1100,7 @@ public final class PathUtils {
 
       // add default paths if they exist
       for (final String template : new String[] {//
-          "C:/Program Files", //$NON-NLS-1$
+      "C:/Program Files", //$NON-NLS-1$
           "C:/Program Files (x86)", //$NON-NLS-1$
           "C:/Windows", //$NON-NLS-1$
           "/etc", //$NON-NLS-1$
@@ -1230,7 +1230,7 @@ public final class PathUtils {
     /** {@inheritDoc} */
     @Override
     public Path parseString(final String string) throws IOException,
-    SecurityException {
+        SecurityException {
       BasicFileAttributes bfa;
       Path f;
 
@@ -1275,7 +1275,7 @@ public final class PathUtils {
    * in a directory, then the directory itself.
    */
   private static final class __DeleteFileTree extends
-  SimpleFileVisitor<Path> {
+      SimpleFileVisitor<Path> {
 
     /** the exceptions */
     private ArrayList<Throwable> m_exceptions;
@@ -1391,7 +1391,7 @@ public final class PathUtils {
         skip.add(p);
       }
       for (final String template : new String[] {//
-          "/tmp", //$NON-NLS-1$
+      "/tmp", //$NON-NLS-1$
           "/etc/cups/ssl", //$NON-NLS-1$
           "/etc/ssl/private", //$NON-NLS-1$
           "/etc/polkit-1/localauthority",//$NON-NLS-1$
@@ -1424,7 +1424,7 @@ public final class PathUtils {
 
         // add default paths if they exist
         for (final String template : new String[] {//
-            "addins", //$NON-NLS-1$
+        "addins", //$NON-NLS-1$
             "ADFS", //$NON-NLS-1$
             "AppCompat", //$NON-NLS-1$
             "apppatch", //$NON-NLS-1$
@@ -1678,33 +1678,33 @@ public final class PathUtils {
     private final FileVisitResult __check(final Path path,
         final BasicFileAttributes attrs) {
       check: {
-      checkAtts: {
-      if (this.m_attsPredicate != null) {
-        try {
-          if (this.m_attsPredicate.check(attrs)) {
-            break checkAtts;
+        checkAtts: {
+          if (this.m_attsPredicate != null) {
+            try {
+              if (this.m_attsPredicate.check(attrs)) {
+                break checkAtts;
+              }
+            } catch (final Throwable t) {
+              //
+            }
+            break check;
           }
-        } catch (final Throwable t) {
-          //
-        }
-        break check;
-      }
-    }
-
-    if (this.m_pathPredicate != null) {
-      try {
-        if (this.m_pathPredicate.check(path)) {
-          this.m_found = path;
-          return FileVisitResult.TERMINATE;
         }
 
-      } catch (final Throwable t) {
-        //
+        if (this.m_pathPredicate != null) {
+          try {
+            if (this.m_pathPredicate.check(path)) {
+              this.m_found = path;
+              return FileVisitResult.TERMINATE;
+            }
+
+          } catch (final Throwable t) {
+            //
+          }
+        }
       }
-    }
-    }
-    return ((this.m_found == null) ? FileVisitResult.CONTINUE
-        : FileVisitResult.TERMINATE);
+      return ((this.m_found == null) ? FileVisitResult.CONTINUE
+          : FileVisitResult.TERMINATE);
     }
 
     /** {@inheritDoc} */
@@ -1743,7 +1743,7 @@ public final class PathUtils {
    * this operation through a <code>PrivilegedAction</code>.
    */
   private static final class __Canonicalizer implements
-  PrivilegedAction<File> {
+      PrivilegedAction<File> {
     /** The file to canonicalize. */
     private final File m_file;
 

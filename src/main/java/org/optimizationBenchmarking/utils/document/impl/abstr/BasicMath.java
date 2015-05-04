@@ -28,9 +28,9 @@ public abstract class BasicMath extends DocumentPart implements IMath {
     if ((++this.m_size) > (max = this.maxArgs())) {
       throw new IllegalStateException(//
           "An instance of " + this.getClass().getSimpleName() + //$NON-NLS-1$
-          " can have at most " + max + //$NON-NLS-1$
-          " arguments, but you tried to create the " + //$NON-NLS-1$
-          this.m_size + "th one."); //$NON-NLS-1$
+              " can have at most " + max + //$NON-NLS-1$
+              " arguments, but you tried to create the " + //$NON-NLS-1$
+              this.m_size + "th one."); //$NON-NLS-1$
     }
   }
 
@@ -246,8 +246,8 @@ public abstract class BasicMath extends DocumentPart implements IMath {
     if (this.m_size < min) {
       throw new IllegalStateException(//
           "An instance of " + this.getClass().getSimpleName() + //$NON-NLS-1$
-          " must have at least " + min + //$NON-NLS-1$
-          " arguments, but has only " + this.m_size); //$NON-NLS-1$
+              " must have at least " + min + //$NON-NLS-1$
+              " arguments, but has only " + this.m_size); //$NON-NLS-1$
     }
 
     super.onClose();

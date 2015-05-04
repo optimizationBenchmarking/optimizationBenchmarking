@@ -77,14 +77,14 @@ public final class StrokeStyle extends BasicStroke implements IStyle {
     if (this.m_name == null) {
       throw new IllegalArgumentException(//
           "Stroke name must not be empty or null, but is '" + //$NON-NLS-1$
-          name + "'.");//$NON-NLS-1$
+              name + "'.");//$NON-NLS-1$
     }
 
     this.m_id = TextUtils.prepare(id);
     if (this.m_id == null) {
       throw new IllegalArgumentException(//
           "Stroke id must not be empty or null, but is '" + //$NON-NLS-1$
-          id + "'.");//$NON-NLS-1$
+              id + "'.");//$NON-NLS-1$
     }
   }
 

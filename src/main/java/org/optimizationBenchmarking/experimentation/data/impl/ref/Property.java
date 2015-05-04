@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the data type.
  */
 public abstract class Property<DT extends PropertyValue<?>> extends
-_NamedIDObjectSet<DT> implements IProperty {
+    _NamedIDObjectSet<DT> implements IProperty {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

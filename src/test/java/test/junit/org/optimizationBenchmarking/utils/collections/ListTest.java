@@ -22,7 +22,7 @@ import test.junit.InstanceTest;
  */
 @Ignore
 public class ListTest<ET, T extends List<ET>> extends
-CollectionTest<ET, T> {
+    CollectionTest<ET, T> {
 
   /** create */
   public ListTest() {

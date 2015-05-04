@@ -35,158 +35,158 @@ final class _XHTML10Bibliography {
 
   /** the editors */
   private static final char[] EDITORS = { ',', ' ', 'e', 'd', 'i', 't',
-    'o', 'r', 's' };
+      'o', 'r', 's' };
 
   /** the dash */
   private static final char[] M_DASH = { '&', 'm', 'd', 'a', 's', 'h',
-    ';', };
+      ';', };
 
   /** the small separator */
   private static final char[] SMALL_SEP = { ',', ' ' };
 
   /** the in */
   private static final char[] IN = { ' ', 'i', 'n', '&', 'n', 'b', 's',
-    'p', ';', };
+      'p', ';', };
 
   /** the article */
   private static final char[] SPAN_ARTICLE = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'a', 'r', 't', 'i', 'c',
-    'l', 'e', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'a', 'r', 't', 'i', 'c',
+      'l', 'e', '"', '>' };
   /** the in collection */
   private static final char[] SPAN_BOOK = { '<', 's', 'p', 'a', 'n', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 'b', 'o', 'o', 'k', '"', '>' };
+      'c', 'l', 'a', 's', 's', '=', '"', 'b', 'o', 'o', 'k', '"', '>' };
   /** the in collection */
   private static final char[] SPAN_IN_COLLECTION = { '<', 's', 'p', 'a',
-    'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'i', 'n', 'C', 'o',
-    'l', 'l', 'e', 'c', 't', 'i', 'o', 'n', '"', '>' };
+      'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'i', 'n', 'C', 'o',
+      'l', 'l', 'e', 'c', 't', 'i', 'o', 'n', '"', '>' };
   /** the in proceedings */
   private static final char[] SPAN_IN_PROCEEDINGS = { '<', 's', 'p', 'a',
-    'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'i', 'n', 'P', 'r',
-    'o', 'c', 'e', 'e', 'd', 'i', 'n', 'g', 's', '"', '>' };
+      'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'i', 'n', 'P', 'r',
+      'o', 'c', 'e', 'e', 'd', 'i', 'n', 'g', 's', '"', '>' };
   /** the proceedings */
   private static final char[] SPAN_PROCEEDINGS = { '<', 's', 'p', 'a',
-    'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'p', 'r', 'o', 'c',
-    'e', 'e', 'd', 'i', 'n', 'g', 's', '"', '>' };
+      'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'p', 'r', 'o', 'c',
+      'e', 'e', 'd', 'i', 'n', 'g', 's', '"', '>' };
   /** the tech report */
   private static final char[] SPAN_TECH_REPORT = { '<', 's', 'p', 'a',
-    'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'e', 'c', 'h',
-    'R', 'e', 'p', 'o', 'r', 't', '"', '>' };
+      'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'e', 'c', 'h',
+      'R', 'e', 'p', 'o', 'r', 't', '"', '>' };
   /** the thesis */
   private static final char[] SPAN_THESIS = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'h', 'e', 's', 'i',
-    's', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 'h', 'e', 's', 'i',
+      's', '"', '>' };
   /** the website */
   private static final char[] SPAN_WEBSITE = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'w', 'e', 'b', 's', 'i',
-    't', 'e', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'w', 'e', 'b', 's', 'i',
+      't', 'e', '"', '>' };
   /** the authors */
   private static final char[] SPAN_AUTHORS = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'a', 'u', 't', 'h', 'o',
-    'r', 's', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'a', 'u', 't', 'h', 'o',
+      'r', 's', '"', '>' };
   /** the author */
   private static final char[] SPAN_AUTHOR = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'a', 'u', 't', 'h', 'o',
-    'r', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'a', 'u', 't', 'h', 'o',
+      'r', '"', '>' };
   /** the editors */
   private static final char[] SPAN_EDITORS = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'e', 'd', 'i', 't', 'o',
-    'r', 's', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'e', 'd', 'i', 't', 'o',
+      'r', 's', '"', '>' };
   /** the editor */
   private static final char[] SPAN_EDITOR = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'e', 'd', 'i', 't', 'o',
-    'r', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'e', 'd', 'i', 't', 'o',
+      'r', '"', '>' };
   /** the title */
   private static final char[] SPAN_TITLE = { '<', 's', 'p', 'a', 'n', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 't', 'i', 't', 'l', 'e', '"', '>' };
+      'c', 'l', 'a', 's', 's', '=', '"', 't', 'i', 't', 'l', 'e', '"', '>' };
   /** the book title */
   private static final char[] SPAN_BOOK_TITLE = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'b', 'o', 'o', 'k', 'T',
-    'i', 't', 'l', 'e', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'b', 'o', 'o', 'k', 'T',
+      'i', 't', 'l', 'e', '"', '>' };
   /** the date */
   private static final char[] SPAN_DATE = { '<', 's', 'p', 'a', 'n', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 'd', 'a', 't', 'e', '"', '>' };
+      'c', 'l', 'a', 's', 's', '=', '"', 'd', 'a', 't', 'e', '"', '>' };
   /** the date */
   private static final char[] SPAN_JOURNAL = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'j', 'o', 'u', 'r', 'n',
-    'a', 'l', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'j', 'o', 'u', 'r', 'n',
+      'a', 'l', '"', '>' };
   /** the pages */
   private static final char[] SPAN_PAGES = { '<', 's', 'p', 'a', 'n', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 'p', 'a', 'g', 'e', 's', '"',
-    '>', };
+      'c', 'l', 'a', 's', 's', '=', '"', 'p', 'a', 'g', 'e', 's', '"',
+      '>', };
   /** the page */
   private static final char[] PAGE = { 'p', 'a', 'g', 'e', '&', 'n', 'b',
-    's', 'p', ';' };
+      's', 'p', ';' };
   /** the page */
   private static final char[] PAGES = { 'p', 'a', 'g', 'e', 's', '&', 'n',
-    'b', 's', 'p', ';' };
+      'b', 's', 'p', ';' };
 
   /** the chapter */
   private static final char[] SPAN_CHAPTER = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'h', 'a', 'p', 't',
-    'e', 'r', '"', '>', 'c', 'h', 'a', 'p', 't', 'e', 'r', '&', 'n',
-    'b', 's', 'p', ';' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'h', 'a', 'p', 't',
+      'e', 'r', '"', '>', 'c', 'h', 'a', 'p', 't', 'e', 'r', '&', 'n',
+      'b', 's', 'p', ';' };
   /** the journal volume */
   private static final char[] SPAN_JOURNAL_VOLUME = { '<', 's', 'p', 'a',
-    'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'j', 'v', 'o', 'l',
-    'u', 'm', 'e', '"', '>' };
+      'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'j', 'v', 'o', 'l',
+      'u', 'm', 'e', '"', '>' };
   /** the issue */
   private static final char[] SPAN_ISSUE = { '<', 's', 'p', 'a', 'n', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 'i', 's', 's', 'u', 'e', '"', '>' };
+      'c', 'l', 'a', 's', 's', '=', '"', 'i', 's', 's', 'u', 'e', '"', '>' };
   /** the edition */
   private static final char[] SPAN_EDITION = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'e', 'd', 'i', 't', 'i',
-    'o', 'n', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'e', 'd', 'i', 't', 'i',
+      'o', 'n', '"', '>' };
   /** the series */
   private static final char[] SPAN_SERIES = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'r', 'i', 'e',
-    's', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'r', 'i', 'e',
+      's', '"', '>' };
   /** the series */
   private static final char[] SPAN_RSERIES = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'r', 's', 'e', 'r', 'i',
-    'e', 's', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'r', 's', 'e', 'r', 'i',
+      'e', 's', '"', '>' };
   /** the series volume */
   private static final char[] SPAN_SERIES_VOLUME = { '<', 's', 'p', 'a',
-    'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'v', 'o', 'l',
-    'u', 'm', 'e', '"', '>', 'v', 'o', 'l', 'u', 'm', 'e', '&', 'n',
-    'b', 's', 'p', ';' };
+      'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'v', 'o', 'l',
+      'u', 'm', 'e', '"', '>', 'v', 'o', 'l', 'u', 'm', 'e', '&', 'n',
+      'b', 's', 'p', ';' };
   /** the report number */
   private static final char[] SPAN_REPORT_NUMBER = { '<', 's', 'p', 'a',
-    'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'r', 'n', 'u', 'm',
-    'b', 'e', 'r', '"', '>', 'n', 'u', 'm', 'b', 'e', 'r', '&', 'n',
-    'b', 's', 'p', ';' };
+      'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'r', 'n', 'u', 'm',
+      'b', 'e', 'r', '"', '>', 'n', 'u', 'm', 'b', 'e', 'r', '&', 'n',
+      'b', 's', 'p', ';' };
   /** the publisher */
   private static final char[] SPAN_PUBLISHER = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'p', 'u', 'b', 'l', 'i',
-    's', 'h', 'e', 'r', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'p', 'u', 'b', 'l', 'i',
+      's', 'h', 'e', 'r', '"', '>' };
 
   /** the location */
   private static final char[] SPAN_LOCATION = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'l', 'o', 'c', 'a', 't',
-    'i', 'o', 'n', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'l', 'o', 'c', 'a', 't',
+      'i', 'o', 'n', '"', '>' };
   /** the doi */
   private static final char[] SPAN_DOI = { '<', 's', 'p', 'a', 'n', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 'd', 'o', 'i', '"', '>', 'd',
-    'o', 'i', ':', '<', 'a', ' ', 'h', 'r', 'e', 'f', '=', '"', 'h',
-    't', 't', 'p', ':', '/', '/', 'd', 'x', '.', 'd', 'o', 'i', '.',
-    'o', 'r', 'g', '/' };
+      'c', 'l', 'a', 's', 's', '=', '"', 'd', 'o', 'i', '"', '>', 'd',
+      'o', 'i', ':', '<', 'a', ' ', 'h', 'r', 'e', 'f', '=', '"', 'h',
+      't', 't', 'p', ':', '/', '/', 'd', 'x', '.', 'd', 'o', 'i', '.',
+      'o', 'r', 'g', '/' };
   /** the link */
   private static final char[] SPAN_LINK = { '<', 's', 'p', 'a', 'n', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 'l', 'i', 'n', 'k', '"', '>',
-    '[', '<', 'a', ' ', 'h', 'r', 'e', 'f', '=', '"' };
+      'c', 'l', 'a', 's', 's', '=', '"', 'l', 'i', 'n', 'k', '"', '>',
+      '[', '<', 'a', ' ', 'h', 'r', 'e', 'f', '=', '"' };
   /** the thesis type */
   private static final char[] SPAN_THESIS_TYPE = { '<', 's', 'p', 'a',
-    'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 't', 'y', 'p',
-    'e', '"', '>' };
+      'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 't', 't', 'y', 'p',
+      'e', '"', '>' };
 
   /** the institute span */
   private static final char[] SPAN_INSTITUTE = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'i', 'n', 's', 't', 'i',
-    't', 'u', 't', 'e', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'i', 'n', 's', 't', 'i',
+      't', 'u', 't', 'e', '"', '>' };
 
   /** the school */
   private static final char[] SPAN_SCHOOL = { '<', 's', 'p', 'a', 'n',
-    ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'c', 'h', 'o', 'o',
-    'l', '"', '>' };
+      ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'c', 'h', 'o', 'o',
+      'l', '"', '>' };
 
   /**
    * Write a record
@@ -715,7 +715,7 @@ final class _XHTML10Bibliography {
       _XHTML10Bibliography.__appendAuthors(
           (needsComma ? ETextCase.IN_SENTENCE
               : ETextCase.AT_SENTENCE_START),
-              _XHTML10Bibliography.SPAN_EDITOR, ref.getEditors(), wco, raw);
+          _XHTML10Bibliography.SPAN_EDITOR, ref.getEditors(), wco, raw);
       ch = _XHTML10Bibliography.EDITORS;
       raw.append(ch, 0, ch.length - ((i > 1) ? 0 : 1));
       raw.append(XHTML10Driver.SPAN_END);

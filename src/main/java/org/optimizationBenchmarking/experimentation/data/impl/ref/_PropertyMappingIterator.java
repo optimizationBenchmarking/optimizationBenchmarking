@@ -77,7 +77,7 @@ final class _PropertyMappingIterator extends BasicIterator<PropertyValue> {
       }
       throw new IllegalArgumentException(//
           "Mapping value must not be null, but the value of property '" //$NON-NLS-1$
-          + key + "' is."); //$NON-NLS-1$
+              + key + "' is."); //$NON-NLS-1$
     }
 
     prop = this.m_owner.find(key);

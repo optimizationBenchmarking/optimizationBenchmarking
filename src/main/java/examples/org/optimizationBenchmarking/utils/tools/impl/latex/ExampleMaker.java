@@ -43,7 +43,7 @@ public final class ExampleMaker {
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info(//
           "Now beginning to build static LaTeX examples to" + //$NON-NLS-1$
-          dest);
+              dest);
     }
 
     try {
@@ -98,8 +98,8 @@ public final class ExampleMaker {
 
       try {
         LaTeX.getInstance().use()
-        .setFileProducerListener(new FinishedPrinter())
-        .setMainFile(dest).setLogger(logger).create().call();
+            .setFileProducerListener(new FinishedPrinter())
+            .setMainFile(dest).setLogger(logger).create().call();
       } catch (final IOException ioe) {
         ErrorUtils.logError(logger, "Error when compiling document.", //$NON-NLS-1$
             ioe, false, RethrowMode.DONT_RETHROW);

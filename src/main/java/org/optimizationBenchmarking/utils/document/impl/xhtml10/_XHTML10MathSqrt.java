@@ -12,7 +12,7 @@ final class _XHTML10MathSqrt extends MathSqrt {
 
   /** the overlined cell */
   final static char[] OL_TD = { '<', 't', 'd', ' ', 'c', 'l', 'a', 's',
-    's', '=', '"', 'm', 'a', 't', 'h', 'T', 'L', '"', '>' };
+      's', '=', '"', 'm', 'a', 't', 'h', 'T', 'L', '"', '>' };
 
   /**
    * Create a new mathematical function

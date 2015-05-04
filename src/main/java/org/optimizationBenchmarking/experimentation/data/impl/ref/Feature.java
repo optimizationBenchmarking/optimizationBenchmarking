@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** A feature. */
 public final class Feature extends Property<FeatureValue> implements
-IFeature {
+    IFeature {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -50,8 +50,8 @@ IFeature {
     if (instance == null) {
       throw new IllegalArgumentException(//
           "Cannot get value of parameter '"//$NON-NLS-1$
-          + this.getName() + //
-          "' for null instance."); //$NON-NLS-1$
+              + this.getName() + //
+              "' for null instance."); //$NON-NLS-1$
     }
     return instance.getFeatureSetting().get(this);
   }
@@ -74,9 +74,9 @@ IFeature {
     }
     throw new IllegalArgumentException(//
         "Cannot get value of parameter '" //$NON-NLS-1$
-        + this.getName() + //
-        "' for data element '"//$NON-NLS-1$
-        + element + //
-        "' - only instances can have parameter values.");//$NON-NLS-1$
+            + this.getName() + //
+            "' for data element '"//$NON-NLS-1$
+            + element + //
+            "' - only instances can have parameter values.");//$NON-NLS-1$
   }
 }

@@ -55,8 +55,8 @@ final class _ModulesBuilder {
     if (allModules.length != _EvaluationSetup.TYPE_COUNT) {
       throw new IllegalArgumentException(//
           "Module list array length is " + //$NON-NLS-1$
-          allModules.length + " but should be "//$NON-NLS-1$
-          + _EvaluationSetup.TYPE_COUNT);
+              allModules.length + " but should be "//$NON-NLS-1$
+              + _EvaluationSetup.TYPE_COUNT);
     }
 
     // Check whether we have at least one module.
@@ -66,7 +66,7 @@ final class _ModulesBuilder {
       if (list == null) {
         throw new IllegalArgumentException(
             "List of " + _ModulesBuilder.MODULE_TYPES[i] + //$NON-NLS-1$
-            " is null.");//$NON-NLS-1$
+                " is null.");//$NON-NLS-1$
       }
       if (list.isEmpty()) {
         allModules[i] = null;

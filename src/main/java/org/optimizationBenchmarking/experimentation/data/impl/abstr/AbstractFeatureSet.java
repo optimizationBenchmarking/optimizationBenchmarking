@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * interface.
  */
 public class AbstractFeatureSet extends
-_AbstractPropertySet<IFeatureSetting> implements IFeatureSet {
+    _AbstractPropertySet<IFeatureSetting> implements IFeatureSet {
 
   /**
    * Create the abstract feature set. If {@code owner==null}, you must

@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _LaTeXMathLd extends MathLd {
   /** the begin binary logarithm */
   private static final char[] LD_BEGIN = { '{', '\\', 'l', 'o', 'g', '_',
-    '2', '{', };
+      '2', '{', };
 
   /**
    * Create a new mathematical function

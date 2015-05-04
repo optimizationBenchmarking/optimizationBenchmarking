@@ -68,8 +68,8 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
     if (this.m_error != null) {
       throw new UnsupportedOperationException(
           ("Cannot use " + //$NON-NLS-1$
-              TextUtils.className(FreeHEPPDFGraphicDriver.class)),
-              this.m_error);
+          TextUtils.className(FreeHEPPDFGraphicDriver.class)),
+          this.m_error);
     }
     super.checkCanUse();
   }
@@ -105,7 +105,7 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
         "org.freehep.graphics2d.font.FontEncoder", //$NON-NLS-1$
         "org.freehep.graphics2d.font.FontUtilities", //$NON-NLS-1$
         "org.freehep.util.images.ImageUtilities" //$NON-NLS-1$
-        );
+    );
 
     final org.freehep.util.UserProperties props = new org.freehep.util.UserProperties();
 
@@ -219,7 +219,7 @@ public class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
         }
       } finally {
         FreeHEPPDFGraphicDriver.s_messWith
-        .setSize(FreeHEPPDFGraphicDriver.s_correctDim);
+            .setSize(FreeHEPPDFGraphicDriver.s_correctDim);
       }
     }
 

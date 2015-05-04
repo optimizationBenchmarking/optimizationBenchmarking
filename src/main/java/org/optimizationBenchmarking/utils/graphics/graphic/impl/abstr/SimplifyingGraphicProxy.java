@@ -51,7 +51,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  *          the wrapped graphics type
  */
 public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
-extends GraphicProxy<GT> {
+    extends GraphicProxy<GT> {
 
   /** the maximum allowed coordinate: {@value} */
   private static final double MAX_COORD = (Double.MAX_VALUE * 0.5d);
@@ -1020,17 +1020,17 @@ extends GraphicProxy<GT> {
             HashUtils.combineHashes(//
                 HashUtils.hashCode(this.x1),//
                 HashUtils.hashCode(this.y1)),//
-                HashUtils.combineHashes(//
-                    HashUtils.hashCode(this.x2),//
-                    HashUtils.hashCode(this.y2)));
+            HashUtils.combineHashes(//
+                HashUtils.hashCode(this.x2),//
+                HashUtils.hashCode(this.y2)));
       }
       return HashUtils.combineHashes(//
           HashUtils.combineHashes(//
               HashUtils.hashCode(this.x2),//
               HashUtils.hashCode(this.y2)),//
-              HashUtils.combineHashes(//
-                  HashUtils.hashCode(this.x1),//
-                  HashUtils.hashCode(this.y1)));
+          HashUtils.combineHashes(//
+              HashUtils.hashCode(this.x1),//
+              HashUtils.hashCode(this.y1)));
     }
 
     /** {@inheritDoc} */
@@ -1135,7 +1135,7 @@ extends GraphicProxy<GT> {
     @Override
     public final String toString() {
       return (((((((("(" + this.x1) + //$NON-NLS-1$
-          ',') + this.y1) + ',') + this.x2) + ',') + this.y2) + ')');
+      ',') + this.y1) + ',') + this.x2) + ',') + this.y2) + ')');
     }
   }
 }

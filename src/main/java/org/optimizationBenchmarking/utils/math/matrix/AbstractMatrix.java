@@ -45,8 +45,8 @@ public class AbstractMatrix implements IMatrix, ITextable {
             TextUtils.className(this.getClass()))
             + ".getDouble(" + row) + ',') + column + //$NON-NLS-1$
             ") is invalid, the valid index range is (0.." //$NON-NLS-1$
-            + (this.m() - 1)) + ", 0.."//$NON-NLS-1$
-            + (this.n() - 1)) + ')') + '.');
+        + (this.m() - 1)) + ", 0.."//$NON-NLS-1$
+        + (this.n() - 1)) + ')') + '.');
   }
 
   /** {@inheritDoc} */
@@ -57,8 +57,8 @@ public class AbstractMatrix implements IMatrix, ITextable {
             TextUtils.className(this.getClass()))
             + ".getLong(" + row) + ',') + column + //$NON-NLS-1$
             ") is invalid, the valid index range is (0.." //$NON-NLS-1$
-            + (this.m() - 1)) + ", 0.."//$NON-NLS-1$
-            + (this.n() - 1)) + ')') + '.');
+        + (this.m() - 1)) + ", 0.."//$NON-NLS-1$
+        + (this.n() - 1)) + ')') + '.');
   }
 
   /** {@inheritDoc} */

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /** A context for instance sets. */
 final class _InstanceSetContext extends
-_HierarchicalCollection<Instance, InstanceContext, InstanceSet> {
+    _HierarchicalCollection<Instance, InstanceContext, InstanceSet> {
 
   /** the feature manager */
   private volatile _FeaturesBuilder m_featureSetBuilder;

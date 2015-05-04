@@ -14,8 +14,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the job builder type
  */
 class _TextOutputJobBuilder<DT, JBT extends _TextOutputJobBuilder<DT, JBT>>
-extends _StreamOutputJobBuilder<DT, JBT> implements
-ITextOutputJobBuilder<DT> {
+    extends _StreamOutputJobBuilder<DT, JBT> implements
+    ITextOutputJobBuilder<DT> {
 
   /**
    * create the job builder

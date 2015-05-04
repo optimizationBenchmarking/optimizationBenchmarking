@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
  * The abstract base-class for evaluation modules.
  */
 public abstract class EvaluationModule extends Tool implements
-IEvaluationModule {
+    IEvaluationModule {
 
   /** create the module */
   protected EvaluationModule() {

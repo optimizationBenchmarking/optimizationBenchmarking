@@ -69,7 +69,7 @@ public final class JFreeChartDriver extends ChartDriver {
           "org.jfree.ui.Size2D", //$NON-NLS-1$
           "org.jfree.ui.VerticalAlignment", //$NON-NLS-1$
           "org.jfree.util.UnitType" //$NON-NLS-1$
-          );
+      );
 
     } catch (final Throwable error) {
       cannot = error;

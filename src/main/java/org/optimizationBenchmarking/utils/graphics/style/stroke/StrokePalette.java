@@ -88,8 +88,8 @@ public class StrokePalette extends Palette<StrokeStyle> {
         if (a < b) {
           throw new IllegalArgumentException(//
               "Line width of thin stroke (" + b + //$NON-NLS-1$
-              ") cannot be bigger than line width of default stroke (" //$NON-NLS-1$
-              + a + ") but it is.");//$NON-NLS-1$
+                  ") cannot be bigger than line width of default stroke (" //$NON-NLS-1$
+                  + a + ") but it is.");//$NON-NLS-1$
         }
       }
 
@@ -98,8 +98,8 @@ public class StrokePalette extends Palette<StrokeStyle> {
         if (a > b) {
           throw new IllegalArgumentException(//
               "Line width of thick stroke (" + b + //$NON-NLS-1$
-              ") cannot be smaler than line width of default stroke (" //$NON-NLS-1$
-              + a + ") but it is.");//$NON-NLS-1$
+                  ") cannot be smaler than line width of default stroke (" //$NON-NLS-1$
+                  + a + ") but it is.");//$NON-NLS-1$
         }
       }
     }
@@ -116,8 +116,8 @@ public class StrokePalette extends Palette<StrokeStyle> {
         if (a > b) {
           throw new IllegalArgumentException(//
               "Line width of thick stroke (" + b + //$NON-NLS-1$
-              ") cannot be smaler than line width of thin stroke (" //$NON-NLS-1$
-              + a + ") but it is.");//$NON-NLS-1$
+                  ") cannot be smaler than line width of thin stroke (" //$NON-NLS-1$
+                  + a + ") but it is.");//$NON-NLS-1$
         }
 
       }
@@ -171,10 +171,10 @@ public class StrokePalette extends Palette<StrokeStyle> {
         HashUtils.combineHashes(//
             super.calcHashCode(), //
             HashUtils.hashCode(this.m_default)),//
-            HashUtils.combineHashes(
-                //
-                HashUtils.hashCode(this.m_thick),
-                HashUtils.hashCode(this.m_thin)));
+        HashUtils.combineHashes(
+            //
+            HashUtils.hashCode(this.m_thick),
+            HashUtils.hashCode(this.m_thin)));
   }
 
   /** {@inheritDoc} */

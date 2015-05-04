@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  *          the data type
  */
 public abstract class _EvaluationJob<DT extends IElementSet> implements
-IEvaluationJob, ITextable {
+    IEvaluationJob, ITextable {
 
   /** the initial state */
   private static final int STATE_NOTHING = 0;
@@ -57,21 +57,21 @@ IEvaluationJob, ITextable {
 
   /** the state names */
   private static final char[][] STATE_NAMES = {
-    { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'o', 'n', 's', 't', 'r', 'u',
-      'c', 't', 'i', 'o', 'n', },
+      { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'o', 'n', 's', 't', 'r', 'u',
+          'c', 't', 'i', 'o', 'n', },
       { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
-        'g', ' ', 'd', 'o', 'I', 'n', 'i', 't', 'i', 'a', 'l', 'i', 'z',
-        'e', },
-        { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
+          'g', ' ', 'd', 'o', 'I', 'n', 'i', 't', 'i', 'a', 'l', 'i', 'z',
+          'e', },
+      { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
           ' ', 'd', 'o', 'I', 'n', 'i', 't', 'i', 'a', 'l', 'i', 'z', 'e', },
-          { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
-            'g', ' ', 'd', 'o', 'S', 'u', 'm', 'm', 'a', 'r', 'y', },
-            { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
-              ' ', 'd', 'o', 'S', 'u', 'm', 'm', 'a', 'r', 'y', },
-              { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
-                'g', ' ', 'd', 'o', 'M', 'a', 'i', 'n', },
-                { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
-                  ' ', 'd', 'o', 'M', 'a', 'i', 'n', }, };
+      { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
+          'g', ' ', 'd', 'o', 'S', 'u', 'm', 'm', 'a', 'r', 'y', },
+      { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
+          ' ', 'd', 'o', 'S', 'u', 'm', 'm', 'a', 'r', 'y', },
+      { 'b', 'e', 'f', 'o', 'r', 'e', ' ', 'c', 'a', 'l', 'l', 'i', 'n',
+          'g', ' ', 'd', 'o', 'M', 'a', 'i', 'n', },
+      { 'a', 'f', 't', 'e', 'r', ' ', 'c', 'a', 'l', 'l', 'i', 'n', 'g',
+          ' ', 'd', 'o', 'M', 'a', 'i', 'n', }, };
 
   /** the data */
   private DT m_data;
@@ -113,26 +113,26 @@ IEvaluationJob, ITextable {
     if (data == null) {
       throw new IllegalArgumentException(//
           TextUtils.className(caller.getClass()) + //
-          " cannot accept null as input data."); //$NON-NLS-1$
+              " cannot accept null as input data."); //$NON-NLS-1$
     }
 
     list = data.getData();
     if (list == null) {
       throw new IllegalArgumentException(//
           "The getData() method of the "//$NON-NLS-1$
-          + TextUtils.className(data.getClass()) + //
-          " provided as input to the " //$NON-NLS-1$
-          + TextUtils.className(caller.getClass()) + //
-          " returned null.");//$NON-NLS-1$
+              + TextUtils.className(data.getClass()) + //
+              " provided as input to the " //$NON-NLS-1$
+              + TextUtils.className(caller.getClass()) + //
+              " returned null.");//$NON-NLS-1$
     }
 
     if (list.isEmpty()) {
       throw new IllegalArgumentException(//
           "The getData() method of the "//$NON-NLS-1$
-          + TextUtils.className(data.getClass()) + //
-          " provided as input to the " //$NON-NLS-1$
-          + TextUtils.className(caller.getClass()) + //
-          " returned an empty set.");//$NON-NLS-1$
+              + TextUtils.className(data.getClass()) + //
+              " provided as input to the " //$NON-NLS-1$
+              + TextUtils.className(caller.getClass()) + //
+              " returned an empty set.");//$NON-NLS-1$
     }
   }
 

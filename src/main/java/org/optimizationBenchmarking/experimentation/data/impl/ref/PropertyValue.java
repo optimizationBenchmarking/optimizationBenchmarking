@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the owner type
  */
 public abstract class PropertyValue<OT extends Property<?>> extends
-_NamedIDObject implements IPropertyValue, Map.Entry<OT, Object> {
+    _NamedIDObject implements IPropertyValue, Map.Entry<OT, Object> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,7 @@ _NamedIDObject implements IPropertyValue, Map.Entry<OT, Object> {
     if (value == null) {
       throw new IllegalArgumentException(//
           "Property value must not be null, but '" + name + //$NON-NLS-1$
-          "' is evaluated to null."); //$NON-NLS-1$
+              "' is evaluated to null."); //$NON-NLS-1$
     }
     this.m_value = value;
   }

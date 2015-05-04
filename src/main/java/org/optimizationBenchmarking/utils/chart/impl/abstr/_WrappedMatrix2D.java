@@ -237,6 +237,6 @@ final class _WrappedMatrix2D extends AbstractMatrix {
     }
     throw new IllegalArgumentException(//
         ((("Invalid row index: " + row) + //$NON-NLS-1$
-            ", must be in (0, ") + this.m()) + '.');//$NON-NLS-1$
+        ", must be in (0, ") + this.m()) + '.');//$NON-NLS-1$
   }
 }

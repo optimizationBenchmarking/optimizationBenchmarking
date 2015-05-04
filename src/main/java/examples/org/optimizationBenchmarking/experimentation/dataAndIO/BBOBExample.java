@@ -29,11 +29,11 @@ public final class BBOBExample extends ExperimentSetCreator {
         this.getLogger())) {
 
       BBOBInput
-      .getInstance()
-      .use()
-      .setDestination(ec)
-      .addArchiveResource(BBOBExample.class,
-          "bbobExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$
+          .getInstance()
+          .use()
+          .setDestination(ec)
+          .addArchiveResource(BBOBExample.class,
+              "bbobExampleData.zip", EArchiveType.ZIP)//$NON-NLS-1$
           .create().call();
       return ec.create();
     }

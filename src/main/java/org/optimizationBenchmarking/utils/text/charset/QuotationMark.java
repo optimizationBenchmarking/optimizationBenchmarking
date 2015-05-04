@@ -4,7 +4,7 @@ package org.optimizationBenchmarking.utils.text.charset;
  * the internal base class for enclosures
  */
 public class QuotationMark extends
-_EnclosureEnd<QuotationMarks, QuotationMark> {
+    _EnclosureEnd<QuotationMarks, QuotationMark> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

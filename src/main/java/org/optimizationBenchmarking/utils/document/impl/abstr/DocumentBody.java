@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
  * actual document text, sections, graphics, etc.
  */
 public class DocumentBody extends _StyleProviderPart implements
-IDocumentBody {
+    IDocumentBody {
 
   /** the sub-section counter */
   private int m_subsectionCount;

@@ -716,14 +716,14 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
   @Override
   protected final String getDefaultPlainOutputFileName() {
     return ("bibliography." + //$NON-NLS-1$
-        BibliographyXML.BIBLIOGRAPHY_XML.getDefaultSuffix());
+    BibliographyXML.BIBLIOGRAPHY_XML.getDefaultSuffix());
   }
 
   /** {@inheritDoc} */
   @Override
   protected final void file(final IOJob job, final Object data,
       final Path file, final StreamEncoding<?, ?> encoding)
-          throws Throwable {
+      throws Throwable {
     super.file(job, data, file, encoding);
     if (Files.exists(file)) {
       this.addFile(job, file, BibliographyXML.BIBLIOGRAPHY_XML);

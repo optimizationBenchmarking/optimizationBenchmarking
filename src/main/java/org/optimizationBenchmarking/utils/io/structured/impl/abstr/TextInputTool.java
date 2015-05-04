@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.utils.io.structured.spec.ITextInputTool;
  *          the destination type
  */
 public class TextInputTool<S> extends StreamInputTool<S> implements
-ITextInputTool<S> {
+    ITextInputTool<S> {
 
   /** create */
   protected TextInputTool() {
@@ -84,7 +84,7 @@ ITextInputTool<S> {
   @Override
   protected void stream(final IOJob job, final S data,
       final InputStream stream, final StreamEncoding<?, ?> encoding)
-          throws Throwable {
+      throws Throwable {
     final Logger logger;
     final Class<?> clazz;
 
@@ -98,7 +98,7 @@ ITextInputTool<S> {
       if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
         logger.log(IOTool.FINE_LOG_LEVEL,//
             ("Using text encoding " + //$NON-NLS-1$
-                encoding.name()));
+            encoding.name()));
       }
       try (final Reader reader = ((Reader) (encoding
           .wrapInputStream(stream)))) {

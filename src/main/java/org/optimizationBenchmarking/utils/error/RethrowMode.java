@@ -51,61 +51,61 @@ import java.io.Serializable;
  *          the error thrown
  */
 public abstract class RethrowMode<T extends Throwable> implements
-Serializable {
+    Serializable {
 
   /**
    * This re-throw mode will consume the error and not re-throw it.
    */
   public static final RethrowMode<RuntimeException> DONT_RETHROW = //
-      new _RethrowModeDontRethrow();
+  new _RethrowModeDontRethrow();
 
   /**
    * This re-throw mode will throw the error as
    * {@link java.lang.RuntimeException}.
    */
   public static final RethrowMode<RuntimeException> AS_RUNTIME_EXCEPTION = //
-      new _RethrowModeRethrowAsRuntimeException();
+  new _RethrowModeRethrowAsRuntimeException();
 
   /**
    * This re-throw mode will throw the error as {@link java.io.IOException}
    * .
    */
   public static final RethrowMode<IOException> AS_IO_EXCEPTION = //
-      new _RethrowModeRethrowAsIOException();
+  new _RethrowModeRethrowAsIOException();
 
   /**
    * This re-throw mode will throw the error as {@link java.lang.Throwable}
    * .
    */
   public static final RethrowMode<Throwable> AS_THROWABLE = //
-      new _RethrowModeRethrowAsThrowable();
+  new _RethrowModeRethrowAsThrowable();
   /**
    * This re-throw mode will throw the error as
    * {@link java.lang.UnsupportedOperationException} .
    */
   public static final RethrowMode<UnsupportedOperationException> AS_UNSUPPORTED_OPERATION_EXCEPTION = //
-      new _RethrowModeRethrowAsUnsupportedOperationException();
+  new _RethrowModeRethrowAsUnsupportedOperationException();
 
   /**
    * This re-throw mode will throw the error as
    * {@link java.lang.IllegalStateException} .
    */
   public static final RethrowMode<IllegalStateException> AS_ILLEGAL_STATE_EXCEPTION = //
-      new _RethrowModeRethrowAsIllegalStateException();
+  new _RethrowModeRethrowAsIllegalStateException();
 
   /**
    * This re-throw mode will throw the error as
    * {@link java.lang.IllegalArgumentException} .
    */
   public static final RethrowMode<IllegalArgumentException> AS_ILLEGAL_ARGUMENT_EXCEPTION = //
-      new _RethrowModeRethrowAsIllegalArgumentException();
+  new _RethrowModeRethrowAsIllegalArgumentException();
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** the synthetic message */
   static final String SYNTHETIC_RUNTIME_EXCEPTION_MSG = //
-      "This is a synthetic instance of java.lang.RuntimeException generated to wrap one or multiple real exceptions. See the causing and suppressed errors to find the real cause."; //$NON-NLS-1$
+  "This is a synthetic instance of java.lang.RuntimeException generated to wrap one or multiple real exceptions. See the causing and suppressed errors to find the real cause."; //$NON-NLS-1$
 
   /** create a new rethrow mode */
   RethrowMode() {

@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** a diagnostic listener */
 final class _DiagnosticListener extends LoggingWriter implements
-DiagnosticListener<Object> {
+    DiagnosticListener<Object> {
 
   /**
    * create the listener

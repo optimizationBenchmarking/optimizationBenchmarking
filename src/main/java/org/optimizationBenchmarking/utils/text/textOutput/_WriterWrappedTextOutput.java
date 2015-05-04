@@ -4,7 +4,7 @@ import java.io.Writer;
 
 /** A version of the text output wrapped around an {@link java.io.Writer}. */
 final class _WriterWrappedTextOutput extends
-_WriterWrappedTextOutputBase<Writer> {
+    _WriterWrappedTextOutputBase<Writer> {
 
   /**
    * Create a wrapped text output

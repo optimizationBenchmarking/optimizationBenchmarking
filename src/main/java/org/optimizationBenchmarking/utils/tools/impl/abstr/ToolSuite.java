@@ -68,8 +68,8 @@ public abstract class ToolSuite extends Tool {
       ErrorUtils.logError(
           Configuration.getGlobalLogger(),
           (("Error while loading the properties of " + //$NON-NLS-1$
-              TextUtils.className(clazz)) + '.'), error, true,
-              RethrowMode.DONT_RETHROW);
+          TextUtils.className(clazz)) + '.'), error, true,
+          RethrowMode.DONT_RETHROW);
     }
 
     this.m_projectVersion = TextUtils.prepare(properties.getProperty(//

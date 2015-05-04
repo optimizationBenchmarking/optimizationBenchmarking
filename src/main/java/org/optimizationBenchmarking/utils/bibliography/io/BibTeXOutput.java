@@ -122,7 +122,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
   @Override
   protected final String getDefaultPlainOutputFileName() {
     return ("bibliography." + //$NON-NLS-1$
-        ELaTeXFileType.BIB.getDefaultSuffix());
+    ELaTeXFileType.BIB.getDefaultSuffix());
   }
 
   /**
@@ -158,7 +158,7 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
 
     throw new IllegalArgumentException(//
         "Element '" + data + //$NON-NLS-1$
-        "' cannot be processed by BibTeX output driver."); //$NON-NLS-1$
+            "' cannot be processed by BibTeX output driver."); //$NON-NLS-1$
   }
 
   /**
@@ -255,13 +255,13 @@ public final class BibTeXOutput extends TextOutputTool<Object> {
     }
     if (data instanceof BibTechReport) {
       BibTeXOutput
-      .__storeTechReport(((BibTechReport) data), raw, enc, buf);
+          .__storeTechReport(((BibTechReport) data), raw, enc, buf);
       return;
     }
 
     throw new IllegalArgumentException(//
         "Element '" + data + //$NON-NLS-1$
-        "' is of unknown type cannot be processed by BibTeX output driver."); //$NON-NLS-1$
+            "' is of unknown type cannot be processed by BibTeX output driver."); //$NON-NLS-1$
   }
 
   /**

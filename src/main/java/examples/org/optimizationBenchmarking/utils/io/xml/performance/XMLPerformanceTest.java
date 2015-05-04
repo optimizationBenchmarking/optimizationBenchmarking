@@ -77,10 +77,10 @@ public final class XMLPerformanceTest {
 
   /** the set of output methods on which we compare the serializers */
   public static final OutputMethod[] OUTPUT = {//
-    new NullOutputMethod(),//
-    // new MemoryOutputMethod(),//
-    // new BufferedTempFileOutputMethod(),//
-    new TempFileOutputMethod(),//
+  new NullOutputMethod(),//
+      // new MemoryOutputMethod(),//
+      // new BufferedTempFileOutputMethod(),//
+      new TempFileOutputMethod(),//
   };
 
   /** the numbers of nodes per document which we test */
@@ -88,7 +88,7 @@ public final class XMLPerformanceTest {
 
   /** the document delays */
   public static final int[] DOCUMENT_DELAYS = { 0, 10, 100, 1000, 10000,
-    100000 };
+      100000 };
 
   /** we perform {@value} runs per document size */
   public static final int RUNS_PER_DOCUMENT_SIZE = 15;
@@ -195,7 +195,7 @@ public final class XMLPerformanceTest {
         System.out.print('\t');
         Arrays.sort(runtimes[ser][out]);
         System.out
-        .print(runtimes[ser][out][runtimes[ser][out].length >>> 1]);
+            .print(runtimes[ser][out][runtimes[ser][out].length >>> 1]);
       }
       System.out.println();
       System.out.flush();
@@ -228,7 +228,7 @@ public final class XMLPerformanceTest {
    */
   private static final void __doDocument(final int size, final int delay,
       final Random rand, final long[][][] minTimes, final int runIndex)
-          throws Throwable {
+      throws Throwable {
     final ExampleDocument doc;
     int ser, out, run;
 
@@ -269,7 +269,7 @@ public final class XMLPerformanceTest {
    */
   private static final long __serialize(final OutputMethod method,
       final SerializationMethod serializer, final ExampleDocument doc)
-          throws Throwable {
+      throws Throwable {
     long time;
     try (final Writer writer = method.createWriter()) {
       time = System.nanoTime();

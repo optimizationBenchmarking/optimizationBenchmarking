@@ -20,7 +20,7 @@ final class _RethrowModeDontRethrow extends RethrowMode<RuntimeException> {
     Throwable re;
 
     useMessage = ((message != null) ? //
-        (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
+    (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
         : RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG);
 
     if (handle == null) {

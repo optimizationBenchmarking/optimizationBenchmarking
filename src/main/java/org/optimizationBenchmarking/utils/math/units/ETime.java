@@ -139,12 +139,12 @@ public enum ETime implements IUnit {
   /** time since the cheop's pyramid was built */
   TIME_SINCE_BUILDING_OF_CHEOPS_PYRAMID(
       "time since building of cheop's pyramid"), //$NON-NLS-1$
-      /** time since the big bang */
-      TIME_SINCE_BIG_BANG("time since the big bang"), //$NON-NLS-1$
-      /** time since the extinction of the dinosaurs */
-      TIME_SINCE_EXTINCTION_OF_DINOSAURS(
-          "time since the extinction of the dinosaurs"), //$NON-NLS-1$
-          ;
+  /** time since the big bang */
+  TIME_SINCE_BIG_BANG("time since the big bang"), //$NON-NLS-1$
+  /** time since the extinction of the dinosaurs */
+  TIME_SINCE_EXTINCTION_OF_DINOSAURS(
+      "time since the extinction of the dinosaurs"), //$NON-NLS-1$
+  ;
 
   /** the default year */
   public static final ETime YEAR = YEAR_JULIAN;

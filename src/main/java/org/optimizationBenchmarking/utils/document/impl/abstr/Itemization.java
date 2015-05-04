@@ -24,19 +24,19 @@ public class Itemization extends List<ItemizationItem> {
 
     outer: {
       inner: {
-      for (o = owner; o != null;) {
-        if (o instanceof Itemization) {
-          this.m_itemDepth = (1 + (((Itemization) o).m_itemDepth));
-          break outer;
-        }
-        if (o instanceof DocumentElement) {
-          o = ((DocumentElement) o)._owner();
-        } else {
-          break inner;
+        for (o = owner; o != null;) {
+          if (o instanceof Itemization) {
+            this.m_itemDepth = (1 + (((Itemization) o).m_itemDepth));
+            break outer;
+          }
+          if (o instanceof DocumentElement) {
+            o = ((DocumentElement) o)._owner();
+          } else {
+            break inner;
+          }
         }
       }
-    }
-    this.m_itemDepth = 0;
+      this.m_itemDepth = 0;
     }
 
   }

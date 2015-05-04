@@ -22,7 +22,7 @@ import org.optimizationBenchmarking.utils.io.structured.spec.IFileInputJobBuilde
  *          the job builder type
  */
 class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
-extends _IOJobBuilder<JBT> implements IFileInputJobBuilder<DT> {
+    extends _IOJobBuilder<JBT> implements IFileInputJobBuilder<DT> {
 
   /** the destination */
   DT m_dest;
@@ -412,7 +412,7 @@ extends _IOJobBuilder<JBT> implements IFileInputJobBuilder<DT> {
           "Source URI string cannot be null."); //$NON-NLS-1$
     }
     this.m_sources
-    .add(new _Location(uri, URI.class, encoding, archiveType));
+        .add(new _Location(uri, URI.class, encoding, archiveType));
     return ((JBT) this);
   }
 
@@ -458,7 +458,7 @@ extends _IOJobBuilder<JBT> implements IFileInputJobBuilder<DT> {
           "Source URL string cannot be null."); //$NON-NLS-1$
     }
     this.m_sources
-    .add(new _Location(url, URL.class, encoding, archiveType));
+        .add(new _Location(url, URL.class, encoding, archiveType));
     return ((JBT) this);
   }
 

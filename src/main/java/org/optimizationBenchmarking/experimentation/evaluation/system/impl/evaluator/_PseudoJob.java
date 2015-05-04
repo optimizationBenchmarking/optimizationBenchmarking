@@ -67,7 +67,7 @@ class _PseudoJob implements IEvaluationJob {
           && (this.m_logger.isLoggable(Level.FINEST))) {
         this.m_logger.finest(//
             "Beginning to initialize the sub-tasks of task " + //$NON-NLS-1$
-            this._getName());
+                this._getName());
       }
 
       for (final IEvaluationJob module : this.m_children) {
@@ -78,7 +78,7 @@ class _PseudoJob implements IEvaluationJob {
           && (this.m_logger.isLoggable(Level.FINEST))) {
         this.m_logger.finest(//
             "Finished initializing the sub-tasks of task " + //$NON-NLS-1$
-            this._getName());
+                this._getName());
       }
     }
   }
@@ -96,7 +96,7 @@ class _PseudoJob implements IEvaluationJob {
           && (this.m_logger.isLoggable(Level.FINEST))) {
         this.m_logger.finest(//
             "Beginning to invoke the summary rountines of the sub-tasks of task " + //$NON-NLS-1$
-            this._getName());
+                this._getName());
       }
 
       for (final IEvaluationJob module : this.m_children) {
@@ -107,7 +107,7 @@ class _PseudoJob implements IEvaluationJob {
           && (this.m_logger.isLoggable(Level.FINEST))) {
         this.m_logger.finest(//
             "Finished invoking the summary rountines of the sub-tasks of task " + //$NON-NLS-1$
-            this._getName());
+                this._getName());
       }
     }
   }
@@ -142,7 +142,7 @@ class _PseudoJob implements IEvaluationJob {
         && (this.m_logger.isLoggable(Level.FINEST))) {
       this.m_logger.finest(//
           "Beginning to execute main routines of sub-tasks of task " //$NON-NLS-1$
-          + this._getName());
+              + this._getName());
     }
 
     if ((children = this.m_children) == null) {
@@ -181,12 +181,12 @@ class _PseudoJob implements IEvaluationJob {
               error = ErrorUtils.aggregateError(error,
                   new IllegalStateException("Task '" + name + //$NON-NLS-1$
                       "' has not yet completed, but did not generate an error (odd!)." //$NON-NLS-1$
-                      ));
+                  ));
             } else {
               error = ErrorUtils.aggregateError(error,
                   new IllegalStateException("Task '" + name + //$NON-NLS-1$
                       "' has not completed normally, but did not generate an error (odd!)." //$NON-NLS-1$
-                      ));
+                  ));
             }
           }
         }
@@ -218,7 +218,7 @@ class _PseudoJob implements IEvaluationJob {
         && (this.m_logger.isLoggable(Level.FINEST))) {
       this.m_logger.finest(//
           "Finished executing main routines of sub-tasks of task " + //$NON-NLS-1$
-          this._getName());
+              this._getName());
     }
   }
 

@@ -149,8 +149,8 @@ public class StrictByteParser extends NumberParser<Byte> {
     if ((d < Byte.MIN_VALUE) || (d > Byte.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((d + " is not a valid byte value, since it is out of the range ") + //$NON-NLS-1$
-              Byte.MIN_VALUE) + "..") + //$NON-NLS-1$
-              Byte.MAX_VALUE) + '.');
+          Byte.MIN_VALUE) + "..") + //$NON-NLS-1$
+          Byte.MAX_VALUE) + '.');
     }
 
     b = ((byte) d);
@@ -167,8 +167,8 @@ public class StrictByteParser extends NumberParser<Byte> {
     if ((l < Byte.MIN_VALUE) || (l > Byte.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((l + " is not a valid byte value, since it is out of the range ") + //$NON-NLS-1$
-              Byte.MIN_VALUE) + "..") + //$NON-NLS-1$
-              Byte.MAX_VALUE) + '.');
+          Byte.MIN_VALUE) + "..") + //$NON-NLS-1$
+          Byte.MAX_VALUE) + '.');
     }
     this.validateByte((byte) l);
   }

@@ -130,7 +130,7 @@ final class _MatrixIterator2DXDoubleYLong extends MatrixIterator2D {
       inner: for (;;) {
         if ((EComparison.compareDoubles(xAtPosition, oldX) > 0) && //
             (noSmallestLarger || //
-                (EComparison.compareDoubles(xAtPosition, smallestLarger) < 0))) {
+            (EComparison.compareDoubles(xAtPosition, smallestLarger) < 0))) {
           // The new x-coordinate must be larger than the old one but
           // smaller than the smallest such increase we found before
           // (unless we did not discover a next point yet).

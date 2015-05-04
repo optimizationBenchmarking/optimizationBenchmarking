@@ -321,7 +321,7 @@ public class ConfigurationTest extends TestBase {
         } while ((random.nextInt(40) > 0) || (params.size() <= 0));
 
         cb.putCommandLine(//
-            params.toArray(new String[params.size()]));
+        params.toArray(new String[params.size()]));
         cfg = cb.getResult();
       }
 
@@ -405,7 +405,7 @@ public class ConfigurationTest extends TestBase {
         } while ((random.nextInt(40) > 0) || (params.size() <= 0));
 
         cb.putCommandLine(//
-            params.toArray(new String[params.size()]));
+        params.toArray(new String[params.size()]));
         cfg = cb.getResult();
       }
 

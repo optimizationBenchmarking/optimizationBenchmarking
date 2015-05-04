@@ -5,7 +5,7 @@ package org.optimizationBenchmarking.utils.error;
  * {@link java.lang.UnsupportedOperationException}.
  */
 final class _RethrowModeRethrowAsUnsupportedOperationException extends
-RethrowMode<UnsupportedOperationException> {
+    RethrowMode<UnsupportedOperationException> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ RethrowMode<UnsupportedOperationException> {
     UnsupportedOperationException re;
 
     useMessage = ((message != null) ? //
-        (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
+    (message + ' ' + RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG)
         : RethrowMode.SYNTHETIC_RUNTIME_EXCEPTION_MSG);
 
     if (handle == null) {

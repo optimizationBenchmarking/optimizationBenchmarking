@@ -90,10 +90,10 @@ public class BibTechReport extends BibRecordWithPublisher {
     return HashUtils.combineHashes(
         HashUtils.combineHashes(super.calcHashCode(),//
             HashUtils.hashCode(this.m_issn)),//
-            HashUtils.combineHashes(
-                //
-                HashUtils.hashCode(this.m_series),
-                HashUtils.hashCode(this.m_number)));
+        HashUtils.combineHashes(
+            //
+            HashUtils.hashCode(this.m_series),
+            HashUtils.hashCode(this.m_number)));
   }
 
   /**
@@ -142,7 +142,7 @@ public class BibTechReport extends BibRecordWithPublisher {
 
       return (EComparison.equals(this.m_issn, x.m_issn) && //
           EComparison.equals(this.m_series, x.m_series) && //
-          EComparison.equals(this.m_number, x.m_number));
+      EComparison.equals(this.m_number, x.m_number));
     }
 
     return false;

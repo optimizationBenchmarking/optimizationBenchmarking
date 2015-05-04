@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
  * The root interface for the document output API.
  */
 public interface IDocument extends IDocumentElement, IStyleProvider,
-IToolJob {
+    IToolJob {
 
   /**
    * create the document header

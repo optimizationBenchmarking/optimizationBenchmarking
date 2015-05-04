@@ -17,8 +17,8 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerJobBu
 
 /** The class for document builders */
 public abstract class DocumentBuilder extends
-DocumentProducerJobBuilder<Document, DocumentBuilder> implements
-IDocumentBuilder, ITextable {
+    DocumentProducerJobBuilder<Document, DocumentBuilder> implements
+    IDocumentBuilder, ITextable {
 
   /** the owning builder */
   private final DocumentConfigurationBuilder m_builder;
@@ -179,10 +179,10 @@ IDocumentBuilder, ITextable {
         && (logger.isLoggable(Level.FINE))) {
       logger.fine(//
           "Begin creation of document '" + //$NON-NLS-1$
-          this.getMainDocumentNameSuggestion()
-          + "' in folder '" + this.getBasePath() + //$NON-NLS-1$
-          "' with graphic driver " + //$NON-NLS-1$
-          this.getGraphicDriver());
+              this.getMainDocumentNameSuggestion()
+              + "' in folder '" + this.getBasePath() + //$NON-NLS-1$
+              "' with graphic driver " + //$NON-NLS-1$
+              this.getGraphicDriver());
     }
     return this.doCreateDocument();
   }

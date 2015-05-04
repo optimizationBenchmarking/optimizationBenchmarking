@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
  * instead.
  */
 public class DummyCloneableAndSerializable implements Serializable,
-Cloneable {
+    Cloneable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

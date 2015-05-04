@@ -73,7 +73,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
    */
   private final void __loadStream(final Path f,
       final ArrayList<ArrayList<Number[]>> list, final boolean canGrow)
-          throws Throwable {
+      throws Throwable {
     ArrayList<Number[]> current;
     int index, i, end1, start2, end2, len;
     double d;
@@ -163,7 +163,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
                 if (d < -1e-12d) {
                   throw new IllegalArgumentException(
                       "value " + d + //$NON-NLS-1$
-                      " for f-f_opt is too negative for assuming numerical imprecision as reason and performing correction to zero."); //$NON-NLS-1$
+                          " for f-f_opt is too negative for assuming numerical imprecision as reason and performing correction to zero."); //$NON-NLS-1$
                 }
                 if (d <= 0d) {
                   if (d < 0d) {
@@ -171,7 +171,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
                         && (this.m_logger.isLoggable(Level.WARNING))) {
                       this.m_logger.log(Level.WARNING,//
                           "Correction of negative objective value " + d + //$NON-NLS-1$
-                          " to 0 in file " + f); //$NON-NLS-1$
+                              " to 0 in file " + f); //$NON-NLS-1$
                     }
                   }
                   d = 0d;
@@ -304,7 +304,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
         (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
       this.m_logger.log(IOTool.FINER_LOG_LEVEL,
           "Begin handling data folder " + dir + //$NON-NLS-1$
-          " for function id " + fid); //$NON-NLS-1$
+              " for function id " + fid); //$NON-NLS-1$
     }
 
     error = null;
@@ -409,7 +409,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
       } catch (final Throwable t) {
         this.m_job.handleError(t,
             "BBOBHandler encountered unrecoverable error in folder " //$NON-NLS-1$
-            + dir);
+                + dir);
       }
     }
 
@@ -417,7 +417,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
         (this.m_logger.isLoggable(IOTool.FINER_LOG_LEVEL))) {
       this.m_logger.log(IOTool.FINER_LOG_LEVEL,
           "Finished handling data folder " + dir + //$NON-NLS-1$
-          " for function id " + fid); //$NON-NLS-1$
+              " for function id " + fid); //$NON-NLS-1$
     }
   }
 
@@ -468,8 +468,8 @@ final class _BBOBHandler implements Comparator<Number[]> {
                     if (dataFolders[dim] != null) {
                       throw new IllegalArgumentException(//
                           "Two data folders for function id " + dim + //$NON-NLS-1$
-                          ": folder " + f + //$NON-NLS-1$
-                          " and " + dataFolders[dim]); //$NON-NLS-1$
+                              ": folder " + f + //$NON-NLS-1$
+                              " and " + dataFolders[dim]); //$NON-NLS-1$
                     }
                     dataFolders[dim] = f;
                     dataFolderCount++;
@@ -477,7 +477,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
                   }
                   throw new IllegalArgumentException(//
                       "Illegal function id " + dim + //$NON-NLS-1$
-                      " of folder " + f); //$NON-NLS-1$
+                          " of folder " + f); //$NON-NLS-1$
                 } catch (final Throwable a) {
 
                   if ((this.m_logger != null) && //

@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the source type
  */
 public class XMLOutputTool<S> extends TextOutputTool<S> implements
-IXMLOutputTool<S> {
+    IXMLOutputTool<S> {
 
   /** create */
   protected XMLOutputTool() {

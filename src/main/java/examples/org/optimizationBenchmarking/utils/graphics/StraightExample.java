@@ -48,7 +48,7 @@ public final class StraightExample {
               dir,
               (((((StraightExample.class.getSimpleName() + '_') + (++z)) + '_') + driver
                   .toString())), StraightExample.SIZE,
-                  new FinishedPrinter(driver), Logger.getGlobal())) {
+              new FinishedPrinter(driver), Logger.getGlobal())) {
 
         g.setColor(Color.red);
 

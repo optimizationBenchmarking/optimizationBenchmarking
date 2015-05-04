@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
  * The abstract basic implementation for description modules.
  */
 public abstract class DescriptionModule extends
-_EvaluationModule<IExperimentSet> implements IDescriptionModule {
+    _EvaluationModule<IExperimentSet> implements IDescriptionModule {
 
   /** create */
   protected DescriptionModule() {

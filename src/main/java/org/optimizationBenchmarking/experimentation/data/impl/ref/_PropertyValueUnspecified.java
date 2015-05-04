@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /** the unspecified parameter value */
 final class _PropertyValueUnspecified implements Serializable,
-Comparable<Object> {
+    Comparable<Object> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

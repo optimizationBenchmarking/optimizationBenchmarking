@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLOutputTool
  *          the experiment data type supported for output
  */
 public class ExperimentSetXMLOutput<T> extends XMLOutputTool<T> implements
-IExperimentSetOutput<T> {
+    IExperimentSetOutput<T> {
 
   /** create */
   protected ExperimentSetXMLOutput() {

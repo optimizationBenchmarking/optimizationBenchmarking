@@ -76,9 +76,9 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
 
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
-      .rethrow(//
-          "Error while loading XML Schema for evaluation configuration XMLFileType.", //$NON-NLS-1$
-          true, rec);
+          .rethrow(//
+              "Error while loading XML Schema for evaluation configuration XMLFileType.", //$NON-NLS-1$
+              true, rec);
     }
   }
 

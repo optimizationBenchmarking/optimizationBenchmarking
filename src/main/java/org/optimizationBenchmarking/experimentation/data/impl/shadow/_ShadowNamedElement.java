@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  *          the shadow type
  */
 class _ShadowNamedElement<OT extends IDataElement, ST extends INamedElement>
-extends _ShadowDataElement<OT, ST> implements INamedElement {
+    extends _ShadowDataElement<OT, ST> implements INamedElement {
 
   /**
    * create the shadow named element

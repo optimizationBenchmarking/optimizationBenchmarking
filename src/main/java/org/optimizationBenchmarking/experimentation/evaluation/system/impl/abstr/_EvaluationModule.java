@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
  *          the data set type
  */
 abstract class _EvaluationModule<DT extends IElementSet> extends
-EvaluationModule {
+    EvaluationModule {
 
   /** create the module */
   _EvaluationModule() {

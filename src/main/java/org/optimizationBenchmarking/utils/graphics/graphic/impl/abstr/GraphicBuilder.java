@@ -15,8 +15,8 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.DocumentProducerJobBu
 
 /** The base class for graphics builders */
 public final class GraphicBuilder extends
-DocumentProducerJobBuilder<Graphic, GraphicBuilder> implements
-IGraphicBuilder, ITextable {
+    DocumentProducerJobBuilder<Graphic, GraphicBuilder> implements
+    IGraphicBuilder, ITextable {
 
   /** the dots per inch parameter */
   public static final String PARAM_DPI = "dpi"; //$NON-NLS-1$
@@ -76,9 +76,9 @@ IGraphicBuilder, ITextable {
         || (r >= GraphicBuilder.MAX_SIZE_M)) {
       throw new IllegalArgumentException(//
           "A graphic width cannot be smaller than 0.1mm or larger than 10m, but "//$NON-NLS-1$
-          + w + " specified in " + sizeUnit + //$NON-NLS-1$
-          " equals " + r + //$NON-NLS-1$
-          "m.");//$NON-NLS-1$
+              + w + " specified in " + sizeUnit + //$NON-NLS-1$
+              " equals " + r + //$NON-NLS-1$
+              "m.");//$NON-NLS-1$
     }
 
     r = sizeUnit.convertTo(h, ELength.M);
@@ -86,9 +86,9 @@ IGraphicBuilder, ITextable {
         || (r >= GraphicBuilder.MAX_SIZE_M)) {
       throw new IllegalArgumentException(//
           "A graphic height cannot be smaller than 0.1mm or larger than 10m, but "//$NON-NLS-1$
-          + h + " specified in " + sizeUnit + //$NON-NLS-1$
-          " equals " + r + //$NON-NLS-1$
-          "m.");//$NON-NLS-1$
+              + h + " specified in " + sizeUnit + //$NON-NLS-1$
+              " equals " + r + //$NON-NLS-1$
+              "m.");//$NON-NLS-1$
     }
 
     this.m_size = size;
@@ -199,7 +199,7 @@ IGraphicBuilder, ITextable {
     if (o instanceof GraphicBuilder) {
       bui = ((GraphicBuilder) o);
       return (EComparison.equals(this.m_config, bui.m_config) && //
-          EComparison.equals(this.m_size, bui.m_size));
+      EComparison.equals(this.m_size, bui.m_size));
     }
     return false;
   }

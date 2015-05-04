@@ -44,7 +44,7 @@ public final class ReflectionUtils {
 
   /** The default package name prefixes */
   private static final String[] DEFAULT_PACKAGE_PREFIXES = new String[] {//
-    "java.lang."//$NON-NLS-1$
+  "java.lang."//$NON-NLS-1$
   };
 
   /**
@@ -340,7 +340,7 @@ public final class ReflectionUtils {
    */
   private static final Class<?> __findClassInternal(
       final String clazzName, final String[] prefixes)
-          throws LinkageError, ClassCastException, ClassNotFoundException {
+      throws LinkageError, ClassCastException, ClassNotFoundException {
     ClassNotFoundException error;
 
     try {
@@ -557,7 +557,7 @@ public final class ReflectionUtils {
    */
   private static final <T> T __field(final Class<T> base,
       final Class<?> container, final String name, final Field field)
-          throws IllegalArgumentException, ReflectiveOperationException {
+      throws IllegalArgumentException, ReflectiveOperationException {
     final int mod;
     final Class<?> retClass;
 
@@ -567,8 +567,8 @@ public final class ReflectionUtils {
           container,
           name,
           ("field " + field + " is not " + //$NON-NLS-1$//$NON-NLS-2$
-              Modifier.toString(ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS
-                  & (~mod))), null);
+          Modifier.toString(ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS
+              & (~mod))), null);
     }
 
     retClass = field.getType();
@@ -576,7 +576,7 @@ public final class ReflectionUtils {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("field " + field + //$NON-NLS-1$
               " of type " + TextUtils.className(retClass) + //$NON-NLS-1$
-              " is incompatible to base class"), null);//$NON-NLS-1$
+          " is incompatible to base class"), null);//$NON-NLS-1$
     }
 
     return base.cast(field.get(null));
@@ -603,7 +603,7 @@ public final class ReflectionUtils {
    */
   private static final <T> T __method(final Class<T> base,
       final Class<?> container, final String name, final Method method)
-          throws IllegalArgumentException, ReflectiveOperationException {
+      throws IllegalArgumentException, ReflectiveOperationException {
     final int mod;
     final Class<?> retClass;
     final Class<?>[] params;
@@ -614,8 +614,8 @@ public final class ReflectionUtils {
           container,
           name,
           ("method " + method + " is not " + //$NON-NLS-1$//$NON-NLS-2$
-              Modifier.toString(ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS
-                  & (~mod))), null);
+          Modifier.toString(ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS
+              & (~mod))), null);
     }
 
     retClass = method.getReturnType();
@@ -623,7 +623,7 @@ public final class ReflectionUtils {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("return type " + TextUtils.className(retClass) + //$NON-NLS-1$
               " of method " + method + //$NON-NLS-1$
-              " is incompatible to base class"), null);//$NON-NLS-1$
+          " is incompatible to base class"), null);//$NON-NLS-1$
     }
 
     params = method.getParameterTypes();
@@ -631,7 +631,7 @@ public final class ReflectionUtils {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("method " + method + //$NON-NLS-1$
               " has more than 0 parameters: " + //$NON-NLS-1$
-              Arrays.toString(params)), null);
+          Arrays.toString(params)), null);
     }
 
     return base.cast(method.invoke(null));
@@ -668,7 +668,7 @@ public final class ReflectionUtils {
     if ((mod & Modifier.PUBLIC) != Modifier.PUBLIC) {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("constructor " + constructor + " is not " + //$NON-NLS-1$//$NON-NLS-2$
-              Modifier.toString(Modifier.PUBLIC)), null);
+          Modifier.toString(Modifier.PUBLIC)), null);
     }
 
     retClass = constructor.getDeclaringClass();
@@ -676,7 +676,7 @@ public final class ReflectionUtils {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("return type " + TextUtils.className(retClass) + //$NON-NLS-1$
               " of constructor " + constructor + //$NON-NLS-1$
-              " is incompatible to base class"), null);//$NON-NLS-1$
+          " is incompatible to base class"), null);//$NON-NLS-1$
     }
 
     params = constructor.getParameterTypes();
@@ -684,7 +684,7 @@ public final class ReflectionUtils {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("constructor " + constructor + //$NON-NLS-1$
               " has more than 0 parameters: " + //$NON-NLS-1$
-              Arrays.toString(params)), null);
+          Arrays.toString(params)), null);
     }
 
     return base.cast(constructor.newInstance());
@@ -753,7 +753,7 @@ public final class ReflectionUtils {
   @SuppressWarnings("rawtypes")
   public static final <T> T getInstance(final Class<T> base,
       final Class<?> container, final String name)
-          throws ReflectiveOperationException {
+      throws ReflectiveOperationException {
     final Class<?> useContainer;
     String useName;
     Throwable errorA, errorB, errorC;
@@ -956,7 +956,7 @@ public final class ReflectionUtils {
    */
   public static final <T> T getInstanceByName(final Class<T> base,
       final String identifier, final String[] prefixes)
-          throws ReflectiveOperationException {
+      throws ReflectiveOperationException {
     final String idString, fieldName;
     String className;
     Class<? extends Object> container;
@@ -967,7 +967,7 @@ public final class ReflectionUtils {
     if (idString == null) {
       throw new IllegalArgumentException(//
           "Class+constant identifier must not be null or empty, but is '"//$NON-NLS-1$
-          + identifier + '\'');
+              + identifier + '\'');
     }
 
     index = idString.lastIndexOf('#');
@@ -991,7 +991,7 @@ public final class ReflectionUtils {
       if (className == null) {
         throw new IllegalArgumentException(//
             "Class name to get an instance from within must neither be null, empty, or consisting only of white spaces, but identifier '"//$NON-NLS-1$
-            + identifier + "' provides such a name.");//$NON-NLS-1$
+                + identifier + "' provides such a name.");//$NON-NLS-1$
       }
 
       cause = null;
@@ -1006,7 +1006,7 @@ public final class ReflectionUtils {
         throw ReflectionUtils.__makeFindInstanceError(base, null,
             fieldName, ("could not discover class '" + className//$NON-NLS-1$
                 + "' based on string '" + idString + '\''),//$NON-NLS-1$
-                cause);
+            cause);
       }
     }
 
@@ -1061,28 +1061,28 @@ public final class ReflectionUtils {
     if (string == null) {
       throw new IllegalArgumentException(//
           "Resource name must not be empty or consisting only of white space, but '"//$NON-NLS-1$
-          + resource + "' is.");//$NON-NLS-1$
+              + resource + "' is.");//$NON-NLS-1$
     }
 
     index = resource.indexOf('#');
     if (index < 0) {
       throw new IllegalArgumentException(//
           "Resource name must contain a '#', but '"//$NON-NLS-1$
-          + resource + "' does not.");//$NON-NLS-1$
+              + resource + "' does not.");//$NON-NLS-1$
     }
 
     clazzName = TextUtils.prepare(resource.substring(0, index));
     if (clazzName == null) {
       throw new IllegalArgumentException(//
           "Name of class hosting a resource must not be empty or consisting only of white space, but '"//$NON-NLS-1$
-          + resource + "' has such a class name.");//$NON-NLS-1$
+              + resource + "' has such a class name.");//$NON-NLS-1$
     }
 
     file = TextUtils.prepare(resource.substring(index + 1));
     if (file == null) {
       throw new IllegalArgumentException(//
           "Name of resource file must not be empty or consisting only of white space, but '"//$NON-NLS-1$
-          + resource + "' has such a resource name.");//$NON-NLS-1$
+              + resource + "' has such a resource name.");//$NON-NLS-1$
     }
 
     try {

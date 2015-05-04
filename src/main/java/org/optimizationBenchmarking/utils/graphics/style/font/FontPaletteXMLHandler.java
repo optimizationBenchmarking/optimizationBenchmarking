@@ -142,9 +142,9 @@ public class FontPaletteXMLHandler extends DelegatingHandler {
 
       if (FontPaletteXML.ELEMENT_FONT.equalsIgnoreCase(localName)
           || FontPaletteXML.ELEMENT_DEFAULT_FONT
-          .equalsIgnoreCase(localName)
+              .equalsIgnoreCase(localName)
           || FontPaletteXML.ELEMENT_EMPHASIZED_FONT
-          .equalsIgnoreCase(localName)
+              .equalsIgnoreCase(localName)
           || FontPaletteXML.ELEMENT_CODE_FONT.equalsIgnoreCase(localName)) {
         this.m_builder.close();
         this.m_builder = null;

@@ -167,7 +167,7 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
             if (canUseMeta
                 && (imageWriterParams != null)
                 && ((typeSpecifier = ImageTypeSpecifier
-                .createFromBufferedImageType(//
+                    .createFromBufferedImageType(//
                     this.m_img.getType())) != null)) {
               metaData = writer.getDefaultImageMetadata(typeSpecifier,
                   imageWriterParams);

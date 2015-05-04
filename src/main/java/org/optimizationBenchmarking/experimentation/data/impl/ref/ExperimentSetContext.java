@@ -416,7 +416,7 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
     if (es == null) {
       throw new IllegalStateException(//
           TextUtils.className(ExperimentSet.class) + //
-          " instance cannot be null, but strangely is?!"); //$NON-NLS-1$
+              " instance cannot be null, but strangely is?!"); //$NON-NLS-1$
     }
 
     return es;

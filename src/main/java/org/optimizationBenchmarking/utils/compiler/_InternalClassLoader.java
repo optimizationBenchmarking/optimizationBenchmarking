@@ -36,7 +36,7 @@ final class _InternalClassLoader extends SecureClassLoader {
     } catch (final ClassNotFoundException cnfe) {
       throw new RuntimeException(//
           "The compiled class " + name + //$NON-NLS-1$
-          " was defined, but could not be loaded, which is very odd.",//$NON-NLS-1$
+              " was defined, but could not be loaded, which is very odd.",//$NON-NLS-1$
           cnfe);
     }
   }

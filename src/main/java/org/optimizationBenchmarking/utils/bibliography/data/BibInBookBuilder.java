@@ -82,7 +82,7 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
     if ((this.m_startPage = this.normalize(startPage)) == null) {
       throw new IllegalArgumentException(//
           "Start page cannot be set to empty or null, but '" //$NON-NLS-1$
-          + startPage + "' is."); //$NON-NLS-1$
+              + startPage + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -100,7 +100,7 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
     if ((this.m_endPage = this.normalize(endPage)) == null) {
       throw new IllegalArgumentException(//
           "End page cannot be set to empty or null, but '" //$NON-NLS-1$
-          + endPage + "' is."); //$NON-NLS-1$
+              + endPage + "' is."); //$NON-NLS-1$
     }
   }
 
@@ -118,7 +118,7 @@ public abstract class BibInBookBuilder extends BibRecordBuilder {
     if ((this.m_chapter = this.normalize(chapter)) == null) {
       throw new IllegalArgumentException(//
           "Chapter name cannot be set to empty or null, but '" //$NON-NLS-1$
-          + chapter + "' is."); //$NON-NLS-1$
+              + chapter + "' is."); //$NON-NLS-1$
     }
   }
 

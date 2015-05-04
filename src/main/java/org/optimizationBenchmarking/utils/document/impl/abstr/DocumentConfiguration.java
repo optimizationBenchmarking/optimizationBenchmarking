@@ -34,8 +34,8 @@ public class DocumentConfiguration extends GraphicConfiguration {
       final DocumentConfigurationBuilder builder) {
     super(builder);
     DocumentConfiguration
-    ._checkDocumentDriver(this.m_documentDriver = builder
-    .getDocumentDriver());
+        ._checkDocumentDriver(this.m_documentDriver = builder
+            .getDocumentDriver());
     DocumentConfiguration._checkChartDriver(this.m_chartDriver = builder
         .getChartDriver());
     DocumentConfiguration._checkGraphicDriverCompliance(
@@ -52,7 +52,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
 
     throw new UnsupportedOperationException(//
         "Cannot make instance of " + //$NON-NLS-1$
-        TextUtils.className(this.getClass()) + " immutable."); //$NON-NLS-1$
+            TextUtils.className(this.getClass()) + " immutable."); //$NON-NLS-1$
   }
 
   /**
@@ -133,7 +133,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
         config = ((DocumentConfiguration) o);
         return (EComparison.equals(this.m_chartDriver,
             config.m_chartDriver) && EComparison.equals(
-                this.m_documentDriver, config.m_documentDriver));
+            this.m_documentDriver, config.m_documentDriver));
       }
     } else {
       if (o instanceof DocumentConfigurationBuilder) {
@@ -141,7 +141,7 @@ public class DocumentConfiguration extends GraphicConfiguration {
           builder = ((DocumentConfigurationBuilder) o);
           return (EComparison.equals(this.m_chartDriver,
               builder.getChartDriver()) && EComparison.equals(
-                  this.m_documentDriver, builder.getDocumentDriver()));
+              this.m_documentDriver, builder.getDocumentDriver()));
         }
       }
     }

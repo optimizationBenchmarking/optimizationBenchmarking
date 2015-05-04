@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * href="http://java.freehep.org/vectorgraphics">FreeHEP</a> library
  */
 final class _FreeHEPEPSGraphicWrapper extends
-_FreeHEPAbstractVectorGraphicsProxy<PSGraphics2D> {
+    _FreeHEPAbstractVectorGraphicsProxy<PSGraphics2D> {
 
   /**
    * instantiate

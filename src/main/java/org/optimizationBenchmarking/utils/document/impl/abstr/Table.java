@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * The base class for tables
  */
 public class Table extends ComplexObject implements ITable,
-Iterable<ETableCellDef> {
+    Iterable<ETableCellDef> {
 
   /** the state when the caption has been created */
   private static final int STATE_CAPTION_CREATED = (DocumentElement.STATE_MAX_ELEMENT + 1);
@@ -155,7 +155,7 @@ Iterable<ETableCellDef> {
       if (d == null) {
         throw new IllegalArgumentException(//
             "No cell definition element can be null, but one of " + //$NON-NLS-1$
-            def + " is."); //$NON-NLS-1$
+                def + " is."); //$NON-NLS-1$
       }
       if (d != ETableCellDef.VERTICAL_SEPARATOR) {
         cells++;
@@ -164,7 +164,7 @@ Iterable<ETableCellDef> {
     if (cells <= 0) {
       throw new IllegalArgumentException(//
           "Table definition cannot be empty, i.e., must contain at least one regular cell - but " //$NON-NLS-1$
-          + Arrays.toString(def) + " does not."); //$NON-NLS-1$
+              + Arrays.toString(def) + " does not."); //$NON-NLS-1$
     }
 
     return cells;

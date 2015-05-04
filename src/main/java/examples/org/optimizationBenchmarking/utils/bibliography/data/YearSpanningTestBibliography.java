@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
  * two years.
  */
 public final class YearSpanningTestBibliography extends
-BibliographyExample {
+    BibliographyExample {
 
   /**
    * create my bibliography

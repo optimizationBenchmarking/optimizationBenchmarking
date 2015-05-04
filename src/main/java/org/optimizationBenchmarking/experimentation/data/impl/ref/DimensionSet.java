@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a set of dimensions */
 public final class DimensionSet extends _IDObjectSet<Dimension> implements
-IDimensionSet {
+    IDimensionSet {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

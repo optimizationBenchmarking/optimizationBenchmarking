@@ -10,8 +10,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
  * attribute-based computations to that parameter value.
  */
 public class ShadowParameterValue extends
-_ShadowPropertyValue<IParameter, IParameterValue> implements
-IParameterValue {
+    _ShadowPropertyValue<IParameter, IParameterValue> implements
+    IParameterValue {
 
   /**
    * create the shadow parameter value

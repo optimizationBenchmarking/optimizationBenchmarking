@@ -22,7 +22,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  *          the entry type
  */
 public class ObjectMap<K, V, NT extends ChainedMapEntry<K, V>> extends
-BasicMap<K, V, NT> {
+    BasicMap<K, V, NT> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

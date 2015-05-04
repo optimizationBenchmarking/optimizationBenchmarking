@@ -74,7 +74,7 @@ public final class REngine extends MathEngine {
     this.m_out = e.wrapOutputStream(process.getStdIn());
 
     this.m_id = (((this.getClass().getSimpleName() + ' ') + '#') + //
-        Long.toString(REngine.ENGINE_ID.incrementAndGet()));
+    Long.toString(REngine.ENGINE_ID.incrementAndGet()));
 
     if ((logger != null) && (logger.isLoggable(Level.INFO))) {
       logger.info(this.m_id + " successfully started"); //$NON-NLS-1$
@@ -120,7 +120,7 @@ public final class REngine extends MathEngine {
   final void _handleError(final Object t) {
     ErrorUtils.logError(this.getLogger(),
         ("Error during communication with R in engine " + //$NON-NLS-1$
-            this.hashCode()), t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
+        this.hashCode()), t, true, RethrowMode.AS_RUNTIME_EXCEPTION);
   }
 
   /** {@inheritDoc} */
@@ -320,7 +320,7 @@ public final class REngine extends MathEngine {
       case MATRIX: {
         throw new IllegalArgumentException(
             "Cannot query variable " + variable + //$NON-NLS-1$
-            " as scalar."); //$NON-NLS-1$
+                " as scalar."); //$NON-NLS-1$
       }
     }
 

@@ -231,7 +231,7 @@ public class InstanceTest<T> extends TestBase {
           if (o instanceof Map.Entry) {
             e = ((Map.Entry) o);
             return ((this.__canSerialize(e.getKey(), visited)) && //
-                (this.__canSerialize(e.getValue(), visited)));
+            (this.__canSerialize(e.getValue(), visited)));
           }
           return true;
         }

@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * Java's raster graphics.
  */
 public final class ImageIOBMPGraphicDriver extends
-_ImageIORasterGraphicDriver {
+    _ImageIORasterGraphicDriver {
 
   /**
    * Get the default instance of the BMP driver based on Java's imaging API
@@ -62,7 +62,7 @@ _ImageIORasterGraphicDriver {
   static final class _ImageIOBMPSPILoader {
     /** the image writer spi */
     static final ImageWriterSpi SPI = //
-        _ImageIORasterGraphicDriver.getSPI(EGraphicFormat.BMP);
+    _ImageIORasterGraphicDriver.getSPI(EGraphicFormat.BMP);
   }
 
   /** the default loader */

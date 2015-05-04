@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
  * implementation here.
  */
 public final class ExperimentSet extends _IDObjectSet<Experiment>
-implements IExperimentSet {
+    implements IExperimentSet {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

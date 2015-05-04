@@ -41,7 +41,7 @@ public final class XHTML10DocumentBuilder extends DocumentBuilder {
   public final XHTML10DocumentBuilder setScreenSize(
       final PhysicalDimension size) {
     ((XHTML10ConfigurationBuilder) (this.getConfigurationBuilder()))
-    .setScreenSize(size);
+        .setScreenSize(size);
     return this;
   }
 
@@ -54,7 +54,7 @@ public final class XHTML10DocumentBuilder extends DocumentBuilder {
    */
   public final XHTML10DocumentBuilder setScreenSize(final EScreenSize size) {
     ((XHTML10ConfigurationBuilder) (this.getConfigurationBuilder()))
-    .setScreenSize(size);
+        .setScreenSize(size);
     return this;
   }
 
@@ -78,7 +78,7 @@ public final class XHTML10DocumentBuilder extends DocumentBuilder {
   public final XHTML10DocumentBuilder setFontPalette(
       final FontPalette fonts) {
     ((XHTML10ConfigurationBuilder) (this.getConfigurationBuilder()))
-    .setFontPalette(fonts);
+        .setFontPalette(fonts);
     return this;
   }
 

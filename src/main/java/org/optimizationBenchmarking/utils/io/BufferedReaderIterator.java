@@ -50,9 +50,9 @@ public class BufferedReaderIterator extends BasicIterator<String> {
           s = this.m_reader.readLine();
         } catch (final IOException ioe) {
           RethrowMode.AS_RUNTIME_EXCEPTION
-          .rethrow(//
-              "Error while invoking readLine() in order to get the next line from a BufferedReader to iterate over via a BufferedReaderIterator.", //$NON-NLS-1$
-              true, ioe);
+              .rethrow(//
+                  "Error while invoking readLine() in order to get the next line from a BufferedReader to iterate over via a BufferedReaderIterator.", //$NON-NLS-1$
+                  true, ioe);
           return false;
         }
 

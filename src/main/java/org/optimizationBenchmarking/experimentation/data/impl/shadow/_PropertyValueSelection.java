@@ -13,7 +13,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
  *          the property value type
  */
 abstract class _PropertyValueSelection<PT extends IProperty, PVT extends IPropertyValue>
-extends _PlainSelection<PT, PVT> {
+    extends _PlainSelection<PT, PVT> {
 
   /**
    * create the property value selection
@@ -39,7 +39,7 @@ extends _PlainSelection<PT, PVT> {
     }
     if (value.isGeneralized() || //
         ((value instanceof IParameterValue) && //
-            (((IParameterValue) value).isUnspecified()))) {
+        (((IParameterValue) value).isUnspecified()))) {
       return false;
     }
     return true;

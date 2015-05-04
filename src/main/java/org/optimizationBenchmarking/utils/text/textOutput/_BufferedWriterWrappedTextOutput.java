@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.error.RethrowMode;
  * {@link java.io.BufferedWriter}.
  */
 final class _BufferedWriterWrappedTextOutput extends
-_WriterWrappedTextOutputBase<BufferedWriter> {
+    _WriterWrappedTextOutputBase<BufferedWriter> {
 
   /**
    * Create a wrapped text output
@@ -30,9 +30,9 @@ _WriterWrappedTextOutputBase<BufferedWriter> {
     } catch (final IOException ioe) {
 
       RethrowMode.AS_RUNTIME_EXCEPTION
-      .rethrow(//
-          "Error while trying to append line break to _BufferedWriterWrappedTextOutput.", //$NON-NLS-1$
-          true, ioe);
+          .rethrow(//
+              "Error while trying to append line break to _BufferedWriterWrappedTextOutput.", //$NON-NLS-1$
+              true, ioe);
     }
   }
 }

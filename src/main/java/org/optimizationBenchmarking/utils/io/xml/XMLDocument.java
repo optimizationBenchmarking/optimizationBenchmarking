@@ -14,11 +14,11 @@ public final class XMLDocument extends XMLBase {
 
   /** the xml declaration */
   private static final char[] XML = { '<', '?', 'x', 'm', 'l', ' ', 'v',
-    'e', 'r', 's', 'i', 'o', 'n', '=', '"', '1', '.', '0', '"', };
+      'e', 'r', 's', 'i', 'o', 'n', '=', '"', '1', '.', '0', '"', };
 
   /** the encoding */
   private static final char[] ENCODING = { 'e', 'n', 'c', 'o', 'd', 'i',
-    'n', 'g', '=', '"' };
+      'n', 'g', '=', '"' };
 
   /** the closing sequence */
   private static final char[] CLOSE = { '"', '?', '>' };

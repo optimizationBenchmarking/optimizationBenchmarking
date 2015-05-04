@@ -106,7 +106,7 @@ public abstract class EvaluationExample {
             .resolve(configName)
             .resolve(
                 (destName + '_')
-                + EvaluationExample.COUNTER.incrementAndGet()));
+                    + EvaluationExample.COUNTER.incrementAndGet()));
 
     builder = Evaluator.getInstance().use();
     builder.setInput(input);
@@ -166,8 +166,8 @@ public abstract class EvaluationExample {
           logger, //
           ("Severe error during experiment example " //$NON-NLS-1$
               + TextUtils.className(this.getClass()) + " for source " + //$NON-NLS-1$
-              TextUtils.className(source)), tt, true,
-              RethrowMode.AS_RUNTIME_EXCEPTION);
+          TextUtils.className(source)), tt, true,
+          RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
 
@@ -189,8 +189,8 @@ public abstract class EvaluationExample {
       ErrorUtils.logError(
           logger, //
           ("Severe error during experiment example " //$NON-NLS-1$
-              + TextUtils.className(this.getClass())), tt, true,
-              RethrowMode.AS_RUNTIME_EXCEPTION);
+          + TextUtils.className(this.getClass())), tt, true,
+          RethrowMode.AS_RUNTIME_EXCEPTION);
     }
   }
 

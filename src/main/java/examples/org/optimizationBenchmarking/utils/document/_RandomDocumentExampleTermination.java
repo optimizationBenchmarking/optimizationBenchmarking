@@ -299,7 +299,7 @@ final class _RandomDocumentExampleTermination extends Thread {
           }
           if (chosen == _ERandomDocumentExampleElements.FIGURE_SERIES) {
             if (!(this.m_autoAllocatedLabels[ELabelType.SUBFIGURE
-                                             .ordinal()].isEmpty())) {
+                .ordinal()].isEmpty())) {
               return chosen;
             }
           }

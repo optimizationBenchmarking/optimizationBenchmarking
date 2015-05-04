@@ -32,14 +32,14 @@ import org.optimizationBenchmarking.utils.math.NumericalTypes;
  * of reasonable numbers for numerical properties.
  */
 public final class PropertyValueGrouper extends
-Attribute<IProperty, PropertyValueGroups> {
+    Attribute<IProperty, PropertyValueGroups> {
 
   /** The suffix of the grouping parameter: {@value} */
   public static final String PARAM_GROUPING_SUFFIX = "Grouping"; //$NON-NLS-1$
 
   /** The default parameter for all grouping */
   public static final String PARAM_DEFAULT_GROUPING = //
-      ("default" + PropertyValueGrouper.PARAM_GROUPING_SUFFIX);//$NON-NLS-1$
+  ("default" + PropertyValueGrouper.PARAM_GROUPING_SUFFIX);//$NON-NLS-1$
 
   /** the default minimum number of anticipated groups */
   private static final int DEFAULT_MIN_GROUPS = 2;
@@ -97,12 +97,12 @@ Attribute<IProperty, PropertyValueGroups> {
     if (minGroups < 0) {
       throw new IllegalArgumentException(//
           "The minimum number of groups must be greater or equal to 0, but is " //$NON-NLS-1$
-          + minGroups);
+              + minGroups);
     }
     if (maxGroups < minGroups) {//
       throw new IllegalArgumentException(//
           "The maximum number of groups must be greater or equal to the minimum number, but is " //$NON-NLS-1$
-          + maxGroups + " while the minimum is " + minGroups);//$NON-NLS-1$
+              + maxGroups + " while the minimum is " + minGroups);//$NON-NLS-1$
     }
 
     this.m_groupingMode = groupingMode;
@@ -154,9 +154,9 @@ Attribute<IProperty, PropertyValueGroups> {
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.m_groupingMode),//
             HashUtils.hashCode(this.m_groupingParameter)),//
-            HashUtils.combineHashes(//
-                HashUtils.hashCode(this.m_minGroups),//
-                HashUtils.hashCode(this.m_maxGroups)));
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.m_minGroups),//
+            HashUtils.hashCode(this.m_maxGroups)));
   }
 
   /**

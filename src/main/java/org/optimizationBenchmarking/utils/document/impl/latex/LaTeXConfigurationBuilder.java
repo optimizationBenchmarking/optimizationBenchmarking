@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** The builder for LaTeX configurations */
 public class LaTeXConfigurationBuilder extends
-DocumentConfigurationBuilder {
+    DocumentConfigurationBuilder {
 
   /** the document class */
   public static final String PARAM_DOCUMENT_CLASS = "documentClass"; //$NON-NLS-1$

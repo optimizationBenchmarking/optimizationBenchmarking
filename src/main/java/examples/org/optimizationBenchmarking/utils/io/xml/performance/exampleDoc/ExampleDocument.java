@@ -252,10 +252,10 @@ public class ExampleDocument {
     return new ExampleElement(namespaces[rand.nextInt(namespaces.length)],//
         RandomUtils.longToString(RandomUtils.DEFAULT_CHARSET,
             rand.nextLong()),//
-            ((attrs.size() > 0) ? attrs.toArray(new ExampleAttribute[attrs
-                                                                     .size()]) : ExampleDocument.EMPTY_ATTRIBUTES),//
-                                                                     ((sub.size() > 0) ? sub.toArray(new Object[sub.size()])
-                                                                         : ExampleDocument.EMPTY_OBJECTS));
+        ((attrs.size() > 0) ? attrs.toArray(new ExampleAttribute[attrs
+            .size()]) : ExampleDocument.EMPTY_ATTRIBUTES),//
+        ((sub.size() > 0) ? sub.toArray(new Object[sub.size()])
+            : ExampleDocument.EMPTY_OBJECTS));
   }
 
   /**

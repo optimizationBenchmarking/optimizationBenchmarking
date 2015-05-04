@@ -13,11 +13,11 @@ public enum EFontType implements IFileType {
       "ttf",//$NON-NLS-1$
       "application/x-font-ttf"), //$NON-NLS-1$
 
-      /** type 1 fonts */
-      TYPE_1(Font.TYPE1_FONT,//
-          "Type 1 Font", //$NON-NLS-1$
-          "pfb",//$NON-NLS-1$
-          null);
+  /** type 1 fonts */
+  TYPE_1(Font.TYPE1_FONT,//
+      "Type 1 Font", //$NON-NLS-1$
+      "pfb",//$NON-NLS-1$
+      null);
 
   /** the type ID */
   private final int m_typeID;

@@ -72,7 +72,7 @@ public final class FontSize {
     for (final int scale : new int[] { 1, 2 }) {
       for (final String fontName : new String[] { "Courier New", //$NON-NLS-1$
           "Arial", //$NON-NLS-1$
-      "Times New Roman" }) {//$NON-NLS-1$
+          "Times New Roman" }) {//$NON-NLS-1$
         System.out.println("============ " + fontName + //$NON-NLS-1$
             " ===============");//$NON-NLS-1$
         im = new BufferedImage(500, 200, BufferedImage.TYPE_INT_RGB);

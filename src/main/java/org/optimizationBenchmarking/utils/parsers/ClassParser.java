@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
  *          the base type
  */
 public class ClassParser<T extends Object> extends
-Parser<Class<? extends T>> {
+    Parser<Class<? extends T>> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

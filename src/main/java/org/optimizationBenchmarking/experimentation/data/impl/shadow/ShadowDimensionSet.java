@@ -13,8 +13,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
  * attribute-based computations to that dimension set.
  */
 public class ShadowDimensionSet extends //
-_ShadowNamedElementSet<IExperimentSet, IDimensionSet, IDimension>
-implements IDimensionSet {
+    _ShadowNamedElementSet<IExperimentSet, IDimensionSet, IDimension>
+    implements IDimensionSet {
 
   /**
    * create the shadow dimension

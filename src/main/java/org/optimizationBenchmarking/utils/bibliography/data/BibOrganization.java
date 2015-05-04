@@ -139,7 +139,7 @@ public class BibOrganization extends _BibElement<BibOrganization> {
       x = ((BibOrganization) r);
 
       return (EComparison.equals(this.m_name, x.m_name) && //
-          EComparison.equals(this.m_address, x.m_address));
+      EComparison.equals(this.m_address, x.m_address));
 
     }
 

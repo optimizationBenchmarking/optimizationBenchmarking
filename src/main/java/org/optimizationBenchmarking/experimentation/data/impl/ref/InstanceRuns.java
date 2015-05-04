@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
  * </p>
  */
 public final class InstanceRuns extends _IDObjectSet<Run> implements
-IInstanceRuns {
+    IInstanceRuns {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

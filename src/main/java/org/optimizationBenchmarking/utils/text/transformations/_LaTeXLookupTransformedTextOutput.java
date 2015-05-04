@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * A lookup text output for LaTeX.
  */
 class _LaTeXLookupTransformedTextOutput extends
-_LookupTransformedTextOutput {
+    _LookupTransformedTextOutput {
 
   /**
    * create the transformed text output

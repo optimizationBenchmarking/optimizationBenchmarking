@@ -10,19 +10,19 @@ final class _LaTeXCode extends Code {
 
   /** the listing begin */
   private static final char[] BEGIN_LISTING = { '\\', 'b', 'e', 'g', 'i',
-    'n', '{', 'l', 's', 't', 'l', 'i', 's', 't', 'i', 'n', 'g', '}',
-    '[', 'f', 'l', 'o', 'a', 't', '=', };
+      'n', '{', 'l', 's', 't', 'l', 'i', 's', 't', 'i', 'n', 'g', '}',
+      '[', 'f', 'l', 'o', 'a', 't', '=', };
 
   /** the float placement */
   private static final char[] FLOAT_LISTING = { '*', 't', 'b', 'h', 'p', };
 
   /** the float label */
   private static final char[] FLOAT_LABEL = { ',', 'l', 'a', 'b', 'e',
-    'l', '=' };
+      'l', '=' };
 
   /** the listing end */
   private static final char[] END_LISTING = { '\\', 'e', 'n', 'd', '{',
-    'l', 's', 't', 'l', 'i', 's', 't', 'i', 'n', 'g', '}', };
+      'l', 's', 't', 'l', 'i', 's', 't', 'i', 'n', 'g', '}', };
 
   /**
    * create the code

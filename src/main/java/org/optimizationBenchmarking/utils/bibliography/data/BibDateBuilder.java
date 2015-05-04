@@ -156,7 +156,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
     if (m == null) {
       throw new IllegalArgumentException(//
           "Month strings must not be null or empty, but '" //$NON-NLS-1$
-          + month + "' is."); //$NON-NLS-1$
+              + month + "' is."); //$NON-NLS-1$
     }
 
     res = null;
@@ -218,7 +218,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
     if (m == null) {
       throw new IllegalArgumentException(//
           "Quarter strings must not be null or empty, but '" //$NON-NLS-1$
-          + quarter + "' is."); //$NON-NLS-1$
+              + quarter + "' is."); //$NON-NLS-1$
     }
 
     res = null;

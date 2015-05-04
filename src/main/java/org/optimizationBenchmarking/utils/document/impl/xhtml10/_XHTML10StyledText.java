@@ -11,12 +11,12 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10StyledText extends StyledText {
   /** the span color begin */
   private static final char[] SPAN_COLOR_BEGIN = { '<', 's', 'p', 'a',
-    'n', ' ', 's', 't', 'y', 'l', 'e', '=', '"', 'c', 'o', 'l', 'o',
-    'r', ':', '#' };
+      'n', ' ', 's', 't', 'y', 'l', 'e', '=', '"', 'c', 'o', 'l', 'o',
+      'r', ':', '#' };
   /** black color span begin */
   private static final char[] SPAN_BLACK = { '<', 's', 'p', 'a', 'n', ' ',
-    's', 't', 'y', 'l', 'e', '=', '"', 'c', 'o', 'l', 'o', 'r', ':',
-    'b', 'l', 'a', 'c', 'k', '"', '>' };
+      's', 't', 'y', 'l', 'e', '=', '"', 'c', 'o', 'l', 'o', 'r', ':',
+      'b', 'l', 'a', 'c', 'k', '"', '>' };
   /** the code begin */
   static final char[] CODE_BEGIN = { '<', 'c', 'o', 'd', 'e', '>' };
   /** the code end */

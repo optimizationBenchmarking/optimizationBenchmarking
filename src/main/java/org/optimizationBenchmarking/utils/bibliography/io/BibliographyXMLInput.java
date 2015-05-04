@@ -16,7 +16,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * A driver for reading bibliography xml
  */
 public final class BibliographyXMLInput extends
-XMLInputTool<BibliographyBuilder> {
+    XMLInputTool<BibliographyBuilder> {
 
   /** create */
   BibliographyXMLInput() {

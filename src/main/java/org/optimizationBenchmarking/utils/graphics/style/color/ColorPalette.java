@@ -45,18 +45,18 @@ public class ColorPalette extends Palette<ColorStyle> {
           name.equalsIgnoreCase(white)) {
         throw new IllegalArgumentException(//
             "The ID of the " + i + //$NON-NLS-1$
-            "th color is '" + name + //$NON-NLS-1$
-            "' which is not permitted."); //$NON-NLS-1$
+                "th color is '" + name + //$NON-NLS-1$
+                "' which is not permitted."); //$NON-NLS-1$
       }
 
       for (j = i; (--j) >= 0;) {
         if (name.equalsIgnoreCase(data[j].getID())) {
           throw new IllegalArgumentException(//
               "No two colors in a palette can have the same ID, but ID '"//$NON-NLS-1$
-              + name + "' of the " + i + //$NON-NLS-1$
-              "th color equals ID '" + //$NON-NLS-1$
-              data[j].getID() + "' of the " + j //$NON-NLS-1$
-              + "th color.");//$NON-NLS-1$
+                  + name + "' of the " + i + //$NON-NLS-1$
+                  "th color equals ID '" + //$NON-NLS-1$
+                  data[j].getID() + "' of the " + j //$NON-NLS-1$
+                  + "th color.");//$NON-NLS-1$
         }
       }
     }

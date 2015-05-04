@@ -33,7 +33,7 @@ public enum ELabelType {
 
   /** the instances */
   public static final ArraySetView<ELabelType> INSTANCES = //
-      new ArraySetView<>(ELabelType.values());
+  new ArraySetView<>(ELabelType.values());
 
   /** the prefix */
   private final char m_prefix;

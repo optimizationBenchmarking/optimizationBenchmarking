@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  *          the setting type
  */
 abstract class _AbstractPropertySet<ST extends IPropertySetting> extends
-AbstractNamedElementSet implements IPropertySet {
+    AbstractNamedElementSet implements IPropertySet {
 
   /** the owning experiment set */
   IExperimentSet m_owner;

@@ -51,10 +51,10 @@ public class FontPaletteExample {
       sub = dir.resolve("example_" + (++j));//$NON-NLS-1$
       for (final GraphicConfiguration d : ExampleGraphicConfigurations.CONFIGURATIONS) {
         FontPaletteExample
-        .__paint(
-            sub,
-            (((FontPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
-            + (d.toString()), d, p);
+            .__paint(
+                sub,
+                (((FontPaletteExample.class.getSimpleName() + '_') + (++i)) + '_')
+                    + (d.toString()), d, p);
       }
     }
   }

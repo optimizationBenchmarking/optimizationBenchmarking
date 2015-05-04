@@ -183,19 +183,19 @@ public class CitationItem implements ISequenceable {
 
     if (mode.printAuthors()) {
       finder: {
-      a = rec.getAuthors();
-      if ((a == null) || (a.isEmpty())) {
-        if (rec instanceof BibBook) {
-          a = (((BibBook) (rec)).getEditors());
-          if ((a == null) || (a.isEmpty())) {
-            break finder;
+        a = rec.getAuthors();
+        if ((a == null) || (a.isEmpty())) {
+          if (rec instanceof BibBook) {
+            a = (((BibBook) (rec)).getEditors());
+            if ((a == null) || (a.isEmpty())) {
+              break finder;
+            }
           }
         }
+        this.renderAuthors(a, textCase, out, raw);
+        tc = tc.nextCase();
+        has = true;
       }
-      this.renderAuthors(a, textCase, out, raw);
-      tc = tc.nextCase();
-      has = true;
-    }
     }
 
     if (mode.printYear()) {

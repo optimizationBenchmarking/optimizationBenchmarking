@@ -106,14 +106,14 @@ public final class FontStyle extends FontProperties implements IStyle {
     super(
         //
         (isItalic ? FontProperties.FONT_FLAG_ITALIC : 0)
-        | (isBold ? FontProperties.FONT_FLAG_BOLD : 0)
-        | (isUnderlined ? FontProperties.FONT_FLAG_UNDERLINED : 0)
-        | ((family == EFontFamily.MONOSPACED) ? FontProperties.FONT_FLAG_MONOSPACE
-            : ((family == EFontFamily.SANS_SERIF) ? FontProperties.FONT_FLAG_SANS_SERIF
-                : ((family == EFontFamily.SERIF) ? FontProperties.FONT_FLAG_SERIF
-                    : ((family == EFontFamily.DIALOG) ? FontProperties.FONT_FLAG_DIALOG
-                        : ((family == EFontFamily.DIALOG_INPUT) ? FontProperties.FONT_FLAG_DIALOG_INPUT
-                            : 0))))));
+            | (isBold ? FontProperties.FONT_FLAG_BOLD : 0)
+            | (isUnderlined ? FontProperties.FONT_FLAG_UNDERLINED : 0)
+            | ((family == EFontFamily.MONOSPACED) ? FontProperties.FONT_FLAG_MONOSPACE
+                : ((family == EFontFamily.SANS_SERIF) ? FontProperties.FONT_FLAG_SANS_SERIF
+                    : ((family == EFontFamily.SERIF) ? FontProperties.FONT_FLAG_SERIF
+                        : ((family == EFontFamily.DIALOG) ? FontProperties.FONT_FLAG_DIALOG
+                            : ((family == EFontFamily.DIALOG_INPUT) ? FontProperties.FONT_FLAG_DIALOG_INPUT
+                                : 0))))));
 
     FontStyleBuilder._checkFontFamily(family);
     FontStyleBuilder._checkSize(size);
@@ -132,7 +132,7 @@ public final class FontStyle extends FontProperties implements IStyle {
     if (id == null) {
       throw new IllegalArgumentException(//
           "ID must not be null or empty, but is '" //$NON-NLS-1$
-          + id + '\'');
+              + id + '\'');
     }
 
     this.m_size = size;
@@ -188,7 +188,7 @@ public final class FontStyle extends FontProperties implements IStyle {
       t = ((FontStyle) o);
       return ((this.m_flags == t.m_flags) && //
           (this.m_size == t.m_size) && //
-          (EComparison.equals(this.m_font, t.m_font)));
+      (EComparison.equals(this.m_font, t.m_font)));
     }
     return false;
   }

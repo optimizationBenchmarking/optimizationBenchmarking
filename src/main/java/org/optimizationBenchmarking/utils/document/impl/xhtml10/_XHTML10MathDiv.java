@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 final class _XHTML10MathDiv extends MathDiv {
   /** the before */
   private final static char[] FRAC_TD = { '<', 't', 'd', ' ', 'c', 'l',
-    'a', 's', 's', '=', '"', 'm', 'a', 't', 'h', 'U', 'L', '"', '>' };
+      'a', 's', 's', '=', '"', 'm', 'a', 't', 'h', 'U', 'L', '"', '>' };
 
   /**
    * Create a new mathematical function

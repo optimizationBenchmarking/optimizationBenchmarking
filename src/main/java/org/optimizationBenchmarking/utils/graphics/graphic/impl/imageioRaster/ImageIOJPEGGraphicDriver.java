@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * href="http://en.wikipedia.org/wiki/JPEG">JPEG</a> graphics.
  */
 public final class ImageIOJPEGGraphicDriver extends
-_ImageIORasterGraphicDriver {
+    _ImageIORasterGraphicDriver {
 
   /** Create a new JPEG driver for based on {@link javax.imageio ImageIO}. */
   ImageIOJPEGGraphicDriver() {
@@ -75,7 +75,7 @@ _ImageIORasterGraphicDriver {
   static final class _ImageIOJPEGSPILoader {
     /** the image writer spi */
     static final ImageWriterSpi SPI = //
-        _ImageIORasterGraphicDriver.getSPI(EGraphicFormat.JPEG);
+    _ImageIORasterGraphicDriver.getSPI(EGraphicFormat.JPEG);
   }
 
   /** the default loader */
@@ -83,6 +83,6 @@ _ImageIORasterGraphicDriver {
 
     /** the default graphic JPEG driver instance */
     static final ImageIOJPEGGraphicDriver INSTANCE = //
-        new ImageIOJPEGGraphicDriver();
+    new ImageIOJPEGGraphicDriver();
   }
 }

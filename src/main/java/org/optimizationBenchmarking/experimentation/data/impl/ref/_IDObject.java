@@ -16,7 +16,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** An internal class for named id objects. */
 abstract class _IDObject extends DataElement implements
-Comparable<_IDObject>, ITextable, Serializable {
+    Comparable<_IDObject>, ITextable, Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -77,7 +77,7 @@ Comparable<_IDObject>, ITextable, Serializable {
         && //
         ((o instanceof _NamedIDObject) || //
             (o instanceof _NamedIDObjectSet) || //
-            (o instanceof Experiment))) {
+        (o instanceof Experiment))) {
 
       nameThis = this.getName();
       nameO = o.getName();
@@ -198,8 +198,8 @@ Comparable<_IDObject>, ITextable, Serializable {
 
     throw new IllegalArgumentException(//
         "The objects '" + this + "' and '" + o + //$NON-NLS-1$ //$NON-NLS-2$
-        " are different instances, but they have no feature that can be used to distinguish them."//$NON-NLS-1$
-        );
+            " are different instances, but they have no feature that can be used to distinguish them."//$NON-NLS-1$
+    );
   }
 
   /**

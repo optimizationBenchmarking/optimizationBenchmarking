@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 
 /** A set of instances. */
 public final class InstanceSet extends _IDObjectSet<Instance> implements
-IInstanceSet {
+    IInstanceSet {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

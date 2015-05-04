@@ -18,7 +18,7 @@ import test.junit.org.optimizationBenchmarking.utils.collections.BasicListTest;
  */
 @Ignore
 public class ArrayListViewTestBase<ET, T extends ArrayListView<ET>>
-extends BasicListTest<ET, ET[], T> {
+    extends BasicListTest<ET, ET[], T> {
 
   /** create */
   public ArrayListViewTestBase() {

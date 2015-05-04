@@ -20,7 +20,7 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  *          the job builder type
  */
 class _EvaluationJobBuilder<DT extends IElementSet, MT extends _EvaluationModule<DT>, JT extends IEvaluationJob, JBT extends _EvaluationJobBuilder<DT, MT, JT, JBT>>
-extends ToolJobBuilder<JT, JBT> implements IEvaluationJobBuilder {
+    extends ToolJobBuilder<JT, JBT> implements IEvaluationJobBuilder {
 
   /** the module */
   private final MT m_module;
@@ -42,7 +42,7 @@ extends ToolJobBuilder<JT, JBT> implements IEvaluationJobBuilder {
     if (module == null) {
       throw new IllegalArgumentException(//
           "Owning module of an "//$NON-NLS-1$
-          + TextUtils.className(this.getClass()) + " cannot be null."); //$NON-NLS-1$
+              + TextUtils.className(this.getClass()) + " cannot be null."); //$NON-NLS-1$
     }
     this.m_module = module;
   }

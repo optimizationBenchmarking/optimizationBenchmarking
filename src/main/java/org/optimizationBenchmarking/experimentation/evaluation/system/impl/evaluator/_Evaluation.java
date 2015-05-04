@@ -286,10 +286,10 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     } catch (final Exception ex) {
       data = null;
       ErrorUtils
-      .logError(
-          logger,
-          "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
-          ex, false, RethrowMode.AS_RUNTIME_EXCEPTION);
+          .logError(
+              logger,
+              "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
+              ex, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       return null;// will never be reached
     }
 
@@ -429,16 +429,16 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
         if (instance == null) {
           throw new IllegalArgumentException(//
               "The " + j + //$NON-NLS-1$
-              "th instance run set of experiment '" //$NON-NLS-1$
-              + ex.getName() + "' is null.");//$NON-NLS-1$
+                  "th instance run set of experiment '" //$NON-NLS-1$
+                  + ex.getName() + "' is null.");//$NON-NLS-1$
         }
         if (((runs = instance.getData()) == null)
             || ((k = runs.size()) <= 0)) {
           throw new IllegalArgumentException(//
               "The instance run set for instance " + //$NON-NLS-1$
-              instance.getInstance().getName() + //
-              " of experiment '" //$NON-NLS-1$
-              + ex.getName() + "' is empty.");//$NON-NLS-1$
+                  instance.getInstance().getName() + //
+                  " of experiment '" //$NON-NLS-1$
+                  + ex.getName() + "' is empty.");//$NON-NLS-1$
         }
         if (message != null) {
           message.append(',');
@@ -555,10 +555,10 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     } catch (final Exception error) {
       doc = null;
       ErrorUtils
-      .logError(
-          logger,
-          "Unrecoverable error during the process of allocating the output document.", //$NON-NLS-1$
-          error, false, RethrowMode.AS_RUNTIME_EXCEPTION);
+          .logError(
+              logger,
+              "Unrecoverable error during the process of allocating the output document.", //$NON-NLS-1$
+              error, false, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
 
     if (doc == null) {
@@ -709,17 +709,17 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       size = data.size();
       if (size == 1) {
         single: {
-        param = set.getParameters().find(
-            Parameter.PARAMETER_ALGORITHM_NAME);
-        if (param != null) {
-          name = data.get(0).getParameterSetting().get(param);
-          if ((name != null) && (name instanceof String)) {
-            title.append((String) name);
-            break single;
+          param = set.getParameters().find(
+              Parameter.PARAMETER_ALGORITHM_NAME);
+          if (param != null) {
+            name = data.get(0).getParameterSetting().get(param);
+            if ((name != null) && (name instanceof String)) {
+              title.append((String) name);
+              break single;
+            }
           }
+          title.append(" One Algorithm"); //$NON-NLS-1$
         }
-        title.append(" One Algorithm"); //$NON-NLS-1$
-      }
       } else {
         InTextNumberAppender.INSTANCE.appendTo(size, ETextCase.IN_TITLE,
             title);

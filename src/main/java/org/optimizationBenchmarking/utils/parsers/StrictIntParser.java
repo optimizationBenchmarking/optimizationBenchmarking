@@ -148,8 +148,8 @@ public class StrictIntParser extends NumberParser<Integer> {
     if ((d < Integer.MIN_VALUE) || (d > Integer.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((d + " is not a valid int value, since it is out of the range ") + //$NON-NLS-1$
-              Integer.MIN_VALUE) + "..") + //$NON-NLS-1$
-              Integer.MAX_VALUE) + '.');
+          Integer.MIN_VALUE) + "..") + //$NON-NLS-1$
+          Integer.MAX_VALUE) + '.');
     }
 
     b = ((int) d);
@@ -166,8 +166,8 @@ public class StrictIntParser extends NumberParser<Integer> {
     if ((l < Integer.MIN_VALUE) || (l > Integer.MAX_VALUE)) {
       throw new IllegalArgumentException(
           ((((l + " is not a valid int value, since it is out of the range ") + //$NON-NLS-1$
-              Integer.MIN_VALUE) + "..") + //$NON-NLS-1$
-              Integer.MAX_VALUE) + '.');
+          Integer.MIN_VALUE) + "..") + //$NON-NLS-1$
+          Integer.MAX_VALUE) + '.');
     }
     this.validateInt((int) l);
   }

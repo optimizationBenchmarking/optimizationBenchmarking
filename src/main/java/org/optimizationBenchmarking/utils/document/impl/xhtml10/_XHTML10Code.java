@@ -9,12 +9,12 @@ final class _XHTML10Code extends Code {
 
   /** the start of the code */
   private static final char[] CODE_DIV_BEGIN = { '<', 'd', 'i', 'v', ' ',
-    'c', 'l', 'a', 's', 's', '=', '"', 'c', 'o', 'd', 'e', '"', '>', };
+      'c', 'l', 'a', 's', 's', '=', '"', 'c', 'o', 'd', 'e', '"', '>', };
 
   /** the start of the code */
   private static final char[] CODE_TABLE_BEGIN = { '<', 't', 'a', 'b',
-    'l', 'e', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'o', 'd',
-    'e', '"', '>' };
+      'l', 'e', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'c', 'o', 'd',
+      'e', '"', '>' };
 
   /**
    * create the code

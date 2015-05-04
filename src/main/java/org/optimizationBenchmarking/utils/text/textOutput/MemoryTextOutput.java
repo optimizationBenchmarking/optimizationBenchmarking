@@ -17,41 +17,41 @@ import org.optimizationBenchmarking.utils.text.ITextable;
  * if multiple text nodes are forked in parallel.
  */
 public class MemoryTextOutput extends AbstractTextOutput implements
-CharSequence, ITextable {
+    CharSequence, ITextable {
 
   /** the ten's digits */
   private final static char[] DIGIT_TENS = { '0', '0', '0', '0', '0', '0',
-    '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1',
-    '1', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '3', '3',
-    '3', '3', '3', '3', '3', '3', '3', '3', '4', '4', '4', '4', '4',
-    '4', '4', '4', '4', '4', '5', '5', '5', '5', '5', '5', '5', '5',
-    '5', '5', '6', '6', '6', '6', '6', '6', '6', '6', '6', '6', '7',
-    '7', '7', '7', '7', '7', '7', '7', '7', '7', '8', '8', '8', '8',
-    '8', '8', '8', '8', '8', '8', '9', '9', '9', '9', '9', '9', '9',
-    '9', '9', '9', };
+      '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1',
+      '1', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '3', '3',
+      '3', '3', '3', '3', '3', '3', '3', '3', '4', '4', '4', '4', '4',
+      '4', '4', '4', '4', '4', '5', '5', '5', '5', '5', '5', '5', '5',
+      '5', '5', '6', '6', '6', '6', '6', '6', '6', '6', '6', '6', '7',
+      '7', '7', '7', '7', '7', '7', '7', '7', '7', '8', '8', '8', '8',
+      '8', '8', '8', '8', '8', '8', '9', '9', '9', '9', '9', '9', '9',
+      '9', '9', '9', };
 
   /** the one's digits */
   private final static char[] DIGIT_ONES = { '0', '1', '2', '3', '4', '5',
-    '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8',
-    '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1',
-    '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4',
-    '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7',
-    '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3',
-    '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6',
-    '7', '8', '9', };
+      '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8',
+      '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1',
+      '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4',
+      '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7',
+      '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+      '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3',
+      '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6',
+      '7', '8', '9', };
 
   /** the integer size table */
   private static final int[] INT_SIZE_TABLE = { 9, 99, 999, 9999, 99999,
-    999999, 9999999, 99999999, 999999999, Integer.MAX_VALUE };
+      999999, 9999999, 99999999, 999999999, Integer.MAX_VALUE };
 
   /** the minimum long */
   private static final char[] LONG_MIN_VAL = //
-      Long.toString(Long.MIN_VALUE).toCharArray();
+  Long.toString(Long.MIN_VALUE).toCharArray();
 
   /** the minimum int */
   private static final char[] INT_MIN_VAL = //
-      Integer.toString(Integer.MIN_VALUE).toCharArray();
+  Integer.toString(Integer.MIN_VALUE).toCharArray();
 
   /** the data */
   private char[] m_data;
@@ -137,9 +137,9 @@ CharSequence, ITextable {
     if ((newLen = (curLen + len)) < curLen) {
       throw new IllegalStateException(//
           "Internal buffer too big: cannot add " + //$NON-NLS-1$
-          len + " characters to the existing " + //$NON-NLS-1$
-          curLen + " ones, the result would be " + //$NON-NLS-1$
-          newLen);
+              len + " characters to the existing " + //$NON-NLS-1$
+              curLen + " ones, the result would be " + //$NON-NLS-1$
+              newLen);
     }
     this.m_size = (newLen = (curLen + len));
     if (newLen > data.length) {

@@ -60,8 +60,8 @@ abstract class _FileSet extends FileCollector {
     if (normalized == null) {
       throw new IllegalArgumentException(//
           "Path '" + path + //$NON-NLS-1$
-          "' of type " + type + //$NON-NLS-1$
-          " normalizes to null."); //$NON-NLS-1$
+              "' of type " + type + //$NON-NLS-1$
+              " normalizes to null."); //$NON-NLS-1$
     }
 
     if (!(Files.isRegularFile(normalized))) {

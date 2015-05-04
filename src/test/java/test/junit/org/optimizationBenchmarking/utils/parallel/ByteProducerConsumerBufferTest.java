@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.parallel.ProducerConsumerBuffer;
  * The base class for testing producer and consumer buffers.
  */
 public class ByteProducerConsumerBufferTest extends
-ProducerConsumerBufferTest<byte[]> {
+    ProducerConsumerBufferTest<byte[]> {
 
   /** create */
   public ByteProducerConsumerBufferTest() {

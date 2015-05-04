@@ -132,11 +132,11 @@ public class TemplateDocumentExample extends DocumentExample {
 
       try {
         DocumentXMLInput
-        .getInstance()
-        .use()
-        .setDestination(new DocumentXMLHandler(body, properties))
-        .addResource(TemplateDocumentExample.class,
-            "exampleTemplate.template").create().call(); //$NON-NLS-1$
+            .getInstance()
+            .use()
+            .setDestination(new DocumentXMLHandler(body, properties))
+            .addResource(TemplateDocumentExample.class,
+                "exampleTemplate.template").create().call(); //$NON-NLS-1$
       } catch (final IOException ioe) {
         RethrowMode.AS_RUNTIME_EXCEPTION.rethrow(//
             "Error while executing document template.",//$NON-NLS-1$
@@ -153,7 +153,7 @@ public class TemplateDocumentExample extends DocumentExample {
 
   /** an internal callback */
   private static final class __PrintMapCallback implements
-  IDocumentCallback<IText> {
+      IDocumentCallback<IText> {
     /** create */
     __PrintMapCallback() {
       super();

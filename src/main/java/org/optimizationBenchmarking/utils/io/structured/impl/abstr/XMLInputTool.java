@@ -23,7 +23,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *          the source type
  */
 public class XMLInputTool<S> extends TextInputTool<S> implements
-IXMLInputTool<S> {
+    IXMLInputTool<S> {
 
   /** the xml version */
   protected static final String XML_VERSION = "1.0"; //$NON-NLS-1$
@@ -137,7 +137,7 @@ IXMLInputTool<S> {
   @Override
   protected void stream(final IOJob job, final S data,
       final InputStream stream, final StreamEncoding<?, ?> encoding)
-          throws Throwable {
+      throws Throwable {
     this.m_spf.newSAXParser().parse(stream,
         this.wrapDestination(data, job));
   }
@@ -183,8 +183,8 @@ IXMLInputTool<S> {
     if (this.m_cause != null) {
       throw new UnsupportedOperationException(//
           "Cannot use tool '" + //$NON-NLS-1$
-          TextUtils.className(this.getClass())
-          + " due to error in XMLFileType parser initialization.",//$NON-NLS-1$
+              TextUtils.className(this.getClass())
+              + " due to error in XMLFileType parser initialization.",//$NON-NLS-1$
           this.m_cause);
     }
     super.checkCanUse();

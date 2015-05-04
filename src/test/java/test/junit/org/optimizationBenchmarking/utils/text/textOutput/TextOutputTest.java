@@ -385,34 +385,34 @@ public abstract class TextOutputTest<R> extends TestBase {
 
             switch ((appendType == 4) ? (rand.nextInt(appendType))
                 : appendType) {
-                  case 0: {
-                    if (len >= size) {
-                      textOut.append(add);
-                      sb.append(add);
-                      break;
-                    }
-                  }
-                  case 1: {
-                    textOut.append(add, 0, len);
-                    sb.append(add, 0, len);
-                    break;
-                  }
-                  case 2: {
-                    if (len >= size) {
-                      s = String.valueOf(add);
-                      textOut.append(s);
-                      sb.append(s);
-                      s = null;
-                      break;
-                    }
-                  }
-                  case 3: {
-                    s = String.valueOf(add);
-                    textOut.append(s, 0, len);
-                    sb.append(s, 0, len);
-                    s = null;
-                    break;
-                  }
+              case 0: {
+                if (len >= size) {
+                  textOut.append(add);
+                  sb.append(add);
+                  break;
+                }
+              }
+              case 1: {
+                textOut.append(add, 0, len);
+                sb.append(add, 0, len);
+                break;
+              }
+              case 2: {
+                if (len >= size) {
+                  s = String.valueOf(add);
+                  textOut.append(s);
+                  sb.append(s);
+                  s = null;
+                  break;
+                }
+              }
+              case 3: {
+                s = String.valueOf(add);
+                textOut.append(s, 0, len);
+                sb.append(s, 0, len);
+                s = null;
+                break;
+              }
             }
             Assert.assertEquals(sb.toString(), this.getString(root));
           }

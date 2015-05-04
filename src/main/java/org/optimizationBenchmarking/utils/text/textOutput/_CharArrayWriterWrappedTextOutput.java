@@ -7,7 +7,7 @@ import java.io.CharArrayWriter;
  * {@link java.io.CharArrayWriter}.
  */
 final class _CharArrayWriterWrappedTextOutput extends
-_AppendableWrappedTextOutputBase<CharArrayWriter> {
+    _AppendableWrappedTextOutputBase<CharArrayWriter> {
 
   /**
    * Create a wrapped text output

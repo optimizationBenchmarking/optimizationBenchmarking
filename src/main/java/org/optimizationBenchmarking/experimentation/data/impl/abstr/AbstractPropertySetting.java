@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * interface.
  */
 public class AbstractPropertySetting extends
-AbstractMap<IProperty, Object> implements IPropertySetting {
+    AbstractMap<IProperty, Object> implements IPropertySetting {
 
   /**
    * Create the abstract property setting
@@ -100,7 +100,7 @@ AbstractMap<IProperty, Object> implements IPropertySetting {
     }
 
     for (final java.util.Map.Entry<IProperty, Object> entry : //
-      this.entrySet()) {
+    this.entrySet()) {
       res = EComparison.compareObjects(entry.getValue(),
           o.get(entry.getKey()));
       if (res != 0) {
@@ -132,7 +132,7 @@ AbstractMap<IProperty, Object> implements IPropertySetting {
     }
 
     for (final java.util.Map.Entry<IProperty, Object> entry : //
-      this.entrySet()) {
+    this.entrySet()) {
       key = entry.getKey();
 
       value1 = entry.getValue();
@@ -155,7 +155,7 @@ AbstractMap<IProperty, Object> implements IPropertySetting {
   @Override
   public boolean isGeneralized() {
     for (final java.util.Map.Entry<IProperty, Object> entry : //
-      this.entrySet()) {
+    this.entrySet()) {
       if (EComparison.equals(//
           entry.getKey().getGeneralized().getValue(), entry.getValue())) {
         return false;

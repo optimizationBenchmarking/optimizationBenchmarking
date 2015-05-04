@@ -15,7 +15,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * A driver for loading a document into a handler
  */
 public final class DocumentXMLInput extends
-XMLInputTool<DocumentXMLHandler> {
+    XMLInputTool<DocumentXMLHandler> {
 
   /** create */
   DocumentXMLInput() {
@@ -67,9 +67,9 @@ XMLInputTool<DocumentXMLHandler> {
 
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
-      .rethrow(//
-          "Error during loading of XML Schema for DocumentXML (the template language of the Document API).", //$NON-NLS-1$
-          true, rec);
+          .rethrow(//
+              "Error during loading of XML Schema for DocumentXML (the template language of the Document API).", //$NON-NLS-1$
+              true, rec);
     }
   }
 

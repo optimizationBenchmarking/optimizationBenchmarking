@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /** A context for creating experiments. */
 final class _ExperimentSetContext extends
-_HierarchicalCollection<Experiment, ExperimentContext, ExperimentSet> {
+    _HierarchicalCollection<Experiment, ExperimentContext, ExperimentSet> {
 
   /** the parameter manager */
   private volatile _ParametersBuilder m_params;

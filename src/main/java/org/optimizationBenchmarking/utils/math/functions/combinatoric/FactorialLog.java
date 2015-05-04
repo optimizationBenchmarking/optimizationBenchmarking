@@ -54,7 +54,7 @@ public final class FactorialLog extends UnaryFunction {
 
     mid = ((start + end) >>> 1);
     return (FactorialLog.factorialLogI(start, mid) + //
-        FactorialLog.factorialLogI(mid + 1, end));
+    FactorialLog.factorialLogI(mid + 1, end));
   }
 
   /**
@@ -76,7 +76,7 @@ public final class FactorialLog extends UnaryFunction {
 
     mid = ((start + end) >>> 1);
     return (FactorialLog.factorialLogL(start, mid) + //
-        FactorialLog.factorialLogL(mid + 1, end));
+    FactorialLog.factorialLogL(mid + 1, end));
   }
 
   /** {@inheritDoc} */

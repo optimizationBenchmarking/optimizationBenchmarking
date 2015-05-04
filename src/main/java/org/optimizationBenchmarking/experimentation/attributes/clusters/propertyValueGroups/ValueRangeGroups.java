@@ -69,7 +69,7 @@ public class ValueRangeGroups extends PropertyValueGroups {
         "_grouped_by_" + //$NON-NLS-1$
         this.getGroupingMode().toString().toLowerCase() + //
         "_of_" + //$NON-NLS-1$
-        this.m_parameter.toString());
+    this.m_parameter.toString());
   }
 
   /** {@inheritDoc} */

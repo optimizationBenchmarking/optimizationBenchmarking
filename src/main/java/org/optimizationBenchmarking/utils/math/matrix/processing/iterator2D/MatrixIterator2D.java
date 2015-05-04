@@ -222,7 +222,7 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * </ol>
  */
 public abstract class MatrixIterator2D extends AbstractMatrix implements
-Iterator<Number> {
+    Iterator<Number> {
 
   /** the matrices to iterate over */
   final IMatrix[] m_matrices;
@@ -312,7 +312,7 @@ Iterator<Number> {
       if (matrix == null) {
         throw new IllegalArgumentException(//
             "Matrix " + i + //$NON-NLS-1$
-            " cannot be null.");//$NON-NLS-1$
+                " cannot be null.");//$NON-NLS-1$
       }
 
       try {
@@ -397,20 +397,20 @@ Iterator<Number> {
   @Override
   public final BasicNumber next() {
     check: {
-    if (this.m_hasNext) {
-      break check;
+      if (this.m_hasNext) {
+        break check;
+      }
+      this._findNext();
+      if (this.m_hasNext) {
+        break check;
+      }
+      throw new NoSuchElementException(//
+          "The MatrixIterator2D does not contain another element. You should have checked hasNext() before invoking next()."//$NON-NLS-1$
+      );
     }
-    this._findNext();
-    if (this.m_hasNext) {
-      break check;
-    }
-    throw new NoSuchElementException(//
-        "The MatrixIterator2D does not contain another element. You should have checked hasNext() before invoking next()."//$NON-NLS-1$
-        );
-  }
-  this.m_hasNext = false;
+    this.m_hasNext = false;
 
-  return this.m_x;
+    return this.m_x;
   }
 
   /** {@inheritDoc} */

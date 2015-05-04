@@ -132,7 +132,7 @@ public enum EArchiveType implements IFileType {
     @Override
     public final OutputStream compressStream(
         final OutputStream destination, final String fallbackFileName)
-            throws IOException {
+        throws IOException {
       return new __ZipOutputStream(destination,
           EArchiveType._fallback(fallbackFileName));
     }
@@ -203,7 +203,7 @@ public enum EArchiveType implements IFileType {
     @Override
     public final OutputStream compressStream(
         final OutputStream destination, final String fallbackFileName)
-            throws IOException {
+        throws IOException {
       return new GZIPOutputStream(destination);
     }
 
@@ -280,7 +280,7 @@ public enum EArchiveType implements IFileType {
    */
   public abstract OutputStream compressStream(
       final OutputStream destination, final String fallbackFileName)
-          throws IOException;
+      throws IOException;
 
   /**
    * Open a single stream from an archive an load its data
@@ -604,7 +604,7 @@ public enum EArchiveType implements IFileType {
    * A visitor for the storing paths all into a single stream
    */
   private static final class __PathCompressor extends
-  SimpleFileVisitor<Path> {
+      SimpleFileVisitor<Path> {
 
     /** the output stream */
     private final OutputStream m_stream;

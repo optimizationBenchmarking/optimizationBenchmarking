@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** The basic interface for data points. */
 public interface IDataPoint extends IMatrix, List<Number>,
-Comparable<IDataPoint> {
+    Comparable<IDataPoint> {
   /**
    * Get the value at index {@code index}, as {@code double}.
    *

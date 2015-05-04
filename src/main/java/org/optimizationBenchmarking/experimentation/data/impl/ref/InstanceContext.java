@@ -84,7 +84,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
     if (bound == null) {
       throw new IllegalArgumentException(//
           "Boundaries must not be null, but instance '" + name + //$NON-NLS-1$
-          "' has at least one null boundary."); //$NON-NLS-1$
+              "' has at least one null boundary."); //$NON-NLS-1$
     }
 
     if (dim != null) {
@@ -103,13 +103,13 @@ public final class InstanceContext extends _NamedContext<Instance> {
         if (l1 <= Long.MIN_VALUE) {
           throw new IllegalArgumentException(//
               "Integer upper boundaries cannot be " + //$NON-NLS-1$
-              Long.MIN_VALUE);
+                  Long.MIN_VALUE);
         }
       } else {
         if (l1 >= Long.MAX_VALUE) {
           throw new IllegalArgumentException(//
               "Integer lower boundaries cannot be " + //$NON-NLS-1$
-              Long.MAX_VALUE);
+                  Long.MAX_VALUE);
         }
       }
 
@@ -137,13 +137,13 @@ public final class InstanceContext extends _NamedContext<Instance> {
         if ((d1 <= Double.NEGATIVE_INFINITY) || (d1 != d1)) {
           throw new IllegalArgumentException(//
               "Float upper boundaries cannot be NaN or negative infinity, but " + //$NON-NLS-1$
-              d1 + " was provided."); //$NON-NLS-1$
+                  d1 + " was provided."); //$NON-NLS-1$
         }
       } else {
         if ((d1 >= Double.POSITIVE_INFINITY) || (d1 != d1)) {
           throw new IllegalArgumentException(//
               "Float lower boundaries cannot be NaN or positive infinity, but " + //$NON-NLS-1$
-              d1 + " was provided."); //$NON-NLS-1$
+                  d1 + " was provided."); //$NON-NLS-1$
         }
       }
 
@@ -166,8 +166,8 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
     throw new IllegalArgumentException(//
         "Class " + TextUtils.className(bound.getClass()) + //$NON-NLS-1$
-        " is not allowed for a boundary, but '" + bound + //$NON-NLS-1$
-        "', which is an instance of that class, was provided."); //$NON-NLS-1$
+            " is not allowed for a boundary, but '" + bound + //$NON-NLS-1$
+            "', which is an instance of that class, was provided."); //$NON-NLS-1$
 
   }
 
@@ -285,7 +285,7 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
     throw new IllegalArgumentException(((((((((("Dimension '" + dim)//$NON-NLS-1$
         + "' is not in the current current dimension set) '" //$NON-NLS-1$
-        + dims) + "' where dimension '") //$NON-NLS-1$
+    + dims) + "' where dimension '") //$NON-NLS-1$
         + exp) + "' is at position ")//$NON-NLS-1$
         + idx) + " instead in instance '") + //$NON-NLS-1$
         this.getName()) + '\'') + '.');

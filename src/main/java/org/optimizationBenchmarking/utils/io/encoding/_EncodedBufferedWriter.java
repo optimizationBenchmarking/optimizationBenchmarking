@@ -5,7 +5,7 @@ import java.io.Writer;
 
 /** an encoded buffered reader */
 final class _EncodedBufferedWriter extends BufferedWriter implements
-IStreamEncoded {
+    IStreamEncoded {
 
   /** the encoding */
   private final StreamEncoding<?, ?> m_encoding;

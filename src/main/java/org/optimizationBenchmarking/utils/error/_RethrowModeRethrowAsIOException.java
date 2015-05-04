@@ -6,14 +6,14 @@ import java.io.IOException;
  * The re-throw mode which does re-throw an as {@link java.io.IOException}.
  */
 final class _RethrowModeRethrowAsIOException extends
-RethrowMode<IOException> {
+    RethrowMode<IOException> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** the synthetic message */
   private static final String SYNTHETIC_MSG = //
-      "This is a synthetic instance of java.io.IOException generated to wrap one or multiple real exceptions. See the causing and suppressed errors to find the real cause."; //$NON-NLS-1$
+  "This is a synthetic instance of java.io.IOException generated to wrap one or multiple real exceptions. See the causing and suppressed errors to find the real cause."; //$NON-NLS-1$
 
   /** create */
   _RethrowModeRethrowAsIOException() {
@@ -29,7 +29,7 @@ RethrowMode<IOException> {
     IOException re;
 
     useMessage = ((message != null) ? //
-        (message + ' ' + _RethrowModeRethrowAsIOException.SYNTHETIC_MSG)
+    (message + ' ' + _RethrowModeRethrowAsIOException.SYNTHETIC_MSG)
         : _RethrowModeRethrowAsIOException.SYNTHETIC_MSG);
 
     if (handle == null) {

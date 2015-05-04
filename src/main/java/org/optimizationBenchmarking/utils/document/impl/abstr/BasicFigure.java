@@ -114,7 +114,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
       } else {
         throw new IllegalArgumentException(//
             "The owner of a figure must be either a section body or a figure series, but you specified a "//$NON-NLS-1$
-            + owner);
+                + owner);
       }
     }
 

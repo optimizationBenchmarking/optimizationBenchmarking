@@ -17,8 +17,8 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  * A builder for LaTeX jobs.
  */
 public class LaTeXJobBuilder extends
-ConfigurableToolJobBuilder<LaTeXJob, LaTeXJobBuilder> implements
-IFileProducerJobBuilder {
+    ConfigurableToolJobBuilder<LaTeXJob, LaTeXJobBuilder> implements
+    IFileProducerJobBuilder {
 
   /** the source file */
   public static final String PARAM_MAIN = "latexSource"; //$NON-NLS-1$
@@ -176,13 +176,13 @@ IFileProducerJobBuilder {
     if (normalized == null) {
       throw new IllegalArgumentException(//
           "Normalized path to main LaTeX file (" //$NON-NLS-1$
-          + path + ") cannot be null.");//$NON-NLS-1$
+              + path + ") cannot be null.");//$NON-NLS-1$
     }
 
     if (!(Files.exists(normalized))) {
       throw new IllegalArgumentException(//
           "Main LaTeX file (" //$NON-NLS-1$
-          + normalized + ") must exist.");//$NON-NLS-1$
+              + normalized + ") must exist.");//$NON-NLS-1$
     }
 
     try {

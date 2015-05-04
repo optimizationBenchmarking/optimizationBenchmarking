@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
  * interface.
  */
 public class AbstractInstance extends AbstractNamedElement implements
-IInstance {
+    IInstance {
 
   /** the owner */
   IInstanceSet m_owner;

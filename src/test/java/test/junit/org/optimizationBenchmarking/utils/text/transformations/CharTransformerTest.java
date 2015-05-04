@@ -25,7 +25,7 @@ import test.junit.InstanceTest;
  */
 @Ignore
 public abstract class CharTransformerTest extends
-InstanceTest<CharTransformer> {
+    InstanceTest<CharTransformer> {
 
   /** the begin of unicode data */
   public static final String UNICODE_START = "\\u"; //$NON-NLS-1$
@@ -60,7 +60,7 @@ InstanceTest<CharTransformer> {
 
     try (InputStream is = this.getClass().getResourceAsStream(
         this.getClass().getSimpleName() + //
-        ".cases")) { //$NON-NLS-1$
+            ".cases")) { //$NON-NLS-1$
       try (InputStreamReader r = new InputStreamReader(is)) {
         try (BufferedReader br = new BufferedReader(r)) {
           while ((s = br.readLine()) != null) {

@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 
 /** A pie data set */
 final class _JFreeChartPieDataset extends
-_JFreeChartDataset<CompiledDataScalar> implements PieDataset {
+    _JFreeChartDataset<CompiledDataScalar> implements PieDataset {
 
   /**
    * create

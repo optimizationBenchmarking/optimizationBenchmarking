@@ -131,7 +131,7 @@ public class GraphicConfiguration implements ITextable {
         || (dotsPerInch > GraphicConfiguration.MAX_DPI)) {
       throw new IllegalArgumentException(//
           "Cannot create images with less than 1 pixel per MM (26 dot per inch) or more than 100000 dots per inch, since such images would be nonsense. You specified "//$NON-NLS-1$
-          + dotsPerInch + "dpi, which is outside the sane range."); //$NON-NLS-1$
+              + dotsPerInch + "dpi, which is outside the sane range."); //$NON-NLS-1$
     }
   }
 
@@ -147,7 +147,7 @@ public class GraphicConfiguration implements ITextable {
         || (quality != quality)) {
       throw new IllegalArgumentException(//
           "Graphic quality must be in [0,1], but you specified " //$NON-NLS-1$
-          + quality);
+              + quality);
     }
   }
 

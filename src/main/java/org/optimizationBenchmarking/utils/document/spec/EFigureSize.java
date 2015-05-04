@@ -55,7 +55,7 @@ public enum EFigureSize {
 
   /** the set of all figure sizes */
   public static final ArraySetView<EFigureSize> INSTANCES = //
-      new ArraySetView<>(EFigureSize.values());
+  new ArraySetView<>(EFigureSize.values());
 
   /**
    * the number of figures of that size that should fit along the x-axis,
@@ -191,7 +191,7 @@ public enum EFigureSize {
       if (this.m_nx > 1) {
         // if more than one image per row, insert some reasonable spacing
         width -= ((this.m_nx - 1) * //
-            (Math.max(10d, EFigureSize.__round(0.01d * width))));
+        (Math.max(10d, EFigureSize.__round(0.01d * width))));
         width /= this.m_nx;
       }
     } else {
@@ -217,8 +217,8 @@ public enum EFigureSize {
       // space for the overall figure series caption
       // -- this is the sketchy part --
       height = (availableHeight - (//
-          ((this.m_ny <= 1) ? 1 : (this.m_ny + 1)) * //
-          (Math.max(43d, EFigureSize.__round(0.03d * availableHeight)))));
+      ((this.m_ny <= 1) ? 1 : (this.m_ny + 1)) * //
+      (Math.max(43d, EFigureSize.__round(0.03d * availableHeight)))));
       height /= this.m_ny;
     } else {
       height = Double.NaN;

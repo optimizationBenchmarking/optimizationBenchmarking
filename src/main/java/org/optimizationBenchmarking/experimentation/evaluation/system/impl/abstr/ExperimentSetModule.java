@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
  * The abstract basic implementation for experiment set modules.
  */
 public abstract class ExperimentSetModule extends
-_EvaluationModule<IExperimentSet> implements IExperimentSetModule {
+    _EvaluationModule<IExperimentSet> implements IExperimentSetModule {
 
   /** create */
   protected ExperimentSetModule() {
