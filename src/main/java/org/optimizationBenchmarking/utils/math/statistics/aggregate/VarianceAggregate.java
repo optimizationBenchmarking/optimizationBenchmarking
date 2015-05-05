@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingSu
  * extensions to use our stable sums and mean aggregate for maximum
  * precision.
  */
-public final class VarianceAggregate extends ScalarAggregate {
+public final class VarianceAggregate extends _StatefulNumber {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -43,6 +43,12 @@ public final class VarianceAggregate extends ScalarAggregate {
     long lOldDelta, lNewDelta, lTemp;
     double dOldDelta, dNewDelta;
 
+    if ((this.m_state == BasicNumber.STATE_POSITIVE_OVERFLOW)
+        || (this.m_state == BasicNumber.STATE_POSITIVE_INFINITY)
+        || (this.m_state == BasicNumber.STATE_NAN)) {
+      return;
+    }
+
     lOldDelta = lNewDelta = Long.MAX_VALUE;
     dOldDelta = dNewDelta = Double.NaN;
 
@@ -52,6 +58,7 @@ public final class VarianceAggregate extends ScalarAggregate {
     } else {
       // compute the delta = (x-old mean)
       switch (this.m_mean.m_state) {
+
         case STATE_INTEGER: {
           lTemp = this.m_mean.m_long;
           if (SaturatingSub.getOverflowType(value, lTemp) == 0) {
@@ -68,6 +75,7 @@ public final class VarianceAggregate extends ScalarAggregate {
           }
           break;
         }
+
         case STATE_DOUBLE: {
           dOldDelta = (value - this.m_mean.m_double);
           if (NumericalTypes.isLong(dOldDelta)) {
@@ -78,8 +86,19 @@ public final class VarianceAggregate extends ScalarAggregate {
           }
           break;
         }
+
+        case STATE_POSITIVE_INFINITY:
+        case STATE_NEGATIVE_INFINITY: {
+          this._setPositiveOverflow();
+          return;
+        }
+        case STATE_POSITIVE_OVERFLOW:
+        case STATE_NEGATIVE_OVERFLOW: {
+          this._setPositiveInfinity();
+          return;
+        }
+
         default: {
-          // TODO: handle this properly
           this.m_M2._setNaN();
           this._setNaN();
           return;
@@ -93,6 +112,7 @@ public final class VarianceAggregate extends ScalarAggregate {
 
     // compute the delta = (x-new mean)
     switch (this.m_mean.m_state) {
+
       case STATE_INTEGER: {
         lTemp = this.m_mean.m_long;
         if (SaturatingSub.getOverflowType(value, lTemp) == 0) {
@@ -109,6 +129,7 @@ public final class VarianceAggregate extends ScalarAggregate {
         }
         break;
       }
+
       case STATE_DOUBLE: {
         dNewDelta = (value - this.m_mean.m_double);
         if (NumericalTypes.isLong(dNewDelta)) {
@@ -119,8 +140,19 @@ public final class VarianceAggregate extends ScalarAggregate {
         }
         break;
       }
+
+      case STATE_POSITIVE_INFINITY:
+      case STATE_NEGATIVE_INFINITY: {
+        this._setPositiveOverflow();
+        return;
+      }
+      case STATE_POSITIVE_OVERFLOW:
+      case STATE_NEGATIVE_OVERFLOW: {
+        this._setPositiveInfinity();
+        return;
+      }
+
       default: {
-        // TODO: handle this properly
         this.m_M2._setNaN();
         this._setNaN();
         return;
@@ -137,14 +169,13 @@ public final class VarianceAggregate extends ScalarAggregate {
           }
           dNewDelta = lNewDelta;
         }
-      } else {
         dOldDelta = lOldDelta;
+      } else {
         if (integerNewDelta) {
           dNewDelta = lNewDelta;
         }
       }
 
-      // TODO: handle overflow
       this.m_M2.append(dOldDelta * dNewDelta);
     }
 
@@ -158,6 +189,12 @@ public final class VarianceAggregate extends ScalarAggregate {
     long lOldDelta, lNewDelta, lTemp;
     double dOldDelta, dNewDelta;
 
+    if ((this.m_state == BasicNumber.STATE_POSITIVE_OVERFLOW)
+        || (this.m_state == BasicNumber.STATE_POSITIVE_INFINITY)
+        || (this.m_state == BasicNumber.STATE_NAN)) {
+      return;
+    }
+
     lOldDelta = lNewDelta = Long.MAX_VALUE;
     dOldDelta = dNewDelta = Double.NaN;
 
@@ -170,6 +207,7 @@ public final class VarianceAggregate extends ScalarAggregate {
         integerOldDelta = false;
       }
     } else {
+
       // compute the delta = (x-old mean)
       switch (this.m_mean.m_state) {
         case STATE_INTEGER: {
@@ -183,6 +221,7 @@ public final class VarianceAggregate extends ScalarAggregate {
           }
           break;
         }
+
         case STATE_DOUBLE: {
           dOldDelta = (value - this.m_mean.m_double);
           if (NumericalTypes.isLong(dOldDelta)) {
@@ -193,8 +232,19 @@ public final class VarianceAggregate extends ScalarAggregate {
           }
           break;
         }
+
+        case STATE_POSITIVE_INFINITY:
+        case STATE_NEGATIVE_INFINITY: {
+          this._setPositiveOverflow();
+          return;
+        }
+        case STATE_POSITIVE_OVERFLOW:
+        case STATE_NEGATIVE_OVERFLOW: {
+          this._setPositiveInfinity();
+          return;
+        }
+
         default: {
-          // TODO: handle this properly
           this.m_M2._setNaN();
           this._setNaN();
           return;
@@ -219,6 +269,7 @@ public final class VarianceAggregate extends ScalarAggregate {
         }
         break;
       }
+
       case STATE_DOUBLE: {
         dNewDelta = (value - this.m_mean.m_double);
         if (NumericalTypes.isLong(dNewDelta)) {
@@ -229,8 +280,19 @@ public final class VarianceAggregate extends ScalarAggregate {
         }
         break;
       }
+
+      case STATE_POSITIVE_INFINITY:
+      case STATE_NEGATIVE_INFINITY: {
+        this._setPositiveOverflow();
+        return;
+      }
+      case STATE_POSITIVE_OVERFLOW:
+      case STATE_NEGATIVE_OVERFLOW: {
+        this._setPositiveInfinity();
+        return;
+      }
+
       default: {
-        // TODO: handle this properly
         this.m_M2._setNaN();
         this._setNaN();
         return;
@@ -247,14 +309,13 @@ public final class VarianceAggregate extends ScalarAggregate {
           }
           dNewDelta = lNewDelta;
         }
-      } else {
         dOldDelta = lOldDelta;
+      } else {
         if (integerNewDelta) {
           dNewDelta = lNewDelta;
         }
       }
 
-      // TODO: handle overflow
       this.m_M2.append(dOldDelta * dNewDelta);
     }
 
@@ -263,50 +324,57 @@ public final class VarianceAggregate extends ScalarAggregate {
 
   /** compute the value */
   private final void __compute() {
-    final long count;
+    long count;
     long lM2;
     double dTemp;
 
-    count = (this.m_mean.m_count - 1L);
+    count = this.m_mean.m_count;
     if (count > 0L) {
+      if (count > 1L) {
+        count--;
 
-      switch (this.m_M2.getState()) {
-        case STATE_INTEGER: {
-          lM2 = this.m_M2.longValue();
-          if ((lM2 % count) == 0) {
-            this.m_double = this.m_long = (lM2 / count);
-            this.m_state = BasicNumber.STATE_INTEGER;
+        switch (this.m_M2.getState()) {
+          case STATE_INTEGER: {
+            lM2 = this.m_M2.longValue();
+            if ((lM2 % count) == 0) {
+              this.m_double = this.m_long = Math.max(0L, (lM2 / count));
+              this.m_state = BasicNumber.STATE_INTEGER;
+              return;
+            }
+
+            dTemp = Div.INSTANCE.computeAsDouble(lM2, count);
+            this.m_double = dTemp;
+            this.m_long = ((long) dTemp);
+            if (NumericalTypes.isLong(dTemp)) {
+              this.m_state = BasicNumber.STATE_INTEGER;
+            } else {
+              this.m_state = BasicNumber.STATE_DOUBLE;
+            }
             return;
           }
 
-          dTemp = Div.INSTANCE.computeAsDouble(lM2, count);
-          this.m_double = dTemp;
-          this.m_long = ((long) dTemp);
-          if (NumericalTypes.isLong(dTemp)) {
-            this.m_state = BasicNumber.STATE_DOUBLE;
-          } else {
-            this.m_state = BasicNumber.STATE_INTEGER;
+          case STATE_DOUBLE: {
+
+            dTemp = Math.max(0d, Div.INSTANCE.computeAsDouble(
+                this.m_M2.doubleValue(), count));
+            this.m_double = dTemp;
+            this.m_long = ((long) dTemp);
+            if (NumericalTypes.isLong(dTemp)) {
+              this.m_state = BasicNumber.STATE_INTEGER;
+            } else {
+              this.m_state = BasicNumber.STATE_DOUBLE;
+            }
+            return;
           }
-          return;
-        }
 
-        case STATE_DOUBLE: {
-
-          dTemp = Div.INSTANCE.computeAsDouble(this.m_M2.doubleValue(),
-              count);
-          this.m_double = dTemp;
-          this.m_long = ((long) dTemp);
-          if (NumericalTypes.isLong(dTemp)) {
-            this.m_state = BasicNumber.STATE_DOUBLE;
-          } else {
-            this.m_state = BasicNumber.STATE_INTEGER;
+          default: {
+            this._setNaN();
           }
-          return;
         }
-
-        default: {
-          this._setNaN(); // TODO: handle this properly
-        }
+      } else {
+        this.m_state = BasicNumber.STATE_INTEGER;
+        this.m_long = 0L;
+        this.m_double = 0d;
       }
     }
   }

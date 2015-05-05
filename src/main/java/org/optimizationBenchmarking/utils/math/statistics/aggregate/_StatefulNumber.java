@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 import org.optimizationBenchmarking.utils.math.BasicNumber;
 
 /** a stateful number */
-class _StatefulNumber extends BasicNumber {
+abstract class _StatefulNumber extends ScalarAggregate {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -104,7 +104,8 @@ class _StatefulNumber extends BasicNumber {
   }
 
   /** reset all internal state information */
-  void reset() {
+  @Override
+  public void reset() {
     this._setEmpty();
   }
 

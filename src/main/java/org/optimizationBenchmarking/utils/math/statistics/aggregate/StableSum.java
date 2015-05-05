@@ -53,7 +53,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingAd
  * </li>
  * </ol>
  */
-public final class StableSum extends ScalarAggregate {
+public final class StableSum extends _StatefulNumber {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

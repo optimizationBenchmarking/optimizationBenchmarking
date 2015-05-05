@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.math.NumericalTypes;
  * This class computes the maximum of a set of numbers, but ignores all
  * infinite or NaN numbers.
  */
-public final class FiniteMaximumAggregate extends ScalarAggregate {
+public final class FiniteMaximumAggregate extends _StatefulNumber {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

@@ -5,14 +5,14 @@ import org.optimizationBenchmarking.utils.math.BasicNumber;
 /**
  * An aggregate with a single, scale result.
  */
-public abstract class ScalarAggregate extends _StatefulNumber implements
+public abstract class ScalarAggregate extends BasicNumber implements
     IAggregate {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** instantiate */
-  protected ScalarAggregate() {
+  public ScalarAggregate() {
     super();
   }
 
@@ -66,11 +66,12 @@ public abstract class ScalarAggregate extends _StatefulNumber implements
     this.append((long) value);
   }
 
-  /** reset all internal state information */
-  @Override
-  public void reset() {
-    this.m_state = BasicNumber.STATE_EMPTY;
-  }
+  /**
+   * Reset all internal state information. The {@link #getState()} becomes
+   * {@link org.optimizationBenchmarking.utils.math.BasicNumber#STATE_EMPTY
+   * empty}.
+   */
+  public abstract void reset();
 
   /** {@inheritDoc} */
   @Override

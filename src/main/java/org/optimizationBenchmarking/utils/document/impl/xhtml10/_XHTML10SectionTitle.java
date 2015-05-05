@@ -6,10 +6,10 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** a section title of a section in a XHTML document */
 final class _XHTML10SectionTitle extends SectionTitle {
-  /** the start of the section head div */
+  /** the start of the section head &lt;div&gt; tag */
   private static final char[] SECTION_HEAD_DIV_BEGIN = { '<', 'd', 'i',
-      'v', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't',
-      'i', 'o', 'n', 'H', 'e', 'a', 'd', '"', '>' };
+    'v', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'e', 'c', 't',
+    'i', 'o', 'n', 'H', 'e', 'a', 'd', '"', '>' };
 
   /**
    * create the section title

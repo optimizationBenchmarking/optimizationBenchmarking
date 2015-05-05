@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.Div;
 /**
  * An aggregate for the arithmetic mean.
  */
-public final class ArithmeticMeanAggregate extends ScalarAggregate {
+public final class ArithmeticMeanAggregate extends _StatefulNumber {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

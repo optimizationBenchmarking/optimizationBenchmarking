@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.math.NumericalTypes;
 /**
  * This class computes the minimum of a set of numbers.
  */
-public final class MinimumAggregate extends ScalarAggregate {
+public final class MinimumAggregate extends _StatefulNumber {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

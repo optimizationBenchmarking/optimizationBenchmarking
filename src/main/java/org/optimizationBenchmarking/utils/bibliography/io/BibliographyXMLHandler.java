@@ -42,7 +42,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
    * @param owner
    *          the owning handler, or {@code null} if not used
    * @param dest
-   *          the bibliograpy builder to load the data into
+   *          the bibliography builder to load the data into
    */
   public BibliographyXMLHandler(final DelegatingHandler owner,
       final BibliographyBuilder dest) {
@@ -52,7 +52,7 @@ public final class BibliographyXMLHandler extends DelegatingHandler {
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings({ "resource", "rawtypes", "unchecked" })
+  @SuppressWarnings({ "rawtypes", "unchecked", "resource" })
   @Override
   protected final void doStartElement(final String uri,
       final String localName, final String qName,
