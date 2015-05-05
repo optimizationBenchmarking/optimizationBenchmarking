@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
 import org.optimizationBenchmarking.utils.math.BasicNumber;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 
 /** a stateful number */
 abstract class _StatefulNumber extends ScalarAggregate {
@@ -155,5 +156,53 @@ abstract class _StatefulNumber extends ScalarAggregate {
     this.m_state = BasicNumber.STATE_NEGATIVE_OVERFLOW;
     this.m_double = Double.NEGATIVE_INFINITY;
     this.m_long = Long.MIN_VALUE;
+  }
+
+  /**
+   * set the {@code long} value
+   *
+   * @param value
+   *          the value
+   */
+  final void _setLong(final long value) {
+    this.m_long = value;
+    this.m_state = BasicNumber.STATE_INTEGER;
+  }
+
+  /**
+   * set the {@code double} value
+   *
+   * @param value
+   *          the value
+   */
+  final void _setDouble(final double value) {
+    this.m_double = value;
+    this.m_state = BasicNumber.STATE_DOUBLE;
+  }
+
+  /**
+   * set the {@code double} value
+   *
+   * @param value
+   *          the value
+   */
+  final void _setDoubleFully(final double value) {
+    if (NumericalTypes.isLong(value)) {
+      this._setLong((long) value);
+    } else {
+      if (value >= Double.POSITIVE_INFINITY) {
+        this.m_state = BasicNumber.STATE_POSITIVE_INFINITY;
+      } else {
+        if (value <= Double.NEGATIVE_INFINITY) {
+          this.m_state = BasicNumber.STATE_NEGATIVE_INFINITY;
+        } else {
+          if (value != value) {
+            this.m_state = BasicNumber.STATE_NAN;
+          } else {
+            this._setDouble(value);
+          }
+        }
+      }
+    }
   }
 }

@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.VarianceAggregate;
 
-/** A test of the arithmetic means */
+/** A test of the variance. */
 public class VarianceTest {
 
   /** the variance data for {@code long}-based computation */

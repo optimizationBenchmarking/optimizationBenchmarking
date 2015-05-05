@@ -368,7 +368,7 @@ public final class ArithmeticMeanAggregate extends _StatefulNumber {
     if (this.m_state == BasicNumber.STATE_EMPTY) {
       this._compute();
     }
-    return this.m_long;
+    return super.longValue();
   }
 
   /** {@inheritDoc} */
@@ -377,6 +377,6 @@ public final class ArithmeticMeanAggregate extends _StatefulNumber {
     if (this.m_state == BasicNumber.STATE_EMPTY) {
       this._compute();
     }
-    return this.m_double;
+    return super.doubleValue();
   }
 }

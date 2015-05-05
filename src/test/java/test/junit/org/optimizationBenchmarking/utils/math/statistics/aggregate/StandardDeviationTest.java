@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.StandardDeviationAggregate;
 
-/** A test of the arithmetic means */
+/** A test of the standard deviations. */
 public class StandardDeviationTest {
 
   /**
