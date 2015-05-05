@@ -41,9 +41,10 @@ public final class AlphabeticNumberAppender extends NumberAppender {
 
   /** {@inheritDoc} */
   @Override
-  public final void appendTo(final long v, final ETextCase textCase,
+  public final ETextCase appendTo(final long v, final ETextCase textCase,
       final ITextOutput textOut) {
     final char[] buf;
+    final ETextCase use;
     long x;
     int addend, its, plus, len;
 
@@ -66,19 +67,23 @@ public final class AlphabeticNumberAppender extends NumberAppender {
       its--;
     } while ((x != 0L) || (its >= 0));
 
-    buf[len] = textCase.adjustCaseOfFirstCharInWord(buf[len]);
+    use = ETextCase.ensure(textCase);
+    buf[len] = use.adjustCaseOfFirstCharInWord(buf[len]);
 
     if (len > 0) {
       textOut.append(buf, len, buf.length);
     } else {
       textOut.append(buf);
     }
+
+    return use.nextCase();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void appendTo(final int v, final ETextCase textCase,
+  public final ETextCase appendTo(final int v, final ETextCase textCase,
       final ITextOutput textOut) {
+    final ETextCase use;
     final char[] buf;
     int x, addend, its, plus, len;
 
@@ -99,12 +104,16 @@ public final class AlphabeticNumberAppender extends NumberAppender {
       x /= 26;
       its--;
     } while ((x != 0) || (its >= 0));
-    buf[len] = textCase.adjustCaseOfFirstCharInWord(buf[len]);
+
+    use = ETextCase.ensure(textCase);
+    buf[len] = use.adjustCaseOfFirstCharInWord(buf[len]);
     if (len > 0) {
       textOut.append(buf, len, buf.length);
     } else {
       textOut.append(buf);
     }
+
+    return use.nextCase();
   }
 
   /**

@@ -19,7 +19,7 @@ final class _NumberStatus {
    */
   _NumberStatus(final ETextCase textCase) {
     super();
-    this.m_case = textCase;
+    this.m_case = ETextCase.ensure(textCase);
   }
 
 }

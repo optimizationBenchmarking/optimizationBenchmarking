@@ -29,10 +29,12 @@ public abstract class NumberAppender implements Serializable {
    *          the text case
    * @param textOut
    *          the text output to append to
+   * @return the next text case
    */
-  public void appendTo(final long v, final ETextCase textCase,
+  public ETextCase appendTo(final long v, final ETextCase textCase,
       final ITextOutput textOut) {
     textOut.append(v);
+    return ETextCase.ensure(textCase).nextCase();
   }
 
   /**
@@ -61,10 +63,11 @@ public abstract class NumberAppender implements Serializable {
    *          the text case
    * @param textOut
    *          the text output to append to
+   * @return the next text case
    */
-  public void appendTo(final int v, final ETextCase textCase,
+  public ETextCase appendTo(final int v, final ETextCase textCase,
       final ITextOutput textOut) {
-    this.appendTo((long) v, textCase, textOut);
+    return this.appendTo((long) v, textCase, textOut);
   }
 
   /**
@@ -93,21 +96,23 @@ public abstract class NumberAppender implements Serializable {
    *          the text case
    * @param textOut
    *          the text output to append to
+   * @return the next text case
    */
-  public void appendTo(final double v, final ETextCase textCase,
+  public ETextCase appendTo(final double v, final ETextCase textCase,
       final ITextOutput textOut) {
     final int types;
 
     types = NumericalTypes.getTypes(v);
     if ((types & NumericalTypes.IS_INT) != 0) {
-      this.appendTo(((int) v), textCase, textOut);
-    } else {
-      if ((types & NumericalTypes.IS_LONG) != 0) {
-        this.appendTo(((long) v), textCase, textOut);
-      } else {
-        textOut.append(v);
-      }
+      return this.appendTo(((int) v), textCase, textOut);
     }
+
+    if ((types & NumericalTypes.IS_LONG) != 0) {
+      return this.appendTo(((long) v), textCase, textOut);
+    }
+
+    textOut.append(v);
+    return ETextCase.ensure(textCase).nextCase();
   }
 
   /**

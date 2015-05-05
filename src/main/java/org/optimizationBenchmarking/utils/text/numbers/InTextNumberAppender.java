@@ -13,18 +13,18 @@ public final class InTextNumberAppender extends NumberAppender {
 
   /** the small numbers */
   static final String[] SMALL_NUMBERS = { "zero", //$NON-NLS-1$
-      "one",//$NON-NLS-1$
-      "two",//$NON-NLS-1$
-      "three",//$NON-NLS-1$
-      "four",//$NON-NLS-1$
-      "five",//$NON-NLS-1$
-      "six",//$NON-NLS-1$
-      "seven",//$NON-NLS-1$
-      "eight",//$NON-NLS-1$
-      "nine",//$NON-NLS-1$
-      "ten",//$NON-NLS-1$
-      "eleven",//$NON-NLS-1$
-      "twelve"//$NON-NLS-1$
+    "one",//$NON-NLS-1$
+    "two",//$NON-NLS-1$
+    "three",//$NON-NLS-1$
+    "four",//$NON-NLS-1$
+    "five",//$NON-NLS-1$
+    "six",//$NON-NLS-1$
+    "seven",//$NON-NLS-1$
+    "eight",//$NON-NLS-1$
+    "nine",//$NON-NLS-1$
+    "ten",//$NON-NLS-1$
+    "eleven",//$NON-NLS-1$
+    "twelve"//$NON-NLS-1$
   };
 
   /** the globally shared instance of the in-text number appender */
@@ -37,14 +37,17 @@ public final class InTextNumberAppender extends NumberAppender {
 
   /** {@inheritDoc} */
   @Override
-  public final void appendTo(final long v, final ETextCase textCase,
+  public final ETextCase appendTo(final long v, final ETextCase textCase,
       final ITextOutput textOut) {
+    final ETextCase use;
+
+    use = ETextCase.ensure(textCase);
     if ((v >= 0) && (v < InTextNumberAppender.SMALL_NUMBERS.length)) {
-      ETextCase.ensure(textCase).appendWord(
-          InTextNumberAppender.SMALL_NUMBERS[(int) v], textOut);
-    } else {
-      textOut.append(v);
+      return use.appendWord(InTextNumberAppender.SMALL_NUMBERS[(int) v],
+          textOut);
     }
+    textOut.append(v);
+    return use.nextCase();
   }
 
   /** {@inheritDoc} */
@@ -59,14 +62,17 @@ public final class InTextNumberAppender extends NumberAppender {
 
   /** {@inheritDoc} */
   @Override
-  public final void appendTo(final int v, final ETextCase textCase,
+  public final ETextCase appendTo(final int v, final ETextCase textCase,
       final ITextOutput textOut) {
+    final ETextCase use;
+
+    use = ETextCase.ensure(textCase);
     if ((v >= 0) && (v < InTextNumberAppender.SMALL_NUMBERS.length)) {
-      ETextCase.ensure(textCase).appendWord(
+      return use.appendWord(//
           InTextNumberAppender.SMALL_NUMBERS[v], textOut);
-    } else {
-      textOut.append(v);
     }
+    textOut.append(v);
+    return use.nextCase();
   }
 
   /** {@inheritDoc} */
@@ -96,19 +102,18 @@ public final class InTextNumberAppender extends NumberAppender {
 
   /** {@inheritDoc} */
   @Override
-  public final void appendTo(final double v, final ETextCase textCase,
-      final ITextOutput textOut) {
+  public final ETextCase appendTo(final double v,
+      final ETextCase textCase, final ITextOutput textOut) {
     final int l;
 
     if ((v >= 0) && (v < InTextNumberAppender.SMALL_NUMBERS.length)) {
       l = ((int) v);
       if (l == v) {
-        this.appendTo(l, textCase, textOut);
-        return;
+        return this.appendTo(l, textCase, textOut);
       }
     }
 
-    SimpleNumberAppender.INSTANCE.appendTo(v, textCase, textOut);
+    return SimpleNumberAppender.INSTANCE.appendTo(v, textCase, textOut);
   }
 
   /**

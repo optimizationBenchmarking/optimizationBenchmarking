@@ -19,9 +19,10 @@ abstract class _PlainIntNumberAppender extends NumberAppender {
 
   /** {@inheritDoc} */
   @Override
-  public final void appendTo(final long v, final ETextCase textCase,
+  public final ETextCase appendTo(final long v, final ETextCase textCase,
       final ITextOutput textOut) {
     textOut.append(v);
+    return ETextCase.ensure(textCase).nextCase();
   }
 
   /** {@inheritDoc} */
@@ -32,9 +33,10 @@ abstract class _PlainIntNumberAppender extends NumberAppender {
 
   /** {@inheritDoc} */
   @Override
-  public final void appendTo(final int v, final ETextCase textCase,
+  public final ETextCase appendTo(final int v, final ETextCase textCase,
       final ITextOutput textOut) {
     textOut.append(v);
+    return ETextCase.ensure(textCase).nextCase();
   }
 
   /** {@inheritDoc} */
