@@ -1122,7 +1122,7 @@ public final class ReflectionUtils {
    * @return the canonical package name, or {@code null} if none could be
    *         found
    */
-  public static final String getCanonicalPackageName(final Class<?> clazz) {
+  public static final String getPackagePrefix(final Class<?> clazz) {
     final Package pack;
     String string;
     int index;
@@ -1134,7 +1134,7 @@ public final class ReflectionUtils {
     if (pack != null) {
       string = pack.getName();
       if (string != null) {
-        return string;
+        return (string + '.');
       }
     }
 
@@ -1142,7 +1142,7 @@ public final class ReflectionUtils {
     if (string != null) {
       index = string.lastIndexOf('.');
       if ((index > 0) && (index < (string.length() - 1))) {
-        return string.substring(0, (index + 1));
+        return (string.substring(0, (index + 1)) + '.');
       }
     }
 
@@ -1166,7 +1166,7 @@ public final class ReflectionUtils {
     final String string;
 
     if (clazz != null) {
-      string = ReflectionUtils.getCanonicalPackageName(clazz);
+      string = ReflectionUtils.getPackagePrefix(clazz);
       if (string != null) {
         list.add(string);
       }

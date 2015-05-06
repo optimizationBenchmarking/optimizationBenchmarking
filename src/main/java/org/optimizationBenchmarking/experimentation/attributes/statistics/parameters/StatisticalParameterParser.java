@@ -15,8 +15,7 @@ InstanceParser<StatisticalParameter> {
   /** create */
   StatisticalParameterParser() {
     super(StatisticalParameter.class, new String[] {//
-      ReflectionUtils.getCanonicalPackageName(//
-          StatisticalParameter.class) });
+      ReflectionUtils.getPackagePrefix(StatisticalParameter.class) });
 
   }
 
