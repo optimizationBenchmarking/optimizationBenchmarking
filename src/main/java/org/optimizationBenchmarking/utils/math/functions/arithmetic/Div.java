@@ -1,11 +1,28 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
-import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.combinatoric.GCD;
 
 /**
- * The {@code "/"} function
+ * <p>
+ * This function implements division.
+ * </p>
+ * <p>
+ * My goal is to provide the most accurate way to get results. This means
+ * that if the inputs are {@code long}s and we want to compute a
+ * {@code double} result, we will not convert them to {@code double} right
+ * away. Instead, we check if the operation can be performed with
+ * {@code long} arithmetic directly. If this is not possible, we first
+ * divide both numbers by their greatest common divisor in {@code long}
+ * arithmetic before performing the actual division in {@code double}
+ * arithmetic.
+ * </p>
+ * <p>
+ * Checking if {@code double}s can be converted to {@code long}s and
+ * performing the above operation seemingly does not lead to improved (or
+ * even different) results, so we use floating point arithmetic for
+ * floating point numbers.
+ * </p>
  */
 public final class Div extends BinaryFunction {
 
@@ -47,9 +64,9 @@ public final class Div extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final float computeAsFloat(final float x0, final float x1) {
-    if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
-      return ((float) (this.computeAsDouble(((long) x0), ((long) x1))));
-    }
+    // if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
+    // return ((float) (this.computeAsDouble(((long) x0), ((long) x1))));
+    // }
 
     return (x0 / x1);
   }
@@ -57,9 +74,9 @@ public final class Div extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
-    if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
-      return this.computeAsDouble(((long) x0), ((long) x1));
-    }
+    // if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
+    // return this.computeAsDouble(((long) x0), ((long) x1));
+    // }
 
     return (x0 / x1);
   }
@@ -67,7 +84,8 @@ public final class Div extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final long x0, final long x1) {
-    final long res, gcd;
+    final long gcd;
+    long res;
 
     if (x1 == 0L) {
       if (x0 < 0L) {
@@ -84,8 +102,13 @@ public final class Div extends BinaryFunction {
       return res;
     }
 
+    res = (x1 / x0);
+    if ((x0 * res) == x1) {
+      return (1d / res);
+    }
+
     // Try to achieve maximum accuracy by first dividing both numbers by
-    // their greatest common divisor. This should lead to the least
+    // their greatest common divisor. This could lead to the least
     // rounding/truncation errors in the subsequent floating point
     // division.
     gcd = GCD.INSTANCE.computeAsLong(x0, x1);
