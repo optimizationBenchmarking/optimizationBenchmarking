@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.math.matrix.processing.iterator2D;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -340,6 +341,27 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
       return new _MatrixIterator2DXDoubleYLong(xDim, yDim, matrices);
     }
     return new _MatrixIterator2DXDoubleYDouble(xDim, yDim, matrices);
+  }
+
+  /**
+   * Create the iterator to iterate over a set of matrices.
+   *
+   * @param xDim
+   *          the {@code x}-dimension
+   * @param yDim
+   *          the {@code y}-dimension
+   * @param matrices
+   *          the matrices
+   * @return the iterator
+   */
+  public static final MatrixIterator2D iterate(final int xDim,
+      final int yDim, final Collection<? extends IMatrix> matrices) {
+    if (matrices == null) {
+      throw new IllegalArgumentException(//
+          "Matrix collection to iterate over cannot be null."); //$NON-NLS-1$
+    }
+    return MatrixIterator2D.iterate(xDim, yDim,
+        matrices.toArray(new IMatrix[matrices.size()]));
   }
 
   /**

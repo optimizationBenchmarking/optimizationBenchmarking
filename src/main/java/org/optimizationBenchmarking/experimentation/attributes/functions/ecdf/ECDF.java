@@ -50,7 +50,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
    */
   public ECDF(final IDimension timeDim, final UnaryFunction timeTransform,
       final IDimension goalDim, final Number goalValue) {
-    super(EAttributeType.TEMPORARILY_STORED);
+    super(EAttributeType.NEVER_STORED);
 
     this.m_raw = new _RawECDF(timeDim, goalDim, goalValue);
     this.m_timeTransform = timeTransform;
