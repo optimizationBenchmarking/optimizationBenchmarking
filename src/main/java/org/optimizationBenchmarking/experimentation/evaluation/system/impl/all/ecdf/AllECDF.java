@@ -34,11 +34,11 @@ public final class AllECDF extends ExperimentSetModule {
    *         module
    */
   public static final AllECDF getInstance() {
-    return __InstanceInformationLoader.INSTANCE;
+    return __AllECDF.INSTANCE;
   }
 
-  /** the instance information loader */
-  private static final class __InstanceInformationLoader {
+  /** the all experiments ECDF loader */
+  private static final class __AllECDF {
     /** the shared instance */
     static final AllECDF INSTANCE = new AllECDF();
   }

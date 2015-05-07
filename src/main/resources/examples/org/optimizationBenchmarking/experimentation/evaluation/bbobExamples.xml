@@ -40,4 +40,18 @@
 		</cfg:configuration>
 	</e:module>
 
+  <e:module class="all.aggregation2D.AllAggregation2D">
+    <cfg:configuration>
+      <cfg:parameter name="aggregation" value="median of variance of F over lg FEs" />
+      <cfg:parameter name="groupBy" value="dim" />
+    </cfg:configuration>
+  </e:module>
+
+  <e:module class="all.aggregation2D.AllAggregation2D">
+    <cfg:configuration>
+      <cfg:parameter name="aggregation" value="stddev of median of lg F over ld FEs" />
+      <cfg:parameter name="groupBy" value="sep" />
+    </cfg:configuration>
+  </e:module>
+
 </e:evaluation>

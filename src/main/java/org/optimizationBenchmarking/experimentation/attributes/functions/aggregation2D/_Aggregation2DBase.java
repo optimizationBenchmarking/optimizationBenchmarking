@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.attributes.functions.statisticalParameter2D;
+package org.optimizationBenchmarking.experimentation.attributes.functions.aggregation2D;
 
 import org.optimizationBenchmarking.experimentation.attributes.functions.FunctionAttribute;
 import org.optimizationBenchmarking.experimentation.attributes.statistics.parameters.StatisticalParameter;
@@ -9,7 +9,13 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.FunctionToMathBridge;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.math.BasicNumber;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
+import org.optimizationBenchmarking.utils.math.matrix.processing.iterator2D.MatrixIterator2D;
+import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
+import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -20,12 +26,17 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * @param <T>
  *          the element set type
  */
-abstract class _StatisticalParameter2DBase<T extends IElementSet> extends
+abstract class _Aggregation2DBase<T extends IElementSet> extends
     FunctionAttribute<T> {
 
-  /** create the raw statistics parameter curve */
-  _StatisticalParameter2DBase() {
-    super(EAttributeType.TEMPORARILY_STORED);
+  /**
+   * create the raw statistics parameter curve
+   *
+   * @param type
+   *          the attribute type
+   */
+  _Aggregation2DBase(final EAttributeType type) {
+    super(type);
   }
 
   /**
@@ -190,8 +201,8 @@ abstract class _StatisticalParameter2DBase<T extends IElementSet> extends
     try (final IMath statPar = this.getStatisticalParameter().asFunction(
         use)) {
       try (final IMath inner = FunctionToMathBridge.bridge(
-          this.getXTransformation(), math)) {
-        this.getXDimension().appendName(inner);
+          this.getYTransformation(), statPar)) {
+        this.getYDimension().appendName(inner);
       }
     }
 
@@ -204,14 +215,14 @@ abstract class _StatisticalParameter2DBase<T extends IElementSet> extends
   @Override
   @SuppressWarnings("rawtypes")
   public final boolean equals(final Object o) {
-    final _StatisticalParameter2DBase other;
+    final _Aggregation2DBase other;
 
     if (o == this) {
       return true;
     }
 
-    if (o instanceof _StatisticalParameter2DBase) {
-      other = ((_StatisticalParameter2DBase) o);
+    if (o instanceof _Aggregation2DBase) {
+      other = ((_Aggregation2DBase) o);
 
       return ((this.getXDimension().getIndex() == //
           other.getXDimension().getIndex())//
@@ -244,5 +255,213 @@ abstract class _StatisticalParameter2DBase<T extends IElementSet> extends
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.getStatisticalParameter()),//
             HashUtils.hashCode(this.getSecondaryStatisticalParameter())));
+  }
+
+  /**
+   * Aggregate the data of a matrix iterator
+   *
+   * @param iterator
+   *          the iterator
+   * @param param
+   *          the parameter
+   * @return the resulting matrix
+   */
+  @SuppressWarnings("incomplete-switch")
+  static final IMatrix _aggregate(final MatrixIterator2D iterator,
+      final StatisticalParameter param) {
+    final ScalarAggregate aggregate;
+    final MatrixBuilder builder;
+    int oldYState, currentYState, xState;
+    double oldYDouble, currentYDouble, xDouble;
+    long oldYLong, currentYLong, xLong;
+    boolean lastWasAdded;
+    BasicNumber x;
+
+    aggregate = param.createSampleAggregate();
+    builder = new MatrixBuilder(EPrimitiveType.LONG);
+    builder.setN(2);
+
+    xDouble = currentYDouble = oldYDouble = Double.NaN;
+    xState = oldYState = currentYState = Integer.MIN_VALUE;
+    xLong = oldYLong = currentYLong = 0L;
+    lastWasAdded = false;
+
+    // Iterate over all the values.
+    while (iterator.hasNext()) {
+      lastWasAdded = false;
+
+      // Get the x-value
+      x = iterator.next();
+      xState = x.getState();
+      switch (xState) {
+        case BasicNumber.STATE_INTEGER: {
+          xLong = x.longValue();
+          break;
+        }
+        case BasicNumber.STATE_DOUBLE: {
+          xDouble = x.doubleValue();
+          break;
+        }
+      }
+
+      // Compute the y-value
+      aggregate.reset();
+      iterator.aggregateRow(0, aggregate);
+      currentYState = aggregate.getState();
+      switch (currentYState) {
+        case BasicNumber.STATE_INTEGER: {
+          currentYLong = aggregate.longValue();
+          break;
+        }
+        case BasicNumber.STATE_DOUBLE: {
+          currentYDouble = aggregate.doubleValue();
+          break;
+        }
+      }
+
+      // We want to compare the current y-value with the old y value. We
+      // only add a point if they are different. If we compute, for
+      // instance, the median or a very high or low percentile, it could be
+      // that the values do not change over many points. We want to avoid
+      // adding useless points to the matrix.
+      checkAdd: {
+        if (currentYState == oldYState) {
+          switch (currentYState) {
+            case BasicNumber.STATE_INTEGER: {
+              if (currentYLong == oldYLong) {
+                break checkAdd;
+              }
+              break;
+            }
+            case BasicNumber.STATE_DOUBLE: {
+              if (EComparison.compareDoubles(currentYDouble, oldYDouble) == 0) {
+                break checkAdd;
+              }
+              break;
+            }
+            default: {
+              break checkAdd;
+            }
+          }
+        }
+
+        // If we get here, the current y and the old y value are different.
+        // We add a point.
+        lastWasAdded = true;
+
+        // First add the x-coordinate.
+        switch (xState) {
+          case BasicNumber.STATE_INTEGER: {
+            builder.append(xLong);
+            break;
+          }
+          case BasicNumber.STATE_DOUBLE: {
+            builder.append(xDouble);
+            break;
+          }
+          case BasicNumber.STATE_POSITIVE_OVERFLOW:
+          case BasicNumber.STATE_POSITIVE_INFINITY: {
+            builder.append(Double.POSITIVE_INFINITY);
+            break;
+          }
+          case BasicNumber.STATE_NEGATIVE_OVERFLOW:
+          case BasicNumber.STATE_NEGATIVE_INFINITY: {
+            builder.append(Double.NEGATIVE_INFINITY);
+            break;
+          }
+          default: {
+            builder.append(Double.NaN);
+          }
+        }
+
+        // Now add the y-coordinate.
+        switch (currentYState) {
+          case BasicNumber.STATE_INTEGER: {
+            builder.append(currentYLong);
+            break;
+          }
+          case BasicNumber.STATE_DOUBLE: {
+            builder.append(currentYDouble);
+            break;
+          }
+          case BasicNumber.STATE_POSITIVE_OVERFLOW:
+          case BasicNumber.STATE_POSITIVE_INFINITY: {
+            builder.append(Double.POSITIVE_INFINITY);
+            break;
+          }
+          case BasicNumber.STATE_NEGATIVE_OVERFLOW:
+          case BasicNumber.STATE_NEGATIVE_INFINITY: {
+            builder.append(Double.NEGATIVE_INFINITY);
+            break;
+          }
+          default: {
+            builder.append(Double.NaN);
+          }
+        }
+
+      }// End of check add: We may get here via break or adding...
+
+      oldYState = currentYState;
+      oldYDouble = currentYDouble;
+      oldYLong = currentYLong;
+    } // end of iteration loop
+
+    // If the last point was not added and we are at the end of the
+    // iteration, we should add the last point, since it marks the last
+    // element on the x-axis.
+    if ((!lastWasAdded) && (xState != Integer.MIN_VALUE)) {
+      // Ok, so let's add the last point:
+      // First add the x-coordinate.
+      switch (xState) {
+        case BasicNumber.STATE_INTEGER: {
+          builder.append(xLong);
+          break;
+        }
+        case BasicNumber.STATE_DOUBLE: {
+          builder.append(xDouble);
+          break;
+        }
+        case BasicNumber.STATE_POSITIVE_OVERFLOW:
+        case BasicNumber.STATE_POSITIVE_INFINITY: {
+          builder.append(Double.POSITIVE_INFINITY);
+          break;
+        }
+        case BasicNumber.STATE_NEGATIVE_OVERFLOW:
+        case BasicNumber.STATE_NEGATIVE_INFINITY: {
+          builder.append(Double.NEGATIVE_INFINITY);
+          break;
+        }
+        default: {
+          builder.append(Double.NaN);
+        }
+      }
+
+      // Now add the y-coordinate.
+      switch (currentYState) {
+        case BasicNumber.STATE_INTEGER: {
+          builder.append(currentYLong);
+          break;
+        }
+        case BasicNumber.STATE_DOUBLE: {
+          builder.append(currentYDouble);
+          break;
+        }
+        case BasicNumber.STATE_POSITIVE_OVERFLOW:
+        case BasicNumber.STATE_POSITIVE_INFINITY: {
+          builder.append(Double.POSITIVE_INFINITY);
+          break;
+        }
+        case BasicNumber.STATE_NEGATIVE_OVERFLOW:
+        case BasicNumber.STATE_NEGATIVE_INFINITY: {
+          builder.append(Double.NEGATIVE_INFINITY);
+          break;
+        }
+        default: {
+          builder.append(Double.NaN);
+        }
+      }
+    }
+
+    return builder.make();
   }
 }

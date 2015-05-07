@@ -50,7 +50,13 @@ public final class Mul extends BinaryFunction {
 
     if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
       l0 = ((long) x0);
+      if (l0 == 0L) {
+        return 0f;
+      }
       l1 = ((long) x1);
+      if (l1 == 0L) {
+        return 0f;
+      }
       res = (l1 * l0);
       if ((res / l0) == l1) {
         return res;
@@ -67,7 +73,13 @@ public final class Mul extends BinaryFunction {
 
     if (NumericalTypes.isLong(x0) && NumericalTypes.isLong(x1)) {
       l0 = ((long) x0);
+      if (l0 == 0L) {
+        return 0d;
+      }
       l1 = ((long) x1);
+      if (l1 == 0L) {
+        return 0d;
+      }
       res = (l1 * l0);
       if ((res / l0) == l1) {
         return res;
@@ -83,7 +95,7 @@ public final class Mul extends BinaryFunction {
     final long res;
 
     if ((x0 == 0L) || (x1 == 0L)) {
-      return 0L;
+      return 0d;
     }
 
     res = (x0 * x1);

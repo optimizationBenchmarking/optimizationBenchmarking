@@ -11,17 +11,17 @@ import examples.org.optimizationBenchmarking.experimentation.dataAndIO.BBOBExamp
 /**
  * An example for the ECDF on BBOB data.
  */
-public final class ECDFBBOBExample extends EvaluationExample {
+public final class BBOBExamples extends EvaluationExample {
 
   /** create */
-  public ECDFBBOBExample() {
+  public BBOBExamples() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
   protected final String getResourceName() {
-    return "bbobECDF.xml"; //$NON-NLS-1$
+    return "bbobExamples.xml"; //$NON-NLS-1$
   }
 
   /**
@@ -42,7 +42,7 @@ public final class ECDFBBOBExample extends EvaluationExample {
     }
 
     Configuration.setup(args);
-    new ECDFBBOBExample().process(dir, BBOBExample.class);
+    new BBOBExamples().process(dir, BBOBExample.class);
   }
 
 }

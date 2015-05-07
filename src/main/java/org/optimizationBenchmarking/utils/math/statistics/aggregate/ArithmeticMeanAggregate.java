@@ -34,6 +34,7 @@ public final class ArithmeticMeanAggregate extends _StatefulNumber {
   @Override
   public final void reset() {
     super.reset();
+    this.m_count = 0L;
     this.m_minimum.reset();
     this.m_maximum.reset();
     this.m_sum.reset();

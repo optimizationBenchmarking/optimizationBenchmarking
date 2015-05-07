@@ -39,4 +39,11 @@
 		</cfg:configuration>
 	</e:module>
 
+  <e:module class="all.aggregation2D.AllAggregation2D">
+    <cfg:configuration>
+      <cfg:parameter name="aggregation" value="median of F over lg FEs" />
+      <cfg:parameter name="groupBy" value="n" />
+    </cfg:configuration>
+  </e:module>
+
 </e:evaluation>

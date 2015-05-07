@@ -162,6 +162,10 @@ public final class VarianceAggregate extends _StatefulNumber {
     compute: {
       if (integerOldDelta) {
         if (integerNewDelta) {
+          if ((lOldDelta == 0L) || (lNewDelta == 0L)) {
+            this.m_M2.append(0L);
+            break compute;
+          }
           lTemp = (lNewDelta * lOldDelta);
           if ((lTemp / lOldDelta) == lNewDelta) {
             this.m_M2.append(lTemp);
@@ -302,6 +306,10 @@ public final class VarianceAggregate extends _StatefulNumber {
     compute: {
       if (integerOldDelta) {
         if (integerNewDelta) {
+          if ((lOldDelta == 0L) || (lNewDelta == 0L)) {
+            this.m_M2.append(0L);
+            break compute;
+          }
           lTemp = (lNewDelta * lOldDelta);
           if ((lTemp / lOldDelta) == lNewDelta) {
             this.m_M2.append(lTemp);

@@ -11,17 +11,17 @@ import examples.org.optimizationBenchmarking.experimentation.dataAndIO.TSPSuiteE
 /**
  * An example for the ECDF on TSP Suite data
  */
-public final class ECDFTSPSuiteExample extends EvaluationExample {
+public final class TSPSuiteExamples extends EvaluationExample {
 
   /** create */
-  public ECDFTSPSuiteExample() {
+  public TSPSuiteExamples() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
   protected final String getResourceName() {
-    return "tspSuiteECDF.xml"; //$NON-NLS-1$
+    return "tspSuiteExamples.xml"; //$NON-NLS-1$
   }
 
   /**
@@ -42,7 +42,7 @@ public final class ECDFTSPSuiteExample extends EvaluationExample {
     }
 
     Configuration.setup(args);
-    new ECDFTSPSuiteExample().process(dir, TSPSuiteExample.class);
+    new TSPSuiteExamples().process(dir, TSPSuiteExample.class);
   }
 
 }
