@@ -244,6 +244,8 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
                     "Finished output to Path identified by String '")//$NON-NLS-1$
                     + location.m_location1 + '\'');
           }
+
+          return;
         }
 
         if (File.class.isAssignableFrom(clazz)) {
@@ -263,8 +265,9 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
                     "Finished output to File identified by String '")//$NON-NLS-1$
                     + location.m_location1 + '\'');
           }
-        }
 
+          return;
+        }
       }
     }
 
