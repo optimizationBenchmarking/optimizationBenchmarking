@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.utils.chart.impl.EChartFormat;
 import org.optimizationBenchmarking.utils.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.document.impl.DocumentDriverParser;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfiguration;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicConfigurationBuilder;
@@ -93,9 +94,9 @@ public class DocumentConfigurationBuilder extends
     this.configureWithoutDriver(config);
 
     oldDriver = this.m_documentDriver;
-    newDriver = config.getInstance(
+    newDriver = config.get(
         DocumentConfigurationBuilder.PARAM_DOCUMENT_DRIVER,
-        IDocumentDriver.class, oldDriver);
+        DocumentDriverParser.getInstance(), oldDriver);
     if ((oldDriver != null) || (newDriver != null)) {
       this.setDocumentDriver(newDriver);
     }

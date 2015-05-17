@@ -127,7 +127,7 @@ public final class QuantileAggregate extends _StatefulNumber {
       this.__appendDoubleToDoubles(value);
     } else {
       size = this.m_size;
-      dData = new double[Math.max(128, (size << 1))];
+      this.m_doubleData = dData = new double[Math.max(128, (size << 1))];
       for (i = size; (--i) >= 0;) {
         dData[i] = lData[i];
       }

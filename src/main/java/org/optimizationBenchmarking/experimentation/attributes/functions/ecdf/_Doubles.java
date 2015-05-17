@@ -12,6 +12,9 @@ abstract class _Doubles extends _List {
   /** the data */
   double[] m_data;
 
+  /** the last point */
+  double m_last;
+
   /**
    * create the {@code double} list
    *
@@ -23,6 +26,8 @@ abstract class _Doubles extends _List {
   _Doubles(final IDimension timeDim, final int goalIndex) {
     super(timeDim, goalIndex);
     this.m_data = new double[1024];
+    this.m_last = (this.m_isTimeIncreasing ? Double.NEGATIVE_INFINITY
+        : Double.POSITIVE_INFINITY);
   }
 
   /**
@@ -104,6 +109,7 @@ abstract class _Doubles extends _List {
 
     idx = 0;
     total = this.m_total;
+    current = earliest;
     for (i = 0; i < size;) {
       current = data[i];
       inner: for (; (++i) < size;) {
@@ -116,6 +122,13 @@ abstract class _Doubles extends _List {
       res[idx++] = ((i + offset) / total);
     }
     data = null;
+
+    // add a last point if needed
+    if (current != this.m_last) {
+      res[idx++] = this.m_last;
+      res[idx] = res[idx - 2];
+      idx++;
+    }
 
     // Resize data if necessary
     if (idx >= res.length) {

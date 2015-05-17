@@ -5,10 +5,10 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.evaluation.system.impl.abstr.DocumentEvaluationOutput;
-import org.optimizationBenchmarking.experimentation.evaluation.system.impl.evaluator.Evaluator;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluation;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationBuilder;
+import org.optimizationBenchmarking.experimentation.evaluation.impl.abstr.DocumentEvaluationOutput;
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.Evaluator;
+import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluation;
+import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationBuilder;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
@@ -27,7 +27,7 @@ import examples.org.optimizationBenchmarking.utils.document.ExampleDocumentConfi
  * This class provides examples for the capabilities of the experiment
  * evaluation abilities. It applies different configurations of the
  * evaluator with different
- * {@link org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationModule
+ * {@link org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationModule
  * modules} to different example data sets, both
  * {@link examples.org.optimizationBenchmarking.experimentation.dataAndIO.RandomExample
  * randomly created} as well as extracted from

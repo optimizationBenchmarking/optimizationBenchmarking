@@ -3,7 +3,7 @@
 	xmlns:e="http://www.optimizationBenchmarking.org/formats/evaluationConfiguration/evaluationConfiguration.1.0.xsd"
 	xmlns:cfg="http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd">
 
-	<e:module class="org.optimizationBenchmarking.experimentation.evaluation.system.impl.single.experimentInfo.ExperimentInformation">
+	<e:module class="org.optimizationBenchmarking.experimentation.evaluation.impl.single.experimentInfo.ExperimentInformation">
 	</e:module>
 
 </e:evaluation>

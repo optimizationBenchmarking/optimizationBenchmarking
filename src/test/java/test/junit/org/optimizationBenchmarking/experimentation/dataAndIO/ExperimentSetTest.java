@@ -25,7 +25,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
-import org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationInput;
+import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationInput;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInput;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;

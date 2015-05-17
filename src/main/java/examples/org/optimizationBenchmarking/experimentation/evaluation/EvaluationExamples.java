@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.utils.io.paths.PathUtils;
  * This class provides examples for the capabilities of the experiment
  * evaluation abilities. It applies different configurations of the
  * evaluator with different
- * {@link org.optimizationBenchmarking.experimentation.evaluation.system.spec.IEvaluationModule
+ * {@link org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationModule
  * modules} to different example data sets, both
  * {@link examples.org.optimizationBenchmarking.experimentation.dataAndIO.RandomExample
  * randomly created} as well as extracted from

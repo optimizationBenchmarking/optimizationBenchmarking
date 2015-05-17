@@ -11,6 +11,9 @@ abstract class _Longs extends _List {
   /** the data */
   long[] m_data;
 
+  /** the latest possible point */
+  long m_last;
+
   /**
    * create the {@code long} list
    *
@@ -22,6 +25,8 @@ abstract class _Longs extends _List {
   _Longs(final IDimension timeDim, final int goalIndex) {
     super(timeDim, goalIndex);
     this.m_data = new long[1024];
+    this.m_last = (this.m_isTimeIncreasing ? Long.MIN_VALUE
+        : Long.MAX_VALUE);
   }
 
   /**
@@ -101,10 +106,11 @@ abstract class _Longs extends _List {
 
     // The output matrix will points of the form (time, fraction of
     // success)
-    res = new double[size << 1];
+    res = new double[(size + 1) << 1];
 
     idx = 0;
     total = this.m_total;
+    current = earliest;
     for (i = 0; i < size;) {
       current = data[i];
       inner: for (; (++i) < size;) {
@@ -117,6 +123,13 @@ abstract class _Longs extends _List {
       res[idx++] = ((i + offset) / total);
     }
     data = null;
+
+    // add a last point if needed
+    if (current != this.m_last) {
+      res[idx++] = this.m_last;
+      res[idx] = res[idx - 2];
+      idx++;
+    }
 
     // Resize data if necessary
     if (idx >= res.length) {
