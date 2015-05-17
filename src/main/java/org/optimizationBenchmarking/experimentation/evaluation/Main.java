@@ -42,6 +42,7 @@ public final class Main {
     if (printInfo) {
       synchronized (System.out) {
         synchronized (System.err) {
+          System.err.flush();
           System.out.print("Welcome to the "); //$NON-NLS-1$
           System.out.println(evaluator.getProjectName());
           System.out.print("  version: "); //$NON-NLS-1$
@@ -60,6 +61,7 @@ public final class Main {
           System.out.print(evaluator.getContactURL());
           System.out.println(')');
           System.out.println();
+          System.out.flush();
         }
       }
     }
@@ -194,8 +196,10 @@ public final class Main {
     if (printInfo) {
       synchronized (System.out) {
         synchronized (System.err) {
+          System.err.flush();
           System.out.println();
           System.out.println("...goodbye.");//$NON-NLS-1$
+          System.out.flush();
         }
       }
     }
