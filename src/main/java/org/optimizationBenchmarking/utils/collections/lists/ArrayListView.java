@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.optimizationBenchmarking.utils.IImmutable;
 import org.optimizationBenchmarking.utils.collections.iterators.ArrayIterator;
 import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
 import org.optimizationBenchmarking.utils.collections.visitors.IVisitor;
@@ -17,7 +18,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * @param <DT>
  *          the type
  */
-public class ArrayListView<DT> extends BasicList<DT> {
+public class ArrayListView<DT> extends BasicList<DT> implements IImmutable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

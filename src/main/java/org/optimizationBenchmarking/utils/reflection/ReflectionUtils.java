@@ -1,10 +1,12 @@
 package org.optimizationBenchmarking.utils.reflection;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -13,14 +15,17 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Currency;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
-import org.optimizationBenchmarking.utils.EmptyUtils;
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.IImmutable;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.io.ByteArrayIOStream;
+import org.optimizationBenchmarking.utils.math.Rational;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -44,7 +49,7 @@ public final class ReflectionUtils {
 
   /** The default package name prefixes */
   private static final String[] DEFAULT_PACKAGE_PREFIXES = new String[] {//
-    "java.lang."//$NON-NLS-1$
+  "java.lang."//$NON-NLS-1$
   };
 
   /**
@@ -99,6 +104,94 @@ public final class ReflectionUtils {
   }
 
   /**
+   * Check if the given object can safely be assumed to be immutable.
+   *
+   * @param object
+   *          the object
+   * @return {@code true} if the object will definitely never change
+   *         (unless something underhanded like reflective access to
+   *         private members is going on), {@code false} if it cannot be
+   *         assumed that the object won't change
+   */
+  public static final boolean isKnownImmutable(final Object object) {
+    final Class<?> clazz;
+    String str;
+
+    if (object == null) {
+      return true;
+    }
+
+    clazz = object.getClass();
+
+    if (
+    // wrappers for primitive types
+    (clazz == Integer.class) || //
+        (clazz == Double.class) || //
+        (clazz == Long.class) || //
+        (clazz == Boolean.class) || //
+        (clazz == Character.class) || //
+        (clazz == Byte.class) || //
+        (clazz == Float.class) || //
+        (clazz == Short.class) || //
+        (clazz == Void.class) || //
+
+        // basic, immutable objects
+        (clazz == String.class) || //
+        (clazz == Object.class) || //
+        (clazz == URI.class) || //
+        (clazz == URL.class) || //
+        (clazz == BigDecimal.class) || //
+        (clazz == BigInteger.class) || //
+        (clazz == Pattern.class) || //
+        (clazz == Currency.class) || //
+        (clazz == Locale.class) || //
+        (clazz == Rational.class) || //
+
+        // reflective objects
+        (clazz == Class.class) || //
+        (clazz == Field.class) || //
+        (clazz == Method.class) || //
+        (clazz == Constructor.class) || //
+        (clazz == Field.class) || //
+        (clazz == Package.class)) {
+      return true;
+    }
+
+    // checks with the more costly instanceof operator
+    if ((object instanceof Enum) || //
+        (object instanceof IImmutable) || //
+        (object instanceof File) || //
+        (object instanceof Path)) {
+      return true;
+    }
+
+    // double-check, to be on the save side
+    if (clazz.isEnum()) {
+      return true;
+    }
+    if (clazz.isPrimitive()) {
+      return true;
+    }
+
+    // empty arrays are immutable, too
+    if (clazz.isArray()) {
+      return (Array.getLength(object) <= 0);
+    }
+
+    // is it an empty, immutable collection?
+    if (clazz.isMemberClass()) {
+      if (java.util.Collections.class.equals(clazz.getEnclosingClass())) {
+        str = clazz.getSimpleName();
+        if ((str != null) && (str.startsWith("Empty"))) {//$NON-NLS-1$
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * Deep clone an object
    *
    * @param instance
@@ -117,125 +210,50 @@ public final class ReflectionUtils {
     final Class<T> clazz;
     final Method m;
 
-    if (instance == null) {
-      return null;
+    // immutable objects don't need to be cloned
+    if (ReflectionUtils.isKnownImmutable(instance)) {
+      return instance;
     }
 
     clazz = (Class<T>) (instance.getClass());
     if (clazz.isArray()) {
       // First, we check for arrays. Arrays can be cloned efficiently.
 
-      if ((instance) instanceof int[]) {
-        int[] array;
-        array = ((int[]) (instance));
-        if (array.length <= 0) {
-          array = EmptyUtils.EMPTY_INTS;
-        } else {
-          array = array.clone();
-        }
-        return ((T) array);
+      if (instance instanceof int[]) {
+        return ((T) (((int[]) instance).clone()));
       }
-      if ((instance) instanceof double[]) {
-        double[] array;
-        array = ((double[]) (instance));
-        if (array.length <= 0) {
-          array = EmptyUtils.EMPTY_DOUBLES;
-        } else {
-          array = array.clone();
-        }
-        return ((T) array);
+      if (instance instanceof double[]) {
+        return ((T) (((double[]) instance).clone()));
       }
-      if ((instance) instanceof long[]) {
-        long[] array;
-        array = ((long[]) (instance));
-        if (array.length <= 0) {
-          array = EmptyUtils.EMPTY_LONGS;
-        } else {
-          array = array.clone();
-        }
-        return ((T) array);
+      if (instance instanceof long[]) {
+        return ((T) (((long[]) instance).clone()));
       }
-      if ((instance) instanceof boolean[]) {
-        boolean[] array;
-        array = ((boolean[]) (instance));
-        if (array.length <= 0) {
-          array = EmptyUtils.EMPTY_BOOLEANS;
-        } else {
-          array = array.clone();
-        }
-        return ((T) array);
+      if (instance instanceof boolean[]) {
+        return ((T) (((boolean[]) instance).clone()));
       }
-      if ((instance) instanceof char[]) {
-        char[] array;
-        array = ((char[]) (instance));
-        if (array.length <= 0) {
-          array = EmptyUtils.EMPTY_CHARS;
-        } else {
-          array = array.clone();
-        }
-        return ((T) array);
+      if (instance instanceof char[]) {
+        return ((T) (((char[]) instance).clone()));
       }
-      if ((instance) instanceof byte[]) {
-        byte[] array;
-        array = ((byte[]) (instance));
-        if (array.length <= 0) {
-          array = EmptyUtils.EMPTY_BYTES;
-        } else {
-          array = array.clone();
-        }
-        return ((T) array);
+      if (instance instanceof byte[]) {
+        return ((T) (((byte[]) instance).clone()));
       }
-      if ((instance) instanceof float[]) {
-        float[] array;
-        array = ((float[]) (instance));
-        if (array.length <= 0) {
-          array = EmptyUtils.EMPTY_FLOATS;
-        } else {
-          array = array.clone();
-        }
-        return ((T) array);
+      if (instance instanceof float[]) {
+        return ((T) (((float[]) instance).clone()));
       }
-      if ((instance) instanceof short[]) {
-        short[] array;
-        array = ((short[]) (instance));
-        if (array.length <= 0) {
-          array = EmptyUtils.EMPTY_SHORTS;
-        } else {
-          array = array.clone();
-        }
-        return ((T) array);
+      if (instance instanceof short[]) {
+        return ((T) (((short[]) instance).clone()));
       }
 
       Object[] array;
-      array = ((Object[]) (instance)).clone();
+      array = ((Object[]) instance).clone();
       for (int i = array.length; (--i) >= 0;) {
         array[i] = ReflectionUtils.deepClone(array[i]);
       }
       return ((T) array);
     }
 
-    // ok, we do not have an array - check for objects that are immutable
-    if ((clazz == String.class) || //
-        (clazz == URI.class) || //
-        (clazz == URL.class) || //
-        (clazz == Integer.class) || //
-        (clazz == Double.class) || //
-        (clazz == Long.class) || //
-        (clazz == Boolean.class) || //
-        (clazz == Character.class) || //
-        (clazz == Byte.class) || //
-        (clazz == Float.class) || //
-        (clazz == Short.class) || //
-        (clazz == Void.class) || //
-        (clazz == BigDecimal.class) || //
-        (clazz == BigInteger.class) || //
-        (clazz == Pattern.class) || //
-        (instance instanceof ArrayListView)) {
-      return (instance);
-    }
-
     // maybe we can clone the object directly?
-    if ((instance) instanceof Cloneable) {
+    if (instance instanceof Cloneable) {
       try {// let's see if it has a public clone method
         m = clazz.getMethod("clone"); //$NON-NLS-1$
         if (m != null) {
@@ -254,8 +272,7 @@ public final class ReflectionUtils {
 
     // if the object is serializable, we can try to serialize and
     // deserialize it
-    if ((instance) instanceof Serializable) {
-
+    if (instance instanceof Serializable) {
       try {
         try (final ByteArrayIOStream bos = new ByteArrayIOStream()) {
           try (final ObjectOutputStream oos = new ObjectOutputStream(bos)) {
@@ -277,7 +294,7 @@ public final class ReflectionUtils {
     // OK, if we get here, its finito: The object is not a primitive array
     // nor is it immutable. It is also not public cloneable and cannot be
     // serialized. This means we are out of "clean" and "official" ways to
-    // copy the code. Thus, let's simply fail with an exception at the
+    // copy the object. Thus, let's simply fail with an exception at the
     // bottom of this method.
     throw new IllegalArgumentException("Object cannot be cloned."); //$NON-NLS-1$
   }
@@ -340,7 +357,7 @@ public final class ReflectionUtils {
    */
   private static final Class<?> __findClassInternal(
       final String clazzName, final String[] prefixes)
-          throws LinkageError, ClassCastException, ClassNotFoundException {
+      throws LinkageError, ClassCastException, ClassNotFoundException {
     ClassNotFoundException error;
 
     try {
@@ -557,7 +574,7 @@ public final class ReflectionUtils {
    */
   private static final <T> T __field(final Class<T> base,
       final Class<?> container, final String name, final Field field)
-          throws IllegalArgumentException, ReflectiveOperationException {
+      throws IllegalArgumentException, ReflectiveOperationException {
     final int mod;
     final Class<?> retClass;
 
@@ -567,8 +584,8 @@ public final class ReflectionUtils {
           container,
           name,
           ("field " + field + " is not " + //$NON-NLS-1$//$NON-NLS-2$
-              Modifier.toString(ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS
-                  & (~mod))), null);
+          Modifier.toString(ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS
+              & (~mod))), null);
     }
 
     retClass = field.getType();
@@ -576,7 +593,7 @@ public final class ReflectionUtils {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("field " + field + //$NON-NLS-1$
               " of type " + TextUtils.className(retClass) + //$NON-NLS-1$
-              " is incompatible to base class"), null);//$NON-NLS-1$
+          " is incompatible to base class"), null);//$NON-NLS-1$
     }
 
     return base.cast(field.get(null));
@@ -603,7 +620,7 @@ public final class ReflectionUtils {
    */
   private static final <T> T __method(final Class<T> base,
       final Class<?> container, final String name, final Method method)
-          throws IllegalArgumentException, ReflectiveOperationException {
+      throws IllegalArgumentException, ReflectiveOperationException {
     final int mod;
     final Class<?> retClass;
     final Class<?>[] params;
@@ -614,8 +631,8 @@ public final class ReflectionUtils {
           container,
           name,
           ("method " + method + " is not " + //$NON-NLS-1$//$NON-NLS-2$
-              Modifier.toString(ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS
-                  & (~mod))), null);
+          Modifier.toString(ReflectionUtils.REQUIRED_MODIFIERS_FOR_ACCESS
+              & (~mod))), null);
     }
 
     retClass = method.getReturnType();
@@ -623,7 +640,7 @@ public final class ReflectionUtils {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("return type " + TextUtils.className(retClass) + //$NON-NLS-1$
               " of method " + method + //$NON-NLS-1$
-              " is incompatible to base class"), null);//$NON-NLS-1$
+          " is incompatible to base class"), null);//$NON-NLS-1$
     }
 
     params = method.getParameterTypes();
@@ -631,7 +648,7 @@ public final class ReflectionUtils {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("method " + method + //$NON-NLS-1$
               " has more than 0 parameters: " + //$NON-NLS-1$
-              Arrays.toString(params)), null);
+          Arrays.toString(params)), null);
     }
 
     return base.cast(method.invoke(null));
@@ -668,7 +685,7 @@ public final class ReflectionUtils {
     if ((mod & Modifier.PUBLIC) != Modifier.PUBLIC) {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("constructor " + constructor + " is not " + //$NON-NLS-1$//$NON-NLS-2$
-              Modifier.toString(Modifier.PUBLIC)), null);
+          Modifier.toString(Modifier.PUBLIC)), null);
     }
 
     retClass = constructor.getDeclaringClass();
@@ -676,7 +693,7 @@ public final class ReflectionUtils {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("return type " + TextUtils.className(retClass) + //$NON-NLS-1$
               " of constructor " + constructor + //$NON-NLS-1$
-              " is incompatible to base class"), null);//$NON-NLS-1$
+          " is incompatible to base class"), null);//$NON-NLS-1$
     }
 
     params = constructor.getParameterTypes();
@@ -684,7 +701,7 @@ public final class ReflectionUtils {
       throw ReflectionUtils.__makeFindInstanceError(base, container, name,
           ("constructor " + constructor + //$NON-NLS-1$
               " has more than 0 parameters: " + //$NON-NLS-1$
-              Arrays.toString(params)), null);
+          Arrays.toString(params)), null);
     }
 
     return base.cast(constructor.newInstance());
@@ -753,7 +770,7 @@ public final class ReflectionUtils {
   @SuppressWarnings("rawtypes")
   public static final <T> T getInstance(final Class<T> base,
       final Class<?> container, final String name)
-          throws ReflectiveOperationException {
+      throws ReflectiveOperationException {
     final Class<?> useContainer;
     String useName;
     Throwable errorA, errorB, errorC;
@@ -956,7 +973,7 @@ public final class ReflectionUtils {
    */
   public static final <T> T getInstanceByName(final Class<T> base,
       final String identifier, final String[] prefixes)
-          throws ReflectiveOperationException {
+      throws ReflectiveOperationException {
     final String idString, fieldName;
     String className;
     Class<? extends Object> container;
@@ -967,7 +984,7 @@ public final class ReflectionUtils {
     if (idString == null) {
       throw new IllegalArgumentException(//
           "Class+constant identifier must not be null or empty, but is '"//$NON-NLS-1$
-          + identifier + '\'');
+              + identifier + '\'');
     }
 
     index = idString.lastIndexOf('#');
@@ -991,7 +1008,7 @@ public final class ReflectionUtils {
       if (className == null) {
         throw new IllegalArgumentException(//
             "Class name to get an instance from within must neither be null, empty, or consisting only of white spaces, but identifier '"//$NON-NLS-1$
-            + identifier + "' provides such a name.");//$NON-NLS-1$
+                + identifier + "' provides such a name.");//$NON-NLS-1$
       }
 
       cause = null;
@@ -1006,7 +1023,7 @@ public final class ReflectionUtils {
         throw ReflectionUtils.__makeFindInstanceError(base, null,
             fieldName, ("could not discover class '" + className//$NON-NLS-1$
                 + "' based on string '" + idString + '\''),//$NON-NLS-1$
-                cause);
+            cause);
       }
     }
 
@@ -1061,28 +1078,28 @@ public final class ReflectionUtils {
     if (string == null) {
       throw new IllegalArgumentException(//
           "Resource name must not be empty or consisting only of white space, but '"//$NON-NLS-1$
-          + resource + "' is.");//$NON-NLS-1$
+              + resource + "' is.");//$NON-NLS-1$
     }
 
     index = resource.indexOf('#');
     if (index < 0) {
       throw new IllegalArgumentException(//
           "Resource name must contain a '#', but '"//$NON-NLS-1$
-          + resource + "' does not.");//$NON-NLS-1$
+              + resource + "' does not.");//$NON-NLS-1$
     }
 
     clazzName = TextUtils.prepare(resource.substring(0, index));
     if (clazzName == null) {
       throw new IllegalArgumentException(//
           "Name of class hosting a resource must not be empty or consisting only of white space, but '"//$NON-NLS-1$
-          + resource + "' has such a class name.");//$NON-NLS-1$
+              + resource + "' has such a class name.");//$NON-NLS-1$
     }
 
     file = TextUtils.prepare(resource.substring(index + 1));
     if (file == null) {
       throw new IllegalArgumentException(//
           "Name of resource file must not be empty or consisting only of white space, but '"//$NON-NLS-1$
-          + resource + "' has such a resource name.");//$NON-NLS-1$
+              + resource + "' has such a resource name.");//$NON-NLS-1$
     }
 
     try {

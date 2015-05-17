@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.text.numbers;
 
+import org.optimizationBenchmarking.utils.IImmutable;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -7,7 +8,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * An internal number appender which, well, directly appends the integer
  * numbers to the output.
  */
-abstract class _PlainIntNumberAppender extends NumberAppender {
+abstract class _PlainIntNumberAppender extends NumberAppender implements
+    IImmutable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

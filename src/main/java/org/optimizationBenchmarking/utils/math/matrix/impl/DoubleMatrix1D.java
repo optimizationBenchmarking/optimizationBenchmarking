@@ -1,12 +1,13 @@
 package org.optimizationBenchmarking.utils.math.matrix.impl;
 
+import org.optimizationBenchmarking.utils.IImmutable;
 import org.optimizationBenchmarking.utils.math.matrix.AbstractMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /**
  * A two-dimensional matrix composed of {@code double} values
  */
-public class DoubleMatrix1D extends AbstractMatrix {
+public class DoubleMatrix1D extends AbstractMatrix implements IImmutable {
 
   /** the m */
   private final int m_m;

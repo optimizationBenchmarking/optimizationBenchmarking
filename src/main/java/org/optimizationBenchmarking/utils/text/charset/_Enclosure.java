@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.text.charset;
 
+import org.optimizationBenchmarking.utils.IImmutable;
+
 /**
  * A collection of enclosures
  *
@@ -7,7 +9,7 @@ package org.optimizationBenchmarking.utils.text.charset;
  *          the end type
  */
 abstract class _Enclosure<ET extends _EnclosureEnd<?, ET>> extends
-    Enclosure implements Comparable<_Enclosure<?>> {
+    Enclosure implements Comparable<_Enclosure<?>>, IImmutable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

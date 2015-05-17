@@ -3,13 +3,14 @@ package org.optimizationBenchmarking.utils.math;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.optimizationBenchmarking.utils.IImmutable;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.functions.combinatoric.GCD;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** a fractional number */
-public class Rational extends BasicNumber {
+public class Rational extends BasicNumber implements IImmutable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 

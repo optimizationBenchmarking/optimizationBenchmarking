@@ -2,10 +2,12 @@ package org.optimizationBenchmarking.utils.text.charset;
 
 import java.io.Serializable;
 
+import org.optimizationBenchmarking.utils.IImmutable;
+
 /**
  * The base class for characters
  */
-public class Char implements Serializable, Comparable<Char> {
+public class Char implements Serializable, Comparable<Char>, IImmutable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

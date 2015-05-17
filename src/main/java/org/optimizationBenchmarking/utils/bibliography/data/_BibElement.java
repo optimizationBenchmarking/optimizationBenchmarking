@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 
 import java.io.Serializable;
 
+import org.optimizationBenchmarking.utils.IImmutable;
 import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -13,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  *          the comparable type
  */
 abstract class _BibElement<T extends _BibElement<T>> extends HashObject
-    implements Serializable, Comparable<T>, ITextable {
+    implements Serializable, Comparable<T>, ITextable, IImmutable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
