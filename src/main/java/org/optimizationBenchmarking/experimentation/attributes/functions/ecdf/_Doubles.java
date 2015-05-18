@@ -105,7 +105,7 @@ abstract class _Doubles extends _List {
 
     // The output matrix will points of the form (time, fraction of
     // success)
-    res = new double[size << 1];
+    res = new double[(size + 1) << 1];
 
     idx = 0;
     total = this.m_total;
