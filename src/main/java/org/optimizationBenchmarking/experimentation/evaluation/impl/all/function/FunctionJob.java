@@ -39,6 +39,7 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.FiniteMaximu
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.FiniteMinimumAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
+import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -71,10 +72,17 @@ public abstract class FunctionJob extends ExperimentSetJob {
    * allowing us to omit legends in the other figures?
    */
   public static final String PARAM_MAKE_LEGEND_FIGURE = "makeLegendFigure"; //$NON-NLS-1$
-  /**
-   * Should the figures include axis titles?
-   */
+  /** Should the figures include axis titles? */
   public static final String PARAM_PRINT_AXIS_TITLES = "showAxisTitles"; //$NON-NLS-1$
+
+  /** the minimum value for the x-axis */
+  public static final String PARAM_MIN_X = "minX";//$NON-NLS-1$
+  /** the maximum value for the x-axis */
+  public static final String PARAM_MAX_X = "maxX";//$NON-NLS-1$
+  /** the minimum value for the y-axis */
+  public static final String PARAM_MIN_Y = "minY";//$NON-NLS-1$
+  /** the maximum value for the y-axis */
+  public static final String PARAM_MAX_Y = "maxY";//$NON-NLS-1$
 
   /** the figure size */
   private final EFigureSize m_figureSize;
@@ -90,6 +98,15 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /** should we print axis titles? */
   private final boolean m_showAxisTitles;
+
+  /** the minimum value for the x-axis, or {@code null} if undefined */
+  private final Number m_minX;
+  /** the maximum value for the x-axis, or {@code null} if undefined */
+  private final Number m_maxX;
+  /** the minimum value for the y-axis, or {@code null} if undefined */
+  private final Number m_minY;
+  /** the maximum value for the y-axis, or {@code null} if undefined */
+  private final Number m_maxY;
 
   /**
    * Create the function job
@@ -131,6 +148,63 @@ public abstract class FunctionJob extends ExperimentSetJob {
     if (this.m_function == null) {
       throw new IllegalArgumentException("Function cannot be null."); //$NON-NLS-1$
     }
+
+    this.m_minX = config.get(FunctionJob.PARAM_MIN_X,
+        AnyNumberParser.INSTANCE, null);
+    this.m_maxX = config.get(FunctionJob.PARAM_MAX_X,
+        AnyNumberParser.INSTANCE, null);
+    this.m_minY = config.get(FunctionJob.PARAM_MIN_Y,
+        AnyNumberParser.INSTANCE, null);
+    this.m_maxY = config.get(FunctionJob.PARAM_MAX_Y,
+        AnyNumberParser.INSTANCE, null);
+  }
+
+  /**
+   * Get the minimum value for the x-axis provided via the configuration.
+   * If this value is not {@code null}, {@link #getXAxisMinimumValue()} and
+   * {@link #getXAxisMinimumAggregate()} are ignored.
+   *
+   * @return the configured minimum value for the {@code x} axis, or
+   *         {@code null} if none is defined
+   */
+  public final Number getXAxisConfiguredMin() {
+    return this.m_minX;
+  }
+
+  /**
+   * Get the maximum value for the x-axis provided via the configuration.
+   * If this value is not {@code null}, {@link #getXAxisMaximumValue()} and
+   * {@link #getXAxisMaximumAggregate()} are ignored.
+   *
+   * @return the configured maximum value for the {@code x} axis, or
+   *         {@code null} if none is defined
+   */
+  public final Number getXAxisConfiguredMax() {
+    return this.m_maxX;
+  }
+
+  /**
+   * Get the minimum value for the y-axis provided via the configuration.
+   * If this value is not {@code null}, {@link #getYAxisMinimumValue()} and
+   * {@link #getYAxisMinimumAggregate()} are ignored.
+   *
+   * @return the configured minimum value for the {@code y} axis, or
+   *         {@code null} if none is defined
+   */
+  public final Number getYAxisConfiguredMin() {
+    return this.m_minY;
+  }
+
+  /**
+   * Get the maximum value for the y-axis provided via the configuration.
+   * If this value is not {@code null}, {@link #getYAxisMaximumValue()} and
+   * {@link #getYAxisMaximumAggregate()} are ignored.
+   *
+   * @return the configured maximum value for the {@code y} axis, or
+   *         {@code null} if none is defined
+   */
+  public final Number getYAxisConfiguredMax() {
+    return this.m_maxY;
   }
 
   /**
@@ -350,11 +424,13 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get an aggregate to be used to determine the minimum value of the
-   * x-axis. If this method returns {@code null}, the fixed value returned
-   * by {@link #getXAxisMinimumValue()} is used as minimum for the x-axis.
+   * x-axis if none was {@link #getXAxisConfiguredMin() configured}. If
+   * this method returns {@code null}, the fixed value returned by
+   * {@link #getXAxisMinimumValue()} is used as minimum for the x-axis.
    *
    * @return the aggregate
    * @see #getXAxisMinimumValue()
+   * @see #getXAxisConfiguredMin()
    */
   protected ScalarAggregate getXAxisMinimumAggregate() {
     return new FiniteMinimumAggregate();
@@ -362,11 +438,13 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get a fixed minimum value for the x-axis. This method is only called
-   * if {@link #getXAxisMinimumAggregate()} returns {@code null}.
+   * if {@link #getXAxisMinimumAggregate()} and
+   * {@link #getXAxisConfiguredMin()} both return {@code null}.
    *
    * @return a {@code double} value representing the minimum value for the
    *         x-axis
    * @see #getXAxisMinimumAggregate()
+   * @see #getXAxisConfiguredMin()
    */
   protected double getXAxisMinimumValue() {
     return 0d;
@@ -374,11 +452,13 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get an aggregate to be used to determine the maximum value of the
-   * x-axis. If this method returns {@code null}, the fixed value returned
-   * by {@link #getXAxisMaximumValue()} is used as maximum for the x-axis.
+   * x-axis if none was {@link #getXAxisConfiguredMax() configured} . If
+   * this method returns {@code null}, the fixed value returned by
+   * {@link #getXAxisMaximumValue()} is used as maximum for the x-axis.
    *
    * @return the aggregate
    * @see #getXAxisMaximumValue()
+   * @see #getXAxisConfiguredMax()
    */
   protected ScalarAggregate getXAxisMaximumAggregate() {
     return new FiniteMaximumAggregate();
@@ -386,11 +466,13 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get a fixed maximum value for the x-axis. This method is only called
-   * if {@link #getXAxisMaximumAggregate()} returns {@code null}.
+   * if {@link #getXAxisMaximumAggregate()} and
+   * {@link #getXAxisConfiguredMax()} both return {@code null}.
    *
    * @return a {@code double} value representing the maximum value for the
    *         x-axis
    * @see #getXAxisMaximumAggregate()
+   * @see #getXAxisConfiguredMax()
    */
   protected double getXAxisMaximumValue() {
     return 0d;
@@ -434,11 +516,13 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get an aggregate to be used to determine the minimum value of the
-   * y-axis. If this method returns {@code null}, the fixed value returned
-   * by {@link #getYAxisMinimumValue()} is used as minimum for the y-axis.
+   * y-axis if none was {@link #getYAxisConfiguredMin() configured}. If
+   * this method returns {@code null}, the fixed value returned by
+   * {@link #getYAxisMinimumValue()} is used as minimum for the y-axis.
    *
    * @return the aggregate
    * @see #getYAxisMinimumValue()
+   * @see #getYAxisConfiguredMin()
    */
   protected ScalarAggregate getYAxisMinimumAggregate() {
     return new FiniteMinimumAggregate();
@@ -446,11 +530,13 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get a fixed minimum value for the y-axis. This method is only called
-   * if {@link #getYAxisMinimumAggregate()} returns {@code null}.
+   * if {@link #getYAxisMinimumAggregate()} and
+   * {@link #getYAxisConfiguredMin()} both return {@code null}.
    *
    * @return a {@code double} value representing the minimum value for the
    *         y-axis
    * @see #getYAxisMinimumAggregate()
+   * @see #getYAxisConfiguredMin()
    */
   protected double getYAxisMinimumValue() {
     return 0d;
@@ -458,11 +544,13 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get an aggregate to be used to determine the maximum value of the
-   * y-axis. If this method returns {@code null}, the fixed value returned
-   * by {@link #getYAxisMaximumValue()} is used as maximum for the y-axis.
+   * y-axis if none was {@link #getYAxisConfiguredMax() configured} . If
+   * this method returns {@code null}, the fixed value returned by
+   * {@link #getYAxisMaximumValue()} is used as maximum for the y-axis.
    *
    * @return the aggregate
    * @see #getYAxisMaximumValue()
+   * @see #getYAxisConfiguredMax()
    */
   protected ScalarAggregate getYAxisMaximumAggregate() {
     return new FiniteMaximumAggregate();
@@ -470,11 +558,13 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
   /**
    * Get a fixed maximum value for the y-axis. This method is only called
-   * if {@link #getYAxisMaximumAggregate()} returns {@code null}.
+   * if {@link #getYAxisMaximumAggregate()} and
+   * {@link #getYAxisConfiguredMax()} both return {@code null}.
    *
    * @return a {@code double} value representing the maximum value for the
    *         y-axis
    * @see #getYAxisMaximumAggregate()
+   * @see #getYAxisConfiguredMax()
    */
   protected double getYAxisMaximumValue() {
     return 0d;
@@ -602,6 +692,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
     FontStyle font;
     ColorStyle color;
     ScalarAggregate aggregate;
+    Number number;
 
     if (showAxisTitles) {
       mto = new MemoryTextOutput();
@@ -622,18 +713,28 @@ public abstract class FunctionJob extends ExperimentSetJob {
         }
       }
 
-      aggregate = this.getXAxisMinimumAggregate();
-      if (aggregate != null) {
-        xAxis.setMinimumAggregate(aggregate);
+      number = this.getXAxisConfiguredMin();
+      if (number != null) {
+        xAxis.setMinimum(number.doubleValue());
       } else {
-        xAxis.setMinimum(this.getXAxisMinimumValue());
+        aggregate = this.getXAxisMinimumAggregate();
+        if (aggregate != null) {
+          xAxis.setMinimumAggregate(aggregate);
+        } else {
+          xAxis.setMinimum(this.getXAxisMinimumValue());
+        }
       }
 
-      aggregate = this.getXAxisMaximumAggregate();
-      if (aggregate != null) {
-        xAxis.setMaximumAggregate(aggregate);
+      number = this.getXAxisConfiguredMax();
+      if (number != null) {
+        xAxis.setMaximum(number.doubleValue());
       } else {
-        xAxis.setMaximum(this.getXAxisMaximumValue());
+        aggregate = this.getXAxisMaximumAggregate();
+        if (aggregate != null) {
+          xAxis.setMaximumAggregate(aggregate);
+        } else {
+          xAxis.setMaximum(this.getXAxisMaximumValue());
+        }
       }
 
       color = this.getXAxisColor();
@@ -666,18 +767,28 @@ public abstract class FunctionJob extends ExperimentSetJob {
         }
       }
 
-      aggregate = this.getYAxisMinimumAggregate();
-      if (aggregate != null) {
-        yAxis.setMinimumAggregate(aggregate);
+      number = this.getYAxisConfiguredMin();
+      if (number != null) {
+        yAxis.setMinimum(number.doubleValue());
       } else {
-        yAxis.setMinimum(this.getYAxisMinimumValue());
+        aggregate = this.getYAxisMinimumAggregate();
+        if (aggregate != null) {
+          yAxis.setMinimumAggregate(aggregate);
+        } else {
+          yAxis.setMinimum(this.getYAxisMinimumValue());
+        }
       }
 
-      aggregate = this.getYAxisMaximumAggregate();
-      if (aggregate != null) {
-        yAxis.setMaximumAggregate(aggregate);
+      number = this.getYAxisConfiguredMax();
+      if (number != null) {
+        yAxis.setMaximum(number.doubleValue());
       } else {
-        yAxis.setMaximum(this.getYAxisMaximumValue());
+        aggregate = this.getYAxisMaximumAggregate();
+        if (aggregate != null) {
+          yAxis.setMaximumAggregate(aggregate);
+        } else {
+          yAxis.setMaximum(this.getYAxisMaximumValue());
+        }
       }
 
       color = this.getYAxisColor();
@@ -785,10 +896,21 @@ public abstract class FunctionJob extends ExperimentSetJob {
     path = this.getFunctionPathComponentSuggestion();
     clustering = data.getClustering();
     if (clustering != null) {
-      mainPath = (path + '_' + clustering.getPathComponentSuggestion());
-    } else {
-      mainPath = path;
+      path = (path + '_' + clustering.getPathComponentSuggestion());
     }
+    if (this.m_minX != null) {
+      path += ("_x1" + this.m_minX); //$NON-NLS-1$
+    }
+    if (this.m_maxX != null) {
+      path += ("_x2" + this.m_maxX); //$NON-NLS-1$
+    }
+    if (this.m_minY != null) {
+      path += ("_y1" + this.m_minY); //$NON-NLS-1$
+    }
+    if (this.m_maxY != null) {
+      path += ("_y2" + this.m_maxX); //$NON-NLS-1$
+    }
+    mainPath = path;
 
     allFunctions = data.getData();
     size = allFunctions.size();
