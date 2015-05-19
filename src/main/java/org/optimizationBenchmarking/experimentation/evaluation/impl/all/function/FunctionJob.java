@@ -899,16 +899,16 @@ public abstract class FunctionJob extends ExperimentSetJob {
       path = (path + '_' + clustering.getPathComponentSuggestion());
     }
     if (this.m_minX != null) {
-      path += ("_x1" + this.m_minX); //$NON-NLS-1$
+      path += ("_x1=" + this.m_minX); //$NON-NLS-1$
     }
     if (this.m_maxX != null) {
-      path += ("_x2" + this.m_maxX); //$NON-NLS-1$
+      path += ("_x2=" + this.m_maxX); //$NON-NLS-1$
     }
     if (this.m_minY != null) {
-      path += ("_y1" + this.m_minY); //$NON-NLS-1$
+      path += ("_y1=" + this.m_minY); //$NON-NLS-1$
     }
     if (this.m_maxY != null) {
-      path += ("_y2" + this.m_maxX); //$NON-NLS-1$
+      path += ("_y2=" + this.m_maxX); //$NON-NLS-1$
     }
     mainPath = path;
 

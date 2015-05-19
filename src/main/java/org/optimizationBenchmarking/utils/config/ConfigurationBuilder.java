@@ -135,7 +135,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
     if (isLocked) {
       throw new IllegalStateException(//
           "There has already been a read access to '" + key + //$NON-NLS-1$
-              "', so it cannot be changed anymore."); //$NON-NLS-1$
+          "', so it cannot be changed anymore."); //$NON-NLS-1$
     }
   }
 
@@ -235,8 +235,9 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
    */
   synchronized final void _configure(final String[] args)
       throws IOException {
-    final Path f;
-    ConfigurationPropertiesInput input;
+    Path configFile;
+    ConfigurationPropertiesInput propertiesInput;
+    ConfigurationXMLInput xmlInput;
 
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
         ConfigurationBuilder.FLAG_HAS_BEEN_CONFIGURED,
@@ -244,12 +245,25 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
     this.putCommandLine(args);
 
-    f = this.m_data._get(Configuration.PARAM_PROPERTY_FILE,
+    // load a potential properties file
+    configFile = this.m_data._get(Configuration.PARAM_PROPERTY_FILE,
         PathParser.INSTANCE, null, false);
-    if (f != null) {
-      input = ConfigurationPropertiesInput.getInstance();
-      if (input.canUse()) {
-        input.use().addPath(f).setDestination(this).create().call();
+    if (configFile != null) {
+      propertiesInput = ConfigurationPropertiesInput.getInstance();
+      if (propertiesInput.canUse()) {
+        propertiesInput.use().addPath(configFile).setDestination(this)
+        .create().call();
+      }
+    }
+
+    // load a potential xml file
+    configFile = this.m_data._get(Configuration.PARAM_XML_FILE,
+        PathParser.INSTANCE, null, false);
+    if (configFile != null) {
+      xmlInput = ConfigurationXMLInput.getInstance();
+      if (xmlInput.canUse()) {
+        xmlInput.use().addPath(configFile).setDestination(this).create()
+        .call();
       }
     }
   }

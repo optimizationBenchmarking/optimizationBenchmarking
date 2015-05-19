@@ -81,8 +81,11 @@ public final class Configuration implements Serializable, ITextable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
-  /** the parameter identifying a configuration file: {@value} */
+  /** the parameter identifying a configuration property file: {@value} */
   public static final String PARAM_PROPERTY_FILE = "configFile"; //$NON-NLS-1$
+
+  /** the parameter identifying a configuration XML file: {@value} */
+  public static final String PARAM_XML_FILE = "configXML"; //$NON-NLS-1$
 
   /** the path parameter */
   public static final String PARAM_PATH = "path"; //$NON-NLS-1$
@@ -192,63 +195,63 @@ public final class Configuration implements Serializable, ITextable {
 
     try {
       breakToCheckRetVal: {
-        needsCheck = true;
-        synchronized (this.m_data) {
-          for (Configuration cfg = this; cfg != null; cfg = cfg.m_owner) {
-            synchronized (cfg.m_data) {
-              entry = ((_ConfigMapEntry) (cfg.m_data.getEntry(key, false)));
-              if (entry != null) {
-                isLocked = entry.m_isLocked;
-                entry.m_isLocked = true;
+      needsCheck = true;
+      synchronized (this.m_data) {
+        for (Configuration cfg = this; cfg != null; cfg = cfg.m_owner) {
+          synchronized (cfg.m_data) {
+            entry = ((_ConfigMapEntry) (cfg.m_data.getEntry(key, false)));
+            if (entry != null) {
+              isLocked = entry.m_isLocked;
+              entry.m_isLocked = true;
 
-                value = entry.getValue();
-                clazz = parser.getOutputClass();
-                if (isLocked) {
-                  retVal = clazz.cast(value);
-                } else {
-                  retVal = null;
-                  try {
-                    if (value == null) {
-                      retVal = _default;
+              value = entry.getValue();
+              clazz = parser.getOutputClass();
+              if (isLocked) {
+                retVal = clazz.cast(value);
+              } else {
+                retVal = null;
+                try {
+                  if (value == null) {
+                    retVal = _default;
+                  } else {
+                    if (value instanceof String) {
+                      retVal = parser.parseString((String) value);
+                      needsCheck = false;
                     } else {
-                      if (value instanceof String) {
-                        retVal = parser.parseString((String) value);
-                        needsCheck = false;
+                      if (clazz.isInstance(value)) {
+                        retVal = clazz.cast(value);
                       } else {
-                        if (clazz.isInstance(value)) {
-                          retVal = clazz.cast(value);
-                        } else {
-                          retVal = parser.parseObject(value);
-                          needsCheck = false;
-                        }
+                        retVal = parser.parseObject(value);
+                        needsCheck = false;
                       }
                     }
-                  } finally {
-                    entry.setValue(retVal);
                   }
+                } finally {
+                  entry.setValue(retVal);
                 }
-
-                break breakToCheckRetVal;
               }
+
+              break breakToCheckRetVal;
             }
           }
-
-          if (createIfNotExists) {
-            entry = ((_ConfigMapEntry) (this.m_data.getEntry(key, true)));
-            entry.m_isLocked = true;
-            entry.setValue(_default);
-            retVal = _default;
-            break breakToCheckRetVal;
-          }
-
-          return null;
         }
-      }
 
-      if (needsCheck) {
-        parser.parseObject(retVal);
+        if (createIfNotExists) {
+          entry = ((_ConfigMapEntry) (this.m_data.getEntry(key, true)));
+          entry.m_isLocked = true;
+          entry.setValue(_default);
+          retVal = _default;
+          break breakToCheckRetVal;
+        }
+
+        return null;
       }
-      return retVal;
+    }
+
+    if (needsCheck) {
+      parser.parseObject(retVal);
+    }
+    return retVal;
     } catch (final Throwable tt) {
       RethrowMode.AS_ILLEGAL_STATE_EXCEPTION.rethrow((((((((//
           "Error while trying to obtain configuration key '" //$NON-NLS-1$
