@@ -29,6 +29,7 @@ import java.text.AttributedCharacterIterator;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
@@ -322,6 +323,15 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
   public FontRenderContext getFontRenderContext() {
     this.checkClosed();
     return this.m_out.getFontRenderContext();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected Graphics wrapCreatedGraphic(final Graphics graphics) {
+    if (graphics instanceof Graphics2D) {
+      return new __InternalGraphicProxy((Graphics2D) graphics);
+    }
+    return super.wrapCreatedGraphic(graphics);
   }
 
   /** {@inheritDoc} */
@@ -995,4 +1005,34 @@ public abstract class GraphicProxy<GT extends Graphics2D> extends Graphic {
         bgcolor, observer);
   }
 
+  /** the internal proxy */
+  private final class __InternalGraphicProxy extends
+      GraphicProxy<Graphics2D> {
+
+    /**
+     * create
+     * 
+     * @param graphic
+     *          the graphic
+     */
+    __InternalGraphicProxy(final Graphics2D graphic) {
+      super(graphic, null, null, null);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final EGraphicFormat getGraphicFormat() {
+      return GraphicProxy.this.getGraphicFormat();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected final void onClose() {
+      try {
+        this.m_out.dispose();
+      } finally {
+        super.onClose();
+      }
+    }
+  }
 }

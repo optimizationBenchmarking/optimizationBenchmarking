@@ -11,6 +11,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.Im
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOGIFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOJPEGGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOPNGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.pgf.PGFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.io.IFileType;
@@ -160,6 +161,7 @@ public enum EGraphicFormat implements IFileType {
       return ImageIOGIFGraphicDriver.getInstance();
     }
   },
+
   /**
    * The <a href="http://en.wikipedia.org/wiki/BMP_file_format">BMP</a>
    * format is lossless <a
@@ -176,6 +178,18 @@ public enum EGraphicFormat implements IFileType {
     }
   },
 
+  /**
+   * The <a href="http://en.wikipedia.org/wiki/PGF/TikZ"> PGF</a> format is
+   * a special version of TeX.
+   */
+  PGF("Portable Graphics Format", false,//$NON-NLS-1$
+      "tex", "application/x-latex") { //$NON-NLS-1$//$NON-NLS-2$
+    /** {@inheritDoc} */
+    @Override
+    public final IGraphicDriver getDefaultDriver() {
+      return PGFGraphicDriver.getInstance();
+    }
+  },
   ;
 
   /**

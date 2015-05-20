@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 
 import org.freehep.graphics2d.AbstractVectorGraphics;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.SimplifyingGraphicProxy;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
@@ -41,7 +42,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
  *          the proxied type
  */
 abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraphics>
-    extends SimplifyingGraphicProxy<T> {
+extends SimplifyingGraphicProxy<T> {
 
   /** the maximum permissible coordinate as integer */
   private static final int MAX_COORD_I = ((((1 << 22) - 3) >> 1) - 3);
@@ -88,6 +89,16 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
     super(graphic, log, listener, path);
     this.m_w = w;
     this.m_h = h;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected Graphics wrapCreatedGraphic(final Graphics graphics) {
+    if (graphics instanceof AbstractVectorGraphics) {
+      return new __InternalFreeHEPAbstractVectorGraphicsProxy(
+          (AbstractVectorGraphics) graphics);
+    }
+    return super.wrapCreatedGraphic(graphics);
   }
 
   /** {@inheritDoc} */
@@ -193,7 +204,11 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
   /** {@inheritDoc} */
   @Override
   public final Rectangle2D getBounds() {
-    return new Rectangle(0, 0, this.m_w, this.m_h);
+    if ((this.m_w > 0) && (this.m_h > 0)) {
+      return new Rectangle(0, 0, this.m_w, this.m_h);
+    }
+
+    return super.getBounds();
   }
 
   /** {@inheritDoc} */
@@ -352,10 +367,10 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
   protected final void flushDrawPolyline(final double[] xPoints,
       final double[] yPoints, final int nPoints) {
     this.m_out
-        .drawPolyline(
-            _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
-            _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
-            nPoints);
+    .drawPolyline(
+        _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
+        _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
+        nPoints);
   }
 
   /** {@inheritDoc} */
@@ -363,10 +378,10 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
   protected final void doFillPolygon(final double[] xPoints,
       final double[] yPoints, final int nPoints) {
     this.m_out
-        .fillPolygon(
-            _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
-            _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
-            nPoints);
+    .fillPolygon(
+        _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
+        _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
+        nPoints);
   }
 
   /** {@inheritDoc} */
@@ -435,7 +450,7 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
             _FreeHEPAbstractVectorGraphicsProxy._f(yCoord),
             _FreeHEPAbstractVectorGraphicsProxy._f(startX
                 + bounds.getWidth()),
-            _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
+                _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
       } finally {
         this.setStroke(old);
       }
@@ -486,7 +501,7 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
             _FreeHEPAbstractVectorGraphicsProxy._f(yCoord),
             _FreeHEPAbstractVectorGraphicsProxy._f(startX
                 + bounds.getWidth()),
-            _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
+                _FreeHEPAbstractVectorGraphicsProxy._f(yCoord));
       } finally {
         this.setStroke(old);
       }
@@ -742,10 +757,10 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
   protected final void flushDrawPolyline(final int xPoints[],
       final int yPoints[], final int nPoints) {
     this.m_out
-        .drawPolyline(
-            _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
-            _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
-            nPoints);
+    .drawPolyline(
+        _FreeHEPAbstractVectorGraphicsProxy.__f(xPoints, nPoints),
+        _FreeHEPAbstractVectorGraphicsProxy.__f(yPoints, nPoints),
+        nPoints);
   }
 
   /** {@inheritDoc} */
@@ -1026,5 +1041,37 @@ abstract class _FreeHEPAbstractVectorGraphicsProxy<T extends AbstractVectorGraph
     this.m_out.fillPolygon(new Polygon(_FreeHEPAbstractVectorGraphicsProxy
         .__f(p.xpoints, p.npoints), _FreeHEPAbstractVectorGraphicsProxy
         .__f(p.ypoints, p.npoints), p.npoints));
+  }
+
+  /** the internal proxy */
+  private final class __InternalFreeHEPAbstractVectorGraphicsProxy extends
+  _FreeHEPAbstractVectorGraphicsProxy<AbstractVectorGraphics> {
+
+    /**
+     * create
+     *
+     * @param graphic
+     *          the graphic
+     */
+    __InternalFreeHEPAbstractVectorGraphicsProxy(
+        final AbstractVectorGraphics graphic) {
+      super(graphic, null, null, null, (-1), (-1));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final EGraphicFormat getGraphicFormat() {
+      return _FreeHEPAbstractVectorGraphicsProxy.this.getGraphicFormat();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected final void doClose() {
+      try {
+        this.m_out.dispose();
+      } finally {
+        super.doClose();
+      }
+    }
   }
 }

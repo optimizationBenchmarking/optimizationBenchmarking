@@ -167,7 +167,7 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
             if (canUseMeta
                 && (imageWriterParams != null)
                 && ((typeSpecifier = ImageTypeSpecifier
-                    .createFromBufferedImageType(//
+                .createFromBufferedImageType(//
                     this.m_img.getType())) != null)) {
               metaData = writer.getDefaultImageMetadata(typeSpecifier,
                   imageWriterParams);
@@ -180,8 +180,8 @@ abstract class _ImageIORasterGraphic extends GraphicProxy<Graphics2D> {
               metaData = null;
             }
 
-            try (final OutputStream os = PathUtils
-                .openOutputStream(this.m_path)) {
+            try (final OutputStream os = PathUtils.openOutputStream(//
+                this.getPath())) {
               try (final ImageOutputStream ios = ImageIO
                   .createImageOutputStream(os)) {
 

@@ -24,7 +24,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
  * (graphics).
  */
-public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
+public final class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final Map<Object, Object> m_props;
 
@@ -55,8 +55,8 @@ public class FreeHEPSVGGraphicDriver extends AbstractGraphicDriver {
     if (this.m_error != null) {
       throw new UnsupportedOperationException(
           ("Cannot use " + //$NON-NLS-1$
-          TextUtils.className(FreeHEPSVGGraphicDriver.class)),
-          this.m_error);
+              TextUtils.className(FreeHEPSVGGraphicDriver.class)),
+              this.m_error);
     }
     super.checkCanUse();
   }

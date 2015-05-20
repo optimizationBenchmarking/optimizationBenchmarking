@@ -15,7 +15,7 @@ import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
  * graphic builder}.
  */
 public class GraphicConfigurationBuilder extends GraphicConfiguration
-    implements IConfigurable {
+implements IConfigurable {
 
   /** the graphic driver parameter */
   public static final String PARAM_GRAPHIC_DRIVER = "graphicDriver"; //$NON-NLS-1$

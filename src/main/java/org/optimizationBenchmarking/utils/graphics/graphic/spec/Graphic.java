@@ -78,7 +78,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
  * </p>
  */
 public abstract class Graphic extends Graphics2D implements Closeable,
-    IToolJob {
+IToolJob {
 
   /** the font attributes */
   private static final Map<TextAttribute, Object> FONT_ATTRIBUTES;
@@ -143,7 +143,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
   private final IFileProducerListener m_listener;
 
   /** the graphic path to which the graphic is written */
-  protected final Path m_path;
+  private final Path m_path;
 
   /**
    * instantiate
@@ -163,6 +163,25 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     this.m_log = logger;
     this.m_path = path;
     this.m_listener = listener;
+  }
+
+  /**
+   * The path associated with this graphic, or {@code null} if the graphic
+   * is not associated with any path, e.g., if it is a Proxy graphic
+   *
+   * @return the graphic path
+   */
+  protected final Path getPath() {
+    return this.m_path;
+  }
+
+  /**
+   * Get the logger
+   *
+   * @return the logger
+   */
+  protected final Logger getLogger() {
+    return this.m_log;
   }
 
   /**
@@ -255,8 +274,8 @@ public abstract class Graphic extends Graphics2D implements Closeable,
    */
   private final String __name() {
     return (((((((((TextUtils.className(this.getClass())) + //
-    '#') + System.identityHashCode(this)) + ' ') + '(') + //
-    this.getGraphicFormat()) + '@') + this.m_path) + ')');
+        '#') + System.identityHashCode(this)) + ' ') + '(') + //
+        this.getGraphicFormat()) + '@') + this.m_path) + ')');
   }
 
   /** {@inheritDoc} */
@@ -659,9 +678,59 @@ public abstract class Graphic extends Graphics2D implements Closeable,
   /** {@inheritDoc} */
   @Override
   public final void fill(final Shape s) {
-    if ((s != null) && (!(s.getBounds2D().isEmpty()))) {
-      this.before(Graphic.BEFORE_FILL);
-      this.doFill(s);
+    final Rectangle2D rectangle;
+    final Polygon poly;
+    final RoundRectangle2D round;
+    final Ellipse2D ellipse;
+    final Arc2D arc;
+
+    if (s != null) {
+
+      if (s instanceof Line2D) {
+        return;
+      }
+
+      if (s instanceof Rectangle2D) {
+        rectangle = ((Rectangle2D) s);
+        this.fillRect(rectangle.getX(), rectangle.getY(),
+            rectangle.getWidth(), rectangle.getHeight());
+        return;
+      }
+
+      if (s instanceof Polygon) {
+        poly = ((Polygon) s);
+        this.fillPolygon(poly.xpoints, poly.ypoints, poly.npoints);
+        return;
+      }
+
+      if (s instanceof RoundRectangle2D) {
+        round = ((RoundRectangle2D) s);
+        this.fillRoundRect(round.getX(), round.getY(), round.getWidth(),
+            round.getHeight(), round.getArcWidth(), round.getArcHeight());
+        return;
+      }
+
+      if (s instanceof Arc2D) {
+        arc = ((Arc2D) s);
+        this.fillArc(arc.getX(), arc.getY(), arc.getWidth(),
+            arc.getHeight(), arc.getAngleStart(), arc.getAngleExtent());
+      }
+
+      if (s instanceof Point2D) {
+        return;
+      }
+
+      if (s instanceof Ellipse2D) {
+        ellipse = ((Ellipse2D) s);
+        if ((ellipse.getWidth() == 0d) || (ellipse.getHeight() == 0d)) {
+          return;
+        }
+      }
+
+      if (!(s.getBounds2D().isEmpty())) {
+        this.before(Graphic.BEFORE_FILL);
+        this.doFill(s);
+      }
     }
   }
 
@@ -941,9 +1010,9 @@ public abstract class Graphic extends Graphics2D implements Closeable,
       trafo.invert();
     } catch (final Throwable error) {
       RethrowMode.AS_RUNTIME_EXCEPTION
-          .rethrow(//
-              "Cannot emulate setting transform, as the current transform cannot be inverted.", //$NON-NLS-1$
-              true, error);
+      .rethrow(//
+          "Cannot emulate setting transform, as the current transform cannot be inverted.", //$NON-NLS-1$
+          true, error);
     }
     trafo.concatenate(Tx);
     this.doTransform(trafo);
@@ -1009,11 +1078,22 @@ public abstract class Graphic extends Graphics2D implements Closeable,
         rect.getHeight());
   }
 
+  /**
+   * Wrap a created graphics device
+   *
+   * @param graphics
+   *          the created graphics device
+   * @return the wrapped graphic
+   */
+  protected Graphics wrapCreatedGraphic(final Graphics graphics) {
+    return graphics;
+  }
+
   /** {@inheritDoc} */
   @Override
   public final Graphics create() {
     this.before(Graphic.BEFORE_CREATE_GRAPHIC);
-    return this.doCreate();
+    return this.wrapCreatedGraphic(this.doCreate());
   }
 
   /**
@@ -1031,7 +1111,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
    */
   protected Graphics doCreate(final int x, final int y, final int width,
       final int height) {
-    return super.create(x, y, width, height);
+    return this.wrapCreatedGraphic(super.create(x, y, width, height));
   }
 
   /** {@inheritDoc} */
@@ -1128,7 +1208,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     q = this.getClip();
     if ((q == null) || //
         ((!(((rect = q.getBounds2D()).isEmpty()) || //
-        (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
+            (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
       this.before(Graphic.BEFORE_CHANGE_CLIP);
       this.doClipRect(x, y, width, height);
     }
@@ -2535,7 +2615,7 @@ public abstract class Graphic extends Graphics2D implements Closeable,
     q = this.getClip();
     if ((q == null) || //
         ((!(((rect = q.getBounds2D()).isEmpty()) || //
-        (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
+            (new Rectangle2D.Double(x, y, width, height).contains(rect)))))) {
       this.before(Graphic.BEFORE_CHANGE_CLIP);
 
       if (this.autoConvertCoordinatesToInt()) {

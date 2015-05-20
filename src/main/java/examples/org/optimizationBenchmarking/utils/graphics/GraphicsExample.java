@@ -50,11 +50,10 @@ public final class GraphicsExample {
 
     z = 0;
     for (final GraphicConfiguration driver : ExampleGraphicConfigurations.CONFIGURATIONS) {
-      try (final Graphic g = driver
-          .createGraphic(
-              dir,
-              (((((GraphicsExample.class.getSimpleName() + '_') + (++z)) + '_') + driver
-                  .toString())), GraphicsExample.SIZE,
+      try (final Graphic g = driver.createGraphic(
+          dir,
+          (((((GraphicsExample.class.getSimpleName() + '_') + //
+              (++z)) + '_') + driver.toString())), GraphicsExample.SIZE,
               new FinishedPrinter(driver), Logger.getGlobal())) {
         for (int i = 1; i < 50; i++) {
           GraphicsExample.paint(g);
@@ -82,7 +81,7 @@ public final class GraphicsExample {
     jcb = new JList<>(new String[] { "item 1",//$NON-NLS-1$
         "item 2", //$NON-NLS-1$
         "item 3", //$NON-NLS-1$
-        "item 4" });//$NON-NLS-1$
+    "item 4" });//$NON-NLS-1$
 
     jcb.setSelectedIndices(new int[] { 0, 2 });
     jcb.setBorder(new BevelBorder(BevelBorder.LOWERED));

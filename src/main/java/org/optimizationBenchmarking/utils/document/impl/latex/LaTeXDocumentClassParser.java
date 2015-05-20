@@ -57,7 +57,8 @@ public final class LaTeXDocumentClassParser extends
     if ("ieeetran".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return IEEEtran.getInstance();
     }
-    if ("llncs".equalsIgnoreCase(string)) { //$NON-NLS-1$
+    if ("llncs".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "lncs".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return LLNCS.getInstance();
     }
     if ("sig-alternate".equalsIgnoreCase(string)) { //$NON-NLS-1$

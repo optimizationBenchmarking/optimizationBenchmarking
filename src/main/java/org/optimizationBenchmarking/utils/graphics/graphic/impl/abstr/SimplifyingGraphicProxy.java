@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Shape;
@@ -17,6 +18,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
@@ -110,6 +112,15 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
       this.m_polyIntX = new int[128];
       this.m_polyIntY = new int[128];
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected Graphics wrapCreatedGraphic(final Graphics graphics) {
+    if (graphics instanceof Graphics2D) {
+      return new __InternalSimplifyingGraphicProxy((Graphics2D) graphics);
+    }
+    return super.wrapCreatedGraphic(graphics);
   }
 
   /** {@inheritDoc} */
@@ -1136,6 +1147,37 @@ public abstract class SimplifyingGraphicProxy<GT extends Graphics2D>
     public final String toString() {
       return (((((((("(" + this.x1) + //$NON-NLS-1$
       ',') + this.y1) + ',') + this.x2) + ',') + this.y2) + ')');
+    }
+  }
+
+  /** the internal proxy */
+  private final class __InternalSimplifyingGraphicProxy extends
+      SimplifyingGraphicProxy<Graphics2D> {
+
+    /**
+     * create
+     * 
+     * @param graphic
+     *          the graphic
+     */
+    __InternalSimplifyingGraphicProxy(final Graphics2D graphic) {
+      super(graphic, null, null, null);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final EGraphicFormat getGraphicFormat() {
+      return SimplifyingGraphicProxy.this.getGraphicFormat();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected final void doClose() {
+      try {
+        this.m_out.dispose();
+      } finally {
+        super.doClose();
+      }
     }
   }
 }

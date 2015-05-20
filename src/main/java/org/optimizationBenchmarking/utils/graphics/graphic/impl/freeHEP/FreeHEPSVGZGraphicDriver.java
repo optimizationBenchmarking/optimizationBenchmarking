@@ -22,7 +22,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVGZ</a>
  * (graphics).
  */
-public class FreeHEPSVGZGraphicDriver extends AbstractGraphicDriver {
+public final class FreeHEPSVGZGraphicDriver extends AbstractGraphicDriver {
   /** the properties */
   private final Map<Object, Object> m_props;
 
@@ -53,8 +53,8 @@ public class FreeHEPSVGZGraphicDriver extends AbstractGraphicDriver {
     if (this.m_error != null) {
       throw new UnsupportedOperationException(
           ("Cannot use " + //$NON-NLS-1$
-          TextUtils.className(FreeHEPSVGZGraphicDriver.class)),
-          this.m_error);
+              TextUtils.className(FreeHEPSVGZGraphicDriver.class)),
+              this.m_error);
     }
     super.checkCanUse();
   }

@@ -29,7 +29,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * resource from the class of the current object (the class changes when we
  * subclass, the resource does not exist...)
  */
-public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
+public final class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
 
   /** the properties */
   private final Map<Object, Object> m_props;
@@ -61,8 +61,8 @@ public class FreeHEPEPSGraphicDriver extends AbstractGraphicDriver {
     if (this.m_error != null) {
       throw new UnsupportedOperationException(
           ("Cannot use " + //$NON-NLS-1$
-          TextUtils.className(FreeHEPEPSGraphicDriver.class)),
-          this.m_error);
+              TextUtils.className(FreeHEPEPSGraphicDriver.class)),
+              this.m_error);
     }
     super.checkCanUse();
   }
