@@ -60,6 +60,7 @@ public final class GraphicsExample {
           GraphicsExample.__paintComponent(g);
           g.translate(-75, -25);
           g.scale(0.55d, 0.5d);
+          g.shear(0.1d, 0.5d);
           g.rotate(1d / 3d);
           g.clip(g.getBounds());
         }

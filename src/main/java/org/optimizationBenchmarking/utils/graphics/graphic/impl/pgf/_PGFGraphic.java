@@ -34,6 +34,7 @@ import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.SimpleGraphic;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.math.MathConstants;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.trigonometric.RadiansToDegrees;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -48,150 +49,255 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 /** The internal, un-simplified PGF graphic */
 final class _PGFGraphic extends SimpleGraphic {
 
+  /** the prefix for defining a color */
+  private static final char[] COLOR_PREFIX = { 't', 'j', };
+  /** the prefix for defining a command */
+  private static final char[] COMMAND_PREFIX = { 'r', 'g', };
+
+  /** the command for defining a command */
+  private static final char[] DEF = { '\\', 'd', 'e', 'f' };
+
+  /** begin the environment */
+  private static final char[] RESIZE_BEGIN = { '\\', 'r', 'e', 's', 'i',
+      'z', 'e', 'b', 'o', 'x', '{' };
+
   /** begin the environment */
   private static final char[] PICTURE_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-    'n', '{', 'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', };
+      'n', '{', 'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', '}' };
 
   /** the post-amble */
   private static final char[] PICTURE_END = { '\\', 'e', 'n', 'd', '{',
-    'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', };
+      'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', '}', '}' };
 
-  /** begin using a path */
-  private static final char[] USE_PATH_BEGIN = { '\\', 'p', 'g', 'f', 'u',
-    's', 'e', 'p', 'a', 't', 'h', '{', };
-
-  /** begin a rectangle path */
-  private static final char[] PATH_RECTANGLE_BEGIN = { '\\', 'p', 'g',
-    'f', 'p', 'a', 't', 'h', 'r', 'e', 'c', 't', 'a', 'n', 'g', 'l',
-    'e', '{', };
-
-  /** the start of a pgf point */
-  private static final char[] POINT_ORIGIN = { '\\', 'p', 'g', 'f', 'p',
-    'o', 'i', 'n', 't', 'o', 'r', 'i', 'g', 'i', 'n' };
-  /** the start of a pgf point */
-  private static final char[] POINT_BEGIN = { '\\', 'p', 'g', 'f', 'p',
-    'o', 'i', 'n', 't', '{', };
-  /** the point unit */
-  private static final char[] PT = { 'p', 't' };
+  /** create a rectangular path */
+  private static final __Command PATH_RECTANGLE = new __Command(4,
+      new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'r', 'e', 'c',
+          't', 'a', 'n', 'g', 'l',
+          'e',
+          '{',//
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}',
+          '{',//
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
+          'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', });
 
   /** the use a path as bounding box */
-  private static final char[] USE_PATH_BOUNDING_BOX = { 'u', 's', 'e',
-    ' ', 'a', 's', ' ', 'b', 'o', 'u', 'n', 'd', 'i', 'n', 'g', ' ',
-    'b', 'o', 'x', ',', 'c', 'l', 'i', 'p', };
+  private static final char[] USE_PATH_BOUNDING_BOX = { '\\', 'p', 'g',
+      'f', 'u', 's', 'e', 'p', 'a', 't', 'h', '{', 'u', 's', 'e', ' ',
+      'a', 's', ' ', 'b', 'o', 'u', 'n', 'd', 'i', 'n', 'g', ' ', 'b',
+      'o', 'x', ',', 'c', 'l', 'i', 'p', '}' };
   /** fill a path */
-  private static final char[] USE_PATH_FILL = { 'f', 'i', 'l', 'l' };
+  private static final __Command USE_PATH_FILL = new __Command(0,
+      new char[] { '\\', 'p', 'g', 'f', 'u', 's', 'e', 'p', 'a', 't', 'h',
+          '{', 'f', 'i', 'l', 'l', '}' });
   /** stroke a path */
-  private static final char[] USE_PATH_STROKE = { 's', 't', 'r', 'o', 'k',
-  'e' };
+  private static final __Command USE_PATH_STROKE = new __Command(0,
+      new char[] { '\\', 'p', 'g', 'f', 'u', 's', 'e', 'p', 'a', 't', 'h',
+          '{', 's', 't', 'r', 'o', 'k', 'e', '}' });
   /** clip a path */
-  private static final char[] USE_PATH_CLIP = { 'c', 'l', 'i', 'p' };
+  private static final __Command USE_PATH_CLIP = new __Command(0,
+      new char[] { '\\', 'p', 'g', 'f', 'u', 's', 'e', 'p', 'a', 't', 'h',
+          '{', 'c', 'l', 'i', 'p', '}', });
 
   /** the beginning of a new scope */
-  private static final char[] SCOPE_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-    'n', '{', 'p', 'g', 'f', 's', 'c', 'o', 'p', 'e', };
+  private static final __Command SCOPE_BEGIN = new __Command(0,
+      new char[] { '\\', 'p', 'g', 'f', 's', 'c', 'o', 'p', 'e', });
 
   /** the end of a scope */
-  private static final char[] SCOPE_END = { '\\', 'e', 'n', 'd', '{', 'p',
-    'g', 'f', 's', 'c', 'o', 'p', 'e', };
+  private static final __Command SCOPE_END = new __Command(0, new char[] {
+      '\\', 'e', 'n', 'd', 'p', 'g', 'f', 's', 'c', 'o', 'p', 'e', });
 
-  /** begin a canvas transform */
-  private static final char[] CANVAS_TRANSFORM_BEGIN = { '\\', 'p', 'g',
-    'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e', 'l', '{', };
+  /** perform a rotation */
+  private static final __Command TRANSFORM_ROTATE = new __Command(1,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'r', 'o', 't', 'a', 't', 'e', '{', '#', '1', '}',//
+          '}' //
+      });
 
-  /** begin a rotation */
-  private static final char[] TRANSFORM_ROTATE_BEGIN = { '\\', 'p', 'g',
-    'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', 'r', 'o', 't',
-    'a', 't', 'e', '{', };
+  /** perform a scaling */
+  private static final __Command TRANSFORM_SCALE = new __Command(1,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',//
+          '}' });
+  /** do an x-scaling */
+  private static final __Command TRANSFORM_SCALE_X = new __Command(1,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'x', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',//
+          '}' });
+  /** do a y-scaling */
+  private static final __Command TRANSFORM_SCALE_Y = new __Command(1,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'y', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',//
+          '}' });
+  /** do an x and y-scaling */
+  private static final __Command TRANSFORM_SCALE_XY = new __Command(2,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v',
+          'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'x', 's', 'c', 'a', 'l', 'e', '{', '#', '1',
+          '}',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'y', 's', 'c', 'a', 'l', 'e', '{', '#', '2', '}',//
+          '}' });
 
-  /** begin an scaling */
-  private static final char[] TRANSFORM_SCALE_BEGIN = { '\\', 'p', 'g',
-    'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', 's', 'c', 'a',
-    'l', 'e', '{', };
+  /** do a shift */
+  private static final __Command TRANSFORM_SHIFT = new __Command(2,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v',
+          'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 's', 'h', 'i', 'f', 't',
+          '{', //
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '}' });
 
-  /** begin an x-scaling */
-  private static final char[] TRANSFORM_SCALE_X_BEGIN = { '\\', 'p', 'g',
-    'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', 'x', 's', 'c',
-    'a', 'l', 'e', '{', };
+  /** do an x-shift */
+  private static final __Command TRANSFORM_SHIFT_X = new __Command(1,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v',
+          'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'x', 's', 'h', 'i', 'f', 't', '{', '#', '1', 'p', 't', '}',
+          '}' });
 
-  /** begin a y-scaling */
-  private static final char[] TRANSFORM_SCALE_Y_BEGIN = { '\\', 'p', 'g',
-    'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', 'y', 's', 'c',
-    'a', 'l', 'e', '{', };
+  /** do an y-shift */
+  private static final __Command TRANSFORM_SHIFT_Y = new __Command(1,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v',
+          'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'y', 's', 'h', 'i', 'f', 't', '{', '#', '1', 'p', 't', '}',
+          '}' });
 
-  /** begin a shift */
-  private static final char[] TRANSFORM_SHIFT_BEGIN = { '\\', 'p', 'g',
-    'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', 's', 'h', 'i',
-    'f', 't', '{', };
+  /** do a slant */
+  private static final __Command TRANSFORM_SLANT = new __Command(2,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v',
+          'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'x', 's', 'l', 'a', 'n', 't', '{', '#', '1',
+          '}',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'y', 's', 'l', 'a', 'n', 't', '{', '#', '2', '}', '}' });
 
-  /** begin a x-shift */
-  private static final char[] TRANSFORM_SHIFT_X_BEGIN = { '\\', 'p', 'g',
-    'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', 'x', 's', 'h',
-    'i', 'f', 't', '{', };
+  /** do an x-slant */
+  private static final __Command TRANSFORM_SLANT_X = new __Command(1,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'x', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}', '}' });
 
-  /** begin a y-shift */
-  private static final char[] TRANSFORM_SHIFT_Y_BEGIN = { '\\', 'p', 'g',
-    'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', 'y', 's', 'h',
-    'i', 'f', 't', '{', };
+  /** do an y-slant */
+  private static final __Command TRANSFORM_SLANT_Y = new __Command(1,
+      new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
+          'l',
+          '{',//
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'y', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}', '}' });
 
-  /** begin a x-slant */
-  private static final char[] TRANSFORM_SLANT_X_BEGIN = { '\\', 'p', 'g',
-    'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', 'x', 's', 'l',
-    'a', 'n', 't', '{', };
-  /** begin a y-slant */
-  private static final char[] TRANSFORM_SLANT_Y_BEGIN = { '\\', 'p', 'g',
-    'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm', 'y', 's', 'l',
-    'a', 'n', 't', '{', };
-
-  /** the prefix for defining a color */
-  private static final char[] COLOR_PREFIX = { 't', '@' };
   /** begin defining a color */
-  private static final char[] DEFINE_COLOR_BEGIN = { '\\', 'd', 'e', 'f',
-    'i', 'n', 'e', 'c', 'o', 'l', 'o', 'r', '{' };
+  private static final __Command DEFINE_COLOR = new __Command(
+      3,
+      new char[] { '\\', 'd', 'e', 'f', 'i', 'n', 'e', 'c', 'o', 'l', 'o',
+          'r', '{', '#', '1', '}', '{', '#', '2', '}', '{', '#', '3', '}' });
+
   /** begin defining a color in rgb */
   private static final char[] DEFINE_COLOR_RGB = { '}', '{', 'r', 'g',
-    'b', '}', '{', };
+      'b', '}', '{', };
   /** begin defining a color in gray */
   private static final char[] DEFINE_COLOR_GRAY = { '}', '{', 'g', 'r',
-    'a', 'y', '}', '{', };
+      'a', 'y', '}', '{', };
 
   /** set the color */
-  private static final char[] SET_COLOR = { '\\', 'p', 'g', 'f', 's', 'e',
-    't', 'c', 'o', 'l', 'o', 'r', '{', };
-  /** set the fill opacity */
-  private static final char[] SET_FILL_OPACITY = { '\\', 'p', 'g', 'f',
-    's', 'e', 't', 'f', 'i', 'l', 'l', 'o', 'p', 'a', 'c', 'i', 't',
-    'y', '{', };
-  /** set the stroke opacity */
-  private static final char[] SET_STROKE_OPACITY = { '\\', 'p', 'g', 'f',
-    's', 'e', 't', 's', 't', 'r', 'o', 'k', 'e', 'o', 'p', 'a', 'c',
-    'i', 't', 'y', '{', };
+  private static final __Command SET_COLOR = new __Command(2, new char[] {
+      '\\', 'p', 'g', 'f', 's', 'e', 't', 'c', 'o', 'l', 'o', 'r', '{',
+      '#',
+      '1',
+      '}',//
+      '\\', 'p', 'g', 'f', 's', 'e', 't', 'f', 'i', 'l', 'l', 'o', 'p',
+      'a', 'c', 'i', 't', 'y', '{', '#', '2',
+      '}',//
+      '\\', 'p', 'g', 'f', 's', 'e', 't', 's', 't', 'r', 'o', 'k', 'e',
+      'o', 'p', 'a', 'c', 'i', 't', 'y', '{', '#', '2', '}',//
+  });
 
   /** path move to */
-  private static final char[] PATH_MOVE_TO = { '\\', 'p', 'g', 'f', 'p',
-    'a', 't', 'h', 'm', 'o', 'v', 'e', 't', 'o', '{' };
+  private static final __Command PATH_MOVE_TO = new __Command(2,
+      new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'm', 'o', 'v',
+          'e', 't', 'o',
+          '{',//
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', });
   /** path line to */
-  private static final char[] PATH_LINE_TO = { '\\', 'p', 'g', 'f', 'p',
-    'a', 't', 'h', 'l', 'i', 'n', 'e', 't', 'o', '{' };
+  private static final __Command PATH_LINE_TO = new __Command(2,
+      new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'l', 'i', 'n',
+          'e', 't', 'o',
+          '{',//
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', });
   /** path curve to */
-  private static final char[] PATH_CURVE_TO = { '\\', 'p', 'g', 'f', 'p',
-    'a', 't', 'h', 'c', 'u', 'r', 'v', 'e', 't', 'o' };
+  private static final __Command PATH_CURVE_TO = new __Command(6,
+      new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'c', 'u', 'r',
+          'v', 'e',
+          't',
+          'o',
+          '{',//
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}',
+          '}',
+          '{',//
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
+          'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}',
+          '{',//
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '5',
+          'p', 't', '}', '{', '#', '6', 'p', 't', '}', '}', });
   /** close the path */
-  private static final char[] PATH_CLOSE = { '\\', 'p', 'g', 'f', 'p',
-    'a', 't', 'h', 'c', 'l', 'o', 's', 'e' };
+  private static final __Command PATH_CLOSE = new __Command(0, new char[] {
+      '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'c', 'l', 'o', 's', 'e' });
   /** path curve to */
-  private static final char[] PATH_QUAD_TO = { '\\', 'p', 'g', 'f', 'p',
-    'a', 't', 'h', 'q', 'u', 'a', 'd', 'r', 'a', 't', 'i', 'c', 'c',
-    'u', 'r', 'v', 'e', 't', 'o', '{', };
+  private static final __Command PATH_QUAD_TO = new __Command(4,
+      new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'q', 'u', 'a',
+          'd', 'r', 'a', 't', 'i', 'c', 'c', 'u', 'r', 'v',
+          'e',
+          't',
+          'o',
+          '{',//
+          '{',//
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}',
+          '{',//
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
+          'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', });
 
   /** the winding rule */
-  private static final char[] PATH_OE_WINDING_RULE = { '\\', 'p', 'g',
-    'f', 's', 'e', 't', 'e', 'o', 'r', 'u', 'l', 'e' };
+  private static final __Command PATH_OE_WINDING_RULE = new __Command(0,
+      new char[] { '\\', 'p', 'g', 'f', 's', 'e', 't', 'e', 'o', 'r', 'u',
+          'l', 'e' });
   /** the winding rule */
-  private static final char[] PATH_NZ_WINDING_RULE = { '\\', 'p', 'g',
-    'f', 's', 'e', 't', 'n', 'o', 'n', 'z', 'e', 'r', 'o', 'r', 'u',
-    'l', 'e' };
+  private static final __Command PATH_NZ_WINDING_RULE = new __Command(0,
+      new char[] { '\\', 'p', 'g', 'f', 's', 'e', 't', 'n', 'o', 'n', 'z',
+          'e', 'r', 'o', 'r', 'u', 'l', 'e' });
   /** the graphic body */
-  private MemoryTextOutput m_body;
+  private __Buffer m_body;
   /** LaTeX encoded output */
   private ITextOutput m_encodedBody;
   /** are we in scope-reset mode? */
@@ -201,8 +307,14 @@ final class _PGFGraphic extends SimpleGraphic {
   /** the active proxies */
   private final ArrayList<_PGFProxy> m_activeProxies;
 
-  /** the registered colors */
-  private HashMap<Color, char[]> m_colors;
+  /** the registered names */
+  private HashMap<Object, char[]> m_names;
+
+  /** the number of colors */
+  private int m_colorCount;
+
+  /** the number of commands */
+  private int m_commandCount;
 
   /**
    * instantiate
@@ -224,14 +336,91 @@ final class _PGFGraphic extends SimpleGraphic {
    */
   _PGFGraphic(final Logger logger, final IFileProducerListener listener,
       final Path path, final int width, final int height)
-          throws IOException {
+      throws IOException {
     super(logger, listener, path, width, height);
 
-    this.m_body = new MemoryTextOutput();
+    final Rectangle boundingBox;
 
     this.m_scopes = new ArrayList<>();
     this.m_activeProxies = new ArrayList<>();
-    this.m_colors = new HashMap<>();
+    this.m_names = new HashMap<>();
+
+    this.m_body = new __Buffer();
+
+    boundingBox = this.getBounds();
+    this.__rectangle(boundingBox.x, boundingBox.y, boundingBox.width,
+        boundingBox.height);
+    this.m_body.append(_PGFGraphic.USE_PATH_BOUNDING_BOX);
+
+    this.__translateY(boundingBox.height);
+    this.__scaleY(-1);
+  }
+
+  /**
+   * Transform an integer to a name
+   *
+   * @param prefix
+   *          the name prefix
+   * @param value
+   *          the value
+   * @param prefixBackslash
+   *          should we pre-pend '\'
+   * @return the name
+   */
+  private static final char[] __intToName(final char[] prefix,
+      final int value, final boolean prefixBackslash) {
+    final MemoryTextOutput mto;
+    int size, mod;
+
+    size = value;
+    mto = new MemoryTextOutput();
+    if (prefixBackslash) {
+      mto.append('\\');
+    }
+    mto.append(prefix);
+    for (;;) {
+      mod = Math.abs(size % 52);
+      if (mod < 26) {
+        mto.append((char) ('a' + mod));
+      } else {
+        mto.append((char) (('A' + mod) - 26));
+      }
+
+      if ((size /= 52) == 0) {
+        break;
+      }
+      if (size < 0) {
+        size++;
+      } else {
+        size--;
+      }
+    }
+    return mto.toChars();
+  }
+
+  /**
+   * define a command
+   *
+   * @param name
+   *          the name
+   * @param cmd
+   *          the command
+   * @param textOut
+   *          the text output
+   */
+  private static final void __defineCommand(final char[] name,
+      final __Command cmd, final __Buffer textOut) {
+    int i;
+
+    textOut.append(_PGFGraphic.DEF);
+    textOut.append(name);
+    for (i = 1; i <= cmd.m_args; i++) {
+      textOut.append('#');
+      textOut.append((char) ('0' + i));
+    }
+    textOut.append('{');
+    textOut.append(cmd.m_name);
+    _PGFGraphic.__commandEndNL(textOut);
   }
 
   /**
@@ -242,30 +431,55 @@ final class _PGFGraphic extends SimpleGraphic {
    * @return the color name
    */
   private final char[] __getColorName(final Color color) {
-    MemoryTextOutput mto;
     char[] name;
-    int size, mod;
 
-    name = this.m_colors.get(color);
+    name = this.m_names.get(color);
+    if (name != null) {
+      return name;
+    }
+    name = _PGFGraphic.__intToName(_PGFGraphic.COLOR_PREFIX,
+        (this.m_colorCount++), false);
+    this.m_names.put(color, name);
+    return name;
+  }
+
+  /**
+   * get the name associated with a given command
+   *
+   * @param command
+   *          the command
+   * @return the command name
+   */
+  private final char[] __getCommandName(final __Command command) {
+    char[] name;
+
+    name = this.m_names.get(command);
     if (name != null) {
       return name;
     }
 
-    size = this.m_colors.size();
-    mto = new MemoryTextOutput();
-    mto.append(_PGFGraphic.COLOR_PREFIX);
-    while (size != 0) {
-      mod = Math.abs(size % 52);
-      size /= 52;
-      if (mod < 26) {
-        mto.append((char) ('a' + mod));
-      } else {
-        mto.append((char) (('A' + mod) - 26));
-      }
-    }
-    name = mto.toChars();
-    this.m_colors.put(color, name);
+    name = _PGFGraphic.__intToName(_PGFGraphic.COMMAND_PREFIX,
+        (this.m_commandCount++), true);
+    this.m_names.put(command, name);
     return name;
+  }
+
+  /**
+   * set a color
+   *
+   * @param color
+   *          the color
+   * @param dest
+   *          the destination
+   */
+  private final void __setColor(final Color color, final __Buffer dest) {
+    dest.append(this.__getCommandName(_PGFGraphic.SET_COLOR));
+    dest.append('{');
+    dest.append(this.__getColorName(color));
+    dest.append('}');
+    dest.append('{');
+    _PGFGraphic.__number((color.getAlpha() / 255d), dest);
+    _PGFGraphic.__commandEndNL(dest);
   }
 
   /**
@@ -274,33 +488,52 @@ final class _PGFGraphic extends SimpleGraphic {
    * @param dest
    *          the destination to flush to
    */
-  private final void __flushColors(final ITextOutput dest) {
+  private final void __flush(final __Buffer dest) {
+    char[] defc;
     Color color;
+    Object key;
     int red, green, blue;
 
-    for (final Map.Entry<Color, char[]> entry : this.m_colors.entrySet()) {
-      dest.append(_PGFGraphic.DEFINE_COLOR_BEGIN);
-      dest.append(entry.getValue());
-      color = entry.getKey();
-      red = color.getRed();
-      green = color.getGreen();
-      blue = color.getBlue();
-
-      if ((red == green) && (green == blue)) {
-        dest.append(_PGFGraphic.DEFINE_COLOR_GRAY);
-        _PGFGraphic.__number((red / 255d), dest);
-      } else {
-        dest.append(_PGFGraphic.DEFINE_COLOR_RGB);
-        _PGFGraphic.__number((red / 255d), dest);
-        dest.append(',');
-        _PGFGraphic.__number((green / 255d), dest);
-        dest.append(',');
-        _PGFGraphic.__number((blue / 255d), dest);
-      }
-
-      _PGFGraphic.__commandEndNL(dest);
+    if (this.m_colorCount > 0) {
+      defc = this.__getCommandName(_PGFGraphic.DEFINE_COLOR);
+      _PGFGraphic.__defineCommand(defc, _PGFGraphic.DEFINE_COLOR, dest);
+    } else {
+      defc = null;
     }
-    this.m_colors = null;
+
+    for (final Map.Entry<Object, char[]> entry : this.m_names.entrySet()) {
+      key = entry.getKey();
+      if (key instanceof Color) {
+        dest.append(defc);
+        dest.append('{');
+        dest.append(entry.getValue());
+
+        color = ((Color) key);
+        red = color.getRed();
+        green = color.getGreen();
+        blue = color.getBlue();
+
+        if ((red == green) && (green == blue)) {
+          dest.append(_PGFGraphic.DEFINE_COLOR_GRAY);
+          _PGFGraphic.__number((red / 255d), dest);
+        } else {
+          dest.append(_PGFGraphic.DEFINE_COLOR_RGB);
+          _PGFGraphic.__number((red / 255d), dest);
+          dest.append(',');
+          _PGFGraphic.__number((green / 255d), dest);
+          dest.append(',');
+          _PGFGraphic.__number((blue / 255d), dest);
+        }
+
+        _PGFGraphic.__commandEndNL(dest);
+      } else {
+        if (key != _PGFGraphic.DEFINE_COLOR) {
+          _PGFGraphic.__defineCommand(entry.getValue(), ((__Command) key),
+              dest);
+        }
+      }
+    }
+    this.m_names = null;
   }
 
   /**
@@ -311,8 +544,7 @@ final class _PGFGraphic extends SimpleGraphic {
    * @param textOut
    *          the text output
    */
-  private static final void __number(final double d,
-      final ITextOutput textOut) {
+  private static final void __number(final double d, final __Buffer textOut) {
     if (NumericalTypes.isLong(d)) {
       textOut.append((long) d);
     } else {
@@ -322,93 +554,6 @@ final class _PGFGraphic extends SimpleGraphic {
   }
 
   /**
-   * append a {@code double} in points to the given text output
-   *
-   * @param d
-   *          the double
-   * @param textOut
-   *          the text output
-   */
-  private static final void __pt(final double d, final ITextOutput textOut) {
-    _PGFGraphic.__number(d, textOut);
-    textOut.append(_PGFGraphic.PT);
-  }
-
-  /**
-   * append a {@code long} to the given text output
-   *
-   * @param d
-   *          the long
-   * @param textOut
-   *          the text output
-   */
-  private static final void __number(final long d,
-      final ITextOutput textOut) {
-    textOut.append(d);
-  }
-
-  /**
-   * append a {@code long} in points to the given text output
-   *
-   * @param d
-   *          the double
-   * @param textOut
-   *          the text output
-   */
-  private static final void __pt(final long d, final ITextOutput textOut) {
-    _PGFGraphic.__number(d, textOut);
-    textOut.append(_PGFGraphic.PT);
-  }
-
-  /**
-   * Write a pgf point to the given output
-   *
-   * @param x
-   *          the x-coordinate
-   * @param y
-   *          the y-coordinate
-   * @param textOut
-   *          the text output
-   */
-  private static final void __pgfPoint(final double x, final double y,
-      final ITextOutput textOut) {
-    if ((x == 0d) && (y == 0d)) {
-      textOut.append(_PGFGraphic.POINT_ORIGIN);
-    } else {
-      textOut.append(_PGFGraphic.POINT_BEGIN);
-      _PGFGraphic.__pt(x, textOut);
-      textOut.append('}');
-      textOut.append('{');
-      _PGFGraphic.__pt(y, textOut);
-      _PGFGraphic.__commandEnd(textOut);
-    }
-  }
-
-  /**
-   * Write a pgf point to the given output
-   *
-   * @param x
-   *          the x-coordinate
-   * @param y
-   *          the y-coordinate
-   * @param textOut
-   *          the text output
-   */
-  private static final void __pgfPoint(final long x, final long y,
-      final ITextOutput textOut) {
-    if ((x == 0) && (y == 0)) {
-      textOut.append(_PGFGraphic.POINT_ORIGIN);
-    } else {
-      textOut.append(_PGFGraphic.POINT_BEGIN);
-      _PGFGraphic.__pt(x, textOut);
-      textOut.append('}');
-      textOut.append('{');
-      _PGFGraphic.__pt(y, textOut);
-      _PGFGraphic.__commandEnd(textOut);
-    }
-  }
-
-  /**
    * create a rectangular path
    *
    * @param x
@@ -419,41 +564,22 @@ final class _PGFGraphic extends SimpleGraphic {
    *          the width
    * @param height
    *          the height
-   * @param textOut
-   *          the destination
    */
-  private static final void __pgfRectangle(final int x, final int y,
-      final int width, final int height, final ITextOutput textOut) {
-    textOut.append(_PGFGraphic.PATH_RECTANGLE_BEGIN);
-    _PGFGraphic.__pgfPoint(x, y, textOut);
-    textOut.append('}');
-    textOut.append('{');
-    _PGFGraphic.__pgfPoint(width, height, textOut);
-    _PGFGraphic.__commandEndNL(textOut);
-  }
-
-  /**
-   * create a rectangular path
-   *
-   * @param x
-   *          the x-coordinate
-   * @param y
-   *          the y-coordinate
-   * @param width
-   *          the width
-   * @param height
-   *          the height
-   * @param textOut
-   *          the destination
-   */
-  private static final void __pgfRectangle(final double x, final double y,
-      final double width, final double height, final ITextOutput textOut) {
-    textOut.append(_PGFGraphic.PATH_RECTANGLE_BEGIN);
-    _PGFGraphic.__pgfPoint(x, y, textOut);
-    textOut.append('}');
-    textOut.append('{');
-    _PGFGraphic.__pgfPoint(width, height, textOut);
-    _PGFGraphic.__commandEndNL(textOut);
+  private final void __rectangle(final double x, final double y,
+      final double width, final double height) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.PATH_RECTANGLE));
+    this.m_body.append('{');
+    _PGFGraphic.__number(x, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(width, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(height, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
   }
 
   /**
@@ -462,7 +588,7 @@ final class _PGFGraphic extends SimpleGraphic {
    * @param textOut
    *          the text output
    */
-  private static final void __commandEnd(final ITextOutput textOut) {
+  private static final void __commandEnd(final __Buffer textOut) {
     textOut.append('}');
   }
 
@@ -472,7 +598,7 @@ final class _PGFGraphic extends SimpleGraphic {
    * @param textOut
    *          the text output
    */
-  private static final void __commandEndNL(final ITextOutput textOut) {
+  private static final void __commandEndNL(final __Buffer textOut) {
     _PGFGraphic.__commandEnd(textOut);
     _PGFGraphic.__nl(textOut);
   }
@@ -483,24 +609,136 @@ final class _PGFGraphic extends SimpleGraphic {
    * @param textOut
    *          the text output
    */
-  private static final void __nl(final ITextOutput textOut) {
-    textOut.append('%');
-    textOut.appendLineBreak();
+  private static final void __nl(final __Buffer textOut) {
+    if ((textOut.length() - textOut.m_lastNewLine) > 256) {
+      textOut.append('%');
+      textOut.appendLineBreak();
+      textOut.m_lastNewLine = textOut.length();
+    }
+  }
+
+  /** use a path for filling */
+  private final void __usePathFill() {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.USE_PATH_FILL));
+  }
+
+  /** use a path for stroke */
+  private final void __usePathStroke() {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.USE_PATH_STROKE));
+  }
+
+  /** use a path for clipping */
+  private final void __usePathClip() {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.USE_PATH_CLIP));
   }
 
   /**
-   * use a path for something
+   * connect the given coordinates with a line
    *
-   * @param as
-   *          for what?
-   * @param textOut
-   *          the text output
+   * @param x
+   *          the x-coordinate
+   * @param y
+   *          the y-coordinate
    */
-  private static final void __pgfUsePath(final char[] as,
-      final ITextOutput textOut) {
-    textOut.append(_PGFGraphic.USE_PATH_BEGIN);
-    textOut.append(as);
-    _PGFGraphic.__commandEndNL(textOut);
+  private final void __pathLineTo(final double x, final double y) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.PATH_LINE_TO));
+    this.m_body.append('{');
+    _PGFGraphic.__number(x, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /**
+   * move to the given coordinates
+   *
+   * @param x
+   *          the x-coordinate
+   * @param y
+   *          the y-coordinate
+   */
+  private final void __pathMoveTo(final double x, final double y) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.PATH_MOVE_TO));
+    this.m_body.append('{');
+    _PGFGraphic.__number(x, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /**
+   * connect the given coordinates with a quadratic bezier
+   *
+   * @param x1
+   *          the x1-coordinate
+   * @param y1
+   *          the y1-coordinate
+   * @param x2
+   *          the x2-coordinate
+   * @param y2
+   *          the y2-coordinate
+   */
+  private final void __pathQuadTo(final double x1, final double y1,
+      final double x2, final double y2) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.PATH_QUAD_TO));
+    this.m_body.append('{');
+    _PGFGraphic.__number(x1, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y1, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(x2, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y2, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /**
+   * connect the given coordinates with a ternary bezier
+   *
+   * @param x1
+   *          the x1-coordinate
+   * @param y1
+   *          the y1-coordinate
+   * @param x2
+   *          the x2-coordinate
+   * @param y2
+   *          the y2-coordinate
+   * @param x3
+   *          the x3-coordinate
+   * @param y3
+   *          the y3-coordinate
+   */
+  private final void __pathCurveTo(final double x1, final double y1,
+      final double x2, final double y2, final double x3, final double y3) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.PATH_CURVE_TO));
+    this.m_body.append('{');
+    _PGFGraphic.__number(x1, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y1, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(x2, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y2, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(x3, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y3, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /** close the current path */
+  private final void __pathClose() {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.PATH_CLOSE));
   }
 
   /**
@@ -510,11 +748,9 @@ final class _PGFGraphic extends SimpleGraphic {
    *          the path iterator
    * @param needsWindingRule
    *          is a winding rule needed?
-   * @param textOut
-   *          the text output
    */
-  private static final void __pgfPath(final PathIterator iterator,
-      final boolean needsWindingRule, final ITextOutput textOut) {
+  private final void __path(final PathIterator iterator,
+      final boolean needsWindingRule) {
     final double[] s;
     int type;
 
@@ -523,18 +759,20 @@ final class _PGFGraphic extends SimpleGraphic {
     if (needsWindingRule) {
       switch (iterator.getWindingRule()) {
         case PathIterator.WIND_EVEN_ODD: {
-          textOut.append(_PGFGraphic.PATH_OE_WINDING_RULE);
+          this.m_body.append(this.__getCommandName(//
+              _PGFGraphic.PATH_OE_WINDING_RULE));
           break;
         }
         case PathIterator.WIND_NON_ZERO: {
-          textOut.append(_PGFGraphic.PATH_NZ_WINDING_RULE);
+          this.m_body.append(this.__getCommandName(//
+              _PGFGraphic.PATH_NZ_WINDING_RULE));
           break;
         }
         default: {
           throw new UnsupportedOperationException();
         }
       }
-      _PGFGraphic.__nl(textOut);
+      _PGFGraphic.__nl(this.m_body);
     }
 
     outer: while (!iterator.isDone()) {
@@ -542,41 +780,23 @@ final class _PGFGraphic extends SimpleGraphic {
       iterator.next();
       switch (type) {
         case PathIterator.SEG_LINETO: {
-          textOut.append(_PGFGraphic.PATH_LINE_TO);
-          _PGFGraphic.__pgfPoint(s[0], s[1], textOut);
-          _PGFGraphic.__commandEndNL(textOut);
+          this.__pathLineTo(s[0], s[1]);
           continue outer;
         }
         case PathIterator.SEG_MOVETO: {
-          textOut.append(_PGFGraphic.PATH_MOVE_TO);
-          _PGFGraphic.__pgfPoint(s[0], s[1], textOut);
-          _PGFGraphic.__commandEndNL(textOut);
+          this.__pathMoveTo(s[0], s[1]);
           continue outer;
         }
         case PathIterator.SEG_QUADTO: {
-          textOut.append(_PGFGraphic.PATH_QUAD_TO);
-          _PGFGraphic.__pgfPoint(s[0], s[1], textOut);
-          textOut.append('}');
-          textOut.append('{');
-          _PGFGraphic.__pgfPoint(s[2], s[3], textOut);
-          _PGFGraphic.__commandEndNL(textOut);
+          this.__pathQuadTo(s[0], s[1], s[2], s[3]);
           continue outer;
         }
         case PathIterator.SEG_CUBICTO: {
-          textOut.append(_PGFGraphic.PATH_CURVE_TO);
-          _PGFGraphic.__pgfPoint(s[0], s[1], textOut);
-          textOut.append('}');
-          textOut.append('{');
-          _PGFGraphic.__pgfPoint(s[2], s[3], textOut);
-          textOut.append('}');
-          textOut.append('{');
-          _PGFGraphic.__pgfPoint(s[4], s[5], textOut);
-          _PGFGraphic.__commandEndNL(textOut);
+          this.__pathCurveTo(s[0], s[1], s[2], s[3], s[4], s[5]);
           continue outer;
         }
         case PathIterator.SEG_CLOSE: {
-          textOut.append(_PGFGraphic.PATH_CLOSE);
-          _PGFGraphic.__nl(textOut);
+          this.__pathClose();
           continue outer;
         }
         default: {
@@ -603,45 +823,43 @@ final class _PGFGraphic extends SimpleGraphic {
   @Override
   protected final void onClose() {
     final ITextOutput textOut;
-    final Rectangle boundingBox;
+    __Buffer header;
 
     this.m_encodedBody = null;
+
+    header = new __Buffer();
+    header.append(_PGFGraphic.RESIZE_BEGIN);
+    header.append(this.m_width);
+    header.append('p');
+    header.append('t');
+    header.append('}');
+    header.append('{');
+    header.append(this.m_height);
+    header.append('p');
+    header.append('t');
+    header.append('}');
+    header.append('{');
+
+    header.append(_PGFGraphic.PICTURE_BEGIN);
+    _PGFGraphic.__nl(header);
+    this.__flush(header);
+
+    this.m_body.append(_PGFGraphic.PICTURE_END);
+    _PGFGraphic.__nl(this.m_body);
 
     try (final OutputStream os = PathUtils
         .openOutputStream(this.getPath())) {
       try (final OutputStreamWriter writer = new OutputStreamWriter(os)) {
         try (final BufferedWriter bw = new BufferedWriter(writer)) {
           textOut = AbstractTextOutput.wrap(bw);
-
-          textOut.append(_PGFGraphic.PICTURE_BEGIN);
-          _PGFGraphic.__commandEndNL(textOut);
-
-          this.__flushColors(textOut);
-
-          boundingBox = this.getBounds();
-          _PGFGraphic.__pgfRectangle(boundingBox.x, boundingBox.y,
-              boundingBox.width, boundingBox.height, textOut);
-          _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_BOUNDING_BOX,
-              textOut);
-
-          textOut.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-          textOut.append(_PGFGraphic.TRANSFORM_SHIFT_Y_BEGIN);
-          _PGFGraphic.__number(this.m_height, textOut);
-          _PGFGraphic.__commandEnd(textOut);
-          _PGFGraphic.__commandEndNL(textOut);
-
-          textOut.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-          textOut.append(_PGFGraphic.TRANSFORM_SCALE_Y_BEGIN);
-          textOut.append('-');
-          textOut.append('1');
-          _PGFGraphic.__commandEnd(textOut);
-          _PGFGraphic.__commandEndNL(textOut);
-
+          header.toText(textOut);
+          header = null;
           this.m_body.toText(textOut);
-
+          if (this.m_body.m_lastNewLine < this.m_body.length()) {
+            bw.append('%');
+            bw.newLine();
+          }
           this.m_body = null;
-          textOut.append(_PGFGraphic.PICTURE_END);
-          _PGFGraphic.__commandEndNL(textOut);
         }
       }
     } catch (final Throwable error) {
@@ -662,8 +880,8 @@ final class _PGFGraphic extends SimpleGraphic {
   /** {@inheritDoc} */
   @Override
   protected final void doDraw(final Shape s) {
-    _PGFGraphic.__pgfPath(s.getPathIterator(null), false, this.m_body);
-    _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_STROKE, this.m_body);
+    this.__path(s.getPathIterator(null), false);
+    this.__usePathStroke();
   }
 
   /** {@inheritDoc} */
@@ -726,8 +944,8 @@ final class _PGFGraphic extends SimpleGraphic {
   /** {@inheritDoc} */
   @Override
   protected final void doFill(final Shape s) {
-    _PGFGraphic.__pgfPath(s.getPathIterator(null), true, this.m_body);
-    _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_FILL, this.m_body);
+    this.__path(s.getPathIterator(null), true);
+    this.__usePathFill();
   }
 
   /** {@inheritDoc} */
@@ -754,6 +972,52 @@ final class _PGFGraphic extends SimpleGraphic {
     this.doTranslate(((double) x), ((double) y));
   }
 
+  /**
+   * perform a shift along the x-axis
+   *
+   * @param v
+   *          the x-coordinate
+   */
+  private final void __translateX(final double v) {
+    this.m_body.append(this
+        .__getCommandName(_PGFGraphic.TRANSFORM_SHIFT_X));
+    this.m_body.append('{');
+    _PGFGraphic.__number(v, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /**
+   * perform a shift along the y-axis
+   *
+   * @param v
+   *          the y-coordinate
+   */
+  private final void __translateY(final double v) {
+    this.m_body.append(this
+        .__getCommandName(_PGFGraphic.TRANSFORM_SHIFT_Y));
+    this.m_body.append('{');
+    _PGFGraphic.__number(v, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /**
+   * perform a shift
+   *
+   * @param x
+   *          the x-coordinate
+   * @param y
+   *          the y-coordinate
+   */
+  private final void __translateXY(final double x, final double y) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.TRANSFORM_SHIFT));
+    this.m_body.append('{');
+    _PGFGraphic.__number(x, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
   /** {@inheritDoc} */
   @Override
   protected final void doTranslate(final double x, final double y) {
@@ -763,25 +1027,13 @@ final class _PGFGraphic extends SimpleGraphic {
       canX = (x != 0d);
       canY = (y != 0d);
       if (canX && canY) {
-        this.m_body.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-        this.m_body.append(_PGFGraphic.TRANSFORM_SHIFT_BEGIN);
-        _PGFGraphic.__pgfPoint(x, y, this.m_body);
-        _PGFGraphic.__commandEnd(this.m_body);
-        _PGFGraphic.__commandEndNL(this.m_body);
+        this.__translateXY(x, y);
       } else {
         if (canX) {
-          this.m_body.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-          this.m_body.append(_PGFGraphic.TRANSFORM_SHIFT_X_BEGIN);
-          _PGFGraphic.__pt(x, this.m_body);
-          _PGFGraphic.__commandEnd(this.m_body);
-          _PGFGraphic.__commandEndNL(this.m_body);
+          this.__translateX(x);
         } else {
           if (canY) {
-            this.m_body.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-            this.m_body.append(_PGFGraphic.TRANSFORM_SHIFT_Y_BEGIN);
-            _PGFGraphic.__pt(y, this.m_body);
-            _PGFGraphic.__commandEnd(this.m_body);
-            _PGFGraphic.__commandEndNL(this.m_body);
+            this.__translateY(y);
           } else {
             return;
           }
@@ -800,8 +1052,38 @@ final class _PGFGraphic extends SimpleGraphic {
    */
   private static final double __toDeg(final double theta) {
     final double value;
-    value = RadiansToDegrees.INSTANCE.computeAsDouble(theta);
-    return (value % 360d);
+    final int integ;
+
+    if ((theta % MathConstants.TWO_PI) == 0d) {
+      return 0d;
+    }
+
+    value = (RadiansToDegrees.INSTANCE.computeAsDouble(theta) % 360d);
+    integ = ((int) (Math.round(value)));
+
+    if ((integ <= Math.nextUp(value)) && //
+        (integ >= Math.nextAfter(value, Double.NEGATIVE_INFINITY))) {
+      if (integ == 360) {
+        return 0d;
+      }
+      return integ;
+    }
+
+    return value;
+  }
+
+  /**
+   * do rotate
+   *
+   * @param thetaDeg
+   *          the angle in degrees
+   */
+  private final void __rotate(final double thetaDeg) {
+    this.m_body
+    .append(this.__getCommandName(_PGFGraphic.TRANSFORM_ROTATE));
+    this.m_body.append('{');
+    _PGFGraphic.__number(thetaDeg, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
   }
 
   /** {@inheritDoc} */
@@ -812,11 +1094,7 @@ final class _PGFGraphic extends SimpleGraphic {
     if (this.m_inScopeReset <= 0) {
       value = _PGFGraphic.__toDeg(theta);
       if (value != 0d) {
-        this.m_body.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-        this.m_body.append(_PGFGraphic.TRANSFORM_ROTATE_BEGIN);
-        _PGFGraphic.__number(value, this.m_body);
-        _PGFGraphic.__commandEnd(this.m_body);
-        _PGFGraphic.__commandEndNL(this.m_body);
+        this.__rotate(value);
       } else {
         return;
       }
@@ -829,89 +1107,184 @@ final class _PGFGraphic extends SimpleGraphic {
   @Override
   protected final void doRotate(final double theta, final double x,
       final double y) {
-    if ((_PGFGraphic.__toDeg(theta) != 0d) || (this.m_inScopeReset > 0)) {
-      this.translate(x, y);
-      this.rotate(theta);
-      this.translate(-x, -y);
+    final double value;
+
+    if (this.m_inScopeReset > 0) {
+      value = _PGFGraphic.__toDeg(theta);
+      if (value != 0d) {
+        this.translate(x, y);
+        this.__rotate(theta);
+        this.translate(-x, -y);
+      }
     }
+  }
+
+  /**
+   * scale
+   *
+   * @param v
+   *          the value
+   */
+  private final void __scale(final double v) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.TRANSFORM_SCALE));
+    this.m_body.append('{');
+    _PGFGraphic.__number(v, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /**
+   * scale x
+   *
+   * @param v
+   *          the value
+   */
+  private final void __scaleX(final double v) {
+    this.m_body.append(this
+        .__getCommandName(_PGFGraphic.TRANSFORM_SCALE_X));
+    this.m_body.append('{');
+    _PGFGraphic.__number(v, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /**
+   * scale y
+   *
+   * @param v
+   *          the value
+   */
+  private final void __scaleY(final double v) {
+    this.m_body.append(this
+        .__getCommandName(_PGFGraphic.TRANSFORM_SCALE_Y));
+    this.m_body.append('{');
+    _PGFGraphic.__number(v, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /**
+   * scale x+y
+   *
+   * @param x
+   *          the x-value
+   * @param y
+   *          the y-value
+   */
+  private final void __scaleXY(final double x, final double y) {
+    this.m_body.append(this
+        .__getCommandName(_PGFGraphic.TRANSFORM_SCALE_XY));
+    this.m_body.append('{');
+    _PGFGraphic.__number(x, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
   }
 
   /** {@inheritDoc} */
   @Override
   protected final void doScale(final double sx, final double sy) {
-    boolean done;
-
-    done = false;
+    boolean xNot0, yNot0;
 
     if (this.m_inScopeReset <= 0) {
-      if (sx == sy) {
-        if (sx == 0d) {
-          return;
-        }
-        this.m_body.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-        this.m_body.append(_PGFGraphic.TRANSFORM_SCALE_BEGIN);
-        _PGFGraphic.__number(sx, this.m_body);
-        _PGFGraphic.__commandEnd(this.m_body);
-        _PGFGraphic.__commandEndNL(this.m_body);
-        done = true;
-      } else {
-        if (sx != 0d) {
-          this.m_body.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-          this.m_body.append(_PGFGraphic.TRANSFORM_SCALE_X_BEGIN);
-          _PGFGraphic.__number(sx, this.m_body);
-          _PGFGraphic.__commandEnd(this.m_body);
-          _PGFGraphic.__commandEndNL(this.m_body);
-          done = true;
-        }
+      xNot0 = (sx != 0);
+      yNot0 = (sy != 0);
 
-        if (sy != 0d) {
-          this.m_body.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-          this.m_body.append(_PGFGraphic.TRANSFORM_SCALE_Y_BEGIN);
-          _PGFGraphic.__number(sy, this.m_body);
-          _PGFGraphic.__commandEnd(this.m_body);
-          _PGFGraphic.__commandEndNL(this.m_body);
-          done = true;
+      if (xNot0 && yNot0) {
+        if (sx == sy) {
+          this.__scale(sx);
+        } else {
+          this.__scaleXY(sx, sy);
+        }
+      } else {
+        if (xNot0) {
+          this.__scaleX(sx);
+        } else {
+          if (yNot0) {
+            this.__scaleY(sy);
+          } else {
+            return;
+          }
         }
       }
-    } else {
-      done = true;
     }
-    if (done) {
-      super.doScale(sx, sy);
-    }
+
+    super.doScale(sx, sy);
+  }
+
+  /**
+   * shear x
+   *
+   * @param v
+   *          the value
+   */
+  private final void __shearX(final double v) {
+    this.m_body.append(this
+        .__getCommandName(_PGFGraphic.TRANSFORM_SLANT_X));
+    this.m_body.append('{');
+    _PGFGraphic.__number(v, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /**
+   * shear y
+   *
+   * @param v
+   *          the value
+   */
+  private final void __shearY(final double v) {
+    this.m_body.append(this
+        .__getCommandName(_PGFGraphic.TRANSFORM_SLANT_Y));
+    this.m_body.append('{');
+    _PGFGraphic.__number(v, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /**
+   * shear x and y
+   *
+   * @param x
+   *          the x-value
+   * @param y
+   *          the y-value
+   */
+  private final void __shearXY(final double x, final double y) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.TRANSFORM_SLANT));
+    this.m_body.append('{');
+    _PGFGraphic.__number(x, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
   }
 
   /** {@inheritDoc} */
   @Override
   protected final void doShear(final double shx, final double shy) {
-    boolean done;
+    boolean xNot0, yNot0;
 
     if (this.m_inScopeReset <= 0) {
-      done = false;
-      if (shx != 0d) {
-        this.m_body.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-        this.m_body.append(_PGFGraphic.TRANSFORM_SLANT_X_BEGIN);
-        _PGFGraphic.__number(shx, this.m_body);
-        _PGFGraphic.__commandEnd(this.m_body);
-        _PGFGraphic.__commandEndNL(this.m_body);
-        done = true;
-      }
+      xNot0 = (shx != 0);
+      yNot0 = (shy != 0);
 
-      if (shy != 0d) {
-        this.m_body.append(_PGFGraphic.CANVAS_TRANSFORM_BEGIN);
-        this.m_body.append(_PGFGraphic.TRANSFORM_SLANT_Y_BEGIN);
-        _PGFGraphic.__number(shy, this.m_body);
-        _PGFGraphic.__commandEnd(this.m_body);
-        _PGFGraphic.__commandEndNL(this.m_body);
-        done = true;
+      if (xNot0 && yNot0) {
+        if (shx == shy) {
+          this.__scale(shx);
+        } else {
+          this.__shearXY(shx, shy);
+        }
+      } else {
+        if (xNot0) {
+          this.__shearX(shx);
+        } else {
+          if (yNot0) {
+            this.__shearY(shy);
+          } else {
+            return;
+          }
+        }
       }
-    } else {
-      done = true;
     }
 
-    if (done) {
-      super.doShear(shx, shy);
-    }
+    super.doShear(shx, shy);
   }
 
   // /** {@inheritDoc} */
@@ -941,25 +1314,8 @@ final class _PGFGraphic extends SimpleGraphic {
   /** {@inheritDoc} */
   @Override
   protected final void doSetColor(final Color c) {
-    final char[] name;
-    final double d;
-
     if (this.m_inScopeReset <= 0) {
-      name = this.__getColorName(c);
-
-      this.m_body.append(_PGFGraphic.SET_COLOR);
-      this.m_body.append(name);
-      _PGFGraphic.__commandEndNL(this.m_body);
-
-      this.m_body.append(_PGFGraphic.SET_FILL_OPACITY);
-      d = (c.getAlpha() / 255d);
-      _PGFGraphic.__number(d, this.m_body);
-      _PGFGraphic.__commandEndNL(this.m_body);
-
-      this.m_body.append(_PGFGraphic.SET_STROKE_OPACITY);
-      _PGFGraphic.__number(d, this.m_body);
-      _PGFGraphic.__commandEndNL(this.m_body);
-
+      this.__setColor(c, this.m_body);
     }
     super.doSetColor(c);
   }
@@ -974,8 +1330,8 @@ final class _PGFGraphic extends SimpleGraphic {
   @Override
   protected final void doSetClip(final Shape clip) {
     if (this.m_inScopeReset <= 0) {
-      _PGFGraphic.__pgfPath(clip.getPathIterator(null), true, this.m_body);
-      _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_CLIP, this.m_body);
+      this.__path(clip.getPathIterator(null), true);
+      this.__usePathClip();
     }
     super.doSetClip(clip);
   }
@@ -985,8 +1341,8 @@ final class _PGFGraphic extends SimpleGraphic {
   protected final void doClipRect(final int x, final int y,
       final int width, final int height) {
     if (this.m_inScopeReset <= 0) {
-      _PGFGraphic.__pgfRectangle(x, y, width, height, this.m_body);
-      _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_CLIP, this.m_body);
+      this.__rectangle(x, y, width, height);
+      this.__usePathClip();
     }
     super.doClipRect(x, y, width, height);
   }
@@ -996,8 +1352,8 @@ final class _PGFGraphic extends SimpleGraphic {
   protected void doSetClip(final int x, final int y, final int width,
       final int height) {
     if (this.m_inScopeReset <= 0) {
-      _PGFGraphic.__pgfRectangle(x, y, width, height, this.m_body);
-      _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_CLIP, this.m_body);
+      this.__rectangle(x, y, width, height);
+      this.__usePathClip();
     }
     super.doSetClip(x, y, width, height);
   }
@@ -1007,8 +1363,8 @@ final class _PGFGraphic extends SimpleGraphic {
   protected void doClipRect(final double x, final double y,
       final double width, final double height) {
     if (this.m_inScopeReset <= 0) {
-      _PGFGraphic.__pgfRectangle(x, y, width, height, this.m_body);
-      _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_CLIP, this.m_body);
+      this.__rectangle(x, y, width, height);
+      this.__usePathClip();
     }
     super.doClipRect(x, y, width, height);
   }
@@ -1018,8 +1374,8 @@ final class _PGFGraphic extends SimpleGraphic {
   protected void doSetClip(final double x, final double y,
       final double width, final double height) {
     if (this.m_inScopeReset <= 0) {
-      _PGFGraphic.__pgfRectangle(x, y, width, height, this.m_body);
-      _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_CLIP, this.m_body);
+      this.__rectangle(x, y, width, height);
+      this.__usePathClip();
     }
     super.doSetClip(x, y, width, height);
   }
@@ -1035,58 +1391,49 @@ final class _PGFGraphic extends SimpleGraphic {
   @Override
   protected void doDrawLine(final int x1, final int y1, final int x2,
       final int y2) {
-    this.m_body.append(_PGFGraphic.PATH_MOVE_TO);
-    _PGFGraphic.__pgfPoint(x1, y1, this.m_body);
-    _PGFGraphic.__commandEndNL(this.m_body);
-    this.m_body.append(_PGFGraphic.PATH_LINE_TO);
-    _PGFGraphic.__pgfPoint(x2, y2, this.m_body);
-    _PGFGraphic.__commandEndNL(this.m_body);
-    _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_STROKE, this.m_body);
+    this.doDrawLine(((double) x1), ((double) y1), ((double) x2),
+        ((double) y2));
   }
 
   /** {@inheritDoc} */
   @Override
   protected void doDrawLine(final double x1, final double y1,
       final double x2, final double y2) {
-    this.m_body.append(_PGFGraphic.PATH_MOVE_TO);
-    _PGFGraphic.__pgfPoint(x1, y1, this.m_body);
-    _PGFGraphic.__commandEndNL(this.m_body);
-    this.m_body.append(_PGFGraphic.PATH_LINE_TO);
-    _PGFGraphic.__pgfPoint(x2, y2, this.m_body);
-    _PGFGraphic.__commandEndNL(this.m_body);
-    _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_STROKE, this.m_body);
+    this.__pathMoveTo(x1, y1);
+    this.__pathLineTo(x2, y2);
+    this.__usePathStroke();
   }
 
   /** {@inheritDoc} */
   @Override
   protected final void doFillRect(final int x, final int y,
       final int width, final int height) {
-    _PGFGraphic.__pgfRectangle(x, y, width, height, this.m_body);
-    _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_FILL, this.m_body);
+    this.doFillRect(((double) x), ((double) y), ((double) width),
+        ((double) height));
   }
 
   /** {@inheritDoc} */
   @Override
   protected final void doFillRect(final double x, final double y,
       final double width, final double height) {
-    _PGFGraphic.__pgfRectangle(x, y, width, height, this.m_body);
-    _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_FILL, this.m_body);
+    this.__rectangle(x, y, width, height);
+    this.__usePathFill();
   }
 
   /** {@inheritDoc} */
   @Override
   protected final void doDrawRect(final int x, final int y,
       final int width, final int height) {
-    _PGFGraphic.__pgfRectangle(x, y, width, height, this.m_body);
-    _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_STROKE, this.m_body);
+    this.doDrawRect(((double) x), ((double) y), ((double) width),
+        ((double) height));
   }
 
   /** {@inheritDoc} */
   @Override
   protected final void doDrawRect(final double x, final double y,
       final double width, final double height) {
-    _PGFGraphic.__pgfRectangle(x, y, width, height, this.m_body);
-    _PGFGraphic.__pgfUsePath(_PGFGraphic.USE_PATH_STROKE, this.m_body);
+    this.__rectangle(x, y, width, height);
+    this.__usePathStroke();
   }
 
   /** {@inheritDoc} */
@@ -1231,8 +1578,7 @@ final class _PGFGraphic extends SimpleGraphic {
 
   /** begin a new scope */
   final void _beginScope() {
-    this.m_body.append(_PGFGraphic.SCOPE_BEGIN);
-    _PGFGraphic.__commandEndNL(this.m_body);
+    this.m_body.append(this.__getCommandName(_PGFGraphic.SCOPE_BEGIN));
 
     this.m_scopes.add(new _PGFState(this.getFont(), this.getClip(),//
         this.getTransform(), this.getColor(), this.getPaint(),//
@@ -1254,8 +1600,7 @@ final class _PGFGraphic extends SimpleGraphic {
       this.setTransform(state.m_transform);
       this.setStroke(state.m_stroke);
 
-      this.m_body.append(_PGFGraphic.SCOPE_END);
-      _PGFGraphic.__commandEndNL(this.m_body);
+      this.m_body.append(this.__getCommandName(_PGFGraphic.SCOPE_END));
     } finally {
       this.m_inScopeReset--;
     }
@@ -1285,6 +1630,39 @@ final class _PGFGraphic extends SimpleGraphic {
     super.before(what);
     for (final _PGFProxy proxy : this.m_activeProxies) {
       proxy._before(what);
+    }
+  }
+
+  /** the internal command holder */
+  private static final class __Command {
+    /** the name */
+    final char[] m_name;
+    /** the number of arguments */
+    final int m_args;
+
+    /**
+     * create the command
+     *
+     * @param args
+     *          the args
+     * @param name
+     *          the name
+     */
+    __Command(final int args, final char[] name) {
+      super();
+      this.m_name = name;
+      this.m_args = args;
+    }
+  }
+
+  /** an internal buffer */
+  private static final class __Buffer extends MemoryTextOutput {
+    /** the last new line */
+    int m_lastNewLine;
+
+    /** create the buffer */
+    __Buffer() {
+      super();
     }
   }
 }
