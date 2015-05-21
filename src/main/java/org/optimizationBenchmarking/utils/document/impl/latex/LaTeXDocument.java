@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.abstr.Document;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
@@ -45,26 +46,29 @@ public final class LaTeXDocument extends Document {
 
   /** the default document class */
   private static final char[] DOCUMENT_CLASS = { '\\', 'd', 'o', 'c', 'u',
-    'm', 'e', 'n', 't', 'c', 'l', 'a', 's', 's', };
+      'm', 'e', 'n', 't', 'c', 'l', 'a', 's', 's', };
 
   /** the default document class */
   private static final char[] REQUIRE_PACKAGE = { '\\', 'R', 'e', 'q',
-    'u', 'i', 'r', 'e', 'P', 'a', 'c', 'k', 'a', 'g', 'e', };
+      'u', 'i', 'r', 'e', 'P', 'a', 'c', 'k', 'a', 'g', 'e', };
 
   /** end the document */
   private static final char[] DOCUMENT_END = { '\\', 'e', 'n', 'd', '{',
-    'd', 'o', 'c', 'u', 'm', 'e', 'n', 't', '}' };
+      'd', 'o', 'c', 'u', 'm', 'e', 'n', 't', '}' };
   /** end the input */
   private static final char[] INPUT_END = { '\\', 'e', 'n', 'd', 'i', 'n',
-    'p', 'u', 't' };
+      'p', 'u', 't' };
   /** the first part of the include graphics call */
   private static final char[] INCLUDE_GRAPHICS_1 = { '\\', 'i', 'n', 'c',
-    'l', 'u', 'd', 'e', 'g', 'r', 'a', 'p', 'h', 'i', 'c', 's', '[',
-    'k', 'e', 'e', 'p', 'a', 's', 'p', 'e', 'c', 't', 'r', 'a', 't',
-    'i', 'o', ',', 'w', 'i', 'd', 't', 'h', '=' };
+      'l', 'u', 'd', 'e', 'g', 'r', 'a', 'p', 'h', 'i', 'c', 's', '[',
+      'k', 'e', 'e', 'p', 'a', 's', 'p', 'e', 'c', 't', 'r', 'a', 't',
+      'i', 'o', ',', 'w', 'i', 'd', 't', 'h', '=' };
   /** the second part of the include graphics call */
   private static final char[] INCLUDE_GRAPHICS_2 = { ',', 'h', 'e', 'i',
-    'g', 'h', 't', '=' };
+      'g', 'h', 't', '=' };
+  /** the code to include a PGF figure */
+  private static final char[] INCLUDE_GRAPHICS_PGF = { '\\', 'i', 'n',
+      'p', 'u', 't', '{' };
 
   /** the required separator */
   private static final String REQUIRED_SEPARATOR = "/"; //$NON-NLS-1$
@@ -129,6 +133,9 @@ public final class LaTeXDocument extends Document {
   /** do we need the ams-symbols package? */
   private boolean m_needsAMSSymb;
 
+  /** is there a PGF figure in the document? */
+  private boolean m_hasPGFFigure;
+
   /**
    * Create a document.
    *
@@ -145,7 +152,7 @@ public final class LaTeXDocument extends Document {
         .createPathInside(
             this.getDocumentFolder(),
             ((PathUtils.getFileNameWithoutExtension(this.getDocumentPath()) + "-setup.") + //$NON-NLS-1$
-                ELaTeXFileType.STY.getDefaultSuffix()));
+            ELaTeXFileType.STY.getDefaultSuffix()));
 
     this.open();
   }
@@ -167,8 +174,8 @@ public final class LaTeXDocument extends Document {
     perRowCalc = (int) (this.m_class.getUnit().convertTo(//
         (size.spansAllColumns() ? this.m_class.getWidth()
             : this.m_class.getColumnWidth()),//
-            ELength.POINT) / //
-            dim.getUnit().convertTo(dim.getWidth(), ELength.POINT));
+        ELength.POINT) / //
+    dim.getUnit().convertTo(dim.getWidth(), ELength.POINT));
     perRowExpected = size.getNX();
 
     return (Math.max(1,//
@@ -226,7 +233,7 @@ public final class LaTeXDocument extends Document {
 
     mto = new MemoryTextOutput();
     mto.append(//
-        "The following license, terms, and conditions apply to "); //$NON-NLS-1$
+    "The following license, terms, and conditions apply to "); //$NON-NLS-1$
     initLength = mto.length();
     collector = this.getFileCollector();
     try {
@@ -245,7 +252,7 @@ public final class LaTeXDocument extends Document {
                       TextUtils.className(clazz)) + //
                       " seems to already exist in the document folder as file '")//$NON-NLS-1$
                       + path) + "' of document") + this) + //$NON-NLS-1$
-                  ". This may cause problems when compiling the document.");//$NON-NLS-1$
+                      ". This may cause problems when compiling the document.");//$NON-NLS-1$
             }
             continue;
           }
@@ -272,22 +279,22 @@ public final class LaTeXDocument extends Document {
               ending = PathUtils.getFileExtension(path);
               if (ending != null) {
                 findType: {
-                for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
-                  if (ending.equalsIgnoreCase(format.getDefaultSuffix())) {
-                    type = format;
-                    break findType;
+                  for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
+                    if (ending.equalsIgnoreCase(format.getDefaultSuffix())) {
+                      type = format;
+                      break findType;
+                    }
                   }
-                }
-                for (final ELaTeXFileType format : ELaTeXFileType.INSTANCES) {
-                  if (ending.equalsIgnoreCase(format.getDefaultSuffix())) {
-                    type = format;
-                    break findType;
+                  for (final ELaTeXFileType format : ELaTeXFileType.INSTANCES) {
+                    if (ending.equalsIgnoreCase(format.getDefaultSuffix())) {
+                      type = format;
+                      break findType;
+                    }
                   }
+                  type = new FileType(ending, null, null);
                 }
-                type = new FileType(ending, null, null);
-              }
 
-              collector.addFile(path, type);
+                collector.addFile(path, type);
               }
 
               ret[index] = path;
@@ -295,29 +302,29 @@ public final class LaTeXDocument extends Document {
             } else {
               if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
                 logger
-                .warning(((((("Resource '" //$NON-NLS-1$
-                    + resource) + "' from class ") + //$NON-NLS-1$
-                    TextUtils.className(clazz)) + //
-                    " is missing and thus could not be copied to document ")//$NON-NLS-1$
-                    + this)
-                    + ". This may make compiling the document impossible.");//$NON-NLS-1$
+                    .warning(((((("Resource '" //$NON-NLS-1$
+                        + resource) + "' from class ") + //$NON-NLS-1$
+                        TextUtils.className(clazz)) + //
+                        " is missing and thus could not be copied to document ")//$NON-NLS-1$
+                        + this)
+                        + ". This may make compiling the document impossible.");//$NON-NLS-1$
               }
             }
           } catch (final Throwable error2) {
             ErrorUtils.logError(logger, Level.WARNING,
                 (((((((("An error occured while copying resource '" //$NON-NLS-1$
-                    + resource) + "' from class ") + //$NON-NLS-1$
-                    TextUtils.className(clazz)) + " to document ") + this) + //$NON-NLS-1$
-                    " under path '") + path) + //$NON-NLS-1$
-                    "'. This may make compiling the document impossible."),//$NON-NLS-1$
-                    error2, true, RethrowMode.DONT_RETHROW);
+                + resource) + "' from class ") + //$NON-NLS-1$
+                TextUtils.className(clazz)) + " to document ") + this) + //$NON-NLS-1$
+                " under path '") + path) + //$NON-NLS-1$
+                "'. This may make compiling the document impossible."),//$NON-NLS-1$
+                error2, true, RethrowMode.DONT_RETHROW);
           }
         } catch (final Throwable error) {
           ErrorUtils
-          .logError(
-              logger,
-              Level.WARNING,
-              (((((("An error occured while creating destination path for resource '" //$NON-NLS-1$
+              .logError(
+                  logger,
+                  Level.WARNING,
+                  (((((("An error occured while creating destination path for resource '" //$NON-NLS-1$
                   + resource) + "' from class ") + //$NON-NLS-1$
                   TextUtils.className(clazz)) + " to document ") + this) + //$NON-NLS-1$
                   ". This may make compiling the document impossible."),//$NON-NLS-1$
@@ -513,44 +520,49 @@ public final class LaTeXDocument extends Document {
 
     if (files.isEmpty()) {
       LaTeXDriver
-      ._commentLine(//
-          "No graphic created. This is odd (maybe see the log for details).", //$NON-NLS-1$
-          out);
+          ._commentLine(//
+              "No graphic created. This is odd (maybe see the log for details).", //$NON-NLS-1$
+              out);
       return;
     }
 
-    width = size.getWidth();
-    height = size.getHeight();
-    length = size.getUnit();
-    switch (length) {
-      case POINT:
-      case INCH:
-      case MILLIMETER:
-      case CENTIMETER:
-      case PICA:
-      case DIDOT:
-      case CICERO:
-      case SCALED_POINT:
-      case BIG_POINT: {
-        break;
+    if (EComparison.equals(EGraphicFormat.PGF, files.get(0).getValue())) {
+      this.m_hasPGFFigure = true;
+      out.append(LaTeXDocument.INCLUDE_GRAPHICS_PGF);
+    } else {
+      width = size.getWidth();
+      height = size.getHeight();
+      length = size.getUnit();
+      switch (length) {
+        case POINT:
+        case INCH:
+        case MILLIMETER:
+        case CENTIMETER:
+        case PICA:
+        case DIDOT:
+        case CICERO:
+        case SCALED_POINT:
+        case BIG_POINT: {
+          break;
+        }
+        default: {
+          width = length.convertTo(width, ELength.POINT);
+          height = length.convertTo(height, ELength.POINT);
+          length = ELength.POINT;
+        }
       }
-      default: {
-        width = length.convertTo(width, ELength.POINT);
-        height = length.convertTo(height, ELength.POINT);
-        length = ELength.POINT;
-      }
-    }
 
-    out.append(LaTeXDocument.INCLUDE_GRAPHICS_1);
-    SimpleNumberAppender.INSTANCE.appendTo(width, ETextCase.IN_SENTENCE,
-        out);
-    out.append(shrt = length.getShortcut());
-    out.append(LaTeXDocument.INCLUDE_GRAPHICS_2);
-    SimpleNumberAppender.INSTANCE.appendTo(height, ETextCase.IN_SENTENCE,
-        out);
-    out.append(shrt);
-    out.append(']');
-    out.append('{');
+      out.append(LaTeXDocument.INCLUDE_GRAPHICS_1);
+      SimpleNumberAppender.INSTANCE.appendTo(width, ETextCase.IN_SENTENCE,
+          out);
+      out.append(shrt = length.getShortcut());
+      out.append(LaTeXDocument.INCLUDE_GRAPHICS_2);
+      SimpleNumberAppender.INSTANCE.appendTo(height,
+          ETextCase.IN_SENTENCE, out);
+      out.append(shrt);
+      out.append(']');
+      out.append('{');
+    }
     out.append(this._pathRelativeToDocument(files.get(0).getKey(), false));
     LaTeXDriver._endCommandLine(out);
   }
@@ -668,9 +680,9 @@ public final class LaTeXDocument extends Document {
     } catch (final Throwable error) {
       ErrorUtils.logError(this.getLogger(), Level.WARNING,//
           "Error when loading resource '" //$NON-NLS-1$
-          + resource + //
-          "' - this will maybe make compiling LaTeX document " //$NON-NLS-1$
-          + this + " impossible.",//$NON-NLS-1$
+              + resource + //
+              "' - this will maybe make compiling LaTeX document " //$NON-NLS-1$
+              + this + " impossible.",//$NON-NLS-1$
           error, true, RethrowMode.DONT_RETHROW);
     }
     LaTeXDriver._endLine(dest);
@@ -697,11 +709,11 @@ public final class LaTeXDocument extends Document {
           // adding default packages
 
           LaTeXDriver
-          ._commentLine(//
-              "This is the setup package for document " + //$NON-NLS-1$
-              PathUtils.getName(this.getDocumentPath()) + //
-              ", it loads all required packages and provides the definitions needed to compile this document.",//$NON-NLS-1$
-              out);
+              ._commentLine(//
+                  "This is the setup package for document " + //$NON-NLS-1$
+                      PathUtils.getName(this.getDocumentPath()) + //
+                      ", it loads all required packages and provides the definitions needed to compile this document.",//$NON-NLS-1$
+                  out);
 
           this.__include("fonts.def", out);//$NON-NLS-1$
 
@@ -711,9 +723,9 @@ public final class LaTeXDocument extends Document {
 
           if (this.m_hasFigure || this.m_hasTable) {
             LaTeXDriver
-            ._commentLine(//
-                "We need caption3 to properly render figure or table captions.",//$NON-NLS-1$
-                out);
+                ._commentLine(//
+                    "We need caption3 to properly render figure or table captions.",//$NON-NLS-1$
+                    out);
             LaTeXDocument._requirePackage(out, "caption3", null); //$NON-NLS-1$
           }
 
@@ -721,42 +733,50 @@ public final class LaTeXDocument extends Document {
             this.__include("tables.def", out);//$NON-NLS-1$
             if (this.m_hasMultiColCell) {
               LaTeXDriver
-              ._commentLine(
-                  "We need multicol since we have at least one table with at least one cell which spans multiple columns.",//$NON-NLS-1$
-                  out);
+                  ._commentLine(
+                      "We need multicol since we have at least one table with at least one cell which spans multiple columns.",//$NON-NLS-1$
+                      out);
               LaTeXDocument._requirePackage(out, "multicol", null); //$NON-NLS-1$
             }
             if (this.m_hasMultiRowCell) {
               LaTeXDriver
-              ._commentLine(
-                  "We need multicol since we have at least one table with at least one cell which spans multiple rows.",//$NON-NLS-1$
-                  out);
+                  ._commentLine(
+                      "We need multicol since we have at least one table with at least one cell which spans multiple rows.",//$NON-NLS-1$
+                      out);
               LaTeXDocument._requirePackage(out, "multirow", null); //$NON-NLS-1$
             }
           }
 
+          // do we have a figure?
           if (this.m_hasFigure) {
             LaTeXDriver._commentLine(
                 "We need graphicx to render the figures.",//$NON-NLS-1$
                 out);
             LaTeXDocument._requirePackage(out, "graphicx", null); //$NON-NLS-1$
+
+            if (this.m_hasPGFFigure) {
+              LaTeXDriver._commentLine(
+                  "We need pgf to render the (LaTeX-based) PGF figures.",//$NON-NLS-1$
+                  out);
+              LaTeXDocument._requirePackage(out, "pgf", null); //$NON-NLS-1$
+            }
+
+            // figure series
+            if (this.m_hasFigureSeries) {
+              this.__loadPackageAndRequire(
+                  out,
+                  "figureSeries.sty", //$NON-NLS-1$
+                  null,
+                  "The figureSeries Package is under LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version. It is author-maintained by Thomas Weise. Copyright (c) 2014, 2015 Thomas Weise."); //$NON-NLS-1$
+            }
           }
 
           if (this.m_needsAMSSymb) {
             LaTeXDriver
-            ._commentLine(
-                "We need amssymb to render some of the mathematical symbols.",//$NON-NLS-1$
-                out);
+                ._commentLine(
+                    "We need amssymb to render some of the mathematical symbols.",//$NON-NLS-1$
+                    out);
             LaTeXDocument._requirePackage(out, "amssymb", null); //$NON-NLS-1$
-          }
-
-          // figure series
-          if (this.m_hasFigureSeries) {
-            this.__loadPackageAndRequire(
-                out,
-                "figureSeries.sty", //$NON-NLS-1$
-                null,
-                "The figureSeries Package is under LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version. It is author-maintained by Thomas Weise. Copyright (c) 2014, 2015 Thomas Weise."); //$NON-NLS-1$
           }
 
           if (this.m_hasCode) {
@@ -769,20 +789,20 @@ public final class LaTeXDocument extends Document {
 
           if (this.m_hasUnderlined) {
             LaTeXDriver
-            ._commentLine(
-                "We need the ulem package to deal with long, underlined text. Ulem allows it to break over several lines.",//$NON-NLS-1$
-                out);
+                ._commentLine(
+                    "We need the ulem package to deal with long, underlined text. Ulem allows it to break over several lines.",//$NON-NLS-1$
+                    out);
             this.__loadPackageAndRequire(out,
                 "ulem.sty",//$NON-NLS-1$
                 new String[] { "normalem" }, //$NON-NLS-1$
                 "Copyright (c) 1989-2011 by Donald Arseneau (Vancouver, Canada; asnd@triumf.ca)\nThis software may be freely transmitted, reproduced, or modified for any purpose provided that this copyright notice is left intact. (Small excerpts may be taken and used without any restriction.)"//$NON-NLS-1$
-                );
+            );
           }
 
           LaTeXDriver
-          ._commentLine(
-              "We need hyperref to allow for clickable references and links.",//$NON-NLS-1$
-              out);
+              ._commentLine(
+                  "We need hyperref to allow for clickable references and links.",//$NON-NLS-1$
+                  out);
           LaTeXDocument._requirePackage(out, "hyperref", //$NON-NLS-1$
               new String[] { "hidelinks=true" });//$NON-NLS-1$
           if (this.getGraphicFormat() == EGraphicFormat.EPS) {
@@ -842,8 +862,8 @@ public final class LaTeXDocument extends Document {
       }
     } catch (final IOException ioError) {
       ErrorUtils
-      .logError(this.getLogger(), Level.WARNING,
-          (((("Error when creating setup package '" + //$NON-NLS-1$
+          .logError(this.getLogger(), Level.WARNING,
+              (((("Error when creating setup package '" + //$NON-NLS-1$
               this.m_setupPackagePath) + " for document ") + this) + //$NON-NLS-1$
               " this is a problem, as compiling the document is now impossible."),//$NON-NLS-1$
               ioError, true, RethrowMode.AS_RUNTIME_EXCEPTION);
@@ -879,8 +899,8 @@ public final class LaTeXDocument extends Document {
         if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
           logger.warning(//
               "Compilation is requested for LaTeX document " //$NON-NLS-1$
-              + this.toString() + //
-              " but the LaTeX compiler tool is not available, so we don't compile.");//$NON-NLS-1$
+                  + this.toString() + //
+                  " but the LaTeX compiler tool is not available, so we don't compile.");//$NON-NLS-1$
         }
         return;
       }
@@ -906,22 +926,22 @@ public final class LaTeXDocument extends Document {
         if ((logger != null) && (logger.isLoggable(Level.INFO))) {
           logger.warning(//
               "Compilation of LaTeX document " //$NON-NLS-1$
-              + this.toString() + //
-              " has been completed without error (seemingly).");//$NON-NLS-1$
+                  + this.toString() + //
+                  " has been completed without error (seemingly).");//$NON-NLS-1$
         }
       } else {
         if ((logger != null) && (logger.isLoggable(Level.WARNING))) {
           logger.warning(//
               "Compilation is requested for LaTeX document '" //$NON-NLS-1$
-              + this.toString() + //
-              " but no suitable tool chain was found.");//$NON-NLS-1$
+                  + this.toString() + //
+                  " but no suitable tool chain was found.");//$NON-NLS-1$
         }
       }
 
     } catch (final Throwable error) {
       ErrorUtils
-      .logError(logger,//
-          (("An error occured when trying to compile document '"//$NON-NLS-1$
+          .logError(logger,//
+              (("An error occured when trying to compile document '"//$NON-NLS-1$
               + this.toString()) + //
               " but we will ignore this error, as it just means that we did not get a PDF.")//$NON-NLS-1$
               , error, true, RethrowMode.DONT_RETHROW);

@@ -226,6 +226,7 @@ final class _PdfTeXAsLaTeX extends _LaTeXToolChainComponent {
     @Override
     final boolean _supports(final IFileType type) {
       return _LaTeXToolChainComponent._equals(ELaTeXFileType.TEX, type) || //
+          _LaTeXToolChainComponent._equals(EGraphicFormat.PGF, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.EPS, type);
     }
 

@@ -223,6 +223,7 @@ final class _PdfTeXAsPdfLaTeX extends _LaTeXToolChainComponent {
       return _LaTeXToolChainComponent._equals(ELaTeXFileType.TEX, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.PDF, type) || //
           _LaTeXToolChainComponent._equals(ELaTeXFileType.PDF, type) || //
+          _LaTeXToolChainComponent._equals(EGraphicFormat.PGF, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.PNG, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.JPEG, type);
     }

@@ -42,7 +42,7 @@ public final class XMLNumberAppender extends _PlainIntNumberAppender {
       return "+INF"; //$NON-NLS-1$
     }
 
-    return SimpleNumberAppender.INSTANCE.toString(v, textCase);
+    return SimpleNumberAppender._simplify(v, String.valueOf(v)).m_string;
   }
 
   /**

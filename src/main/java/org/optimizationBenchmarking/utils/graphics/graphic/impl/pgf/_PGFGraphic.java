@@ -45,7 +45,7 @@ import org.optimizationBenchmarking.utils.math.functions.trigonometric.Hypot;
 import org.optimizationBenchmarking.utils.math.functions.trigonometric.RadiansToDegrees;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
-import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
+import org.optimizationBenchmarking.utils.text.numbers.NoExponentNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -54,6 +54,13 @@ import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** The internal, un-simplified PGF graphic */
 final class _PGFGraphic extends SimpleGraphic {
+
+  /** the maximum coordinate */
+  private static final double MAX_COORD = (0.25d * Float.MAX_VALUE);
+  /** the minimum coordinate */
+  private static final double MIN_COORD = (-_PGFGraphic.MAX_COORD);
+  /** the NaN coordinate */
+  private static final double NaN_COORD = 0d;
 
   /** the prefix for defining a color */
   private static final char[] COLOR_PREFIX = { 't', 'j', };
@@ -610,11 +617,27 @@ final class _PGFGraphic extends SimpleGraphic {
    *          the text output
    */
   private static final void __number(final double d, final __Buffer textOut) {
-    if (NumericalTypes.isLong(d)) {
-      textOut.append((long) d);
+    final double useValue;
+
+    if (d <= _PGFGraphic.MIN_COORD) {
+      useValue = _PGFGraphic.MIN_COORD;
     } else {
-      SimpleNumberAppender.INSTANCE.appendTo(d, ETextCase.IN_SENTENCE,
-          textOut);
+      if (d >= _PGFGraphic.MAX_COORD) {
+        useValue = _PGFGraphic.MAX_COORD;
+      } else {
+        if (d != d) {
+          useValue = _PGFGraphic.NaN_COORD;
+        } else {
+          useValue = d;
+        }
+      }
+    }
+
+    if (NumericalTypes.isLong(useValue)) {
+      textOut.append((long) useValue);
+    } else {
+      NoExponentNumberAppender.INSTANCE.appendTo(useValue,
+          ETextCase.IN_SENTENCE, textOut);
     }
   }
 
@@ -950,8 +973,6 @@ final class _PGFGraphic extends SimpleGraphic {
       this.m_body.append('}');
       this.m_body.append('{');
       _PGFGraphic.__number(phase, this.m_body);
-      this.m_body.append('p');
-      this.m_body.append('t');
       _PGFGraphic.__commandEndNL(this.m_body);
     }
   }

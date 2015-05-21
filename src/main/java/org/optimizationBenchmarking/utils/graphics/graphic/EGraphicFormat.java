@@ -67,6 +67,21 @@ public enum EGraphicFormat implements IFileType {
   },
 
   /**
+   * The <a href="http://en.wikipedia.org/wiki/PGF/TikZ"> PGF</a> format.
+   * PGF is a LaTeX package for defining figures, which means that any PGF
+   * figure can directly be included in a LaTeX document via {@code \input}
+   * .
+   */
+  PGF("Portable Graphics Format", false,//$NON-NLS-1$
+      "tex", "application/x-latex") { //$NON-NLS-1$//$NON-NLS-2$
+    /** {@inheritDoc} */
+    @Override
+    public final IGraphicDriver getDefaultDriver() {
+      return PGFGraphicDriver.getInstance();
+    }
+  },
+
+  /**
    * The <a
    * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
    * format is a <a
@@ -178,18 +193,6 @@ public enum EGraphicFormat implements IFileType {
     }
   },
 
-  /**
-   * The <a href="http://en.wikipedia.org/wiki/PGF/TikZ"> PGF</a> format is
-   * a special version of TeX.
-   */
-  PGF("Portable Graphics Format", false,//$NON-NLS-1$
-      "tex", "application/x-latex") { //$NON-NLS-1$//$NON-NLS-2$
-    /** {@inheritDoc} */
-    @Override
-    public final IGraphicDriver getDefaultDriver() {
-      return PGFGraphicDriver.getInstance();
-    }
-  },
   ;
 
   /**

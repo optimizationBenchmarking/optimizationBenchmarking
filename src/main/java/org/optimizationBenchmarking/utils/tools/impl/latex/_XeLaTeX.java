@@ -178,6 +178,7 @@ final class _XeLaTeX extends _LaTeXToolChainComponent {
           _LaTeXToolChainComponent._equals(EGraphicFormat.PDF, type) || //
           _LaTeXToolChainComponent._equals(ELaTeXFileType.PDF, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.EPS, type) || //
+          _LaTeXToolChainComponent._equals(EGraphicFormat.PGF, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.PNG, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.JPEG, type);//
       // XeLaTeX also supports bmp, seemingly, but may sometimes fail with

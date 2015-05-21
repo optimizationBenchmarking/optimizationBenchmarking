@@ -12,16 +12,10 @@ import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGr
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.math.units.ELength;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransformer;
 
 /** A driver which creates a PGF graphic. */
 public final class PGFGraphicDriver extends AbstractGraphicDriver {
-
-  /** the required packages */
-  private static final char[] REQUIRE_PACKAGES = { '\\', 'R', 'e', 'q',
-    'u', 'i', 'r', 'e', 'P', 'a', 'c', 'k', 'a', 'g', 'e', '{', 'p',
-    'g', 'f', '}', '%' };
 
   /** create */
   PGFGraphicDriver() {
@@ -36,17 +30,6 @@ public final class PGFGraphicDriver extends AbstractGraphicDriver {
     } catch (final Throwable error) {
       return false;
     }
-  }
-
-  /**
-   * Require the packages necessary for the graphics environment
-   *
-   * @param rawText
-   *          the raw text
-   */
-  public static final void requirePackages(final ITextOutput rawText) {
-    rawText.append(PGFGraphicDriver.REQUIRE_PACKAGES);
-    rawText.appendLineBreak();
   }
 
   /**

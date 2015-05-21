@@ -17,6 +17,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.Im
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOGIFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOJPEGGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOPNGGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.pgf.PGFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 
@@ -32,8 +33,8 @@ import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 public final class ExampleGraphicConfigurations {
 
   /** the shared instances */
-  public static final ArrayListView<GraphicConfiguration> CONFIGURATIONS = ExampleGraphicConfigurations
-      .__make();
+  public static final ArrayListView<GraphicConfiguration> CONFIGURATIONS = //
+  ExampleGraphicConfigurations.__make();
 
   /**
    * make the graphics configurations
@@ -43,10 +44,10 @@ public final class ExampleGraphicConfigurations {
   private static final ArrayListView<GraphicConfiguration> __make() {
     final LinkedHashSet<GraphicConfiguration> examples;
     GraphicConfigurationBuilder builder;
+    IGraphicDriver d;
 
     examples = new LinkedHashSet<>();
 
-    IGraphicDriver d;
     d = FreeHEPEPSGraphicDriver.getInstance();
     if (d.canUse()) {
       builder = new GraphicConfigurationBuilder();
@@ -55,6 +56,13 @@ public final class ExampleGraphicConfigurations {
     }
 
     d = FreeHEPPDFGraphicDriver.getInstance();
+    if (d.canUse()) {
+      builder = new GraphicConfigurationBuilder();
+      builder.setGraphicDriver(d);
+      examples.add(builder.immutable());
+    }
+
+    d = PGFGraphicDriver.getInstance();
     if (d.canUse()) {
       builder = new GraphicConfigurationBuilder();
       builder.setGraphicDriver(d);
