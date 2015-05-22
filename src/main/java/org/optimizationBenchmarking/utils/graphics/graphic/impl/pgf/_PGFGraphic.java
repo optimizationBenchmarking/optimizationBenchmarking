@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
+import org.optimizationBenchmarking.utils.graphics.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.SimpleGraphic;
@@ -72,22 +73,22 @@ final class _PGFGraphic extends SimpleGraphic {
 
   /** begin the environment */
   private static final char[] RESIZE_BEGIN = { '\\', 'r', 'e', 's', 'i',
-      'z', 'e', 'b', 'o', 'x', '{' };
+    'z', 'e', 'b', 'o', 'x', '{' };
 
   /** begin the environment */
   private static final char[] PICTURE_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-      'n', '{', 'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', '}' };
+    'n', '{', 'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', '}' };
 
   /** the post-amble */
   private static final char[] PICTURE_END = { '\\', 'e', 'n', 'd', '{',
-      'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', '}', '}' };
+    'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', '}', '}' };
 
   /**
    * set a stroke: #1 = width, #2=cap, #3 join, #4 miter limit, if any
    */
-  private static final __Command SET_STROKE = new __Command(4, new char[] {
-  /* set the line width */
-  '\\', 'p', 'g', 'f', 's', 'e', 't', 'l', 'i', 'n', 'e', 'w', 'i', 'd',
+  private static final __Command SET_STROKE = new __Command(6, new char[] {
+      /* set the line width */
+      '\\', 'p', 'g', 'f', 's', 'e', 't', 'l', 'i', 'n', 'e', 'w', 'i', 'd',
       't', 'h', '{', '#', '1', 'p', 't', '}',
       /* set the cap */
       '\\', 'i', 'f', 'c', 'a', 's', 'e', '#', '2',
@@ -114,42 +115,36 @@ final class _PGFGraphic extends SimpleGraphic {
       /* BasicStroke.JOIN_BEVEL==2 */
       '\\', 'e', 'l', 's', 'e', '\\', 'p', 'g', 'f', 's', 'e', 't', 'b',
       'e', 'v', 'e', 'l', 'j', 'o', 'i', 'n',
-      /* end of set join */
-      '\\', 'f', 'i', });
-
-  /**
-   * set a dash
-   */
-  private static final __Command SET_DASH = new __Command(2, new char[] {
-      '\\', 'p', 'g', 'f', 's', 'e', 't', 'd', 'a', 's', 'h', '{', '#',
-      '1', '}', '{', '#', '2', 'p', 't', '}', });
+      /* end of set join - now setting dash */
+      '\\', 'f', 'i', '\\', 'p', 'g', 'f', 's', 'e', 't', 'd', 'a', 's',
+      'h', '{', '#', '5', '}', '{', '#', '6', 'p', 't', '}', });
 
   /** create a rectangular path */
   private static final __Command PATH_RECTANGLE = new __Command(4,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'r', 'e', 'c',
-          't', 'a', 'n', 'g', 'l', 'e', '{',/* */
-          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
-          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
-          'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', });
+      't', 'a', 'n', 'g', 'l', 'e', '{',/* */
+      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
+      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
+      'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', });
 
   /** the use a path as bounding box */
   private static final char[] USE_PATH_BOUNDING_BOX = { '\\', 'p', 'g',
-      'f', 'u', 's', 'e', 'p', 'a', 't', 'h', '{', 'u', 's', 'e', ' ',
-      'a', 's', ' ', 'b', 'o', 'u', 'n', 'd', 'i', 'n', 'g', ' ', 'b',
-      'o', 'x', ',', 'c', 'l', 'i', 'p', '}' };
+    'f', 'u', 's', 'e', 'p', 'a', 't', 'h', '{', 'u', 's', 'e', ' ',
+    'a', 's', ' ', 'b', 'o', 'u', 'n', 'd', 'i', 'n', 'g', ' ', 'b',
+    'o', 'x', ',', 'c', 'l', 'i', 'p', '}' };
   /** fill a path */
   private static final __Command USE_PATH_FILL = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 'u', 's', 'e', 'p', 'a', 't', 'h',
-          '{', 'f', 'i', 'l', 'l', '}' });
+      '{', 'f', 'i', 'l', 'l', '}' });
   /** stroke a path */
   private static final __Command USE_PATH_STROKE = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 'u', 's', 'e', 'p', 'a', 't', 'h',
-          '{', 's', 't', 'r', 'o', 'k', 'e', '}' });
+      '{', 's', 't', 'r', 'o', 'k', 'e', '}' });
   /** clip a path */
   private static final __Command USE_PATH_CLIP = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 'u', 's', 'e', 'p', 'a', 't', 'h',
-          '{', 'c', 'l', 'i', 'p', '}', });
+      '{', 'c', 'l', 'i', 'p', '}', });
 
   /** the beginning of a new scope */
   private static final __Command SCOPE_BEGIN = new __Command(0,
@@ -162,89 +157,89 @@ final class _PGFGraphic extends SimpleGraphic {
   /** perform a rotation */
   private static final __Command TRANSFORM_ROTATE = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'r', 'o', 't', 'a', 't', 'e', '{', '#', '1', '}',/* */
-          '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'r', 'o', 't', 'a', 't', 'e', '{', '#', '1', '}',/* */
+  '}' });
 
   /** perform a scaling */
   private static final __Command TRANSFORM_SCALE = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
-          '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
+  '}' });
   /** do an x-scaling */
   private static final __Command TRANSFORM_SCALE_X = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'x', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
-          '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'x', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
+  '}' });
   /** do a y-scaling */
   private static final __Command TRANSFORM_SCALE_Y = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'y', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
-          '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'y', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
+  '}' });
   /** do an x and y-scaling */
   private static final __Command TRANSFORM_SCALE_XY = new __Command(2,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'x', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'y', 's', 'c', 'a', 'l', 'e', '{', '#', '2', '}',/* */
-          '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'x', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'y', 's', 'c', 'a', 'l', 'e', '{', '#', '2', '}',/* */
+  '}' });
 
   /** do a shift */
   private static final __Command TRANSFORM_SHIFT = new __Command(2,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 's', 'h', 'i', 'f', 't', '{', /* */
-          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 's', 'h', 'i', 'f', 't', '{', /* */
+      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '}' });
 
   /** do an x-shift */
   private static final __Command TRANSFORM_SHIFT_X = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'x', 's', 'h', 'i', 'f', 't', '{', '#', '1', 'p', 't', '}',
-          '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'x', 's', 'h', 'i', 'f', 't', '{', '#', '1', 'p', 't', '}',
+  '}' });
 
   /** do an y-shift */
   private static final __Command TRANSFORM_SHIFT_Y = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'y', 's', 'h', 'i', 'f', 't', '{', '#', '1', 'p', 't', '}',
-          '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'y', 's', 'h', 'i', 'f', 't', '{', '#', '1', 'p', 't', '}',
+  '}' });
 
   /** do a slant */
   private static final __Command TRANSFORM_SLANT = new __Command(2,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'x', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'y', 's', 'l', 'a', 'n', 't', '{', '#', '2', '}', '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'x', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'y', 's', 'l', 'a', 'n', 't', '{', '#', '2', '}', '}' });
 
   /** do an x-slant */
   private static final __Command TRANSFORM_SLANT_X = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'x', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}', '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'x', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}', '}' });
 
   /** do an y-slant */
   private static final __Command TRANSFORM_SLANT_Y = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-          'l', '{',/* */
-          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-          'm', 'y', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}', '}' });
+      'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+      'm', 'y', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}', '}' });
 
   /** begin defining a color */
   private static final __Command DEFINE_COLOR = new __Command(
@@ -254,10 +249,10 @@ final class _PGFGraphic extends SimpleGraphic {
 
   /** begin defining a color in rgb */
   private static final char[] DEFINE_COLOR_RGB = { '}', '{', 'r', 'g',
-      'b', '}', '{', };
+    'b', '}', '{', };
   /** begin defining a color in gray */
   private static final char[] DEFINE_COLOR_GRAY = { '}', '{', 'g', 'r',
-      'a', 'y', '}', '{', };
+    'a', 'y', '}', '{', };
 
   /** set the color */
   private static final __Command SET_COLOR = new __Command(2, new char[] {
@@ -272,57 +267,57 @@ final class _PGFGraphic extends SimpleGraphic {
   /** set an opaque color */
   private static final __Command SET_OPAQUE_COLOR = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 's', 'e', 't', 'c', 'o', 'l', 'o',
-          'r', '{', '#', '1', '}',/* */
-          '\\', 'p', 'g', 'f', 's', 'e', 't', 'f', 'i', 'l', 'l', 'o',
-          'p', 'a', 'c', 'i', 't', 'y', '{', '1', '}',/* */
-          '\\', 'p', 'g', 'f', 's', 'e', 't', 's', 't', 'r', 'o', 'k',
-          'e', 'o', 'p', 'a', 'c', 'i', 't', 'y', '{', '1', '}',/* */
-      });
+      'r', '{', '#', '1', '}',/* */
+      '\\', 'p', 'g', 'f', 's', 'e', 't', 'f', 'i', 'l', 'l', 'o',
+      'p', 'a', 'c', 'i', 't', 'y', '{', '1', '}',/* */
+      '\\', 'p', 'g', 'f', 's', 'e', 't', 's', 't', 'r', 'o', 'k',
+      'e', 'o', 'p', 'a', 'c', 'i', 't', 'y', '{', '1', '}',/* */
+  });
 
   /** path move to */
   private static final __Command PATH_MOVE_TO = new __Command(2,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'm', 'o', 'v',
-          'e', 't', 'o', '{',/* */
-          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', });
+      'e', 't', 'o', '{',/* */
+      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', });
   /** path line to */
   private static final __Command PATH_LINE_TO = new __Command(2,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'l', 'i', 'n',
-          'e', 't', 'o', '{',/* */
-          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', });
+      'e', 't', 'o', '{',/* */
+      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', });
   /** path curve to */
   private static final __Command PATH_CURVE_TO = new __Command(6,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'c', 'u', 'r',
-          'v', 'e', 't', 'o', '{',/* */
-          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
-          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
-          'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', '{',/* */
-          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '5',
-          'p', 't', '}', '{', '#', '6', 'p', 't', '}', '}', });
+      'v', 'e', 't', 'o', '{',/* */
+      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
+      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
+      'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', '{',/* */
+      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '5',
+      'p', 't', '}', '{', '#', '6', 'p', 't', '}', '}', });
   /** close the path */
   private static final __Command PATH_CLOSE = new __Command(0, new char[] {
       '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'c', 'l', 'o', 's', 'e' });
   /** path curve to */
   private static final __Command PATH_QUAD_TO = new __Command(4,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'q', 'u', 'a',
-          'd', 'r', 'a', 't', 'i', 'c', 'c', 'u', 'r', 'v', 'e', 't', 'o',
-          '{',/* */
-          '{',/* */
-          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
-          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
-          'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', });
+      'd', 'r', 'a', 't', 'i', 'c', 'c', 'u', 'r', 'v', 'e', 't', 'o',
+      '{',/* */
+      '{',/* */
+      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
+      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
+      'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', });
 
   /** the winding rule */
   private static final __Command PATH_OE_WINDING_RULE = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 's', 'e', 't', 'e', 'o', 'r', 'u',
-          'l', 'e' });
+      'l', 'e' });
   /** the winding rule */
   private static final __Command PATH_NZ_WINDING_RULE = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 's', 'e', 't', 'n', 'o', 'n', 'z',
-          'e', 'r', 'o', 'r', 'u', 'l', 'e' });
+      'e', 'r', 'o', 'r', 'u', 'l', 'e' });
 
   /** render some text */
   private static final __Command TEXT = new __Command(5, new char[] {
@@ -394,7 +389,7 @@ final class _PGFGraphic extends SimpleGraphic {
    */
   _PGFGraphic(final Logger logger, final IFileProducerListener listener,
       final Path path, final int width, final int height)
-      throws IOException {
+          throws IOException {
     super(logger, listener, path, width, height);
 
     final Rectangle boundingBox;
@@ -959,10 +954,9 @@ final class _PGFGraphic extends SimpleGraphic {
     if (join == BasicStroke.JOIN_MITER) {
       _PGFGraphic.__number(miterLimit, this.m_body);
     }
-    _PGFGraphic.__commandEndNL(this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
     if ((dash != null) && (dash.length > 0)) {
-      this.m_body.append(this.__getCommandName(_PGFGraphic.SET_DASH));
-      this.m_body.append('{');
       for (final float f : dash) {
         this.m_body.append('{');
         _PGFGraphic.__number(f, this.m_body);
@@ -973,8 +967,13 @@ final class _PGFGraphic extends SimpleGraphic {
       this.m_body.append('}');
       this.m_body.append('{');
       _PGFGraphic.__number(phase, this.m_body);
-      _PGFGraphic.__commandEndNL(this.m_body);
+    } else {
+      this.m_body.append('}');
+      this.m_body.append('{');
+      this.m_body.append('0');
     }
+
+    _PGFGraphic.__commandEndNL(this.m_body);
   }
 
   /**
@@ -1094,6 +1093,7 @@ final class _PGFGraphic extends SimpleGraphic {
     final TextLayout layout;
     final Rectangle2D bounds;
     FontProperties properties;
+    EFontFamily family;
     int closing;
 
     font = this.getFont();
@@ -1138,24 +1138,28 @@ final class _PGFGraphic extends SimpleGraphic {
       this.m_body.append('{');
       closing++;
     }
-    switch (properties.getFamily()) {
-      case MONOSPACED: {
-        this.m_body.append(this.__getCommandName(_PGFGraphic.TEXT_TT));
-        this.m_body.append('{');
-        closing++;
-        break;
-      }
-      case SANS_SERIF: {
-        this.m_body.append(this.__getCommandName(_PGFGraphic.TEXT_SF));
-        this.m_body.append('{');
-        closing++;
-        break;
-      }
-      case SERIF: {
-        this.m_body.append(this.__getCommandName(_PGFGraphic.TEXT_RM));
-        this.m_body.append('{');
-        closing++;
-        break;
+
+    family = properties.getFamily();
+    if (family != null) {
+      switch (family) {
+        case MONOSPACED: {
+          this.m_body.append(this.__getCommandName(_PGFGraphic.TEXT_TT));
+          this.m_body.append('{');
+          closing++;
+          break;
+        }
+        case SANS_SERIF: {
+          this.m_body.append(this.__getCommandName(_PGFGraphic.TEXT_SF));
+          this.m_body.append('{');
+          closing++;
+          break;
+        }
+        case SERIF: {
+          this.m_body.append(this.__getCommandName(_PGFGraphic.TEXT_RM));
+          this.m_body.append('{');
+          closing++;
+          break;
+        }
       }
     }
 
@@ -1249,6 +1253,11 @@ final class _PGFGraphic extends SimpleGraphic {
   /** {@inheritDoc} */
   @Override
   protected final void doSetPaint(final Paint paint) {
+    if (this.m_inScopeReset <= 0) {
+      if (paint instanceof Color) {
+        this.__setColor((Color) paint);
+      }
+    }
     super.doSetPaint(paint);
   }
 
@@ -1375,7 +1384,7 @@ final class _PGFGraphic extends SimpleGraphic {
    */
   private final void __rotate(final double thetaDeg) {
     this.m_body
-        .append(this.__getCommandName(_PGFGraphic.TRANSFORM_ROTATE));
+    .append(this.__getCommandName(_PGFGraphic.TRANSFORM_ROTATE));
     this.m_body.append('{');
     _PGFGraphic.__number(thetaDeg, this.m_body);
     _PGFGraphic.__commandEndNL(this.m_body);

@@ -83,8 +83,6 @@ public final class SimpleNumberAppender extends _PlainIntNumberAppender {
     __CharFloat inc, dec;
     String temp;
     _NumberString current, best;
-    int keepOn;
-
     // Now we have the string representation of the double number.
     // Let us see how and whether we can make it shorter.
     best = new _NumberString(orig);
@@ -99,39 +97,31 @@ public final class SimpleNumberAppender extends _PlainIntNumberAppender {
     }
 
     dec = inc.clone();
-    keepOn = 0;
 
     increment: {
       while (inc._incOrDec(1)) {
         temp = inc.toString();
         if (Double.parseDouble(temp) == value) {
-          keepOn = 0;
           current = new _NumberString(temp);
           if (current.compareTo(best) < 0) {
             best = current;
           }
         } else {
-          if ((keepOn++) > 0) {
-            break increment;
-          }
+          break increment;
         }
       }
     }
 
-    keepOn = 0;
     decrement: {
       while (dec._incOrDec(-1)) {
         temp = dec.toString();
         if (Double.parseDouble(temp) == value) {
-          keepOn = 0;
           current = new _NumberString(temp);
           if (current.compareTo(best) < 0) {
             best = current;
           }
         } else {
-          if ((keepOn++) > 0) {
-            break decrement;
-          }
+          break decrement;
         }
       }
     }
@@ -345,10 +335,10 @@ public final class SimpleNumberAppender extends _PlainIntNumberAppender {
           res += carry;
           data[i] = res;
           if (res > '9') {
-            res = '0';
+            data[i] = res = '0';
           } else {
             if (res < '0') {
-              res = '9';
+              data[i] = res = '9';
             } else {
               end = (i + 1);
               break add;
@@ -356,7 +346,7 @@ public final class SimpleNumberAppender extends _PlainIntNumberAppender {
           }
         }
 
-        if (carry < 0) {
+        if (i < 0) {
           return false;
         }
 
