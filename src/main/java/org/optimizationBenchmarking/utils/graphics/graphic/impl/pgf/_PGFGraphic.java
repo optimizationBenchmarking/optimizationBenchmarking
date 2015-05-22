@@ -14,6 +14,7 @@ import java.awt.Stroke;
 import java.awt.font.GlyphVector;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.PathIterator;
@@ -328,11 +329,7 @@ final class _PGFGraphic extends SimpleGraphic {
   private static final __Command PATH_NZ_WINDING_RULE = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 's', 'e', 't', 'n', 'o', 'n', 'z',
           'e', 'r', 'o', 'r', 'u', 'l', 'e' });
-  /** create an arc */
-  private static final __Command PATH_ARC = new __Command(4, new char[] {
-      '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'a', 'r', 'c', '{', '#',
-      '1', '}', '{', '#', '2', '}', '{', '#', '3', 'p', 't', ' ', 'a',
-      'n', 'd', '#', '4', 'p', 't', '}', });
+
   /** create an ellipse */
   private static final __Command PATH_ELLIPSE = new __Command(4,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'e', 'l', 'l',
@@ -1135,7 +1132,7 @@ final class _PGFGraphic extends SimpleGraphic {
     _PGFGraphic.__number(bounds.getWidth(), this.m_body);
     this.m_body.append('}');
     this.m_body.append('{');
-    _PGFGraphic.__number(bounds.getHeight(), this.m_body);
+    _PGFGraphic.__number(layout.getAscent(), this.m_body);
 
     this.m_body.append('}');
     this.m_body.append('{');
@@ -1626,13 +1623,13 @@ final class _PGFGraphic extends SimpleGraphic {
     _PGFGraphic.__number(tx.getScaleX(), this.m_body);
     this.m_body.append('}');
     this.m_body.append('{');
-    _PGFGraphic.__number(tx.getScaleY(), this.m_body);
+    _PGFGraphic.__number(tx.getShearY(), this.m_body);
     this.m_body.append('}');
     this.m_body.append('{');
     _PGFGraphic.__number(tx.getShearX(), this.m_body);
     this.m_body.append('}');
     this.m_body.append('{');
-    _PGFGraphic.__number(tx.getShearY(), this.m_body);
+    _PGFGraphic.__number(tx.getScaleY(), this.m_body);
     this.m_body.append('}');
     this.m_body.append('{');
     _PGFGraphic.__number(tx.getTranslateX(), this.m_body);
@@ -1916,44 +1913,13 @@ final class _PGFGraphic extends SimpleGraphic {
         ((double) height), ((double) startAngle), ((double) arcAngle));
   }
 
-  /**
-   * Add an arc segment to the current path
-   *
-   * @param width
-   *          the width
-   * @param height
-   *          the height
-   * @param startAngle
-   *          the start angle
-   * @param arcAngle
-   *          the end angle
-   */
-  private final void __arc(final double width, final double height,
-      final double startAngle, final double arcAngle) {
-    this.m_body.append(this.__getCommandName(_PGFGraphic.PATH_ARC));
-    this.m_body.append('{');
-    _PGFGraphic.__number(_PGFGraphic.__toDeg(startAngle), this.m_body);
-    this.m_body.append('}');
-    this.m_body.append('{');
-    _PGFGraphic.__number(_PGFGraphic.__toDeg(startAngle + arcAngle),
-        this.m_body);
-    this.m_body.append('}');
-    this.m_body.append('{');
-    _PGFGraphic.__number(width, this.m_body);
-    this.m_body.append('}');
-    this.m_body.append('{');
-    _PGFGraphic.__number(height, this.m_body);
-    _PGFGraphic.__commandEndNL(this.m_body);
-  }
-
   /** {@inheritDoc} */
   @Override
   protected final void doDrawArc(final double x, final double y,
       final double width, final double height, final double startAngle,
       final double arcAngle) {
-    this.__pathMoveTo(x, y);
-    this.__arc(width, height, startAngle, arcAngle);
-    this.__usePathStroke();
+    this.doDraw(new Arc2D.Double(x, y, width, height, startAngle,
+        arcAngle, Arc2D.PIE));
   }
 
   /** {@inheritDoc} */
@@ -1970,10 +1936,8 @@ final class _PGFGraphic extends SimpleGraphic {
   protected final void doFillArc(final double x, final double y,
       final double width, final double height, final double startAngle,
       final double arcAngle) {
-    this.__pathMoveTo(x, y);
-    this.__arc(width, height, startAngle, arcAngle);
-    this.__pathClose();
-    this.__usePathFill();
+    this.doFill(new Arc2D.Double(x, y, width, height, startAngle,
+        arcAngle, Arc2D.PIE));
   }
 
   /** {@inheritDoc} */
