@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.freeHEP.FreeHEPGraphicDrivers;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIORasterGraphicDrivers;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.pgf.PGFGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.parsers.InstanceParser;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
@@ -41,6 +42,8 @@ public final class GraphicDriverParser extends
         FreeHEPGraphicDrivers.class, paths);
     ReflectionUtils.addPackageOfClassToPrefixList(
         ImageIORasterGraphicDrivers.class, paths);
+    ReflectionUtils.addPackageOfClassToPrefixList(PGFGraphicDriver.class,
+        paths);
     return paths.toArray(new String[paths.size()]);
   }
 
@@ -48,6 +51,11 @@ public final class GraphicDriverParser extends
   @Override
   public final IGraphicDriver parseString(final String string)
       throws Exception {
+    if ("tex".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "latex".equalsIgnoreCase(string)) { //$NON-NLS-1$
+      return EGraphicFormat.PGF.getDefaultDriver();
+    }
+
     try {
       return this.m_formatParser.parseString(string).getDefaultDriver();
     } catch (final Exception exception) {

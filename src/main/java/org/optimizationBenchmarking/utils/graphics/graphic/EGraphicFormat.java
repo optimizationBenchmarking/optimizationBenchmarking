@@ -67,10 +67,13 @@ public enum EGraphicFormat implements IFileType {
   },
 
   /**
-   * The <a href="http://en.wikipedia.org/wiki/PGF/TikZ"> PGF</a> format.
-   * PGF is a LaTeX package for defining figures, which means that any PGF
-   * figure can directly be included in a LaTeX document via {@code \input}
-   * .
+   * The Portable Graphic Format (PGF) <sup><a
+   * href="http://en.wikipedia.org/wiki/PGF/TikZ">1</a>, <a
+   * href="http://ctan.org/pkg/pgf">2</a></sup>. PGF is a <a
+   * href="http://en.wikipedia.org/wiki/LaTeX">LaTeX</a format, meaning
+   * that such figures can readily be included into
+   * {@link org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver
+   * LaTeX} documents via {@code \input}.
    */
   PGF("Portable Graphics Format", false,//$NON-NLS-1$
       "tex", "application/x-latex") { //$NON-NLS-1$//$NON-NLS-2$
