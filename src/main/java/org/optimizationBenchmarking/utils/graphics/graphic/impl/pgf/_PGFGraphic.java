@@ -15,8 +15,10 @@ import java.awt.font.GlyphVector;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ImageObserver;
@@ -73,22 +75,22 @@ final class _PGFGraphic extends SimpleGraphic {
 
   /** begin the environment */
   private static final char[] RESIZE_BEGIN = { '\\', 'r', 'e', 's', 'i',
-    'z', 'e', 'b', 'o', 'x', '{' };
+      'z', 'e', 'b', 'o', 'x', '{' };
 
   /** begin the environment */
   private static final char[] PICTURE_BEGIN = { '\\', 'b', 'e', 'g', 'i',
-    'n', '{', 'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', '}' };
+      'n', '{', 'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', '}' };
 
   /** the post-amble */
   private static final char[] PICTURE_END = { '\\', 'e', 'n', 'd', '{',
-    'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', '}', '}' };
+      'p', 'g', 'f', 'p', 'i', 'c', 't', 'u', 'r', 'e', '}', '}' };
 
   /**
    * set a stroke: #1 = width, #2=cap, #3 join, #4 miter limit, if any
    */
   private static final __Command SET_STROKE = new __Command(6, new char[] {
-      /* set the line width */
-      '\\', 'p', 'g', 'f', 's', 'e', 't', 'l', 'i', 'n', 'e', 'w', 'i', 'd',
+  /* set the line width */
+  '\\', 'p', 'g', 'f', 's', 'e', 't', 'l', 'i', 'n', 'e', 'w', 'i', 'd',
       't', 'h', '{', '#', '1', 'p', 't', '}',
       /* set the cap */
       '\\', 'i', 'f', 'c', 'a', 's', 'e', '#', '2',
@@ -122,29 +124,29 @@ final class _PGFGraphic extends SimpleGraphic {
   /** create a rectangular path */
   private static final __Command PATH_RECTANGLE = new __Command(4,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'r', 'e', 'c',
-      't', 'a', 'n', 'g', 'l', 'e', '{',/* */
-      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
-      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
-      'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', });
+          't', 'a', 'n', 'g', 'l', 'e', '{',/* */
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
+          'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', });
 
   /** the use a path as bounding box */
   private static final char[] USE_PATH_BOUNDING_BOX = { '\\', 'p', 'g',
-    'f', 'u', 's', 'e', 'p', 'a', 't', 'h', '{', 'u', 's', 'e', ' ',
-    'a', 's', ' ', 'b', 'o', 'u', 'n', 'd', 'i', 'n', 'g', ' ', 'b',
-    'o', 'x', ',', 'c', 'l', 'i', 'p', '}' };
+      'f', 'u', 's', 'e', 'p', 'a', 't', 'h', '{', 'u', 's', 'e', ' ',
+      'a', 's', ' ', 'b', 'o', 'u', 'n', 'd', 'i', 'n', 'g', ' ', 'b',
+      'o', 'x', ',', 'c', 'l', 'i', 'p', '}' };
   /** fill a path */
   private static final __Command USE_PATH_FILL = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 'u', 's', 'e', 'p', 'a', 't', 'h',
-      '{', 'f', 'i', 'l', 'l', '}' });
+          '{', 'f', 'i', 'l', 'l', '}' });
   /** stroke a path */
   private static final __Command USE_PATH_STROKE = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 'u', 's', 'e', 'p', 'a', 't', 'h',
-      '{', 's', 't', 'r', 'o', 'k', 'e', '}' });
+          '{', 's', 't', 'r', 'o', 'k', 'e', '}' });
   /** clip a path */
   private static final __Command USE_PATH_CLIP = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 'u', 's', 'e', 'p', 'a', 't', 'h',
-      '{', 'c', 'l', 'i', 'p', '}', });
+          '{', 'c', 'l', 'i', 'p', '}', });
 
   /** the beginning of a new scope */
   private static final __Command SCOPE_BEGIN = new __Command(0,
@@ -157,89 +159,97 @@ final class _PGFGraphic extends SimpleGraphic {
   /** perform a rotation */
   private static final __Command TRANSFORM_ROTATE = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'r', 'o', 't', 'a', 't', 'e', '{', '#', '1', '}',/* */
-  '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'r', 'o', 't', 'a', 't', 'e', '{', '#', '1', '}',/* */
+          '}' });
 
   /** perform a scaling */
   private static final __Command TRANSFORM_SCALE = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
-  '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
+          '}' });
   /** do an x-scaling */
   private static final __Command TRANSFORM_SCALE_X = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'x', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
-  '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'x', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
+          '}' });
   /** do a y-scaling */
   private static final __Command TRANSFORM_SCALE_Y = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'y', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
-  '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'y', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
+          '}' });
   /** do an x and y-scaling */
   private static final __Command TRANSFORM_SCALE_XY = new __Command(2,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'x', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'y', 's', 'c', 'a', 'l', 'e', '{', '#', '2', '}',/* */
-  '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'x', 's', 'c', 'a', 'l', 'e', '{', '#', '1', '}',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'y', 's', 'c', 'a', 'l', 'e', '{', '#', '2', '}',/* */
+          '}' });
 
   /** do a shift */
   private static final __Command TRANSFORM_SHIFT = new __Command(2,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 's', 'h', 'i', 'f', 't', '{', /* */
-      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 's', 'h', 'i', 'f', 't', '{', /* */
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '}' });
 
   /** do an x-shift */
   private static final __Command TRANSFORM_SHIFT_X = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'x', 's', 'h', 'i', 'f', 't', '{', '#', '1', 'p', 't', '}',
-  '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'x', 's', 'h', 'i', 'f', 't', '{', '#', '1', 'p', 't', '}',
+          '}' });
 
   /** do an y-shift */
   private static final __Command TRANSFORM_SHIFT_Y = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'y', 's', 'h', 'i', 'f', 't', '{', '#', '1', 'p', 't', '}',
-  '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'y', 's', 'h', 'i', 'f', 't', '{', '#', '1', 'p', 't', '}',
+          '}' });
 
   /** do a slant */
   private static final __Command TRANSFORM_SLANT = new __Command(2,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'x', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'y', 's', 'l', 'a', 'n', 't', '{', '#', '2', '}', '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'x', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'y', 's', 'l', 'a', 'n', 't', '{', '#', '2', '}', '}' });
 
   /** do an x-slant */
   private static final __Command TRANSFORM_SLANT_X = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'x', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}', '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'x', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}', '}' });
 
   /** do an y-slant */
   private static final __Command TRANSFORM_SLANT_Y = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e',
-      'l', '{',/* */
-      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
-      'm', 'y', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}', '}' });
+          'l', '{',/* */
+          '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r',
+          'm', 'y', 's', 'l', 'a', 'n', 't', '{', '#', '1', '}', '}' });
+  /** do a transformation */
+  private static final __Command TRANSFORM = new __Command(6, new char[] {
+      '\\', 'p', 'g', 'f', 'l', 'o', 'w', 'l', 'e', 'v', 'e', 'l', '{',/* */
+      '\\', 'p', 'g', 'f', 't', 'r', 'a', 'n', 's', 'f', 'o', 'r', 'm',
+      'c', 'm', '{', '#', '1', '}', '{', '#', '2', '}', '{', '#', '3',
+      '}', '{', '#', '4', '}', '{', '\\', 'p', 'g', 'f', 'p', 'o', 'i',
+      'n', 't', '{', '#', '5', 'p', 't', '}', '{', '#', '6', 'p', 't',
+      '}', '}', '}', });
 
   /** begin defining a color */
   private static final __Command DEFINE_COLOR = new __Command(
@@ -249,10 +259,10 @@ final class _PGFGraphic extends SimpleGraphic {
 
   /** begin defining a color in rgb */
   private static final char[] DEFINE_COLOR_RGB = { '}', '{', 'r', 'g',
-    'b', '}', '{', };
+      'b', '}', '{', };
   /** begin defining a color in gray */
   private static final char[] DEFINE_COLOR_GRAY = { '}', '{', 'g', 'r',
-    'a', 'y', '}', '{', };
+      'a', 'y', '}', '{', };
 
   /** set the color */
   private static final __Command SET_COLOR = new __Command(2, new char[] {
@@ -267,57 +277,71 @@ final class _PGFGraphic extends SimpleGraphic {
   /** set an opaque color */
   private static final __Command SET_OPAQUE_COLOR = new __Command(1,
       new char[] { '\\', 'p', 'g', 'f', 's', 'e', 't', 'c', 'o', 'l', 'o',
-      'r', '{', '#', '1', '}',/* */
-      '\\', 'p', 'g', 'f', 's', 'e', 't', 'f', 'i', 'l', 'l', 'o',
-      'p', 'a', 'c', 'i', 't', 'y', '{', '1', '}',/* */
-      '\\', 'p', 'g', 'f', 's', 'e', 't', 's', 't', 'r', 'o', 'k',
-      'e', 'o', 'p', 'a', 'c', 'i', 't', 'y', '{', '1', '}',/* */
-  });
+          'r', '{', '#', '1', '}',/* */
+          '\\', 'p', 'g', 'f', 's', 'e', 't', 'f', 'i', 'l', 'l', 'o',
+          'p', 'a', 'c', 'i', 't', 'y', '{', '1', '}',/* */
+          '\\', 'p', 'g', 'f', 's', 'e', 't', 's', 't', 'r', 'o', 'k',
+          'e', 'o', 'p', 'a', 'c', 'i', 't', 'y', '{', '1', '}',/* */
+      });
 
   /** path move to */
   private static final __Command PATH_MOVE_TO = new __Command(2,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'm', 'o', 'v',
-      'e', 't', 'o', '{',/* */
-      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', });
+          'e', 't', 'o', '{',/* */
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', });
   /** path line to */
   private static final __Command PATH_LINE_TO = new __Command(2,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'l', 'i', 'n',
-      'e', 't', 'o', '{',/* */
-      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', });
+          'e', 't', 'o', '{',/* */
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', });
   /** path curve to */
   private static final __Command PATH_CURVE_TO = new __Command(6,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'c', 'u', 'r',
-      'v', 'e', 't', 'o', '{',/* */
-      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
-      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
-      'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', '{',/* */
-      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '5',
-      'p', 't', '}', '{', '#', '6', 'p', 't', '}', '}', });
+          'v', 'e', 't', 'o', '{',/* */
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
+          'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', '{',/* */
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '5',
+          'p', 't', '}', '{', '#', '6', 'p', 't', '}', '}', });
   /** close the path */
   private static final __Command PATH_CLOSE = new __Command(0, new char[] {
       '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'c', 'l', 'o', 's', 'e' });
   /** path curve to */
   private static final __Command PATH_QUAD_TO = new __Command(4,
       new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'q', 'u', 'a',
-      'd', 'r', 'a', 't', 'i', 'c', 'c', 'u', 'r', 'v', 'e', 't', 'o',
-      '{',/* */
-      '{',/* */
-      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
-      'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
-      '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
-      'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', });
+          'd', 'r', 'a', 't', 'i', 'c', 'c', 'u', 'r', 'v', 'e', 't', 'o',
+          '{',/* */
+          '{',/* */
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '1',
+          'p', 't', '}', '{', '#', '2', 'p', 't', '}', '}', '{',/* */
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '#', '3',
+          'p', 't', '}', '{', '#', '4', 'p', 't', '}', '}', });
 
   /** the winding rule */
   private static final __Command PATH_OE_WINDING_RULE = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 's', 'e', 't', 'e', 'o', 'r', 'u',
-      'l', 'e' });
+          'l', 'e' });
   /** the winding rule */
   private static final __Command PATH_NZ_WINDING_RULE = new __Command(0,
       new char[] { '\\', 'p', 'g', 'f', 's', 'e', 't', 'n', 'o', 'n', 'z',
-      'e', 'r', 'o', 'r', 'u', 'l', 'e' });
+          'e', 'r', 'o', 'r', 'u', 'l', 'e' });
+  /** create an arc */
+  private static final __Command PATH_ARC = new __Command(4, new char[] {
+      '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'a', 'r', 'c', '{', '#',
+      '1', '}', '{', '#', '2', '}', '{', '#', '3', 'p', 't', ' ', 'a',
+      'n', 'd', '#', '4', 'p', 't', '}', });
+  /** create an ellipse */
+  private static final __Command PATH_ELLIPSE = new __Command(4,
+      new char[] { '\\', 'p', 'g', 'f', 'p', 'a', 't', 'h', 'e', 'l', 'l',
+          'i', 'p', 's', 'e', '{', '\\', 'p', 'g', 'f', 'p', 'o', 'i',
+          'n', 't', '{', '#', '1', 'p', 't', '}', '{', '#', '2', 'p', 't',
+          '}', '}', '{', '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't',
+          '{', '#', '3', 'p', 't', '}', '{', '0', 'p', 't', '}', '}', '{',
+          '\\', 'p', 'g', 'f', 'p', 'o', 'i', 'n', 't', '{', '0', 'p',
+          't', '}', '{', '#', '4', 'p', 't', '}', '}', });
 
   /** render some text */
   private static final __Command TEXT = new __Command(5, new char[] {
@@ -389,7 +413,7 @@ final class _PGFGraphic extends SimpleGraphic {
    */
   _PGFGraphic(final Logger logger, final IFileProducerListener listener,
       final Path path, final int width, final int height)
-          throws IOException {
+      throws IOException {
     super(logger, listener, path, width, height);
 
     final Rectangle boundingBox;
@@ -1059,7 +1083,6 @@ final class _PGFGraphic extends SimpleGraphic {
   protected void doDrawImage(final BufferedImage img,
       final BufferedImageOp op, final int x, final int y) {
     // TODO
-
   }
 
   /** {@inheritDoc} */
@@ -1384,7 +1407,7 @@ final class _PGFGraphic extends SimpleGraphic {
    */
   private final void __rotate(final double thetaDeg) {
     this.m_body
-    .append(this.__getCommandName(_PGFGraphic.TRANSFORM_ROTATE));
+        .append(this.__getCommandName(_PGFGraphic.TRANSFORM_ROTATE));
     this.m_body.append('{');
     _PGFGraphic.__number(thetaDeg, this.m_body);
     _PGFGraphic.__commandEndNL(this.m_body);
@@ -1591,17 +1614,64 @@ final class _PGFGraphic extends SimpleGraphic {
     super.doShear(shx, shy);
   }
 
-  // /** {@inheritDoc} */
-  // @Override
-  // protected void doTransform(final AffineTransform Tx) {
-  // this.__getTransform().concatenate(Tx);
-  // }
-  //
-  // /** {@inheritDoc} */
-  // @Override
-  // protected void doSetTransform(final AffineTransform Tx) {
-  // this.__getTransform().setTransform(Tx);
-  // }
+  /**
+   * apply a transform
+   *
+   * @param tx
+   *          the transform
+   */
+  private final void __transform(final AffineTransform tx) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.TRANSFORM));
+    this.m_body.append('{');
+    _PGFGraphic.__number(tx.getScaleX(), this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(tx.getScaleY(), this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(tx.getShearX(), this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(tx.getShearY(), this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(tx.getTranslateX(), this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(tx.getTranslateY(), this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doTransform(final AffineTransform Tx) {
+    if (this.m_inScopeReset <= 0) {
+      this.__transform(Tx);
+    }
+    super.doTransform(Tx);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doSetTransform(final AffineTransform Tx) {
+    final AffineTransform ax;
+
+    if (this.m_inScopeReset <= 0) {
+      try {
+        ax = this.getTransform();
+        if (!(ax.isIdentity())) {
+          ax.invert();
+          this.__transform(ax);
+        }
+      } catch (final NoninvertibleTransformException cannot) {
+        ErrorUtils.logError(this.getLogger(),
+            "Cannot set transform since cannot invert old transform.", //$NON-NLS-1$
+            cannot, false, RethrowMode.DONT_RETHROW);
+      }
+      this.__transform(Tx);
+    }
+    super.doSetTransform(Tx);
+  }
 
   /** {@inheritDoc} */
   @Override
@@ -1742,48 +1812,168 @@ final class _PGFGraphic extends SimpleGraphic {
 
   /** {@inheritDoc} */
   @Override
-  protected void doDrawRoundRect(final int x, final int y,
+  protected final void doDrawRoundRect(final int x, final int y,
       final int width, final int height, final int arcWidth,
       final int arcHeight) {
-    throw new UnsupportedOperationException();
-
+    this.doDrawRoundRect(((double) x), ((double) y), ((double) width),
+        ((double) height), ((double) arcWidth), ((double) arcHeight));
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void doFillRoundRect(final int x, final int y,
+  protected final void doDrawRoundRect(final double x, final double y,
+      final double width, final double height, final double arcWidth,
+      final double arcHeight) {
+    this.doDraw(new RoundRectangle2D.Double(x, y, width, height, arcWidth,
+        arcHeight));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doFillRoundRect(final int x, final int y,
       final int width, final int height, final int arcWidth,
       final int arcHeight) {
-    // TODO
+    this.doFillRoundRect(((double) x), ((double) y), ((double) width),
+        ((double) height), ((double) arcWidth), ((double) arcHeight));
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void doDrawOval(final int x, final int y, final int width,
-      final int height) {
-    // TODO
+  protected final void doFillRoundRect(final double x, final double y,
+      final double width, final double height, final double arcWidth,
+      final double arcHeight) {
+    this.doFill(new RoundRectangle2D.Double(x, y, width, height, arcWidth,
+        arcHeight));
+  }
+
+  /**
+   * put an ellipse on the path
+   *
+   * @param x
+   *          the x-coordinate
+   * @param y
+   *          the y-coordinate
+   * @param width
+   *          the width
+   * @param height
+   *          the height
+   */
+  private final void __ellipse(final double x, final double y,
+      final double width, final double height) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.PATH_ELLIPSE));
+    this.m_body.append('{');
+    _PGFGraphic.__number(x, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(y, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(width, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(height, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void doFillOval(final int x, final int y, final int width,
-      final int height) {
-    // TODO
-
+  protected final void doDrawOval(final int x, final int y,
+      final int width, final int height) {
+    this.doDrawOval(((double) x), ((double) y), ((double) width),
+        ((double) height));
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void doDrawArc(final int x, final int y, final int width,
-      final int height, final int startAngle, final int arcAngle) {
-    // TODO
+  protected final void doDrawOval(final double x, final double y,
+      final double width, final double height) {
+    this.__ellipse(x, y, width, height);
+    this.__usePathStroke();
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void doFillArc(final int x, final int y, final int width,
-      final int height, final int startAngle, final int arcAngle) {
-    // TODO
+  protected final void doFillOval(final int x, final int y,
+      final int width, final int height) {
+    this.doFillOval(((double) x), ((double) y), ((double) width),
+        ((double) height));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doFillOval(final double x, final double y,
+      final double width, final double height) {
+    this.__ellipse(x, y, width, height);
+    this.__usePathFill();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doDrawArc(final int x, final int y,
+      final int width, final int height, final int startAngle,
+      final int arcAngle) {
+    this.doDrawArc(((double) x), ((double) y), ((double) width),
+        ((double) height), ((double) startAngle), ((double) arcAngle));
+  }
+
+  /**
+   * Add an arc segment to the current path
+   *
+   * @param width
+   *          the width
+   * @param height
+   *          the height
+   * @param startAngle
+   *          the start angle
+   * @param arcAngle
+   *          the end angle
+   */
+  private final void __arc(final double width, final double height,
+      final double startAngle, final double arcAngle) {
+    this.m_body.append(this.__getCommandName(_PGFGraphic.PATH_ARC));
+    this.m_body.append('{');
+    _PGFGraphic.__number(_PGFGraphic.__toDeg(startAngle), this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(_PGFGraphic.__toDeg(startAngle + arcAngle),
+        this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(width, this.m_body);
+    this.m_body.append('}');
+    this.m_body.append('{');
+    _PGFGraphic.__number(height, this.m_body);
+    _PGFGraphic.__commandEndNL(this.m_body);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doDrawArc(final double x, final double y,
+      final double width, final double height, final double startAngle,
+      final double arcAngle) {
+    this.__pathMoveTo(x, y);
+    this.__arc(width, height, startAngle, arcAngle);
+    this.__usePathStroke();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doFillArc(final int x, final int y,
+      final int width, final int height, final int startAngle,
+      final int arcAngle) {
+    this.doFillArc(((double) x), ((double) y), ((double) width),
+        ((double) height), ((double) startAngle), ((double) arcAngle));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void doFillArc(final double x, final double y,
+      final double width, final double height, final double startAngle,
+      final double arcAngle) {
+    this.__pathMoveTo(x, y);
+    this.__arc(width, height, startAngle, arcAngle);
+    this.__pathClose();
+    this.__usePathFill();
   }
 
   /** {@inheritDoc} */
