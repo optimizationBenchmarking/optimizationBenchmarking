@@ -181,7 +181,7 @@ abstract class _Aggregation2DBase<T extends IElementSet> extends
       textOut.append(' ');
     }
 
-    return this.getXDimension().appendName(textOut, use);
+    return this.getYDimension().appendName(textOut, use);
   }
 
   /** {@inheritDoc} */
