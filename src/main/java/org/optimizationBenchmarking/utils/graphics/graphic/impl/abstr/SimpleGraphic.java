@@ -30,8 +30,11 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
- * A graphic which simply discards all of its output. This object is
- * designed for high-throughput and low memory footprint.
+ * A base class for implementations of
+ * {@link org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic}
+ * that are not wrappers around library-provided graphics but the
+ * "real deal". This implementation does not provide any rendering
+ * functionality, but keeps track of colors and transforms and so on.
  */
 public abstract class SimpleGraphic extends Graphic {
 
@@ -80,7 +83,7 @@ public abstract class SimpleGraphic extends Graphic {
   private FontRenderContext m_fontRenderContext;
 
   /**
-   * create the null graphic
+   * create the simple graphic
    *
    * @param logger
    *          the logger
@@ -107,8 +110,8 @@ public abstract class SimpleGraphic extends Graphic {
     this.m_width = width;
     this.m_height = height;
 
-    this.m_paint = this.m_color = DEFAULT_FOREGROUND_COLOR;
-    this.m_bgcolor = DEFAULT_BACKGROUND_COLOR;
+    this.m_paint = this.m_color = SimpleGraphic.DEFAULT_FOREGROUND_COLOR;
+    this.m_bgcolor = SimpleGraphic.DEFAULT_BACKGROUND_COLOR;
     this.m_clip = new Rectangle(0, 0, this.m_width, this.m_height);
   }
 
@@ -127,7 +130,7 @@ public abstract class SimpleGraphic extends Graphic {
 
   /**
    * Create the graphics device configuration
-   * 
+   *
    * @return the graphics device configuration
    */
   protected GraphicsConfiguration createDeviceConfiguration() {
@@ -191,7 +194,7 @@ public abstract class SimpleGraphic extends Graphic {
 
   /**
    * Create the default rendering hints for this graphic.
-   * 
+   *
    * @return the default rendering hints for this graphic
    */
   protected RenderingHints createRenderingHints() {
@@ -501,7 +504,7 @@ public abstract class SimpleGraphic extends Graphic {
 
   /**
    * Get the color model
-   * 
+   *
    * @return the color model
    */
   protected ColorModel getColorModel() {
@@ -510,7 +513,7 @@ public abstract class SimpleGraphic extends Graphic {
 
   /**
    * Get the color model
-   * 
+   *
    * @param transparency
    *          the transparency
    * @return the color model
@@ -521,7 +524,7 @@ public abstract class SimpleGraphic extends Graphic {
 
   /**
    * Get the default transformation
-   * 
+   *
    * @return the default transformation
    */
   protected AffineTransform getDefaultTransform() {
@@ -530,7 +533,7 @@ public abstract class SimpleGraphic extends Graphic {
 
   /**
    * Get the normalizing transformation
-   * 
+   *
    * @return the normalizing transformation
    */
   protected AffineTransform getNormalizingTransform() {

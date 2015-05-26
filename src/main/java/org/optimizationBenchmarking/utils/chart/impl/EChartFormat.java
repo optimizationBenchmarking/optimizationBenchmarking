@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.chart.impl;
 
+import org.optimizationBenchmarking.utils.chart.impl.export.ExportChartDriver;
 import org.optimizationBenchmarking.utils.chart.impl.jfree.JFreeChartDriver;
 import org.optimizationBenchmarking.utils.chart.spec.IChartDriver;
 
@@ -7,13 +8,23 @@ import org.optimizationBenchmarking.utils.chart.spec.IChartDriver;
 public enum EChartFormat {
 
   /** the JFreeChart chart format */
-  JFreeChart() {
+  JFreeChart {
     /** {@inheritDoc} */
     @Override
     public final IChartDriver getDefaultDriver() {
       return JFreeChartDriver.getInstance();
     }
-  };
+  },
+
+  /** the export chart format */
+  EXPORT {
+    /** {@inheritDoc} */
+    @Override
+    public final IChartDriver getDefaultDriver() {
+      return ExportChartDriver.getInstance();
+    }
+  },
+  ;
 
   /** the default chart format */
   public static final EChartFormat DEFAULT = JFreeChart;

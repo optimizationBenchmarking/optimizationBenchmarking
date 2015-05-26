@@ -9,13 +9,11 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.GraphicUtils;
-import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
-import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
@@ -68,8 +66,8 @@ public final class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
     if (this.m_error != null) {
       throw new UnsupportedOperationException(
           ("Cannot use " + //$NON-NLS-1$
-              TextUtils.className(FreeHEPPDFGraphicDriver.class)),
-              this.m_error);
+          TextUtils.className(FreeHEPPDFGraphicDriver.class)),
+          this.m_error);
     }
     super.checkCanUse();
   }
@@ -105,7 +103,7 @@ public final class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
         "org.freehep.graphics2d.font.FontEncoder", //$NON-NLS-1$
         "org.freehep.graphics2d.font.FontUtilities", //$NON-NLS-1$
         "org.freehep.util.images.ImageUtilities" //$NON-NLS-1$
-        );
+    );
 
     final org.freehep.util.UserProperties props = new org.freehep.util.UserProperties();
 
@@ -168,29 +166,15 @@ public final class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   protected final Graphic createGraphic(final GraphicBuilder builder) {
     final org.freehep.util.UserProperties up;
     final _FreeHEPPDFGraphic g;
-    final double wd, hd;
     final Dimension dim;
-    final ELength sizeUnit;
     final Path path;
-    final PhysicalDimension size;
     final Logger logger;
     OutputStream stream;
 
     up = new org.freehep.util.UserProperties();
     up.putAll(this.m_props);
 
-    size = builder.getSize();
-    sizeUnit = size.getUnit();
-    wd = sizeUnit.convertTo(size.getWidth(), ELength.POINT);
-    hd = sizeUnit.convertTo(size.getHeight(), ELength.POINT);
-    dim = new Dimension();
-    if ((wd <= 0d) || (wd >= Integer.MAX_VALUE) || (hd <= 0d)
-        || (hd >= Integer.MAX_VALUE)
-        || ((dim.width = ((int) (0.5d + wd))) <= 0)
-        || ((dim.height = ((int) (0.5d + hd))) <= 0)) {
-      throw new IllegalArgumentException("Invalid size " + size + //$NON-NLS-1$
-          " translated to " + dim);//$NON-NLS-1$
-    }
+    dim = AbstractGraphicDriver.getIntegerSizeInPoints(builder.getSize());
 
     path = this.makePath(builder.getBasePath(),
         builder.getMainDocumentNameSuggestion());
@@ -219,7 +203,7 @@ public final class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
         }
       } finally {
         FreeHEPPDFGraphicDriver.s_messWith
-        .setSize(FreeHEPPDFGraphicDriver.s_correctDim);
+            .setSize(FreeHEPPDFGraphicDriver.s_correctDim);
       }
     }
 

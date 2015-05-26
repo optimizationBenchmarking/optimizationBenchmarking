@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** a graphic driver parser */
 public final class GraphicDriverParser extends
-    InstanceParser<IGraphicDriver> {
+InstanceParser<IGraphicDriver> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -55,6 +55,11 @@ public final class GraphicDriverParser extends
         "latex".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return EGraphicFormat.PGF.getDefaultDriver();
     }
+    if ("text".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "txt".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "export".equalsIgnoreCase(string)) { //$NON-NLS-1$
+      return EGraphicFormat.TEXT.getDefaultDriver();
+    }
 
     try {
       return this.m_formatParser.parseString(string).getDefaultDriver();
@@ -64,8 +69,8 @@ public final class GraphicDriverParser extends
       } catch (final Exception exception2) {
         RethrowMode.AS_UNSUPPORTED_OPERATION_EXCEPTION.rethrow(
             ((("Could not find graphic driver fitting to string '" //$NON-NLS-1$
-            + string) + '\'') + '.'), false,
-            ErrorUtils.aggregateError(exception, exception2));
+                + string) + '\'') + '.'), false,
+                ErrorUtils.aggregateError(exception, exception2));
         return null;// never reached
       }
     }
@@ -82,8 +87,8 @@ public final class GraphicDriverParser extends
       } catch (final Exception exception2) {
         RethrowMode.AS_UNSUPPORTED_OPERATION_EXCEPTION.rethrow(
             ((("Could not find graphic driver fitting to object '" //$NON-NLS-1$
-            + o) + '\'') + '.'), false,
-            ErrorUtils.aggregateError(exception, exception2));
+                + o) + '\'') + '.'), false,
+                ErrorUtils.aggregateError(exception, exception2));
         return null;// never reached
       }
     }

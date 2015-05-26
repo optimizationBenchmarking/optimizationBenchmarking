@@ -4,7 +4,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 public class Emphasize extends PlainText {
 
   /**
-   * Create an in-line code text.
+   * Create an emphasize text.
    *
    * @param owner
    *          the owning FSM

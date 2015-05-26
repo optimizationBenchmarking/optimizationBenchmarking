@@ -6,12 +6,10 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
-import org.optimizationBenchmarking.utils.graphics.PhysicalDimension;
 import org.optimizationBenchmarking.utils.graphics.graphic.EGraphicFormat;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.AbstractGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.abstr.GraphicBuilder;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
-import org.optimizationBenchmarking.utils.math.units.ELength;
 import org.optimizationBenchmarking.utils.text.transformations.LaTeXCharTransformer;
 
 /**
@@ -59,25 +57,11 @@ public final class PGFGraphicDriver extends AbstractGraphicDriver {
   /** {@inheritDoc} */
   @Override
   protected final Graphic createGraphic(final GraphicBuilder builder) {
-    final double wd, hd;
     final Dimension dim;
-    final ELength sizeUnit;
     final Path path;
-    final PhysicalDimension size;
     final Logger logger;
 
-    size = builder.getSize();
-    sizeUnit = size.getUnit();
-    wd = sizeUnit.convertTo(size.getWidth(), ELength.POINT);
-    hd = sizeUnit.convertTo(size.getHeight(), ELength.POINT);
-    dim = new Dimension();
-    if ((wd <= 0d) || (wd >= Integer.MAX_VALUE) || (hd <= 0d)
-        || (hd >= Integer.MAX_VALUE)
-        || ((dim.width = ((int) (0.5d + wd))) <= 0)
-        || ((dim.height = ((int) (0.5d + hd))) <= 0)) {
-      throw new IllegalArgumentException("Invalid size " + size + //$NON-NLS-1$
-          " translated to " + dim);//$NON-NLS-1$
-    }
+    dim = AbstractGraphicDriver.getIntegerSizeInPoints(builder.getSize());
 
     path = this.makePath(builder.getBasePath(),
         builder.getMainDocumentNameSuggestion());

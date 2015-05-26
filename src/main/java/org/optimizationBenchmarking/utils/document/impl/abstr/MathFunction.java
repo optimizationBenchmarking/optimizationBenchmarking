@@ -44,7 +44,12 @@ public abstract class MathFunction extends BasicMath {
       final HierarchicalText child, final MemoryTextOutput out) {
     this.m_data[this.m_done++] = out.toChars();
     if (this.m_data[this.m_done - 1].length <= 0) {
-      throw new IllegalArgumentException(child.toString());
+      throw new IllegalArgumentException((((//
+          "Child " //$NON-NLS-1$
+          + child.toString()) + //
+          " of the mathematical function ") //$NON-NLS-1$
+          + this.toString())
+          + " must produce some text, but returned an empty string.");//$NON-NLS-1$
     }
   }
 

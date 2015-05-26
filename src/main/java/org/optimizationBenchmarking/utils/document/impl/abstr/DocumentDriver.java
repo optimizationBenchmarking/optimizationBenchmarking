@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.bibliography.data.BibRecord;
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
+import org.optimizationBenchmarking.utils.chart.impl.EChartFormat;
+import org.optimizationBenchmarking.utils.chart.impl.export.ExportChartDriver;
+import org.optimizationBenchmarking.utils.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
@@ -933,6 +936,28 @@ public abstract class DocumentDriver extends DocumentProducerTool
    */
   protected void checkGraphicDriver(final IGraphicDriver driver) {
     //
+  }
+
+  /**
+   * Obtain the default graphics chart for this document type
+   *
+   * @return the default graphics chart for this document type
+   */
+  protected IChartDriver getDefaultChartDriver() {
+    return EChartFormat.DEFAULT.getDefaultDriver();
+  }
+
+  /**
+   * check the chart driver
+   *
+   * @param driver
+   *          the driver, never {@code null}
+   */
+  protected void checkChartDriver(final IChartDriver driver) {
+    if (driver instanceof ExportChartDriver) {
+      throw new IllegalArgumentException(
+          "This document format only supports 'real' chart drivers, but you supplied a graphic driver for textual data export."); //$NON-NLS-1$
+    }
   }
 
   /**

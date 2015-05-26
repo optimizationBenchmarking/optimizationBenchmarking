@@ -12,9 +12,11 @@ import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.Im
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOJPEGGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.imageioRaster.ImageIOPNGGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.impl.pgf.PGFGraphicDriver;
+import org.optimizationBenchmarking.utils.graphics.graphic.impl.text.TextGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver;
 import org.optimizationBenchmarking.utils.graphics.style.color.EColorModel;
 import org.optimizationBenchmarking.utils.io.IFileType;
+import org.optimizationBenchmarking.utils.text.ETextFileType;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
@@ -193,6 +195,23 @@ public enum EGraphicFormat implements IFileType {
     @Override
     public final IGraphicDriver getDefaultDriver() {
       return ImageIOBMPGraphicDriver.getInstance();
+    }
+  },
+
+  /**
+   * A graphic format not intended to actually produce graphics, but
+   * instead for creating text files containing, e.g.,
+   * {@link org.optimizationBenchmarking.utils.text.ETextFileType#CSV}
+   * data. This is intended to allow specialized chart drivers to export
+   * the chart data instead of rendering them.
+   */
+  TEXT(ETextFileType.TXT.getName(), true,//
+      ETextFileType.TXT.getDefaultSuffix(),//
+      ETextFileType.TXT.getMIMEType()) {
+    /** {@inheritDoc} */
+    @Override
+    public final IGraphicDriver getDefaultDriver() {
+      return TextGraphicDriver.getInstance();
     }
   },
 

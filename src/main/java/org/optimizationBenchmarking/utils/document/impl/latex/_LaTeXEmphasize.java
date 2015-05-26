@@ -10,7 +10,7 @@ final class _LaTeXEmphasize extends Emphasize {
   private static final char[] EMPH_BEGIN = _LaTeXStyledText.EMPH_BEGIN;
 
   /**
-   * create the subscript element
+   * create the emphasize element
    *
    * @param owner
    *          the owner

@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.document.impl;
 
 import java.util.LinkedHashSet;
 
+import org.optimizationBenchmarking.utils.document.impl.export.ExportDriver;
 import org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver;
 import org.optimizationBenchmarking.utils.document.impl.xhtml10.XHTML10Driver;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
@@ -51,6 +52,11 @@ public final class DocumentDriverParser extends
         "xetex".equalsIgnoreCase(string) || //$NON-NLS-1$
         "pdflatex".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return LaTeXDriver.getInstance();
+    }
+    if ("export".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "text".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "txt".equalsIgnoreCase(string)) { //$NON-NLS-1$
+      return ExportDriver.getInstance();
     }
 
     return super.parseString(string);

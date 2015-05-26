@@ -200,6 +200,8 @@ public abstract class DocumentBuilder extends
         .getChartDriver());
     DocumentConfiguration._checkGraphicDriverCompliance(
         this.m_builder.getGraphicDriver(), documents);
+    DocumentConfiguration._checkChartDriverCompliance(
+        this.m_builder.getChartDriver(), documents);
   }
 
   /** {@inheritDoc} */

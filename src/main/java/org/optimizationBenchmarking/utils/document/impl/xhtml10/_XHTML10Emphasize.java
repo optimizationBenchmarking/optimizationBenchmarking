@@ -11,7 +11,7 @@ final class _XHTML10Emphasize extends Emphasize {
   private boolean m_tagUsed;
 
   /**
-   * create the inline code element
+   * create the emphasize element
    *
    * @param owner
    *          the owner

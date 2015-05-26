@@ -40,6 +40,8 @@ public class DocumentConfiguration extends GraphicConfiguration {
         .getChartDriver());
     DocumentConfiguration._checkGraphicDriverCompliance(
         this.getGraphicDriver(), this.m_documentDriver);
+    DocumentConfiguration._checkChartDriverCompliance(this.m_chartDriver,
+        this.m_documentDriver);
   }
 
   /** {@inheritDoc} */
@@ -96,6 +98,25 @@ public class DocumentConfiguration extends GraphicConfiguration {
       if (document != null) {
         if (document instanceof DocumentDriver) {
           ((DocumentDriver) document).checkGraphicDriver(graphics);
+        }
+      }
+    }
+  }
+
+  /**
+   * check whether a chart driver complies with a document driver
+   *
+   * @param charts
+   *          the charts driver
+   * @param document
+   *          the document driver
+   */
+  static final void _checkChartDriverCompliance(final IChartDriver charts,
+      final IDocumentDriver document) {
+    if (charts != null) {
+      if (document != null) {
+        if (document instanceof DocumentDriver) {
+          ((DocumentDriver) document).checkChartDriver(charts);
         }
       }
     }

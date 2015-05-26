@@ -31,7 +31,6 @@ final class _LaTeXMathInBraces extends MathInBraces {
   /** {@inheritDoc} */
   @Override
   protected synchronized final void onOpen() {
-
     super.onOpen();
     this.getTextOutput().append(
         _LaTeXMathInBraces.BRACE_BEGIN[this.getBraceIndex()

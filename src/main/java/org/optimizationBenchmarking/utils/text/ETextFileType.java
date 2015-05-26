@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.utils.text;
 import org.optimizationBenchmarking.utils.io.IFileType;
 
 /** The text file type */
-public enum TextFileTypes implements IFileType {
+public enum ETextFileType implements IFileType {
 
   /** the text file type instance */
   TXT {

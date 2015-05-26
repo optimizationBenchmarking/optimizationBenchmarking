@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
+import org.optimizationBenchmarking.utils.chart.impl.ChartDriverParser;
 import org.optimizationBenchmarking.utils.chart.impl.EChartFormat;
 import org.optimizationBenchmarking.utils.chart.spec.IChartDriver;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
@@ -121,9 +122,9 @@ public class DocumentConfigurationBuilder extends
     super.configure(config);
 
     oldDriver = this.m_chartDriver;
-    newDriver = config.getInstance(
+    newDriver = config.get(
         DocumentConfigurationBuilder.PARAM_CHART_DRIVER,
-        IChartDriver.class, oldDriver);
+        ChartDriverParser.getInstance(), oldDriver);
     if ((oldDriver != null) || (newDriver != null)) {
       this.setChartDriver(newDriver);
     }
@@ -152,6 +153,8 @@ public class DocumentConfigurationBuilder extends
    */
   public final void setChartDriver(final IChartDriver driver) {
     DocumentConfiguration._checkChartDriver(driver);
+    DocumentConfiguration._checkChartDriverCompliance(driver,
+        this.m_documentDriver);
     this.m_chartDriver = driver;
   }
 
@@ -175,16 +178,31 @@ public class DocumentConfigurationBuilder extends
    */
   public void setDocumentDriver(final IDocumentDriver driver) {
     IGraphicDriver graphics;
+    IChartDriver charts;
 
     DocumentConfiguration._checkDocumentDriver(driver);
+
     DocumentConfiguration._checkGraphicDriverCompliance(
         (graphics = this.getGraphicDriver()), driver);
+    DocumentConfiguration._checkChartDriverCompliance(
+        (charts = this.m_chartDriver), driver);
+
     this.m_documentDriver = driver;
+
     if (graphics == null) {
       if (driver instanceof DocumentDriver) {
         graphics = ((DocumentDriver) driver).getDefaultGraphicDriver();
         if (graphics != null) {
           this.setGraphicDriver(graphics);
+        }
+      }
+    }
+
+    if (charts == null) {
+      if (driver instanceof DocumentDriver) {
+        charts = ((DocumentDriver) driver).getDefaultChartDriver();
+        if (charts != null) {
+          this.setChartDriver(charts);
         }
       }
     }
