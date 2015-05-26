@@ -59,16 +59,16 @@
 	</scm>
 
 	<inceptionYear>2014</inceptionYear>
-	
+
 	<distributionManagement>
-    <downloadUrl>http://optimizationbenchmarking.github.io/optimizationBenchmarking/repo/</downloadUrl>
-    <repository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>local-file</id>
-      <name>local repository site</name>
-      <url>file://${basedir}/target/repo/</url>
-    </repository>
-  </distributionManagement>
+		<downloadUrl>http://optimizationbenchmarking.github.io/optimizationBenchmarking/repo/</downloadUrl>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>local-file</id>
+			<name>local repository site</name>
+			<url>file://${basedir}/target/repo/</url>
+		</repository>
+	</distributionManagement>
 
 	<repositories>
 		<repository>
@@ -256,9 +256,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-					<excludes>
-						<exclude>/examples</exclude>
-					</excludes>
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries />
@@ -302,6 +299,7 @@
 									</excludes>
 								</filter>
 							</filters>
+
 
 							<transformers>
 								<transformer
