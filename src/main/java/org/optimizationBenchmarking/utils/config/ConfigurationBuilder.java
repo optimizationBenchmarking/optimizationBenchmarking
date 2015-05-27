@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.config;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -235,9 +236,12 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
    */
   synchronized final void _configure(final String[] args)
       throws IOException {
+    final _ConfigMap map;
     Path configFile;
     ConfigurationPropertiesInput propertiesInput;
     ConfigurationXMLInput xmlInput;
+    HashMap<String, Object> copy;
+    String param;
 
     this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
         ConfigurationBuilder.FLAG_HAS_BEEN_CONFIGURED,
@@ -245,12 +249,18 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
     this.putCommandLine(args);
 
+    map = this.m_data.m_data;
+    copy = null;
+
     // load a potential properties file
     configFile = this.m_data._get(Configuration.PARAM_PROPERTY_FILE,
         PathParser.INSTANCE, null, false);
     if (configFile != null) {
       propertiesInput = ConfigurationPropertiesInput.getInstance();
       if (propertiesInput.canUse()) {
+        copy = new HashMap<>(map.size());
+        copy.putAll(map);
+
         propertiesInput.use().addPath(configFile).setDestination(this)
         .create().call();
       }
@@ -262,8 +272,26 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
     if (configFile != null) {
       xmlInput = ConfigurationXMLInput.getInstance();
       if (xmlInput.canUse()) {
+
+        if (copy == null) {
+          copy = new HashMap<>(map.size());
+          copy.putAll(map);
+        }
+
         xmlInput.use().addPath(configFile).setDestination(this).create()
         .call();
+      }
+    }
+
+    // restore command line arguments: overwrite config file
+    if (copy != null) {
+      for (final Map.Entry<String, Object> entry : copy.entrySet()) {
+        param = entry.getKey();
+        if (Configuration.PARAM_XML_FILE.equalsIgnoreCase(param) || //
+            Configuration.PARAM_PROPERTY_FILE.equalsIgnoreCase(param)) {
+          continue;
+        }
+        map.getEntry(param, false).setValue(entry.getValue());
       }
     }
   }
