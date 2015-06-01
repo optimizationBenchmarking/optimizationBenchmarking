@@ -1,7 +1,4 @@
 name: Optimization Benchmarking
 markdown: redcarpet
 baseurl: /optimizationBenchmarking
-currentSoftwareVersion=0.8.0
-currentSoftwareStandAlone=optimizationBenchmarking-0.8.0-full.jar
-currentSoftwareURL=http://optimizationbenchmarking.github.io/optimizationBenchmarking/repo/optimizationBenchmarking/org/optimizationBenchmarking/0.8.0/optimizationBenchmarking-0.8.0-full.jar
 include: [.url]
