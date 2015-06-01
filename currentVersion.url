@@ -1,1 +1,4 @@
+---
+title: The URL of the Current Software Version
+---
 {{ site.data.currentVersion.currentVersionURL }}
