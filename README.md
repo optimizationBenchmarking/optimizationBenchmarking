@@ -5,7 +5,11 @@
 [<img alt="CircleCI Build Status" src="https://img.shields.io/circleci/project/optimizationBenchmarking/optimizationBenchmarking.svg" height="20"/>](https://circleci.com/gh/optimizationBenchmarking/optimizationBenchmarking)
 [<img alt="Semaphore Build Status" src="https://semaphoreci.com/api/v1/projects/7e98df8c-dc67-416f-a660-cb6f803fc3cf/380468/shields_badge.svg" height="20"/>](https://semaphoreci.com/thomasweise/optimizationbenchmarking)
 
-This is the main repository of the optimizationBenchmarking.org tool suite.
+Please visit our [website](http://www.optimizationBenchmarking.org/) to
+download stand-alone executables. A set of slides with examples and descriptions
+how to use the system can be found [here](http://www.github.com/optimizationBenchmarking/optimizationBenchmarking/raw/documentation/documents/evaluatorSlides/evaluatorSlides.pdf).
+
+This is the main source repository of the optimizationBenchmarking.org tool suite.
 The optimizationBenchmarking.org tool suite supports researchers in
 evaluating and comparing the performance of (anytime) optimization
 algorithms, such as
