@@ -1,4 +1,4 @@
 ---
 title: The URL of the Current Software Version
 ---
-{{ site.data.currentVersion.currentVersionURL }}
+{{ site.data.currentVersion.currentVersionStandAloneJarURL }}
