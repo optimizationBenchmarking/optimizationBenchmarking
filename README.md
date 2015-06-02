@@ -6,7 +6,8 @@
 [<img alt="Semaphore Build Status" src="https://semaphoreci.com/api/v1/projects/7e98df8c-dc67-416f-a660-cb6f803fc3cf/380468/shields_badge.svg" height="20"/>](https://semaphoreci.com/thomasweise/optimizationbenchmarking)
 
 Please visit our [website](http://www.optimizationBenchmarking.org/) to
-download stand-alone executables. A set of slides with examples and descriptions
+download the latest release in form of a stand-alone executable.
+A set of slides with examples and descriptions
 how to use the system can be found [here](http://www.github.com/optimizationBenchmarking/optimizationBenchmarking/raw/documentation/documents/evaluatorSlides/evaluatorSlides.pdf).
 
 This is the main source repository of the optimizationBenchmarking.org tool suite.
