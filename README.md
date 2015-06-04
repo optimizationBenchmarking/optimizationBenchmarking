@@ -21,6 +21,14 @@ algorithms, such as
 and virtually all other
 [metaheuristics](http://en.wikipedia.org/wiki/Metaheuristic).
 
+## System Requirements
+
+1. Java 1.7
+2. optional: a LaTeX installation such as MikTeX or TexLive
+3. the [third party libraries](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/master/LICENSE.md) `optimizationBenchmarking` depends on if and only if you do not use the stand-alone/full executable
+
+## Optimization and Anytime Algorithms
+
 Optimization algorithms are algorithms which can find (approximate)
 solutions for computationally hard (e.g., [NP-hard](http://en.wikipedia.org/wiki/NP-hard)) problems,
 such as the
@@ -39,4 +47,16 @@ Comparing two such algorithms is not an easy thing, since it involves
 comparing behavior over runtime.
 
 In this project, we try to provide a set of tools to make this process
-easier.
+easier. The currently available tool can load log files (with rows of, e.g., the form
+`consumed-runtime, best-solution-found`) and render performance reports in a variety of
+different formats, including LaTeX and XHTML. These reports contain performance metrics
+and comparisons carried out according to a user-provided specification.
+
+## Examples
+
+We provide a set of examples which can be executed directly on the command line of
+your Linux machine, given that you have `Java 1.7` installed (and potentially `svn` and
+a LaTeX installation).
+
+1. Comparison of Algorithms of Maximum Satisfiability Problem: [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.sh)
+2. Comparison of Some Algorithms from [BBOB'2013](http://coco.gforge.inria.fr/doku.php?id=bbob-2013): [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.sh)
