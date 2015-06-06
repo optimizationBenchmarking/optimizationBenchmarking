@@ -908,7 +908,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
       path += ("_y1=" + this.m_minY); //$NON-NLS-1$
     }
     if (this.m_maxY != null) {
-      path += ("_y2=" + this.m_maxX); //$NON-NLS-1$
+      path += ("_y2=" + this.m_maxY); //$NON-NLS-1$
     }
     mainPath = path;
 

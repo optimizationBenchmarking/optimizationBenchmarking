@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation;
 
+import java.io.PrintStream;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -9,6 +10,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.Ev
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationBuilder;
 import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.io.SynchronizedIO;
 
 /** The main entry point for evaluation. */
 public final class Main {
@@ -38,35 +40,13 @@ public final class Main {
 
     evaluator = Evaluator.getInstance();
 
+    logger = Configuration.getGlobalLogger();
+
     printInfo = (!(config.getBoolean(Main.PARAM_QUIET, false)));
     if (printInfo) {
-      synchronized (System.out) {
-        synchronized (System.err) {
-          System.err.flush();
-          System.out.print("Welcome to the "); //$NON-NLS-1$
-          System.out.println(evaluator.getProjectName());
-          System.out.print("  version: "); //$NON-NLS-1$
-          System.out.println(evaluator.getProjectVersion());
-          System.out.print("  url: "); //$NON-NLS-1$
-          System.out.println(evaluator.getProjectURL());
-          System.out.print("  for JDK version: "); //$NON-NLS-1$
-          System.out.println(evaluator.getProjectJDK());
-          System.out.print("  contact: "); //$NON-NLS-1$
-          System.out.print(evaluator.getContactName());
-          System.out.print(' ');
-          System.out.print('(');
-          System.out.print(evaluator.getContactEmail());
-          System.out.print(',');
-          System.out.print(' ');
-          System.out.print(evaluator.getContactURL());
-          System.out.println(')');
-          System.out.println();
-          System.out.flush();
-        }
-      }
+      new __Begin(logger, evaluator).run();
     }
 
-    logger = Configuration.getGlobalLogger();
     try {
 
       if (logger != null) {
@@ -194,14 +174,75 @@ public final class Main {
     }
 
     if (printInfo) {
-      synchronized (System.out) {
-        synchronized (System.err) {
-          System.err.flush();
-          System.out.println();
-          System.out.println("...goodbye.");//$NON-NLS-1$
-          System.out.flush();
-        }
-      }
+      new __End(logger).run();
+    }
+  }
+
+  /**
+   * Write the hello message
+   */
+  private static final class __Begin extends SynchronizedIO<PrintStream> {
+
+    /** the evaluator */
+    private final Evaluator m_evaluator;
+
+    /**
+     * Create the start message writer
+     *
+     * @param logger
+     *          the logger to synchronize on
+     * @param evaluator
+     *          the evaluator
+     */
+    __Begin(final Logger logger, final Evaluator evaluator) {
+      super(System.out, logger);
+      this.m_evaluator = evaluator;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected final void io(final PrintStream io, final Logger logger) {
+      io.print("Welcome to the "); //$NON-NLS-1$
+      io.println(this.m_evaluator.getProjectName());
+      io.print("  version: "); //$NON-NLS-1$
+      io.println(this.m_evaluator.getProjectVersion());
+      io.print("  url: "); //$NON-NLS-1$
+      io.println(this.m_evaluator.getProjectURL());
+      io.print("  for JDK version: "); //$NON-NLS-1$
+      io.println(this.m_evaluator.getProjectJDK());
+      io.print("  contact: "); //$NON-NLS-1$
+      io.print(this.m_evaluator.getContactName());
+      io.print(' ');
+      io.print('(');
+      io.print(this.m_evaluator.getContactEmail());
+      io.print(',');
+      io.print(' ');
+      io.print(this.m_evaluator.getContactURL());
+      io.println(')');
+      io.println();
+    }
+  }
+
+  /**
+   * Write the goodbye message
+   */
+  private static final class __End extends SynchronizedIO<PrintStream> {
+
+    /**
+     * Create the start message writer
+     *
+     * @param logger
+     *          the logger to synchronize on
+     */
+    __End(final Logger logger) {
+      super(System.out, logger);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected final void io(final PrintStream io, final Logger logger) {
+      io.println();
+      io.println("...goodbye.");//$NON-NLS-1$
     }
   }
 }
