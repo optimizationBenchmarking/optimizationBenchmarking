@@ -20,19 +20,16 @@ first major milestone and can already be used.
 * [JavaDoc](optimizationBenchmarking-0.8.0-javadoc.jar) [[md5](optimizationBenchmarking-0.8.0-javadoc.jar.md5)] [[sha1](optimizationBenchmarking-0.8.0-javadoc.jar.sha1)]
 * [Maven `pom`](optimizationBenchmarking-0.8.0.pom) [[md5](optimizationBenchmarking-0.8.0.pom.md5)] [[sha1](optimizationBenchmarking-0.8.0.pom.sha1)]
 
-````Maven POM
-<pre>
-<repositories>
-  <repository>
-    <id>optimizationBenchmarking</id>
-    <url>http://optimizationbenchmarking.github.io/optimizationBenchmarking/repo/</url>
-  </repository>
-</repositories>
-<dependencies>
-  <dependency>
-    <groupId>optimizationBenchmarking.org</groupId>
-    <artifactId>optimizationBenchmarking</artifactId>
-    <version>0.8.0</version>
-  </dependency>
-</dependencies>
-````
+    <repositories>
+      <repository>
+        <id>optimizationBenchmarking</id>
+        <url>http://optimizationbenchmarking.github.io/optimizationBenchmarking/repo/</url>
+      </repository>
+    </repositories>
+    <dependencies>
+      <dependency>
+        <groupId>optimizationBenchmarking.org</groupId>
+        <artifactId>optimizationBenchmarking</artifactId>
+        <version>0.8.0</version>
+      </dependency>
+    </dependencies>
