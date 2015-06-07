@@ -23,18 +23,4 @@ first major milestone and can already be used.
 <p>If you want to build your own software by using ours as external dependency, include the following
 information in your <a href="http://en.wikipedia.org/wiki/Project_Object_Model">Maven POM</a>:</p>
 
-<pre>
-&lt;repositories&gt;
-  &lt;repository&gt;
-    &lt;id&gt;optimizationBenchmarking&lt;/id&gt;
-    &lt;url&gt;http://optimizationbenchmarking.github.io/optimizationBenchmarking/repo/&lt;/url&gt;
-  &lt;/repository&gt;
-&lt;/repositories&gt;
-&lt;dependencies&gt;
-  &lt;dependency&gt;
-    &lt;groupId&gt;optimizationBenchmarking.org&lt;/groupId&gt;
-    &lt;artifactId&gt;optimizationBenchmarking&lt;/artifactId&gt;
-    &lt;version&gt;0.8.0&lt;/version&gt;
-  &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</pre>
+{% include mavenPom.md projectVersion="0.8.0"%}
