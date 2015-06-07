@@ -1,5 +1,5 @@
 {% if include.projectVersion %}
-{% highlight Maven POM}
+{% highlight xml}
 <repositories>
   <repository>
     <id>optimizationBenchmarking</id>
@@ -15,7 +15,7 @@
 </dependencies>
 {% endhighlight %}
 {% else %}
-{% highlight Maven POM}
+{% highlight xml}
 <repositories>
   <repository>
     <id>optimizationBenchmarking</id>
