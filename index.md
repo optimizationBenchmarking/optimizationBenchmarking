@@ -19,7 +19,7 @@ text files which may later be loaded by other applications.
 The current version of this software is [{{ site.data.currentVersion.currentVersion }}]({{ site.data.currentVersion.currentVersionRepo }}).
 A stand-alone `jar` is provided [here]({{ site.data.currentVersion.currentVersionStandAloneJarURL }}) and
 a set of slides introducing the whole framework and providing examples can be found
-[here](http://github.com/optimizationBenchmarking/optimizationBenchmarking/raw/documentation/documents/evaluatorSlides/evaluatorSlides.pdf).
+[here]({{ site.data.documentation.evaluatorSlidesURL }}).
 
 ## Examples
 We provide a set of examples which can be executed directly on the command line of
@@ -34,7 +34,7 @@ These examples can also be run on Windows (by using different commands and/or do
 
 ## Workflow
 The *optimizationBenchmarking.org* framework prescribes the following work flow, which is discussed
-in more detail in [this set of slides](http://github.com/optimizationBenchmarking/optimizationBenchmarking/raw/documentation/documents/evaluatorSlides/evaluatorSlides.pdf):
+in more detail in [this set of slides]({{ site.data.documentation.evaluatorSlidesURL }}):
 
 1. *Algorithm Implementation:* You implement your algorithm. Do it in a way so that you can generate
    log files containing rows such as (`passed runtime`, `best solution quality so far`) for each run (execution) of your algorithm.
