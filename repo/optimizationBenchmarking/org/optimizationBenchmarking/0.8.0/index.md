@@ -20,7 +20,4 @@ first major milestone and can already be used.
 * [JavaDoc](optimizationBenchmarking-0.8.0-javadoc.jar) [[md5](optimizationBenchmarking-0.8.0-javadoc.jar.md5)] [[sha1](optimizationBenchmarking-0.8.0-javadoc.jar.sha1)]
 * [Maven `pom`](optimizationBenchmarking-0.8.0.pom) [[md5](optimizationBenchmarking-0.8.0.pom.md5)] [[sha1](optimizationBenchmarking-0.8.0.pom.sha1)]
 
-<p>If you want to build your own software by using ours as external dependency, include the following
-information in your <a href="http://en.wikipedia.org/wiki/Project_Object_Model">Maven POM</a>:</p>
-
 {% include mavenPom.md projectVersion="0.8.0"%}
