@@ -42,16 +42,8 @@ in more detail in [this set of slides](http://github.com/optimizationBenchmarkin
 3. *Experiments:* Well, run your algorithm, i.e., apply it a few times to each benchmark instance. You get the log files.
    Actually, you may want to do this several times with different parameter settings of your algorithm. Or maybe for different algorithms, so you have comparison data.
 4. *Use Evaluator:* Now, you can use our evaluator component to find our how good your method works!
-  1. *Define Dimensions:* First, you define which dimensions (runtime? number of generated solutions? solution quality?) you have measured.
-  2. *Define Instances:* Now you provide information about the problem instances you used for benchmarking. For example, for a TSP instance, you may provide the number of cities. Our system can then deduce how your algorithm's performance is related to the number of cities!
-  3. *Define Experiments:* Provide the values of the configuration parameters of your algorithm. The goal is that our framework can use this to find out how the performance of your method is related to its configuration parameters, if you did multiple experiments with different settings.
-  4. *Define Evaluation:* Define what kind of information you want to obtain. Is it something like the ECDF? Or diagrams showing how your method progresses over time?
-  5. *Define Output Format:* Do you want LaTeX output? Maybe optimized for an IEEE Transactions journal? Or rather XHTML for publishing on your website?
-  6. *Run Evaluator:* You apply the evaluator. A report is created with all the information you want. 
-
-Notice that all of this defining of information for instances or dimensions only needs to be done
-once for any benchmarking scenario and can be re-used. Also it won't take much longer than a few minutes.
-And implementing the algorithm is something you would need to do anyway. So although the above looks a bit much,
-it is actually not. On the other hand, you will not need to draw any figure by hand anymore. Plus you
-will get higher-level conclusions and a complete analysis of your algorithm as report. (Well, right
-now, we just have figures, but we will get there -- once we have transitioned from alpha to beta status.) 
+   For this, you can define the *dimensions* you have measured (such as runtime and solution quality),
+   the features of your benchmark instances (such as number of cities in a TSP), the parameter settings
+   of your algorithm (such as population size of an EA), information you want to get (ECDF? performance over time?),
+   and how you want to get it (LaTeX, optimized for IEEE Transactions, ACM, or Springer LNCS? or maybe XHTML for the web?).
+   Our evaluator will create the report with the desired information in the desired format.
