@@ -1,5 +1,5 @@
 {% if include.projectVersion %}
-```Maven POM
+{% highlight Maven POM}
 <repositories>
   <repository>
     <id>optimizationBenchmarking</id>
@@ -13,9 +13,9 @@
     <version>{{ include.projectVersion }}</version>
   </dependency>
 </dependencies>
-```
+{% endhighlight %}
 {% else %}
-```Maven POM
+{% highlight Maven POM}
 <repositories>
   <repository>
     <id>optimizationBenchmarking</id>
@@ -29,5 +29,5 @@
     <version>{{ site.data.currentVersion.currentVersion }}</version>
   </dependency>
 </dependencies>
-```
+{% endhighlight %}
 {% endif %}
