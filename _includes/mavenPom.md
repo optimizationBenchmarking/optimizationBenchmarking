@@ -1,5 +1,5 @@
 
-The *optimizationBenchmarking.org* framework can also be used as library inside your own software. If you build with [Maven](http://en.wikipedia.org/wiki/Apache_Maven), then you can use *optimizationBenchmarking.org* framework as external dependency by including the following information in your [Maven POM](http://en.wikipedia.org/wiki/Project_Object_Model#Project_Object_Model).
+The <em>optimizationBenchmarking.org</em> framework can also be used as library inside your own software. If you build with <a href="http://en.wikipedia.org/wiki/Apache_Maven">Maven</a>, then you can use <em>optimizationBenchmarking.org</em> framework as external dependency by including the following information in your <a href="http://en.wikipedia.org/wiki/Project_Object_Model#Project_Object_Model">Maven POM</a>.
 
 
 {% if include.projectVersion %}
