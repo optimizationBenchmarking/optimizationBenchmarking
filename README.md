@@ -8,7 +8,7 @@
 Please visit our [website](http://www.optimizationBenchmarking.org/) to
 download the latest release in form of a stand-alone executable.
 A set of slides with examples and descriptions
-how to use the system can be found [here](http://www.github.com/optimizationBenchmarking/optimizationBenchmarking/raw/documentation/documents/evaluatorSlides/evaluatorSlides.pdf).
+how to use the system can be found [here](https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarking/documentation/documents/evaluatorSlides/evaluatorSlides.pdf).
 
 This is the main source repository of the optimizationBenchmarking.org tool suite.
 The optimizationBenchmarking.org tool suite supports researchers in
@@ -60,3 +60,6 @@ a LaTeX installation).
 
 1. Comparison of Algorithms of Maximum Satisfiability Problem: [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.sh)
 2. Comparison of Some Algorithms from [BBOB'2013](http://coco.gforge.inria.fr/doku.php?id=bbob-2013): [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.sh)
+3. Comparison of Some Algorithms for the [TSP](https://github.com/optimizationBenchmarking/tspSuite) : [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/tspSuite/make.sh)
+
+These examples can also be run on Windows (by using different commands and/or doing stuff by hand). Right now we only provide shell scripts for Linux.
