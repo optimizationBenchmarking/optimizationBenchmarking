@@ -15,13 +15,13 @@ It can create reports in [LaTeX](http://en.wikipedia.org/wiki/LaTeX) (ready for 
 text files which may later be loaded by other applications.
 
 
-# Downloads
+## Downloads
 The current version of this software is [{{ site.data.currentVersion.currentVersion }}]({{ site.data.currentVersion.currentVersionRepo }}).
 A stand-alone `jar` is provided [here]({{ site.data.currentVersion.currentVersionStandAloneJarURL }}) and
 a set of slides introducing the whole framework and providing examples can be found
 [here](http://github.com/optimizationBenchmarking/optimizationBenchmarking/raw/documentation/documents/evaluatorSlides/evaluatorSlides.pdf).
 
-# Examples
+## Examples
 We provide a set of examples which can be executed directly on the command line of
 your Linux machine, given that you have `Java 1.7` installed (and potentially `svn` and
 a LaTeX installation).
@@ -32,7 +32,7 @@ a LaTeX installation).
 
 These examples can also be run on Windows (by using different commands and/or doing stuff by hand). Right now we only provide shell scripts for Linux.
 
-# Workflow
+## Workflow
 The *optimizationBenchmarking.org* framework prescribes the following work flow, which is discussed
 in more detail in [this set of slides](http://github.com/optimizationBenchmarking/optimizationBenchmarking/raw/documentation/documents/evaluatorSlides/evaluatorSlides.pdf):
 
