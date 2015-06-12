@@ -2,6 +2,10 @@ package org.optimizationBenchmarking.utils.math.functions;
 
 import java.io.Serializable;
 
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+
 /**
  * <p>
  * The base class for mathematical functions. It is our goal to implement
@@ -402,7 +406,10 @@ public abstract class MathematicalFunction implements Serializable {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return this.getClass().getSimpleName().toLowerCase();
+    final MemoryTextOutput out;
+    out = new MemoryTextOutput();
+    this.render(out, DefaultParameterRenderer.INSTANCE);
+    return out.toString();
   }
 
   /**
@@ -435,12 +442,61 @@ public abstract class MathematicalFunction implements Serializable {
    * Is a calculation in {@code long} arithmetic accurate? Some
    * mathematical functions will always return the correct result for
    * {@link #computeAsLong(long...)}, for example min, max, round, etc.
-   * Others will not (such as +, sin).
+   * Others will not (such as {@code +} (due to possible overflows) and
+   * {@code sin}).
    *
    * @return {@code true} if calculating values in {@code long} arithmetic
    *         will always return accurate results, {@code false} otherwise
    */
   public boolean isLongArithmeticAccurate() {
     return false;
+  }
+
+  /**
+   * Render this mathematical function to the given text output device
+   *
+   * @param out
+   *          the text output device
+   * @param renderer
+   *          the parameter renderer
+   */
+  public void render(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    final int arity;
+    char separator;
+    int index;
+
+    out.append(this.getClass().getSimpleName().toLowerCase());
+    separator = '(';
+    arity = this.getMinArity();
+
+    for (index = 0; index < arity; index++) {
+      out.append(separator);
+      separator = ',';
+      renderer.renderParameter(index, out);
+    }
+
+    out.append(')');
+  }
+
+  /**
+   * Render this mathematical function to the given math output device
+   *
+   * @param out
+   *          the math output device
+   * @param renderer
+   *          the parameter renderer
+   */
+  public void render(final IMath out, final IParameterRenderer renderer) {
+    final int arity;
+    int index;
+
+    arity = this.getMinArity();
+    try (final IMath math = out.nAryFunction(//
+        this.getClass().getSimpleName().toLowerCase(), arity, arity)) {
+      for (index = 0; index < arity; index++) {
+        renderer.renderParameter(index, math);
+      }
+    }
   }
 }

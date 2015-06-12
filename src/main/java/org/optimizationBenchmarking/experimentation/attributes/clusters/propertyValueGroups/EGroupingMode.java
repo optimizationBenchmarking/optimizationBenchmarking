@@ -276,7 +276,8 @@ public enum EGroupingMode {
   ;
 
   /** the power choices */
-  static final long[] POWER_CHOICES = { 10L, 2L, 100L, 1000L, 10000L };
+  static final long[] POWER_CHOICES = { 10L, 2L, 100L, 4L, 1000L, 8L, 16L,
+      10000L, 1024L, 32L, 64L, 256L, 512L, };
 
   /** the choices for the {@code long} multiples */
   static final long[] MULTIPLE_CHOICES_L = { 2L, 3L, 4L, 5L, 10L, 15L,

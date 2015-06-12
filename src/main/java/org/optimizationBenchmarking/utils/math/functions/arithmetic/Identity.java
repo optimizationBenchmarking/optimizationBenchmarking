@@ -1,6 +1,9 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.math.functions.IParameterRenderer;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The identity function
@@ -64,6 +67,20 @@ public final class Identity extends UnaryFunction {
   @Override
   public final boolean isLongArithmeticAccurate() {
     return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void render(final IMath out,
+      final IParameterRenderer renderer) {
+    renderer.renderParameter(0, out);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void render(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    renderer.renderParameter(0, out);
   }
 
   // default, automatic serialization replacement and resolve routines for
