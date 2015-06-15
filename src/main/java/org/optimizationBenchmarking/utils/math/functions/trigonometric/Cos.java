@@ -10,12 +10,22 @@ public final class Cos extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the cosine operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sin.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Cos INSTANCE = new Cos();
 
   /** instantiate */
   private Cos() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Cos.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

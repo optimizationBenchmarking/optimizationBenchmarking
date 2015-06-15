@@ -91,18 +91,18 @@ FunctionBuilder<TernaryFunction> {
   @Override
   public final TernaryFunction parameter(final int index) {
     switch (index) {
-      case 1: {
+      case 0: {
         return _Select1of3.INSTANCE;
       }
-      case 2: {
+      case 1: {
         return _Select2of3.INSTANCE;
       }
-      case 3: {
+      case 2: {
         return _Select3of3.INSTANCE;
       }
       default: {
         throw new IllegalArgumentException( //
-            "The parameter index must be in 1..3, but " //$NON-NLS-1$
+            "The parameter index must be in 0..2, but " //$NON-NLS-1$
             + index + " was specified."); //$NON-NLS-1$
       }
     }

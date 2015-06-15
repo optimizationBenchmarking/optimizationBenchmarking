@@ -8,12 +8,21 @@ public final class SaturatingMul extends BinaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the saturating multiplication operator */
+  public static final int PRECEDENCE_PRIORITY = Mul.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final SaturatingMul INSTANCE = new SaturatingMul();
 
   /** instantiate */
   private SaturatingMul() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return SaturatingMul.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

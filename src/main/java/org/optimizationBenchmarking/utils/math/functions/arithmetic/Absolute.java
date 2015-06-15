@@ -10,12 +10,22 @@ public final class Absolute extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the unary absolute operator used as prefix */
+  public static final int PRECEDENCE_PRIORITY = //
+  (int) ((((long) (Integer.MIN_VALUE)) + ((long) (Add.PRECEDENCE_PRIORITY))) / 2);
+
   /** the globally shared instance */
   public static final Absolute INSTANCE = new Absolute();
 
   /** instantiate */
   private Absolute() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Absolute.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

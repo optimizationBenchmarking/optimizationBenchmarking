@@ -14,12 +14,13 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.IParameterRenderer;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 import org.optimizationBenchmarking.utils.math.functions.QuaternaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.ParameterRendererBridge;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -121,6 +122,10 @@ final class _CodeGenerator {
           bw.print(IMath.class.getCanonicalName());
           bw.println(';');
           bw.print("import ");//$NON-NLS-1$
+          bw.print(ParameterRendererBridge.class.getCanonicalName());
+          bw.println(';');
+
+          bw.print("import ");//$NON-NLS-1$
           bw.print(mAryName);
           bw.println(';');
           if (m != n) {
@@ -173,15 +178,10 @@ final class _CodeGenerator {
 
           _CodeGenerator.___compound_makeIsLongArithmeticAccurate(n, bw);
 
-          for (final Class<?> clazz : new Class[] { ITextOutput.class,
-              IMath.class }) {
-            this.___compound_makeRender(m, n, clazz, bw);
-          }
+          _CodeGenerator.___compound_makeMathRender(n, bw);
 
           _CodeGenerator.___compound_makeHashCode(n, bw);
           _CodeGenerator.___compound_makeEquals(m, n, bw);
-
-          this.__compound_renderer(m, n, bw);
 
           bw.println('}');
         }
@@ -503,33 +503,58 @@ final class _CodeGenerator {
   }
 
   /**
-   * Make the member variables of the function node's renderer
+   * Make the render function for the given type
    *
-   * @param m
-   *          the number of parameters of the top-level function
    * @param n
-   *          the number of functions
-   * @param clazz
-   *          the class
+   *          the selected index
    * @param bw
    *          the output writer
    */
-  private final void ___compound_makeRender(final int m, final int n,
-      final Class<?> clazz, final PrintWriter bw) {
-    bw.println();
-    bw.println();
-    bw.println(" /** {@inheritDoc} */");//$NON-NLS-1$
-    bw.println(" @Override");//$NON-NLS-1$
+  private static final void ___compound_makeMathRender(final int n,
+      final PrintWriter bw) {
+    int j;
 
-    bw.print(" public final void render(final ");//$NON-NLS-1$
-    bw.print(clazz.getSimpleName());
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.print("public final void mathRender(final ");//$NON-NLS-1$
+    bw.print(IMath.class.getSimpleName());
     bw.print(" out, final ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getSimpleName());
     bw.println(" renderer) {");//$NON-NLS-1$
 
-    bw.print("this.m_result.render(out, new ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__compound_renderer_name(m, n));
-    bw.println("(renderer));");//$NON-NLS-1$
+    bw.print("this.m_result.mathRender(out, new ");//$NON-NLS-1$
+    bw.print(ParameterRendererBridge.class.getSimpleName());
+    bw.print("(renderer");//$NON-NLS-1$
+
+    for (j = 1; j <= n; j++) {
+      bw.print(", this.m_child");//$NON-NLS-1$
+      bw.print(j);
+    }
+
+    bw.println("));");//$NON-NLS-1$
+    bw.println('}');
+
+    bw.println();
+    bw.println();
+
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.print("public final void mathRender(final ");//$NON-NLS-1$
+    bw.print(ITextOutput.class.getSimpleName());
+    bw.print(" out, final ");//$NON-NLS-1$
+    bw.print(IParameterRenderer.class.getSimpleName());
+    bw.println(" renderer) {");//$NON-NLS-1$
+
+    bw.print("this.m_result.mathRender(out, new ");//$NON-NLS-1$
+    bw.print(ParameterRendererBridge.class.getSimpleName());
+    bw.print("(renderer");//$NON-NLS-1$
+
+    for (j = 1; j <= n; j++) {
+      bw.print(", this.m_child");//$NON-NLS-1$
+      bw.print(j);
+    }
+
+    bw.println("));");//$NON-NLS-1$
     bw.println('}');
   }
 
@@ -633,7 +658,7 @@ final class _CodeGenerator {
           }
 
           _CodeGenerator.___selection_makeIsLongArithmeticAccurate(bw);
-          _CodeGenerator.___selection_makeRender(sel, bw);
+          _CodeGenerator.___selection_makeMathRender(sel, bw);
           _CodeGenerator.___selection_makeHashCode(m, sel, bw);
           _CodeGenerator.___selection_makeEquals(m, sel, bw);
           _CodeGenerator.___selection_makeSerial(m, sel, bw);
@@ -860,12 +885,12 @@ final class _CodeGenerator {
    * @param bw
    *          the output writer
    */
-  private static final void ___selection_makeRender(final int n,
+  private static final void ___selection_makeMathRender(final int n,
       final PrintWriter bw) {
 
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println("@Override");//$NON-NLS-1$
-    bw.print("public final void render(final ");//$NON-NLS-1$
+    bw.print("public final void mathRender(final ");//$NON-NLS-1$
     bw.print(IMath.class.getSimpleName());
     bw.print(" out, final ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getSimpleName());
@@ -880,7 +905,7 @@ final class _CodeGenerator {
 
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println("@Override");//$NON-NLS-1$
-    bw.print("public final void render(final ");//$NON-NLS-1$
+    bw.print("public final void mathRender(final ");//$NON-NLS-1$
     bw.print(ITextOutput.class.getSimpleName());
     bw.print(" out, final ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getSimpleName());
@@ -996,7 +1021,7 @@ final class _CodeGenerator {
           }
 
           _CodeGenerator.___const_makeIsLongArithmeticAccurate(bw);
-          _CodeGenerator.___const_makeRender(bw);
+          _CodeGenerator.___const_makeMathRender(bw);
           _CodeGenerator.___const_makeHashCode(m, bw);
           _CodeGenerator.___const_makeEquals(m, bw);
           bw.println('}');
@@ -1066,11 +1091,11 @@ final class _CodeGenerator {
    * @param bw
    *          the output writer
    */
-  private static final void ___const_makeRender(final PrintWriter bw) {
+  private static final void ___const_makeMathRender(final PrintWriter bw) {
 
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println("@Override");//$NON-NLS-1$
-    bw.print("public final void render(final ");//$NON-NLS-1$
+    bw.print("public final void mathRender(final ");//$NON-NLS-1$
     bw.print(IMath.class.getSimpleName());
     bw.print(" out, final ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getSimpleName());
@@ -1078,7 +1103,7 @@ final class _CodeGenerator {
     bw.print("try (final ");//$NON-NLS-1$
     bw.print(IText.class.getSimpleName());
     bw.println(" number = out.number()) {");//$NON-NLS-1$
-    bw.println("this.render(number, renderer);");//$NON-NLS-1$
+    bw.println("this.mathRender(number, renderer);");//$NON-NLS-1$
     bw.println('}');
     bw.println('}');
 
@@ -1087,7 +1112,7 @@ final class _CodeGenerator {
 
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println("@Override");//$NON-NLS-1$
-    bw.print("public final void render(final ");//$NON-NLS-1$
+    bw.print("public final void mathRender(final ");//$NON-NLS-1$
     bw.print(ITextOutput.class.getSimpleName());
     bw.print(" out, final ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getSimpleName());
@@ -1446,7 +1471,7 @@ final class _CodeGenerator {
 
     for (i = 1; i <= m; i++) {
       bw.print(" case ");//$NON-NLS-1$
-      bw.print(i);
+      bw.print(i - 1);
       bw.print(": { return ");//$NON-NLS-1$
       bw.print(_CodeGenerator.__selection_name(m, i));
       bw.println(".INSTANCE; }");//$NON-NLS-1$
@@ -1454,8 +1479,8 @@ final class _CodeGenerator {
 
     bw.println(" default: { ");//$NON-NLS-1$
     bw.println(" throw new IllegalArgumentException( //");//$NON-NLS-1$
-    bw.print(" \"The parameter index must be in 1..");//$NON-NLS-1$
-    bw.print(m);
+    bw.print(" \"The parameter index must be in 0..");//$NON-NLS-1$
+    bw.print(m - 1);
     bw.println(", but \" //$NON-NLS-1$");//$NON-NLS-1$
     bw.println(" + index + \" was specified.\"); //$NON-NLS-1$");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
@@ -1522,261 +1547,6 @@ final class _CodeGenerator {
    */
   private static final String __builder_name(final int m) {
     return (_CodeGenerator.FUNCTIONS_OF_ARITY[m].getSimpleName() + "Builder");//$NON-NLS-1$
-  }
-
-  /**
-   * Generate a function node for {@code m}-ary functions which is a
-   * compound of {@code n} single functions.
-   *
-   * @param m
-   *          the number of parameters of the top-level function
-   * @param n
-   *          the number of compound functions
-   * @param bw
-   *          the print writer
-   */
-  private final void __compound_renderer(final int m, final int n,
-      final PrintWriter bw) {
-    final String name;
-
-    bw.println();
-    name = _CodeGenerator.__compound_renderer_name(m, n);
-
-    bw.print("/** This is the automatically generated code for a {@link ");//$NON-NLS-1$
-    bw.print(IParameterRenderer.class.getCanonicalName());
-    bw.print(' ');
-    bw.print(" parameter renderer} for the {@link ");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__compound_name(m, n));
-    bw.println(" parameter renderer} for the */");//$NON-NLS-1$
-
-    bw.print("private final class ");//$NON-NLS-1$
-    bw.print(name);
-    bw.print(" implements ");//$NON-NLS-1$
-    bw.print(IParameterRenderer.class.getSimpleName());
-    bw.println(" {");//$NON-NLS-1$
-    bw.println();
-
-    this.___compound_renderer_makeMembersAndConstructor(m, n, bw);
-
-    for (final Class<?> clazz : new Class[] { ITextOutput.class,
-        IMath.class }) {
-      this.___compound_renderer_makeRenderParameter(m, n, clazz, bw);
-    }
-
-    _CodeGenerator.__compound_renderer_makeHashCode(m, n, bw);
-    _CodeGenerator.__compound_renderer_makeEquals(m, n, bw);
-
-    bw.println('}');
-  }
-
-  /**
-   * Make the member variables of the function node's renderer
-   *
-   * @param m
-   *          the number of parameters of the top-level function
-   * @param n
-   *          the number of functions
-   * @param bw
-   *          the output writer
-   */
-  private final void ___compound_renderer_makeMembersAndConstructor(
-      final int m, final int n, final PrintWriter bw) {
-    final String name, longName, paramName, longParamName, paramShort;
-
-    paramShort = IParameterRenderer.class.getSimpleName();
-    longParamName = IParameterRenderer.class.getCanonicalName();
-    paramName = //
-    "the instance of {@link "//$NON-NLS-1$
-        + longParamName + //
-        "} to delegate to."; //$NON-NLS-1$
-
-    bw.println();
-    bw.print(" /** @serial ");//$NON-NLS-1$
-    bw.print(paramName);
-    bw.println(" */");//$NON-NLS-1$
-    bw.print(" private final ");//$NON-NLS-1$
-    bw.print(paramShort);
-    bw.print(" m_renderer;");//$NON-NLS-1$
-
-    bw.println();
-    bw.println();
-
-    name = _CodeGenerator.__compound_renderer_name(m, n);
-    longName = (((("the {@link " + longParamName + //$NON-NLS-1$
-        " parameter renderer} of the {@link " + //$NON-NLS-1$
-    this.m_packageName) + '.') + _CodeGenerator.__compound_name(m, n)) + //
-    "}, a function which returns a constant value");//$NON-NLS-1$
-
-    bw.print(" /** Create the ");//$NON-NLS-1$
-    bw.print(longName);
-    bw.println('.');
-    bw.print(" * @param renderer ");//$NON-NLS-1$
-    bw.println(paramName);
-    bw.println(" * @throws IllegalArgumentException if {@code renderer} is {@code null} */");//$NON-NLS-1$
-    bw.print(name);
-    bw.print("(final ");//$NON-NLS-1$
-    bw.print(paramShort);
-    bw.println(" renderer) {");//$NON-NLS-1$
-    bw.println(" super();");//$NON-NLS-1$
-
-    bw.println(" if(renderer == null) {");//$NON-NLS-1$
-    bw.println(" throw new IllegalArgumentException( //");//$NON-NLS-1$
-    bw.print(" \"Original parameter renderer of the "); //$NON-NLS-1$
-    bw.print(longName);
-    bw.println(//
-    ", cannot be null.\"); //$NON-NLS-1$");//$NON-NLS-1$
-
-    bw.println("}");//$NON-NLS-1$
-
-    bw.println(" this.m_renderer = renderer;");//$NON-NLS-1$
-    bw.println("}");//$NON-NLS-1$
-  }
-
-  /**
-   * Make the member variables of the function node's renderer
-   *
-   * @param m
-   *          the number of parameters of the top-level function
-   * @param n
-   *          the number of functions
-   * @param clazz
-   *          the class
-   * @param bw
-   *          the output writer
-   */
-  private final void ___compound_renderer_makeRenderParameter(final int m,
-      final int n, final Class<?> clazz, final PrintWriter bw) {
-    final String main;
-    int index;
-
-    bw.println();
-    bw.println();
-    bw.println(" /** {@inheritDoc} */");//$NON-NLS-1$
-    bw.println(" @Override");//$NON-NLS-1$
-
-    bw.print(" public final void renderParameter(final int index, final ");//$NON-NLS-1$
-    bw.print(clazz.getSimpleName());
-    bw.println(" out) {");//$NON-NLS-1$
-
-    bw.println("switch(index) {");//$NON-NLS-1$
-
-    main = _CodeGenerator.__compound_name(m, n);
-    for (index = 0; index < n; index++) {
-      bw.print("case ");//$NON-NLS-1$
-      bw.print(index);
-      bw.println(": {");//$NON-NLS-1$
-      bw.print(main);
-      bw.print(".this.m_child");//$NON-NLS-1$
-      bw.print(index + 1);
-      bw.println(".render(out, this.m_renderer);");//$NON-NLS-1$
-      bw.println(" return; }");//$NON-NLS-1$
-    }
-
-    bw.println("default : {");//$NON-NLS-1$
-    bw.println(" throw new IllegalArgumentException( //");//$NON-NLS-1$
-
-    bw.print("\"Only parameter indexes from 0 to ");//$NON-NLS-1$
-    bw.print(n - 1);
-    bw.println(" are valid, but \" //$NON-NLS-1$");//$NON-NLS-1$
-    bw.println(" + index + \" was provided.\" //$NON-NLS-1$");//$NON-NLS-1$
-    bw.println(");");//$NON-NLS-1$
-    bw.println('}');
-    bw.println('}');
-    bw.println('}');
-  }
-
-  /**
-   * Make the {@link Object#hashCode()} method
-   *
-   * @param m
-   *          the arity of the function
-   * @param n
-   *          the number of functions
-   * @param bw
-   *          the output writer
-   */
-  private static final void __compound_renderer_makeHashCode(final int m,
-      final int n, final PrintWriter bw) {
-    bw.println();
-    bw.println();
-    bw.println(" /** {@inheritDoc} */");//$NON-NLS-1$
-    bw.println(" @Override");//$NON-NLS-1$
-    bw.println(" public final int hashCode() {");//$NON-NLS-1$
-
-    bw.print(//
-    "return HashUtils.combineHashes(HashUtils.hashCode(this.m_renderer),HashUtils.hashCode(");//$NON-NLS-1$
-    bw.print(_CodeGenerator.__compound_name(m, n));
-    bw.println(//
-    ".this));");//$NON-NLS-1$
-    bw.println("}");//$NON-NLS-1$
-  }
-
-  /**
-   * Make the {@link Object#equals(Object)} method
-   *
-   * @param m
-   *          the number of parameters of the top-level function
-   * @param n
-   *          the number of functions
-   * @param bw
-   *          the output writer
-   */
-  private static final void __compound_renderer_makeEquals(final int m,
-      final int n, final PrintWriter bw) {
-    final String name, ownerName;
-
-    ownerName = _CodeGenerator.__compound_name(m, n);
-    name = _CodeGenerator.__compound_renderer_name(m, n);
-
-    bw.println();
-    bw.println();
-    bw.println("/** Get the owning instance of this renderer.");//$NON-NLS-1$
-    bw.println("* @return the owning instance of this renderer */");//$NON-NLS-1$
-    bw.print("private final ");//$NON-NLS-1$
-    bw.print(ownerName);
-    bw.println(" __owner() {");//$NON-NLS-1$
-    bw.print(" return ");//$NON-NLS-1$
-    bw.print(ownerName);
-    bw.println(".this;");//$NON-NLS-1$
-    bw.println('}');
-
-    bw.println();
-    bw.println();
-    bw.println(" /** {@inheritDoc} */");//$NON-NLS-1$
-    bw.println(" @Override");//$NON-NLS-1$
-    bw.println(" public final boolean equals(final Object o) {");//$NON-NLS-1$
-    bw.print("final ");//$NON-NLS-1$
-    bw.print(name);
-    bw.println(" other;");//$NON-NLS-1$
-    bw.println("if (o == this) {return true;}");//$NON-NLS-1$
-    bw.print(" if (o instanceof ");//$NON-NLS-1$
-    bw.print(name);
-    bw.println(") {");//$NON-NLS-1$
-    bw.print("other = ((");//$NON-NLS-1$
-    bw.print(name);
-    bw.println(") o);");//$NON-NLS-1$
-    bw.print("return ((this.m_renderer.equals(other.m_renderer) && ");//$NON-NLS-1$
-    bw.print(ownerName);
-    bw.println(".this.equals(other.__owner())));");//$NON-NLS-1$
-
-    bw.println("}");//$NON-NLS-1$
-    bw.println("return false;");//$NON-NLS-1$
-    bw.println("}");//$NON-NLS-1$
-  }
-
-  /**
-   * Get the name of the renderer for the node representing {@code m}-ary
-   * functions which is a compound of {@code n} single functions.
-   *
-   * @param m
-   *          the number of parameters of the top-level function
-   * @param n
-   *          the number of compound functions
-   * @return the {@code n}-ary node name
-   */
-  private static final String __compound_renderer_name(final int m,
-      final int n) {
-    return (('_' + _CodeGenerator.__compound_name(m, n)) + "ParameterRenderer"); //$NON-NLS-1$
   }
 
   /**

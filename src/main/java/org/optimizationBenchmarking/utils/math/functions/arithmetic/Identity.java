@@ -1,8 +1,8 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.math.functions.IParameterRenderer;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -71,14 +71,14 @@ public final class Identity extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final void render(final IMath out,
+  public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
     renderer.renderParameter(0, out);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void render(final ITextOutput out,
+  public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
     renderer.renderParameter(0, out);
   }

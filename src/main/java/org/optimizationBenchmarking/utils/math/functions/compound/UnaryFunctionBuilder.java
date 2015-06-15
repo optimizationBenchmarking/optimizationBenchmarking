@@ -92,12 +92,12 @@ FunctionBuilder<UnaryFunction> {
   @Override
   public final UnaryFunction parameter(final int index) {
     switch (index) {
-      case 1: {
+      case 0: {
         return Identity.INSTANCE;
       }
       default: {
         throw new IllegalArgumentException( //
-            "The parameter index must be in 1..1, but " //$NON-NLS-1$
+            "The parameter index must be in 0..0, but " //$NON-NLS-1$
             + index + " was specified."); //$NON-NLS-1$
       }
     }

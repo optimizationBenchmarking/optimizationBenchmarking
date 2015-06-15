@@ -13,12 +13,22 @@ public final class Ld extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the ld operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Ln.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Ld INSTANCE = new Ld();
 
   /** instantiate */
   private Ld() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Ld.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

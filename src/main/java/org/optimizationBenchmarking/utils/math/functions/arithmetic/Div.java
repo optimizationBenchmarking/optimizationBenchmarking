@@ -29,12 +29,21 @@ public final class Div extends BinaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the division operator */
+  public static final int PRECEDENCE_PRIORITY = Mul.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Div INSTANCE = new Div();
 
   /** instantiate */
   private Div() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Div.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

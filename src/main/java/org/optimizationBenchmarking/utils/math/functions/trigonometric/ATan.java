@@ -10,12 +10,21 @@ public final class ATan extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the arc tangent operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sin.PRECEDENCE_PRIORITY;
   /** the globally shared instance */
   public static final ATan INSTANCE = new ATan();
 
   /** instantiate */
   private ATan() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return ATan.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

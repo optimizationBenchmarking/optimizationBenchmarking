@@ -13,9 +13,19 @@ public final class Ln extends UnaryFunction {
   /** the globally shared instance */
   public static final Ln INSTANCE = new Ln();
 
+  /** the precedence priority of the ln operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Exp.PRECEDENCE_PRIORITY;
+
   /** instantiate */
   private Ln() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Ln.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

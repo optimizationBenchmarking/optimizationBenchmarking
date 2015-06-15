@@ -3,6 +3,9 @@ package org.optimizationBenchmarking.utils.math.functions;
 import java.io.Serializable;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -19,10 +22,17 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * efficiently inlined by a compiler</li>
  * </ol>
  */
-public abstract class MathematicalFunction implements Serializable {
+public abstract class MathematicalFunction implements Serializable,
+    IMathRenderable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
+
+  /**
+   * The default precedence priority: it should be somewhere between an
+   * addition and a multiplication.
+   */
+  protected static final int DEFAULT_PRECEDENCE_PRIORITY = 0;
 
   /**
    * Instantiate the basic function class.
@@ -408,7 +418,7 @@ public abstract class MathematicalFunction implements Serializable {
   public String toString() {
     final MemoryTextOutput out;
     out = new MemoryTextOutput();
-    this.render(out, DefaultParameterRenderer.INSTANCE);
+    this.mathRender(out, DefaultParameterRenderer.INSTANCE);
     return out.toString();
   }
 
@@ -460,7 +470,8 @@ public abstract class MathematicalFunction implements Serializable {
    * @param renderer
    *          the parameter renderer
    */
-  public void render(final ITextOutput out,
+  @Override
+  public void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
     final int arity;
     char separator;
@@ -487,7 +498,8 @@ public abstract class MathematicalFunction implements Serializable {
    * @param renderer
    *          the parameter renderer
    */
-  public void render(final IMath out, final IParameterRenderer renderer) {
+  @Override
+  public void mathRender(final IMath out, final IParameterRenderer renderer) {
     final int arity;
     int index;
 
@@ -498,5 +510,17 @@ public abstract class MathematicalFunction implements Serializable {
         renderer.renderParameter(index, math);
       }
     }
+  }
+
+  /**
+   * Obtain the <a
+   * href="https://en.wikipedia.org/wiki/Order_of_operations">precedence
+   * priority</a> of this operator. The higher the returned value is, the
+   * more "binding" it is to its arguments.
+   *
+   * @return the precedence priority
+   */
+  public int getPrecedencePriority() {
+    return MathematicalFunction.DEFAULT_PRECEDENCE_PRIORITY;
   }
 }

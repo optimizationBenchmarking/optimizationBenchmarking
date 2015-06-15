@@ -10,6 +10,12 @@ public final class Sqr extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the sqr operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  (int) ((((long) (Integer.MAX_VALUE)) + //
+  ((long) (Math.max(Exp.PRECEDENCE_PRIORITY,//
+      Math.max(Sqrt.PRECEDENCE_PRIORITY, Pow.PRECEDENCE_PRIORITY))))) / 2);
+
   /** the square root of {@value java.lang.Long#MAX_VALUE}: {@value} */
   static final long SQRT_LONG_MAX_VALUE = 3037000499L;
 
@@ -19,6 +25,12 @@ public final class Sqr extends UnaryFunction {
   /** instantiate */
   private Sqr() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Sqr.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

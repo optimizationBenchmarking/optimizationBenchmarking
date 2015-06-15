@@ -1,11 +1,14 @@
-package org.optimizationBenchmarking.utils.math.functions;
+package org.optimizationBenchmarking.utils.math.text;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
+import org.optimizationBenchmarking.utils.math.functions.compound.FunctionBuilder;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
-/** The default parameter renderer. */
-public final class DefaultParameterRenderer implements IParameterRenderer {
+/** The default parameter renderer, which also is a name resolver. */
+public final class DefaultParameterRenderer implements IParameterRenderer,
+    INameResolver {
 
   /** the internal parameters */
   private static final String[] PARAMETERS = {//
@@ -42,6 +45,14 @@ public final class DefaultParameterRenderer implements IParameterRenderer {
     }
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final MathematicalFunction resolve(final String name,
+      final FunctionBuilder<?> builder) {
+    return builder.parameter(DefaultParameterRenderer
+        .getParameterIndex(name));
+  }
+
   /**
    * Get a string corresponding to the parameter at the {@code 0}-based
    * index {@code index}
@@ -58,7 +69,7 @@ public final class DefaultParameterRenderer implements IParameterRenderer {
               + index);
     }
     if (index >= DefaultParameterRenderer.PARAMETERS.length) {
-      return (('#' + Integer.toString(index)) + '#');
+      return (('#' + Integer.toString(index + 1)) + '#');
     }
     return DefaultParameterRenderer.PARAMETERS[index];
   }
@@ -87,7 +98,7 @@ public final class DefaultParameterRenderer implements IParameterRenderer {
     }
 
     try {
-      result = Integer.parseInt(string.substring((start + 1), end));
+      result = (Integer.parseInt(string.substring((start + 1), end)) - 1);
     } catch (final Throwable error) {
       throw new IllegalArgumentException((((//
           "Illegal parameter string '" + string) + '\'') + '.'),//$NON-NLS-1$

@@ -10,12 +10,21 @@ public final class Pow2 extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the base-2 power operator */
+  public static final int PRECEDENCE_PRIORITY = Pow.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Pow2 INSTANCE = new Pow2();
 
   /** instantiate */
   private Pow2() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Pow2.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

@@ -12,6 +12,9 @@ public final class Add3 extends TernaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the ternary add operator */
+  public static final int PRECEDENCE_PRIORITY = Add.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance of the ternary adder */
   public static final Add3 INSTANCE = new Add3();
 
@@ -457,6 +460,12 @@ public final class Add3 extends TernaryFunction {
   public final double computeAsDouble(final int x0, final int x1,
       final int x2) {
     return (((long) x0) + ((long) x1) + (x2));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Add3.PRECEDENCE_PRIORITY;
   }
 
   /**

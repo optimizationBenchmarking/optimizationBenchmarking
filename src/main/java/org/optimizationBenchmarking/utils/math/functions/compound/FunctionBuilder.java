@@ -1,5 +1,9 @@
 package org.optimizationBenchmarking.utils.math.functions.compound;
 
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
@@ -106,10 +110,80 @@ public abstract class FunctionBuilder<T extends MathematicalFunction> {
       final T param1, final T param2, final T param3, final T param4);
 
   /**
+   * Create a compound function based on an arbitrary number of parameters
+   *
+   * @param func
+   *          the function
+   * @param params
+   *          the parameters
+   * @return the compound
+   */
+  @SafeVarargs
+  public final T compound(final MathematicalFunction func,
+      final T... params) {
+    return this.compound(func, new ArrayListView<>(params));
+  }
+
+  /**
+   * Create a compound function based on an arbitrary number of parameters
+   *
+   * @param func
+   *          the function
+   * @param params
+   *          the parameters
+   * @return the compound
+   */
+  public final T compound(final MathematicalFunction func,
+      final Collection<T> params) {
+    final int min, max, size;
+    final Iterator<T> it;
+
+    if (func == null) {
+      throw new IllegalArgumentException(//
+          "Mathematical function must not be null."); //$NON-NLS-1$
+    }
+    if (params == null) {
+      throw new IllegalArgumentException(//
+          "Parameter array for function " + func + //$NON-NLS-1$
+              " must not be null."); //$NON-NLS-1$
+    }
+
+    min = func.getMinArity();
+    max = func.getMaxArity();
+    size = params.size();
+    if ((size < min) || (size > max)) {
+      throw new IllegalArgumentException(//
+          "Function " + func + //$NON-NLS-1$
+              " requires between " + min + //$NON-NLS-1$
+              " and " + max + //$NON-NLS-1$
+              " arguments, but you specified " + size); //$NON-NLS-1$
+    }
+
+    it = params.iterator();
+    if (func instanceof UnaryFunction) {
+      return this.compound(((UnaryFunction) func), it.next());
+    }
+    if (func instanceof BinaryFunction) {
+      return this.compound(((BinaryFunction) func), it.next(), it.next());
+    }
+    if (func instanceof TernaryFunction) {
+      return this.compound(((TernaryFunction) func), it.next(), it.next(),
+          it.next());
+    }
+    if (func instanceof QuaternaryFunction) {
+      return this.compound(((QuaternaryFunction) func), it.next(),
+          it.next(), it.next(), it.next());
+    }
+
+    throw new IllegalArgumentException("Function " + func + //$NON-NLS-1$
+        " is not supported.");//$NON-NLS-1$
+  }
+
+  /**
    * Choose {@code index}th parameter from the set of parameters
    *
    * @param index
-   *          the {@code 1}-based index of the parameter to choose
+   *          the {@code 0}-based index of the parameter to choose
    * @return a function returning this parameter
    */
   public abstract T parameter(final int index);

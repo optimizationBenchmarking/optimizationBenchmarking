@@ -3,8 +3,8 @@ package org.optimizationBenchmarking.utils.math.functions.compound;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
-import org.optimizationBenchmarking.utils.math.functions.IParameterRenderer;
 import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -106,16 +106,16 @@ final class _Const3 extends TernaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final void render(final IMath out,
+  public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
     try (final IText number = out.number()) {
-      this.render(number, renderer);
+      this.mathRender(number, renderer);
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void render(final ITextOutput out,
+  public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
     if (this.isLongArithmeticAccurate()) {
       out.append(this.m_const.longValue());

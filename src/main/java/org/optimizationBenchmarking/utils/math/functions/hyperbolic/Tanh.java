@@ -10,12 +10,22 @@ public final class Tanh extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the hyperbolic tangent operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sinh.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Tanh INSTANCE = new Tanh();
 
   /** instantiate */
   private Tanh() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Tanh.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

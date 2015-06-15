@@ -12,6 +12,10 @@ public final class Lg extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the lg operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Ln.PRECEDENCE_PRIORITY;
+
   /** the lookup table */
   static final long[] TABLE = { //
   1L,//
@@ -41,6 +45,12 @@ public final class Lg extends UnaryFunction {
   /** instantiate */
   private Lg() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Lg.PRECEDENCE_PRIORITY;
   }
 
   /**

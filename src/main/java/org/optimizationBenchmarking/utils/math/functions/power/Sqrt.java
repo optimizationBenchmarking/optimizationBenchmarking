@@ -4,6 +4,7 @@ import org.apache.commons.math3.util.FastMath;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
 
 /** The sqrt function */
 public final class Sqrt extends UnaryFunction {
@@ -11,12 +12,26 @@ public final class Sqrt extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the sqrt operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  (int) ((((long) (Math.min(Exp.PRECEDENCE_PRIORITY,//
+      Pow.PRECEDENCE_PRIORITY))) + //
+  ((long) (Math.min(Math.min(Exp.PRECEDENCE_PRIORITY,//
+      Pow.PRECEDENCE_PRIORITY),//
+      Mul.PRECEDENCE_PRIORITY)))) / 2);
+
   /** the globally shared instance */
   public static final Sqrt INSTANCE = new Sqrt();
 
   /** instantiate */
   private Sqrt() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Sqrt.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

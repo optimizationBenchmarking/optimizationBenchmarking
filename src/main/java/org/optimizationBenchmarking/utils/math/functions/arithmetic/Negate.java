@@ -1,6 +1,11 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.power.Exp;
+import org.optimizationBenchmarking.utils.math.functions.power.Pow;
+import org.optimizationBenchmarking.utils.math.functions.power.Sqr;
+import org.optimizationBenchmarking.utils.math.functions.power.Sqrt;
 
 /**
  * The negate function
@@ -9,6 +14,18 @@ public final class Negate extends UnaryFunction {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
+
+  /** the precedence priority of the unary negate operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  (int) ((((long) (Math.max(Mul.PRECEDENCE_PRIORITY, //
+      Math.min(//
+          Math.min(Sqrt.PRECEDENCE_PRIORITY,//
+              Exp.PRECEDENCE_PRIORITY),//
+          Math.min(Sqr.PRECEDENCE_PRIORITY,//
+              Pow.PRECEDENCE_PRIORITY)))))//
+  + //
+  ((long) (Math.max(Mul.PRECEDENCE_PRIORITY, //
+      MathematicalFunction.DEFAULT_PRECEDENCE_PRIORITY)))) / 2);
 
   /** the globally shared instance */
   public static final Negate INSTANCE = new Negate();

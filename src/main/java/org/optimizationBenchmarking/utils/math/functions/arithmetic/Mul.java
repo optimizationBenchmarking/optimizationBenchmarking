@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 
 /**
  * The {@code "*"} function
@@ -11,12 +12,25 @@ public final class Mul extends BinaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the multiplication operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  (int) ((((long) (Integer.MAX_VALUE)) + //
+  ((long) (Math.max(Add.PRECEDENCE_PRIORITY,
+      Math.max(Sub.PRECEDENCE_PRIORITY,//
+          MathematicalFunction.DEFAULT_PRECEDENCE_PRIORITY))))) / 2);
+
   /** the globally shared instance */
   public static final Mul INSTANCE = new Mul();
 
   /** instantiate */
   private Mul() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Mul.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

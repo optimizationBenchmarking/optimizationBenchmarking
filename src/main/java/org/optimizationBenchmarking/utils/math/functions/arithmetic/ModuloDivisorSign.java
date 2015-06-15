@@ -36,12 +36,21 @@ public final class ModuloDivisorSign extends BinaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the modulo division operator */
+  public static final int PRECEDENCE_PRIORITY = Div.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final ModuloDivisorSign INSTANCE = new ModuloDivisorSign();
 
   /** instantiate */
   private ModuloDivisorSign() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return ModuloDivisorSign.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

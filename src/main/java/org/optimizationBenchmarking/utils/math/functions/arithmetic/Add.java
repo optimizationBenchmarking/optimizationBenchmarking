@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 
 /**
  * The {@code "+"} function
@@ -10,6 +11,11 @@ public final class Add extends BinaryFunction {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
+
+  /** the precedence priority of the add operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  (int) ((((long) (Integer.MIN_VALUE)) + //
+  ((long) (MathematicalFunction.DEFAULT_PRECEDENCE_PRIORITY))) / 2);
 
   /** the globally shared instance */
   public static final Add INSTANCE = new Add();
@@ -101,6 +107,12 @@ public final class Add extends BinaryFunction {
       return SubBA.INSTANCE;
     }
     return Sub.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Add.PRECEDENCE_PRIORITY;
   }
 
   // default, automatic serialization replacement and resolve routines for

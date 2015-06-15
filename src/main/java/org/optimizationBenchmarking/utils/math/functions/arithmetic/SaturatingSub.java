@@ -8,12 +8,21 @@ public final class SaturatingSub extends BinaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the saturating subtraction operator */
+  public static final int PRECEDENCE_PRIORITY = Sub.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final SaturatingSub INSTANCE = new SaturatingSub();
 
   /** instantiate */
   private SaturatingSub() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return SaturatingSub.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

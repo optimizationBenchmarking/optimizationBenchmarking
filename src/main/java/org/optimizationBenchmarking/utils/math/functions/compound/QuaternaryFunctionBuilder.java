@@ -91,21 +91,21 @@ FunctionBuilder<QuaternaryFunction> {
   @Override
   public final QuaternaryFunction parameter(final int index) {
     switch (index) {
-      case 1: {
+      case 0: {
         return _Select1of4.INSTANCE;
       }
-      case 2: {
+      case 1: {
         return _Select2of4.INSTANCE;
       }
-      case 3: {
+      case 2: {
         return _Select3of4.INSTANCE;
       }
-      case 4: {
+      case 3: {
         return _Select4of4.INSTANCE;
       }
       default: {
         throw new IllegalArgumentException( //
-            "The parameter index must be in 1..4, but " //$NON-NLS-1$
+            "The parameter index must be in 0..3, but " //$NON-NLS-1$
             + index + " was specified."); //$NON-NLS-1$
       }
     }

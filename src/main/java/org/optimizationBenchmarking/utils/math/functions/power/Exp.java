@@ -2,7 +2,9 @@ package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.apache.commons.math3.util.FastMath;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
+import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
 
 /** The exp function */
 public final class Exp extends UnaryFunction {
@@ -10,12 +12,25 @@ public final class Exp extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the exp operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  (int) ((((long) (Math.max(Mul.PRECEDENCE_PRIORITY,
+      Pow.PRECEDENCE_PRIORITY))) + //
+  ((long) (Math.max(Mul.PRECEDENCE_PRIORITY,//
+      MathematicalFunction.DEFAULT_PRECEDENCE_PRIORITY)))) / 2);
+
   /** the globally shared instance */
   public static final Exp INSTANCE = new Exp();
 
   /** instantiate */
   private Exp() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Exp.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

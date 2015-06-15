@@ -1,12 +1,22 @@
 package org.optimizationBenchmarking.utils.math.functions.combinatoric;
 
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.power.Exp;
+import org.optimizationBenchmarking.utils.math.functions.power.Pow;
+import org.optimizationBenchmarking.utils.math.functions.power.Sqr;
+import org.optimizationBenchmarking.utils.math.functions.power.Sqrt;
 
 /** The factorial function */
 public final class Factorial extends UnaryFunction {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
+  /** the precedence priority of the sqr operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  (int) ((((long) (Integer.MAX_VALUE)) + //
+  ((long) (Math.max(//
+      Math.max(Sqr.PRECEDENCE_PRIORITY, Exp.PRECEDENCE_PRIORITY),//
+      Math.max(Sqrt.PRECEDENCE_PRIORITY, Pow.PRECEDENCE_PRIORITY))))) / 2);
 
   /** the globally shared instance */
   public static final Factorial INSTANCE = new Factorial();

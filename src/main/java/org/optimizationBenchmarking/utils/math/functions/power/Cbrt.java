@@ -10,12 +10,22 @@ public final class Cbrt extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the cube root operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sqrt.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Cbrt INSTANCE = new Cbrt();
 
   /** instantiate */
   private Cbrt() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Cbrt.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

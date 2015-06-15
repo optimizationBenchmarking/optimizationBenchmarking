@@ -10,12 +10,22 @@ public final class Tan extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the tangent operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sin.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Tan INSTANCE = new Tan();
 
   /** instantiate */
   private Tan() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Tan.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

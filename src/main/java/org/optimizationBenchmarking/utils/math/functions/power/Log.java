@@ -14,12 +14,22 @@ public final class Log extends BinaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the log operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Ln.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Log INSTANCE = new Log();
 
   /** instantiate */
   private Log() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Log.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

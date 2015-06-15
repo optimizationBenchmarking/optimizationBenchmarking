@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.utils.math.functions;
+package org.optimizationBenchmarking.utils.math.text;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;

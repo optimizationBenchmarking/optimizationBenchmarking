@@ -10,6 +10,10 @@ public final class Cube extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the cube operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sqr.PRECEDENCE_PRIORITY;
+
   /** the cubic root of {@value java.lang.Long#MAX_VALUE}: {@value} */
   private static final long CBRT_LONG_MAX_VALUE = 2097151L;
 
@@ -19,6 +23,12 @@ public final class Cube extends UnaryFunction {
   /** instantiate */
   private Cube() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Cube.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

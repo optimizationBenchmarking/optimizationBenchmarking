@@ -15,12 +15,21 @@ public final class SaturatingAdd extends BinaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the saturating add operator */
+  public static final int PRECEDENCE_PRIORITY = Add.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final SaturatingAdd INSTANCE = new SaturatingAdd();
 
   /** instantiate */
   private SaturatingAdd() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return SaturatingAdd.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

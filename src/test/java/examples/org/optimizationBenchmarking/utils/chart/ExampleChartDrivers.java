@@ -26,7 +26,9 @@ public final class ExampleChartDrivers {
     list.add(JFreeChartDriver.getInstance());
 
     for (final EChartFormat format : EChartFormat.values()) {
-      list.add(format.getDefaultDriver());
+      if (format != EChartFormat.EXPORT) {
+        list.add(format.getDefaultDriver());
+      }
     }
 
     return new ArrayListView<>(list.toArray(new IChartDriver[list.size()]));

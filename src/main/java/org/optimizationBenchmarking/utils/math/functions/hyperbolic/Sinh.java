@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.math.functions.hyperbolic;
 import org.apache.commons.math3.util.FastMath;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.trigonometric.Sin;
 
 /** The sinh function */
 public final class Sinh extends UnaryFunction {
@@ -10,12 +11,22 @@ public final class Sinh extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the hyperbolic sine operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sin.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Sinh INSTANCE = new Sinh();
 
   /** instantiate */
   private Sinh() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Sinh.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

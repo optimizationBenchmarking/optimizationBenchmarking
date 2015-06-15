@@ -11,6 +11,9 @@ public final class Sub extends BinaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the subtraction operator */
+  public static final int PRECEDENCE_PRIORITY = Add.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Sub INSTANCE = new Sub();
 
@@ -102,6 +105,12 @@ public final class Sub extends BinaryFunction {
       return Sub.INSTANCE;
     }
     return Add.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Sub.PRECEDENCE_PRIORITY;
   }
 
   // default, automatic serialization replacement and resolve routines for

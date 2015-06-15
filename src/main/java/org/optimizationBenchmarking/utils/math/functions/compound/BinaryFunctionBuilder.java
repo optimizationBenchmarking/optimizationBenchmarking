@@ -91,15 +91,15 @@ FunctionBuilder<BinaryFunction> {
   @Override
   public final BinaryFunction parameter(final int index) {
     switch (index) {
-      case 1: {
+      case 0: {
         return _Select1of2.INSTANCE;
       }
-      case 2: {
+      case 1: {
         return _Select2of2.INSTANCE;
       }
       default: {
         throw new IllegalArgumentException( //
-            "The parameter index must be in 1..2, but " //$NON-NLS-1$
+            "The parameter index must be in 0..1, but " //$NON-NLS-1$
             + index + " was specified."); //$NON-NLS-1$
       }
     }

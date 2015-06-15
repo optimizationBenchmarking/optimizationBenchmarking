@@ -10,12 +10,22 @@ public final class ACos extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the arc cosine operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sin.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final ACos INSTANCE = new ACos();
 
   /** instantiate */
   private ACos() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return ACos.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

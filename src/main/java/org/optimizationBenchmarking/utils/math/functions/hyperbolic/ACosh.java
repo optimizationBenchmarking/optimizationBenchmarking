@@ -15,12 +15,22 @@ public final class ACosh extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the arcus hyperbolic cosine operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sinh.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final ACosh INSTANCE = new ACosh();
 
   /** instantiate */
   private ACosh() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return ACosh.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

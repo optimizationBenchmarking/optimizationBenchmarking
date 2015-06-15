@@ -9,12 +9,22 @@ public final class Sqrt1z extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the sqrt1z root operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sqrt.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Sqrt1z INSTANCE = new Sqrt1z();
 
   /** instantiate */
   private Sqrt1z() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Sqrt1z.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

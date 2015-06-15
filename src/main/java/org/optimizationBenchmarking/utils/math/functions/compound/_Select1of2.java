@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.math.functions.compound;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
-import org.optimizationBenchmarking.utils.math.functions.IParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -92,14 +92,14 @@ final class _Select1of2 extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final void render(final IMath out,
+  public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
     renderer.renderParameter(0, out);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void render(final ITextOutput out,
+  public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
     renderer.renderParameter(0, out);
   }

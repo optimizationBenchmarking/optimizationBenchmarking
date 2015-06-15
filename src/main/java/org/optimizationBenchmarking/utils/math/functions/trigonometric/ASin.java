@@ -10,12 +10,21 @@ public final class ASin extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the arc sine operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sin.PRECEDENCE_PRIORITY;
   /** the globally shared instance */
   public static final ASin INSTANCE = new ASin();
 
   /** instantiate */
   private ASin() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return ASin.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

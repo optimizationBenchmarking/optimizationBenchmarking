@@ -10,12 +10,21 @@ public final class Cosh extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the hyperbolic cosine operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Sinh.PRECEDENCE_PRIORITY;
   /** the globally shared instance */
   public static final Cosh INSTANCE = new Cosh();
 
   /** instantiate */
   private Cosh() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Cosh.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

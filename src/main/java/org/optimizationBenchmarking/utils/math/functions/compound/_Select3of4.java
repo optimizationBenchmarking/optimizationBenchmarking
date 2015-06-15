@@ -1,8 +1,8 @@
 package org.optimizationBenchmarking.utils.math.functions.compound;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.math.functions.IParameterRenderer;
 import org.optimizationBenchmarking.utils.math.functions.QuaternaryFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -100,14 +100,14 @@ final class _Select3of4 extends QuaternaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final void render(final IMath out,
+  public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
     renderer.renderParameter(2, out);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void render(final ITextOutput out,
+  public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
     renderer.renderParameter(2, out);
   }

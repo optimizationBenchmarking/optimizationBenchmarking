@@ -11,6 +11,9 @@ public final class SubBA extends BinaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the argument-swapped subtraction operator */
+  public static final int PRECEDENCE_PRIORITY = Sub.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final SubBA INSTANCE = new SubBA();
 
@@ -101,6 +104,12 @@ public final class SubBA extends BinaryFunction {
       return Add.INSTANCE;
     }
     return SubBA.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return SubBA.PRECEDENCE_PRIORITY;
   }
 
   // default, automatic serialization replacement and resolve routines for

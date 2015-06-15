@@ -2,9 +2,10 @@ package org.optimizationBenchmarking.utils.math.functions.compound;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.math.functions.IParameterRenderer;
 import org.optimizationBenchmarking.utils.math.functions.QuaternaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.ParameterRendererBridge;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -222,18 +223,18 @@ final class _Compound4x3 extends TernaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public final void render(final ITextOutput out,
+  public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
-    this.m_result
-    .render(out, new __Compound4x3ParameterRenderer(renderer));
+    this.m_result.mathRender(out, new ParameterRendererBridge(renderer,
+        this.m_child1, this.m_child2, this.m_child3, this.m_child4));
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void render(final IMath out,
+  public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
-    this.m_result
-    .render(out, new __Compound4x3ParameterRenderer(renderer));
+    this.m_result.mathRender(out, new ParameterRendererBridge(renderer,
+        this.m_child1, this.m_child2, this.m_child3, this.m_child4));
   }
 
   /** {@inheritDoc} */
@@ -262,135 +263,5 @@ final class _Compound4x3 extends TernaryFunction {
           .equals(other.m_child4));
     }
     return false;
-  }
-
-  /**
-   * This is the automatically generated code for a
-   * {@link org.optimizationBenchmarking.utils.math.functions.IParameterRenderer
-   * parameter renderer} for the {@link _Compound4x3 parameter renderer}
-   * for the
-   */
-  private final class __Compound4x3ParameterRenderer implements
-  IParameterRenderer {
-
-    /**
-     * @serial the instance of
-     *         {@link org.optimizationBenchmarking.utils.math.functions.IParameterRenderer}
-     *         to delegate to.
-     */
-    private final IParameterRenderer m_renderer;
-
-    /**
-     * Create the the
-     * {@link org.optimizationBenchmarking.utils.math.functions.IParameterRenderer
-     * parameter renderer} of the
-     * {@link org.optimizationBenchmarking.utils.math.functions.compound._Compound4x3}
-     * , a function which returns a constant value.
-     *
-     * @param renderer
-     *          the instance of
-     *          {@link org.optimizationBenchmarking.utils.math.functions.IParameterRenderer}
-     *          to delegate to.
-     * @throws IllegalArgumentException
-     *           if {@code renderer} is {@code null}
-     */
-    __Compound4x3ParameterRenderer(final IParameterRenderer renderer) {
-      super();
-      if (renderer == null) {
-        throw new IllegalArgumentException( //
-            "Original parameter renderer of the the {@link org.optimizationBenchmarking.utils.math.functions.IParameterRenderer parameter renderer} of the {@link org.optimizationBenchmarking.utils.math.functions.compound._Compound4x3}, a function which returns a constant value, cannot be null."); //$NON-NLS-1$
-      }
-      this.m_renderer = renderer;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final void renderParameter(final int index,
-        final ITextOutput out) {
-      switch (index) {
-        case 0: {
-          _Compound4x3.this.m_child1.render(out, this.m_renderer);
-          return;
-        }
-        case 1: {
-          _Compound4x3.this.m_child2.render(out, this.m_renderer);
-          return;
-        }
-        case 2: {
-          _Compound4x3.this.m_child3.render(out, this.m_renderer);
-          return;
-        }
-        case 3: {
-          _Compound4x3.this.m_child4.render(out, this.m_renderer);
-          return;
-        }
-        default: {
-          throw new IllegalArgumentException( //
-              "Only parameter indexes from 0 to 3 are valid, but " //$NON-NLS-1$
-              + index + " was provided." //$NON-NLS-1$
-              );
-        }
-      }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final void renderParameter(final int index, final IMath out) {
-      switch (index) {
-        case 0: {
-          _Compound4x3.this.m_child1.render(out, this.m_renderer);
-          return;
-        }
-        case 1: {
-          _Compound4x3.this.m_child2.render(out, this.m_renderer);
-          return;
-        }
-        case 2: {
-          _Compound4x3.this.m_child3.render(out, this.m_renderer);
-          return;
-        }
-        case 3: {
-          _Compound4x3.this.m_child4.render(out, this.m_renderer);
-          return;
-        }
-        default: {
-          throw new IllegalArgumentException( //
-              "Only parameter indexes from 0 to 3 are valid, but " //$NON-NLS-1$
-              + index + " was provided." //$NON-NLS-1$
-              );
-        }
-      }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final int hashCode() {
-      return HashUtils.combineHashes(HashUtils.hashCode(this.m_renderer),
-          HashUtils.hashCode(_Compound4x3.this));
-    }
-
-    /**
-     * Get the owning instance of this renderer.
-     *
-     * @return the owning instance of this renderer
-     */
-    private final _Compound4x3 __owner() {
-      return _Compound4x3.this;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final boolean equals(final Object o) {
-      final __Compound4x3ParameterRenderer other;
-      if (o == this) {
-        return true;
-      }
-      if (o instanceof __Compound4x3ParameterRenderer) {
-        other = ((__Compound4x3ParameterRenderer) o);
-        return ((this.m_renderer.equals(other.m_renderer) && _Compound4x3.this
-            .equals(other.__owner())));
-      }
-      return false;
-    }
   }
 }

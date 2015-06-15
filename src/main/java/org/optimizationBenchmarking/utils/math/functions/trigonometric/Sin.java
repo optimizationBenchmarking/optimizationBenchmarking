@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.math.functions.trigonometric;
 import org.apache.commons.math3.util.FastMath;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.power.Ln;
 
 /** The sin function */
 public final class Sin extends UnaryFunction {
@@ -10,12 +11,22 @@ public final class Sin extends UnaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the sine operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  Ln.PRECEDENCE_PRIORITY;
+
   /** the globally shared instance */
   public static final Sin INSTANCE = new Sin();
 
   /** instantiate */
   private Sin() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Sin.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */

@@ -3,6 +3,8 @@ package org.optimizationBenchmarking.utils.math.functions.power;
 import org.apache.commons.math3.util.FastMath;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
+import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
 
 /**
  * The pow function: raise {@code x1} to the power {@code x2}
@@ -12,12 +14,24 @@ public final class Pow extends BinaryFunction {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the precedence priority of the power operator */
+  public static final int PRECEDENCE_PRIORITY = //
+  (int) ((((long) (Integer.MAX_VALUE)) + //
+  ((long) (Math.max(Mul.PRECEDENCE_PRIORITY,//
+      MathematicalFunction.DEFAULT_PRECEDENCE_PRIORITY)))) / 2);
+
   /** the globally shared instance */
   public static final Pow INSTANCE = new Pow();
 
   /** instantiate */
   private Pow() {
     super();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int getPrecedencePriority() {
+    return Pow.PRECEDENCE_PRIORITY;
   }
 
   /** {@inheritDoc} */
