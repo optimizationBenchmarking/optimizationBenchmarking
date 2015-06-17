@@ -8,8 +8,8 @@ import org.optimizationBenchmarking.experimentation.attributes.statistics.parame
 import org.optimizationBenchmarking.experimentation.attributes.statistics.parameters.StatisticalParameterParser;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimensionSet;
-import org.optimizationBenchmarking.utils.math.functions.MathematicalFunctionParser;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.text.MathematicalFunctionParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterator;
 
@@ -58,7 +58,7 @@ import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterato
  * If a name for such a function, say
  * <code>"{@link org.optimizationBenchmarking.utils.math.functions.power.Lg lg}"</code>
  * is provided, it is parsed via the
- * {@link org.optimizationBenchmarking.utils.math.functions.MathematicalFunctionParser}
+ * {@link org.optimizationBenchmarking.utils.math.text.MathematicalFunctionParser}
  * . Notice that the transformation is applied before computing the
  * statistical parameter. Knowing this is important since "
  * {@code mean of ln y}" is different from "{@code ln of the mean y}". If
@@ -74,7 +74,7 @@ import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterato
  * If a name for such a function, say
  * <code>"{@link org.optimizationBenchmarking.utils.math.functions.power.Lg lg}"</code>
  * is provided, it is parsed via the
- * {@link org.optimizationBenchmarking.utils.math.functions.MathematicalFunctionParser}
+ * {@link org.optimizationBenchmarking.utils.math.text.MathematicalFunctionParser}
  * . If no function is provided, no transformation will be applied to the
  * {@code x-dimension}.</dd>
  * </dl>

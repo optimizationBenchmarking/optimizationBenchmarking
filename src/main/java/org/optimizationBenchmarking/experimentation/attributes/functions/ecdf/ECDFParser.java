@@ -3,8 +3,8 @@ package org.optimizationBenchmarking.experimentation.attributes.functions.ecdf;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimensionSet;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
-import org.optimizationBenchmarking.utils.math.functions.MathematicalFunctionParser;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.text.MathematicalFunctionParser;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -21,7 +21,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * name for such a function, say
  * <code>"{@link org.optimizationBenchmarking.utils.math.functions.power.Lg lg}"</code>
  * is provided, it is parsed via the
- * {@link org.optimizationBenchmarking.utils.math.functions.MathematicalFunctionParser}
+ * {@link org.optimizationBenchmarking.utils.math.text.MathematicalFunctionParser}
  * . If no function is provided, no transformation will be applied to the
  * time dimension.</dd>
  * <dt>{@code timeDimension}</dt>

@@ -4,8 +4,12 @@ import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Negate;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * This is the automatically generated code for a
@@ -106,10 +110,21 @@ final class _Const3 extends TernaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public int getPrecedencePriority() {
+    return ((this.m_const.doubleValue() >= 0d) ? Integer.MAX_VALUE
+        : Negate.PRECEDENCE_PRIORITY);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
-    try (final IText number = out.number()) {
-      this.mathRender(number, renderer);
+    if (this.m_const instanceof IMathRenderable) { // for named constants
+      ((IMathRenderable) (this.m_const)).mathRender(out, renderer);
+    } else { // normal constants
+      try (final IText number = out.number()) {
+        this.mathRender(number, renderer);
+      }
     }
   }
 
@@ -117,10 +132,14 @@ final class _Const3 extends TernaryFunction {
   @Override
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
-    if (this.isLongArithmeticAccurate()) {
-      out.append(this.m_const.longValue());
-    } else {
-      out.append(this.m_const.doubleValue());
+    if (this.m_const instanceof IMathRenderable) { // for named constants
+      ((IMathRenderable) (this.m_const)).mathRender(out, renderer);
+    } else { // normal constants
+      if (this.isLongArithmeticAccurate()) {
+        out.append(this.m_const.longValue());
+      } else {
+        out.append(this.m_const.doubleValue());
+      }
     }
   }
 
@@ -135,5 +154,14 @@ final class _Const3 extends TernaryFunction {
   public final boolean equals(final Object o) {
     return ((o instanceof _Const3) && (this.m_const
         .equals(((_Const3) o).m_const)));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    final MemoryTextOutput output;
+    output = new MemoryTextOutput();
+    this.mathRender(output, DefaultParameterRenderer.INSTANCE);
+    return output.toString();
   }
 }

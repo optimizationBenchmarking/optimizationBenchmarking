@@ -1,10 +1,13 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** The sqrt function */
 public final class Sqrt extends UnaryFunction {
@@ -117,6 +120,23 @@ public final class Sqrt extends UnaryFunction {
   @Override
   public final Sqr invertFor(final int index) {
     return Sqr.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    out.append((char) 0x221a);
+    renderer.renderParameter(0, out);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath root = out.sqrt()) {
+      renderer.renderParameter(0, root);
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

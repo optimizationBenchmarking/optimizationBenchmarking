@@ -116,4 +116,16 @@ FunctionBuilder<BinaryFunction> {
   public final Class<BinaryFunction> getFunctionClass() {
     return BinaryFunction.class;
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    return (o instanceof BinaryFunctionBuilder);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return 5051;
+  }
 }

@@ -1,6 +1,10 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The cube function
@@ -147,6 +151,26 @@ public final class Cube extends UnaryFunction {
   @Override
   public final Cbrt invertFor(final int index) {
     return Cbrt.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    renderer.renderParameter(0, out);
+    out.append((char) 0xb3);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath sqr = out.pow()) {
+      renderer.renderParameter(0, sqr);
+      try (final IText num = sqr.number()) {
+        num.append(3);
+      }
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

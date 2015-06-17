@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IPropertySet;
 import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -106,8 +107,14 @@ abstract class _ShadowProperty<OT extends IPropertySet, ST extends IProperty, PV
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final IMath math) {
-    this.m_shadowUnpacked.appendName(math);
+  public final void mathRender(ITextOutput out, IParameterRenderer renderer) {
+    this.m_shadowUnpacked.mathRender(out, renderer);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(IMath out, IParameterRenderer renderer) {
+    this.m_shadowUnpacked.mathRender(out, renderer);
   }
 
   /** {@inheritDoc} */

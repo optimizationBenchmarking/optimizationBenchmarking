@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /**
  * A math renderable representing a name.
  */
-public final class NameMathRenderable implements IMathRenderable {
+public final class NamedMathRenderable implements IMathRenderable {
   /** the name */
   private final String m_name;
 
@@ -17,7 +17,7 @@ public final class NameMathRenderable implements IMathRenderable {
    * @param name
    *          the name of the object
    */
-  public NameMathRenderable(final String name) {
+  public NamedMathRenderable(final String name) {
     super();
     if (name == null) {
       throw new IllegalArgumentException("Name cannot be null."); //$NON-NLS-1$
@@ -27,16 +27,22 @@ public final class NameMathRenderable implements IMathRenderable {
 
   /** {@inheritDoc} */
   @Override
+  public final String toString() {
+    return this.m_name;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
-    NameMathRenderable.mathRender(this.m_name, out, renderer);
+    NamedMathRenderable.mathRender(this.m_name, out, renderer);
   }
 
   /** {@inheritDoc} */
   @Override
   public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
-    NameMathRenderable.mathRender(this.m_name, out, renderer);
+    NamedMathRenderable.mathRender(this.m_name, out, renderer);
   }
 
   /** {@inheritDoc} */
@@ -48,8 +54,8 @@ public final class NameMathRenderable implements IMathRenderable {
   /** {@inheritDoc} */
   @Override
   public final boolean equals(final Object o) {
-    return ((o == this) || ((o instanceof NameMathRenderable) && //
-    (this.m_name.equals(((NameMathRenderable) o).m_name))));
+    return ((o == this) || ((o instanceof NamedMathRenderable) && //
+    (this.m_name.equals(((NamedMathRenderable) o).m_name))));
   }
 
   /**

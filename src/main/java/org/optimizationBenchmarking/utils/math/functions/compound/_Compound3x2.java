@@ -4,9 +4,11 @@ import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
+import org.optimizationBenchmarking.utils.math.text.AbstractParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
-import org.optimizationBenchmarking.utils.math.text.ParameterRendererBridge;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * This is the automatically generated code for a
@@ -189,18 +191,24 @@ final class _Compound3x2 extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public int getPrecedencePriority() {
+    return this.m_result.getPrecedencePriority();
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
-    this.m_result.mathRender(out, new ParameterRendererBridge(renderer,
-        this.m_child1, this.m_child2, this.m_child3));
+    this.m_result.mathRender(out, new __Compound3x2ParameterRenderer(
+        renderer));
   }
 
   /** {@inheritDoc} */
   @Override
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
-    this.m_result.mathRender(out, new ParameterRendererBridge(renderer,
-        this.m_child1, this.m_child2, this.m_child3));
+    this.m_result.mathRender(out, new __Compound3x2ParameterRenderer(
+        renderer));
   }
 
   /** {@inheritDoc} */
@@ -227,5 +235,126 @@ final class _Compound3x2 extends BinaryFunction {
           .equals(other.m_child3));
     }
     return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    final MemoryTextOutput output;
+    output = new MemoryTextOutput();
+    this.mathRender(output, DefaultParameterRenderer.INSTANCE);
+    return output.toString();
+  }
+
+  /**
+   * This is the automatically generated code of the
+   * {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
+   * parameter renderer} of the {@link _Compound3x2}.
+   */
+  private final class __Compound3x2ParameterRenderer extends
+  AbstractParameterRenderer {
+    /**
+     * the
+     * {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
+     * parameter renderer} to bridge to
+     */
+    private final IParameterRenderer m_renderer;
+
+    /**
+     * Create the
+     * {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
+     * parameter renderer} of the {@link _Compound3x2}
+     *
+     * @param renderer
+     *          the
+     *          {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
+     *          parameter renderer} to bridge to
+     * @throws IllegalArgumentException
+     *           if {@code renderer} is {@code null}
+     */
+    __Compound3x2ParameterRenderer(final IParameterRenderer renderer) {
+      super();
+      if (renderer == null) {
+        throw new IllegalArgumentException( //
+            "The parameter renderer to bridge to cannot be null."); //$NON-NLS-1$
+      }
+      this.m_renderer = renderer;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void renderParameter(final int index, final IMath out) {
+      switch (index) {
+        case 0: {
+          _Compound3x2.this.m_child1.mathRender(out, this.m_renderer);
+          return;
+        }
+        case 1: {
+          _Compound3x2.this.m_child2.mathRender(out, this.m_renderer);
+          return;
+        }
+        case 2: {
+          _Compound3x2.this.m_child3.mathRender(out, this.m_renderer);
+          return;
+        }
+        default: {
+          AbstractParameterRenderer.throwInvalidParameterIndex(index, 2);
+        }
+      }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void renderParameter(final int index,
+        final ITextOutput out) {
+      switch (index) {
+        case 0: {
+          _Compound3x2.this.m_child1.mathRender(out, this.m_renderer);
+          return;
+        }
+        case 1: {
+          _Compound3x2.this.m_child2.mathRender(out, this.m_renderer);
+          return;
+        }
+        case 2: {
+          _Compound3x2.this.m_child3.mathRender(out, this.m_renderer);
+          return;
+        }
+        default: {
+          AbstractParameterRenderer.throwInvalidParameterIndex(index, 2);
+        }
+      }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final int hashCode() {
+      return HashUtils.combineHashes(HashUtils.hashCode(this.m_renderer),
+          _Compound3x2.this.hashCode());
+    }
+
+    /**
+     * the internal owner getter
+     *
+     * @return the owning {@link _Compound3x2} instance
+     */
+    private final _Compound3x2 __getOwner() {
+      return _Compound3x2.this;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean equals(final Object o) {
+      final __Compound3x2ParameterRenderer other;
+      if (o == this) {
+        return true;
+      }
+      if (o instanceof __Compound3x2ParameterRenderer) {
+        other = ((__Compound3x2ParameterRenderer) o);
+        return ((this.m_renderer.equals(other.m_renderer)) && (_Compound3x2.this
+            .equals(other.__getOwner())));
+      }
+      return false;
+    }
   }
 }

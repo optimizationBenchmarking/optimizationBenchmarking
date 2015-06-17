@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
-import org.optimizationBenchmarking.experimentation.data.spec.ISemanticComponent;
+import org.optimizationBenchmarking.utils.document.spec.ISemanticComponent;
 
 /**
  * A cluster is a sub-set of an experiment set.

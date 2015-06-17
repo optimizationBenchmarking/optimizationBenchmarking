@@ -1,11 +1,14 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.power.Exp;
 import org.optimizationBenchmarking.utils.math.functions.power.Pow;
 import org.optimizationBenchmarking.utils.math.functions.power.Sqr;
 import org.optimizationBenchmarking.utils.math.functions.power.Sqrt;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The negate function
@@ -102,6 +105,23 @@ public final class Negate extends UnaryFunction {
   @Override
   public final Negate invertFor(final int index) {
     return Negate.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    out.append('-');
+    renderer.renderParameter(0, out);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath neg = out.negate()) {
+      renderer.renderParameter(0, neg);
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

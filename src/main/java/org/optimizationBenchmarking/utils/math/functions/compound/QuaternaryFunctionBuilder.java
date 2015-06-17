@@ -122,4 +122,16 @@ FunctionBuilder<QuaternaryFunction> {
   public final Class<QuaternaryFunction> getFunctionClass() {
     return QuaternaryFunction.class;
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    return (o instanceof QuaternaryFunctionBuilder);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return 362897;
+  }
 }

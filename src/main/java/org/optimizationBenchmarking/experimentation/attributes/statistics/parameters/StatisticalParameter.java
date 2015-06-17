@@ -1,11 +1,11 @@
 package org.optimizationBenchmarking.experimentation.attributes.statistics.parameters;
 
-import org.optimizationBenchmarking.experimentation.data.spec.ISemanticComponent;
-import org.optimizationBenchmarking.utils.document.spec.IComplexText;
+import org.optimizationBenchmarking.experimentation.data.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.document.spec.IMathName;
+import org.optimizationBenchmarking.utils.document.spec.ISemanticComponent;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -19,8 +19,6 @@ public abstract class StatisticalParameter implements ISemanticComponent {
   private final String m_shortName;
   /** the long name */
   private final String m_longName;
-  /** does the {@link #m_longName} consist of muliple words? */
-  private final boolean m_isWords;
 
   /**
    * create
@@ -35,22 +33,25 @@ public abstract class StatisticalParameter implements ISemanticComponent {
 
     this.m_shortName = TextUtils.prepare(shortName);
     this.m_longName = TextUtils.prepare(longName);
-    this.m_isWords = (this.m_longName.indexOf(' ') >= 0);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final IMath math) {
-    try (final IMathName name = math.name()) {
-      name.append(this.getShortName());
-    }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final ETextCase appendName(final ITextOutput textOut,
+  public ETextCase appendName(final ITextOutput textOut,
       final ETextCase textCase) {
-    return this.appendLongName(textOut, textCase);
+    return this.appendShortName(textOut, textCase);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(ITextOutput out, IParameterRenderer renderer) {
+    SemanticComponentUtils.mathRender(this.m_shortName, out, renderer);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(IMath out, IParameterRenderer renderer) {
+    SemanticComponentUtils.mathRender(this.m_shortName, out, renderer);
   }
 
   /**
@@ -76,18 +77,8 @@ public abstract class StatisticalParameter implements ISemanticComponent {
    */
   public final ETextCase appendShortName(final ITextOutput textOut,
       final ETextCase textCase) {
-    final ETextCase use;
-
-    use = ETextCase.ensure(textCase);
-
-    if (textOut instanceof IComplexText) {
-      try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-        this.appendName(math);
-      }
-      return use.nextCase();
-    }
-
-    return use.appendWord(this.getShortName(), textOut);
+    return SemanticComponentUtils.appendName(this.m_shortName, textOut,
+        textCase, true);
   }
 
   /**
@@ -102,14 +93,8 @@ public abstract class StatisticalParameter implements ISemanticComponent {
    */
   public ETextCase appendLongName(final ITextOutput textOut,
       final ETextCase textCase) {
-    final ETextCase use;
-
-    use = ETextCase.ensure(textCase);
-
-    if (this.m_isWords) {
-      return use.appendWords(this.getLongName(), textOut);
-    }
-    return use.appendWord(this.getLongName(), textOut);
+    return ETextCase.ensure(textCase)
+        .appendWords(this.m_longName, textOut);
   }
 
   /** {@inheritDoc} */
@@ -151,7 +136,7 @@ public abstract class StatisticalParameter implements ISemanticComponent {
   @Override
   public boolean equals(final Object o) {
     return ((o == this) || ((o != null) && //
-        (this.getClass() == o.getClass())));
+    (this.getClass() == o.getClass())));
   }
 
   /** {@inheritDoc} */

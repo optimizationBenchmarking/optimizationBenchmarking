@@ -4,11 +4,10 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
+import org.optimizationBenchmarking.experimentation.data.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
-import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.document.spec.IMathName;
-import org.optimizationBenchmarking.utils.document.spec.IPlainText;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -311,16 +310,27 @@ abstract class _IDObject extends DataElement implements
   }
 
   /**
-   * the internal blueprint method for appending the name of an object to a
-   * mathematics context
-   *
-   * @param math
-   *          the maths context
+   * Render this object as mathematical formula to a text output
+   * 
+   * @param out
+   *          the text output
+   * @param renderer
+   *          the parameter renderer
    */
-  void appendName(final IMath math) {
-    try (final IMathName name = math.name()) {
-      name.append(this.getName());
-    }
+  void mathRender(ITextOutput out, IParameterRenderer renderer) {
+    SemanticComponentUtils.mathRender(this.getName(), out, renderer);
+  }
+
+  /**
+   * Render this object as mathematical formula to a math context
+   * 
+   * @param out
+   *          the math context
+   * @param renderer
+   *          the parameter renderer
+   */
+  void mathRender(IMath out, IParameterRenderer renderer) {
+    SemanticComponentUtils.mathRender(this.getName(), out, renderer);
   }
 
   /**
@@ -334,14 +344,8 @@ abstract class _IDObject extends DataElement implements
    * @return the next text case
    */
   ETextCase appendName(final ITextOutput textOut, final ETextCase textCase) {
-    if (textOut instanceof IComplexText) {
-      try (final IPlainText emph = ((IComplexText) textOut).emphasize()) {
-        emph.append(this.getName());
-      }
-    } else {
-      textOut.append(this.getName());
-    }
-    return ETextCase.ensure(textCase).nextCase();
+    return SemanticComponentUtils.appendName(this.getName(), textOut,
+        textCase, false);
   }
 
   /**

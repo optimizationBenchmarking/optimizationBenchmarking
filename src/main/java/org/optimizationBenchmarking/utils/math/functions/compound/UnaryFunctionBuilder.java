@@ -56,6 +56,12 @@ FunctionBuilder<UnaryFunction> {
   @Override
   public final UnaryFunction compound(final UnaryFunction func,
       final UnaryFunction param1) {
+    if (param1 instanceof Identity) {
+      return func;
+    }
+    if (func instanceof Identity) {
+      return param1;
+    }
     return new _Compound1x1(func, param1);
   }
 
@@ -113,5 +119,17 @@ FunctionBuilder<UnaryFunction> {
   @Override
   public final Class<UnaryFunction> getFunctionClass() {
     return UnaryFunction.class;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    return (o instanceof UnaryFunctionBuilder);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return 727;
   }
 }

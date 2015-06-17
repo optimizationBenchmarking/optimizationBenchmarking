@@ -1,11 +1,11 @@
 package org.optimizationBenchmarking.experimentation.data.impl.abstr;
 
+import org.optimizationBenchmarking.experimentation.data.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.INamedElement;
-import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.document.spec.IMathName;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -42,25 +42,22 @@ public class AbstractNamedElement extends DataElement implements
 
   /** {@inheritDoc} */
   @Override
-  public void appendName(final IMath math) {
-    try (final IMathName name = math.name()) {
-      name.append(this.getName());
-    }
+  public void mathRender(ITextOutput out, IParameterRenderer renderer) {
+    SemanticComponentUtils.mathRender(this.getName(), out, renderer);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void mathRender(IMath out, IParameterRenderer renderer) {
+    SemanticComponentUtils.mathRender(this.getName(), out, renderer);
   }
 
   /** {@inheritDoc} */
   @Override
   public ETextCase appendName(final ITextOutput textOut,
       final ETextCase textCase) {
-    if (textOut instanceof IComplexText) {
-      try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-        this.appendName(math);
-      }
-    } else {
-      textOut.append(this.getName());
-    }
-
-    return ETextCase.ensure(textCase).nextCase();
+    return SemanticComponentUtils.appendName(this.getName(), textOut,
+        textCase, false);
   }
 
   /** {@inheritDoc} */

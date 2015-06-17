@@ -3,10 +3,9 @@ package org.optimizationBenchmarking.experimentation.attributes.functions;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
-import org.optimizationBenchmarking.experimentation.data.spec.ISemanticComponent;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.document.spec.ISemanticComponent;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -20,24 +19,19 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 public abstract class FunctionAttribute<DT extends IElementSet> extends
     Attribute<DT, IMatrix> implements ISemanticComponent {
 
-  /**
-   * Create the function attribute
-   *
-   * @param type
+  /** Create the function attribute
+   * 
+   *  @param type
    *          the attribute type
+   * @param xAxisTransformation the transformation to be applied to the x-axis
+   * @param yAxisInputTransformation the transformation to be applied to the data of the y-axis before being fed to the actual computation
+   * @param yAxisOutputTransformation the transformation t
    */
-  protected FunctionAttribute(final EAttributeType type) {
+  protected FunctionAttribute(final EAttributeType type,
+      final DimensionTransformation xAxisTransformation,
+      final DimensionTransformation yAxisInputTransformation,
+      final NamedSourceTransformation yAxisOutputTransformation) {
     super(type);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public void appendName(final IMath math) {
-    this.appendYAxisTitle(math);
-    try (final IText text = math.text()) {
-      text.append(" over ");//$NON-NLS-1$
-    }
-    this.appendXAxisTitle(math);
   }
 
   /** {@inheritDoc} */

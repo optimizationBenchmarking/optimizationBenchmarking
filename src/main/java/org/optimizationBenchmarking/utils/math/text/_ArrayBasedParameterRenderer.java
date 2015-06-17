@@ -19,6 +19,9 @@ class _ArrayBasedParameterRenderer extends AbstractParameterRenderer {
   /** the immediate parameters */
   private final IMathRenderable[] m_parameters;
 
+  /** the hash code */
+  private int m_hashCode;
+
   /**
    * Create the array-based parameter renderer
    *
@@ -32,6 +35,8 @@ class _ArrayBasedParameterRenderer extends AbstractParameterRenderer {
   _ArrayBasedParameterRenderer(final IParameterRenderer renderer,
       final boolean useThisAsRenderer, final IMathRenderable... parameters) {
     super();
+
+    int hc;
 
     if (useThisAsRenderer) {
       this.m_renderer = this;
@@ -49,6 +54,14 @@ class _ArrayBasedParameterRenderer extends AbstractParameterRenderer {
     }
 
     this.m_parameters = parameters;
+
+    hc = HashUtils.hashCode(parameters);
+    if (this.m_renderer != this) {
+      this.m_hashCode = HashUtils.combineHashes(
+          HashUtils.hashCode(renderer), hc);
+    } else {
+      this.m_hashCode = hc;
+    }
   }
 
   /** {@inheritDoc} */
@@ -76,15 +89,7 @@ class _ArrayBasedParameterRenderer extends AbstractParameterRenderer {
   /** {@inheritDoc} */
   @Override
   public final int hashCode() {
-    int hashCode;
-
-    hashCode = ((this != this.m_renderer) ? HashUtils
-        .hashCode(this.m_renderer) : 0);
-    for (final IMathRenderable renderable : this.m_parameters) {
-      hashCode = HashUtils.combineHashes(hashCode,
-          HashUtils.hashCode(renderable));
-    }
-    return hashCode;
+    return this.m_hashCode;
   }
 
   /** {@inheritDoc} */
@@ -96,8 +101,10 @@ class _ArrayBasedParameterRenderer extends AbstractParameterRenderer {
     }
     if (o instanceof _ArrayBasedParameterRenderer) {
       other = ((_ArrayBasedParameterRenderer) o);
-      return (((this == this.m_renderer) || //
-      this.m_renderer.equals(other.m_renderer))//
+
+      return ((this.m_hashCode == other.m_hashCode) && //
+          ((this == this.m_renderer) || //
+          this.m_renderer.equals(other.m_renderer))//
       && Arrays.equals(this.m_parameters, other.m_parameters));
     }
 

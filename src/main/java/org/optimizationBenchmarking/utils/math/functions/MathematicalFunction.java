@@ -3,11 +3,9 @@ package org.optimizationBenchmarking.utils.math.functions;
 import java.io.Serializable;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
-import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * <p>
@@ -413,15 +411,6 @@ public abstract class MathematicalFunction implements Serializable,
     return null;
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public String toString() {
-    final MemoryTextOutput out;
-    out = new MemoryTextOutput();
-    this.mathRender(out, DefaultParameterRenderer.INSTANCE);
-    return out.toString();
-  }
-
   /**
    * This instance equals to any object of the same class. The reason is
    * that mathematical functions are usually singletons.
@@ -477,7 +466,7 @@ public abstract class MathematicalFunction implements Serializable,
     char separator;
     int index;
 
-    out.append(this.getClass().getSimpleName().toLowerCase());
+    out.append(this.toString());
     separator = '(';
     arity = this.getMinArity();
 
@@ -505,7 +494,7 @@ public abstract class MathematicalFunction implements Serializable,
 
     arity = this.getMinArity();
     try (final IMath math = out.nAryFunction(//
-        this.getClass().getSimpleName().toLowerCase(), arity, arity)) {
+        this.toString(), arity, arity)) {
       for (index = 0; index < arity; index++) {
         renderer.renderParameter(index, math);
       }
@@ -522,5 +511,11 @@ public abstract class MathematicalFunction implements Serializable,
    */
   public int getPrecedencePriority() {
     return MathematicalFunction.DEFAULT_PRECEDENCE_PRIORITY;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    return this.getClass().getSimpleName().toLowerCase();
   }
 }

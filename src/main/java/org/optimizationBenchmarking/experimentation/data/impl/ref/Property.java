@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.experimentation.data.spec.IPropertySet;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -219,35 +220,19 @@ public abstract class Property<DT extends PropertyValue<?>> extends
    */
   public abstract Object get(final DataElement element);
 
-  /**
-   * Append the "name" of this object to the given
-   * {@link org.optimizationBenchmarking.utils.document.spec.IMath
-   * mathematics context}.
-   *
-   * @param math
-   *          the mathematics output device
-   */
+  /** {@inheritDoc} */
   @Override
-  public final void appendName(final IMath math) {
-    super.appendName(math);
+  public final void mathRender(ITextOutput out, IParameterRenderer renderer) {
+    super.mathRender(out, renderer);
   }
 
-  /**
-   * Append the "name" of this object to the given text output device. This
-   * device may actually be an instance of
-   * {@link org.optimizationBenchmarking.utils.document.spec.IComplexText}
-   * or something similar. In this case, the implementation of this
-   * function may make use of all the capabilities of this object, foremost
-   * including the ability to
-   * {@link org.optimizationBenchmarking.utils.document.spec.IComplexText#inlineMath()
-   * display mathematical text}.
-   *
-   * @param textOut
-   *          the text output device
-   * @param textCase
-   *          the text case
-   * @return the next text case
-   */
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(IMath out, IParameterRenderer renderer) {
+    super.mathRender(out, renderer);
+  }
+
+  /** {@inheritDoc} */
   @Override
   public final ETextCase appendName(final ITextOutput textOut,
       final ETextCase textCase) {

@@ -31,7 +31,14 @@ import org.optimizationBenchmarking.utils.parsers.InstanceParser;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
-/** A parser for mathematical functionsdrivers. */
+/**
+ * A parser for singular instances of
+ * {@link org.optimizationBenchmarking.utils.math.functions.MathematicalFunction}
+ * , such as simple addition or subtraction. If you are looking for
+ * compound functions such as {@code 4+5*7*x}, use
+ * {@link org.optimizationBenchmarking.utils.math.text.CompoundFunctionParser}
+ * .
+ */
 public final class MathematicalFunctionParser extends
     InstanceParser<MathematicalFunction> {
 
@@ -244,48 +251,50 @@ public final class MathematicalFunctionParser extends
    *         none was found
    */
   static final _ParsedFunction _parseChar(final char currentChar) {
-
     switch (currentChar) {
-      case '+': {
-        return _ParsedFunction.ADD_INFIX;
-      }
-      case '-': {
-        return _ParsedFunction.SUB_INFIX;
-      }
-      case '*': {
-        return _ParsedFunction.MUL_INFIX;
-      }
-      case '/': {
-        return _ParsedFunction.DIV_INFIX;
-      }
-      case '%': {
-        return _ParsedFunction.MOD_INFIX;
-      }
-      case '&': {
-        return _ParsedFunction.BAND_INFIX;
-      }
-      case '~': {
-        return _ParsedFunction.BNOT_PREFIX;
-      }
-      case '^': {
-        return _ParsedFunction.POW_INFIX;
-      }
-      case '!': {
+      case 0x21: { // '!'
         return _ParsedFunction.FACTORIAL_POSTFIX;
       }
-      case 0xb2: {
+      case 0x25: { // ':'
+        return _ParsedFunction.MOD_INFIX;
+      }
+      case 0x26: { // '&'
+        return _ParsedFunction.BAND_INFIX;
+      }
+      case 0x2a: { // '*'
+        return _ParsedFunction.MUL_INFIX;
+      }
+      case 0x2b: { // '+'
+        return _ParsedFunction.ADD_INFIX;
+      }
+      case 0x2d: { // '-'
+        return _ParsedFunction.SUB_INFIX;
+      }
+      case 0x2f: // '/'
+      case 0x3a: {// ':'
+        return _ParsedFunction.DIV_INFIX;
+      }
+      case 0x5e: { // '^'
+        return _ParsedFunction.POW_INFIX;
+      }
+      case 0x7e: {// '~'
+        return _ParsedFunction.BNOT_PREFIX;
+      }
+      case 0xac: { // logical not character
+        return _ParsedFunction.LNOT_PREFIX;
+      }
+      case 0xb2: { // '^2'
         return _ParsedFunction.SQR_POSTFIX;
       }
-      case 0xb3: {
+      case 0xb3: { // '^3'
         return _ParsedFunction.CUBE_POSTFIX;
       }
-      case 0x221a: {
+      case 0x221a: { // sqrt character
         return _ParsedFunction.SQRT_PREFIX;
       }
-      case 0x221b: {
+      case 0x221b: { // cubic root character
         return _ParsedFunction.CBRT_PREFIX;
       }
-
       default: {
         return null;
       }

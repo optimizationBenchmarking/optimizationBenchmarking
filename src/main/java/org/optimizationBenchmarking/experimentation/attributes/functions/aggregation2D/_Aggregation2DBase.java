@@ -150,7 +150,7 @@ abstract class _Aggregation2DBase<T extends IElementSet> extends
   /** {@inheritDoc} */
   @Override
   public void appendXAxisTitle(final IMath math) {
-    try (final IMath inner = FunctionToMathBridge.bridge(
+    try (final IMath inner = new FunctionToMathBridge(
         this.getXTransformation(), math)) {
       this.getXDimension().appendName(inner);
     }
@@ -200,7 +200,7 @@ abstract class _Aggregation2DBase<T extends IElementSet> extends
 
     try (final IMath statPar = this.getStatisticalParameter().asFunction(
         use)) {
-      try (final IMath inner = FunctionToMathBridge.bridge(
+      try (final IMath inner = new FunctionToMathBridge(
           this.getYTransformation(), statPar)) {
         this.getYDimension().appendName(inner);
       }

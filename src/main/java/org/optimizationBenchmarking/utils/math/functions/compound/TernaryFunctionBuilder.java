@@ -119,4 +119,16 @@ FunctionBuilder<TernaryFunction> {
   public final Class<TernaryFunction> getFunctionClass() {
     return TernaryFunction.class;
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    return (o instanceof TernaryFunctionBuilder);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return 40343;
+  }
 }

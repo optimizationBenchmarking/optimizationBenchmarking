@@ -1,7 +1,10 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The second possible {@code "-"} function
@@ -110,6 +113,25 @@ public final class SubBA extends BinaryFunction {
   @Override
   public final int getPrecedencePriority() {
     return SubBA.PRECEDENCE_PRIORITY;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    renderer.renderParameter(1, out);
+    out.append('-');
+    renderer.renderParameter(0, out);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath sub = out.sub()) {
+      renderer.renderParameter(1, sub);
+      renderer.renderParameter(0, sub);
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

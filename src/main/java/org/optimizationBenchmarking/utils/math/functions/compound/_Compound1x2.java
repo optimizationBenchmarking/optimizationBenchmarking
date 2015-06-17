@@ -4,9 +4,12 @@ import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
+import org.optimizationBenchmarking.utils.math.text.AbstractParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
-import org.optimizationBenchmarking.utils.math.text.ParameterRendererBridge;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * This is the automatically generated code for a
@@ -138,18 +141,27 @@ final class _Compound1x2 extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public int getPrecedencePriority() {
+    return this.m_result.getPrecedencePriority();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  @SuppressWarnings("resource")
   public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
-    this.m_result.mathRender(out, new ParameterRendererBridge(renderer,
-        this.m_child1));
+    final _InternalMath internalMath;
+    internalMath = new _InternalMath(out,
+        new __Compound1x2ParameterRenderer(renderer));
+    this.m_result.mathRender(internalMath, internalMath.m_renderer);
   }
 
   /** {@inheritDoc} */
   @Override
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
-    this.m_result.mathRender(out, new ParameterRendererBridge(renderer,
-        this.m_child1));
+    this.m_result.mathRender(out, new __Compound1x2ParameterRenderer(
+        renderer));
   }
 
   /** {@inheritDoc} */
@@ -172,5 +184,129 @@ final class _Compound1x2 extends BinaryFunction {
           .equals(other.m_child1));
     }
     return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    final MemoryTextOutput output;
+    output = new MemoryTextOutput();
+    this.mathRender(output, DefaultParameterRenderer.INSTANCE);
+    return output.toString();
+  }
+
+  /**
+   * This is the automatically generated code of the
+   * {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
+   * parameter renderer} of the {@link _Compound1x2}.
+   */
+  private final class __Compound1x2ParameterRenderer extends
+  _CompoundParameterRendererBase {
+    /**
+     * the
+     * {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
+     * parameter renderer} to bridge to
+     */
+    private final IParameterRenderer m_renderer;
+
+    /**
+     * Create the
+     * {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
+     * parameter renderer} of the {@link _Compound1x2}
+     *
+     * @param renderer
+     *          the
+     *          {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
+     *          parameter renderer} to bridge to
+     * @throws IllegalArgumentException
+     *           if {@code renderer} is {@code null}
+     */
+    __Compound1x2ParameterRenderer(final IParameterRenderer renderer) {
+      super();
+      if (renderer == null) {
+        throw new IllegalArgumentException( //
+            "The parameter renderer to bridge to cannot be null."); //$NON-NLS-1$
+      }
+      this.m_renderer = renderer;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void renderParameter(final int index, final IMath out) {
+      switch (index) {
+        case 0: {
+          if (this.m_bracesNotNeeded
+              || (_Compound1x2.this.m_child1.getPrecedencePriority() > _Compound1x2.this.m_result
+                  .getPrecedencePriority())
+                  || (_Compound1x2.this.m_result instanceof Absolute)) {
+            _Compound1x2.this.m_child1.mathRender(out, this.m_renderer);
+          } else {
+            try (final IMath braces = out.inBraces()) {
+              _Compound1x2.this.m_child1.mathRender(braces,
+                  this.m_renderer);
+            }
+          }
+          return;
+        }
+        default: {
+          AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
+        }
+      }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void renderParameter(final int index,
+        final ITextOutput out) {
+      final boolean braces;
+      switch (index) {
+        case 0: {
+          braces = ((_Compound1x2.this.m_child1.getPrecedencePriority() <= _Compound1x2.this.m_result
+              .getPrecedencePriority()) && (!(_Compound1x2.this.m_result instanceof Absolute)));
+          if (braces) {
+            out.append('(');
+          }
+          _Compound1x2.this.m_child1.mathRender(out, this.m_renderer);
+          if (braces) {
+            out.append(')');
+          }
+          return;
+        }
+        default: {
+          AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
+        }
+      }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final int hashCode() {
+      return HashUtils.combineHashes(HashUtils.hashCode(this.m_renderer),
+          _Compound1x2.this.hashCode());
+    }
+
+    /**
+     * the internal owner getter
+     *
+     * @return the owning {@link _Compound1x2} instance
+     */
+    private final _Compound1x2 __getOwner() {
+      return _Compound1x2.this;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final boolean equals(final Object o) {
+      final __Compound1x2ParameterRenderer other;
+      if (o == this) {
+        return true;
+      }
+      if (o instanceof __Compound1x2ParameterRenderer) {
+        other = ((__Compound1x2ParameterRenderer) o);
+        return ((this.m_renderer.equals(other.m_renderer)) && (_Compound1x2.this
+            .equals(other.__getOwner())));
+      }
+      return false;
+    }
   }
 }

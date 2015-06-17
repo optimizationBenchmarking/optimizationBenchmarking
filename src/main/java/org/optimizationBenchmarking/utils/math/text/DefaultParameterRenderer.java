@@ -49,6 +49,13 @@ public final class DefaultParameterRenderer implements IParameterRenderer,
   @Override
   public final MathematicalFunction resolve(final String name,
       final FunctionBuilder<?> builder) {
+    Number number;
+
+    number = AbstractNameResolver.resolveDefaultConstant(name);
+    if (number != null) {
+      return builder.constant(number);
+    }
+
     return builder.parameter(DefaultParameterRenderer
         .getParameterIndex(name));
   }

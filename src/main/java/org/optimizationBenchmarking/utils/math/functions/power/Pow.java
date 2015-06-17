@@ -1,10 +1,13 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The pow function: raise {@code x1} to the power {@code x2}
@@ -218,6 +221,25 @@ public final class Pow extends BinaryFunction {
       return Log.INSTANCE;
     }
     return null;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    renderer.renderParameter(0, out);
+    out.append('^');
+    renderer.renderParameter(1, out);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath pow = out.pow()) {
+      renderer.renderParameter(0, pow);
+      renderer.renderParameter(1, pow);
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

@@ -1,8 +1,11 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The {@code "+"} function
@@ -113,6 +116,25 @@ public final class Add extends BinaryFunction {
   @Override
   public final int getPrecedencePriority() {
     return Add.PRECEDENCE_PRIORITY;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    renderer.renderParameter(0, out);
+    out.append('+');
+    renderer.renderParameter(1, out);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath add = out.add()) {
+      renderer.renderParameter(0, add);
+      renderer.renderParameter(1, add);
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

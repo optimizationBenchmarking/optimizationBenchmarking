@@ -1,6 +1,9 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The {@code abs} function returns {@code |x|}.
@@ -11,8 +14,7 @@ public final class Absolute extends UnaryFunction {
   private static final long serialVersionUID = 1L;
 
   /** the precedence priority of the unary absolute operator used as prefix */
-  public static final int PRECEDENCE_PRIORITY = //
-  (int) ((((long) (Integer.MIN_VALUE)) + ((long) (Add.PRECEDENCE_PRIORITY))) / 2);
+  public static final int PRECEDENCE_PRIORITY = Integer.MAX_VALUE;
 
   /** the globally shared instance */
   public static final Absolute INSTANCE = new Absolute();
@@ -86,6 +88,24 @@ public final class Absolute extends UnaryFunction {
   @Override
   public final double computeAsDouble(final int x0) {
     return ((x0 <= Integer.MIN_VALUE) ? (-((double) x0)) : Math.abs(x0));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    out.append('|');
+    renderer.renderParameter(0, out);
+    out.append('|');
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath absolute = out.abs()) {
+      renderer.renderParameter(0, absolute);
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

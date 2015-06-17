@@ -18,10 +18,16 @@ import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 import org.optimizationBenchmarking.utils.math.functions.QuaternaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Negate;
+import org.optimizationBenchmarking.utils.math.functions.combinatoric.Factorial;
+import org.optimizationBenchmarking.utils.math.text.AbstractParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
-import org.optimizationBenchmarking.utils.math.text.ParameterRendererBridge;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * This is the internal class used to generate the code for the compound
@@ -119,11 +125,22 @@ final class _CodeGenerator {
           bw.print(ITextOutput.class.getCanonicalName());
           bw.println(';');
           bw.print("import ");//$NON-NLS-1$
+          bw.print(MemoryTextOutput.class.getCanonicalName());
+          bw.println(';');
+          bw.print("import ");//$NON-NLS-1$
+          bw.print(DefaultParameterRenderer.class.getCanonicalName());
+          bw.println(';');
+          bw.print("import ");//$NON-NLS-1$
           bw.print(IMath.class.getCanonicalName());
           bw.println(';');
           bw.print("import ");//$NON-NLS-1$
-          bw.print(ParameterRendererBridge.class.getCanonicalName());
+          bw.print(AbstractParameterRenderer.class.getCanonicalName());
           bw.println(';');
+          if (n == 1) {
+            bw.print("import ");//$NON-NLS-1$
+            bw.print(Absolute.class.getCanonicalName());
+            bw.println(';');
+          }
 
           bw.print("import ");//$NON-NLS-1$
           bw.print(mAryName);
@@ -177,11 +194,13 @@ final class _CodeGenerator {
           }
 
           _CodeGenerator.___compound_makeIsLongArithmeticAccurate(n, bw);
-
-          _CodeGenerator.___compound_makeMathRender(n, bw);
-
+          _CodeGenerator.___compound_makePrecedencePriority(bw);
+          _CodeGenerator.___compound_makeMathRender(m, n, bw);
           _CodeGenerator.___compound_makeHashCode(n, bw);
           _CodeGenerator.___compound_makeEquals(m, n, bw);
+          _CodeGenerator.__makeToString(bw);
+
+          this.__compound_renderer(m, n, bw);
 
           bw.println('}');
         }
@@ -385,6 +404,25 @@ final class _CodeGenerator {
   }
 
   /**
+   * Make the
+   * {@link org.optimizationBenchmarking.utils.math.functions.MathematicalFunction#getPrecedencePriority()}
+   * method
+   *
+   * @param bw
+   *          the output writer
+   */
+  private static final void ___compound_makePrecedencePriority(
+      final PrintWriter bw) {
+    bw.println();
+    bw.println();
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.println("public int getPrecedencePriority() {");//$NON-NLS-1$
+    bw.println("return this.m_result.getPrecedencePriority();");//$NON-NLS-1$
+    bw.println("}");//$NON-NLS-1$
+  }
+
+  /**
    * Make the member variables of the function node
    *
    * @param m
@@ -505,33 +543,41 @@ final class _CodeGenerator {
   /**
    * Make the render function for the given type
    *
+   * @param m
+   *          thefunction arity
    * @param n
    *          the selected index
    * @param bw
    *          the output writer
    */
-  private static final void ___compound_makeMathRender(final int n,
-      final PrintWriter bw) {
-    int j;
+  private static final void ___compound_makeMathRender(final int m,
+      final int n, final PrintWriter bw) {
 
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println("@Override");//$NON-NLS-1$
+    if (n <= 2) {
+      bw.println("@SuppressWarnings(\"resource\")");//$NON-NLS-1$
+    }
     bw.print("public final void mathRender(final ");//$NON-NLS-1$
     bw.print(IMath.class.getSimpleName());
     bw.print(" out, final ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getSimpleName());
     bw.println(" renderer) {");//$NON-NLS-1$
-
-    bw.print("this.m_result.mathRender(out, new ");//$NON-NLS-1$
-    bw.print(ParameterRendererBridge.class.getSimpleName());
-    bw.print("(renderer");//$NON-NLS-1$
-
-    for (j = 1; j <= n; j++) {
-      bw.print(", this.m_child");//$NON-NLS-1$
-      bw.print(j);
+    if (n <= 2) {
+      bw.print("final ");//$NON-NLS-1$
+      bw.print(_InternalMath.class.getSimpleName());
+      bw.println(" internalMath;");//$NON-NLS-1$
+      bw.print("internalMath = new ");//$NON-NLS-1$
+      bw.print(_InternalMath.class.getSimpleName());
+      bw.print("(out, new ");//$NON-NLS-1$
+      bw.print(_CodeGenerator.__compound_renderer_name(m, n));
+      bw.println("(renderer));");//$NON-NLS-1$
+      bw.println("this.m_result.mathRender(internalMath, internalMath.m_renderer);");//$NON-NLS-1$
+    } else {
+      bw.println("this.m_result.mathRender(out, new ");//$NON-NLS-1$
+      bw.print(_CodeGenerator.__compound_renderer_name(m, n));
+      bw.println("(renderer));");//$NON-NLS-1$
     }
-
-    bw.println("));");//$NON-NLS-1$
     bw.println('}');
 
     bw.println();
@@ -546,15 +592,8 @@ final class _CodeGenerator {
     bw.println(" renderer) {");//$NON-NLS-1$
 
     bw.print("this.m_result.mathRender(out, new ");//$NON-NLS-1$
-    bw.print(ParameterRendererBridge.class.getSimpleName());
-    bw.print("(renderer");//$NON-NLS-1$
-
-    for (j = 1; j <= n; j++) {
-      bw.print(", this.m_child");//$NON-NLS-1$
-      bw.print(j);
-    }
-
-    bw.println("));");//$NON-NLS-1$
+    bw.print(_CodeGenerator.__compound_renderer_name(m, n));
+    bw.println("(renderer));");//$NON-NLS-1$
     bw.println('}');
   }
 
@@ -570,6 +609,403 @@ final class _CodeGenerator {
    */
   private static final String __compound_name(final int m, final int n) {
     return ((("_Compound" + n) + 'x') + m); //$NON-NLS-1$
+  }
+
+  /**
+   * Generate the parameter renderer of the function node for {@code m}-ary
+   * functions which is a compound of {@code n} single functions.
+   *
+   * @param m
+   *          the number of parameters of the top-level function
+   * @param n
+   *          the number of compound functions
+   * @param bw
+   *          the writer
+   * @throws IOException
+   *           if i/o fails
+   */
+  private final void __compound_renderer(final int m, final int n,
+      final PrintWriter bw) throws IOException {
+    final String name;
+
+    name = _CodeGenerator.__compound_renderer_name(m, n);
+
+    bw.print("/** This is the automatically generated code of the {@link ");//$NON-NLS-1$
+    bw.print(IParameterRenderer.class.getCanonicalName());
+    bw.print(" parameter renderer} of the {@link ");//$NON-NLS-1$
+    bw.print(_CodeGenerator.__compound_name(m, n));
+    bw.println("}. */");//$NON-NLS-1$
+
+    bw.print("private final class ");//$NON-NLS-1$
+    bw.print(name);
+    bw.print(" extends ");//$NON-NLS-1$
+    if (n <= 2) {
+      bw.print(_CompoundParameterRendererBase.class.getSimpleName());
+    } else {
+      bw.print(AbstractParameterRenderer.class.getSimpleName());
+    }
+    bw.println(" {");//$NON-NLS-1$
+
+    this.___compound_renderer_makeConstructorAndMembers(m, n, bw);
+    _CodeGenerator.___compound_renderer_renderParameterMath(m, n, bw);
+    _CodeGenerator.___compound_renderer_renderParameterText(m, n, bw);
+    _CodeGenerator.___compound_renderer_makeHashCode(m, n, bw);
+    _CodeGenerator.___compound_renderer_makeEquals(m, n, bw);
+
+    bw.println('}');
+
+    System.out.println((("Done with '" + name) + '\'') + '.');//$NON-NLS-1$
+  }
+
+  /**
+   * Make the member variables of the function node
+   *
+   * @param m
+   *          the number of parameters of the top-level function
+   * @param n
+   *          the number of sub-functions
+   * @param bw
+   *          the output writer
+   */
+  private final void ___compound_renderer_makeConstructorAndMembers(
+      final int m, final int n, final PrintWriter bw) {
+    String name;
+
+    name = ("the {@link " + //$NON-NLS-1$
+        IParameterRenderer.class.getCanonicalName() + //
+    " parameter renderer} to bridge to");//$NON-NLS-1$
+    bw.print("/** ");//$NON-NLS-1$
+    bw.print(name);
+    bw.println(" */");//$NON-NLS-1$
+    bw.print("private final ");//$NON-NLS-1$
+    bw.print(IParameterRenderer.class.getSimpleName());
+    bw.println(" m_renderer;");//$NON-NLS-1$
+
+    bw.println();
+    bw.print(" /** Create the {@link ");//$NON-NLS-1$
+    bw.print(IParameterRenderer.class.getCanonicalName());
+    bw.print(" parameter renderer} of the {@link ");//$NON-NLS-1$
+    bw.print(_CodeGenerator.__compound_name(m, n));
+    bw.println('}');
+    bw.print("@param renderer ");//$NON-NLS-1$
+    bw.println(name);
+    bw.println(" * @throws IllegalArgumentException if {@code renderer} is {@code null} */");//$NON-NLS-1$
+    bw.print(_CodeGenerator.__compound_renderer_name(m, n));
+    bw.print("(final ");//$NON-NLS-1$
+    bw.print(IParameterRenderer.class.getSimpleName());
+    bw.println(" renderer) {");//$NON-NLS-1$
+    bw.println(" super();");//$NON-NLS-1$
+    bw.println("if(renderer==null) {");//$NON-NLS-1$
+    bw.println("throw new IllegalArgumentException( //");//$NON-NLS-1$
+    bw.println("\"The parameter renderer to bridge to cannot be null.\"); //$NON-NLS-1$");//$NON-NLS-1$
+    bw.println('}');
+    bw.println("this.m_renderer = renderer;");//$NON-NLS-1$
+    bw.println('}');
+  }
+
+  /**
+   * Make the {@link Object#hashCode()} method
+   *
+   * @param m
+   *          the arity of the function
+   * @param n
+   *          the number of functions
+   * @param bw
+   *          the output writer
+   */
+  private static final void ___compound_renderer_makeHashCode(final int m,
+      final int n, final PrintWriter bw) {
+    bw.println();
+    bw.println();
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.println("public final int hashCode() {");//$NON-NLS-1$
+
+    bw.print(//
+    "return HashUtils.combineHashes(HashUtils.hashCode(this.m_renderer), ");//$NON-NLS-1$
+    bw.print(_CodeGenerator.__compound_name(m, n));
+    bw.println(//
+    ".this.hashCode());");//$NON-NLS-1$
+    bw.println("}");//$NON-NLS-1$
+  }
+
+  /**
+   * Make the {@link Object#equals(Object)} method
+   *
+   * @param m
+   *          the number of parameters of the top-level function
+   * @param n
+   *          the number of functions
+   * @param bw
+   *          the output writer
+   */
+  private static final void ___compound_renderer_makeEquals(final int m,
+      final int n, final PrintWriter bw) {
+    final String name, type;
+
+    name = _CodeGenerator.__compound_name(m, n);
+    type = _CodeGenerator.__compound_renderer_name(m, n);
+    bw.println();
+    bw.println();
+    bw.println(" /** the internal owner getter");//$NON-NLS-1$
+    bw.print("@return the owning {@link ");//$NON-NLS-1$
+    bw.print(name);
+    bw.println("} instance */");//$NON-NLS-1$
+    bw.print("private final ");//$NON-NLS-1$
+    bw.print(name);
+    bw.println(" __getOwner() {");//$NON-NLS-1$
+    bw.print("return ");//$NON-NLS-1$
+    bw.print(name);
+    bw.println(".this; }");//$NON-NLS-1$
+
+    bw.println();
+    bw.println();
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.println("public final boolean equals(final Object o) {");//$NON-NLS-1$
+    bw.print("final ");//$NON-NLS-1$
+    bw.print(type);
+    bw.println(" other;");//$NON-NLS-1$
+    bw.print("if (o==this) { return true; }");//$NON-NLS-1$
+
+    bw.print("if (o instanceof ");//$NON-NLS-1$
+    bw.print(type);
+    bw.println(") {");//$NON-NLS-1$
+
+    bw.print("other = ((");//$NON-NLS-1$
+    bw.print(type);
+    bw.println(") o);");//$NON-NLS-1$
+
+    bw.print("return ((this.m_renderer.equals(other.m_renderer)) && (");//$NON-NLS-1$
+    bw.print(name);
+    bw.println(".this.equals(other.__getOwner())));");//$NON-NLS-1$
+
+    bw.println("} return false; }");//$NON-NLS-1$
+  }
+
+  /**
+   * Make the render function for the given type
+   *
+   * @param m
+   *          the arity
+   * @param n
+   *          the selected index
+   * @param bw
+   *          the output writer
+   */
+  private static final void ___compound_renderer_renderParameterMath(
+      final int m, final int n, final PrintWriter bw) {
+    int index;
+    String name;
+
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.print("public final void renderParameter(final int index, final ");//$NON-NLS-1$
+    bw.print(IMath.class.getSimpleName());
+    bw.println(" out) {");//$NON-NLS-1$
+
+    bw.println("switch(index) {");//$NON-NLS-1$
+
+    name = _CodeGenerator.__compound_name(m, n);
+
+    for (index = 0; index < n; index++) {
+      bw.print("case ");//$NON-NLS-1$
+      bw.print(index);
+      bw.println(": {");//$NON-NLS-1$
+
+      if (n <= 2) {
+        if (index <= 0) {
+          bw.print("if (this.m_bracesNotNeeded || (");//$NON-NLS-1$
+          bw.print(name);
+          bw.print(".this.m_child");//$NON-NLS-1$
+          bw.print(index + 1);
+          bw.print(".getPrecedencePriority() > ");//$NON-NLS-1$
+          bw.print(name);
+          bw.println(".this.m_result.getPrecedencePriority()");//$NON-NLS-1$
+          if (n == 1) {
+            bw.print(") || (");//$NON-NLS-1$
+            bw.print(name);
+            bw.print(".this.m_result instanceof ");//$NON-NLS-1$
+            bw.print(Absolute.class.getSimpleName());
+          }
+          bw.println(")) {");//$NON-NLS-1$
+
+          bw.print(name);
+          bw.print(".this.m_child");//$NON-NLS-1$
+          bw.print(index + 1);
+          bw.println(".mathRender(out, this.m_renderer);");//$NON-NLS-1$
+
+          bw.println("} else {");//$NON-NLS-1$
+
+          bw.print("try (final ");//$NON-NLS-1$
+          bw.print(IMath.class.getSimpleName());
+          bw.print(" braces = out.inBraces()) {");//$NON-NLS-1$
+
+          bw.print(name);
+          bw.print(".this.m_child");//$NON-NLS-1$
+          bw.print(index + 1);
+          bw.println(".mathRender(braces, this.m_renderer);");//$NON-NLS-1$
+          bw.println('}');
+
+          bw.println('}');
+        } else {
+          bw.print("if (this.m_bracesNotNeeded || (");//$NON-NLS-1$
+          bw.print(name);
+          bw.print(".this.m_child");//$NON-NLS-1$
+          bw.print(index + 1);
+          bw.print(".getPrecedencePriority() >= ");//$NON-NLS-1$
+          bw.print(name);
+          bw.println(".this.m_result.getPrecedencePriority())) {");//$NON-NLS-1$
+
+          bw.print(name);
+          bw.print(".this.m_child");//$NON-NLS-1$
+          bw.print(index + 1);
+          bw.println(".mathRender(out, this.m_renderer);");//$NON-NLS-1$
+
+          bw.println("} else {");//$NON-NLS-1$
+
+          bw.print("try (final ");//$NON-NLS-1$
+          bw.print(IMath.class.getSimpleName());
+          bw.print(" braces = out.inBraces()) {");//$NON-NLS-1$
+
+          bw.print(name);
+          bw.print(".this.m_child");//$NON-NLS-1$
+          bw.print(index + 1);
+          bw.println(".mathRender(braces, this.m_renderer);");//$NON-NLS-1$
+          bw.println('}');
+
+          bw.println('}');
+        }
+      } else {
+
+        bw.print(name);
+        bw.print(".this.m_child");//$NON-NLS-1$
+        bw.print(index + 1);
+        bw.println(".mathRender(out, this.m_renderer);");//$NON-NLS-1$
+      }
+      bw.println("return; }");//$NON-NLS-1$
+    }
+
+    bw.println("default: {");//$NON-NLS-1$
+    bw.print(AbstractParameterRenderer.class.getSimpleName());
+    bw.print(".throwInvalidParameterIndex(index, ");//$NON-NLS-1$
+    bw.print(n - 1);
+    bw.println(");");//$NON-NLS-1$
+    bw.println('}');
+    bw.println('}');
+    bw.println('}');
+  }
+
+  /**
+   * Make the render function for the given type
+   *
+   * @param m
+   *          the arity
+   * @param n
+   *          the selected index
+   * @param bw
+   *          the output writer
+   */
+  private static final void ___compound_renderer_renderParameterText(
+      final int m, final int n, final PrintWriter bw) {
+    int index;
+    String name;
+
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.print("public final void renderParameter(final int index, final ");//$NON-NLS-1$
+    bw.print(ITextOutput.class.getSimpleName());
+    bw.println(" out) {");//$NON-NLS-1$
+
+    if (n <= 2) {
+      bw.println("final boolean braces;");//$NON-NLS-1$
+    }
+
+    bw.println("switch(index) {");//$NON-NLS-1$
+
+    name = _CodeGenerator.__compound_name(m, n);
+
+    for (index = 0; index < n; index++) {
+      bw.print("case ");//$NON-NLS-1$
+      bw.print(index);
+      bw.println(": {");//$NON-NLS-1$
+
+      if (n <= 2) {
+        if (index <= 0) {
+          bw.print("braces = (");//$NON-NLS-1$
+          if (n == 1) {
+            bw.print('(');
+          }
+          bw.print(name);
+          bw.print(".this.m_child");//$NON-NLS-1$
+          bw.print(index + 1);
+          bw.print(".getPrecedencePriority() <= ");//$NON-NLS-1$
+          bw.print(name);
+          bw.println(".this.m_result.getPrecedencePriority())");//$NON-NLS-1$
+          if (n == 1) {
+            bw.print(" && (!(");//$NON-NLS-1$
+            bw.print(name);
+            bw.println(".this.m_result instanceof ");//$NON-NLS-1$
+            bw.print(Absolute.class.getSimpleName());
+            bw.print(")));");//$NON-NLS-1$
+          } else {
+            bw.print(';');
+          }
+
+          bw.println("if(braces) {");//$NON-NLS-1$
+          bw.println("out.append('(');");//$NON-NLS-1$
+          bw.println('}');
+        } else {
+          bw.print("braces = (");//$NON-NLS-1$
+          bw.print(name);
+          bw.print(".this.m_child");//$NON-NLS-1$
+          bw.print(index + 1);
+          bw.print(".getPrecedencePriority() < ");//$NON-NLS-1$
+          bw.print(name);
+          bw.println(".this.m_result.getPrecedencePriority());");//$NON-NLS-1$
+          bw.println("if(braces) {");//$NON-NLS-1$
+          bw.println("out.append('(');");//$NON-NLS-1$
+          bw.println('}');
+        }
+      }
+
+      bw.print(name);
+      bw.print(".this.m_child");//$NON-NLS-1$
+      bw.print(index + 1);
+      bw.println(".mathRender(out, this.m_renderer);");//$NON-NLS-1$
+
+      if (n <= 2) {
+        bw.println("if(braces) { out.append(')'); }");//$NON-NLS-1$
+      }
+
+      bw.println("return; }");//$NON-NLS-1$
+    }
+
+    bw.println("default: {");//$NON-NLS-1$
+    bw.print(AbstractParameterRenderer.class.getSimpleName());
+    bw.print(".throwInvalidParameterIndex(index, ");//$NON-NLS-1$
+    bw.print(n - 1);
+    bw.println(");");//$NON-NLS-1$
+    bw.println('}');
+    bw.println('}');
+    bw.println('}');
+  }
+
+  /**
+   * Get the name of the parameter renderer for the node representing
+   * {@code m}-ary functions which is a compound of {@code n} single
+   * functions.
+   *
+   * @param m
+   *          the number of parameters of the top-level function
+   * @param n
+   *          the number of compound functions
+   * @return the {@code n}-ary node name
+   */
+  private static final String __compound_renderer_name(final int m,
+      final int n) {
+    return (((("__Compound" + n) + 'x') + m) + //$NON-NLS-1$
+    "ParameterRenderer"); //$NON-NLS-1$
   }
 
   /**
@@ -604,25 +1040,24 @@ final class _CodeGenerator {
           bw.print("package ");//$NON-NLS-1$
           bw.print(this.m_packageName);
           bw.println(';');
-          bw.println();
-
+          bw.print("import ");//$NON-NLS-1$
+          bw.print(MemoryTextOutput.class.getCanonicalName());
+          bw.println(';');
+          bw.print("import ");//$NON-NLS-1$
+          bw.print(DefaultParameterRenderer.class.getCanonicalName());
+          bw.println(';');
           bw.print("import ");//$NON-NLS-1$
           bw.print(mAryName);
           bw.println(';');
-          bw.println();
-
           bw.print("import ");//$NON-NLS-1$
           bw.print(IMath.class.getCanonicalName());
           bw.println(';');
-          bw.println();
           bw.print("import ");//$NON-NLS-1$
           bw.print(ITextOutput.class.getCanonicalName());
           bw.println(';');
-          bw.println();
           bw.print("import ");//$NON-NLS-1$
           bw.print(IParameterRenderer.class.getCanonicalName());
           bw.println(';');
-          bw.println();
 
           bw.print("/** This is the automatically generated code for a {@link ");//$NON-NLS-1$
           bw.print(mAryName);
@@ -658,10 +1093,12 @@ final class _CodeGenerator {
           }
 
           _CodeGenerator.___selection_makeIsLongArithmeticAccurate(bw);
+          _CodeGenerator.___selection_makePrecedencePriority(bw);
           _CodeGenerator.___selection_makeMathRender(sel, bw);
           _CodeGenerator.___selection_makeHashCode(m, sel, bw);
           _CodeGenerator.___selection_makeEquals(m, sel, bw);
           _CodeGenerator.___selection_makeSerial(m, sel, bw);
+          _CodeGenerator.__makeToString(bw);
 
           bw.println('}');
         }
@@ -824,16 +1261,35 @@ final class _CodeGenerator {
       final int sel, final PrintWriter bw) {
     bw.println();
     bw.println();
-    bw.println(" /** {@inheritDoc} */");//$NON-NLS-1$
-    bw.println(" @Override");//$NON-NLS-1$
-    bw.println(" public final int hashCode() {");//$NON-NLS-1$
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.println("public final int hashCode() {");//$NON-NLS-1$
 
-    bw.print(" return ");//$NON-NLS-1$
+    bw.print("return ");//$NON-NLS-1$
     bw.print(Primes.nextPrime((int) (//
         (((long) (Integer.MAX_VALUE)) * ((((m - 1) * m) >>> 1) + (sel - 1))) / //
         ((((_CodeGenerator.MAX_ARITY * (_CodeGenerator.MAX_ARITY + 1)) >>> 1))))));
 
     bw.println(';');
+    bw.println("}");//$NON-NLS-1$
+  }
+
+  /**
+   * Make the
+   * {@link org.optimizationBenchmarking.utils.math.functions.MathematicalFunction#getPrecedencePriority()}
+   * method
+   *
+   * @param bw
+   *          the output writer
+   */
+  private static final void ___selection_makePrecedencePriority(
+      final PrintWriter bw) {
+    bw.println();
+    bw.println();
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.println("public int getPrecedencePriority() {");//$NON-NLS-1$
+    bw.println("return Integer.MAX_VALUE;");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
   }
 
@@ -962,33 +1418,39 @@ final class _CodeGenerator {
           bw.print("package ");//$NON-NLS-1$
           bw.print(this.m_packageName);
           bw.println(';');
-          bw.println();
 
           bw.print("import ");//$NON-NLS-1$
           bw.print(mAryName);
           bw.println(';');
-          bw.println();
 
           bw.print("import ");//$NON-NLS-1$
           bw.print(NumericalTypes.class.getCanonicalName());
           bw.println(';');
-          bw.println();
           bw.print("import ");//$NON-NLS-1$
           bw.print(IText.class.getCanonicalName());
           bw.println(';');
-          bw.println();
           bw.print("import ");//$NON-NLS-1$
           bw.print(IMath.class.getCanonicalName());
           bw.println(';');
-          bw.println();
           bw.print("import ");//$NON-NLS-1$
           bw.print(ITextOutput.class.getCanonicalName());
           bw.println(';');
-          bw.println();
+          bw.print("import ");//$NON-NLS-1$
+          bw.print(Negate.class.getCanonicalName());
+          bw.println(';');
+          bw.print("import ");//$NON-NLS-1$
+          bw.print(MemoryTextOutput.class.getCanonicalName());
+          bw.println(';');
+          bw.print("import ");//$NON-NLS-1$
+          bw.print(DefaultParameterRenderer.class.getCanonicalName());
+          bw.println(';');
+
           bw.print("import ");//$NON-NLS-1$
           bw.print(IParameterRenderer.class.getCanonicalName());
           bw.println(';');
-          bw.println();
+          bw.print("import ");//$NON-NLS-1$
+          bw.print(IMathRenderable.class.getCanonicalName());
+          bw.println(';');
 
           bw.print("/** This is the automatically generated code for a {@link ");//$NON-NLS-1$
           bw.print(mAryName);
@@ -1021,9 +1483,11 @@ final class _CodeGenerator {
           }
 
           _CodeGenerator.___const_makeIsLongArithmeticAccurate(bw);
+          _CodeGenerator.___const_makePrecedencePriority(bw);
           _CodeGenerator.___const_makeMathRender(bw);
           _CodeGenerator.___const_makeHashCode(m, bw);
           _CodeGenerator.___const_makeEquals(m, bw);
+          _CodeGenerator.__makeToString(bw);
           bw.println('}');
         }
       }
@@ -1100,10 +1564,18 @@ final class _CodeGenerator {
     bw.print(" out, final ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getSimpleName());
     bw.println(" renderer) {");//$NON-NLS-1$
+    bw.print("if(this.m_const instanceof ");//$NON-NLS-1$
+    bw.print(IMathRenderable.class.getSimpleName());
+    bw.println(") { // for named constants");//$NON-NLS-1$
+    bw.print("((");//$NON-NLS-1$
+    bw.print(IMathRenderable.class.getSimpleName());
+    bw.println(")(this.m_const)).mathRender(out, renderer);");//$NON-NLS-1$
+    bw.println("} else { // normal constants");//$NON-NLS-1$
     bw.print("try (final ");//$NON-NLS-1$
     bw.print(IText.class.getSimpleName());
     bw.println(" number = out.number()) {");//$NON-NLS-1$
     bw.println("this.mathRender(number, renderer);");//$NON-NLS-1$
+    bw.println('}');
     bw.println('}');
     bw.println('}');
 
@@ -1117,10 +1589,18 @@ final class _CodeGenerator {
     bw.print(" out, final ");//$NON-NLS-1$
     bw.print(IParameterRenderer.class.getSimpleName());
     bw.println(" renderer) {");//$NON-NLS-1$
+    bw.print("if(this.m_const instanceof ");//$NON-NLS-1$
+    bw.print(IMathRenderable.class.getSimpleName());
+    bw.println(") { // for named constants");//$NON-NLS-1$
+    bw.print("((");//$NON-NLS-1$
+    bw.print(IMathRenderable.class.getSimpleName());
+    bw.println(")(this.m_const)).mathRender(out, renderer);");//$NON-NLS-1$
+    bw.println("} else { // normal constants");//$NON-NLS-1$
     bw.println("if (this.isLongArithmeticAccurate()) {");//$NON-NLS-1$
     bw.println("out.append(this.m_const.longValue());");//$NON-NLS-1$
     bw.println("} else {");//$NON-NLS-1$
     bw.println("out.append(this.m_const.doubleValue());");//$NON-NLS-1$
+    bw.println('}');
     bw.println('}');
     bw.println('}');
   }
@@ -1144,6 +1624,27 @@ final class _CodeGenerator {
     bw.print(" return (");//$NON-NLS-1$
     bw.print(Primes.nextPrime(Primes.nextPrime(16384 * m) << (m + 1)));
     bw.println(" ^ this.m_const.hashCode());");//$NON-NLS-1$
+    bw.println("}");//$NON-NLS-1$
+  }
+
+  /**
+   * Make the
+   * {@link org.optimizationBenchmarking.utils.math.functions.MathematicalFunction#getPrecedencePriority()}
+   * method
+   *
+   * @param bw
+   *          the output writer
+   */
+  private static final void ___const_makePrecedencePriority(
+      final PrintWriter bw) {
+    bw.println();
+    bw.println();
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.println("public int getPrecedencePriority() {");//$NON-NLS-1$
+    bw.print("return ((this.m_const.doubleValue() >= 0d) ? Integer.MAX_VALUE : ");//$NON-NLS-1$
+    bw.print(Negate.class.getSimpleName());
+    bw.println(".PRECEDENCE_PRIORITY);");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
   }
 
@@ -1324,6 +1825,8 @@ final class _CodeGenerator {
           _CodeGenerator.___builder_makeSelection(m, bw);
           _CodeGenerator.___builder_makeFunctionArity(m, bw);
           _CodeGenerator.___builder_makeFunctionClass(m, bw);
+          _CodeGenerator.___builder_makeEquals(m, bw);
+          _CodeGenerator.___builder_makeHashCode(m, bw);
           bw.println('}');
         }
       }
@@ -1366,7 +1869,20 @@ final class _CodeGenerator {
     }
     bw.println(") {");//$NON-NLS-1$
 
-    bw.print(" return new ");//$NON-NLS-1$
+    if ((n == 1) && (m == 1)) {
+      bw.print("if(param1 instanceof ");//$NON-NLS-1$
+      bw.print(Identity.class.getSimpleName());
+      bw.println(") {");//$NON-NLS-1$
+      bw.println("return func;");//$NON-NLS-1$
+      bw.println("}");//$NON-NLS-1$
+      bw.print("if(func instanceof ");//$NON-NLS-1$
+      bw.print(Identity.class.getSimpleName());
+      bw.println(") {");//$NON-NLS-1$
+      bw.println("return param1;");//$NON-NLS-1$
+      bw.println("}");//$NON-NLS-1$
+    }
+
+    bw.print("return new ");//$NON-NLS-1$
 
     bw.print(_CodeGenerator.__compound_name(m, n));
     bw.print("(func");//$NON-NLS-1$
@@ -1445,6 +1961,77 @@ final class _CodeGenerator {
     bw.print(" return ");//$NON-NLS-1$
     bw.print(clazz);
     bw.println(".class;");//$NON-NLS-1$
+    bw.println("}");//$NON-NLS-1$
+  }
+
+  /**
+   * Make the {@link java.lang.Object#toString()} method for the given type
+   *
+   * @param bw
+   *          the output writer
+   */
+  private static final void __makeToString(final PrintWriter bw) {
+    bw.println();
+    bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.print("public final String toString() {");//$NON-NLS-1$
+    bw.print("final ");//$NON-NLS-1$
+    bw.print(MemoryTextOutput.class.getSimpleName());
+    bw.println(" output;");//$NON-NLS-1$
+
+    bw.print("output = new ");//$NON-NLS-1$
+    bw.print(MemoryTextOutput.class.getSimpleName());
+    bw.println("();");//$NON-NLS-1$
+
+    bw.print("this.mathRender(output, ");//$NON-NLS-1$
+    bw.print(DefaultParameterRenderer.class.getSimpleName());
+    bw.println(".INSTANCE);");//$NON-NLS-1$
+
+    bw.println("return output.toString();");//$NON-NLS-1$
+    bw.println("}");//$NON-NLS-1$
+  }
+
+  /**
+   * Make the {@link Object#equals(Object)} method
+   *
+   * @param m
+   *          the number of parameters of the top-level function
+   * @param bw
+   *          the output writer
+   */
+  private static final void ___builder_makeEquals(final int m,
+      final PrintWriter bw) {
+    bw.println();
+    bw.println();
+    bw.println(" /** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println(" @Override");//$NON-NLS-1$
+    bw.println(" public final boolean equals(final Object o) {");//$NON-NLS-1$
+    bw.print(" return (o instanceof ");//$NON-NLS-1$
+    bw.print(_CodeGenerator.__builder_name(m));
+    bw.println(");");//$NON-NLS-1$
+    bw.println("}");//$NON-NLS-1$
+  }
+
+  /**
+   * Make the {@link Object#hashCode()} method
+   *
+   * @param m
+   *          the arity of the function
+   * @param bw
+   *          the output writer
+   */
+  private static final void ___builder_makeHashCode(final int m,
+      final PrintWriter bw) {
+    bw.println();
+    bw.println();
+    bw.println(" /** {@inheritDoc} */");//$NON-NLS-1$
+    bw.println(" @Override");//$NON-NLS-1$
+    bw.println(" public final int hashCode() {");//$NON-NLS-1$
+
+    bw.print(" return ");//$NON-NLS-1$
+    bw.print(Primes.nextPrime(//
+        Factorial.INSTANCE.computeAsInt(5 + m)));
+    bw.println(';');
     bw.println("}");//$NON-NLS-1$
   }
 

@@ -2,8 +2,10 @@ package org.optimizationBenchmarking.utils.math.functions.compound;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * This is the automatically generated code for a
@@ -92,6 +94,12 @@ final class _Select1of2 extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
+  public int getPrecedencePriority() {
+    return Integer.MAX_VALUE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
     renderer.renderParameter(0, out);
@@ -138,5 +146,14 @@ final class _Select1of2 extends BinaryFunction {
    */
   private final Object readResolve() {
     return _Select1of2.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    final MemoryTextOutput output;
+    output = new MemoryTextOutput();
+    this.mathRender(output, DefaultParameterRenderer.INSTANCE);
+    return output.toString();
   }
 }

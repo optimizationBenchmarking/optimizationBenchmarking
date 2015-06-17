@@ -219,7 +219,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
   /** {@inheritDoc} */
   @Override
   public final void appendXAxisTitle(final IMath math) {
-    try (final IMath inner = FunctionToMathBridge.bridge(
+    try (final IMath inner = new FunctionToMathBridge(
         this.m_timeTransform, math)) {
       this.m_raw.m_timeDim.appendName(inner);
     }

@@ -1,18 +1,7 @@
 package org.optimizationBenchmarking.utils.math;
 
-import org.optimizationBenchmarking.utils.math.functions.power.Ln;
-
 /** A set of common mathematical constants */
 public final class MathConstants {
-
-  /** the zero double */
-  public static final Double DOUBLE_ZERO = Double.valueOf(0d);
-
-  /** the one double */
-  public static final Double DOUBLE_ONE = Double.valueOf(1d);
-
-  /** the nan */
-  public static final Double DOUBLE_NAN = Double.valueOf(Double.NaN);
 
   /**
    * two pi:
@@ -20,12 +9,6 @@ public final class MathConstants {
    */
   public static final double TWO_PI = 6.283185307179586476925286766559d;
   // (Math.PI + Math.PI);
-
-  /**
-   * The natural logarithm of 10, i.e.,
-   * <code>{@value} = {@link java.lang.Math#log(double) Math.log(10d)}</code>
-   */
-  public static final double LN_10 = 2.3025850929940456840179914546844d;
 
   /**
    * The natural logarithm of 2, i.e.,
@@ -77,29 +60,6 @@ public final class MathConstants {
    * are considered as equal
    */
   public static final double EPS = Math.pow(2.0d, -52.0d);
-
-  /** The natural logarithm of EPS */
-  public static final double LN_EPS = Ln.INSTANCE
-      .computeAsDouble(MathConstants.EPS);
-
-  /**
-   * The natural logarithm of Double.MAX_VALUE, or, in other words, the
-   * biggest value where <code>Math.exp(x)</code> produces an exact result.
-   *
-   * @see Double#MAX_VALUE
-   */
-  public static final double LN_MAX_DOUBLE = Ln.INSTANCE
-      .computeAsDouble(Double.MAX_VALUE);
-
-  /**
-   * The natural logarithm of Double.MIN_VALUE, or, in other words, the
-   * smallest value where <code>Math.exp(x)</code> produces an exact
-   * result.
-   *
-   * @see Double#MIN_VALUE
-   */
-  public static final double LN_MIN_DOUBLE = Ln.INSTANCE
-      .computeAsDouble(Double.MIN_VALUE);
 
   /**
    * multiplying a number {@code s} by {@value #GOLDEN_RATIO} will give you

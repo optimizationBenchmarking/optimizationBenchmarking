@@ -10,6 +10,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.Sub;
 import org.optimizationBenchmarking.utils.math.functions.binary.BAnd;
 import org.optimizationBenchmarking.utils.math.functions.binary.BNot;
 import org.optimizationBenchmarking.utils.math.functions.combinatoric.Factorial;
+import org.optimizationBenchmarking.utils.math.functions.logic.LNot;
 import org.optimizationBenchmarking.utils.math.functions.power.Cbrt;
 import org.optimizationBenchmarking.utils.math.functions.power.Cube;
 import org.optimizationBenchmarking.utils.math.functions.power.Exp;
@@ -57,9 +58,13 @@ final class _ParsedFunction {
   static final _ParsedFunction BAND_INFIX = new _ParsedFunction(
       BAnd.INSTANCE, _ParsedFunction.MODE_INFIX);
 
-  /** the bit-wise in prefix mode */
+  /** the bit-wise not in prefix mode */
   static final _ParsedFunction BNOT_PREFIX = new _ParsedFunction(
       BNot.INSTANCE, _ParsedFunction.MODE_PREFIX);
+
+  /** the logical not in prefix mode */
+  static final _ParsedFunction LNOT_PREFIX = new _ParsedFunction(
+      LNot.INSTANCE, _ParsedFunction.MODE_PREFIX);
 
   /** the factorial in postfix mode */
   static final _ParsedFunction FACTORIAL_POSTFIX = new _ParsedFunction(

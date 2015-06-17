@@ -1,8 +1,11 @@
 package org.optimizationBenchmarking.utils.math.functions.arithmetic;
 
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The {@code "*"} function
@@ -132,6 +135,25 @@ public final class Mul extends BinaryFunction {
       return Div.INSTANCE;
     }
     return null;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    renderer.renderParameter(0, out);
+    out.append('*');
+    renderer.renderParameter(1, out);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath mul = out.mul()) {
+      renderer.renderParameter(0, mul);
+      renderer.renderParameter(1, mul);
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

@@ -1,6 +1,10 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The 10^x function
@@ -73,6 +77,28 @@ public final class Pow10 extends UnaryFunction {
   @Override
   public final Lg invertFor(final int index) {
     return Lg.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    renderer.renderParameter(0, out);
+    out.append('^');
+    out.append('1');
+    out.append('0');
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath pow = out.pow()) {
+      renderer.renderParameter(0, pow);
+      try (final IText num = pow.number()) {
+        num.append(10);
+      }
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

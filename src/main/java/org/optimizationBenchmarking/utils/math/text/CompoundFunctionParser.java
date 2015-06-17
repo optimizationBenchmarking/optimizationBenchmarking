@@ -7,12 +7,17 @@ import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
+import org.optimizationBenchmarking.utils.math.functions.QuaternaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.TernaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Absolute;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Add;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Mul;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Sub;
+import org.optimizationBenchmarking.utils.math.functions.compound.BinaryFunctionBuilder;
 import org.optimizationBenchmarking.utils.math.functions.compound.FunctionBuilder;
+import org.optimizationBenchmarking.utils.math.functions.compound.QuaternaryFunctionBuilder;
+import org.optimizationBenchmarking.utils.math.functions.compound.TernaryFunctionBuilder;
 import org.optimizationBenchmarking.utils.math.functions.compound.UnaryFunctionBuilder;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
@@ -21,7 +26,8 @@ import org.optimizationBenchmarking.utils.text.charset.Char;
 import org.optimizationBenchmarking.utils.text.charset.Characters;
 
 /**
- * A mathematical function parser
+ * A mathematical function parser which can build compound functions of a
+ * given arity.
  *
  * @param <T>
  *          the function type
@@ -34,6 +40,7 @@ public class CompoundFunctionParser<T extends MathematicalFunction>
 
   /** the argument separator tag in the token list */
   private static final Object ARGUMENT_SEPARATOR = new Object();
+  
   /** the white space tag used when building the token list */
   private static final Object WHITE_SPACE = new Object();
 
@@ -753,8 +760,7 @@ public class CompoundFunctionParser<T extends MathematicalFunction>
 
     switch (currentChar) {
       case ',':
-      case ';':
-      case ':': {
+      case ';': {
         return CompoundFunctionParser.ARGUMENT_SEPARATOR;
       }
 
@@ -785,11 +791,93 @@ public class CompoundFunctionParser<T extends MathematicalFunction>
     return __DefaultUnaryFunctionParser.INSTANCE;
   }
 
+  /**
+   * Get the default parser for binary functions
+   *
+   * @return the default parser for binary functions
+   */
+  public static final CompoundFunctionParser<BinaryFunction> getDefaultBinaryFunctionParser() {
+    return __DefaultBinaryFunctionParser.INSTANCE;
+  }
+
+  /**
+   * Get the default parser for ternary functions
+   *
+   * @return the default parser for ternary functions
+   */
+  public static final CompoundFunctionParser<TernaryFunction> getDefaultTernaryFunctionParser() {
+    return __DefaultTernaryFunctionParser.INSTANCE;
+  }
+
+  /**
+   * Get the default parser for quaternary functions
+   *
+   * @return the default parser for quaternary functions
+   */
+  public static final CompoundFunctionParser<QuaternaryFunction> getDefaultQuaternaryFunctionParser() {
+    return __DefaultQuaternaryFunctionParser.INSTANCE;
+  }
+
+  /**
+   * Get the default function parser for a given arity
+   * 
+   * @param arity
+   *          the arity
+   * @return the parser
+   */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public static final CompoundFunctionParser<MathematicalFunction> getDefaultFunctionParser(
+      final int arity) {
+    switch (arity) {
+      case 1: {
+        return ((CompoundFunctionParser) (getDefaultUnaryFunctionParser()));
+      }
+      case 2: {
+        return ((CompoundFunctionParser) (getDefaultBinaryFunctionParser()));
+      }
+      case 3: {
+        return ((CompoundFunctionParser) (getDefaultTernaryFunctionParser()));
+      }
+      case 4: {
+        return ((CompoundFunctionParser) (getDefaultQuaternaryFunctionParser()));
+      }
+      default: {
+        return new CompoundFunctionParser<>(
+            FunctionBuilder.getInstanceForArity(arity),
+            DefaultParameterRenderer.INSTANCE);
+      }
+    }
+  }
+
   /** the holder for the default unary function parser */
   private static final class __DefaultUnaryFunctionParser {
     /** the globally shared instance */
     static final CompoundFunctionParser<UnaryFunction> INSTANCE = //
     new CompoundFunctionParser<>(UnaryFunctionBuilder.getInstance(),
+        DefaultParameterRenderer.INSTANCE);
+  }
+
+  /** the holder for the default binary function parser */
+  private static final class __DefaultBinaryFunctionParser {
+    /** the globally shared instance */
+    static final CompoundFunctionParser<BinaryFunction> INSTANCE = //
+    new CompoundFunctionParser<>(BinaryFunctionBuilder.getInstance(),
+        DefaultParameterRenderer.INSTANCE);
+  }
+
+  /** the holder for the default ternary function parser */
+  private static final class __DefaultTernaryFunctionParser {
+    /** the globally shared instance */
+    static final CompoundFunctionParser<TernaryFunction> INSTANCE = //
+    new CompoundFunctionParser<>(TernaryFunctionBuilder.getInstance(),
+        DefaultParameterRenderer.INSTANCE);
+  }
+
+  /** the holder for the default quaternary function parser */
+  private static final class __DefaultQuaternaryFunctionParser {
+    /** the globally shared instance */
+    static final CompoundFunctionParser<QuaternaryFunction> INSTANCE = //
+    new CompoundFunctionParser<>(QuaternaryFunctionBuilder.getInstance(),
         DefaultParameterRenderer.INSTANCE);
   }
 }

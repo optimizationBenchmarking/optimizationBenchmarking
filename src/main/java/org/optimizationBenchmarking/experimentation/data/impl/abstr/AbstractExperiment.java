@@ -1,14 +1,14 @@
 package org.optimizationBenchmarking.experimentation.data.impl.abstr;
 
+import org.optimizationBenchmarking.experimentation.data.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSetting;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.document.spec.IMathName;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -92,26 +92,22 @@ public class AbstractExperiment extends AbstractElementSet implements
 
   /** {@inheritDoc} */
   @Override
-  public void appendName(final IMath math) {
-    try (final IMathName name = math.name()) {
-      name.append(this.getName());
-    }
+  public void mathRender(ITextOutput out, IParameterRenderer renderer) {
+    SemanticComponentUtils.mathRender(this.getName(), out, renderer);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void mathRender(IMath out, IParameterRenderer renderer) {
+    SemanticComponentUtils.mathRender(this.getName(), out, renderer);
   }
 
   /** {@inheritDoc} */
   @Override
   public ETextCase appendName(final ITextOutput textOut,
       final ETextCase textCase) {
-
-    if (textOut instanceof IComplexText) {
-      try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-        this.appendName(math);
-      }
-    } else {
-      textOut.append(this.getName());
-    }
-
-    return ETextCase.ensure(textCase).nextCase();
+    return SemanticComponentUtils.appendName(this.getName(), textOut,
+        textCase, false);
   }
 
   /** {@inheritDoc} */
@@ -119,4 +115,5 @@ public class AbstractExperiment extends AbstractElementSet implements
   public String getPathComponentSuggestion() {
     return this.getName();
   }
+
 }
