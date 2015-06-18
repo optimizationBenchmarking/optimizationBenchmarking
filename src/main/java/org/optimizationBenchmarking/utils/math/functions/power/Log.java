@@ -1,9 +1,12 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.functions.BinaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Div;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The log function computes the logarithm of {@code x2} to the base
@@ -78,6 +81,27 @@ public final class Log extends BinaryFunction {
   private static final double __fastMathLog(final double x1,
       final double x2) {
     return FastMath.log(x1, x2);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    out.append("log("); //$NON-NLS-1$
+    renderer.renderParameter(0, out);
+    out.append(',');
+    renderer.renderParameter(1, out);
+    out.append(')');
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath log = out.log()) {
+      renderer.renderParameter(0, log);
+      renderer.renderParameter(1, log);
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

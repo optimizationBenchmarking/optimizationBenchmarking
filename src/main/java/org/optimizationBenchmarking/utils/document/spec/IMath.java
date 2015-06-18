@@ -151,6 +151,16 @@ public interface IMath extends IDocumentElement {
 
   /**
    * An {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   * instance representing the cubic root ({@code cbrt(a)}) with exactly 1
+   * argument (the number).
+   *
+   * @return {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   *         for {@code cbrt}
+   */
+  public abstract IMath cbrt();
+
+  /**
+   * An {@link org.optimizationBenchmarking.utils.document.spec.IMath}
    * instance representing a comparison ({@code a =/!=/</>... b}) with
    * exactly 2 arguments (the two values to be compared).
    *
@@ -220,6 +230,56 @@ public interface IMath extends IDocumentElement {
    *         for {@code tan}
    */
   public abstract IMath tan();
+
+  /**
+   * An {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   * instance representing the exponent of something ({@code exp a}) with
+   * exactly 1 argument.
+   *
+   * @return {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   *         for {@code exp}
+   */
+  public abstract IMath exp();
+
+  /**
+   * An {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   * instance representing the square of something ({@code a²}) with
+   * exactly 1 argument.
+   *
+   * @return {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   *         for {@code sqr}
+   */
+  public abstract IMath sqr();
+
+  /**
+   * An {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   * instance representing the cube of something ({@code a³}) with exactly
+   * 1 argument.
+   *
+   * @return {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   *         for {@code cube}
+   */
+  public abstract IMath cube();
+
+  /**
+   * An {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   * instance representing the maximum of something (
+   * <code>max{a,1,2}</code>) with at least 1 argument.
+   *
+   * @return {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   *         for {@code max}
+   */
+  public abstract IMath max();
+
+  /**
+   * An {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   * instance representing the minimum of something (
+   * <code>min{a,1,2}</code>) with at least 1 argument.
+   *
+   * @return {@link org.optimizationBenchmarking.utils.document.spec.IMath}
+   *         for {@code min}
+   */
+  public abstract IMath min();
 
   /**
    * Print an {@code n}-ary function

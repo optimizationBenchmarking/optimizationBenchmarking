@@ -25,7 +25,7 @@ final class _Const1 extends UnaryFunction {
    * @serial the instance of {@link java.lang.Number} holding the constant
    *         value returned by this function
    */
-  private final Number m_const;
+  final Number m_const;
 
   /**
    * Create the

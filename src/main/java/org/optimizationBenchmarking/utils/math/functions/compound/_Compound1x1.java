@@ -152,11 +152,28 @@ final class _Compound1x1 extends UnaryFunction {
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("incomplete-switch")
   @Override
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
-    this.m_result.mathRender(out, new __Compound1x1ParameterRenderer(
-        renderer));
+    final __Compound1x1ParameterRenderer subRenderer;
+    final MemoryTextOutput memoryTextOut;
+    final int index;
+    subRenderer = new __Compound1x1ParameterRenderer(renderer);
+    memoryTextOut = new MemoryTextOutput();
+    this.m_result.mathRender(memoryTextOut,
+        DefaultParameterRenderer.INSTANCE);
+    if ((index = memoryTextOut
+        .indexOf(DefaultParameterRenderer.PARAMETER_ENCLOSING_CHAR)) > 0) {
+      switch (memoryTextOut.charAt(index - 1)) {
+        case '(':
+        case '[':
+        case '{': {
+          subRenderer.m_bracesNotNeeded = true;
+        }
+      }
+    }
+    this.m_result.mathRender(out, subRenderer);
   }
 
   /** {@inheritDoc} */
@@ -257,7 +274,8 @@ final class _Compound1x1 extends UnaryFunction {
       switch (index) {
         case 0: {
           braces = ((_Compound1x1.this.m_child1.getPrecedencePriority() <= _Compound1x1.this.m_result
-              .getPrecedencePriority()) && (!(_Compound1x1.this.m_result instanceof Absolute)));
+              .getPrecedencePriority())
+              && (!(_Compound1x1.this.m_result instanceof Absolute)) && (!(this.m_bracesNotNeeded)));
           if (braces) {
             out.append('(');
           }

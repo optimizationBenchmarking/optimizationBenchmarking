@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * A unary function which receives values from a given dimension as input
  * and transforms potentially them based on information obtain from
  * experiment parameters or instance features.
- * 
+ *
  * @param <RT>
  *          the renderable type
  */
@@ -34,7 +34,7 @@ class _Transformation<RT extends IMathRenderable> implements
   final UnaryFunction m_func;
 
   /** the internal property-based constants */
-  private final _PropertyConstant[] m_constants;
+  private final _DataBasedConstant[] m_constants;
 
   /** the marker that this transformation is blocked because it is in use */
   private volatile boolean m_isInUse;
@@ -50,7 +50,7 @@ class _Transformation<RT extends IMathRenderable> implements
 
   /**
    * Create the data transformation
-   * 
+   *
    * @param function
    *          the function to be applied
    * @param constants
@@ -59,7 +59,7 @@ class _Transformation<RT extends IMathRenderable> implements
    *          the single parameter
    */
   _Transformation(final UnaryFunction function,
-      final _PropertyConstant[] constants, final RT parameter) {
+      final _DataBasedConstant[] constants, final RT parameter) {
     super();
 
     if (parameter == null) {
@@ -86,13 +86,15 @@ class _Transformation<RT extends IMathRenderable> implements
 
   /** {@inheritDoc} */
   @Override
-  public final void mathRender(ITextOutput out, IParameterRenderer renderer) {
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
     this.m_func.mathRender(out, this.m_renderer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void mathRender(IMath out, IParameterRenderer renderer) {
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
     this.m_func.mathRender(out, this.m_renderer);
   }
 
@@ -107,7 +109,7 @@ class _Transformation<RT extends IMathRenderable> implements
 
   /**
    * Provide the data transformation function based on a given data element
-   * 
+   *
    * @param element
    *          the data element
    * @return the transformation function
@@ -121,7 +123,7 @@ class _Transformation<RT extends IMathRenderable> implements
             this.m_func + " is already in use concurrently.."); //$NON-NLS-1$
       }
 
-      for (_PropertyConstant constant : this.m_constants) {
+      for (final _DataBasedConstant constant : this.m_constants) {
         constant._update(element);
       }
     }
@@ -139,7 +141,7 @@ class _Transformation<RT extends IMathRenderable> implements
 
     if (isInUse) {
       if (this.m_constants != null) {
-        for (_PropertyConstant constant : this.m_constants) {
+        for (final _DataBasedConstant constant : this.m_constants) {
           constant._clear();
         }
       }
@@ -148,8 +150,8 @@ class _Transformation<RT extends IMathRenderable> implements
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase printShortName(ITextOutput textOut,
-      ETextCase textCase) {
+  public final ETextCase printShortName(final ITextOutput textOut,
+      final ETextCase textCase) {
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
         this.mathRender(math, DefaultParameterRenderer.INSTANCE);
@@ -162,14 +164,15 @@ class _Transformation<RT extends IMathRenderable> implements
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase printLongName(ITextOutput textOut,
-      ETextCase textCase) {
+  public final ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
     return this.printShortName(textOut, textCase);
   }
 
   /** {@inheritDoc} */
   @Override
-  public ETextCase printDescription(ITextOutput textOut, ETextCase textCase) {
+  public ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
     ETextCase next;
 
     next = ETextCase.ensure(textCase);
@@ -239,7 +242,8 @@ class _Transformation<RT extends IMathRenderable> implements
 
     /** {@inheritDoc} */
     @Override
-    public final void renderParameter(int index, ITextOutput out) {
+    public final void renderParameter(final int index,
+        final ITextOutput out) {
       if (index == 0) {
         _Transformation.this.m_renderable.mathRender(out, this);
       } else {
@@ -249,7 +253,7 @@ class _Transformation<RT extends IMathRenderable> implements
 
     /** {@inheritDoc} */
     @Override
-    public final void renderParameter(int index, IMath out) {
+    public final void renderParameter(final int index, final IMath out) {
       if (index == 0) {
         _Transformation.this.m_renderable.mathRender(out, this);
       } else {

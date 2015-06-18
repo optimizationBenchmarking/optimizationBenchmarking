@@ -399,6 +399,42 @@ public final class LaTeXDriver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
+  protected final _LaTeXMathSqr createMathSqr(final BasicMath owner) {
+    return new _LaTeXMathSqr(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathCube createMathCube(final BasicMath owner) {
+    return new _LaTeXMathCube(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathCbrt createMathCbrt(final BasicMath owner) {
+    return new _LaTeXMathCbrt(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathExp createMathExp(final BasicMath owner) {
+    return new _LaTeXMathExp(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathMax createMathMax(final BasicMath owner) {
+    return new _LaTeXMathMax(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _LaTeXMathMin createMathMin(final BasicMath owner) {
+    return new _LaTeXMathMin(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected final _LaTeXMathRoot createMathRoot(final BasicMath owner) {
     return new _LaTeXMathRoot(owner);
   }

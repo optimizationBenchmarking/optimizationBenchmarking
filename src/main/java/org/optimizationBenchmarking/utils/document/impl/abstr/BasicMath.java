@@ -201,6 +201,48 @@ public abstract class BasicMath extends DocumentPart implements IMath {
 
   /** {@inheritDoc} */
   @Override
+  public synchronized final MathSqr sqr() {
+    this.__nextIndex();
+    return this.m_driver.createMathSqr(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final MathCube cube() {
+    this.__nextIndex();
+    return this.m_driver.createMathCube(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final MathExp exp() {
+    this.__nextIndex();
+    return this.m_driver.createMathExp(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final MathMax max() {
+    this.__nextIndex();
+    return this.m_driver.createMathMax(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final MathMin min() {
+    this.__nextIndex();
+    return this.m_driver.createMathMin(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final MathCbrt cbrt() {
+    this.__nextIndex();
+    return this.m_driver.createMathCbrt(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public synchronized final IMath nAryFunction(final String name,
       final int minArity, final int maxArity) {
     this.__nextIndex();

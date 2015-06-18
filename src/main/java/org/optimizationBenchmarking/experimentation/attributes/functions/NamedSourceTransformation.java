@@ -12,7 +12,7 @@ public final class NamedSourceTransformation extends
 
   /**
    * Create the data transformation
-   * 
+   *
    * @param function
    *          the function to be applied
    * @param constants
@@ -21,13 +21,13 @@ public final class NamedSourceTransformation extends
    *          the named source
    */
   NamedSourceTransformation(final UnaryFunction function,
-      final _PropertyConstant[] constants, final IMathRenderable source) {
+      final _DataBasedConstant[] constants, final IMathRenderable source) {
     super(function, constants, source);
   }
 
   /**
    * Create the data transformation
-   * 
+   *
    * @param source
    *          the named source
    */

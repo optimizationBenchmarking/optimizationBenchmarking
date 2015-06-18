@@ -20,7 +20,7 @@ public final class DimensionTransformationParser extends
 
   /**
    * create the dimension transformation parser
-   * 
+   *
    * @param experimentSet
    *          the experiment set
    */
@@ -31,7 +31,7 @@ public final class DimensionTransformationParser extends
   /** {@inheritDoc} */
   @Override
   final DimensionTransformation _createTransformation(
-      UnaryFunction function, _PropertyConstant[] constants) {
+      final UnaryFunction function, final _DataBasedConstant[] constants) {
     final IDimension dim;
 
     dim = this.m_dimension;
@@ -47,8 +47,8 @@ public final class DimensionTransformationParser extends
 
   /** {@inheritDoc} */
   @Override
-  final UnaryFunction _resolveUnknownName(String name,
-      FunctionBuilder<UnaryFunction> builder) {
+  final UnaryFunction _resolveUnknownName(final String name,
+      final FunctionBuilder<UnaryFunction> builder) {
     IDimension dim;
 
     dim = this.m_experimentSet.getDimensions().find(name);
@@ -60,7 +60,7 @@ public final class DimensionTransformationParser extends
         if (!(EComparison.equals(this.m_dimension, dim))) {
           throw new IllegalArgumentException(//
               "A dimension transformation can only have one source dimension, but you specified " //$NON-NLS-1$
-                  + this.m_dimension + " and " + dim);//$NON-NLS-1$          
+                  + this.m_dimension + " and " + dim);//$NON-NLS-1$
         }
       }
 

@@ -20,7 +20,7 @@ final class _ParameterConstant extends _PropertyConstant {
 
   /**
    * create the parameter constant
-   * 
+   *
    * @param parameter
    *          the parameter
    */
@@ -31,27 +31,27 @@ final class _ParameterConstant extends _PropertyConstant {
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  final Object _getValue(IDataElement element) {
+  final Object _getValue(final IDataElement element) {
     if (element instanceof IParameterSetting) {
-      return __getValue((IParameterSetting) element);
+      return this.__getValue((IParameterSetting) element);
     }
     if (element instanceof IInstanceRuns) {
-      return __getValue((IInstanceRuns) element);
+      return this.__getValue((IInstanceRuns) element);
     }
     if (element instanceof IRun) {
-      return __getValue((IRun) element);
+      return this.__getValue((IRun) element);
     }
     if (element instanceof IExperiment) {
-      return __getValue((IExperiment) element);
+      return this.__getValue((IExperiment) element);
     }
     if (element instanceof IExperimentSet) {
-      return __getValue((IExperimentSet) element);
+      return this.__getValue((IExperimentSet) element);
     }
     if (element instanceof IElementSet) {
-      return __getValue((IElementSet) element);
+      return this.__getValue((IElementSet) element);
     }
     if (element instanceof Iterable) {
-      return __getValue((Iterable) element);
+      return this.__getValue((Iterable) element);
     }
 
     throw new IllegalArgumentException(//
@@ -59,42 +59,48 @@ final class _ParameterConstant extends _PropertyConstant {
             + element);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return ("Parameter " + this.m_property.getName()); //$NON-NLS-1$
+  }
+
   /**
    * Get the value of a parameter from a parameter setting
-   * 
+   *
    * @param setting
    *          the setting
    * @return the parameter value
    */
-  private final Object __getValue(IParameterSetting setting) {
+  private final Object __getValue(final IParameterSetting setting) {
     return setting.get(this.m_property);
   }
 
   /**
    * Get the value of a parameter from an instance run set
-   * 
+   *
    * @param instanceRuns
    *          the instance runs
    * @return the parameter value
    */
-  private final Object __getValue(IInstanceRuns instanceRuns) {
+  private final Object __getValue(final IInstanceRuns instanceRuns) {
     return this.__getValue(instanceRuns.getOwner());
   }
 
   /**
    * Get the value of a parameter from a run
-   * 
+   *
    * @param run
    *          the run
    * @return the parameter value
    */
-  private final Object __getValue(IRun run) {
+  private final Object __getValue(final IRun run) {
     return this.__getValue(run.getOwner());
   }
 
   /**
    * Get the value from a collection of things
-   * 
+   *
    * @param list
    *          the list
    * @return the result
@@ -103,7 +109,7 @@ final class _ParameterConstant extends _PropertyConstant {
     Object value, newVal;
 
     value = null;
-    looper: for (Object element : list) {
+    looper: for (final Object element : list) {
       if (element instanceof IDataElement) {
         newVal = this._getValue((IDataElement) element);
         if (newVal == null) {
@@ -115,7 +121,7 @@ final class _ParameterConstant extends _PropertyConstant {
         } else {
           if (!(EComparison.equals(value, newVal))) {
             throw new IllegalArgumentException(//
-                "Parameter value must be the same over the whole list, otherwise computation is inconsistent, but we discovered the non-equal values "//$NON-NLS-1$ 
+                "Parameter value must be the same over the whole list, otherwise computation is inconsistent, but we discovered the non-equal values "//$NON-NLS-1$
                     + value + " and " + newVal);//$NON-NLS-1$
           }
         }
@@ -135,34 +141,34 @@ final class _ParameterConstant extends _PropertyConstant {
 
   /**
    * Get the value of a parameter from an experiment
-   * 
+   *
    * @param experiment
    *          the experiment
    * @return the parameter value
    */
-  private final Object __getValue(IExperiment experiment) {
+  private final Object __getValue(final IExperiment experiment) {
     return this.__getValue(experiment.getParameterSetting());
   }
 
   /**
    * Get the value of a parameter from an experiment set
-   * 
+   *
    * @param experimentSet
    *          the experimentSet
    * @return the parameter value
    */
-  private final Object __getValue(IExperimentSet experimentSet) {
+  private final Object __getValue(final IExperimentSet experimentSet) {
     return this.__getValue(experimentSet.getData());
   }
 
   /**
    * Get the value of a parameter from an element set
-   * 
+   *
    * @param elementSet
    *          the elementSet
    * @return the parameter value
    */
-  private final Object __getValue(IElementSet elementSet) {
+  private final Object __getValue(final IElementSet elementSet) {
     return this.__getValue(elementSet.getData());
   }
 }

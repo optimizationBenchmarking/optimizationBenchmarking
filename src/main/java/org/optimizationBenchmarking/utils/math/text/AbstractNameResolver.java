@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.text;
 
 import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
+import org.optimizationBenchmarking.utils.math.MathConstants;
 import org.optimizationBenchmarking.utils.math.functions.MathematicalFunction;
 import org.optimizationBenchmarking.utils.math.functions.compound.FunctionBuilder;
 
@@ -27,6 +28,11 @@ public class AbstractNameResolver implements INameResolver {
     name = "e"; //$NON-NLS-1$
     map.put(name, new NamedDoubleConstant(Math.E, name));
 
+    name = "ulp"; //$NON-NLS-1$
+    constant = new NamedDoubleConstant(MathConstants.EPS, name);
+    map.put(name, constant);
+    map.put("eps", constant);//$NON-NLS-1$
+
     BASIC_CONSTANTS = map;
   }
 
@@ -37,8 +43,8 @@ public class AbstractNameResolver implements INameResolver {
 
   /** {@inheritDoc} */
   @Override
-  public MathematicalFunction resolve(String name,
-      FunctionBuilder<?> builder) {
+  public MathematicalFunction resolve(final String name,
+      final FunctionBuilder<?> builder) {
     throw new IllegalArgumentException("The name '" + name + //$NON-NLS-1$
         "' cannot be resolved to any known function or constant.");//$NON-NLS-1$
   }
@@ -46,13 +52,13 @@ public class AbstractNameResolver implements INameResolver {
   /**
    * Check whether the given name is a default constant, such as
    * {@link Math#PI}
-   * 
+   *
    * @param name
    *          the name
    * @return the constant, or {@code null} if none could be detected
    */
   protected static final Number resolveDefaultConstant(final String name) {
-    return BASIC_CONSTANTS.get(name);
+    return AbstractNameResolver.BASIC_CONSTANTS.get(name);
   }
 
 }

@@ -1,9 +1,12 @@
 package org.optimizationBenchmarking.utils.math.functions.trigonometric;
 
 import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.power.Ln;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** The sin function */
 public final class Sin extends UnaryFunction {
@@ -54,6 +57,24 @@ public final class Sin extends UnaryFunction {
   @Override
   public final ASin invertFor(final int index) {
     return ASin.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    out.append("sin("); //$NON-NLS-1$
+    renderer.renderParameter(0, out);
+    out.append(')');
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath trig = out.sin()) {
+      renderer.renderParameter(0, trig);
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

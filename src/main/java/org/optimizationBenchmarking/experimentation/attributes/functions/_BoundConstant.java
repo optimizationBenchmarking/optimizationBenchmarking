@@ -1,33 +1,65 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
-import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSetting;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
-import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.parsers.NumberParser;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
- * A constant representing an instance feature value.
+ * A constant which can be updated based on a bound of a dimension, i.e.,
+ * either an experiment parameter or instance feature.
  */
-final class _FeatureConstant extends _PropertyConstant {
+final class _BoundConstant extends _DataBasedConstant {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the dimension */
+  private final IDimension m_dimension;
+  /** the end for the upper bound of the given dimension */
+  static final String UPPER_BOUND_END = ".max"; //$NON-NLS-1$
+  /** the end for the lower bound of the given dimension */
+  static final String LOWER_BOUND_END = ".min";//$NON-NLS-1$
+
   /**
-   * create the feature constant
-   *
-   * @param feature
-   *          the feature
+   * {@code true} if we want the upper bound, {@code false} for the lower
+   * bound
    */
-  _FeatureConstant(final IProperty feature) {
-    super(feature);
+  private final boolean m_upper;
+
+  /** the default boundary */
+  private Number m_defaultBound;
+
+  /**
+   * create the dimension bound constant
+   *
+   * @param dimension
+   *          the dimension
+   * @param upper
+   *          {@code true} if we want the upper bound, {@code false} for
+   *          the lower bound
+   */
+  _BoundConstant(final IDimension dimension, final boolean upper) {
+    super();
+
+    if (dimension == null) {
+      throw new IllegalArgumentException(//
+          "Dimensions cannot be null."); //$NON-NLS-1$
+    }
+    this.m_dimension = dimension;
+    this.m_upper = upper;
   }
 
   /** {@inheritDoc} */
@@ -36,9 +68,6 @@ final class _FeatureConstant extends _PropertyConstant {
   final Object _getValue(final IDataElement element) {
     if (element instanceof IInstance) {
       return this.__getValue((IInstance) element);
-    }
-    if (element instanceof IFeatureSetting) {
-      return this.__getValue((IFeatureSetting) element);
     }
     if (element instanceof IInstanceRuns) {
       return this.__getValue((IInstanceRuns) element);
@@ -61,27 +90,47 @@ final class _FeatureConstant extends _PropertyConstant {
     if (element instanceof Iterable) {
       return this.__getValue((Iterable) element);
     }
+    return this.__getDefaultBound();
+  }
 
-    throw new IllegalArgumentException(//
-        "Cannot get a feature value from a " //$NON-NLS-1$
-            + element);
+  /**
+   * Get the default, instance-independent dimension boundary
+   *
+   * @return the default, instance-independent dimension boundary
+   */
+  private final Number __getDefaultBound() {
+    final NumberParser<Number> parser;
+
+    if (this.m_defaultBound == null) {
+      parser = this.m_dimension.getParser();
+      if (parser.areBoundsInteger()) {
+        if (this.m_upper) {
+          this.m_defaultBound = NumericalTypes.valueOf(parser
+              .getUpperBoundLong());
+        } else {
+          this.m_defaultBound = NumericalTypes.valueOf(parser
+              .getLowerBoundLong());
+        }
+      } else {
+        if (this.m_upper) {
+          this.m_defaultBound = NumericalTypes.valueOf(parser
+              .getUpperBoundDouble());
+        } else {
+          this.m_defaultBound = NumericalTypes.valueOf(parser
+              .getLowerBoundDouble());
+        }
+      }
+    }
+    return this.m_defaultBound;
   }
 
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return ("Feature " + this.m_property.getName()); //$NON-NLS-1$
-  }
-
-  /**
-   * Get the value of a feature from a feature setting
-   *
-   * @param setting
-   *          the setting
-   * @return the feature value
-   */
-  private final Object __getValue(final IFeatureSetting setting) {
-    return setting.get(this.m_property);
+    return ((this.m_upper ? //
+    "upper bound of dimension " : //$NON-NLS-1$
+        "lower bound of dimension ") + //$NON-NLS-1$
+    this.m_dimension.getName());
   }
 
   /**
@@ -92,7 +141,18 @@ final class _FeatureConstant extends _PropertyConstant {
    * @return the feature value
    */
   private final Object __getValue(final IInstance instance) {
-    return this.__getValue(instance.getFeatureSetting());
+    Number number;
+
+    if (this.m_upper) {
+      number = instance.getUpperBound(this.m_dimension);
+    } else {
+      number = instance.getLowerBound(this.m_dimension);
+    }
+
+    if (number == null) {
+      return this.__getDefaultBound();
+    }
+    return number;
   }
 
   /**
@@ -140,7 +200,7 @@ final class _FeatureConstant extends _PropertyConstant {
         } else {
           if (!(EComparison.equals(value, newVal))) {
             throw new IllegalArgumentException(//
-                "Feature value must be the same over the whole experiment, otherwise computation is inconsistent, but we discovered the non-equal values "//$NON-NLS-1$
+                "Dimension boundary value must be the same over the whole experiment, otherwise computation is inconsistent, but we discovered the non-equal values "//$NON-NLS-1$
                     + value + " and " + newVal);//$NON-NLS-1$
           }
         }
@@ -152,7 +212,7 @@ final class _FeatureConstant extends _PropertyConstant {
     }
 
     if (value == null) {
-      throw new IllegalArgumentException("Feature value cannot be null."); //$NON-NLS-1$
+      return this.__getDefaultBound();
     }
 
     return value;
@@ -202,4 +262,23 @@ final class _FeatureConstant extends _PropertyConstant {
     return this.__getValue(instanceSet.getData());
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    this.m_dimension.mathRender(out, renderer);
+    out.append(this.m_upper ? _BoundConstant.UPPER_BOUND_END
+        : _BoundConstant.LOWER_BOUND_END);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    this.m_dimension.mathRender(out, renderer);
+    try (final IText name = out.name()) {
+      name.append(this.m_upper ? _BoundConstant.UPPER_BOUND_END
+          : _BoundConstant.LOWER_BOUND_END);
+    }
+  }
 }

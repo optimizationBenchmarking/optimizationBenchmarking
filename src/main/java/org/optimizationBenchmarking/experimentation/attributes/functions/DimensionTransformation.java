@@ -12,7 +12,7 @@ public final class DimensionTransformation extends
 
   /**
    * Create the data transformation
-   * 
+   *
    * @param function
    *          the function to be applied
    * @param constants
@@ -21,13 +21,13 @@ public final class DimensionTransformation extends
    *          the dimension
    */
   DimensionTransformation(final UnaryFunction function,
-      final _PropertyConstant[] constants, final IDimension dimension) {
+      final _DataBasedConstant[] constants, final IDimension dimension) {
     super(function, constants, dimension);
   }
 
   /**
    * Create the data transformation
-   * 
+   *
    * @param dimension
    *          the dimension
    */
@@ -37,7 +37,7 @@ public final class DimensionTransformation extends
 
   /**
    * The dimension to be transformed by this transformer
-   * 
+   *
    * @return dimension to be transformed by this transformer
    */
   public final IDimension getDimension() {

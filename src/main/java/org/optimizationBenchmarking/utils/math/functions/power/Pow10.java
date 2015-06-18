@@ -83,10 +83,12 @@ public final class Pow10 extends UnaryFunction {
   @Override
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
-    renderer.renderParameter(0, out);
-    out.append('^');
     out.append('1');
     out.append('0');
+    out.append('^');
+    out.append('(');
+    renderer.renderParameter(0, out);
+    out.append(')');
   }
 
   /** {@inheritDoc} */
@@ -94,10 +96,10 @@ public final class Pow10 extends UnaryFunction {
   public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
     try (final IMath pow = out.pow()) {
-      renderer.renderParameter(0, pow);
       try (final IText num = pow.number()) {
         num.append(10);
       }
+      renderer.renderParameter(0, pow);
     }
   }
 

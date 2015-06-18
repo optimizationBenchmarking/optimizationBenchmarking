@@ -413,6 +413,42 @@ public final class XHTML10Driver extends DocumentDriver {
 
   /** {@inheritDoc} */
   @Override
+  protected final _XHTML10MathSqr createMathSqr(final BasicMath owner) {
+    return new _XHTML10MathSqr(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathCube createMathCube(final BasicMath owner) {
+    return new _XHTML10MathCube(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathCbrt createMathCbrt(final BasicMath owner) {
+    return new _XHTML10MathCbrt(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathExp createMathExp(final BasicMath owner) {
+    return new _XHTML10MathExp(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathMax createMathMax(final BasicMath owner) {
+    return new _XHTML10MathMax(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final _XHTML10MathMin createMathMin(final BasicMath owner) {
+    return new _XHTML10MathMin(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
   protected final _XHTML10MathRoot createMathRoot(final BasicMath owner) {
     return new _XHTML10MathRoot(owner);
   }

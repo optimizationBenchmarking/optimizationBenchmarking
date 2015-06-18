@@ -1,8 +1,11 @@
 package org.optimizationBenchmarking.utils.math.functions.trigonometric;
 
 import org.apache.commons.math3.util.FastMath;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.functions.MathLibraries;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** The tan function */
 public final class Tan extends UnaryFunction {
@@ -53,6 +56,24 @@ public final class Tan extends UnaryFunction {
   @Override
   public final ATan invertFor(final int index) {
     return ATan.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    out.append("tan("); //$NON-NLS-1$
+    renderer.renderParameter(0, out);
+    out.append(')');
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath trig = out.tan()) {
+      renderer.renderParameter(0, trig);
+    }
   }
 
   // default, automatic serialization replacement and resolve routines for

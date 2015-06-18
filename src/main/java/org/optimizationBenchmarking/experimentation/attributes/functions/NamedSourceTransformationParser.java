@@ -22,7 +22,7 @@ public final class NamedSourceTransformationParser extends
 
   /**
    * create the dimension transformation parser
-   * 
+   *
    * @param experimentSet
    *          the experiment set
    * @param sourceName
@@ -53,7 +53,7 @@ public final class NamedSourceTransformationParser extends
   /** {@inheritDoc} */
   @Override
   final NamedSourceTransformation _createTransformation(
-      UnaryFunction function, _PropertyConstant[] constants) {
+      final UnaryFunction function, final _DataBasedConstant[] constants) {
     final UnaryFunction func;
 
     func = this.m_unary;
@@ -68,8 +68,8 @@ public final class NamedSourceTransformationParser extends
 
   /** {@inheritDoc} */
   @Override
-  final UnaryFunction _resolveUnknownName(String name,
-      FunctionBuilder<UnaryFunction> builder) {
+  final UnaryFunction _resolveUnknownName(final String name,
+      final FunctionBuilder<UnaryFunction> builder) {
 
     if (this.m_sourceName.equalsIgnoreCase(TextUtils.prepare(name))) {
       if (this.m_unary == null) {

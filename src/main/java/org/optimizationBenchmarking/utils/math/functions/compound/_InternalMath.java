@@ -200,4 +200,43 @@ final class _InternalMath implements IMath {
     // could be negative...
     return this.m_math.number();
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IMath cbrt() {
+    this.m_renderer.m_bracesNotNeeded = true;
+    return this.m_math.cbrt();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IMath exp() {
+    return this.m_math.exp();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IMath sqr() {
+    return this.m_math.sqr();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IMath cube() {
+    return this.m_math.cube();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IMath max() {
+    this.m_renderer.m_bracesNotNeeded = true;
+    return this.m_math.max();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IMath min() {
+    this.m_renderer.m_bracesNotNeeded = true;
+    return this.m_math.min();
+  }
 }

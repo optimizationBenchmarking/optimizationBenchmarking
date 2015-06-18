@@ -30,7 +30,7 @@ public final class CompoundParserTest {
     System.out.println(parser.parseString(string));
     System.out.println();
 
-    string = ("5+4*3^6/7"); //$NON-NLS-1$
+    string = ("5+4*3^0.333333333333333333333333333/7"); //$NON-NLS-1$
     System.out.println(string);
     System.out.println(parser.parseString(string));
     System.out.println();

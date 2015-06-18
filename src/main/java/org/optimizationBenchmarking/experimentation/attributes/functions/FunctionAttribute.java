@@ -19,13 +19,18 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 public abstract class FunctionAttribute<DT extends IElementSet> extends
     Attribute<DT, IMatrix> implements ISemanticComponent {
 
-  /** Create the function attribute
-   * 
-   *  @param type
+  /**
+   * Create the function attribute
+   *
+   * @param type
    *          the attribute type
-   * @param xAxisTransformation the transformation to be applied to the x-axis
-   * @param yAxisInputTransformation the transformation to be applied to the data of the y-axis before being fed to the actual computation
-   * @param yAxisOutputTransformation the transformation t
+   * @param xAxisTransformation
+   *          the transformation to be applied to the x-axis
+   * @param yAxisInputTransformation
+   *          the transformation to be applied to the data of the y-axis
+   *          before being fed to the actual computation
+   * @param yAxisOutputTransformation
+   *          the transformation t
    */
   protected FunctionAttribute(final EAttributeType type,
       final DimensionTransformation xAxisTransformation,

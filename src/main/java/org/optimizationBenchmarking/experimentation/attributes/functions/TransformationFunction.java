@@ -22,7 +22,7 @@ public class TransformationFunction extends UnaryFunction implements
 
   /**
    * create the function context
-   * 
+   *
    * @param trafo
    *          the data transformation
    */

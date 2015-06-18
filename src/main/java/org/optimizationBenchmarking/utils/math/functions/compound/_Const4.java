@@ -25,7 +25,7 @@ final class _Const4 extends QuaternaryFunction {
    * @serial the instance of {@link java.lang.Number} holding the constant
    *         value returned by this function
    */
-  private final Number m_const;
+  final Number m_const;
 
   /**
    * Create the

@@ -1,13 +1,13 @@
 package org.optimizationBenchmarking.utils.document.impl.latex;
 
 import org.optimizationBenchmarking.utils.document.impl.abstr.BasicMath;
-import org.optimizationBenchmarking.utils.document.impl.abstr.MathRoot;
+import org.optimizationBenchmarking.utils.document.impl.abstr.MathExp;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
-/** an mathematical root function in a LaTeX document */
-final class _LaTeXMathRoot extends MathRoot {
-  /** the root */
-  static final char[] ROOT = { '{', '\\', 's', 'q', 'r', 't', '[', '{', };
+/** an mathematical exp function in a LaTeX document */
+final class _LaTeXMathExp extends MathExp {
+  /** the begin exp */
+  private static final char[] EXP_BEGIN = { '{', '\\', 'e', 'x', 'p', '{', };
 
   /**
    * Create a new mathematical function
@@ -15,7 +15,7 @@ final class _LaTeXMathRoot extends MathRoot {
    * @param owner
    *          the owning text
    */
-  _LaTeXMathRoot(final BasicMath owner) {
+  _LaTeXMathExp(final BasicMath owner) {
     super(owner);
     this.open();
   }
@@ -24,12 +24,9 @@ final class _LaTeXMathRoot extends MathRoot {
   @Override
   protected final void render(final ITextOutput out, final char[][] data,
       final int size) {
-    out.append(_LaTeXMathRoot.ROOT);
+
+    out.append(_LaTeXMathExp.EXP_BEGIN);
     out.append(data[0]);
-    out.append('}');
-    out.append(']');
-    out.append('{');
-    out.append(data[1]);
     out.append('}');
     out.append('}');
   }

@@ -551,6 +551,72 @@ public abstract class DocumentDriver extends DocumentProducerTool
   }
 
   /**
+   * Create a mathematical sqr
+   *
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathSqr createMathSqr(final BasicMath owner) {
+    return new MathSqr(owner);
+  }
+
+  /**
+   * Create a mathematical cube
+   *
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathCube createMathCube(final BasicMath owner) {
+    return new MathCube(owner);
+  }
+
+  /**
+   * Create a mathematical cubic root
+   *
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathCbrt createMathCbrt(final BasicMath owner) {
+    return new MathCbrt(owner);
+  }
+
+  /**
+   * Create a mathematical exp
+   *
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathExp createMathExp(final BasicMath owner) {
+    return new MathExp(owner);
+  }
+
+  /**
+   * Create a mathematical max
+   *
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathMax createMathMax(final BasicMath owner) {
+    return new MathMax(owner);
+  }
+
+  /**
+   * Create a mathematical min
+   *
+   * @param owner
+   *          the owner
+   * @return the function
+   */
+  protected MathMin createMathMin(final BasicMath owner) {
+    return new MathMin(owner);
+  }
+
+  /**
    * Create a mathematical root
    *
    * @param owner

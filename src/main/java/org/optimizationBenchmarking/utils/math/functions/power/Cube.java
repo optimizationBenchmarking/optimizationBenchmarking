@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.functions.power;
 
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -165,11 +164,8 @@ public final class Cube extends UnaryFunction {
   @Override
   public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
-    try (final IMath sqr = out.pow()) {
-      renderer.renderParameter(0, sqr);
-      try (final IText num = sqr.number()) {
-        num.append(3);
-      }
+    try (final IMath cube = out.cube()) {
+      renderer.renderParameter(0, cube);
     }
   }
 
