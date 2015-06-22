@@ -1,13 +1,12 @@
 package org.optimizationBenchmarking.experimentation.data.spec;
 
-import org.optimizationBenchmarking.utils.document.spec.ISemanticComponent;
-import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
+import org.optimizationBenchmarking.utils.document.spec.ISemanticMathComponent;
 
 /**
  * This interface is common to all elements which have a name.
  */
-public interface INamedElement extends IDataElement, ISemanticComponent,
-    IMathRenderable {
+public interface INamedElement extends IDataElement,
+    ISemanticMathComponent {
 
   /**
    * Obtain the name of this object.

@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.text.textOutput;
 
 import java.text.CharacterIterator;
 
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.CharArrayCharSequence;
 import org.optimizationBenchmarking.utils.text.ITextable;
 
@@ -500,4 +501,82 @@ public class MemoryTextOutput extends AbstractTextOutput implements
       textOut.append(this.m_data, 0, len);
     }
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object o) {
+    final CharSequence seq;
+    int index;
+
+    if (o == this) {
+      return true;
+    }
+    if (o instanceof CharSequence) {
+      seq = ((CharSequence) o);
+      if (seq.length() == (index = this.m_size)) {
+        for (; (--index) >= 0;) {
+          if (this.m_data[index] != seq.charAt(index)) {
+            return false;
+          }
+        }
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    final int end;
+    int index, hc;
+
+    end = this.m_size;
+    hc = 0;
+    for (index = 0; index < end; index++) {
+      hc = HashUtils.combineHashes(hc,
+          HashUtils.hashCode(this.m_data[index]));
+    }
+    return hc;
+  }
+
+  /**
+   * Compare the contents of this memory text output device with another
+   * char sequence in a case-insensitive manner.
+   * 
+   * @param seq
+   *          the other char sequence
+   * @return {@code true} if the two sequences are equal under ignorance of
+   *         case
+   */
+  public final boolean equalsIgnoreCase(final CharSequence seq) {
+    int index;
+    char a, b;
+
+    if (seq == this) {
+      return true;
+    }
+    if (seq.length() == (index = this.m_size)) {
+      // same procedure as in String.equalsIgnoreCase
+      for (; (--index) >= 0;) {
+        if ((a = this.m_data[index]) == (b = seq.charAt(index))) {
+          continue;
+        }
+        a = Character.toUpperCase(a);
+        b = Character.toUpperCase(b);
+        if (a == b) {
+          continue;
+        }
+        if (Character.toLowerCase(a) == Character.toLowerCase(b)) {
+          continue;
+        }
+        return false;
+      }
+      return true;
+    }
+
+    return false;
+  }
+
 }

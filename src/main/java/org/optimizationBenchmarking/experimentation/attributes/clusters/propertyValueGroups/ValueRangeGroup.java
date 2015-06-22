@@ -5,6 +5,8 @@ import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -168,8 +170,9 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final IMath math) {
-    try (final IMath compare = math.compare(EMathComparison.LESS_OR_EQUAL)) {
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath compare = out.compare(EMathComparison.LESS_OR_EQUAL)) {
 
       try (final IText number = compare.number()) {
         PropertyValueGroup._appendNumber(this.m_lower, number);
@@ -178,7 +181,7 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
       try (final IMath compare2 = compare.compare(//
           this.m_isUpperExclusive ? EMathComparison.LESS
               : EMathComparison.LESS_OR_EQUAL)) {
-        this.getOwner().m_property.appendName(compare2);
+        this.getOwner().m_property.mathRender(compare2, renderer);
 
         try (final IText number = compare2.number()) {
           PropertyValueGroup._appendNumber(this.m_upper, number);
@@ -189,30 +192,61 @@ public class ValueRangeGroup extends PropertyValueGroup<ValueRangeGroups> {
 
   /** {@inheritDoc} */
   @Override
-  final ETextCase _appendName(final ITextOutput textOut,
-      final ETextCase textCase) {
-    ETextCase next;
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    PropertyValueGroup._appendNumber(this.m_lower, out);
+    out.append(EMathComparison.LESS_OR_EQUAL.getOperatorChar());
+    this.getOwner().m_property.mathRender(out, renderer);
+    out.append((this.m_isUpperExclusive ? EMathComparison.LESS
+        : EMathComparison.LESS_OR_EQUAL).getOperatorChar());
+  }
 
-    next = ETextCase.ensure(textCase);
+  /**
+   * Print the name
+   *
+   * @param textOut
+   *          the text output device
+   * @param textCase
+   *          the text case
+   * @param nameMode
+   *          the name mode
+   * @return the next case
+   */
+  private final ETextCase __printName(final ITextOutput textOut,
+      final ETextCase textCase, final int nameMode) {
+    final ETextCase use;
+
+    use = this._printSelected(textOut, textCase, nameMode);
 
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-        this.appendName(math);
+        this.mathRender(math, DefaultParameterRenderer.INSTANCE);
       }
     } else {
-
-      PropertyValueGroup._appendNumber(this.m_lower, textOut);
-
-      textOut.append('\u2264');
-
-      next = this.getOwner().m_property.appendName(textOut, next);
-
-      textOut.append(this.m_isUpperExclusive ? '<' : '\u2265');
-
-      PropertyValueGroup._appendNumber(this.m_upper, textOut);
+      this.mathRender(textOut, DefaultParameterRenderer.INSTANCE);
     }
 
-    return ETextCase.ensure(next);
+    return use.nextCase();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printShortName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.__printName(textOut, textCase, 0);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.__printName(textOut, textCase, 1);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.__printName(textOut, textCase, 2);
+  }
 }

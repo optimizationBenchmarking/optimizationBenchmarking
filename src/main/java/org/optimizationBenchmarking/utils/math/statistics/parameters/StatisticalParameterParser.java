@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.attributes.statistics.parameters;
+package org.optimizationBenchmarking.utils.math.statistics.parameters;
 
 import org.optimizationBenchmarking.utils.parsers.DoubleParser;
 import org.optimizationBenchmarking.utils.parsers.InstanceParser;
@@ -7,15 +7,18 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** A parser for static parameters */
 public final class StatisticalParameterParser extends
-InstanceParser<StatisticalParameter> {
+    InstanceParser<StatisticalParameter> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
+  /** the possible separators */
+  private static final char[] SEPARATORS = { ' ', '_', '.', '@' };
+
   /** create */
   StatisticalParameterParser() {
     super(StatisticalParameter.class, new String[] {//
-      ReflectionUtils.getPackagePrefix(StatisticalParameter.class) });
+        ReflectionUtils.getPackagePrefix(StatisticalParameter.class) });
 
   }
 
@@ -25,8 +28,7 @@ InstanceParser<StatisticalParameter> {
       throws Exception {
     final String prepared;
     String lower, first, last;
-
-    final int index;
+    int index;
 
     prepared = TextUtils.prepare(string);
     if (prepared == null) {
@@ -65,18 +67,26 @@ InstanceParser<StatisticalParameter> {
 
       default: {
         try {
-          index = lower.indexOf(' ');
+
+          index = (-1);
+          for (final char ch : StatisticalParameterParser.SEPARATORS) {
+            index = lower.indexOf(ch);
+            if (index > 0) {
+              break;
+            }
+          }
+
           if (index > 0) {
             first = TextUtils.prepare(lower.substring(0, index));
             last = TextUtils.prepare(lower.substring(index + 1));
             if ((first != null) && (last != null)) {
               if (Quantile.SHORT.equals(first)) {
-                return Quantile.getInstance(DoubleParser.INSTANCE
-                    .parseDouble(last));
+                return Quantile.getInstance(//
+                    DoubleParser.INSTANCE.parseDouble(last));
               }
               if (Quantile.LONG.equals(last)) {
-                return Quantile.getInstance(DoubleParser.INSTANCE
-                    .parseDouble(first));
+                return Quantile.getInstance(//
+                    DoubleParser.INSTANCE.parseDouble(first));
               }
             }
             first = last = null;

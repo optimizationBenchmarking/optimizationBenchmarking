@@ -2,9 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.impl.all.aggrega
 
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.attributes.functions.FunctionAttribute;
-import org.optimizationBenchmarking.experimentation.attributes.functions.aggregation2D.Aggregation2DParser;
-import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.attributes.functions.aggregation2D.Aggregation2D;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.impl.all.function.FunctionData;
 import org.optimizationBenchmarking.experimentation.evaluation.impl.all.function.FunctionJob;
@@ -29,16 +27,7 @@ final class _AllAggregation2DJob extends FunctionJob {
    */
   _AllAggregation2DJob(final IExperimentSet data,
       final Configuration config, final Logger logger) {
-    super(data, config, logger);
-
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected final FunctionAttribute<? super IExperiment> configureFunction(
-      final IExperimentSet data, final Configuration config) {
-    return config.get(AllAggregation2D.PARAM_AGGREGATION,
-        new Aggregation2DParser(data.getDimensions()), null);
+    super(data, Aggregation2D.create(data, config), config, logger);
   }
 
   /** {@inheritDoc} */

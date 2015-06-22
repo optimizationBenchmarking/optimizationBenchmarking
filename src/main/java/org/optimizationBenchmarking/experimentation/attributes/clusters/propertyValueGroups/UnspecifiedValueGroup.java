@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelecti
 import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -13,8 +14,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 public final class UnspecifiedValueGroup extends
     PropertyValueGroup<PropertyValueGroups> {
 
+  /** the unspecified char: {@value} */
+  private static final char UNSPECIFIED_CHAR = ((char) (0x2205));
+
   /** the unspecified string: {@value} */
-  private static final String UNSPECIFIED = "unspecified"; //$NON-NLS-1$
+  private static final String UNSPECIFIED_STRING = "unspecified"; //$NON-NLS-1$
 
   /** the singular value */
   private final Object m_value;
@@ -53,45 +57,74 @@ public final class UnspecifiedValueGroup extends
   /** {@inheritDoc} */
   @Override
   public final void appendCriterion(final ITextOutput textOut) {
-    textOut.append(UnspecifiedValueGroup.UNSPECIFIED);
+    textOut.append(UnspecifiedValueGroup.UNSPECIFIED_CHAR);
   }
 
   /** {@inheritDoc} */
   @Override
   public final String getCriterionString() {
-    return String.valueOf(UnspecifiedValueGroup.UNSPECIFIED);
+    return String.valueOf(UnspecifiedValueGroup.UNSPECIFIED_CHAR);
   }
 
   /** {@inheritDoc} */
   @Override
   public final String getPathComponentSuggestion() {
-    return UnspecifiedValueGroup.UNSPECIFIED;
+    return UnspecifiedValueGroup.UNSPECIFIED_STRING;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final IMath math) {
-    try (final IMath compare = math.compare(EMathComparison.EQUAL)) {
-      this.getOwner().m_property.appendName(compare);
-      try (final IComplexText text = math.text()) {
-        text.append(UnspecifiedValueGroup.UNSPECIFIED);
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath compare = out.compare(EMathComparison.EQUAL)) {
+      this.getOwner().m_property.mathRender(compare, renderer);
+      try (final IComplexText text = compare.text()) {
+        text.append(UnspecifiedValueGroup.UNSPECIFIED_CHAR);
       }
     }
   }
 
   /** {@inheritDoc} */
   @Override
-  final ETextCase _appendName(final ITextOutput textOut,
-      final ETextCase textCase) {
-    ETextCase next;
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    this.getOwner().m_property.mathRender(out, renderer);
+    out.append('=');
+    out.append(UnspecifiedValueGroup.UNSPECIFIED_CHAR);
+  }
 
-    next = this.getOwner().m_property.appendName(textOut, textCase);
-    if (next == null) {
-      next = ETextCase.IN_SENTENCE;
-    }
-    textOut.append(" is "); //$NON-NLS-1$
-    next.appendWord(UnspecifiedValueGroup.UNSPECIFIED, textOut);
-    return next.nextCase();
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printShortName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    final ETextCase use;
+    use = this.getOwner().m_property.printShortName(textOut, textCase);
+    textOut.append(' ');
+    return ETextCase.ensure(use).appendWords("is unspecified", textOut); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    final ETextCase use;
+    use = this.getOwner().m_property.printLongName(textOut, textCase);
+    textOut.append(' ');
+    return ETextCase.ensure(use).appendWords("is unspecified", textOut); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase use;
+    use = ETextCase.ensure(textCase).appendWords(//
+        "the set of experiments whose parameter", //$NON-NLS-1$
+        textOut);
+    textOut.append(' ');
+    use = this.getOwner().m_property.printLongName(textOut, use);
+    textOut.append(' ');
+    return ETextCase.ensure(use).appendWords("is unspecified", textOut); //$NON-NLS-1$
   }
 
 }

@@ -1,8 +1,7 @@
-package org.optimizationBenchmarking.experimentation.attributes.statistics.parameters;
+package org.optimizationBenchmarking.utils.math.statistics.parameters;
 
-import org.optimizationBenchmarking.experimentation.data.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.document.spec.ISemanticComponent;
+import org.optimizationBenchmarking.utils.document.spec.ISemanticMathComponent;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
@@ -11,9 +10,37 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
- * A statistic parameter.
+ * <p>
+ * This class represents a univariate statistic parameter, that is a
+ * property which can be {@link #createSampleAggregate() computed} based on
+ * a stream of numerical data. Examples are the
+ * </p>
+ * <ol>
+ * <li>
+ * {@link org.optimizationBenchmarking.utils.math.statistics.parameters.Median
+ * median},</li>
+ * <li>
+ * {@link org.optimizationBenchmarking.utils.math.statistics.parameters.ArithmeticMean
+ * mean},</li>
+ * <li>
+ * {@link org.optimizationBenchmarking.utils.math.statistics.parameters.Quantile
+ * quantiles},</li>
+ * <li>
+ * {@link org.optimizationBenchmarking.utils.math.statistics.parameters.Minimum
+ * minimum},</li>
+ * <li>
+ * {@link org.optimizationBenchmarking.utils.math.statistics.parameters.Maximum
+ * maximum}</li>
+ * <li>
+ * {@link org.optimizationBenchmarking.utils.math.statistics.parameters.Variance
+ * variance}, or the</li>
+ * <li>
+ * {@link org.optimizationBenchmarking.utils.math.statistics.parameters.StandardDeviation
+ * standard deviation}</li>
+ * </ol>
  */
-public abstract class StatisticalParameter implements ISemanticComponent {
+public abstract class StatisticalParameter implements
+    ISemanticMathComponent {
 
   /** the short name */
   private final String m_shortName;
@@ -37,61 +64,33 @@ public abstract class StatisticalParameter implements ISemanticComponent {
 
   /** {@inheritDoc} */
   @Override
-  public ETextCase appendName(final ITextOutput textOut,
+  public ETextCase printShortName(final ITextOutput textOut,
       final ETextCase textCase) {
-    return this.appendShortName(textOut, textCase);
+    return ETextCase.ensure(textCase)
+        .appendWord(this.m_shortName, textOut);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void mathRender(ITextOutput out, IParameterRenderer renderer) {
-    SemanticComponentUtils.mathRender(this.m_shortName, out, renderer);
+  public void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    out.append(this.m_shortName);
+    out.append('(');
+    renderer.renderParameter(0, out);
+    out.append(')');
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void mathRender(IMath out, IParameterRenderer renderer) {
-    SemanticComponentUtils.mathRender(this.m_shortName, out, renderer);
+  public void mathRender(final IMath out, final IParameterRenderer renderer) {
+    try (final IMath function = out.nAryFunction(this.m_shortName, 1, 1)) {
+      renderer.renderParameter(0, out);
+    }
   }
 
-  /**
-   * Use this parameter as mathematical function
-   *
-   * @param math
-   *          the mathematical context
-   * @return the function
-   */
-  public final IMath asFunction(final IMath math) {
-    return math.nAryFunction(this.getShortName(), 1, 1);
-  }
-
-  /**
-   * Append the {@link #getShortName() short name} of this parameter to the
-   * text output device
-   *
-   * @param textOut
-   *          the text output device
-   * @param textCase
-   *          the text case
-   * @return the next text case
-   */
-  public final ETextCase appendShortName(final ITextOutput textOut,
-      final ETextCase textCase) {
-    return SemanticComponentUtils.appendName(this.m_shortName, textOut,
-        textCase, true);
-  }
-
-  /**
-   * Append the {@link #getLongName() long name} of this parameter to the
-   * text output device
-   *
-   * @param textOut
-   *          the text output device
-   * @param textCase
-   *          the text case
-   * @return the next text case
-   */
-  public ETextCase appendLongName(final ITextOutput textOut,
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printLongName(final ITextOutput textOut,
       final ETextCase textCase) {
     return ETextCase.ensure(textCase)
         .appendWords(this.m_longName, textOut);
@@ -143,5 +142,11 @@ public abstract class StatisticalParameter implements ISemanticComponent {
   @Override
   public int hashCode() {
     return HashUtils.hashCode(this.getClass());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return this.m_shortName;
   }
 }

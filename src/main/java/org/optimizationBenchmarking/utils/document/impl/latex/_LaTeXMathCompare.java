@@ -53,9 +53,6 @@ final class _LaTeXMathCompare extends MathCompare {
     _LaTeXMathCompare.SIGNS[EMathComparison.NOT_APPROXIMATELY_EQUAL
         .ordinal()] = new char[] { '}', '{', '\\', 'n', 'o', 't', '\\',
         'a', 'p', 'p', 'r', 'o', 'x', 'e', 'q', '}', '{', };
-    _LaTeXMathCompare.SIGNS[EMathComparison.NOT_PROPROTIONAL_TO.ordinal()] = new char[] {
-        '}', '{', '\\', 'n', 'o', 't', '\\', 'p', 'r', 'o', 'p', 't', 'o',
-        '}', '{' };
     _LaTeXMathCompare.SIGNS[EMathComparison.ELEMENT_OF.ordinal()] = new char[] {
         '}', '{', '\\', 'i', 'n', '}', '{' };
     _LaTeXMathCompare.SIGNS[EMathComparison.NOT_ELEMENT_OF.ordinal()] = new char[] {

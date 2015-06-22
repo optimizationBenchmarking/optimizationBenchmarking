@@ -296,6 +296,9 @@ public enum EGroupingMode {
       1e18d, 1e20d, 1e21d, 1e24d, 1e27d, 1e30d, 1e35d, 1e40d, 1e50d,
       1e60d, 1e70d, 1e100d, 1e200d, 1e300d };
 
+  /** the name */
+  private final String m_name;
+
   /**
    * Create a grouping
    *
@@ -820,5 +823,16 @@ public enum EGroupingMode {
 
     return new _Groups(buffer, minGroups, maxGroups, MULTIPLES,
         NumericalTypes.valueOf(range));
+  }
+
+  /** create the grouping mode */
+  EGroupingMode() {
+    this.m_name = super.toString().toLowerCase();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return this.m_name;
   }
 }

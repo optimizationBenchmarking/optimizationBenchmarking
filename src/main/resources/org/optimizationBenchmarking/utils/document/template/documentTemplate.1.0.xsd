@@ -290,7 +290,6 @@
 										<enumeration value="nequiv" />
 										<enumeration value="napprox" />
 										<enumeration value="napproxe" />
-										<enumeration value="nprop" />
 										<enumeration value="in" />
 										<enumeration value="nin" />
 										<enumeration value="subset" />

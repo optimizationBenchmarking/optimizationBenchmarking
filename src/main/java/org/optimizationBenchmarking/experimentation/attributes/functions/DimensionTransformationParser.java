@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.compound.FunctionBuilder;
@@ -24,7 +24,7 @@ public final class DimensionTransformationParser extends
    * @param experimentSet
    *          the experiment set
    */
-  public DimensionTransformationParser(final ExperimentSet experimentSet) {
+  public DimensionTransformationParser(final IExperimentSet experimentSet) {
     super(experimentSet);
   }
 
@@ -75,5 +75,4 @@ public final class DimensionTransformationParser extends
   public final Class<DimensionTransformation> getOutputClass() {
     return DimensionTransformation.class;
   }
-
 }

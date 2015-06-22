@@ -1,6 +1,8 @@
-package org.optimizationBenchmarking.experimentation.attributes.statistics.parameters;
+package org.optimizationBenchmarking.utils.math.statistics.parameters;
 
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ArithmeticMeanAggregate;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A statistic parameter computing the arithmetic mean. */
 public final class ArithmeticMean extends StatisticalParameter {
@@ -27,5 +29,16 @@ public final class ArithmeticMean extends StatisticalParameter {
   @Override
   public final ArithmeticMeanAggregate createSampleAggregate() {
     return new ArithmeticMeanAggregate();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return ETextCase
+        .ensure(textCase)
+        .appendWords(//
+            "the arithmetic mean (often refered to as average) of a set of values, i.e., the sum of the values divided by their number.",// //$NON-NLS-1$
+            textOut);
   }
 }

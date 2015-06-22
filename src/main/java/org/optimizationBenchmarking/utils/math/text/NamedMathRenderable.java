@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.math.text;
 
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -55,11 +56,14 @@ public final class NamedMathRenderable implements IMathRenderable {
   @Override
   public final boolean equals(final Object o) {
     return ((o == this) || ((o instanceof NamedMathRenderable) && //
-    (this.m_name.equals(((NamedMathRenderable) o).m_name))));
+        (this.m_name.equals(((NamedMathRenderable) o).m_name))));
   }
 
   /**
-   * Render a name
+   * Render a name on a single string. This is a default implementation of
+   * the method
+   * {@link org.optimizationBenchmarking.utils.math.text.IMathRenderable#mathRender(ITextOutput, IParameterRenderer)}
+   * .
    *
    * @param name
    *          the name to render
@@ -70,11 +74,20 @@ public final class NamedMathRenderable implements IMathRenderable {
    */
   public static final void mathRender(final String name,
       final ITextOutput out, final IParameterRenderer renderer) {
-    out.append(name);
+    if (out instanceof IComplexText) {
+      try (final IMath math = ((IComplexText) out).inlineMath()) {
+        NamedMathRenderable.mathRender(name, math, renderer);
+      }
+    } else {
+      out.append(name);
+    }
   }
 
   /**
-   * Render a name
+   * Render a name based on a single string. This is a default
+   * implementation of the method
+   * {@link org.optimizationBenchmarking.utils.math.text.IMathRenderable#mathRender(IMath, IParameterRenderer)}
+   * .
    *
    * @param name
    *          the name to render

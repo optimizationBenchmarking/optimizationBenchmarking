@@ -5,8 +5,6 @@ import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.document.spec.IComplexText;
-import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -44,18 +42,17 @@ final class _InstanceGroups extends DataElement implements IClustering {
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final IMath math) {
-    try (IComplexText text = math.text()) {
-      this.appendName(text, ETextCase.IN_SENTENCE);
-    }
+  public final ETextCase printShortName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return ETextCase.ensure(textCase).appendWords(//
+        "grouped by instance", textOut); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase appendName(final ITextOutput textOut,
+  public final ETextCase printLongName(final ITextOutput textOut,
       final ETextCase textCase) {
-    return ETextCase.ensure(textCase).appendWords(//
-        "grouped by instance", textOut); //$NON-NLS-1$
+    return this.printShortName(textOut, textCase);
   }
 
   /** {@inheritDoc} */
@@ -68,5 +65,14 @@ final class _InstanceGroups extends DataElement implements IClustering {
   @Override
   public final ArrayListView<ICluster> getData() {
     return this.m_data;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return ETextCase.ensure(textCase).appendWords(//
+        "instance run sets are grouped by their instance", //$NON-NLS-1$
+        textOut);
   }
 }

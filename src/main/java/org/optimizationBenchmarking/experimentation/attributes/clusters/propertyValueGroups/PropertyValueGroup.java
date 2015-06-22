@@ -3,8 +3,14 @@ package org.optimizationBenchmarking.experimentation.attributes.clusters.propert
 import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.ShadowExperimentSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
+import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.impl.SemanticComponentUtils;
+import org.optimizationBenchmarking.utils.document.spec.ISemanticComponent;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
@@ -71,45 +77,102 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
   }
 
   /**
-   * Append a name
+   * Print the number of selected elements or the title of the selected
+   * element, if only one was selected.
    *
    * @param textOut
-   *          the text output device
+   *          the number of selected elements
    * @param textCase
-   *          the text case
+   *          the number of selected elements
+   * @param nameMode
+   *          the name printing mode
    * @return the next text case
    */
-  abstract ETextCase _appendName(final ITextOutput textOut,
-      final ETextCase textCase);
-
-  /** {@inheritDoc} */
-  @Override
-  public final ETextCase appendName(final ITextOutput textOut,
-      final ETextCase textCase) {
-    final ArrayListView<? extends IInstance> list;
+  final ETextCase _printSelected(final ITextOutput textOut,
+      final ETextCase textCase, final int nameMode) {
+    final IProperty prop;
+    final ArrayListView<? extends IInstance> instanceList;
+    final ArrayListView<? extends IExperiment> experimentList;
     final int size;
+    final ISemanticComponent component;
     ETextCase useCase;
 
     useCase = ETextCase.ensure(textCase);
-    list = this.getInstances().getData();
-    size = list.size();
-    if (size <= 0) {
-      useCase = useCase.appendWords("no instance", textOut); //$NON-NLS-1$
-    } else {
-      if (size <= 1) {
-        useCase = useCase.appendWord("instance", textOut); //$NON-NLS-1$
-        textOut.append(' ');
-        useCase = list.get(0).appendName(textOut, useCase);
+    prop = this.getOwner().m_property;
+
+    if (prop instanceof IFeature) {
+      instanceList = this.getInstances().getData();
+      size = instanceList.size();
+      if (size <= 0) {
+        useCase = useCase.appendWords("no instance", textOut); //$NON-NLS-1$
       } else {
-        textOut.append(size);
-        textOut.append(' ');
-        useCase = useCase.appendWord("instances", textOut); //$NON-NLS-1$
+        if (size <= 1) {
+          useCase = useCase.appendWord("instance", textOut); //$NON-NLS-1$
+          textOut.append(' ');
+          component = instanceList.get(0);
+
+          switch (nameMode) {
+            case 0: {
+              useCase = component.printShortName(textOut, useCase);
+              break;
+            }
+            case 1: {
+              useCase = component.printLongName(textOut, useCase);
+              break;
+            }
+            default: {
+              useCase = SemanticComponentUtils
+                  .printLongAndShortNameIfDifferent(component, textOut,
+                      textCase);
+            }
+          }
+
+        } else {
+          textOut.append(size);
+          textOut.append(' ');
+          useCase = useCase.appendWord("instances", textOut); //$NON-NLS-1$
+        }
+      }
+    } else {
+      if (prop instanceof IParameter) {
+        experimentList = this.getData();
+        size = experimentList.size();
+        if (size <= 0) {
+          useCase = useCase.appendWords("no experiment", textOut); //$NON-NLS-1$
+        } else {
+          if (size <= 1) {
+            useCase = useCase.appendWord("experiment", textOut); //$NON-NLS-1$
+            textOut.append(' ');
+            component = experimentList.get(0);
+            switch (nameMode) {
+              case 0: {
+                useCase = component.printShortName(textOut, useCase);
+                break;
+              }
+              case 1: {
+                useCase = component.printLongName(textOut, useCase);
+                break;
+              }
+              default: {
+                useCase = SemanticComponentUtils
+                    .printLongAndShortNameIfDifferent(component, textOut,
+                        textCase);
+              }
+            }
+          } else {
+            textOut.append(size);
+            textOut.append(' ');
+            useCase = useCase.appendWord("experiments", textOut); //$NON-NLS-1$
+          }
+        }
+      } else {
+        useCase = useCase.appendWords("data with", textOut); //$NON-NLS-1$
       }
     }
 
     textOut.append(' ');
     useCase = ETextCase.ensure(useCase).appendWord("with", textOut); //$NON-NLS-1$
     textOut.append(' ');
-    return this._appendName(textOut, useCase);
+    return useCase;
   }
 }

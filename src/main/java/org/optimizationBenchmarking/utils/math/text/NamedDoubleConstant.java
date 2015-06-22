@@ -1,14 +1,11 @@
 package org.optimizationBenchmarking.utils.math.text;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.BasicNumber;
-import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A named double constant */
-public final class NamedDoubleConstant extends NamedConstant {
+public final class NamedDoubleConstant extends StringNamedConstant {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -16,39 +13,17 @@ public final class NamedDoubleConstant extends NamedConstant {
   /** the value */
   private final double m_value;
 
-  /** the name */
-  private final String m_name;
-
   /**
    * create the double constant
-   * 
+   *
    * @param value
    *          the value
    * @param name
    *          the name of the constant
    */
   NamedDoubleConstant(final double value, final String name) {
-    super();
-    if (name == null) {
-      throw new IllegalArgumentException(//
-          "Name of double constant cannot be null."); //$NON-NLS-1$
-    }
+    super(name);
     this.m_value = value;
-    this.m_name = name;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void mathRender(ITextOutput out, IParameterRenderer renderer) {
-    out.append(this.m_name);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final void mathRender(IMath out, IParameterRenderer renderer) {
-    try (final IText name = out.name()) {
-      name.append(this.m_name);
-    }
   }
 
   /** {@inheritDoc} */
@@ -86,7 +61,7 @@ public final class NamedDoubleConstant extends NamedConstant {
     if (o instanceof NamedDoubleConstant) {
       other = ((NamedDoubleConstant) o);
       return (((EComparison.compareDoubles(this.m_value, other.m_value) == 0)//
-      && this.m_name.equals(other.m_name)));
+          && this.m_name.equals(other.m_name)));
     }
     return false;
   }

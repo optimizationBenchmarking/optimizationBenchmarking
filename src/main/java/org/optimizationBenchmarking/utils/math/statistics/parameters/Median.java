@@ -1,7 +1,9 @@
-package org.optimizationBenchmarking.experimentation.attributes.statistics.parameters;
+package org.optimizationBenchmarking.utils.math.statistics.parameters;
 
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A statistic parameter computing the median . */
 public final class Median extends StatisticalParameter {
@@ -26,5 +28,16 @@ public final class Median extends StatisticalParameter {
   @Override
   public final ScalarAggregate createSampleAggregate() {
     return new QuantileAggregate(0.5d);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return ETextCase
+        .ensure(textCase)
+        .appendWords(//
+            "the median of a set of values, i.e., the value which would be in the middle if we sorted the set.",// //$NON-NLS-1$
+            textOut);
   }
 }

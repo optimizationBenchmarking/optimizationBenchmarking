@@ -79,7 +79,8 @@ public final class DefaultParameterRenderer implements IParameterRenderer,
               + index);
     }
     if (index >= DefaultParameterRenderer.PARAMETERS.length) {
-      return ((PARAMETER_ENCLOSING_CHAR + Integer.toString(index + 1)) + PARAMETER_ENCLOSING_CHAR);
+      return ((DefaultParameterRenderer.PARAMETER_ENCLOSING_CHAR + Integer
+          .toString(index + 1)) + DefaultParameterRenderer.PARAMETER_ENCLOSING_CHAR);
     }
     return DefaultParameterRenderer.PARAMETERS[index];
   }
@@ -99,8 +100,10 @@ public final class DefaultParameterRenderer implements IParameterRenderer,
       throw new IllegalArgumentException(
           "Parameter string cannot be null.");//$NON-NLS-1$
     }
-    start = string.indexOf(PARAMETER_ENCLOSING_CHAR);
-    end = string.lastIndexOf(PARAMETER_ENCLOSING_CHAR);
+    start = string
+        .indexOf(DefaultParameterRenderer.PARAMETER_ENCLOSING_CHAR);
+    end = string
+        .lastIndexOf(DefaultParameterRenderer.PARAMETER_ENCLOSING_CHAR);
     if (start >= (end - 1)) {
       throw new IllegalArgumentException(//
           "Parameter index must be enclosed by '#', but '" + //$NON-NLS-1$

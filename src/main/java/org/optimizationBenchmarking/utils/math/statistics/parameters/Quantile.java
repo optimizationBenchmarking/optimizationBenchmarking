@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.attributes.statistics.parameters;
+package org.optimizationBenchmarking.utils.math.statistics.parameters;
 
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.QuantileAggregate;
@@ -69,7 +69,7 @@ public final class Quantile extends StatisticalParameter {
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase appendLongName(final ITextOutput textOut,
+  public final ETextCase printLongName(final ITextOutput textOut,
       final ETextCase textCase) {
     ETextCase next;
 
@@ -77,6 +77,30 @@ public final class Quantile extends StatisticalParameter {
         this.m_p, textCase, textOut));
     textOut.append(' ');
     return next.appendWord("quantile", textOut); //$NON-NLS-1$
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase next;
+
+    next = ETextCase.ensure(textCase).appendWord("the", textOut);//$NON-NLS-1$
+    textOut.append(' ');
+    next = SimpleNumberAppender.INSTANCE.appendTo(//
+        this.m_p, textCase, textOut);
+    textOut.append('-');
+    next = next.appendWords(
+        "quantile, i.e., the value which would be at position",// //$NON-NLS-1$
+        textOut);
+    textOut.append(' ');
+    next = SimpleNumberAppender.INSTANCE.appendTo(//
+        this.m_p, textCase, textOut);
+    textOut.append('*');
+    next = next.appendWords("n if we sorted n values",// //$NON-NLS-1$
+        textOut);
+
+    return next;
   }
 
   /** {@inheritDoc} */

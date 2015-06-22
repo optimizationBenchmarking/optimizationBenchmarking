@@ -118,21 +118,37 @@ public final class Experiment extends _IDObjectSet<InstanceRuns> implements
 
   /** {@inheritDoc} */
   @Override
-  public final void mathRender(ITextOutput out, IParameterRenderer renderer) {
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
     super.mathRender(out, renderer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void mathRender(IMath out, IParameterRenderer renderer) {
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
     super.mathRender(out, renderer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase appendName(final ITextOutput textOut,
+  public final ETextCase printShortName(final ITextOutput textOut,
       final ETextCase textCase) {
-    return super.appendName(textOut, textCase);
+    return super.printShortName(textOut, textCase);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return super.printLongName(textOut, textCase);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return super.printDescription(textOut, textCase);
   }
 
   /**

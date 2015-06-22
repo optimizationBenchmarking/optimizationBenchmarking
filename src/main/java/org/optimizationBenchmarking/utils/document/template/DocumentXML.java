@@ -232,7 +232,6 @@ public enum DocumentXML implements IXMLFileType {
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_APPROXIMATELY.ordinal()] = "napprox"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_APPROXIMATELY_EQUAL
         .ordinal()] = "napproxe"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP[EMathComparison.NOT_PROPROTIONAL_TO.ordinal()] = "nprop"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.ELEMENT_OF.ordinal()] = "in"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.NOT_ELEMENT_OF.ordinal()] = "nin"; //$NON-NLS-1$
     DocumentXML.VAL_COMP_OP[EMathComparison.SUBSET_OF.ordinal()] = "subset"; //$NON-NLS-1$
@@ -257,46 +256,9 @@ public enum DocumentXML implements IXMLFileType {
 
     VAL_COMP_OP2 = new String[EMathComparison.INSTANCES.size()];
 
-    DocumentXML.VAL_COMP_OP2[EMathComparison.VERY_MUCH_LESS.ordinal()] = "\u22d8"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.MUCH_LESS.ordinal()] = "\u226a"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.LESS.ordinal()] = "<"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.LESS_OR_EQUAL.ordinal()] = "\u2264"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.GREATER_OR_EQUAL.ordinal()] = "\u2265"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.GREATER.ordinal()] = ">"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.MUCH_GREATER.ordinal()] = "\u226b"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.VERY_MUCH_GREATER.ordinal()] = "\u22d9"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.EQUAL.ordinal()] = "="; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.EQUIVALENT.ordinal()] = "\u2261"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.APPROXIMATELY.ordinal()] = "\u2248"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.APPROXIMATELY_EQUAL.ordinal()] = "\u224a"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.PROPROTIONAL_TO.ordinal()] = "\u221d"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_EQUAL.ordinal()] = "\u2260"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_EQUIVALENT.ordinal()] = "\u2262"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_APPROXIMATELY.ordinal()] = "\u2249"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_APPROXIMATELY_EQUAL
-        .ordinal()] = "\u2247"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_PROPROTIONAL_TO.ordinal()] = "\u00ac\u221d"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.ELEMENT_OF.ordinal()] = "\u2208"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_ELEMENT_OF.ordinal()] = "\u2209"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.SUBSET_OF.ordinal()] = "\u2282"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUBSET_OF.ordinal()] = "\u2284"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.SUBSET_OF_OR_EQUAL.ordinal()] = "\u2286"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUBSET_OF_OR_EQUAL
-        .ordinal()] = "\u2288"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.DEFINED_AS.ordinal()] = "\u225c"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.APPROXIMATED_AS.ordinal()] = "\u2259"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.PRECEDES.ordinal()] = "\u227a"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_PRECEDES.ordinal()] = "\u2280"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.PRECEDES_OR_EQUAL.ordinal()] = "\u227c"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_PRECEDES_OR_EQUAL
-        .ordinal()] = "\u22e0"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.SUCCEEDS.ordinal()] = "\u227b"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUCCEEDS.ordinal()] = "\u2281"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.SUCCEEDS_OR_EQUAL.ordinal()] = "\u227d"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SUCCEEDS_OR_EQUAL
-        .ordinal()] = "\u22e1"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.SIMILAR.ordinal()] = "\u223c"; //$NON-NLS-1$
-    DocumentXML.VAL_COMP_OP2[EMathComparison.NOT_SIMILAR.ordinal()] = "\u2242"; //$NON-NLS-1$
+    for (final EMathComparison comp : EMathComparison.INSTANCES) {
+      DocumentXML.VAL_COMP_OP2[comp.ordinal()] = comp.toString();
+    }
   }
 
   /**

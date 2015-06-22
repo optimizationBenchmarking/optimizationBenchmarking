@@ -1,10 +1,11 @@
 package org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups;
 
 import org.optimizationBenchmarking.experimentation.data.impl.shadow.DataSelection;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.document.spec.IMath;
-import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.document.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -72,33 +73,88 @@ public class ValueRangeGroups extends PropertyValueGroups {
     this.m_parameter.toString());
   }
 
-  /** {@inheritDoc} */
-  @Override
-  public final void appendName(final IMath math) {
-    try (final IText text = math.text()) {
-      this.appendName(text, ETextCase.IN_SENTENCE);
-    }
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final ETextCase appendName(final ITextOutput textOut,
+  /**
+   * Print the rest of the name
+   *
+   * @param textOut
+   *          the destination
+   * @param textCase
+   *          the text case
+   * @return the next case
+   */
+  private final ETextCase __printNameRest(final ITextOutput textOut,
       final ETextCase textCase) {
     ETextCase next;
 
-    next = this.m_property.appendName(textOut, textCase);
     textOut.append(' ');
-    if (next == null) {
-      next = ETextCase.IN_SENTENCE;
-    }
-    next = next.appendWords("grouped by", textOut); //$NON-NLS-1$
+    next = ETextCase.ensure(ETextCase.IN_SENTENCE).appendWords(
+        "grouped by", textOut); //$NON-NLS-1$
     textOut.append(' ');
-    next = next.appendWord(
-        this.getGroupingMode().toString().toLowerCase(), textOut);
+    next = next.appendWord(this.getGroupingMode().toString(), textOut);
     textOut.append(' ');
     next = next.appendWord("of", textOut); //$NON-NLS-1$
     textOut.append(' ');
     PropertyValueGroup._appendNumber(this.m_parameter, textOut);
+    return next.nextCase();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.__printNameRest(textOut,
+        this.m_property.printLongName(textOut, textCase));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printShortName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.__printNameRest(textOut,
+        this.m_property.printShortName(textOut, textCase));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    ETextCase next;
+
+    next = ETextCase.ensure(textCase);
+
+    if (this.m_property instanceof IParameter) {
+      textOut.append(' ');
+      next = next.appendWords(//
+          "the experiments whose value of parameter",//$NON-NLS-1$
+          textOut);
+    } else {
+      if (this.m_property instanceof IFeature) {
+        textOut.append(' ');
+        next = next
+            .appendWords(//
+                "the instance run sets belonging to an instance whose value of feature",//$NON-NLS-1$
+                textOut);
+      } else {
+        next = ETextCase.ensure(textCase).appendWords(//
+            "the data whose", textOut); //$NON-NLS-1$
+      }
+    }
+    next = SemanticComponentUtils.printLongAndShortNameIfDifferent(
+        this.m_property, textOut, next);
+    textOut.append(' ');
+    if (next == null) {
+      next = ETextCase.IN_SENTENCE;
+    }
+    next = next.appendWords("fall into the range of the same", textOut); //$NON-NLS-1$
+    textOut.append(' ');
+    next = next.appendWord(this.getGroupingMode().toString(), textOut);
+    textOut.append(' ');
+    next = next.appendWord("of", textOut); //$NON-NLS-1$
+    textOut.append(' ');
+    PropertyValueGroup._appendNumber(this.m_parameter, textOut);
+    textOut.append(' ');
+    next = next.appendWords("are grouped together.", textOut); //$NON-NLS-1$
+
     return next.nextCase();
   }
 }

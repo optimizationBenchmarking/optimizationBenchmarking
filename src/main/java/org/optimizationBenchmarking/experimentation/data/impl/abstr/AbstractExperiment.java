@@ -1,12 +1,12 @@
 package org.optimizationBenchmarking.experimentation.data.impl.abstr;
 
-import org.optimizationBenchmarking.experimentation.data.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterSetting;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.document.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -92,28 +92,43 @@ public class AbstractExperiment extends AbstractElementSet implements
 
   /** {@inheritDoc} */
   @Override
-  public void mathRender(ITextOutput out, IParameterRenderer renderer) {
-    SemanticComponentUtils.mathRender(this.getName(), out, renderer);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public void mathRender(IMath out, IParameterRenderer renderer) {
-    SemanticComponentUtils.mathRender(this.getName(), out, renderer);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public ETextCase appendName(final ITextOutput textOut,
-      final ETextCase textCase) {
-    return SemanticComponentUtils.appendName(this.getName(), textOut,
-        textCase, false);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public String getPathComponentSuggestion() {
     return this.getName();
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    SemanticComponentUtils.mathRender(this.getName(), out, renderer);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void mathRender(final IMath out, final IParameterRenderer renderer) {
+    SemanticComponentUtils.mathRender(this.getName(), out, renderer);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printShortName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return SemanticComponentUtils.printShortName(this.getName(), textOut,
+        textCase, true);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.printShortName(textOut, textCase);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return SemanticComponentUtils.printDescription(this.getDescription(),
+        textOut, textCase);
+  }
 }

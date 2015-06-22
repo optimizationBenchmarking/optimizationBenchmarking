@@ -1,6 +1,8 @@
-package org.optimizationBenchmarking.experimentation.attributes.statistics.parameters;
+package org.optimizationBenchmarking.utils.math.statistics.parameters;
 
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.MinimumAggregate;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A statistic parameter computing the minimum. */
 public final class Minimum extends StatisticalParameter {
@@ -25,5 +27,14 @@ public final class Minimum extends StatisticalParameter {
   @Override
   public final MinimumAggregate createSampleAggregate() {
     return new MinimumAggregate();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return ETextCase.ensure(textCase).appendWords(//
+        "the minimum, i.e., smallest, of a set of values.",// //$NON-NLS-1$
+        textOut);
   }
 }

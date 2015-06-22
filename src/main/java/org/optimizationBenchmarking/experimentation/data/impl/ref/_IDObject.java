@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
-import org.optimizationBenchmarking.experimentation.data.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.utils.document.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -311,31 +311,30 @@ abstract class _IDObject extends DataElement implements
 
   /**
    * Render this object as mathematical formula to a text output
-   * 
+   *
    * @param out
    *          the text output
    * @param renderer
    *          the parameter renderer
    */
-  void mathRender(ITextOutput out, IParameterRenderer renderer) {
+  void mathRender(final ITextOutput out, final IParameterRenderer renderer) {
     SemanticComponentUtils.mathRender(this.getName(), out, renderer);
   }
 
   /**
    * Render this object as mathematical formula to a math context
-   * 
+   *
    * @param out
    *          the math context
    * @param renderer
    *          the parameter renderer
    */
-  void mathRender(IMath out, IParameterRenderer renderer) {
+  void mathRender(final IMath out, final IParameterRenderer renderer) {
     SemanticComponentUtils.mathRender(this.getName(), out, renderer);
   }
 
   /**
-   * the internal blueprint method for appending the name of an object to a
-   * text output device
+   * Print the short name
    *
    * @param textOut
    *          the text output device
@@ -343,9 +342,39 @@ abstract class _IDObject extends DataElement implements
    *          the text case
    * @return the next text case
    */
-  ETextCase appendName(final ITextOutput textOut, final ETextCase textCase) {
-    return SemanticComponentUtils.appendName(this.getName(), textOut,
-        textCase, false);
+  ETextCase printShortName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return SemanticComponentUtils.printShortName(this.getName(), textOut,
+        textCase, true);
+  }
+
+  /**
+   * Print the long name
+   *
+   * @param textOut
+   *          the text output device
+   * @param textCase
+   *          the text case
+   * @return the next text case
+   */
+  ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.printShortName(textOut, textCase);
+  }
+
+  /**
+   * Print the description
+   *
+   * @param textOut
+   *          the text output device
+   * @param textCase
+   *          the text case
+   * @return the next text case
+   */
+  ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return SemanticComponentUtils.printDescription(this.getDescription(),
+        textOut, textCase);
   }
 
   /**

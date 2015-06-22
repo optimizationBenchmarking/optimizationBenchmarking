@@ -39,6 +39,7 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.FiniteMaximu
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.FiniteMinimumAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -113,16 +114,23 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *
    * @param data
    *          the data
+   * @param attribute
+   *          the function attribute to use
    * @param logger
    *          the logger
    * @param config
    *          the configuration
    */
   protected FunctionJob(final IExperimentSet data,
+      final FunctionAttribute<? super IExperiment> attribute,
       final Configuration config, final Logger logger) {
     super(data, logger);
 
     final EFigureSize defau;
+
+    if (attribute == null) {
+      throw new IllegalArgumentException("Function cannot be null."); //$NON-NLS-1$
+    }
 
     defau = this.getDefaultFigureSize(data);
     if (defau == null) {
@@ -130,6 +138,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
           "Default figure size cannot be null."); //$NON-NLS-1$
     }
 
+    this.m_function = attribute;
     this.m_figureSize = config.get(FigureSizeParser.PARAM_FIGURE_SIZE,
         FigureSizeParser.INSTANCE, defau);
 
@@ -143,11 +152,6 @@ public abstract class FunctionJob extends ExperimentSetJob {
                 this.m_makeLegendFigure));
 
     this.m_clusterer = this.configureClustering(data, config);
-
-    this.m_function = this.configureFunction(data, config);
-    if (this.m_function == null) {
-      throw new IllegalArgumentException("Function cannot be null."); //$NON-NLS-1$
-    }
 
     this.m_minX = config.get(FunctionJob.PARAM_MIN_X,
         AnyNumberParser.INSTANCE, null);
@@ -345,18 +349,6 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
     return (n <= 4);
   }
-
-  /**
-   * Get the function attribute used to obtain the function data
-   *
-   * @param data
-   *          the data
-   * @param config
-   *          the configuration
-   * @return the attribute
-   */
-  protected abstract FunctionAttribute<? super IExperiment> configureFunction(
-      final IExperimentSet data, final Configuration config);
 
   /**
    * Obtain the attribute used to get the clustering
@@ -703,7 +695,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
     // initialize the x-axis
     try (final IAxis xAxis = chart.xAxis()) {
       if (mto != null) {
-        this.m_function.appendXAxisTitle(mto, ETextCase.IN_SENTENCE);
+        this.m_function.getXAxisSemanticComponent().mathRender(mto,
+            DefaultParameterRenderer.INSTANCE);
         xAxis.setTitle(mto.toString());
         mto.clear();
 
@@ -757,7 +750,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
     try (final IAxis yAxis = chart.yAxis()) {
       if (mto != null) {
-        this.m_function.appendYAxisTitle(mto, ETextCase.IN_SENTENCE);
+        this.m_function.getYAxisSemanticComponent().mathRender(mto,
+            DefaultParameterRenderer.INSTANCE);
         yAxis.setTitle(mto.toString());
         mto.clear();
 
@@ -938,14 +932,14 @@ public abstract class FunctionJob extends ExperimentSetJob {
         try (final IComplexText caption = figure.caption()) {
 
           caption.append("The "); //$NON-NLS-1$
-          this.m_function.appendLongName(caption, ETextCase.IN_SENTENCE);
+          this.m_function.printLongName(caption, ETextCase.IN_SENTENCE);
           if (clustering != null) {
             caption.append(" with data separated according to "); //$NON-NLS-1$
-            clustering.appendName(caption, ETextCase.IN_SENTENCE);
+            clustering.printLongName(caption, ETextCase.IN_SENTENCE);
             if (cluster != null) {
               caption.append(':');
               caption.append(' ');
-              cluster.appendName(caption, ETextCase.IN_SENTENCE);
+              cluster.printLongName(caption, ETextCase.IN_SENTENCE);
             }
           }
           caption.append('.');
@@ -965,10 +959,10 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
         try (final IComplexText caption = figureSeries.caption()) {
           caption.append("The "); //$NON-NLS-1$
-          this.m_function.appendLongName(caption, ETextCase.IN_SENTENCE);
+          this.m_function.printLongName(caption, ETextCase.IN_SENTENCE);
           if (clustering != null) {
             caption.append(" with data separated according to "); //$NON-NLS-1$
-            clustering.appendName(caption, ETextCase.IN_SENTENCE);
+            clustering.printLongName(caption, ETextCase.IN_SENTENCE);
           }
           caption.append('.');
         }
@@ -1007,9 +1001,10 @@ public abstract class FunctionJob extends ExperimentSetJob {
 
             try (final IComplexText caption = figure.caption()) {
               if (cluster == null) {
-                this.m_function.appendName(caption, ETextCase.IN_SENTENCE);
+                this.m_function.printLongName(caption,
+                    ETextCase.IN_SENTENCE);
               } else {
-                cluster.appendName(caption, ETextCase.IN_SENTENCE);
+                cluster.printLongName(caption, ETextCase.IN_SENTENCE);
               }
             }
 
@@ -1039,7 +1034,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *          the title destination
    */
   protected void makeTitle(final IComplexText title) {
-    this.m_function.appendLongName(title, ETextCase.AT_TITLE_START);
+    this.m_function.printLongName(title, ETextCase.AT_TITLE_START);
   }
 
   /**

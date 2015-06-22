@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions;
 
-import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
+import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
@@ -20,8 +20,8 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * @param <TT>
  *          the transformation type
  */
-abstract class _TransformationParser<TT extends _Transformation<?>>
-    extends Parser<TT> {
+abstract class _TransformationParser<TT extends Transformation> extends
+    Parser<TT> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -33,7 +33,7 @@ abstract class _TransformationParser<TT extends _Transformation<?>>
   private final __PropertyResolver m_resolver;
 
   /** the experiment set */
-  final ExperimentSet m_experimentSet;
+  final IExperimentSet m_experimentSet;
 
   /**
    * the unary function for the parameter: must be reset to {@code null} by
@@ -47,7 +47,7 @@ abstract class _TransformationParser<TT extends _Transformation<?>>
    * @param experimentSet
    *          the experiment set
    */
-  _TransformationParser(final ExperimentSet experimentSet) {
+  _TransformationParser(final IExperimentSet experimentSet) {
     super();
 
     if (experimentSet == null) {

@@ -18,7 +18,7 @@ public class TransformationFunction extends UnaryFunction implements
   private static final long serialVersionUID = 1L;
 
   /** the data transformation */
-  private _Transformation<?> m_trafo;
+  private Transformation m_trafo;
 
   /**
    * create the function context
@@ -26,7 +26,7 @@ public class TransformationFunction extends UnaryFunction implements
    * @param trafo
    *          the data transformation
    */
-  TransformationFunction(final _Transformation<?> trafo) {
+  TransformationFunction(final Transformation trafo) {
     super();
     if (trafo == null) {
       throw new IllegalArgumentException(
@@ -111,20 +111,20 @@ public class TransformationFunction extends UnaryFunction implements
   @Override
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
-    this.m_trafo.mathRender(out, renderer);
+    this.m_trafo.m_func.mathRender(out, renderer);
   }
 
   /** {@inheritDoc} */
   @Override
   public final void mathRender(final IMath out,
       final IParameterRenderer renderer) {
-    this.m_trafo.mathRender(out, renderer);
+    this.m_trafo.m_func.mathRender(out, renderer);
   }
 
   /** {@inheritDoc} */
   @Override
   public final void close() {
-    final _Transformation<?> trafo;
+    final Transformation trafo;
 
     trafo = this.m_trafo;
     this.m_trafo = null;

@@ -1,6 +1,8 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.numbers.SimpleNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** The base class for text and math content */
@@ -145,14 +147,16 @@ public abstract class Text extends DocumentPart implements IText {
   @Override
   public synchronized void append(final float v) {
     this.assertNoChildren();
-    this.m_encoded.append(v);
+    SimpleNumberAppender.INSTANCE.appendTo(v, ETextCase.IN_SENTENCE,
+        this.m_encoded);
   }
 
   /** {@inheritDoc} */
   @Override
   public synchronized void append(final double v) {
     this.assertNoChildren();
-    this.m_encoded.append(v);
+    SimpleNumberAppender.INSTANCE.appendTo(v, ETextCase.IN_SENTENCE,
+        this.m_encoded);
   }
 
   /** {@inheritDoc} */
@@ -166,6 +170,32 @@ public abstract class Text extends DocumentPart implements IText {
   @Override
   public synchronized void append(final Object o) {
     this.assertNoChildren();
+
+    if (o instanceof Integer) {
+      this.append(((Integer) o).intValue());
+      return;
+    }
+    if (o instanceof Long) {
+      this.append(((Long) o).longValue());
+      return;
+    }
+    if (o instanceof Double) {
+      this.append(((Double) o).doubleValue());
+      return;
+    }
+    if (o instanceof Float) {
+      this.append(((Float) o).floatValue());
+      return;
+    }
+    if (o instanceof Short) {
+      this.append(((Short) o).shortValue());
+      return;
+    }
+    if (o instanceof Byte) {
+      this.append(((Byte) o).byteValue());
+      return;
+    }
+
     this.m_encoded.append(o);
   }
 

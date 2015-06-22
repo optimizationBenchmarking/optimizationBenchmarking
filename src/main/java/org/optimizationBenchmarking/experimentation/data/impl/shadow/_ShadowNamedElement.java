@@ -47,21 +47,37 @@ class _ShadowNamedElement<OT extends IDataElement, ST extends INamedElement>
 
   /** {@inheritDoc} */
   @Override
-  public final void mathRender(ITextOutput out, IParameterRenderer renderer) {
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
     this.m_shadowUnpacked.mathRender(out, renderer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final void mathRender(IMath out, IParameterRenderer renderer) {
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
     this.m_shadowUnpacked.mathRender(out, renderer);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final ETextCase appendName(final ITextOutput textOut,
+  public final ETextCase printShortName(final ITextOutput textOut,
       final ETextCase textCase) {
-    return this.m_shadowUnpacked.appendName(textOut, textCase);
+    return this.m_shadowUnpacked.printShortName(textOut, textCase);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.m_shadowUnpacked.printLongName(textOut, textCase);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.m_shadowUnpacked.printDescription(textOut, textCase);
   }
 
   /** {@inheritDoc} */

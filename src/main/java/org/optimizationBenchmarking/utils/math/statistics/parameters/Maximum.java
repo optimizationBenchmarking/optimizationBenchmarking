@@ -1,6 +1,8 @@
-package org.optimizationBenchmarking.experimentation.attributes.statistics.parameters;
+package org.optimizationBenchmarking.utils.math.statistics.parameters;
 
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.MaximumAggregate;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A statistic parameter computing the maximum. */
 public final class Maximum extends StatisticalParameter {
@@ -25,5 +27,14 @@ public final class Maximum extends StatisticalParameter {
   @Override
   public final MaximumAggregate createSampleAggregate() {
     return new MaximumAggregate();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return ETextCase.ensure(textCase).appendWords(//
+        "the maximum, i.e., largest, of a set of values.",// //$NON-NLS-1$
+        textOut);
   }
 }

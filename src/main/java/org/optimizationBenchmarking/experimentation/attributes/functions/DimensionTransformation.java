@@ -7,8 +7,10 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
 /**
  * A transformation to be applied to values from a given dimension.
  */
-public final class DimensionTransformation extends
-    _Transformation<IDimension> {
+public final class DimensionTransformation extends Transformation {
+
+  /** the dimension */
+  final IDimension m_dimension;
 
   /**
    * Create the data transformation
@@ -22,7 +24,13 @@ public final class DimensionTransformation extends
    */
   DimensionTransformation(final UnaryFunction function,
       final _DataBasedConstant[] constants, final IDimension dimension) {
-    super(function, constants, dimension);
+    super(function, constants);
+
+    if (dimension == null) {
+      throw new IllegalArgumentException(//
+          "Dimension for DimensionTransformation cannot be null."); //$NON-NLS-1$
+    }
+    this.m_dimension = dimension;
   }
 
   /**
@@ -41,6 +49,6 @@ public final class DimensionTransformation extends
    * @return dimension to be transformed by this transformer
    */
   public final IDimension getDimension() {
-    return this.m_renderable;
+    return this.m_dimension;
   }
 }

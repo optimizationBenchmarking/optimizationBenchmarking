@@ -4,13 +4,19 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import org.optimizationBenchmarking.utils.IImmutable;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.functions.combinatoric.GCD;
+import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** a fractional number */
-public class Rational extends BasicNumber implements IImmutable {
+public class Rational extends BasicNumber implements IImmutable,
+    IMathRenderable {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
@@ -748,5 +754,57 @@ public class Rational extends BasicNumber implements IImmutable {
   @Override
   public final boolean isInteger() {
     return (this.m_down == 1L);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(ITextOutput out, IParameterRenderer renderer) {
+    if (out instanceof IComplexText) {
+      try (final IMath math = ((IComplexText) out).inlineMath()) {
+        this.mathRender(math, renderer);
+      }
+      return;
+    }
+    this.toText(out);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void mathRender(IMath out, IParameterRenderer renderer) {
+    final long down;
+
+    down = this.m_down;
+
+    if (down == 0L) {
+      try (final IText number = out.number()) {
+        if (this.m_up < 0L) {
+          number.append(Double.NEGATIVE_INFINITY);
+        } else {
+          if (this.m_up > 0L) {
+            number.append(Double.POSITIVE_INFINITY);
+          } else {
+            number.append(Double.NaN);
+          }
+        }
+      }
+
+      return;
+    }
+
+    if (down == 1L) {
+      try (final IText number = out.number()) {
+        number.append(this.m_up);
+      }
+      return;
+    }
+
+    try (final IMath inlineFrac = out.divInline()) {
+      try (final IText up = inlineFrac.number()) {
+        up.append(this.m_up);
+      }
+      try (final IText ddown = inlineFrac.number()) {
+        ddown.append(down);
+      }
+    }
   }
 }

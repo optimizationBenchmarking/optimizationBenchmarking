@@ -6,6 +6,8 @@ import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IMathName;
 import org.optimizationBenchmarking.utils.document.spec.IText;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -69,9 +71,10 @@ public final class DistinctValueGroup extends
 
   /** {@inheritDoc} */
   @Override
-  public final void appendName(final IMath math) {
-    try (final IMath compare = math.compare(EMathComparison.EQUAL)) {
-      this.getOwner().m_property.appendName(compare);
+  public final void mathRender(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath compare = out.compare(EMathComparison.EQUAL)) {
+      this.getOwner().m_property.mathRender(compare, renderer);
       if (this.m_value instanceof Number) {
         try (final IText number = compare.number()) {
           PropertyValueGroup._appendNumber(((Number) (this.m_value)),
@@ -87,26 +90,63 @@ public final class DistinctValueGroup extends
 
   /** {@inheritDoc} */
   @Override
-  final ETextCase _appendName(final ITextOutput textOut,
-      final ETextCase textCase) {
-    final ETextCase next;
+  public final void mathRender(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    this.getOwner().m_property.mathRender(out, renderer);
+    out.append('=');
+    if (this.m_value instanceof Number) {
+      PropertyValueGroup._appendNumber(((Number) (this.m_value)), out);
+    } else {
+      out.append(this.m_value);
+    }
+  }
+
+  /**
+   * Print the name
+   *
+   * @param textOut
+   *          the text output device
+   * @param textCase
+   *          the text case
+   * @param nameMode
+   *          the name mode
+   * @return the next case
+   */
+  private final ETextCase __printName(final ITextOutput textOut,
+      final ETextCase textCase, final int nameMode) {
+    final ETextCase use;
+
+    use = this._printSelected(textOut, textCase, nameMode);
 
     if (textOut instanceof IComplexText) {
       try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-        this.appendName(math);
+        this.mathRender(math, DefaultParameterRenderer.INSTANCE);
       }
-      next = textCase;
     } else {
-      next = this.getOwner().m_property.appendName(textOut, textCase);
-      textOut.append('=');
-      if (this.m_value instanceof Number) {
-        PropertyValueGroup._appendNumber(((Number) (this.m_value)),
-            textOut);
-      } else {
-        textOut.append(this.m_value);
-      }
+      this.mathRender(textOut, DefaultParameterRenderer.INSTANCE);
     }
 
-    return ((next != null) ? next : ETextCase.IN_SENTENCE);
+    return use.nextCase();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printShortName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.__printName(textOut, textCase, 0);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printLongName(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.__printName(textOut, textCase, 1);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.__printName(textOut, textCase, 2);
   }
 }

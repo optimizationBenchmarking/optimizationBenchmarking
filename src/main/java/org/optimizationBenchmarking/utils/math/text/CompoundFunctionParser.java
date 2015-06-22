@@ -40,7 +40,7 @@ public class CompoundFunctionParser<T extends MathematicalFunction>
 
   /** the argument separator tag in the token list */
   private static final Object ARGUMENT_SEPARATOR = new Object();
-  
+
   /** the white space tag used when building the token list */
   private static final Object WHITE_SPACE = new Object();
 
@@ -820,7 +820,7 @@ public class CompoundFunctionParser<T extends MathematicalFunction>
 
   /**
    * Get the default function parser for a given arity
-   * 
+   *
    * @param arity
    *          the arity
    * @return the parser
@@ -830,16 +830,20 @@ public class CompoundFunctionParser<T extends MathematicalFunction>
       final int arity) {
     switch (arity) {
       case 1: {
-        return ((CompoundFunctionParser) (getDefaultUnaryFunctionParser()));
+        return ((CompoundFunctionParser) (CompoundFunctionParser
+            .getDefaultUnaryFunctionParser()));
       }
       case 2: {
-        return ((CompoundFunctionParser) (getDefaultBinaryFunctionParser()));
+        return ((CompoundFunctionParser) (CompoundFunctionParser
+            .getDefaultBinaryFunctionParser()));
       }
       case 3: {
-        return ((CompoundFunctionParser) (getDefaultTernaryFunctionParser()));
+        return ((CompoundFunctionParser) (CompoundFunctionParser
+            .getDefaultTernaryFunctionParser()));
       }
       case 4: {
-        return ((CompoundFunctionParser) (getDefaultQuaternaryFunctionParser()));
+        return ((CompoundFunctionParser) (CompoundFunctionParser
+            .getDefaultQuaternaryFunctionParser()));
       }
       default: {
         return new CompoundFunctionParser<>(

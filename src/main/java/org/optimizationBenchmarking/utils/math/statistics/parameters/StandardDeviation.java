@@ -1,6 +1,8 @@
-package org.optimizationBenchmarking.experimentation.attributes.statistics.parameters;
+package org.optimizationBenchmarking.utils.math.statistics.parameters;
 
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.StandardDeviationAggregate;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A statistic parameter computing the standard deviation. */
 public final class StandardDeviation extends StatisticalParameter {
@@ -25,5 +27,14 @@ public final class StandardDeviation extends StatisticalParameter {
   @Override
   public final StandardDeviationAggregate createSampleAggregate() {
     return new StandardDeviationAggregate();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return ETextCase.ensure(textCase).appendWords(//
+        "the standard deviation of a set of values.",// //$NON-NLS-1$
+        textOut);
   }
 }
