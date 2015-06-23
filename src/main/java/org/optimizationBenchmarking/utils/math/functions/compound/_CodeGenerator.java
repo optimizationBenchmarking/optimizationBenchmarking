@@ -34,6 +34,7 @@ import org.optimizationBenchmarking.utils.math.text.AbstractParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.NamedConstant;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -1512,6 +1513,9 @@ final class _CodeGenerator {
           bw.print("import ");//$NON-NLS-1$
           bw.print(IMathRenderable.class.getCanonicalName());
           bw.println(';');
+          bw.print("import ");//$NON-NLS-1$
+          bw.print(NamedConstant.class.getCanonicalName());
+          bw.println(';');
 
           bw.print("/** This is the automatically generated code for a {@link ");//$NON-NLS-1$
           bw.print(mAryName);
@@ -1703,6 +1707,10 @@ final class _CodeGenerator {
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println("@Override");//$NON-NLS-1$
     bw.println("public int getPrecedencePriority() {");//$NON-NLS-1$
+
+    bw.print("if(this.m_const instanceof ");//$NON-NLS-1$
+    bw.print(NamedConstant.class.getSimpleName());
+    bw.println(") { return Integer.MAX_VALUE; }");//$NON-NLS-1$
     bw.print("return ((this.m_const.doubleValue() >= 0d) ? Integer.MAX_VALUE : ");//$NON-NLS-1$
     bw.print(Negate.class.getSimpleName());
     bw.println(".PRECEDENCE_PRIORITY);");//$NON-NLS-1$
@@ -1749,6 +1757,11 @@ final class _CodeGenerator {
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println(" @Override");//$NON-NLS-1$
     bw.println(" public final boolean isLongArithmeticAccurate() {");//$NON-NLS-1$
+    bw.print("if(this.m_const instanceof ");//$NON-NLS-1$
+    bw.print(NamedConstant.class.getSimpleName());
+    bw.print(") { return ((");//$NON-NLS-1$
+    bw.print(NamedConstant.class.getSimpleName());
+    bw.println(")(this.m_const)).isLongArithmeticAccurate(); }");//$NON-NLS-1$
     bw.println(" return ((NumericalTypes.getTypes(this.m_const) & NumericalTypes.IS_LONG) != 0);");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
   }

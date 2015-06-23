@@ -8,6 +8,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.Negate;
 import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.NamedConstant;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -98,12 +99,18 @@ final class _Const2 extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final boolean isLongArithmeticAccurate() {
+    if (this.m_const instanceof NamedConstant) {
+      return ((NamedConstant) (this.m_const)).isLongArithmeticAccurate();
+    }
     return ((NumericalTypes.getTypes(this.m_const) & NumericalTypes.IS_LONG) != 0);
   }
 
   /** {@inheritDoc} */
   @Override
   public int getPrecedencePriority() {
+    if (this.m_const instanceof NamedConstant) {
+      return Integer.MAX_VALUE;
+    }
     return ((this.m_const.doubleValue() >= 0d) ? Integer.MAX_VALUE
         : Negate.PRECEDENCE_PRIORITY);
   }

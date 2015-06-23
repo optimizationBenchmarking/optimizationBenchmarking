@@ -33,6 +33,13 @@ public final class DimensionTransformation extends Transformation {
     this.m_dimension = dimension;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final boolean isLongArithmeticAccurate() {
+    return (this.m_dimension.getDataType().isInteger() && //
+    this.m_func.isLongArithmeticAccurate());
+  }
+
   /**
    * Create the data transformation
    *

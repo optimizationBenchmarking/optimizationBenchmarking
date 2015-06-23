@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.experimentation.data.impl.shadow;
 
 import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractParameterSetting;
+import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 
@@ -49,11 +50,49 @@ final class _ShadowParameterSetting extends AbstractParameterSetting {
   /** {@inheritDoc} */
   @Override
   public final boolean containsKey(final Object key) {
-    for (final ShadowParameterValue entry : this.m_data) {
-      if (EComparison.equals(entry.getOwner(), key)) {
-        return true;
+    return (this.__getParameterValue(key) != null);
+  }
+
+  /**
+   * Get the shadow parameter value for a given key
+   *
+   * @param key
+   *          the key
+   * @return the value
+   */
+  private final ShadowParameterValue __getParameterValue(final Object key) {
+    final IParameter useKey;
+    IParameter compare;
+
+    if (key instanceof IParameter) {
+
+      if (key instanceof ShadowParameter) {
+        useKey = ((ShadowParameter) key).m_shadowUnpacked;
+      } else {
+        useKey = ((IParameter) key);
+      }
+
+      for (final ShadowParameterValue entry : this.m_data) {
+        compare = entry.getOwner();
+        if (compare instanceof ShadowParameter) {
+          compare = ((ShadowParameter) compare).m_shadowUnpacked;
+        }
+        if (EComparison.equals(compare, useKey)) {
+          return entry;
+        }
       }
     }
-    return false;
+    return null;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final Object get(final Object key) {
+    final ShadowParameterValue value;
+    value = this.__getParameterValue(key);
+    if (value != null) {
+      return value.getValue();
+    }
+    return null;
   }
 }

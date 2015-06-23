@@ -2,6 +2,9 @@ package org.optimizationBenchmarking.experimentation.attributes.functions.ecdf;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
+import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 
 /** a list */
@@ -25,20 +28,71 @@ abstract class _List {
   /** is the time an increasing dimension ? */
   final boolean m_isTimeIncreasing;
 
+  /** the goal criterion */
+  final EComparison m_criterion;
+
+  /** the goal transformation */
+  final UnaryFunction m_goalTransform;
+
   /**
-   * create the {@code long} list
+   * do we need to use the {@link #m_goalTransform goal transformation} and
+   * {@link #m_criterion criterion}?
+   */
+  final boolean m_useGoalTransformAndCriterion;
+
+  /**
+   * create the list
    *
    * @param timeDim
    *          the time dimension
-   * @param goalIndex
-   *          the goal index
+   * @param goalDim
+   *          the goal dimension
+   * @param criterion
+   *          the goal criterion
+   * @param goalTransform
+   *          the goal transformation
    */
-  _List(final IDimension timeDim, final int goalIndex) {
+  _List(final IDimension timeDim, final IDimension goalDim,
+      final EComparison criterion, final UnaryFunction goalTransform) {
     super();
     this.m_timeIndex = timeDim.getIndex();
-    this.m_goalIndex = goalIndex;
+    this.m_goalIndex = goalDim.getIndex();
     this.m_timeDim = timeDim;
     this.m_isTimeIncreasing = timeDim.getDirection().isIncreasing();
+
+    setTransform: {
+
+      if (goalTransform instanceof Identity) {
+        setNoTransform: {
+          switcher: switch (criterion) {
+            case LESS_OR_EQUAL: {
+              if (goalDim.getDirection().isIncreasing()) {
+                break setNoTransform;
+              }
+              break switcher;
+            }
+            case GREATER_OR_EQUAL: {
+              if (goalDim.getDirection().isIncreasing()) {
+                break switcher;
+              }
+              break setNoTransform;
+            }
+            default: {
+              break setNoTransform;
+            }
+          }
+
+          this.m_useGoalTransformAndCriterion = false;
+          this.m_goalTransform = null;
+          this.m_criterion = null;
+          break setTransform;
+        }
+      }
+
+      this.m_goalTransform = goalTransform;
+      this.m_useGoalTransformAndCriterion = true;
+      this.m_criterion = criterion;
+    }
   }
 
   /**
@@ -52,7 +106,12 @@ abstract class _List {
   /**
    * Convert the data to a matrix
    *
+   * @param timeTransform
+   *          the time transformation
+   * @param resultTransform
+   *          the result transformation
    * @return the matrix
    */
-  abstract DoubleMatrix1D _toMatrix();
+  abstract DoubleMatrix1D _toMatrix(final UnaryFunction timeTransform,
+      final UnaryFunction resultTransform);
 }

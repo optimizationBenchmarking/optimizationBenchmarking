@@ -89,6 +89,8 @@ abstract class _DataBasedConstant extends NamedConstant {
 
   /** clear this property constant's numerical value */
   final void _clear() {
+    this.m_longVal = Long.MIN_VALUE;
+    this.m_doubleVal = Double.NaN;
     this.m_state = BasicNumber.STATE_EMPTY;
   }
 

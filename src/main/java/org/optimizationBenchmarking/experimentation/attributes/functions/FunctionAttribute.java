@@ -35,7 +35,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * conjunction with a
    * {@link org.optimizationBenchmarking.utils.config.Configuration}.
    */
-  public static final String DEFAULT_X_AXIS_PARAM = "xAxis"; //$NON-NLS-1$
+  public static final String X_AXIS_PARAM = "xAxis"; //$NON-NLS-1$
 
   /**
    * The default parameter for the {@code y}-axis input transformation (see
@@ -43,7 +43,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * conjunction with a
    * {@link org.optimizationBenchmarking.utils.config.Configuration}.
    */
-  public static final String DEFAULT_Y_INPUT_AXIS_PARAM = "yAxis"; //$NON-NLS-1$
+  public static final String Y_INPUT_AXIS_PARAM = "yAxis"; //$NON-NLS-1$
 
   /**
    * The default parameter for the {@code y}-axis result transformation
@@ -51,7 +51,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * use in conjunction with a
    * {@link org.optimizationBenchmarking.utils.config.Configuration}.
    */
-  public static final String DEFAULT_Y_AXIS_OUTPUT_PARAM = "yAxisTransformation"; //$NON-NLS-1$
+  public static final String Y_AXIS_OUTPUT_PARAM = "yAxisTransformation"; //$NON-NLS-1$
 
   /** the transformation of the {@code x}-axis */
   final DimensionTransformation m_xAxisTransformation;

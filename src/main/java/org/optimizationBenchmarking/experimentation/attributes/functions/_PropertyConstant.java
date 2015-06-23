@@ -35,6 +35,12 @@ abstract class _PropertyConstant extends _DataBasedConstant {
 
   /** {@inheritDoc} */
   @Override
+  public final boolean isLongArithmeticAccurate() {
+    return this.m_property.getPrimitiveType().isInteger();
+  }
+
+  /** {@inheritDoc} */
+  @Override
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
     this.m_property.mathRender(out, renderer);

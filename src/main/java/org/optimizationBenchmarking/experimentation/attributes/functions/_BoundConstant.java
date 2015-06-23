@@ -63,6 +63,12 @@ final class _BoundConstant extends _DataBasedConstant {
   }
 
   /** {@inheritDoc} */
+  @Override
+  public final boolean isLongArithmeticAccurate() {
+    return this.m_dimension.getDataType().isInteger();
+  }
+
+  /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   final Object _getValue(final IDataElement element) {

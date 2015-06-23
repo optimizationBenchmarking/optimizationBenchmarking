@@ -3,6 +3,8 @@ package org.optimizationBenchmarking.experimentation.attributes.functions.ecdf;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 
 /** a list of {@code long}s */
@@ -19,11 +21,16 @@ abstract class _Longs extends _List {
    *
    * @param timeDim
    *          the time dimension
-   * @param goalIndex
-   *          the goal index
+   * @param goalDim
+   *          the goal dimension
+   * @param criterion
+   *          the goal criterion
+   * @param goalTransform
+   *          the goal transformation
    */
-  _Longs(final IDimension timeDim, final int goalIndex) {
-    super(timeDim, goalIndex);
+  _Longs(final IDimension timeDim, final IDimension goalDim,
+      final EComparison criterion, final UnaryFunction goalTransform) {
+    super(timeDim, goalDim, criterion, goalTransform);
     this.m_data = new long[1024];
     this.m_last = (this.m_isTimeIncreasing ? Long.MIN_VALUE
         : Long.MAX_VALUE);
@@ -53,7 +60,8 @@ abstract class _Longs extends _List {
 
   /** {@inheritDoc} */
   @Override
-  final DoubleMatrix1D _toMatrix() {
+  final DoubleMatrix1D _toMatrix(final UnaryFunction timeTransform,
+      final UnaryFunction resultTransform) {
     final int size;
     final double total;
     final double[] ret;
@@ -119,14 +127,14 @@ abstract class _Longs extends _List {
         }
       }
 
-      res[idx++] = current;
-      res[idx++] = ((i + offset) / total);
+      res[idx++] = timeTransform.computeAsDouble(current);
+      res[idx++] = resultTransform.computeAsDouble((i + offset) / total);
     }
     data = null;
 
     // add a last point if needed
     if (current != this.m_last) {
-      res[idx++] = this.m_last;
+      res[idx++] = timeTransform.computeAsDouble(this.m_last);
       res[idx] = res[idx - 2];
       idx++;
     }

@@ -73,6 +73,19 @@ public class Transformation extends HashObject {
   }
 
   /**
+   * Check whether this function is accurate in {@code long} arithmetic:
+   * The result can always be represented as a {@code long} without loss of
+   * fidelity, if a {@code long} is the input, if this method returns
+   * {@code true}.
+   *
+   * @return {@code true} if the {@code long} arithmetic of this
+   *         transformation is accurate
+   */
+  public boolean isLongArithmeticAccurate() {
+    return this.m_func.isLongArithmeticAccurate();
+  }
+
+  /**
    * Provide the data transformation function based on a given data element
    *
    * @param element
@@ -85,7 +98,7 @@ public class Transformation extends HashObject {
     if (this.m_constants != null) {
       if (this.m_isInUse) {
         throw new IllegalStateException("The data transformation " + //$NON-NLS-1$
-            this.m_func + " is already in use concurrently.."); //$NON-NLS-1$
+            this.m_func + " is already in use concurrently."); //$NON-NLS-1$
       }
 
       for (final _DataBasedConstant constant : this.m_constants) {

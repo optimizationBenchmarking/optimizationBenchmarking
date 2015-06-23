@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.matrix.impl.DoubleMatrix1D;
 
 /** a list of {@code double}s */
@@ -20,11 +21,16 @@ abstract class _Doubles extends _List {
    *
    * @param timeDim
    *          the time dimension
-   * @param goalIndex
-   *          the goal index
+   * @param goalDim
+   *          the goal dimension
+   * @param criterion
+   *          the goal criterion
+   * @param goalTransform
+   *          the goal transformation
    */
-  _Doubles(final IDimension timeDim, final int goalIndex) {
-    super(timeDim, goalIndex);
+  _Doubles(final IDimension timeDim, final IDimension goalDim,
+      final EComparison criterion, final UnaryFunction goalTransform) {
+    super(timeDim, goalDim, criterion, goalTransform);
     this.m_data = new double[1024];
     this.m_last = (this.m_isTimeIncreasing ? Double.NEGATIVE_INFINITY
         : Double.POSITIVE_INFINITY);
@@ -54,7 +60,8 @@ abstract class _Doubles extends _List {
 
   /** {@inheritDoc} */
   @Override
-  final DoubleMatrix1D _toMatrix() {
+  final DoubleMatrix1D _toMatrix(final UnaryFunction timeTransform,
+      final UnaryFunction resultTransform) {
     final int size;
     final double total;
     final double[] ret;
@@ -80,7 +87,7 @@ abstract class _Doubles extends _List {
         if ((idx--) <= 0) {
           break loop;
         }
-        if (EComparison.compareDoubles(dbl, earliest) == 0) {
+        if (EComparison.EQUAL.compare(dbl, earliest)) {
           break add;
         }
       }
@@ -113,19 +120,19 @@ abstract class _Doubles extends _List {
     for (i = 0; i < size;) {
       current = data[i];
       inner: for (; (++i) < size;) {
-        if (EComparison.compareDoubles(current, data[i]) != 0) {
+        if (EComparison.EQUAL.compare(current, data[i])) {
           break inner;
         }
       }
 
-      res[idx++] = current;
-      res[idx++] = ((i + offset) / total);
+      res[idx++] = timeTransform.computeAsDouble(current);
+      res[idx++] = resultTransform.computeAsDouble((i + offset) / total);
     }
     data = null;
 
     // add a last point if needed
     if (current != this.m_last) {
-      res[idx++] = this.m_last;
+      res[idx++] = timeTransform.computeAsDouble(this.m_last);
       res[idx] = res[idx - 2];
       idx++;
     }
