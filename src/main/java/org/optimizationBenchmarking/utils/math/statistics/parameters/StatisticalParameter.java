@@ -161,63 +161,89 @@ public abstract class StatisticalParameter implements
 
   /**
    * Aggregate the data of over a set of matrices. The matrices must have
-   * two dimensions: The first one is considered as time dimension, the
-   * second one is aggregated for each unique time value.
+   * (at least) two dimensions: We iterate over each unique value of
+   * dimensions {@code timeDim} in any of the provided matrices and
+   * aggregate the corresponding values in dimension {@code aggregateDim}.
+   * The term "corresponding" is based on the behavior of the
+   * {@org.optimizationBenchmarking.utils.math.matrix.processing.iterator2D.MatrixIterator2D
+   * 
+   * matrix iterator}.
    *
    * @param matrices
    *          the matrices
+   * @param timeDim
+   *          the dimension to be used as time: We will aggregate the
+   *          values of {@code aggregateDim} for each unique value in
+   *          {@code timeDim}
+   * @param aggregateDim
+   *          the values of this dimension are aggregated
    * @param transform
    *          the transformation to apply to the aggregate result value
    * @return the resulting matrix
    */
-  public final IMatrix aggregate(final IMatrix[] matrices,
+  public final IMatrix aggregate2D(final IMatrix[] matrices,
+      final int timeDim, final int aggregateDim,
       final UnaryFunction transform) {
-    return this.__aggregate(matrices, transform);
+    return this.__aggregate2D(
+        MatrixIterator2D.iterate(timeDim, aggregateDim, matrices),
+        transform);
   }
 
   /**
    * Aggregate the data of over a set of matrices. The matrices must have
-   * two dimensions: The first one is considered as time dimension, the
-   * second one is aggregated for each unique time value.
+   * (at least) two dimensions: We iterate over each unique value of
+   * dimensions {@code timeDim} in any of the provided matrices and
+   * aggregate the corresponding values in dimension {@code aggregateDim}.
+   * The term "corresponding" is based on the behavior of the
+   * {@org.optimizationBenchmarking.utils.math.matrix.processing.iterator2D.MatrixIterator2D
+   * 
+   * matrix iterator}.
    *
    * @param matrices
    *          the matrices
+   * @param timeDim
+   *          the dimension to be used as time: We will aggregate the
+   *          values of {@code aggregateDim} for each unique value in
+   *          {@code timeDim}
+   * @param aggregateDim
+   *          the values of this dimension are aggregated
    * @param transform
    *          the transformation to apply to the aggregate result value
    * @return the resulting matrix
+   * @see #aggregate2D(IMatrix[], int, int, UnaryFunction)
    */
-  public final IMatrix aggregate(final Collection<IMatrix> matrices,
+  public final IMatrix aggregate2D(final Collection<IMatrix> matrices,
+      final int timeDim, final int aggregateDim,
       final UnaryFunction transform) {
-    return this.__aggregate(matrices, transform);
+    return this.__aggregate2D(
+        MatrixIterator2D.iterate(timeDim, aggregateDim, matrices),
+        transform);
   }
 
   /**
-   * Aggregate the data via a matrix iterator
+   * Aggregate the data via a matrix iterator: Do the work of
+   * {@link #aggregate2D(Collection, int, int, UnaryFunction)} and
+   * {@link #aggregate2D(IMatrix[], int, int, UnaryFunction)}
    *
-   * @param matrices
-   *          the matrices
+   * @param iterator
+   *          the iterator
    * @param transform
    *          the transformation to apply to the aggregate result value
    * @return the resulting matrix
+   * @see #aggregate2D(Collection, int, int, UnaryFunction)
+   * @see #aggregate2D(IMatrix[], int, int, UnaryFunction)
    */
-  @SuppressWarnings({ "incomplete-switch", "rawtypes", "unchecked" })
-  private final IMatrix __aggregate(final Object matrices,
+  @SuppressWarnings("incomplete-switch")
+  private final IMatrix __aggregate2D(final MatrixIterator2D iterator,
       final UnaryFunction transform) {
     final ScalarAggregate aggregate;
     final MatrixBuilder builder;
-    final MatrixIterator2D iterator;
     final boolean isLongArithmeticAccurate;
     int oldYState, currentYState, xState;
     double oldYDouble, currentYDouble, xDouble;
     long oldYLong, currentYLong, xLong;
     boolean lastWasAdded;
     BasicNumber x;
-
-    if (matrices instanceof IMatrix[]) {
-      iterator = MatrixIterator2D.iterate(0, 1, ((IMatrix[]) matrices));
-    } else {
-      iterator = MatrixIterator2D.iterate(0, 1, ((Collection) matrices));
-    }
 
     aggregate = this.createSampleAggregate();
     builder = new MatrixBuilder(EPrimitiveType.LONG);

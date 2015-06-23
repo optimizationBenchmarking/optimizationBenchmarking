@@ -89,8 +89,8 @@ abstract class _List {
         }
       }
 
-      this.m_goalTransform = goalTransform;
       this.m_useGoalTransformAndCriterion = true;
+      this.m_goalTransform = goalTransform;
       this.m_criterion = criterion;
     }
   }

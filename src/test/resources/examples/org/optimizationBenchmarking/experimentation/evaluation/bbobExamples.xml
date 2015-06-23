@@ -10,10 +10,11 @@
 	</cfg:configuration>
 
 	<e:module class="description.instances.InstanceInformation" />
-
 	<e:module class="all.ecdf.AllECDF">
 		<cfg:configuration>
-			<cfg:parameter name="ecdf" value="lg FEs, F 1e-8" />
+			<cfg:parameter name="xAxis" value="lg FEs" />
+			<cfg:parameter name="yAxis" value="F" />
+			<cfg:parameter name="goal" value="1e-8" />
 			<cfg:parameter name="figureSize" value="page wide" />
 			<cfg:parameter name="makeLegendFigure" value="false" />
 		</cfg:configuration>
@@ -21,37 +22,50 @@
 
 	<e:module class="all.ecdf.AllECDF">
 		<cfg:configuration>
-			<cfg:parameter name="ecdf" value="lg FEs, F 1e-8" />
+			<cfg:parameter name="xAxis" value="lg FEs" />
+			<cfg:parameter name="yAxis" value="F" />
+			<cfg:parameter name="goal" value="1e-8" />
 			<cfg:parameter name="groupBy" value="dim" />
 		</cfg:configuration>
 	</e:module>
 
 	<e:module class="all.ecdf.AllECDF">
 		<cfg:configuration>
-			<cfg:parameter name="ecdf" value="lg FEs, F 1e-5" />
+			<cfg:parameter name="xAxis" value="lg FEs" />
+			<cfg:parameter name="yAxis" value="F" />
+			<cfg:parameter name="goal" value="1e-5" />
 			<cfg:parameter name="groupBy" value="sep" />
 		</cfg:configuration>
 	</e:module>
 
 	<e:module class="all.ecdf.AllECDF">
 		<cfg:configuration>
-			<cfg:parameter name="ecdf" value="ln FEs, F 1e-5" />
+			<cfg:parameter name="xAxis" value="lg FEs" />
+			<cfg:parameter name="yAxis" value="F" />
+			<cfg:parameter name="goal" value="1e-5" />
 			<cfg:parameter name="byInstance" value="true" />
 		</cfg:configuration>
 	</e:module>
 
-  <e:module class="all.aggregation2D.AllAggregation2D">
-    <cfg:configuration>
-      <cfg:parameter name="aggregation" value="median of variance of F over lg FEs" />
-      <cfg:parameter name="groupBy" value="dim" />
-    </cfg:configuration>
-  </e:module>
+	<e:module class="all.aggregation2D.AllAggregation2D">
+		<cfg:configuration>
+			<cfg:parameter name="xAxis" value="lg(FEs/dim)" />
+			<cfg:parameter name="yAxis" value="F" />
+			<cfg:parameter name="yAxisTransformation" value="lg result" />
+			<cfg:parameter name="aggregate" value="median" />
+		</cfg:configuration>
+	</e:module>
 
-  <e:module class="all.aggregation2D.AllAggregation2D">
-    <cfg:configuration>
-      <cfg:parameter name="aggregation" value="stddev of median of lg F over ld FEs" />
-      <cfg:parameter name="groupBy" value="sep" />
-    </cfg:configuration>
-  </e:module>
+	<e:module class="all.aggregation2D.AllAggregation2D">
+		<cfg:configuration>
+			<cfg:parameter name="figureSize" value="2 by 2" />
+			<cfg:parameter name="xAxis" value="lg(FEs/dim)" />
+			<cfg:parameter name="yAxis" value="F" />
+			<cfg:parameter name="yAxisTransformation" value="lg result" />
+			<cfg:parameter name="aggregate" value="median" />
+			<cfg:parameter name="secondaryAggregate" value="stddev" />
+			<cfg:parameter name="groupBy" value="sep" />
+		</cfg:configuration>
+	</e:module>
 
 </e:evaluation>

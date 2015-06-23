@@ -152,7 +152,7 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
                 xFunction, yInputFunction);
           }
 
-          return this.m_param.aggregate(matrices, yOutputFunction);
+          return this.m_param.aggregate2D(matrices, 0, 1, yOutputFunction);
         }
       }
     }
@@ -178,7 +178,7 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
       matrices[i] = this.__computeInstanceRuns(runs.get(i));
     }
 
-    return this.m_second.aggregate(matrices, Identity.INSTANCE);
+    return this.m_second.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
   }
 
   /**
@@ -198,7 +198,7 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
       }
     }
 
-    return this.m_second.aggregate(matrices, Identity.INSTANCE);
+    return this.m_second.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
   }
 
   /** {@inheritDoc} */

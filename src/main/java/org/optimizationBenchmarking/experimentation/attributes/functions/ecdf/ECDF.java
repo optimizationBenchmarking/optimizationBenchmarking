@@ -23,7 +23,7 @@ import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
-import org.optimizationBenchmarking.utils.math.statistics.parameters.Median;
+import org.optimizationBenchmarking.utils.math.statistics.parameters.ArithmeticMean;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
@@ -55,10 +55,10 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
   private final boolean m_useLongGoal;
 
   /** the comparison used to determine whether the goal criterion was met */
-  private EComparison m_criterion;
+  private final EComparison m_criterion;
 
   /** the way to aggregate the different ECDFs */
-  private StatisticalParameter m_aggregate;
+  private final StatisticalParameter m_aggregate;
 
   /**
    * Create the ECDF attribute
@@ -128,6 +128,9 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
             criterion);
       }
     }
+
+    this.m_criterion = criterion;
+    this.m_aggregate = aggregate;
   }
 
   /**
@@ -342,7 +345,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       matrices[i] = this.__computeInstanceRuns(runs.get(i));
     }
 
-    return this.m_aggregate.aggregate(matrices, Identity.INSTANCE);
+    return this.m_aggregate.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
   }
 
   /**
@@ -362,7 +365,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       }
     }
 
-    return this.m_aggregate.aggregate(matrices, Identity.INSTANCE);
+    return this.m_aggregate.aggregate2D(matrices, 0, 1, Identity.INSTANCE);
   }
 
   /** {@inheritDoc} */
@@ -428,7 +431,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
             new Transformation());
 
     aggregate = config.get(ECDF.AGGREGATE_PARAM,
-        StatisticalParameterParser.getInstance(), Median.INSTANCE);
+        StatisticalParameterParser.getInstance(), ArithmeticMean.INSTANCE);
 
     goalDim = yIn.getDimension();
 
