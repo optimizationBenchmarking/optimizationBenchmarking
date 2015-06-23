@@ -60,7 +60,7 @@ I can also quote the title of a publication, such as<cite mode="title"><bib:book
 <body>
 We can also do equations:
 <equation>
-<cmp op="nprop"><pow><brace><add><sqrt><number>3</number></sqrt><name>xx</name></add></brace>
+<cmp op="prop"><pow><brace><add><sqrt><number>3</number></sqrt><name>xx</name></add></brace>
 <number><double>&#x3c0;</double></number></pow>
 <log><number><int>Byte#MAX_VALUE</int></number><name>X</name></log>
 </cmp>
