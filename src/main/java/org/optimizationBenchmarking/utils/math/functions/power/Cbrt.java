@@ -62,8 +62,9 @@ public final class Cbrt extends UnaryFunction {
   @Override
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
-    out.append((char) 0x221b);
+    out.append("cbrt("); //$NON-NLS-1$
     renderer.renderParameter(0, out);
+    out.append(')');
   }
 
   /** {@inheritDoc} */

@@ -19,20 +19,21 @@ public final class TextUtils {
   public static final String NULL_STRING = String.valueOf((Object) null);
 
   /** the default normalizer form */
-  public static final Normalizer.Form DEFAULT_NORMALIZER_FORM = Normalizer.Form.NFKC;
+  public static final Normalizer.Form DEFAULT_NORMALIZER_FORM = Normalizer.Form.NFC;
 
   /**
    * the globally shared line separator: The value of this variable is
    * compatible to what {@link java.io.BufferedWriter} et al. are using
    */
-  public static final String LINE_SEPARATOR = TextUtils.getLineSeparator();
+  public static final String LINE_SEPARATOR = TextUtils
+      .__getLineSeparator();
 
   /**
    * obtain the line separator
    *
    * @return the line separator
    */
-  private static final String getLineSeparator() {
+  private static final String __getLineSeparator() {
     final byte[] bs;
     final char[] cs;
     final int l;

@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.attributes.functions.ecdf;
 
+import org.optimizationBenchmarking.experimentation.attributes.functions.TransformationFunction;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataPoint;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
@@ -27,8 +28,8 @@ final class _LongTimeLongGoal extends _Longs {
    *          the goal
    */
   _LongTimeLongGoal(final IDimension timeDim, final IDimension goalDim,
-      final EComparison criterion, final UnaryFunction goalTransform,
-      final long goal) {
+      final EComparison criterion,
+      final TransformationFunction goalTransform, final long goal) {
     super(timeDim, goalDim, criterion, goalTransform);
     this.m_goal = goal;
   }

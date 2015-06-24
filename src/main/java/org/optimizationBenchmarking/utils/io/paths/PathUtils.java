@@ -90,8 +90,15 @@ public final class PathUtils {
         if (codepoint <= 0x40) { // up to "@"
           break dontChange;
         }
-        if ((codepoint <= 0x5a) || // "A".."Z"
-            (codepoint == '_')) {
+        if ((codepoint <= 0x5a)) { // "A".."Z", except '_'
+          continue outer;
+        }
+        if (codepoint == '_') {// now "A".."Z" is covered
+          if ((index < (size - 1)) && (data[index + 1] == '_')) {
+            System.arraycopy(data, (index + 1), data, index,
+                ((--size) - index));
+            changed = true;
+          }
           continue outer;
         }
         if (codepoint <= 0x60) { // up to "`"

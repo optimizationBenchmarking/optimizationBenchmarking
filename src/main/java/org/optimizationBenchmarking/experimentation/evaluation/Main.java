@@ -101,7 +101,7 @@ public final class Main {
 
         if ((logger != null) && (logger.isLoggable(Level.INFO))) {
           logger.info(//
-              "The evaluation job has finished (seemingly without encountering an unrecoverable error) in thread " //$NON-NLS-1$
+              "The evaluation job has finished (seemingly successfully) in thread " //$NON-NLS-1$
                   + Thread.currentThread());
         }
       } else {

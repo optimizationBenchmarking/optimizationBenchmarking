@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.attributes.functions.ecdf;
 
 import java.util.Arrays;
 
+import org.optimizationBenchmarking.experimentation.attributes.functions.TransformationFunction;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
@@ -29,7 +30,8 @@ abstract class _Doubles extends _List {
    *          the goal transformation
    */
   _Doubles(final IDimension timeDim, final IDimension goalDim,
-      final EComparison criterion, final UnaryFunction goalTransform) {
+      final EComparison criterion,
+      final TransformationFunction goalTransform) {
     super(timeDim, goalDim, criterion, goalTransform);
     this.m_data = new double[1024];
     this.m_last = (this.m_isTimeIncreasing ? Double.NEGATIVE_INFINITY
@@ -120,7 +122,7 @@ abstract class _Doubles extends _List {
     for (i = 0; i < size;) {
       current = data[i];
       inner: for (; (++i) < size;) {
-        if (EComparison.EQUAL.compare(current, data[i])) {
+        if (EComparison.NOT_EQUAL.compare(current, data[i])) {
           break inner;
         }
       }

@@ -101,8 +101,8 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
 
     String rpath;
 
-    rpath = ((path == null) ? this.m_globalID//
-        : PathUtils.sanitizePathComponent(path));
+    rpath = PathUtils.sanitizePathComponent(//
+        ((path == null) ? this.m_globalID : path));
     if (owner instanceof SectionBody) {
       this.m_folder = PathUtils.normalize(this.m_doc.m_basePath
           .resolve(BasicFigure.GRAPHICS_OFFSET));

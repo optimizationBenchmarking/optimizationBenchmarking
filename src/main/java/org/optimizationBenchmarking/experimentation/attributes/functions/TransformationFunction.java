@@ -35,6 +35,17 @@ public class TransformationFunction extends UnaryFunction implements
     this.m_trafo = trafo;
   }
 
+  /**
+   * Check whether this function represents an identity transformation of
+   * the input to the output, i.e., if it just returns its input directly.
+   *
+   * @return {@code true} if this functions is an identity transformation,
+   *         {@code false} otherwise
+   */
+  public final boolean isIdentityTransformation() {
+    return this.m_trafo.isIdentityTransformation();
+  }
+
   /** {@inheritDoc} */
   @Override
   public final int hashCode() {
