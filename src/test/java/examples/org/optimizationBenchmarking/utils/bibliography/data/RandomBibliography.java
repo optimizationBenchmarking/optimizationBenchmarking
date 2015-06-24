@@ -1,7 +1,6 @@
 package examples.org.optimizationBenchmarking.utils.bibliography.data;
 
 import java.text.Normalizer;
-import java.text.Normalizer.Form;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +20,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.EThesisType;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A class to test generating a random bibliography.
@@ -356,7 +356,8 @@ public final class RandomBibliography extends BibliographyExample {
     }
 
     charString = String.valueOf(ch);
-    plainString = Normalizer.normalize(charString, Form.NFC);
+    plainString = Normalizer.normalize(charString,
+        TextUtils.DEFAULT_NORMALIZER_FORM);
     if (plainString.length() != 1) {
       return 0;
     }

@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.parsers;
 import java.text.Normalizer;
 
 import org.optimizationBenchmarking.utils.EmptyUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.charset.Char;
 import org.optimizationBenchmarking.utils.text.charset.Characters;
 import org.optimizationBenchmarking.utils.text.charset.QuotationMark;
@@ -164,7 +165,8 @@ public class StringParser extends Parser<String> {
         return string;
       }
 
-      temp = Normalizer.normalize(string, Normalizer.Form.NFKC);
+      temp = Normalizer.normalize(string,
+          TextUtils.DEFAULT_NORMALIZER_FORM);
       if (temp == null) {
         return EmptyUtils.EMPTY_STRING;
       }
