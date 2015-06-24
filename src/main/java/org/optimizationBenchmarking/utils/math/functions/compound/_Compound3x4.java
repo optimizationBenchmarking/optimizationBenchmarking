@@ -114,9 +114,9 @@ final class _Compound3x4 extends QuaternaryFunction {
   @Override
   public final byte computeAsByte(final byte x0, final byte x1,
       final byte x2, final byte x3) {
-    return this.m_result.computeAsByte(
-        this.m_child1.computeAsByte(x0, x1, x2, x3),
-        this.m_child2.computeAsByte(x0, x1, x2, x3),
+    return this.m_result.computeAsByte( //
+        this.m_child1.computeAsByte(x0, x1, x2, x3), //
+        this.m_child2.computeAsByte(x0, x1, x2, x3), //
         this.m_child3.computeAsByte(x0, x1, x2, x3));
   }
 
@@ -124,9 +124,9 @@ final class _Compound3x4 extends QuaternaryFunction {
   @Override
   public final short computeAsShort(final short x0, final short x1,
       final short x2, final short x3) {
-    return this.m_result.computeAsShort(
-        this.m_child1.computeAsShort(x0, x1, x2, x3),
-        this.m_child2.computeAsShort(x0, x1, x2, x3),
+    return this.m_result.computeAsShort( //
+        this.m_child1.computeAsShort(x0, x1, x2, x3), //
+        this.m_child2.computeAsShort(x0, x1, x2, x3), //
         this.m_child3.computeAsShort(x0, x1, x2, x3));
   }
 
@@ -134,9 +134,9 @@ final class _Compound3x4 extends QuaternaryFunction {
   @Override
   public final int computeAsInt(final int x0, final int x1, final int x2,
       final int x3) {
-    return this.m_result.computeAsInt(
-        this.m_child1.computeAsInt(x0, x1, x2, x3),
-        this.m_child2.computeAsInt(x0, x1, x2, x3),
+    return this.m_result.computeAsInt( //
+        this.m_child1.computeAsInt(x0, x1, x2, x3), //
+        this.m_child2.computeAsInt(x0, x1, x2, x3), //
         this.m_child3.computeAsInt(x0, x1, x2, x3));
   }
 
@@ -144,9 +144,9 @@ final class _Compound3x4 extends QuaternaryFunction {
   @Override
   public final long computeAsLong(final long x0, final long x1,
       final long x2, final long x3) {
-    return this.m_result.computeAsLong(
-        this.m_child1.computeAsLong(x0, x1, x2, x3),
-        this.m_child2.computeAsLong(x0, x1, x2, x3),
+    return this.m_result.computeAsLong( //
+        this.m_child1.computeAsLong(x0, x1, x2, x3), //
+        this.m_child2.computeAsLong(x0, x1, x2, x3), //
         this.m_child3.computeAsLong(x0, x1, x2, x3));
   }
 
@@ -154,9 +154,9 @@ final class _Compound3x4 extends QuaternaryFunction {
   @Override
   public final float computeAsFloat(final float x0, final float x1,
       final float x2, final float x3) {
-    return this.m_result.computeAsFloat(
-        this.m_child1.computeAsFloat(x0, x1, x2, x3),
-        this.m_child2.computeAsFloat(x0, x1, x2, x3),
+    return this.m_result.computeAsFloat( //
+        this.m_child1.computeAsFloat(x0, x1, x2, x3), //
+        this.m_child2.computeAsFloat(x0, x1, x2, x3), //
         this.m_child3.computeAsFloat(x0, x1, x2, x3));
   }
 
@@ -164,9 +164,9 @@ final class _Compound3x4 extends QuaternaryFunction {
   @Override
   public final double computeAsDouble(final double x0, final double x1,
       final double x2, final double x3) {
-    return this.m_result.computeAsDouble(
-        this.m_child1.computeAsDouble(x0, x1, x2, x3),
-        this.m_child2.computeAsDouble(x0, x1, x2, x3),
+    return this.m_result.computeAsDouble( //
+        this.m_child1.computeAsDouble(x0, x1, x2, x3), //
+        this.m_child2.computeAsDouble(x0, x1, x2, x3), //
         this.m_child3.computeAsDouble(x0, x1, x2, x3));
   }
 
@@ -174,9 +174,9 @@ final class _Compound3x4 extends QuaternaryFunction {
   @Override
   public final double computeAsDouble(final int x0, final int x1,
       final int x2, final int x3) {
-    return this.m_result.computeAsDouble(
-        this.m_child1.computeAsDouble(x0, x1, x2, x3),
-        this.m_child2.computeAsDouble(x0, x1, x2, x3),
+    return this.m_result.computeAsDouble( //
+        this.m_child1.computeAsDouble(x0, x1, x2, x3), //
+        this.m_child2.computeAsDouble(x0, x1, x2, x3), //
         this.m_child3.computeAsDouble(x0, x1, x2, x3));
   }
 
@@ -184,24 +184,24 @@ final class _Compound3x4 extends QuaternaryFunction {
   @Override
   public final double computeAsDouble(final long x0, final long x1,
       final long x2, final long x3) {
-    return this.m_result.computeAsDouble(
-        this.m_child1.computeAsDouble(x0, x1, x2, x3),
-        this.m_child2.computeAsDouble(x0, x1, x2, x3),
+    return this.m_result.computeAsDouble( //
+        this.m_child1.computeAsDouble(x0, x1, x2, x3), //
+        this.m_child2.computeAsDouble(x0, x1, x2, x3), //
         this.m_child3.computeAsDouble(x0, x1, x2, x3));
   }
 
   /** {@inheritDoc} */
   @Override
   public final boolean isLongArithmeticAccurate() {
-    return (this.m_result.isLongArithmeticAccurate()
-        && this.m_child1.isLongArithmeticAccurate()
-        && this.m_child2.isLongArithmeticAccurate() && this.m_child3
-        .isLongArithmeticAccurate());
+    return (this.m_result.isLongArithmeticAccurate() //
+        && this.m_child1.isLongArithmeticAccurate() //
+        && this.m_child2.isLongArithmeticAccurate() //
+        && this.m_child3.isLongArithmeticAccurate());
   }
 
   /** {@inheritDoc} */
   @Override
-  public int getPrecedencePriority() {
+  public final int getPrecedencePriority() {
     return this.m_result.getPrecedencePriority();
   }
 
@@ -224,9 +224,12 @@ final class _Compound3x4 extends QuaternaryFunction {
   /** {@inheritDoc} */
   @Override
   public final int hashCode() {
-    return HashUtils.combineHashes(HashUtils.hashCode(this.m_result),
-        HashUtils.combineHashes(HashUtils.hashCode(this.m_child1),
-            HashUtils.combineHashes(HashUtils.hashCode(this.m_child2),
+    return HashUtils.combineHashes( //
+        HashUtils.hashCode(this.m_result), //
+        HashUtils.combineHashes( //
+            HashUtils.hashCode(this.m_child1), //
+            HashUtils.combineHashes( //
+                HashUtils.hashCode(this.m_child2), //
                 HashUtils.hashCode(this.m_child3))));
   }
 
@@ -239,10 +242,10 @@ final class _Compound3x4 extends QuaternaryFunction {
     }
     if (o instanceof _Compound3x4) {
       other = ((_Compound3x4) o);
-      return (this.m_result.equals(other.m_result)
-          && this.m_child1.equals(other.m_child1)
-          && this.m_child2.equals(other.m_child2) && this.m_child3
-          .equals(other.m_child3));
+      return (this.m_result.equals(other.m_result) //
+          && this.m_child1.equals(other.m_child1) //
+          && this.m_child2.equals(other.m_child2) //
+          && this.m_child3.equals(other.m_child3));
     }
     return false;
   }

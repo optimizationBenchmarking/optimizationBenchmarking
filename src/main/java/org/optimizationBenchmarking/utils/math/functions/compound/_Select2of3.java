@@ -101,7 +101,7 @@ final class _Select2of3 extends TernaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public int getPrecedencePriority() {
+  public final int getPrecedencePriority() {
     return Integer.MAX_VALUE;
   }
 

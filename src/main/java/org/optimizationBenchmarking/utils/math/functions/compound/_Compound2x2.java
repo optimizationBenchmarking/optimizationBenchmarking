@@ -95,77 +95,78 @@ final class _Compound2x2 extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final byte computeAsByte(final byte x0, final byte x1) {
-    return this.m_result.computeAsByte(
-        this.m_child1.computeAsByte(x0, x1),
+    return this.m_result.computeAsByte( //
+        this.m_child1.computeAsByte(x0, x1), //
         this.m_child2.computeAsByte(x0, x1));
   }
 
   /** {@inheritDoc} */
   @Override
   public final short computeAsShort(final short x0, final short x1) {
-    return this.m_result.computeAsShort(
-        this.m_child1.computeAsShort(x0, x1),
+    return this.m_result.computeAsShort( //
+        this.m_child1.computeAsShort(x0, x1), //
         this.m_child2.computeAsShort(x0, x1));
   }
 
   /** {@inheritDoc} */
   @Override
   public final int computeAsInt(final int x0, final int x1) {
-    return this.m_result.computeAsInt(this.m_child1.computeAsInt(x0, x1),
+    return this.m_result.computeAsInt( //
+        this.m_child1.computeAsInt(x0, x1), //
         this.m_child2.computeAsInt(x0, x1));
   }
 
   /** {@inheritDoc} */
   @Override
   public final long computeAsLong(final long x0, final long x1) {
-    return this.m_result.computeAsLong(
-        this.m_child1.computeAsLong(x0, x1),
+    return this.m_result.computeAsLong( //
+        this.m_child1.computeAsLong(x0, x1), //
         this.m_child2.computeAsLong(x0, x1));
   }
 
   /** {@inheritDoc} */
   @Override
   public final float computeAsFloat(final float x0, final float x1) {
-    return this.m_result.computeAsFloat(
-        this.m_child1.computeAsFloat(x0, x1),
+    return this.m_result.computeAsFloat( //
+        this.m_child1.computeAsFloat(x0, x1), //
         this.m_child2.computeAsFloat(x0, x1));
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0, final double x1) {
-    return this.m_result.computeAsDouble(
-        this.m_child1.computeAsDouble(x0, x1),
+    return this.m_result.computeAsDouble( //
+        this.m_child1.computeAsDouble(x0, x1), //
         this.m_child2.computeAsDouble(x0, x1));
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final int x0, final int x1) {
-    return this.m_result.computeAsDouble(
-        this.m_child1.computeAsDouble(x0, x1),
+    return this.m_result.computeAsDouble( //
+        this.m_child1.computeAsDouble(x0, x1), //
         this.m_child2.computeAsDouble(x0, x1));
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final long x0, final long x1) {
-    return this.m_result.computeAsDouble(
-        this.m_child1.computeAsDouble(x0, x1),
+    return this.m_result.computeAsDouble( //
+        this.m_child1.computeAsDouble(x0, x1), //
         this.m_child2.computeAsDouble(x0, x1));
   }
 
   /** {@inheritDoc} */
   @Override
   public final boolean isLongArithmeticAccurate() {
-    return (this.m_result.isLongArithmeticAccurate()
-        && this.m_child1.isLongArithmeticAccurate() && this.m_child2
-        .isLongArithmeticAccurate());
+    return (this.m_result.isLongArithmeticAccurate() //
+        && this.m_child1.isLongArithmeticAccurate() //
+        && this.m_child2.isLongArithmeticAccurate());
   }
 
   /** {@inheritDoc} */
   @Override
-  public int getPrecedencePriority() {
+  public final int getPrecedencePriority() {
     return this.m_result.getPrecedencePriority();
   }
 
@@ -191,8 +192,10 @@ final class _Compound2x2 extends BinaryFunction {
   /** {@inheritDoc} */
   @Override
   public final int hashCode() {
-    return HashUtils.combineHashes(HashUtils.hashCode(this.m_result),
-        HashUtils.combineHashes(HashUtils.hashCode(this.m_child1),
+    return HashUtils.combineHashes( //
+        HashUtils.hashCode(this.m_result), //
+        HashUtils.combineHashes( //
+            HashUtils.hashCode(this.m_child1), //
             HashUtils.hashCode(this.m_child2)));
   }
 
@@ -205,9 +208,9 @@ final class _Compound2x2 extends BinaryFunction {
     }
     if (o instanceof _Compound2x2) {
       other = ((_Compound2x2) o);
-      return (this.m_result.equals(other.m_result)
-          && this.m_child1.equals(other.m_child1) && this.m_child2
-          .equals(other.m_child2));
+      return (this.m_result.equals(other.m_result) //
+          && this.m_child1.equals(other.m_child1) //
+          && this.m_child2.equals(other.m_child2));
     }
     return false;
   }
@@ -261,9 +264,9 @@ final class _Compound2x2 extends BinaryFunction {
     public final void renderParameter(final int index, final IMath out) {
       switch (index) {
         case 0: {
-          if (this.m_bracesNotNeeded
-              || (_Compound2x2.this.m_child1.getPrecedencePriority() > _Compound2x2.this.m_result
-                  .getPrecedencePriority())) {
+          if (this.m_bracesNotNeeded || //
+              (_Compound2x2.this.m_child1.getPrecedencePriority() > //
+              _Compound2x2.this.m_result.getPrecedencePriority())) {
             _Compound2x2.this.m_child1.mathRender(out, this.m_renderer);
           } else {
             try (final IMath braces = out.inBraces()) {
@@ -274,9 +277,9 @@ final class _Compound2x2 extends BinaryFunction {
           return;
         }
         case 1: {
-          if (this.m_bracesNotNeeded
-              || (_Compound2x2.this.m_child2.getPrecedencePriority() >= _Compound2x2.this.m_result
-              .getPrecedencePriority())) {
+          if (this.m_bracesNotNeeded || //
+              (_Compound2x2.this.m_child2.getPrecedencePriority() >= //
+              _Compound2x2.this.m_result.getPrecedencePriority())) {
             _Compound2x2.this.m_child2.mathRender(out, this.m_renderer);
           } else {
             try (final IMath braces = out.inBraces()) {
@@ -299,8 +302,8 @@ final class _Compound2x2 extends BinaryFunction {
       final boolean braces;
       switch (index) {
         case 0: {
-          braces = (_Compound2x2.this.m_child1.getPrecedencePriority() <= _Compound2x2.this.m_result
-              .getPrecedencePriority());
+          braces = (_Compound2x2.this.m_child1.getPrecedencePriority() <= //
+              _Compound2x2.this.m_result.getPrecedencePriority());
           if (braces) {
             out.append('(');
           }
@@ -311,8 +314,8 @@ final class _Compound2x2 extends BinaryFunction {
           return;
         }
         case 1: {
-          braces = (_Compound2x2.this.m_child2.getPrecedencePriority() < _Compound2x2.this.m_result
-              .getPrecedencePriority());
+          braces = (_Compound2x2.this.m_child2.getPrecedencePriority() < //
+              _Compound2x2.this.m_result.getPrecedencePriority());
           if (braces) {
             out.append('(');
           }

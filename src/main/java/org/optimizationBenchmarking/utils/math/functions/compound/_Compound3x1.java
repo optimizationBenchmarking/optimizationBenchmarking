@@ -112,81 +112,87 @@ final class _Compound3x1 extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final byte computeAsByte(final byte x0) {
-    return this.m_result.computeAsByte(this.m_child1.computeAsByte(x0),
-        this.m_child2.computeAsByte(x0), this.m_child3.computeAsByte(x0));
+    return this.m_result.computeAsByte( //
+        this.m_child1.computeAsByte(x0), //
+        this.m_child2.computeAsByte(x0), //
+        this.m_child3.computeAsByte(x0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final short computeAsShort(final short x0) {
-    return this.m_result
-        .computeAsShort(this.m_child1.computeAsShort(x0),
-            this.m_child2.computeAsShort(x0),
-            this.m_child3.computeAsShort(x0));
+    return this.m_result.computeAsShort( //
+        this.m_child1.computeAsShort(x0), //
+        this.m_child2.computeAsShort(x0), //
+        this.m_child3.computeAsShort(x0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final int computeAsInt(final int x0) {
-    return this.m_result.computeAsInt(this.m_child1.computeAsInt(x0),
-        this.m_child2.computeAsInt(x0), this.m_child3.computeAsInt(x0));
+    return this.m_result.computeAsInt( //
+        this.m_child1.computeAsInt(x0), //
+        this.m_child2.computeAsInt(x0), //
+        this.m_child3.computeAsInt(x0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final long computeAsLong(final long x0) {
-    return this.m_result.computeAsLong(this.m_child1.computeAsLong(x0),
-        this.m_child2.computeAsLong(x0), this.m_child3.computeAsLong(x0));
+    return this.m_result.computeAsLong( //
+        this.m_child1.computeAsLong(x0), //
+        this.m_child2.computeAsLong(x0), //
+        this.m_child3.computeAsLong(x0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final float computeAsFloat(final float x0) {
-    return this.m_result
-        .computeAsFloat(this.m_child1.computeAsFloat(x0),
-            this.m_child2.computeAsFloat(x0),
-            this.m_child3.computeAsFloat(x0));
+    return this.m_result.computeAsFloat( //
+        this.m_child1.computeAsFloat(x0), //
+        this.m_child2.computeAsFloat(x0), //
+        this.m_child3.computeAsFloat(x0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final double x0) {
-    return this.m_result.computeAsDouble(
-        this.m_child1.computeAsDouble(x0),
-        this.m_child2.computeAsDouble(x0),
+    return this.m_result.computeAsDouble( //
+        this.m_child1.computeAsDouble(x0), //
+        this.m_child2.computeAsDouble(x0), //
         this.m_child3.computeAsDouble(x0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final int x0) {
-    return this.m_result.computeAsDouble(
-        this.m_child1.computeAsDouble(x0),
-        this.m_child2.computeAsDouble(x0),
+    return this.m_result.computeAsDouble( //
+        this.m_child1.computeAsDouble(x0), //
+        this.m_child2.computeAsDouble(x0), //
         this.m_child3.computeAsDouble(x0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final double computeAsDouble(final long x0) {
-    return this.m_result.computeAsDouble(
-        this.m_child1.computeAsDouble(x0),
-        this.m_child2.computeAsDouble(x0),
+    return this.m_result.computeAsDouble( //
+        this.m_child1.computeAsDouble(x0), //
+        this.m_child2.computeAsDouble(x0), //
         this.m_child3.computeAsDouble(x0));
   }
 
   /** {@inheritDoc} */
   @Override
   public final boolean isLongArithmeticAccurate() {
-    return (this.m_result.isLongArithmeticAccurate()
-        && this.m_child1.isLongArithmeticAccurate()
-        && this.m_child2.isLongArithmeticAccurate() && this.m_child3
-        .isLongArithmeticAccurate());
+    return (this.m_result.isLongArithmeticAccurate() //
+        && this.m_child1.isLongArithmeticAccurate() //
+        && this.m_child2.isLongArithmeticAccurate() //
+        && this.m_child3.isLongArithmeticAccurate());
   }
 
   /** {@inheritDoc} */
   @Override
-  public int getPrecedencePriority() {
+  public final int getPrecedencePriority() {
     return this.m_result.getPrecedencePriority();
   }
 
@@ -209,9 +215,12 @@ final class _Compound3x1 extends UnaryFunction {
   /** {@inheritDoc} */
   @Override
   public final int hashCode() {
-    return HashUtils.combineHashes(HashUtils.hashCode(this.m_result),
-        HashUtils.combineHashes(HashUtils.hashCode(this.m_child1),
-            HashUtils.combineHashes(HashUtils.hashCode(this.m_child2),
+    return HashUtils.combineHashes( //
+        HashUtils.hashCode(this.m_result), //
+        HashUtils.combineHashes( //
+            HashUtils.hashCode(this.m_child1), //
+            HashUtils.combineHashes( //
+                HashUtils.hashCode(this.m_child2), //
                 HashUtils.hashCode(this.m_child3))));
   }
 
@@ -224,10 +233,10 @@ final class _Compound3x1 extends UnaryFunction {
     }
     if (o instanceof _Compound3x1) {
       other = ((_Compound3x1) o);
-      return (this.m_result.equals(other.m_result)
-          && this.m_child1.equals(other.m_child1)
-          && this.m_child2.equals(other.m_child2) && this.m_child3
-          .equals(other.m_child3));
+      return (this.m_result.equals(other.m_result) //
+          && this.m_child1.equals(other.m_child1) //
+          && this.m_child2.equals(other.m_child2) //
+          && this.m_child3.equals(other.m_child3));
     }
     return false;
   }

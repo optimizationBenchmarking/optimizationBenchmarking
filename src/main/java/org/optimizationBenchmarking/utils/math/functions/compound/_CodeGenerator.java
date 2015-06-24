@@ -248,8 +248,8 @@ final class _CodeGenerator {
     }
     bw.println();
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
-    bw.println(" @Override");//$NON-NLS-1$
-    bw.print(" public final ");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.print("public final ");//$NON-NLS-1$
     bw.print(outTypeName);
     bw.print(' ');
     outTypeNameInName = ("computeAs" + //$NON-NLS-1$
@@ -269,12 +269,12 @@ final class _CodeGenerator {
     }
     bw.println(") {");//$NON-NLS-1$
 
-    bw.print(" return this.m_result.");//$NON-NLS-1$
+    bw.print("return this.m_result.");//$NON-NLS-1$
     bw.print(outTypeNameInName);
-    bw.print('(');
+    bw.println("( //");//$NON-NLS-1$
     for (j = 1; j <= n; j++) {
       if (j > 1) {
-        bw.print(',');
+        bw.println(", //");//$NON-NLS-1$
       }
       bw.print("this.m_child");//$NON-NLS-1$
       bw.print(j);
@@ -288,7 +288,7 @@ final class _CodeGenerator {
         bw.print('x');
         bw.print(i);
       }
-      bw.print(')');
+      bw.println(')');
     }
 
     bw.println(");");//$NON-NLS-1$
@@ -310,13 +310,16 @@ final class _CodeGenerator {
     bw.println();
     bw.println();
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
-    bw.println(" @Override");//$NON-NLS-1$
-    bw.println(" public final boolean isLongArithmeticAccurate() {");//$NON-NLS-1$
-    bw.print(" return (this.m_result.isLongArithmeticAccurate()");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.println("public final boolean isLongArithmeticAccurate() {");//$NON-NLS-1$
+    bw.println("return (this.m_result.isLongArithmeticAccurate() //");//$NON-NLS-1$
     for (j = 1; j <= n; j++) {
       bw.print(" && this.m_child"); //$NON-NLS-1$
       bw.print(j);
       bw.print(".isLongArithmeticAccurate()");//$NON-NLS-1$
+      if (j < n) {
+        bw.println(" //");//$NON-NLS-1$
+      }
     }
     bw.println(");");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
@@ -336,18 +339,18 @@ final class _CodeGenerator {
     bw.println();
     bw.println();
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
-    bw.println(" @Override");//$NON-NLS-1$
-    bw.println(" public final int hashCode() {");//$NON-NLS-1$
-    bw.print(" return ");//$NON-NLS-1$
+    bw.println("@Override");//$NON-NLS-1$
+    bw.println("public final int hashCode() {");//$NON-NLS-1$
+    bw.print("return ");//$NON-NLS-1$
 
     for (j = 0; j <= n; j++) {
       if (j > 0) {
-        bw.print(',');
+        bw.println(", //");//$NON-NLS-1$
       }
       if (j < n) {
-        bw.print(" HashUtils.combineHashes("); //$NON-NLS-1$
+        bw.println("HashUtils.combineHashes( //"); //$NON-NLS-1$
       }
-      bw.print(" HashUtils.hashCode(this.m_"); //$NON-NLS-1$
+      bw.print("HashUtils.hashCode(this.m_"); //$NON-NLS-1$
       if (j <= 0) {
         bw.print("result"); //$NON-NLS-1$
       } else {
@@ -395,7 +398,7 @@ final class _CodeGenerator {
     bw.print(name);
     bw.println(") o);");//$NON-NLS-1$
 
-    bw.print(" return (this.m_result.equals(other.m_result)");//$NON-NLS-1$
+    bw.println(" return (this.m_result.equals(other.m_result) //");//$NON-NLS-1$
 
     for (j = 1; j <= n; j++) {
       bw.print(" && this.m_child"); //$NON-NLS-1$
@@ -404,6 +407,9 @@ final class _CodeGenerator {
       bw.print("other.m_child"); //$NON-NLS-1$
       bw.print(j);
       bw.print(')');
+      if (j < n) {
+        bw.println(" //"); //$NON-NLS-1$
+      }
     }
 
     bw.println(");");//$NON-NLS-1$
@@ -427,7 +433,7 @@ final class _CodeGenerator {
     bw.println();
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println("@Override");//$NON-NLS-1$
-    bw.println("public int getPrecedencePriority() {");//$NON-NLS-1$
+    bw.println("public final int getPrecedencePriority() {");//$NON-NLS-1$
     bw.println("return this.m_result.getPrecedencePriority();");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
   }
@@ -554,7 +560,7 @@ final class _CodeGenerator {
    * Make the render function for the given type
    *
    * @param m
-   *          thefunction arity
+   *          the function arity
    * @param n
    *          the selected index
    * @param bw
@@ -877,15 +883,17 @@ final class _CodeGenerator {
 
       if (n <= 2) {
         if (index <= 0) {
-          bw.print("if (this.m_bracesNotNeeded || (");//$NON-NLS-1$
+          bw.println("if (this.m_bracesNotNeeded || //");//$NON-NLS-1$
+          bw.print('(');
           bw.print(name);
           bw.print(".this.m_child");//$NON-NLS-1$
           bw.print(index + 1);
-          bw.print(".getPrecedencePriority() > ");//$NON-NLS-1$
+          bw.println(".getPrecedencePriority() > //");//$NON-NLS-1$
           bw.print(name);
           bw.println(".this.m_result.getPrecedencePriority()");//$NON-NLS-1$
           if (n == 1) {
-            bw.print(") || (");//$NON-NLS-1$
+            bw.println(") || //");//$NON-NLS-1$
+            bw.print("(");//$NON-NLS-1$
             bw.print(name);
             bw.print(".this.m_result instanceof ");//$NON-NLS-1$
             bw.print(Absolute.class.getSimpleName());
@@ -911,11 +919,12 @@ final class _CodeGenerator {
 
           bw.println('}');
         } else {
-          bw.print("if (this.m_bracesNotNeeded || (");//$NON-NLS-1$
+          bw.println("if (this.m_bracesNotNeeded || //");//$NON-NLS-1$
+          bw.print('(');
           bw.print(name);
           bw.print(".this.m_child");//$NON-NLS-1$
           bw.print(index + 1);
-          bw.print(".getPrecedencePriority() >= ");//$NON-NLS-1$
+          bw.println(".getPrecedencePriority() >= //");//$NON-NLS-1$
           bw.print(name);
           bw.println(".this.m_result.getPrecedencePriority())) {");//$NON-NLS-1$
 
@@ -1001,7 +1010,7 @@ final class _CodeGenerator {
           bw.print(name);
           bw.print(".this.m_child");//$NON-NLS-1$
           bw.print(index + 1);
-          bw.print(".getPrecedencePriority() <= ");//$NON-NLS-1$
+          bw.println(".getPrecedencePriority() <= //");//$NON-NLS-1$
           bw.print(name);
           bw.println(".this.m_result.getPrecedencePriority())");//$NON-NLS-1$
           if (n == 1) {
@@ -1009,7 +1018,8 @@ final class _CodeGenerator {
             bw.print(name);
             bw.println(".this.m_result instanceof ");//$NON-NLS-1$
             bw.print(Absolute.class.getSimpleName());
-            bw.print(")) && (!(this.m_bracesNotNeeded)));");//$NON-NLS-1$
+            bw.println(")) //");//$NON-NLS-1$
+            bw.print(" && (!(this.m_bracesNotNeeded)));");//$NON-NLS-1$
           } else {
             bw.print(';');
           }
@@ -1022,7 +1032,7 @@ final class _CodeGenerator {
           bw.print(name);
           bw.print(".this.m_child");//$NON-NLS-1$
           bw.print(index + 1);
-          bw.print(".getPrecedencePriority() < ");//$NON-NLS-1$
+          bw.println(".getPrecedencePriority() < //");//$NON-NLS-1$
           bw.print(name);
           bw.println(".this.m_result.getPrecedencePriority());");//$NON-NLS-1$
           bw.println("if(braces) {");//$NON-NLS-1$
@@ -1350,7 +1360,7 @@ final class _CodeGenerator {
     bw.println();
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println("@Override");//$NON-NLS-1$
-    bw.println("public int getPrecedencePriority() {");//$NON-NLS-1$
+    bw.println("public final int getPrecedencePriority() {");//$NON-NLS-1$
     bw.println("return Integer.MAX_VALUE;");//$NON-NLS-1$
     bw.println("}");//$NON-NLS-1$
   }
@@ -1706,7 +1716,7 @@ final class _CodeGenerator {
     bw.println();
     bw.println("/** {@inheritDoc} */");//$NON-NLS-1$
     bw.println("@Override");//$NON-NLS-1$
-    bw.println("public int getPrecedencePriority() {");//$NON-NLS-1$
+    bw.println("public final int getPrecedencePriority() {");//$NON-NLS-1$
 
     bw.print("if(this.m_const instanceof ");//$NON-NLS-1$
     bw.print(NamedConstant.class.getSimpleName());

@@ -83,6 +83,12 @@ public final class Identity extends UnaryFunction {
     renderer.renderParameter(0, out);
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public int getPrecedencePriority() {
+    return Integer.MAX_VALUE;
+  }
+
   // default, automatic serialization replacement and resolve routines for
   // singletons
   //

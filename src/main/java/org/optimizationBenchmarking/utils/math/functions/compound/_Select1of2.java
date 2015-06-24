@@ -94,7 +94,7 @@ final class _Select1of2 extends BinaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public int getPrecedencePriority() {
+  public final int getPrecedencePriority() {
     return Integer.MAX_VALUE;
   }
 

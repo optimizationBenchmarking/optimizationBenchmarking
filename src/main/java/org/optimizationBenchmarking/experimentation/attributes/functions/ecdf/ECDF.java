@@ -108,19 +108,22 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       case SHORT:
       case INT:
       case LONG: {
-        this.m_useLongGoal = yAxisInputTransformation
-            .isLongArithmeticAccurate();
 
-        if ((NumericalTypes.getTypes(goalValue) & NumericalTypes.IS_LONG) != 0) {
-          this.m_goalValueLong = goalValue.longValue();
-        } else {
-          this.m_goalValueLong = ECDF.__doubleToLong(
-              goalValue.doubleValue(), criterion);
+        if (yAxisInputTransformation.isLongArithmeticAccurate()) {
+          this.m_useLongGoal = true;
+          if ((NumericalTypes.getTypes(goalValue) & NumericalTypes.IS_LONG) != 0) {
+            this.m_goalValueLong = goalValue.longValue();
+          } else {
+            this.m_goalValueLong = ECDF.__doubleToLong(
+                goalValue.doubleValue(), criterion);
+          }
+
+          this.m_goalValueDouble = this.m_goalValueLong;
+          break;
         }
-
-        this.m_goalValueDouble = this.m_goalValueLong;
-        break;
+        // fall through
       }
+      //$FALL-THROUGH$
       default: {
         this.m_goalValueDouble = goalValue.doubleValue();
         this.m_useLongGoal = false;
@@ -168,7 +171,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
         if (d != d) {
           throw new IllegalArgumentException(//
               "Cannot transform " + d + //$NON-NLS-1$
-                  " to a long under " + criterion);//$NON-NLS-1$
+              " to a long under " + criterion);//$NON-NLS-1$
         }
         return ((long) d);
       }
@@ -184,7 +187,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       default: {
         throw new IllegalArgumentException(//
             "Illegal comparison operator: " //$NON-NLS-1$
-                + criterion);
+            + criterion);
       }
     }
   }
@@ -196,12 +199,12 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
         HashUtils.combineHashes(//
             super.calcHashCode(),//
             (this.m_useLongGoal ? //
-            HashUtils.hashCode(this.m_goalValueLong)
+                HashUtils.hashCode(this.m_goalValueLong)
                 : HashUtils.hashCode(this.m_goalValueDouble))//
             ), HashUtils.combineHashes(//
-            HashUtils.hashCode(this.m_criterion),//
-            HashUtils.hashCode(this.m_aggregate)//
-            ));
+                HashUtils.hashCode(this.m_criterion),//
+                HashUtils.hashCode(this.m_aggregate)//
+                ));
   }
 
   /** {@inheritDoc} */
@@ -215,12 +218,12 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     return ((this.m_useLongGoal == ecdf.m_useLongGoal)//
         && //
         (this.m_useLongGoal ? //
-        (this.m_goalValueLong == ecdf.m_goalValueLong)
+            (this.m_goalValueLong == ecdf.m_goalValueLong)
             : //
-            (EComparison.EQUAL.compare(this.m_goalValueDouble,
-                ecdf.m_goalValueDouble))) && //
-        this.m_criterion.equals(ecdf.m_criterion) && //
-    this.m_aggregate.equals(ecdf.m_aggregate));
+              (EComparison.EQUAL.compare(this.m_goalValueDouble,
+                  ecdf.m_goalValueDouble))) && //
+                  this.m_criterion.equals(ecdf.m_criterion) && //
+                  this.m_aggregate.equals(ecdf.m_aggregate));
   }
 
   /**
@@ -412,7 +415,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     if (xIn == null) {//
       throw new IllegalArgumentException(
           "Must specify an x-dimension via parameter '" //$NON-NLS-1$
-              + FunctionAttribute.X_AXIS_PARAM + '\'');
+          + FunctionAttribute.X_AXIS_PARAM + '\'');
     }
 
     yIn = config
@@ -420,7 +423,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     if (yIn == null) {//
       throw new IllegalArgumentException(
           "Must specify an input dimension for the y-axis via parameter '" //$NON-NLS-1$
-              + FunctionAttribute.Y_INPUT_AXIS_PARAM + '\'');
+          + FunctionAttribute.Y_INPUT_AXIS_PARAM + '\'');
     }
 
     dimParser = null;

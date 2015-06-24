@@ -107,7 +107,7 @@ final class _Const1 extends UnaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public int getPrecedencePriority() {
+  public final int getPrecedencePriority() {
     if (this.m_const instanceof NamedConstant) {
       return Integer.MAX_VALUE;
     }

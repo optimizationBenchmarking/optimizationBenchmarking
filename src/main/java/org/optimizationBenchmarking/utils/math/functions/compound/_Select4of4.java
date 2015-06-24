@@ -102,7 +102,7 @@ final class _Select4of4 extends QuaternaryFunction {
 
   /** {@inheritDoc} */
   @Override
-  public int getPrecedencePriority() {
+  public final int getPrecedencePriority() {
     return Integer.MAX_VALUE;
   }
 
