@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.document.spec;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /** Comparison operators as used by the compare operation */
 public enum EMathComparison {
@@ -112,5 +113,44 @@ public enum EMathComparison {
    */
   public final char getOperatorChar() {
     return this.m_operatorChar;
+  }
+
+  /**
+   * Translate an instance of
+   * {@link org.optimizationBenchmarking.utils.comparison.EComparison} to
+   * an instance of {@link EMathComparison}.
+   *
+   * @param compare
+   *          the
+   *          {@link org.optimizationBenchmarking.utils.comparison.EComparison
+   *          comparison} instance
+   * @return the {@link EMathComparison} instance
+   */
+  public static final EMathComparison fromEComparison(
+      final EComparison compare) {
+    switch (compare) {
+      case LESS: {
+        return LESS;
+      }
+      case LESS_OR_EQUAL: {
+        return LESS_OR_EQUAL;
+      }
+      case EQUAL: {
+        return EQUAL;
+      }
+      case GREATER_OR_EQUAL: {
+        return GREATER_OR_EQUAL;
+      }
+      case GREATER: {
+        return GREATER;
+      }
+      case NOT_EQUAL: {
+        return NOT_EQUAL;
+      }
+      default: {
+        throw new IllegalArgumentException(compare + //
+            " does not match to any EMathComparison instance."); //$NON-NLS-1$
+      }
+    }
   }
 }

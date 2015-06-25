@@ -647,6 +647,66 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
         this.__getYAxisFunctionRenderer());
   }
 
+  /**
+   * Render the name of {@code x}-axis, as used in the first parameter of
+   * the function computed as {@code y}-axis
+   *
+   * @param out
+   *          the output destination
+   * @param renderer
+   *          the parameter renderer
+   */
+  protected void yAxisRenderXAxisAsParameter(final IMath out,
+      final IParameterRenderer renderer) {
+    FunctionAttribute.this.m_xAxisTransformation.getDimension()
+        .mathRender(out, renderer);
+  }
+
+  /**
+   * Render the name of {@code x}-axis, as used in the first parameter of
+   * the function computed as {@code y}-axis
+   *
+   * @param out
+   *          the output destination
+   * @param renderer
+   *          the parameter renderer
+   */
+  protected void yAxisRenderXAxisAsParameter(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    out.append(FunctionAttribute.this.m_xAxisTransformation.getDimension()
+        .getName());
+  }
+
+  /**
+   * Render the name of {@code y}-axis source, as used in the second
+   * parameter of the function computed as {@code y}-axis
+   *
+   * @param out
+   *          the output destination
+   * @param renderer
+   *          the parameter renderer
+   */
+  protected void yAxisRenderYAxisSourceAsParameter(final IMath out,
+      final IParameterRenderer renderer) {
+    FunctionAttribute.this.m_yAxisInputTransformation.m_func.mathRender(
+        out, renderer);
+  }
+
+  /**
+   * Render the name of {@code y}-axis source, as used in the second
+   * parameter of the function computed as {@code y}-axis
+   *
+   * @param out
+   *          the output destination
+   * @param renderer
+   *          the parameter renderer
+   */
+  protected void yAxisRenderYAxisSourceAsParameter(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    FunctionAttribute.this.m_yAxisInputTransformation.m_func.mathRender(
+        out, FunctionAttribute.this._getYAxisParameterRenderer());
+  }
+
   /** The internal class representing the x-axis of a function */
   private final class __FunctionXAxis implements ISemanticMathComponent {
 
@@ -822,15 +882,15 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     @Override
     public final void renderParameter(final int index,
         final ITextOutput out) {
+      final IParameterRenderer next;
       if (index == 0) {
         out.append(FunctionAttribute.this.getShortName());
         out.append('(');
-        out.append(FunctionAttribute.this.m_xAxisTransformation
-            .getDimension().getName());
+        next = FunctionAttribute.this._getYAxisParameterRenderer();
+        FunctionAttribute.this.yAxisRenderXAxisAsParameter(out, next);
         out.append(',');
-        FunctionAttribute.this.m_yAxisInputTransformation.m_func
-            .mathRender(out,
-                FunctionAttribute.this._getYAxisParameterRenderer());
+        FunctionAttribute.this
+            .yAxisRenderYAxisSourceAsParameter(out, next);
         out.append(')');
       } else {
         AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
@@ -846,10 +906,10 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
         next = FunctionAttribute.this._getYAxisParameterRenderer();
         try (final IMath function = out.nAryFunction(
             FunctionAttribute.this.getShortName(), 2, 2)) {
-          FunctionAttribute.this.m_xAxisTransformation.getDimension()
-              .mathRender(function, next);
-          FunctionAttribute.this.m_yAxisInputTransformation.m_func
-              .mathRender(function, next);
+          FunctionAttribute.this.yAxisRenderXAxisAsParameter(function,
+              next);
+          FunctionAttribute.this.yAxisRenderYAxisSourceAsParameter(
+              function, next);
         }
       } else {
         AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);

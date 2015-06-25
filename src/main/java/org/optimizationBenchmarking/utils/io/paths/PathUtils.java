@@ -107,19 +107,19 @@ public final class PathUtils {
         if ((codepoint <= 0x7a)) {// "a" ... "z"
           continue outer;
         }
-        if (codepoint <= 0xbf) { // up to the inverted question mark
-          break dontChange;
-        }
-        if (!(Character.isDefined(codepoint) && //
-        Character.isValidCodePoint(codepoint))) {
-          break dontChange;
-        }
-        if (Character.isISOControl(codepoint) || //
-            Character.isWhitespace(codepoint)) {
-          break dontChange;
-        }
-
-        continue outer;
+        // if (codepoint <= 0xbf) { // up to the inverted question mark
+        // break dontChange;
+        // }
+        // if (!(Character.isDefined(codepoint) && //
+        // Character.isValidCodePoint(codepoint))) {
+        // break dontChange;
+        // }
+        // if (Character.isISOControl(codepoint) || //
+        // Character.isWhitespace(codepoint)) {
+        // break dontChange;
+        // }
+        // continue outer;
+        break dontChange;
       }
 
       if ((index < (size - 1)) && (data[index + 1] == '_')) {

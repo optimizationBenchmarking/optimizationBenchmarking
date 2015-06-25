@@ -19,6 +19,9 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.ComparisonParser;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
+import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.NumericalTypes;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
@@ -26,7 +29,9 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.ArithmeticMean;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser;
+import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The Estimated Cumulative Distribution Function returns, for an
@@ -136,6 +141,39 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     this.m_aggregate = aggregate;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  protected void yAxisRenderYAxisSourceAsParameter(final IMath out,
+      final IParameterRenderer renderer) {
+    try (final IMath math = out.compare(EMathComparison
+        .fromEComparison(this.m_criterion))) {
+      super.yAxisRenderYAxisSourceAsParameter(math, renderer);
+      try (final IText number = math.number()) {
+        if (this.isGoalValueLong()
+            || (this.m_goalValueLong == this.m_goalValueDouble)) {
+          number.append(this.m_goalValueLong);
+        } else {
+          number.append(this.m_goalValueDouble);
+        }
+      }
+    }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected void yAxisRenderYAxisSourceAsParameter(final ITextOutput out,
+      final IParameterRenderer renderer) {
+    super.yAxisRenderYAxisSourceAsParameter(out, renderer);
+    out.append(EMathComparison.fromEComparison(this.m_criterion)
+        .getOperatorChar());
+    if (this.isGoalValueLong()
+        || (this.m_goalValueLong == this.m_goalValueDouble)) {
+      out.append(this.m_goalValueLong);
+    } else {
+      out.append(this.m_goalValueDouble);
+    }
+  }
+
   /**
    * convert a {@code double} goal value to a {@code long}
    *
@@ -171,7 +209,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
         if (d != d) {
           throw new IllegalArgumentException(//
               "Cannot transform " + d + //$NON-NLS-1$
-              " to a long under " + criterion);//$NON-NLS-1$
+                  " to a long under " + criterion);//$NON-NLS-1$
         }
         return ((long) d);
       }
@@ -187,7 +225,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
       default: {
         throw new IllegalArgumentException(//
             "Illegal comparison operator: " //$NON-NLS-1$
-            + criterion);
+                + criterion);
       }
     }
   }
@@ -199,12 +237,12 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
         HashUtils.combineHashes(//
             super.calcHashCode(),//
             (this.m_useLongGoal ? //
-                HashUtils.hashCode(this.m_goalValueLong)
+            HashUtils.hashCode(this.m_goalValueLong)
                 : HashUtils.hashCode(this.m_goalValueDouble))//
             ), HashUtils.combineHashes(//
-                HashUtils.hashCode(this.m_criterion),//
-                HashUtils.hashCode(this.m_aggregate)//
-                ));
+            HashUtils.hashCode(this.m_criterion),//
+            HashUtils.hashCode(this.m_aggregate)//
+            ));
   }
 
   /** {@inheritDoc} */
@@ -218,12 +256,12 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     return ((this.m_useLongGoal == ecdf.m_useLongGoal)//
         && //
         (this.m_useLongGoal ? //
-            (this.m_goalValueLong == ecdf.m_goalValueLong)
+        (this.m_goalValueLong == ecdf.m_goalValueLong)
             : //
-              (EComparison.EQUAL.compare(this.m_goalValueDouble,
-                  ecdf.m_goalValueDouble))) && //
-                  this.m_criterion.equals(ecdf.m_criterion) && //
-                  this.m_aggregate.equals(ecdf.m_aggregate));
+            (EComparison.EQUAL.compare(this.m_goalValueDouble,
+                ecdf.m_goalValueDouble))) && //
+        this.m_criterion.equals(ecdf.m_criterion) && //
+    this.m_aggregate.equals(ecdf.m_aggregate));
   }
 
   /**
@@ -415,7 +453,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     if (xIn == null) {//
       throw new IllegalArgumentException(
           "Must specify an x-dimension via parameter '" //$NON-NLS-1$
-          + FunctionAttribute.X_AXIS_PARAM + '\'');
+              + FunctionAttribute.X_AXIS_PARAM + '\'');
     }
 
     yIn = config
@@ -423,7 +461,7 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     if (yIn == null) {//
       throw new IllegalArgumentException(
           "Must specify an input dimension for the y-axis via parameter '" //$NON-NLS-1$
-          + FunctionAttribute.Y_INPUT_AXIS_PARAM + '\'');
+              + FunctionAttribute.Y_INPUT_AXIS_PARAM + '\'');
     }
 
     dimParser = null;
