@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfiguration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
@@ -18,6 +19,7 @@ import org.optimizationBenchmarking.utils.document.spec.IDocumentDriver;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.TempDir;
 
+import test.junit.CategorySlowTests;
 import test.junit.FileProducerCollector;
 import test.junit.InstanceTest;
 import test.junit.org.optimizationBenchmarking.utils.tools.ToolTest;
@@ -207,6 +209,7 @@ public abstract class DocumentDriverTest extends
    *           if something goes wrong
    */
   @Test(timeout = 3600000)
+  @Category(CategorySlowTests.class)
   public void testParallelDocumentCreation_1_fifo() throws Throwable {
     this.__doParallelTest(1, true, new Random());
   }
@@ -229,6 +232,7 @@ public abstract class DocumentDriverTest extends
    *           if something goes wrong
    */
   @Test(timeout = 3600000)
+  @Category(CategorySlowTests.class)
   public void testParallelDocumentCreation_2_fifo() throws Throwable {
     this.__doParallelTest(2, true, new Random());
   }
@@ -251,6 +255,7 @@ public abstract class DocumentDriverTest extends
    *           if something goes wrong
    */
   @Test(timeout = 3600000)
+  @Category(CategorySlowTests.class)
   public void testParallelDocumentCreation_3_fifo() throws Throwable {
     this.__doParallelTest(3, true, new Random());
   }
@@ -262,6 +267,7 @@ public abstract class DocumentDriverTest extends
    *           if something goes wrong
    */
   @Test(timeout = 3600000)
+  @Category(CategorySlowTests.class)
   public void testParallelDocumentCreation_3_default() throws Throwable {
     this.__doParallelTest(3, false, new Random());
   }
