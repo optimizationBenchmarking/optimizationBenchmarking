@@ -115,8 +115,6 @@ public final class FontStyle extends FontProperties implements IStyle {
                             : ((family == EFontFamily.DIALOG_INPUT) ? FontProperties.FONT_FLAG_DIALOG_INPUT
                                 : 0))))));
 
-    Font use;
-
     FontStyleBuilder._checkFontFamily(family);
     FontStyleBuilder._checkSize(size);
 
@@ -135,12 +133,6 @@ public final class FontStyle extends FontProperties implements IStyle {
       throw new IllegalArgumentException(//
           "ID must not be null or empty, but is '" //$NON-NLS-1$
               + id + '\'');
-    }
-
-    // just in case of http://stackoverflow.com/questions/26063828
-    use = Font.getFont(font.getAttributes());
-    if (use == null) {
-      use = font;
     }
 
     this.m_size = size;

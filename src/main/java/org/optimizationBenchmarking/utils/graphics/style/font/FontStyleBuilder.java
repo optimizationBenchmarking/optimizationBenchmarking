@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Locale;
+import java.util.logging.Level;
+
+import javax.swing.text.StyleContext;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -17,9 +20,9 @@ import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.graphics.EFontFamily;
 import org.optimizationBenchmarking.utils.graphics.EFontType;
 import org.optimizationBenchmarking.utils.graphics.FontProperties;
-import org.optimizationBenchmarking.utils.graphics.style.PaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
+import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.parsers.BooleanParser;
 import org.optimizationBenchmarking.utils.parsers.IntParser;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
@@ -27,7 +30,14 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.text.transformations.NormalCharTransformer;
 
-/** A builder for font styles */
+/**
+ * A builder for font styles. This builder can resolve and load a instance
+ * of
+ * {@code org.optimizationBenchmarking.utils.graphics.style.font.FontStyle}
+ * based a set of face choices and attributes. It will try to build fonts
+ * which support an as-wide-as-possible range of the Unicode code table,
+ * {@linkplain #__makeFont(Font) creating a composite font} if necessary.
+ */
 public final class FontStyleBuilder extends
     PaletteElementBuilder<FontStyle> {
 
@@ -84,8 +94,7 @@ public final class FontStyleBuilder extends
    * @param id
    *          the id
    */
-  protected FontStyleBuilder(
-      final PaletteBuilder<FontStyle, FontPalette> owner,
+  protected FontStyleBuilder(final FontPaletteBuilder owner,
       final int choice, final String id) {
     super(owner);
     this.m_family = EFontFamily.SERIF;
@@ -666,9 +675,50 @@ public final class FontStyleBuilder extends
 
     // ok, now we have everything
     return new FontStyle(((fam2 != null) ? fam2 : fam1), this.m_size,
-        this.m_italic, this.m_bold, this.m_underlined, font,
-        new ArrayListView<>(choices.toArray(new String[choices.size()])),
-        resource, type, this.m_id);
+        this.m_italic, this.m_bold, this.m_underlined,
+        this.__makeFont(font), new ArrayListView<>(
+            choices.toArray(new String[choices.size()])), resource, type,
+        this.m_id);
+  }
+
+  /**
+   * Some of the standard fonts for publications only support a weird
+   * subset of the Unicode character set: The cmr fonts, for instance do
+   * not have glyphs for "<", the "less-or-equal"-symbol, "²", or "{" and
+   * "}". These symbols will be rendered as empty rectangles, which kind of
+   * messes up the experience. With the method call below, we obtain a
+   * composite font where these missing glyphs are replaced with glyphs of
+   * another font.
+   *
+   * @param font
+   *          the original font
+   * @return the new font
+   */
+  @SuppressWarnings("resource")
+  private final Font __makeFont(final Font font) {
+    final StyleContext context;
+    HierarchicalFSM ownerFSM;
+    Font use;
+
+    ownerFSM = this.getOwner();
+    if (ownerFSM instanceof FontPaletteBuilder) {
+      context = ((FontPaletteBuilder) ownerFSM).m_context;
+    } else {
+      context = StyleContext.getDefaultStyleContext();
+    }
+
+    try {
+      use = context.getFont(font.getFamily(), font.getStyle(),
+          font.getSize());
+      if (use != null) {
+        return use;
+      }
+    } catch (final Throwable error) {
+      ErrorUtils.logError(Configuration.getGlobalLogger(), Level.WARNING,
+          ("Error while trying build composite font based on font " //$NON-NLS-1$
+          + font), error, false, RethrowMode.DONT_RETHROW);
+    }
+    return font;
   }
 
   /** {@inheritDoc} */

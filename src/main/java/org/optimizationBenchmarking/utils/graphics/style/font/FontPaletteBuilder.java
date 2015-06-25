@@ -2,6 +2,8 @@ package org.optimizationBenchmarking.utils.graphics.style.font;
 
 import java.util.ArrayList;
 
+import javax.swing.text.StyleContext;
+
 import org.optimizationBenchmarking.utils.graphics.style.PaletteBuilder;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
@@ -29,9 +31,13 @@ public class FontPaletteBuilder extends
   /** the font counter */
   private int m_count;
 
+  /** the internal style context */
+  final StyleContext m_context;
+
   /** create */
   public FontPaletteBuilder() {
     super(null);
+    this.m_context = new StyleContext();
     this.open();
   }
 
