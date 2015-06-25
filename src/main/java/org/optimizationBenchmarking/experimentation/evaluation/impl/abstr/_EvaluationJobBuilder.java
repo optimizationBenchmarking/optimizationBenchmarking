@@ -14,13 +14,12 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
  *          the data type
  * @param <MT>
  *          the module type
- * @param <JT>
- *          the job type
  * @param <JBT>
  *          the job builder type
  */
-class _EvaluationJobBuilder<DT extends IElementSet, MT extends _EvaluationModule<DT>, JT extends IEvaluationJob, JBT extends _EvaluationJobBuilder<DT, MT, JT, JBT>>
-    extends ToolJobBuilder<JT, JBT> implements IEvaluationJobBuilder {
+class _EvaluationJobBuilder<DT extends IElementSet, MT extends _EvaluationModule<DT>, JBT extends _EvaluationJobBuilder<DT, MT, JBT>>
+    extends ToolJobBuilder<IEvaluationJob, JBT> implements
+    IEvaluationJobBuilder {
 
   /** the module */
   private final MT m_module;
@@ -56,7 +55,7 @@ class _EvaluationJobBuilder<DT extends IElementSet, MT extends _EvaluationModule
    */
   @SuppressWarnings("unchecked")
   public final synchronized JBT setData(final DT data) {
-    _EvaluationJob._checkData(this, data);
+    EvaluationJob._checkData(this, data);
     this.m_data = data;
     return ((JBT) this);
   }
@@ -88,12 +87,11 @@ class _EvaluationJobBuilder<DT extends IElementSet, MT extends _EvaluationModule
   }
 
   /** {@inheritDoc} */
-  @SuppressWarnings("unchecked")
   @Override
-  public synchronized final JT create() throws Exception {
+  public synchronized final IEvaluationJob create() throws Exception {
     this.validate();
-    return ((JT) (this.m_module.createJob(this.m_data, this.m_config,
-        this.getLogger())));
+    return this.m_module.createJob(this.m_data, this.m_config,
+        this.getLogger());
   }
 
 }

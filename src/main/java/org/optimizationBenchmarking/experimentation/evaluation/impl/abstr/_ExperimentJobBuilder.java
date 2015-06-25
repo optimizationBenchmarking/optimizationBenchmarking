@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.spec.IExperimentJ
 /** The experiment job builder implementation */
 final class _ExperimentJobBuilder
     extends
-    _EvaluationJobBuilder<IExperiment, ExperimentModule, ExperimentJob, _ExperimentJobBuilder>
+    _EvaluationJobBuilder<IExperiment, ExperimentModule, _ExperimentJobBuilder>
     implements IExperimentJobBuilder {
 
   /**

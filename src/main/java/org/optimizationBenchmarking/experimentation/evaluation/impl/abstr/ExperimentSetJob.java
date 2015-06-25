@@ -10,7 +10,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
  * .
  */
 public abstract class ExperimentSetJob extends
-    _EvaluationJob<IExperimentSet> {
+    EvaluationJob<IExperimentSet> {
   /**
    * Create the experiment set evaluation job
    *

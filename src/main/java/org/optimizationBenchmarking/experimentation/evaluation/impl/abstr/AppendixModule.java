@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IAppendixJobBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IAppendixModule;
+import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationJob;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
 /**
@@ -37,6 +38,6 @@ public abstract class AppendixModule extends
    *          log info should be written
    */
   @Override
-  public abstract AppendixJob createJob(IExperimentSet data,
+  public abstract IEvaluationJob createJob(IExperimentSet data,
       Configuration config, Logger logger);
 }

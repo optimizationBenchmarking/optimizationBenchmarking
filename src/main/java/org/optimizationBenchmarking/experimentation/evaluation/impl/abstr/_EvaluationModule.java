@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.impl.abstr;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IElementSet;
+import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationJob;
 import org.optimizationBenchmarking.utils.config.Configuration;
 
 /**
@@ -30,7 +31,7 @@ abstract class _EvaluationModule<DT extends IElementSet> extends
    *          the logger
    * @return the job
    */
-  abstract _EvaluationJob<DT> createJob(final DT data,
+  abstract IEvaluationJob createJob(final DT data,
       final Configuration config, final Logger logger);
 
 }

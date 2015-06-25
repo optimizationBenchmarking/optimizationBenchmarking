@@ -19,7 +19,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * @param <DT>
  *          the data type
  */
-public abstract class _EvaluationJob<DT extends IElementSet> implements
+public abstract class EvaluationJob<DT extends IElementSet> implements
     IEvaluationJob, ITextable {
 
   /** the initial state */
@@ -28,32 +28,32 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
    * we are before calling
    * {@link #doInitialize(IElementSet, IDocument, Logger)}
    */
-  private static final int STATE_BEFORE_INIT = (_EvaluationJob.STATE_NOTHING + 1);
+  private static final int STATE_BEFORE_INIT = (EvaluationJob.STATE_NOTHING + 1);
   /**
    * we are after calling
    * {@link #doInitialize(IElementSet, IDocument, Logger)}
    */
-  private static final int STATE_AFTER_INIT = (_EvaluationJob.STATE_BEFORE_INIT + 1);
+  private static final int STATE_AFTER_INIT = (EvaluationJob.STATE_BEFORE_INIT + 1);
   /**
    * we are before calling
    * {@link #doSummary(IElementSet, IPlainText, Logger)}
    */
-  private static final int STATE_BEFORE_SUMMARY = (_EvaluationJob.STATE_AFTER_INIT + 1);
+  private static final int STATE_BEFORE_SUMMARY = (EvaluationJob.STATE_AFTER_INIT + 1);
   /**
    * we are after calling
    * {@link #doSummary(IElementSet, IPlainText, Logger)}
    */
-  private static final int STATE_AFTER_SUMMARY = (_EvaluationJob.STATE_BEFORE_SUMMARY + 1);
+  private static final int STATE_AFTER_SUMMARY = (EvaluationJob.STATE_BEFORE_SUMMARY + 1);
   /**
    * we are before calling
    * {@link #doMain(IElementSet, ISectionContainer, Logger)}
    */
-  private static final int STATE_BEFORE_MAIN = (_EvaluationJob.STATE_AFTER_SUMMARY + 1);
+  private static final int STATE_BEFORE_MAIN = (EvaluationJob.STATE_AFTER_SUMMARY + 1);
   /**
    * we are after calling
    * {@link #doMain(IElementSet, ISectionContainer, Logger)}
    */
-  private static final int STATE_AFTER_MAIN = (_EvaluationJob.STATE_BEFORE_MAIN + 1);
+  private static final int STATE_AFTER_MAIN = (EvaluationJob.STATE_BEFORE_MAIN + 1);
 
   /** the state names */
   private static final char[][] STATE_NAMES = {
@@ -90,13 +90,13 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
    * @param logger
    *          the logger
    */
-  _EvaluationJob(final DT data, final Logger logger) {
+  protected EvaluationJob(final DT data, final Logger logger) {
     super();
 
-    _EvaluationJob._checkData(this, data);
+    EvaluationJob._checkData(this, data);
     this.m_data = data;
     this.m_logger = logger;
-    this.m_state = _EvaluationJob.STATE_NOTHING;
+    this.m_state = EvaluationJob.STATE_NOTHING;
   }
 
   /**
@@ -152,9 +152,9 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
       mto.append("Evaluation job ");//$NON-NLS-1$
       this.toText(mto);
       mto.append(" is supposed to be in state '");//$NON-NLS-1$
-      mto.append(_EvaluationJob.STATE_NAMES[expected]);
+      mto.append(EvaluationJob.STATE_NAMES[expected]);
       mto.append("' but is in state '"); //$NON-NLS-1$
-      mto.append(_EvaluationJob.STATE_NAMES[this.m_state]);
+      mto.append(EvaluationJob.STATE_NAMES[this.m_state]);
       mto.append('\'');
       mto.append('.');
       throw new IllegalStateException(mto.toString());
@@ -181,13 +181,13 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
   /** {@inheritDoc} */
   @Override
   public final void initialize(final IDocument document) {
-    this.__step(_EvaluationJob.STATE_NOTHING,
-        _EvaluationJob.STATE_BEFORE_INIT);
+    this.__step(EvaluationJob.STATE_NOTHING,
+        EvaluationJob.STATE_BEFORE_INIT);
     try {
       this.doInitialize(this.m_data, document, this.m_logger);
     } finally {
-      this.__step(_EvaluationJob.STATE_BEFORE_INIT,
-          _EvaluationJob.STATE_AFTER_INIT);
+      this.__step(EvaluationJob.STATE_BEFORE_INIT,
+          EvaluationJob.STATE_AFTER_INIT);
     }
   }
 
@@ -213,11 +213,11 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
   /** {@inheritDoc} */
   @Override
   public final void summary(final IPlainText summary) {
-    this.__step(_EvaluationJob.STATE_AFTER_INIT,
-        _EvaluationJob.STATE_BEFORE_SUMMARY);
+    this.__step(EvaluationJob.STATE_AFTER_INIT,
+        EvaluationJob.STATE_BEFORE_SUMMARY);
     this.doSummary(this.m_data, summary, this.m_logger);
-    this.__step(_EvaluationJob.STATE_BEFORE_SUMMARY,
-        _EvaluationJob.STATE_AFTER_SUMMARY);
+    this.__step(EvaluationJob.STATE_BEFORE_SUMMARY,
+        EvaluationJob.STATE_AFTER_SUMMARY);
   }
 
   /**
@@ -243,11 +243,11 @@ public abstract class _EvaluationJob<DT extends IElementSet> implements
   @Override
   public final void main(final ISectionContainer sectionContainer) {
     try {
-      this.__step(_EvaluationJob.STATE_AFTER_SUMMARY,
-          _EvaluationJob.STATE_BEFORE_MAIN);
+      this.__step(EvaluationJob.STATE_AFTER_SUMMARY,
+          EvaluationJob.STATE_BEFORE_MAIN);
       this.doMain(this.m_data, sectionContainer, this.m_logger);
-      this.__step(_EvaluationJob.STATE_BEFORE_MAIN,
-          _EvaluationJob.STATE_AFTER_MAIN);
+      this.__step(EvaluationJob.STATE_BEFORE_MAIN,
+          EvaluationJob.STATE_AFTER_MAIN);
     } finally {
       this.m_data = null;
       this.m_logger = null;

@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
  * {@link org.optimizationBenchmarking.experimentation.evaluation.spec.IAppendixModule}
  * .
  */
-public abstract class AppendixJob extends _EvaluationJob<IExperimentSet> {
+public abstract class AppendixJob extends EvaluationJob<IExperimentSet> {
   /**
    * Create the appendix evaluation job
    *

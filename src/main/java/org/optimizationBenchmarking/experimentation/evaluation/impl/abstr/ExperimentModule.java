@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.impl.abstr;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
+import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationJob;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IExperimentJobBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IExperimentModule;
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -37,6 +38,6 @@ public abstract class ExperimentModule extends
    *          log info should be written
    */
   @Override
-  public abstract ExperimentJob createJob(IExperiment data,
+  public abstract IEvaluationJob createJob(IExperiment data,
       Configuration config, Logger logger);
 }

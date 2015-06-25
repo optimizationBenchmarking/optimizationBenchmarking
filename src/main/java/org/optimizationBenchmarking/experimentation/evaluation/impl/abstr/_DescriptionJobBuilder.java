@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.spec.IDescription
 /** The description job builder implementation */
 final class _DescriptionJobBuilder
     extends
-    _EvaluationJobBuilder<IExperimentSet, DescriptionModule, DescriptionJob, _DescriptionJobBuilder>
+    _EvaluationJobBuilder<IExperimentSet, DescriptionModule, _DescriptionJobBuilder>
     implements IDescriptionJobBuilder {
 
   /**

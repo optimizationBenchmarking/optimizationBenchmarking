@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.spec.IAppendixJob
 /** The appendix job builder implementation */
 final class _AppendixJobBuilder
     extends
-    _EvaluationJobBuilder<IExperimentSet, AppendixModule, AppendixJob, _AppendixJobBuilder>
+    _EvaluationJobBuilder<IExperimentSet, AppendixModule, _AppendixJobBuilder>
     implements IAppendixJobBuilder {
 
   /**

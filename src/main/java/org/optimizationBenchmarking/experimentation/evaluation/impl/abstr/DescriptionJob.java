@@ -9,8 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
  * {@link org.optimizationBenchmarking.experimentation.evaluation.spec.IDescriptionModule}
  * .
  */
-public abstract class DescriptionJob extends
-    _EvaluationJob<IExperimentSet> {
+public abstract class DescriptionJob extends EvaluationJob<IExperimentSet> {
   /**
    * Create the description evaluation job
    *
