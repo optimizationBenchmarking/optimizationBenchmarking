@@ -148,7 +148,7 @@ public final class SemanticComponentUtils {
     mto1 = new MemoryTextOutput();
     next = component.printLongName(mto1, textCase);
     mto2 = new MemoryTextOutput(mto1.length());
-    next = component.printShortName(mto1, next);
+    next = component.printShortName(mto2, next);
 
     if (mto1.equalsIgnoreCase(mto2)) {
       mto2 = null;

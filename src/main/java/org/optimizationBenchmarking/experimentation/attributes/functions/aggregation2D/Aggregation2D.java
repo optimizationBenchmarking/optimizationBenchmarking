@@ -16,6 +16,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
+import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
@@ -23,6 +25,9 @@ import org.optimizationBenchmarking.utils.math.matrix.processing.ColumnTransform
 import org.optimizationBenchmarking.utils.math.statistics.parameters.Median;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
+import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The 2D statistical parameter curve, which can be computed over instance
@@ -121,6 +126,79 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
    */
   public final StatisticalParameter getSecondaryStatisticalParameter() {
     return this.m_second;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    final DimensionTransformation xIn, yIn;
+    final Transformation yOut;
+    ETextCase use;
+
+    use = super.printDescription(textOut, textCase).nextCase();
+
+    yIn = this.getYAxisInputTransformation();
+    xIn = this.getXAxisTransformation();
+    yOut = this.getYAxisOutputTransformation();
+
+    textOut.append(" The "); //$NON-NLS-1$
+    if (textOut instanceof IComplexText) {
+      try (final IMath math = ((IComplexText) textOut).inlineMath()) {
+        this.yAxisMathRender(math, DefaultParameterRenderer.INSTANCE);
+      }
+    } else {
+      this.yAxisMathRender(textOut, DefaultParameterRenderer.INSTANCE);
+    }
+    textOut.append(" represents the "); //$NON-NLS-1$
+    this.m_param.printLongName(textOut, use);
+    textOut.append(" of the "); //$NON-NLS-1$
+    yIn.printShortName(textOut, use);
+    textOut.append(' ');
+    textOut.append(" for a given ellapsed runtime measured in "); //$NON-NLS-1$
+    xIn.getDimension().printShortName(textOut, use);
+
+    if (yOut.isIdentityTransformation()) {
+      textOut.append(". The "); //$NON-NLS-1$
+      this.m_param.printLongName(textOut, use);
+    } else {
+      textOut.append(//
+          ". We do not use these values directly, but instead compute "); //$NON-NLS-1$
+      if (textOut instanceof IComplexText) {
+        try (final IMath math = ((IComplexText) textOut).inlineMath()) {
+          this.yAxisMathRender(math, DefaultParameterRenderer.INSTANCE);
+        }
+      } else {
+        this.yAxisMathRender(textOut, DefaultParameterRenderer.INSTANCE);
+      }
+      textOut.append(". The result of this formula"); //$NON-NLS-1$
+    }
+    textOut.append(//
+        " is always computed over the runs of an experiment for a given benchmark instance. If runs for multiple instances are available, we aggregate these "); //$NON-NLS-1$
+    if (yOut.isIdentityTransformation()) {
+      this.m_param.printLongName(textOut, use);
+    } else {
+      textOut.append("result"); //$NON-NLS-1$
+    }
+    textOut.append("s by computing their "); //$NON-NLS-1$
+    this.m_second.printLongName(textOut, use);
+    textOut.append('.');
+
+    if (!(xIn.isIdentityTransformation())) {
+      textOut.append(" The x-axis does not represent the values of "); //$NON-NLS-1$
+      xIn.getDimension().printShortName(textOut, use);
+      textOut.append(" directly, but instead "); //$NON-NLS-1$
+      if (textOut instanceof IComplexText) {
+        try (final IMath math = ((IComplexText) textOut).inlineMath()) {
+          xIn.mathRender(math, DefaultParameterRenderer.INSTANCE);
+        }
+      } else {
+        xIn.mathRender(textOut, DefaultParameterRenderer.INSTANCE);
+      }
+      textOut.append('.');
+    }
+
+    return use;
   }
 
   /**
@@ -242,8 +320,8 @@ public final class Aggregation2D extends FunctionAttribute<IElementSet> {
   /** {@inheritDoc} */
   @Override
   protected final String getShortName() {
-    return (this.m_second.getShortName() + ' ' + this.m_param
-        .getShortName());
+    return ((this.m_second.getShortName() + ' ') + //
+    this.m_param.getShortName());
   }
 
   /** {@inheritDoc} */

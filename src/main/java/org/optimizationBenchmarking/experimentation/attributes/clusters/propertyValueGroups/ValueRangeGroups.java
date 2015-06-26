@@ -125,20 +125,21 @@ public class ValueRangeGroups extends PropertyValueGroups {
     if (this.m_property instanceof IParameter) {
       textOut.append(' ');
       next = next.appendWords(//
-          "the experiments whose value of parameter",//$NON-NLS-1$
+          "all experiments whose value of parameter",//$NON-NLS-1$
           textOut);
     } else {
       if (this.m_property instanceof IFeature) {
         textOut.append(' ');
         next = next
             .appendWords(//
-                "the instance run sets belonging to an instance whose value of feature",//$NON-NLS-1$
+                "all instance run sets belonging to an instance whose value of feature",//$NON-NLS-1$
                 textOut);
       } else {
         next = ETextCase.ensure(textCase).appendWords(//
             "the data whose", textOut); //$NON-NLS-1$
       }
     }
+    textOut.append(' ');
     next = SemanticComponentUtils.printLongAndShortNameIfDifferent(
         this.m_property, textOut, next);
     textOut.append(' ');
@@ -155,6 +156,6 @@ public class ValueRangeGroups extends PropertyValueGroups {
     textOut.append(' ');
     next = next.appendWords("are grouped together.", textOut); //$NON-NLS-1$
 
-    return next.nextCase();
+    return next.nextAfterSentenceEnd();
   }
 }

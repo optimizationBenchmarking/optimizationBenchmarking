@@ -30,9 +30,9 @@ final class _LaTeXFigureSeriesCaption extends FigureSeriesCaption {
 
     out = this.getTextOutput();
 
-    LaTeXDriver._label(this.getOwner().getLabel(), out);
-
-    LaTeXDriver._endLine(out);
+    if (!(LaTeXDriver._label(this.getOwner().getLabel(), out))) {
+      LaTeXDriver._endLine(out);
+    }
     out.append('}');
     out.append('{');
     LaTeXDriver._endLine(out);

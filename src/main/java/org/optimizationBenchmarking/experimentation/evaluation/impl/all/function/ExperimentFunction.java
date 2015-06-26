@@ -11,6 +11,8 @@ public final class ExperimentFunction {
   private final IExperiment m_experiment;
   /** the function */
   private final IMatrix m_function;
+  /** the owning experiment set functions */
+  ExperimentSetFunctions m_owner;
 
   /**
    * Create the experiment function
@@ -43,5 +45,14 @@ public final class ExperimentFunction {
    */
   public final IMatrix getFunction() {
     return this.m_function;
+  }
+
+  /**
+   * Get the owning experiment set functions
+   *
+   * @return the owning experiment set functions
+   */
+  public final ExperimentSetFunctions getOwner() {
+    return this.m_owner;
   }
 }

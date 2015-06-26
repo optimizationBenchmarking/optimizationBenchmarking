@@ -7,6 +7,8 @@ import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.math.functions.UnaryFunction;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.Identity;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
  * A unary function which receives values from a given dimension as input
@@ -139,5 +141,15 @@ public class Transformation extends HashObject {
       (Arrays.equals(this.m_constants, other.m_constants)));
     }
     return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    final MemoryTextOutput mto;
+
+    mto = new MemoryTextOutput();
+    this.m_func.mathRender(mto, DefaultParameterRenderer.INSTANCE);
+    return mto.toString();
   }
 }

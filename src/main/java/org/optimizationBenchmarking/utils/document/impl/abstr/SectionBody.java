@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.document.impl.abstr;
 
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
@@ -33,6 +34,12 @@ public class SectionBody extends StructuredText implements ISectionBody {
    */
   protected SectionBody(final Section owner) {
     super(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ILabel createLabel(final ELabelType type) {
+    return this.m_doc.createLabel(type);
   }
 
   /**

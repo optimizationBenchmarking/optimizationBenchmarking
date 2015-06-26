@@ -150,12 +150,13 @@ public class AbstractTextOutput implements ITextOutput, IStreamEncoded {
 
   /**
    * Append a non-breaking space. This default implementation appends the
-   * Unicode character with the hexadecimal code point 2007, which is a
-   * non-breakable white space.
+   * Unicode character with the hexadecimal code point
+   * {@value org.optimizationBenchmarking.utils.text.TextUtils#NON_BREAKING_SPACE}
+   * , which is a non-breakable white space.
    */
   @Override
   public void appendNonBreakingSpace() {
-    this.append('\u2007');
+    this.append(TextUtils.NON_BREAKING_SPACE);
   }
 
   /** {@inheritDoc} */

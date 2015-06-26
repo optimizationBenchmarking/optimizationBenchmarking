@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.impl.all.functio
 
 import org.optimizationBenchmarking.experimentation.attributes.clusters.IClustering;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.spec.ILabel;
 
 /** The overall data of the function job */
 public final class FunctionData {
@@ -10,6 +11,12 @@ public final class FunctionData {
   /** the functions */
   private final ArrayListView<ExperimentSetFunctions> m_functions;
 
+  /** the label */
+  private final ILabel m_label;
+
+  /** the label for the legend figure */
+  private final ILabel m_legendLabel;
+
   /**
    * Create the data
    *
@@ -17,12 +24,31 @@ public final class FunctionData {
    *          the clustering
    * @param functions
    *          the functions
+   * @param label
+   *          the main figure label
+   * @param legendLabel
+   *          the legend label
    */
   FunctionData(final IClustering clustering,
-      final ExperimentSetFunctions[] functions) {
+      final ExperimentSetFunctions[] functions, final ILabel label,
+      final ILabel legendLabel) {
     super();
     this.m_clustering = clustering;
     this.m_functions = new ArrayListView<>(functions);
+    for (final ExperimentSetFunctions esf : functions) {
+      esf.m_owner = this;
+    }
+    this.m_label = label;
+    this.m_legendLabel = legendLabel;
+  }
+
+  /**
+   * Obtain the label for the legend figure
+   *
+   * @return the label for the legend figure
+   */
+  public final ILabel getLegendLabel() {
+    return this.m_legendLabel;
   }
 
   /**
@@ -43,4 +69,14 @@ public final class FunctionData {
   public final ArrayListView<ExperimentSetFunctions> getData() {
     return this.m_functions;
   }
+
+  /**
+   * Get the label associated with this data element
+   *
+   * @return the label associated with this data element
+   */
+  public final ILabel getLabel() {
+    return this.m_label;
+  }
+
 }

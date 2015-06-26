@@ -17,6 +17,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.spi.FileSystemProvider;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -60,79 +61,81 @@ public final class PathUtils {
     final char[] data;
     final String normalized;
     int index, codepoint, size;
-    boolean changed;
+    boolean changed, useChange;
 
     if (component == null) {
       throw new IllegalArgumentException(//
           "Path component cannot be null."); //$NON-NLS-1$
     }
 
-    normalized = TextUtils.normalize(component);
+    normalized = TextUtils.normalize(component, Form.NFKC);
     if (normalized == null) {
       throw new IllegalArgumentException(//
           "Normalized form of path component cannot be null."); //$NON-NLS-1$
     }
 
     data = normalized.toCharArray();
+    useChange = true;
     changed = false;
     size = data.length;
-    outer: for (index = data.length; (--index) >= 0;) {
 
+    outer: for (index = data.length; (--index) >= 0;) {
       codepoint = data[index];
 
-      dontChange: {
+      checkNeedsChange: {
         if (codepoint <= 0x2f) { // includes everything to "/"
-          break dontChange;
+          break checkNeedsChange;
         }
         if (codepoint <= 0x39) {// "0".."9"
           continue outer;
         }
         if (codepoint <= 0x40) { // up to "@"
-          break dontChange;
+          break checkNeedsChange;
         }
-        if ((codepoint <= 0x5a)) { // "A".."Z", except '_'
+        if ((codepoint <= 0x5a)) { // "A".."Z"
           continue outer;
         }
-        if (codepoint == '_') {// now "A".."Z" is covered
-          if ((index < (size - 1)) && (data[index + 1] == '_')) {
-            System.arraycopy(data, (index + 1), data, index,
-                ((--size) - index));
-            changed = true;
-          }
-          continue outer;
+        if (codepoint == '_') {
+          useChange = false;
+          break checkNeedsChange;
         }
         if (codepoint <= 0x60) { // up to "`"
-          break dontChange;
+          break checkNeedsChange;
         }
-        if ((codepoint <= 0x7a)) {// "a" ... "z"
+        if (codepoint <= 0x7a) {// "a" ... "z"
           continue outer;
         }
-        // if (codepoint <= 0xbf) { // up to the inverted question mark
-        // break dontChange;
-        // }
-        // if (!(Character.isDefined(codepoint) && //
-        // Character.isValidCodePoint(codepoint))) {
-        // break dontChange;
-        // }
-        // if (Character.isISOControl(codepoint) || //
-        // Character.isWhitespace(codepoint)) {
-        // break dontChange;
-        // }
-        // continue outer;
-        break dontChange;
       }
 
-      if ((index < (size - 1)) && (data[index + 1] == '_')) {
-        System.arraycopy(data, (index + 1), data, index,
-            ((--size) - index));
+      if (index >= (size - 1)) {
+        size--;
+        useChange = true;
       } else {
-        data[index] = '_';
+        if (data[index + 1] == '_') {
+          System.arraycopy(data, (index + 1), data, index,
+              ((--size) - index));
+          useChange = true;
+        } else {
+          data[index] = '_';
+        }
       }
+      changed |= useChange;
+      useChange = true;
+    }
+
+    if (data[0] == '_') {
+      size--;
+      index = 1;
       changed = true;
+    } else {
+      index = 0;
     }
 
     if (changed) {
-      return new String(data, 0, size);
+      if (size <= 0) {
+        return "undefined"; //$NON-NLS-1$
+      }
+      return new String(data, index, size);
     }
 
     return normalized;

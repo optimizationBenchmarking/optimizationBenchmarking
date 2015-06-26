@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.text;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.Normalizer;
+import java.text.Normalizer.Form;
 
 /**
  * The text utilities class provides several methods that help us to
@@ -25,8 +26,11 @@ public final class TextUtils {
    * the globally shared line separator: The value of this variable is
    * compatible to what {@link java.io.BufferedWriter} et al. are using
    */
-  public static final String LINE_SEPARATOR = TextUtils
-      .__getLineSeparator();
+  public static final String LINE_SEPARATOR = //
+  TextUtils.__getLineSeparator();
+
+  /** A character which represents a non-breaking space: {@value} */
+  public static final char NON_BREAKING_SPACE = 0x2007;
 
   /**
    * obtain the line separator
@@ -132,6 +136,21 @@ public final class TextUtils {
    * @return the normalized version
    */
   public static final String normalize(final String s) {
+    return TextUtils.normalize(s, TextUtils.DEFAULT_NORMALIZER_FORM);
+  }
+
+  /**
+   * Normalize a string.
+   *
+   * @param s
+   *          the string
+   * @param normalizerForm
+   *          the normalizer form ({@code null} for
+   *          {@link #DEFAULT_NORMALIZER_FORM})
+   * @return the normalized version
+   */
+  public static final String normalize(final String s,
+      final Form normalizerForm) {
     String t, u;
 
     if (s == null) {
@@ -143,7 +162,8 @@ public final class TextUtils {
       return null;
     }
 
-    u = Normalizer.normalize(t, TextUtils.DEFAULT_NORMALIZER_FORM);
+    u = Normalizer.normalize(t, ((normalizerForm != null) ? normalizerForm
+        : TextUtils.DEFAULT_NORMALIZER_FORM));
     if (u != t) {
       t = u.trim();
 

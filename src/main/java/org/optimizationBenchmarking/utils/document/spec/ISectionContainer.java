@@ -5,7 +5,7 @@ package org.optimizationBenchmarking.utils.document.spec;
  * {@link #section(ILabel)} by definition. Any other interfaces or methods
  * <em>may</em> or may not be parallel.
  */
-public interface ISectionContainer extends IDocumentElement {
+public interface ISectionContainer extends IDocumentElement, ILabelBuilder {
   /**
    * Create a new section.
    *

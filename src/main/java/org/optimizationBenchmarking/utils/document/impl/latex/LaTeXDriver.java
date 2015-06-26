@@ -88,9 +88,11 @@ public final class LaTeXDriver extends DocumentDriver {
    *          the label
    * @param out
    *          the text output
+   * @return {@code true} if the label command was executed and has caused
+   *         a line to end, {@code false} if nothing happened
    */
-  static final void _label(final Label label, final ITextOutput out) {
-    LaTeXDriver._label(label, out, false);
+  static final boolean _label(final Label label, final ITextOutput out) {
+    return LaTeXDriver._label(label, out, false);
   }
 
   /**
@@ -102,17 +104,19 @@ public final class LaTeXDriver extends DocumentDriver {
    *          the text output
    * @param enforce
    *          should we enforce the label location?
+   * @return {@code true} if the label command was executed and has caused
+   *         a line to end, {@code false} if nothing happened
    */
-  static final void _label(final Label label, final ITextOutput out,
+  static final boolean _label(final Label label, final ITextOutput out,
       final boolean enforce) {
     final String id;
 
     if (label == null) {
-      return;
+      return false;
     }
     id = label.getLabelMark();
     if (id == null) {
-      return;
+      return false;
     }
     if (enforce) {
       out.append(LaTeXDriver.PHANTOMSECTION);
@@ -120,6 +124,7 @@ public final class LaTeXDriver extends DocumentDriver {
     out.append(LaTeXDriver.LABEL);
     out.append(id);
     LaTeXDriver._endCommandLine(out);
+    return true;
   }
 
   /**

@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
+import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
@@ -30,6 +31,12 @@ public class DocumentFooter extends _StyleProviderPart implements
    */
   protected DocumentFooter(final Document owner) {
     super(owner);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ILabel createLabel(final ELabelType type) {
+    return this.m_doc.createLabel(type);
   }
 
   /** {@inheritDoc} */

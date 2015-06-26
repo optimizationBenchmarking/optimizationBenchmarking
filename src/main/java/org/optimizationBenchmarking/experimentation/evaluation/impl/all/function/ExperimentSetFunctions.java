@@ -3,9 +3,14 @@ package org.optimizationBenchmarking.experimentation.evaluation.impl.all.functio
 import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.spec.ILabel;
 
 /** The functions for a given experiment set */
 public final class ExperimentSetFunctions {
+
+  /** the owning function data */
+  FunctionData m_owner;
+
   /** the experiment set (or ICluster) */
   private final IExperimentSet m_set;
   /**
@@ -15,6 +20,9 @@ public final class ExperimentSetFunctions {
   private final ICluster m_cluster;
   /** the functions */
   private final ArrayListView<ExperimentFunction> m_functions;
+
+  /** the label */
+  private ILabel m_label;
 
   /**
    * create the experiment set functions
@@ -32,7 +40,35 @@ public final class ExperimentSetFunctions {
     super();
     this.m_set = set;
     this.m_cluster = cluster;
+    for (final ExperimentFunction func : functions) {
+      func.m_owner = this;
+    }
     this.m_functions = new ArrayListView<>(functions);
+  }
+
+  /**
+   * Get the label associated with this data element
+   *
+   * @return the label associated with this data element
+   */
+  public final ILabel getLabel() {
+    return this.m_label;
+  }
+
+  /**
+   * set the label
+   *
+   * @param label
+   *          the label
+   */
+  final void _setLabel(final ILabel label) {
+    if (this.m_label != null) {
+      throw new IllegalStateException("Label already set?");//$NON-NLS-1$
+    }
+    if (label == null) {
+      throw new IllegalArgumentException("Cannot set label to null."); //$NON-NLS-1$
+    }
+    this.m_label = label;
   }
 
   /**
@@ -66,5 +102,14 @@ public final class ExperimentSetFunctions {
    */
   public final ArrayListView<ExperimentFunction> getData() {
     return this.m_functions;
+  }
+
+  /**
+   * Get the owning function data
+   *
+   * @return the owning function data
+   */
+  public final FunctionData getOwner() {
+    return this.m_owner;
   }
 }

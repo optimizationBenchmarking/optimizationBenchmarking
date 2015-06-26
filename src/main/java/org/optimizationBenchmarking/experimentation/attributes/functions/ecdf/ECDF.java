@@ -15,11 +15,24 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceRuns;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
+import org.optimizationBenchmarking.utils.bibliography.data.BibAuthor;
+import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibInProceedingsBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibOrganizationBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibProceedingsBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.BibTechReportBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.Bibliography;
+import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
+import org.optimizationBenchmarking.utils.bibliography.data.EBibMonth;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.ComparisonParser;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EMathComparison;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
@@ -29,8 +42,10 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.ArithmeticMean;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter;
 import org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser;
-import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
+import org.optimizationBenchmarking.utils.text.ESequenceMode;
+import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -46,6 +61,9 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
   public static final String GOAL_PARAM = "goal";//$NON-NLS-1$
   /** the aggregate parameter */
   public static final String AGGREGATE_PARAM = "aggregate";//$NON-NLS-1$
+
+  /** the references to be used for the ecdf */
+  public static final Bibliography REFERENCES = ECDF.__buildReferences();
 
   /** the goal value as {@code double} */
   private final double m_goalValueDouble;
@@ -143,11 +161,10 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
   /** {@inheritDoc} */
   @Override
-  protected void yAxisRenderYAxisSourceAsParameter(final IMath out,
-      final IParameterRenderer renderer) {
+  protected void yAxisRenderYAxisSourceAsParameter(final IMath out) {
     try (final IMath math = out.compare(EMathComparison
         .fromEComparison(this.m_criterion))) {
-      super.yAxisRenderYAxisSourceAsParameter(math, renderer);
+      super.yAxisRenderYAxisSourceAsParameter(math);
       try (final IText number = math.number()) {
         if (this.isGoalValueLong()
             || (this.m_goalValueLong == this.m_goalValueDouble)) {
@@ -161,9 +178,8 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
 
   /** {@inheritDoc} */
   @Override
-  protected void yAxisRenderYAxisSourceAsParameter(final ITextOutput out,
-      final IParameterRenderer renderer) {
-    super.yAxisRenderYAxisSourceAsParameter(out, renderer);
+  protected void yAxisRenderYAxisSourceAsParameter(final ITextOutput out) {
+    super.yAxisRenderYAxisSourceAsParameter(out);
     out.append(EMathComparison.fromEComparison(this.m_criterion)
         .getOperatorChar());
     if (this.isGoalValueLong()
@@ -172,6 +188,110 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     } else {
       out.append(this.m_goalValueDouble);
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected ETextCase printNameInDescription(final ITextOutput textOut,
+      final ETextCase textCase, final boolean fromYAxisSemanticComponent) {
+    ETextCase next;
+
+    next = super.printNameInDescription(textOut, textCase,
+        fromYAxisSemanticComponent);
+
+    if (!fromYAxisSemanticComponent) {
+      if (textOut instanceof IComplexText) {
+        try (final BibliographyBuilder builder = ((IComplexText) textOut)
+            .cite(ECitationMode.ID, next, ESequenceMode.COMMA)) {
+          builder.addAll(ECDF.REFERENCES);
+        }
+      }
+    }
+
+    return next.nextCase();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public ETextCase printDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    final DimensionTransformation xIn, yIn;
+    final Transformation yOut;
+    ETextCase use;
+
+    use = super.printDescription(textOut, textCase).nextCase();
+
+    yIn = this.getYAxisInputTransformation();
+    xIn = this.getXAxisTransformation();
+    yOut = this.getYAxisOutputTransformation();
+
+    textOut.append(" The "); //$NON-NLS-1$
+    if (textOut instanceof IComplexText) {
+      try (final IMath math = ((IComplexText) textOut).inlineMath()) {
+        this.yAxisMathRender(math, DefaultParameterRenderer.INSTANCE);
+      }
+    } else {
+      this.yAxisMathRender(textOut, DefaultParameterRenderer.INSTANCE);
+    }
+    textOut.append(//
+        " represents the fraction of runs which reach a value of "); //$NON-NLS-1$
+    yIn.printShortName(textOut, use);
+    textOut.append(' ');
+    textOut.append(this.m_criterion.toString());
+    textOut.append(' ');
+    if (this.m_useLongGoal) {
+      textOut.append(this.m_goalValueLong);
+    } else {
+      textOut.append(this.m_goalValueDouble);
+    }
+    textOut.append(" for a given ellapsed runtime measured in "); //$NON-NLS-1$
+    xIn.getDimension().printShortName(textOut, use);
+
+    if (yOut.isIdentityTransformation()) {
+      textOut.append(". The "); //$NON-NLS-1$
+      this.printShortName(textOut, use);
+    } else {
+      textOut.append(//
+          ". We do not use these fractions directly, but instead compute "); //$NON-NLS-1$
+      if (textOut instanceof IComplexText) {
+        try (final IMath math = ((IComplexText) textOut).inlineMath()) {
+          this.yAxisMathRender(math, DefaultParameterRenderer.INSTANCE);
+        }
+      } else {
+        this.yAxisMathRender(textOut, DefaultParameterRenderer.INSTANCE);
+      }
+      textOut.append(". The result of this formula"); //$NON-NLS-1$
+    }
+
+    textOut.append(//
+        " is always computed over the runs of an experiment for a given benchmark instance. If runs for multiple instances are available, we aggregate the results by computing their "); //$NON-NLS-1$
+    this.m_aggregate.printLongName(textOut, use);
+    textOut.append('.');
+
+    if (!(xIn.isIdentityTransformation())) {
+      textOut.append(" The x-axis does not represent the values of "); //$NON-NLS-1$
+      xIn.getDimension().printShortName(textOut, use);
+      textOut.append(" directly, but instead "); //$NON-NLS-1$
+      if (textOut instanceof IComplexText) {
+        try (final IMath math = ((IComplexText) textOut).inlineMath()) {
+          xIn.mathRender(math, DefaultParameterRenderer.INSTANCE);
+        }
+      } else {
+        xIn.mathRender(textOut, DefaultParameterRenderer.INSTANCE);
+      }
+      textOut.append('.');
+    }
+
+    if (yOut.isIdentityTransformation()) {
+      textOut.append(" The "); //$NON-NLS-1$
+      this.printShortName(textOut, use);
+      textOut.append(" is always between "); //$NON-NLS-1$
+      textOut.append(0);
+      textOut.append(" and "); //$NON-NLS-1$
+      textOut.append(1);
+      textOut.append(" \u2012 and the higher it is, the better."); //$NON-NLS-1$
+    }
+    return use;
   }
 
   /**
@@ -499,4 +619,152 @@ public final class ECDF extends FunctionAttribute<IElementSet> {
     return new ECDF(xIn, yIn, yOut, goal, compare, aggregate);
   }
 
+  /**
+   * build the references to be used when plotting an ECDF
+   *
+   * @return the bibliography of references
+   */
+  private static final Bibliography __buildReferences() {
+    final BibAuthor hoos;
+
+    hoos = new BibAuthor(//
+        "Holger H.",//$NON-NLS-1$
+        "Hoos");//$NON-NLS-1$
+
+    try (final BibliographyBuilder bibBuilder = new BibliographyBuilder()) {
+
+      try (final BibInProceedingsBuilder inProc = //
+      bibBuilder.inProceedings()) {
+        try (final BibAuthorsBuilder authors = inProc.setAuthors()) {
+          authors.addAuthor(hoos);
+          try (final BibAuthorBuilder author = authors.author()) {
+            author.setPersonalName("Thomas");//$NON-NLS-1$
+            author.setFamilyName("St\u00fctzle");//$NON-NLS-1$
+          }
+        }
+        inProc.setTitle(//
+            "Evaluating Las Vegas Algorithms \u2012 Pitfalls and Remedies");//$NON-NLS-1$
+        try (final BibProceedingsBuilder proc = inProc.proceedings()) {
+          proc.setTitle(//
+          "Proceedings of the 14th Conference on Uncertainty in Artificial Intelligence (UAI'98)");//$NON-NLS-1$
+          try (final BibDateBuilder date = proc.startDate()) {
+            date.setYear(1998);
+            date.setMonth(EBibMonth.JULY);
+            date.setDay(24);
+          }
+          try (final BibDateBuilder date = proc.endDate()) {
+            date.setYear(1998);
+            date.setMonth(EBibMonth.JULY);
+            date.setDay(26);
+          }
+          try (final BibAuthorsBuilder editors = proc.setEditors()) {
+            try (final BibAuthorBuilder editor = editors.author()) {
+              editor.setPersonalName("Gregory F.");//$NON-NLS-1$
+              editor.setFamilyName("Cooper");//$NON-NLS-1$
+            }
+            try (final BibAuthorBuilder editor = editors.author()) {
+              editor.setPersonalName("Serafin");//$NON-NLS-1$
+              editor.setFamilyName("Moral");//$NON-NLS-1$
+            }
+          }
+          try (final BibOrganizationBuilder loc = proc.location()) {
+            loc.setAddress("Madison, WI, USA");//$NON-NLS-1$
+          }
+          try (final BibOrganizationBuilder pub = proc.publisher()) {
+            pub.setAddress("San Francisco, CA, USA");//$NON-NLS-1$
+            pub.setName("Morgan Kaufmann Publishers Inc.");//$NON-NLS-1$
+          }
+        }
+        inProc.setStartPage("238");//$NON-NLS-1$
+        inProc.setEndPage("245");//$NON-NLS-1$
+        inProc.setURL(//
+            "http://www.intellektik.informatik.tu-darmstadt.de/TR/1998/98-02.ps.Z");//$NON-NLS-1$
+      }
+
+      try (final BibInProceedingsBuilder inProc = //
+      bibBuilder.inProceedings()) {
+        try (final BibAuthorsBuilder authors = inProc.setAuthors()) {
+          try (final BibAuthorBuilder author = authors.author()) {
+            author.setPersonalName("Dave Andrew Douglas");//$NON-NLS-1$
+            author.setFamilyName("Tompkins");//$NON-NLS-1$
+          }
+          authors.addAuthor(hoos);
+        }
+        inProc.setTitle(//
+            "UBCSAT: An Implementation and Experimentation Environment for SLS Algorithms for SAT and MAX-SAT");//$NON-NLS-1$
+        try (final BibProceedingsBuilder proc = inProc.proceedings()) {
+          proc.setTitle(//
+          "Revised Selected Papers from the Seventh International Conference on Theory and Applications of Satisfiability Testing (SAT'04)");//$NON-NLS-1$
+          try (final BibDateBuilder date = proc.startDate()) {
+            date.setYear(2004);
+            date.setMonth(EBibMonth.MAY);
+            date.setDay(10);
+          }
+          try (final BibDateBuilder date = proc.endDate()) {
+            date.setYear(2004);
+            date.setMonth(EBibMonth.MAY);
+            date.setDay(13);
+          }
+          try (final BibAuthorsBuilder editors = proc.setEditors()) {
+            editors.addAuthor(hoos);
+            try (final BibAuthorBuilder editor = editors.author()) {
+              editor.setPersonalName("David G.");//$NON-NLS-1$
+              editor.setFamilyName("Mitchell");//$NON-NLS-1$
+            }
+          }
+          try (final BibOrganizationBuilder loc = proc.location()) {
+            loc.setAddress("Vancouver, BC, Canada");//$NON-NLS-1$
+          }
+          try (final BibOrganizationBuilder pub = proc.publisher()) {
+            pub.setAddress("Berlin, Germany");//$NON-NLS-1$
+            pub.setName("Springer-Verlag GmbH");//$NON-NLS-1$
+          }
+          proc.setSeries("Lecture Notes in Computer Science (LNCS)");//$NON-NLS-1$
+          proc.setVolume("3542");//$NON-NLS-1$
+        }
+        inProc.setDOI("10.1007/11527695");//$NON-NLS-1$
+        inProc.setStartPage("306");//$NON-NLS-1$
+        inProc.setEndPage("320");//$NON-NLS-1$
+        inProc.setURL(//
+            "http://ubcsat.dtompkins.com/downloads/sat04proc-ubcsat.pdf?attredirects=0");//$NON-NLS-1$
+      }
+
+      try (BibTechReportBuilder report = bibBuilder.techReport()) {
+        try (final BibAuthorsBuilder authors = report.setAuthors()) {
+          try (final BibAuthorBuilder author = authors.author()) {
+            author.setPersonalName("Nikolaus");//$NON-NLS-1$
+            author.setFamilyName("Hansen");//$NON-NLS-1$
+          }
+          try (final BibAuthorBuilder author = authors.author()) {
+            author.setPersonalName("Anne");//$NON-NLS-1$
+            author.setFamilyName("Auger");//$NON-NLS-1$
+          }
+          try (final BibAuthorBuilder author = authors.author()) {
+            author.setPersonalName("Steffen");//$NON-NLS-1$
+            author.setFamilyName("Finck");//$NON-NLS-1$
+          }
+          try (final BibAuthorBuilder author = authors.author()) {
+            author.setPersonalName("Raymond");//$NON-NLS-1$
+            author.setFamilyName("Ros");//$NON-NLS-1$
+          }
+        }
+        report.setTitle(//
+            "Real-Parameter Black-Box Optimization Benchmarking: Experimental Setup");//$NON-NLS-1$
+        try (final BibOrganizationBuilder pub = report.publisher()) {
+          pub.setAddress("Orsay, France");//$NON-NLS-1$
+          pub.setName(//
+          "Universit\u00e9 Paris Sud, Institut National de Recherche en Informatique et en Automatique (INRIA) Futurs, \u00c9quipe TAO");//$NON-NLS-1$
+        }
+        try (final BibDateBuilder date = report.date()) {
+          date.setYear(2012);
+          date.setMonth(EBibMonth.MARCH);
+          date.setDay(24);
+        }
+        report.setURL(//
+            "http://coco.lri.fr/BBOB-downloads/download11.05/bbobdocexperiment.pdf");//$NON-NLS-1$
+      }
+
+      return bibBuilder.getResult();
+    }
+  }
 }

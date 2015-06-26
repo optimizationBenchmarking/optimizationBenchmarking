@@ -24,7 +24,7 @@ final class _LaTeXMathNAryFunction extends MathNAryFunction {
    */
   _LaTeXMathNAryFunction(final BasicMath owner, final String name,
       final int minArity, final int maxArity) {
-    super(owner, name, minArity, maxArity);
+    super(owner, name.replace(' ', '~'), minArity, maxArity);
     this.open();
   }
 

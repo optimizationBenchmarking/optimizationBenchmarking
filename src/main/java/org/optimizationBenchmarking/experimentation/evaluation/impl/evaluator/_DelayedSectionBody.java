@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator;
 import org.optimizationBenchmarking.utils.bibliography.data.BibliographyBuilder;
 import org.optimizationBenchmarking.utils.document.spec.ECitationMode;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ETableCellDef;
 import org.optimizationBenchmarking.utils.document.spec.ICode;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
@@ -116,6 +117,12 @@ final class _DelayedSectionBody implements ISectionBody {
   @Override
   public final IPlainText inBraces() {
     return this.m_real.inBraces();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ILabel createLabel(final ELabelType type) {
+    return this.m_real.createLabel(type);
   }
 
   /** {@inheritDoc} */

@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator;
 
+import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
@@ -44,6 +45,12 @@ final class _DelayedSectionContainer implements ISectionContainer {
       }
     }
     return this;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ILabel createLabel(final ELabelType type) {
+    return this.m_real.createLabel(type);
   }
 
   /** {@inheritDoc} */

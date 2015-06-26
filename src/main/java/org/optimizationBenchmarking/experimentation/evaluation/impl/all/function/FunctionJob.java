@@ -23,10 +23,13 @@ import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.FigureSizeParser;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
+import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.IFigureSeries;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
+import org.optimizationBenchmarking.utils.document.spec.ILabelBuilder;
+import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
 import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
@@ -41,8 +44,10 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
 import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
+import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.numbers.InTextNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -695,7 +700,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
     // initialize the x-axis
     try (final IAxis xAxis = chart.xAxis()) {
       if (mto != null) {
-        this.m_function.getXAxisSemanticComponent().mathRender(mto,
+        this.m_function.getXAxisTransformation().mathRender(mto,
             DefaultParameterRenderer.INSTANCE);
         xAxis.setTitle(mto.toString());
         mto.clear();
@@ -856,6 +861,137 @@ public abstract class FunctionJob extends ExperimentSetJob {
   }
 
   /**
+   * This method renders the caption of the single figure. The function job
+   * will render a singular figure with one diagram in it. {@code data} is
+   * the function data which consists of exactly one instance of
+   * {@link ExperimentSetFunctions}.
+   *
+   * @param data
+   *          the data
+   * @param caption
+   *          the complex text to render the caption to
+   */
+  protected void renderFigureCaption(final FunctionData data,
+      final IComplexText caption) {
+    final IClustering clustering;
+    final ICluster cluster;
+
+    caption.append("The "); //$NON-NLS-1$
+    this.m_function.printLongName(caption, ETextCase.IN_SENTENCE);
+
+    clustering = data.getClustering();
+    if (clustering != null) {
+      caption.append(" with data separated according to "); //$NON-NLS-1$
+      clustering.printLongName(caption, ETextCase.IN_SENTENCE);
+      cluster = data.getData().get(0).getCluster();
+      if (cluster != null) {
+        caption.append(':');
+        caption.append(' ');
+        cluster.printLongName(caption, ETextCase.IN_SENTENCE);
+      }
+    }
+    caption.append('.');
+  }
+
+  /**
+   * This method renders the caption of a series of figures. The function
+   * job will render a series of figures. This could have two reasons:
+   * Either, and most likely, {@code data} is the function data which
+   * consists of multiple instances of {@link ExperimentSetFunctions},
+   * i.e., we draw several sub-figures with different diagrams because the
+   * input data was clustered. Or we have a single diagram and one legend.
+   *
+   * @param data
+   *          the data
+   * @param caption
+   *          the complex text to render the caption to
+   */
+  protected void renderFigureSeriesCaption(final FunctionData data,
+      final IComplexText caption) {
+    final IClustering clustering;
+    final ILabel legend;
+
+    caption.append("The "); //$NON-NLS-1$
+    this.m_function.printLongName(caption, ETextCase.IN_SENTENCE);
+
+    clustering = data.getClustering();
+    if (clustering != null) {
+      caption.append(" with data separated according to "); //$NON-NLS-1$
+      clustering.printLongName(caption, ETextCase.IN_SENTENCE);
+    }
+    legend = data.getLegendLabel();
+    if (legend != null) {
+      caption.append(" (legend: "); //$NON-NLS-1$
+      caption.reference(ETextCase.IN_SENTENCE, ESequenceMode.AND, legend);
+      caption.append(')');
+    }
+    caption.append('.');
+  }
+
+  /**
+   * Render the legend caption.
+   *
+   * @param data
+   *          the data
+   * @param caption
+   *          the complex text to render the caption to
+   */
+  protected void renderLegendCaption(final FunctionData data,
+      final IComplexText caption) {
+    final int size;
+    final ArrayListView<ExperimentSetFunctions> functs;
+    ILabel other;
+
+    functs = data.getData();
+    size = functs.size();
+
+    if (size == 1) {
+      other = functs.get(0).getLabel();
+      if (other != null) {
+        caption.append(//
+            "Legend for ");//$NON-NLS-1$
+        caption.reference(ETextCase.IN_SENTENCE, ESequenceMode.AND, other);
+        caption.append('.');
+      } else {
+        caption.append(//
+            "Legend for this figure.");//$NON-NLS-1$
+      }
+    } else {
+      caption.append("Legend for the ");//$NON-NLS-1$
+      InTextNumberAppender.INSTANCE.appendTo(size, ETextCase.IN_SENTENCE,
+          caption);
+      caption.append(" sub-figures of this figure.");//$NON-NLS-1$
+    }
+  }
+
+  /**
+   * This method renders the caption of a sub-figure of the series of
+   * figures. The function job will render a series of figures. This could
+   * have two reasons: Either, and most likely, {@code data} is the
+   * function data which consists of multiple instances of
+   * {@link ExperimentSetFunctions}, i.e., we draw several sub-figures with
+   * different diagrams because the input data was clustered. Or we have a
+   * single diagram and one legend.
+   *
+   * @param data
+   *          the data
+   * @param caption
+   *          the complex text to render the caption to
+   */
+  protected void renderSubFigureCaption(final ExperimentSetFunctions data,
+      final IComplexText caption) {
+    final ICluster cluster;
+
+    cluster = data.getCluster();
+
+    if (cluster == null) {
+      this.m_function.printLongName(caption, ETextCase.IN_SENTENCE);
+    } else {
+      cluster.printLongName(caption, ETextCase.IN_SENTENCE);
+    }
+  }
+
+  /**
    * Print the plots into a section body
    *
    * @param data
@@ -866,13 +1002,10 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *          the style set
    * @param logger
    *          the logger
-   * @param mainLabel
-   *          the main label to be used
    * @return the actual label of the created figure
    */
-  protected ILabel makePlots(final FunctionData data,
-      final ISectionBody body, final StyleSet styles, final Logger logger,
-      final ILabel mainLabel) {
+  protected ILabel renderPlots(final FunctionData data,
+      final ISectionBody body, final StyleSet styles, final Logger logger) {
     final ILabel ret;
     final String mainPath;
     final IClustering clustering;
@@ -925,24 +1058,12 @@ public abstract class FunctionJob extends ExperimentSetJob {
         path = (path + '_' + cluster.getPathComponentSuggestion());
       }
 
-      try (final IFigure figure = body.figure(mainLabel,
+      try (final IFigure figure = body.figure(data.getLabel(),
           this.m_figureSize, path)) {
         this.__logFigure(logger, 1, 1);
 
         try (final IComplexText caption = figure.caption()) {
-
-          caption.append("The "); //$NON-NLS-1$
-          this.m_function.printLongName(caption, ETextCase.IN_SENTENCE);
-          if (clustering != null) {
-            caption.append(" with data separated according to "); //$NON-NLS-1$
-            clustering.printLongName(caption, ETextCase.IN_SENTENCE);
-            if (cluster != null) {
-              caption.append(':');
-              caption.append(' ');
-              cluster.printLongName(caption, ETextCase.IN_SENTENCE);
-            }
-          }
-          caption.append('.');
+          this.renderFigureCaption(data, caption);
         }
 
         try (final ILineChart2D lines = figure.lineChart2D()) {
@@ -954,17 +1075,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
         ret = figure.getLabel();
       }
     } else {
-      try (final IFigureSeries figureSeries = body.figureSeries(mainLabel,
-          this.m_figureSize, mainPath)) {
+      try (final IFigureSeries figureSeries = body.figureSeries(
+          data.getLabel(), this.m_figureSize, mainPath)) {
 
         try (final IComplexText caption = figureSeries.caption()) {
-          caption.append("The "); //$NON-NLS-1$
-          this.m_function.printLongName(caption, ETextCase.IN_SENTENCE);
-          if (clustering != null) {
-            caption.append(" with data separated according to "); //$NON-NLS-1$
-            clustering.printLongName(caption, ETextCase.IN_SENTENCE);
-          }
-          caption.append('.');
+          this.renderFigureSeriesCaption(data, caption);
         }
 
         index = 0;
@@ -973,11 +1088,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
           path = (mainPath + "_legend"); //$NON-NLS-1$
 
           this.__logFigure(logger, (++index), size);
-          try (final IFigure figure = figureSeries.figure(null, path)) {
+          try (final IFigure figure = figureSeries.figure(
+              data.getLegendLabel(), path)) {
 
             try (final IComplexText caption = figure.caption()) {
-              caption.append(//
-                  "Legend for all sub-figures of this figure.");//$NON-NLS-1$
+              this.renderLegendCaption(data, caption);
             }
             try (final ILineChart2D lines = figure.lineChart2D()) {
               lines.setLegendMode(ELegendMode.CHART_IS_LEGEND);
@@ -997,15 +1112,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
           }
 
           this.__logFigure(logger, (++index), size);
-          try (final IFigure figure = figureSeries.figure(null, path)) {
+          try (final IFigure figure = figureSeries.figure(
+              experimentSetFunctions2.getLabel(), path)) {
 
             try (final IComplexText caption = figure.caption()) {
-              if (cluster == null) {
-                this.m_function.printLongName(caption,
-                    ETextCase.IN_SENTENCE);
-              } else {
-                cluster.printLongName(caption, ETextCase.IN_SENTENCE);
-              }
+              this.renderSubFigureCaption(experimentSetFunctions2, caption);
             }
 
             try (final ILineChart2D lines = figure.lineChart2D()) {
@@ -1033,8 +1144,18 @@ public abstract class FunctionJob extends ExperimentSetJob {
    * @param title
    *          the title destination
    */
-  protected void makeTitle(final IComplexText title) {
+  protected void renderTitle(final IComplexText title) {
     this.m_function.printLongName(title, ETextCase.AT_TITLE_START);
+  }
+
+  /**
+   * Should the sub-figures receive labels?
+   *
+   * @return {@code true} if the sub-figures are labeled, {@code false}
+   *         otherwise
+   */
+  protected boolean labelSubFigures() {
+    return true;
   }
 
   /**
@@ -1058,18 +1179,44 @@ public abstract class FunctionJob extends ExperimentSetJob {
   }
 
   /**
-   * Perform the main process: Paint the figures, write the text.
+   * This method is invoked before the figures are plotted and can render
+   * some text.
    *
    * @param data
    *          the data, or {@code null} if no data exists to draw
    *          reasonable diagrams
-   * @param sectionContainer
-   *          the section container
+   * @param body
+   *          the section body
    * @param logger
    *          the logger
    */
-  protected void process(final FunctionData data,
-      final ISectionContainer sectionContainer, final Logger logger) {
+  protected void beforePlots(final FunctionData data,
+      final ISectionBody body, final Logger logger) {
+    final IClustering clustering;
+
+    body.append("We analyze "); //$NON-NLS-1$
+    this.m_function.printDescription(body, ETextCase.IN_SENTENCE);
+    clustering = data.getClustering();
+    if (clustering != null) {
+      body.append(' ');
+      clustering.printDescription(body, ETextCase.AT_SENTENCE_START);
+    }
+  }
+
+  /**
+   * This method is invoked after the figures are plotted and can render
+   * some text.
+   *
+   * @param data
+   *          the data, or {@code null} if no data exists to draw
+   *          reasonable diagrams
+   * @param body
+   *          the section body
+   * @param logger
+   *          the logger
+   */
+  protected void afterPlots(final FunctionData data,
+      final ISectionBody body, final Logger logger) {
     //
   }
 
@@ -1084,7 +1231,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
           TextUtils.className(this.getClass()));
     }
 
-    functionData = this.__makeData(data, logger);
+    functionData = this.__makeData(data, logger, sectionContainer);
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
       logger.finer(((("Finished computing data for " + //$NON-NLS-1$
@@ -1093,7 +1240,19 @@ public abstract class FunctionJob extends ExperimentSetJob {
           + " clusters with useful data, which will now be processed.");//$NON-NLS-1$
     }
 
-    this.process(functionData, sectionContainer, logger);
+    if (data != null) {
+      try (final ISection section = sectionContainer.section(null)) {
+        try (final IComplexText title = section.title()) {
+          this.renderTitle(title);
+        }
+
+        try (final ISectionBody body = section.body()) {
+          this.beforePlots(functionData, body, logger);
+          this.renderPlots(functionData, body, section.getStyles(), logger);
+          this.afterPlots(functionData, body, logger);
+        }
+      }
+    }
 
     if ((logger != null) && (logger.isLoggable(Level.FINER))) {
       logger.finer("Finished processing of data in " + //$NON-NLS-1$
@@ -1108,16 +1267,20 @@ public abstract class FunctionJob extends ExperimentSetJob {
    *          the logger
    * @param set
    *          the experiment set
+   * @param labelBuilder
+   *          the label builder
    * @return the data
    */
   private final FunctionData __makeData(final IExperimentSet set,
-      final Logger logger) {
+      final Logger logger, final ILabelBuilder labelBuilder) {
     final IExperimentSet selected;
     final IClustering clustering;
     final int size;
+    final ExperimentSetFunctions[] functions;
     ArrayList<ExperimentFunction> experimentSetTemp;
     ArrayList<ExperimentSetFunctions> clustersTemp;
     ExperimentSetFunctions experimentSetFunctions;
+    ILabel figure, legend;
 
     selected = OnlySharedInstanceRuns.INSTANCE.get(set);
 
@@ -1162,8 +1325,29 @@ public abstract class FunctionJob extends ExperimentSetJob {
     if (size <= 0) {
       return null;
     }
-    return new FunctionData(clustering,
-        clustersTemp.toArray(new ExperimentSetFunctions[size]));
+
+    functions = clustersTemp.toArray(new ExperimentSetFunctions[size]);
+
+    figure = labelBuilder.createLabel(ELabelType.FIGURE);
+    makeSubLabels: {
+      if (this.m_makeLegendFigure) {
+        legend = labelBuilder.createLabel(ELabelType.SUBFIGURE);
+        if (this.labelSubFigures()) {
+          for (final ExperimentSetFunctions funcs : functions) {
+            funcs._setLabel(//
+                labelBuilder.createLabel(ELabelType.SUBFIGURE));
+          }
+        }
+      } else {
+        legend = null;
+        if (size == 1) {
+          functions[0]._setLabel(figure);
+          break makeSubLabels;
+        }
+      }
+    }
+
+    return new FunctionData(clustering, functions, figure, legend);
   }
 
   /**

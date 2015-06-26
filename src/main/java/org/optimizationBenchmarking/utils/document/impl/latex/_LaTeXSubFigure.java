@@ -47,7 +47,6 @@ final class _LaTeXSubFigure extends SubFigure {
     super.onOpen();
 
     out = this.getTextOutput();
-    LaTeXDriver._endLine(out);
 
     index = this.getIndex();
     if ((((index - 1) % this.getOwner().getFiguresPerRow()) == 0)) {
@@ -55,9 +54,8 @@ final class _LaTeXSubFigure extends SubFigure {
         LaTeXDriver._endCommandLine(out);
       }
       out.append(_LaTeXSubFigure.FIGURE_ROW_BEGIN);
+      LaTeXDriver._endLine(out);
     }
-
-    LaTeXDriver._endLine(out);
     out.append(_LaTeXSubFigure.FIGURE_CELL_BEGIN);
   }
 

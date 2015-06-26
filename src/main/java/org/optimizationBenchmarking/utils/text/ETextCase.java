@@ -146,6 +146,18 @@ public enum ETextCase {
   }
 
   /**
+   * Obtain the text case for the next word after a sentence ended
+   *
+   * @return the text case for the next word after a sentence ended
+   */
+  public final ETextCase nextAfterSentenceEnd() {
+    final ETextCase next;
+    next = this.nextCase();
+    return ((next == ETextCase.IN_SENTENCE) ? ETextCase.AT_SENTENCE_START
+        : next);
+  }
+
+  /**
    * Adjust the case of the first character in a word
    *
    * @param ch

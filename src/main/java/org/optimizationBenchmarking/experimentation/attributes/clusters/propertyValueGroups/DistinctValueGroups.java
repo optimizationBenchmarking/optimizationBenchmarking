@@ -113,11 +113,12 @@ public final class DistinctValueGroups extends PropertyValueGroups {
             "the data with the same values of", textOut); //$NON-NLS-1$
       }
     }
+    textOut.append(' ');
     next = SemanticComponentUtils.printLongAndShortNameIfDifferent(
         this.m_property, textOut, next);
 
     textOut.append(' ');
-    return ETextCase.ensure(next)
-        .appendWords("grouped together.", textOut); //$NON-NLS-1$
+    return ETextCase.ensure(next).appendWords("grouped together.", //$NON-NLS-1$
+        textOut).nextAfterSentenceEnd();
   }
 }

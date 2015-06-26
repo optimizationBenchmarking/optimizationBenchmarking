@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.document.impl.abstr;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.utils.document.spec.ELabelType;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
@@ -26,6 +27,12 @@ public class DocumentBody extends _StyleProviderPart implements
   protected DocumentBody(final Document owner) {
     super(owner);
     this.m_subsectionCount = 0;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final ILabel createLabel(final ELabelType type) {
+    return this.m_doc.createLabel(type);
   }
 
   /**

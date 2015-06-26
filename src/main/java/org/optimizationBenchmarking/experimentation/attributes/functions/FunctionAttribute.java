@@ -71,13 +71,6 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
   /**
    * the
    * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticMathComponent
-   * semantic math component} representing the {@code x}-axis
-   */
-  private transient ISemanticMathComponent m_xAxisSemanticComponent;
-
-  /**
-   * the
-   * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticMathComponent
    * semantic math component} representing the {@code y}-axis
    */
   private transient ISemanticMathComponent m_yAxisSemanticComponent;
@@ -85,21 +78,9 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
   /**
    * the
    * {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
-   * parameter renderer} for the {@code x}-axis
-   */
-  private transient IParameterRenderer m_xAxisParameterRenderer;
-  /**
-   * the
-   * {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
    * parameter renderer} for the {@code y}-axis function
    */
   private transient IParameterRenderer m_yAxisFunctionRenderer;
-  /**
-   * the
-   * {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
-   * parameter renderer} for the {@code y}-axis
-   */
-  private transient IParameterRenderer m_yAxisParameterRenderer;
 
   /**
    * Create the function attribute
@@ -178,22 +159,6 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
   /**
    * Get the
    * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticMathComponent
-   * semantic math component} representing the {@code x}-axis
-   *
-   * @return the
-   *         {@link org.optimizationBenchmarking.utils.document.spec.ISemanticMathComponent
-   *         semantic math component} representing the {@code x}-axis
-   */
-  public final ISemanticMathComponent getXAxisSemanticComponent() {
-    if (this.m_xAxisSemanticComponent == null) {
-      this.m_xAxisSemanticComponent = new __FunctionXAxis();
-    }
-    return this.m_xAxisSemanticComponent;
-  }
-
-  /**
-   * Get the
-   * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticMathComponent
    * semantic math component} representing the {@code y}-axis
    *
    * @return the
@@ -257,7 +222,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
   @Override
   public ETextCase printDescription(final ITextOutput textOut,
       final ETextCase textCase) {
-    return this.yAxisPrintDescription(textOut, textCase);
+    return this.__printDescription(textOut, textCase, false);
   }
 
   /** {@inheritDoc} */
@@ -313,177 +278,6 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
   }
 
   /**
-   * get the internal parameter renderer for the {@code x}-axis
-   *
-   * @return the internal parameter renderer for the {@code x}-axis
-   */
-  private final IParameterRenderer __getXAxisParameterRenderer() {
-    if (this.m_xAxisParameterRenderer == null) {
-      this.m_xAxisParameterRenderer = new __XAxisParameterRenderer();
-    }
-    return this.m_xAxisParameterRenderer;
-  }
-
-  /**
-   * The method
-   * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticComponent#printShortName(ITextOutput, ETextCase)}
-   * for the {@code x}-axis
-   *
-   * @param textOut
-   *          the text output device
-   * @param textCase
-   *          the text case
-   * @return the next text case
-   */
-  protected ETextCase xAxisPrintShortName(final ITextOutput textOut,
-      final ETextCase textCase) {
-
-    if (this.m_xAxisTransformation.isIdentityTransformation()) {
-      return this.m_xAxisTransformation.m_dimension.printShortName(
-          textOut, textCase);
-    }
-
-    if (textOut instanceof IComplexText) {
-      try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-        this.xAxisMathRender(math, this.__getXAxisParameterRenderer());
-      }
-    } else {
-      this.xAxisMathRender(textOut, this.__getXAxisParameterRenderer());
-    }
-
-    return ETextCase.ensure(textCase).nextCase();
-  }
-
-  /**
-   * The method
-   * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticComponent#printLongName(ITextOutput, ETextCase)}
-   * for the {@code x}-axis
-   *
-   * @param textOut
-   *          the text output device
-   * @param textCase
-   *          the text case
-   * @return the next text case
-   */
-  protected ETextCase xAxisPrintLongName(final ITextOutput textOut,
-      final ETextCase textCase) {
-
-    if (this.m_xAxisTransformation.isIdentityTransformation()) {
-      return this.m_xAxisTransformation.m_dimension.printLongName(textOut,
-          textCase);
-    }
-
-    if (textOut instanceof IComplexText) {
-      try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-        this.xAxisMathRender(math, this.__getXAxisParameterRenderer());
-      }
-    } else {
-      this.xAxisMathRender(textOut, this.__getXAxisParameterRenderer());
-    }
-
-    return ETextCase.ensure(textCase).nextCase();
-  }
-
-  /**
-   * The method
-   * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticComponent#printDescription(ITextOutput, ETextCase)}
-   * for the {@code x}-axis
-   *
-   * @param textOut
-   *          the text output device
-   * @param textCase
-   *          the text case
-   * @return the next text case
-   */
-  protected ETextCase xAxisPrintDescription(final ITextOutput textOut,
-      final ETextCase textCase) {
-    ETextCase use;
-
-    use = ETextCase.ensure(textCase).appendWords(
-        "the values of dimension", //$NON-NLS-1$
-        textOut);
-    textOut.append(' ');
-    use = SemanticComponentUtils.printLongAndShortNameIfDifferent(
-        this.m_xAxisTransformation.m_dimension, textOut, use);
-    if (!(this.m_xAxisTransformation.isIdentityTransformation())) {
-      textOut.append(' ');
-      use = use.appendWords("transformed according to", //$NON-NLS-1$
-          textOut);
-      textOut.append(' ');
-      this.xAxisMathRender(textOut, DefaultParameterRenderer.INSTANCE);
-    }
-
-    return use;
-  }
-
-  /**
-   * The method
-   * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticComponent#getPathComponentSuggestion()}
-   * for the {@code x}-axis
-   *
-   * @return the path component suggestion
-   */
-  protected String xAxisGetPathComponentSuggestion() {
-    return PathUtils.sanitizePathComponent(this.xAxisToString());
-  }
-
-  /**
-   * The method
-   * {@link org.optimizationBenchmarking.utils.math.text.IMathRenderable#mathRender(ITextOutput, IParameterRenderer)}
-   * for the {@code x}-axis
-   *
-   * @param out
-   *          the text output device
-   * @param renderer
-   *          the renderer
-   */
-  protected void xAxisMathRender(final ITextOutput out,
-      final IParameterRenderer renderer) {
-    this.m_xAxisTransformation.m_func.mathRender(out,
-        this.__getXAxisParameterRenderer());
-  }
-
-  /**
-   * The method
-   * {@link org.optimizationBenchmarking.utils.math.text.IMathRenderable#mathRender(IMath, IParameterRenderer)}
-   * for the {@code x}-axis
-   *
-   * @param out
-   *          the math output device
-   * @param renderer
-   *          the renderer
-   */
-  protected void xAxisMathRender(final IMath out,
-      final IParameterRenderer renderer) {
-    this.m_xAxisTransformation.m_func.mathRender(out,
-        this.__getXAxisParameterRenderer());
-  }
-
-  /**
-   * The method {@link java.lang.Object#toString()} for the {@code x}-axis
-   *
-   * @return the string
-   */
-  protected String xAxisToString() {
-    final MemoryTextOutput mto;
-    mto = new MemoryTextOutput();
-    this.xAxisMathRender(mto, this.__getXAxisParameterRenderer());
-    return mto.toString();
-  }
-
-  /**
-   * get the internal parameter renderer for the {@code y}-axis
-   *
-   * @return the internal parameter renderer for the {@code y}-axis
-   */
-  final IParameterRenderer _getYAxisParameterRenderer() {
-    if (this.m_yAxisParameterRenderer == null) {
-      this.m_yAxisParameterRenderer = new __YAxisParameterRenderer();
-    }
-    return this.m_yAxisParameterRenderer;
-  }
-
-  /**
    * get the internal function renderer for the {@code y}-axis
    *
    * @return the internal function renderer for the {@code y}-axis
@@ -529,6 +323,27 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
   }
 
   /**
+   * Print the name of this function inside a description.
+   *
+   * @param textOut
+   *          the text output device
+   * @param textCase
+   *          the text case
+   * @param fromYAxisSemanticComponent
+   *          is this method called from
+   *          {@link #yAxisPrintDescription(ITextOutput, ETextCase)} (
+   *          {@code true}) or
+   *          {@link #printDescription(ITextOutput, ETextCase)} (
+   *          {@code false})
+   * @return the next text case
+   */
+  protected ETextCase printNameInDescription(final ITextOutput textOut,
+      final ETextCase textCase, final boolean fromYAxisSemanticComponent) {
+    return SemanticComponentUtils.printLongAndShortNameIfDifferent(this,
+        textOut, textCase);
+  }
+
+  /**
    * The method
    * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticComponent#printDescription(ITextOutput, ETextCase)}
    * for the {@code y}-axis
@@ -537,16 +352,22 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    *          the text output device
    * @param textCase
    *          the text case
+   * @param fromYAxisSemanticComponent
+   *          is this method called from
+   *          {@link #yAxisPrintDescription(ITextOutput, ETextCase)} (
+   *          {@code true}) or
+   *          {@link #printDescription(ITextOutput, ETextCase)} (
+   *          {@code false})
    * @return the next text case
    */
-  protected ETextCase yAxisPrintDescription(final ITextOutput textOut,
-      final ETextCase textCase) {
+  private final ETextCase __printDescription(final ITextOutput textOut,
+      final ETextCase textCase, final boolean fromYAxisSemanticComponent) {
     ETextCase use;
 
     use = ETextCase.ensure(textCase).appendWord("the", textOut); //$NON-NLS-1$
     textOut.append(' ');
-    use = SemanticComponentUtils.printLongAndShortNameIfDifferent(
-        FunctionAttribute.this, textOut, use);
+    use = this.printNameInDescription(textOut, use,
+        fromYAxisSemanticComponent);
     textOut.append(' ');
 
     if (!(this.m_yAxisOutputTransformation.isIdentityTransformation())) {
@@ -566,7 +387,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     }
 
     if (this.m_yAxisInputTransformation.isIdentityTransformation()) {
-      use = use.appendWords("in terms of", textOut);//$NON-NLS-1$
+      use = use.appendWords("of", textOut);//$NON-NLS-1$
       textOut.append(' ');
       use = this.m_yAxisInputTransformation.m_dimension.printShortName(
           textOut, use);
@@ -575,21 +396,38 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
       textOut.append(' ');
       if (textOut instanceof IComplexText) {
         try (final IMath math = ((IComplexText) textOut).inlineMath()) {
-          this.m_yAxisInputTransformation.m_func.mathRender(math,
-              this._getYAxisParameterRenderer());
+          this.m_yAxisInputTransformation.mathRender(math,
+              DefaultParameterRenderer.INSTANCE);
         }
       } else {
-        this.m_yAxisInputTransformation.m_func.mathRender(textOut,
-            this._getYAxisParameterRenderer());
+        this.m_yAxisInputTransformation.mathRender(textOut,
+            DefaultParameterRenderer.INSTANCE);
       }
       use = use.nextCase();
     }
 
+    textOut.append(' ');
     use = use.appendWord("over", textOut);//$NON-NLS-1$
     textOut.append(' ');
-    use = this.xAxisPrintShortName(textOut, use);
+    use = this.m_xAxisTransformation.printShortName(textOut, use);
     textOut.append('.');
-    return use;
+    return use.nextAfterSentenceEnd();
+  }
+
+  /**
+   * The method
+   * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticComponent#printDescription(ITextOutput, ETextCase)}
+   * for the {@code y}-axis
+   *
+   * @param textOut
+   *          the text output device
+   * @param textCase
+   *          the text case
+   * @return the next text case
+   */
+  protected ETextCase yAxisPrintDescription(final ITextOutput textOut,
+      final ETextCase textCase) {
+    return this.__printDescription(textOut, textCase, true);
   }
 
   /**
@@ -653,13 +491,10 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    *
    * @param out
    *          the output destination
-   * @param renderer
-   *          the parameter renderer
    */
-  protected void yAxisRenderXAxisAsParameter(final IMath out,
-      final IParameterRenderer renderer) {
-    FunctionAttribute.this.m_xAxisTransformation.getDimension()
-        .mathRender(out, renderer);
+  protected void yAxisRenderXAxisAsParameter(final IMath out) {
+    this.m_xAxisTransformation.getDimension().mathRender(out,
+        DefaultParameterRenderer.INSTANCE);
   }
 
   /**
@@ -668,13 +503,9 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    *
    * @param out
    *          the output destination
-   * @param renderer
-   *          the parameter renderer
    */
-  protected void yAxisRenderXAxisAsParameter(final ITextOutput out,
-      final IParameterRenderer renderer) {
-    out.append(FunctionAttribute.this.m_xAxisTransformation.getDimension()
-        .getName());
+  protected void yAxisRenderXAxisAsParameter(final ITextOutput out) {
+    out.append(this.m_xAxisTransformation.getDimension().getName());
   }
 
   /**
@@ -683,13 +514,10 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    *
    * @param out
    *          the output destination
-   * @param renderer
-   *          the parameter renderer
    */
-  protected void yAxisRenderYAxisSourceAsParameter(final IMath out,
-      final IParameterRenderer renderer) {
-    FunctionAttribute.this.m_yAxisInputTransformation.m_func.mathRender(
-        out, renderer);
+  protected void yAxisRenderYAxisSourceAsParameter(final IMath out) {
+    this.m_yAxisInputTransformation.mathRender(out,
+        DefaultParameterRenderer.INSTANCE);
   }
 
   /**
@@ -698,94 +526,10 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    *
    * @param out
    *          the output destination
-   * @param renderer
-   *          the parameter renderer
    */
-  protected void yAxisRenderYAxisSourceAsParameter(final ITextOutput out,
-      final IParameterRenderer renderer) {
-    FunctionAttribute.this.m_yAxisInputTransformation.m_func.mathRender(
-        out, FunctionAttribute.this._getYAxisParameterRenderer());
-  }
-
-  /** The internal class representing the x-axis of a function */
-  private final class __FunctionXAxis implements ISemanticMathComponent {
-
-    /** create */
-    __FunctionXAxis() {
-      super();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final ETextCase printShortName(final ITextOutput textOut,
-        final ETextCase textCase) {
-      return FunctionAttribute.this.xAxisPrintShortName(textOut, textCase);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final ETextCase printLongName(final ITextOutput textOut,
-        final ETextCase textCase) {
-      return FunctionAttribute.this.xAxisPrintLongName(textOut, textCase);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final ETextCase printDescription(final ITextOutput textOut,
-        final ETextCase textCase) {
-      return FunctionAttribute.this.xAxisPrintDescription(textOut,
-          textCase);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final String getPathComponentSuggestion() {
-      return FunctionAttribute.this.xAxisGetPathComponentSuggestion();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final void mathRender(final ITextOutput out,
-        final IParameterRenderer renderer) {
-      FunctionAttribute.this.xAxisMathRender(out, renderer);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final void mathRender(final IMath out,
-        final IParameterRenderer renderer) {
-      FunctionAttribute.this.xAxisMathRender(out, renderer);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final int hashCode() {
-      return (2434249 ^ FunctionAttribute.this.hashCode());
-    }
-
-    /**
-     * get the owning function attribute
-     *
-     * @return the owning function attribute
-     */
-    private final FunctionAttribute<?> __getOwner() {
-      return FunctionAttribute.this;
-    }
-
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public final boolean equals(final Object o) {
-      return ((o == this) || //
-      ((o instanceof FunctionAttribute.__FunctionXAxis) && //
-      (FunctionAttribute.this.equals(((__FunctionXAxis) o).__getOwner()))));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final String toString() {
-      return FunctionAttribute.this.xAxisToString();
-    }
+  protected void yAxisRenderYAxisSourceAsParameter(final ITextOutput out) {
+    this.m_yAxisInputTransformation.mathRender(out,
+        DefaultParameterRenderer.INSTANCE);
   }
 
   /** The internal class representing the y-axis of a function */
@@ -882,15 +626,12 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     @Override
     public final void renderParameter(final int index,
         final ITextOutput out) {
-      final IParameterRenderer next;
       if (index == 0) {
         out.append(FunctionAttribute.this.getShortName());
         out.append('(');
-        next = FunctionAttribute.this._getYAxisParameterRenderer();
-        FunctionAttribute.this.yAxisRenderXAxisAsParameter(out, next);
+        FunctionAttribute.this.yAxisRenderXAxisAsParameter(out);
         out.append(',');
-        FunctionAttribute.this
-            .yAxisRenderYAxisSourceAsParameter(out, next);
+        FunctionAttribute.this.yAxisRenderYAxisSourceAsParameter(out);
         out.append(')');
       } else {
         AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
@@ -900,16 +641,13 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     /** {@inheritDoc} */
     @Override
     public final void renderParameter(final int index, final IMath out) {
-      final IParameterRenderer next;
 
       if (index == 0) {
-        next = FunctionAttribute.this._getYAxisParameterRenderer();
         try (final IMath function = out.nAryFunction(
             FunctionAttribute.this.getShortName(), 2, 2)) {
-          FunctionAttribute.this.yAxisRenderXAxisAsParameter(function,
-              next);
-          FunctionAttribute.this.yAxisRenderYAxisSourceAsParameter(
-              function, next);
+          FunctionAttribute.this.yAxisRenderXAxisAsParameter(function);
+          FunctionAttribute.this
+              .yAxisRenderYAxisSourceAsParameter(function);
         }
       } else {
         AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
@@ -938,122 +676,6 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
       return ((o == this) || //
       ((o instanceof FunctionAttribute.__YAxisFunctionRenderer) && //
       (FunctionAttribute.this.equals(((__YAxisFunctionRenderer) o)
-          .__getOwner()))));
-    }
-  }
-
-  /** The renderer for the {@code y}-axis function */
-  private final class __YAxisParameterRenderer extends
-      AbstractParameterRenderer {
-
-    /** create */
-    __YAxisParameterRenderer() {
-      super();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final void renderParameter(final int index,
-        final ITextOutput out) {
-      if (index == 0) {
-        FunctionAttribute.this.m_yAxisInputTransformation.m_dimension
-            .mathRender(out, this);
-      } else {
-        AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
-      }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final void renderParameter(final int index, final IMath out) {
-      if (index == 0) {
-        FunctionAttribute.this.m_yAxisInputTransformation.m_dimension
-            .mathRender(out, this);
-      } else {
-        AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
-      }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final int hashCode() {
-      return (7324651 ^ FunctionAttribute.this.hashCode());
-    }
-
-    /**
-     * get the owning function attribute
-     *
-     * @return the owning function attribute
-     */
-    private final FunctionAttribute<?> __getOwner() {
-      return FunctionAttribute.this;
-    }
-
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public final boolean equals(final Object o) {
-      return ((o == this) || //
-      ((o instanceof FunctionAttribute.__YAxisParameterRenderer) && //
-      (FunctionAttribute.this.equals(((__YAxisParameterRenderer) o)
-          .__getOwner()))));
-    }
-  }
-
-  /** The renderer for the {@code x}-axis function */
-  private final class __XAxisParameterRenderer extends
-      AbstractParameterRenderer {
-
-    /** create */
-    __XAxisParameterRenderer() {
-      super();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final void renderParameter(final int index,
-        final ITextOutput out) {
-      if (index == 0) {
-        FunctionAttribute.this.m_xAxisTransformation.m_dimension
-            .mathRender(out, this);
-      } else {
-        AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
-      }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final void renderParameter(final int index, final IMath out) {
-      if (index == 0) {
-        FunctionAttribute.this.m_xAxisTransformation.m_dimension
-            .mathRender(out, this);
-      } else {
-        AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
-      }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final int hashCode() {
-      return (5564633 ^ FunctionAttribute.this.hashCode());
-    }
-
-    /**
-     * get the owning function attribute
-     *
-     * @return the owning function attribute
-     */
-    private final FunctionAttribute<?> __getOwner() {
-      return FunctionAttribute.this;
-    }
-
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public final boolean equals(final Object o) {
-      return ((o == this) || //
-      ((o instanceof FunctionAttribute.__XAxisParameterRenderer) && //
-      (FunctionAttribute.this.equals(((__XAxisParameterRenderer) o)
           .__getOwner()))));
     }
   }

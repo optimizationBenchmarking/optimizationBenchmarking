@@ -33,7 +33,7 @@ public final class CompoundAggregate implements IAggregate {
    */
   public static final IAggregate combine(final IAggregate a,
       final IAggregate b) {
-    if (a == null) {
+    if ((a == null) || (a == b)) {
       return b;
     }
     if (b == null) {

@@ -24,7 +24,6 @@ final class _LaTeXMathName extends MathName {
   /** {@inheritDoc} */
   @Override
   protected synchronized final void onOpen() {
-
     super.onOpen();
     this.getTextOutput().append(_LaTeXMathName.NAME_BEGIN);
   }

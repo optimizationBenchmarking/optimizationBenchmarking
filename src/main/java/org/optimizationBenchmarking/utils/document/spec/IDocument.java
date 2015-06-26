@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.tools.spec.IToolJob;
  * The root interface for the document output API.
  */
 public interface IDocument extends IDocumentElement, IStyleProvider,
-    IToolJob {
+    IToolJob, ILabelBuilder {
 
   /**
    * create the document header
@@ -31,16 +31,6 @@ public interface IDocument extends IDocumentElement, IStyleProvider,
    * @return the document footer
    */
   public abstract IDocumentBody footer();
-
-  /**
-   * Create a new label to mark a table or figure or section with that is
-   * going to be written in the future.
-   *
-   * @param type
-   *          the label type
-   * @return the label to be used in forward references
-   */
-  public abstract ILabel createLabel(final ELabelType type);
 
   /**
    * Get the path to the document's main file
