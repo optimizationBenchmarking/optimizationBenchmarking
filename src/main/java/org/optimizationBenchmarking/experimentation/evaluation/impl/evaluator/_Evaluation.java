@@ -28,6 +28,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibDateBuilder;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.DocumentDriverParser;
+import org.optimizationBenchmarking.utils.document.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBody;
 import org.optimizationBenchmarking.utils.document.spec.IDocumentBuilder;
@@ -286,10 +287,10 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     } catch (final Exception ex) {
       data = null;
       ErrorUtils
-      .logError(
-          logger,
-          "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
-          ex, false, RethrowMode.AS_RUNTIME_EXCEPTION);
+          .logError(
+              logger,
+              "Unrecoverable error during the process of obtaining the input data.", //$NON-NLS-1$
+              ex, false, RethrowMode.AS_RUNTIME_EXCEPTION);
       return null;// will never be reached
     }
 
@@ -429,16 +430,16 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
         if (instance == null) {
           throw new IllegalArgumentException(//
               "The " + j + //$NON-NLS-1$
-              "th instance run set of experiment '" //$NON-NLS-1$
-              + ex.getName() + "' is null.");//$NON-NLS-1$
+                  "th instance run set of experiment '" //$NON-NLS-1$
+                  + ex.getName() + "' is null.");//$NON-NLS-1$
         }
         if (((runs = instance.getData()) == null)
             || ((k = runs.size()) <= 0)) {
           throw new IllegalArgumentException(//
               "The instance run set for instance " + //$NON-NLS-1$
-              instance.getInstance().getName() + //
-              " of experiment '" //$NON-NLS-1$
-              + ex.getName() + "' is empty.");//$NON-NLS-1$
+                  instance.getInstance().getName() + //
+                  " of experiment '" //$NON-NLS-1$
+                  + ex.getName() + "' is empty.");//$NON-NLS-1$
         }
         if (message != null) {
           message.append(',');
@@ -555,10 +556,10 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     } catch (final Exception error) {
       doc = null;
       ErrorUtils
-      .logError(
-          logger,
-          "Unrecoverable error during the process of allocating the output document.", //$NON-NLS-1$
-          error, false, RethrowMode.AS_RUNTIME_EXCEPTION);
+          .logError(
+              logger,
+              "Unrecoverable error during the process of allocating the output document.", //$NON-NLS-1$
+              error, false, RethrowMode.AS_RUNTIME_EXCEPTION);
     }
 
     if (doc == null) {
@@ -617,8 +618,8 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
   private static final void __summary(final _MainJob modules,
       final IExperimentSet set, final IPlainText summary,
       final Logger logger) {
-    final ArrayListView<? extends IExperiment> data;
-    final int size;
+    final ArrayListView<? extends IExperiment> experiments;
+    final int experimentSize, instanceSize;
     final IParameter param;
     Object name;
     HashSet<String> names;
@@ -628,27 +629,37 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     summary.append(//
-        "This document contains an automatically-generated evaluation report on "); //$NON-NLS-1$
+        "This is the evaluation report on "); //$NON-NLS-1$
 
-    data = set.getData();
-    size = data.size();
+    experiments = set.getData();
+    experimentSize = experiments.size();
     param = set.getParameters().find(Parameter.PARAMETER_ALGORITHM_NAME);
-    if (size == 1) {
-      summary.append(" one algorithm"); //$NON-NLS-1$
-      if (param != null) {
-        name = data.get(0).getParameterSetting().get(param);
-        if ((name != null) && (name instanceof String)) {
-          summary.append(": ");//$NON-NLS-1$
-          summary.append((String) (name));
+    algoNames: {
+
+      if (experimentSize == 1) {
+        summary.append(" one algorithm"); //$NON-NLS-1$
+        if (param != null) {
+          name = experiments.get(0).getParameterSetting().get(param);
+          if ((name != null) && (name instanceof String)) {
+            summary.append(": ");//$NON-NLS-1$
+            summary.append((String) (name));
+            break algoNames;
+          }
+        } else {
+          summary.append(", namely ");//$NON-NLS-1$
+          experiments.get(0)
+              .printShortName(summary, ETextCase.IN_SENTENCE);
+          break algoNames;
         }
+
       }
-    } else {
-      InTextNumberAppender.INSTANCE.appendTo(size, ETextCase.IN_SENTENCE,
-          summary);
+
+      InTextNumberAppender.INSTANCE.appendTo(experimentSize,
+          ETextCase.IN_SENTENCE, summary);
       summary.append(" experiments"); //$NON-NLS-1$
       if (param != null) {
         names = null;
-        for (final IExperiment experiment : data) {
+        for (final IExperiment experiment : experiments) {
           name = experiment.getParameterSetting().get(param);
           if ((name != null) && (name instanceof String)) {
             if (names == null) {
@@ -662,15 +673,32 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
           if (names.size() <= 1) {
             summary.append(" with the algorithm "); //$NON-NLS-1$
             summary.append(names.iterator().next());
-          } else {
-            summary.append(" with the algorithms "); //$NON-NLS-1$
-            ESequenceMode.AND.appendSequence(ETextCase.IN_SENTENCE, names,
-                true, summary);
+            break algoNames;
           }
+          summary.append(" with the algorithms "); //$NON-NLS-1$
+          ESequenceMode.AND.appendSequence(ETextCase.IN_SENTENCE, names,
+              true, summary);
+          break algoNames;
         }
       }
+
+      summary.append(", namely "); //$NON-NLS-1$
+      SemanticComponentUtils.printNames(ESequenceMode.AND, experiments,
+          true, false, ETextCase.IN_SENTENCE, summary);
     }
 
+    summary.append(" on "); //$NON-NLS-1$
+    instanceSize = set.getInstances().getData().size();
+    InTextNumberAppender.INSTANCE.appendTo(instanceSize,
+        ETextCase.IN_SENTENCE, summary);
+    summary.append(" benchmark instance"); //$NON-NLS-1$
+    if (instanceSize > 0) {
+      summary.append('s');
+    }
+
+    summary.append(//
+        ". This report has been generated with the "); //$NON-NLS-1$
+    Evaluator.getInstance()._printInfo(summary);
     summary.append('.');
 
     modules.summary(summary);
@@ -709,17 +737,17 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
       size = data.size();
       if (size == 1) {
         single: {
-        param = set.getParameters().find(
-            Parameter.PARAMETER_ALGORITHM_NAME);
-        if (param != null) {
-          name = data.get(0).getParameterSetting().get(param);
-          if ((name != null) && (name instanceof String)) {
-            title.append((String) name);
-            break single;
+          param = set.getParameters().find(
+              Parameter.PARAMETER_ALGORITHM_NAME);
+          if (param != null) {
+            name = data.get(0).getParameterSetting().get(param);
+            if ((name != null) && (name instanceof String)) {
+              title.append((String) name);
+              break single;
+            }
           }
+          title.append(" One Algorithm"); //$NON-NLS-1$
         }
-        title.append(" One Algorithm"); //$NON-NLS-1$
-      }
       } else {
         InTextNumberAppender.INSTANCE.appendTo(size, ETextCase.IN_TITLE,
             title);

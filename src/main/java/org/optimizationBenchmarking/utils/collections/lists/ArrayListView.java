@@ -86,8 +86,11 @@ public class ArrayListView<DT> extends BasicList<DT> implements IImmutable {
 
   /** {@inheritDoc} */
   @Override
-  public final DT[] toArray() {
-    return this.m_data.clone();
+  public final Object[] toArray() {
+    final Object[] data;
+    data = new Object[this.m_data.length];
+    System.arraycopy(this.m_data, 0, data, 0, data.length);
+    return data;
   }
 
   /** {@inheritDoc} */

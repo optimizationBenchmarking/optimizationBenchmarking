@@ -920,7 +920,7 @@ public class RandomExample extends ExperimentSetCreator {
     final HashSet<HashMap<String, Object>> configs;
 
     params = this.__createProperties(r);
-    is = insts.getData().toArray();
+    is = insts.getData().toArray(new Instance[insts.getData().size()]);
 
     configs = new HashSet<>();
 

@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.document.impl;
 
+import java.util.Collection;
+
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.document.spec.ISemanticComponent;
@@ -7,6 +10,7 @@ import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.NamedMathRenderable;
+import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -173,6 +177,49 @@ public final class SemanticComponentUtils {
       output.append(')');
     }
     return next;
+  }
+
+  /**
+   * Print the names of a sequence of semantic components
+   *
+   * @param mode
+   *          the sequence mode
+   * @param components
+   *          the components
+   * @param printShortName
+   *          should we print the short name?
+   * @param printLongName
+   *          should we print the long name?
+   * @param textCase
+   *          the text case
+   * @param dest
+   *          the output destination
+   */
+  public static final void printNames(final ESequenceMode mode,
+      final Collection<? extends ISemanticComponent> components,
+      final boolean printShortName, final boolean printLongName,
+      final ETextCase textCase, final ITextOutput dest) {
+    final Object[] list;
+    int index;
+
+    if (mode == null) {
+      throw new IllegalArgumentException(//
+          "Sequence mode cannot be null"); //$NON-NLS-1$
+    }
+    if (components == null) {
+      throw new IllegalArgumentException(//
+          "List of components cannot be null.");//$NON-NLS-1$
+    }
+
+    SemanticComponentSequenceable._checkPrint(printShortName,
+        printLongName);
+    list = components.toArray();
+    for (index = list.length; (--index) >= 0;) {
+      list[index] = new SemanticComponentSequenceable(//
+          ((ISemanticComponent) (list[index])),//
+          printShortName, printLongName);
+    }
+    mode.appendSequence(textCase, new ArrayListView<>(list), false, dest);
   }
 
   /** the forbidden constructor */

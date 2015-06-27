@@ -3,7 +3,10 @@ package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluator;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfigurationBuilder;
+import org.optimizationBenchmarking.utils.document.spec.IComplexText;
+import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolSuite;
 
 /**
@@ -50,6 +53,25 @@ public final class Evaluator extends ToolSuite implements IEvaluator {
    */
   public static final Evaluator getInstance() {
     return __EvaluatorLoader.INSTANCE;
+  }
+
+  /**
+   * print the information of this evaluator to the given text destination
+   *
+   * @param out
+   *          the text destination
+   */
+  final void _printInfo(final ITextOutput out) {
+    out.append("version "); //$NON-NLS-1$
+    out.append(this.getProjectVersion());
+    out.append(" of the "); //$NON-NLS-1$
+    if (out instanceof IComplexText) {
+      try (final IText emph = ((IComplexText) out).emphasize()) {
+        emph.append(this.getProjectName());
+      }
+    } else {
+      out.append(this.getProjectName());
+    }
   }
 
   /** the loader */
