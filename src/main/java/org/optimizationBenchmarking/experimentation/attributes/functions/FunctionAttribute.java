@@ -81,6 +81,13 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * parameter renderer} for the {@code y}-axis function
    */
   private transient IParameterRenderer m_yAxisFunctionRenderer;
+  /**
+   * the
+   * {@link org.optimizationBenchmarking.utils.math.text.IParameterRenderer
+   * parameter renderer} for the {@code y}-axis function in path component
+   * suggestions
+   */
+  private transient IParameterRenderer m_yAxisPathComponentRenderer;
 
   /**
    * Create the function attribute
@@ -290,6 +297,20 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
   }
 
   /**
+   * get the internal function renderer for the {@code y}-axis for
+   * {@link #yAxisGetPathComponentSuggestion()}
+   *
+   * @return the internal function renderer for the {@code y}-axis for
+   *         {@link #yAxisGetPathComponentSuggestion()}
+   */
+  private final IParameterRenderer __getYAxisPathComponentRenderer() {
+    if (this.m_yAxisPathComponentRenderer == null) {
+      this.m_yAxisPathComponentRenderer = new __YAxisPathComponentRenderer();
+    }
+    return this.m_yAxisPathComponentRenderer;
+  }
+
+  /**
    * The method
    * {@link org.optimizationBenchmarking.utils.document.spec.ISemanticComponent#printShortName(ITextOutput, ETextCase)}
    * for the {@code y}-axis
@@ -438,7 +459,11 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * @return the path component suggestion
    */
   protected String yAxisGetPathComponentSuggestion() {
-    return PathUtils.sanitizePathComponent(this.yAxisToString());
+    final MemoryTextOutput mto;
+    mto = new MemoryTextOutput();
+    this.m_yAxisOutputTransformation.m_func.mathRender(mto,
+        this.__getYAxisPathComponentRenderer());
+    return PathUtils.sanitizePathComponent(mto.toString());
   }
 
   /**
@@ -679,4 +704,77 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
           .__getOwner()))));
     }
   }
+
+  /**
+   * The renderer for the {@code y}-axis function for making the path
+   * component
+   */
+  private final class __YAxisPathComponentRenderer extends
+      AbstractParameterRenderer {
+
+    /** create */
+    __YAxisPathComponentRenderer() {
+      super();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void renderParameter(final int index,
+        final ITextOutput out) {
+      if (index == 0) {
+        out.append(FunctionAttribute.this.getShortName());
+        out.append('(');
+        FunctionAttribute.this.m_xAxisTransformation.mathRender(out,
+            DefaultParameterRenderer.INSTANCE);
+        out.append(',');
+        FunctionAttribute.this.yAxisRenderYAxisSourceAsParameter(out);
+        out.append(')');
+      } else {
+        AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
+      }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final void renderParameter(final int index, final IMath out) {
+
+      if (index == 0) {
+        try (final IMath function = out.nAryFunction(
+            FunctionAttribute.this.getShortName(), 2, 2)) {
+          FunctionAttribute.this.m_xAxisTransformation.mathRender(out,
+              DefaultParameterRenderer.INSTANCE);
+          FunctionAttribute.this
+              .yAxisRenderYAxisSourceAsParameter(function);
+        }
+      } else {
+        AbstractParameterRenderer.throwInvalidParameterIndex(index, 0);
+      }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final int hashCode() {
+      return (7764707 ^ FunctionAttribute.this.hashCode());
+    }
+
+    /**
+     * get the owning function attribute
+     *
+     * @return the owning function attribute
+     */
+    private final FunctionAttribute<?> __getOwner() {
+      return FunctionAttribute.this;
+    }
+
+    /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
+    @Override
+    public final boolean equals(final Object o) {
+      return ((o == this) || //
+      ((o instanceof FunctionAttribute.__YAxisPathComponentRenderer) && //
+      (FunctionAttribute.this.equals(((__YAxisPathComponentRenderer) o)
+          .__getOwner()))));
+    }
+  }
+
 }
