@@ -157,8 +157,7 @@ public final class Cube extends UnaryFunction {
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
     renderer.renderParameter(0, out);
-    out.append('^');
-    out.append('3');
+    out.append((char) 0xb3);
   }
 
   /** {@inheritDoc} */

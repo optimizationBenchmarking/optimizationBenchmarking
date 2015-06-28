@@ -126,7 +126,7 @@ public final class Sqrt extends UnaryFunction {
   @Override
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
-    out.append("sqrt("); //$NON-NLS-1$
+    out.append((char) 0x221a);
     renderer.renderParameter(0, out);
     out.append(')');
   }

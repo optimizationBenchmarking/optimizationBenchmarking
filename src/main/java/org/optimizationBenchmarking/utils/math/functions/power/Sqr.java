@@ -133,8 +133,7 @@ public final class Sqr extends UnaryFunction {
   public final void mathRender(final ITextOutput out,
       final IParameterRenderer renderer) {
     renderer.renderParameter(0, out);
-    out.append('^');
-    out.append('2');
+    out.append((char) 0xb2);
   }
 
   /** {@inheritDoc} */
