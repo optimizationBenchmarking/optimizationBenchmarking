@@ -3,11 +3,12 @@
   <groupId>optimizationBenchmarking.org</groupId>
   <artifactId>optimizationBenchmarking</artifactId>
   <versioning>
-    <release>0.8.1</release>
+    <release>0.8.2</release>
     <versions>
       <version>0.8.0</version>
       <version>0.8.1</version>
+      <version>0.8.2</version>
     </versions>
-    <lastUpdated>20150628104351</lastUpdated>
+    <lastUpdated>20150705134815</lastUpdated>
   </versioning>
 </metadata>

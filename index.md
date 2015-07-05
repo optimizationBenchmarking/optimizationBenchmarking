@@ -22,15 +22,13 @@ a set of slides introducing the whole framework and providing examples can be fo
 [here]({{ site.data.documentation.evaluatorSlidesURL }}).
 
 ## Examples
-We provide a set of examples which can be executed directly on the command line of
-your Linux machine, given that you have `Java 1.7` installed (and potentially `svn` and
-a LaTeX installation).
+We provide a set of examples which can be executed directly on the command lines of
+your Linux or Windows machine, given that you have `Java 1.7` installed (and potentially `svn` and a LaTeX installation).
+No further installation or downloads are required, nothing will be installed (just downloaded into the current folder).
 
-1. Comparison of Algorithms of Maximum Satisfiability Problem: [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.sh)
-2. Comparison of Some Algorithms from [BBOB'2013](http://coco.gforge.inria.fr/doku.php?id=bbob-2013): [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.sh)
-3. Comparison of Some Algorithms for the [TSP](https://github.com/optimizationBenchmarking/tspSuite) : [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/tspSuite/make.sh)
-
-These examples can also be run on Windows (by using different commands and/or doing stuff by hand). Right now we only provide shell scripts for Linux.
+1. Comparison of Algorithms of Maximum Satisfiability Problem: [Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.sh) [Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.bat)
+2. Comparison of Some Algorithms from [BBOB'2013](http://coco.gforge.inria.fr/doku.php?id=bbob-2013): [Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.sh) [Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.bat)
+3. Comparison of Some Algorithms for the [TSP](https://github.com/optimizationBenchmarking/tspSuite): [Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/tspSuite/make.sh) [Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/tspSuite/make.bat)
 
 ## Workflow
 The *optimizationBenchmarking.org* framework prescribes the following work flow, which is discussed
