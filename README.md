@@ -55,7 +55,7 @@ and comparisons carried out according to a user-provided specification.
 ## Examples
 
 We provide a set of examples which can be executed directly on the command lines of
-your Linux or Windows machine, given that you have `Java 1.7` installed (and potentially `svn` and a LaTeX installation).
+your Linux or Windows machine, given that you have `Java 1.7` installed (and potentially `svn` and a LaTeX installation). No further installation or downloads are required, nothing will be installed (just downloaded into the current folder).
 
 1. Comparison of Algorithms of Maximum Satisfiability Problem: [Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.sh) [Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.bat)
 2. Comparison of Some Algorithms from [BBOB'2013](http://coco.gforge.inria.fr/doku.php?id=bbob-2013): [Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.sh) [Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.bat)
