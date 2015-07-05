@@ -118,8 +118,6 @@ public final class ExperimentSetContext extends _FSM implements IToolJob {
   public ExperimentSetContext(final Logger logger) {
     super(null);
 
-    ExperimentDataTool.getInstance().checkCanUse();
-
     this.m_logger = logger;
     this.m_normal = new HashMap<>();
 

@@ -23,7 +23,7 @@ and virtually all other
 
 ## System Requirements
 
-1. Java 1.7
+1. Java 1.7: Ideally a JDK, because under a JRE, the software is both slower and needs more memory
 2. optional: a LaTeX installation such as MikTeX or TexLive
 3. the [third party libraries](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/master/LICENSE.md) `optimizationBenchmarking` depends on if and only if you do not use the stand-alone/full executable
 
@@ -54,12 +54,9 @@ and comparisons carried out according to a user-provided specification.
 
 ## Examples
 
-We provide a set of examples which can be executed directly on the command line of
-your Linux machine, given that you have `Java 1.7` installed (and potentially `svn` and
-a LaTeX installation).
+We provide a set of examples which can be executed directly on the command lines of
+your Linux or Windows machine, given that you have `Java 1.7` installed (and potentially `svn` and a LaTeX installation).
 
-1. Comparison of Algorithms of Maximum Satisfiability Problem: [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.sh)
-2. Comparison of Some Algorithms from [BBOB'2013](http://coco.gforge.inria.fr/doku.php?id=bbob-2013): [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.sh)
-3. Comparison of Some Algorithms for the [TSP](https://github.com/optimizationBenchmarking/tspSuite) : [script](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/tspSuite/make.sh)
-
-These examples can also be run on Windows (by using different commands and/or doing stuff by hand). Right now we only provide shell scripts for Linux.
+1. Comparison of Algorithms of Maximum Satisfiability Problem: [Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.sh) [Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.bat)
+2. Comparison of Some Algorithms from [BBOB'2013](http://coco.gforge.inria.fr/doku.php?id=bbob-2013): [Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.sh) [Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.bat)
+3. Comparison of Some Algorithms for the [TSP](https://github.com/optimizationBenchmarking/tspSuite): [Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/tspSuite/make.sh) [Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/tspSuite/make.bat)

@@ -23,10 +23,10 @@ public class Dimension extends _NamedIDObject implements IDimension {
   final EPrimitiveType m_primitiveType;
 
   /** the dimension type */
-  private final EDimensionType m_dimensionType;
+  final EDimensionType m_dimensionType;
 
   /** the direction of the dimension */
-  private final EDimensionDirection m_direction;
+  final EDimensionDirection m_direction;
 
   /** the default lower boundary */
   final Number m_defaultLower;

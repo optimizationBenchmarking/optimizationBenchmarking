@@ -1225,10 +1225,11 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     }
     sb.append("final int length = s.length();"); //$NON-NLS-1$
     sb.append("int i;"); //$NON-NLS-1$
-    sb.append("int j = 0;"); //$NON-NLS-1$
+    sb.append("char ch = 0;"); //$NON-NLS-1$
+    sb.append("int j = (-1);"); //$NON-NLS-1$
 
     for (index = 0; index < this.m_primitiveTypes.length; index++) {
-      sb.append("i = j;"); //$NON-NLS-1$
+      sb.append("i = (j+1);"); //$NON-NLS-1$
 
       sb.append("while(s.charAt(i) <= ' ') { i++; }"); //$NON-NLS-1$
       if (index <= 0) {
@@ -1238,10 +1239,12 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       sb.append("j = i;"); //$NON-NLS-1$
       sb.append("inner"); //$NON-NLS-1$
       sb.append(index);
-      sb.append(": for (j = i; j < length; j++) {"); //$NON-NLS-1$
-      sb.append("if (s.charAt(j) <= ' ') { break inner"); //$NON-NLS-1$
+      sb.append(": { for (j = i; j < length; j++) {"); //$NON-NLS-1$
+      sb.append("ch = s.charAt(j);"); //$NON-NLS-1$
+      sb.append("if ((ch <= ' ') || (ch == ',')) { break inner"); //$NON-NLS-1$
       sb.append(index);
       sb.append("; } }"); //$NON-NLS-1$
+      sb.append("if (ch == ']') { j--; } }"); //$NON-NLS-1$
 
       sb.append('l');
       sb.append(index);
@@ -1252,14 +1255,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       v = this.m_primitiveTypes[index].getPrimitiveTypeName();
       sb.append(Character.toUpperCase(v.charAt(0)));
       sb.append(v.substring(1));
-      sb.append("(s.substring(i, ((s.charAt(j-1)=='"); //$NON-NLS-1$
-      if (index < (this.m_primitiveTypes.length - 1)) {
-        ch = ',';
-      } else {
-        ch = ']';
-      }
-      sb.append(ch);
-      sb.append("')?(j-1):j)));"); //$NON-NLS-1$
+      sb.append("(s.substring(i, j));"); //$NON-NLS-1$
     }
 
     sb.append("return new "); //$NON-NLS-1$

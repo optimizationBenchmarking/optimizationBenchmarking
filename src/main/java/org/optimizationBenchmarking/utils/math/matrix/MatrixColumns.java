@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.math.matrix;
 
 /**
- * A class for matrix columns
+ * A class for selecting columns from another matrix
  *
  * @param <OT>
  *          the owning matrix type

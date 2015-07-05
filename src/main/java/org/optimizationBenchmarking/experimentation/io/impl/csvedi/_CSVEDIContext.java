@@ -80,7 +80,10 @@ final class _CSVEDIContext extends FlatExperimentSetContext {
     synchronized (this.m_done) {
       if (this.m_done.add(path)) {
         key = attrs.fileKey();
-        if (!(path.equals(key))) {
+        if (key == null) {
+          return true;
+        }
+        if (!(path.equals(key) || key.equals(path))) {
           return this.m_done.add(key);
         }
       }

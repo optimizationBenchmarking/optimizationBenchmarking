@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.LinkedHashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
@@ -270,11 +272,15 @@ public final class CSVEDIInput extends EDIInputToolBase {
       final ExperimentSetContext data, final Path path,
       final BasicFileAttributes attributes) throws Throwable {
     final _CSVEDIContext context;
+    final Logger logger;
     Instance inst;
     BasicFileAttributes candidateAttrs;
     Path candidate;
 
+    logger = job.getLogger();
+
     if (super.enterDirectory(job, data, path, attributes)) {
+
       context = ((_CSVEDIContext) (job.getToken()));
       if (context._isNew(path, attributes)) {
 
@@ -293,9 +299,21 @@ public final class CSVEDIInput extends EDIInputToolBase {
               if ((candidateAttrs != null)
                   && (candidateAttrs.isRegularFile())) {
                 if (context._isNew(candidate, candidateAttrs)) {
+
+                  if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+                    logger.finer("Now loading dimensions definition " //$NON-NLS-1$
+                        + candidate);
+                  }
+
                   context._dimensionsFound();
                   super.file(job, data, candidate, attributes,
                       StreamEncoding.TEXT);
+
+                  if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+                    logger.finer("Done loading dimensions definition " //$NON-NLS-1$
+                        + candidate);
+                  }
+
                   break dims;
                 }
               }
@@ -318,9 +336,21 @@ public final class CSVEDIInput extends EDIInputToolBase {
               if ((candidateAttrs != null)
                   && (candidateAttrs.isRegularFile())) {
                 if (context._isNew(candidate, candidateAttrs)) {
+
+                  if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+                    logger.finer("Now loading instances definition " //$NON-NLS-1$
+                        + candidate);
+                  }
+
                   context._instancesFound();
                   super.file(job, data, candidate, attributes,
                       StreamEncoding.TEXT);
+
+                  if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+                    logger.finer("Done loading instances definition " //$NON-NLS-1$
+                        + candidate);
+                  }
+
                   break insts;
                 }
               }
@@ -342,8 +372,20 @@ public final class CSVEDIInput extends EDIInputToolBase {
             if ((candidateAttrs != null)
                 && (candidateAttrs.isRegularFile())) {
               if (context._isNew(candidate, candidateAttrs)) {
+
+                if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+                  logger.finer("Now loading experiment definition " //$NON-NLS-1$
+                      + candidate);
+                }
+
                 super.file(job, data, candidate, attributes,
                     StreamEncoding.TEXT);
+
+                if ((logger != null) && (logger.isLoggable(Level.FINER))) {
+                  logger.finer("Done loading experiment definition " //$NON-NLS-1$
+                      + candidate);
+                }
+
                 break exp;
               }
             }
