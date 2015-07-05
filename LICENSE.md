@@ -330,6 +330,41 @@ The following libraries are needed by *the project*:
     - Version: 1.9-patched-1.0
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/netbeans/openide-lookup/1.9-patched-1.0/openide-lookup-1.9-patched-1.0.jar)
+
+
+### Files Included in Documentation Branch
+
+In the documentation branch, we include some files for easing the automated use of our
+examples under windows. That is, a stand-alone `svn` client and a stand-alone `tar`, `zip`,
+`lzma`, and `gz` decompressor.
+
+* 7-Zip Stand-Alone Binary
+   - The [7-Zip](http://www.7-zip.org/) stand-alone binary from package [`7-Zip Extra`](http://www.7-zip.org/a/7z1505-extra.7z) of [7-Zip 15.05 beta](http://www.7-zip.org/download.html) (2015-06-14) for Windows
+   - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
+   - Copyright: Copyright (C) 1999-2015 Igor Pavlov
+   - Author: Igor Pavlov
+   - Files:
+      + [7za.exe](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/tools/windows/7zip/7za.exe)
+      + [License.txt](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/tools/windows/7zip/License.txt)
+   - Version: 15.05 beta (2015-06-14)
+   - Status: freely available in the internet
+   - Source: [http://www.7-zip.org/download.html](http://www.7-zip.org/download.html)
+   
+* Stand-Alone [Apache(TM) Subversion(R)](http://subversion.apache.org/) Client maintained by [VisualSVN](https://www.visualsvn.com/)
+   - Apache [does not](http://subversion.apache.org/packages.html#windows) maintain binaries for their SVN system, so we use the unofficial binaries from [VisualSVN](https://www.visualsvn.com/downloads/) for Windows
+   - License: This software is composed of several components, so there are several licenses, which are all included in the archive we provide.
+      + [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt) (see file "[meta/licenses/apache-2.0.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/apache-2.0.txt)")
+      + The [OpenSSL toolkit](http://www.openssl.org/) stays under a dual license, i.e. both the conditions of the OpenSSL License and the original SSLeay license apply to the toolkit. Actually both licenses are BSD-style Open Source licenses. In case of any license issues related to OpenSSL please contact [openssl-core@openssl.org](mailto:openssl-core@openssl.org).
+      + ZLib is provided by [Jean-loup Gailly](jloup@gzip.org) and [Mark Adler](madler@alumni.caltech.edu) 'as-is', without any express or implied warranty, under an Open Source license.
+   - Copyright:
+      + General: [The Apache Software Foundation](http://www.apache.org/) 2011 
+      + OpenSSL: Copyright (c) 1998-2005 [The OpenSSL Project](http://www.openssl.org/). 
+      + ZLib: (C) 1995-2004 [Jean-loup Gailly](jloup@gzip.org) and [Mark Adler](madler@alumni.caltech.edu)
+   - Authors: [The Apache Software Foundation](http://www.apache.org/), [The OpenSSL Project](http://www.openssl.org/),  [Jean-loup Gailly](jloup@gzip.org), and [Mark Adler](madler@alumni.caltech.edu) (sources), [VisualSVN](https://www.visualsvn.com/) (binaries)
+   - File: [svn.tar.lzma](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/tools/windows/svn/svn.tar.lzma)
+   - Version: 1.8.13
+   - Status: freely available in the internet
+   - Source: [https://www.visualsvn.com/files/Apache-Subversion-1.8.13.zip](https://www.visualsvn.com/files/Apache-Subversion-1.8.13.zip)
     
 
 ## Questions and Problems
