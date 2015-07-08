@@ -45,7 +45,7 @@ final class _AllEngines implements Iterable<_LaTeXToolChainComponentDesc> {
     /** {@inheritDoc} */
     @Override
     public final boolean hasNext() {
-      return (this.m_index <= 8);
+      return (this.m_index <= 9);
     }
 
     /** {@inheritDoc} */
@@ -78,6 +78,9 @@ final class _AllEngines implements Iterable<_LaTeXToolChainComponentDesc> {
         }
         case 8: {
           return _XeLaTeX._getDescription();
+        }
+        case 9: {
+          return _XeTeXAsXeLaTeX._getDescription();
         }
         default: {
           return super.next(); // no more elements

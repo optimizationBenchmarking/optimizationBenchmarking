@@ -40,6 +40,7 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
 
     final Logger logger;
     final Path exec;
+    final boolean needsOutput;
     String[] args;
     String progname, name, arg1, arg2, arg3;
     Throwable error;
@@ -71,26 +72,40 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
     if (exec != null) {
       progname = this._getProcName();
 
-      args = new String[((progname == null) ? 2 : 3)];
-      args[0] = "output-format="; //$NON-NLS-1$
-      args[1] = "halt-on-error"; //$NON-NLS-1$
+      index = 1;
+      needsOutput = this._needsOutputFormat();
+      if (needsOutput) {
+        index++;
+      }
       if (progname != null) {
-        args[2] = "progname="; //$NON-NLS-1$
+        index++;
+      }
+      args = new String[index];
+      args[0] = "halt-on-error"; //$NON-NLS-1$
+      index = 1;
+      if (needsOutput) {
+        args[index++] = "output-format="; //$NON-NLS-1$
+      }
+      if (progname != null) {
+        args[index] = "progname="; //$NON-NLS-1$
       }
 
       try {
         args = _LaTeXToolChainComponent._getArgs(exec, "-help", args);//$NON-NLS-1$
 
-        if ((arg1 = args[0]) == null) {
-          throw new IllegalStateException(
-              this.m_tool1Name + " binary '" + exec//$NON-NLS-1$
-                  + "' does not offer option 'output-format' when asked via '-help'.");//$NON-NLS-1$
+        arg2 = args[0];
+
+        index = 1;
+        if (needsOutput) {
+          if ((arg1 = args[index++]) == null) {
+            throw new IllegalStateException(
+                this.m_tool1Name + " binary '" + exec//$NON-NLS-1$
+                    + "' does not offer option 'output-format' when asked via '-help'.");//$NON-NLS-1$
+          }
         }
 
-        arg2 = args[1];
-
         if (progname != null) {
-          if ((arg3 = args[2]) == null) {
+          if ((arg3 = args[index]) == null) {
             throw new IllegalStateException(//
                 this.m_tool1Name + " binary '" + exec + //$NON-NLS-1$
                     "' does not offer option 'progname' when asked via '-help'.");//$NON-NLS-1$
@@ -130,6 +145,16 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
   }
 
   /**
+   * Do we need a parameter for the output format?
+   *
+   * @return {@code true} if we need such a parameter, {@code false}
+   *         otherwise
+   */
+  boolean _needsOutputFormat() {
+    return true;
+  }
+
+  /**
    * Obtain the path to the executable
    *
    * @return the path to the executable, or {@code null} if none was found
@@ -140,7 +165,7 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
   @Override
   final boolean _canUse() {
     return ((this.m_executable != null) && //
-        (this.m_formatArg != null) && //
+        ((this.m_formatArg != null) || (!(this._needsOutputFormat()))) && //
         (this.m_error == null) && //
     ((this.m_progNameArg != null) || (this._getProcName() == null)));
   }
@@ -153,6 +178,7 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
     final ExternalProcessBuilder builder;
     final ELaTeXFileType type;
     final int ret;
+    final boolean needsOutput;
     boolean ok;
 
     if (this.m_error != null) {
@@ -163,11 +189,14 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
               + " compiler because... (see causing error).",//$NON-NLS-1$
           this.m_error);
     }
-    if (this.m_formatArg == null) {
-      throw new UnsupportedOperationException(//
-          this.m_tool1Name + " cannot be used as " + //$NON-NLS-1$
-              this.m_tool2Name + //
-              " compiler because no corresponding option was detected.");//$NON-NLS-1$
+    needsOutput = this._needsOutputFormat();
+    if (needsOutput) {
+      if (this.m_formatArg == null) {
+        throw new UnsupportedOperationException(//
+            this.m_tool1Name + " cannot be used as " + //$NON-NLS-1$
+                this.m_tool2Name + //
+                " compiler because no corresponding option was detected.");//$NON-NLS-1$
+      }
     }
     if (this.m_progNameArg == null) {
       if (this._getProcName() != null) {
@@ -205,8 +234,12 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
     builder = ProcessExecutor.getInstance().use();
     builder.setDirectory(job._getDirectory());
     builder.setExecutable(exec);
-    builder.addStringArgument(this.m_formatArg);
-    builder.addStringArgument(this.m_progNameArg);
+    if (this.m_formatArg != null) {
+      builder.addStringArgument(this.m_formatArg);
+    }
+    if (this.m_progNameArg != null) {
+      builder.addStringArgument(this.m_progNameArg);
+    }
     if (this.m_haltArg != null) {
       builder.addStringArgument(this.m_haltArg);
     }
