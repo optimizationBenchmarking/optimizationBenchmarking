@@ -76,6 +76,12 @@ public enum EGraphicFormat implements IFileType {
    * that such figures can readily be included into
    * {@link org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDriver
    * LaTeX} documents via {@code \input}.
+   * <p>
+   * Note: Large PGF graphics may make LaTeX fail due to out-of-memory. It
+   * seems that lualatex can dynamically allocate more memory if necessary
+   * (this is why we currently priorize using a lualatex-based tool chain
+   * in the LaTeX tool). see http://tex.stackexchange.com/questions/7953
+   * </p>
    */
   PGF("Portable Graphics Format", false,//$NON-NLS-1$
       "tex", "application/x-latex") { //$NON-NLS-1$//$NON-NLS-2$

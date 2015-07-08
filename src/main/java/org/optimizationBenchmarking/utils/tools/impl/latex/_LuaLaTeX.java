@@ -10,30 +10,27 @@ import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
 import org.optimizationBenchmarking.utils.predicates.AndPredicate;
 
-/** a tool using PdfTeX as LaTeX */
-final class _PdfTeXAsLaTeX extends _LaTeXUsedAsToolBase {
+/** the <a href="http://luatex.org/">LuaLaTeX</a> tool */
+final class _LuaLaTeX extends _LaTeXToolBase {
 
   /** create */
-  _PdfTeXAsLaTeX() {
+  _LuaLaTeX() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
   final Path _getExecutable() {
-    return _PdfTeXPathLoader.PATH;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  final String _getProcName() {
-    return "latex"; //$NON-NLS-1$
+    return PathUtils.findFirstInPath(new AndPredicate<>(
+        new FileNamePredicate(true, "lualatex" //$NON-NLS-1$
+        ), CanExecutePredicate.INSTANCE),//
+        IsFilePredicate.INSTANCE, null);
   }
 
   /** {@inheritDoc} */
   @Override
   final ELaTeXFileType _produces() {
-    return ELaTeXFileType.DVI;
+    return ELaTeXFileType.PDF;
   }
 
   /**
@@ -42,18 +39,18 @@ final class _PdfTeXAsLaTeX extends _LaTeXUsedAsToolBase {
    * @return the description
    */
   static final _LaTeXToolChainComponentDesc _getDescription() {
-    return __PdfLaTeXAsLaTeXDesc.DESC;
+    return __LuaLaTeXDesc.DESC;
   }
 
   /** the description */
-  private static final class __PdfLaTeXAsLaTeXDesc extends
+  private static final class __LuaLaTeXDesc extends
       _LaTeXToolChainComponentDesc {
 
     /** the description */
-    static final _LaTeXToolChainComponentDesc DESC = new __PdfLaTeXAsLaTeXDesc();
+    static final _LaTeXToolChainComponentDesc DESC = new __LuaLaTeXDesc();
 
     /** create */
-    private __PdfLaTeXAsLaTeXDesc() {
+    private __LuaLaTeXDesc() {
       super();
     }
 
@@ -61,29 +58,25 @@ final class _PdfTeXAsLaTeX extends _LaTeXUsedAsToolBase {
     @Override
     final boolean _supports(final IFileType type) {
       return _LaTeXToolChainComponent._equals(ELaTeXFileType.TEX, type) || //
+          _LaTeXToolChainComponent._equals(EGraphicFormat.PDF, type) || //
+          _LaTeXToolChainComponent._equals(ELaTeXFileType.PDF, type) || //
+          _LaTeXToolChainComponent._equals(EGraphicFormat.EPS, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.PGF, type) || //
-          _LaTeXToolChainComponent._equals(EGraphicFormat.EPS, type);
+          _LaTeXToolChainComponent._equals(EGraphicFormat.PNG, type) || //
+          _LaTeXToolChainComponent._equals(EGraphicFormat.JPEG, type);//
     }
 
     /** {@inheritDoc} */
     @Override
     final _LaTeXToolChainComponent _getComponent() {
-      return __PdfTeXAsLaTeXLoader.INSTANCE;
+      return __LuaLaTeXLoader.INSTANCE;
     }
 
     /** the loader */
-    private static final class __PdfTeXAsLaTeXLoader {
+    private static final class __LuaLaTeXLoader {
       /** the instance */
-      static final _LaTeXToolChainComponent INSTANCE = new _PdfTeXAsLaTeX();
+      static final _LaTeXToolChainComponent INSTANCE = new _LuaLaTeX();
     }
   }
 
-  /** the loader of the path to PdfTeX */
-  static final class _PdfTeXPathLoader {
-    /** the path to the PdfTeX executable */
-    static final Path PATH = PathUtils.findFirstInPath(new AndPredicate<>(
-        new FileNamePredicate(true, "pdftex" //$NON-NLS-1$
-        ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
-  }
 }
