@@ -39,8 +39,8 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
     super();
 
     final Logger logger;
-    final Path exec;
     final boolean needsOutput;
+    Path exec;
     String[] args;
     String progname, name, arg1, arg2, arg3;
     Throwable error;
@@ -67,7 +67,7 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
               " executable which can be used as " + this.m_tool2Name);//$NON-NLS-1$
     }
 
-    this.m_executable = exec = this._getExecutable();
+    exec = this._getExecutable();
 
     if (exec != null) {
       progname = this._getProcName();
@@ -115,11 +115,13 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
       } catch (final Throwable err) {
         error = err;
         arg1 = arg2 = arg3 = null;
+        exec = null;
       }
     } else {
       progname = null;
     }
 
+    this.m_executable = exec;
     this.m_formatArg = ((arg1 != null) ? (arg1 + //
     this._produces().getDefaultSuffix().toLowerCase())
         : null);

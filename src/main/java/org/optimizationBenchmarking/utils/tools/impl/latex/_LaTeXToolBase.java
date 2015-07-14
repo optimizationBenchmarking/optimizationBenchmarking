@@ -41,7 +41,7 @@ abstract class _LaTeXToolBase extends _LaTeXToolChainComponent {
 
     executable = this._getExecutable();
     arg = null;
-    if (this.m_executable != null) {
+    if (executable != null) {
       try {
         arg = _LaTeXToolChainComponent._getArgs(this.m_executable,
             "-help", //$NON-NLS-1$
