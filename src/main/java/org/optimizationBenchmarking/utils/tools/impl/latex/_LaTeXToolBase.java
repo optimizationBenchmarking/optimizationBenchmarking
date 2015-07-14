@@ -43,7 +43,7 @@ abstract class _LaTeXToolBase extends _LaTeXToolChainComponent {
     arg = null;
     if (executable != null) {
       try {
-        arg = _LaTeXToolChainComponent._getArgs(this.m_executable,
+        arg = _LaTeXToolChainComponent._getArgs(executable,
             "-help", //$NON-NLS-1$
             "halt-on-error")[0]; //$NON-NLS-1$
       } catch (final Throwable t) {
