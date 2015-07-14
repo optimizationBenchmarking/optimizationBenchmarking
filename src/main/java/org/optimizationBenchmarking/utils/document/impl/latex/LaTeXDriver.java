@@ -63,11 +63,8 @@ public final class LaTeXDriver extends DocumentDriver {
       'n', 't', 'o', 'm', 's', 'e', 'c', 't', 'i', 'o', 'n', '}' };
 
   /** begin the center environment */
-  static final char[] CENTER_BEGIN = { '\\', 'b', 'e', 'g', 'i', 'n', '{',
-      'c', 'e', 'n', 't', 'e', 'r', '}' };
-  /** end the center environment */
-  static final char[] CENTER_END = { '\\', 'e', 'n', 'd', '{', 'c', 'e',
-      'n', 't', 'e', 'r', '}' };
+  static final char[] CENTERING = { '\\', 'c', 'e', 'n', 't', 'e', 'r',
+      'i', 'n', 'g' };
 
   /** the caption */
   static final char[] CAPTION_BEGIN = { '\\', 'c', 'a', 'p', 't', 'i',

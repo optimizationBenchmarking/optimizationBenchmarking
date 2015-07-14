@@ -105,11 +105,6 @@ final class _LaTeXTable extends Table {
     out.append(this.m_pageWide ? _LaTeXTable.TABLE_B_BEGIN
         : _LaTeXTable.TABLE_A_BEGIN);
     LaTeXDriver._endLine(out);
-
-    out.append(LaTeXDriver.CENTER_BEGIN);
-    LaTeXDriver._endLine(out);
-
-    LaTeXDriver._endLine(out);
   }
 
   /**
@@ -162,8 +157,6 @@ final class _LaTeXTable extends Table {
     out.append(_LaTeXTable.TABULAR_END);
     LaTeXDriver._endLine(out);
     out.append(_LaTeXTable.SMALL_END);
-    LaTeXDriver._endLine(out);
-    out.append(LaTeXDriver.CENTER_END);
     LaTeXDriver._endLine(out);
     out.append(this.m_pageWide ? _LaTeXTable.TABLE_B_END
         : _LaTeXTable.TABLE_A_END);

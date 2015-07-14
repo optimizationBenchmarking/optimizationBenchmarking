@@ -36,7 +36,6 @@ final class _LaTeXTableCaption extends TableCaption {
 
     out = this.getTextOutput();
 
-    LaTeXDriver._endLine(out);
     out.append(LaTeXDriver.CAPTION_BEGIN);
     LaTeXDriver._endLine(out);
   }
@@ -51,6 +50,8 @@ final class _LaTeXTableCaption extends TableCaption {
     LaTeXDriver._endLine(out);
     LaTeXDriver._label(this.getOwner().getLabel(), out);
     LaTeXDriver._endCommandLine(out);
+    out.append(LaTeXDriver.CENTERING);
+    LaTeXDriver._endLine(out);
     out.append(_LaTeXTableCaption.SMALL_BEGIN);
     LaTeXDriver._endLine(out);
 

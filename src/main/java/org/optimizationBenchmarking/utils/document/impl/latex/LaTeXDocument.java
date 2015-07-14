@@ -851,7 +851,7 @@ public final class LaTeXDocument extends Document {
             if (this.m_hasFigureSeries) {
               LaTeXDriver
                   ._commentLine(
-                      "Package figureSeries) allows for figures with arbitrarily many sub-figures",//$NON-NLS-1$
+                      "Package figureSeries allows for figures with arbitrarily many sub-figures",//$NON-NLS-1$
                       out);
               LaTeXDriver
                   ._commentLine(

@@ -99,9 +99,7 @@ final class _LaTeXFigure extends Figure {
         : _LaTeXFigure.FIGURE_COL_WIDE_BEGIN);
     LaTeXDriver._endLine(out);
 
-    out.append(LaTeXDriver.CENTER_BEGIN);
-    LaTeXDriver._endLine(out);
-
+    out.append(LaTeXDriver.CENTERING);
     LaTeXDriver._endLine(out);
   }
 
@@ -119,8 +117,6 @@ final class _LaTeXFigure extends Figure {
     out.append(this.m_caption);
     this.m_caption = null;
 
-    out.append(LaTeXDriver.CENTER_END);
-    LaTeXDriver._endLine(out);
     out.append(this.m_pageWide ? _LaTeXFigure.FIGURE_PAGE_WIDE_END
         : _LaTeXFigure.FIGURE_COL_WIDE_END);
     LaTeXDriver._endLine(out);
