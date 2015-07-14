@@ -140,7 +140,7 @@ public final class LaTeXDriver extends DocumentDriver {
     out.append('%');
     out.append(' ');
     out.append(comment);
-    LaTeXDriver._endLine(out);
+    out.appendLineBreak();
   }
 
   /**

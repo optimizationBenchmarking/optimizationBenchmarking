@@ -210,14 +210,26 @@ The licenses used for some of these elements are given in the folder
    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
    - Status: freely available in the internet
    - Source: [http://ctan.org/pkg/alphalph](http://ctan.org/pkg/alphalph)
+  
+* LaTeX Package "cuted"
+   - License: [LaTeX Project Public License](http://www.latex-project.org/lppl-1.3.txt), version 1.3c (see file "[meta/licenses/lppl-1.3.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lppl-1.3.txt)")
+   - Copyright: Copyright (C) 1997-2012 by Sigitas Tolušis [<sigitas@vtex.lt>](mailto:sigitas@vtex.lt), VTeX Ltd., Akademijos 4, Vilnius, Lithuania, [http://www.vtex.lt/tex/download/macros/](http://www.vtex.lt/tex/download/macros/)
+   - Author: Sigitas Tolušis
+   - File: [cuted.sty](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/cuted.sty)
+   - Version: 2012/10/04 v1.5 Mixing onecolumn and twocolumn modes
+   - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
+   - Status: freely available in the internet
+   - Sources:
+      + [http://ctan.org/pkg/cuted](http://ctan.org/pkg/cuted)
+      + [http://www.vtex.lt/tex/download/macros/cuted.sty](http://www.vtex.lt/tex/download/macros/cuted.sty)
 
     
 ### Referenced Libraries
 
 *The project* depends on a set of external libraries. These will automatically
-be loaded if install the project via the [Maven POM](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/pom.xml)
+be loaded if you install the project via the [Maven POM](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/pom.xml)
 file. They are not part of the official source code. However, they may be included in "fat `jars`", i.e., the
-`jar` archives we create via the Maven Shade Plugin and which hold a "-full" in their
+`jar` archives we create via the [Maven Shade Plugin](http://maven.apache.org/plugins/maven-shade-plugin/) and which hold a "-full" in their
 name. These `jar` archive are created for the user's convenience: Using
 them, no additional libraries need to be put into the classpath.
 

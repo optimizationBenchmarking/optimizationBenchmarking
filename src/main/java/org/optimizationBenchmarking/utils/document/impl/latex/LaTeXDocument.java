@@ -84,14 +84,37 @@ public final class LaTeXDocument extends Document {
   private final Path m_setupPackagePath;
 
   /**
-   * {@code true} if we have at least one figure in the document,
-   * {@code false} otherwise
+   * {@code true} if we have at least one figure-like element (
+   * {@code figure}, {@code figure*}, {@code figureSeries}) in the
+   * document, {@code false} otherwise
+   *
+   * @see #m_hasFigurePlain
+   * @see #m_hasFigureSeries
+   * @see #m_hasFigureStar
    */
   private boolean m_hasFigure;
   /**
-   * {@code true} if we have at least one figure series in the document
-   * (and {@link #m_hasFigure} is also {@code true}), {@code false}
+   * {@code true} if we have at least one {@code figure} in the document (
+   * {@link #m_hasFigure} will then also be {@code true}), {@code false}
+   * otherwise.
+   *
+   * @see #m_hasFigure
+   */
+  private boolean m_hasFigurePlain;
+  /**
+   * {@code true} if we have at least one {@code figure*} in the document (
+   * {@link #m_hasFigure} will then also be {@code true}), {@code false}
    * otherwise
+   *
+   * @see #m_hasFigure
+   */
+  private boolean m_hasFigureStar;
+  /**
+   * {@code true} if we have at least one figure series in the document (
+   * {@link #m_hasFigure} will then also be {@code true}), {@code false}
+   * otherwise
+   *
+   * @see #m_hasFigure
    */
   private boolean m_hasFigureSeries;
   /**
@@ -573,9 +596,19 @@ public final class LaTeXDocument extends Document {
     this.m_hasFigure = true;
   }
 
-  /** register that there is a figure in the document */
-  final void _registerFigure() {
+  /**
+   * register that there is a figure in the document
+   *
+   * @param starred
+   *          is it a starred figure?
+   */
+  final void _registerFigure(final boolean starred) {
     this.m_hasFigure = true;
+    if (starred) {
+      this.m_hasFigureStar = true;
+    } else {
+      this.m_hasFigurePlain = true;
+    }
   }
 
   /** register that there is a table in the document */
@@ -658,19 +691,50 @@ public final class LaTeXDocument extends Document {
   private final void __include(final String resource,
       final ITextOutput dest) {
     String s;
+    int length;
 
     LaTeXDriver._endLine(dest);
     try (final InputStream is = LaTeXDocument.class
         .getResourceAsStream(resource)) {
       try (final InputStreamReader isr = new InputStreamReader(is)) {
         try (final BufferedReader br = new BufferedReader(isr)) {
-          while ((s = br.readLine()) != null) {
+          looper: while ((s = br.readLine()) != null) {
             s = TextUtils.prepare(s);
             if (s != null) {
               dest.append(s);
-              if (s.charAt(s.length() - 1) == '%') {
+              length = s.length();
+              doLB: {// add a simple line break without additional '%'
+                noLB: { // check if we better not do that
+                  if (length <= 0) {
+                    break doLB; // empty string? then need a '%'
+                  }
+                  if (s.charAt(0) == '%') {
+                    break noLB; // string starts with '%' -> don't need '%'
+                  }
+                  if (s.charAt(--length) != '%') {
+                    break doLB; // string does not end with '%' -> need '%'
+                  }
+                  if (length <= 0) {
+                    // string ends with '%' and length=1 -> don't need '%'
+                    break noLB;
+                  }
+                  if (s.charAt(--length) != '\\') {
+                    // string ends with '%' but not "\%" -> no '%' needed
+                    break noLB;
+                  }
+                  if (length <= 0) {
+                    // string is "\%" -> needs '%'
+                    break doLB;
+                  }
+                  if (s.charAt(--length) == '\\') {
+                    // string ends with "\\%" -> no '%' needed
+                    break noLB;
+                  }
+                  // string ends with "\%" -> '%' needed
+                  break doLB;
+                }
                 dest.appendLineBreak();
-                continue;
+                continue looper;
               }
             }
             LaTeXDriver._endLine(dest);
@@ -698,6 +762,7 @@ public final class LaTeXDocument extends Document {
     final AbstractTextOutput out;
     String html;
     ColorStyle color;
+    boolean b;
     int i;
 
     try (final OutputStream os = PathUtils
@@ -726,6 +791,10 @@ public final class LaTeXDocument extends Document {
                 ._commentLine(//
                     "We need caption3 to properly render figure or table captions.",//$NON-NLS-1$
                     out);
+            LaTeXDriver
+                ._commentLine(//
+                    "http://www.ctan.org/tex-archive/macros/latex/contrib/caption/",//$NON-NLS-1$
+                    out);
             LaTeXDocument._requirePackage(out, "caption3", null); //$NON-NLS-1$
           }
 
@@ -734,15 +803,28 @@ public final class LaTeXDocument extends Document {
             if (this.m_hasMultiColCell) {
               LaTeXDriver
                   ._commentLine(
-                      "We need multicol since we have at least one table with at least one cell which spans multiple columns.",//$NON-NLS-1$
+                      "We need multicol since we have at least one table with",//$NON-NLS-1$
                       out);
+              LaTeXDriver._commentLine(
+                  "at least one cell which spans multiple columns.",//$NON-NLS-1$
+                  out);
+              LaTeXDriver._commentLine(//
+                  "http://www.ctan.org/pkg/multicol",//$NON-NLS-1$
+                  out);
               LaTeXDocument._requirePackage(out, "multicol", null); //$NON-NLS-1$
             }
             if (this.m_hasMultiRowCell) {
               LaTeXDriver
                   ._commentLine(
-                      "We need multicol since we have at least one table with at least one cell which spans multiple rows.",//$NON-NLS-1$
+                      "We need multirow since we have at least one table with",//$NON-NLS-1$
                       out);
+              LaTeXDriver._commentLine(
+                  "at least one cell which spans multiple rows.",//$NON-NLS-1$
+                  out);
+
+              LaTeXDriver._commentLine(//
+                  "http://www.ctan.org/pkg/multirow",//$NON-NLS-1$
+                  out);
               LaTeXDocument._requirePackage(out, "multirow", null); //$NON-NLS-1$
             }
           }
@@ -752,22 +834,43 @@ public final class LaTeXDocument extends Document {
             LaTeXDriver._commentLine(
                 "We need graphicx to render the figures.",//$NON-NLS-1$
                 out);
+            LaTeXDriver._commentLine("http://www.ctan.org/pkg/graphicx",//$NON-NLS-1$
+                out);
             LaTeXDocument._requirePackage(out, "graphicx", null); //$NON-NLS-1$
 
             if (this.m_hasPGFFigure) {
               LaTeXDriver._commentLine(
                   "We need pgf to render the (LaTeX-based) PGF figures.",//$NON-NLS-1$
                   out);
+              LaTeXDriver._commentLine("http://www.ctan.org/pkg/pgf",//$NON-NLS-1$
+                  out);
               LaTeXDocument._requirePackage(out, "pgf", null); //$NON-NLS-1$
             }
 
             // figure series
             if (this.m_hasFigureSeries) {
+              LaTeXDriver
+                  ._commentLine(
+                      "Package figureSeries) allows for figures with arbitrarily many sub-figures",//$NON-NLS-1$
+                      out);
+              LaTeXDriver
+                  ._commentLine(
+                      "which can break over several pages and can (sort of) float.",//$NON-NLS-1$
+                      out);
+              LaTeXDriver._commentLine(
+                  "https://github.com/thomasWeise/figureSeries",//$NON-NLS-1$
+                  out);
               this.__loadPackageAndRequire(
                   out,
                   "figureSeries.sty", //$NON-NLS-1$
                   null,
                   "The figureSeries Package is under LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version. It is author-maintained by Thomas Weise. Copyright (c) 2014, 2015 Thomas Weise."); //$NON-NLS-1$
+
+              this._requireResources(
+                  LaTeXDocument.class,
+                  new String[] { "cuted.sty" },//$NON-NLS-1$
+                  "This is file `cuted.sty', generated with cuted.dtx (with options: `package').\n IMPORTANT NOTICE: For the copyright see the source file.\n Any modified versions of this file must be renamed with new filenames distinct from cuted.sty.\n For distribution of the original source see the terms for copying and modification in the file cuted.dtx.\n This generated file may be distributed as long as the original source files, as listed above, are part of the same distribution. (The sources need not necessarily be in the same archive or directory.) Copyright (C) 1997-2012 by Sigitas Tolu\\v{s}is <sigitas@vtex.lt> VTeX Ltd., Akademijos 4, Vilnius, Lithuania http://www.vtex.lt/tex/download/macros/.\n This work may be distributed and/or modified under the conditions of the LaTeX Project Public License, either version 1.3 of this license or (at your option) any later version. The latest version of this license is in http://www.latex-project.org/lppl.txt and version 1.3 or later is part of all distributions of LaTeX version 2005/12/01 or later.");//$NON-NLS-1$
+
             }
           }
 
@@ -776,6 +879,12 @@ public final class LaTeXDocument extends Document {
                 ._commentLine(
                     "We need amssymb to render some of the mathematical symbols.",//$NON-NLS-1$
                     out);
+            LaTeXDriver._commentLine(
+                "http://www.ctan.org/tex-archive/fonts/amsfonts/",//$NON-NLS-1$
+                out);
+            LaTeXDriver._commentLine(
+                "http://www.ams.org/publications/authors/tex/amslatex",//$NON-NLS-1$
+                out);
             LaTeXDocument._requirePackage(out, "amssymb", null); //$NON-NLS-1$
           }
 
@@ -783,15 +892,48 @@ public final class LaTeXDocument extends Document {
             this.__include("listings.def", out);//$NON-NLS-1$
           }
 
-          if (this.m_hasTextSubOrSuperScript) {
+          b = (this.m_hasFigurePlain && this.m_hasFigureStar && //
+          (this.m_class.getColumnCount() > 1));
+          if (this.m_hasTextSubOrSuperScript || b) {
+            if (this.m_hasTextSubOrSuperScript) {
+              if (b) {
+                LaTeXDriver
+                    ._commentLine(
+                        "We need fixltx2e to have \\textsuperscript and to keep figure and figure* environments in order.",//$NON-NLS-1$
+                        out);
+              } else {
+                LaTeXDriver._commentLine(
+                    "We need fixltx2e to have \\textsuperscript.",//$NON-NLS-1$
+                    out);
+              }
+            } else {
+              LaTeXDriver
+                  ._commentLine(
+                      "We need fixltx2e to keep figure and figure* environments in order.",//$NON-NLS-1$
+                      out);
+            }
+            LaTeXDriver
+                ._commentLine(
+                    "Notice that fixltx2e is obsolete in new LaTeX installations after 2015.",//$NON-NLS-1$
+                    out);
+            LaTeXDriver._commentLine(
+                "It will then just print a warning message.",//$NON-NLS-1$
+                out);
+            LaTeXDriver._commentLine("http://www.ctan.org/pkg/fixltx2e",//$NON-NLS-1$
+                out);
             LaTeXDocument._requirePackage(out, "fixltx2e", null); //$NON-NLS-1$
           }
 
           if (this.m_hasUnderlined) {
             LaTeXDriver
                 ._commentLine(
-                    "We need the ulem package to deal with long, underlined text. Ulem allows it to break over several lines.",//$NON-NLS-1$
+                    "We need the ulem package to deal with long, underlined text.",//$NON-NLS-1$
                     out);
+            LaTeXDriver._commentLine(
+                "Ulem allows it to break over several lines.",//$NON-NLS-1$
+                out);
+            LaTeXDriver._commentLine("http://www.ctan.org/pkg/ulem",//$NON-NLS-1$
+                out);
             this.__loadPackageAndRequire(out,
                 "ulem.sty",//$NON-NLS-1$
                 new String[] { "normalem" }, //$NON-NLS-1$
@@ -803,6 +945,8 @@ public final class LaTeXDocument extends Document {
               ._commentLine(
                   "We need hyperref to allow for clickable references and links.",//$NON-NLS-1$
                   out);
+          LaTeXDriver._commentLine("http://www.ctan.org/pkg/hyperref",//$NON-NLS-1$
+              out);
           LaTeXDocument._requirePackage(out, "hyperref", //$NON-NLS-1$
               new String[] { "hidelinks=true" });//$NON-NLS-1$
           if (this.getGraphicFormat() == EGraphicFormat.EPS) {

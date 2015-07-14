@@ -1,15 +1,19 @@
 %
 % We load the fontenc package to make sure that all required special
 % characters are available (some are not available with encoding OT1.
+% http://www.ctan.org/pkg/fontenc
 \RequirePackage[T1]{fontenc}%
-\RequirePackage{textcomp}%
 %
-% The textcomp package provides a command called \capitaldotaccent
-% but no corresponding command for lower case letters.
-% Normally, the right way to get a "c" with a dot above would
-% be writing {\.{c}}. However, some BibTeX styles [1] eat all dots,
-% so we would get {\{c}}, which explodes. Thus we define the
-% command below.
-% [1] http://compgroups.net/comp.text.tex/problem-with-i-accent-in-bibtex/1921379
+%
+% The textcomp package [1, 2] provides a command called \capitaldotaccent
+% but no corresponding command for lower case letters. Normally, the right
+% way to get a "c" with a dot above would be writing {\.{c}}. However,
+% some BibTeX styles [3] eat all dots, so we would get {\{c}}, which
+% explodes. Thus we define the command below.
+% [1] http://www.ctan.org/pkg/textcomp
+% [2] http://www.ctan.org/pkg/latex
+% [3] http://compgroups.net/comp.text.tex/problem-with-i-accent-in-bibtex/1921379
+%
+\RequirePackage{textcomp}%
 \gdef\lowerdotaccent#1{\.{#1}}% 
 %

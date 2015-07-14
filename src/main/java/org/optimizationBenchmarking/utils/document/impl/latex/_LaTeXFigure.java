@@ -86,7 +86,6 @@ final class _LaTeXFigure extends Figure {
     super.onOpen();
 
     doc = ((LaTeXDocument) (this.getDocument()));
-    doc._registerFigure();
 
     out = this.getTextOutput();
     LaTeXDriver._endLine(out);
@@ -94,6 +93,8 @@ final class _LaTeXFigure extends Figure {
 
     this.m_pageWide = (this.getSize().spansAllColumns() && //
     (doc.m_class.getColumnCount() > 1));
+
+    doc._registerFigure(this.m_pageWide);
     out.append(this.m_pageWide ? _LaTeXFigure.FIGURE_PAGE_WIDE_BEGIN
         : _LaTeXFigure.FIGURE_COL_WIDE_BEGIN);
     LaTeXDriver._endLine(out);

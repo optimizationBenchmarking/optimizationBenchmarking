@@ -1,6 +1,7 @@
 %
-% The listings package is responsible both for inline listings
+% The listings package is responsible both for in-line listings
 % as well as floating listings.
+% http://www.ctan.org/pkg/listings
 %
 \RequirePackage{listings}%
 %

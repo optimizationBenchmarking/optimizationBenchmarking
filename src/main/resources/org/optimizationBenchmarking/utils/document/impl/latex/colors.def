@@ -1,6 +1,10 @@
 %
 % We load the color and xcolor package to allow the
 % definition of named colors.
+% http://www.ctan.org/pkg/color
+% http://www.ctan.org/pkg/xcolor
+% http://www.ukern.de/tex/xcolor.html
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics
 \RequirePackage{color}%
 \RequirePackage{xcolor}%
 %
