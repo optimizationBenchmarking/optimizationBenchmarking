@@ -23,8 +23,8 @@ final class _LuaLaTeX extends _LaTeXToolBase {
   final Path _getExecutable() {
     return PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "lualatex" //$NON-NLS-1$
-        ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+            ), CanExecutePredicate.INSTANCE),//
+            IsFilePredicate.INSTANCE, null);
   }
 
   /** {@inheritDoc} */
@@ -36,34 +36,57 @@ final class _LuaLaTeX extends _LaTeXToolBase {
   /**
    * get the description
    *
+   * @param acceptEPS
+   *          should we accept EPS?
    * @return the description
    */
-  static final _LaTeXToolChainComponentDesc _getDescription() {
-    return __LuaLaTeXDesc.DESC;
+  static final _LaTeXToolChainComponentDesc _getDescription(
+      final boolean acceptEPS) {
+    return (acceptEPS ? __LuaLaTeXDesc.DESC_WITH_EPS
+        : __LuaLaTeXDesc.DESC_WITHOUT_EPS);
   }
 
   /** the description */
   private static final class __LuaLaTeXDesc extends
-      _LaTeXToolChainComponentDesc {
+  _LaTeXToolChainComponentDesc {
 
     /** the description */
-    static final _LaTeXToolChainComponentDesc DESC = new __LuaLaTeXDesc();
+    static final _LaTeXToolChainComponentDesc DESC_WITHOUT_EPS = new __LuaLaTeXDesc(
+        false);
 
-    /** create */
-    private __LuaLaTeXDesc() {
+    /** the description */
+    static final _LaTeXToolChainComponentDesc DESC_WITH_EPS = new __LuaLaTeXDesc(
+        true);
+
+    /** should we accept eps? */
+    private final boolean m_acceptEPS;
+
+    /**
+     * create
+     *
+     * @param acceptEPS
+     *          should we accept EPS?
+     */
+    private __LuaLaTeXDesc(final boolean acceptEPS) {
       super();
+      this.m_acceptEPS = acceptEPS;
     }
 
     /** {@inheritDoc} */
     @Override
     final boolean _supports(final IFileType type) {
-      return _LaTeXToolChainComponent._equals(ELaTeXFileType.TEX, type) || //
+      if (_LaTeXToolChainComponent._equals(ELaTeXFileType.TEX, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.PDF, type) || //
           _LaTeXToolChainComponent._equals(ELaTeXFileType.PDF, type) || //
-          _LaTeXToolChainComponent._equals(EGraphicFormat.EPS, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.PGF, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.PNG, type) || //
-          _LaTeXToolChainComponent._equals(EGraphicFormat.JPEG, type);//
+          _LaTeXToolChainComponent._equals(EGraphicFormat.JPEG, type)) {
+        return true;
+      }
+      if (_LaTeXToolChainComponent._equals(EGraphicFormat.EPS, type)) {
+        return this.m_acceptEPS;
+      }
+      return false;
     }
 
     /** {@inheritDoc} */

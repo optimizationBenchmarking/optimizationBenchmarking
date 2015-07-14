@@ -32,7 +32,7 @@ final class _AllEngines implements Iterable<_LaTeXToolChainComponentDesc> {
 
   /** the internal iterator implementation */
   private static final class __Iterator extends
-      BasicIterator<_LaTeXToolChainComponentDesc> {
+  BasicIterator<_LaTeXToolChainComponentDesc> {
 
     /** the index */
     private int m_index;
@@ -45,7 +45,7 @@ final class _AllEngines implements Iterable<_LaTeXToolChainComponentDesc> {
     /** {@inheritDoc} */
     @Override
     public final boolean hasNext() {
-      return (this.m_index <= 9);
+      return (this.m_index <= 11);
     }
 
     /** {@inheritDoc} */
@@ -53,10 +53,10 @@ final class _AllEngines implements Iterable<_LaTeXToolChainComponentDesc> {
     public final _LaTeXToolChainComponentDesc next() {
       switch (this.m_index++) {
         case 0: {
-          return _LuaLaTeX._getDescription();
+          return _LuaLaTeX._getDescription(false);
         }
         case 1: {
-          return _LuaTeXAsLuaLaTeX._getDescription();
+          return _LuaTeXAsLuaLaTeX._getDescription(false);
         }
         case 2: {
           return _PdfLaTeX._getDescription();
@@ -81,6 +81,12 @@ final class _AllEngines implements Iterable<_LaTeXToolChainComponentDesc> {
         }
         case 9: {
           return _XeTeXAsXeLaTeX._getDescription();
+        }
+        case 10: {
+          return _LuaLaTeX._getDescription(true);
+        }
+        case 11: {
+          return _LuaTeXAsLuaLaTeX._getDescription(true);
         }
         default: {
           return super.next(); // no more elements

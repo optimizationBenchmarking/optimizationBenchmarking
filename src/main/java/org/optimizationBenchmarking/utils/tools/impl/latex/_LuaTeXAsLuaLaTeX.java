@@ -39,10 +39,14 @@ final class _LuaTeXAsLuaLaTeX extends _LaTeXUsedAsToolBase {
   /**
    * get the description
    *
+   * @param acceptEPS
+   *          should we accept EPS?
    * @return the description
    */
-  static final _LaTeXToolChainComponentDesc _getDescription() {
-    return __LuaTeXAsLuaLaTeXDesc.DESC;
+  static final _LaTeXToolChainComponentDesc _getDescription(
+      final boolean acceptEPS) {
+    return (acceptEPS ? __LuaTeXAsLuaLaTeXDesc.DESC_WITH_EPS
+        : __LuaTeXAsLuaLaTeXDesc.DESC_WITHOUT_EPS);
   }
 
   /** the loader of the path to LuaTeX */
@@ -50,32 +54,51 @@ final class _LuaTeXAsLuaLaTeX extends _LaTeXUsedAsToolBase {
     /** the path to the LuaTeX executable */
     static final Path PATH = PathUtils.findFirstInPath(new AndPredicate<>(
         new FileNamePredicate(true, "luatex" //$NON-NLS-1$
-        ), CanExecutePredicate.INSTANCE),//
-        IsFilePredicate.INSTANCE, null);
+            ), CanExecutePredicate.INSTANCE),//
+            IsFilePredicate.INSTANCE, null);
   }
 
   /** the description */
   private static final class __LuaTeXAsLuaLaTeXDesc extends
-      _LaTeXToolChainComponentDesc {
+  _LaTeXToolChainComponentDesc {
 
     /** the description */
-    static final _LaTeXToolChainComponentDesc DESC = new __LuaTeXAsLuaLaTeXDesc();
+    static final _LaTeXToolChainComponentDesc DESC_WITHOUT_EPS = new __LuaTeXAsLuaLaTeXDesc(
+        false);
 
-    /** create */
-    private __LuaTeXAsLuaLaTeXDesc() {
+    /** the description */
+    static final _LaTeXToolChainComponentDesc DESC_WITH_EPS = new __LuaTeXAsLuaLaTeXDesc(
+        true);
+
+    /** should we accept eps? */
+    private final boolean m_acceptEPS;
+
+    /**
+     * create
+     *
+     * @param acceptEPS
+     *          should we accept EPS?
+     */
+    private __LuaTeXAsLuaLaTeXDesc(final boolean acceptEPS) {
       super();
+      this.m_acceptEPS = acceptEPS;
     }
 
     /** {@inheritDoc} */
     @Override
     final boolean _supports(final IFileType type) {
-      return _LaTeXToolChainComponent._equals(ELaTeXFileType.TEX, type) || //
+      if (_LaTeXToolChainComponent._equals(ELaTeXFileType.TEX, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.PDF, type) || //
           _LaTeXToolChainComponent._equals(ELaTeXFileType.PDF, type) || //
-          _LaTeXToolChainComponent._equals(EGraphicFormat.EPS, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.PGF, type) || //
           _LaTeXToolChainComponent._equals(EGraphicFormat.PNG, type) || //
-          _LaTeXToolChainComponent._equals(EGraphicFormat.JPEG, type);//
+          _LaTeXToolChainComponent._equals(EGraphicFormat.JPEG, type)) {
+        return true;
+      }
+      if (_LaTeXToolChainComponent._equals(EGraphicFormat.EPS, type)) {
+        return this.m_acceptEPS;
+      }
+      return false;
     }
 
     /** {@inheritDoc} */
