@@ -7,4 +7,4 @@
 
 Besides the downloads from our Maven [repository]({{ site.baseurl }}/repo/optimizationBenchmarking/org/optimizationBenchmarking/{{ include.projectVersion }}/index.html), you can also download this version from [GitHub](https://github.com/optimizationBenchmarking/optimizationBenchmarking/releases/tag/v{{ include.projectVersion }}) (where only the sources are provided).
 ## Maven `pom`
-{% include mavenPom.md projectVersion=include.projectVersion" %}
+{% include mavenPom.md projectVersion=include.projectVersion %}
