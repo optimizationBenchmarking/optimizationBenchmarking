@@ -12,6 +12,7 @@ import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicat
 import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
 import org.optimizationBenchmarking.utils.predicates.AndPredicate;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
@@ -120,6 +121,15 @@ final class _BibTeX extends _LaTeXToolChainComponent {
   @Override
   final ELaTeXFileType _produces() {
     return ELaTeXFileType.BBL;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append("BibTeX"); //$NON-NLS-1$
+    textOut.append('(');
+    textOut.append(this.m_executable);
+    textOut.append(')');
   }
 
   /**

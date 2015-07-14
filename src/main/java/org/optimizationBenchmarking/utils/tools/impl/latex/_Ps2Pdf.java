@@ -12,6 +12,7 @@ import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicat
 import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
 import org.optimizationBenchmarking.utils.predicates.AndPredicate;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
@@ -69,6 +70,15 @@ final class _Ps2Pdf extends _LaTeXToolChainComponent {
       + "' found.") : //$NON-NLS-1$
           "No ps2pdf executable found.");//$NON-NLS-1$
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append("ps2pdf"); //$NON-NLS-1$
+    textOut.append('(');
+    textOut.append(this.m_executable);
+    textOut.append(')');
   }
 
   /** {@inheritDoc} */

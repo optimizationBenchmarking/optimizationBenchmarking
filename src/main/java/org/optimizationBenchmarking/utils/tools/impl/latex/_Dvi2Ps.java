@@ -12,6 +12,7 @@ import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicat
 import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
 import org.optimizationBenchmarking.utils.predicates.AndPredicate;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
@@ -45,6 +46,15 @@ final class _Dvi2Ps extends _LaTeXToolChainComponent {
       ("Dvips executable '" + this.m_executable + "' found.") : //$NON-NLS-1$//$NON-NLS-2$
           "No dvips executable found.");//$NON-NLS-1$
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append("dvips"); //$NON-NLS-1$
+    textOut.append('(');
+    textOut.append(this.m_executable);
+    textOut.append(')');
   }
 
   /** {@inheritDoc} */

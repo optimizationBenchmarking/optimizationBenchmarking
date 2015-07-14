@@ -15,6 +15,7 @@ import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.paths.FileChangeDetector;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** the main job of the LaTeX tool chain */
@@ -348,5 +349,42 @@ final class _LaTeXMainJob extends LaTeXJob {
   @Override
   public final boolean canCompileToPDF() {
     return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    final MemoryTextOutput mto;
+    boolean first;
+
+    mto = new MemoryTextOutput();
+    mto.append('[');
+    if (this.m_loopChain != null) {
+      first = true;
+      for (final _LaTeXToolChainComponent comp : this.m_loopChain) {
+        if (first) {
+          first = false;
+        } else {
+          mto.append(',');
+        }
+        mto.append(comp);
+      }
+    }
+    mto.append("]+ --> ["); //$NON-NLS-1$
+    if (this.m_finalChain != null) {
+      first = true;
+      for (final _LaTeXToolChainComponent comp : this.m_finalChain) {
+        if (first) {
+          first = false;
+        } else {
+          mto.append(',');
+        }
+        mto.append(comp);
+      }
+    }
+    mto.append("] in "); //$NON-NLS-1$
+    mto.append(this.m_directory);
+
+    return mto.toString();
   }
 }

@@ -59,4 +59,9 @@ final class _NoSuitableToolChainFound extends LaTeXJob {
     return false;
   }
 
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    return "No Suitable LaTeX Tool Chain Found"; //$NON-NLS-1$
+  }
 }

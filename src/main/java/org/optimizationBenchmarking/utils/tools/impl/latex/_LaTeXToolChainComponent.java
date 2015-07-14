@@ -11,14 +11,17 @@ import java.util.logging.Logger;
 import org.optimizationBenchmarking.utils.EmptyUtils;
 import org.optimizationBenchmarking.utils.io.IFileType;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
 import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 
 /** A component of a tool chain */
-abstract class _LaTeXToolChainComponent {
+abstract class _LaTeXToolChainComponent implements ITextable {
 
   /** create the tool chain component */
   _LaTeXToolChainComponent() {
@@ -48,6 +51,23 @@ abstract class _LaTeXToolChainComponent {
    *           if I/O fails
    */
   abstract void _use(final _LaTeXMainJob job) throws IOException;
+
+  /** {@inheritDoc} */
+  @Override
+  public void toText(final ITextOutput textOut) {
+    final String string;
+    string = this.getClass().getSimpleName();
+    textOut.append(string, 0, string.length());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final String toString() {
+    final MemoryTextOutput mto;
+    mto = new MemoryTextOutput();
+    this.toText(mto);
+    return mto.toString();
+  }
 
   /**
    * require a path from the job

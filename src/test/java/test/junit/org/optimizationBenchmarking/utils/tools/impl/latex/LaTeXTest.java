@@ -65,12 +65,13 @@ public class LaTeXTest extends ToolTest<LaTeX> {
     final FileProducerCollector listener, all;
     final LaTeX tool;
     final LaTeXJobBuilder builder;
-    final LaTeXJob job;
     final ArrayList<IFileType> required;
+    LaTeXJob job;
     Path graphic;
     Bibliography bib;
     boolean first;
 
+    job = null;
     try (final TempDir temp = new TempDir()) {
       path = PathUtils.createPathInside(temp.getPath(), "document.tex"); //$NON-NLS-1$
 
@@ -245,8 +246,8 @@ public class LaTeXTest extends ToolTest<LaTeX> {
           job.call();
         } catch (final Throwable t) {
           throw new RuntimeException(//
-              "LaTeX document compilation failed.", //$NON-NLS-1$
-              t);
+              "LaTeX document compilation failed with job " + //$NON-NLS-1$
+                  job, t);
         }
 
         if (this.getInstance().hasToolChainFor(
@@ -255,8 +256,11 @@ public class LaTeXTest extends ToolTest<LaTeX> {
         }
 
       } catch (final Throwable tt) {
-        throw new RuntimeException(//
-            "Example LaTeX file generation failed.",//$NON-NLS-1$
+        throw new RuntimeException(
+            ((job != null)//
+            ? ("Example LaTeX file generation and compilation failed with job " + //$NON-NLS-1$
+            job)
+                : "Example LaTeX file generation and compilation failed"),//$NON-NLS-1$
             tt);
       }
 

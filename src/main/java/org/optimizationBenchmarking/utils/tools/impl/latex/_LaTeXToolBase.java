@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
@@ -43,8 +44,7 @@ abstract class _LaTeXToolBase extends _LaTeXToolChainComponent {
     arg = null;
     if (executable != null) {
       try {
-        arg = _LaTeXToolChainComponent._getArgs(executable,
-            "-help", //$NON-NLS-1$
+        arg = _LaTeXToolChainComponent._getArgs(executable, "-help", //$NON-NLS-1$
             "halt-on-error")[0]; //$NON-NLS-1$
       } catch (final Throwable t) {
         arg = null;
@@ -158,5 +158,18 @@ abstract class _LaTeXToolBase extends _LaTeXToolChainComponent {
                 " to '" + tex) + '\'') + '.'); //$NON-NLS-1$
       }
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append(this.m_toolName);
+    textOut.append('(');
+    textOut.append(this.m_executable);
+    if (this.m_haltArg != null) {
+      textOut.append(' ');
+      textOut.append(this.m_haltArg);
+    }
+    textOut.append(')');
   }
 }

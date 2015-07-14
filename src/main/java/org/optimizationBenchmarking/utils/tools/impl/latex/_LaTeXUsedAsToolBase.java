@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
@@ -284,5 +285,26 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
                 " to '" + tex) + '\'') + '.'); //$NON-NLS-1$
       }
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void toText(final ITextOutput textOut) {
+    textOut.append(this.m_toolName);
+    textOut.append('(');
+    textOut.append(this.m_executable);
+    if (this.m_formatArg != null) {
+      textOut.append(' ');
+      textOut.append(this.m_formatArg);
+    }
+    if (this.m_progNameArg != null) {
+      textOut.append(' ');
+      textOut.append(this.m_progNameArg);
+    }
+    if (this.m_haltArg != null) {
+      textOut.append(' ');
+      textOut.append(this.m_haltArg);
+    }
+    textOut.append(')');
   }
 }
