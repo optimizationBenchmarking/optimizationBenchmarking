@@ -55,7 +55,7 @@ final class _MatrixIterator2DXLongYLong extends MatrixIterator2D {
     int have, index, position, max;
 
     have = 0;
-    outer: for (index = this.m_indexes.length; (--index) >= 0;) {
+    outer: for (index = 0; index < this.m_indexes.length; index++) {
       position = this.m_indexes[index];
       matrix = this.m_matrices[index];
       max = matrix.m();
