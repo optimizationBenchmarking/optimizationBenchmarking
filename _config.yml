@@ -2,3 +2,5 @@ name: Optimization Benchmarking
 markdown: redcarpet
 baseurl: /optimizationBenchmarking
 include: [.url]
+authorName: Thomas Weise
+authorEmail: tweise@ustc.edu.cn
