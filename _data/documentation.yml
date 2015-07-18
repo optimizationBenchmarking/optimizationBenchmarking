@@ -1,1 +1,7 @@
-evaluatorSlidesURL: https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarking/documentation/documents/evaluatorSlides/evaluatorSlides.pdf
+evaluatorSlidesURL: https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/documents/evaluatorSlides/evaluatorSlides.pdf
+exampleMaxSatLinuxURL: https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/maxSat/make.sh
+exampleMaxSatWindowsURL: https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/maxSat/make.bat
+exampleBBOBLinuxURL: https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/bbob/make.sh
+exampleBBOBWindowsURL: https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/bbob/make.bat
+exampleTSPSuiteLinuxURL: https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/tspSuite/make.sh
+exampleTSPSuiteWindowsURL: https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/tspSuite/make.bat
