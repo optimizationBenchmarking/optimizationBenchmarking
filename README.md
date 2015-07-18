@@ -8,7 +8,7 @@
 Please visit our [website](http://www.optimizationBenchmarking.org/) to
 download the latest release in form of a stand-alone executable.
 A set of slides with examples and descriptions
-how to use the system can be found [here](https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarking/documentation/documents/evaluatorSlides/evaluatorSlides.pdf).
+how to use the system can be found [here](https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/documents/evaluatorSlides/evaluatorSlides.pdf).
 
 This is the main source repository of the optimizationBenchmarking.org tool suite.
 The optimizationBenchmarking.org tool suite supports researchers in
@@ -55,8 +55,8 @@ and comparisons carried out according to a user-provided specification.
 ## Examples
 
 We provide a set of examples which can be executed directly on the command lines of
-your Linux or Windows machine, given that you have `Java 1.7` installed (and potentially `svn` and a LaTeX installation). No further installation or downloads are required, nothing will be installed (just downloaded into the current folder).
+your Linux or Windows machine, given that you have `Java 1.7` installed (and potentially `svn` and a LaTeX installation). No further installation or downloads are required, nothing will be installed (just copied into the current folder).
 
-1. Comparison of Algorithms of Maximum Satisfiability Problem: [[Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.sh)] [[Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/maxSat/make.bat)]
-2. Comparison of Some Algorithms from [BBOB'2013](http://coco.gforge.inria.fr/doku.php?id=bbob-2013): [[Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.sh)] [[Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/bbob/make.bat)]
-3. Comparison of Some Algorithms for the [TSP](https://github.com/optimizationBenchmarking/tspSuite): [[Linux](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/tspSuite/make.sh)] [[Windows](https://github.com/optimizationBenchmarking/optimizationBenchmarking/blob/documentation/examples/tspSuite/make.bat)]
+1. Comparison of Algorithms of Maximum Satisfiability Problem: [[Linux](https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/maxSat/make.sh)] [[Windows](https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/maxSat/make.bat)]
+2. Comparison of Some Algorithms from [BBOB'2013](http://coco.gforge.inria.fr/doku.php?id=bbob-2013): [[Linux](https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/bbob/make.sh)] [[Windows](https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/bbob/make.bat)]
+3. Comparison of Some Algorithms for the [TSP](https://github.com/optimizationBenchmarking/tspSuite): [[Linux](https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/tspSuite/make.sh)] [[Windows](https://raw.githubusercontent.com/optimizationBenchmarking/optimizationBenchmarkingDocu/master/examples/tspSuite/make.bat)]
