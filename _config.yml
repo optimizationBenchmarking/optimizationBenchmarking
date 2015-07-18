@@ -2,6 +2,3 @@ name: Optimization Benchmarking
 markdown: redcarpet
 baseurl: /optimizationBenchmarking
 include: [.url]
-
-gems:
-  - jekyll-feed
