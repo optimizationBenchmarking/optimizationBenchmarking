@@ -34,44 +34,12 @@ final class _RankedDouble extends _RankedElement {
   /** {@inheritDoc} */
   @Override
   public final int compareTo(final _RankedElement o) {
-    final _RankedLong rl;
-    final double val, oDouble;
-    final long oLong, thisLong;
-
     if (o instanceof _RankedDouble) {
       return EComparison.compareDoubles(this.m_value,
           ((_RankedDouble) o).m_value);
     }
-
     if (o instanceof _RankedLong) {
-      val = this.m_value;
-      if (val >= _RankedElement.MAX_LONG_DOUBLE) {
-        return 1;
-      }
-      if (val <= _RankedElement.MIN_LONG_DOUBLE) {
-        return (-1);
-      }
-
-      rl = ((_RankedLong) o);
-      oLong = rl.m_value;
-
-      thisLong = ((long) val);
-      if (thisLong == val) {
-        return Long.compare(thisLong, oLong);
-      }
-
-      oDouble = oLong;
-      if (((long) oDouble) == oLong) {
-        return EComparison.compareDoubles(val, oDouble);
-      }
-
-      if (this.m_decimal == null) {
-        this.m_decimal = new BigDecimal(val);
-      }
-      if (rl.m_decimal == null) {
-        rl.m_decimal = new BigDecimal(oLong);
-      }
-      return this.m_decimal.compareTo(rl.m_decimal);
+      return (-(_RankedElement._compareLongDouble(((_RankedLong) o), this)));
     }
     return (-(o.compareTo(this)));
   }

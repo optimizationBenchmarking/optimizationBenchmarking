@@ -62,14 +62,14 @@ public final class NumericalTypes {
   public static final long MAX_DOUBLE_LONG = 9007199254740992L;
 
   /** the {@link java.lang.Long#MAX_VALUE} as {@code double}: {@value} */
-  private static final double MAX_LONG_DOUBLE = Long.MAX_VALUE;
+  public static final double MAX_LONG_DOUBLE = Long.MAX_VALUE;
   /** the {@link java.lang.Long#MIN_VALUE} as {@code double}: {@value} */
-  private static final double MIN_LONG_DOUBLE = Long.MIN_VALUE;
+  public static final double MIN_LONG_DOUBLE = Long.MIN_VALUE;
 
   /** the {@link java.lang.Long#MAX_VALUE} as {@code float}: {@value} */
-  private static final float MAX_LONG_FLOAT = Long.MAX_VALUE;
+  public static final float MAX_LONG_FLOAT = Long.MAX_VALUE;
   /** the {@link java.lang.Long#MIN_VALUE} as {@code float}: {@value} */
-  private static final float MIN_LONG_FLOAT = Long.MIN_VALUE;
+  public static final float MIN_LONG_FLOAT = Long.MIN_VALUE;
 
   /**
    * Get the possible types of a given object

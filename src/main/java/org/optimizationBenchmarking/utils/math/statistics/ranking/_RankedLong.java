@@ -2,8 +2,6 @@ package org.optimizationBenchmarking.utils.math.statistics.ranking;
 
 import java.math.BigDecimal;
 
-import org.optimizationBenchmarking.utils.comparison.EComparison;
-
 /** a ranked {@code long} */
 final class _RankedLong extends _RankedElement {
 
@@ -34,44 +32,11 @@ final class _RankedLong extends _RankedElement {
   /** {@inheritDoc} */
   @Override
   public final int compareTo(final _RankedElement o) {
-    final long val, oLong;
-    final double oDouble, thisDouble;
-    final _RankedDouble rd;
-
     if (o instanceof _RankedLong) {
       return Long.compare(this.m_value, ((_RankedLong) o).m_value);
     }
-
     if (o instanceof _RankedDouble) {
-      rd = ((_RankedDouble) o);
-
-      oDouble = rd.m_value;
-      if (oDouble >= _RankedElement.MAX_LONG_DOUBLE) {
-        return 1;
-      }
-      if (oDouble <= _RankedElement.MIN_LONG_DOUBLE) {
-        return (-1);
-      }
-      val = this.m_value;
-
-      oLong = ((long) oDouble);
-      if (oLong == oDouble) {
-        return Long.compare(val, oLong);
-      }
-
-      thisDouble = val;
-      if (((long) thisDouble) == val) {
-        return EComparison.compareDoubles(thisDouble, oDouble);
-      }
-
-      if (this.m_decimal == null) {
-        this.m_decimal = new BigDecimal(val);
-      }
-      if (rd.m_decimal == null) {
-        rd.m_decimal = new BigDecimal(oDouble);
-      }
-
-      return this.m_decimal.compareTo(rd.m_decimal);
+      return _RankedElement._compareLongDouble(this, ((_RankedDouble) o));
     }
     return (-(o.compareTo(this)));
   }
