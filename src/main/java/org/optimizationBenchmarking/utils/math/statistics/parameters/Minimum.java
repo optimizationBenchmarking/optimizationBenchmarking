@@ -33,7 +33,7 @@ public final class Minimum extends StatisticalParameter {
   @Override
   public final ETextCase printDescription(final ITextOutput textOut,
       final ETextCase textCase) {
-    return ETextCase.ensure(textCase).appendWords(//
+    return textCase.appendWords(//
         "the minimum, i.e., smallest, of a set of values.",// //$NON-NLS-1$
         textOut);
   }

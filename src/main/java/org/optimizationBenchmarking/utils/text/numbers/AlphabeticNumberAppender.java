@@ -67,7 +67,7 @@ public final class AlphabeticNumberAppender extends NumberAppender {
       its--;
     } while ((x != 0L) || (its >= 0));
 
-    use = ETextCase.ensure(textCase);
+    use = textCase;
     buf[len] = use.adjustCaseOfFirstCharInWord(buf[len]);
 
     if (len > 0) {
@@ -105,7 +105,7 @@ public final class AlphabeticNumberAppender extends NumberAppender {
       its--;
     } while ((x != 0) || (its >= 0));
 
-    use = ETextCase.ensure(textCase);
+    use = textCase;
     buf[len] = use.adjustCaseOfFirstCharInWord(buf[len]);
     if (len > 0) {
       textOut.append(buf, len, buf.length);

@@ -34,8 +34,7 @@ public final class Median extends StatisticalParameter {
   @Override
   public final ETextCase printDescription(final ITextOutput textOut,
       final ETextCase textCase) {
-    return ETextCase
-        .ensure(textCase)
+    return textCase
         .appendWords(//
             "the median of a set of values, i.e., the value which would be in the middle if we sorted the set.",// //$NON-NLS-1$
             textOut);

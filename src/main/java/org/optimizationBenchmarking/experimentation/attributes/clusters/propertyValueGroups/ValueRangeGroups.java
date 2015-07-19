@@ -87,8 +87,7 @@ public class ValueRangeGroups extends PropertyValueGroups {
     ETextCase next;
 
     textOut.append(' ');
-    next = ETextCase.ensure(ETextCase.IN_SENTENCE).appendWords(
-        "grouped by", textOut); //$NON-NLS-1$
+    next = ETextCase.IN_SENTENCE.appendWords("grouped by", textOut); //$NON-NLS-1$
     textOut.append(' ');
     next = next.appendWord(this.getGroupingMode().toString(), textOut);
     textOut.append(' ');
@@ -120,7 +119,7 @@ public class ValueRangeGroups extends PropertyValueGroups {
       final ETextCase textCase) {
     ETextCase next;
 
-    next = ETextCase.ensure(textCase);
+    next = textCase;
 
     if (this.m_property instanceof IParameter) {
       textOut.append(' ');
@@ -135,7 +134,7 @@ public class ValueRangeGroups extends PropertyValueGroups {
                 "all instance run sets belonging to an instance whose value of feature",//$NON-NLS-1$
                 textOut);
       } else {
-        next = ETextCase.ensure(textCase).appendWords(//
+        next = textCase.appendWords(//
             "the data whose", textOut); //$NON-NLS-1$
       }
     }

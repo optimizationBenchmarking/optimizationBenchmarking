@@ -33,7 +33,7 @@ public final class Variance extends StatisticalParameter {
   @Override
   public final ETextCase printDescription(final ITextOutput textOut,
       final ETextCase textCase) {
-    return ETextCase.ensure(textCase).appendWords(//
+    return textCase.appendWords(//
         "the variance of a set of values.",// //$NON-NLS-1$
         textOut);
   }

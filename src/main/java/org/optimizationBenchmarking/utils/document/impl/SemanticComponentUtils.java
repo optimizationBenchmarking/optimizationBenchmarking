@@ -39,7 +39,7 @@ public final class SemanticComponentUtils {
       final boolean isCaseFixed) {
     final ETextCase useCase;
 
-    useCase = ETextCase.ensure(textCase);
+    useCase = textCase;
     if (textOut instanceof IComplexText) {
       try (final IText emph = ((IComplexText) textOut).emphasize()) {
         if (isCaseFixed) {
@@ -68,7 +68,7 @@ public final class SemanticComponentUtils {
    */
   public static final ETextCase printLongName(final String longName,
       final ITextOutput textOut, final ETextCase textCase) {
-    return ETextCase.ensure(textCase).appendWords(longName, textOut);
+    return textCase.appendWords(longName, textOut);
   }
 
   /**
@@ -86,7 +86,7 @@ public final class SemanticComponentUtils {
    */
   public static final ETextCase printDescription(final String description,
       final ITextOutput textOut, final ETextCase textCase) {
-    return ETextCase.ensure(textCase).appendWords(description, textOut);
+    return textCase.appendWords(description, textOut);
   }
 
   /**

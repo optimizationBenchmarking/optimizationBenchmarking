@@ -214,15 +214,14 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
     } else {
       textOut.append(this.getShortName());
     }
-    return ETextCase.ensure(textCase).nextCase();
+    return textCase.nextCase();
   }
 
   /** {@inheritDoc} */
   @Override
   public ETextCase printLongName(final ITextOutput textOut,
       final ETextCase textCase) {
-    return ETextCase.ensure(textCase).appendWords(this.getLongName(),
-        textOut);
+    return textCase.appendWords(this.getLongName(), textOut);
   }
 
   /** {@inheritDoc} */
@@ -324,7 +323,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
   protected ETextCase yAxisPrintShortName(final ITextOutput textOut,
       final ETextCase textCase) {
     this.yAxisMathRender(textOut, this.__getYAxisFunctionRenderer());
-    return ETextCase.ensure(textCase).nextCase();
+    return textCase.nextCase();
   }
 
   /**
@@ -385,7 +384,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
       final ETextCase textCase, final boolean fromYAxisSemanticComponent) {
     ETextCase use;
 
-    use = ETextCase.ensure(textCase).appendWord("the", textOut); //$NON-NLS-1$
+    use = textCase.appendWord("the", textOut); //$NON-NLS-1$
     textOut.append(' ');
     use = this.printNameInDescription(textOut, use,
         fromYAxisSemanticComponent);

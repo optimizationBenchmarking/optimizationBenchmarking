@@ -39,7 +39,7 @@ final class _InstanceCluster extends ShadowExperimentSet<_InstanceGroups>
   public final ETextCase printShortName(final ITextOutput textOut,
       final ETextCase textCase) {
     final ETextCase use;
-    use = ETextCase.ensure(textCase).appendWord("instance", textOut); //$NON-NLS-1$
+    use = textCase.appendWord("instance", textOut); //$NON-NLS-1$
     textOut.append(' ');
     return this.__getInstance().printShortName(textOut, use);
   }
@@ -49,7 +49,7 @@ final class _InstanceCluster extends ShadowExperimentSet<_InstanceGroups>
   public final ETextCase printLongName(final ITextOutput textOut,
       final ETextCase textCase) {
     final ETextCase use;
-    use = ETextCase.ensure(textCase).appendWord("instance", textOut); //$NON-NLS-1$
+    use = textCase.appendWord("instance", textOut); //$NON-NLS-1$
     textOut.append(' ');
     return this.__getInstance().printLongName(textOut, use);
   }
@@ -59,8 +59,7 @@ final class _InstanceCluster extends ShadowExperimentSet<_InstanceGroups>
   public final ETextCase printDescription(final ITextOutput textOut,
       final ETextCase textCase) {
     final ETextCase use;
-    use = ETextCase.ensure(textCase).appendWord(
-        "run sets belonging to instance", textOut); //$NON-NLS-1$
+    use = textCase.appendWord("run sets belonging to instance", textOut); //$NON-NLS-1$
     textOut.append(' ');
     return SemanticComponentUtils.printLongAndShortNameIfDifferent(
         this.__getInstance(), textOut, use);

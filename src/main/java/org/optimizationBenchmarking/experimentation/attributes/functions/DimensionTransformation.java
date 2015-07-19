@@ -102,7 +102,7 @@ public final class DimensionTransformation extends Transformation
       this.mathRender(textOut, this.__getParameterRenderer());
     }
 
-    return ETextCase.ensure(textCase).nextCase();
+    return textCase.nextCase();
   }
 
   /** {@inheritDoc} */
@@ -121,7 +121,7 @@ public final class DimensionTransformation extends Transformation
       this.mathRender(textOut, this.__getParameterRenderer());
     }
 
-    return ETextCase.ensure(textCase).nextCase();
+    return textCase.nextCase();
   }
 
   /** {@inheritDoc} */
@@ -130,8 +130,7 @@ public final class DimensionTransformation extends Transformation
       final ETextCase textCase) {
     ETextCase use;
 
-    use = ETextCase.ensure(textCase).appendWords(
-        "the values of dimension", //$NON-NLS-1$
+    use = textCase.appendWords("the values of dimension", //$NON-NLS-1$
         textOut);
     textOut.append(' ');
     use = SemanticComponentUtils.printLongAndShortNameIfDifferent(

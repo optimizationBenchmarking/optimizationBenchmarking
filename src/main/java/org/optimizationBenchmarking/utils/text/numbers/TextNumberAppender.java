@@ -458,7 +458,7 @@ public final class TextNumberAppender extends NumberAppender {
 
     if (v < 0d) {
       if (v <= Double.NEGATIVE_INFINITY) {
-        return ETextCase.ensure(textCase).appendWords(//
+        return textCase.appendWords(//
             DoubleParser.NEGATIVE_INFINITY, textOut);
       }
 
@@ -473,16 +473,14 @@ public final class TextNumberAppender extends NumberAppender {
       value = (-v);
     } else {
       if (v == 0d) {
-        return ETextCase.ensure(textCase).appendWord(
-            TextNumberAppender.C_0, textOut);
+        return textCase.appendWord(TextNumberAppender.C_0, textOut);
       }
       if (v >= Double.POSITIVE_INFINITY) {
-        return ETextCase.ensure(textCase).appendWords(
-            DoubleParser.POSITIVE_INFINITY, textOut);
+        return textCase.appendWords(DoubleParser.POSITIVE_INFINITY,
+            textOut);
       }
       if (v != v) {
-        return ETextCase.ensure(textCase).appendWord(
-            DoubleParser.NOT_A_NUMBER, textOut);
+        return textCase.appendWord(DoubleParser.NOT_A_NUMBER, textOut);
       }
       value = v;
       status = new _NumberStatus(textCase);

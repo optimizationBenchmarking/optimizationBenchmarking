@@ -65,8 +65,7 @@ public final class DistinctValueGroups extends PropertyValueGroups {
     ETextCase next;
 
     textOut.append(' ');
-    next = ETextCase.ensure(ETextCase.IN_SENTENCE).appendWords(
-        "grouped by", textOut); //$NON-NLS-1$
+    next = ETextCase.IN_SENTENCE.appendWords("grouped by", textOut); //$NON-NLS-1$
     textOut.append(' ');
     return next.appendWord("distinct values", textOut); //$NON-NLS-1$
   }
@@ -93,7 +92,7 @@ public final class DistinctValueGroups extends PropertyValueGroups {
       final ETextCase textCase) {
     ETextCase next;
 
-    next = ETextCase.ensure(textCase);
+    next = textCase;
 
     if (this.m_property instanceof IParameter) {
       textOut.append(' ');
@@ -109,7 +108,7 @@ public final class DistinctValueGroups extends PropertyValueGroups {
                 "the instance run sets belonging to instances with the same value of the feature",//$NON-NLS-1$
                 textOut);
       } else {
-        next = ETextCase.ensure(textCase).appendWords(//
+        next = textCase.appendWords(//
             "the data with the same values of", textOut); //$NON-NLS-1$
       }
     }
@@ -118,7 +117,7 @@ public final class DistinctValueGroups extends PropertyValueGroups {
         this.m_property, textOut, next);
 
     textOut.append(' ');
-    return ETextCase.ensure(next).appendWords("grouped together.", //$NON-NLS-1$
+    return next.appendWords("grouped together.", //$NON-NLS-1$
         textOut).nextAfterSentenceEnd();
   }
 }

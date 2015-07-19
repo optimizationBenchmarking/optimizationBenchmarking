@@ -73,8 +73,8 @@ public final class Quantile extends StatisticalParameter {
       final ETextCase textCase) {
     ETextCase next;
 
-    next = ETextCase.ensure(SimpleNumberAppender.INSTANCE.appendTo(//
-        this.m_p, textCase, textOut));
+    next = SimpleNumberAppender.INSTANCE.appendTo(//
+        this.m_p, textCase, textOut);
     textOut.append(' ');
     return next.appendWord("quantile", textOut); //$NON-NLS-1$
   }
@@ -85,7 +85,7 @@ public final class Quantile extends StatisticalParameter {
       final ETextCase textCase) {
     ETextCase next;
 
-    next = ETextCase.ensure(textCase).appendWord("the", textOut);//$NON-NLS-1$
+    next = textCase.appendWord("the", textOut);//$NON-NLS-1$
     textOut.append(' ');
     next = SimpleNumberAppender.INSTANCE.appendTo(//
         this.m_p, textCase, textOut);

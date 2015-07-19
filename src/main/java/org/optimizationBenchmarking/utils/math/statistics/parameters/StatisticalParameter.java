@@ -75,8 +75,7 @@ public abstract class StatisticalParameter implements
   @Override
   public ETextCase printShortName(final ITextOutput textOut,
       final ETextCase textCase) {
-    return ETextCase.ensure(textCase)
-        .appendWord(this.m_shortName, textOut);
+    return textCase.appendWord(this.m_shortName, textOut);
   }
 
   /** {@inheritDoc} */
@@ -101,8 +100,7 @@ public abstract class StatisticalParameter implements
   @Override
   public ETextCase printLongName(final ITextOutput textOut,
       final ETextCase textCase) {
-    return ETextCase.ensure(textCase)
-        .appendWords(this.m_longName, textOut);
+    return textCase.appendWords(this.m_longName, textOut);
   }
 
   /** {@inheritDoc} */

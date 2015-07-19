@@ -13,18 +13,18 @@ public final class InTextNumberAppender extends NumberAppender {
 
   /** the small numbers */
   static final String[] SMALL_NUMBERS = { "zero", //$NON-NLS-1$
-    "one",//$NON-NLS-1$
-    "two",//$NON-NLS-1$
-    "three",//$NON-NLS-1$
-    "four",//$NON-NLS-1$
-    "five",//$NON-NLS-1$
-    "six",//$NON-NLS-1$
-    "seven",//$NON-NLS-1$
-    "eight",//$NON-NLS-1$
-    "nine",//$NON-NLS-1$
-    "ten",//$NON-NLS-1$
-    "eleven",//$NON-NLS-1$
-    "twelve"//$NON-NLS-1$
+      "one",//$NON-NLS-1$
+      "two",//$NON-NLS-1$
+      "three",//$NON-NLS-1$
+      "four",//$NON-NLS-1$
+      "five",//$NON-NLS-1$
+      "six",//$NON-NLS-1$
+      "seven",//$NON-NLS-1$
+      "eight",//$NON-NLS-1$
+      "nine",//$NON-NLS-1$
+      "ten",//$NON-NLS-1$
+      "eleven",//$NON-NLS-1$
+      "twelve"//$NON-NLS-1$
   };
 
   /** the globally shared instance of the in-text number appender */
@@ -39,15 +39,12 @@ public final class InTextNumberAppender extends NumberAppender {
   @Override
   public final ETextCase appendTo(final long v, final ETextCase textCase,
       final ITextOutput textOut) {
-    final ETextCase use;
-
-    use = ETextCase.ensure(textCase);
     if ((v >= 0) && (v < InTextNumberAppender.SMALL_NUMBERS.length)) {
-      return use.appendWord(InTextNumberAppender.SMALL_NUMBERS[(int) v],
-          textOut);
+      return textCase.appendWord(
+          InTextNumberAppender.SMALL_NUMBERS[(int) v], textOut);
     }
     textOut.append(v);
-    return use.nextCase();
+    return textCase.nextCase();
   }
 
   /** {@inheritDoc} */
@@ -64,15 +61,12 @@ public final class InTextNumberAppender extends NumberAppender {
   @Override
   public final ETextCase appendTo(final int v, final ETextCase textCase,
       final ITextOutput textOut) {
-    final ETextCase use;
-
-    use = ETextCase.ensure(textCase);
     if ((v >= 0) && (v < InTextNumberAppender.SMALL_NUMBERS.length)) {
-      return use.appendWord(//
+      return textCase.appendWord(//
           InTextNumberAppender.SMALL_NUMBERS[v], textOut);
     }
     textOut.append(v);
-    return use.nextCase();
+    return textCase.nextCase();
   }
 
   /** {@inheritDoc} */

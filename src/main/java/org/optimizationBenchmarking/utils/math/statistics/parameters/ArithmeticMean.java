@@ -35,8 +35,7 @@ public final class ArithmeticMean extends StatisticalParameter {
   @Override
   public final ETextCase printDescription(final ITextOutput textOut,
       final ETextCase textCase) {
-    return ETextCase
-        .ensure(textCase)
+    return textCase
         .appendWords(//
             "the arithmetic mean (often refered to as average) of a set of values, i.e., the sum of the values divided by their number.",// //$NON-NLS-1$
             textOut);

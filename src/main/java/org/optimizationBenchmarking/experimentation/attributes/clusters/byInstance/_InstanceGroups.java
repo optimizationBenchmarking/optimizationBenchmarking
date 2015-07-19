@@ -44,7 +44,7 @@ final class _InstanceGroups extends DataElement implements IClustering {
   @Override
   public final ETextCase printShortName(final ITextOutput textOut,
       final ETextCase textCase) {
-    return ETextCase.ensure(textCase).appendWords(//
+    return textCase.appendWords(//
         "grouped by instance", textOut); //$NON-NLS-1$
   }
 
@@ -73,7 +73,7 @@ final class _InstanceGroups extends DataElement implements IClustering {
       final ETextCase textCase) {
     ETextCase use;
 
-    use = ETextCase.ensure(textCase).appendWords(//
+    use = textCase.appendWords(//
         "instance run sets are grouped by their instance", //$NON-NLS-1$
         textOut);
     textOut.append('.');

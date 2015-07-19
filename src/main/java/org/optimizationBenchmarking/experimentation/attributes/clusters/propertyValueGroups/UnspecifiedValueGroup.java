@@ -100,7 +100,7 @@ public final class UnspecifiedValueGroup extends
     final ETextCase use;
     use = this.getOwner().m_property.printShortName(textOut, textCase);
     textOut.append(' ');
-    return ETextCase.ensure(use).appendWords("is unspecified", textOut); //$NON-NLS-1$
+    return use.appendWords("is unspecified", textOut); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
@@ -110,7 +110,7 @@ public final class UnspecifiedValueGroup extends
     final ETextCase use;
     use = this.getOwner().m_property.printLongName(textOut, textCase);
     textOut.append(' ');
-    return ETextCase.ensure(use).appendWords("is unspecified", textOut); //$NON-NLS-1$
+    return use.appendWords("is unspecified", textOut); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
@@ -118,13 +118,13 @@ public final class UnspecifiedValueGroup extends
   public final ETextCase printDescription(final ITextOutput textOut,
       final ETextCase textCase) {
     ETextCase use;
-    use = ETextCase.ensure(textCase).appendWords(//
+    use = textCase.appendWords(//
         "the set of experiments whose parameter", //$NON-NLS-1$
         textOut);
     textOut.append(' ');
     use = this.getOwner().m_property.printLongName(textOut, use);
     textOut.append(' ');
-    return ETextCase.ensure(use).appendWords("is unspecified", textOut); //$NON-NLS-1$
+    return use.appendWords("is unspecified", textOut); //$NON-NLS-1$
   }
 
 }

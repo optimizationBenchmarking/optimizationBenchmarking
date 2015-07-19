@@ -30,11 +30,8 @@ public final class NoExponentNumberAppender extends
   @Override
   public final ETextCase appendTo(final double v,
       final ETextCase textCase, final ITextOutput textOut) {
-    final ETextCase use;
-
-    use = ETextCase.ensure(textCase);
-    textOut.append(this.toString(v, use));
-    return use.nextCase();
+    textOut.append(this.toString(v, textCase));
+    return textCase.nextCase();
   }
 
   /** {@inheritDoc} */

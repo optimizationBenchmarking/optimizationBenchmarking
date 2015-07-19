@@ -97,7 +97,7 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
     final ISemanticComponent component;
     ETextCase useCase;
 
-    useCase = ETextCase.ensure(textCase);
+    useCase = textCase;
     prop = this.getOwner().m_property;
 
     if (prop instanceof IFeature) {
@@ -171,7 +171,7 @@ public abstract class PropertyValueGroup<OT extends PropertyValueGroups>
     }
 
     textOut.append(' ');
-    useCase = ETextCase.ensure(useCase).appendWord("with", textOut); //$NON-NLS-1$
+    useCase = useCase.appendWord("with", textOut); //$NON-NLS-1$
     textOut.append(' ');
     return useCase;
   }
