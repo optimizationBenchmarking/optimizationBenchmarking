@@ -222,17 +222,6 @@ public class RandomLineChart2DExample extends ChartExample {
       }
     }
 
-    if (rand.nextBoolean()) {
-      line.setStart(Double.NEGATIVE_INFINITY,
-          (rand.nextBoolean() ? Double.NEGATIVE_INFINITY
-              : Double.POSITIVE_INFINITY));
-    }
-    if (rand.nextBoolean()) {
-      line.setEnd(Double.POSITIVE_INFINITY,
-          (rand.nextBoolean() ? Double.NEGATIVE_INFINITY
-              : Double.POSITIVE_INFINITY));
-    }
-
     line.setType(ChartExample.randomLineType(rand));
 
     x = new double[rand.nextInt(1000) + 2];

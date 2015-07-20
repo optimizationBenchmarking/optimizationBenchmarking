@@ -36,12 +36,16 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.graphics.style.font.FontStyle;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokeStyle;
+import org.optimizationBenchmarking.utils.math.BasicNumber;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
+import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
+import org.optimizationBenchmarking.utils.math.matrix.processing.iterator2D.MatrixIterator2D;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.CompoundAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.FiniteMaximumAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.FiniteMinimumAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.math.statistics.aggregate.ScalarAggregate;
+import org.optimizationBenchmarking.utils.math.statistics.ranking.RankingStrategy;
 import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
@@ -90,6 +94,14 @@ public abstract class FunctionJob extends ExperimentSetJob {
   /** the maximum value for the y-axis */
   public static final String PARAM_MAX_Y = "maxY";//$NON-NLS-1$
 
+  /** should we plot the ranking instead of the actual data? */
+  public static final String PARAM_RANKING = "rankingPlot";//$NON-NLS-1$
+  /**
+   * should we assume that the experiments keep their last function value
+   * forever or should their ranks end when their function ends?
+   */
+  public static final String PARAM_RANKING_CONTINUE = "rankingContinueToEnd";//$NON-NLS-1$
+
   /** the figure size */
   private final EFigureSize m_figureSize;
 
@@ -105,14 +117,43 @@ public abstract class FunctionJob extends ExperimentSetJob {
   /** should we print axis titles? */
   private final boolean m_showAxisTitles;
 
-  /** the minimum value for the x-axis, or {@code null} if undefined */
+  /**
+   * the minimum value for the x-axis, or {@code null} if undefined
+   *
+   * @see #PARAM_MIN_X
+   */
   private final Number m_minX;
-  /** the maximum value for the x-axis, or {@code null} if undefined */
+  /**
+   * the maximum value for the x-axis, or {@code null} if undefined
+   *
+   * @see #PARAM_MAX_X
+   */
   private final Number m_maxX;
-  /** the minimum value for the y-axis, or {@code null} if undefined */
+  /**
+   * the minimum value for the y-axis, or {@code null} if undefined
+   *
+   * @see #PARAM_MIN_Y
+   */
   private final Number m_minY;
-  /** the maximum value for the y-axis, or {@code null} if undefined */
+  /**
+   * the maximum value for the y-axis, or {@code null} if undefined
+   *
+   * @see #PARAM_MAX_Y
+   */
   private final Number m_maxY;
+  /**
+   * the ranking strategy, or {@code null} if the data should be printed
+   *
+   * @see #PARAM_RANKING
+   */
+  private final RankingStrategy m_ranking;
+
+  /**
+   * should we assume that the experiments keep their last function value
+   * forever ({@code true}) or should their ranks end when their function
+   * ends ({@code false})?
+   */
+  private final boolean m_rankingContinue;
 
   /**
    * Create the function job
@@ -166,6 +207,25 @@ public abstract class FunctionJob extends ExperimentSetJob {
         AnyNumberParser.INSTANCE, null);
     this.m_maxY = config.get(FunctionJob.PARAM_MAX_Y,
         AnyNumberParser.INSTANCE, null);
+
+    if (config.getBoolean(FunctionJob.PARAM_RANKING, false)) {
+      this.m_ranking = RankingStrategy.create(config);
+      this.m_rankingContinue = config.getBoolean(
+          FunctionJob.PARAM_RANKING_CONTINUE, true);
+    } else {
+      this.m_ranking = null;
+      this.m_rankingContinue = false;
+    }
+  }
+
+  /**
+   * Has a ranking strategy been set?
+   *
+   * @return {@code true} if a ranking strategy has been set, {@code false}
+   *         otherwise
+   */
+  public final RankingStrategy getRankingStrategy() {
+    return this.m_ranking;
   }
 
   /**
@@ -476,12 +536,47 @@ public abstract class FunctionJob extends ExperimentSetJob {
   }
 
   /**
+   * Get the title to be printed at the x-axis
+   *
+   * @return the title to be printed at the x-axis
+   */
+  protected String getXAxisTitle() {
+    final MemoryTextOutput mto;
+
+    mto = new MemoryTextOutput();
+    this.m_function.getXAxisTransformation().mathRender(mto,
+        DefaultParameterRenderer.INSTANCE);
+    return mto.toString();
+  }
+
+  /**
    * Get the title font of the y-axis. Returns {@code null} to use default.
    *
    * @return the title font of the y-axis, or {@code null} for default
    */
   protected FontStyle getYAxisTitleFont() {
     return null;
+  }
+
+  /**
+   * Get the title to be printed at the y-axis
+   *
+   * @return the title to be printed at the y-axis
+   */
+  protected String getYAxisTitle() {
+    final MemoryTextOutput mto;
+
+    mto = new MemoryTextOutput();
+    if (this.m_ranking != null) {
+      this.m_ranking.printShortName(mto, ETextCase.IN_SENTENCE);
+      mto.append('(');
+    }
+    this.m_function.getYAxisSemanticComponent().mathRender(mto,
+        DefaultParameterRenderer.INSTANCE);
+    if (this.m_ranking != null) {
+      mto.append(')');
+    }
+    return mto.toString();
   }
 
   /**
@@ -522,7 +617,11 @@ public abstract class FunctionJob extends ExperimentSetJob {
    * @see #getYAxisConfiguredMin()
    */
   protected ScalarAggregate getYAxisMinimumAggregate() {
-    return new FiniteMinimumAggregate();
+    if (this.m_ranking == null) {
+      return new FiniteMinimumAggregate();
+    }
+    // if we rank, we should always start at 0
+    return null;
   }
 
   /**
@@ -565,37 +664,6 @@ public abstract class FunctionJob extends ExperimentSetJob {
    */
   protected double getYAxisMaximumValue() {
     return 0d;
-  }
-
-  /**
-   * Get an optional starting point for a given experiment function.
-   *
-   * @param function
-   *          the experiment function data
-   * @param xyDest
-   *          an array of length 2 to receive an x and y coordinate of the
-   *          starting point (in case {@code true} is returned)
-   * @return {@code true} if a starting point was set, {@code false}
-   *         otherwise
-   */
-  protected boolean getExperimentFunctionStart(
-      final ExperimentFunction function, final double[] xyDest) {
-    return false; // nothing
-  }
-
-  /**
-   * Get an optional end point for a given experiment function.
-   *
-   * @param function
-   *          the experiment function data
-   * @param xyDest
-   *          an array of length 2 to receive an x and y coordinate of the
-   *          end point (in case {@code true} is returned)
-   * @return {@code true} if a end point was set, {@code false} otherwise
-   */
-  protected boolean getExperimentFunctionEnd(
-      final ExperimentFunction function, final double[] xyDest) {
-    return false; // nothing
   }
 
   /**
@@ -682,8 +750,6 @@ public abstract class FunctionJob extends ExperimentSetJob {
   private final void __drawChart(final ILineChart2D chart,
       final ExperimentSetFunctions data, final boolean showLineTitles,
       final boolean showAxisTitles, final StyleSet styles) {
-    final MemoryTextOutput mto;
-    final double[] xy;
     String title;
     StrokeStyle stroke;
     FontStyle font;
@@ -691,20 +757,10 @@ public abstract class FunctionJob extends ExperimentSetJob {
     ScalarAggregate aggregate;
     Number number;
 
-    if (showAxisTitles) {
-      mto = new MemoryTextOutput();
-    } else {
-      mto = null;
-    }
-
     // initialize the x-axis
     try (final IAxis xAxis = chart.xAxis()) {
-      if (mto != null) {
-        this.m_function.getXAxisTransformation().mathRender(mto,
-            DefaultParameterRenderer.INSTANCE);
-        xAxis.setTitle(mto.toString());
-        mto.clear();
-
+      if (showAxisTitles) {
+        xAxis.setTitle(this.getXAxisTitle());
         font = this.getXAxisTitleFont();
         if (font != null) {
           xAxis.setTitleFont(font.getFont());
@@ -754,12 +810,8 @@ public abstract class FunctionJob extends ExperimentSetJob {
     // initialize the y-axis
 
     try (final IAxis yAxis = chart.yAxis()) {
-      if (mto != null) {
-        this.m_function.getYAxisSemanticComponent().mathRender(mto,
-            DefaultParameterRenderer.INSTANCE);
-        yAxis.setTitle(mto.toString());
-        mto.clear();
-
+      if (showAxisTitles) {
+        yAxis.setTitle(this.getYAxisTitle());
         font = this.getYAxisTitleFont();
         if (font != null) {
           yAxis.setTitleFont(font.getFont());
@@ -807,26 +859,10 @@ public abstract class FunctionJob extends ExperimentSetJob {
     }
 
     // plot the functions, one for each experiment
-    xy = new double[2];
     for (final ExperimentFunction experimentFunction : data.getData()) {
 
       try (final ILine2D line = chart.line()) {
         line.setData(experimentFunction.getFunction());
-
-        // set values to NaN to provoke fail-fast behavior
-        xy[0] = Double.NaN;
-        xy[1] = Double.NaN;
-        if (this.getExperimentFunctionStart(experimentFunction, xy)) {
-          line.setStart(xy[0], xy[1]);
-        }
-
-        // set values to NaN to provoke fail-fast behavior
-        xy[0] = Double.NaN;
-        xy[1] = Double.NaN;
-        if (this.getExperimentFunctionEnd(experimentFunction, xy)) {
-          line.setStart(xy[0], xy[1]);
-        }
-
         line.setType(this.getExperimentLineType(experimentFunction));
 
         color = this.getExperimentColor(experimentFunction, styles);
@@ -877,6 +913,9 @@ public abstract class FunctionJob extends ExperimentSetJob {
     final ICluster cluster;
 
     caption.append("The "); //$NON-NLS-1$
+    if (this.m_ranking != null) {
+      caption.append(" rankings of the ");//$NON-NLS-1$
+    }
     this.m_function.printLongName(caption, ETextCase.IN_SENTENCE);
 
     clustering = data.getClustering();
@@ -912,6 +951,9 @@ public abstract class FunctionJob extends ExperimentSetJob {
     final ILabel legend;
 
     caption.append("The "); //$NON-NLS-1$
+    if (this.m_ranking != null) {
+      caption.append(" rankings of the ");//$NON-NLS-1$
+    }
     this.m_function.printLongName(caption, ETextCase.IN_SENTENCE);
 
     clustering = data.getClustering();
@@ -1201,6 +1243,31 @@ public abstract class FunctionJob extends ExperimentSetJob {
       body.append(' ');
       clustering.printDescription(body, ETextCase.AT_SENTENCE_START);
     }
+
+    if (this.m_ranking != null) {
+      body.appendLineBreak();
+      body.append("Instead of plotting the ");//$NON-NLS-1$
+      this.m_function.printShortName(body, ETextCase.IN_SENTENCE);
+      body.append(//
+      " directly, we rank the experiments according to their ");//$NON-NLS-1$
+      this.m_function.printShortName(body, ETextCase.IN_SENTENCE);
+      body.append(//
+      " value at each time step (bigger values lead to bigger ranks). This may make it easier to see which experiment has larger or smaller ");//$NON-NLS-1$
+      this.m_function.printShortName(body, ETextCase.IN_SENTENCE);
+      body.append(" values and when. "); //$NON-NLS-1$
+      this.m_ranking.printDescription(body, ETextCase.AT_SENTENCE_START);
+      body.append(//
+      " If the function of an experiment has ended (towards growing ");//$NON-NLS-1$
+      this.m_function.getXAxisTransformation().printShortName(body,
+          ETextCase.IN_SENTENCE);
+      if (this.m_rankingContinue) {
+        body.append(//
+        ") its last value with be used for ranking afterwards.");//$NON-NLS-1$
+      } else {
+        body.append(//
+        ") it will now longer appear in the ranking.");//$NON-NLS-1$
+      }
+    }
   }
 
   /**
@@ -1351,6 +1418,66 @@ public abstract class FunctionJob extends ExperimentSetJob {
   }
 
   /**
+   * Perform a ranking transform of the given functions: Instead of the
+   * function values, we will now have their ranks instead.
+   *
+   * @param inOut
+   *          the in/out data
+   */
+  private final void __rankingTransform(
+      final ArrayList<ExperimentFunction> inOut) {
+    final double[] ranks;
+    final int size;
+    final MatrixIterator2D iterator;
+    final IMatrix[] source;
+    final MatrixBuilder[] builders;
+    IMatrix matrix;
+    int index, maxRows;
+    BasicNumber x;
+    MatrixBuilder builder;
+
+    size = inOut.size();
+    source = new IMatrix[size];
+    builders = new MatrixBuilder[size];
+
+    ranks = new double[size];
+
+    maxRows = 128;
+    for (index = size; (--index) >= 0;) {
+      matrix = inOut.get(index).getFunction();
+
+      source[index] = matrix;
+      maxRows = Math.max(maxRows, matrix.m());
+      builders[index] = builder = new MatrixBuilder(maxRows);
+      builder.setN(2);
+    }
+
+    iterator = MatrixIterator2D.iterate(0, 1, source,
+        (!(this.m_rankingContinue)));
+    while (iterator.hasNext()) {
+      x = iterator.next();
+      this.m_ranking.rankRow(iterator, 0, ranks);
+
+      for (index = iterator.n(); (--index) >= 0;) {
+        builder = builders[iterator.getSource(index)];
+        if (x.isInteger()) {
+          builder.append(x.longValue());
+        } else {
+          builder.append(x.doubleValue());
+        }
+        builder.append(ranks[index]);
+      }
+    }
+
+    for (index = size; (--index) >= 0;) {
+      inOut.set(index, new ExperimentFunction(//
+          inOut.get(index).getExperiment(),//
+          builders[index].make()));
+      builders[index] = null;
+    }
+  }
+
+  /**
    * Make the functions over the experiment sets.
    *
    * @param set
@@ -1398,6 +1525,9 @@ public abstract class FunctionJob extends ExperimentSetJob {
     size = temp.size();
     if (size > 0) {
       if ((minX.compareTo(maxX) != 0) && (minY.compareTo(maxY) != 0)) {
+        if (this.m_ranking != null) {
+          this.__rankingTransform(temp);
+        }
         retVal = new ExperimentSetFunctions(set, cluster,
             temp.toArray(new ExperimentFunction[size]));
       }

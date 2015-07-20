@@ -15,6 +15,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** The builder for two-dimensional line charts. */
@@ -92,16 +93,19 @@ public class LineChart2D extends Chart implements ILineChart2D {
    *
    * @param line
    *          the line
+   * @param originalData
+   *          the original data to be aggregated over
    */
-  synchronized final void _addLine(final CompiledLine2D line) {
+  synchronized final void _addLine(final CompiledLine2D line,
+      final IMatrix originalData) {
     this.fsmStateAssert(ChartElement.STATE_ALIVE);
     this.fsmFlagsAssertAndUpdate(
         (LineChart2D.FLAG_HAS_X_AXIS | LineChart2D.FLAG_HAS_Y_AXIS),
         FSM.FLAG_NOTHING, LineChart2D.FLAG_HAS_LINE, FSM.FLAG_NOTHING);
 
     if (line != null) {
-      this.m_xAxis._registerData(line.m_data);
-      this.m_yAxis._registerData(line.m_data);
+      this.m_xAxis._registerData(originalData);
+      this.m_yAxis._registerData(originalData);
       this.m_lines.add(line);
     }
   }

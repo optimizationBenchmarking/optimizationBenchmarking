@@ -41,12 +41,18 @@ final class _AllECDFJob extends FunctionJob {
   /** {@inheritDoc} */
   @Override
   protected final ScalarAggregate getYAxisMaximumAggregate() {
-    return null;
+    if (this.getRankingStrategy() == null) {
+      return null;
+    }
+    return super.getYAxisMaximumAggregate();
   }
 
   /** {@inheritDoc} */
   @Override
   protected final double getYAxisMaximumValue() {
-    return 1d;
+    if (this.getRankingStrategy() == null) {
+      return 1d;
+    }
+    return super.getYAxisMaximumValue();
   }
 }

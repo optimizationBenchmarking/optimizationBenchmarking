@@ -221,6 +221,14 @@ import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
  * <li>{@code x=16}, row matrix = {@code (71, 80, 92)}</li>
  * <li>{@code x=20}, row matrix = {@code (71,, 80, 92)}</li>
  * </ol>
+ * <p>
+ * You may notice that some of the matrices have no corresponding entry for
+ * some values of {@code x}. E.g., it may not be clear from which matrix
+ * the value {@code 10} for {@code x=1} comes when using
+ * {@link #getLong(int, int) getLong(0, 10)} in the first iteration.
+ * Therefore, function {@link #getSource(int) getSource(0)} would return
+ * the index of the source matrix, that is {@code 0}.
+ * </p>
  */
 public abstract class MatrixIterator2D extends AbstractMatrix implements
     Iterator<Number> {
@@ -236,6 +244,15 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
 
   /** the current m-indexes */
   final int[] m_indexes;
+
+  /** the sources from where the values come */
+  final int[] m_sources;
+
+  /**
+   * do we allow an early end for some matrices, or should all iterations
+   * end at the same position?
+   */
+  final boolean m_allowEarlyEnd;
 
   /** the number for the {@code x}-coordinates */
   _Number m_x;
@@ -255,15 +272,21 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
    *          the first (x) dimension
    * @param yDim
    *          the second (y) dimension
+   * @param allowEarlyEnd
+   *          do we allow an early end for some matrices, or should all
+   *          iterations end at the same position?
    */
-  MatrixIterator2D(final int xDim, final int yDim, final IMatrix[] matrices) {
+  MatrixIterator2D(final int xDim, final int yDim,
+      final IMatrix[] matrices, final boolean allowEarlyEnd) {
     super();
 
     this.m_xDim = xDim;
     this.m_yDim = yDim;
     this.m_matrices = matrices;
+    this.m_allowEarlyEnd = allowEarlyEnd;
 
     this.m_indexes = new int[matrices.length];
+    this.m_sources = new int[matrices.length];
   }
 
   /**
@@ -289,10 +312,13 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
    *          the {@code y}-dimension
    * @param matrices
    *          the matrices
+   * @param allowEarlyEnd
+   *          do we allow an early end for some matrices, or should all
+   *          iterations end at the same position?
    * @return the iterator
    */
   public static final MatrixIterator2D iterate(final int xDim,
-      final int yDim, final IMatrix[] matrices) {
+      final int yDim, final IMatrix[] matrices, final boolean allowEarlyEnd) {
     int i;
     boolean canLongX, canLongY;
 
@@ -333,14 +359,18 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
 
     if (canLongX) {
       if (canLongY) {
-        return new _MatrixIterator2DXLongYLong(xDim, yDim, matrices);
+        return new _MatrixIterator2DXLongYLong(xDim, yDim, matrices,
+            allowEarlyEnd);
       }
-      return new _MatrixIterator2DXLongYDouble(xDim, yDim, matrices);
+      return new _MatrixIterator2DXLongYDouble(xDim, yDim, matrices,
+          allowEarlyEnd);
     }
     if (canLongY) {
-      return new _MatrixIterator2DXDoubleYLong(xDim, yDim, matrices);
+      return new _MatrixIterator2DXDoubleYLong(xDim, yDim, matrices,
+          allowEarlyEnd);
     }
-    return new _MatrixIterator2DXDoubleYDouble(xDim, yDim, matrices);
+    return new _MatrixIterator2DXDoubleYDouble(xDim, yDim, matrices,
+        allowEarlyEnd);
   }
 
   /**
@@ -352,16 +382,20 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
    *          the {@code y}-dimension
    * @param matrices
    *          the matrices
+   * @param allowEarlyEnd
+   *          do we allow an early end for some matrices, or should all
+   *          iterations end at the same position?
    * @return the iterator
    */
   public static final MatrixIterator2D iterate(final int xDim,
-      final int yDim, final Collection<? extends IMatrix> matrices) {
+      final int yDim, final Collection<? extends IMatrix> matrices,
+      final boolean allowEarlyEnd) {
     if (matrices == null) {
       throw new IllegalArgumentException(//
           "Matrix collection to iterate over cannot be null."); //$NON-NLS-1$
     }
     return MatrixIterator2D.iterate(xDim, yDim,
-        matrices.toArray(new IMatrix[matrices.size()]));
+        matrices.toArray(new IMatrix[matrices.size()]), allowEarlyEnd);
   }
 
   /**
@@ -398,6 +432,23 @@ public abstract class MatrixIterator2D extends AbstractMatrix implements
 
   /** The internal method to find the next iteration element. */
   abstract void _findNext();
+
+  /**
+   * Obtain the index of the source matrix from which the current element
+   * at index {@code index} stems.
+   *
+   * @param index
+   *          the index (i.e., column) of the element
+   * @return the index of the matrix it stems from
+   */
+  public final int getSource(final int index) {
+    if ((index >= 0) && (index < this.m_currentN)) {
+      return this.m_sources[index];
+    }
+    throw new IllegalArgumentException(index + //
+        " is not a valid source index, the valid range is 0.." //$NON-NLS-1$
+        + this.m_currentN);
+  }
 
   /** {@inheritDoc} */
   @Override

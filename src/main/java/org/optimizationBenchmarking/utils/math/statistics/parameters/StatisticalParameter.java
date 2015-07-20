@@ -183,7 +183,7 @@ public abstract class StatisticalParameter implements
       final int timeDim, final int aggregateDim,
       final UnaryFunction transform) {
     return this.__aggregate2D(
-        MatrixIterator2D.iterate(timeDim, aggregateDim, matrices),
+        MatrixIterator2D.iterate(timeDim, aggregateDim, matrices, false),
         transform);
   }
 
@@ -214,7 +214,7 @@ public abstract class StatisticalParameter implements
       final int timeDim, final int aggregateDim,
       final UnaryFunction transform) {
     return this.__aggregate2D(
-        MatrixIterator2D.iterate(timeDim, aggregateDim, matrices),
+        MatrixIterator2D.iterate(timeDim, aggregateDim, matrices, false),
         transform);
   }
 

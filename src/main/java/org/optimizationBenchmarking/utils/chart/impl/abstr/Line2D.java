@@ -13,10 +13,10 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * The base class for all 2-dimensional lines
  */
-public class Line2D extends DataSeries2D implements ILine2D {
+public class Line2D extends DataSeries implements ILine2D {
 
   /** the type has been set */
-  static final int FLAG_HAS_TYPE = (DataSeries2D.FLAG_HAS_END << 1);
+  static final int FLAG_HAS_TYPE = (DataElement.FLAG_HAS_DATA << 1);
 
   /** the line type */
   ELineType m_type;
@@ -66,10 +66,9 @@ public class Line2D extends DataSeries2D implements ILine2D {
       final String title, final Font titleFont, final Color color,
       final Stroke stroke) {
     if (owner instanceof LineChart2D) {
-      ((LineChart2D) owner)._addLine(new CompiledLine2D(id, title,
-          titleFont, color, stroke, this.m_data, this.m_hasStart,
-          this.m_startX, this.m_startY, this.m_hasEnd, this.m_endX,
-          this.m_endY, this.m_type));
+      ((LineChart2D) owner)
+          ._addLine(new CompiledLine2D(id, title, titleFont, color,
+              stroke, this.m_data, this.m_type), this.m_data);
     }
   }
 

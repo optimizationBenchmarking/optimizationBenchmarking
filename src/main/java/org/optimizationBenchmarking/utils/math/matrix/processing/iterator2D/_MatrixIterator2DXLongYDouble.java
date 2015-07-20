@@ -25,10 +25,13 @@ final class _MatrixIterator2DXLongYDouble extends MatrixIterator2D {
    *          the first (x) dimension
    * @param yDim
    *          the second (y) dimension
+   * @param allowEarlyEnd
+   *          do we allow an early end for some matrices, or should all
+   *          iterations end at the same position?
    */
   _MatrixIterator2DXLongYDouble(final int xDim, final int yDim,
-      final IMatrix[] matrices) {
-    super(xDim, yDim, matrices);
+      final IMatrix[] matrices, final boolean allowEarlyEnd) {
+    super(xDim, yDim, matrices, allowEarlyEnd);
 
     long minVal, curVal;
 
@@ -79,9 +82,15 @@ final class _MatrixIterator2DXLongYDouble extends MatrixIterator2D {
       if ((--position) < 0) {
         continue outer;
       }
-      this.m_indexes[index] = position;
-      this.m_y[have++] = val = MatrixIterator2D._d(matrix.getDouble(
+
+      this.m_y[have] = val = MatrixIterator2D._d(matrix.getDouble(
           position, this.m_yDim));
+      if (this.m_allowEarlyEnd && (position >= (max - 1))) {
+        position = max;
+      }
+      this.m_indexes[index] = position;
+      this.m_sources[have] = index;
+      ++have;
       type &= NumericalTypes.getTypes(val);
     }
 
@@ -140,8 +149,9 @@ final class _MatrixIterator2DXLongYDouble extends MatrixIterator2D {
           // The new x-coordinate must be larger than the old one but
           // smaller than the smallest such increase we found before
           // (unless we did not discover a next point yet).
-          if ((position <= 0)
-              || (EComparison.compareDoubles(yAtPosition, yAtOldPosition) != 0)) {
+          if ((position <= 0)//
+              || (EComparison.compareDoubles(yAtPosition, yAtOldPosition) != 0)//
+              || (this.m_allowEarlyEnd && (position >= (max - 1)))) {
             // The y-must be different, because otherwise we can simply
             // omit the point.
             smallestLarger = xAtPosition;

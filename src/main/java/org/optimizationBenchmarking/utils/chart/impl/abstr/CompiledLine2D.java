@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.chart.spec.ELineType;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 
 /** The base class for lines */
-public class CompiledLine2D extends CompiledDataSeries2D {
+public class CompiledLine2D extends CompiledDataSeries {
 
   /** the line type */
   private final ELineType m_type;
@@ -28,28 +28,13 @@ public class CompiledLine2D extends CompiledDataSeries2D {
    *          the stroke
    * @param data
    *          the matrix
-   * @param hasStart
-   *          do we have a starting point?
-   * @param startX
-   *          the start x
-   * @param startY
-   *          the start y
-   * @param hasEnd
-   *          do we have a ending point?
-   * @param endX
-   *          the end x
-   * @param endY
-   *          the end y
    * @param type
    *          the line type
    */
   protected CompiledLine2D(final int id, final String title,
       final Font titleFont, final Color color, final Stroke stroke,
-      final IMatrix data, final boolean hasStart, final double startX,
-      final double startY, final boolean hasEnd, final double endX,
-      final double endY, final ELineType type) {
-    super(id, title, titleFont, color, stroke, data, hasStart, startX,
-        startY, hasEnd, endX, endY);
+      final IMatrix data, final ELineType type) {
+    super(id, title, titleFont, color, stroke, data);
     CompiledLine2D._assertType(type);
     this.m_type = type;
   }

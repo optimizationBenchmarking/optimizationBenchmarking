@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.spec.ISemanticComponent;
+import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -110,6 +111,34 @@ public final class RankingStrategy implements ISemanticComponent {
     for (final double d : data) {
       elements[i] = this.m_nan._element(i, 0, d);
       ++i;
+    }
+    Arrays.sort(elements);
+    this.m_ties._rank(elements);
+    this.m_nan._refine(elements);
+    for (final _RankedElement e : elements) {
+      dest[e.m_index1] = e.m_rank;
+    }
+  }
+
+  /**
+   * Rank the elements in row {@code row} of a given {@code matrix} store
+   * the resulting ranks in the destination array.
+   *
+   * @param matrix
+   *          the matrix, containing the row with the elements to be ranked
+   * @param row
+   *          the index of the row to rank
+   * @param dest
+   *          the destination array
+   */
+  public final void rankRow(final IMatrix matrix, final int row,
+      final double[] dest) {
+    final _RankedElement[] elements;
+    int i;
+
+    elements = new _RankedElement[matrix.n()];
+    for (i = elements.length; (--i) >= 0;) {
+      elements[i] = this.m_nan._element(i, 0, matrix.getDouble(row, i));
     }
     Arrays.sort(elements);
     this.m_ties._rank(elements);
