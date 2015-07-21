@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.math.statistics.aggregate;
 
 import org.optimizationBenchmarking.utils.math.BasicNumber;
+import org.optimizationBenchmarking.utils.math.NumericalTypes;
 
 /**
  * An aggregate with a single, scale result.
@@ -81,5 +82,42 @@ public abstract class ScalarAggregate extends BasicNumber implements
   @Override
   public final void append(final float value) {
     this.append((double) value);
+  }
+
+  /**
+   * Append a number to this aggregate
+   *
+   * @param v
+   *          the number
+   */
+  public final void append(final Number v) {
+    final int type;
+    if (v == null) {
+      throw new IllegalArgumentException(//
+          "Cannot add null number to aggregate " //$NON-NLS-1$
+              + this.getClass().getSimpleName());
+    }
+    type = NumericalTypes.getTypes(v);
+    if ((type & NumericalTypes.IS_BYTE) != 0) {
+      this.append(v.byteValue());
+    } else {
+      if ((type & NumericalTypes.IS_SHORT) != 0) {
+        this.append(v.shortValue());
+      } else {
+        if ((type & NumericalTypes.IS_INT) != 0) {
+          this.append(v.intValue());
+        } else {
+          if ((type & NumericalTypes.IS_LONG) != 0) {
+            this.append(v.longValue());
+          } else {
+            if ((type & NumericalTypes.IS_FLOAT) != 0) {
+              this.append(v.floatValue());
+            } else {
+              this.append(v.doubleValue());
+            }
+          }
+        }
+      }
+    }
   }
 }

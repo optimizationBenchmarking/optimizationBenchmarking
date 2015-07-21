@@ -265,7 +265,7 @@ final class _InstanceInformationJob extends DescriptionJob {
     " we illustrate the relative amount of benchmark instances per feature value over all ");//$NON-NLS-1$
     InTextNumberAppender.INSTANCE.appendTo(allSize, ETextCase.IN_SENTENCE,
         body);
-    body.append(" benchmark instances. Each of them is characterized by ");//$NON-NLS-1$
+    body.append(" benchmark instances, each of which is characterized by the ");//$NON-NLS-1$
 
     features = this.m_groupers.length;
     InTextNumberAppender.INSTANCE.appendTo(features,
@@ -277,7 +277,7 @@ final class _InstanceInformationJob extends DescriptionJob {
           data.getFeatures().getData(), true, true, ETextCase.IN_SENTENCE,
           body);
     } else {
-      body.append(" feature, namely ");//$NON-NLS-1$
+      body.append(" feature ");//$NON-NLS-1$
       SemanticComponentUtils.printLongAndShortNameIfDifferent(data
           .getFeatures().getData().get(0), body, ETextCase.IN_SENTENCE);
     }
@@ -288,7 +288,7 @@ final class _InstanceInformationJob extends DescriptionJob {
       body.append('s');
     }
     body.append(//
-    " are the bigger, the more benchmark instances have the associated feature value, in comparison to the other values. The more similar the pie sizes are, the more evenly are the benchmark instances distributed over the benchmark feature values, which may be a good idea for fair experimentation.");//$NON-NLS-1$
+    " are the bigger, the more benchmark instances have the associated feature value in comparison to the other values. The more similar the pie sizes are, the more evenly are the benchmark instances distributed over the benchmark feature values, which may be a good idea for fair experimentation.");//$NON-NLS-1$
 
     if (forAllSize < allSize) {
       body.append(//

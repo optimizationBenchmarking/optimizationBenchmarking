@@ -602,4 +602,64 @@ public abstract class BasicNumber extends Number implements
   public boolean isInteger() {
     return (this.getState() == BasicNumber.STATE_INTEGER);
   }
+
+  /**
+   * Transform this value into a constant {@link java.lang.Number}
+   *
+   * @return the {@link java.lang.Number} representing the value of this
+   *         number
+   */
+  public Number toNumber() {
+    final int type;
+    final long lval;
+    final double dval;
+
+    switch (this.getState()) {
+      case STATE_INTEGER: {
+        lval = this.longValue();
+        type = NumericalTypes.getTypes(lval);
+        if ((type & NumericalTypes.IS_BYTE) != 0) {
+          return Byte.valueOf((byte) lval);
+        }
+        if ((type & NumericalTypes.IS_SHORT) != 0) {
+          return Short.valueOf((short) lval);
+        }
+        if ((type & NumericalTypes.IS_INT) != 0) {
+          return Integer.valueOf((int) lval);
+        }
+        return Long.valueOf(lval);
+      }
+      case STATE_DOUBLE: {
+        dval = this.doubleValue();
+        type = NumericalTypes.getTypes(dval);
+        if ((type & NumericalTypes.IS_BYTE) != 0) {
+          return Byte.valueOf((byte) dval);
+        }
+        if ((type & NumericalTypes.IS_SHORT) != 0) {
+          return Short.valueOf((short) dval);
+        }
+        if ((type & NumericalTypes.IS_INT) != 0) {
+          return Integer.valueOf((int) dval);
+        }
+        if ((type & NumericalTypes.IS_LONG) != 0) {
+          return Long.valueOf((long) dval);
+        }
+        if ((type & NumericalTypes.IS_FLOAT) != 0) {
+          return Float.valueOf((float) dval);
+        }
+        return Double.valueOf(dval);
+      }
+      case STATE_NEGATIVE_OVERFLOW:
+      case STATE_NEGATIVE_INFINITY: {
+        return Float.valueOf(Float.NEGATIVE_INFINITY);
+      }
+      case STATE_POSITIVE_OVERFLOW:
+      case STATE_POSITIVE_INFINITY: {
+        return Float.valueOf(Float.POSITIVE_INFINITY);
+      }
+      default: {
+        return Float.valueOf(Float.NaN);
+      }
+    }
+  }
 }
