@@ -24,19 +24,19 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * and {@code C}. Then a shadow copy of the original experiment set will be
  * created with shadow copies of the experiments only containing the runs
  * for instances {@code A} and {@code C}. If all experiments have data for
- * the same instances, this attribute returns the original experiment set.
+ * all instances, this attribute returns the original experiment set.
  */
-public final class OnlySharedInstanceRuns extends
+public final class OnlySharedInstances extends
     Attribute<IExperimentSet, IExperimentSet> {
 
   /**
-   * The globally shared instance of the {@link OnlySharedInstanceRuns}
+   * The globally shared instance of the {@link OnlySharedInstances}
    * attribute
    */
-  public static final OnlySharedInstanceRuns INSTANCE = new OnlySharedInstanceRuns();
+  public static final OnlySharedInstances INSTANCE = new OnlySharedInstances();
 
   /** create the instance of this attribute */
-  private OnlySharedInstanceRuns() {
+  private OnlySharedInstances() {
     super(EAttributeType.TEMPORARILY_STORED);
   }
 

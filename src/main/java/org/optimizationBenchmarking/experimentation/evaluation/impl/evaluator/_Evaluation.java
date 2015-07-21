@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.optimizationBenchmarking.experimentation.attributes.OnlyUsedInstances;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Parameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
@@ -688,7 +689,8 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     summary.append(" on "); //$NON-NLS-1$
-    instanceSize = set.getInstances().getData().size();
+    instanceSize = OnlyUsedInstances.INSTANCE.get(set).getInstances()
+        .getData().size();
     InTextNumberAppender.INSTANCE.appendTo(instanceSize,
         ETextCase.IN_SENTENCE, summary);
     summary.append(" benchmark instance"); //$NON-NLS-1$

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.attributes.OnlySharedInstanceRuns;
+import org.optimizationBenchmarking.experimentation.attributes.OnlySharedInstances;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.IClustering;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.byInstance.ByInstanceGrouping;
@@ -1349,7 +1349,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
     ExperimentSetFunctions experimentSetFunctions;
     ILabel figure, legend;
 
-    selected = OnlySharedInstanceRuns.INSTANCE.get(set);
+    selected = OnlySharedInstances.INSTANCE.get(set);
 
     experimentSetTemp = new ArrayList<>();
 
