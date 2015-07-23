@@ -8,9 +8,12 @@ import org.optimizationBenchmarking.experimentation.attributes.OnlyUsedInstances
 import org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueGroup;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueGrouper;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueGroups;
+import org.optimizationBenchmarking.experimentation.attributes.statistics.propertyExtremals.ExtremalPropertyValues;
+import org.optimizationBenchmarking.experimentation.attributes.statistics.propertyExtremals.ExtremalPropertyValuesGetter;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSet;
+import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 import org.optimizationBenchmarking.experimentation.evaluation.impl.abstr.DescriptionJob;
@@ -18,6 +21,7 @@ import org.optimizationBenchmarking.utils.chart.spec.ELegendMode;
 import org.optimizationBenchmarking.utils.chart.spec.IDataScalar;
 import org.optimizationBenchmarking.utils.chart.spec.IPieChart;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.impl.FigureSizeParser;
 import org.optimizationBenchmarking.utils.document.impl.SemanticComponentUtils;
@@ -27,6 +31,7 @@ import org.optimizationBenchmarking.utils.document.spec.IComplexText;
 import org.optimizationBenchmarking.utils.document.spec.IFigure;
 import org.optimizationBenchmarking.utils.document.spec.IFigureSeries;
 import org.optimizationBenchmarking.utils.document.spec.ILabel;
+import org.optimizationBenchmarking.utils.document.spec.IList;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.document.spec.ISection;
 import org.optimizationBenchmarking.utils.document.spec.ISectionBody;
@@ -36,6 +41,7 @@ import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.ISequenceable;
 import org.optimizationBenchmarking.utils.text.numbers.InTextNumberAppender;
 
 /** A job of the instance information module. */
@@ -85,7 +91,8 @@ final class _InstanceInformationJob extends DescriptionJob {
   }
 
   /**
-   * Make the feature figure series
+   * Make the feature figure series of pie charts which show how many
+   * instances belong to a given feature value.
    *
    * @param data
    *          the data
@@ -188,7 +195,8 @@ final class _InstanceInformationJob extends DescriptionJob {
   }
 
   /**
-   * Discuss the instance features
+   * Discuss the instance features, i.e., how many instances belong to a
+   * given feature
    *
    * @param data
    *          the experiment data
@@ -201,9 +209,10 @@ final class _InstanceInformationJob extends DescriptionJob {
    * @param body
    *          the section body to write to
    */
-  private final void __discussFeatures(final IExperimentSet data,
-      final IExperimentSet dataForSome, final IExperimentSet dataForAll,
-      final StyleSet styles, final ISectionBody body) {
+  private final void __discussRelativeFeatureValueAmounts(
+      final IExperimentSet data, final IExperimentSet dataForSome,
+      final IExperimentSet dataForAll, final StyleSet styles,
+      final ISectionBody body) {
     final ILabel labelMain, labelForSome, labelForAll;
     final int features;
     final int allSize, forSomeSize, forAllSize;
@@ -265,25 +274,8 @@ final class _InstanceInformationJob extends DescriptionJob {
     " we illustrate the relative amount of benchmark instances per feature value over all ");//$NON-NLS-1$
     InTextNumberAppender.INSTANCE.appendTo(allSize, ETextCase.IN_SENTENCE,
         body);
-    body.append(" benchmark instances, each of which is characterized by the ");//$NON-NLS-1$
-
     features = this.m_groupers.length;
-    InTextNumberAppender.INSTANCE.appendTo(features,
-        ETextCase.IN_SENTENCE, body);
-    if (features > 1) {
-      body.append(" features, namely ");//$NON-NLS-1$
-      SemanticComponentUtils.printNames(
-          ESequenceMode.AND,//
-          data.getFeatures().getData(), true, true, ETextCase.IN_SENTENCE,
-          body);
-    } else {
-      body.append(" feature ");//$NON-NLS-1$
-      SemanticComponentUtils.printLongAndShortNameIfDifferent(data
-          .getFeatures().getData().get(0), body, ETextCase.IN_SENTENCE);
-    }
-
-    body.append(//
-    ".  The slices in the pie chart");//$NON-NLS-1$
+    body.append(" benchmark instances. The slices in the pie chart");//$NON-NLS-1$
     if ((features > 1) || (forAllSize < allSize)) {
       body.append('s');
     }
@@ -292,7 +284,7 @@ final class _InstanceInformationJob extends DescriptionJob {
 
     if (forAllSize < allSize) {
       body.append(//
-      " Since experimental runs have not been performe for all instances, we draw the same plot");//$NON-NLS-1$
+      " Since experimental runs have not been performed for every instance, we draw the same plot");//$NON-NLS-1$
       if (features > 1) {
         body.append('s');
       }
@@ -317,7 +309,7 @@ final class _InstanceInformationJob extends DescriptionJob {
           }
 
           if (forAllSize < forSomeSize) {
-            body.append(" and in ");//$NON-NLS-1$
+            body.append(", and in ");//$NON-NLS-1$
           } else {
             body.append('.');
             break drawForAll;
@@ -340,7 +332,8 @@ final class _InstanceInformationJob extends DescriptionJob {
   }
 
   /**
-   * Discuss the instances
+   * Discuss the instances, how many there are, for which we have data,
+   * etc.
    *
    * @param data
    *          the experiment data
@@ -410,11 +403,16 @@ final class _InstanceInformationJob extends DescriptionJob {
         body.append(" For "); //$NON-NLS-1$
         InTextNumberAppender.INSTANCE.appendTo(missing.size(),
             ETextCase.IN_SENTENCE, body);
-        body.append(" of them ("); //$NON-NLS-1$
-        SemanticComponentUtils.printNames(ESequenceMode.AND, missing,
-            true, false, ETextCase.IN_SENTENCE, body);
+        body.append(" of them"); //$NON-NLS-1$
+        if (missing.size() < 10) {
+          body.append(' ');
+          try (final IPlainText text = body.inBraces()) {
+            SemanticComponentUtils.printNames(ESequenceMode.AND, missing,
+                true, false, ETextCase.IN_SENTENCE, text);
+          }
+        }
         missing.clear();
-        body.append("), no data has been collected."); //$NON-NLS-1$
+        body.append(", no data has been collected."); //$NON-NLS-1$
       }
     }
 
@@ -447,12 +445,173 @@ final class _InstanceInformationJob extends DescriptionJob {
             missing.add(inst);
           }
         }
-        body.append("at least some experiments do not have data for instances "); //$NON-NLS-1$
-        SemanticComponentUtils.printNames(ESequenceMode.AND, missing,
-            true, false, ETextCase.IN_SENTENCE, body);
+        body.append("at least some experiments do not have data for instances"); //$NON-NLS-1$
+        if (missing.size() < 10) {
+          body.append(' ');
+          SemanticComponentUtils.printNames(ESequenceMode.AND, missing,
+              true, false, ETextCase.IN_SENTENCE, body);
+        }
         missing = null;
         body.append('.');
       }
+    }
+  }
+
+  /**
+   * Discuss the numerical properties
+   *
+   * @param data
+   *          the experiment data
+   * @param dataForSome
+   *          the instances for which at least some experiments have data
+   * @param dataForAll
+   *          the instances for which all experiments have data
+   * @param styles
+   *          the styles
+   * @param body
+   *          the section body to write to
+   */
+  private final void __discussFeatureValues(final IExperimentSet data,
+      final IExperimentSet dataForSome, final IExperimentSet dataForAll,
+      final StyleSet styles, final ISectionBody body) {
+    final int count;
+    ISequenceable[] current, prev;
+    ArrayListView<? extends IFeature> features;
+    ArrayList<ISequenceable> print;
+    IFeature feature;
+    int i, size;
+    ExtremalPropertyValues<IFeatureValue> extreme;
+    ISequenceable seq;
+    boolean further, needsSpace;
+
+    current = null;
+    count = data.getFeatures().getData().size();
+
+    body.appendLineBreak();
+
+    print = new ArrayList<>();
+    needsSpace = further = false;
+    for (final IExperimentSet es : new IExperimentSet[] { data,
+        dataForSome, dataForAll }) {
+      if (es == null) {
+        break;
+      }
+      prev = current;
+      current = new ISequenceable[count];
+      features = es.getFeatures().getData();
+
+      for (i = count; (--i) >= 0;) {
+        feature = features.get(i);
+        if (feature.getPrimitiveType().isNumber()) {
+          extreme = ExtremalPropertyValuesGetter.EXTREMAL_FEATURE_VALUES
+              .get(feature);
+          if ((prev == null) || (!(EComparison.equals(//
+              ((_NumericalFeatureSequenceable) (prev[i])).m_extremal,//
+              extreme)))) {
+            seq = new _NumericalFeatureSequenceable(feature, extreme);
+            print.add(seq);
+          } else {
+            seq = prev[i];
+          }
+        } else {
+          if ((prev == null)
+              || (((_OrdinalFeatureSequenceable) (prev[i])).m_feature
+                  .getData().size() > feature.getData().size())) {
+            seq = new _OrdinalFeatureSequenceable(feature);
+            print.add(seq);
+          } else {
+            seq = prev[i];
+          }
+        }
+        current[i] = seq;
+      }
+
+      if (print.isEmpty()) {
+        continue;
+      }
+
+      if (needsSpace) {
+        body.append(' ');
+      }
+
+      if (es == data) {
+        body.append("There benchmark instances are characterized by ");//$NON-NLS-1$
+        InTextNumberAppender.INSTANCE.appendTo(count,
+            ETextCase.IN_SENTENCE, body);
+        body.append((count > 1) ? " features: " : //$NON-NLS-1$
+            " feature: ");//$NON-NLS-1$
+      } else {
+        if (es == dataForSome) {
+          body.append(//
+          "If we only consider the ");//$NON-NLS-1$
+          InTextNumberAppender.INSTANCE.appendTo(es.getInstances()
+              .getData().size(), ETextCase.IN_SENTENCE, body);
+          body.append(//
+          " benchmark instances for which at least some experimental runs have been conducted, the ranges of ");//$NON-NLS-1$
+
+          i = print.size();
+          if (i >= count) {
+            if (i == 1) {
+              body.append("the only"); //$NON-NLS-1$
+            } else {
+              body.append("all"); //$NON-NLS-1$
+            }
+          } else {
+            InTextNumberAppender.INSTANCE.appendTo(i,
+                ETextCase.IN_SENTENCE, body);
+          }
+          body.append((i > 1) ? " features change as follows: " : //$NON-NLS-1$
+              " feature changes as follows: ");//$NON-NLS-1$
+          further = true;
+        } else {
+          if (further) {
+            body.append(//
+            "Furthermore, i");//$NON-NLS-1$
+          } else {
+            body.append('I');
+          }
+          body.append(//
+          "f we only look at the ");//$NON-NLS-1$
+          InTextNumberAppender.INSTANCE.appendTo(es.getInstances()
+              .getData().size(), ETextCase.IN_SENTENCE, body);
+          body.append(//
+          " benchmark instances for which runs exist in all experiments, the ranges of "); //$NON-NLS-1$
+          i = print.size();
+          if (i >= count) {
+            if (i == 1) {
+              body.append("the only"); //$NON-NLS-1$
+            } else {
+              body.append("all"); //$NON-NLS-1$
+            }
+          } else {
+            InTextNumberAppender.INSTANCE.appendTo(i,
+                ETextCase.IN_SENTENCE, body);
+          }
+          body.append((i > 1) ? " features change as follows: " : //$NON-NLS-1$
+              " feature changes as follows: ");//$NON-NLS-1$
+        }
+      }
+
+      size = print.size();
+      if (size > 1) {
+        try (final IList list = body.itemization()) {
+          --size;
+          for (i = 0; i <= size; i++) {
+            seq = print.get(i);
+            try (final IText text = list.item()) {
+              seq.toSequence((i <= 0), (i >= size), ETextCase.IN_SENTENCE,
+                  text);
+            }
+          }
+        }
+        needsSpace = false;
+      } else {
+        print.get(0).toSequence(true, true, ETextCase.IN_SENTENCE, body);
+        body.append('.');
+        needsSpace = true;
+      }
+
+      print.clear();
     }
   }
 
@@ -476,7 +635,10 @@ final class _InstanceInformationJob extends DescriptionJob {
       try (final ISectionBody body = section.body()) {
         this.__discussInstances(data, dataForSome, dataForAll, styles,
             body);
-        this.__discussFeatures(data, dataForSome, dataForAll, styles, body);
+        this.__discussFeatureValues(data, dataForSome, dataForAll, styles,
+            body);
+        this.__discussRelativeFeatureValueAmounts(data, dataForSome,
+            dataForAll, styles, body);
       }
     }
   }

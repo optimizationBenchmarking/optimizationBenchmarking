@@ -223,7 +223,7 @@ public final class ExampleGraphicConfigurations {
       examples.add(builder.immutable());
     }
 
-    return ArrayListView.collectionToView(examples, false);
+    return ArrayListView.collectionToView(examples);
   }
 
   /** the forbidden constructor */

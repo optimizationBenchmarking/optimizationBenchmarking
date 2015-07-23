@@ -40,7 +40,7 @@ public final class JavaCompilerJob extends ToolJob implements
       throw new IllegalArgumentException(
           "Java sources cannot be null or empty."); //$NON-NLS-1$
     }
-    this.m_sources = ArrayListView.collectionToView(sources, false);
+    this.m_sources = ArrayListView.collectionToView(sources);
     if (this.m_sources.isEmpty()) {
       throw new IllegalStateException(//
           "Sources have concurrently been emptied."); //$NON-NLS-1$

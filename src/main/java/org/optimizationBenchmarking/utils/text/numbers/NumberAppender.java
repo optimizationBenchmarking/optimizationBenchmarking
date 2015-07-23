@@ -116,6 +116,54 @@ public abstract class NumberAppender implements Serializable {
   }
 
   /**
+   * Append a {link java.lang.Number number} {@code v} to a text output
+   * device
+   *
+   * @param v
+   *          the {link java.lang.Number number} value to append
+   * @param textCase
+   *          the text case
+   * @param textOut
+   *          the text output to append to
+   * @return the next text case
+   */
+  public final ETextCase appendTo(final Number v,
+      final ETextCase textCase, final ITextOutput textOut) {
+
+    if ((v instanceof Byte) || (v instanceof Short)
+        || (v instanceof Integer)) {
+      return this.appendTo(v.intValue(), textCase, textOut);
+    }
+
+    if (v instanceof Long) {
+      return this.appendTo(v.longValue(), textCase, textOut);
+    }
+
+    if ((v instanceof Float) || (v instanceof Double)) {
+      return this.appendTo(v.doubleValue(), textCase, textOut);
+    }
+
+    switch (NumericalTypes.getMinType(v)) {
+      case NumericalTypes.IS_BYTE:
+      case NumericalTypes.IS_SHORT:
+      case NumericalTypes.IS_INT: {
+        return this.appendTo(v.intValue(), textCase, textOut);
+      }
+      case NumericalTypes.IS_LONG: {
+        return this.appendTo(v.longValue(), textCase, textOut);
+      }
+      case NumericalTypes.IS_FLOAT:
+      case NumericalTypes.IS_DOUBLE: {
+        return this.appendTo(v.doubleValue(), textCase, textOut);
+      }
+      default: {
+        throw new IllegalArgumentException("Number " + v + //$NON-NLS-1$
+            " cannot be dealt with."); //$NON-NLS-1$
+      }
+    }
+  }
+
+  /**
    * Convert a {@code double} number to a string
    *
    * @param v

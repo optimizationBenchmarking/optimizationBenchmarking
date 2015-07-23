@@ -88,6 +88,21 @@ public final class NumericalTypes {
   }
 
   /**
+   * Get the smallest numerical type of a given object
+   *
+   * @param object
+   *          the object
+   * @return the smallest numerical type which applies to the object, or
+   *         {@code 0} if the object is not a number
+   */
+  public static final int getMinType(final Object object) {
+    if (object instanceof Number) {
+      return NumericalTypes.getMinType((Number) object);
+    }
+    return 0;
+  }
+
+  /**
    * Get the possible types of a given number
    *
    * @param number
@@ -96,7 +111,7 @@ public final class NumericalTypes {
    *         apply to the number
    */
   public static final int getTypes(final Number number) {
-    BasicNumber base;
+    final BasicNumber base;
     int res;
 
     if (number instanceof Byte) {
@@ -135,6 +150,73 @@ public final class NumericalTypes {
   }
 
   /**
+   * Get the smallest numerical type of a given number
+   *
+   * @param number
+   *          the number
+   * @return the smallest type which can store the number without loss of
+   *         fidelity
+   */
+  public static final int getMinType(final Number number) {
+    final BasicNumber base;
+
+    if (number instanceof Byte) {
+      return NumericalTypes.getMinType((Byte) number);
+    }
+    if (number instanceof Short) {
+      return NumericalTypes.getMinType((Short) number);
+    }
+    if (number instanceof Integer) {
+      return NumericalTypes.getMinType((Integer) number);
+    }
+    if (number instanceof Long) {
+      return NumericalTypes.getMinType((Long) number);
+    }
+    if (number instanceof Float) {
+      return NumericalTypes.getMinType((Float) number);
+    }
+    if (number instanceof Double) {
+      return NumericalTypes.getMinType((Double) number);
+    }
+
+    if (number instanceof BasicNumber) {
+      base = ((BasicNumber) number);
+      if (base.isInteger()) {
+        return NumericalTypes.getMinType(base.longValue());
+      }
+      return NumericalTypes.getMinType(base.doubleValue());
+    }
+    return Math.max(NumericalTypes.getMinType(number.longValue()), //
+        NumericalTypes.getMinType(number.doubleValue()));
+  }
+
+  /**
+   * Get the smallest data type in which the given {@link java.lang.Byte
+   * byte} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Byte byte} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Byte byte} number can be stored
+   */
+  public static final int getMinType(final byte number) {
+    return NumericalTypes.IS_BYTE;
+  }
+
+  /**
+   * Get the smallest data type in which the given {@link java.lang.Byte
+   * byte} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Byte byte} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Byte byte} number can be stored
+   */
+  public static final int getMinType(final Byte number) {
+    return NumericalTypes.IS_BYTE;
+  }
+
+  /**
    * Get the possible types of a given {@link java.lang.Byte byte} number
    *
    * @param number
@@ -160,6 +242,35 @@ public final class NumericalTypes {
     return (NumericalTypes.IS_BYTE | NumericalTypes.IS_SHORT
         | NumericalTypes.IS_INT | NumericalTypes.IS_LONG
         | NumericalTypes.IS_FLOAT | NumericalTypes.IS_DOUBLE);
+  }
+
+  /**
+   * Get the smallest data type in which the given {@link java.lang.Short
+   * short} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Short short} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Short short} number can be stored
+   */
+  public static final int getMinType(final short number) {
+    if ((number < Byte.MIN_VALUE) || (number > Byte.MAX_VALUE)) {
+      return NumericalTypes.IS_SHORT;
+    }
+    return NumericalTypes.IS_BYTE;
+  }
+
+  /**
+   * Get the smallest data type in which the given {@link java.lang.Short
+   * short} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Short short} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Short short} number can be stored
+   */
+  public static final int getMinType(final Short number) {
+    return NumericalTypes.getMinType(number.shortValue());
   }
 
   /**
@@ -190,6 +301,38 @@ public final class NumericalTypes {
     return (NumericalTypes.IS_BYTE | NumericalTypes.IS_SHORT
         | NumericalTypes.IS_INT | NumericalTypes.IS_LONG
         | NumericalTypes.IS_FLOAT | NumericalTypes.IS_DOUBLE);
+  }
+
+  /**
+   * Get the smallest data type in which the given
+   * {@link java.lang.Integer int} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Integer int} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Integer int} number can be stored
+   */
+  public static final int getMinType(final int number) {
+    if ((number >= Short.MIN_VALUE) && (number <= Short.MAX_VALUE)) {
+      if ((number >= Byte.MIN_VALUE) && (number <= Byte.MAX_VALUE)) {
+        return NumericalTypes.IS_BYTE;
+      }
+      return NumericalTypes.IS_SHORT;
+    }
+    return NumericalTypes.IS_INT;
+  }
+
+  /**
+   * Get the smallest data type in which the given
+   * {@link java.lang.Integer int} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Integer int} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Integer int} number can be stored
+   */
+  public static final int getMinType(final Integer number) {
+    return NumericalTypes.getMinType(number.intValue());
   }
 
   /**
@@ -234,6 +377,41 @@ public final class NumericalTypes {
     }
 
     return res;
+  }
+
+  /**
+   * Get the smallest data type in which the given {@link java.lang.Long
+   * long} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Long long} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Long long} number can be stored
+   */
+  public static final int getMinType(final long number) {
+    if ((number >= Integer.MIN_VALUE) && (number <= Integer.MAX_VALUE)) {
+      if ((number >= Short.MIN_VALUE) && (number <= Short.MAX_VALUE)) {
+        if ((number >= Byte.MIN_VALUE) && (number <= Byte.MAX_VALUE)) {
+          return NumericalTypes.IS_BYTE;
+        }
+        return NumericalTypes.IS_SHORT;
+      }
+      return NumericalTypes.IS_INT;
+    }
+    return NumericalTypes.IS_LONG;
+  }
+
+  /**
+   * Get the smallest data type in which the given {@link java.lang.Long
+   * long} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Long long} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Long long} number can be stored
+   */
+  public static final int getMinType(final Long number) {
+    return NumericalTypes.getMinType(number.longValue());
   }
 
   /**
@@ -298,6 +476,50 @@ public final class NumericalTypes {
   }
 
   /**
+   * Get the smallest data type in which the given {@link java.lang.Float
+   * float} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Float float} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Float float} number can be stored
+   */
+  public static final int getMinType(final float number) {
+    final long l;
+
+    if ((number >= NumericalTypes.MIN_LONG_FLOAT)
+        && (number <= NumericalTypes.MAX_LONG_FLOAT)) {
+      l = ((long) number);
+      if (l == number) {
+        if ((l >= Integer.MIN_VALUE) && (l <= Integer.MAX_VALUE)) {
+          if ((l >= Short.MIN_VALUE) && (l <= Short.MAX_VALUE)) {
+            if ((l >= Byte.MIN_VALUE) && (l <= Byte.MAX_VALUE)) {
+              return NumericalTypes.IS_BYTE;
+            }
+            return NumericalTypes.IS_SHORT;
+          }
+          return NumericalTypes.IS_INT;
+        }
+        return NumericalTypes.IS_LONG;
+      }
+    }
+    return NumericalTypes.IS_FLOAT;
+  }
+
+  /**
+   * Get the smallest data type in which the given {@link java.lang.Float
+   * float} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Float float} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Float float} number can be stored
+   */
+  public static final int getMinType(final Float number) {
+    return NumericalTypes.getMinType(number.floatValue());
+  }
+
+  /**
    * Get the possible types of a given {@link java.lang.Float float} number
    *
    * @param number
@@ -359,6 +581,59 @@ public final class NumericalTypes {
     }
 
     return res;
+  }
+
+  /**
+   * Get the smallest data type in which the given {@link java.lang.Double
+   * double} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Double double} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Double double} number can be stored
+   */
+  public static final int getMinType(final double number) {
+    final long l;
+    final float f;
+
+    if ((number >= NumericalTypes.MIN_LONG_DOUBLE)
+        && (number <= NumericalTypes.MAX_LONG_DOUBLE)) {
+      l = ((long) number);
+      if (l == number) {
+        if ((l >= Integer.MIN_VALUE) && (l <= Integer.MAX_VALUE)) {
+          if ((l >= Short.MIN_VALUE) && (l <= Short.MAX_VALUE)) {
+            if ((l >= Byte.MIN_VALUE) && (l <= Byte.MAX_VALUE)) {
+              return NumericalTypes.IS_BYTE;
+            }
+            return NumericalTypes.IS_SHORT;
+          }
+          return NumericalTypes.IS_INT;
+        }
+        return NumericalTypes.IS_LONG;
+      }
+    }
+
+    if ((number <= Double.NEGATIVE_INFINITY)
+        || (number >= Double.POSITIVE_INFINITY) || (number != number)) {
+      return NumericalTypes.IS_FLOAT;
+    }
+
+    f = ((float) number);
+    return ((f == number) ? NumericalTypes.IS_FLOAT
+        : NumericalTypes.IS_DOUBLE);
+  }
+
+  /**
+   * Get the smallest data type in which the given {@link java.lang.Double
+   * double} number can be stored
+   *
+   * @param number
+   *          the {@link java.lang.Double double} number
+   * @return the smallest data type in which the given
+   *         {@link java.lang.Double double} number can be stored
+   */
+  public static final int getMinType(final Double number) {
+    return NumericalTypes.getMinType(number.doubleValue());
   }
 
   /**
@@ -561,13 +836,14 @@ public final class NumericalTypes {
    * @return the number
    */
   public static final Number valueOf(final short val) {
-    final int types;
-
-    types = NumericalTypes.getTypes(val);
-    if ((types & NumericalTypes.IS_BYTE) != 0) {
-      return Byte.valueOf((byte) val);
+    switch (NumericalTypes.getMinType(val)) {
+      case IS_BYTE: {
+        return Byte.valueOf((byte) val);
+      }
+      default: {
+        return Short.valueOf(val);
+      }
     }
-    return Short.valueOf(val);
   }
 
   /**
@@ -578,16 +854,17 @@ public final class NumericalTypes {
    * @return the number
    */
   public static final Number valueOf(final int val) {
-    final int types;
-
-    types = NumericalTypes.getTypes(val);
-    if ((types & NumericalTypes.IS_BYTE) != 0) {
-      return Byte.valueOf((byte) val);
+    switch (NumericalTypes.getMinType(val)) {
+      case IS_BYTE: {
+        return Byte.valueOf((byte) val);
+      }
+      case IS_SHORT: {
+        return Short.valueOf((short) val);
+      }
+      default: {
+        return Integer.valueOf(val);
+      }
     }
-    if ((types & NumericalTypes.IS_SHORT) != 0) {
-      return Short.valueOf((short) val);
-    }
-    return Integer.valueOf(val);
   }
 
   /**
@@ -598,19 +875,20 @@ public final class NumericalTypes {
    * @return the number
    */
   public static final Number valueOf(final long val) {
-    final int types;
-
-    types = NumericalTypes.getTypes(val);
-    if ((types & NumericalTypes.IS_BYTE) != 0) {
-      return Byte.valueOf((byte) val);
+    switch (NumericalTypes.getMinType(val)) {
+      case IS_BYTE: {
+        return Byte.valueOf((byte) val);
+      }
+      case IS_SHORT: {
+        return Short.valueOf((short) val);
+      }
+      case IS_INT: {
+        return Integer.valueOf((int) val);
+      }
+      default: {
+        return Long.valueOf(val);
+      }
     }
-    if ((types & NumericalTypes.IS_SHORT) != 0) {
-      return Short.valueOf((short) val);
-    }
-    if ((types & NumericalTypes.IS_INT) != 0) {
-      return Integer.valueOf((int) val);
-    }
-    return Long.valueOf(val);
   }
 
   /**
@@ -621,22 +899,23 @@ public final class NumericalTypes {
    * @return the number
    */
   public static final Number valueOf(final float val) {
-    final int types;
-
-    types = NumericalTypes.getTypes(val);
-    if ((types & NumericalTypes.IS_BYTE) != 0) {
-      return Byte.valueOf((byte) val);
+    switch (NumericalTypes.getMinType(val)) {
+      case IS_BYTE: {
+        return Byte.valueOf((byte) val);
+      }
+      case IS_SHORT: {
+        return Short.valueOf((short) val);
+      }
+      case IS_INT: {
+        return Integer.valueOf((int) val);
+      }
+      case IS_LONG: {
+        return Long.valueOf((long) val);
+      }
+      default: {
+        return Float.valueOf(val);
+      }
     }
-    if ((types & NumericalTypes.IS_SHORT) != 0) {
-      return Short.valueOf((short) val);
-    }
-    if ((types & NumericalTypes.IS_INT) != 0) {
-      return Integer.valueOf((int) val);
-    }
-    if ((types & NumericalTypes.IS_LONG) != 0) {
-      return Long.valueOf((long) val);
-    }
-    return Float.valueOf(val);
   }
 
   /**
@@ -647,25 +926,26 @@ public final class NumericalTypes {
    * @return the number
    */
   public static final Number valueOf(final double val) {
-    final int types;
-
-    types = NumericalTypes.getTypes(val);
-    if ((types & NumericalTypes.IS_BYTE) != 0) {
-      return Byte.valueOf((byte) val);
+    switch (NumericalTypes.getMinType(val)) {
+      case IS_BYTE: {
+        return Byte.valueOf((byte) val);
+      }
+      case IS_SHORT: {
+        return Short.valueOf((short) val);
+      }
+      case IS_INT: {
+        return Integer.valueOf((int) val);
+      }
+      case IS_LONG: {
+        return Long.valueOf((long) val);
+      }
+      case IS_FLOAT: {
+        return Float.valueOf((float) val);
+      }
+      default: {
+        return Double.valueOf(val);
+      }
     }
-    if ((types & NumericalTypes.IS_SHORT) != 0) {
-      return Short.valueOf((short) val);
-    }
-    if ((types & NumericalTypes.IS_INT) != 0) {
-      return Integer.valueOf((int) val);
-    }
-    if ((types & NumericalTypes.IS_LONG) != 0) {
-      return Long.valueOf((long) val);
-    }
-    if ((types & NumericalTypes.IS_FLOAT) != 0) {
-      return Float.valueOf((float) val);
-    }
-    return Double.valueOf(val);
   }
 
   /** the forbidden constructor */

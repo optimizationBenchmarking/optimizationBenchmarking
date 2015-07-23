@@ -110,7 +110,7 @@ public final class ExampleFontPalettes {
       /** ignore **/
     }
 
-    return ArrayListView.collectionToView(all, false);
+    return ArrayListView.collectionToView(all);
   }
 
   /** the forbidden constructor */

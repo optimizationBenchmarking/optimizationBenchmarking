@@ -1,6 +1,5 @@
-package org.optimizationBenchmarking.experimentation.attributes.statistics;
+package org.optimizationBenchmarking.experimentation.attributes.statistics.atSelection;
 
-import org.optimizationBenchmarking.experimentation.attributes.statistics.selection.SelectionCriterion;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.EAttributeType;
 import org.optimizationBenchmarking.experimentation.data.spec.IDataElement;

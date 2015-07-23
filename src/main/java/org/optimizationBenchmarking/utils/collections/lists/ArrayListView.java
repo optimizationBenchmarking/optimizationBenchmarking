@@ -423,22 +423,19 @@ public class ArrayListView<DT> extends BasicList<DT> implements IImmutable {
 
   /**
    * Take the data from a given collection to fill an array list view. If
-   * the collection is null or empty,
+   * the collection is {@code null} or empty,
    * {@link org.optimizationBenchmarking.utils.collections.lists.ArraySetView#EMPTY_SET_VIEW}
    * will be returned.
    *
    * @param collection
    *          the collection
-   * @param clearCollection
-   *          should the collection be emptied afterwards?
    * @return the list view
    * @param <T>
    *          the data type
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public static final <T> ArrayListView<T> collectionToView(
-      final Collection<? extends T> collection,
-      final boolean clearCollection) {
+      final Collection<? extends T> collection) {
     final int s;
     final ArrayListView<T> l;
 
@@ -447,9 +444,6 @@ public class ArrayListView<DT> extends BasicList<DT> implements IImmutable {
     }
 
     l = new ArrayListView(collection.toArray(new Object[s]));
-    if (clearCollection) {
-      collection.clear();
-    }
     return l;
   }
 

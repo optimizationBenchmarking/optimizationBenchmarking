@@ -91,32 +91,35 @@ public abstract class ScalarAggregate extends BasicNumber implements
    *          the number
    */
   public final void append(final Number v) {
-    final int type;
     if (v == null) {
       throw new IllegalArgumentException(//
           "Cannot add null number to aggregate " //$NON-NLS-1$
               + this.getClass().getSimpleName());
     }
-    type = NumericalTypes.getTypes(v);
-    if ((type & NumericalTypes.IS_BYTE) != 0) {
-      this.append(v.byteValue());
-    } else {
-      if ((type & NumericalTypes.IS_SHORT) != 0) {
+
+    switch (NumericalTypes.getMinType(v)) {
+      case NumericalTypes.IS_BYTE: {
+        this.append(v.byteValue());
+        return;
+      }
+      case NumericalTypes.IS_SHORT: {
         this.append(v.shortValue());
-      } else {
-        if ((type & NumericalTypes.IS_INT) != 0) {
-          this.append(v.intValue());
-        } else {
-          if ((type & NumericalTypes.IS_LONG) != 0) {
-            this.append(v.longValue());
-          } else {
-            if ((type & NumericalTypes.IS_FLOAT) != 0) {
-              this.append(v.floatValue());
-            } else {
-              this.append(v.doubleValue());
-            }
-          }
-        }
+        return;
+      }
+      case NumericalTypes.IS_INT: {
+        this.append(v.intValue());
+        return;
+      }
+      case NumericalTypes.IS_LONG: {
+        this.append(v.longValue());
+        return;
+      }
+      case NumericalTypes.IS_FLOAT: {
+        this.append(v.floatValue());
+        return;
+      }
+      default: {
+        this.append(v.doubleValue());
       }
     }
   }

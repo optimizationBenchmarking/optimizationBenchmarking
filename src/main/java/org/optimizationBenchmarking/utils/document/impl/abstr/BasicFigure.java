@@ -271,8 +271,7 @@ public abstract class BasicFigure extends ComplexObject implements IFigure {
         if (result instanceof ArrayListView) {
           this.m_figureFiles = ((ArrayListView) result);
         } else {
-          this.m_figureFiles = ArrayListView.collectionToView(result,
-              false);
+          this.m_figureFiles = ArrayListView.collectionToView(result);
         }
       } else {
         empty = (i <= 0);

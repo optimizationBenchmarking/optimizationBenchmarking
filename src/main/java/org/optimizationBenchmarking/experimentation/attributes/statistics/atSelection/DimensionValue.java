@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.attributes.statistics.selection;
+package org.optimizationBenchmarking.experimentation.attributes.statistics.atSelection;
 
 import org.optimizationBenchmarking.experimentation.data.spec.IDataPoint;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;

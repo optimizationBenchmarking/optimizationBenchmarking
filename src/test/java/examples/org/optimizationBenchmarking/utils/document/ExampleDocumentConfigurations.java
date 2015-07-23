@@ -337,7 +337,7 @@ public final class ExampleDocumentConfigurations {
       }
     }
 
-    return ArrayListView.collectionToView(configs, false);
+    return ArrayListView.collectionToView(configs);
   }
 
   /** the forbidden constructor */
