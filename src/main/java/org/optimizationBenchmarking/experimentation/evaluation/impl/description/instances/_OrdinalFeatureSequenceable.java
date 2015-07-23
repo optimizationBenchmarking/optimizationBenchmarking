@@ -78,7 +78,7 @@ final class _OrdinalFeatureSequenceable implements ISequenceable {
 
         seq = new ArrayList<>(size);
         for (i = 0; i < size; i++) {
-          seq.add(new _SingleFeatureValueSequenceable(values.get(size)));
+          seq.add(new _SingleFeatureValueSequenceable(values.get(i)));
         }
 
         ESequenceMode.AND.appendSequence(next, seq, true, use);

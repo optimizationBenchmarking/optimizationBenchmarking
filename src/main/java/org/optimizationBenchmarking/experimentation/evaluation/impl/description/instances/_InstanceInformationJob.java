@@ -39,6 +39,7 @@ import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.color.ColorStyle;
+import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.ISequenceable;
@@ -480,6 +481,7 @@ final class _InstanceInformationJob extends DescriptionJob {
     ArrayList<ISequenceable> print;
     IFeature feature;
     int i, size;
+    EPrimitiveType type;
     ExtremalPropertyValues<IFeatureValue> extreme;
     ISequenceable seq;
     boolean further, needsSpace;
@@ -502,7 +504,8 @@ final class _InstanceInformationJob extends DescriptionJob {
 
       for (i = count; (--i) >= 0;) {
         feature = features.get(i);
-        if (feature.getPrimitiveType().isNumber()) {
+        type = feature.getPrimitiveType();
+        if ((type != null) && (type.isNumber())) {
           extreme = ExtremalPropertyValuesGetter.EXTREMAL_FEATURE_VALUES
               .get(feature);
           if ((prev == null) || (!(EComparison.equals(//

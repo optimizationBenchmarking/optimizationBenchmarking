@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.experimentation.attributes.functions;
 import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -26,9 +27,16 @@ abstract class _PropertyConstant extends _DataBasedConstant {
   _PropertyConstant(final IProperty property) {
     super();
 
+    final EPrimitiveType type;
     if (property == null) {
       throw new IllegalArgumentException(//
           "Property cannot be null."); //$NON-NLS-1$
+    }
+    type = property.getPrimitiveType();
+    if ((type == null) || (!(type.isNumber()))) {
+      throw new IllegalArgumentException(//
+          "Property type must be numerical, but property " + //$NON-NLS-1$
+              property + " has type " + type);//$NON-NLS-1$
     }
     this.m_property = property;
   }
