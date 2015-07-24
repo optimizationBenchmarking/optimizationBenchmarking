@@ -232,17 +232,13 @@ final class _InstanceInformationJob extends DescriptionJob {
 
     colors = new ArrayList<>();
     if ((forAllSize < allSize) && (forSomeSize > 0)) {
-      if (forAllSize > 0) {
-        labelMain = this
-            .__makeFeatureFigures(
-                data,
-                styles,
-                body,//
-                "The fractions of all available instances with specific feature values.", //$NON-NLS-1$
-                "existing", colors);//$NON-NLS-1$
-      } else {
-        labelMain = null;
-      }
+      labelMain = this
+          .__makeFeatureFigures(
+              data,
+              styles,
+              body,//
+              "The fractions of all available instances with specific feature values.", //$NON-NLS-1$
+              "existing", colors);//$NON-NLS-1$
 
       if (forSomeSize < allSize) {
         labelForSome = this
@@ -256,7 +252,7 @@ final class _InstanceInformationJob extends DescriptionJob {
         labelForSome = null;
       }
 
-      if (forAllSize < forSomeSize) {
+      if ((forAllSize < forSomeSize) && (forAllSize > 0)) {
         labelForAll = this
             .__makeFeatureFigures(
                 dataForAll,
@@ -291,8 +287,8 @@ final class _InstanceInformationJob extends DescriptionJob {
     body.append(//
     " are the bigger, the more benchmark instances have the associated feature value in comparison to the other values. The more similar the pie sizes are, the more evenly are the benchmark instances distributed over the benchmark feature values, which may be a good idea for fair experimentation.");//$NON-NLS-1$
 
-    if ((forAllSize < allSize) && (forSomeSize > 0)) {
-
+    if ((forAllSize < allSize) && (forSomeSize > 0)
+        && ((labelForSome != null) || (labelForAll != null))) {
       body.append(//
       " Since experimental runs have not been performed for every instance, we draw the same plot");//$NON-NLS-1$
       if (features > 1) {
@@ -301,7 +297,7 @@ final class _InstanceInformationJob extends DescriptionJob {
       body.append(" again in ");//$NON-NLS-1$
 
       drawForAll: {
-        if (forSomeSize < allSize) {
+        if ((forSomeSize < allSize) && (labelForSome != null)) {
           body.reference(ETextCase.IN_SENTENCE, ESequenceMode.COMMA,
               labelForSome);
           body.append(", but only for the ");//$NON-NLS-1$
@@ -319,7 +315,7 @@ final class _InstanceInformationJob extends DescriptionJob {
             break drawForAll;
           }
 
-          if (forAllSize > 0) {
+          if ((forAllSize > 0) && (labelForAll != null)) {
             body.append(", and in ");//$NON-NLS-1$
           } else {
             body.append('.');
@@ -327,14 +323,16 @@ final class _InstanceInformationJob extends DescriptionJob {
           }
         }
 
-        body.reference(ETextCase.IN_SENTENCE, ESequenceMode.COMMA,
-            labelForAll);
-        body.append(" for the ");//$NON-NLS-1$
-        InTextNumberAppender.INSTANCE.appendTo(forAllSize,
-            ETextCase.IN_SENTENCE, body);
-        body.append((forAllSize > 1) ? " instances" : //$NON-NLS-1$
-            " instance"); //$NON-NLS-1$
-        body.append(", for which all experiments contain runs.");//$NON-NLS-1$
+        if ((forAllSize > 0) && (labelForAll != null)) {
+          body.reference(ETextCase.IN_SENTENCE, ESequenceMode.COMMA,
+              labelForAll);
+          body.append(" for the ");//$NON-NLS-1$
+          InTextNumberAppender.INSTANCE.appendTo(forAllSize,
+              ETextCase.IN_SENTENCE, body);
+          body.append((forAllSize > 1) ? " instances" : //$NON-NLS-1$
+              " instance"); //$NON-NLS-1$
+          body.append(", for which all experiments contain runs.");//$NON-NLS-1$
+        }
       }
 
       body.append(//
