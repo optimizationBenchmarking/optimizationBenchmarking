@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.optimizationBenchmarking.experimentation.data.spec.DataElement;
+import org.optimizationBenchmarking.experimentation.data.spec.IPropertyValue;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.document.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
@@ -77,6 +79,16 @@ abstract class _IDObject extends DataElement implements
         ((o instanceof _NamedIDObject) || //
             (o instanceof _NamedIDObjectSet) || //
         (o instanceof Experiment))) {
+
+      if ((this instanceof IPropertyValue)
+          && (o instanceof IPropertyValue)) {
+        i = EComparison.compareObjects(//
+            ((IPropertyValue) this).getValue(),//
+            ((PropertyValue) o).getValue());
+        if (i != 0) {
+          return i;
+        }
+      }
 
       nameThis = this.getName();
       nameO = o.getName();

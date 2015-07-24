@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.math;
 
-import java.math.BigDecimal;
-
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.ITextable;
@@ -339,7 +337,7 @@ public abstract class BasicNumber extends Number implements
             }
 
             case STATE_DOUBLE: {
-              return BasicNumber.__compareLongDouble(this.longValue(),
+              return EComparison.compareLongToDouble(this.longValue(),
                   b.doubleValue());
             }
 
@@ -358,7 +356,7 @@ public abstract class BasicNumber extends Number implements
           switch (stateB) {
 
             case STATE_INTEGER: {
-              return (-(BasicNumber.__compareLongDouble(b.longValue(),
+              return (-(EComparison.compareLongToDouble(b.longValue(),
                   this.doubleValue())));
             }
 
@@ -458,7 +456,7 @@ public abstract class BasicNumber extends Number implements
         }
 
         case STATE_DOUBLE: {
-          return (-(BasicNumber.__compareLongDouble(number.longValue(),
+          return (-(EComparison.compareLongToDouble(number.longValue(),
               this.doubleValue())));
         }
 
@@ -480,7 +478,7 @@ public abstract class BasicNumber extends Number implements
         return ((doubleB != doubleB) ? (-1) : 1);
       }
       case STATE_INTEGER: {
-        return BasicNumber.__compareLongDouble(this.longValue(), doubleB);
+        return EComparison.compareLongToDouble(this.longValue(), doubleB);
       }
       case STATE_DOUBLE: {
         doubleA = this.doubleValue();
@@ -529,42 +527,6 @@ public abstract class BasicNumber extends Number implements
         return ((doubleB != doubleB) ? (-1) : 1);
       }
     }
-  }
-
-  /**
-   * compare a {@code long} to a {@code double}.
-   *
-   * @param a
-   *          the {@code long}
-   * @param b
-   *          the {@code double}
-   * @return the comparison result
-   */
-  private static final int __compareLongDouble(final long a, final double b) {
-    final long longB;
-    final double doubleA;
-
-    if (b > NumericalTypes.MAX_LONG_DOUBLE) {
-      return (-1);
-    }
-    if (b < NumericalTypes.MIN_LONG_DOUBLE) {
-      return 1;
-    }
-
-    longB = ((long) b);
-    if (longB == b) {
-      return Long.compare(a, longB);
-    }
-
-    if ((a >= NumericalTypes.MIN_DOUBLE_LONG)
-        && (a <= NumericalTypes.MAX_DOUBLE_LONG)) {
-      doubleA = a;
-      if (((long) doubleA) == a) {
-        return EComparison.compareDoubles(doubleA, b);
-      }
-    }
-
-    return new BigDecimal(a).compareTo(new BigDecimal(b));
   }
 
   /** {@inheritDoc} */

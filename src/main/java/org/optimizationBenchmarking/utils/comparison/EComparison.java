@@ -667,6 +667,30 @@ public enum EComparison {
   }
 
   /**
+   * Compare a {@code long} to a {@code double}.
+   * <p>
+   * For some time, I supposed that there may be situations when comparing
+   * {@code long} and {@code double} values where something like
+   * {@code a=c} but {@code a<b} and {@code b<c} could happen. However,
+   * this seemingly is not the case (and does not make much sense either).
+   * </p>
+   * <p>
+   * For the sake of completeness I will keep this method here. Also for
+   * the case that I am wrong again. In that case, I can fill this method
+   * with life again.
+   * </p>
+   *
+   * @param a
+   *          the {@code long}
+   * @param b
+   *          the {@code double}
+   * @return the comparison result
+   */
+  public static final int compareLongToDouble(final long a, final double b) {
+    return EComparison.compareDoubles(a, b);
+  }
+
+  /**
    * Compare one {@code float} to another one. This method sets
    * {@code 0d == -0d}, although
    * <code>{@link java.lang.Float#floatToIntBits(float) Float.floatToLongBits(0d)==0}</code>
@@ -843,5 +867,4 @@ public enum EComparison {
 
     return 0;
   }
-
 }

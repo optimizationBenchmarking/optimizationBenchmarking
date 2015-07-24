@@ -1,18 +1,12 @@
 package org.optimizationBenchmarking.utils.math.statistics.ranking;
 
-import java.math.BigDecimal;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 
 /** a ranked {@code long} */
 final class _RankedLong extends _RankedElement {
 
   /** the original value */
   final long m_value;
-
-  /**
-   * the big decimal used when comparing {@code double}s and {@code long}s
-   * cannot be facilitated in any other way
-   */
-  BigDecimal m_decimal;
 
   /**
    * create the ranked {@code long}
@@ -36,7 +30,8 @@ final class _RankedLong extends _RankedElement {
       return Long.compare(this.m_value, ((_RankedLong) o).m_value);
     }
     if (o instanceof _RankedDouble) {
-      return _RankedElement._compareLongDouble(this, ((_RankedDouble) o));
+      return EComparison.compareLongToDouble(this.m_value,
+          ((_RankedDouble) o).m_value);
     }
     return (-(o.compareTo(this)));
   }

@@ -1,10 +1,5 @@
 package org.optimizationBenchmarking.utils.math.statistics.ranking;
 
-import java.math.BigDecimal;
-
-import org.optimizationBenchmarking.utils.comparison.EComparison;
-import org.optimizationBenchmarking.utils.math.NumericalTypes;
-
 /** a ranked element */
 abstract class _RankedElement implements Comparable<_RankedElement> {
 
@@ -29,44 +24,5 @@ abstract class _RankedElement implements Comparable<_RankedElement> {
     super();
     this.m_index1 = index1;
     this.m_index2 = index2;
-  }
-
-  /**
-   * compare a {@code long} to a {@code double}.
-   *
-   * @param a
-   *          the {@code long}
-   * @param b
-   *          the {@code double}
-   * @return the comparison result
-   */
-  static final int _compareLongDouble(final _RankedLong a,
-      final _RankedDouble b) {
-    final long longA, longB;
-    final double doubleA, doubleB;
-
-    doubleB = b.m_value;
-    if (doubleB > NumericalTypes.MAX_LONG_DOUBLE) {
-      return (-1);
-    }
-    if (doubleB < NumericalTypes.MIN_LONG_DOUBLE) {
-      return 1;
-    }
-
-    longA = a.m_value;
-    longB = ((long) doubleB);
-    if (longB == doubleB) {
-      return Long.compare(longA, longB);
-    }
-
-    if ((longA >= NumericalTypes.MIN_DOUBLE_LONG)
-        && (longA <= NumericalTypes.MAX_DOUBLE_LONG)) {
-      doubleA = longA;
-      if (((long) doubleA) == longA) {
-        return EComparison.compareDoubles(doubleA, doubleB);
-      }
-    }
-
-    return new BigDecimal(longA).compareTo(new BigDecimal(doubleB));
   }
 }
