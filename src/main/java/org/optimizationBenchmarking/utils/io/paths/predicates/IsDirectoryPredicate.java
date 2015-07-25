@@ -3,14 +3,12 @@ package org.optimizationBenchmarking.utils.io.paths.predicates;
 import java.io.Serializable;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import org.optimizationBenchmarking.utils.predicates.IPredicate;
-
 /**
  * This predicate returns {@code true} only if a path identifies a
  * directory
  */
-public final class IsDirectoryPredicate implements
-    IPredicate<BasicFileAttributes>, Serializable {
+public final class IsDirectoryPredicate extends
+    BasicFileAttributesPredicate implements Serializable {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;

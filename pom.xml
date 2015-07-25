@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>optimizationBenchmarking.org</groupId>
 	<artifactId>optimizationBenchmarking</artifactId>
-	<version>0.8.3</version>
+	<version>0.8.4</version>
 	<packaging>jar</packaging>
 	<name>Optimization Benchmarking Tool Suite</name>
 	<description>The Optimization Benchmarking Tool Suite is a software framework which supports researchers in testing and benchmarking optimization algorithms. It aims for a holistic approach providing deeper insights into what problem features or algorithm settings have which impact on the overall solution quality.</description>
