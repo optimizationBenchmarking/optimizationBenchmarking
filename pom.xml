@@ -34,7 +34,7 @@
 		<encoding>UTF-8</encoding>
 		<project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
-
+		<project.mainClass>org.optimizationBenchmarking.experimentation.evaluation.Main</project.mainClass>
 		<jdk.version>1.7</jdk.version>
 		<junit.version>4.11</junit.version>
 		<commons.math.majorVersion>3</commons.math.majorVersion>
@@ -254,7 +254,7 @@
 						<manifest>
 							<addDefaultImplementationEntries />
 							<addDefaultSpecificationEntries />
-							<mainClass>org.optimizationBenchmarking.experimentation.evaluation.Main</mainClass>
+							<mainClass>${project.mainClass}</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -295,7 +295,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>org.optimizationBenchmarking.experimentation.evaluation.Main</mainClass>
+									<mainClass>${project.mainClass}</mainClass>
 								</transformer>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer" />
