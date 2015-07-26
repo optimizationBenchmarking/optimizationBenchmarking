@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.predicates.StringInListIgnoreCase;
 
 /**
@@ -57,6 +58,6 @@ public final class FileNamePredicate extends StringInListIgnoreCase<Path> {
 
     s = (this.m_ignoreExtension ? PathUtils
         .getFileNameWithoutExtension(file) : PathUtils.getName(file));
-    return ((s != null) ? s.toLowerCase() : null);
+    return ((s != null) ? TextUtils.toLowerCase(s) : null);
   }
 }

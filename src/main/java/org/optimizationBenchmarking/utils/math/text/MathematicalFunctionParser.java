@@ -130,7 +130,7 @@ public final class MathematicalFunctionParser extends
       }
     }
 
-    lowerCase = preProcessed.toLowerCase();
+    lowerCase = TextUtils.toLowerCase(preProcessed);
     func = null;
     error = null;
     findFunc: {
@@ -181,7 +181,7 @@ public final class MathematicalFunctionParser extends
         // if no '.' is contained in the function name, we can try
         // different cases
         try {
-          func = super.parseString(Character.toUpperCase(first)
+          func = super.parseString(TextUtils.toUpperCase(first)
               + preProcessed.substring(1));
           if (func != null) {
             break findFunc;
@@ -194,7 +194,7 @@ public final class MathematicalFunctionParser extends
         }
 
         try {
-          func = super.parseString(Character.toUpperCase(first)
+          func = super.parseString(TextUtils.toUpperCase(first)
               + lowerCase.substring(1));
           if (func != null) {
             break findFunc;

@@ -437,7 +437,7 @@ public abstract class StreamEncoding<IST extends Closeable, OST extends Closeabl
   /** {@inheritDoc} */
   @Override
   protected final int calcHashCode() {
-    return HashUtils.hashCode(this.m_name.toLowerCase());
+    return HashUtils.hashCode(TextUtils.toLowerCase(this.m_name));
   }
 
   /** {@inheritDoc} */

@@ -600,7 +600,7 @@ public final class PathUtils {
     if ((last < 0) || (last >= (length - 1))) {
       return null;
     }
-    return fileName.substring(last + 1).toLowerCase();
+    return TextUtils.toLowerCase(fileName.substring(last + 1));
   }
 
   /**

@@ -30,6 +30,7 @@ import org.optimizationBenchmarking.utils.math.statistics.aggregate.IAggregate;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.predicates.IPredicate;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -251,7 +252,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
         sb.append(v);
         sb.append(" get"); //$NON-NLS-1$
         v = type.getPrimitiveTypeName();
-        sb.append(Character.toUpperCase(v.charAt(0)));
+        sb.append(TextUtils.toUpperCase(v.charAt(0)));
         sb.append(v.substring(1));
         sb.append("(final int index) { switch(index) {"); //$NON-NLS-1$
 
@@ -428,7 +429,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
         sb.append(EComparison.class.getCanonicalName());
         sb.append(".compare"); //$NON-NLS-1$
         v = t.getPrimitiveTypeName();
-        sb.append(Character.toUpperCase(v.charAt(0)));
+        sb.append(TextUtils.toUpperCase(v.charAt(0)));
         sb.append(v.substring(1));
         sb.append("s(this.m"); //$NON-NLS-1$
         sb.append(i);
@@ -464,12 +465,12 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
         sb.append('(');
         sb.append(EComparison.class.getCanonicalName());
         sb.append(".compare"); //$NON-NLS-1$
-        sb.append(Character.toUpperCase(v.charAt(0)));
+        sb.append(TextUtils.toUpperCase(v.charAt(0)));
         sb.append(v.substring(1));
         sb.append("s(this.m"); //$NON-NLS-1$
         sb.append(i);
         sb.append(",f.get"); //$NON-NLS-1$
-        sb.append(Character.toUpperCase(v.charAt(0)));
+        sb.append(TextUtils.toUpperCase(v.charAt(0)));
         sb.append(v.substring(1));
         sb.append('(');
         sb.append(i);
@@ -479,7 +480,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
         sb.append(i);
         sb.append("=="); //$NON-NLS-1$
         sb.append("f.get"); //$NON-NLS-1$
-        sb.append(Character.toUpperCase(v.charAt(0)));
+        sb.append(TextUtils.toUpperCase(v.charAt(0)));
         sb.append(v.substring(1));
         sb.append('(');
         sb.append(i);
@@ -573,7 +574,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       sb.append('p');
       sb.append(v);
       sb.append("=o.get"); //$NON-NLS-1$
-      sb.append(Character.toUpperCase(v.charAt(0)));
+      sb.append(TextUtils.toUpperCase(v.charAt(0)));
       sb.append(v.substring(1));
       sb.append('(');
       sb.append(dim.getIndex());
@@ -748,7 +749,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
-      sb.append(Character.toUpperCase(s.charAt(0)));
+      sb.append(TextUtils.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
@@ -771,7 +772,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
       sb.append(//
       "} } throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
-      sb.append(Character.toUpperCase(s.charAt(0)));
+      sb.append(TextUtils.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
       sb.append(//
@@ -1253,7 +1254,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       sb.append(index);
       sb.append(".parse"); //$NON-NLS-1$
       v = this.m_primitiveTypes[index].getPrimitiveTypeName();
-      sb.append(Character.toUpperCase(v.charAt(0)));
+      sb.append(TextUtils.toUpperCase(v.charAt(0)));
       sb.append(v.substring(1));
       sb.append("(s.substring(i, j));"); //$NON-NLS-1$
     }
@@ -1305,7 +1306,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       sb.append("this.m"); //$NON-NLS-1$
       sb.append(index);
       sb.append(".validate"); //$NON-NLS-1$
-      sb.append(Character.toUpperCase(v.charAt(0)));
+      sb.append(TextUtils.toUpperCase(v.charAt(0)));
       sb.append(v.substring(1));
       sb.append('(');
       sb.append('l');
@@ -1478,7 +1479,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
-      sb.append(Character.toUpperCase(s.charAt(0)));
+      sb.append(TextUtils.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
@@ -1501,7 +1502,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
       sb.append(//
       "} throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
-      sb.append(Character.toUpperCase(s.charAt(0)));
+      sb.append(TextUtils.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
       sb.append(//
@@ -1788,7 +1789,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
-      sb.append(Character.toUpperCase(s.charAt(0)));
+      sb.append(TextUtils.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
@@ -1811,7 +1812,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
       sb.append(//
       "} throw new IndexOutOfBoundsException(((\"Matrix access get"); //$NON-NLS-1$
-      sb.append(Character.toUpperCase(s.charAt(0)));
+      sb.append(TextUtils.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
 
@@ -2030,7 +2031,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
       "@Override public final "); //$NON-NLS-1$
       sb.append(s = pt.getPrimitiveTypeName());
       sb.append(" get"); //$NON-NLS-1$
-      sb.append(Character.toUpperCase(s.charAt(0)));
+      sb.append(TextUtils.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(final int row, final int column) {"); //$NON-NLS-1$
       sb.append(//
@@ -2053,7 +2054,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
 
       sb.append(//
       "} } throw new IndexOutOfBoundsException((((\"Matrix access get"); //$NON-NLS-1$
-      sb.append(Character.toUpperCase(s.charAt(0)));
+      sb.append(TextUtils.toUpperCase(s.charAt(0)));
       sb.append(s.substring(1));
       sb.append("(\" + row) + "); //$NON-NLS-1$
 

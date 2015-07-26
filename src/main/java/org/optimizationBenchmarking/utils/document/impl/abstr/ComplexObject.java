@@ -188,7 +188,7 @@ public abstract class ComplexObject extends DocumentPart implements
             ComplexObject.LOG_PACKAGE)) {
           s = clazz.getSimpleName();
           if (s != null) {
-            s = s.toLowerCase();
+            s = TextUtils.toLowerCase(s);
             break findName;
           }
         }
@@ -198,7 +198,7 @@ public abstract class ComplexObject extends DocumentPart implements
       if (s != null) {
         i = s.lastIndexOf('.');
         if (i > 0) {
-          s = s.substring(i + 1).toLowerCase();
+          s = TextUtils.toLowerCase(s.substring(i + 1));
           break findName;
         }
       }

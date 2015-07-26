@@ -974,8 +974,8 @@ public final class LaTeXDocument extends Document {
                 out.append("\\definecolor{");//$NON-NLS-1$
                 out.append(this._colorName(color));
                 out.append("}{HTML}{"); //$NON-NLS-1$
-                html = Integer.toHexString(color.getRGB() & 0xffffff)
-                    .toUpperCase();
+                html = TextUtils.toUpperCase(Integer.toHexString(//
+                    color.getRGB() & 0xffffff));
                 for (i = html.length(); i < 6; i++) {
                   out.append('0');
                 }

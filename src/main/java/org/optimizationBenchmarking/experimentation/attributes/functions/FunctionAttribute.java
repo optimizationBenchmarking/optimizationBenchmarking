@@ -17,6 +17,7 @@ import org.optimizationBenchmarking.utils.math.text.AbstractParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -187,7 +188,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
    * @return the name of the function to be computed
    */
   protected String getShortName() {
-    return this.getClass().getSimpleName().toLowerCase();
+    return TextUtils.toLowerCase(this.getClass().getSimpleName());
   }
 
   /**

@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.collections.maps.StringMap;
 import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * Test the case-insensitive string map.
@@ -56,15 +57,15 @@ public class StringMapCITest extends StringMapTest {
       ch = key.charAt(i);
       switch (random.nextInt(4)) {
         case 1: {
-          ch = Character.toLowerCase(ch);
+          ch = TextUtils.toLowerCase(ch);
           break;
         }
         case 2: {
-          ch = Character.toUpperCase(ch);
+          ch = TextUtils.toUpperCase(ch);
           break;
         }
         case 3: {
-          ch = Character.toTitleCase(ch);
+          ch = TextUtils.toTitleCase(ch);
           break;
         }
         default: {

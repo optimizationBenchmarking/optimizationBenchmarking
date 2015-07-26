@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.optimizationBenchmarking.utils.EmptyUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * check whether a string is in a list
@@ -46,7 +47,7 @@ public class StringInListIgnoreCase<T> extends StringInList<T> {
     }
 
     for (; (--i) >= 0;) {
-      list[i] = list[i].toLowerCase();
+      list[i] = TextUtils.toLowerCase(list[i]);
     }
     Arrays.sort(list);
 
@@ -56,6 +57,6 @@ public class StringInListIgnoreCase<T> extends StringInList<T> {
   /** {@inheritDoc} */
   @Override
   protected String getString(final T object) {
-    return super.getString(object).toLowerCase();
+    return TextUtils.toLowerCase(super.getString(object));
   }
 }

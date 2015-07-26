@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.text.charset;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** The set of defined special characters. */
 public final class Characters extends ArraySetView<Char> {
@@ -556,7 +557,7 @@ public final class Characters extends ArraySetView<Char> {
         }
       }
 
-      l = Character.toLowerCase(afterBackslash);
+      l = TextUtils.toLowerCase(afterBackslash);
       if ((l != afterBackslash) && (l < this.m_escapes.length)) {
         return this.m_escapes[l];
       }

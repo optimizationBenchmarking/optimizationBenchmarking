@@ -5,6 +5,7 @@ import java.text.CharacterIterator;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.text.CharArrayCharSequence;
 import org.optimizationBenchmarking.utils.text.ITextable;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A simple
@@ -544,7 +545,7 @@ public class MemoryTextOutput extends AbstractTextOutput implements
   /**
    * Compare the contents of this memory text output device with another
    * char sequence in a case-insensitive manner.
-   * 
+   *
    * @param seq
    *          the other char sequence
    * @return {@code true} if the two sequences are equal under ignorance of
@@ -563,12 +564,12 @@ public class MemoryTextOutput extends AbstractTextOutput implements
         if ((a = this.m_data[index]) == (b = seq.charAt(index))) {
           continue;
         }
-        a = Character.toUpperCase(a);
-        b = Character.toUpperCase(b);
+        a = TextUtils.toUpperCase(a);
+        b = TextUtils.toUpperCase(b);
         if (a == b) {
           continue;
         }
-        if (Character.toLowerCase(a) == Character.toLowerCase(b)) {
+        if (TextUtils.toLowerCase(a) == TextUtils.toLowerCase(b)) {
           continue;
         }
         return false;

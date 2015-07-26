@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter;
 import java.util.Random;
 
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.AbstractTextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -367,7 +368,7 @@ public final class LoremIpsum {
 
         if (newSentence) {
           // start sentence with capital letter
-          out.append(Character.toUpperCase(string.charAt(0)));
+          out.append(TextUtils.toUpperCase(string.charAt(0)));
           out.append(string, 1, curLength);
           newSentence = false;
         } else {

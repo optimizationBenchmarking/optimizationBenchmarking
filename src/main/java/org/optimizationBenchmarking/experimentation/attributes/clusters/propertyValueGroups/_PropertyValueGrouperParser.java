@@ -110,7 +110,7 @@ final class _PropertyValueGrouperParser extends
       iterator = new WordBasedStringIterator(use);
 
       current = iterator.next();
-      currentLC = current.toLowerCase();
+      currentLC = TextUtils.toLowerCase(current);
 
       define: {
         switch (currentLC) {
@@ -165,7 +165,7 @@ final class _PropertyValueGrouperParser extends
 
           if (iterator.hasNext()) {
             current = iterator.next();
-            switch (current.toLowerCase()) {
+            switch (TextUtils.toLowerCase(current)) {
               case MULTIPLES: {
                 mode = EGroupingMode.MULTIPLES;
                 break;

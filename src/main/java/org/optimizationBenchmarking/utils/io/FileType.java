@@ -35,7 +35,7 @@ public class FileType implements IFileType, Serializable {
     String s;
 
     s = TextUtils.prepare(suffix);
-    this.m_suffix = ((s != null) ? s.toLowerCase() : s);
+    this.m_suffix = ((s != null) ? TextUtils.toLowerCase(s) : s);
 
     this.m_mime = TextUtils.prepare(mime);
 

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -516,6 +517,6 @@ public abstract class MathematicalFunction implements Serializable,
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return this.getClass().getSimpleName().toLowerCase();
+    return TextUtils.toLowerCase(this.getClass().getSimpleName());
   }
 }

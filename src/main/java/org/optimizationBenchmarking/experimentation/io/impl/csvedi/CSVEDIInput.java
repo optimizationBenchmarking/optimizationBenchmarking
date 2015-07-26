@@ -161,13 +161,15 @@ public final class CSVEDIInput extends EDIInputToolBase {
    */
   private static final void __add(final String base,
       final LinkedHashSet<String> dest) {
-    for (final String str1 : new String[] { base, base.toUpperCase() }) {
+    for (final String str1 : new String[] { base,
+        TextUtils.toUpperCase(base) }) {
       for (final String str2 : new String[] {
           EDI.EDI_XML.getDefaultSuffix(),//
           "edi", //$NON-NLS-1$
           "xml", //$NON-NLS-1$
           XMLFileType.XML.getDefaultSuffix() }) {
-        for (final String str3 : new String[] { str2, str2.toUpperCase() }) {
+        for (final String str3 : new String[] { str2,
+            TextUtils.toUpperCase(str2) }) {
           dest.add(str1 + '.' + str3);
         }
       }

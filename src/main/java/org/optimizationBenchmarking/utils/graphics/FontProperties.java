@@ -211,7 +211,7 @@ public class FontProperties extends HashObject {
     if (beginner == null) {
       return null;
     }
-    beginner = beginner.toLowerCase();
+    beginner = TextUtils.toLowerCase(beginner);
 
     for (cmpMode = 0; cmpMode <= 3; cmpMode++) {
       str = beginner;
@@ -501,8 +501,8 @@ public class FontProperties extends HashObject {
      */
     private __FontFlags(final String data, final int idx) {
       super(FontProperties._flags(data, idx));
-      this.m_name = TextUtils.prepare(data.substring(idx + 1))
-          .toLowerCase();
+      this.m_name = TextUtils.toLowerCase(TextUtils.prepare(//
+          data.substring(idx + 1)));
     }
 
     /**

@@ -216,7 +216,7 @@ public abstract class BibRecord extends _BibElement<BibRecord> implements
     if (d == null) {
       return null;
     }
-    d2 = d.substring(0, Math.min(d.length(), 18)).toLowerCase();
+    d2 = TextUtils.toLowerCase(d.substring(0, Math.min(d.length(), 18)));
     if (d2.startsWith("http://dx.doi.org/")) {//$NON-NLS-1$
       return TextUtils.prepare(d.substring(18));
     }

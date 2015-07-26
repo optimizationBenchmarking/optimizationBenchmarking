@@ -459,7 +459,7 @@ final class _BBOBHandler implements Comparator<Number[]> {
           if (name != null) {
             name = TextUtils.normalize(name);
             if (name != null) {
-              name = name.toLowerCase();
+              name = TextUtils.toLowerCase(name);
               if (name.startsWith(_BBOBHandler.DATA_FOLDER_START)) {
                 try {
                   dim = Integer.parseInt(name

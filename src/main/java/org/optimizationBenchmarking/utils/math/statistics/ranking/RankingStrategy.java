@@ -6,6 +6,7 @@ import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.spec.ISemanticComponent;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -211,11 +212,11 @@ public final class RankingStrategy implements ISemanticComponent {
     mto.append(RankingStrategy.SHORT_NAME);
     if (this.m_nan != ENaNStrategy.DEFAULT) {
       mto.append('_');
-      mto.append(this.m_nan.name().toLowerCase());
+      mto.append(TextUtils.toLowerCase(this.m_nan.name()));
     }
     if (this.m_ties != ETieStrategy.DEFAULT) {
       mto.append('_');
-      mto.append(this.m_ties.name().toLowerCase());
+      mto.append(TextUtils.toLowerCase(this.m_ties.name()));
     }
 
     return mto.toString();

@@ -74,7 +74,7 @@ public class StringParser extends Parser<String> {
         if (data[i] == '\\') {
           if (i < (end - 1)) {
             ch = data[i + 1];
-            if (Character.toLowerCase(ch) == 'u') {
+            if (TextUtils.toLowerCase(ch) == 'u') {
               if (i < (end - 5)) {
                 val = code = Character.digit(data[i + 2], 16);
                 if (code < 0) {

@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.collections.maps;
 
+import org.optimizationBenchmarking.utils.text.TextUtils;
+
 /**
  * A case-insensitive hash map that uses {@link java.lang.String}s as keys.
  * All keys will be converted to lower case. Since the case of key strings
@@ -27,7 +29,7 @@ public class StringMapCI<ET> extends StringMap<ET> {
     final String t;
     t = super._prepare(s);
     if (t != null) {
-      return t.toLowerCase();
+      return TextUtils.toLowerCase(t);
     }
     return null;
   }

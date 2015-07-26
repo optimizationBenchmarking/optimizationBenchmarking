@@ -57,13 +57,13 @@ public final class TextEncoding extends
     names = new ArrayList<>();
 
     sn = this.name();
-    snlc = sn.toLowerCase();
+    snlc = TextUtils.toLowerCase(sn);
 
     names.add(snlc);
     jn = this.getJavaName();
     if (jn != null) {
       if ((jn != sn) && (!(sn.equals(jn)))) {
-        jnlc = jn.toLowerCase();
+        jnlc = TextUtils.toLowerCase(jn);
         if (!(snlc.equals(jnlc))) {
           names.add(jnlc);
         }
@@ -75,7 +75,7 @@ public final class TextEncoding extends
         if (cs != null) {
           lc = cs.displayName();
           if (lc != null) {
-            lc = lc.toLowerCase();
+            lc = TextUtils.toLowerCase(lc);
 
             if (!(names.contains(lc) || lc
                 .equalsIgnoreCase(StreamEncoding._DEFAULT))) {
@@ -85,7 +85,7 @@ public final class TextEncoding extends
 
           lc = cs.displayName(Locale.US);
           if (lc != null) {
-            lc = lc.toLowerCase();
+            lc = TextUtils.toLowerCase(lc);
 
             if (!(names.contains(lc) || lc
                 .equalsIgnoreCase(StreamEncoding._DEFAULT))) {
@@ -95,7 +95,7 @@ public final class TextEncoding extends
 
           for (String s : cs.aliases()) {
             if (s != null) {
-              s = s.toLowerCase();
+              s = TextUtils.toLowerCase(s);
               if (!(names.contains(s) || s
                   .equalsIgnoreCase(StreamEncoding._DEFAULT))) {
                 names.add(s);
@@ -112,7 +112,7 @@ public final class TextEncoding extends
     for (final String s : moreNames) {
       lc = TextUtils.prepare(s);
       if (lc != null) {
-        lc = lc.toLowerCase();
+        lc = TextUtils.toLowerCase(lc);
         if (!(names.contains(lc))) {
           names.add(lc);
         }

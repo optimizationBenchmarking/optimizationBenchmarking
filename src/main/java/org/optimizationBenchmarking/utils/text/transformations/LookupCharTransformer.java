@@ -122,7 +122,7 @@ public class LookupCharTransformer extends CharTransformer {
               continue;
             }
 
-            a = a.toLowerCase();
+            a = TextUtils.toLowerCase(a);
             try {
               chrA = Integer.parseInt(a, 16);
             } catch (final Throwable t) {

@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcess;
@@ -124,7 +125,7 @@ abstract class _LaTeXUsedAsToolBase extends _LaTeXToolChainComponent {
 
     this.m_executable = exec;
     this.m_formatArg = ((arg1 != null) ? (arg1 + //
-    this._produces().getDefaultSuffix().toLowerCase())
+    TextUtils.toLowerCase(this._produces().getDefaultSuffix()))
         : null);
     this.m_haltArg = arg2;
     this.m_progNameArg = ((arg3 != null) ? (arg3 + progname) : null);

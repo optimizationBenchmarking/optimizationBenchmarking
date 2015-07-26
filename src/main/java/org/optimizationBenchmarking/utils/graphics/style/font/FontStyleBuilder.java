@@ -728,7 +728,8 @@ public final class FontStyleBuilder extends
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
 
-    this.setFontFamily(EFontFamily.valueOf(strings.next().toUpperCase()));
+    this.setFontFamily(EFontFamily.valueOf(TextUtils.toUpperCase(//
+        strings.next())));
 
     t = strings.next();
     this.setBold((t != null) && BooleanParser.INSTANCE.parseBoolean(t));

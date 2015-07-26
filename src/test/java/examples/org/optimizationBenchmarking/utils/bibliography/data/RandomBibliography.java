@@ -409,12 +409,12 @@ public final class RandomBibliography extends BibliographyExample {
       } while ((ch <= ' ') || (ch == prev));
       prev = ch;
       if (sb.length() <= 0) {
-        ch = Character.toUpperCase(ch);
+        ch = TextUtils.toUpperCase(ch);
         if (Character.isLowerCase(ch)) {
           continue main;
         }
       } else {
-        ch = Character.toLowerCase(ch);
+        ch = TextUtils.toLowerCase(ch);
         if (Character.isUpperCase(ch) || Character.isTitleCase(ch)) {
           continue main;
         }

@@ -140,10 +140,10 @@ public class ConfigurationTest extends TestBase {
         return key;
       }
       case 1: {
-        return key.toLowerCase();
+        return TextUtils.toLowerCase(key);
       }
       case 2: {
-        return key.toUpperCase();
+        return TextUtils.toUpperCase(key);
       }
       default: {
         sb = new StringBuilder();
@@ -155,11 +155,11 @@ public class ConfigurationTest extends TestBase {
               break;
             }
             case 1: {
-              sb.append(Character.toUpperCase(ch));
+              sb.append(TextUtils.toUpperCase(ch));
               break;
             }
             default: {
-              sb.append(Character.toLowerCase(ch));
+              sb.append(TextUtils.toLowerCase(ch));
               break;
             }
           }

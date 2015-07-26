@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** an internal constant class for number resolution */
 final class _TextConst implements Comparable<_TextConst> {
@@ -23,7 +24,7 @@ final class _TextConst implements Comparable<_TextConst> {
   private static final _TextConst[] CONSTS = new _TextConst[] {
 
       new _TextConst(
-          Double.toString(Double.NEGATIVE_INFINITY).toLowerCase(),//
+          TextUtils.toLowerCase(Double.toString(Double.NEGATIVE_INFINITY)),//
           Double.NEGATIVE_INFINITY, Long.MIN_VALUE, Integer.MIN_VALUE,
           false),//
 
@@ -33,8 +34,8 @@ final class _TextConst implements Comparable<_TextConst> {
       new _TextConst(DoubleParser.NEGATIVE_INFINITY,
           Double.NEGATIVE_INFINITY),//
 
-      new _TextConst(Double.toString(Double.POSITIVE_INFINITY)
-          .toLowerCase(),//
+      new _TextConst(TextUtils.toLowerCase(Double
+          .toString(Double.POSITIVE_INFINITY)),//
           Double.POSITIVE_INFINITY),//
 
       new _TextConst("positiveinfinity",//$NON-NLS-1$
@@ -67,7 +68,7 @@ final class _TextConst implements Comparable<_TextConst> {
       new _TextConst("unendlich",//$NON-NLS-1$
           Double.POSITIVE_INFINITY),//
 
-      new _TextConst(Double.toString(Double.NaN).toLowerCase(),//
+      new _TextConst(TextUtils.toLowerCase(Double.toString(Double.NaN)),//
           Double.NaN),//
 
       new _TextConst("nan!",//$NON-NLS-1$
@@ -412,7 +413,7 @@ final class _TextConst implements Comparable<_TextConst> {
     _TextConst midVal;
     final String name;
 
-    name = constName.toLowerCase();
+    name = TextUtils.toLowerCase(constName);
     low = 0;
     high = (_TextConst.CONSTS.length - 1);
 

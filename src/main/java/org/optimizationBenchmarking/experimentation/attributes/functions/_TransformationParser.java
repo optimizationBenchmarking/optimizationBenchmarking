@@ -167,7 +167,7 @@ abstract class _TransformationParser<TT extends Transformation> extends
           if (parameter != null) {
             constant = new _ParameterConstant(parameter);
           } else {
-            lower = processed.toLowerCase();
+            lower = TextUtils.toLowerCase(processed);
 
             bound: {
               if (lower.endsWith(_BoundConstant.LOWER_BOUND_END)) {

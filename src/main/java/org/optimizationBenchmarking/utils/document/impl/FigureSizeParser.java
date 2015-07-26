@@ -4,6 +4,7 @@ import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A parser for instances of
@@ -63,7 +64,7 @@ public class FigureSizeParser extends Parser<EFigureSize> {
     for (final EFigureSize size : EFigureSize.INSTANCES) {
       name = size.name();
       map.put(name, size);
-      name = name.toLowerCase();
+      name = TextUtils.toLowerCase(name);
 
       for (int i = 0; i < 16; i++) {
         name2 = name;

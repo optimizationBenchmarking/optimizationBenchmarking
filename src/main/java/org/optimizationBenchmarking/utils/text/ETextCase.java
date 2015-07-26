@@ -179,7 +179,7 @@ public enum ETextCase {
     int x;
     char y;
 
-    x = Character.toTitleCase((int) ch);
+    x = TextUtils.toTitleCase((int) ch);
     if ((x >= Character.MIN_VALUE) && (x <= Character.MAX_VALUE)) {
       y = ((char) x);
       if (Character.isDefined(y)) {
@@ -201,7 +201,7 @@ public enum ETextCase {
     int x;
     char y;
 
-    x = Character.toUpperCase((int) ch);
+    x = TextUtils.toUpperCase((int) ch);
     if ((x >= Character.MIN_VALUE) && (x <= Character.MAX_VALUE)) {
       y = ((char) x);
       if (Character.isDefined(y)) {

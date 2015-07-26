@@ -108,7 +108,7 @@ public final class FontFinder {
 
     found = 0;
     outer: for (final String font : fonts) {
-      lc = font.toLowerCase();
+      lc = TextUtils.toLowerCase(font);
       for (size = 5; size < 16; size++) {
         for (style = 0; style <= 3; style++) {
           try {
@@ -117,7 +117,7 @@ public final class FontFinder {
                     (((style & 2) != 0) ? Font.ITALIC : 0), size);
 
             ff = load.getFontName();
-            ff = ff.toLowerCase();
+            ff = TextUtils.toLowerCase(ff);
             if (ff.equalsIgnoreCase(font) || ff.contains(lc)
                 || lc.contains(ff)) {
               System.out.print('\'');

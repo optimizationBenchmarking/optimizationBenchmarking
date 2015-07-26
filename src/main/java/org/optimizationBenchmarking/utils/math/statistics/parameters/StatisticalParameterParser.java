@@ -37,8 +37,8 @@ public final class StatisticalParameterParser extends
           + string) + '\'') + '.');
     }
 
-    lower = prepared.toLowerCase();
-    switch (string.toLowerCase()) {
+    lower = TextUtils.toLowerCase(prepared);
+    switch (TextUtils.toLowerCase(string)) {
       case ArithmeticMean.SHORT:
       case ArithmeticMean.LONG:
       case ArithmeticMean.OTHER: {

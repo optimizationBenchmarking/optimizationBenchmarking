@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IProperty;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /** A set of property value range groups. */
@@ -68,7 +69,7 @@ public class ValueRangeGroups extends PropertyValueGroups {
   public final String getPathComponentSuggestion() {
     return (this.m_property.getName() + //
         "_grouped_by_" + //$NON-NLS-1$
-        this.getGroupingMode().toString().toLowerCase() + //
+        TextUtils.toLowerCase(this.getGroupingMode().toString()) + //
         "_of_" + //$NON-NLS-1$
     this.m_parameter.toString());
   }

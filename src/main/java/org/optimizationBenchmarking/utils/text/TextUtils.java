@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.Locale;
 
 /**
  * The text utilities class provides several methods that help us to
@@ -126,6 +127,94 @@ public final class TextUtils {
     }
 
     return t;
+  }
+
+  /**
+   * Convert a string to lower case
+   *
+   * @param string
+   *          the string
+   * @return the lower case
+   */
+  public static final String toLowerCase(final String string) {
+    return string.toLowerCase(Locale.ENGLISH);
+  }
+
+  /**
+   * Convert a string to upper case
+   *
+   * @param string
+   *          the string
+   * @return the upper case
+   */
+  public static final String toUpperCase(final String string) {
+    return string.toUpperCase(Locale.ENGLISH);
+  }
+
+  /**
+   * Convert a character to lower case
+   *
+   * @param chr
+   *          the char
+   * @return the lower case
+   */
+  public static final char toLowerCase(final char chr) {
+    return Character.toLowerCase(chr);
+  }
+
+  /**
+   * Convert a character to upper case
+   *
+   * @param chr
+   *          the char
+   * @return the upper case
+   */
+  public static final char toUpperCase(final char chr) {
+    return Character.toUpperCase(chr);
+  }
+
+  /**
+   * Convert a character to lower case
+   *
+   * @param chr
+   *          the char
+   * @return the lower case
+   */
+  public static final int toLowerCase(final int chr) {
+    return Character.toLowerCase(chr);
+  }
+
+  /**
+   * Convert a character to upper case
+   *
+   * @param chr
+   *          the char
+   * @return the upper case
+   */
+  public static final int toUpperCase(final int chr) {
+    return Character.toUpperCase(chr);
+  }
+
+  /**
+   * Convert a character to title case
+   *
+   * @param chr
+   *          the char
+   * @return the title case
+   */
+  public static final int toTitleCase(final int chr) {
+    return Character.toTitleCase(chr);
+  }
+
+  /**
+   * Convert a character to title case
+   *
+   * @param chr
+   *          the char
+   * @return the title case
+   */
+  public static final char toTitleCase(final char chr) {
+    return Character.toTitleCase(chr);
   }
 
   /**

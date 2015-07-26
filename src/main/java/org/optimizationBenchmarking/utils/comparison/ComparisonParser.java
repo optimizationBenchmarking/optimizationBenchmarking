@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.comparison;
 
 import org.optimizationBenchmarking.utils.parsers.InstanceParser;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** A parser for comparisons */
 public class ComparisonParser extends InstanceParser<EComparison> {
@@ -19,7 +20,7 @@ public class ComparisonParser extends InstanceParser<EComparison> {
   @Override
   public final EComparison parseString(final String string)
       throws Exception {
-    switch (string.toLowerCase()) {
+    switch (TextUtils.toLowerCase(string)) {
 
       case "less than": //$NON-NLS-1$
       case "less": //$NON-NLS-1$

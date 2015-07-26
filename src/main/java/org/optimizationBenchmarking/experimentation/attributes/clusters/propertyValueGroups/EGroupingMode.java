@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingAd
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingSub;
 import org.optimizationBenchmarking.utils.math.functions.power.Log;
 import org.optimizationBenchmarking.utils.math.functions.power.Pow;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A set of different modi for grouping elements.
@@ -827,7 +828,7 @@ public enum EGroupingMode {
 
   /** create the grouping mode */
   EGroupingMode() {
-    this.m_name = super.toString().toLowerCase();
+    this.m_name = TextUtils.toLowerCase(super.toString());
   }
 
   /** {@inheritDoc} */

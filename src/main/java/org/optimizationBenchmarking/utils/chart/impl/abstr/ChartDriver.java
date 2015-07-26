@@ -14,6 +14,7 @@ import org.optimizationBenchmarking.utils.graphics.graphic.spec.Graphic;
 import org.optimizationBenchmarking.utils.graphics.style.StyleSet;
 import org.optimizationBenchmarking.utils.graphics.style.stroke.StrokeStyle;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
 
 /** the chart driver base class */
@@ -554,7 +555,7 @@ public abstract class ChartDriver extends Tool implements IChartDriver {
 
       int style;
 
-      this.m_fontName = font.getFontName().toLowerCase();
+      this.m_fontName = TextUtils.toLowerCase(font.getFontName());
 
       style = 0;
       if (!(font.isBold())) {

@@ -35,6 +35,7 @@ import org.optimizationBenchmarking.utils.math.text.DefaultParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.IMathRenderable;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.math.text.NamedConstant;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -253,7 +254,7 @@ final class _CodeGenerator {
     bw.print(outTypeName);
     bw.print(' ');
     outTypeNameInName = ("computeAs" + //$NON-NLS-1$
-        Character.toUpperCase(outTypeName.charAt(0)) + outTypeName
+        TextUtils.toUpperCase(outTypeName.charAt(0)) + outTypeName
         .substring(1));
     bw.print(outTypeNameInName);
     bw.print('(');
@@ -1213,7 +1214,7 @@ final class _CodeGenerator {
     bw.print(outTypeName);
     bw.print(' ');
     outTypeNameInName = ("computeAs" + //$NON-NLS-1$
-        Character.toUpperCase(outTypeName.charAt(0)) + outTypeName
+        TextUtils.toUpperCase(outTypeName.charAt(0)) + outTypeName
         .substring(1));
     bw.print(outTypeNameInName);
     bw.print('(');
@@ -1601,7 +1602,7 @@ final class _CodeGenerator {
     bw.print(outTypeName);
     bw.print(' ');
     outTypeNameInName = ("computeAs" + //$NON-NLS-1$
-        Character.toUpperCase(outTypeName.charAt(0)) + outTypeName
+        TextUtils.toUpperCase(outTypeName.charAt(0)) + outTypeName
         .substring(1));
     bw.print(outTypeNameInName);
     bw.print('(');
