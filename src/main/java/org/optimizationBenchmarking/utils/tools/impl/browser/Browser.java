@@ -104,9 +104,9 @@ public final class Browser extends Tool implements IConfigurableJobTool {
             IsFilePredicate.INSTANCE, null);
 
         if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
-          logger
-              .config((__BrowserPath.PATH != null) ? ("Browser binary is '" + __BrowserPath.PATH + '\'') : //$NON-NLS-1$
-                  "No browser binary detected.");//$NON-NLS-1$
+          logger.config((__BrowserPath.PATH != null) ? //
+          ("Browser binary is '" + __BrowserPath.PATH + '\'') : //$NON-NLS-1$
+              "No browser binary detected.");//$NON-NLS-1$
         }
       }
     }
