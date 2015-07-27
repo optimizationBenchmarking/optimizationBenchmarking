@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.tools.impl.browser;
 
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,7 +11,9 @@ import org.optimizationBenchmarking.utils.io.paths.predicates.CanExecutePredicat
 import org.optimizationBenchmarking.utils.io.paths.predicates.FileNamePredicate;
 import org.optimizationBenchmarking.utils.io.paths.predicates.IsFilePredicate;
 import org.optimizationBenchmarking.utils.predicates.AndPredicate;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.Tool;
+import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 import org.optimizationBenchmarking.utils.tools.spec.IConfigurableJobTool;
 
 /**
@@ -26,13 +29,14 @@ public final class Browser extends Tool implements IConfigurableJobTool {
   /** {@inheritDoc} */
   @Override
   public final boolean canUse() {
-    return (__BrowserPath.PATH != null);
+    return (ProcessExecutor.getInstance().canUse() && (_BrowserPath.PATH != null));
   }
 
   /** {@inheritDoc} */
   @Override
   public final void checkCanUse() {
-    if (__BrowserPath.PATH == null) {
+    ProcessExecutor.getInstance().checkCanUse();
+    if (_BrowserPath.PATH == null) {
       throw new IllegalStateException(//
           "Cannot use the browser tool, since no web browser could be detected."); //$NON-NLS-1$
     }
@@ -42,7 +46,7 @@ public final class Browser extends Tool implements IConfigurableJobTool {
   @Override
   public final BrowserJobBuilder use() {
     this.checkCanUse();
-    return new BrowserJobBuilder(__BrowserPath.PATH);
+    return new BrowserJobBuilder();
   }
 
   /**
@@ -61,53 +65,85 @@ public final class Browser extends Tool implements IConfigurableJobTool {
   }
 
   /** load the path to a browser */
-  private static final class __BrowserPath {
+  static final class _BrowserPath {
 
     /** the browser path */
     static final Path PATH;
 
+    /** the argument */
+    static final String ARGUMENT;
+
     static {
-      final Path p;
       final Logger logger;
+      final LinkedHashMap<String, String> browsers;
+      Path p;
 
+      // Nowadays, browser run several processes and may re-use existing
+      // processes. If the browser is open and a new one started, for our
+      // tool, it may look as if the new browser was immediately closed.
+      // Some browsers (like Internet Explorer) may provide us with command
+      // line arguments to remedy this situation, but generally, there is
+      // no way against that. However, we still give it our best shot by
+      // providing a facility to have such arguments and hopefully, can add
+      // more arguments in the future.
+      browsers = new LinkedHashMap<>();
+      browsers.put("firefox", null); //$NON-NLS-1$
+      browsers.put("iexplore", "-noframemerging"); //$NON-NLS-1$ //$NON-NLS-2$
+      browsers.put("iceweasel", null); //$NON-NLS-1$
+      browsers.put("opera", null); //$NON-NLS-1$
+      browsers.put("chromium", null); //$NON-NLS-1$
+      browsers.put("chrome", null); //$NON-NLS-1$
+      browsers.put("safari", null); //$NON-NLS-1$
+      browsers.put("netscape", null); //$NON-NLS-1$
+      browsers.put("seamonkey", null); //$NON-NLS-1$
+      browsers.put("konquerer", null); //$NON-NLS-1$
+      browsers.put("kmelon", null); //$NON-NLS-1$
+      browsers.put("lynx", null); //$NON-NLS-1$
+      browsers.put("icecat", null); //$NON-NLS-1$
+      browsers.put("galeon", null); //$NON-NLS-1$
+
+      // User- or environment-specified browser.
       p = Configuration.getRoot().getPath("browser", null); //$NON-NLS-1$
-      if (IsFilePredicate.INSTANCE.check(p)
-          && CanExecutePredicate.INSTANCE.check(p)) {
-        PATH = p;
-      } else {
-
+      if (!(IsFilePredicate.INSTANCE.check(p) && //
+      CanExecutePredicate.INSTANCE.check(p))) {
         logger = Configuration.getGlobalLogger();
         if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
           logger.config("Looking for browser binary.");//$NON-NLS-1$
         }
 
-        PATH = PathUtils.findFirstInPath(new AndPredicate<>(
+        // Check for real browsers.
+        p = PathUtils.findFirstInPath(new AndPredicate<>(
             new FileNamePredicate(true,//
-                "xdg-open", //$NON-NLS-1$
-                "gnome-open", //$NON-NLS-1$
-                "firefox", //$NON-NLS-1$
-                "opera", //$NON-NLS-1$
-                "iexplore", //$NON-NLS-1$
-                "edge", //$NON-NLS-1$
-                "iceweasel", //$NON-NLS-1$
-                "chrome", //$NON-NLS-1$
-                "safari", //$NON-NLS-1$
-                "netscape", //$NON-NLS-1$
-                "camino", //$NON-NLS-1$
-                "seamonkey", //$NON-NLS-1$
-                "konquerer", //$NON-NLS-1$
-                "galeon", //$NON-NLS-1$
-                "kmelon", //$NON-NLS-1$
-                "lynx", //$NON-NLS-1$
-                "icecat" //$NON-NLS-1$
-            ), CanExecutePredicate.INSTANCE),//
+                browsers.keySet().toArray(new String[browsers.size()])),//
+            CanExecutePredicate.INSTANCE),//
             IsFilePredicate.INSTANCE, null);
 
+        if (p == null) {
+          // Check for utilities which may indirectly launch a browser
+          // process.
+          p = PathUtils.findFirstInPath(new AndPredicate<>(
+              new FileNamePredicate(true,//
+                  "xdg-open",//$NON-NLS-1$
+                  "gnome-open",//$NON-NLS-1$
+                  "open"), //$NON-NLS-1$
+              CanExecutePredicate.INSTANCE),//
+              IsFilePredicate.INSTANCE, null);
+        }
+
         if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
-          logger.config((__BrowserPath.PATH != null) ? //
-          ("Browser binary is '" + __BrowserPath.PATH + '\'') : //$NON-NLS-1$
+          logger.config((_BrowserPath.PATH != null) ? //
+          ("Browser binary is '" + _BrowserPath.PATH + '\'') : //$NON-NLS-1$
               "No browser binary detected.");//$NON-NLS-1$
         }
+      }
+
+      PATH = p;
+
+      if (p == null) {
+        ARGUMENT = null;
+      } else {
+        ARGUMENT = browsers.get(TextUtils.toLowerCase(//
+            PathUtils.getFileNameWithoutExtension(p)));
       }
     }
 

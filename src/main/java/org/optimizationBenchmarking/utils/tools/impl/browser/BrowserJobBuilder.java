@@ -1,11 +1,19 @@
 package org.optimizationBenchmarking.utils.tools.impl.browser;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
+import org.optimizationBenchmarking.utils.io.EOSFamily;
+import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.io.paths.TempDir;
 import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJobBuilder;
 import org.optimizationBenchmarking.utils.tools.impl.process.EProcessStream;
 import org.optimizationBenchmarking.utils.tools.impl.process.ExternalProcessBuilder;
@@ -23,44 +31,94 @@ public final class BrowserJobBuilder extends
   /** the url to visit */
   public static final String PARAM_URL = "url"; //$NON-NLS-1$
 
-  /** the external process builder */
-  private final ExternalProcessBuilder m_builder;
-
   /** the url */
-  private boolean m_hasURL;
+  private URL m_url;
 
-  /**
-   * create
-   *
-   * @param browser
-   *          the path to the browser
-   */
-  BrowserJobBuilder(final Path browser) {
+  /** create */
+  BrowserJobBuilder() {
     super();
-    this.m_builder = ProcessExecutor.getInstance().use();
-
-    Path parent;
-
-    this.m_builder.setExecutable(browser);
-    parent = browser.getParent();
-    if (parent != null) {
-      this.m_builder.setDirectory(parent);
-    }
-
-    this.m_builder.setStdIn(EProcessStream.IGNORE);
-    this.m_builder.setStdErr(EProcessStream.IGNORE);
-    this.m_builder.setStdOut(EProcessStream.IGNORE);
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   public final BrowserJob create() throws IOException {
-    if (!(this.m_hasURL)) {
+    final Path executable, parent, batch;
+    final ExternalProcessBuilder epb;
+    final String url, arg;
+    final TempDir temp;
+    final Logger logger;
+
+    if (this.m_url == null) {
       throw new IllegalStateException(//
           "URL to visit has not been set."); //$NON-NLS-1$
     }
-    this.m_builder.setLogger(this.getLogger());
-    return new BrowserJob(this.getLogger(), this.m_builder.create());
+
+    url = this.m_url.toExternalForm();
+
+    executable = Browser._BrowserPath.PATH;
+    arg = Browser._BrowserPath.ARGUMENT;
+    epb = ProcessExecutor.getInstance().use();
+
+    logger = this.getLogger();
+    epb.setLogger(logger);
+    epb.setStdErr(EProcessStream.IGNORE);
+    epb.setStdIn(EProcessStream.IGNORE);
+    epb.setStdOut(EProcessStream.IGNORE);
+
+    if (EOSFamily.DETECTED == EOSFamily.Windows) {
+      // For windows, we need a special work-around since the IE may launch
+      // but we cannot wait for it to finish directly. The same problem
+      // appears with opera.
+      // See http://stackoverflow.com/questions/3349922
+
+      temp = new TempDir();
+      parent = temp.getPath();
+      batch = PathUtils.createPathInside(parent, "batch.bat"); //$NON-NLS-1$
+
+      try (final OutputStream os = PathUtils.openOutputStream(batch)) {
+        try (final OutputStreamWriter fow = new OutputStreamWriter(os)) {
+          try (final BufferedWriter bw = new BufferedWriter(fow)) {
+            bw.write("start \"\" /wait \""); //$NON-NLS-1$
+            bw.write(PathUtils.getPhysicalPath(executable, false));
+            bw.write('"');
+            bw.write(' ');
+
+            if (arg != null) {
+              bw.write(arg);
+              bw.write(' ');
+            }
+
+            bw.write('"');
+            bw.write(url);
+            bw.write('"');
+            bw.newLine();
+          }
+        }
+      }
+
+      if ((logger != null) && logger.isLoggable(Level.FINE)) {
+        logger.fine(//
+            "Launching browser via batch '" + batch.toString() + //$NON-NLS-1$
+                "' as work-around for browser processes detaching themselves.");//$NON-NLS-1$
+      }
+
+      epb.setExecutable(batch);
+      epb.setDirectory(parent);
+    } else {
+      epb.setExecutable(executable);
+      parent = executable.getParent();
+      if (parent != null) {
+        epb.setDirectory(parent);
+      }
+      if (arg != null) {
+        epb.addStringArgument(arg);
+      }
+      epb.addStringArgument(url);
+      temp = null;
+    }
+
+    return new BrowserJob(this.getLogger(), epb.create(), temp);
   }
 
   /**
@@ -105,10 +163,6 @@ public final class BrowserJobBuilder extends
       throw new IllegalArgumentException(
           "The URL to visit cannot be null."); //$NON-NLS-1$
     }
-    if (this.m_hasURL) {
-      throw new IllegalStateException("URL has already been set."); //$NON-NLS-1$
-    }
-
     try {
       use = url.toURI().normalize().toURL();
     } catch (final Throwable error) {
@@ -124,8 +178,7 @@ public final class BrowserJobBuilder extends
           "The URL to visit cannot normalize to null."); //$NON-NLS-1$
     }
 
-    this.m_hasURL = true;
-    this.m_builder.addStringArgument(url.toExternalForm());
+    this.m_url = url;
 
     return this;
   }
@@ -134,10 +187,17 @@ public final class BrowserJobBuilder extends
   @Override
   public final BrowserJobBuilder configure(final Configuration config) {
     final String url;
+    final Logger oldLogger, newLogger;
 
     url = config.getString(BrowserJobBuilder.PARAM_URL, null);
     if (url != null) {
       this.setURL(url);
+    }
+
+    oldLogger = this.getLogger();
+    newLogger = config.getLogger(Configuration.PARAM_LOGGER, oldLogger);
+    if ((oldLogger != null) || (newLogger != null)) {
+      this.setLogger(newLogger);
     }
 
     return this;
