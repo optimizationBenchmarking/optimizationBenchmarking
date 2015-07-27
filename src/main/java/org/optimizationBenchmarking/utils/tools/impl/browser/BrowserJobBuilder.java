@@ -118,7 +118,8 @@ public final class BrowserJobBuilder extends
       temp = null;
     }
 
-    return new BrowserJob(this.getLogger(), epb.create(), temp);
+    return new BrowserJob(this.getLogger(), epb.create(), temp,
+        (arg != null));
   }
 
   /**

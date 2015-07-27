@@ -89,6 +89,8 @@ public final class Browser extends Tool implements IConfigurableJobTool {
       browsers = new LinkedHashMap<>();
       browsers.put("firefox", null); //$NON-NLS-1$
       browsers.put("iexplore", "-noframemerging"); //$NON-NLS-1$ //$NON-NLS-2$
+      browsers.put("edge", null); //$NON-NLS-1$
+      browsers.put("spartan", null); //$NON-NLS-1$
       browsers.put("iceweasel", null); //$NON-NLS-1$
       browsers.put("opera", null); //$NON-NLS-1$
       browsers.put("chromium", null); //$NON-NLS-1$
@@ -125,6 +127,8 @@ public final class Browser extends Tool implements IConfigurableJobTool {
               new FileNamePredicate(true,//
                   "xdg-open",//$NON-NLS-1$
                   "gnome-open",//$NON-NLS-1$
+                  "cygstart",//$NON-NLS-1$
+                  "explorer",//$NON-NLS-1$
                   "open"), //$NON-NLS-1$
               CanExecutePredicate.INSTANCE),//
               IsFilePredicate.INSTANCE, null);

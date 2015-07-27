@@ -18,6 +18,12 @@ public final class BrowserJob extends ToolJob implements Closeable {
   private TempDir m_temp;
 
   /**
+   * {@code true} if and only if {@link #waitFor()} is reliable,
+   * {@code false} otherwise.
+   */
+  private final boolean m_isWaitForReliable;
+
+  /**
    * Create the browser job,
    *
    * @param process
@@ -26,15 +32,19 @@ public final class BrowserJob extends ToolJob implements Closeable {
    *          the logger
    * @param temp
    *          the temporary directory, or {@code null} if none is needed
+   * @param isWaitForReliable
+   *          {@code true} if and only if {@link #waitFor()} is reliable,
+   *          {@code false} otherwise
    */
   BrowserJob(final Logger logger, final ExternalProcess process,
-      final TempDir temp) {
+      final TempDir temp, final boolean isWaitForReliable) {
     super(logger);
     if (process == null) {
       throw new IllegalArgumentException("Browser process cannot be null."); //$NON-NLS-1$
     }
     this.m_process = process;
     this.m_temp = temp;
+    this.m_isWaitForReliable = isWaitForReliable;
   }
 
   /**
@@ -55,6 +65,22 @@ public final class BrowserJob extends ToolJob implements Closeable {
       return proc.waitFor();
     }
     throw new IllegalStateException("Process already closed."); //$NON-NLS-1$
+  }
+
+  /**
+   * As stated in its documentation, the {@link #waitFor()} method cannot
+   * be made reliable in the general case: It may return although the
+   * browser is still open. This is due to the multi-process structure of
+   * modern browsers. However, in some configurations (such as Internet
+   * Explorer under Windows) it can be reliable. This function here tells
+   * you whether {@link #waitFor()} will only return when the browser has
+   * actually been closed (or crashed), or whether it may return earlier.
+   *
+   * @return {@code true} if and only if {@link #waitFor()} is reliable,
+   *         {@code false} otherwise
+   */
+  public final boolean isWaitForReliable() {
+    return this.m_isWaitForReliable;
   }
 
   /** {@inheritDoc} */
