@@ -53,7 +53,7 @@ public class BasicIterator<T> extends BasicEnumeration<T> implements
   /** {@inheritDoc} */
   @Override
   public void remove() {
-    throw new NoSuchElementException(
+    throw new UnsupportedOperationException(
         "The iterator of type " + TextUtils.className(this.getClass()) + //$NON-NLS-1$
             " does not allow removing the current element (or maybe you did not call next() before remove())."//$NON-NLS-1$
     );
