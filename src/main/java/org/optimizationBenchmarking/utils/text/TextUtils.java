@@ -4,7 +4,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.Arrays;
 import java.util.Locale;
+
+import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
  * The text utilities class provides several methods that help us to
@@ -32,6 +35,26 @@ public final class TextUtils {
 
   /** A character which represents a non-breaking space: {@value} */
   public static final char NON_BREAKING_SPACE = 0x2007;
+
+  /** the sizes */
+  private static final long[] SIZES = { 0,//
+      (1L << 10L),//
+      (1L << 20L),//
+      (1L << 30L),//
+      (1L << 40L),//
+      (1L << 50L),//
+      (1L << 60L),//
+  };
+
+  /** the size names */
+  private static final char[][] SIZE_NAMES = { { 'B' },//
+      { 'K', 'i', 'B' },//
+      { 'M', 'i', 'B' },//
+      { 'G', 'i', 'B' },//
+      { 'T', 'i', 'B' },//
+      { 'P', 'i', 'B' },//
+      { 'E', 'i', 'B' },//
+  };
 
   /**
    * obtain the line separator
@@ -372,5 +395,44 @@ public final class TextUtils {
     }
 
     return false;
+  }
+
+  /**
+   * Format a file size
+   *
+   * @param size
+   *          the file size
+   * @param to
+   *          the destination
+   */
+  public static final void appendFileSize(final long size,
+      final ITextOutput to) {
+    long use;
+    int index;
+
+    if (size < 0L) {
+      to.append('-');
+      if (size <= Long.MIN_VALUE) {
+        to.append('8');
+        to.appendNonBreakingSpace();
+        to.append(TextUtils.SIZE_NAMES[TextUtils.SIZE_NAMES.length - 1]);
+        return;
+      }
+      use = (-size);
+    } else {
+      use = size;
+    }
+
+    index = Arrays.binarySearch(TextUtils.SIZES, use);
+    if (index < 0) {
+      index = (-(index + 2));
+    }
+
+    if (index > 0) {
+      use /= TextUtils.SIZES[index];
+    }
+    to.append(use);
+    to.appendNonBreakingSpace();
+    to.append(TextUtils.SIZE_NAMES[index]);
   }
 }
