@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>optimizationBenchmarking.org</groupId>
 	<artifactId>optimizationBenchmarking</artifactId>
 	<version>0.8.4</version>
@@ -56,7 +56,9 @@
 	</issueManagement>
 
 	<scm>
-		<url>https://github.com/optimizationBenchmarking/optimizationBenchmarking</url>
+		<connection>scm:git:git@github.com:optimizationBenchmarking/optimizationBenchmarking.git</connection>
+		<developerConnection>scm:git:git@github.com:optimizationBenchmarking/optimizationBenchmarking.git</developerConnection>
+		<url>git@github.com:optimizationBenchmarking/optimizationBenchmarking.git</url>
 	</scm>
 
 	<inceptionYear>2014</inceptionYear>

@@ -85,7 +85,7 @@ The licenses used for some of these elements are given in the folder
     - File: [sig-alternate.cls](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/sig-alternate.cls)
     - Version: v2.5, Wednesday 23rd. May 2012
     - Status: freely available in the internet
-    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)   
+    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
     - Sources:
         + [http://www.acm.org/sigs/publications/sig-alternate-v1.1](http://www.acm.org/sigs/publications/sig-alternate-v1.1)
         + [http://www.acm.org/sigs/publications/proceedings-templates](http://www.acm.org/sigs/publications/proceedings-templates)
@@ -97,7 +97,7 @@ The licenses used for some of these elements are given in the folder
     - File: [llncs.cls](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/llncs.cls)
     - Version: LLNCS DOCUMENT CLASS -- version 2.18 (27-Sep-2013)
     - Status: freely available in the internet
-    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)   
+    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
     - Sources:
         + [http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0](http://www.springer.com/computer/lncs/lncs+authors?SGWID=0-40209-0-0-0)
         + [ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip](ftp://ftp.springer.de/pub/tex/latex/llncs/latex2e/llncs2e.zip)
@@ -171,7 +171,7 @@ The licenses used for some of these elements are given in the folder
         + [nimbusSansLItalic.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/nimbusSansLItalic.pfb)
     - Version:
         + Release 1.0.7pre22 of Valek Filippov's improved versions of the URW type 1 font collection
-        + 2004-01-19 (modified time of [Ghostscript fonts](http://sourceforge.net/projects/gs-fonts/))        
+        + 2004-01-19 (modified time of [Ghostscript fonts](http://sourceforge.net/projects/gs-fonts/))
     - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/)
     - Status: freely available in the internet
     - Source: [http://sourceforge.net/projects/gs-fonts/](http://sourceforge.net/projects/gs-fonts/)
@@ -195,12 +195,12 @@ The licenses used for some of these elements are given in the folder
       + [computerModernSansSerifItalic10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernSansSerifItalic10.pfb)
       + [computerModernTypewriter9.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernTypewriter9.pfb)
       + [computerModernTypewriter10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernTypewriter10.pfb)
-      + [computerModernTypewriterItalic10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernTypewriterItalic10.pfb)      
+      + [computerModernTypewriterItalic10.pfb](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/computerModernTypewriterItalic10.pfb)
     - Version: amsfonts 3.04 [2013/01/14]
     - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/documentClasses/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
     - Status: freely available in the internet
     - Source: [http://www.ctan.org/tex-archive/fonts/amsfonts/](http://www.ctan.org/tex-archive/fonts/amsfonts/)
- 
+
 * LaTeX Package "alphalph"
    - License: [LaTeX Project Public License](http://www.latex-project.org/lppl-1.3.txt), version 1.3c (see file "[meta/licenses/lppl-1.3.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lppl-1.3.txt)")
    - Copyright: Copyright (C) 1999, 2006-2008, 2010, 2011 by [<heiko.oberdiek at googlemail.com>](mailto:heiko.oberdiek@googlemail.com)
@@ -210,7 +210,7 @@ The licenses used for some of these elements are given in the folder
    - Location in Project: [src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/src/main/resources/org/optimizationBenchmarking/utils/document/impl/latex/)
    - Status: freely available in the internet
    - Source: [http://ctan.org/pkg/alphalph](http://ctan.org/pkg/alphalph)
-  
+
 * LaTeX Package "cuted"
    - License: [LaTeX Project Public License](http://www.latex-project.org/lppl-1.3.txt), version 1.3c (see file "[meta/licenses/lppl-1.3.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lppl-1.3.txt)")
    - Copyright: Copyright (C) 1997-2012 by Sigitas Tolušis [<sigitas@vtex.lt>](mailto:sigitas@vtex.lt), VTeX Ltd., Akademijos 4, Vilnius, Lithuania, [http://www.vtex.lt/tex/download/macros/](http://www.vtex.lt/tex/download/macros/)
@@ -223,7 +223,7 @@ The licenses used for some of these elements are given in the folder
       + [http://ctan.org/pkg/cuted](http://ctan.org/pkg/cuted)
       + [http://www.vtex.lt/tex/download/macros/cuted.sty](http://www.vtex.lt/tex/download/macros/cuted.sty)
 
-    
+
 ### Referenced Libraries
 
 *The project* depends on a set of external libraries. These will automatically
@@ -242,65 +242,65 @@ The following libraries are needed by *the project*:
     - Source: [repo.maven.apache.org](http://repo.maven.apache.org/maven2/org/apache/commons/commons-math3/3.3/commons-math3-3.3.jar)
 
 * `freehep-export-2.1.1.jar`
-    - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)") 
+    - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.1.1
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/freehep/freehep-export/2.1.1/freehep-export-2.1.1.jar)
-    
+
 * `freehep-graphics2d-2.1.1.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.1.1
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/freehep/freehep-graphics2d/2.1.1/freehep-graphics2d-2.1.1.jar)
-    
+
 * `freehep-graphicsio-2.1.1.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.1.1
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/freehep/freehep-graphicsio/2.1.1/freehep-graphicsio-2.1.1.jar)
-    
+
 * `freehep-graphicsio-emf-2.1.1.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.1.1
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/freehep/freehep-graphicsio-emf/2.1.1/freehep-graphicsio-emf-2.1.1.jar)
-    
+
 * `freehep-graphicsio-pdf-2.1.1.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.1.1
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/freehep/freehep-graphicsio-pdf/2.1.1/freehep-graphicsio-pdf-2.1.1.jar)
-    
+
 * `freehep-graphicsio-ps-2.1.1.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.1.1
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/freehep/freehep-graphicsio-ps/2.1.1/freehep-graphicsio-ps-2.1.1.jar)
-    
+
 * `freehep-graphicsio-svg-2.1.1.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.1.1
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/freehep/freehep-graphicsio-svg/2.1.1/freehep-graphicsio-svg-2.1.1.jar)
-    
+
 * `freehep-io-2.0.2.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.0.2
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/freehep/freehep-io/2.0.2/freehep-io-2.0.2.jar)
-    
+
 * `freehep-swing-2.0.3.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.0.3
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/freehep/freehep-swing/2.0.3/freehep-swing-2.0.3.jar)
-        
+
 * `freehep-util-2.0.2.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.0.2
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/freehep/freehep-util/2.0.2/freehep-util-2.0.2.jar)
-    
+
 * `freehep-xml-2.1.1.jar`
     - License: [GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1](http://www.gnu.org/copyleft/lesser.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-2.1.txt)")
     - Version: 2.1.1
@@ -312,19 +312,19 @@ The following libraries are needed by *the project*:
     - Version: 1.3
     - Status: freely available in the internet
     - Source: [repo.maven.apache.org](http://repo.maven.apache.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar)
-    
+
 * `jcommon-1.0.23.jar`
-    - License: [GNU Lesser General Public Licence](http://www.gnu.org/licenses/lgpl-3.0.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-3.0.txt)") 
+    - License: [GNU Lesser General Public Licence](http://www.gnu.org/licenses/lgpl-3.0.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-3.0.txt)")
     - Version: 1.0.19
     - Status: freely available in the internet
     - Source: [repo.maven.apache.org](http://repo.maven.apache.org/maven2/org/jfree/jcommon/1.0.23/jcommon-1.0.23.jar)
-    
+
 * `jdom-1.0.jar`
     - License: ?
     - Version: 1.0
     - Status: freely available in the internet
     - Source: [repo.maven.apache.org](http://repo.maven.apache.org/maven2/jdom/jdom/1.0/jdom-1.0.jar)
-    
+
 * `jfreechart-1.0.19.jar`
     - License: [GNU Lesser General Public Licence](http://www.gnu.org/licenses/lgpl-3.0.txt) (see file "[meta/licenses/lgpl-2.1.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/lgpl-3.0.txt)")
     - Version: 1.0.19
@@ -332,17 +332,17 @@ The following libraries are needed by *the project*:
     - Source: [repo.maven.apache.org](http://repo.maven.apache.org/maven2/org/jfree/jfreechart/1.0.19/jfreechart-1.0.19.jar)
 
 * `junit-4.11.jar`
-    - License: [Common Public License Version 1.0](http://www.opensource.org/licenses/cpl1.0.txt) (see file "[meta/licenses/cpl-1.0.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/cpl-1.0.txt)") 
+    - License: [Common Public License Version 1.0](http://www.opensource.org/licenses/cpl1.0.txt) (see file "[meta/licenses/cpl-1.0.txt](http://github.com/optimizationBenchmarking/optimizationBenchmarking/tree/master/meta/licenses/cpl-1.0.txt)")
     - Version: 4.11
     - Status: freely available in the internet
     - Source: [repo.maven.apache.org](http://repo.maven.apache.org/maven2/junit/junit/4.11/junit-4.11.jar)
-            
+
 * `openide-lookup-1.9-patched-1.0.jar`
     - License: ?
     - Version: 1.9-patched-1.0
     - Status: freely available in the internet
     - Source: [java.freehep.org](http://java.freehep.org/maven2/org/netbeans/openide-lookup/1.9-patched-1.0/openide-lookup-1.9-patched-1.0.jar)
-    
+
 
 ## Questions and Problems
 
@@ -350,19 +350,19 @@ If you have any questions about *the project*, want to contribute
 to *the project*, want to discuss licensing terms, or have any
 problem with *the project* itself and/or its licensing terms,
 please contact the project main author via
-[email](mailto:tweise@ustc.edu.cn) (see point "Contact").  
+[email](mailto:tweise@ustc.edu.cn) (see point "Contact").
 
 ## Contact
 
 The main author, copyright holder, and corresponding author of
 *the project* is Dr. Thomas Weise.
 
-**Dr. Thomas Weise**  
-Nature Inspired Computation and Applications Laboratory (NICAL)  
-USTC-Birmingham Joint Research Institute in Intelligent Computation and Its Applications (UBRI)  
-School of Computer Science and Technology (SCST)  
-University of Science and Technology of China (USTC)  
-West Campus, Science and Technology Building, West Wing, Room 601  
-Huangshan Road/Feixi Road, Hefei 230027, Anhui, China  
-Web:    [http://www.it-weise.de/](http://www.it-weise.de/)  
+**Dr. Thomas Weise**
+Nature Inspired Computation and Applications Laboratory (NICAL)
+USTC-Birmingham Joint Research Institute in Intelligent Computation and Its Applications (UBRI)
+School of Computer Science and Technology (SCST)
+University of Science and Technology of China (USTC)
+West Campus, Science and Technology Building, West Wing, Room 601
+Huangshan Road/Feixi Road, Hefei 230027, Anhui, China
+Web:    [http://www.it-weise.de/](http://www.it-weise.de/)
 Email:  [tweise@gmx.de](mailto:tweise@gmx.de), [tweise@ustc.edu.cn](mailto:tweise@ustc.edu.cn)
