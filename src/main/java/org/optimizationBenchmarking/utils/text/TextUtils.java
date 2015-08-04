@@ -160,7 +160,7 @@ public final class TextUtils {
    * @return the lower case
    */
   public static final String toLowerCase(final String string) {
-    return string.toLowerCase(Locale.ENGLISH);
+    return string.toLowerCase(Locale.ROOT);
   }
 
   /**
@@ -171,7 +171,7 @@ public final class TextUtils {
    * @return the upper case
    */
   public static final String toUpperCase(final String string) {
-    return string.toUpperCase(Locale.ENGLISH);
+    return string.toUpperCase(Locale.ROOT);
   }
 
   /**
