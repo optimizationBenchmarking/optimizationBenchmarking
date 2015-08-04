@@ -667,7 +667,7 @@ public final class FontStyleBuilder extends
       idb.append('_');
       idb.append(this.m_size);
       this.m_id = NormalCharTransformer.getInstance().transform(
-          idb.toString(), TextUtils.DEFAULT_NORMALIZER_FORM);
+          idb.toString());
     }
 
     choices.remove(null);// just to be sure

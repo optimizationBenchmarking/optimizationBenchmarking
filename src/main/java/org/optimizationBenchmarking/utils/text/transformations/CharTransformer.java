@@ -83,4 +83,17 @@ public abstract class CharTransformer {
     return r;
   }
 
+  /**
+   * {@linkplain #transform(String, java.text.Normalizer.Form) Transform} a
+   * string using the
+   * {@linkplain org.optimizationBenchmarking.utils.text.TextUtils#DEFAULT_NORMALIZER_FORM
+   * default normalizer form}.
+   *
+   * @param s
+   *          the string
+   * @return the transformed string
+   */
+  public final String transform(final String s) {
+    return this.transform(s, TextUtils.DEFAULT_NORMALIZER_FORM);
+  }
 }

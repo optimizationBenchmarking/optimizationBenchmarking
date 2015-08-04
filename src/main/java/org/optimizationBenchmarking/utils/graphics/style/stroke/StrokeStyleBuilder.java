@@ -77,7 +77,7 @@ public class StrokeStyleBuilder extends PaletteElementBuilder<StrokeStyle> {
 
     if (this.m_id == null) {
       this.m_id = NormalCharTransformer.getInstance().transform(
-          this.m_name, TextUtils.DEFAULT_NORMALIZER_FORM);
+          this.m_name);
     }
   }
 

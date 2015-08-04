@@ -133,8 +133,7 @@ public abstract class CharTransformerTest extends
 
     t = this.getInstance();
     for (final String[] ss : this.getCases()) {
-      Assert.assertEquals(ss[1],
-          t.transform(ss[0], TextUtils.DEFAULT_NORMALIZER_FORM));
+      Assert.assertEquals(ss[1], t.transform(ss[0]));
     }
   }
 
@@ -175,8 +174,7 @@ public abstract class CharTransformerTest extends
         for (;;) {
           try {
             s = String.valueOf((char) (r.nextInt(256)));
-            if (s
-                .equals(t.transform(s, TextUtils.DEFAULT_NORMALIZER_FORM))) {
+            if (s.equals(t.transform(s))) {
               break;
             }
           } catch (final Throwable tt) {
@@ -188,8 +186,7 @@ public abstract class CharTransformerTest extends
         b.append(s);
       }
 
-      Assert.assertEquals(a.toString(),
-          t.transform(b.toString(), TextUtils.DEFAULT_NORMALIZER_FORM));
+      Assert.assertEquals(a.toString(), t.transform(b.toString()));
     }
   }
 

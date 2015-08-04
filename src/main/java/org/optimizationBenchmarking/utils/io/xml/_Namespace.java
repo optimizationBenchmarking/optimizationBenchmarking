@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.io.xml;
 
 import java.net.URI;
 
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.transformations.XMLCharTransformer;
 
 /** a namespace record */
@@ -29,8 +28,7 @@ final class _Namespace {
     super();
     this.m_uri = uri;
     this.m_uriChars = XMLCharTransformer.getInstance()
-        .transform(uri.toString(), TextUtils.DEFAULT_NORMALIZER_FORM)
-        .toCharArray();
+        .transform(uri.toString()).toCharArray();
     this.m_prefixChars = prefixString.toCharArray();
   }
 }

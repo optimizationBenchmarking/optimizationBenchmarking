@@ -94,6 +94,7 @@ public final class Browser extends Tool implements IConfigurableJobTool {
       browsers.put("iceweasel", null); //$NON-NLS-1$
       browsers.put("opera", null); //$NON-NLS-1$
       browsers.put("chromium", null); //$NON-NLS-1$
+      browsers.put("chromium-browser", null); //$NON-NLS-1$
       browsers.put("chrome", null); //$NON-NLS-1$
       browsers.put("safari", null); //$NON-NLS-1$
       browsers.put("netscape", null); //$NON-NLS-1$

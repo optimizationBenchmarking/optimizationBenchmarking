@@ -68,7 +68,7 @@ public class ColorStyle extends Color implements IStyle {
     }
 
     this.m_id = NormalCharTransformer.getInstance().transform(
-        nb.toString(), TextUtils.DEFAULT_NORMALIZER_FORM);
+        nb.toString());
   }
 
   /**
