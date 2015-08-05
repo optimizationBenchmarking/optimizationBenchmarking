@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.io;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -400,7 +401,7 @@ public enum EArchiveType implements IFileType {
   static final ZipOutputStream _makeZipOutputStream(final OutputStream out) {
     final ZipOutputStream zipStream;
 
-    zipStream = new ZipOutputStream(out);
+    zipStream = new ZipOutputStream(out, StandardCharsets.UTF_8);
     zipStream.setMethod(ZipOutputStream.DEFLATED);
     zipStream.setLevel(Deflater.BEST_COMPRESSION);
     return zipStream;
