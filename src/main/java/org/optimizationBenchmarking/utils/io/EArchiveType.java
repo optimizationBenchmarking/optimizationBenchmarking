@@ -15,6 +15,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
@@ -71,14 +72,19 @@ public enum EArchiveType implements IFileType {
 
     /** {@inheritDoc} */
     @Override
-    public final void compressPathToStream(final Path sourcePath,
+    public final void compressPathsToStream(
+        final Iterable<Path> sourcePaths, final Path nameBase,
         final OutputStream destStream) throws IOException {
       final Path res;
+      final __PathZipper zipper;
 
-      res = PathUtils.normalize(sourcePath);
+      res = PathUtils.normalize(nameBase);
       try (final ZipOutputStream zipStream = EArchiveType
           ._makeZipOutputStream(destStream)) {
-        Files.walkFileTree(res, new __PathZipper(res, zipStream));
+        zipper = new __PathZipper(res, zipStream);
+        for (final Path p : sourcePaths) {
+          Files.walkFileTree(PathUtils.normalize(p), zipper);
+        }
       }
     }
 
@@ -171,14 +177,17 @@ public enum EArchiveType implements IFileType {
 
     /** {@inheritDoc} */
     @Override
-    public final void compressPathToStream(final Path sourcePath,
+    public final void compressPathsToStream(
+        final Iterable<Path> sourcePaths, final Path nameBase,
         final OutputStream destStream) throws IOException {
-      final Path res;
+      final __PathCompressor zipper;
 
-      res = PathUtils.normalize(sourcePath);
       try (final GZIPOutputStream zipStream = new GZIPOutputStream(
           destStream)) {
-        Files.walkFileTree(res, new __PathCompressor(zipStream));
+        zipper = new __PathCompressor(zipStream);
+        for (final Path p : sourcePaths) {
+          Files.walkFileTree(PathUtils.normalize(p), zipper);
+        }
       }
     }
 
@@ -231,6 +240,22 @@ public enum EArchiveType implements IFileType {
   }
 
   /**
+   * Compress a set of files or folder structures to an output stream.
+   *
+   * @param sourcePaths
+   *          the files or folders to compress
+   * @param nameBase
+   *          the path used to resolve names against
+   * @param destStream
+   *          the destination stream
+   * @throws IOException
+   *           if I/O fails
+   */
+  public abstract void compressPathsToStream(
+      final Iterable<Path> sourcePaths, final Path nameBase,
+      final OutputStream destStream) throws IOException;
+
+  /**
    * Compress a single file or a whole folder structure to an output
    * stream.
    *
@@ -241,8 +266,11 @@ public enum EArchiveType implements IFileType {
    * @throws IOException
    *           if I/O fails
    */
-  public abstract void compressPathToStream(final Path sourcePath,
-      final OutputStream destStream) throws IOException;
+  public void compressPathToStream(final Path sourcePath,
+      final OutputStream destStream) throws IOException {
+    this.compressPathsToStream(new ArrayListView<>(
+        new Path[] { sourcePath }), sourcePath, destStream);
+  }
 
   /**
    * De-compress a stream to a folder.
