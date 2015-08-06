@@ -784,10 +784,12 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     Configuration config;
 
     logger = this._getLogger();
-    config = this._getConfiguration();
-    if (config != null) {
-      logger = config.getLogger(Configuration.PARAM_LOGGER, logger);
-      config = null;
+    if (logger == null) {
+      config = this._getConfiguration();
+      if (config != null) {
+        logger = config.getLogger(Configuration.PARAM_LOGGER, logger);
+        config = null;
+      }
     }
     if (logger == null) {
       logger = Configuration.getGlobalLogger();

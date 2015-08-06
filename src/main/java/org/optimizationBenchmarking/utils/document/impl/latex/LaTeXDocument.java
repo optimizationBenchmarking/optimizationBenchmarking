@@ -1068,7 +1068,7 @@ public final class LaTeXDocument extends Document {
       if (job.canCompileToPDF()) {
         job.call();
         if ((logger != null) && (logger.isLoggable(Level.INFO))) {
-          logger.warning(//
+          logger.info(//
               "Compilation of LaTeX document " //$NON-NLS-1$
                   + this.toString() + //
                   " has been completed without error (seemingly).");//$NON-NLS-1$
