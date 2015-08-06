@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -20,14 +21,16 @@ final class _InputJob extends _IOJob {
    *          the logger
    * @param tool
    *          the owning tool
+   * @param basePath
+   *          the base path used for path and file resolution
    * @param data
    *          the source data
    * @param sources
    *          the sources
    */
   _InputJob(final Logger logger, final FileInputTool<?> tool,
-      final Object data, final _Location[] sources) {
-    super(logger, tool, data);
+      final Object data, final Path basePath, final _Location[] sources) {
+    super(logger, tool, basePath, data);
     if ((sources == null) || (sources.length <= 0)) {
       throw new IllegalArgumentException(
           "Source list must not be null or empty."); //$NON-NLS-1$

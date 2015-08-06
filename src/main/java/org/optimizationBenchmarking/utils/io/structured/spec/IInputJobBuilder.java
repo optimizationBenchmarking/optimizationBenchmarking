@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.io.structured.spec;
 
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -19,6 +20,10 @@ public interface IInputJobBuilder<D> extends IIOJobBuilder {
   /** {@inheritDoc} */
   @Override
   public abstract IInputJobBuilder<D> setLogger(final Logger logger);
+
+  /** {@inheritDoc} */
+  @Override
+  public abstract IInputJobBuilder<D> setBasePath(final Path path);
 
   /**
    * Set the destination data object, i.e., the object to be filled with

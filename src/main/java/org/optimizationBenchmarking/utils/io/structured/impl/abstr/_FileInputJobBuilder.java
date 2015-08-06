@@ -470,7 +470,7 @@ class _FileInputJobBuilder<DT, JBT extends _FileInputJobBuilder<DT, JBT>>
     ar = this.m_sources.toArray(new _Location[this.m_sources.size()]);
     this.m_sources = null;
     return new _InputJob(this.getLogger(),
-        ((FileInputTool) (this.m_tool)), this.m_dest, ar);
+        ((FileInputTool) (this.m_tool)), this.m_dest, this.m_basePath, ar);
   }
 
   /** {@inheritDoc} */

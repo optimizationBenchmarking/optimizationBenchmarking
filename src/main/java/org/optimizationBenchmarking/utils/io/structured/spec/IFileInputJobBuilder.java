@@ -26,6 +26,10 @@ public interface IFileInputJobBuilder<D> extends IInputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
+  public abstract IFileInputJobBuilder<D> setBasePath(final Path path);
+
+  /** {@inheritDoc} */
+  @Override
   public abstract IFileInputJobBuilder<D> setLogger(final Logger logger);
 
   /** {@inheritDoc} */

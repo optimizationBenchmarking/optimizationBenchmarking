@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -22,6 +23,8 @@ final class _OutputJob extends _IOJob {
    *          the logger
    * @param tool
    *          the owning tool
+   * @param basePath
+   *          the base path used for path and file resolution
    * @param data
    *          the source data
    * @param dest
@@ -30,9 +33,9 @@ final class _OutputJob extends _IOJob {
    *          the listener
    */
   _OutputJob(final Logger logger, final FileOutputTool<?> tool,
-      final Object data, final _Location dest,
+      final Path basePath, final Object data, final _Location dest,
       final IFileProducerListener listener) {
-    super(logger, tool, data);
+    super(logger, tool, basePath, data);
 
     if (dest == null) {
       throw new IllegalArgumentException("Destination must not be null."); //$NON-NLS-1$

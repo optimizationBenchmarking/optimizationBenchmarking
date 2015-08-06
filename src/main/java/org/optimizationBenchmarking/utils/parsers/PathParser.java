@@ -16,12 +16,33 @@ public class PathParser extends Parser<Path> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
-  /** the globally shared instance of the path parser */
-  public static final PathParser INSTANCE = new PathParser();
+  /**
+   * The default instance of the path parser resolves files aginst the
+   * current directory
+   */
+  public static final PathParser INSTANCE = new PathParser(null);
 
-  /** create the parser */
-  protected PathParser() {
+  /** the base path to resolve non-absolute paths against */
+  private final Path m_basePath;
+
+  /**
+   * create the parser
+   *
+   * @param basePath
+   *          the base path to resolve non-absolute paths against
+   */
+  public PathParser(final Path basePath) {
     super();
+    this.m_basePath = basePath;
+  }
+
+  /**
+   * Get the base path to resolve non-absolute paths against
+   *
+   * @return the base path to resolve non-absolute paths against
+   */
+  public final Path getBasePath() {
+    return this.m_basePath;
   }
 
   /** {@inheritDoc} */
@@ -36,7 +57,7 @@ public class PathParser extends Parser<Path> {
       SecurityException {
     final Path f;
 
-    f = PathUtils.normalize(Paths.get(string));
+    f = PathUtils.normalize(string, this.m_basePath);
     this.validate(f);
     return f;
   }
@@ -86,26 +107,8 @@ public class PathParser extends Parser<Path> {
       }
     }
 
-    ret = PathUtils.normalize(ret);
+    ret = PathUtils.normalize(ret, this.m_basePath);
     this.validate(ret);
     return ret;
-  }
-
-  /**
-   * write replace
-   *
-   * @return the replacement
-   */
-  private final Object writeReplace() {
-    return PathParser.INSTANCE;
-  }
-
-  /**
-   * read resolve
-   *
-   * @return the replacement
-   */
-  private final Object readResolve() {
-    return PathParser.INSTANCE;
   }
 }

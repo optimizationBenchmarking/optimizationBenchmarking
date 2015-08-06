@@ -32,6 +32,10 @@ public interface IXMLInputJobBuilder<D> extends ITextInputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
+  public abstract IXMLInputJobBuilder<D> setBasePath(final Path path);
+
+  /** {@inheritDoc} */
+  @Override
   public abstract IXMLInputJobBuilder<D> setDestination(final D destination);
 
   /** {@inheritDoc} */

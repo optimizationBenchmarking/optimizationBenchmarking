@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-import java.nio.file.Path;
 import java.util.Collection;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
@@ -20,9 +19,6 @@ public class ListParser<ET> extends
 
   /** the string list parser */
   public static final ListParser<String> STRING_LIST_PARSER = new _StringListParser();
-
-  /** the globally shared file set parser */
-  public static final ListParser<Path> PATH_LIST_PARSER = new _PathListParser();
 
   /**
    * create the parser

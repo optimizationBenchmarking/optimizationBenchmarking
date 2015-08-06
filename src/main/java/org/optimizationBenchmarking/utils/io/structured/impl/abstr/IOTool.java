@@ -434,8 +434,8 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
   private final void __pathPath(final IOJob job, final D data,
       final Path path, final StreamEncoding<?, ?> encoding,
       final EArchiveType archiveType) throws Throwable {
-    this._pathNormalized(job, data, PathUtils.normalize(path), encoding,
-        archiveType);
+    this._pathNormalized(job, data,
+        PathUtils.normalize(path, job.m_basePath), encoding, archiveType);
   }
 
   /**
@@ -457,8 +457,8 @@ public abstract class IOTool<D> extends Tool implements IIOTool {
   private final void __pathString(final IOJob job, final D data,
       final String path, final StreamEncoding<?, ?> encoding,
       final EArchiveType archiveType) throws Throwable {
-    this._pathNormalized(job, data, PathUtils.normalize(path), encoding,
-        archiveType);
+    this._pathNormalized(job, data,
+        PathUtils.normalize(path, job.m_basePath), encoding, archiveType);
   }
 
   /**

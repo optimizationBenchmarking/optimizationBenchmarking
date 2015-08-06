@@ -31,6 +31,10 @@ public interface IStreamOutputJobBuilder<D> extends
 
   /** {@inheritDoc} */
   @Override
+  public abstract IStreamOutputJobBuilder<D> setBasePath(final Path path);
+
+  /** {@inheritDoc} */
+  @Override
   public abstract IStreamOutputJobBuilder<D> setLogger(final Logger logger);
 
   /** {@inheritDoc} */

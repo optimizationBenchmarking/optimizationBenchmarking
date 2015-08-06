@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.utils.io.structured.spec.IIOJob;
@@ -21,11 +22,14 @@ abstract class _IOJob extends IOJob implements IIOJob {
    *          the logger
    * @param tool
    *          the owning tool
+   * @param basePath
+   *          the base path used for path and file resolution
    * @param data
    *          the source/dest data
    */
-  _IOJob(final Logger logger, final IOTool<?> tool, final Object data) {
-    super(logger, tool);
+  _IOJob(final Logger logger, final IOTool<?> tool, final Path basePath,
+      final Object data) {
+    super(logger, tool, basePath);
     if (data == null) {
       throw new IllegalArgumentException("Data must not be null."); //$NON-NLS-1$
     }

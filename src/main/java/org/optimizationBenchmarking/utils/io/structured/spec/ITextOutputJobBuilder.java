@@ -33,6 +33,10 @@ public interface ITextOutputJobBuilder<D> extends
 
   /** {@inheritDoc} */
   @Override
+  public abstract ITextOutputJobBuilder<D> setBasePath(final Path path);
+
+  /** {@inheritDoc} */
+  @Override
   public abstract ITextOutputJobBuilder<D> setLogger(final Logger logger);
 
   /** {@inheritDoc} */

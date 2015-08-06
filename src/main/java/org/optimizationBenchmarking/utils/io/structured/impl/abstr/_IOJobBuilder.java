@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 
+import java.nio.file.Path;
+
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.spec.IIOJob;
@@ -19,6 +21,9 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
   /** the tool */
   final IOTool<?> m_tool;
 
+  /** the base path */
+  Path m_basePath;
+
   /**
    * create the IIOJobBuilder
    *
@@ -35,6 +40,14 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
   @Override
   protected final String getParameterPrefix() {
     return this.m_tool.getParameterPrefix();
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
+  @Override
+  public final JBT setBasePath(final Path path) {
+    this.m_basePath = path;
+    return ((JBT) this);
   }
 
   /**

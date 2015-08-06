@@ -37,6 +37,10 @@ public interface IXMLOutputJobBuilder<D> extends ITextOutputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
+  public abstract IXMLOutputJobBuilder<D> setBasePath(final Path path);
+
+  /** {@inheritDoc} */
+  @Override
   public abstract IXMLOutputJobBuilder<D> setSource(final D source);
 
   /** {@inheritDoc} */

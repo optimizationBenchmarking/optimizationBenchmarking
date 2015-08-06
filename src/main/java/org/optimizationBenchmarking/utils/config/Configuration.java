@@ -22,6 +22,7 @@ import org.optimizationBenchmarking.utils.parsers.InstanceParser;
 import org.optimizationBenchmarking.utils.parsers.ListParser;
 import org.optimizationBenchmarking.utils.parsers.LoggerParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
+import org.optimizationBenchmarking.utils.parsers.PathListParser;
 import org.optimizationBenchmarking.utils.parsers.PathParser;
 import org.optimizationBenchmarking.utils.parsers.StringParser;
 import org.optimizationBenchmarking.utils.text.ITextable;
@@ -543,7 +544,7 @@ public final class Configuration implements Serializable, ITextable {
   public final ArrayListView<Path> getPathList(final String key,
       final ArrayListView<Path> def) {
     return this.get(key,//
-        ListParser.PATH_LIST_PARSER, (ArraySetView) ((def != null) ? def
+        PathListParser.INSTANCE, (ArraySetView) ((def != null) ? def
             : ArraySetView.EMPTY_SET_VIEW));
   }
 

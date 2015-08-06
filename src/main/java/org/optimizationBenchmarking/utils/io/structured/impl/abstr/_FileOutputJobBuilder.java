@@ -212,8 +212,8 @@ class _FileOutputJobBuilder<DT, JBT extends _FileOutputJobBuilder<DT, JBT>>
   @Override
   final _OutputJob _doCreate() {
     return new _OutputJob(this.getLogger(),
-        ((FileOutputTool) (this.m_tool)), this.m_source, this.m_dest,
-        this.m_listener);
+        ((FileOutputTool) (this.m_tool)), this.m_basePath, this.m_source,
+        this.m_dest, this.m_listener);
   }
 
   /** {@inheritDoc} */

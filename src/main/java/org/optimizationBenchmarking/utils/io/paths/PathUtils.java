@@ -173,13 +173,33 @@ public final class PathUtils {
   }
 
   /**
-   * Try to find a canonical version of a given path
+   * Try to find a canonical version of a given path. If the path is
+   * relative, it is resolved against the current directory.
    *
    * @param path
    *          the path
    * @return the canonicalized version
+   * @see #normalize(Path)
+   * @see #normalize(String, Path)
    */
   public static final Path normalize(final String path) {
+    return PathUtils.normalize(path, null);
+  }
+
+  /**
+   * Try to find a canonical version of a given path by using a base path
+   * for resolution, as outlined in {@link #normalize(Path, Path)}.
+   *
+   * @param path
+   *          the path
+   * @param basePath
+   *          the base path, or {@code null} for normalization vs. the
+   *          current directory
+   * @return the canonicalized version
+   * @see #normalize(Path, Path)
+   * @see #normalize(String)
+   */
+  public static final Path normalize(final String path, final Path basePath) {
     final String s;
 
     s = TextUtils.prepare(path);
@@ -188,22 +208,47 @@ public final class PathUtils {
           "Path cannot be null, empty, or composed only of whitespace but is '" //$NON-NLS-1$
               + s + "'.");//$NON-NLS-1$
     }
-    return PathUtils.normalize(Paths.get(path));
+    return PathUtils.normalize(Paths.get(path), basePath);
   }
 
   /**
-   * Try to find a canonical version of a given path
+   * Try to find a canonical version of a given path. If the path is
+   * relative, it is resolved against the current directory.
    *
    * @param path
    *          the path
    * @return the canonicalized version
+   * @see #normalize(Path, Path)
    */
   public static final Path normalize(final Path path) {
+    return PathUtils.normalize(path, null);
+  }
+
+  /**
+   * Normalize a given path. If the path is absolute, it will be normalized
+   * directly. If it is not, it will be made into an absolute path. For
+   * this purpose, you can provide a {@code basePath} against which
+   * {@code path} is resolved. If no such base path is provided, it will be
+   * normalized against the current directory.
+   *
+   * @param path
+   *          the path
+   * @param basePath
+   *          the base path, or {@code null} for normalization vs. the
+   *          current directory
+   * @return the normalized path
+   * @see #normalize(Path)
+   */
+  public static final Path normalize(final Path path, final Path basePath) {
     Path before, p, q;
 
     PathUtils.__pathNotNull(path);
 
     before = path;
+    if ((!(path.isAbsolute())) && (basePath != null)) {
+      before = basePath.resolve(path);
+    }
+
     for (;;) {
       p = before;
 
@@ -239,6 +284,7 @@ public final class PathUtils {
       }
       before = p;
     }
+
   }
 
   /**
@@ -1237,7 +1283,7 @@ public final class PathUtils {
 
     /** the directory parser */
     private __DirPathParser() {
-      super();
+      super(null);
     }
 
     /** {@inheritDoc} */

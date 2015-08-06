@@ -31,6 +31,10 @@ public interface ITextInputJobBuilder<D> extends IStreamInputJobBuilder<D> {
 
   /** {@inheritDoc} */
   @Override
+  public abstract ITextInputJobBuilder<D> setBasePath(final Path path);
+
+  /** {@inheritDoc} */
+  @Override
   public abstract ITextInputJobBuilder<D> setDestination(
       final D destination);
 

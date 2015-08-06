@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,6 +13,9 @@ import org.optimizationBenchmarking.utils.tools.impl.abstr.ToolJob;
 
 /** The base class for I/O jobs */
 public class IOJob extends ToolJob {
+
+  /** the base path used for path and file resolution */
+  final Path m_basePath;
 
   /** the long id */
   long m_lid;
@@ -36,11 +40,14 @@ public class IOJob extends ToolJob {
    *          the logger
    * @param tool
    *          the owning tool
+   * @param basePath
+   *          the base path used for path and file resolution
    */
-  IOJob(final Logger logger, final IOTool<?> tool) {
+  IOJob(final Logger logger, final IOTool<?> tool, final Path basePath) {
     super(logger);
     _IOJobBuilder._validateTool(tool);
     this.m_tool = tool;
+    this.m_basePath = basePath;
   }
 
   /** {@inheritDoc} */

@@ -31,6 +31,10 @@ public interface IFileOutputJobBuilder<D> extends IOutputJobBuilder<D>,
 
   /** {@inheritDoc} */
   @Override
+  public abstract IFileOutputJobBuilder<D> setBasePath(final Path path);
+
+  /** {@inheritDoc} */
+  @Override
   public abstract IFileOutputJobBuilder<D> setSource(final D source);
 
   /**
