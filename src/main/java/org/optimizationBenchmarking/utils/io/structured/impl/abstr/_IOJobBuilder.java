@@ -2,8 +2,10 @@ package org.optimizationBenchmarking.utils.io.structured.impl.abstr;
 
 import java.nio.file.Path;
 
+import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.io.EArchiveType;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
+import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.structured.spec.IIOJob;
 import org.optimizationBenchmarking.utils.io.structured.spec.IIOJobBuilder;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -46,8 +48,28 @@ abstract class _IOJobBuilder<JBT extends _IOJobBuilder<JBT>> extends
   @SuppressWarnings("unchecked")
   @Override
   public final JBT setBasePath(final Path path) {
-    this.m_basePath = path;
+    final Path use;
+
+    if (path != null) {
+      use = PathUtils.normalize(path);
+      if (use == null) {
+        throw new IllegalArgumentException(//
+            "Cannot set a non-null base path which normalizes to null, but '" //$NON-NLS-1$
+                + use + "' does."); //$NON-NLS-1$
+      }
+    } else {
+      use = null;
+    }
+
+    this.m_basePath = use;
     return ((JBT) this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public JBT configure(final Configuration config) {
+    super.configure(config);
+    return this.setBasePath(config.getBasePath());
   }
 
   /**

@@ -105,10 +105,25 @@ public final class Configuration implements Serializable, ITextable {
   /** the configuration data */
   final _ConfigMap m_data;
 
+  /** the path parser */
+  PathParser m_pathParser;
+
   /** create a configuration within an owning scope */
   Configuration() {
     super();
     this.m_data = new _ConfigMap();
+    this.m_pathParser = PathParser.INSTANCE;
+  }
+
+  /**
+   * Get the base path against which the paths in this configuration are
+   * resolved.
+   *
+   * @return the base path against which the paths in this configuration
+   *         are resolved
+   */
+  public final Path getBasePath() {
+    return this.m_pathParser.getBasePath();
   }
 
   /**
@@ -327,7 +342,7 @@ public final class Configuration implements Serializable, ITextable {
    * @return the canonical path
    */
   public final Path getPath(final String key, final Path def) {
-    return this.get(key, PathParser.INSTANCE, def);
+    return this.get(key, this.m_pathParser, def);
   }
 
   /**
@@ -543,9 +558,17 @@ public final class Configuration implements Serializable, ITextable {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public final ArrayListView<Path> getPathList(final String key,
       final ArrayListView<Path> def) {
-    return this.get(key,//
-        PathListParser.INSTANCE, (ArraySetView) ((def != null) ? def
-            : ArraySetView.EMPTY_SET_VIEW));
+    final PathParser parser;
+
+    parser = this.m_pathParser;
+
+    return this
+        .get(
+            key,//
+            ((parser.getBasePath() == null) ? PathListParser.INSTANCE//
+                : new PathListParser(parser)),//
+            (ArraySetView) ((def != null) ? def
+                : ArraySetView.EMPTY_SET_VIEW));
   }
 
   /**

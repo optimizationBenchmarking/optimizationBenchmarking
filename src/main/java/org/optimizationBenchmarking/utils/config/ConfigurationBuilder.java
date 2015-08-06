@@ -7,9 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.parsers.PathParser;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -22,6 +24,8 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
   private static final int FLAG_DATA_HAS_BEEN_SET = (ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET << 1);
   /** the data has been configured */
   private static final int FLAG_HAS_BEEN_CONFIGURED = (ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET << 1);
+  /** the base path has been set */
+  private static final int FLAG_BASE_PATH_HAS_BEEN_SET = (ConfigurationBuilder.FLAG_HAS_BEEN_CONFIGURED << 1);
 
   /** the configuration being built */
   final Configuration m_data;
@@ -65,13 +69,16 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
       final int flagIndex, final MemoryTextOutput append) {
     switch (flagValue) {
       case FLAG_OWNER_HAS_BEEN_SET: {
-        append.append("ownerHasBeenSet");return; //$NON-NLS-1$
+        append.append("hasOwner");return; //$NON-NLS-1$
       }
       case FLAG_DATA_HAS_BEEN_SET: {
-        append.append("dataHasBeenSet");return; //$NON-NLS-1$
+        append.append("hasData");return; //$NON-NLS-1$
       }
       case FLAG_HAS_BEEN_CONFIGURED: {
         append.append("hasBeenConfigured");return; //$NON-NLS-1$
+      }
+      case FLAG_BASE_PATH_HAS_BEEN_SET: {
+        append.append("hasBasePath");return; //$NON-NLS-1$
       }
       default: {
         super.fsmFlagsAppendName(flagValue, flagIndex, append);
@@ -93,10 +100,45 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
 
     this.fsmFlagsAssertAndUpdate(
         FSM.FLAG_NOTHING,
-        (ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET | ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET),
+        (ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET | //
+            ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET | //
+        ConfigurationBuilder.FLAG_BASE_PATH_HAS_BEEN_SET),
         ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET, FSM.FLAG_NOTHING);
 
     this.m_data.m_owner = owner;
+    this.m_data.m_pathParser = owner.m_pathParser;
+  }
+
+  /**
+   * Set the base path
+   *
+   * @param basePath
+   *          the base path
+   */
+  public synchronized final void setBasePath(final Path basePath) {
+    final Path base;
+
+    if (basePath != null) {
+      base = PathUtils.normalize(basePath);
+      if (base == null) {
+        throw new IllegalArgumentException(//
+            "Cannot set a non-null base path which normalizes to null, but '" //$NON-NLS-1$
+                + basePath + "' does."); //$NON-NLS-1$
+      }
+    } else {
+      base = null;
+    }
+
+    this.fsmFlagsAssertAndUpdate(
+        FSM.FLAG_NOTHING,
+        (ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET | //
+        ConfigurationBuilder.FLAG_BASE_PATH_HAS_BEEN_SET),
+        ConfigurationBuilder.FLAG_BASE_PATH_HAS_BEEN_SET, FSM.FLAG_NOTHING);
+
+    if (!(EComparison.equals(base, this.m_data.m_pathParser.getBasePath()))) {
+      this.m_data.m_pathParser = ((base == null) ? PathParser.INSTANCE
+          : new PathParser(base));
+    }
   }
 
   /**
@@ -105,7 +147,8 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
   public synchronized final void setDebug() {
     this.fsmFlagsAssertAndUpdate(
         FSM.FLAG_NOTHING,
-        (ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET | ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET),
+        (ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET | //
+        ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET),
         ConfigurationBuilder.FLAG_OWNER_HAS_BEEN_SET, FSM.FLAG_NOTHING);
     this.m_data.m_owner = null;
   }
@@ -136,7 +179,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
     if (isLocked) {
       throw new IllegalStateException(//
           "There has already been a read access to '" + key + //$NON-NLS-1$
-          "', so it cannot be changed anymore."); //$NON-NLS-1$
+              "', so it cannot be changed anymore."); //$NON-NLS-1$
     }
   }
 
@@ -262,7 +305,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
         copy.putAll(map);
 
         propertiesInput.use().addPath(configFile).setDestination(this)
-        .create().call();
+            .create().call();
       }
     }
 
@@ -279,7 +322,7 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
         }
 
         xmlInput.use().addPath(configFile).setDestination(this).create()
-        .call();
+            .call();
       }
     }
 
