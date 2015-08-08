@@ -45,7 +45,7 @@ class _StringIterator extends BasicIterator<String> {
 
   /** {@inheritDoc} */
   @Override
-  public void remove() {
+  public final void remove() {
     throw new UnsupportedOperationException(//
         "Cannot remove elements from a string iteration."); //$NON-NLS-1$
   }

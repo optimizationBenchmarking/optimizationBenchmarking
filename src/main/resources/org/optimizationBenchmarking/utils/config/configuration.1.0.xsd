@@ -24,6 +24,5 @@
 			<attribute name="version" type="string" fixed="1.0" />
 		</complexType>
 	</element>
-
-
+	
 </schema>

@@ -41,9 +41,33 @@ public abstract class CharTransformer {
    *         {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
    *         instance which can be written to and which transforms all text
    *         it receives and writes it to {@code out}
+   * @see #transform(ITextOutput)
    */
   public abstract AbstractTextOutput transform(final ITextOutput out,
       final Normalizer.Form form);
+
+  /**
+   * Create a transformation wrapper around a given
+   * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
+   * {@code out}. The new wrapper will transform all character data that it
+   * receives according to the rules of this character transformation
+   * definition and then pass them on to {@code out} using the
+   * {@linkplain org.optimizationBenchmarking.utils.text.TextUtils#DEFAULT_NORMALIZER_FORM
+   * default normalizer form}.
+   *
+   * @param out
+   *          the
+   *          {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
+   *          to receive the transformed character data
+   * @return the new
+   *         {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
+   *         instance which can be written to and which transforms all text
+   *         it receives and writes it to {@code out}
+   * @see #transform(ITextOutput, java.text.Normalizer.Form)
+   */
+  public final AbstractTextOutput transform(final ITextOutput out) {
+    return this.transform(out, TextUtils.DEFAULT_NORMALIZER_FORM);
+  }
 
   /**
    * Transform a string
@@ -54,6 +78,7 @@ public abstract class CharTransformer {
    *          a normalization form to be applied before the text
    *          transformation, or {@code null} if none needs to be applied
    * @return the transformed string
+   * @see #transform(String)
    */
   public final String transform(final String s, final Normalizer.Form form) {
     String t, r;
@@ -89,6 +114,7 @@ public abstract class CharTransformer {
    * {@linkplain org.optimizationBenchmarking.utils.text.TextUtils#DEFAULT_NORMALIZER_FORM
    * default normalizer form}.
    *
+   * @see #transform(String, java.text.Normalizer.Form)
    * @param s
    *          the string
    * @return the transformed string
