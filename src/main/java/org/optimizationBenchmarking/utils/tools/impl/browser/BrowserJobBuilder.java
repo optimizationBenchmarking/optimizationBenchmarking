@@ -45,9 +45,12 @@ public final class BrowserJobBuilder extends
   public final BrowserJob create() throws IOException {
     final Path executable, parent, batch;
     final ExternalProcessBuilder epb;
-    final String url, arg;
+    final String url;
     final TempDir temp;
     final Logger logger;
+    final String[] args;
+    final _BrowserDesc desc;
+    boolean reliable;
 
     if (this.m_url == null) {
       throw new IllegalStateException(//
@@ -57,7 +60,6 @@ public final class BrowserJobBuilder extends
     url = this.m_url.toExternalForm();
 
     executable = Browser._BrowserPath.PATH;
-    arg = Browser._BrowserPath.ARGUMENT;
     epb = ProcessExecutor.getInstance().use();
 
     logger = this.getLogger();
@@ -66,60 +68,76 @@ public final class BrowserJobBuilder extends
     epb.setStdIn(EProcessStream.IGNORE);
     epb.setStdOut(EProcessStream.IGNORE);
 
-    if (EOSFamily.DETECTED == EOSFamily.Windows) {
-      // For windows, we need a special work-around since the IE may launch
-      // but we cannot wait for it to finish directly. The same problem
-      // appears with opera.
-      // See http://stackoverflow.com/questions/3349922
+    desc = Browser._BrowserPath.DESC;
+    reliable = desc.m_reliable;
+    make: {
+      if (desc.m_needsWinBatchWrap) { //
+        if (EOSFamily.DETECTED == EOSFamily.Windows) {
+          // For windows, we need a special work-around since the IE or
+          // chrome may launch but we cannot wait for it to finish
+          // directly. The same problem appears with opera.
+          // See http://stackoverflow.com/questions/3349922
 
-      temp = new TempDir();
-      parent = temp.getPath();
-      batch = PathUtils.createPathInside(parent, "batch.bat"); //$NON-NLS-1$
+          temp = new TempDir();
+          parent = temp.getPath();
+          batch = PathUtils.createPathInside(parent, "batch.bat"); //$NON-NLS-1$
 
-      try (final OutputStream os = PathUtils.openOutputStream(batch)) {
-        try (final OutputStreamWriter fow = new OutputStreamWriter(os)) {
-          try (final BufferedWriter bw = new BufferedWriter(fow)) {
-            bw.write("start \"\" /wait \""); //$NON-NLS-1$
-            bw.write(PathUtils.getPhysicalPath(executable, false));
-            bw.write('"');
-            bw.write(' ');
+          try (final OutputStream os = PathUtils.openOutputStream(batch)) {
+            try (final OutputStreamWriter fow = new OutputStreamWriter(os)) {
+              try (final BufferedWriter bw = new BufferedWriter(fow)) {
+                bw.write("start \"\" /wait \""); //$NON-NLS-1$
+                bw.write(PathUtils.getPhysicalPath(executable, false));
+                bw.write('"');
+                bw.write(' ');
 
-            if (arg != null) {
-              bw.write(arg);
-              bw.write(' ');
+                args = desc.m_parameters;
+                if (args != null) {
+                  for (final String arg : args) {
+                    bw.write(arg);
+                    bw.write(' ');
+                  }
+                }
+
+                bw.write('"');
+                bw.write(url);
+                bw.write('"');
+                bw.newLine();
+              }
             }
-
-            bw.write('"');
-            bw.write(url);
-            bw.write('"');
-            bw.newLine();
           }
+
+          if ((logger != null) && logger.isLoggable(Level.FINE)) {
+            logger.fine(//
+                "Launching browser via batch '" + batch.toString() + //$NON-NLS-1$
+                    "' as work-around for browser processes detaching themselves.");//$NON-NLS-1$
+          }
+
+          epb.setExecutable(batch);
+          epb.setDirectory(parent);
+          break make;
         }
+        // if we are not under windows and run directly, we cannot rely on
+        // the browser
+        reliable = false;
       }
 
-      if ((logger != null) && logger.isLoggable(Level.FINE)) {
-        logger.fine(//
-            "Launching browser via batch '" + batch.toString() + //$NON-NLS-1$
-                "' as work-around for browser processes detaching themselves.");//$NON-NLS-1$
-      }
-
-      epb.setExecutable(batch);
-      epb.setDirectory(parent);
-    } else {
       epb.setExecutable(executable);
       parent = executable.getParent();
       if (parent != null) {
         epb.setDirectory(parent);
       }
-      if (arg != null) {
-        epb.addStringArgument(arg);
+
+      args = desc.m_parameters;
+      if (args != null) {
+        for (final String arg : args) {
+          epb.addStringArgument(arg);
+        }
       }
       epb.addStringArgument(url);
       temp = null;
     }
 
-    return new BrowserJob(this.getLogger(), epb.create(), temp,
-        (arg != null));
+    return new BrowserJob(this.getLogger(), epb.create(), temp, reliable);
   }
 
   /**

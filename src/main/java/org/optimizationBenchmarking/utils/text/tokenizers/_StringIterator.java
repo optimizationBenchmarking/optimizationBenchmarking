@@ -2,10 +2,10 @@ package org.optimizationBenchmarking.utils.text.tokenizers;
 
 import java.util.NoSuchElementException;
 
-import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
+import org.optimizationBenchmarking.utils.collections.iterators.IterableIterator;
 
 /** An internal base class for string tokenizers . */
-class _StringIterator extends BasicIterator<String> {
+class _StringIterator extends IterableIterator<String> {
 
   /** the string */
   final String m_string;
@@ -22,7 +22,7 @@ class _StringIterator extends BasicIterator<String> {
    * @param string
    *          the string to iterate over
    */
-  public _StringIterator(final String string) {
+  _StringIterator(final String string) {
     super();
 
     this.m_string = string;

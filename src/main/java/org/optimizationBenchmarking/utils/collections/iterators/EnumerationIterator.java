@@ -8,7 +8,7 @@ import java.util.Enumeration;
  * @param <T>
  *          the type parameter
  */
-public final class EnumerationIterator<T> extends BasicIterator<T> {
+public final class EnumerationIterator<T> extends IterableIterator<T> {
 
   /** the enumeration */
   private final Enumeration<? extends T> m_enum;

@@ -31,7 +31,6 @@ public class StrokePaletteXMLHandler extends DelegatingHandler {
       final String localName, final String qName,
       final Attributes attributes) throws SAXException {
     final String dash;
-    final WordBasedStringIterator components;
     StrokeStyleBuilder builder;
 
     if ((uri == null)
@@ -75,9 +74,8 @@ public class StrokePaletteXMLHandler extends DelegatingHandler {
           StrokePaletteXML.NAMESPACE, StrokePaletteXML.ATTRIBUTE_DASH);
 
       if (dash != null) {
-        components = new WordBasedStringIterator(dash);
-        while (components.hasNext()) {
-          builder.addDash(Float.parseFloat(components.next()));
+        for (final String flt : new WordBasedStringIterator(dash)) {
+          builder.addDash(Float.parseFloat(flt));
         }
       }
 

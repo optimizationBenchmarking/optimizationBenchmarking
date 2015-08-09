@@ -242,9 +242,8 @@ public final class REngine extends MathEngine {
   public IMatrix getAsMatrix(final IVariable variable) {
     final BufferedWriter out;
     final BufferedReader in;
-    String line, token;
+    String line;
     MatrixBuilder mb;
-    WordBasedStringIterator iterator;
     int n;
 
     try {
@@ -267,9 +266,8 @@ public final class REngine extends MathEngine {
       iterateLines: while ((line = in.readLine()) != null) {
         if (line.contains("XXX")) {break iterateLines;} //$NON-NLS-1$
         n = 0;
-        iterator = new WordBasedStringIterator(line);
-        iterateTokens: while (iterator.hasNext()) {
-          token = iterator.next();
+        iterateTokens: for (final String token : new WordBasedStringIterator(
+            line)) {
           n++;
           if (RExpression.NAN.equalsIgnoreCase(token)) {
             mb.append(Double.NaN);

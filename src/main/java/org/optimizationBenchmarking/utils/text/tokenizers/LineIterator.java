@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 
-import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
+import org.optimizationBenchmarking.utils.collections.iterators.IterableIterator;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
  * replaced with an implementation working on the string directly.
  * </p>
  */
-public final class LineIterator extends BasicIterator<String> {
+public final class LineIterator extends IterableIterator<String> {
 
   /** the reader */
   private final BufferedReader m_br;

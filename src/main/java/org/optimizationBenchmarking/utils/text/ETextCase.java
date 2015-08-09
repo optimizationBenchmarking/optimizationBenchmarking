@@ -384,21 +384,19 @@ public enum ETextCase {
    */
   public final ETextCase appendWords(final String words,
       final ITextOutput textOut) {
-    final WordBasedStringIterator it;
     ETextCase t;
     boolean first;
 
-    it = new WordBasedStringIterator(words);
     t = this;
     first = true;
 
-    while (it.hasNext()) {
+    for (final String word : new WordBasedStringIterator(words)) {
       if (first) {
         first = false;
       } else {
         textOut.append(' ');
       }
-      t = t.appendWord(it.next(), textOut);
+      t = t.appendWord(word, textOut);
     }
 
     return t;

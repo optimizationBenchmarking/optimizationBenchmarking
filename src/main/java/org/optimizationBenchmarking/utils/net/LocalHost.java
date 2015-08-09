@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-import org.optimizationBenchmarking.utils.collections.iterators.EnumerationIterable;
+import org.optimizationBenchmarking.utils.collections.iterators.EnumerationIterator;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -163,10 +163,10 @@ public final class LocalHost {
                   lerror, false, RethrowMode.DONT_RETHROW);
         }
 
-        for (final NetworkInterface netint : new EnumerationIterable<>(
+        for (final NetworkInterface netint : new EnumerationIterator<>(
             NetworkInterface.getNetworkInterfaces())) {
           try {
-            for (final InetAddress inetAddress : new EnumerationIterable<>(
+            for (final InetAddress inetAddress : new EnumerationIterator<>(
                 netint.getInetAddresses())) {
               try {
                 if (inetAddress == null) {

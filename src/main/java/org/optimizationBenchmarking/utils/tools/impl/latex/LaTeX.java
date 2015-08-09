@@ -314,7 +314,7 @@ public class LaTeX extends FileProducerTool implements
 
       list = new ArrayList<>(EGraphicFormat.INSTANCES.size());
       main: for (final EGraphicFormat format : EGraphicFormat.INSTANCES) {
-        for (final _LaTeXToolChainComponentDesc desc : _AllEngines.ALL_ENGINES) {
+        for (final _LaTeXToolChainComponentDesc desc : new _AllEngines()) {
           if (desc._supports(format)) {
             list.add(format);
             continue main;
@@ -342,7 +342,7 @@ public class LaTeX extends FileProducerTool implements
       final IFileType[] required) {
     _LaTeXToolChainComponent comp;
 
-    mainLoop: for (final _LaTeXToolChainComponentDesc desc : _AllEngines.ALL_ENGINES) {
+    mainLoop: for (final _LaTeXToolChainComponentDesc desc : new _AllEngines()) {
       if (desc == null) {
         continue mainLoop;
       }
