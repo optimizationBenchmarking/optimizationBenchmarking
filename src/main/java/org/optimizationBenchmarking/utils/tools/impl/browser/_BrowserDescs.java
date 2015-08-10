@@ -22,7 +22,7 @@ final class _BrowserDescs extends
   /** {@inheritDoc} */
   @Override
   public final boolean hasNext() {
-    return (this.m_index <= 4);
+    return (this.m_index <= 3);
   }
 
   /** {@inheritDoc} */
@@ -33,7 +33,7 @@ final class _BrowserDescs extends
     map = this.m_map;
     map.clear();
 
-    switch (this.m_index) {
+    switch (this.m_index++) {
 
       case 0: {
         // Browsers which I can execute and wait for their termination
@@ -41,32 +41,26 @@ final class _BrowserDescs extends
         map.put("iexplore", //$NON-NLS-1$
             new _BrowserDesc(true, true,
                 new String[] { "-noframemerging" })); //$NON-NLS-1$
-        map.put("chromium", //$NON-NLS-1$
-            new _BrowserDesc(true)); // not tested, probably same as below
-        map.put("chromium-browser", //$NON-NLS-1$
-            new _BrowserDesc(true));
         return map;
       }
 
       case 1: {
-        // chrome under windows can be made reliable, if we make a batch
-        // script - under linux i don't know, probably not?
-        map.put("chrome", //$NON-NLS-1$
-            new _BrowserDesc(true, true, null));
-        return map;
-      }
-
-      case 2: {
         // Browsers which may terminated whenever they want, but at least I
         // know them.
         map.put("firefox", //$NON-NLS-1$
             new _BrowserDesc(false));
         map.put("opera", //$NON-NLS-1$
             new _BrowserDesc(false));
+        map.put("chromium", //$NON-NLS-1$
+            new _BrowserDesc(false)); // not tested, probably same as below
+        map.put("chromium-browser", //$NON-NLS-1$
+            new _BrowserDesc(false));
+        map.put("chrome", //$NON-NLS-1$
+            new _BrowserDesc(false));
         return map;
       }
 
-      case 3: {
+      case 2: {
         // Browsers I have never used, so I know nothing about them.
         map.put("edge", //$NON-NLS-1$
             new _BrowserDesc(false));
@@ -95,7 +89,7 @@ final class _BrowserDescs extends
         return map;
       }
 
-      case 4: {
+      case 3: {
         // Programs which are not actual programs but instead run the
         // system default browser for us.
         map.put("xdg-open", //$NON-NLS-1$
