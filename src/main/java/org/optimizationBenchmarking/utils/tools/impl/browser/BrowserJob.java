@@ -27,7 +27,8 @@ public final class BrowserJob extends ToolJob implements Closeable {
    * Create the browser job,
    *
    * @param process
-   *          the browser process
+   *          the browser process or {@code null} if desktop browsing is
+   *          used
    * @param logger
    *          the logger
    * @param temp
@@ -40,7 +41,10 @@ public final class BrowserJob extends ToolJob implements Closeable {
       final TempDir temp, final boolean isWaitForReliable) {
     super(logger);
     if (process == null) {
-      throw new IllegalArgumentException("Browser process cannot be null."); //$NON-NLS-1$
+      if (Browser._BrowserPath.DESKTOP == null) {
+        throw new IllegalArgumentException(
+            "Browser process cannot be null."); //$NON-NLS-1$
+      }
     }
     this.m_process = process;
     this.m_temp = temp;
@@ -64,7 +68,10 @@ public final class BrowserJob extends ToolJob implements Closeable {
     if (proc != null) {
       return proc.waitFor();
     }
-    throw new IllegalStateException("Process already closed."); //$NON-NLS-1$
+    if (Browser._BrowserPath.DESKTOP == null) {
+      throw new IllegalStateException("Process already closed."); //$NON-NLS-1$
+    }
+    return 0;
   }
 
   /**

@@ -57,12 +57,23 @@ public final class BrowserJobBuilder extends
           "URL to visit has not been set."); //$NON-NLS-1$
     }
 
+    logger = this.getLogger();
+
+    if (Browser._BrowserPath.DESKTOP != null) {
+      try {
+        Browser._BrowserPath.DESKTOP.browse(this.m_url.toURI());
+        return new BrowserJob(logger, null, null, false);
+      } catch (final Throwable error) {
+        throw new IOException(("Failed to launch browser for URL '" //$NON-NLS-1$
+            + this.m_url + '\'' + '.'), error);
+      }
+    }
+
     url = this.m_url.toExternalForm();
 
     executable = Browser._BrowserPath.PATH;
     epb = ProcessExecutor.getInstance().use();
 
-    logger = this.getLogger();
     epb.setLogger(logger);
     epb.setStdErr(EProcessStream.IGNORE);
     epb.setStdIn(EProcessStream.IGNORE);

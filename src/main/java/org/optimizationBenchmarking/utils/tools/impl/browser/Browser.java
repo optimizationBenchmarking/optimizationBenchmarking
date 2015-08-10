@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.tools.impl.browser;
 
+import java.awt.Desktop;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +17,13 @@ import org.optimizationBenchmarking.utils.tools.impl.process.ProcessExecutor;
 import org.optimizationBenchmarking.utils.tools.spec.IConfigurableJobTool;
 
 /**
- * The browser tool.
+ * The browser tool. The tool first tries to detect whether there is a
+ * browser which we can launch and for which we can reliably wait until it
+ * terminates. If yes, this browser will be used. If not, we will look for
+ * a set of known browsers, and if we find one, we will use it. Otherwise,
+ * we will try to go through the
+ * {@link java.awt.Desktop#browse(java.net.URI) Desktop} API to browse, if
+ * that is supported.
  */
 public final class Browser extends Tool implements IConfigurableJobTool {
 
@@ -28,16 +35,20 @@ public final class Browser extends Tool implements IConfigurableJobTool {
   /** {@inheritDoc} */
   @Override
   public final boolean canUse() {
-    return (ProcessExecutor.getInstance().canUse() && (_BrowserPath.PATH != null));
+    return (_BrowserPath.DESKTOP != null)
+        || ((ProcessExecutor.getInstance().canUse()
+            && (_BrowserPath.PATH != null) && (_BrowserPath.DESC != null)));
   }
 
   /** {@inheritDoc} */
   @Override
   public final void checkCanUse() {
-    ProcessExecutor.getInstance().checkCanUse();
-    if (_BrowserPath.PATH == null) {
-      throw new IllegalStateException(//
-          "Cannot use the browser tool, since no web browser could be detected."); //$NON-NLS-1$
+    if (_BrowserPath.DESKTOP == null) {
+      ProcessExecutor.getInstance().checkCanUse();
+      if (_BrowserPath.PATH == null) {
+        throw new IllegalStateException(//
+            "Cannot use the browser tool, since no web browser could be detected."); //$NON-NLS-1$
+      }
     }
   }
 
@@ -72,8 +83,12 @@ public final class Browser extends Tool implements IConfigurableJobTool {
     /** the browser description */
     static final _BrowserDesc DESC;
 
+    /** the desctop */
+    static final Desktop DESKTOP;
+
     static {
       final Logger logger;
+      Desktop desktop;
       String name;
       _BrowserDesc desc;
       Path path;
@@ -94,6 +109,7 @@ public final class Browser extends Tool implements IConfigurableJobTool {
 
       path = null;
       desc = null;
+      desktop = null;
 
       looper: for (final StringMapCI<_BrowserDesc> browsers : new _BrowserDescs()) {
         path = PathUtils.findFirstInPath(new AndPredicate<>(
@@ -114,11 +130,36 @@ public final class Browser extends Tool implements IConfigurableJobTool {
       PATH = path;
       DESC = desc;
 
+      if (path == null) {
+        try {
+          if (Desktop.isDesktopSupported()) {
+            desktop = Desktop.getDesktop();
+            if (desktop != null) {
+              if (!(desktop.isSupported(Desktop.Action.BROWSE))) {
+                desktop = null;
+              }
+            }
+          }
+        } catch (final Throwable ignore) {
+          // well, ignore
+          desktop = null;
+        }
+      }
+
+      DESKTOP = desktop;
+
       if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
-        if (_BrowserPath.PATH != null) {
-          logger.config((_BrowserPath.PATH != null) ? //
-          ("Browser binary is '" + _BrowserPath.PATH + '\'') : //$NON-NLS-1$
-              "No browser binary detected.");//$NON-NLS-1$
+        if (_BrowserPath.DESKTOP != null) {
+          logger.config(//
+              "No known browser executable detected, but browsing is supported via java.awt.Desktop."); //$NON-NLS-1$
+        } else {
+          if (_BrowserPath.PATH != null) {
+            logger.config("Detected browser binary is '" //$NON-NLS-1$
+                + _BrowserPath.PATH + '\'');
+          } else {
+            logger.config(//
+                "No browser binary detected and browsing not supported via java.awt.Desktop.");//$NON-NLS-1$
+          }
         }
       }
     }
