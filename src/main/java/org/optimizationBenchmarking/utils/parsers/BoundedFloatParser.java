@@ -74,13 +74,13 @@ public class BoundedFloatParser extends FloatParser {
 
   /** {@inheritDoc} */
   @Override
-  public final double getLowerBoundDouble() {
+  public final float getLowerBound() {
     return this.m_min;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final double getUpperBoundDouble() {
-    return this.m_max;
+  public final float getUpperBound() {
+    return this.m_min;
   }
 }

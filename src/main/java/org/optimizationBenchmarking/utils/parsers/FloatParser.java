@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+
 /**
  * A parser for {@code float}s which can also interpret things such as
  * constants.
@@ -103,5 +106,31 @@ public class FloatParser extends StrictFloatParser {
    */
   private final Object readResolve() {
     return FloatParser.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return HashUtils.combineHashes(87293,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBound()),//
+            HashUtils.hashCode(this.getUpperBound())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object other) {
+    final FloatParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof FloatParser) {
+      parser = ((FloatParser) other);
+      return (EComparison.EQUAL.compare(parser.getLowerBound(),
+          this.getLowerBound()) && //
+      EComparison.EQUAL.compare(parser.getUpperBound(),
+          this.getUpperBound()));
+    }
+    return false;
   }
 }

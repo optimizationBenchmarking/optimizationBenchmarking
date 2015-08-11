@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+
 /** A parser for {@code byte}s */
 public class ByteParser extends StrictByteParser {
   /** the serial version uid */
@@ -70,5 +72,29 @@ public class ByteParser extends StrictByteParser {
    */
   private final Object readResolve() {
     return ByteParser.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return HashUtils.combineHashes(94624963,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBound()),//
+            HashUtils.hashCode(this.getUpperBound())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object other) {
+    final ByteParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof ByteParser) {
+      parser = ((ByteParser) other);
+      return ((parser.getLowerBound() == this.getLowerBound()) && //
+      (parser.getUpperBound() == this.getUpperBound()));
+    }
+    return false;
   }
 }

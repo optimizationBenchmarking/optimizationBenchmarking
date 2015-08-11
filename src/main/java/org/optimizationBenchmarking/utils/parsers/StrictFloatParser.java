@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+
 /**
  * A strict {@code float}-parser. A strict parser will behave similar to
  * {@link java.lang.Float#parseFloat(String)} and throw exceptions quickly
@@ -165,14 +168,14 @@ public class StrictFloatParser extends NumberParser<Float> {
 
   /** {@inheritDoc} */
   @Override
-  public double getLowerBoundDouble() {
-    return Double.NEGATIVE_INFINITY;
+  public final double getLowerBoundDouble() {
+    return this.getLowerBound();
   }
 
   /** {@inheritDoc} */
   @Override
-  public double getUpperBoundDouble() {
-    return Double.POSITIVE_INFINITY;
+  public final double getUpperBoundDouble() {
+    return this.getUpperBound();
   }
 
   /** {@inheritDoc} */
@@ -229,5 +232,49 @@ public class StrictFloatParser extends NumberParser<Float> {
           + " cannot be converted to a float without loss of fidelity."); //$NON-NLS-1$
     }
     this.validateFloat(f);
+  }
+
+  /**
+   * Get the lower bound as float
+   *
+   * @return the lower bound as float
+   */
+  public float getLowerBound() {
+    return Float.POSITIVE_INFINITY;
+  }
+
+  /**
+   * Get the upper bound as float
+   *
+   * @return the upper bound as float
+   */
+  public float getUpperBound() {
+    return Float.POSITIVE_INFINITY;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(377325253,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBound()),//
+            HashUtils.hashCode(this.getUpperBound())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean equals(final Object other) {
+    final StrictFloatParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof StrictFloatParser) {
+      parser = ((StrictFloatParser) other);
+      return (EComparison.EQUAL.compare(parser.getLowerBound(),
+          this.getLowerBound()) && //
+      EComparison.EQUAL.compare(parser.getUpperBound(),
+          this.getUpperBound()));
+    }
+    return false;
   }
 }

@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+
 /**
  * A strict {@code short}-parser. A strict parser will behave similar to
  * {@link java.lang.Short#parseShort(String)} and throw exceptions quickly
@@ -114,14 +116,14 @@ public class StrictShortParser extends NumberParser<Short> {
 
   /** {@inheritDoc} */
   @Override
-  public long getLowerBoundLong() {
-    return Short.MIN_VALUE;
+  public final long getLowerBoundLong() {
+    return this.getUpperBound();
   }
 
   /** {@inheritDoc} */
   @Override
-  public long getUpperBoundLong() {
-    return Short.MAX_VALUE;
+  public final long getUpperBoundLong() {
+    return this.getUpperBound();
   }
 
   /** {@inheritDoc} */
@@ -171,5 +173,47 @@ public class StrictShortParser extends NumberParser<Short> {
           Short.MAX_VALUE) + '.');
     }
     this.validateShort((short) l);
+  }
+
+  /**
+   * Get the lower bound as short
+   *
+   * @return the lower bound as short
+   */
+  public short getLowerBound() {
+    return Short.MIN_VALUE;
+  }
+
+  /**
+   * Get the upper bound as short
+   *
+   * @return the upper bound as short
+   */
+  public short getUpperBound() {
+    return Short.MAX_VALUE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(3557153,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBound()),//
+            HashUtils.hashCode(this.getUpperBound())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean equals(final Object other) {
+    final StrictShortParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof StrictShortParser) {
+      parser = ((StrictShortParser) other);
+      return ((parser.getLowerBound() == this.getLowerBound()) && //
+      (parser.getUpperBound() == this.getUpperBound()));
+    }
+    return false;
   }
 }

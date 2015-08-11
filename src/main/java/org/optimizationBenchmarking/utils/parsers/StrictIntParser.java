@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+
 /**
  * A strict {@code int}-parser. A strict parser will behave similar to
  * {@link java.lang.Integer#parseInt(String)} and throw exceptions quickly
@@ -113,26 +115,26 @@ public class StrictIntParser extends NumberParser<Integer> {
 
   /** {@inheritDoc} */
   @Override
-  public long getLowerBoundLong() {
-    return Integer.MIN_VALUE;
+  public final long getLowerBoundLong() {
+    return this.getLowerBound();
   }
 
   /** {@inheritDoc} */
   @Override
-  public long getUpperBoundLong() {
-    return Integer.MAX_VALUE;
+  public final long getUpperBoundLong() {
+    return this.getUpperBound();
   }
 
   /** {@inheritDoc} */
   @Override
   public final double getLowerBoundDouble() {
-    return this.getLowerBoundLong();
+    return this.getLowerBound();
   }
 
   /** {@inheritDoc} */
   @Override
   public final double getUpperBoundDouble() {
-    return this.getUpperBoundLong();
+    return this.getUpperBound();
   }
 
   /** {@inheritDoc} */
@@ -172,4 +174,45 @@ public class StrictIntParser extends NumberParser<Integer> {
     this.validateInt((int) l);
   }
 
+  /**
+   * Get the lower bound as int
+   *
+   * @return the lower bound as int
+   */
+  public int getLowerBound() {
+    return Integer.MIN_VALUE;
+  }
+
+  /**
+   * Get the upper bound as int
+   *
+   * @return the upper bound as int
+   */
+  public int getUpperBound() {
+    return Integer.MAX_VALUE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(73557217,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBound()),//
+            HashUtils.hashCode(this.getUpperBound())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean equals(final Object other) {
+    final StrictIntParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof StrictIntParser) {
+      parser = ((StrictIntParser) other);
+      return ((parser.getLowerBound() == this.getLowerBound()) && //
+      (parser.getUpperBound() == this.getUpperBound()));
+    }
+    return false;
+  }
 }

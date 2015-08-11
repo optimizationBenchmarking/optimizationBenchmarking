@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+
 /**
  * A parser for {@code short}s.
  */
@@ -72,5 +74,29 @@ public class ShortParser extends StrictShortParser {
    */
   private final Object readResolve() {
     return ShortParser.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return HashUtils.combineHashes(66666983,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBound()),//
+            HashUtils.hashCode(this.getUpperBound())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object other) {
+    final ShortParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof ShortParser) {
+      parser = ((ShortParser) other);
+      return ((parser.getLowerBound() == this.getLowerBound()) && //
+      (parser.getUpperBound() == this.getUpperBound()));
+    }
+    return false;
   }
 }

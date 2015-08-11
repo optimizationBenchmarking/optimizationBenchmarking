@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
@@ -179,5 +181,31 @@ public class DoubleParser extends StrictDoubleParser {
    */
   private final Object readResolve() {
     return DoubleParser.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return HashUtils.combineHashes(444979,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBoundDouble()),//
+            HashUtils.hashCode(this.getUpperBoundDouble())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object other) {
+    final DoubleParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof DoubleParser) {
+      parser = ((DoubleParser) other);
+      return (EComparison.EQUAL.compare(parser.getLowerBoundDouble(),
+          this.getLowerBoundDouble()) && //
+      EComparison.EQUAL.compare(parser.getUpperBoundDouble(),
+          this.getUpperBoundDouble()));
+    }
+    return false;
   }
 }

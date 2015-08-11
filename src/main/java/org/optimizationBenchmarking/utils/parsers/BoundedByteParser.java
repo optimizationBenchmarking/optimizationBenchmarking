@@ -74,13 +74,13 @@ public class BoundedByteParser extends ByteParser {
 
   /** {@inheritDoc} */
   @Override
-  public final long getLowerBoundLong() {
+  public final byte getLowerBound() {
     return this.m_min;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long getUpperBoundLong() {
-    return this.m_max;
+  public final byte getUpperBound() {
+    return this.m_min;
   }
 }

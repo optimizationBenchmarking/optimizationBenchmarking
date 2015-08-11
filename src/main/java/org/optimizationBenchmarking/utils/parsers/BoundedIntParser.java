@@ -73,13 +73,13 @@ public class BoundedIntParser extends IntParser {
 
   /** {@inheritDoc} */
   @Override
-  public final long getLowerBoundLong() {
+  public final int getLowerBound() {
     return this.m_min;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long getUpperBoundLong() {
-    return this.m_max;
+  public final int getUpperBound() {
+    return this.m_min;
   }
 }

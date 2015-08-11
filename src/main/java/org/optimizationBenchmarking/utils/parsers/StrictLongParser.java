@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+
 /**
  * A strict {@code long}-parser. A strict parser will behave similar to
  * {@link java.lang.Long#parseLong(String)} and throw exceptions quickly if
@@ -151,5 +153,29 @@ public class StrictLongParser extends NumberParser<Long> {
   /** {@inheritDoc} */
   @Override
   public void validateLong(final long l) {//
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(57329999,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBoundLong()),//
+            HashUtils.hashCode(this.getUpperBoundLong())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean equals(final Object other) {
+    final StrictLongParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof StrictLongParser) {
+      parser = ((StrictLongParser) other);
+      return ((parser.getLowerBoundLong() == this.getLowerBoundLong()) && //
+      (parser.getUpperBoundLong() == this.getUpperBoundLong()));
+    }
+    return false;
   }
 }

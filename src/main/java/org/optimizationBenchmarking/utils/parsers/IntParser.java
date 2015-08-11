@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
@@ -170,5 +171,29 @@ public class IntParser extends StrictIntParser {
    */
   private final Object readResolve() {
     return IntParser.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return HashUtils.combineHashes(111245699,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBound()),//
+            HashUtils.hashCode(this.getUpperBound())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object other) {
+    final IntParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof IntParser) {
+      parser = ((IntParser) other);
+      return ((parser.getLowerBound() == this.getLowerBound()) && //
+      (parser.getUpperBound() == this.getUpperBound()));
+    }
+    return false;
   }
 }

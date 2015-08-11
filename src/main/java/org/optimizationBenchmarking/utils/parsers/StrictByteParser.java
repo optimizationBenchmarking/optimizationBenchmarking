@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+
 /**
  * A strict {@code byte}-parser. A strict parser will behave similar to
  * {@link java.lang.Byte#parseByte(String)} and throw exceptions quickly if
@@ -114,26 +116,26 @@ public class StrictByteParser extends NumberParser<Byte> {
 
   /** {@inheritDoc} */
   @Override
-  public long getLowerBoundLong() {
-    return Byte.MIN_VALUE;
+  public final long getLowerBoundLong() {
+    return this.getLowerBound();
   }
 
   /** {@inheritDoc} */
   @Override
-  public long getUpperBoundLong() {
-    return Byte.MAX_VALUE;
+  public final long getUpperBoundLong() {
+    return this.getUpperBound();
   }
 
   /** {@inheritDoc} */
   @Override
   public final double getLowerBoundDouble() {
-    return this.getLowerBoundLong();
+    return this.getLowerBound();
   }
 
   /** {@inheritDoc} */
   @Override
   public final double getUpperBoundDouble() {
-    return this.getUpperBoundLong();
+    return this.getUpperBound();
   }
 
   /** {@inheritDoc} */
@@ -173,4 +175,45 @@ public class StrictByteParser extends NumberParser<Byte> {
     this.validateByte((byte) l);
   }
 
+  /**
+   * Get the lower bound as byte
+   *
+   * @return the lower bound as byte
+   */
+  public byte getLowerBound() {
+    return Byte.MIN_VALUE;
+  }
+
+  /**
+   * Get the upper bound as byte
+   *
+   * @return the upper bound as byte
+   */
+  public byte getUpperBound() {
+    return Byte.MAX_VALUE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(123456803,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBound()),//
+            HashUtils.hashCode(this.getUpperBound())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean equals(final Object other) {
+    final StrictByteParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof StrictByteParser) {
+      parser = ((StrictByteParser) other);
+      return ((parser.getLowerBound() == this.getLowerBound()) && //
+      (parser.getUpperBound() == this.getUpperBound()));
+    }
+    return false;
+  }
 }

@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
@@ -166,5 +167,29 @@ public class LongParser extends StrictLongParser {
    */
   private final Object readResolve() {
     return LongParser.INSTANCE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final int hashCode() {
+    return HashUtils.combineHashes(222223091,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBoundLong()),//
+            HashUtils.hashCode(this.getUpperBoundLong())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean equals(final Object other) {
+    final LongParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof LongParser) {
+      parser = ((LongParser) other);
+      return ((parser.getLowerBoundLong() == this.getLowerBoundLong()) && //
+      (parser.getUpperBoundLong() == this.getUpperBoundLong()));
+    }
+    return false;
   }
 }

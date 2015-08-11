@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import org.optimizationBenchmarking.utils.comparison.EComparison;
+import org.optimizationBenchmarking.utils.hash.HashUtils;
+
 /**
  * A strict {@code double}-parser. A strict parser will behave similar to
  * {@link java.lang.Double#parseDouble(String)} and throw exceptions
@@ -169,5 +172,31 @@ public class StrictDoubleParser extends NumberParser<Double> {
           + " cannot be converted to a double without loss of fidelity."); //$NON-NLS-1$
     }
     this.validateDouble(f);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(556725031,//
+        HashUtils.combineHashes(//
+            HashUtils.hashCode(this.getLowerBoundDouble()),//
+            HashUtils.hashCode(this.getUpperBoundDouble())));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean equals(final Object other) {
+    final StrictDoubleParser parser;
+    if (other == this) {
+      return true;
+    }
+    if (other instanceof StrictDoubleParser) {
+      parser = ((StrictDoubleParser) other);
+      return (EComparison.EQUAL.compare(parser.getLowerBoundDouble(),
+          this.getLowerBoundDouble()) && //
+      EComparison.EQUAL.compare(parser.getUpperBoundDouble(),
+          this.getUpperBoundDouble()));
+    }
+    return false;
   }
 }

@@ -74,13 +74,13 @@ public class BoundedShortParser extends ShortParser {
 
   /** {@inheritDoc} */
   @Override
-  public final long getLowerBoundLong() {
+  public final short getLowerBound() {
     return this.m_min;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long getUpperBoundLong() {
-    return this.m_max;
+  public final short getUpperBound() {
+    return this.m_min;
   }
 }
