@@ -407,7 +407,7 @@ public final class TextUtils {
    */
   public static final void appendFileSize(final long size,
       final ITextOutput to) {
-    long use;
+    long use, unit, mod;
     int index;
 
     if (size < 0L) {
@@ -429,7 +429,20 @@ public final class TextUtils {
     }
 
     if (index > 0) {
-      use /= TextUtils.SIZES[index];
+      unit = TextUtils.SIZES[index];
+      mod = (use % unit);
+      use /= unit;
+
+      if (mod >= (unit >>> 1L)) {
+        use++; // round sizes up
+        if (index < (TextUtils.SIZE_NAMES.length - 1)) {
+          // what if we have 1023.7 KiB -> 1 MiB
+          if ((use * unit) >= TextUtils.SIZES[index + 1]) {
+            use = 1L;
+            index++;
+          }
+        }
+      }
     }
     to.append(use);
     to.appendNonBreakingSpace();

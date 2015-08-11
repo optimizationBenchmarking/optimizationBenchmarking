@@ -48,23 +48,45 @@ public class TextUtilsTest extends TestBase {
     Assert.assertEquals("3\u2007KiB", mto.toString()); //$NON-NLS-1$
     mto.clear();
 
-    TextUtils.appendFileSize(((1024 * 1024) - 1), mto);
+    TextUtils.appendFileSize(((1024 * 1024) - 513), mto);
     Assert.assertEquals("1023\u2007KiB", mto.toString()); //$NON-NLS-1$
+    mto.clear();
+
+    TextUtils.appendFileSize(((1024 * 1024) - 512), mto);
+    Assert.assertEquals("1\u2007MiB", mto.toString()); //$NON-NLS-1$
+    mto.clear();
+
+    TextUtils.appendFileSize(((1024 * 1024) - 1), mto);
+    Assert.assertEquals("1\u2007MiB", mto.toString()); //$NON-NLS-1$
     mto.clear();
 
     TextUtils.appendFileSize((1024 * 1024), mto);
     Assert.assertEquals("1\u2007MiB", mto.toString()); //$NON-NLS-1$
     mto.clear();
 
-    TextUtils.appendFileSize(((1024L * 1024L * 1024L) - 1), mto);
+    TextUtils.appendFileSize((1023L * 1024L * 1024L), mto);
     Assert.assertEquals("1023\u2007MiB", mto.toString()); //$NON-NLS-1$
+    mto.clear();
+
+    TextUtils
+        .appendFileSize(((1024L * 1024L * 1024L) - (513 * 1024)), mto);
+    Assert.assertEquals("1023\u2007MiB", mto.toString()); //$NON-NLS-1$
+    mto.clear();
+
+    TextUtils
+        .appendFileSize(((1024L * 1024L * 1024L) - (512 * 1024)), mto);
+    Assert.assertEquals("1\u2007GiB", mto.toString()); //$NON-NLS-1$
+    mto.clear();
+
+    TextUtils.appendFileSize(((1024L * 1024L * 1024L) - 1), mto);
+    Assert.assertEquals("1\u2007GiB", mto.toString()); //$NON-NLS-1$
     mto.clear();
 
     TextUtils.appendFileSize((1024L * 1024L * 1024L), mto);
     Assert.assertEquals("1\u2007GiB", mto.toString()); //$NON-NLS-1$
     mto.clear();
 
-    TextUtils.appendFileSize(((1024L * 1024L * 1024L * 1024L) - 1), mto);
+    TextUtils.appendFileSize(((1024L * 1024L * 1024L * 1023L) - 1), mto);
     Assert.assertEquals("1023\u2007GiB", mto.toString()); //$NON-NLS-1$
     mto.clear();
 
@@ -73,7 +95,7 @@ public class TextUtilsTest extends TestBase {
     mto.clear();
 
     TextUtils.appendFileSize(
-        ((1024L * 1024L * 1024L * 1024L * 1024L) - 1), mto);
+        ((1024L * 1024L * 1024L * 1024L * 1023L) - 1), mto);
     Assert.assertEquals("1023\u2007TiB", mto.toString()); //$NON-NLS-1$
     mto.clear();
 
@@ -82,7 +104,7 @@ public class TextUtilsTest extends TestBase {
     mto.clear();
 
     TextUtils.appendFileSize(
-        ((1024L * 1024L * 1024L * 1024L * 1024L * 1024L) - 1), mto);
+        ((1024L * 1024L * 1024L * 1024L * 1024L * 1023L) - 1), mto);
     Assert.assertEquals("1023\u2007PiB", mto.toString()); //$NON-NLS-1$
     mto.clear();
 
