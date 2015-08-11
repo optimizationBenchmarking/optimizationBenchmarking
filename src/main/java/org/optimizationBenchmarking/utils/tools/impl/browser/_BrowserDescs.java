@@ -13,6 +13,9 @@ final class _BrowserDescs extends
   /** the map */
   private final StringMapCI<_BrowserDesc> m_map;
 
+  /** the unreliable browser desc */
+  private _BrowserDesc m_unreliable;
+
   /** create */
   _BrowserDescs() {
     super();
@@ -47,61 +50,40 @@ final class _BrowserDescs extends
       case 1: {
         // Browsers which may terminated whenever they want, but at least I
         // know them.
-        map.put("firefox", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("opera", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("chromium", //$NON-NLS-1$
-            new _BrowserDesc(false)); // not tested, probably same as below
-        map.put("chromium-browser", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("chrome", //$NON-NLS-1$
-            new _BrowserDesc(false));
+        this.m_unreliable = new _BrowserDesc(false);
+        map.put("firefox", this.m_unreliable); //$NON-NLS-1$
+        map.put("opera", this.m_unreliable); //$NON-NLS-1$
+        map.put("chromium", this.m_unreliable); //$NON-NLS-1$ // not tested, probably same as below
+        map.put("chromium-browser", this.m_unreliable); //$NON-NLS-1$
+        map.put("chrome", this.m_unreliable); //$NON-NLS-1$
         return map;
       }
 
       case 2: {
         // Browsers I have never used, so I know nothing about them.
-        map.put("edge", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("spartan", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("iceweasel", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("safari", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("netscape", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("seamonkey", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("konquerer", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("kmelon", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("konquerer", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("lynx", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("icecat", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("galeon", //$NON-NLS-1$
-            new _BrowserDesc(false));
+        map.put("edge", this.m_unreliable); //$NON-NLS-1$
+        map.put("spartan", this.m_unreliable); //$NON-NLS-1$
+        map.put("iceweasel", this.m_unreliable); //$NON-NLS-1$
+        map.put("safari", this.m_unreliable); //$NON-NLS-1$
+        map.put("netscape", this.m_unreliable); //$NON-NLS-1$
+        map.put("seamonkey", this.m_unreliable); //$NON-NLS-1$
+        map.put("konqueror", this.m_unreliable); //$NON-NLS-1$
+        map.put("kmelon", this.m_unreliable); //$NON-NLS-1$
+        map.put("konquerer", this.m_unreliable); //$NON-NLS-1$
+        map.put("lynx", this.m_unreliable); //$NON-NLS-1$
+        map.put("icecat", this.m_unreliable); //$NON-NLS-1$
+        map.put("galeon", this.m_unreliable); //$NON-NLS-1$
         return map;
       }
 
       case 3: {
         // Programs which are not actual programs but instead run the
         // system default browser for us.
-        map.put("xdg-open", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("gnome-open", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("cygstart", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("explorer", //$NON-NLS-1$
-            new _BrowserDesc(false));
-        map.put("open", //$NON-NLS-1$
-            new _BrowserDesc(false));
+        map.put("xdg-open", this.m_unreliable); //$NON-NLS-1$
+        map.put("gnome-open", this.m_unreliable); //$NON-NLS-1$
+        map.put("cygstart", this.m_unreliable); //$NON-NLS-1$
+        map.put("explorer", this.m_unreliable); //$NON-NLS-1$
+        map.put("open", this.m_unreliable); //$NON-NLS-1$
         return map;
       }
 
