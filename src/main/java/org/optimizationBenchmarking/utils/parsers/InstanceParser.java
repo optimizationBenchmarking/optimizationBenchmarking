@@ -1,6 +1,7 @@
 package org.optimizationBenchmarking.utils.parsers;
 
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * Get an instance from a string.
@@ -40,18 +41,26 @@ public class InstanceParser<T> extends Parser<T> {
 
   /** {@inheritDoc} */
   @Override
-  public T parseString(final String string) throws Exception {
+  public T parseString(final String string)
+      throws IllegalArgumentException {
     final T fieldValue;
 
-    fieldValue = ReflectionUtils.getInstanceByName(this.m_base,
-        LooseStringParser.INSTANCE.parseString(string), this.m_prefixes);
+    try {
+      fieldValue = ReflectionUtils.getInstanceByName(this.m_base,
+          LooseStringParser.INSTANCE.parseString(string), this.m_prefixes);
+    } catch (final ReflectiveOperationException exception) {
+      throw new IllegalArgumentException(//
+          "Cannot parse string '" + string + //$NON-NLS-1$
+              "' to an instance of " //$NON-NLS-1$
+              + TextUtils.className(this.m_base), exception);
+    }
     this.validate(fieldValue);
     return fieldValue;
   }
 
   /** {@inheritDoc} */
   @Override
-  public T parseObject(final Object o) throws Exception {
+  public T parseObject(final Object o) {
     final Class<T> base;
     final T obj;
 
@@ -76,6 +85,9 @@ public class InstanceParser<T> extends Parser<T> {
     if (instance == null) {
       throw new IllegalArgumentException("Instance must not be null."); //$NON-NLS-1$
     }
+    // Check if we can cast or whether something dodgy has been done with
+    // generics.
+    this.m_base.cast(instance);
   }
 
   /** {@inheritDoc} */

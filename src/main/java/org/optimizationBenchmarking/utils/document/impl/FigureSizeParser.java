@@ -2,15 +2,14 @@ package org.optimizationBenchmarking.utils.document.impl;
 
 import org.optimizationBenchmarking.utils.collections.maps.StringMapCI;
 import org.optimizationBenchmarking.utils.document.spec.EFigureSize;
-import org.optimizationBenchmarking.utils.parsers.Parser;
-import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.parsers.InstanceParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A parser for instances of
  * {@link org.optimizationBenchmarking.utils.document.spec.EFigureSize}.
  */
-public class FigureSizeParser extends Parser<EFigureSize> {
+public class FigureSizeParser extends InstanceParser<EFigureSize> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -27,19 +26,12 @@ public class FigureSizeParser extends Parser<EFigureSize> {
 
   /** create the figure size parser */
   private FigureSizeParser() {
-    super();
+    super(EFigureSize.class, null);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Class<EFigureSize> getOutputClass() {
-    return EFigureSize.class;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final EFigureSize parseString(final String string)
-      throws Exception {
+  public final EFigureSize parseString(final String string) {
     EFigureSize res;
 
     res = FigureSizeParser.LOOKUP.get(string);
@@ -47,7 +39,7 @@ public class FigureSizeParser extends Parser<EFigureSize> {
       return res;
     }
 
-    return ReflectionUtils.getInstanceByName(EFigureSize.class, string);
+    return super.parseString(string);
   }
 
   /**

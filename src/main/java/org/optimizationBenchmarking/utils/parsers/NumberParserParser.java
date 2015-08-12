@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.parsers;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashSet;
 
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
@@ -39,12 +40,10 @@ public final class NumberParserParser extends
    * @param upperBound
    *          the upper boundary
    * @return the parser
-   * @throws Exception
-   *           if the parser could not be obtained
    */
   @SuppressWarnings("rawtypes")
   private final NumberParser<Number> __parse(final String parserClass,
-      final String lowerBound, final String upperBound) throws Exception {
+      final String lowerBound, final String upperBound) {
     Number lower, upper;
     RuntimeException re;
     Class<? extends NumberParser> clazz;
@@ -118,8 +117,16 @@ public final class NumberParserParser extends
               if ("byte".equalsIgnoreCase(parserClass)) { //$NON-NLS-1$
                 clazz = BoundedLooseByteParser.class;
               } else {
-                clazz = ReflectionUtils.findClass(parserClass,
-                    NumberParser.class, NumberParserParser.PREFIXES);
+                try {
+                  clazz = ReflectionUtils.findClass(parserClass,
+                      NumberParser.class, NumberParserParser.PREFIXES);
+                } catch (LinkageError | ClassNotFoundException
+                    | ClassCastException error) {
+                  throw new IllegalArgumentException(//
+                      "Cannot find class '" + parserClass + //$NON-NLS-1$
+                          "' corresponding to '" + parserClass + //$NON-NLS-1$
+                          ' ' + lowerBound + ' ' + upperBound, error);
+                }
               }
             }
           }
@@ -127,8 +134,17 @@ public final class NumberParserParser extends
       }
     }
 
-    return clazz.getConstructor(Number.class, Number.class).newInstance(
-        lower, upper);
+    try {
+      return clazz.getConstructor(Number.class, Number.class).newInstance(
+          lower, upper);
+    } catch (NoSuchMethodException | SecurityException
+        | InstantiationException | IllegalAccessException
+        | IllegalArgumentException | InvocationTargetException error) {
+      throw new IllegalArgumentException(//
+          "Cannot find and invoke constructor of class '" + parserClass + //$NON-NLS-1$
+              "' corresponding to '" + parserClass + //$NON-NLS-1$
+              ' ' + lowerBound + ' ' + upperBound, error);
+    }
   }
 
   /**
@@ -141,11 +157,9 @@ public final class NumberParserParser extends
    * @param upperBound
    *          the upper boundary
    * @return the parser
-   * @throws Exception
-   *           if the parser could not be obtained
    */
   public final NumberParser<Number> parse(final String parserClass,
-      final String lowerBound, final String upperBound) throws Exception {
+      final String lowerBound, final String upperBound) {
     NumberParser<Number> parser;
 
     parser = this.__parse(parserClass, lowerBound, upperBound);
@@ -156,8 +170,7 @@ public final class NumberParserParser extends
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public final NumberParser<Number> parseString(final String string)
-      throws Exception {
+  public final NumberParser<Number> parseString(final String string) {
 
     final int length, idx1, idx2;
 

@@ -1288,8 +1288,7 @@ public final class PathUtils {
 
     /** {@inheritDoc} */
     @Override
-    public Path parseString(final String string) throws IOException,
-        SecurityException {
+    public Path parseString(final String string) {
       BasicFileAttributes bfa;
       Path f;
 

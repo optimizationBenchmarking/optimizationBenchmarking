@@ -24,8 +24,7 @@ public final class StatisticalParameterParser extends
 
   /** {@inheritDoc} */
   @Override
-  public final StatisticalParameter parseString(final String string)
-      throws Exception {
+  public final StatisticalParameter parseString(final String string) {
     final String prepared;
     String lower, first, last;
     int index;

@@ -18,8 +18,7 @@ public class ComparisonParser extends InstanceParser<EComparison> {
 
   /** {@inheritDoc} */
   @Override
-  public final EComparison parseString(final String string)
-      throws Exception {
+  public final EComparison parseString(final String string) {
     switch (TextUtils.toLowerCase(string)) {
 
       case "less than": //$NON-NLS-1$

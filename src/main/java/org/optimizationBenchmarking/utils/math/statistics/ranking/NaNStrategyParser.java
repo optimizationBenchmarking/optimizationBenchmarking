@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.statistics.ranking;
 
-import org.optimizationBenchmarking.utils.parsers.Parser;
-import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.parsers.InstanceParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
@@ -9,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * {@link org.optimizationBenchmarking.utils.math.statistics.ranking.ENaNStrategy}
  * s
  */
-public final class NaNStrategyParser extends Parser<ENaNStrategy> {
+public final class NaNStrategyParser extends InstanceParser<ENaNStrategy> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -19,19 +18,12 @@ public final class NaNStrategyParser extends Parser<ENaNStrategy> {
 
   /** create the parser */
   private NaNStrategyParser() {
-    super();
+    super(ENaNStrategy.class, null);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Class<ENaNStrategy> getOutputClass() {
-    return ENaNStrategy.class;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final ENaNStrategy parseString(final String string)
-      throws Exception {
+  public final ENaNStrategy parseString(final String string) {
     final String name;
 
     name = TextUtils.prepare(string);
@@ -71,8 +63,7 @@ public final class NaNStrategyParser extends Parser<ENaNStrategy> {
       }
 
       default: {
-        return ReflectionUtils.getInstance(ENaNStrategy.class,
-            ENaNStrategy.class, name);
+        return super.parseString(name);
       }
     }
   }

@@ -28,10 +28,15 @@ public class URIParser extends Parser<URI> {
 
   /** {@inheritDoc} */
   @Override
-  public final URI parseString(final String string)
-      throws URISyntaxException {
-    return this.__cleanse(new URI(LooseStringParser.INSTANCE
-        .parseString(string)));
+  public final URI parseString(final String string) {
+    URI uri;
+    try {
+      uri = new URI(LooseStringParser.INSTANCE.parseString(string));
+    } catch (final URISyntaxException use) {
+      throw new IllegalArgumentException("String '" + string + //$NON-NLS-1$
+          "' is not a valid URI."); //$NON-NLS-1$
+    }
+    return this.__cleanse(uri);
   }
 
   /**
@@ -64,7 +69,7 @@ public class URIParser extends Parser<URI> {
 
   /** {@inheritDoc} */
   @Override
-  public final URI parseObject(final Object o) throws URISyntaxException {
+  public final URI parseObject(final Object o) {
     final URI ret;
 
     if (o instanceof File) {
@@ -74,7 +79,12 @@ public class URIParser extends Parser<URI> {
         ret = ((Path) o).toUri();
       } else {
         if (o instanceof URL) {
-          ret = ((URL) o).toURI();
+          try {
+            ret = ((URL) o).toURI();
+          } catch (final URISyntaxException use) {
+            throw new IllegalArgumentException("Object '" + o + //$NON-NLS-1$
+                "' cannot be converted from type URL to URI.", use); //$NON-NLS-1$
+          }
         } else {
           return this.parseString(String.valueOf(o));
         }

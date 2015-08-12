@@ -41,8 +41,7 @@ public final class DocumentDriverParser extends
 
   /** {@inheritDoc} */
   @Override
-  public final IDocumentDriver parseString(final String string)
-      throws Exception {
+  public final IDocumentDriver parseString(final String string) {
     if ("xhtml".equalsIgnoreCase(string) || //$NON-NLS-1$
         "xhtml 1.0".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return XHTML10Driver.getInstance();

@@ -46,8 +46,7 @@ public final class ExperimentSetInputParser extends
 
   /** {@inheritDoc} */
   @Override
-  public final IExperimentSetInput parseString(final String string)
-      throws Exception {
+  public final IExperimentSetInput parseString(final String string) {
 
     if ("edi".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return EDIInput.getInstance();

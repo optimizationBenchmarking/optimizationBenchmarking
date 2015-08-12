@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /** a graphic driver parser */
 public final class GraphicDriverParser extends
-InstanceParser<IGraphicDriver> {
+    InstanceParser<IGraphicDriver> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -49,8 +49,7 @@ InstanceParser<IGraphicDriver> {
 
   /** {@inheritDoc} */
   @Override
-  public final IGraphicDriver parseString(final String string)
-      throws Exception {
+  public final IGraphicDriver parseString(final String string) {
     if ("tex".equalsIgnoreCase(string) || //$NON-NLS-1$
         "latex".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return EGraphicFormat.PGF.getDefaultDriver();
@@ -69,8 +68,8 @@ InstanceParser<IGraphicDriver> {
       } catch (final Exception exception2) {
         RethrowMode.AS_UNSUPPORTED_OPERATION_EXCEPTION.rethrow(
             ((("Could not find graphic driver fitting to string '" //$NON-NLS-1$
-                + string) + '\'') + '.'), false,
-                ErrorUtils.aggregateError(exception, exception2));
+            + string) + '\'') + '.'), false,
+            ErrorUtils.aggregateError(exception, exception2));
         return null;// never reached
       }
     }
@@ -78,7 +77,7 @@ InstanceParser<IGraphicDriver> {
 
   /** {@inheritDoc} */
   @Override
-  public final IGraphicDriver parseObject(final Object o) throws Exception {
+  public final IGraphicDriver parseObject(final Object o) {
     try {
       return this.m_formatParser.parseObject(o).getDefaultDriver();
     } catch (final Exception exception) {
@@ -87,8 +86,8 @@ InstanceParser<IGraphicDriver> {
       } catch (final Exception exception2) {
         RethrowMode.AS_UNSUPPORTED_OPERATION_EXCEPTION.rethrow(
             ((("Could not find graphic driver fitting to object '" //$NON-NLS-1$
-                + o) + '\'') + '.'), false,
-                ErrorUtils.aggregateError(exception, exception2));
+            + o) + '\'') + '.'), false,
+            ErrorUtils.aggregateError(exception, exception2));
         return null;// never reached
       }
     }

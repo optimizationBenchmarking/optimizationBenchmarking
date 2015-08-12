@@ -77,8 +77,7 @@ final class _PropertyValueGrouperParser extends
 
   /** {@inheritDoc} */
   @Override
-  public final PropertyValueGrouper parseString(final String string)
-      throws Exception {
+  public final PropertyValueGrouper parseString(final String string) {
     final String use;
     final EGroupingMode defMode;
     final int defMinGroups, defMaxGroups;

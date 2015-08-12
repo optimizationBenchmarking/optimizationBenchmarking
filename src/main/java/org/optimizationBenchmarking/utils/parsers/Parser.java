@@ -31,11 +31,12 @@ public abstract class Parser<T> implements Serializable {
    * @param string
    *          the string
    * @return the return type
-   * @throws Exception
+   * @throws IllegalArgumentException
    *           if something fails
    */
   @SuppressWarnings("unchecked")
-  public T parseString(final String string) throws Exception {
+  public T parseString(final String string)
+      throws IllegalArgumentException {
     final T ret;
 
     ret = ((T) string);
@@ -49,10 +50,10 @@ public abstract class Parser<T> implements Serializable {
    * @param o
    *          the object
    * @return the parse result
-   * @throws Exception
+   * @throws IllegalArgumentException
    *           if something fails
    */
-  public T parseObject(final Object o) throws Exception {
+  public T parseObject(final Object o) throws IllegalArgumentException {
     final T ret;
     final Class<T> clazz;
 
@@ -77,10 +78,10 @@ public abstract class Parser<T> implements Serializable {
    *
    * @param instance
    *          the object instance
-   * @throws Exception
+   * @throws IllegalArgumentException
    *           if something fails
    */
-  public void validate(final T instance) throws Exception {
+  public void validate(final T instance) throws IllegalArgumentException {
     //
   }
 }

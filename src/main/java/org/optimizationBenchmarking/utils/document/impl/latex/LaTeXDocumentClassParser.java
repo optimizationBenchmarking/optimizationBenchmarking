@@ -43,8 +43,7 @@ public final class LaTeXDocumentClassParser extends
 
   /** {@inheritDoc} */
   @Override
-  public final LaTeXDocumentClass parseString(final String string)
-      throws Exception {
+  public final LaTeXDocumentClass parseString(final String string) {
     if ("article".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return Article.getInstance();
     }

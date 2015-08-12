@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.parsers;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -53,8 +52,7 @@ public class PathParser extends Parser<Path> {
 
   /** {@inheritDoc} */
   @Override
-  public Path parseString(final String string) throws IOException,
-      SecurityException {
+  public Path parseString(final String string) {
     final Path f;
 
     f = PathUtils.normalize(string, this.m_basePath);
@@ -73,8 +71,7 @@ public class PathParser extends Parser<Path> {
 
   /** {@inheritDoc} */
   @Override
-  public final Path parseObject(final Object o) throws IOException,
-      SecurityException, URISyntaxException {
+  public final Path parseObject(final Object o) {
     Path ret;
     URI uri;
 
@@ -89,7 +86,14 @@ public class PathParser extends Parser<Path> {
           uri = ((URI) o);
         } else {
           if (o instanceof URL) {
-            uri = ((URL) o).toURI();
+            try {
+              uri = ((URL) o).toURI();
+            } catch (final URISyntaxException use) {
+              throw new IllegalArgumentException(
+                  "Cannot convert object '" + //$NON-NLS-1$
+                      "' from type URL to URI in order to translate it to a path.", //$NON-NLS-1$
+                  use);
+            }
           } else {
             uri = null;
           }

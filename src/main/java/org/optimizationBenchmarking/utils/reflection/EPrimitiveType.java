@@ -52,7 +52,7 @@ public enum EPrimitiveType {
 
   /** the double type class */
   DOUBLE(double.class, Double.class, 8, StrictDoubleParser.INSTANCE,
-                                  LooseDoubleParser.INSTANCE), ;
+      LooseDoubleParser.INSTANCE), ;
 
   /** the type */
   private static final EPrimitiveType[] _TYPES = EPrimitiveType.values();
@@ -237,9 +237,11 @@ public enum EPrimitiveType {
    * @return the primitive type, or {@code null} if none was found
    */
   public static final EPrimitiveType getPrimitiveType(final Class<?> clazz) {
-    for (final EPrimitiveType x : EPrimitiveType._TYPES) {
-      if ((x.m_primitive == clazz) || (x.m_wrapper == clazz)) {
-        return x;
+    if (clazz != null) {
+      for (final EPrimitiveType x : EPrimitiveType._TYPES) {
+        if ((x.m_primitive == clazz) || (x.m_wrapper == clazz)) {
+          return x;
+        }
       }
     }
     return null;

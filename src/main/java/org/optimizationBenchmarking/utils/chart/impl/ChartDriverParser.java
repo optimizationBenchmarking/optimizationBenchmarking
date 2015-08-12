@@ -44,8 +44,7 @@ public final class ChartDriverParser extends InstanceParser<IChartDriver> {
 
   /** {@inheritDoc} */
   @Override
-  public final IChartDriver parseString(final String string)
-      throws Exception {
+  public final IChartDriver parseString(final String string) {
     if ("export".equalsIgnoreCase(string) || //$NON-NLS-1$
         "txt".equalsIgnoreCase(string) || //$NON-NLS-1$
         "text".equalsIgnoreCase(string)) { //$NON-NLS-1$
@@ -69,7 +68,7 @@ public final class ChartDriverParser extends InstanceParser<IChartDriver> {
 
   /** {@inheritDoc} */
   @Override
-  public final IChartDriver parseObject(final Object o) throws Exception {
+  public final IChartDriver parseObject(final Object o) {
     try {
       return this.m_formatParser.parseObject(o).getDefaultDriver();
     } catch (final Exception exception) {

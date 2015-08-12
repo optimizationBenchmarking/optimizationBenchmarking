@@ -1,7 +1,6 @@
 package org.optimizationBenchmarking.utils.math.statistics.ranking;
 
-import org.optimizationBenchmarking.utils.parsers.Parser;
-import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.parsers.InstanceParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
@@ -9,7 +8,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * {@link org.optimizationBenchmarking.utils.math.statistics.ranking.ETieStrategy}
  * s
  */
-public final class TieStrategyParser extends Parser<ETieStrategy> {
+public final class TieStrategyParser extends InstanceParser<ETieStrategy> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -19,19 +18,12 @@ public final class TieStrategyParser extends Parser<ETieStrategy> {
 
   /** create the parser */
   private TieStrategyParser() {
-    super();
+    super(ETieStrategy.class, null);
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Class<ETieStrategy> getOutputClass() {
-    return ETieStrategy.class;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final ETieStrategy parseString(final String string)
-      throws Exception {
+  public final ETieStrategy parseString(final String string) {
     final String name;
 
     name = TextUtils.prepare(string);
@@ -67,8 +59,7 @@ public final class TieStrategyParser extends Parser<ETieStrategy> {
       }
 
       default: {
-        return ReflectionUtils.getInstance(ETieStrategy.class,
-            ETieStrategy.class, name);
+        return super.parseString(name);
       }
     }
   }

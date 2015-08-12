@@ -1,8 +1,5 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 
 /** A parser for a stream encodings. */
@@ -28,8 +25,7 @@ public class StreamEncodingParser extends Parser<StreamEncoding<?, ?>> {
 
   /** {@inheritDoc} */
   @Override
-  public final StreamEncoding<?, ?> parseString(final String string)
-      throws IOException, SecurityException {
+  public final StreamEncoding<?, ?> parseString(final String string) {
     final StreamEncoding<?, ?> f;
 
     f = StreamEncoding.parseString(string);
@@ -49,8 +45,7 @@ public class StreamEncodingParser extends Parser<StreamEncoding<?, ?>> {
 
   /** {@inheritDoc} */
   @Override
-  public final StreamEncoding<?, ?> parseObject(final Object o)
-      throws IOException, SecurityException, URISyntaxException {
+  public final StreamEncoding<?, ?> parseObject(final Object o) {
     final StreamEncoding<?, ?> f;
 
     f = StreamEncoding.getStreamEncoding(o);

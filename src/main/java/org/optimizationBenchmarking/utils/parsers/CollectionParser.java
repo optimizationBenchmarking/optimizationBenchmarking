@@ -95,7 +95,7 @@ public abstract class CollectionParser<ET, CT extends Collection<ET>>
 
   /** {@inheritDoc} */
   @Override
-  public final CT parseString(final String string) throws Exception {
+  public final CT parseString(final String string) {
     final Parser<ET> parser;
     final Collection<ET> list;
     final ArrayList<EnclosureEnd> enc;
@@ -170,7 +170,7 @@ public abstract class CollectionParser<ET, CT extends Collection<ET>>
   /** {@inheritDoc} */
   @SuppressWarnings("unchecked")
   @Override
-  public final CT parseObject(final Object o) throws Exception {
+  public final CT parseObject(final Object o) {
     final Class<CT> clazz;
     final CT res;
 

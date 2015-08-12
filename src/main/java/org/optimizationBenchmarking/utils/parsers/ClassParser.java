@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.utils.parsers;
 
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A parser for classes
@@ -52,28 +53,35 @@ public class ClassParser<T extends Object> extends
 
   /** {@inheritDoc} */
   @Override
-  public final Class<? extends T> parseString(final String string)
-      throws LinkageError, ExceptionInInitializerError,
-      ClassNotFoundException, ClassCastException {
+  public final Class<? extends T> parseString(final String string) {
     Class<? extends T> c;
 
-    c = ReflectionUtils.findClass(string, this.m_base);
+    try {
+      c = ReflectionUtils.findClass(string, this.m_base);
+    } catch (LinkageError | ClassNotFoundException | ClassCastException error) {
+      throw new IllegalArgumentException("Cannt parse string '" + string + //$NON-NLS-1$
+          "' to a class of type " + //$NON-NLS-1$
+          TextUtils.className(this.m_base), error);
+    }
     this.validate(c);
     return c;
   }
 
   /** {@inheritDoc} */
   @Override
-  public void validate(final Class<? extends T> instance)
-      throws ClassCastException, ClassNotFoundException {
-    ReflectionUtils.validateSubClass(instance, this.m_base);
+  public void validate(final Class<? extends T> instance) {
+    try {
+      ReflectionUtils.validateSubClass(instance, this.m_base);
+    } catch (final ClassCastException except) {
+      throw new IllegalArgumentException("Invalid class: " + instance, //$NON-NLS-1$
+          except);
+    }
   }
 
   /** {@inheritDoc} */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
-  public final Class<? extends T> parseObject(final Object o)
-      throws ClassCastException, ClassNotFoundException {
+  public final Class<? extends T> parseObject(final Object o) {
     final Class<? extends T> clazz;
 
     if (o instanceof Class) {

@@ -87,8 +87,7 @@ public final class MathematicalFunctionParser extends
 
   /** {@inheritDoc} */
   @Override
-  public final MathematicalFunction parseString(final String string)
-      throws Exception {
+  public final MathematicalFunction parseString(final String string) {
     _ParsedFunction func;
 
     func = this._parseString(string);
