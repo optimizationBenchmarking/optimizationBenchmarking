@@ -1,18 +1,18 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-/** A bounded long parser */
-public class BoundedLongParser extends LongParser {
+/** A bounded byte parser */
+public final class BoundedLooseByteParser extends LooseByteParser {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** the minimum allowed value */
-  private final long m_min;
+  private final byte m_min;
 
   /** the maximum allowed value */
-  private final long m_max;
+  private final byte m_max;
 
   /**
-   * Create the bounded long parser
+   * Create the bounded byte parser
    *
    * @param min
    *          the minimum allowed value, a
@@ -25,12 +25,12 @@ public class BoundedLongParser extends LongParser {
    *          IllegalArgumentException} will be thrown if this constraint
    *          is violated
    */
-  public BoundedLongParser(final Number min, final Number max) {
-    this(min.longValue(), max.longValue());
+  public BoundedLooseByteParser(final Number min, final Number max) {
+    this(min.byteValue(), max.byteValue());
   }
 
   /**
-   * Create the bounded long parser
+   * Create the bounded byte parser
    *
    * @param min
    *          the minimum allowed value, a
@@ -43,23 +43,22 @@ public class BoundedLongParser extends LongParser {
    *          IllegalArgumentException} will be thrown if this constraint
    *          is violated
    */
-  public BoundedLongParser(final long min, final long max) {
+  public BoundedLooseByteParser(final byte min, final byte max) {
     super();
 
     if (max < min) {
       throw new IllegalArgumentException((((NumberParser.MIN_MAX + //
           min) + ',') + max) + ']');
     }
-
     this.m_min = min;
     this.m_max = max;
   }
 
   /** {@inheritDoc} */
   @Override
-  public void validateLong(final long value)
+  public void validateByte(final byte value)
       throws IllegalArgumentException {
-    super.validateLong(value);
+    super.validateByte(value);
 
     if (value < this.m_min) {
       throw new IllegalArgumentException((((NumberParser.MBLOET + //
@@ -74,13 +73,13 @@ public class BoundedLongParser extends LongParser {
 
   /** {@inheritDoc} */
   @Override
-  public final long getLowerBoundLong() {
+  public final byte getLowerBound() {
     return this.m_min;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long getUpperBoundLong() {
+  public final byte getUpperBound() {
     return this.m_max;
   }
 }

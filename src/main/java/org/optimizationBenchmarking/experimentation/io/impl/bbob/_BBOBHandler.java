@@ -23,8 +23,8 @@ import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
-import org.optimizationBenchmarking.utils.parsers.IntParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseIntParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** the internal content handler */
@@ -158,8 +158,8 @@ final class _BBOBHandler implements Comparator<Number[]> {
                       "Found job point, but not run begin in " + f); //$NON-NLS-1$
                 }
 
-                d = DoubleParser.INSTANCE.parseDouble(s.substring(start2,
-                    end2));
+                d = LooseDoubleParser.INSTANCE.parseDouble(s.substring(
+                    start2, end2));
                 if (d < -1e-12d) {
                   throw new IllegalArgumentException(
                       "value " + d + //$NON-NLS-1$
@@ -177,8 +177,9 @@ final class _BBOBHandler implements Comparator<Number[]> {
                   d = 0d;
                 }
                 current.add(new Number[] {
-                    IntParser.INSTANCE.parseString(s.substring(0, end1)),//
-                    Double.valueOf(d) });
+                    LooseIntParser.INSTANCE.parseString(s.substring(0,
+                        end1)),//
+                        Double.valueOf(d) });
               } else {
                 throw new IllegalArgumentException("Found string '" + //$NON-NLS-1$
                     s + "' in file " + f); //$NON-NLS-1$

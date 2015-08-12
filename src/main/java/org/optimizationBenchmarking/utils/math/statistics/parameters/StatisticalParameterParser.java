@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.utils.math.statistics.parameters;
 
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
 import org.optimizationBenchmarking.utils.parsers.InstanceParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
@@ -82,11 +82,11 @@ public final class StatisticalParameterParser extends
             if ((first != null) && (last != null)) {
               if (Quantile.SHORT.equals(first)) {
                 return Quantile.getInstance(//
-                    DoubleParser.INSTANCE.parseDouble(last));
+                    LooseDoubleParser.INSTANCE.parseDouble(last));
               }
               if (Quantile.LONG.equals(last)) {
                 return Quantile.getInstance(//
-                    DoubleParser.INSTANCE.parseDouble(first));
+                    LooseDoubleParser.INSTANCE.parseDouble(first));
               }
             }
             first = last = null;

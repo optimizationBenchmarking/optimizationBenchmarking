@@ -31,7 +31,7 @@ final class _TextConst implements Comparable<_TextConst> {
       new _TextConst("negativeinfinity",//$NON-NLS-1$,
           Double.NEGATIVE_INFINITY),//
 
-      new _TextConst(DoubleParser.NEGATIVE_INFINITY,
+      new _TextConst(LooseDoubleParser.NEGATIVE_INFINITY,
           Double.NEGATIVE_INFINITY),//
 
       new _TextConst(TextUtils.toLowerCase(Double
@@ -59,7 +59,7 @@ final class _TextConst implements Comparable<_TextConst> {
       new _TextConst("infty",//$NON-NLS-1$
           Double.POSITIVE_INFINITY),//
 
-      new _TextConst(DoubleParser.POSITIVE_INFINITY,
+      new _TextConst(LooseDoubleParser.POSITIVE_INFINITY,
           Double.POSITIVE_INFINITY),//
 
       new _TextConst("\u221e",//$NON-NLS-1$
@@ -77,7 +77,7 @@ final class _TextConst implements Comparable<_TextConst> {
       new _TextConst("nan",//$NON-NLS-1$
           Double.NaN),//
 
-      new _TextConst(DoubleParser.NOT_A_NUMBER, Double.NaN),//
+      new _TextConst(LooseDoubleParser.NOT_A_NUMBER, Double.NaN),//
 
       new _TextConst("notanumber",//$NON-NLS-1$
           Double.NaN),//

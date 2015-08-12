@@ -23,8 +23,8 @@ import org.optimizationBenchmarking.utils.graphics.FontProperties;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
-import org.optimizationBenchmarking.utils.parsers.BooleanParser;
-import org.optimizationBenchmarking.utils.parsers.IntParser;
+import org.optimizationBenchmarking.utils.parsers.LooseBooleanParser;
+import org.optimizationBenchmarking.utils.parsers.LooseIntParser;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
@@ -732,16 +732,18 @@ public final class FontStyleBuilder extends
         strings.next())));
 
     t = strings.next();
-    this.setBold((t != null) && BooleanParser.INSTANCE.parseBoolean(t));
+    this.setBold((t != null)
+        && LooseBooleanParser.INSTANCE.parseBoolean(t));
 
     t = strings.next();
-    this.setItalic((t != null) && BooleanParser.INSTANCE.parseBoolean(t));
+    this.setItalic((t != null)
+        && LooseBooleanParser.INSTANCE.parseBoolean(t));
 
     t = strings.next();
     this.setUnderlined((t != null)
-        && BooleanParser.INSTANCE.parseBoolean(t));
+        && LooseBooleanParser.INSTANCE.parseBoolean(t));
 
-    this.setSize(IntParser.INSTANCE.parseInt(strings.next()));
+    this.setSize(LooseIntParser.INSTANCE.parseInt(strings.next()));
 
     while (strings.hasNext()) {
       this.addFaceChoice(strings.next());

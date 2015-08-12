@@ -1,15 +1,15 @@
 package org.optimizationBenchmarking.utils.reflection;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
-import org.optimizationBenchmarking.utils.parsers.BooleanParser;
-import org.optimizationBenchmarking.utils.parsers.ByteParser;
-import org.optimizationBenchmarking.utils.parsers.CharParser;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
-import org.optimizationBenchmarking.utils.parsers.FloatParser;
-import org.optimizationBenchmarking.utils.parsers.IntParser;
-import org.optimizationBenchmarking.utils.parsers.LongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseBooleanParser;
+import org.optimizationBenchmarking.utils.parsers.LooseByteParser;
+import org.optimizationBenchmarking.utils.parsers.LooseCharParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseFloatParser;
+import org.optimizationBenchmarking.utils.parsers.LooseIntParser;
+import org.optimizationBenchmarking.utils.parsers.LooseLongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseShortParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
-import org.optimizationBenchmarking.utils.parsers.ShortParser;
 import org.optimizationBenchmarking.utils.parsers.StrictBooleanParser;
 import org.optimizationBenchmarking.utils.parsers.StrictByteParser;
 import org.optimizationBenchmarking.utils.parsers.StrictCharParser;
@@ -23,36 +23,36 @@ import org.optimizationBenchmarking.utils.parsers.StrictShortParser;
 public enum EPrimitiveType {
 
   /** the boolean type class */
-  BOOLEAN(boolean.class, Boolean.class, 1,
-      StrictBooleanParser.STRICT_INSTANCE, BooleanParser.INSTANCE),
+  BOOLEAN(boolean.class, Boolean.class, 1, StrictBooleanParser.INSTANCE,
+      LooseBooleanParser.INSTANCE),
 
   /** the boolean type class */
-  CHAR(char.class, Character.class, 2, StrictCharParser.STRICT_INSTANCE,
-      CharParser.INSTANCE),
+  CHAR(char.class, Character.class, 2, StrictCharParser.INSTANCE,
+      LooseCharParser.INSTANCE),
 
   /** the byte type class */
-  BYTE(byte.class, Byte.class, 4, StrictByteParser.STRICT_INSTANCE,
-      ByteParser.INSTANCE),
+  BYTE(byte.class, Byte.class, 4, StrictByteParser.INSTANCE,
+      LooseByteParser.INSTANCE),
 
   /** the short type class */
-  SHORT(short.class, Short.class, 4, StrictShortParser.STRICT_INSTANCE,
-      ShortParser.INSTANCE),
+  SHORT(short.class, Short.class, 4, StrictShortParser.INSTANCE,
+      LooseShortParser.INSTANCE),
 
   /** the int type class */
-  INT(int.class, Integer.class, 4, StrictIntParser.STRICT_INSTANCE,
-      IntParser.INSTANCE),
+  INT(int.class, Integer.class, 4, StrictIntParser.INSTANCE,
+      LooseIntParser.INSTANCE),
 
   /** the long type class */
-  LONG(long.class, Long.class, 4, StrictLongParser.STRICT_INSTANCE,
-      LongParser.INSTANCE),
+  LONG(long.class, Long.class, 4, StrictLongParser.INSTANCE,
+      LooseLongParser.INSTANCE),
 
   /** the float type class */
-  FLOAT(float.class, Float.class, 8, StrictFloatParser.STRICT_INSTANCE,
-      FloatParser.INSTANCE),
+  FLOAT(float.class, Float.class, 8, StrictFloatParser.INSTANCE,
+      LooseFloatParser.INSTANCE),
 
   /** the double type class */
-  DOUBLE(double.class, Double.class, 8,
-      StrictDoubleParser.STRICT_INSTANCE, DoubleParser.INSTANCE), ;
+  DOUBLE(double.class, Double.class, 8, StrictDoubleParser.INSTANCE,
+                                  LooseDoubleParser.INSTANCE), ;
 
   /** the type */
   private static final EPrimitiveType[] _TYPES = EPrimitiveType.values();

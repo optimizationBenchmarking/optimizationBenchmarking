@@ -5,7 +5,7 @@ import java.util.Iterator;
 import org.optimizationBenchmarking.utils.EmptyUtils;
 import org.optimizationBenchmarking.utils.graphics.style.PaletteElementBuilder;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
-import org.optimizationBenchmarking.utils.parsers.FloatParser;
+import org.optimizationBenchmarking.utils.parsers.LooseFloatParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.transformations.NormalCharTransformer;
 
@@ -131,9 +131,9 @@ public class StrokeStyleBuilder extends PaletteElementBuilder<StrokeStyle> {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     try {
       this.setName(strings.next());
-      this.setWidth(FloatParser.INSTANCE.parseFloat(strings.next()));
+      this.setWidth(LooseFloatParser.INSTANCE.parseFloat(strings.next()));
       while (strings.hasNext()) {
-        this.addDash(FloatParser.INSTANCE.parseFloat(strings.next()));
+        this.addDash(LooseFloatParser.INSTANCE.parseFloat(strings.next()));
       }
     } catch (final Throwable t) {
       throw new IllegalArgumentException(('\'' + strings.toString())

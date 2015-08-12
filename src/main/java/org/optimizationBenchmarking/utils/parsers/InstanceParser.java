@@ -44,7 +44,7 @@ public class InstanceParser<T> extends Parser<T> {
     final T fieldValue;
 
     fieldValue = ReflectionUtils.getInstanceByName(this.m_base,
-        StringParser.INSTANCE.parseString(string), this.m_prefixes);
+        LooseStringParser.INSTANCE.parseString(string), this.m_prefixes);
     this.validate(fieldValue);
     return fieldValue;
   }

@@ -8,23 +8,23 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 
 /**
  * the basic test for double parsers
  */
-public class DoubleParserTest extends ParserTest<Double> {
+public class LooseDoubleParserTest extends ParserTest<Double> {
 
   /** create the test */
-  public DoubleParserTest() {
+  public LooseDoubleParserTest() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
-  protected DoubleParser getParser() {
-    return DoubleParser.INSTANCE;
+  protected LooseDoubleParser getParser() {
+    return LooseDoubleParser.INSTANCE;
   }
 
   /** {@inheritDoc} */
@@ -57,54 +57,55 @@ public class DoubleParserTest extends ParserTest<Double> {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   protected Collection<Map.Entry<String, Double>> getExpectedStringParsingResults() {
     return ((Collection) (new ArrayListView<>(new Map.Entry[] {//
-            DoubleParserTest.__entry(0.3d, "0.3"),//$NON-NLS-1$
-            DoubleParserTest.__entry(7, "7"),//$NON-NLS-1$
-            DoubleParserTest.__entry(-2.4d, "-2.4"),//$NON-NLS-1$
-            DoubleParserTest.__entry(21d, "21"),//$NON-NLS-1$
-            DoubleParserTest.__entry(Integer.MAX_VALUE,
+            LooseDoubleParserTest.__entry(0.3d, "0.3"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(7, "7"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-2.4d, "-2.4"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(21d, "21"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(Integer.MAX_VALUE,
                 "Integer#MAX_VALUE"),//$NON-NLS-1$
-            DoubleParserTest.__entry(Double.POSITIVE_INFINITY,
+            LooseDoubleParserTest.__entry(Double.POSITIVE_INFINITY,
                 "Double#POSITIVE_INFINITY"), //$NON-NLS-1$
-            DoubleParserTest.__entry((Integer.MAX_VALUE),
+            LooseDoubleParserTest.__entry((Integer.MAX_VALUE),
                 String.valueOf(Integer.MAX_VALUE)),//
-            DoubleParserTest.__entry(Double.POSITIVE_INFINITY,
+            LooseDoubleParserTest.__entry(Double.POSITIVE_INFINITY,
                 String.valueOf(Double.POSITIVE_INFINITY)),//
 
-            DoubleParserTest.__entry(0, "0"),//$NON-NLS-1$
-            DoubleParserTest.__entry(Math.E, "'e'"),//$NON-NLS-1$
-            DoubleParserTest.__entry(Math.E, "-(-E)"),//$NON-NLS-1$
-            DoubleParserTest.__entry(1e-13, "1e-13"),//$NON-NLS-1$
-            DoubleParserTest.__entry(-1.31234234, "-1.31234234"),//$NON-NLS-1$
-            DoubleParserTest.__entry(3, "0x3"),//$NON-NLS-1$
-            DoubleParserTest.__entry(-16, "-0x10"),//$NON-NLS-1$
-            DoubleParserTest.__entry(Double.POSITIVE_INFINITY,//
+            LooseDoubleParserTest.__entry(0, "0"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(Math.E, "'e'"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(Math.E, "-(-E)"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(1e-13, "1e-13"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-1.31234234, "-1.31234234"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(3, "0x3"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-16, "-0x10"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(Double.POSITIVE_INFINITY,//
                 "Double#POSITIVE_INFINITY"),//$NON-NLS-1$
-            DoubleParserTest.__entry(Double.NEGATIVE_INFINITY,//
+            LooseDoubleParserTest.__entry(Double.NEGATIVE_INFINITY,//
                 "\"-+- +-'Double#POSITIVE_INFINITY'\""),//$NON-NLS-1$
-            DoubleParserTest.__entry(Math.E, "Math#E"),//$NON-NLS-1$
-            DoubleParserTest.__entry(-Math.PI, "-\u03c0"),//$NON-NLS-1$
-            DoubleParserTest.__entry(-Math.PI, "-\\u03c0"),//$NON-NLS-1$
-            DoubleParserTest.__entry(-Math.PI, "-(\\u03c0)"),//$NON-NLS-1$
-            DoubleParserTest.__entry(-Math.PI, "\"-(\\u03c0)\""),//$NON-NLS-1$
-            DoubleParserTest.__entry(Math.PI, "-\"-(\\u03c0)\""),//$NON-NLS-1$
-            DoubleParserTest.__entry(-Math.PI, "-java.lang.Math#PI"),//$NON-NLS-1$
-            DoubleParserTest.__entry(Double.NaN,
+            LooseDoubleParserTest.__entry(Math.E, "Math#E"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-Math.PI, "-\u03c0"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-Math.PI, "-\\u03c0"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-Math.PI, "-(\\u03c0)"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-Math.PI, "\"-(\\u03c0)\""),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(Math.PI, "-\"-(\\u03c0)\""),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-Math.PI, "-java.lang.Math#PI"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(Double.NaN,
                 String.valueOf(Double.NaN)),//
-            DoubleParserTest.__entry(-Math.PI,//
+            LooseDoubleParserTest.__entry(-Math.PI,//
                 ('-' + Character.toString((char) 0x3c0))),
-            DoubleParserTest.__entry(Math.E, " Ma th# E "),//$NON-NLS-1$
-            DoubleParserTest.__entry(Math.E / 100, (" Ma th# E %")),//$NON-NLS-1$
-            DoubleParserTest.__entry(
-                -(1 | 2 | 4 | 8 | 256 | 512 | 1024 | 2048),//
+            LooseDoubleParserTest.__entry(Math.E, " Ma th# E "),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(Math.E / 100, (" Ma th# E %")),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-(1 | 2 | 4 | 8 | 256 | 512
+                                            | 1024 | 2048),//
                 ("-0b0000_1111_0000_1111")),//$NON-NLS-1$
-            DoubleParserTest.__entry(Integer.MAX_VALUE,//
+            LooseDoubleParserTest.__entry(Integer.MAX_VALUE,//
                 "Integer#MAX_VALUE"),//$NON-NLS-1$
-            DoubleParserTest.__entry(Short.SIZE, "Short#SIZE"),//$NON-NLS-1$;
-            DoubleParserTest.__entry(-0.3334d, "-[0.3334]"),//$NON-NLS-1$
-            DoubleParserTest.__entry(-0.3334d / 100d, "-[0.3334]%"),//$NON-NLS-1$
-            DoubleParserTest.__entry(-0.3334d / 1e6d, "-[0.3334" + //$NON-NLS-1$
+            LooseDoubleParserTest.__entry(Short.SIZE, "Short#SIZE"),//$NON-NLS-1$;
+            LooseDoubleParserTest.__entry(-0.3334d, "-[0.3334]"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-0.3334d / 100d, "-[0.3334]%"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-0.3334d / 1e6d, "-[0.3334" + //$NON-NLS-1$
                 Character.toString((char) (0xb5)) + ']'),
-            DoubleParserTest.__entry(-0.3334d / 1e6d, "-<0.3334\\u00b5>"),//$NON-NLS-1$
+            LooseDoubleParserTest.__entry(-0.3334d / 1e6d,
+                                                        "-<0.3334\\u00b5>"),//$NON-NLS-1$
 
         })));
   }

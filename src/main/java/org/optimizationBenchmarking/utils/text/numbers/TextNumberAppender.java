@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.utils.text.numbers;
 
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -459,7 +459,7 @@ public final class TextNumberAppender extends NumberAppender {
     if (v < 0d) {
       if (v <= Double.NEGATIVE_INFINITY) {
         return textCase.appendWords(//
-            DoubleParser.NEGATIVE_INFINITY, textOut);
+            LooseDoubleParser.NEGATIVE_INFINITY, textOut);
       }
 
       status = new _NumberStatus(textCase);
@@ -476,11 +476,12 @@ public final class TextNumberAppender extends NumberAppender {
         return textCase.appendWord(TextNumberAppender.C_0, textOut);
       }
       if (v >= Double.POSITIVE_INFINITY) {
-        return textCase.appendWords(DoubleParser.POSITIVE_INFINITY,
+        return textCase.appendWords(LooseDoubleParser.POSITIVE_INFINITY,
             textOut);
       }
       if (v != v) {
-        return textCase.appendWord(DoubleParser.NOT_A_NUMBER, textOut);
+        return textCase
+            .appendWord(LooseDoubleParser.NOT_A_NUMBER, textOut);
       }
       value = v;
       status = new _NumberStatus(textCase);

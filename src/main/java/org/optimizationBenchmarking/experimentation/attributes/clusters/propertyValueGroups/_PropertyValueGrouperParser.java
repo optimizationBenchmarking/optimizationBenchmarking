@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.experimentation.attributes.clusters.propert
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.parsers.AnyNumberParser;
-import org.optimizationBenchmarking.utils.parsers.IntParser;
+import org.optimizationBenchmarking.utils.parsers.LooseIntParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterator;
@@ -137,7 +137,7 @@ final class _PropertyValueGrouperParser extends
             break;
           }
           default: {
-            minGroups = IntParser.INSTANCE.parseInt(current);
+            minGroups = LooseIntParser.INSTANCE.parseInt(current);
             minMaxMode = true;
           }
         }
@@ -154,7 +154,7 @@ final class _PropertyValueGrouperParser extends
 
           current = iterator.next();
           if (!(_PropertyValueGrouperParser.DONT_CARE.equals(current))) {
-            maxGroups = IntParser.INSTANCE.parseInt(current);
+            maxGroups = LooseIntParser.INSTANCE.parseInt(current);
           }
 
           if (maxGroups < minGroups) {

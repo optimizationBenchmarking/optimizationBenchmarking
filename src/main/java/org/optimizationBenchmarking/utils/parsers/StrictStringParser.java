@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.text.charset.Characters;
 import org.optimizationBenchmarking.utils.text.charset.QuotationMark;
 
 /** A parser for a given type */
-public class StrictStringParser extends Parser<String> {
+public class StrictStringParser extends StringParser {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
@@ -17,12 +17,6 @@ public class StrictStringParser extends Parser<String> {
   /** create the parser */
   protected StrictStringParser() {
     super();
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public final Class<String> getOutputClass() {
-    return String.class;
   }
 
   /**

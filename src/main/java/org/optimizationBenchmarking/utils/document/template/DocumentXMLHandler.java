@@ -27,13 +27,13 @@ import org.optimizationBenchmarking.utils.document.spec.ISectionContainer;
 import org.optimizationBenchmarking.utils.document.spec.IStructuredText;
 import org.optimizationBenchmarking.utils.document.spec.IText;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
-import org.optimizationBenchmarking.utils.parsers.ByteParser;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
-import org.optimizationBenchmarking.utils.parsers.FloatParser;
-import org.optimizationBenchmarking.utils.parsers.IntParser;
-import org.optimizationBenchmarking.utils.parsers.LongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseByteParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseFloatParser;
+import org.optimizationBenchmarking.utils.parsers.LooseIntParser;
+import org.optimizationBenchmarking.utils.parsers.LooseLongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseShortParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
-import org.optimizationBenchmarking.utils.parsers.ShortParser;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
@@ -783,7 +783,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startDouble(final Attributes attributes) {
     this.__loadFormatAttrs(attributes);
-    this.m_formatParser = DoubleParser.INSTANCE;
+    this.m_formatParser = LooseDoubleParser.INSTANCE;
     return;
   }
 
@@ -797,7 +797,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startInt(final Attributes attributes) {
     this.__loadFormatAttrs(attributes);
-    this.m_formatParser = IntParser.INSTANCE;
+    this.m_formatParser = LooseIntParser.INSTANCE;
     return;
   }
 
@@ -811,7 +811,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startLong(final Attributes attributes) {
     this.__loadFormatAttrs(attributes);
-    this.m_formatParser = LongParser.INSTANCE;
+    this.m_formatParser = LooseLongParser.INSTANCE;
     return;
   }
 
@@ -825,7 +825,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startFloat(final Attributes attributes) {
     this.__loadFormatAttrs(attributes);
-    this.m_formatParser = FloatParser.INSTANCE;
+    this.m_formatParser = LooseFloatParser.INSTANCE;
     return;
   }
 
@@ -839,7 +839,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startShort(final Attributes attributes) {
     this.__loadFormatAttrs(attributes);
-    this.m_formatParser = ShortParser.INSTANCE;
+    this.m_formatParser = LooseShortParser.INSTANCE;
     return;
   }
 
@@ -853,7 +853,7 @@ public final class DocumentXMLHandler extends DelegatingHandler {
    */
   private final void __startByte(final Attributes attributes) {
     this.__loadFormatAttrs(attributes);
-    this.m_formatParser = ByteParser.INSTANCE;
+    this.m_formatParser = LooseByteParser.INSTANCE;
     return;
   }
 

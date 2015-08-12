@@ -19,9 +19,9 @@ import org.optimizationBenchmarking.utils.math.mathEngine.impl.abstr.MathEngine;
 import org.optimizationBenchmarking.utils.math.mathEngine.spec.IVariable;
 import org.optimizationBenchmarking.utils.math.matrix.IMatrix;
 import org.optimizationBenchmarking.utils.math.matrix.impl.MatrixBuilder;
-import org.optimizationBenchmarking.utils.parsers.BooleanParser;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
-import org.optimizationBenchmarking.utils.parsers.LongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseBooleanParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseLongParser;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.tokenizers.WordBasedStringIterator;
@@ -361,7 +361,7 @@ public final class REngine extends MathEngine {
     if (RExpression.FALSE.equalsIgnoreCase(token)) {
       return 0d;
     }
-    return DoubleParser.INSTANCE.parseDouble(token);
+    return LooseDoubleParser.INSTANCE.parseDouble(token);
   }
 
   /** {@inheritDoc} */
@@ -376,7 +376,7 @@ public final class REngine extends MathEngine {
     if (RExpression.FALSE.equalsIgnoreCase(token)) {
       return 0L;
     }
-    return LongParser.INSTANCE.parseLong(token);
+    return LooseLongParser.INSTANCE.parseLong(token);
   }
 
   /** {@inheritDoc} */
@@ -391,7 +391,7 @@ public final class REngine extends MathEngine {
     if (RExpression.FALSE.equalsIgnoreCase(token)) {
       return false;
     }
-    return BooleanParser.INSTANCE.parseBoolean(token);
+    return LooseBooleanParser.INSTANCE.parseBoolean(token);
   }
 
   /** {@inheritDoc} */

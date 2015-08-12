@@ -2,28 +2,13 @@ package org.optimizationBenchmarking.utils.parsers;
 
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
- * A parser for {@code double}s which can also interpret things such as
- * constants.
+ * A {@code double}-parser.
  */
-public class DoubleParser extends StrictDoubleParser {
-
+public abstract class DoubleParser extends NumberParser<Double> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
-
-  /** the negative infinity string */
-  public static final String NEGATIVE_INFINITY = "negative infinity"; //$NON-NLS-1$
-
-  /** the nan string */
-  public static final String NOT_A_NUMBER = "not a number"; //$NON-NLS-1$
-
-  /** the infinity string */
-  public static final String POSITIVE_INFINITY = "infinity"; //$NON-NLS-1$
-
-  /** the globally shared instance of the double parser */
-  public static final DoubleParser INSTANCE = new DoubleParser();
 
   /** create the parser */
   protected DoubleParser() {
@@ -32,161 +17,140 @@ public class DoubleParser extends StrictDoubleParser {
 
   /** {@inheritDoc} */
   @Override
-  public final double parseDouble(final String string) {
-    final _PreparedString prep;
-    double retVal;
-    String str;
-    _TextConst cnst;
-    Object number;
-    int base;
-
-    checker: {
-
-      try {
-        // first we try to cast the string directly to a double
-        // this will be the fast execution path for 'correctly' formatted
-        // numbers
-        retVal = java.lang.Double.parseDouble(string);
-        break checker;
-
-      } catch (final NumberFormatException origNumberError) {
-        // ok, the string does not follow java's default number format
-        // so now, we check whether it is hexadecimal/octal/binary
-        // formatted, a
-        // constant, or even a static member identifier
-
-        prep = new _PreparedString(string);
-
-        outer: while ((str = prep.next()) != null) {
-          // we now iterate over the prepared strings: step-by-step, we
-          // will
-          // try
-          // to process the string by, e.g., trimming it; removing +, -, (,
-          // ),
-          // etc; removing internal white spaces and underscores (to match
-          // Java
-          // 7's new binary syntax) and so on - until we can either parse
-          // it or
-          // have to give up
-
-          if (str != string) {
-            // try again to parse the string directly
-            try {
-              retVal = prep.getReturn(java.lang.Double.parseDouble(str));
-              break checker;
-            } catch (final Throwable canBeIgnored) {
-              // we ignore this exception, as we will throw the original
-              // one
-              // on failure
-            }
-          }
-
-          // let's see if it was a constant in some other base
-          if ((str.length() > 2) && (str.charAt(0) == '0')) {
-            if ((base = _PreparedString._getBase(str.charAt(1))) != 0) {
-              try {
-                retVal = prep.getReturn(java.lang.Long.parseLong(
-                    str.substring(2), base));
-                break checker;
-              } catch (final Throwable canBeIgnored) {
-                // we ignore this exception, as we will throw the original
-                // one
-                // on failure
-              }
-            }
-          }
-
-          // does the string correspond to a constant we know?
-          cnst = _TextConst.findConst(str);
-          if (cnst != null) {
-            if (cnst.hasDouble()) {
-              retVal = prep.getReturn(cnst.m_d);
-              break checker;
-            }
-            break outer;
-          }
-
-          // ok, it is no constant, maybe it is a public static final
-          // member?
-          try {
-            number = ReflectionUtils.getInstanceByName(Object.class, str);
-            if ((number != null) && (number != string) && (number != str)) {
-              retVal = prep.getReturn(this.__parseObjectRaw(number));
-              break checker;
-            }
-          } catch (final Throwable canBeIgnored) {
-            // ignore this exception: it will be thrown if no member fits
-            // in which case we will throw the original error anyway at the
-            // end
-          }
-        }
-
-        // ok, all our ideas to resolve the number have failed - throw
-        // original
-        // error again
-        throw origNumberError;
-      }
-    }
-
-    this.validateDouble(retVal);
-    return retVal;
+  public final Class<Double> getOutputClass() {
+    return Double.class;
   }
 
   /**
-   * The raw parsing method for calling inside {@link #parseString(String)}
+   * Parse the string
    *
-   * @param o
-   *          the object
-   * @return the return value
+   * @param string
+   *          the string
+   * @return the return type
    */
-  private final double __parseObjectRaw(final Object o) {
-    if (o instanceof java.lang.Number) {
-      return ((Number) o).doubleValue();
+  public double parseDouble(final String string) {
+    final double d;
+    boolean hasLong;
+    long l;
+
+    d = Double.parseDouble(string);
+
+    hasLong = false;
+    l = 0L;
+    try {
+      l = Long.parseLong(string);
+      hasLong = true;
+    } catch (final Throwable t) {
+      //
+    }
+    if (hasLong && (l != d)) {
+      throw new IllegalArgumentException(//
+          "Loss of fidelity when parsing '" + string + //$NON-NLS-1$
+              "' to a double (" + d + //$NON-NLS-1$
+              ") compared to parsing it to a long (" + //$NON-NLS-1$
+              l + ")."); //$NON-NLS-1$
     }
 
-    return this.parseDouble(String.valueOf(o));
+    this.validateDouble(d);
+
+    return d;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Double parseObject(final Object o) {
+  public final Double parseString(final String string) {
+    return Double.valueOf(this.parseDouble(string));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Double parseObject(final Object o) {
     final Double retVal;
     final double ret;
 
     if (o instanceof Double) {
       retVal = ((Double) o);
       ret = retVal.doubleValue();
-    } else {
-      ret = this.__parseObjectRaw(o);
-      retVal = null;
+      this.validateDouble(ret);
+      return retVal;
     }
 
-    this.validateDouble(ret);
-    return ((retVal != null) ? retVal : Double.valueOf(ret));
-  }
+    if (o instanceof String) {
+      return this.parseString((String) o);
+    }
 
-  /**
-   * write replace
-   *
-   * @return the replacement
-   */
-  private final Object writeReplace() {
-    return DoubleParser.INSTANCE;
-  }
-
-  /**
-   * read resolve
-   *
-   * @return the replacement
-   */
-  private final Object readResolve() {
-    return DoubleParser.INSTANCE;
+    throw new IllegalArgumentException(//
+        o + " is not a valid double."); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int hashCode() {
-    return HashUtils.combineHashes(444979,//
+  public final void validate(final Double instance) {
+    this.validateDouble(instance.doubleValue());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean areBoundsInteger() {
+    return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final long getLowerBoundLong() {
+    final long l;
+    final double d;
+
+    d = this.getLowerBoundDouble();
+    l = ((long) (Math.max(Long.MIN_VALUE, d)));
+    return ((l < d) ? (l + 1L) : l);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final long getUpperBoundLong() {
+    final long l;
+    final double d;
+
+    d = this.getUpperBoundDouble();
+    l = ((long) (Math.min(Long.MAX_VALUE, d)));
+    return ((l > d) ? (l - 1L) : l);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public double getLowerBoundDouble() {
+    return Double.NEGATIVE_INFINITY;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public double getUpperBoundDouble() {
+    return Double.POSITIVE_INFINITY;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void validateDouble(final double d) {//
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void validateLong(final long l) {
+    final double f;
+
+    f = l;
+    if (l != f) {
+      throw new IllegalArgumentException(l
+          + " cannot be converted to a double without loss of fidelity."); //$NON-NLS-1$
+    }
+    this.validateDouble(f);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(44525744,//
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.getLowerBoundDouble()),//
             HashUtils.hashCode(this.getUpperBoundDouble())));
@@ -194,7 +158,7 @@ public class DoubleParser extends StrictDoubleParser {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean equals(final Object other) {
+  public boolean equals(final Object other) {
     final DoubleParser parser;
     if (other == this) {
       return true;

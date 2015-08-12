@@ -7,8 +7,8 @@ import java.util.GregorianCalendar;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
-import org.optimizationBenchmarking.utils.parsers.IntParser;
-import org.optimizationBenchmarking.utils.parsers.StringParser;
+import org.optimizationBenchmarking.utils.parsers.LooseIntParser;
+import org.optimizationBenchmarking.utils.parsers.LooseStringParser;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for date objects. */
@@ -121,7 +121,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
    *          the year
    */
   public final void setYear(final String year) {
-    this.setYear(IntParser.INSTANCE.parseInt(year));
+    this.setYear(LooseIntParser.INSTANCE.parseInt(year));
   }
 
   /**
@@ -152,7 +152,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
     final String m;
     EBibMonth res;
 
-    m = StringParser.INSTANCE.parseString(month);
+    m = LooseStringParser.INSTANCE.parseString(month);
     if (m == null) {
       throw new IllegalArgumentException(//
           "Month strings must not be null or empty, but '" //$NON-NLS-1$
@@ -173,7 +173,8 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
       }
 
       try {
-        res = EBibMonth.MONTHS.get(IntParser.INSTANCE.parseInt(month));
+        res = EBibMonth.MONTHS
+            .get(LooseIntParser.INSTANCE.parseInt(month));
         break finder;
       } catch (final Throwable ignore) {
         // ignore
@@ -214,7 +215,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
     final String m;
     EBibQuarter res;
 
-    m = StringParser.INSTANCE.parseString(quarter);
+    m = LooseStringParser.INSTANCE.parseString(quarter);
     if (m == null) {
       throw new IllegalArgumentException(//
           "Quarter strings must not be null or empty, but '" //$NON-NLS-1$
@@ -235,7 +236,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
       }
 
       try {
-        res = EBibQuarter.QUARTERS.get(IntParser.INSTANCE
+        res = EBibQuarter.QUARTERS.get(LooseIntParser.INSTANCE
             .parseInt(quarter));
         break finder;
       } catch (final Throwable ignore) {
@@ -273,7 +274,7 @@ public final class BibDateBuilder extends BuilderFSM<BibDate> {
    *          the day
    */
   public final void setDay(final String day) {
-    this.setDay(IntParser.INSTANCE.parseInt(day));
+    this.setDay(LooseIntParser.INSTANCE.parseInt(day));
   }
 
   /**

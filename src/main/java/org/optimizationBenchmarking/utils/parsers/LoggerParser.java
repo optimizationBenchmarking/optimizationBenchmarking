@@ -76,13 +76,15 @@ public class LoggerParser extends Parser<Logger> {
           "Logger parameter must contain at least the name of the logger."); //$NON-NLS-1$
     }
 
-    ret = Logger.getLogger(StringParser.INSTANCE.parseString(it.next()));
+    ret = Logger.getLogger(LooseStringParser.INSTANCE.parseString(it
+        .next()));
 
     // is there a logging level?
     if (it.hasNext()) {
 
       // yes, let's try to parse it
-      level = Level.parse(StringParser.INSTANCE.parseString(it.next()));
+      level = Level
+          .parse(LooseStringParser.INSTANCE.parseString(it.next()));
       ret.setLevel(level);
 
       // If a logging level specified, we will also set the log levels for
@@ -90,7 +92,7 @@ public class LoggerParser extends Parser<Logger> {
       // is given which is set to "false"
       setHandlerLevels: {
         if (it.hasNext()) {
-          if (!(BooleanParser.INSTANCE.parseBoolean(it.next()))) {
+          if (!(LooseBooleanParser.INSTANCE.parseBoolean(it.next()))) {
             break setHandlerLevels;
           }
         }

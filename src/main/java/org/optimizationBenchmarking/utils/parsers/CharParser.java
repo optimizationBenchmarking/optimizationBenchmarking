@@ -1,15 +1,11 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
-import org.optimizationBenchmarking.utils.text.charset.Char;
-
-/** A parser for a given type */
-public class CharParser extends StrictCharParser {
-
+/**
+ * A {@code char}-parser.
+ */
+public abstract class CharParser extends Parser<Character> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
-  /** the globally shared instance of the char parser */
-  public static final CharParser INSTANCE = new CharParser();
 
   /** create the parser */
   protected CharParser() {
@@ -18,120 +14,82 @@ public class CharParser extends StrictCharParser {
 
   /** {@inheritDoc} */
   @Override
-  public final char parseCharacter(final String string) {
-    char retVal;
-    final String str;
-    Object var;
-    int len;
-
-    if (string == null) {
-      throw new NullPointerException();
-    }
-
-    len = string.length();
-    if (len <= 0) {
-      throw new IllegalArgumentException("Empty string."); //$NON-NLS-1$
-    }
-
-    checker: {
-
-      // first we try to cast the string directly to a boolean
-      // this will be the fast execution path for 'correctly' formatted
-      // text
-      if (len == 1) {
-        retVal = string.charAt(0);
-        break checker;
-      }
-
-      str = StringParser.INSTANCE.parseString(string);
-
-      len = str.length();
-      if (len <= 0) {
-        throw new IllegalArgumentException("Empty string."); //$NON-NLS-1$
-      }
-      if (len == 1) {
-        retVal = str.charAt(0);
-        break checker;
-      }
-
-      // ok, it is no constant, maybe it is a public static final member?
-      try {
-        var = ReflectionUtils.getInstanceByName(Object.class, str);
-        if ((var != null) && (var != string) && (var != str)) {
-          retVal = this.__parseObjectRaw(var);
-          break checker;
-        }
-      } catch (final Throwable canBeIgnored) {
-        // ignore this exception: it will be thrown if no member fits
-        // in which case we will throw the original error anyway at the
-        // end
-      }
-
-      throw new IllegalArgumentException('\'' + string + //
-          "' with length " + string.length() + //$NON-NLS-1$
-          " is not a valid character value."); //$NON-NLS-1$
-    }
-
-    this.validateChar(retVal);
-    return retVal;
+  public final Class<Character> getOutputClass() {
+    return Character.class;
   }
 
   /**
-   * The raw parsing method for calling inside {@link #parseString(String)}
+   * Validate the parsing result
    *
-   * @param o
-   *          the object
-   * @return the return value
+   * @param value
+   *          the parsing result
+   * @throws IllegalArgumentException
+   *           if the result is not admissible
    */
-  private final char __parseObjectRaw(final Object o) {
-    if (o instanceof Character) {
-      return ((Character) o).charValue();
+  public void validateChar(final char value)
+      throws IllegalArgumentException {
+    if (!(Character.isDefined(value))) {
+      throw new IllegalArgumentException("Character code \\u" + //$NON-NLS-1$
+          Integer.toHexString(value) + " is undefined."); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * Parse a string to a char
+   *
+   * @param string
+   *          the string
+   * @return the return type
+   */
+  public char parseCharacter(final String string) {
+    final char b;
+
+    if (string == null) {
+      throw new IllegalArgumentException(//
+          "Null string is not a valid char."); //$NON-NLS-1$
     }
 
-    if (o instanceof Char) {
-      return ((Char) o).getChar();
+    if (string.length() != 1) {
+      throw new IllegalArgumentException(//
+          "String '" + string + //$NON-NLS-1$
+              "' must have length 1 to be interpreted as char, but has length " //$NON-NLS-1$
+              + string.length());
     }
-
-    if (o instanceof Number) {
-      return ((char) (((Number) o).intValue()));
-    }
-
-    return this.parseCharacter(String.valueOf(o));
+    b = string.charAt(0);
+    this.validateChar(b);
+    return b;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Character parseObject(final Object o) {
+  public final Character parseString(final String string) {
+    return Character.valueOf(this.parseCharacter(string));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Character parseObject(final Object o) {
     final Character retVal;
     final char ret;
 
     if (o instanceof Character) {
       retVal = ((Character) o);
       ret = retVal.charValue();
-    } else {
-      ret = this.__parseObjectRaw(o);
-      retVal = null;
+      this.validateChar(ret);
+      return retVal;
     }
 
-    this.validateChar(ret);
-    return ((retVal != null) ? retVal : Character.valueOf(ret));
+    if (o instanceof String) {
+      return this.parseString((String) o);
+    }
+
+    throw new IllegalArgumentException(//
+        o + " is not a valid char."); //$NON-NLS-1$
   }
 
-  /**
-   * write replace
-   *
-   * @return the replacement
-   */
-  private final Object writeReplace() {
-    return CharParser.INSTANCE;
-  }
-
-  /**
-   * read resolve
-   *
-   * @return the replacement
-   */
-  private final Object readResolve() {
-    return CharParser.INSTANCE;
+  /** {@inheritDoc} */
+  @Override
+  public final void validate(final Character instance) {
+    this.validateChar(instance.charValue());
   }
 }

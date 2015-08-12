@@ -1,182 +1,174 @@
 package org.optimizationBenchmarking.utils.parsers;
 
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
- * A parser for {@code int}s which can also interpret things such as
- * constants.
+ * A strict {@code int}-parser.
  */
-public class IntParser extends StrictIntParser {
-
+public abstract class IntParser extends NumberParser<Integer> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
-  /** the globally shared instance of the integer parser */
-  public static final IntParser INSTANCE = new IntParser();
-
   /** create the parser */
-  IntParser() {
+  protected IntParser() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int parseInt(final String string) {
-    final _PreparedString prep;
-    int retVal;
-    String str;
-    _TextConst cnst;
-    Object number;
-    int base;
-
-    checker: {
-
-      try {
-        // first we try to cast the string directly to a int
-        // this will be the fast execution path for 'correctly' formatted
-        // numbers
-        retVal = java.lang.Integer.parseInt(string);
-        break checker;
-
-      } catch (final NumberFormatException origNumberError) {
-        // ok, the string does not follow java's default number format
-        // so now, we check whether it is hexadecimal/octal/binary
-        // formatted, a
-        // constant, or even a static member identifier
-
-        prep = new _PreparedString(string);
-
-        outer: while ((str = prep.next()) != null) {
-          // we now iterate over the prepared strings: step-by-step, we
-          // will
-          // try
-          // to process the string by, e.g., trimming it; removing +, -, (,
-          // ),
-          // etc; removing internal white spaces and underscores (to match
-          // Java
-          // 7's new binary syntax) and so on - until we can either parse
-          // it or
-          // have to give up
-
-          if (str != string) {
-            // try again to parse the string directly
-            try {
-              retVal = prep.getReturn(java.lang.Integer.parseInt(str));
-              break checker;
-            } catch (final Throwable canBeIgnored) {
-              // we ignore this exception, as we will throw the original
-              // one
-              // on failure
-            }
-          }
-
-          // let's see if it was a constant in some other base
-          if ((str.length() > 2) && (str.charAt(0) == '0')) {
-            if ((base = _PreparedString._getBase(str.charAt(1))) != 0) {
-              try {
-                retVal = prep.getReturn(java.lang.Integer.parseInt(
-                    str.substring(2), base));
-                break checker;
-              } catch (final Throwable canBeIgnored) {
-                // we ignore this exception, as we will throw the original
-                // one
-                // on failure
-              }
-            }
-          }
-
-          // does the string correspond to a constant we know?
-          cnst = _TextConst.findConst(str);
-          if (cnst != null) {
-            if (cnst.hasInt()) {
-              retVal = prep.getReturn(cnst.m_i);
-              break checker;
-            }
-            break outer;
-          }
-
-          // ok, it is no constant, maybe it is a public static final
-          // member?
-          try {
-            number = ReflectionUtils.getInstanceByName(Object.class, str);
-            if ((number != null) && (number != string) && (number != str)) {
-              retVal = prep.getReturn(this.__parseObjectRaw(number));
-              break checker;
-            }
-          } catch (final Throwable canBeIgnored) {
-            // ignore this exception: it will be thrown if no member fits
-            // in which case we will throw the original error anyway at the
-            // end
-          }
-        }
-
-        // ok, all our ideas to resolve the number have failed - throw
-        // original
-        // error again
-        throw origNumberError;
-      }
-    }
-
-    this.validateInt(retVal);
-    return retVal;
+  public final Class<Integer> getOutputClass() {
+    return Integer.class;
   }
 
   /**
-   * The raw parsing method for calling inside {@link #parseString(String)}
+   * Validate the parsing result
    *
-   * @param o
-   *          the object
-   * @return the return value
+   * @param value
+   *          the parsing result
+   * @throws IllegalArgumentException
+   *           if the result is not admissible
    */
-  private final int __parseObjectRaw(final Object o) {
-    if (o instanceof java.lang.Number) {
-      return ((Number) o).intValue();
-    }
+  public void validateInt(final int value) throws IllegalArgumentException {
+    //
+  }
 
-    return this.parseInt(String.valueOf(o));
+  /**
+   * Parse the string
+   *
+   * @param string
+   *          the string
+   * @return the return type
+   */
+  public int parseInt(final String string) {
+    final int b;
+
+    b = Integer.parseInt(string);
+    this.validateInt(b);
+    return b;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Integer parseObject(final Object o) {
+  public final Integer parseString(final String string) {
+    return Integer.valueOf(this.parseInt(string));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Integer parseObject(final Object o) {
     final Integer retVal;
     final int ret;
 
     if (o instanceof Integer) {
       retVal = ((Integer) o);
       ret = retVal.intValue();
-    } else {
-      ret = this.__parseObjectRaw(o);
-      retVal = null;
+      this.validateInt(ret);
+      return retVal;
     }
 
-    this.validateInt(ret);
-    return ((retVal != null) ? retVal : Integer.valueOf(ret));
-  }
+    if (o instanceof String) {
+      return this.parseString((String) o);
+    }
 
-  /**
-   * write replace
-   *
-   * @return the replacement
-   */
-  private final Object writeReplace() {
-    return IntParser.INSTANCE;
-  }
-
-  /**
-   * read resolve
-   *
-   * @return the replacement
-   */
-  private final Object readResolve() {
-    return IntParser.INSTANCE;
+    throw new IllegalArgumentException(//
+        o + " is not a valid int."); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int hashCode() {
-    return HashUtils.combineHashes(111245699,//
+  public final void validate(final Integer instance) {
+    this.validateInt(instance.intValue());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean areBoundsInteger() {
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final long getLowerBoundLong() {
+    return this.getLowerBound();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final long getUpperBoundLong() {
+    return this.getUpperBound();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double getLowerBoundDouble() {
+    return this.getLowerBound();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double getUpperBoundDouble() {
+    return this.getUpperBound();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void validateDouble(final double d) {
+    final int b;
+
+    if (d != d) {
+      throw new IllegalArgumentException(d
+          + " (not-a-number) is not a valid int value."); //$NON-NLS-1$
+    }
+
+    if ((d < Integer.MIN_VALUE) || (d > Integer.MAX_VALUE)) {
+      throw new IllegalArgumentException(
+          ((((d + " is not a valid int value, since it is out of the range ") + //$NON-NLS-1$
+          Integer.MIN_VALUE) + "..") + //$NON-NLS-1$
+          Integer.MAX_VALUE) + '.');
+    }
+
+    b = ((int) d);
+    if (b != d) {
+      throw new IllegalArgumentException(d
+          + " cannot be converted to a int without loss of fidelity."); //$NON-NLS-1$
+    }
+    this.validateInt(b);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void validateLong(final long l) {
+    if ((l < Integer.MIN_VALUE) || (l > Integer.MAX_VALUE)) {
+      throw new IllegalArgumentException(
+          ((((l + " is not a valid int value, since it is out of the range ") + //$NON-NLS-1$
+          Integer.MIN_VALUE) + "..") + //$NON-NLS-1$
+          Integer.MAX_VALUE) + '.');
+    }
+    this.validateInt((int) l);
+  }
+
+  /**
+   * Get the lower bound as int
+   *
+   * @return the lower bound as int
+   */
+  public int getLowerBound() {
+    return Integer.MIN_VALUE;
+  }
+
+  /**
+   * Get the upper bound as int
+   *
+   * @return the upper bound as int
+   */
+  public int getUpperBound() {
+    return Integer.MAX_VALUE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(44483,//
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.getLowerBound()),//
             HashUtils.hashCode(this.getUpperBound())));
@@ -184,7 +176,7 @@ public class IntParser extends StrictIntParser {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean equals(final Object other) {
+  public boolean equals(final Object other) {
     final IntParser parser;
     if (other == this) {
       return true;

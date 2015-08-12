@@ -8,7 +8,7 @@ final class _StringListParser extends ListParser<String> {
 
   /** create the parser */
   _StringListParser() {
-    super(StringParser.INSTANCE, true, false);
+    super(LooseStringParser.INSTANCE, true, false);
   }
 
   /**

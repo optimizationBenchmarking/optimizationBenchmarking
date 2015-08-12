@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.bibliography.data;
 
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.parsers.StringParser;
+import org.optimizationBenchmarking.utils.parsers.LooseStringParser;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** A builder for thesis records */
@@ -119,7 +119,7 @@ public final class BibThesisBuilder extends BibBookBuilder {
     final String m;
     EThesisType res;
 
-    m = StringParser.INSTANCE.parseString(type);
+    m = LooseStringParser.INSTANCE.parseString(type);
     if (m == null) {
       throw new IllegalArgumentException(//
           "Type strings must not be null or empty, but '" //$NON-NLS-1$

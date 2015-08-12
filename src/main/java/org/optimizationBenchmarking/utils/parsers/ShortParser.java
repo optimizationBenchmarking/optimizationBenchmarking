@@ -3,83 +3,173 @@ package org.optimizationBenchmarking.utils.parsers;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 
 /**
- * A parser for {@code short}s.
+ * A strict {@code short}-parser.
  */
-public class ShortParser extends StrictShortParser {
+public abstract class ShortParser extends NumberParser<Short> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
-  /** the globally shared instance of the short parser */
-  public static final ShortParser INSTANCE = new ShortParser();
-
   /** create the parser */
-  ShortParser() {
+  protected ShortParser() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final short parseShort(final String string) {
-    final short retVal;
-    final int val;
+  public final Class<Short> getOutputClass() {
+    return Short.class;
+  }
 
-    val = IntParser.INSTANCE.parseInt(string);
-    if ((val < Short.MIN_VALUE) || (val > Short.MAX_VALUE)) {
-      throw new IllegalArgumentException(string
-          + (((((" represents value " + val) + //$NON-NLS-1$
-          " which is outside of the valid range [") + Short.MIN_VALUE) + //$NON-NLS-1$
-          ',') + Short.MAX_VALUE) + " for shorts."); //$NON-NLS-1$
-    }
+  /**
+   * Validate the parsing result
+   *
+   * @param value
+   *          the parsing result
+   * @throws IllegalArgumentException
+   *           if the result is not admissible
+   */
+  public void validateShort(final short value)
+      throws IllegalArgumentException {
+    //
+  }
 
-    retVal = ((short) val);
-    this.validateShort(retVal);
-    return retVal;
+  /**
+   * Parse the string
+   *
+   * @param string
+   *          the string
+   * @return the return type
+   */
+  public short parseShort(final String string) {
+    final short b;
+
+    b = Short.parseShort(string);
+    this.validateShort(b);
+    return b;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Short parseObject(final Object o) {
+  public final Short parseString(final String string) {
+    return Short.valueOf(this.parseShort(string));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Short parseObject(final Object o) {
     final Short retVal;
     final short ret;
 
-    if (o instanceof Number) {
-      if (o instanceof Short) {
-        retVal = ((Short) o);
-        ret = retVal.shortValue();
-      } else {
-        ret = ((Number) o).shortValue();
-        retVal = null;
-      }
-    } else {
-      return this.parseString(String.valueOf(o));
+    if (o instanceof Short) {
+      retVal = ((Short) o);
+      ret = retVal.shortValue();
+      this.validateShort(ret);
+      return retVal;
     }
 
-    this.validateShort(ret);
-    return ((retVal != null) ? retVal : Short.valueOf(ret));
-  }
+    if (o instanceof String) {
+      return this.parseString((String) o);
+    }
 
-  /**
-   * write replace
-   *
-   * @return the replacement
-   */
-  private final Object writeReplace() {
-    return ShortParser.INSTANCE;
-  }
-
-  /**
-   * read resolve
-   *
-   * @return the replacement
-   */
-  private final Object readResolve() {
-    return ShortParser.INSTANCE;
+    throw new IllegalArgumentException(//
+        o + " is not a valid short."); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int hashCode() {
-    return HashUtils.combineHashes(66666983,//
+  public final void validate(final Short instance) {
+    this.validateShort(instance.shortValue());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean areBoundsInteger() {
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final long getLowerBoundLong() {
+    return this.getLowerBound();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final long getUpperBoundLong() {
+    return this.getUpperBound();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double getLowerBoundDouble() {
+    return this.getLowerBoundLong();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double getUpperBoundDouble() {
+    return this.getUpperBoundLong();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void validateDouble(final double d) {
+    final short b;
+
+    if (d != d) {
+      throw new IllegalArgumentException(d
+          + " (not-a-number) is not a valid short value."); //$NON-NLS-1$
+    }
+
+    if ((d < Short.MIN_VALUE) || (d > Short.MAX_VALUE)) {
+      throw new IllegalArgumentException(
+          ((((d + " is not a valid short value, since it is out of the range ") + //$NON-NLS-1$
+          Short.MIN_VALUE) + "..") + //$NON-NLS-1$
+          Short.MAX_VALUE) + '.');
+    }
+
+    b = ((short) d);
+    if (b != d) {
+      throw new IllegalArgumentException(d
+          + " cannot be converted to a short without loss of fidelity."); //$NON-NLS-1$
+    }
+    this.validateShort(b);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void validateLong(final long l) {
+    if ((l < Short.MIN_VALUE) || (l > Short.MAX_VALUE)) {
+      throw new IllegalArgumentException(
+          ((((l + " is not a valid short value, since it is out of the range ") + //$NON-NLS-1$
+          Short.MIN_VALUE) + "..") + //$NON-NLS-1$
+          Short.MAX_VALUE) + '.');
+    }
+    this.validateShort((short) l);
+  }
+
+  /**
+   * Get the lower bound as short
+   *
+   * @return the lower bound as short
+   */
+  public short getLowerBound() {
+    return Short.MIN_VALUE;
+  }
+
+  /**
+   * Get the upper bound as short
+   *
+   * @return the upper bound as short
+   */
+  public short getUpperBound() {
+    return Short.MAX_VALUE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(886741,//
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.getLowerBound()),//
             HashUtils.hashCode(this.getUpperBound())));
@@ -87,7 +177,7 @@ public class ShortParser extends StrictShortParser {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean equals(final Object other) {
+  public boolean equals(final Object other) {
     final ShortParser parser;
     if (other == this) {
       return true;

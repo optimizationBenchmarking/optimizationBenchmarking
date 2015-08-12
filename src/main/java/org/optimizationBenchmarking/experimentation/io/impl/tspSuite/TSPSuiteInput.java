@@ -20,8 +20,8 @@ import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
-import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
-import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseLongParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
@@ -386,12 +386,12 @@ public class TSPSuiteInput extends ExperimentSetFileInput {
    */
   public static final void makeTSPSuiteDimensionSet(
       final ExperimentSetContext esb) {
-    final BoundedLongParser p1, p2;
-    final BoundedDoubleParser bd;
+    final BoundedLooseLongParser p1, p2;
+    final BoundedLooseDoubleParser bd;
 
-    p1 = new BoundedLongParser(0L, Long.MAX_VALUE);
-    p2 = new BoundedLongParser(1L, Long.MAX_VALUE);
-    bd = new BoundedDoubleParser(0d, Double.MAX_VALUE);
+    p1 = new BoundedLooseLongParser(0L, Long.MAX_VALUE);
+    p2 = new BoundedLooseLongParser(1L, Long.MAX_VALUE);
+    bd = new BoundedLooseDoubleParser(0d, Double.MAX_VALUE);
 
     try (final DimensionContext d = esb.createDimension()) {
       d.setName("FEs"); //$NON-NLS-1$

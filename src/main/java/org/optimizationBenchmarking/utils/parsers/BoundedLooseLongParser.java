@@ -1,18 +1,18 @@
 package org.optimizationBenchmarking.utils.parsers;
 
-/** A bounded float parser */
-public class BoundedFloatParser extends FloatParser {
+/** A bounded long parser */
+public final class BoundedLooseLongParser extends LooseLongParser {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
 
   /** the minimum allowed value */
-  private final float m_min;
+  private final long m_min;
 
   /** the maximum allowed value */
-  private final float m_max;
+  private final long m_max;
 
   /**
-   * Create the bounded float parser
+   * Create the bounded long parser
    *
    * @param min
    *          the minimum allowed value, a
@@ -25,12 +25,12 @@ public class BoundedFloatParser extends FloatParser {
    *          IllegalArgumentException} will be thrown if this constraint
    *          is violated
    */
-  public BoundedFloatParser(final Number min, final Number max) {
-    this(min.floatValue(), max.floatValue());
+  public BoundedLooseLongParser(final Number min, final Number max) {
+    this(min.longValue(), max.longValue());
   }
 
   /**
-   * Create the bounded float parser
+   * Create the bounded long parser
    *
    * @param min
    *          the minimum allowed value, a
@@ -43,23 +43,22 @@ public class BoundedFloatParser extends FloatParser {
    *          IllegalArgumentException} will be thrown if this constraint
    *          is violated
    */
-  public BoundedFloatParser(final float min, final float max) {
+  public BoundedLooseLongParser(final long min, final long max) {
     super();
 
     if (max < min) {
       throw new IllegalArgumentException((((NumberParser.MIN_MAX + //
           min) + ',') + max) + ']');
     }
-
     this.m_min = min;
     this.m_max = max;
   }
 
   /** {@inheritDoc} */
   @Override
-  public void validateFloat(final float value)
+  public void validateLong(final long value)
       throws IllegalArgumentException {
-    super.validateFloat(value);
+    super.validateLong(value);
 
     if (value < this.m_min) {
       throw new IllegalArgumentException((((NumberParser.MBLOET + //
@@ -74,13 +73,13 @@ public class BoundedFloatParser extends FloatParser {
 
   /** {@inheritDoc} */
   @Override
-  public final float getLowerBound() {
+  public final long getLowerBoundLong() {
     return this.m_min;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final float getUpperBound() {
-    return this.m_min;
+  public final long getUpperBoundLong() {
+    return this.m_max;
   }
 }

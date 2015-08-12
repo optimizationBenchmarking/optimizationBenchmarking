@@ -12,13 +12,15 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
   /** value */
-  protected static final String MIN_MAX = "MinimumAggregate allowed value must be less or equal to maximum allowed value, but value range is ("; //$NON-NLS-1$
+  static final String MIN_MAX = "MinimumAggregate allowed value must be less or equal to maximum allowed value, but value range is ("; //$NON-NLS-1$
   /** value too small */
-  protected static final String MBLOET = "Value must be larger or equal to "; //$NON-NLS-1$
+  static final String MBLOET = "Value must be larger or equal to "; //$NON-NLS-1$
   /** value is */
-  protected static final String BI = " but is "; //$NON-NLS-1$
+  static final String BI = " but is "; //$NON-NLS-1$
   /** value too large */
-  protected static final String MBSOET = "Value must be smaller or equal to "; //$NON-NLS-1$
+  static final String MBSOET = "Value must be smaller or equal to "; //$NON-NLS-1$
+  /** the minimum bound is null */
+  static final String NAN = "Interval cannot contain NaN, but you specified ";//$NON-NLS-1$
 
   /** create the parser */
   NumberParser() {
@@ -136,9 +138,9 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
             : Long.MAX_VALUE);
 
         if ((llb <= Byte.MIN_VALUE) && (lub >= Byte.MAX_VALUE)) {
-          return ByteParser.INSTANCE;
+          return LooseByteParser.INSTANCE;
         }
-        return new BoundedByteParser(//
+        return new BoundedLooseByteParser(//
             ((byte) (Math.max(Byte.MIN_VALUE, llb))),//
             ((byte) (Math.min(Byte.MAX_VALUE, lub))));
       }
@@ -149,9 +151,9 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
             : Long.MAX_VALUE);
 
         if ((llb <= Short.MIN_VALUE) && (lub >= Short.MAX_VALUE)) {
-          return ShortParser.INSTANCE;
+          return LooseShortParser.INSTANCE;
         }
-        return new BoundedShortParser(//
+        return new BoundedLooseShortParser(//
             ((short) (Math.max(Short.MIN_VALUE, llb))),//
             ((short) (Math.min(Short.MAX_VALUE, lub))));
       }
@@ -162,9 +164,9 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
             : Long.MAX_VALUE);
 
         if ((llb <= Integer.MIN_VALUE) && (lub >= Integer.MAX_VALUE)) {
-          return IntParser.INSTANCE;
+          return LooseIntParser.INSTANCE;
         }
-        return new BoundedIntParser(//
+        return new BoundedLooseIntParser(//
             ((int) (Math.max(Integer.MIN_VALUE, llb))),//
             ((int) (Math.min(Integer.MAX_VALUE, lub))));
       }
@@ -176,9 +178,9 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
             : Long.MAX_VALUE);
 
         if ((llb <= Long.MIN_VALUE) && (lub >= Long.MAX_VALUE)) {
-          return LongParser.INSTANCE;
+          return LooseLongParser.INSTANCE;
         }
-        return new BoundedLongParser(//
+        return new BoundedLooseLongParser(//
             Math.max(Long.MIN_VALUE, llb),//
             Math.min(Long.MAX_VALUE, lub));
       }
@@ -191,9 +193,9 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
 
         if ((dlb <= Double.NEGATIVE_INFINITY)
             && (dub >= Double.POSITIVE_INFINITY)) {
-          return FloatParser.INSTANCE;
+          return LooseFloatParser.INSTANCE;
         }
-        return new BoundedFloatParser(//
+        return new BoundedLooseFloatParser(//
             ((float) (Math.max(Float.NEGATIVE_INFINITY, dlb))),//
             ((float) (Math.min(Float.POSITIVE_INFINITY, dub))));
       }
@@ -206,9 +208,9 @@ public abstract class NumberParser<N extends Number> extends Parser<N> {
 
         if ((dlb <= Double.NEGATIVE_INFINITY)
             && (dub >= Double.POSITIVE_INFINITY)) {
-          return DoubleParser.INSTANCE;
+          return LooseDoubleParser.INSTANCE;
         }
-        return new BoundedDoubleParser(//
+        return new BoundedLooseDoubleParser(//
             Math.max(Double.NEGATIVE_INFINITY, dlb),//
             Math.min(Double.POSITIVE_INFINITY, dub));
       }

@@ -168,7 +168,8 @@ final class _PreparedString {
       // a version of the original string with all special characters
       // expanded
       case 2: {
-        newS = TextUtils.prepare(StringParser.INSTANCE.parseString(newS));
+        newS = TextUtils.prepare(LooseStringParser.INSTANCE
+            .parseString(newS));
         if (newS == null) {
           return null;
         }

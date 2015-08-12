@@ -1,12 +1,12 @@
 package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
-import org.optimizationBenchmarking.utils.parsers.ByteParser;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
-import org.optimizationBenchmarking.utils.parsers.FloatParser;
-import org.optimizationBenchmarking.utils.parsers.IntParser;
-import org.optimizationBenchmarking.utils.parsers.LongParser;
-import org.optimizationBenchmarking.utils.parsers.ShortParser;
+import org.optimizationBenchmarking.utils.parsers.LooseByteParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseFloatParser;
+import org.optimizationBenchmarking.utils.parsers.LooseIntParser;
+import org.optimizationBenchmarking.utils.parsers.LooseLongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseShortParser;
 import org.optimizationBenchmarking.utils.parsers.StrictByteParser;
 import org.optimizationBenchmarking.utils.parsers.StrictDoubleParser;
 import org.optimizationBenchmarking.utils.parsers.StrictFloatParser;
@@ -306,17 +306,17 @@ public final class InstanceContext extends _NamedContext<Instance> {
     error = null;
     n1 = n2 = null;
     try {
-      n1 = StrictLongParser.STRICT_INSTANCE.parseObject(bound);
+      n1 = StrictLongParser.INSTANCE.parseObject(bound);
       try {
-        n2 = StrictIntParser.STRICT_INSTANCE.parseObject(bound);
+        n2 = StrictIntParser.INSTANCE.parseObject(bound);
         if (n2 != null) {
           n1 = n2;
         }
-        n2 = StrictShortParser.STRICT_INSTANCE.parseObject(bound);
+        n2 = StrictShortParser.INSTANCE.parseObject(bound);
         if (n2 != null) {
           n1 = n2;
         }
-        n2 = StrictByteParser.STRICT_INSTANCE.parseObject(bound);
+        n2 = StrictByteParser.INSTANCE.parseObject(bound);
         if (n2 != null) {
           return n2;
         }
@@ -338,9 +338,9 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
     n1 = n2 = null;
     try {
-      n1 = StrictDoubleParser.STRICT_INSTANCE.parseObject(bound);
+      n1 = StrictDoubleParser.INSTANCE.parseObject(bound);
       try {
-        n2 = StrictFloatParser.STRICT_INSTANCE.parseObject(bound);
+        n2 = StrictFloatParser.INSTANCE.parseObject(bound);
         if (n2 != null) {
           return n2;
         }
@@ -362,17 +362,17 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
     n1 = n2 = null;
     try {
-      n1 = LongParser.INSTANCE.parseObject(bound);
+      n1 = LooseLongParser.INSTANCE.parseObject(bound);
       try {
-        n2 = IntParser.INSTANCE.parseObject(bound);
+        n2 = LooseIntParser.INSTANCE.parseObject(bound);
         if (n2 != null) {
           n1 = n2;
         }
-        n2 = ShortParser.INSTANCE.parseObject(bound);
+        n2 = LooseShortParser.INSTANCE.parseObject(bound);
         if (n2 != null) {
           n1 = n2;
         }
-        n2 = ByteParser.INSTANCE.parseObject(bound);
+        n2 = LooseByteParser.INSTANCE.parseObject(bound);
         if (n2 != null) {
           return n2;
         }
@@ -394,9 +394,9 @@ public final class InstanceContext extends _NamedContext<Instance> {
 
     n1 = n2 = null;
     try {
-      n1 = DoubleParser.INSTANCE.parseObject(bound);
+      n1 = LooseDoubleParser.INSTANCE.parseObject(bound);
       try {
-        n2 = FloatParser.INSTANCE.parseObject(bound);
+        n2 = LooseFloatParser.INSTANCE.parseObject(bound);
         if (n2 != null) {
           return n2;
         }

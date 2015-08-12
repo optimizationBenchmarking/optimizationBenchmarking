@@ -2,7 +2,7 @@ package org.optimizationBenchmarking.utils.graphics.style.font;
 
 import org.optimizationBenchmarking.utils.graphics.EFontType;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
-import org.optimizationBenchmarking.utils.parsers.IntParser;
+import org.optimizationBenchmarking.utils.parsers.LooseIntParser;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -110,7 +110,7 @@ public class FontPaletteXMLHandler extends DelegatingHandler {
       attr = DelegatingHandler.getAttribute(attributes,
           FontPaletteXML.NAMESPACE, FontPaletteXML.ATTRIBUTE_FONT_SIZE);
       if (attr != null) {
-        this.m_builder.setSize(IntParser.INSTANCE.parseInt(attr));
+        this.m_builder.setSize(LooseIntParser.INSTANCE.parseInt(attr));
       }
 
       this.m_builder.setFontFamily(FontPaletteXML

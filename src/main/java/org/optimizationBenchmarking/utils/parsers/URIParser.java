@@ -30,7 +30,7 @@ public class URIParser extends Parser<URI> {
   @Override
   public final URI parseString(final String string)
       throws URISyntaxException {
-    return this.__cleanse(new URI(StringParser.INSTANCE
+    return this.__cleanse(new URI(LooseStringParser.INSTANCE
         .parseString(string)));
   }
 

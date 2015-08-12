@@ -13,10 +13,10 @@ import org.optimizationBenchmarking.experimentation.data.impl.ref.RunContext;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
 import org.optimizationBenchmarking.utils.config.Configuration;
-import org.optimizationBenchmarking.utils.parsers.BoundedFloatParser;
-import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
-import org.optimizationBenchmarking.utils.parsers.LongParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseFloatParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseLongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseLongParser;
 import org.optimizationBenchmarking.utils.parsers.StrictLongParser;
 
 /** A class for creating experiment sets */
@@ -63,7 +63,7 @@ public final class Example1 extends ExperimentSetCreator {
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimA"); //$NON-NLS-1$
       dc.setDescription("DescriptionModule of dimension A."); //$NON-NLS-1$
-      dc.setParser(LongParser.INSTANCE);
+      dc.setParser(LooseLongParser.INSTANCE);
       dc.setType(EDimensionType.ITERATION_FE);
       dc.setDirection(EDimensionDirection.INCREASING_STRICTLY);
     }
@@ -71,7 +71,7 @@ public final class Example1 extends ExperimentSetCreator {
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimB"); //$NON-NLS-1$
       dc.setDescription("DescriptionModule of dimension B."); //$NON-NLS-1$
-      dc.setParser(new BoundedLongParser(0, 1000L));
+      dc.setParser(new BoundedLooseLongParser(0, 1000L));
       dc.setType(EDimensionType.ITERATION_SUB_FE);
       dc.setDirection(EDimensionDirection.DECREASING);
     }
@@ -79,7 +79,7 @@ public final class Example1 extends ExperimentSetCreator {
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimC"); //$NON-NLS-1$
       dc.setDescription("DescriptionModule of dimension C."); //$NON-NLS-1$
-      dc.setParser(StrictLongParser.STRICT_INSTANCE);
+      dc.setParser(StrictLongParser.INSTANCE);
       dc.setType(EDimensionType.RUNTIME_CPU);
       dc.setDirection(EDimensionDirection.INCREASING);
     }
@@ -87,7 +87,7 @@ public final class Example1 extends ExperimentSetCreator {
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimD"); //$NON-NLS-1$
       dc.setDescription("DescriptionModule of dimension D."); //$NON-NLS-1$
-      dc.setParser(DoubleParser.INSTANCE);
+      dc.setParser(LooseDoubleParser.INSTANCE);
       dc.setType(EDimensionType.RUNTIME_NORMALIZED);
       dc.setDirection(EDimensionDirection.INCREASING);
     }
@@ -95,14 +95,14 @@ public final class Example1 extends ExperimentSetCreator {
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimE"); //$NON-NLS-1$
       dc.setDescription("DescriptionModule of dimension E."); //$NON-NLS-1$
-      dc.setParser(new BoundedFloatParser(-100f, 100f));
+      dc.setParser(new BoundedLooseFloatParser(-100f, 100f));
       dc.setType(EDimensionType.QUALITY_PROBLEM_DEPENDENT);
       dc.setDirection(EDimensionDirection.DECREASING);
     }
 
     try (DimensionContext dc = dsc.createDimension()) {
       dc.setName("dimF"); //$NON-NLS-1$
-      dc.setParser(DoubleParser.INSTANCE);
+      dc.setParser(LooseDoubleParser.INSTANCE);
       dc.setType(EDimensionType.QUALITY_PROBLEM_INDEPENDENT);
       dc.setDirection(EDimensionDirection.INCREASING);
     }

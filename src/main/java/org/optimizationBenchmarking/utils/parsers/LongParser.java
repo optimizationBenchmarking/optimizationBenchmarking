@@ -1,178 +1,137 @@
 package org.optimizationBenchmarking.utils.parsers;
 
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 
 /**
- * A parser for {@code long}s which can also interpret things such as
- * constants.
+ * A strict {@code long}-parser.
  */
-public class LongParser extends StrictLongParser {
-
+public abstract class LongParser extends NumberParser<Long> {
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
-  /** the globally shared instance of the long parser */
-  public static final LongParser INSTANCE = new LongParser();
 
   /** create the parser */
-  LongParser() {
+  protected LongParser() {
     super();
   }
 
   /** {@inheritDoc} */
   @Override
-  public final long parseLong(final String string) {
-    final _PreparedString prep;
-    long retVal;
-    String str;
-    _TextConst cnst;
-    Object number;
-    int base;
-
-    checker: {
-
-      try {
-        // first we try to cast the string directly to a long
-        // this will be the fast execution path for 'correctly' formatted
-        // numbers
-        retVal = java.lang.Long.parseLong(string);
-        break checker;
-
-      } catch (final NumberFormatException origNumberError) {
-        // ok, the string does not follow java's default number format
-        // so now, we check whether it is hexadecimal/octal/binary
-        // formatted, a
-        // constant, or even a static member identifier
-
-        prep = new _PreparedString(string);
-
-        outer: while ((str = prep.next()) != null) {
-          // we now iterate over the prepared strings: step-by-step, we
-          // will try
-          // to process the string by, e.g., trimming it; removing +, -, (,
-          // ), etc; removing internal white spaces and underscores (to
-          // match
-          // Java 7's new binary syntax) and so on - until we can either
-          // parse
-          // it or have to give up
-
-          if (str != string) {
-            // try again to parse the string directly
-            try {
-              retVal = prep.getReturn(java.lang.Long.parseLong(str));
-              break checker;
-            } catch (final Throwable canBeIgnored) {
-              // we ignore this exception, as we will throw the original
-              // one
-              // on failure
-            }
-          }
-
-          // let's see if it was a constant in some other base
-          if ((str.length() > 2) && (str.charAt(0) == '0')) {
-            if ((base = _PreparedString._getBase(str.charAt(1))) != 0) {
-              try {
-                retVal = prep.getReturn(java.lang.Long.parseLong(
-                    str.substring(2), base));
-                break checker;
-              } catch (final Throwable canBeIgnored) {
-                // we ignore this exception, as we will throw the original
-                // one on failure
-              }
-            }
-          }
-
-          // does the string correspond to a constant we know?
-          cnst = _TextConst.findConst(str);
-          if (cnst != null) {
-            if (cnst.hasInt()) {
-              retVal = prep.getReturn(cnst.m_l);
-              break checker;
-            }
-            break outer;
-          }
-
-          // ok, it is no constant, maybe it is a public static final
-          // member?
-          try {
-            number = ReflectionUtils.getInstanceByName(Object.class, str);
-            if ((number != null) && (number != string) && (number != str)) {
-              retVal = prep.getReturn(this.__parseObjectRaw(number));
-              break checker;
-            }
-          } catch (final Throwable canBeIgnored) {
-            // ignore this exception: it will be thrown if no member fits
-            // in which case we will throw the original error anyway at the
-            // end
-          }
-        }
-
-        // ok, all our ideas to resolve the number have failed - throw
-        // original
-        // error again
-        throw origNumberError;
-      }
-    }
-
-    this.validateLong(retVal);
-    return retVal;
+  public final Class<Long> getOutputClass() {
+    return Long.class;
   }
 
   /**
-   * The raw parsing method for calling inside {@link #parseString(String)}
+   * Parse the string
    *
-   * @param o
-   *          the object
-   * @return the return value
+   * @param string
+   *          the string
+   * @return the return type
    */
-  private final long __parseObjectRaw(final Object o) {
-    if (o instanceof java.lang.Number) {
-      return ((Number) o).longValue();
-    }
+  public long parseLong(final String string) {
+    final long b;
 
-    return this.parseLong(String.valueOf(o));
+    b = Long.parseLong(string);
+    this.validateLong(b);
+    return b;
   }
 
   /** {@inheritDoc} */
   @Override
-  public final Long parseObject(final Object o) {
+  public final Long parseString(final String string) {
+    return Long.valueOf(this.parseLong(string));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Long parseObject(final Object o) {
     final Long retVal;
     final long ret;
 
     if (o instanceof Long) {
       retVal = ((Long) o);
       ret = retVal.longValue();
-    } else {
-      ret = this.__parseObjectRaw(o);
-      retVal = null;
+      this.validateLong(ret);
+      return retVal;
     }
 
-    this.validateLong(ret);
-    return ((retVal != null) ? retVal : Long.valueOf(ret));
-  }
+    if (o instanceof String) {
+      return this.parseString((String) o);
+    }
 
-  /**
-   * write replace
-   *
-   * @return the replacement
-   */
-  private final Object writeReplace() {
-    return LongParser.INSTANCE;
-  }
-
-  /**
-   * read resolve
-   *
-   * @return the replacement
-   */
-  private final Object readResolve() {
-    return LongParser.INSTANCE;
+    throw new IllegalArgumentException(//
+        o + " is not a valid long."); //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
   @Override
-  public final int hashCode() {
-    return HashUtils.combineHashes(222223091,//
+  public final void validate(final Long instance) {
+    this.validateLong(instance.longValue());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final boolean areBoundsInteger() {
+    return true;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public long getLowerBoundLong() {
+    return Long.MIN_VALUE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public long getUpperBoundLong() {
+    return Long.MAX_VALUE;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double getLowerBoundDouble() {
+    return this.getLowerBoundLong();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final double getUpperBoundDouble() {
+    return this.getUpperBoundLong();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final void validateDouble(final double d) {
+    final long b;
+
+    if (d != d) {
+      throw new IllegalArgumentException(d
+          + " (not-a-number) is not a valid long value."); //$NON-NLS-1$
+    }
+
+    if ((d < Long.MIN_VALUE) || (d > Long.MAX_VALUE)) {
+      throw new IllegalArgumentException(
+          ((((d + " is not a valid long value, since it is out of the range ") + //$NON-NLS-1$
+          Long.MIN_VALUE) + "..") + //$NON-NLS-1$
+          Long.MAX_VALUE) + '.');
+    }
+
+    b = ((long) d);
+    if (b != d) {
+      throw new IllegalArgumentException(d
+          + " cannot be converted to a long without loss of fidelity."); //$NON-NLS-1$
+    }
+    this.validateLong(b);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public void validateLong(final long l) {//
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return HashUtils.combineHashes(99454651,//
         HashUtils.combineHashes(//
             HashUtils.hashCode(this.getLowerBoundLong()),//
             HashUtils.hashCode(this.getUpperBoundLong())));
@@ -180,7 +139,7 @@ public class LongParser extends StrictLongParser {
 
   /** {@inheritDoc} */
   @Override
-  public final boolean equals(final Object other) {
+  public boolean equals(final Object other) {
     final LongParser parser;
     if (other == this) {
       return true;

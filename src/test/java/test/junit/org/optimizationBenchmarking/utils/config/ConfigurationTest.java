@@ -17,16 +17,16 @@ import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
 import org.optimizationBenchmarking.utils.config.ConfigurationXMLInput;
 import org.optimizationBenchmarking.utils.config.ConfigurationXMLOutput;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
-import org.optimizationBenchmarking.utils.parsers.BooleanParser;
-import org.optimizationBenchmarking.utils.parsers.ByteParser;
-import org.optimizationBenchmarking.utils.parsers.CharParser;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
-import org.optimizationBenchmarking.utils.parsers.FloatParser;
-import org.optimizationBenchmarking.utils.parsers.IntParser;
-import org.optimizationBenchmarking.utils.parsers.LongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseBooleanParser;
+import org.optimizationBenchmarking.utils.parsers.LooseByteParser;
+import org.optimizationBenchmarking.utils.parsers.LooseCharParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseFloatParser;
+import org.optimizationBenchmarking.utils.parsers.LooseIntParser;
+import org.optimizationBenchmarking.utils.parsers.LooseLongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseShortParser;
+import org.optimizationBenchmarking.utils.parsers.LooseStringParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
-import org.optimizationBenchmarking.utils.parsers.ShortParser;
-import org.optimizationBenchmarking.utils.parsers.StringParser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.charset.QuotationMarks;
 
@@ -58,23 +58,23 @@ public class ConfigurationTest extends TestBase {
     final IdentityHashMap map;
 
     map = new IdentityHashMap<>();
-    map.put(Boolean.class, ((BooleanParser.INSTANCE)));
-    map.put(boolean.class, ((BooleanParser.INSTANCE)));
-    map.put(Byte.class, ((ByteParser.INSTANCE)));
-    map.put(byte.class, ((ByteParser.INSTANCE)));
-    map.put(Character.class, ((CharParser.INSTANCE)));
-    map.put(char.class, ((CharParser.INSTANCE)));
-    map.put(Double.class, ((DoubleParser.INSTANCE)));
-    map.put(double.class, ((DoubleParser.INSTANCE)));
-    map.put(Float.class, ((FloatParser.INSTANCE)));
-    map.put(float.class, ((FloatParser.INSTANCE)));
-    map.put(Integer.class, ((IntParser.INSTANCE)));
-    map.put(int.class, ((IntParser.INSTANCE)));
-    map.put(Long.class, ((LongParser.INSTANCE)));
-    map.put(long.class, ((LongParser.INSTANCE)));
-    map.put(Short.class, ((ShortParser.INSTANCE)));
-    map.put(short.class, ((ShortParser.INSTANCE)));
-    map.put(String.class, ((StringParser.INSTANCE)));
+    map.put(Boolean.class, ((LooseBooleanParser.INSTANCE)));
+    map.put(boolean.class, ((LooseBooleanParser.INSTANCE)));
+    map.put(Byte.class, ((LooseByteParser.INSTANCE)));
+    map.put(byte.class, ((LooseByteParser.INSTANCE)));
+    map.put(Character.class, ((LooseCharParser.INSTANCE)));
+    map.put(char.class, ((LooseCharParser.INSTANCE)));
+    map.put(Double.class, ((LooseDoubleParser.INSTANCE)));
+    map.put(double.class, ((LooseDoubleParser.INSTANCE)));
+    map.put(Float.class, ((LooseFloatParser.INSTANCE)));
+    map.put(float.class, ((LooseFloatParser.INSTANCE)));
+    map.put(Integer.class, ((LooseIntParser.INSTANCE)));
+    map.put(int.class, ((LooseIntParser.INSTANCE)));
+    map.put(Long.class, ((LooseLongParser.INSTANCE)));
+    map.put(long.class, ((LooseLongParser.INSTANCE)));
+    map.put(Short.class, ((LooseShortParser.INSTANCE)));
+    map.put(short.class, ((LooseShortParser.INSTANCE)));
+    map.put(String.class, ((LooseStringParser.INSTANCE)));
 
     return ((map));
   }
@@ -447,8 +447,8 @@ public class ConfigurationTest extends TestBase {
         try {
           cfg.get(
               ConfigurationTest.__makeKey(key, random),//
-              ((p == ((Object) (LongParser.INSTANCE))) ? IntParser.INSTANCE
-                  : LongParser.INSTANCE), null);
+              ((p == ((Object) (LooseLongParser.INSTANCE))) ? LooseIntParser.INSTANCE
+                  : LooseLongParser.INSTANCE), null);
           Assert.fail("Changing the type of elements is not permitted."); //$NON-NLS-1$
         } catch (final IllegalStateException | ClassCastException tt) {
           //

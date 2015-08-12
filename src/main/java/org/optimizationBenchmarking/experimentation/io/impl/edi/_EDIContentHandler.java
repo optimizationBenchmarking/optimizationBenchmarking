@@ -7,8 +7,8 @@ import org.optimizationBenchmarking.experimentation.io.impl.FlatExperimentSetCon
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
-import org.optimizationBenchmarking.utils.parsers.LongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseLongParser;
 import org.optimizationBenchmarking.utils.parsers.NumberParser;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 import org.optimizationBenchmarking.utils.text.TextUtils;
@@ -170,12 +170,12 @@ final class _EDIContentHandler extends DelegatingHandler {
     s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
         EDI.ATTRIBUTE_INTEGER_LOWER_BOUND);
     if (s != null) {
-      lb = LongParser.INSTANCE.parseString(s);
+      lb = LooseLongParser.INSTANCE.parseString(s);
     } else {
       s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
           EDI.ATTRIBUTE_FLOAT_LOWER_BOUND);
       if (s != null) {
-        lb = DoubleParser.INSTANCE.parseString(s);
+        lb = LooseDoubleParser.INSTANCE.parseString(s);
       } else {
         lb = null;
       }
@@ -184,12 +184,12 @@ final class _EDIContentHandler extends DelegatingHandler {
     s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
         EDI.ATTRIBUTE_INTEGER_UPPER_BOUND);
     if (s != null) {
-      ub = LongParser.INSTANCE.parseString(s);
+      ub = LooseLongParser.INSTANCE.parseString(s);
     } else {
       s = DelegatingHandler.getAttributeNormalized(atts, EDI.NAMESPACE,
           EDI.ATTRIBUTE_FLOAT_UPPER_BOUND);
       if (s != null) {
-        ub = DoubleParser.INSTANCE.parseString(s);
+        ub = LooseDoubleParser.INSTANCE.parseString(s);
       } else {
         ub = null;
       }

@@ -50,16 +50,16 @@ public final class NumberParserParser extends
     Class<? extends NumberParser> clazz;
 
     try {
-      lower = StrictLongParser.STRICT_INSTANCE.parseString(lowerBound);
+      lower = StrictLongParser.INSTANCE.parseString(lowerBound);
     } catch (final Throwable t1) {
       try {
-        lower = StrictDoubleParser.STRICT_INSTANCE.parseString(lowerBound);
+        lower = StrictDoubleParser.INSTANCE.parseString(lowerBound);
       } catch (final Throwable t2) {
         try {
-          lower = LongParser.INSTANCE.parseString(lowerBound);
+          lower = LooseLongParser.INSTANCE.parseString(lowerBound);
         } catch (final Throwable t3) {
           try {
-            lower = DoubleParser.INSTANCE.parseString(lowerBound);
+            lower = LooseDoubleParser.INSTANCE.parseString(lowerBound);
           } catch (final Throwable t4) {
             re = new RuntimeException(//
                 "The lower bound string '" + lowerBound + //$NON-NLS-1$
@@ -75,16 +75,16 @@ public final class NumberParserParser extends
     }
 
     try {
-      upper = StrictLongParser.STRICT_INSTANCE.parseString(upperBound);
+      upper = StrictLongParser.INSTANCE.parseString(upperBound);
     } catch (final Throwable t1) {
       try {
-        upper = StrictDoubleParser.STRICT_INSTANCE.parseString(upperBound);
+        upper = StrictDoubleParser.INSTANCE.parseString(upperBound);
       } catch (final Throwable t2) {
         try {
-          upper = LongParser.INSTANCE.parseString(upperBound);
+          upper = LooseLongParser.INSTANCE.parseString(upperBound);
         } catch (final Throwable t3) {
           try {
-            upper = DoubleParser.INSTANCE.parseString(upperBound);
+            upper = LooseDoubleParser.INSTANCE.parseString(upperBound);
           } catch (final Throwable t4) {
             re = new RuntimeException(//
                 "The upper bound string '" + upperBound + //$NON-NLS-1$
@@ -100,23 +100,23 @@ public final class NumberParserParser extends
     }
 
     if ("double".equalsIgnoreCase(parserClass)) { //$NON-NLS-1$
-      clazz = BoundedDoubleParser.class;
+      clazz = BoundedLooseDoubleParser.class;
     } else {
       if ("long".equalsIgnoreCase(parserClass)) { //$NON-NLS-1$
-        clazz = BoundedLongParser.class;
+        clazz = BoundedLooseLongParser.class;
       } else {
         if ("int".equalsIgnoreCase(parserClass) || //$NON-NLS-1$
             "integer".equalsIgnoreCase(parserClass)) { //$NON-NLS-1$
-          clazz = BoundedIntParser.class;
+          clazz = BoundedLooseIntParser.class;
         } else {
           if ("float".equalsIgnoreCase(parserClass)) { //$NON-NLS-1$
-            clazz = BoundedFloatParser.class;
+            clazz = BoundedLooseFloatParser.class;
           } else {
             if ("short".equalsIgnoreCase(parserClass)) { //$NON-NLS-1$
-              clazz = BoundedShortParser.class;
+              clazz = BoundedLooseShortParser.class;
             } else {
               if ("byte".equalsIgnoreCase(parserClass)) { //$NON-NLS-1$
-                clazz = BoundedByteParser.class;
+                clazz = BoundedLooseByteParser.class;
               } else {
                 clazz = ReflectionUtils.findClass(parserClass,
                     NumberParser.class, NumberParserParser.PREFIXES);
@@ -174,23 +174,23 @@ public final class NumberParserParser extends
     }
 
     if ("double".equalsIgnoreCase(string)) { //$NON-NLS-1$
-      return ((NumberParser) (StrictDoubleParser.STRICT_INSTANCE));
+      return ((NumberParser) (StrictDoubleParser.INSTANCE));
     }
     if ("long".equalsIgnoreCase(string)) { //$NON-NLS-1$
-      return ((NumberParser) (StrictLongParser.STRICT_INSTANCE));
+      return ((NumberParser) (StrictLongParser.INSTANCE));
     }
     if ("int".equalsIgnoreCase(string) || //$NON-NLS-1$
         "integer".equalsIgnoreCase(string)) { //$NON-NLS-1$
-      return ((NumberParser) (StrictIntParser.STRICT_INSTANCE));
+      return ((NumberParser) (StrictIntParser.INSTANCE));
     }
     if ("float".equalsIgnoreCase(string)) { //$NON-NLS-1$
-      return ((NumberParser) (StrictFloatParser.STRICT_INSTANCE));
+      return ((NumberParser) (StrictFloatParser.INSTANCE));
     }
     if ("short".equalsIgnoreCase(string)) { //$NON-NLS-1$
-      return ((NumberParser) (StrictShortParser.STRICT_INSTANCE));
+      return ((NumberParser) (StrictShortParser.INSTANCE));
     }
     if ("byte".equalsIgnoreCase(string)) { //$NON-NLS-1$
-      return ((NumberParser) (StrictByteParser.STRICT_INSTANCE));
+      return ((NumberParser) (StrictByteParser.INSTANCE));
     }
     return super.parseString(string);
   }

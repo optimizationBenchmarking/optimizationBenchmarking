@@ -11,8 +11,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
 import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetFileInput;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
-import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
-import org.optimizationBenchmarking.utils.parsers.BoundedIntParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseIntParser;
 
 /**
  * <p>
@@ -94,7 +94,7 @@ public class BBOBInput extends ExperimentSetFileInput {
       d.setDescription("the number of fully constructed candidate solutions"); //$NON-NLS-1$
       d.setDirection(EDimensionDirection.INCREASING_STRICTLY);
       d.setType(EDimensionType.ITERATION_FE);
-      d.setParser(new BoundedIntParser(1, Integer.MAX_VALUE));
+      d.setParser(new BoundedLooseIntParser(1, Integer.MAX_VALUE));
     }
 
     try (final DimensionContext d = esb.createDimension()) {
@@ -103,7 +103,7 @@ public class BBOBInput extends ExperimentSetFileInput {
       "the best objective value - F_opt"); //$NON-NLS-1$
       d.setDirection(EDimensionDirection.DECREASING);
       d.setType(EDimensionType.QUALITY_PROBLEM_DEPENDENT);
-      d.setParser(new BoundedDoubleParser(0d, Double.MAX_VALUE));
+      d.setParser(new BoundedLooseDoubleParser(0d, Double.MAX_VALUE));
     }
 
   }

@@ -10,21 +10,21 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.parsers.BooleanParser;
-import org.optimizationBenchmarking.utils.parsers.BoundedByteParser;
-import org.optimizationBenchmarking.utils.parsers.BoundedDoubleParser;
-import org.optimizationBenchmarking.utils.parsers.BoundedFloatParser;
-import org.optimizationBenchmarking.utils.parsers.BoundedIntParser;
-import org.optimizationBenchmarking.utils.parsers.BoundedLongParser;
-import org.optimizationBenchmarking.utils.parsers.BoundedShortParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseByteParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseFloatParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseIntParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseLongParser;
+import org.optimizationBenchmarking.utils.parsers.BoundedLooseShortParser;
 import org.optimizationBenchmarking.utils.parsers.ClassParser;
 import org.optimizationBenchmarking.utils.parsers.InstanceParser;
 import org.optimizationBenchmarking.utils.parsers.ListParser;
 import org.optimizationBenchmarking.utils.parsers.LoggerParser;
+import org.optimizationBenchmarking.utils.parsers.LooseBooleanParser;
+import org.optimizationBenchmarking.utils.parsers.LooseStringParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.parsers.PathListParser;
 import org.optimizationBenchmarking.utils.parsers.PathParser;
-import org.optimizationBenchmarking.utils.parsers.StringParser;
 import org.optimizationBenchmarking.utils.text.ITextable;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
@@ -54,8 +54,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * making use of the extensive
  * {@link org.optimizationBenchmarking.utils.parsers Parser API}. Since
  * this API allows for the creation of parsers with limited ranges, such as
- * {@link org.optimizationBenchmarking.utils.parsers.BoundedLongParser},
- * which throws an exception if the parsed {@code long} is outside of a
+ * {@link org.optimizationBenchmarking.utils.parsers.BoundedLooseLongParser}
+ * , which throws an exception if the parsed {@code long} is outside of a
  * specific range, you can even make sure that certain parameters are
  * within certain ranges.
  * </p>
@@ -366,7 +366,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final byte getByte(final String key, final byte min,
       final byte max, final byte def) {
-    return this.get(key, new BoundedByteParser(min, max),//
+    return this.get(key, new BoundedLooseByteParser(min, max),//
         Byte.valueOf(def)).byteValue();
   }
 
@@ -392,7 +392,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final short getShort(final String key, final short min,
       final short max, final short def) {
-    return this.get(key, new BoundedShortParser(min, max),//
+    return this.get(key, new BoundedLooseShortParser(min, max),//
         Short.valueOf(def)).shortValue();
   }
 
@@ -417,7 +417,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final int getInt(final String key, final int min, final int max,
       final int def) {
-    return this.get(key, new BoundedIntParser(min, max),//
+    return this.get(key, new BoundedLooseIntParser(min, max),//
         Integer.valueOf(def)).intValue();
   }
 
@@ -442,7 +442,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final long getLong(final String key, final long min,
       final long max, final long def) {
-    return this.get(key, new BoundedLongParser(min, max),//
+    return this.get(key, new BoundedLooseLongParser(min, max),//
         Long.valueOf(def)).longValue();
   }
 
@@ -469,7 +469,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final float getFloat(final String key, final float min,
       final float max, final float def) {
-    return this.get(key, new BoundedFloatParser(min, max),//
+    return this.get(key, new BoundedLooseFloatParser(min, max),//
         Float.valueOf(def)).floatValue();
   }
 
@@ -496,7 +496,7 @@ public final class Configuration implements Serializable, ITextable {
    */
   public final double getDouble(final String key, final double min,
       final double max, final double def) {
-    return this.get(key, new BoundedDoubleParser(min, max),//
+    return this.get(key, new BoundedLooseDoubleParser(min, max),//
         Double.valueOf(def)).doubleValue();
   }
 
@@ -511,7 +511,8 @@ public final class Configuration implements Serializable, ITextable {
    *         data
    */
   public final boolean getBoolean(final String key, final boolean def) {
-    return this.get(key, BooleanParser.INSTANCE, Boolean.valueOf(def))
+    return this
+        .get(key, LooseBooleanParser.INSTANCE, Boolean.valueOf(def))
         .booleanValue();
   }
 
@@ -525,7 +526,7 @@ public final class Configuration implements Serializable, ITextable {
    * @return the strings
    */
   public final String getString(final String key, final String def) {
-    return this.get(key, StringParser.INSTANCE, def);
+    return this.get(key, LooseStringParser.INSTANCE, def);
   }
 
   /**

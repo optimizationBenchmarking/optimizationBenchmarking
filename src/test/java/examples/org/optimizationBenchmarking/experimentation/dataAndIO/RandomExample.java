@@ -25,13 +25,13 @@ import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.math.random.RandomUtils;
-import org.optimizationBenchmarking.utils.parsers.ByteParser;
-import org.optimizationBenchmarking.utils.parsers.DoubleParser;
-import org.optimizationBenchmarking.utils.parsers.FloatParser;
-import org.optimizationBenchmarking.utils.parsers.IntParser;
-import org.optimizationBenchmarking.utils.parsers.LongParser;
+import org.optimizationBenchmarking.utils.parsers.LooseByteParser;
+import org.optimizationBenchmarking.utils.parsers.LooseDoubleParser;
+import org.optimizationBenchmarking.utils.parsers.LooseFloatParser;
+import org.optimizationBenchmarking.utils.parsers.LooseIntParser;
+import org.optimizationBenchmarking.utils.parsers.LooseLongParser;
 import org.optimizationBenchmarking.utils.parsers.NumberParser;
-import org.optimizationBenchmarking.utils.parsers.ShortParser;
+import org.optimizationBenchmarking.utils.parsers.LooseShortParser;
 import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 /** A class for creating experiment sets */
@@ -42,8 +42,8 @@ public class RandomExample extends ExperimentSetCreator {
 
   /** the parsers */
   private static final NumberParser<?>[] PARSERS = new NumberParser[] {
-      ByteParser.INSTANCE, ShortParser.INSTANCE, IntParser.INSTANCE,
-      LongParser.INSTANCE, FloatParser.INSTANCE, DoubleParser.INSTANCE };
+      LooseByteParser.INSTANCE, LooseShortParser.INSTANCE, LooseIntParser.INSTANCE,
+      LooseLongParser.INSTANCE, LooseFloatParser.INSTANCE, LooseDoubleParser.INSTANCE };
 
   /** the name counter */
   final AtomicLong m_v;

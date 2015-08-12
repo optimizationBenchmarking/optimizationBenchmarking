@@ -110,7 +110,7 @@ public abstract class CollectionParser<ET, CT extends Collection<ET>>
     boolean quit;
     ET parsed;
 
-    s = StringParser.INSTANCE.parseString(string);
+    s = LooseStringParser.INSTANCE.parseString(string);
     len = s.length();
 
     list = this.createGatheringCollection();
