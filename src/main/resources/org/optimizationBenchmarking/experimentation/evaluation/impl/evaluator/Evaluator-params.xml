@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cd:configurationDefinition
+	xmlns:cd="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
+	allowsMore="false">
+
+	<cd:instance name="inputDriver"
+		description="The way in which the input data, i.e., the experimental results, are stored."
+		class="org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput"
+		parser="org.optimizationBenchmarking.experimentation.io.impl.ExperimentSetInputParser"
+		default="csv+edi" allowsMore="true">
+		<cd:choice name="csv+edi"
+			description="The experimental results are stored as CSV (comma separated values) files, which are simple text files with one line per log point. The meta-data (such as instances, dimensions, and experiment parameters) are stored in our 'EDI' format." />
+		<cd:choice name="edi" description="All data is stored in 'EDI' format." />
+		<cd:choice name="tspSuite"
+			description="The experimental results are stored in the format used by TSP Suite. No additional meta-data is necessary." />
+		<cd:choice name="bbob"
+			description="The experimental results are stored in the format used by the Black Box Optimization Benchmarking (BBOB) workshop's COmparing Continuous Optimisers (COCO) tool. No additional meta-data is necessary." />
+	</cd:instance>
+
+	<cd:string name="inputSource"
+		description="The source location(s) of the input data. Multiple locations separated by ';' can be provided. Locations can have different forms, such as: 'path(...)', where '...' is a path to a folder or file relative to the location of the configuration document, 'zipPath(...)' is a path to a zip archive containing data, and 'zipURL(...)' is a URL where a zip archive with data can be found." />
+
+	<cd:instance name="documentDriver"
+		description="The type of output document to be created."
+		class="org.optimizationBenchmarking.utils.document.spec.IDocumentDriver"
+		parser="org.optimizationBenchmarking.utils.document.impl.DocumentDriverParser"
+		default="LaTeX" allowsMore="true">
+		<cd:choice name="LaTeX"
+			description="Create a LaTeX document and, if a LaTeX compiler can be detected, compile it to PDF. The grahpic drivers 'eps', 'pdf', 'pgf', 'png' and 'jpg' are supported. 'jpg' and 'pnf' are not recommended, 'pgf' renders graphics as plain LaTeX (cool), but may not work for large graphics due to memory issues of older LaTeX compilers." />
+		<cd:choice name="XHTML"
+			description="Create a XHTML 1.0 web page. The graphic drivers 'svg', 'svgz', 'png', 'gif', 'jpg', and 'bmp' are supported." />
+		<cd:choice name="export"
+			description="Create a text document and render graphics as CSV files. Such graphics can then be imported into tools like Gnuplot. This format requires the graphic driver 'export'." />
+	</cd:instance>
+
+	<cd:instance name="documentClass"
+		description="The LaTeX document class. This parameter is only used by LaTeX documents."
+		class="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDocumentClass"
+		parser="org.optimizationBenchmarking.utils.document.impl.latex.LaTeXDocumentClassParser"
+		default="LaTeX" allowsMore="true">
+		<cd:choice name="article"
+			description="The 'article' document class shipping with all LaTeX installation." />
+		<cd:choice name="book"
+			description="The 'book' document class shipping with all LaTeX installation." />
+		<cd:choice name="report"
+			description="The 'report' document class shipping with all LaTeX installation." />
+		<cd:choice name="IEEEtran"
+			description="The document class used by IEEE Transactions journals." />
+		<cd:choice name="llncs"
+			description="The document class used by Springer conferences which publish their proceedings in Lecture Notes in Computer Science (LNCS) series or that alike." />
+		<cd:choice name="sig-alternate"
+			description="The document class used by ACM, at conferences like GECCO." />
+	</cd:instance>
+
+	<cd:instance name="graphicDriver"
+		description="The graphics format to be used for all figures."
+		class="org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver"
+		parser="org.optimizationBenchmarking.utils.graphics.graphic.impl.GraphicDriverParser"
+		allowsMore="true">
+		<cd:choice name="pdf"
+			description="Graphics are created as stand-alone PDF files. PDFs are vector graphics format and can be opened on virtually any computer. This driver makes sense when used together with the 'LaTeX' document driver." />
+		<cd:choice name="eps"
+			description="Create graphis as encapsulated postscript files. This is a vector graphics format which works well with the LaTeX document driver." />
+		<cd:choice name="svg"
+			description="Graphics are created as scalable vector graphics, which makes sense for XHTML documents." />
+		<cd:choice name="svgz"
+			description="Graphics are created as compressed scalable vector graphics, which makes sense for XHTML documents." />
+		<cd:choice name="pgf"
+			description="Graphics are created plain LaTeX (using PGF primitives). This would be the perfect graphics driver for LaTeX documents, but almost all LaTeX compilers (except LuaLaTeX) may fail to compile documents with large PGF files due to memory issues." />
+		<cd:choice name="png"
+			description="Graphics are created as PNG files, an efficient and losslessly-encoded raster graphic format. It is supported by XHTML and LaTeX, but using it makes mainly sense in XHTML documents." />
+		<cd:choice name="jpg"
+			description="Graphics are created as JPG files, an efficient but lossy-encoded raster graphic format. It is supported by XHTML and LaTeX, but using it makes not much sense due to the inevitable artifacts." />
+		<cd:choice name="gif"
+			description="Graphics are created as CompuServe GIF bitmap files, which are raster graphics limited to 256 colors. It is an alternative to PNG for XHTML documents." />
+		<cd:choice name="bmp"
+			description="Graphics are created as Microsoft bitmap files. This file format is inferior to PNG in all concerns. It could be used in XHTML documents, but there is no reason for that." />
+		<cd:choice name="emf"
+			description="Enhanced meta files are vector graphics for Microsoft Windows. It won't work in any of the supported document formats." />
+		<cd:choice name="export"
+			description="Graphics containing diagrams are stored as CSV text files. They can be loaded in other applications. It will only work for the 'export' document format and not for any non-diagram graphics." />
+	</cd:instance>
+
+	<cd:string name="output"
+		description="The relative path to the folder where the output document should be put."
+		default="../results/" />
+
+	<cd:string name="docName"
+		description="The name of the output document to be generated."
+		default="report" />
+
+	<cd:string name="evaluationSetup"
+		description="The location of the evaluation process definition. Locations can have different forms, such as: 'path(evaluation.xml)', for instance, would identify a file called 'evaluation.xml' in the same folder as this definition setup, 'zipPath(...)' is a path to a zip archive containing an evaluation definition, and 'zipURL(...)' is a URL where a zip archive with an evaluation definition can be found." />
+
+</cd:configurationDefinition>

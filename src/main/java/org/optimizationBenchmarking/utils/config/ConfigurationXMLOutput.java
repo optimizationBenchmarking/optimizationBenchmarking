@@ -63,7 +63,7 @@ public final class ConfigurationXMLOutput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Configuration XMLFileType Output"; //$NON-NLS-1$
+    return "Configuration XML Output"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

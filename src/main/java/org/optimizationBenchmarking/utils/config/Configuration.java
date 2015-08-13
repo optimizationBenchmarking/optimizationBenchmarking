@@ -541,10 +541,9 @@ public final class Configuration implements Serializable, ITextable {
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public final ArrayListView<String> getStringList(final String key,
       final ArrayListView<String> def) {
-    return this
-        .get(key, ListParser.STRING_LIST_PARSER,
-            (ArraySetView) ((def != null) ? def
-                : ArraySetView.EMPTY_SET_VIEW));
+    return this.get(key,//
+        ListParser.STRING_LIST_PARSER, (ArraySetView) ((def != null) ? def
+            : ArraySetView.EMPTY_SET_VIEW));
   }
 
   /**
@@ -564,9 +563,9 @@ public final class Configuration implements Serializable, ITextable {
     parser = this.m_pathParser;
 
     return this
-        .get(
-            key,//
-            ((parser.getBasePath() == null) ? PathListParser.INSTANCE//
+        .get(key,
+            ((parser.getBasePath() == null)//
+            ? PathListParser.INSTANCE//
                 : new PathListParser(parser)),//
             (ArraySetView) ((def != null) ? def
                 : ArraySetView.EMPTY_SET_VIEW));
@@ -632,6 +631,18 @@ public final class Configuration implements Serializable, ITextable {
     synchronized (this.m_data) {
       return this.m_data.toString();
     }
+  }
+
+  /**
+   * Get the elements of a given definition which are specified here.
+   *
+   * @param definition
+   *          the definition
+   * @return the list of stored elements
+   */
+  public final ConfigurationDump dump(
+      final ConfigurationDefinition definition) {
+    return this.m_data._dump(definition);
   }
 
   /**

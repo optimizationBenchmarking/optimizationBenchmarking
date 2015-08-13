@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
+	targetNamespace="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
+	elementFormDefault="qualified">
+
+	<annotation>
+		<documentation>The XML Schema for configuration specifications,
+			version 1.0.
+		</documentation>
+	</annotation>
+
+	<complexType name="base">
+		<attribute name="name" type="token" use="required" />
+		<attribute name="description" type="string" use="required" />
+	</complexType>
+
+	<element name="boolean">
+		<complexType>
+			<complexContent>
+				<extension base="tns:base">
+					<attribute name="default" type="boolean" use="required" />
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="byte">
+		<complexType>
+			<complexContent>
+				<extension base="tns:base">
+					<attribute name="min" type="byte" use="required" />
+					<attribute name="default" type="byte" use="required" />
+					<attribute name="max" type="byte" use="required" />
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="short">
+		<complexType>
+			<complexContent>
+				<extension base="tns:base">
+					<attribute name="default" type="short" use="required" />
+					<attribute name="min" type="short" use="required" />
+					<attribute name="max" type="short" use="required" />
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="int">
+		<complexType>
+			<complexContent>
+				<extension base="tns:base">
+					<attribute name="default" type="int" use="required" />
+					<attribute name="min" type="int" use="required" />
+					<attribute name="max" type="int" use="required" />
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="long">
+		<complexType>
+			<complexContent>
+				<extension base="tns:base">
+					<attribute name="default" type="long" use="required" />
+					<attribute name="min" type="long" use="required" />
+					<attribute name="max" type="long" use="required" />
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="float">
+		<complexType>
+			<complexContent>
+				<extension base="tns:base">
+					<attribute name="default" type="float" use="required" />
+					<attribute name="min" type="float" use="required" />
+					<attribute name="max" type="float" use="required" />
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="double">
+		<complexType>
+			<complexContent>
+				<extension base="tns:base">
+					<attribute name="default" type="double" use="required" />
+					<attribute name="min" type="double" use="required" />
+					<attribute name="max" type="double" use="required" />
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<element name="string">
+		<complexType>
+			<complexContent>
+				<extension base="tns:base">
+					<attribute name="default" type="string" use="optional" />
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+	<simpleType name="tokenList">
+		<list itemType="token" />
+	</simpleType>
+
+	<element name="instance">
+		<complexType>
+			<complexContent>
+				<extension base="tns:base">
+					<sequence>
+						<element name="choice" minOccurs="0" maxOccurs="unbounded"
+							type="tns:base" />
+					</sequence>
+					<attribute name="default" type="string" use="required" />
+					<attribute name="allowsMore" type="boolean" use="required" />
+					<attribute name="class" type="token" use="required" />
+					<attribute name="parser" type="token" use="optional" />
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
+
+	<element name="configurationDefinition">
+		<complexType>
+			<choice minOccurs="0" maxOccurs="unbounded">
+				<element ref="tns:boolean" />
+				<element ref="tns:byte" />
+				<element ref="tns:short" />
+				<element ref="tns:int" />
+				<element ref="tns:long" />
+				<element ref="tns:float" />
+				<element ref="tns:double" />
+				<element ref="tns:string" />
+				<element ref="tns:instance" />
+			</choice>
+			<attribute name="allowsMore" type="boolean" use="required" />
+		</complexType>
+	</element>
+
+</schema>

@@ -8,7 +8,8 @@ import org.optimizationBenchmarking.utils.io.xml.IXMLFileType;
 import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
 
 /**
- * The class for the XMLFileType constants of the configuration XMLFileType
+ * The class for the constants of the configuration
+ * {@link org.optimizationBenchmarking.utils.io.xml.XMLFileType XML}
  * format.
  */
 public enum ConfigurationXML implements IXMLFileType {
@@ -51,7 +52,7 @@ public enum ConfigurationXML implements IXMLFileType {
   /** {@inheritDoc} */
   @Override
   public final String getName() {
-    return "Configuration XMLFileType File"; //$NON-NLS-1$
+    return "Configuration XML File"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */
