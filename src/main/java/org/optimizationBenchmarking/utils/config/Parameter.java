@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.config;
 
+import javax.swing.JOptionPane;
+
+import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 import org.optimizationBenchmarking.utils.parsers.Parser;
@@ -118,6 +121,16 @@ public class Parameter<T> extends DefinitionElement {
   }
 
   /**
+   * Get the definition elements
+   *
+   * @return the definition elements
+   */
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  BasicIterator<DefinitionElement> _getDefinitionElements() {
+    return ((BasicIterator) (BasicIterator.EMPTY_ITERATOR));
+  }
+
+  /**
    * Format the value object for a configuration dump
    *
    * @param value
@@ -125,39 +138,60 @@ public class Parameter<T> extends DefinitionElement {
    * @return the formatted value to be stored in a configuration
    */
   Object _formatForDump(final Object value) {
-    final Object z;
-    String v;
+    final Object parsed;
+    BasicIterator<DefinitionElement> iterator;
+    String compare;
 
     if ((value == null) || (value == "")) { //$NON-NLS-1$
       return null;
     }
 
+    // Check whether the value is actually valid. If not, return null.
     try {
-      // check whether the value is actually valid
-      z = this.m_parser.parseObject(value);
-      // if the value is a string, return directly
-      if (value instanceof String) {
-        return value;
+      parsed = this.m_parser.parseObject(value);
+      if (parsed == null) {
+        return null;
       }
-      try {
-        v = String.valueOf(value);
-        // check if the direct string representation is valid,
-        // if so, return it
-        if (!(EComparison.equals(v, value))) {
-          this.m_parser.parseString(v);
-          return v;
-        }
-      } catch (final Throwable q) {
-        // ignore
-      }
-      // prefer string representations
-      if (z instanceof String) {
-        return z;
-      }
-      return value;
     } catch (final Throwable error) {
-      // the value is invalid, return null
       return null;
     }
+
+    iterator = this._getDefinitionElements();
+
+    while (iterator.hasNext()) {
+      compare = iterator.next().m_name;
+      JOptionPane.showConfirmDialog(null, compare + ' ' + parsed + ' '
+          + this.m_parser.parseString(compare));
+      if (EComparison.equals(this.m_parser.parseString(compare), parsed)) {
+        return compare;
+      }
+    }
+
+    // If the conversion of the parsed string value to the parsed.
+    try {
+      compare = String.valueOf(value);
+      if (EComparison.equals(this.m_parser.parseString(compare), parsed)) {
+        if (EComparison.equals(compare, value)) {
+          return value;
+        }
+        return compare;
+      }
+    } catch (final Throwable error) {
+      // do nothing
+    }
+
+    try {
+      compare = String.valueOf(parsed);
+      if (EComparison.equals(this.m_parser.parseString(compare), parsed)) {
+        if (EComparison.equals(compare, value)) {
+          return value;
+        }
+        return compare;
+      }
+    } catch (final Throwable error) {
+      // do nothing
+    }
+
+    return parsed;
   }
 }

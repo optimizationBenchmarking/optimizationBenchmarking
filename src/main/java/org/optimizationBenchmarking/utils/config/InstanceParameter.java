@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.utils.config;
 
+import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
@@ -134,65 +135,7 @@ public final class InstanceParameter<T> extends Parameter<T> {
 
   /** {@inheritDoc} */
   @Override
-  final Object _formatForDump(final Object value) {
-    Object use, parsed;
-    String str;
-    boolean ignoreCase;
-
-    use = super._formatForDump(value);
-    if (use == null) {
-      return null;
-    }
-
-    if (use instanceof String) {
-      str = ((String) use);
-    } else {
-      try {
-        str = String.valueOf(use);
-      } catch (final Throwable error) {//
-        str = null;
-      }
-    }
-
-    ignoreCase = false;
-
-    for (;;) {
-      if (str != null) {
-        for (final DefinitionElement de : this.m_choices) {
-          if (ignoreCase ? de.m_name.equalsIgnoreCase(str)//
-              : de.m_name.equals(str)) {
-            return de.m_name;
-          }
-        }
-      }
-
-      for (final DefinitionElement de : this.m_choices) {
-        try {
-          parsed = this.m_parser.parseString(de.m_name);
-          if (EComparison.equals(parsed, use) || //
-              ((str != null) && //
-              (EComparison.equals(parsed, str) || //
-                  ((parsed instanceof String) && //
-                  (ignoreCase ? str.equalsIgnoreCase((String) parsed)//
-                      : str.equals(parsed))) || //
-              (ignoreCase ? str.equalsIgnoreCase(String.valueOf(parsed))
-                    : str.equals(String.valueOf(parsed)))))) {
-            return de.m_name;
-          }
-        } catch (final Throwable error) {
-          // ignore
-        }
-      }
-
-      if (ignoreCase) {
-        break;
-      }
-      ignoreCase = true;
-    }
-
-    if (this.m_allowsMore) {
-      return use;
-    }
-    return null;
+  final BasicIterator<DefinitionElement> _getDefinitionElements() {
+    return this.m_choices.iterator();
   }
 }
