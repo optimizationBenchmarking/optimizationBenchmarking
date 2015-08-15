@@ -53,14 +53,17 @@ public final class LaTeXDocumentClassParser extends
     if ("report".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return Report.getInstance();
     }
-    if ("ieeetran".equalsIgnoreCase(string)) { //$NON-NLS-1$
+    if ("ieeetran".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "ieee tran".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "ieee transactions".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return IEEEtran.getInstance();
     }
     if ("llncs".equalsIgnoreCase(string) || //$NON-NLS-1$
         "lncs".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return LLNCS.getInstance();
     }
-    if ("sig-alternate".equalsIgnoreCase(string)) { //$NON-NLS-1$
+    if ("sig-alternate".equalsIgnoreCase(string) || //$NON-NLS-1$
+        "sigalternate".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return SigAlternate.getInstance();
     }
 
