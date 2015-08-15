@@ -6,7 +6,7 @@ import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** A basic definition */
-public class ConfigurationDefinitionElement extends HashObject {
+public class DefinitionElement extends HashObject {
 
   /** the parameter name */
   final String m_name;
@@ -22,13 +22,11 @@ public class ConfigurationDefinitionElement extends HashObject {
    * @param description
    *          the description
    */
-  ConfigurationDefinitionElement(final String name,
-      final String description) {
+  DefinitionElement(final String name, final String description) {
     super();
 
-    this.m_name = ConfigurationDefinitionElement._makeName(name);
-    this.m_description = ConfigurationDefinitionElement
-        ._makeDescription(description);
+    this.m_name = DefinitionElement._makeName(name);
+    this.m_description = DefinitionElement._makeDescription(description);
   }
 
   /**
@@ -114,7 +112,7 @@ public class ConfigurationDefinitionElement extends HashObject {
    * @return {@code true} if the names and descriptions of this and the
    *         other definition are the same, {@code false} otherwise.
    */
-  final boolean _equalsDE(final ConfigurationDefinitionElement other) {
+  final boolean _equalsDE(final DefinitionElement other) {
     return (this.m_name.equals(other.m_name) && //
     this.m_description.equals(other.m_description));
   }
@@ -124,6 +122,6 @@ public class ConfigurationDefinitionElement extends HashObject {
   public boolean equals(final Object o) {
     return ((o == this) || //
     (((o != null) && (o.getClass() == this.getClass())) && //
-    (this._equalsDE((ConfigurationDefinitionElement) o))));
+    (this._equalsDE((DefinitionElement) o))));
   }
 }

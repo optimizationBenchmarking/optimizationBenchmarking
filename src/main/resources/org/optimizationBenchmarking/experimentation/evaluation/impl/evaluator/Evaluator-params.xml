@@ -53,7 +53,7 @@
 	</cd:instance>
 
 	<cd:instance name="graphicDriver"
-		description="The graphics format to be used for all figures."
+		description="The graphics format to be used for all figures. If you select nothing here, a reasonable default for your chosen document driver will be used."
 		class="org.optimizationBenchmarking.utils.graphics.graphic.spec.IGraphicDriver"
 		parser="org.optimizationBenchmarking.utils.graphics.graphic.impl.GraphicDriverParser"
 		allowsMore="true">
@@ -91,5 +91,8 @@
 
 	<cd:string name="evaluationSetup"
 		description="The location of the evaluation process definition. Locations can have different forms, such as: 'path(evaluation.xml)', for instance, would identify a file called 'evaluation.xml' in the same folder as this definition setup, 'zipPath(...)' is a path to a zip archive containing an evaluation definition, and 'zipURL(...)' is a URL where a zip archive with an evaluation definition can be found." />
+
+	<cd:string name="authors"
+		description="The list of authors, in the form of 'FamilyNameOfFirstAuthor; GivenNameOfFirstAuthor; FamilyNameOfSecondAuthor; GivenNameOfSecondAuthor; ...'." />
 
 </cd:configurationDefinition>

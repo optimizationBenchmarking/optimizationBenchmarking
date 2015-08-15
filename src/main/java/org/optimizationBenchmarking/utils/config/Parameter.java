@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
  * @param <T>
  *          the type
  */
-public class Parameter<T> extends ConfigurationDefinitionElement {
+public class Parameter<T> extends DefinitionElement {
 
   /** the parser for the parameter */
   final Parser<T> m_parser;
@@ -115,5 +115,49 @@ public class Parameter<T> extends ConfigurationDefinitionElement {
     return ((o == this) || //
     (((o != null) && (o.getClass() == this.getClass())) && //
     (this._equalsPA((Parameter) o))));
+  }
+
+  /**
+   * Format the value object for a configuration dump
+   *
+   * @param value
+   *          the value
+   * @return the formatted value to be stored in a configuration
+   */
+  Object _formatForDump(final Object value) {
+    final Object z;
+    String v;
+
+    if ((value == null) || (value == "")) { //$NON-NLS-1$
+      return null;
+    }
+
+    try {
+      // check whether the value is actually valid
+      z = this.m_parser.parseObject(value);
+      // if the value is a string, return directly
+      if (value instanceof String) {
+        return value;
+      }
+      try {
+        v = String.valueOf(value);
+        // check if the direct string representation is valid,
+        // if so, return it
+        if (!(EComparison.equals(v, value))) {
+          this.m_parser.parseString(v);
+          return v;
+        }
+      } catch (final Throwable q) {
+        // ignore
+      }
+      // prefer string representations
+      if (z instanceof String) {
+        return z;
+      }
+      return value;
+    } catch (final Throwable error) {
+      // the value is invalid, return null
+      return null;
+    }
   }
 }

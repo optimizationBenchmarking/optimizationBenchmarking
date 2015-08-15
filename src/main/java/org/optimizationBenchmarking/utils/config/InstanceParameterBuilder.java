@@ -14,7 +14,7 @@ public final class InstanceParameterBuilder extends NormalizingFSM {
   private final Parameter<?> m_base;
 
   /** the parameters */
-  private LinkedHashMap<String, ConfigurationDefinitionElement> m_choices;
+  private LinkedHashMap<String, DefinitionElement> m_choices;
 
   /** are more elements allowed than the choices suggest? */
   private final boolean m_allowsMore;
@@ -29,7 +29,7 @@ public final class InstanceParameterBuilder extends NormalizingFSM {
    * @param allowsMore
    *          are more elements allowed than the choices suggest?
    */
-  InstanceParameterBuilder(final ConfigurationDefinitionBuilder owner,
+  InstanceParameterBuilder(final DefinitionBuilder owner,
       final Parameter<?> base, final boolean allowsMore) {
     super(owner);
 
@@ -57,9 +57,9 @@ public final class InstanceParameterBuilder extends NormalizingFSM {
    */
   public synchronized final void addChoice(final String name,
       final String description) {
-    final ConfigurationDefinitionElement de;
+    final DefinitionElement de;
 
-    de = new ConfigurationDefinitionElement(name, description);
+    de = new DefinitionElement(name, description);
     if (this.m_choices.containsKey(de.m_name)) {
       throw new IllegalArgumentException("Choice with name '" + name //$NON-NLS-1$
           + "' already defined."); //$NON-NLS-1$
@@ -74,8 +74,8 @@ public final class InstanceParameterBuilder extends NormalizingFSM {
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   synchronized final InstanceParameter<?> _take() {
-    final ArrayListView<ConfigurationDefinitionElement> alv;
-    LinkedHashMap<String, ConfigurationDefinitionElement> al;
+    final ArrayListView<DefinitionElement> alv;
+    LinkedHashMap<String, DefinitionElement> al;
 
     al = this.m_choices;
     this.m_choices = null;

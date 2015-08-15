@@ -2,16 +2,17 @@ package org.optimizationBenchmarking.utils.config;
 
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
 import org.optimizationBenchmarking.utils.parsers.InstanceParser;
+import org.optimizationBenchmarking.utils.parsers.LooseBooleanParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 /** A stack-able XMLFileType handler for configuration XMLFileType data */
-public class ConfigurationDefinitionXMLHandler extends DelegatingHandler {
+public class DefinitionXMLHandler extends DelegatingHandler {
 
   /** the destination configuration builder */
-  private ConfigurationDefinitionBuilder m_dest;
+  private DefinitionBuilder m_dest;
 
   /** the instance parameter builder */
   private InstanceParameterBuilder m_ipb;
@@ -24,8 +25,8 @@ public class ConfigurationDefinitionXMLHandler extends DelegatingHandler {
    * @param dest
    *          the configuration builder to load the data into
    */
-  public ConfigurationDefinitionXMLHandler(final DelegatingHandler owner,
-      final ConfigurationDefinitionBuilder dest) {
+  public DefinitionXMLHandler(final DelegatingHandler owner,
+      final DefinitionBuilder dest) {
     super(owner);
     this.m_dest = dest;
   }
@@ -39,116 +40,114 @@ public class ConfigurationDefinitionXMLHandler extends DelegatingHandler {
     Parser<?> xparser;
     Class<?> clazz;
 
-    if ((uri == null)
-        || (ConfigurationDefinitionXML.NAMESPACE.equalsIgnoreCase(uri))) {
+    if ((uri == null) || (DefinitionXML.NAMESPACE.equalsIgnoreCase(uri))) {
 
-      name = attributes
-          .getValue(ConfigurationDefinitionXML.ATTRIBUTE_NAME);
+      name = attributes.getValue(DefinitionXML.ATTRIBUTE_NAME);
       description = attributes
-          .getValue(ConfigurationDefinitionXML.ATTRIBUTE_DESCRIPTION);
+          .getValue(DefinitionXML.ATTRIBUTE_DESCRIPTION);
 
       switch (localName) {
 
-        case ConfigurationDefinitionXML.ELEMENT_BOOLEAN: {
+        case DefinitionXML.ELEMENT_BOOLEAN: {
           this.m_dest.booleanParameter(name, description,//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_DEF));
+                  DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
-        case ConfigurationDefinitionXML.ELEMENT_STRING: {
+        case DefinitionXML.ELEMENT_STRING: {
           this.m_dest.stringParameter(name, description,//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_DEF));
+                  DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
-        case ConfigurationDefinitionXML.ELEMENT_BYTE: {
+        case DefinitionXML.ELEMENT_BYTE: {
           this.m_dest.byteParameter(name, description,//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MIN),//
+                  DefinitionXML.ATTRIBUTE_MIN),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MAX),//
+                  DefinitionXML.ATTRIBUTE_MAX),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_DEF));
+                  DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
-        case ConfigurationDefinitionXML.ELEMENT_SHORT: {
+        case DefinitionXML.ELEMENT_SHORT: {
           this.m_dest.shortParameter(name, description,//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MIN),//
+                  DefinitionXML.ATTRIBUTE_MIN),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MAX),//
+                  DefinitionXML.ATTRIBUTE_MAX),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_DEF));
+                  DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
-        case ConfigurationDefinitionXML.ELEMENT_INT: {
+        case DefinitionXML.ELEMENT_INT: {
           this.m_dest.intParameter(name, description,//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MIN),//
+                  DefinitionXML.ATTRIBUTE_MIN),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MAX),//
+                  DefinitionXML.ATTRIBUTE_MAX),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_DEF));
+                  DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
-        case ConfigurationDefinitionXML.ELEMENT_LONG: {
+        case DefinitionXML.ELEMENT_LONG: {
           this.m_dest.longParameter(name, description,//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MIN),//
+                  DefinitionXML.ATTRIBUTE_MIN),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MAX),//
+                  DefinitionXML.ATTRIBUTE_MAX),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_DEF));
+                  DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
-        case ConfigurationDefinitionXML.ELEMENT_FLOAT: {
+        case DefinitionXML.ELEMENT_FLOAT: {
           this.m_dest.floatParameter(name, description,//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MIN),//
+                  DefinitionXML.ATTRIBUTE_MIN),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MAX),//
+                  DefinitionXML.ATTRIBUTE_MAX),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_DEF));
+                  DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
-        case ConfigurationDefinitionXML.ELEMENT_DOUBLE: {
+        case DefinitionXML.ELEMENT_DOUBLE: {
           this.m_dest.doubleParameter(name, description,//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MIN),//
+                  DefinitionXML.ATTRIBUTE_MIN),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_MAX),//
+                  DefinitionXML.ATTRIBUTE_MAX),//
               attributes.getValue(//
-                  ConfigurationDefinitionXML.ATTRIBUTE_DEF));
+                  DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
-        case ConfigurationDefinitionXML.ELEMENT_CHOICE: {
+        case DefinitionXML.ELEMENT_CHOICE: {
           if (this.m_ipb == null) {
             throw new IllegalStateException(
-                "The '" + ConfigurationDefinitionXML.ELEMENT_CHOICE + //$NON-NLS-1$
+                "The '" + DefinitionXML.ELEMENT_CHOICE + //$NON-NLS-1$
                     "' element can only occur inside a '" //$NON-NLS-1$
-                    + ConfigurationDefinitionXML.ELEMENT_DEFINITION
+                    + DefinitionXML.ELEMENT_INSTANCE
                     + "' element, but was encountered outside.");//$NON-NLS-1$
           }
           this.m_ipb.addChoice(name, description);
           break;
         }
 
-        case ConfigurationDefinitionXML.ELEMENT_INSTANCE: {
+        case DefinitionXML.ELEMENT_INSTANCE: {
           xparser = null;
           clazz = null;
           try {
             clazz = ReflectionUtils.findClass(attributes.getValue(//
-                ConfigurationDefinitionXML.ATTRIBUTE_CLASS), Object.class);
+                DefinitionXML.ATTRIBUTE_CLASS), Object.class);
             parser = attributes.getValue(//
-                ConfigurationDefinitionXML.ATTRIBUTE_PARSER);
+                DefinitionXML.ATTRIBUTE_PARSER);
             if (parser != null) {
               xparser = ReflectionUtils.getInstanceByName(Parser.class,
                   parser);
@@ -170,10 +169,16 @@ public class ConfigurationDefinitionXMLHandler extends DelegatingHandler {
             }
           }
 
+          this.m_ipb = this.m_dest.instanceParameter(name, description,
+              xparser, attributes.getValue(//
+                  DefinitionXML.ATTRIBUTE_DEF),
+                  LooseBooleanParser.INSTANCE.parseBoolean(attributes
+                      .getValue(DefinitionXML.ATTRIBUTE_ALLOWS_MORE)));
+
           break;
         }
 
-        case ConfigurationDefinitionXML.ELEMENT_DEFINITION: {
+        case DefinitionXML.ELEMENT_DEFINITION: {
           break; // ignore
         }
 
@@ -190,15 +195,14 @@ public class ConfigurationDefinitionXMLHandler extends DelegatingHandler {
   protected final void doEndElement(final String uri,
       final String localName, final String qName) throws SAXException {
 
-    if ((uri == null)
-        || (ConfigurationDefinitionXML.NAMESPACE.equalsIgnoreCase(uri))) {
+    if ((uri == null) || (DefinitionXML.NAMESPACE.equalsIgnoreCase(uri))) {
       switch (localName) {
-        case ConfigurationDefinitionXML.ELEMENT_DEFINITION: {
+        case DefinitionXML.ELEMENT_DEFINITION: {
           this.close();
           this.m_dest = null;
           break;
         }
-        case ConfigurationDefinitionXML.ELEMENT_CHOICE: {
+        case DefinitionXML.ELEMENT_INSTANCE: {
           if (this.m_ipb != null) {
             try {
               this.m_ipb.close();

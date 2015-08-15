@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.parsers.Parser;
 public final class InstanceParameter<T> extends Parameter<T> {
 
   /** the pre-defined choices */
-  private final ArrayListView<ConfigurationDefinitionElement> m_choices;
+  private final ArrayListView<DefinitionElement> m_choices;
 
   /** are more choices allowed */
   private final boolean m_allowsMore;
@@ -37,7 +37,7 @@ public final class InstanceParameter<T> extends Parameter<T> {
    */
   InstanceParameter(final String name, final String description,
       final Parser<T> parser, final String def,
-      final ArrayListView<ConfigurationDefinitionElement> choices,
+      final ArrayListView<DefinitionElement> choices,
       final boolean allowsMore) {
     super(name, description, parser, def);
 
@@ -66,7 +66,7 @@ public final class InstanceParameter<T> extends Parameter<T> {
       }
 
       str = ((String) value);
-      for (final ConfigurationDefinitionElement def : this.m_choices) {
+      for (final DefinitionElement def : this.m_choices) {
         if (def.m_name.equalsIgnoreCase(str)) {
           return;
         }
@@ -91,7 +91,7 @@ public final class InstanceParameter<T> extends Parameter<T> {
    *
    * @return the choices
    */
-  public final ArrayListView<ConfigurationDefinitionElement> getChoices() {
+  public final ArrayListView<DefinitionElement> getChoices() {
     return this.m_choices;
   }
 
@@ -130,5 +130,69 @@ public final class InstanceParameter<T> extends Parameter<T> {
       EComparison.equals(this.m_choices, p.m_choices));
     }
     return false;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final Object _formatForDump(final Object value) {
+    Object use, parsed;
+    String str;
+    boolean ignoreCase;
+
+    use = super._formatForDump(value);
+    if (use == null) {
+      return null;
+    }
+
+    if (use instanceof String) {
+      str = ((String) use);
+    } else {
+      try {
+        str = String.valueOf(use);
+      } catch (final Throwable error) {//
+        str = null;
+      }
+    }
+
+    ignoreCase = false;
+
+    for (;;) {
+      if (str != null) {
+        for (final DefinitionElement de : this.m_choices) {
+          if (ignoreCase ? de.m_name.equalsIgnoreCase(str)//
+              : de.m_name.equals(str)) {
+            return de.m_name;
+          }
+        }
+      }
+
+      for (final DefinitionElement de : this.m_choices) {
+        try {
+          parsed = this.m_parser.parseString(de.m_name);
+          if (EComparison.equals(parsed, use) || //
+              ((str != null) && //
+              (EComparison.equals(parsed, str) || //
+                  ((parsed instanceof String) && //
+                  (ignoreCase ? str.equalsIgnoreCase((String) parsed)//
+                      : str.equals(parsed))) || //
+              (ignoreCase ? str.equalsIgnoreCase(String.valueOf(parsed))
+                    : str.equals(String.valueOf(parsed)))))) {
+            return de.m_name;
+          }
+        } catch (final Throwable error) {
+          // ignore
+        }
+      }
+
+      if (ignoreCase) {
+        break;
+      }
+      ignoreCase = true;
+    }
+
+    if (this.m_allowsMore) {
+      return use;
+    }
+    return null;
   }
 }

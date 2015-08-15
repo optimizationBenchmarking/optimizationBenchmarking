@@ -634,18 +634,6 @@ public final class Configuration implements Serializable, ITextable {
   }
 
   /**
-   * Get the elements of a given definition which are specified here.
-   *
-   * @param definition
-   *          the definition
-   * @return the list of stored elements
-   */
-  public final ConfigurationDump dump(
-      final ConfigurationDefinition definition) {
-    return this.m_data._dump(definition);
-  }
-
-  /**
    * Get the globally used logger
    *
    * @return the logger

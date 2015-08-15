@@ -18,14 +18,14 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** the configuration definition xml input */
-public final class ConfigurationDefinitionXMLInput extends
-    XMLInputTool<ConfigurationDefinitionBuilder> {
+public final class DefinitionXMLInput extends
+    XMLInputTool<DefinitionBuilder> {
 
   /** The map with the references to the cached definitions */
-  private final MapCache<Class<?>, ConfigurationDefinition> m_cache;
+  private final MapCache<Class<?>, Definition> m_cache;
 
   /** create */
-  ConfigurationDefinitionXMLInput() {
+  DefinitionXMLInput() {
     super();
     this.m_cache = new MapCache<>();
   }
@@ -43,8 +43,7 @@ public final class ConfigurationDefinitionXMLInput extends
     try {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       schema = sf.newSchema(//
-          ConfigurationDefinitionXML.CONFIG_DEFINITION_XML
-              .getSchemaSource());
+          DefinitionXML.CONFIG_DEFINITION_XML.getSchemaSource());
     } catch (final Throwable a) {
       rec = ErrorUtils.aggregateError(a, rec);
     } finally {
@@ -73,9 +72,9 @@ public final class ConfigurationDefinitionXMLInput extends
 
   /** {@inheritDoc} */
   @Override
-  protected final ConfigurationDefinitionXMLHandler wrapDestination(
-      final ConfigurationDefinitionBuilder dataDestination, final IOJob job) {
-    return new ConfigurationDefinitionXMLHandler(null, dataDestination);
+  protected final DefinitionXMLHandler wrapDestination(
+      final DefinitionBuilder dataDestination, final IOJob job) {
+    return new DefinitionXMLHandler(null, dataDestination);
   }
 
   /**
@@ -87,10 +86,10 @@ public final class ConfigurationDefinitionXMLInput extends
    *          a logger to use, or {@code null}
    * @return the corresponding definition
    */
-  public final ConfigurationDefinition forClass(final Class<?> clazz,
+  public final Definition forClass(final Class<?> clazz,
       final Logger logger) {
     final String name, msg;
-    ConfigurationDefinition def;
+    Definition def;
 
     this.checkCanUse();
 
@@ -100,7 +99,7 @@ public final class ConfigurationDefinitionXMLInput extends
     }
 
     name = (clazz.getSimpleName() + "-params.xml"); //$NON-NLS-1$
-    try (final ConfigurationDefinitionBuilder builder = new ConfigurationDefinitionBuilder()) {
+    try (final DefinitionBuilder builder = new DefinitionBuilder()) {
       try {
         this.use().setLogger(logger).setDestination(builder)
             .addResource(clazz, name).create().call();
@@ -126,8 +125,7 @@ public final class ConfigurationDefinitionXMLInput extends
    *          a logger to use, or {@code null}
    * @return the corresponding definition
    */
-  public final ConfigurationDefinition forClass(final String clazz,
-      final Logger logger) {
+  public final Definition forClass(final String clazz, final Logger logger) {
     final Class<?> claz;
     final String msg;
 
@@ -151,17 +149,17 @@ public final class ConfigurationDefinitionXMLInput extends
   }
 
   /**
-   * get the instance of the {@link ConfigurationDefinitionXMLInput}
+   * get the instance of the {@link DefinitionXMLInput}
    *
-   * @return the instance of the {@link ConfigurationDefinitionXMLInput}
+   * @return the instance of the {@link DefinitionXMLInput}
    */
-  public static final ConfigurationDefinitionXMLInput getInstance() {
+  public static final DefinitionXMLInput getInstance() {
     return __ConfigurationDefinitionXMLInputLoader.INSTANCE;
   }
 
   /** the loader */
   private static final class __ConfigurationDefinitionXMLInputLoader {
     /** the configuration xml */
-    static final ConfigurationDefinitionXMLInput INSTANCE = new ConfigurationDefinitionXMLInput();
+    static final DefinitionXMLInput INSTANCE = new DefinitionXMLInput();
   }
 }

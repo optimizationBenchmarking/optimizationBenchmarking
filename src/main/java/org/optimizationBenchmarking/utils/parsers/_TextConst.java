@@ -103,10 +103,16 @@ final class _TextConst implements Comparable<_TextConst> {
       new _TextConst("check",//$NON-NLS-1$
           true),//
 
+      new _TextConst("checked",//$NON-NLS-1$
+          true),//
+
       new _TextConst("accept", //$NON-NLS-1$
           true),//
 
       new _TextConst("confirm",//$NON-NLS-1$
+          true),//
+
+      new _TextConst("confirmed",//$NON-NLS-1$
           true),//
 
       new _TextConst("acknowledge",//$NON-NLS-1$
@@ -123,6 +129,12 @@ final class _TextConst implements Comparable<_TextConst> {
 
       new _TextConst("t",//$NON-NLS-1$
           true),//
+
+      new _TextConst("on",//$NON-NLS-1$
+          true),//
+
+      new _TextConst("off",//$NON-NLS-1$
+          false),//
 
       new _TextConst("no",//$NON-NLS-1$
           false),//

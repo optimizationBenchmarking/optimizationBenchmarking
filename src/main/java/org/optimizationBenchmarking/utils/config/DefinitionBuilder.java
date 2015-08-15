@@ -3,7 +3,6 @@ package org.optimizationBenchmarking.utils.config;
 import java.util.LinkedHashMap;
 
 import org.optimizationBenchmarking.utils.collections.cache.NormalizingCache;
-import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.parsers.BoundedLooseByteParser;
@@ -25,8 +24,7 @@ import org.optimizationBenchmarking.utils.parsers.Parser;
 /**
  * A builder for a definition.
  */
-public final class ConfigurationDefinitionBuilder extends
-BuilderFSM<ConfigurationDefinition> {
+public final class DefinitionBuilder extends BuilderFSM<Definition> {
 
   /** the internal cache */
   private static final NormalizingCache CACHE = new NormalizingCache();
@@ -34,11 +32,8 @@ BuilderFSM<ConfigurationDefinition> {
   /** the parameters */
   private LinkedHashMap<String, Parameter<?>> m_params;
 
-  /** set whether we allow additional parameters or not */
-  private boolean m_allowsMore;
-
   /** create the definition builder */
-  public ConfigurationDefinitionBuilder() {
+  public DefinitionBuilder() {
     super(null);
     this.m_params = new LinkedHashMap<>();
     this.open();
@@ -47,7 +42,7 @@ BuilderFSM<ConfigurationDefinition> {
   /** {@inheritDoc} */
   @Override
   protected final <T> T doNormalizePersistently(final T input) {
-    return ConfigurationDefinitionBuilder.CACHE.normalize(input);
+    return DefinitionBuilder.CACHE.normalize(input);
   }
 
   /**
@@ -61,21 +56,6 @@ BuilderFSM<ConfigurationDefinition> {
       throw new IllegalStateException("Parameter of name '" + //$NON-NLS-1$
           name + "' already defined."); //$NON-NLS-1$
     }
-  }
-
-  /**
-   * Set whether we allow additional parameters ({@code allowsMore=true})
-   * which are not explicitly specified, or only the specified parameters (
-   * {@code allowsMore=false})
-   *
-   * @param allowsMore
-   *          {@code false} if only the parameters in the list of this
-   *          definition are allowed, {@code true} if additional parameters
-   *          may be passed in
-   */
-  public synchronized final void setAllowsMore(final boolean allowsMore) {
-    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    this.m_allowsMore = allowsMore;
   }
 
   /**
@@ -335,7 +315,7 @@ BuilderFSM<ConfigurationDefinition> {
     new SimpleParameter<>(useName,//
         this.normalize(description), //
         LooseStringParser.INSTANCE,//
-        this.normalize(String.valueOf(def))));
+        this.normalize(def)));
   }
 
   /**
@@ -563,18 +543,14 @@ BuilderFSM<ConfigurationDefinition> {
 
   /** {@inheritDoc} */
   @Override
-  protected final ConfigurationDefinition compile() {
-    final ArrayListView<Parameter<?>> alv;
+  protected final Definition compile() {
     LinkedHashMap<String, Parameter<?>> al;
 
     al = this.m_params;
     this.m_params = null;
 
-    alv = this.normalize(ArrayListView.collectionToView(al.values()));
-    al = null;
-
-    return this.normalize(new ConfigurationDefinition(alv,
-        this.m_allowsMore));
+    return this.normalize(new Definition(al.values().toArray(//
+        new Parameter[al.size()])));
   }
 
 }

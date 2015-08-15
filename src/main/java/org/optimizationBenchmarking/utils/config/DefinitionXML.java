@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.io.xml.XMLFileType;
  * {@link org.optimizationBenchmarking.utils.io.xml.XMLFileType XML}
  * format.
  */
-public enum ConfigurationDefinitionXML implements IXMLFileType {
+public enum DefinitionXML implements IXMLFileType {
 
   /** the globally shared instance of the configuration XML file type */
   CONFIG_DEFINITION_XML;
@@ -20,10 +20,9 @@ public enum ConfigurationDefinitionXML implements IXMLFileType {
   /** the namespace */
   static final URI NAMESPACE_URI = //
   URI.create(//
-      "http://www.optimizationBenchmarking.org/formats/configuration/configuration.1.0.xsd").normalize(); //$NON-NLS-1$
+      "http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd").normalize(); //$NON-NLS-1$
   /** the namespace string */
-  static final String NAMESPACE = ConfigurationDefinitionXML.NAMESPACE_URI
-      .toString();
+  static final String NAMESPACE = DefinitionXML.NAMESPACE_URI.toString();
 
   /** the name attribute */
   static final String ATTRIBUTE_NAME = "name"; //$NON-NLS-1$
@@ -39,6 +38,8 @@ public enum ConfigurationDefinitionXML implements IXMLFileType {
   static final String ATTRIBUTE_CLASS = "class"; //$NON-NLS-1$
   /** the parser attribute */
   static final String ATTRIBUTE_PARSER = "parser"; //$NON-NLS-1$
+  /** the allows-more attribute */
+  static final String ATTRIBUTE_ALLOWS_MORE = "allowsMore"; //$NON-NLS-1$
 
   /** the boolean element */
   static final String ELEMENT_BOOLEAN = "boolean"; //$NON-NLS-1$
@@ -93,13 +94,13 @@ public enum ConfigurationDefinitionXML implements IXMLFileType {
   /** {@inheritDoc} */
   @Override
   public final URI getNamespaceURI() {
-    return ConfigurationDefinitionXML.NAMESPACE_URI;
+    return DefinitionXML.NAMESPACE_URI;
   }
 
   /** {@inheritDoc} */
   @Override
   public final String getNamespace() {
-    return ConfigurationDefinitionXML.NAMESPACE;
+    return DefinitionXML.NAMESPACE;
   }
 
   /** {@inheritDoc} */
@@ -107,12 +108,11 @@ public enum ConfigurationDefinitionXML implements IXMLFileType {
   public final URL getSchemaSource() throws IOException {
     final URL u;
     u = this.getClass().getResource(//
-        ConfigurationDefinitionXML.NAMESPACE
-            .substring(ConfigurationDefinitionXML.NAMESPACE
-                .lastIndexOf('/') + 1));
+        DefinitionXML.NAMESPACE.substring(DefinitionXML.NAMESPACE
+            .lastIndexOf('/') + 1));
     if (u != null) {
       return u;
     }
-    return ConfigurationDefinitionXML.NAMESPACE_URI.toURL();
+    return DefinitionXML.NAMESPACE_URI.toURL();
   }
 }

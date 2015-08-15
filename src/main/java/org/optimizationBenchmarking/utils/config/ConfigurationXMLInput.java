@@ -67,7 +67,7 @@ public final class ConfigurationXMLInput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Configuration XMLFileType Input"; //$NON-NLS-1$
+    return "Configuration XML Input"; //$NON-NLS-1$
   }
 
   /**
