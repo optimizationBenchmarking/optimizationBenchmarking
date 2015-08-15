@@ -1,7 +1,5 @@
 package org.optimizationBenchmarking.utils.config;
 
-import javax.swing.JOptionPane;
-
 import org.optimizationBenchmarking.utils.collections.iterators.BasicIterator;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
@@ -160,8 +158,6 @@ public class Parameter<T> extends DefinitionElement {
 
     while (iterator.hasNext()) {
       compare = iterator.next().m_name;
-      JOptionPane.showConfirmDialog(null, compare + ' ' + parsed + ' '
-          + this.m_parser.parseString(compare));
       if (EComparison.equals(this.m_parser.parseString(compare), parsed)) {
         return compare;
       }
