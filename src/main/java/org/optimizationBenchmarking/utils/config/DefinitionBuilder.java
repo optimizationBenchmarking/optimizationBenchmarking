@@ -32,6 +32,9 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
   /** the parameters */
   private LinkedHashMap<String, Parameter<?>> m_params;
 
+  /** are more parameters allowed? */
+  private boolean m_allowsMore;
+
   /** create the definition builder */
   public DefinitionBuilder() {
     super(null);
@@ -56,6 +59,18 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       throw new IllegalStateException("Parameter of name '" + //$NON-NLS-1$
           name + "' already defined."); //$NON-NLS-1$
     }
+  }
+
+  /**
+   * Set whether additional parameters are allowed.
+   *
+   * @param allowsMore
+   *          {@code true} if parameters not specified here are allowed,
+   *          {@code false} otherwise
+   */
+  public synchronized final void setAllowsMore(final boolean allowsMore) {
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
+    this.m_allowsMore = allowsMore;
   }
 
   /**
@@ -550,7 +565,7 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
     this.m_params = null;
 
     return this.normalize(new Definition(al.values().toArray(//
-        new Parameter[al.size()])));
+        new Parameter[al.size()]), this.m_allowsMore));
   }
 
 }

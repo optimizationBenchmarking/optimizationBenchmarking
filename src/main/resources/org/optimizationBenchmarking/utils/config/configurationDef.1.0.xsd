@@ -142,6 +142,7 @@
 				<element ref="tns:string" />
 				<element ref="tns:instance" />
 			</choice>
+			<attribute name="allowsMore" type="boolean" use="required" />
 		</complexType>
 	</element>
 

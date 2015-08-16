@@ -172,13 +172,16 @@ public class DefinitionXMLHandler extends DelegatingHandler {
           this.m_ipb = this.m_dest.instanceParameter(name, description,
               xparser, attributes.getValue(//
                   DefinitionXML.ATTRIBUTE_DEF),
-                  LooseBooleanParser.INSTANCE.parseBoolean(attributes
-                      .getValue(DefinitionXML.ATTRIBUTE_ALLOWS_MORE)));
+              LooseBooleanParser.INSTANCE.parseBoolean(attributes
+                  .getValue(DefinitionXML.ATTRIBUTE_ALLOWS_MORE)));
 
           break;
         }
 
         case DefinitionXML.ELEMENT_DEFINITION: {
+          this.m_dest.setAllowsMore(//
+              LooseBooleanParser.INSTANCE.parseBoolean(attributes//
+                  .getValue(DefinitionXML.ATTRIBUTE_ALLOWS_MORE)));
           break; // ignore
         }
 
