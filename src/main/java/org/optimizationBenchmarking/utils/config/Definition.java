@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.utils.config;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Map;
 
 import org.optimizationBenchmarking.utils.collections.ImmutableAssociation;
@@ -40,7 +42,7 @@ public final class Definition extends _DefSet<Parameter<?>> {
     ImmutableAssociation<Parameter<?>, Object>[] known, copy;
     StringMapCI<Object> map;
     Parameter<?> param;
-    int paramSize, mapSize, index;
+    int paramSize, mapSize, index, origLen;
 
     paramSize = this.m_data.length;
     allowsMore = this.m_allowsMore;
@@ -78,10 +80,15 @@ public final class Definition extends _DefSet<Parameter<?>> {
             if (allowsMore) {
               // If there are more (unspecified) parameters, dump them as
               // well
+              origLen = index;
               for (final Map.Entry<String, Object> entry : map) {
                 known[index++] = new ImmutableAssociation(//
                     new UnspecifiedParameter(entry.getKey()),//
                     String.valueOf(entry.getValue()));
+              }
+
+              if (index > (origLen + 1)) {
+                Arrays.sort(known, origLen, index, new __Comp());
               }
             }
 
@@ -111,5 +118,23 @@ public final class Definition extends _DefSet<Parameter<?>> {
     }
 
     return new Dump(known, allowsMore);
+  }
+
+  /** the internal comparator */
+  private static final class __Comp implements
+      Comparator<ImmutableAssociation<Parameter<?>, Object>> {
+    /** create */
+    __Comp() {
+      super();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final int compare(
+        final ImmutableAssociation<Parameter<?>, Object> o1,
+        final ImmutableAssociation<Parameter<?>, Object> o2) {
+      return String.CASE_INSENSITIVE_ORDER.compare(o1.getKey().m_name,
+          o2.getKey().m_name);
+    }
   }
 }

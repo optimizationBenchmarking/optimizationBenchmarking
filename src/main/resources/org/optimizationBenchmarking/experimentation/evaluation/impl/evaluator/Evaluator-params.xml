@@ -94,5 +94,4 @@
 
 	<cd:string name="authors"
 		description="The list of authors, in the form of 'FamilyNameOfFirstAuthor; GivenNameOfFirstAuthor; FamilyNameOfSecondAuthor; GivenNameOfSecondAuthor; ...'." />
-
 </cd:configurationDefinition>
