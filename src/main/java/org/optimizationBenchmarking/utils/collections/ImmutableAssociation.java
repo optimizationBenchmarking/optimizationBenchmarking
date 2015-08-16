@@ -47,4 +47,10 @@ public class ImmutableAssociation<K, V> extends BasicMapEntry<K, V> {
   public final V getValue() {
     return this.m_value;
   }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final Object clone() {
+    return this;
+  }
 }
