@@ -17,6 +17,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.text.TextUtils;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** the data belonging to an evaluation process */
 class _EvaluationSetup {
@@ -62,6 +63,9 @@ class _EvaluationSetup {
   /** the logger */
   private Logger m_logger;
 
+  /** the file producer listener */
+  private IFileProducerListener m_fpo;
+
   /** instantiate */
   @SuppressWarnings("unchecked")
   _EvaluationSetup() {
@@ -89,6 +93,7 @@ class _EvaluationSetup {
     final IEvaluationInput input;
     final IEvaluationOutput output;
     final BibAuthors authors;
+    final IFileProducerListener listener;
 
     synchronized (this.m_synch) {
       synchronized (copyFrom.m_synch) {
@@ -122,6 +127,11 @@ class _EvaluationSetup {
           this._setAuthors(authors);
         }
 
+        listener = copyFrom._getFileProducerListener();
+        if (listener != null) {
+          this._setFileProducerListener(listener);
+        }
+
         for (final ArrayList<_ModuleEntry> list : copyFrom._takeModules()) {
           for (final _ModuleEntry entry : list) {
             this._addModule(entry.m_module, entry.m_config);
@@ -129,6 +139,33 @@ class _EvaluationSetup {
         }
       }
     }
+  }
+
+  /**
+   * Set the file producer listener for collecting the created output
+   * files. This can only work if the output document is set via the
+   * {@link org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationBuilder#setOutput(IEvaluationOutput)}
+   * method taking an instance of
+   * {@link org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationOutput}
+   * as parameter which supports this action. Otherwise it is ignored.
+   *
+   * @param listener
+   *          the file producer listener for collecting the created output
+   *          files
+   */
+  final void _setFileProducerListener(final IFileProducerListener listener) {
+    synchronized (this.m_synch) {
+      this.m_fpo = listener;
+    }
+  }
+
+  /**
+   * Get the file producer listener
+   *
+   * @return the file producer listener
+   */
+  final IFileProducerListener _getFileProducerListener() {
+    return this.m_fpo;
   }
 
   /**
@@ -497,6 +534,21 @@ class _EvaluationSetup {
     }
 
     return output;
+  }
+
+  /**
+   * take the file producer listener
+   *
+   * @return the file producer listener
+   */
+  final IFileProducerListener _takeFileProducerListener() {
+    final IFileProducerListener listener;
+
+    synchronized (this.m_synch) {
+      listener = this.m_fpo;
+      this.m_fpo = null;
+    }
+    return listener;
   }
 
   /**

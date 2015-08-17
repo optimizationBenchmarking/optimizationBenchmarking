@@ -23,9 +23,9 @@ import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.da
 import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data.ModuleEntry;
 import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.io.EvaluationXMLInput;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluation;
+import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationOutput;
 import org.optimizationBenchmarking.experimentation.io.impl.ExperimentSetInputParser;
 import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput;
-import org.optimizationBenchmarking.utils.MemoryUtils;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorBuilder;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthorsBuilder;
@@ -48,6 +48,7 @@ import org.optimizationBenchmarking.utils.text.ESequenceMode;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.numbers.InTextNumberAppender;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** The evaluation job */
 final class _Evaluation extends _EvaluationSetup implements IEvaluation {
@@ -573,6 +574,8 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    * @return the destination document
    */
   private final IDocument __createDocument(final Logger logger) {
+    final IEvaluationOutput output;
+    final IFileProducerListener listener;
     IDocument doc;
 
     if ((logger != null) && (logger.isLoggable(Level.FINE))) {
@@ -580,7 +583,12 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     try {
-      doc = this._takeOutput().getDocument();
+      listener = this._takeFileProducerListener();
+      output = this._takeOutput();
+      if ((listener != null) && (output instanceof DocumentDriverOutput)) {
+        ((DocumentDriverOutput) output).setFileProducerListener(listener);
+      }
+      doc = output.getDocument();
     } catch (final Exception error) {
       doc = null;
       ErrorUtils
@@ -836,8 +844,6 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
     }
 
     authors = this.__makeAuthors();
-
-    MemoryUtils.quickGC();
 
     try (final IDocument doc = this.__createDocument(logger)) {
       root.initialize(doc);

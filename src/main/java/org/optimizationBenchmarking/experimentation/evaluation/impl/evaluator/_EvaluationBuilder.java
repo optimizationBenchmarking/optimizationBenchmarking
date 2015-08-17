@@ -11,6 +11,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationO
 import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /** The evaluation builder */
 final class _EvaluationBuilder extends _EvaluationSetup implements
@@ -90,5 +91,13 @@ final class _EvaluationBuilder extends _EvaluationSetup implements
   @Override
   public final IEvaluation create() {
     return new _Evaluation(this);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public final IEvaluationBuilder setFileProducerListener(
+      final IFileProducerListener listener) {
+    this._setFileProducerListener(listener);
+    return this;
   }
 }

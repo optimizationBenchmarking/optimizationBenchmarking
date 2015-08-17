@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.utils.bibliography.data.BibAuthors;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.document.spec.IDocument;
 import org.optimizationBenchmarking.utils.tools.spec.IConfigurableToolJobBuilder;
+import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
  * A builder for an evaluation job
@@ -90,6 +91,22 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
   public abstract IEvaluationBuilder setOutputDocument(final IDocument doc);
 
   /**
+   * Set the file producer listener for collecting the created output
+   * files. This can only work if the output document is set via the
+   * {@link #setOutput(IEvaluationOutput)} method taking an instance of
+   * {@link org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationOutput}
+   * as parameter which supports this action. Otherwise it is ignored.
+   *
+   * @param listener
+   *          the file producer listener for collecting the created output
+   *          files
+   * @return this builder
+   * @see #setOutput(IEvaluationOutput)
+   */
+  public abstract IEvaluationBuilder setFileProducerListener(
+      final IFileProducerListener listener);
+
+  /**
    * Set the output object generating the document to be used for storing
    * the experiment output
    *
@@ -97,6 +114,7 @@ public interface IEvaluationBuilder extends IConfigurableToolJobBuilder {
    *          the output object
    * @return this builder
    * @see #setOutputDocument(IDocument)
+   * @see #setFileProducerListener(IFileProducerListener)
    */
   public abstract IEvaluationBuilder setOutput(
       final IEvaluationOutput output);
