@@ -34,6 +34,7 @@ public final class BBOBExamples extends EvaluationExample {
    */
   public static final void main(final String[] args) throws Throwable {
     final Path dir;
+    final BBOBExamples example;
 
     if ((args != null) && (args.length > 0)) {
       dir = PathUtils.normalize(args[0]);
@@ -42,7 +43,11 @@ public final class BBOBExamples extends EvaluationExample {
     }
 
     Configuration.setup(args);
-    new BBOBExamples().process(dir, BBOBExample.class);
+
+    example = new BBOBExamples();
+
+    example._logSetup();
+    example.process(dir, BBOBExample.class);
   }
 
 }

@@ -20,11 +20,7 @@ public enum ConfigurationXML implements IXMLFileType {
   /** the configuration parameter name attribute */
   static final String ATTRIBUTE_CONFIGURATION_PARAMETER_NAME = "name"; //$NON-NLS-1$
   /** the configuration parameter value attribute */
-  static final String ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE = "value"; //$NON-NLS-1$
-  /** the configuration version attribute */
-  static final String ATTRIBUTE_CONFIGURATION_VERSION = "version"; //$NON-NLS-1$
-  /** the configuration version attribute value */
-  static final String ATTRIBUTE_VALUE_CONFIGURATION_VERSION = "1.0"; //$NON-NLS-1$
+  static final String ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE = "value"; //$NON-NLS-1$  
   /** the configuration parameter element */
   static final String ELEMENT_CONFIGURATION_PARAMETER = "parameter"; //$NON-NLS-1$
   /** the configuration root element */

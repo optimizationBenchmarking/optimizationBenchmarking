@@ -13,6 +13,8 @@ import org.optimizationBenchmarking.utils.io.xml.XMLElement;
 /** the configuration xml output */
 public final class ConfigurationXMLOutput extends
     XMLOutputTool<Configuration> {
+  /** The configuration namespace prefix */
+  public static final String CONFIGURATION_NAMESPACE_PREFIX = "cfg"; //$NON-NLS-1$
 
   /** create */
   ConfigurationXMLOutput() {
@@ -30,19 +32,15 @@ public final class ConfigurationXMLOutput extends
 
   /** {@inheritDoc} */
   @Override
-  protected void xml(final IOJob job, final Configuration data,
+  protected final void xml(final IOJob job, final Configuration data,
       final XMLBase xmlBase) throws Throwable {
     try (XMLElement root = xmlBase.element()) {
-      root.namespaceSetPrefix(ConfigurationXML.NAMESPACE_URI, "cfg"); //$NON-NLS-1$
+      root.namespaceSetPrefix(ConfigurationXML.NAMESPACE_URI,
+          ConfigurationXMLOutput.CONFIGURATION_NAMESPACE_PREFIX);
       root.name(ConfigurationXML.NAMESPACE_URI,
           ConfigurationXML.ELEMENT_CONFIGURATION_ROOT);
 
       synchronized (data.m_data) {
-
-        root.attributeRaw(ConfigurationXML.NAMESPACE_URI,
-            ConfigurationXML.ATTRIBUTE_CONFIGURATION_VERSION,
-            ConfigurationXML.ATTRIBUTE_VALUE_CONFIGURATION_VERSION);
-
         for (final Entry<String, Object> e : data.m_data.entries()) {
           try (final XMLElement param = root.element()) {
             param.name(ConfigurationXML.NAMESPACE_URI,
@@ -86,7 +84,7 @@ public final class ConfigurationXMLOutput extends
 
   /** the loader */
   private static final class __ConfigurationXMLOutputLoader {
-    /** the configuration xml */
+    /** the globally shared configuration xml output writer instance */
     static final ConfigurationXMLOutput INSTANCE = new ConfigurationXMLOutput();
   }
 }

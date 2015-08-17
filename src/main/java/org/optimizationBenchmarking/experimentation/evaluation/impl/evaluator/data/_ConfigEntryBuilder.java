@@ -76,7 +76,7 @@ abstract class _ConfigEntryBuilder<T> extends BuilderFSM<T> {
         FSM.FLAG_NOTHING,
         (this._forbiddenFlagsAtConfig() | _ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED),
         _ConfigEntryBuilder.FLAG_CONFIG_SET, FSM.FLAG_NOTHING);
-    this.m_config = this.normalize(config);
+    this.m_config = config;
   }
 
   /**
@@ -93,7 +93,7 @@ abstract class _ConfigEntryBuilder<T> extends BuilderFSM<T> {
         _ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED,
         this._forbiddenFlagsAtConfig(),
         _ConfigEntryBuilder.FLAG_CONFIG_SET, FSM.FLAG_NOTHING);
-    this.m_config = this.normalize(config);
+    this.m_config = config;
   }
 
   /**

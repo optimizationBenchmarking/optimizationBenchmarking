@@ -21,8 +21,7 @@
 			<sequence>
 				<element ref="tns:parameter" minOccurs="0" maxOccurs="unbounded" />
 			</sequence>
-			<attribute name="version" type="string" fixed="1.0" />
 		</complexType>
 	</element>
-	
+
 </schema>

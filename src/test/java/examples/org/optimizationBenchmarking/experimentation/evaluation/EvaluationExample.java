@@ -7,6 +7,10 @@ import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.evaluation.impl.abstr.DocumentEvaluationOutput;
 import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.Evaluator;
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data.EvaluationModules;
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data.EvaluationModulesBuilder;
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.io.EvaluationXMLInput;
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.io.EvaluationXMLOutput;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluation;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationBuilder;
 import org.optimizationBenchmarking.utils.config.Configuration;
@@ -63,6 +67,26 @@ public abstract class EvaluationExample {
    * @return the resource name
    */
   protected abstract String getResourceName();
+
+  /** log the setup */
+  final void _logSetup() {
+    EvaluationModules modules;
+    try {
+
+      try (final EvaluationModulesBuilder builder = new EvaluationModulesBuilder()) {
+        EvaluationXMLInput.getInstance().use()
+            .addResource(this.getClass(), this.getResourceName())
+            .setDestination(builder).create().call();
+        modules = builder.getResult();
+      }
+
+      EvaluationXMLOutput.getInstance().use().setSource(modules)
+          .setStream(System.out).create().call();
+
+    } catch (final Throwable error) {
+      error.printStackTrace();
+    }
+  }
 
   /**
    * Process a given experiment source and destination
