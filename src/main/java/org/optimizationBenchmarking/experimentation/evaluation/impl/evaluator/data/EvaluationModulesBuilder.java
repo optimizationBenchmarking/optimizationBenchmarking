@@ -115,9 +115,8 @@ public final class EvaluationModulesBuilder extends
    */
   public synchronized final void addModule(final ModuleEntry entry) {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    this.fsmFlagsAssertAndUpdate(_ConfigEntryBuilder.FLAG_CONFIG_SET,
-        FSM.FLAG_NOTHING, EvaluationModulesBuilder.FLAG_MODULE_ADDED,
-        FSM.FLAG_NOTHING);
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING, FSM.FLAG_NOTHING,
+        EvaluationModulesBuilder.FLAG_MODULE_ADDED, FSM.FLAG_NOTHING);
     this.m_entries.add(entry);
   }
 
@@ -128,9 +127,8 @@ public final class EvaluationModulesBuilder extends
    */
   public synchronized final ModuleEntryBuilder addModule() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    this.fsmFlagsAssertAndUpdate(_ConfigEntryBuilder.FLAG_CONFIG_SET,
-        FSM.FLAG_NOTHING, EvaluationModulesBuilder.FLAG_MODULE_ADDED,
-        FSM.FLAG_NOTHING);
+    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING, FSM.FLAG_NOTHING,
+        EvaluationModulesBuilder.FLAG_MODULE_ADDED, FSM.FLAG_NOTHING);
     return new ModuleEntryBuilder(this);
   }
 
@@ -152,6 +150,27 @@ public final class EvaluationModulesBuilder extends
     super.afterChildClosed(child);
   }
 
+  /**
+   * Get the configuration
+   *
+   * @return the configuration
+   */
+  final Configuration _getConfiguration() {
+    Configuration config;
+
+    config = this.m_config;
+    if (config != null) {
+      return config;
+    }
+
+    config = this.m_root;
+    if (config != null) {
+      return config;
+    }
+
+    return Configuration.getRoot();
+  }
+
   /** {@inheritDoc} */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   @Override
@@ -160,9 +179,7 @@ public final class EvaluationModulesBuilder extends
     LinkedHashSet<ModuleEntry> list;
     ArrayListView<ModuleEntry> view;
 
-    this.fsmFlagsAssertTrue(_ConfigEntryBuilder.FLAG_CONFIG_SET);
-
-    config = this.m_config;
+    config = this._getConfiguration();
     this.m_config = null;
     list = this.m_entries;
     this.m_entries = null;

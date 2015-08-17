@@ -293,47 +293,6 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
             "Finished loading module data from XML."); //$NON-NLS-1$
       }
     }
-    //
-    // final IInputJobBuilder<_EvaluationSetup> builder;
-    // final _EvaluationXMLInput input;
-    // final IIOJob job;
-    //
-    // input = _EvaluationXMLInput.getInstance();
-    // if (input.areSourcesDefined(config)) {
-    // if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
-    // logger.config(//
-    //            "Configuring evaluation process and module hierarchy from XML.");//$NON-NLS-1$
-    // }
-    //
-    // builder = input.use();
-    //
-    // if ((logger != null) && (logger.isLoggable(Level.FINE))) {
-    // logger.fine(//
-    //            "Job builder for XML-based evaluation configuration created and will now be configured."); //$NON-NLS-1$
-    // }
-    //
-    // builder.configure(config);
-    // builder.setLogger(logger);
-    // builder.setDestination(this);
-    //
-    // if ((logger != null) && (logger.isLoggable(Level.FINE))) {
-    // logger.fine(//
-    //            "Job builder for XML-based evaluation configuration has been configured."); //$NON-NLS-1$
-    // }
-    //
-    // job = builder.create();
-    // if (job == null) {
-    // throw new IllegalStateException(//
-    //            "XML-based configuration loader created null job.");//$NON-NLS-1$
-    // }
-    // try {
-    // job.call();
-    // } catch (final IOException ioe) {
-    // throw new IllegalArgumentException(//
-    //            "I/O error during evaluation process configuration.", //$NON-NLS-1$
-    // ioe);
-    // }
-    // }
   }
 
   /**

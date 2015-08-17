@@ -120,7 +120,7 @@ public final class ModuleEntryBuilder extends
     if (config == null) {
       owner = this.getOwner();
       if (owner instanceof EvaluationModulesBuilder) {
-        config = ((EvaluationModulesBuilder) owner).m_config;
+        config = ((EvaluationModulesBuilder) owner)._getConfiguration();
       }
     }
 
