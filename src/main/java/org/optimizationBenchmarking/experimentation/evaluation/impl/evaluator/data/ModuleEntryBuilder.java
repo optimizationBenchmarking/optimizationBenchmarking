@@ -16,7 +16,7 @@ public final class ModuleEntryBuilder extends
     _ConfigEntryBuilder<ModuleEntry> {
 
   /** the flag for the module set */
-  static final int FLAG_MODULE_SET = (_ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED << 1);
+  private static final int FLAG_MODULE_SET = (_ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED << 1);
 
   /** the class */
   private IEvaluationModule m_module;
@@ -94,7 +94,8 @@ public final class ModuleEntryBuilder extends
   protected synchronized final void afterChildClosed(
       final HierarchicalFSM child) {
     if (child instanceof ConfigurationBuilder) {
-      this.setConfiguration(((ConfigurationBuilder) child).getResult());
+      this._setConfigurationFromBuilder(((ConfigurationBuilder) child)
+          .getResult());
     } else {
       this.throwChildNotAllowed(child);
     }
@@ -102,18 +103,32 @@ public final class ModuleEntryBuilder extends
   }
 
   /** {@inheritDoc} */
+  @SuppressWarnings("resource")
   @Override
   protected final ModuleEntry compile() {
-    final Configuration config;
     final IEvaluationModule module;
+    final HierarchicalFSM owner;
+    Configuration config;
 
-    this.fsmFlagsAssertTrue(ModuleEntryBuilder.FLAG_MODULE_SET
-        | _ConfigEntryBuilder.FLAG_CONFIG_SET);
+    this.fsmFlagsAssertTrue(ModuleEntryBuilder.FLAG_MODULE_SET);
 
     config = this.m_config;
     this.m_config = null;
     module = this.m_module;
     this.m_module = null;
+
+    if (config == null) {
+      owner = this.getOwner();
+      if (owner instanceof EvaluationModulesBuilder) {
+        config = ((EvaluationModulesBuilder) owner).m_config;
+      }
+    }
+
+    if (config == null) {
+      this.fsmFlagsAssertTrue(_ConfigEntryBuilder.FLAG_CONFIG_SET);
+      throw new IllegalStateException(
+          "Configuration has been set but is null?"); //$NON-NLS-1$
+    }
 
     return new ModuleEntry(config, module);
   }

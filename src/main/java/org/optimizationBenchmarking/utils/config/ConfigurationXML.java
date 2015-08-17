@@ -28,7 +28,7 @@ public enum ConfigurationXML implements IXMLFileType {
   /** the configuration parameter element */
   static final String ELEMENT_CONFIGURATION_PARAMETER = "parameter"; //$NON-NLS-1$
   /** the configuration root element */
-  static final String ELEMENT_CONFIGURATION_ROOT = "configuration"; //$NON-NLS-1$
+  public static final String ELEMENT_CONFIGURATION_ROOT = "configuration"; //$NON-NLS-1$
   /** the namespace */
   static final URI NAMESPACE_URI = //
   URI.create(//

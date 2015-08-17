@@ -50,81 +50,81 @@ public class DefinitionXMLHandler extends DelegatingHandler {
 
         case DefinitionXML.ELEMENT_BOOLEAN: {
           this.m_dest.booleanParameter(name, description,//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_DEF));
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
         case DefinitionXML.ELEMENT_STRING: {
           this.m_dest.stringParameter(name, description,//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_DEF));
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
         case DefinitionXML.ELEMENT_BYTE: {
           this.m_dest.byteParameter(name, description,//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MIN),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MAX),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_DEF));
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MIN),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MAX),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
         case DefinitionXML.ELEMENT_SHORT: {
           this.m_dest.shortParameter(name, description,//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MIN),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MAX),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_DEF));
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MIN),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MAX),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
         case DefinitionXML.ELEMENT_INT: {
           this.m_dest.intParameter(name, description,//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MIN),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MAX),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_DEF));
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MIN),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MAX),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
         case DefinitionXML.ELEMENT_LONG: {
           this.m_dest.longParameter(name, description,//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MIN),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MAX),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_DEF));
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MIN),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MAX),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
         case DefinitionXML.ELEMENT_FLOAT: {
           this.m_dest.floatParameter(name, description,//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MIN),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MAX),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_DEF));
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MIN),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MAX),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
         case DefinitionXML.ELEMENT_DOUBLE: {
           this.m_dest.doubleParameter(name, description,//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MIN),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_MAX),//
-              attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_DEF));
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MIN),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_MAX),//
+              DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_DEF));
           break;
         }
 
@@ -144,10 +144,11 @@ public class DefinitionXMLHandler extends DelegatingHandler {
           xparser = null;
           clazz = null;
           try {
-            clazz = ReflectionUtils.findClass(attributes.getValue(//
-                DefinitionXML.ATTRIBUTE_CLASS), Object.class);
-            parser = attributes.getValue(//
-                DefinitionXML.ATTRIBUTE_PARSER);
+            clazz = ReflectionUtils.findClass(DelegatingHandler
+                .getAttribute(attributes, DefinitionXML.NAMESPACE,
+                    DefinitionXML.ATTRIBUTE_CLASS), Object.class);
+            parser = DelegatingHandler.getAttribute(attributes,
+                DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_PARSER);
             if (parser != null) {
               xparser = ReflectionUtils.getInstanceByName(Parser.class,
                   parser);
@@ -170,18 +171,20 @@ public class DefinitionXMLHandler extends DelegatingHandler {
           }
 
           this.m_ipb = this.m_dest.instanceParameter(name, description,
-              xparser, attributes.getValue(//
-                  DefinitionXML.ATTRIBUTE_DEF),
-              LooseBooleanParser.INSTANCE.parseBoolean(attributes
-                  .getValue(DefinitionXML.ATTRIBUTE_ALLOWS_MORE)));
+              xparser, DelegatingHandler.getAttribute(attributes,
+                  DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_DEF),
+              LooseBooleanParser.INSTANCE.parseBoolean(DelegatingHandler
+                  .getAttribute(attributes, DefinitionXML.NAMESPACE,
+                      DefinitionXML.ATTRIBUTE_ALLOWS_MORE)));
 
           break;
         }
 
         case DefinitionXML.ELEMENT_DEFINITION: {
           this.m_dest.setAllowsMore(//
-              LooseBooleanParser.INSTANCE.parseBoolean(attributes//
-                  .getValue(DefinitionXML.ATTRIBUTE_ALLOWS_MORE)));
+              LooseBooleanParser.INSTANCE.parseBoolean(DelegatingHandler
+                  .getAttribute(attributes, DefinitionXML.NAMESPACE,
+                      DefinitionXML.ATTRIBUTE_ALLOWS_MORE)));
           break; // ignore
         }
 

@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator;
 
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.io.EvaluationXML;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluator;
 import org.optimizationBenchmarking.utils.document.impl.abstr.DocumentConfigurationBuilder;

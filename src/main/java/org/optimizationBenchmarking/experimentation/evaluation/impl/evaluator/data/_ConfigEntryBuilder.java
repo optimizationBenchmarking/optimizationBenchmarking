@@ -54,6 +54,15 @@ abstract class _ConfigEntryBuilder<T> extends BuilderFSM<T> {
   }
 
   /**
+   * the forbidden flags when creating a configuration
+   *
+   * @return the flags
+   */
+  int _forbiddenFlagsAtConfig() {
+    return _ConfigEntryBuilder.FLAG_CONFIG_SET;
+  }
+
+  /**
    * Set the configuration
    *
    * @param config
@@ -63,8 +72,26 @@ abstract class _ConfigEntryBuilder<T> extends BuilderFSM<T> {
       final Configuration config) {
     _ConfigEntry._validateConfig(config);
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
-        _ConfigEntryBuilder.FLAG_CONFIG_SET,
+    this.fsmFlagsAssertAndUpdate(
+        FSM.FLAG_NOTHING,
+        (this._forbiddenFlagsAtConfig() | _ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED),
+        _ConfigEntryBuilder.FLAG_CONFIG_SET, FSM.FLAG_NOTHING);
+    this.m_config = this.normalize(config);
+  }
+
+  /**
+   * Set the configuration
+   *
+   * @param config
+   *          the configuration
+   */
+  synchronized final void _setConfigurationFromBuilder(
+      final Configuration config) {
+    _ConfigEntry._validateConfig(config);
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
+    this.fsmFlagsAssertAndUpdate(
+        _ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED,
+        this._forbiddenFlagsAtConfig(),
         _ConfigEntryBuilder.FLAG_CONFIG_SET, FSM.FLAG_NOTHING);
     this.m_config = this.normalize(config);
   }
@@ -87,7 +114,7 @@ abstract class _ConfigEntryBuilder<T> extends BuilderFSM<T> {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
     this.fsmFlagsAssertAndUpdate(
         FSM.FLAG_NOTHING,
-        (_ConfigEntryBuilder.FLAG_CONFIG_SET | _ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED),
+        (this._forbiddenFlagsAtConfig() | _ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED),
         _ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED, FSM.FLAG_NOTHING);
     return this._createConfigurationBuilder();
   }

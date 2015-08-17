@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator;
+package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.io;
 
 import org.optimizationBenchmarking.utils.config.ConfigurationXML;
 import org.optimizationBenchmarking.utils.io.xml.SimpleLSResourceResolver;

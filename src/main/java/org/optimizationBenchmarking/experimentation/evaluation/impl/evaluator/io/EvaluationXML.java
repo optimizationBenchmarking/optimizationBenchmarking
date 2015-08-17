@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator;
+package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.io;
 
 import java.io.IOException;
 import java.net.URI;
@@ -30,10 +30,10 @@ public enum EvaluationXML implements IXMLFileType {
   static final String ATTRIBUTE_CLASS = "class";//$NON-NLS-1$
 
   /** the evaluation source prefix */
-  static final String PARAM_EVALUATION_PREFIX = "evaluation";//$NON-NLS-1$
+  public static final String PARAM_EVALUATION_PREFIX = "evaluation";//$NON-NLS-1$
 
   /** the evaluation source suffix */
-  static final String PARAM_EVALUATION_SUFFIX = "Setup"; //$NON-NLS-1$
+  public static final String PARAM_EVALUATION_SUFFIX = "Setup"; //$NON-NLS-1$
 
   /** {@inheritDoc} */
   @Override

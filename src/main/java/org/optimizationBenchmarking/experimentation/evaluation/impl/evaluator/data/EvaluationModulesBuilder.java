@@ -1,20 +1,35 @@
 package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.config.Configuration;
 import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
+import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
+import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /** The builder for evaluation setups. */
 public final class EvaluationModulesBuilder extends
     _ConfigEntryBuilder<EvaluationModules> {
+  /** the flag for the root configuration set */
+  private static final int FLAG_ROOT_CONFIG_SET = (_ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED << 1);
+
+  /** a module has been added */
+  private static final int FLAG_MODULE_ADDED = (EvaluationModulesBuilder.FLAG_ROOT_CONFIG_SET << 1);
+
+  /** Set the root configuration */
+  private Configuration m_root;
 
   /** the entries */
-  private ArrayList<ModuleEntry> m_entries;
+  private LinkedHashSet<ModuleEntry> m_entries;
+
+  /** create the modules builder */
+  public EvaluationModulesBuilder() {
+    this(null);
+  }
 
   /**
    * create the modules builder
@@ -24,8 +39,72 @@ public final class EvaluationModulesBuilder extends
    */
   public EvaluationModulesBuilder(final HierarchicalFSM owner) {
     super(owner);
-    this.m_entries = new ArrayList<>();
+    this.m_entries = new LinkedHashSet<>();
     this.open();
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  protected final void fsmFlagsAppendName(final int flagValue,
+      final int flagIndex, final MemoryTextOutput append) {
+    switch (flagValue) {
+      case FLAG_ROOT_CONFIG_SET: {
+        append.append("rootConfigSet");//$NON-NLS-1$
+        return;
+      }
+      case FLAG_MODULE_ADDED: {
+        append.append("moduleAdded");//$NON-NLS-1$
+        return;
+      }
+      default: {
+        super.fsmFlagsAppendName(flagValue, flagIndex, append);
+        return;
+      }
+    }
+  }
+
+  /**
+   * Set the root configuration to be used if the configuration of this
+   * builder is created via the {@link #setConfiguration() builder-based
+   * approach}.
+   *
+   * @param root
+   *          the root configuration
+   * @see #setConfiguration(Configuration)
+   */
+  public synchronized final void setRootConfiguration(
+      final Configuration root) {
+    _ConfigEntry._validateConfig(root);
+    this.fsmFlagsAssertAndUpdate(
+        FSM.FLAG_NOTHING,
+        (EvaluationModulesBuilder.FLAG_ROOT_CONFIG_SET
+            | _ConfigEntryBuilder.FLAG_CONFIG_SET
+            | _ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED | EvaluationModulesBuilder.FLAG_MODULE_ADDED),
+        EvaluationModulesBuilder.FLAG_ROOT_CONFIG_SET, FSM.FLAG_NOTHING);
+    this.m_root = root;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final int _forbiddenFlagsAtConfig() {
+    return (_ConfigEntryBuilder.FLAG_CONFIG_SET | EvaluationModulesBuilder.FLAG_MODULE_ADDED);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  final ConfigurationBuilder _createConfigurationBuilder() {
+    final ConfigurationBuilder cb;
+    final Configuration root;
+
+    cb = super._createConfigurationBuilder();
+
+    root = this.m_root;
+    this.m_root = null;
+    if (root != null) {
+      cb.setOwner(root);
+    }
+
+    return cb;
   }
 
   /**
@@ -36,7 +115,9 @@ public final class EvaluationModulesBuilder extends
    */
   public synchronized final void addModule(final ModuleEntry entry) {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    this.fsmFlagsAssertFalse(_ConfigEntryBuilder.FLAG_CONFIG_SET);
+    this.fsmFlagsAssertAndUpdate(_ConfigEntryBuilder.FLAG_CONFIG_SET,
+        FSM.FLAG_NOTHING, EvaluationModulesBuilder.FLAG_MODULE_ADDED,
+        FSM.FLAG_NOTHING);
     this.m_entries.add(entry);
   }
 
@@ -47,7 +128,9 @@ public final class EvaluationModulesBuilder extends
    */
   public synchronized final ModuleEntryBuilder addModule() {
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-    this.fsmFlagsAssertFalse(_ConfigEntryBuilder.FLAG_CONFIG_SET);
+    this.fsmFlagsAssertAndUpdate(_ConfigEntryBuilder.FLAG_CONFIG_SET,
+        FSM.FLAG_NOTHING, EvaluationModulesBuilder.FLAG_MODULE_ADDED,
+        FSM.FLAG_NOTHING);
     return new ModuleEntryBuilder(this);
   }
 
@@ -55,8 +138,10 @@ public final class EvaluationModulesBuilder extends
   @Override
   protected synchronized final void afterChildClosed(
       final HierarchicalFSM child) {
+
     if (child instanceof ConfigurationBuilder) {
-      this.setConfiguration(((ConfigurationBuilder) child).getResult());
+      this._setConfigurationFromBuilder(((ConfigurationBuilder) child)
+          .getResult());
     } else {
       if (child instanceof ModuleEntryBuilder) {
         this.addModule(((ModuleEntryBuilder) child).getResult());
@@ -72,7 +157,7 @@ public final class EvaluationModulesBuilder extends
   @Override
   protected final EvaluationModules compile() {
     final Configuration config;
-    ArrayList<ModuleEntry> list;
+    LinkedHashSet<ModuleEntry> list;
     ArrayListView<ModuleEntry> view;
 
     this.fsmFlagsAssertTrue(_ConfigEntryBuilder.FLAG_CONFIG_SET);

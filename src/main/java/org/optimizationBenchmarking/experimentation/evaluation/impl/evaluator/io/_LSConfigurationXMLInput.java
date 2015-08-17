@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator;
+package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.io;
 
 import java.io.InputStream;
 

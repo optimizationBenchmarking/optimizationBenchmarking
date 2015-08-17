@@ -18,6 +18,10 @@ import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
 import org.optimizationBenchmarking.experimentation.evaluation.impl.abstr.DocumentDriverOutput;
 import org.optimizationBenchmarking.experimentation.evaluation.impl.abstr.StructuredIOInput;
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data.EvaluationModules;
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data.EvaluationModulesBuilder;
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data.ModuleEntry;
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.io.EvaluationXMLInput;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluation;
 import org.optimizationBenchmarking.experimentation.io.impl.ExperimentSetInputParser;
 import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput;
@@ -226,46 +230,110 @@ final class _Evaluation extends _EvaluationSetup implements IEvaluation {
    */
   private final void __loadModules(final Configuration config,
       final Logger logger) {
-    final IInputJobBuilder<_EvaluationSetup> builder;
-    final _EvaluationXMLInput input;
+    final IInputJobBuilder<EvaluationModulesBuilder> jobBuilder;
+    final EvaluationXMLInput input;
     final IIOJob job;
+    final EvaluationModules modules;
 
-    input = _EvaluationXMLInput.getInstance();
+    input = EvaluationXMLInput.getInstance();
     if (input.areSourcesDefined(config)) {
       if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
         logger.config(//
             "Configuring evaluation process and module hierarchy from XML.");//$NON-NLS-1$
       }
 
-      builder = input.use();
+      try (final EvaluationModulesBuilder builder = new EvaluationModulesBuilder()) {
 
-      if ((logger != null) && (logger.isLoggable(Level.FINE))) {
-        logger.fine(//
-            "Job builder for XML-based evaluation configuration created and will now be configured."); //$NON-NLS-1$
+        if (config != null) {
+          builder.setRootConfiguration(config);
+        }
+
+        jobBuilder = input.use();
+        jobBuilder.configure(config);
+        jobBuilder.setLogger(logger);
+        jobBuilder.setDestination(builder);
+
+        if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+          logger.fine(//
+              "Job builder for XML-based evaluation configuration has been configured."); //$NON-NLS-1$
+        }
+
+        job = jobBuilder.create();
+        if (job == null) {
+          throw new IllegalStateException(//
+              "XML-based configuration loader created null job.");//$NON-NLS-1$
+        }
+        try {
+          job.call();
+        } catch (final IOException ioe) {
+          throw new IllegalArgumentException(//
+              "I/O error during evaluation process configuration.", //$NON-NLS-1$
+              ioe);
+        }
+        if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+          logger.fine(//
+              "XML-based evaluation configuration job has completed successfully, now building data structures."); //$NON-NLS-1$
+        }
+
+        modules = builder.getResult();
       }
 
-      builder.configure(config);
-      builder.setLogger(logger);
-      builder.setDestination(this);
-
-      if ((logger != null) && (logger.isLoggable(Level.FINE))) {
-        logger.fine(//
-            "Job builder for XML-based evaluation configuration has been configured."); //$NON-NLS-1$
-      }
-
-      job = builder.create();
-      if (job == null) {
+      if (modules == null) {
         throw new IllegalStateException(//
-            "XML-based configuration loader created null job.");//$NON-NLS-1$
+            "The modules data structure loaded from XML is null, although the loading process completed without error?"); //$NON-NLS-1$
       }
-      try {
-        job.call();
-      } catch (final IOException ioe) {
-        throw new IllegalArgumentException(//
-            "I/O error during evaluation process configuration.", //$NON-NLS-1$
-            ioe);
+
+      this._setBaseConfiguration(modules.getConfiguration());
+      for (final ModuleEntry entry : modules.getEntries()) {
+        this._addModule(entry.getModule(), entry.getConfiguration());
+      }
+
+      if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+        logger.fine(//
+            "Finished loading module data from XML."); //$NON-NLS-1$
       }
     }
+    //
+    // final IInputJobBuilder<_EvaluationSetup> builder;
+    // final _EvaluationXMLInput input;
+    // final IIOJob job;
+    //
+    // input = _EvaluationXMLInput.getInstance();
+    // if (input.areSourcesDefined(config)) {
+    // if ((logger != null) && (logger.isLoggable(Level.CONFIG))) {
+    // logger.config(//
+    //            "Configuring evaluation process and module hierarchy from XML.");//$NON-NLS-1$
+    // }
+    //
+    // builder = input.use();
+    //
+    // if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+    // logger.fine(//
+    //            "Job builder for XML-based evaluation configuration created and will now be configured."); //$NON-NLS-1$
+    // }
+    //
+    // builder.configure(config);
+    // builder.setLogger(logger);
+    // builder.setDestination(this);
+    //
+    // if ((logger != null) && (logger.isLoggable(Level.FINE))) {
+    // logger.fine(//
+    //            "Job builder for XML-based evaluation configuration has been configured."); //$NON-NLS-1$
+    // }
+    //
+    // job = builder.create();
+    // if (job == null) {
+    // throw new IllegalStateException(//
+    //            "XML-based configuration loader created null job.");//$NON-NLS-1$
+    // }
+    // try {
+    // job.call();
+    // } catch (final IOException ioe) {
+    // throw new IllegalArgumentException(//
+    //            "I/O error during evaluation process configuration.", //$NON-NLS-1$
+    // ioe);
+    // }
+    // }
   }
 
   /**

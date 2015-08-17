@@ -1,10 +1,11 @@
-package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator;
+package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.io;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data.EvaluationModulesBuilder;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
@@ -12,10 +13,11 @@ import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 import org.xml.sax.helpers.DefaultHandler;
 
 /** the evaluation xml input */
-final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
+public final class EvaluationXMLInput extends
+    XMLInputTool<EvaluationModulesBuilder> {
 
   /** create */
-  _EvaluationXMLInput() {
+  EvaluationXMLInput() {
     super();
   }
 
@@ -32,11 +34,11 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
   }
 
   /**
-   * get the instance of the {@link _EvaluationXMLInput}
+   * get the instance of the {@link EvaluationXMLInput}
    *
-   * @return the instance of the {@link _EvaluationXMLInput}
+   * @return the instance of the {@link EvaluationXMLInput}
    */
-  public static final _EvaluationXMLInput getInstance() {
+  public static final EvaluationXMLInput getInstance() {
     return __EvaluationXMLInputLoader.INSTANCE;
   }
 
@@ -54,8 +56,8 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
       sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
       sf.setResourceResolver(new _LSResourceResolver(sf
           .getResourceResolver()));
-      schema = sf
-          .newSchema(EvaluationXML.EVALUATION_XML.getSchemaSource());
+      schema = sf.newSchema(//
+          EvaluationXML.EVALUATION_XML.getSchemaSource());
     } catch (final Throwable a) {
       rec = ErrorUtils.aggregateError(a, rec);
     } finally {
@@ -85,8 +87,8 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
   /** {@inheritDoc} */
   @Override
   protected final DefaultHandler wrapDestination(
-      final _EvaluationSetup dataDestination, final IOJob job) {
-    return new _EvaluationXMLHandler(null, dataDestination);
+      final EvaluationModulesBuilder dataDestination, final IOJob job) {
+    return new EvaluationXMLHandler(null, dataDestination);
   }
 
   /** {@inheritDoc} */
@@ -98,6 +100,6 @@ final class _EvaluationXMLInput extends XMLInputTool<_EvaluationSetup> {
   /** the loader */
   private static final class __EvaluationXMLInputLoader {
     /** the evaluation xml */
-    static final _EvaluationXMLInput INSTANCE = new _EvaluationXMLInput();
+    static final EvaluationXMLInput INSTANCE = new EvaluationXMLInput();
   }
 }
