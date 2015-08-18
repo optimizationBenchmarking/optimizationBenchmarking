@@ -2,7 +2,6 @@ package org.optimizationBenchmarking.utils.config;
 
 import org.optimizationBenchmarking.utils.hash.HashObject;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
-import org.optimizationBenchmarking.utils.parsers.Parser;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** A basic definition */
@@ -22,23 +21,10 @@ public class DefinitionElement extends HashObject {
    * @param description
    *          the description
    */
-  DefinitionElement(final String name, final String description) {
+  protected DefinitionElement(final String name, final String description) {
     super();
-
     this.m_name = DefinitionElement._makeName(name);
     this.m_description = DefinitionElement._makeDescription(description);
-  }
-
-  /**
-   * check the parser
-   *
-   * @param parser
-   *          the parser
-   */
-  static final void _checkParser(final Parser<?> parser) {
-    if (parser == null) {
-      throw new IllegalArgumentException("Parser must not be null."); //$NON-NLS-1$
-    }
   }
 
   /**

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.optimizationBenchmarking.org/formats/evaluationModules/evaluationModules.1.0.xsd"
+	targetNamespace="http://www.optimizationBenchmarking.org/formats/evaluationModules/evaluationModules.1.0.xsd"
+	elementFormDefault="qualified">
+
+	<annotation>
+		<documentation>The XML Schema for specifying lists of modules,
+			version
+			1.0.
+		</documentation>
+	</annotation>
+
+	<element name="module">
+		<complexType>
+			<attribute name="name" type="token" use="required" />
+			<attribute name="description" type="string" use="required" />
+			<attribute name="class" type="token" use="required" />
+		</complexType>
+	</element>
+
+	<element name="modules">
+		<complexType>
+			<sequence>
+				<element ref="tns:module" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

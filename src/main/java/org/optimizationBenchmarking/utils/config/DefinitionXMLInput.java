@@ -14,6 +14,7 @@ import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
+import org.optimizationBenchmarking.utils.io.structured.spec.IXMLInputJobBuilder;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.optimizationBenchmarking.utils.text.TextUtils;
 
@@ -89,6 +90,7 @@ public final class DefinitionXMLInput extends
   public final Definition forClass(final Class<?> clazz,
       final Logger logger) {
     final String name, msg;
+    final IXMLInputJobBuilder<DefinitionBuilder> job;
     Definition def;
 
     this.checkCanUse();
@@ -101,8 +103,12 @@ public final class DefinitionXMLInput extends
     name = (clazz.getSimpleName() + "-params.xml"); //$NON-NLS-1$
     try (final DefinitionBuilder builder = new DefinitionBuilder()) {
       try {
-        this.use().setLogger(logger).setDestination(builder)
-            .addResource(clazz, name).create().call();
+        job = this.use();
+        if (logger != null) {
+          job.setLogger(logger);
+        }
+        job.setDestination(builder).addResource(clazz, name).create()
+            .call();
       } catch (final IOException ioe) {
         msg = "Could not load configuration resource '" + //$NON-NLS-1$
             name + "' for class " + TextUtils.className(clazz);//$NON-NLS-1$
