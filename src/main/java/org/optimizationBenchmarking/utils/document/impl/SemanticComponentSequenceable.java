@@ -1,5 +1,8 @@
 package org.optimizationBenchmarking.utils.document.impl;
 
+import java.util.Collection;
+
+import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.document.spec.ISemanticComponent;
 import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.ISequenceable;
@@ -73,6 +76,31 @@ public class SemanticComponentSequenceable implements ISequenceable {
     } else {
       this.m_component.printLongName(textOut, textCase);
     }
+  }
 
+  /**
+   * Wrap a collection of elements to semantic component sequenceables.
+   *
+   * @param components
+   *          the components
+   * @param printShortName
+   *          should we print the short name?
+   * @param printLongName
+   *          should we print the long name?
+   * @return the wrapped collection
+   */
+  public static final ArrayListView<ISequenceable> wrap(
+      final Collection<? extends ISemanticComponent> components,
+      final boolean printShortName, final boolean printLongName) {
+    final ISequenceable[] wrapped;
+    int index;
+
+    wrapped = new ISequenceable[components.size()];
+    index = 0;
+    for (final ISemanticComponent isc : components) {
+      wrapped[index++] = new SemanticComponentSequenceable(isc,
+          printShortName, printLongName);
+    }
+    return new ArrayListView<>(wrapped);
   }
 }

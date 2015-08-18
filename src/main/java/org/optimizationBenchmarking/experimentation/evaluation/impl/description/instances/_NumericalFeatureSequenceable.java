@@ -9,6 +9,7 @@ import org.optimizationBenchmarking.experimentation.data.spec.IFeature;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstance;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.document.impl.SemanticComponentSequenceable;
 import org.optimizationBenchmarking.utils.document.spec.IPlainText;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.text.ESequenceMode;
@@ -137,13 +138,15 @@ final class _NumericalFeatureSequenceable implements ISequenceable {
     textOut.append(' ');
     if (textOut instanceof IPlainText) {
       try (final IPlainText inside = ((IPlainText) textOut).inBraces()) {
-        ESequenceMode.AND.appendNestedSequence(textCase, instances, true,
-            depth, inside);
+        ESequenceMode.AND.appendNestedSequence(textCase, //
+            SemanticComponentSequenceable.wrap(instances, true, false),//
+            true, depth, inside);
       }
     } else {
       textOut.append('[');
-      ESequenceMode.AND.appendNestedSequence(textCase, instances, true,
-          depth, textOut);
+      ESequenceMode.AND.appendNestedSequence(textCase, //
+          SemanticComponentSequenceable.wrap(instances, true, false),//
+          true, depth, textOut);
       textOut.append(']');
     }
     return textCase.nextCase();

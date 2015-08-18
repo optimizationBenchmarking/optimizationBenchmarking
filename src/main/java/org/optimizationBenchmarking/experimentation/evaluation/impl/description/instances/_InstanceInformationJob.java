@@ -565,7 +565,7 @@ final class _InstanceInformationJob extends DescriptionJob {
         }
 
         if (es == data) {
-          body.append("There benchmark instances are characterized by ");//$NON-NLS-1$
+          body.append("The benchmark instances are characterized by ");//$NON-NLS-1$
           InTextNumberAppender.INSTANCE.appendTo(count,
               ETextCase.IN_SENTENCE, body);
           body.append((count > 1) ? " features: " : //$NON-NLS-1$

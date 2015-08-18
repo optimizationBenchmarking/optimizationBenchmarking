@@ -67,7 +67,7 @@ final class _OrdinalFeatureSequenceable implements ISequenceable {
           next = next.appendWord("value", use); //$NON-NLS-1$
           use.append(':');
           use.append(' ');
-          use.append(values.get(0));
+          use.append(values.get(0).getValue());
           break printValues;
         }
         next = InTextNumberAppender.INSTANCE.appendTo(size, next, use);
