@@ -496,8 +496,14 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
                       " and " + compare + //$NON-NLS-1$
                       " should be the same, but they are not. We looked for value "//$NON-NLS-1$
                       + o + " of dimension " + dim.getIndex() + //$NON-NLS-1$
-                      " between the values " + //$NON-NLS-1$
-                      p + " and " + q); //$NON-NLS-1$
+                      " (" + dim + //$NON-NLS-1$
+                      ") between the values " + //$NON-NLS-1$
+                      p + " and " + q + //$NON-NLS-1$
+                      " of points " + first + //$NON-NLS-1$
+                      " and " + last + //$NON-NLS-1$
+                      " at indexes " + i + //$NON-NLS-1$
+                      " and " + (i + 1) + //$NON-NLS-1$
+                      " of " + dps.size());//$NON-NLS-1$
                 }
               }
             }
