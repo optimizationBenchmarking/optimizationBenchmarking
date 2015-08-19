@@ -31,6 +31,7 @@ import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingAdd;
+import org.optimizationBenchmarking.utils.reflection.EPrimitiveType;
 
 import test.junit.InstanceTest;
 import test.junit.org.optimizationBenchmarking.utils.collections.lists.ArrayListViewTestBase;
@@ -389,6 +390,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
     IDimensionSet dims;
     IDataPoint first, last, found, compare;
     double o, p, q;
+    float u, v, w;
     ArrayListView<? extends IDataPoint> dps;
     int i, index, comp;
     long a, b, c, d;
@@ -446,64 +448,127 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
                 }
               } else {
 
-                p = first.getDouble(index);
-                q = last.getDouble(index);
-                comp = EComparison.compareDoubles(p, q);
-                if (!(dim.getDirection().isIncreasing())) {
-                  comp = (-comp);
-                }
-                if ((comp >= 0) || (p >= Double.MAX_VALUE)
-                    || (p <= (-Double.MAX_VALUE)) || (p != p)
-                    || (q >= Double.MAX_VALUE)
-                    || (q <= (-Double.MAX_VALUE)) || (q != q)) {
-                  continue;
-                }
-                o = (p + q);
-                if ((o >= Double.MAX_VALUE) || (o <= (-Double.MAX_VALUE))
-                    || (o != o)) {
-                  continue;
-                }
-                o *= 0.5d;
-                if (o != o) {
-                  continue;
-                }
+                if (dim.getDataType() == EPrimitiveType.DOUBLE) {
 
-                comp = EComparison.compareDoubles(p, o);
-                if (!(dim.getDirection().isIncreasing())) {
-                  comp = (-comp);
-                }
-                if (comp >= 0) {
-                  continue;
-                }
+                  p = first.getDouble(index);
+                  q = last.getDouble(index);
+                  comp = EComparison.compareDoubles(p, q);
+                  if (!(dim.getDirection().isIncreasing())) {
+                    comp = (-comp);
+                  }
+                  if ((comp >= 0) || (p >= Double.MAX_VALUE)
+                      || (p <= (-Double.MAX_VALUE)) || (p != p)
+                      || (q >= Double.MAX_VALUE)
+                      || (q <= (-Double.MAX_VALUE)) || (q != q)) {
+                    continue;
+                  }
+                  o = (p + q);
+                  if ((o >= Double.MAX_VALUE)
+                      || (o <= (-Double.MAX_VALUE)) || (o != o)) {
+                    continue;
+                  }
+                  o *= 0.5d;
+                  if (o != o) {
+                    continue;
+                  }
 
-                comp = EComparison.compareDoubles(o, q);
-                if (!(dim.getDirection().isIncreasing())) {
-                  comp = (-comp);
-                }
-                if (comp >= 0) {
-                  continue;
-                }
+                  comp = EComparison.compareDoubles(p, o);
+                  if (!(dim.getDirection().isIncreasing())) {
+                    comp = (-comp);
+                  }
+                  if (comp >= 0) {
+                    continue;
+                  }
 
-                found = run.find(index, o);
-                if (dim.getDimensionType().isSolutionQualityMeasure()) {
-                  compare = last;
+                  comp = EComparison.compareDoubles(o, q);
+                  if (!(dim.getDirection().isIncreasing())) {
+                    comp = (-comp);
+                  }
+                  if (comp >= 0) {
+                    continue;
+                  }
+
+                  found = run.find(index, o);
+                  if (dim.getDimensionType().isSolutionQualityMeasure()) {
+                    compare = last;
+                  } else {
+                    compare = first;
+                  }
+
+                  if (found != compare) {
+                    throw new AssertionError("The log points " + found + //$NON-NLS-1$
+                        " and " + compare + //$NON-NLS-1$
+                        " should be the same, but they are not. We looked for value "//$NON-NLS-1$
+                        + o + " of dimension " + dim.getIndex() + //$NON-NLS-1$
+                        " (" + dim + //$NON-NLS-1$
+                        ") between the values " + //$NON-NLS-1$
+                        p + " and " + q + //$NON-NLS-1$
+                        " of points " + first + //$NON-NLS-1$
+                        " and " + last + //$NON-NLS-1$
+                        " at indexes " + i + //$NON-NLS-1$
+                        " and " + (i + 1) + //$NON-NLS-1$
+                        " of " + dps.size());//$NON-NLS-1$
+                  }
                 } else {
-                  compare = first;
-                }
+                  u = first.getFloat(index);
+                  v = last.getFloat(index);
+                  comp = EComparison.compareFloats(u, v);
+                  if (!(dim.getDirection().isIncreasing())) {
+                    comp = (-comp);
+                  }
+                  if ((comp >= 0) || (u >= Float.MAX_VALUE)
+                      || (u <= (-Float.MAX_VALUE)) || (u != u)
+                      || (v >= Float.MAX_VALUE)
+                      || (v <= (-Float.MAX_VALUE)) || (v != v)) {
+                    continue;
+                  }
+                  w = (u + v);
+                  if ((w >= Float.MAX_VALUE) || (w <= (-Float.MAX_VALUE))
+                      || (w != w)) {
+                    continue;
+                  }
+                  w *= 0.5d;
+                  if (w != w) {
+                    continue;
+                  }
 
-                if (found != compare) {
-                  throw new AssertionError("The log points " + found + //$NON-NLS-1$
-                      " and " + compare + //$NON-NLS-1$
-                      " should be the same, but they are not. We looked for value "//$NON-NLS-1$
-                      + o + " of dimension " + dim.getIndex() + //$NON-NLS-1$
-                      " (" + dim + //$NON-NLS-1$
-                      ") between the values " + //$NON-NLS-1$
-                      p + " and " + q + //$NON-NLS-1$
-                      " of points " + first + //$NON-NLS-1$
-                      " and " + last + //$NON-NLS-1$
-                      " at indexes " + i + //$NON-NLS-1$
-                      " and " + (i + 1) + //$NON-NLS-1$
-                      " of " + dps.size());//$NON-NLS-1$
+                  comp = EComparison.compareFloats(u, w);
+                  if (!(dim.getDirection().isIncreasing())) {
+                    comp = (-comp);
+                  }
+                  if (comp >= 0) {
+                    continue;
+                  }
+
+                  comp = EComparison.compareFloats(w, v);
+                  if (!(dim.getDirection().isIncreasing())) {
+                    comp = (-comp);
+                  }
+                  if (comp >= 0) {
+                    continue;
+                  }
+
+                  found = run.find(index, w);
+                  if (dim.getDimensionType().isSolutionQualityMeasure()) {
+                    compare = last;
+                  } else {
+                    compare = first;
+                  }
+
+                  if (found != compare) {
+                    throw new AssertionError("The log points " + found + //$NON-NLS-1$
+                        " and " + compare + //$NON-NLS-1$
+                        " should be the same, but they are not. We looked for value "//$NON-NLS-1$
+                        + w + " of dimension " + dim.getIndex() + //$NON-NLS-1$
+                        " (" + dim + //$NON-NLS-1$
+                        ") between the values " + //$NON-NLS-1$
+                        u + " and " + v + //$NON-NLS-1$
+                        " of points " + first + //$NON-NLS-1$
+                        " and " + last + //$NON-NLS-1$
+                        " at indexes " + i + //$NON-NLS-1$
+                        " and " + (i + 1) + //$NON-NLS-1$
+                        " of " + dps.size());//$NON-NLS-1$
+                  }
                 }
               }
             }
