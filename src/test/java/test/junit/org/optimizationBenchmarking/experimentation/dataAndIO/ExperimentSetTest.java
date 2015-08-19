@@ -29,6 +29,7 @@ import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationI
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInput;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.math.functions.arithmetic.SaturatingAdd;
 
 import test.junit.InstanceTest;
@@ -267,12 +268,12 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
                 if (x.getDouble(index) != dp.getDouble(dim.getIndex())) {
                   Assert.fail(//
                       "Direct search for floating point value " + //$NON-NLS-1$
-                      x.getDouble(index) + //
-                      " for dimension " + dim + //$NON-NLS-1$
-                      " at index " + index + //$NON-NLS-1$
-                      " returned data point " + dp + //$NON-NLS-1$
-                      " instead of the expected " //$NON-NLS-1$
-                      + x);
+                          x.getDouble(index) + //
+                          " for dimension " + dim + //$NON-NLS-1$
+                          " at index " + index + //$NON-NLS-1$
+                          " returned data point " + dp + //$NON-NLS-1$
+                          " instead of the expected " //$NON-NLS-1$
+                          + x);
 
                 }
               } else {
@@ -280,12 +281,12 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
                 if (x.getLong(index) != dp.getLong(index)) {
                   Assert.fail(//
                       "Direct search for long value " + //$NON-NLS-1$
-                      x.getLong(index) + //
-                      " for dimension " + dim + //$NON-NLS-1$
-                      " at index " + index + //$NON-NLS-1$
-                      " returned data point " + dp + //$NON-NLS-1$
-                      " instead of the expected " //$NON-NLS-1$
-                      + x);
+                          x.getLong(index) + //
+                          " for dimension " + dim + //$NON-NLS-1$
+                          " at index " + index + //$NON-NLS-1$
+                          " returned data point " + dp + //$NON-NLS-1$
+                          " instead of the expected " //$NON-NLS-1$
+                          + x);
                 }
               }
 
@@ -389,7 +390,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
     IDataPoint first, last;
     double o, p, q;
     ArrayListView<? extends IDataPoint> dps;
-    int i, index;
+    int i, index, comp;
     long a, b, c, d;
 
     es = this.getInstance();
@@ -422,7 +423,19 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
                   continue;
                 }
                 c /= 2L;
-                if (!((a < c) && (c < b))) {
+
+                comp = Long.compare(a, c);
+                if (!(dim.getDirection().isIncreasing())) {
+                  comp = (-comp);
+                }
+                if (comp >= 0) {
+                  continue;
+                }
+                comp = Long.compare(c, b);
+                if (!(dim.getDirection().isIncreasing())) {
+                  comp = (-comp);
+                }
+                if (comp >= 0) {
                   continue;
                 }
 
@@ -435,7 +448,11 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
 
                 p = first.getDouble(index);
                 q = last.getDouble(index);
-                if ((p == q) || (p >= Double.MAX_VALUE)
+                comp = EComparison.compareDoubles(p, q);
+                if (!(dim.getDirection().isIncreasing())) {
+                  comp = (-comp);
+                }
+                if ((comp >= 0) || (p >= Double.MAX_VALUE)
                     || (p <= (-Double.MAX_VALUE)) || (p != p)
                     || (q >= Double.MAX_VALUE)
                     || (q <= (-Double.MAX_VALUE)) || (q != q)) {
@@ -447,7 +464,23 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
                   continue;
                 }
                 o *= 0.5d;
-                if ((o != o) || (!((p < o) && (o < q)))) {
+                if (o != o) {
+                  continue;
+                }
+
+                comp = EComparison.compareDoubles(p, o);
+                if (!(dim.getDirection().isIncreasing())) {
+                  comp = (-comp);
+                }
+                if (comp >= 0) {
+                  continue;
+                }
+
+                comp = EComparison.compareDoubles(o, q);
+                if (!(dim.getDirection().isIncreasing())) {
+                  comp = (-comp);
+                }
+                if (comp >= 0) {
                   continue;
                 }
 
@@ -637,29 +670,29 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
 
     } else {
       checkString: {
-      if (a instanceof String) {
-        s1 = ((String) a);
-      } else {
-        if (a instanceof Character) {
-          s1 = a.toString();
+        if (a instanceof String) {
+          s1 = ((String) a);
         } else {
-          break checkString;
+          if (a instanceof Character) {
+            s1 = a.toString();
+          } else {
+            break checkString;
+          }
         }
-      }
 
-      if (b instanceof String) {
-        s2 = ((String) b);
-      } else {
-        if (b instanceof Character) {
-          s2 = b.toString();
+        if (b instanceof String) {
+          s2 = ((String) b);
         } else {
-          break checkString;
+          if (b instanceof Character) {
+            s2 = b.toString();
+          } else {
+            break checkString;
+          }
         }
-      }
 
-      Assert.assertEquals(s1, s2);
-      return;
-    }
+        Assert.assertEquals(s1, s2);
+        return;
+      }
     }
 
     Assert.assertEquals(a, b);
@@ -711,7 +744,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
       iae = ia.get(si);
       ibe = ib.get(si);
       ExperimentSetTest
-      ._assertEquals(iae.getInstance(), ibe.getInstance());
+          ._assertEquals(iae.getInstance(), ibe.getInstance());
       ra = iae.getData();
       rb = ibe.getData();
       sr = ra.size();
