@@ -387,7 +387,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
   public final void testExperimentRunsFindValuesBetween() {
     IExperimentSet es;
     IDimensionSet dims;
-    IDataPoint first, last;
+    IDataPoint first, last, found, compare;
     double o, p, q;
     ArrayListView<? extends IDataPoint> dps;
     int i, index, comp;
@@ -484,10 +484,20 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
                   continue;
                 }
 
+                found = run.find(index, o);
                 if (dim.getDimensionType().isSolutionQualityMeasure()) {
-                  Assert.assertSame(last, run.find(index, o));
+                  compare = last;
                 } else {
-                  Assert.assertSame(first, run.find(index, o));
+                  compare = first;
+                }
+
+                if (found != compare) {
+                  throw new AssertionError("The log points " + found + //$NON-NLS-1$
+                      " and " + compare + //$NON-NLS-1$
+                      " should be the same, but they are not. We looked for value "//$NON-NLS-1$
+                      + o + " of dimension " + dim.getIndex() + //$NON-NLS-1$
+                      " between the values " + //$NON-NLS-1$
+                      p + " and " + q); //$NON-NLS-1$
                 }
               }
             }
