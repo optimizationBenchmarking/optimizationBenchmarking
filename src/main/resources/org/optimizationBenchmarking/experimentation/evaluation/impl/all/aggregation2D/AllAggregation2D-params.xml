@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cd:configurationDefinition
+	xmlns:cd="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
+	allowsMore="true">
+
+	<cd:inherit
+		class="org.optimizationBenchmarking.experimentation.attributes.functions.aggregation2D.Aggregation2D" />
+
+	<cd:inherit
+		class="org.optimizationBenchmarking.experimentation.evaluation.impl.all.function.FunctionJob" />
+
+</cd:configurationDefinition>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cd:configurationDefinition
+	xmlns:cd="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
+	allowsMore="false">
+
+	<cd:instance name="aggregate"
+		description="The statistical aggregate to be computed over the 'y' values for each 'x' value of each instance."
+		class="org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter"
+		parser="org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser"
+		default="median" allowsMore="false">
+		<cd:choice name="median" description="Plot the median over the different ECDFs." />
+		<cd:choice name="mean"
+			description="Plot the arithmetic mean over the different ECDFs." />
+		<cd:choice name="min" description="Plot the minimum over the different ECDFs." />
+		<cd:choice name="max" description="Plot the maximum over the different ECDFs." />
+		<cd:choice name="quantil 0.02"
+			description="Plot the value dividing the lower 2% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.05"
+			description="Plot the value dividing the lower 5% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.1"
+			description="Plot the value dividing the lower 10% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.25"
+			description="Plot the value dividing the lower 25% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.75"
+			description="Plot the value dividing the upper 25% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.9"
+			description="Plot the value dividing the upper 10% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.95"
+			description="Plot the value dividing the upper 5% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.98"
+			description="Plot the value dividing the upper 2% of the ECDFs from the rest." />
+		<cd:choice name="standard deviation"
+			description="Plot the standard deviation of the different ECDFs." />
+		<cd:choice name="variance" description="Plot the variance of the different ECDFs." />
+	</cd:instance>
+
+	<cd:instance name="secondaryAggregate"
+		description="While the aggregate is computed per instance, the 'secondaryAggregate' joins these results over the instance groups or all instances.&#xD;Let's say you want to compute the standard deviation of your objective values for each instance. In order to have a diagram over all instances or a specific group of instances, you now need to aggregate these values over that group. You could use the 'median' for that purpose."
+		class="org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter"
+		parser="org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser"
+		default="median" allowsMore="false">
+		<cd:choice name="median" description="Plot the median over the different ECDFs." />
+		<cd:choice name="mean"
+			description="Plot the arithmetic mean over the different ECDFs." />
+		<cd:choice name="min" description="Plot the minimum over the different ECDFs." />
+		<cd:choice name="max" description="Plot the maximum over the different ECDFs." />
+		<cd:choice name="quantil 0.02"
+			description="Plot the value dividing the lower 2% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.05"
+			description="Plot the value dividing the lower 5% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.1"
+			description="Plot the value dividing the lower 10% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.25"
+			description="Plot the value dividing the lower 25% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.75"
+			description="Plot the value dividing the upper 25% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.9"
+			description="Plot the value dividing the upper 10% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.95"
+			description="Plot the value dividing the upper 5% of the ECDFs from the rest." />
+		<cd:choice name="quantil 0.98"
+			description="Plot the value dividing the upper 2% of the ECDFs from the rest." />
+		<cd:choice name="standard deviation"
+			description="Plot the standard deviation of the different ECDFs." />
+		<cd:choice name="variance" description="Plot the variance of the different ECDFs." />
+	</cd:instance>
+
+	<cd:inherit
+		class="org.optimizationBenchmarking.experimentation.attributes.functions.FunctionAttribute" />
+</cd:configurationDefinition>

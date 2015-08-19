@@ -7,7 +7,11 @@
 		class="org.optimizationBenchmarking.experimentation.evaluation.impl.description.instances.InstanceInformation"
 		description="Information about the benchmark instances used in the experiments. It tells you what features they have and draws charts on how the features values are distributed. Thus, you can see which features are over- or under-represented in your experiments, i.e., whether there may be some bias, as well as what feature ranges are covered. This module supports grouping." />
 
-	<m:module name="ECDF Comparator"
+	<m:module name="Statistical Parameter Plot (Comparison)"
+		class="org.optimizationBenchmarking.experimentation.evaluation.impl.all.aggregation2D.AllAggregation2D"
+		description="A statistical parameter, say the median or variance, is plotted for a (quality) dimension over a (time) dimension." />
+
+	<m:module name="ECDF (Comparison)"
 		class="org.optimizationBenchmarking.experimentation.evaluation.impl.all.ecdf.AllECDF"
 		description="The Empiricial Cumulative Distribution Function (ECDF) &#x2012; the fraction of runs that have reached a certain goal." />
 

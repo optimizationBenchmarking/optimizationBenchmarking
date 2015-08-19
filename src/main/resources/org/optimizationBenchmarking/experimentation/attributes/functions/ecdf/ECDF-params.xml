@@ -30,9 +30,9 @@
 		class="org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameter"
 		parser="org.optimizationBenchmarking.utils.math.statistics.parameters.StatisticalParameterParser"
 		default="mean" allowsMore="false">
+		<cd:choice name="median" description="Plot the median over the different ECDFs." />
 		<cd:choice name="mean"
 			description="Plot the arithmetic mean over the different ECDFs." />
-		<cd:choice name="median" description="Plot the median over the different ECDFs." />
 		<cd:choice name="min" description="Plot the minimum over the different ECDFs." />
 		<cd:choice name="max" description="Plot the maximum over the different ECDFs." />
 		<cd:choice name="quantil 0.02"
