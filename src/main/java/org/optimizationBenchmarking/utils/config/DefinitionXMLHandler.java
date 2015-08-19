@@ -180,6 +180,12 @@ public class DefinitionXMLHandler extends DelegatingHandler {
           break;
         }
 
+        case DefinitionXML.ELEMENT_INHERIT: {
+          this.m_dest.inherit(DelegatingHandler.getAttribute(attributes,
+              DefinitionXML.NAMESPACE, DefinitionXML.ATTRIBUTE_CLASS));
+          break;
+        }
+
         case DefinitionXML.ELEMENT_DEFINITION: {
           this.m_dest.setAllowsMore(//
               LooseBooleanParser.INSTANCE.parseBoolean(DelegatingHandler

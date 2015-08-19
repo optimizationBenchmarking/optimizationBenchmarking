@@ -129,6 +129,16 @@
 	</element>
 
 
+	<element name="inherit">
+		<complexType>
+			<complexContent>
+				<extension base="tns:base">
+					<attribute name="class" type="token" use="required" />
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
+
 	<element name="configurationDefinition">
 		<complexType>
 			<choice minOccurs="0" maxOccurs="unbounded">
@@ -141,6 +151,7 @@
 				<element ref="tns:double" />
 				<element ref="tns:string" />
 				<element ref="tns:instance" />
+				<element ref="tns:inherit" />
 			</choice>
 			<attribute name="allowsMore" type="boolean" use="required" />
 		</complexType>

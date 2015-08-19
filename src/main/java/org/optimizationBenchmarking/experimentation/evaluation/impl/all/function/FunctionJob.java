@@ -5,10 +5,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.attributes.OnlySharedInstances;
+import org.optimizationBenchmarking.experimentation.attributes.clusters.ClustererLoader;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.ICluster;
 import org.optimizationBenchmarking.experimentation.attributes.clusters.IClustering;
-import org.optimizationBenchmarking.experimentation.attributes.clusters.byInstance.ByInstanceGrouping;
-import org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueSelector;
 import org.optimizationBenchmarking.experimentation.attributes.functions.FunctionAttribute;
 import org.optimizationBenchmarking.experimentation.data.spec.Attribute;
 import org.optimizationBenchmarking.experimentation.data.spec.IExperiment;
@@ -197,7 +196,7 @@ public abstract class FunctionJob extends ExperimentSetJob {
             .getDefaultShowAxisTitles(data, this.m_figureSize,
                 this.m_makeLegendFigure));
 
-    this.m_clusterer = this.configureClustering(data, config);
+    this.m_clusterer = ClustererLoader.configureClustering(data, config);
 
     this.m_minX = config.get(FunctionJob.PARAM_MIN_X,
         AnyNumberParser.INSTANCE, null);
@@ -413,25 +412,6 @@ public abstract class FunctionJob extends ExperimentSetJob {
     }
 
     return (n <= 4);
-  }
-
-  /**
-   * Obtain the attribute used to get the clustering
-   *
-   * @param data
-   *          the data
-   * @param config
-   *          the configuration
-   * @return the clustering
-   */
-  protected Attribute<? super IExperimentSet, ? extends IClustering> configureClustering(
-      final IExperimentSet data, final Configuration config) {
-
-    if (config.getBoolean(ByInstanceGrouping.PARAM_BY_INSTANCE, false)) {
-      return ByInstanceGrouping.INSTANCE;
-    }
-
-    return PropertyValueSelector.configure(data, config);
   }
 
   /**

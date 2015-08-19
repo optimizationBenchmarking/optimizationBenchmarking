@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cd:configurationDefinition
+	xmlns:cd="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
+	allowsMore="false">
+
+	<cd:string name="groupBy"
+		description="The data should be grouped according to the specified benchmark instance feature or algorithm parameter. Based on the type and values of the feature/parameter, a division into a reasonable number of groups is performed. The heuristic for this grouping can be overridden via the 'defaultGrouping' parameter in general or for a specific parameter or feature with name 'zzz' with a parameter 'zzzGrouping'. You cannot specify both 'byInstance' and 'groupBy'." />
+
+	<cd:string name="defaultGrouping"
+		description="The default grouping to be applied by 'groupBy'. A parser which can transform a string to a property value grouper. The following syntax is supported (where '|' indicates an 'exclusive or' choice of strings):&#xD;'m|? to n|?': ry to find between 'm' to 'n' groups. A question mark ('?') can be specified instead of either 'm' or 'n' and indicates 'don't care', in which case a reasonable default is used.&#xD;The resulting groups may be generated based on any grouping mode such as:&#xD;'m|? to n|? multiples|powers|any': Try to find a grouping where the ranges are multiples or powers (or anything) such that there are 'm' to 'n' groups. A question mark ('?' ) can be specified instead of either 'm' or 'n' and indicates 'don't care', in which case a reasonable default is used. &#xD;'multiples|powers of p': The grouping is to be based on powers or multiples of the number 'p'. The group number results automatically and cannot be specified. &#xD;'multiples|powers|distinct|any': Groupings are to be found which are either multiples, powers, correspond to distinct values, or are any of the above. The group number is 'don't care' in the multiple, power, or any case and results automatically in the distinct case.&#xD;You can define a specific grouping for a benchmark instance feature/algorithm parameter 'zzz' by providing a parameter 'zzzGrouping'." />
+
+</cd:configurationDefinition>

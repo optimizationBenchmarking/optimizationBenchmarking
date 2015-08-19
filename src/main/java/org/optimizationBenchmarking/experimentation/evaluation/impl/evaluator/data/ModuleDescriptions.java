@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,6 +33,7 @@ public final class ModuleDescriptions extends
    */
   ModuleDescriptions(final ModuleDescription[] description) {
     super(description);
+    Arrays.sort(description, new __Cmp());
   }
 
   /**
@@ -41,20 +44,33 @@ public final class ModuleDescriptions extends
    * @return the description
    */
   public final ModuleDescription forName(final String name) {
+    int low, high, mid, cmp;
+    ModuleDescription midVal;
+
     if (name == null) {
       throw new IllegalArgumentException(//
           "Cannot find module definition for a null name."); //$NON-NLS-1$
     }
-    for (final ModuleDescription md : this.m_data) {
-      if (name.equals(md.getName())) {
-        return md;
+
+    low = 0;
+    high = (this.m_data.length - 1);
+
+    while (low <= high) {
+      mid = ((low + high) >>> 1);
+      midVal = this.m_data[mid];
+      cmp = String.CASE_INSENSITIVE_ORDER.compare(midVal.getName(), name);
+
+      if (cmp < 0) {
+        low = (mid + 1);
+      } else {
+        if (cmp > 0) {
+          high = (mid - 1);
+        } else {
+          return midVal;
+        }
       }
     }
-    for (final ModuleDescription md : this.m_data) {
-      if (name.equalsIgnoreCase(md.getName())) {
-        return md;
-      }
-    }
+
     throw new IllegalArgumentException(//
         "Cannot find module definition for name '" + //$NON-NLS-1$
             name + '\'' + '.');
@@ -148,7 +164,7 @@ public final class ModuleDescriptions extends
             .entrySet()) {
           other = entry.getValue();
           if (other != null) {
-            builder.addParameter(other);
+            builder.add(other);
             continue;
           }
           namelk = entry.getKey();
@@ -177,5 +193,22 @@ public final class ModuleDescriptions extends
     }
 
     return this.m_jointDefinition;
+  }
+
+  /** the internal comparator class to sort the module list */
+  private static final class __Cmp implements
+      Comparator<ModuleDescription> {
+    /** create */
+    __Cmp() {
+      super();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final int compare(final ModuleDescription o1,
+        final ModuleDescription o2) {
+      return String.CASE_INSENSITIVE_ORDER.compare(o1.getName(),
+          o2.getName());
+    }
   }
 }

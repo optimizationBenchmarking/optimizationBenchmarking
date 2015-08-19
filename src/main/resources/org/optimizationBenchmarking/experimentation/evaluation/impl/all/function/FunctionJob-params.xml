@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cd:configurationDefinition
+	xmlns:cd="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
+	allowsMore="true">
+
+	<cd:inherit
+		class="org.optimizationBenchmarking.experimentation.attributes.clusters.ClustererLoader" />
+
+	<cd:boolean name="makeLegendFigure" default="false"
+		description="Should we make a separate figure containing the legend, so we do not need to include the legend into the other/actual figures (to save space)?" />
+
+	<cd:boolean name="showAxisTitles" default="true"
+		description="Should we show the titles of the axes?" />
+
+	<cd:double name="minX" min="-inf" max="inf" default="0"
+		description="The minimum value of the x-axis. If this paramter is not specified, the smallest x-coordinate will be used." />
+	<cd:double name="maxX" min="-inf" max="inf" default="0"
+		description="The maximum value of the x-axis. If this paramter is not specified, the largest x-coordinate will be used." />
+	<cd:double name="minY" min="-inf" max="inf" default="0"
+		description="The minimum value of the y-axis. If this paramter is not specified, the smallest y-coordinate will be used." />
+	<cd:double name="maxY" min="-inf" max="inf" default="1"
+		description="The maximum value of the y-axis. If this paramter is not specified, the largest y-coordinate will be used." />
+
+	<cd:boolean name="rankingPlot" default="false"
+		description="Instead of plotting the function ('y') values, rank them for each value of 'x'. This will make it much easier to see when which function takes on a larger value than another one. This may be necessary if the 'y' axis spans over values of different order of magnitude." />
+
+</cd:configurationDefinition>

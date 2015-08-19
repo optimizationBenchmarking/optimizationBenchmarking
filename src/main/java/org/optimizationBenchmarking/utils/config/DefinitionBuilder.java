@@ -3,6 +3,7 @@ package org.optimizationBenchmarking.utils.config;
 import java.util.LinkedHashMap;
 
 import org.optimizationBenchmarking.utils.collections.cache.NormalizingCache;
+import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.parsers.BoundedLooseByteParser;
@@ -20,6 +21,7 @@ import org.optimizationBenchmarking.utils.parsers.LooseLongParser;
 import org.optimizationBenchmarking.utils.parsers.LooseShortParser;
 import org.optimizationBenchmarking.utils.parsers.LooseStringParser;
 import org.optimizationBenchmarking.utils.parsers.Parser;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * A builder for a definition.
@@ -29,7 +31,7 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
   /** the internal cache */
   private static final NormalizingCache CACHE = new NormalizingCache();
 
-  /** the parameters */
+  /** the used names */
   private LinkedHashMap<String, Parameter<?>> m_params;
 
   /** are more parameters allowed? */
@@ -46,19 +48,6 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
   @Override
   protected final <T> T doNormalizePersistently(final T input) {
     return DefinitionBuilder.CACHE.normalize(input);
-  }
-
-  /**
-   * check if the provided name is allowed
-   *
-   * @param name
-   *          the name
-   */
-  private final void __checkAllowed(final String name) {
-    if (this.m_params.containsKey(name)) {
-      throw new IllegalStateException("Parameter of name '" + //$NON-NLS-1$
-          name + "' already defined."); //$NON-NLS-1$
-    }
   }
 
   /**
@@ -79,15 +68,31 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
    * @param parameter
    *          the parameter to add
    */
-  public synchronized final void addParameter(final Parameter<?> parameter) {
-    final String name;
+  public synchronized final void add(final Parameter<?> parameter) {
+    final Parameter<?> old, use;
+    final String str;
+
+    if (parameter == null) {
+      throw new IllegalArgumentException("Cannot add null parameter."); //$NON-NLS-1$
+    }
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
 
-    name = parameter.m_name;
-    this.__checkAllowed(name);
+    use = this.normalize(parameter);
+    str = TextUtils.toUpperCase(use.m_name);
+    old = this.m_params.get(str);
 
-    this.m_params.put(name, this.normalize(parameter));
+    if (old == null) {
+      this.m_params.put(str, use);
+      return;
+    }
+
+    if (EComparison.equals(old, use)) {
+      return;
+    }
+
+    throw new IllegalStateException("Parameter of name '" + //$NON-NLS-1$
+        use.m_name + "' already defined."); //$NON-NLS-1$
   }
 
   /**
@@ -108,12 +113,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       final String description, final byte min, final byte max,
       final byte def) {
     final Parser<Byte> p;
-    final String useName;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-
-    useName = this.normalize(name);
-    this.__checkAllowed(useName);
 
     if ((min <= Byte.MIN_VALUE) && (max >= Byte.MAX_VALUE)) {
       p = LooseByteParser.INSTANCE;
@@ -121,7 +122,7 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       p = this.normalize(new BoundedLooseByteParser(min, max));
     }
 
-    this.addParameter(new SimpleParameter<>(useName,//
+    this.add(new SimpleParameter<>(this.normalize(name),//
         this.normalize(description), p, //
         this.normalize(Byte.valueOf(def))));
   }
@@ -144,12 +145,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       final String description, final short min, final short max,
       final short def) {
     final Parser<Short> p;
-    final String useName;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-
-    useName = this.normalize(name);
-    this.__checkAllowed(useName);
 
     if ((min <= Short.MIN_VALUE) && (max >= Short.MAX_VALUE)) {
       p = LooseShortParser.INSTANCE;
@@ -157,7 +154,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       p = this.normalize(new BoundedLooseShortParser(min, max));
     }
 
-    this.addParameter(new SimpleParameter<>(useName,//
+    this.add(new SimpleParameter<>(//
+        this.normalize(name),//
         this.normalize(description), p, //
         this.normalize(Short.valueOf(def))));
   }
@@ -179,12 +177,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
   public synchronized final void intParameter(final String name,
       final String description, final int min, final int max, final int def) {
     final Parser<Integer> p;
-    final String useName;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-
-    useName = this.normalize(name);
-    this.__checkAllowed(useName);
 
     if ((min <= Integer.MIN_VALUE) && (max >= Integer.MAX_VALUE)) {
       p = LooseIntParser.INSTANCE;
@@ -192,7 +186,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       p = this.normalize(new BoundedLooseIntParser(min, max));
     }
 
-    this.addParameter(new SimpleParameter<>(useName,//
+    this.add(new SimpleParameter<>(//
+        this.normalize(name),//
         this.normalize(description), p, //
         this.normalize(Integer.valueOf(def))));
   }
@@ -215,12 +210,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       final String description, final long min, final long max,
       final long def) {
     final Parser<Long> p;
-    final String useName;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-
-    useName = this.normalize(name);
-    this.__checkAllowed(useName);
 
     if ((min <= Long.MIN_VALUE) && (max >= Long.MAX_VALUE)) {
       p = LooseLongParser.INSTANCE;
@@ -228,7 +219,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       p = this.normalize(new BoundedLooseLongParser(min, max));
     }
 
-    this.addParameter(new SimpleParameter<>(useName,//
+    this.add(new SimpleParameter<>(//
+        this.normalize(name),//
         this.normalize(description), p, //
         this.normalize(Long.valueOf(def))));
   }
@@ -251,12 +243,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       final String description, final double min, final double max,
       final double def) {
     final Parser<Double> p;
-    final String useName;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-
-    useName = this.normalize(name);
-    this.__checkAllowed(useName);
 
     if ((min <= Double.NEGATIVE_INFINITY)
         && (max >= Double.POSITIVE_INFINITY)) {
@@ -265,7 +253,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       p = this.normalize(new BoundedLooseDoubleParser(min, max));
     }
 
-    this.addParameter(new SimpleParameter<>(useName,//
+    this.add(new SimpleParameter<>(//
+        this.normalize(name),//
         this.normalize(description), p, //
         this.normalize(Double.valueOf(def))));
   }
@@ -288,12 +277,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       final String description, final float min, final float max,
       final float def) {
     final Parser<Float> p;
-    final String useName;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
-
-    useName = this.normalize(name);
-    this.__checkAllowed(useName);
 
     if ((min <= Float.NEGATIVE_INFINITY)
         && (max >= Float.POSITIVE_INFINITY)) {
@@ -302,7 +287,8 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
       p = this.normalize(new BoundedLooseFloatParser(min, max));
     }
 
-    this.addParameter(new SimpleParameter<>(useName,//
+    this.add(new SimpleParameter<>(//
+        this.normalize(name),//
         this.normalize(description), p, //
         this.normalize(Float.valueOf(def))));
   }
@@ -319,15 +305,12 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
    */
   public synchronized final void stringParameter(final String name,
       final String description, final String def) {
-    final String useName;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
 
-    useName = this.normalize(name);
-    this.__checkAllowed(useName);
-
-    this.addParameter(//
-    new SimpleParameter<>(useName,//
+    this.add(//
+    new SimpleParameter<>(//
+        this.normalize(name),//
         this.normalize(description), //
         LooseStringParser.INSTANCE,//
         this.normalize(def)));
@@ -345,15 +328,12 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
    */
   public synchronized final void booleanParameter(final String name,
       final String description, final boolean def) {
-    final String useName;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
 
-    useName = this.normalize(name);
-    this.__checkAllowed(useName);
-
-    this.addParameter(//
-    new SimpleParameter<>(useName,//
+    this.add(//
+    new SimpleParameter<>(//
+        this.normalize(name),//
         this.normalize(description), //
         LooseBooleanParser.INSTANCE,//
         Boolean.valueOf(def)));
@@ -533,23 +513,68 @@ public final class DefinitionBuilder extends BuilderFSM<Definition> {
   public synchronized final InstanceParameterBuilder instanceParameter(
       final String name, final String description, final Parser<?> parser,
       final String def, final boolean allowsMore) {
-    final String useName;
 
     this.fsmStateAssert(BuilderFSM.STATE_OPEN);
 
-    useName = this.normalize(name);
-    this.__checkAllowed(useName);
+    return new InstanceParameterBuilder(this, new Parameter(//
+        this.normalize(name), this.normalize(description),
+        this.normalize(parser), this.normalize(def)), allowsMore);
+  }
 
-    return new InstanceParameterBuilder(this, new Parameter(useName,
-        this.normalize(description), this.normalize(parser),
-        this.normalize(def)), allowsMore);
+  /**
+   * Add all the parameters.
+   *
+   * @param def
+   *          the definition
+   */
+  public synchronized final void addAll(
+      final Iterable<? extends Parameter<?>> def) {
+    if (def == null) {
+      throw new IllegalArgumentException(//
+          "Cannot add parameters from a collection which is null."); //$NON-NLS-1$
+    }
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
+
+    for (final Parameter<?> param : def) {
+      this.add(param);
+    }
+  }
+
+  /**
+   * Inherit the parameters from a given class.
+   *
+   * @param clazz
+   *          the class
+   */
+  public synchronized final void inherit(final Class<?> clazz) {
+    final Definition def;
+    def = DefinitionXMLInput.getInstance().forClass(clazz, null);
+    this.addAll(def);
+    if (def.allowsMore()) {
+      this.setAllowsMore(true);
+    }
+  }
+
+  /**
+   * Inherit the parameters from a given class.
+   *
+   * @param clazz
+   *          the class
+   */
+  public synchronized final void inherit(final String clazz) {
+    final Definition def;
+    def = DefinitionXMLInput.getInstance().forClass(clazz, null);
+    this.addAll(def);
+    if (def.allowsMore()) {
+      this.setAllowsMore(true);
+    }
   }
 
   /** {@inheritDoc} */
   @Override
   protected synchronized void afterChildClosed(final HierarchicalFSM child) {
     if (child instanceof InstanceParameterBuilder) {
-      this.addParameter(((InstanceParameterBuilder) child)._take());
+      this.add(((InstanceParameterBuilder) child)._take());
     } else {
       this.throwChildNotAllowed(child);
     }

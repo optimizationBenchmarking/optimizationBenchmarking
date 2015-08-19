@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cd:configurationDefinition
+	xmlns:cd="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
+	allowsMore="false">
+
+	<cd:string name="xAxis"
+		description="The x-axis along which the function should be plotted.&#xD;Let's say you have a time dimension called 'FEs' in your measurements. Then you could specify 'log(10,FEs)' to have a log-scaled x-axis.&#xD;If your benchmark instances also have a numerical feature called 'scale', you could even say something like 'log(10,(FEs/scale))'." />
+
+	<cd:string name="yAxis"
+		description="The input data for the function to plot: For every value of the x-axis, this value is put into the function.&#xD;Let's say you have a solution quality dimension called 'f', then you could specify 'f' or 'sqrt(f)' to have a plot based on 'f' or its square root, respectively.&#xD;Furthermore, if you have a benchmark instance feature called 'knownBest', you could also do 'f/knownBest'.&#xD;Or, if your benchmark instances have specified limits for the dimension 'f', you could do something like '(f-f.min)/(f.max-f.min)' which would scale the 'f'-values into [0,1] based on the upper and lower bound of that dimension, for each instance." />
+
+	<cd:string name="yAxisTransformation"
+		description="An optional transformation to be applied to the result of the function. You could do, e.g., 'sqrt(result)'." />
+
+</cd:configurationDefinition>

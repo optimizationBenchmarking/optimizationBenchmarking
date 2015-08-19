@@ -32,7 +32,7 @@ public abstract class FunctionAttribute<DT extends IElementSet> extends
 
   /**
    * The default parameter for the {@code x}-axis (see
-   * {@link #getYAxisOutputTransformation()}: This is intended for use in
+   * {@link #getXAxisTransformation()}: This is intended for use in
    * conjunction with a
    * {@link org.optimizationBenchmarking.utils.config.Configuration}.
    */

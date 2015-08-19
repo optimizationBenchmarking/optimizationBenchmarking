@@ -6,6 +6,7 @@ import java.util.HashSet;
 import org.optimizationBenchmarking.experimentation.evaluation.spec.IEvaluationModule;
 import org.optimizationBenchmarking.utils.hierarchy.BuilderFSM;
 import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /** A builder for module lists. */
 public final class ModuleDescriptionsBuilder extends
@@ -46,7 +47,7 @@ public final class ModuleDescriptionsBuilder extends
     }
 
     name = desc.getName();
-    if (this.m_names.contains(name)) {
+    if (this.m_names.contains(TextUtils.toLowerCase(name))) {
       throw new IllegalArgumentException("Name '" + name + //$NON-NLS-1$
           "' already defined as module."); //$NON-NLS-1$
     }

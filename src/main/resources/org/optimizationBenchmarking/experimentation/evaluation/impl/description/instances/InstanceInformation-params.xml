@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cd:configurationDefinition
+	xmlns:cd="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
+	allowsMore="false">
+
+	<cd:inherit
+		class="org.optimizationBenchmarking.experimentation.attributes.clusters.propertyValueGroups.PropertyValueSelector" />
+
+</cd:configurationDefinition>

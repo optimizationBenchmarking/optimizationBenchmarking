@@ -110,4 +110,10 @@ public class DefinitionElement extends HashObject {
     (((o != null) && (o.getClass() == this.getClass())) && //
     (this._equalsDE((DefinitionElement) o))));
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public String toString() {
+    return this.m_name;
+  }
 }

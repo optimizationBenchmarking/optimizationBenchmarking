@@ -73,6 +73,9 @@ public enum DefinitionXML implements IXMLFileType {
   /** the definition root element */
   static final String ELEMENT_DEFINITION = "configurationDefinition"; //$NON-NLS-1$
 
+  /** the inheritance element */
+  static final String ELEMENT_INHERIT = "inherit"; //$NON-NLS-1$
+
   /** {@inheritDoc} */
   @Override
   public final String getDefaultSuffix() {
