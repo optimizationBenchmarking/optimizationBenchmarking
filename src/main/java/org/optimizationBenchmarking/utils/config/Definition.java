@@ -77,6 +77,8 @@ public final class Definition extends _DefSet<Parameter<?>> {
                   param._formatForDump(map.remove(param.m_name)));
             }
 
+            Arrays.sort(known, 0, index, new __Comp2());
+
             if (allowsMore) {
               // If there are more (unspecified) parameters, dump them as
               // well
@@ -135,6 +137,35 @@ public final class Definition extends _DefSet<Parameter<?>> {
         final ImmutableAssociation<Parameter<?>, Object> o2) {
       return String.CASE_INSENSITIVE_ORDER.compare(o1.getKey().m_name,
           o2.getKey().m_name);
+    }
+  }
+
+  /** the second internal comparator */
+  private static final class __Comp2 implements
+      Comparator<ImmutableAssociation<Parameter<?>, Object>> {
+    /** create */
+    __Comp2() {
+      super();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public final int compare(
+        final ImmutableAssociation<Parameter<?>, Object> o1,
+        final ImmutableAssociation<Parameter<?>, Object> o2) {
+      Object a, b;
+      a = o1.getValue();
+      b = o2.getValue();
+      if (a == null) {
+        if (b == null) {
+          return 0;
+        }
+        return 1;
+      }
+      if (b == null) {
+        return (-1);
+      }
+      return 0;
     }
   }
 }

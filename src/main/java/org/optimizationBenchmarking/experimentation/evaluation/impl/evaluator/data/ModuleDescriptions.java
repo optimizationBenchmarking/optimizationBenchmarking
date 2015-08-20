@@ -77,6 +77,21 @@ public final class ModuleDescriptions extends
   }
 
   /**
+   * Get the module description for the given module
+   *
+   * @param module
+   *          the module
+   * @return the description
+   */
+  public final ModuleDescription forModule(final IEvaluationModule module) {
+    if (module == null) {
+      throw new IllegalArgumentException(//
+          "Cannot find module definition for a null module."); //$NON-NLS-1$
+    }
+    return this.forClass(module.getClass());
+  }
+
+  /**
    * Get the module description for the given class
    *
    * @param clazz
@@ -155,6 +170,7 @@ public final class ModuleDescriptions extends
             merged.put(namelk, name);
             continue;
           }
+          parameters.put(namelk, param);
         }
       }
 

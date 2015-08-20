@@ -1,11 +1,15 @@
 package org.optimizationBenchmarking.experimentation.evaluation.impl;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data.ModuleDescriptions;
 import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data.ModuleDescriptionsBuilder;
 import org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.io.ModuleDescriptionXMLInput;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.error.ErrorUtils;
+import org.optimizationBenchmarking.utils.error.RethrowMode;
+import org.optimizationBenchmarking.utils.io.structured.spec.IXMLInputJobBuilder;
 
 /** A shared list of evaluation module descriptions */
 public final class EvaluationModuleDescriptions {
@@ -18,30 +22,46 @@ public final class EvaluationModuleDescriptions {
 
   /**
    * Get the default module descriptions
-   * 
+   *
    * @return the descriptions
    */
   public static final ModuleDescriptions getDescriptions() {
-    synchronized (SYNCH) {
-      if (DESCRIPTIONS == null) {
+    return EvaluationModuleDescriptions.getDescriptions(null);
+  }
+
+  /**
+   * Get the default module descriptions
+   *
+   * @param logger
+   *          a logger to use
+   * @return the descriptions
+   */
+  public static final ModuleDescriptions getDescriptions(
+      final Logger logger) {
+    final IXMLInputJobBuilder<ModuleDescriptionsBuilder> job;
+    final String argh;
+
+    synchronized (EvaluationModuleDescriptions.SYNCH) {
+      if (EvaluationModuleDescriptions.DESCRIPTIONS == null) {
         try (final ModuleDescriptionsBuilder builder = new ModuleDescriptionsBuilder()) {
 
           try {
-            ModuleDescriptionXMLInput
-                .getInstance()
-                .use()
-                .addResource(EvaluationModuleDescriptions.class,
-                    "modules.xml").configure(Configuration.getRoot()) //$NON-NLS-1$
+            job = ModuleDescriptionXMLInput.getInstance().use();
+            if (logger != null) {
+              job.setLogger(logger);
+            }
+            job.addResource(EvaluationModuleDescriptions.class,
+                "modules.xml").configure(Configuration.getRoot()) //$NON-NLS-1$
                 .setDestination(builder).create().call();
-          } catch (IOException ioe) {
-            throw new IllegalStateException(
-                "Could not load the module list.",//$NON-NLS-1$
-                ioe);
+          } catch (final IOException ioe) {
+            argh = "Could not load the module list.";//$NON-NLS-1$
+            ErrorUtils.logError(logger, argh, ioe, false,
+                RethrowMode.AS_ILLEGAL_STATE_EXCEPTION);
           }
-          DESCRIPTIONS = builder.getResult();
+          EvaluationModuleDescriptions.DESCRIPTIONS = builder.getResult();
         }
       }
-      return DESCRIPTIONS;
+      return EvaluationModuleDescriptions.DESCRIPTIONS;
     }
   }
 }

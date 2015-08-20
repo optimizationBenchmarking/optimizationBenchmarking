@@ -3,8 +3,10 @@ package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.d
 import java.util.Collection;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
+import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
 import org.optimizationBenchmarking.utils.comparison.EComparison;
 import org.optimizationBenchmarking.utils.config.Configuration;
+import org.optimizationBenchmarking.utils.config.ConfigurationBuilder;
 import org.optimizationBenchmarking.utils.hash.HashUtils;
 
 /**
@@ -40,6 +42,19 @@ public final class EvaluationModules extends _ConfigEntry {
   static final void _validateModules(final Collection<ModuleEntry> modules) {
     if (modules == null) {
       throw new IllegalArgumentException("Module list cannot be null."); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * Obtain an empty evaluation modules list
+   *
+   * @return the empty list
+   */
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  public static final EvaluationModules empty() {
+    try (final ConfigurationBuilder cb = new ConfigurationBuilder()) {
+      return new EvaluationModules(cb.getResult(),
+          ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW)));
     }
   }
 

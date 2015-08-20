@@ -6,6 +6,10 @@
 	<cd:inherit
 		class="org.optimizationBenchmarking.experimentation.attributes.clusters.ClustererLoader" />
 
+	<cd:inherit
+		class="org.optimizationBenchmarking.utils.document.impl.FigureSizeParser" />
+
+
 	<cd:boolean name="makeLegendFigure" default="false"
 		description="Should we make a separate figure containing the legend, so we do not need to include the legend into the other/actual figures (to save space)?" />
 

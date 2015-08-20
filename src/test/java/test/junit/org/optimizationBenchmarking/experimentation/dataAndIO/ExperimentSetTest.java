@@ -527,7 +527,7 @@ public class ExperimentSetTest extends InstanceTest<IExperimentSet> {
                       || (w != w)) {
                     continue;
                   }
-                  w *= 0.5d;
+                  w *= 0.5f;
                   if (w != w) {
                     continue;
                   }

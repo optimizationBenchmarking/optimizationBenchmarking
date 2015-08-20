@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cd:configurationDefinition
+	xmlns:cd="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
+	allowsMore="false">
+
+	<cd:instance name="figureSize"
+		description="The size of the figure(s) to plot. Figure sizes are based on the width (and sometimes height) of the columns and pages of the output format."
+		class="org.optimizationBenchmarking.utils.document.spec.EFigureSize"
+		parser="org.optimizationBenchmarking.utils.document.impl.FigureSizeParser"
+		default="3 per row" allowsMore="false">
+		<cd:choice name="page"
+			description="A figure which covers the whole size of the page." />
+		<cd:choice name="page wide"
+			description="A figure which is as wide as a whole page and has an aesthetically pleasing height." />
+		<cd:choice name="column"
+			description="A figure which covers the whole size of a column (or page, in a single-column document format)." />
+		<cd:choice name="column wide"
+			description="A figure which is as wide as a column and has an aesthetically pleasing height." />
+		<cd:choice name="2 by 2"
+			description="Four figures fit on a page: two rows of two figures each." />
+		<cd:choice name="2 per row"
+			description="Two figures fit next to each other on a page. The figure height is chosen aesthetically pleasing." />
+		<cd:choice name="3 per row"
+			description="Three figures fit next to each other on a page. The figure height is chosen aesthetically pleasing." />
+		<cd:choice name="4 per row"
+			description="Four figures fit next to each other on a page. The figure height is chosen aesthetically pleasing. These figures are may be a bit small, so if you plot diagrams, you could plot an extra figure with the legend so that you can leave it away in the figures and save space." />
+		<cd:choice name="5 per row"
+			description="Five figures fit next to each other on a page. The figure height is chosen aesthetically pleasing. These figures are quite small, so if you plot diagrams, you better plot an extra figure with the legend so that you can leave it away in the figures and save space." />
+		<cd:choice name="6 per row"
+			description="Six figures fit next to each other on a page. The figure height is chosen aesthetically pleasing. These figures are quite small, so if you plot diagrams, you better plot an extra figure with the legend so that you can leave it away in the figures and save space." />
+		<cd:choice name="column 2 per row"
+			description="Two figures fit next to each other in a column." />
+	</cd:instance>
+
+</cd:configurationDefinition>

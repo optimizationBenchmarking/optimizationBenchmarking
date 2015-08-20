@@ -35,22 +35,26 @@
 			description="Plot the arithmetic mean over the different ECDFs." />
 		<cd:choice name="min" description="Plot the minimum over the different ECDFs." />
 		<cd:choice name="max" description="Plot the maximum over the different ECDFs." />
-		<cd:choice name="quantil 0.02"
+		<cd:choice name="0.01 quantil"
+			description="Plot the value dividing the lower 1% of the ECDFs from the rest." />
+		<cd:choice name="0.02 quantil"
 			description="Plot the value dividing the lower 2% of the ECDFs from the rest." />
-		<cd:choice name="quantil 0.05"
+		<cd:choice name="0.05 quantil"
 			description="Plot the value dividing the lower 5% of the ECDFs from the rest." />
-		<cd:choice name="quantil 0.1"
+		<cd:choice name="0.1 quantil"
 			description="Plot the value dividing the lower 10% of the ECDFs from the rest." />
-		<cd:choice name="quantil 0.25"
+		<cd:choice name="0.25 quantil"
 			description="Plot the value dividing the lower 25% of the ECDFs from the rest." />
-		<cd:choice name="quantil 0.75"
+		<cd:choice name="0.75 quantil"
 			description="Plot the value dividing the upper 25% of the ECDFs from the rest." />
-		<cd:choice name="quantil 0.9"
+		<cd:choice name="0.9 quantil"
 			description="Plot the value dividing the upper 10% of the ECDFs from the rest." />
-		<cd:choice name="quantil 0.95"
+		<cd:choice name="0.95 quantil"
 			description="Plot the value dividing the upper 5% of the ECDFs from the rest." />
-		<cd:choice name="quantil 0.98"
+		<cd:choice name="0.98 quantil"
 			description="Plot the value dividing the upper 2% of the ECDFs from the rest." />
+		<cd:choice name="0.99 quantil"
+			description="Plot the value dividing the upper 1% of the ECDFs from the rest." />
 		<cd:choice name="standard deviation"
 			description="Plot the standard deviation of the different ECDFs." />
 		<cd:choice name="variance" description="Plot the variance of the different ECDFs." />

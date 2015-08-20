@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * A parser for instances of
  * {@link org.optimizationBenchmarking.utils.document.spec.EFigureSize}.
  */
-public class FigureSizeParser extends InstanceParser<EFigureSize> {
+public final class FigureSizeParser extends InstanceParser<EFigureSize> {
 
   /** the serial version uid */
   private static final long serialVersionUID = 1L;
