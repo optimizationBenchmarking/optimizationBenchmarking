@@ -155,7 +155,7 @@ public final class EvaluationModulesBuilder extends
    *
    * @return the configuration
    */
-  final Configuration _getConfiguration() {
+  synchronized final Configuration _getConfiguration() {
     Configuration config;
 
     config = this.m_config;
@@ -163,12 +163,18 @@ public final class EvaluationModulesBuilder extends
       return config;
     }
 
+    this.fsmFlagsAssertAndUpdate(
+        FSM.FLAG_NOTHING,
+        (_ConfigEntryBuilder.FLAG_CONFIG_BUILDER_CREATED | _ConfigEntryBuilder.FLAG_CONFIG_SET),
+        _ConfigEntryBuilder.FLAG_CONFIG_SET, FSM.FLAG_NOTHING);
+
     config = this.m_root;
-    if (config != null) {
-      return config;
+    if (config == null) {
+      config = Configuration.createEmpty();
     }
 
-    return Configuration.getRoot();
+    this.m_config = config;
+    return config;
   }
 
   /** {@inheritDoc} */

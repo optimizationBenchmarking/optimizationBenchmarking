@@ -19,8 +19,8 @@ import examples.org.optimizationBenchmarking.utils.io.xml.performance.exampleDoc
 import examples.org.optimizationBenchmarking.utils.io.xml.performance.exampleDoc.ExampleElement;
 
 /**
- * The {@link org.w3c.dom.Document DOM}-style XMLFileType serialization:
- * The complete document tree data structure is created in memory and then
+ * The {@link org.w3c.dom.Document DOM}-style XML serialization: The
+ * complete document tree data structure is created in memory and then
  * transformed to a text stream.
  */
 public class XMLDOMSerialization extends SerializationMethod {
@@ -46,7 +46,7 @@ public class XMLDOMSerialization extends SerializationMethod {
     } catch (final Throwable t) {
       RethrowMode.AS_RUNTIME_EXCEPTION
           .rethrow(//
-              "Error while trying to obtain XMLFileType DOM transformer or document builder.",//$NON-NLS-1$
+              "Error while trying to obtain XML DOM transformer or document builder.",//$NON-NLS-1$
               true, t);
     }
     this.m_builder = a;

@@ -17,7 +17,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * A tool for reading XMLFileType input
+ * A tool for reading XML input
  *
  * @param <S>
  *          the source type
@@ -109,7 +109,7 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
   }
 
   /**
-   * Read the data from an XMLFileType document
+   * Read the data from an XML document
    *
    * @param job
    *          the job where logging info can be written
@@ -184,7 +184,7 @@ public class XMLInputTool<S> extends TextInputTool<S> implements
       throw new UnsupportedOperationException(//
           "Cannot use tool '" + //$NON-NLS-1$
               TextUtils.className(this.getClass())
-              + " due to error in XMLFileType parser initialization.",//$NON-NLS-1$
+              + " due to error in XML parser initialization.",//$NON-NLS-1$
           this.m_cause);
     }
     super.checkCanUse();

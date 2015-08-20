@@ -13,7 +13,7 @@ import examples.org.optimizationBenchmarking.utils.io.xml.performance.exampleDoc
 
 /**
  * The serial version of the usage of
- * {@link org.optimizationBenchmarking.utils.io.xml XMLFileType API}-based
+ * {@link org.optimizationBenchmarking.utils.io.xml XML API}-based
  * serialization
  */
 public class XMLAPISerialSerialization extends SerializationMethod {

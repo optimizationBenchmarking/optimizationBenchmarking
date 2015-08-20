@@ -14,7 +14,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 import org.optimizationBenchmarking.utils.tools.spec.IFileProducerListener;
 
 /**
- * An XMLFileType I/O job builder.
+ * An XML I/O job builder.
  *
  * @param <D>
  *          the data type which can be stored

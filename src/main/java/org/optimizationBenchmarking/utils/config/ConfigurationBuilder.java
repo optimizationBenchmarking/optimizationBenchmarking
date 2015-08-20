@@ -342,8 +342,6 @@ public class ConfigurationBuilder extends BuilderFSM<Configuration> {
   /** {@inheritDoc} */
   @Override
   protected synchronized final Configuration compile() {
-    this.fsmFlagsAssert(ConfigurationBuilder.FLAG_DATA_HAS_BEEN_SET,
-        FSM.FLAG_NOTHING);
     return this.m_data;
   }
 }

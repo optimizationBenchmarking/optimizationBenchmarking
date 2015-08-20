@@ -14,7 +14,7 @@ import examples.org.optimizationBenchmarking.utils.io.xml.performance.exampleDoc
 /**
  * The multi-threaded ([@link java.util.concurrent.ForkJoinPool
  * fork-join-style}) usage of
- * {@link org.optimizationBenchmarking.utils.io.xml XMLFileType API}-based
+ * {@link org.optimizationBenchmarking.utils.io.xml XML API}-based
  * serialization
  */
 public class XMLAPIParallelSerialization extends SerializationMethod {

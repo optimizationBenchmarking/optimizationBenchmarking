@@ -54,7 +54,7 @@ public final class ColorPaletteXMLInput extends
     if (rec != null) {
       RethrowMode.AS_IO_EXCEPTION
           .rethrow(//
-              "Error during loading of the XML Schema for the color style palette XMLFileType.", //$NON-NLS-1$
+              "Error during loading of the XML Schema for the color style palette XML.", //$NON-NLS-1$
               true, rec);
     }
   }
@@ -69,7 +69,7 @@ public final class ColorPaletteXMLInput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Color Palette XMLFileType Input"; //$NON-NLS-1$
+    return "Color Palette XML Input"; //$NON-NLS-1$
   }
 
   /**

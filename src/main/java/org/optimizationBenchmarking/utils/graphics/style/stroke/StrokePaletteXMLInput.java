@@ -69,7 +69,7 @@ public final class StrokePaletteXMLInput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Stroke Palette XMLFileType Input"; //$NON-NLS-1$
+    return "Stroke Palette XML Input"; //$NON-NLS-1$
   }
 
   /**

@@ -77,10 +77,9 @@ public final class ModuleDescriptionXMLInput extends
     }
 
     if (rec != null) {
-      RethrowMode.AS_IO_EXCEPTION
-          .rethrow(//
-              "Error while loading XML Schema for evaluation configuration XMLFileType.", //$NON-NLS-1$
-              true, rec);
+      RethrowMode.AS_IO_EXCEPTION.rethrow(//
+          "Error while loading XML Schema for module description XML.", //$NON-NLS-1$
+          true, rec);
     }
   }
 

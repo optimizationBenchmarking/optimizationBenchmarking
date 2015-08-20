@@ -137,7 +137,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
     }
 
     throw new IllegalArgumentException(
-        '\'' + (o + "' cannot be serialized to bibliography XMLFileType.")); //$NON-NLS-1$
+        '\'' + (o + "' cannot be serialized to bibliography XML.")); //$NON-NLS-1$
   }
 
   /**
@@ -709,7 +709,7 @@ public final class BibliographyXMLOutput extends XMLOutputTool<Object> {
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Bibliography XMLFileType Output"; //$NON-NLS-1$
+    return "Bibliography XML Output"; //$NON-NLS-1$
   }
 
   /** {@inheritDoc} */

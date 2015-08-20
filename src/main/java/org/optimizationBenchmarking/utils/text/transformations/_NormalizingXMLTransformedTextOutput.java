@@ -8,8 +8,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /**
  * An implementation of
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
- * which first normalizes a text and then transforms it to XMLFileType
- * entities and writes it to its output.
+ * which first normalizes a text and then transforms it to XML entities and
+ * writes it to its output.
  *
  * @author Thomas Weise
  */

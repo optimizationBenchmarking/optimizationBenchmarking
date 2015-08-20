@@ -7,7 +7,7 @@ import org.optimizationBenchmarking.utils.io.xml.XMLDocument;
 import org.optimizationBenchmarking.utils.io.xml.XMLElement;
 
 /**
- * A first example for the hierarchical XMLFileType API.
+ * A first example for the hierarchical XML API.
  */
 public final class Example1 {
 

@@ -14,11 +14,11 @@ import examples.org.optimizationBenchmarking.utils.io.xml.performance.serializer
 import examples.org.optimizationBenchmarking.utils.io.xml.performance.serializers.XMLStreamWriterSerialization;
 
 /**
- * An &quot;example document&quot; is an example for what a potential
- * XMLFileType output could be. Example documents are randomly generated
- * and contain a given amount of hierarchically nested nodes. Each node may
- * have some attributes and contain a text. The attribute text and the
- * element text is represented by an object and obtained by the
+ * An &quot;example document&quot; is an example for what a potential XML
+ * output could be. Example documents are randomly generated and contain a
+ * given amount of hierarchically nested nodes. Each node may have some
+ * attributes and contain a text. The attribute text and the element text
+ * is represented by an object and obtained by the
  * {@link java.lang.Object#toString()} method. This method may have some
  * delay, as it would also be the case when generating and serializing
  * data.

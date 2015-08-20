@@ -66,21 +66,23 @@ public final class EvaluationXMLOutput extends
       rootConfig = data.getConfiguration();
       cxo = ConfigurationXMLOutput.getInstance();
 
-      cxo.use().setLogger(job.getLogger()).setSource(rootConfig)
-          .setWriter(root).create().call();
+      if (!(rootConfig.isEmpty())) {
+        cxo.use().setLogger(job.getLogger()).setSource(rootConfig)
+            .setWriter(root).create().call();
+      }
 
       for (final ModuleEntry module : data.getEntries()) {
-        try (final XMLElement param = root.element()) {
-          param.name(EvaluationXML.NAMESPACE_URI,
+        try (final XMLElement moduleElement = root.element()) {
+          moduleElement.name(EvaluationXML.NAMESPACE_URI,
               EvaluationXML.ELEMENT_MODULE);
 
-          param.attributeEncoded(EvaluationXML.NAMESPACE_URI,
+          moduleElement.attributeEncoded(EvaluationXML.NAMESPACE_URI,
               EvaluationXML.ATTRIBUTE_CLASS,
               TextUtils.className(module.getModule().getClass()));
           config = module.getConfiguration();
-          if (config != rootConfig) {
+          if ((config != rootConfig) && (!(config.isEmpty()))) {
             cxo.use().setLogger(job.getLogger()).setSource(config)
-                .setWriter(root).create().call();
+                .setWriter(moduleElement).create().call();
           }
         }
       }

@@ -9,7 +9,7 @@ import org.optimizationBenchmarking.utils.io.xml.XMLDocument;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
- * A tool for generating XMLFileType output
+ * A tool for generating XML output
  *
  * @param <S>
  *          the source type
@@ -47,7 +47,7 @@ public class XMLOutputTool<S> extends TextOutputTool<S> implements
   }
 
   /**
-   * Store the data element to an XMLFileType document or document fragment
+   * Store the data element to an XML document or document fragment
    *
    * @param job
    *          the job where logging info can be written

@@ -97,9 +97,8 @@ public enum EGraphicFormat implements IFileType {
    * href="http://en.wikipedia.org/wiki/Scalable_Vector_Graphics">SVG</a>
    * format is a <a
    * href="http://en.wikipedia.org/wiki/Vector_graphics">vector graphic</a>
-   * format intended for the web. It is based on XMLFileType and browser
-   * support is now increasing, although not all browsers can display SVGs
-   * properly.
+   * format intended for the web. It is based on XML and browser support is
+   * now increasing, although not all browsers can display SVGs properly.
    */
   SVG("Scalable Vector Graphics", true,//$NON-NLS-1$
       "svg", "image/svg+xml") { //$NON-NLS-1$//$NON-NLS-2$

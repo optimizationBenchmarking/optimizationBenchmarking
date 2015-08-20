@@ -4,12 +4,12 @@ import org.optimizationBenchmarking.utils.hierarchy.HierarchicalFSM;
 import org.optimizationBenchmarking.utils.hierarchy.HierarchicalText;
 
 /**
- * The base class for all elements of our XMLFileType output API.
+ * The base class for all elements of our XML output API.
  */
 public class XMLBase extends HierarchicalText {
 
   /**
-   * Create the hierarchical XMLFileType writer
+   * Create the hierarchical XML writer
    *
    * @param owner
    *          the owning hierarchical fsm

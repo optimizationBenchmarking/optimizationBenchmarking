@@ -69,6 +69,17 @@ public final class ModuleEntryBuilder extends
         .parseString(module));
   }
 
+  /**
+   * Get the module which was previously set
+   *
+   * @return the previously set module
+   */
+  public synchronized final IEvaluationModule getModule() {
+    this.fsmStateAssert(BuilderFSM.STATE_OPEN);
+    this.fsmFlagsAssertTrue(ModuleEntryBuilder.FLAG_MODULE_SET);
+    return this.m_module;
+  }
+
   /** {@inheritDoc} */
   @SuppressWarnings("resource")
   @Override

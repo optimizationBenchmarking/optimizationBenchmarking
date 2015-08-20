@@ -17,7 +17,7 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
  */
 public enum DocumentXML implements IXMLFileType {
 
-  /** the document XMLFileType file type */
+  /** the document XML file type */
   DOCUMENT_XML;
 
   /** the namespace uri */

@@ -81,7 +81,7 @@ public final class BibliographyXMLInput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Bibliography XMLFileType Input"; //$NON-NLS-1$
+    return "Bibliography XML Input"; //$NON-NLS-1$
   }
 
   /** the loader */

@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * <p>
  * The base class for &quot;hierarchical&quot; APIs. Several APIs are
  * hierarchical by nature, but usually defined in a flat way. The creation
- * of XMLFileType documents is an example for this, or the creation of
+ * of XML documents is an example for this, or the creation of
  * {@link org.optimizationBenchmarking.utils.bibliography bibliographic
  * data}. The idea of our hierarchical API &ndash; discussed <a
  * href="http://blog.it-weise.de/p/347">here</a> &ndash; is that we are
@@ -23,8 +23,7 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * machine.
  * </p>
  * <p>
- * You can imagine it like StAX XMLFileType writing, where the you can
- * declare the
+ * You can imagine it like StAX XML writing, where the you can declare the
  * {@link javax.xml.stream.XMLStreamWriter#writeStartElement(String) start}
  * and the {@link javax.xml.stream.XMLStreamWriter#writeEndElement() end}
  * of an element by calling a

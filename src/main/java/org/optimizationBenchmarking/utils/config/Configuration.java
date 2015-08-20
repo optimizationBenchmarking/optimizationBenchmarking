@@ -625,6 +625,19 @@ public final class Configuration implements Serializable, ITextable {
     }
   }
 
+  /**
+   * Check whether this configuration is empty. This only checks the
+   * current configuration, not its parent configurations.
+   *
+   * @return {@code true} if this configuration is empty, {@code false} if
+   *         it contains at least one parameter
+   */
+  public final boolean isEmpty() {
+    synchronized (this.m_data) {
+      return this.m_data.isEmpty();
+    }
+  }
+
   /** {@inheritDoc} */
   @Override
   public final String toString() {
@@ -690,5 +703,14 @@ public final class Configuration implements Serializable, ITextable {
     }
     throw new IllegalStateException(//
         "The root configuration can only be setup at most once."); //$NON-NLS-1$
+  }
+
+  /**
+   * Get an empty configuration.
+   *
+   * @return the empty configuration
+   */
+  public static final Configuration createEmpty() {
+    return new Configuration();
   }
 }

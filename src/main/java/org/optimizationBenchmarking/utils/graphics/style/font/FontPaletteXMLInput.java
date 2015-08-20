@@ -68,7 +68,7 @@ public final class FontPaletteXMLInput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Font Palette XMLFileType Input"; //$NON-NLS-1$
+    return "Font Palette XML Input"; //$NON-NLS-1$
   }
 
   /**

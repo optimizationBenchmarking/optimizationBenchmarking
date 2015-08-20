@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/** A stack-able XMLFileType handler for configuration XMLFileType data */
+/** A stack-able XML handler for configuration XML data */
 public class ConfigurationXMLHandler extends DelegatingHandler {
 
   /** the destination configuration builder */

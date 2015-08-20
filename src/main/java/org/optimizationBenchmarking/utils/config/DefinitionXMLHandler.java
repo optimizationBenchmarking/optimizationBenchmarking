@@ -8,7 +8,7 @@ import org.optimizationBenchmarking.utils.reflection.ReflectionUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/** A stack-able XMLFileType handler for configuration XMLFileType data */
+/** A stack-able XML handler for definition XML data */
 public class DefinitionXMLHandler extends DelegatingHandler {
 
   /** the destination configuration builder */

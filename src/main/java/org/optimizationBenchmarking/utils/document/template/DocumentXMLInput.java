@@ -83,7 +83,7 @@ public final class DocumentXMLInput extends
   /** {@inheritDoc} */
   @Override
   public final String toString() {
-    return "Document Template XMLFileType Input"; //$NON-NLS-1$
+    return "Document Template XML Input"; //$NON-NLS-1$
   }
 
   /** the loader for lazy initialization */

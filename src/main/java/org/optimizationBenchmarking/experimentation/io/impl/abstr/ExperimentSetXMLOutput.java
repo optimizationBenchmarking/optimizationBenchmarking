@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetOutput
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLOutputTool;
 
 /**
- * An XMLFileType-based experiment output tool.
+ * An XML-based experiment output tool.
  *
  * @param <T>
  *          the experiment data type supported for output

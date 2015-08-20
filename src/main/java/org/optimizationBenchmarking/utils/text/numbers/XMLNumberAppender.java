@@ -4,7 +4,7 @@ import org.optimizationBenchmarking.utils.text.ETextCase;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
- * A number appender designed for XMLFileType data.
+ * A number appender designed for XML data.
  */
 public final class XMLNumberAppender extends _PlainIntNumberAppender {
 
