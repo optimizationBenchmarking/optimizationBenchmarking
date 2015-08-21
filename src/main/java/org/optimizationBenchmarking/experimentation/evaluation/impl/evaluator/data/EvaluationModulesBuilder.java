@@ -1,6 +1,6 @@
 package org.optimizationBenchmarking.experimentation.evaluation.impl.evaluator.data;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
@@ -24,7 +24,7 @@ public final class EvaluationModulesBuilder extends
   private Configuration m_root;
 
   /** the entries */
-  private LinkedHashSet<ModuleEntry> m_entries;
+  private ArrayList<ModuleEntry> m_entries;
 
   /** create the modules builder */
   public EvaluationModulesBuilder() {
@@ -39,7 +39,7 @@ public final class EvaluationModulesBuilder extends
    */
   public EvaluationModulesBuilder(final HierarchicalFSM owner) {
     super(owner);
-    this.m_entries = new LinkedHashSet<>();
+    this.m_entries = new ArrayList<>();
     this.open();
   }
 
@@ -182,7 +182,7 @@ public final class EvaluationModulesBuilder extends
   @Override
   protected final EvaluationModules compile() {
     final Configuration config;
-    LinkedHashSet<ModuleEntry> list;
+    ArrayList<ModuleEntry> list;
     ArrayListView<ModuleEntry> view;
 
     config = this._getConfiguration();
