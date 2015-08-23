@@ -26,8 +26,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * All using FreeHEP should thus synchronize on
  * <code>{@link org.freehep.graphicsio.PageConstants}.class</code> during
  * all code accessing page sizes. This driver has some problems, see, e.g.,
- * {@link examples.org.optimizationBenchmarking.utils.graphics.GraphicsExample}
- * .
+ * the examples.
  */
 public final class FreeHEPPDFGraphicDriver extends AbstractGraphicDriver {
   /** the correct dimension to use */
