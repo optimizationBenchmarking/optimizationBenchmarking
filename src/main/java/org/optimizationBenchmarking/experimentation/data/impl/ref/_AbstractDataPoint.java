@@ -335,7 +335,7 @@ abstract class _AbstractDataPoint extends DataPoint {
     return hashCode;
   }
 
-  /** {@inherintDoc} */
+  /** {@inheritDoc} */
   @Override
   public final void toText(final ITextOutput textOut) {
     final int size;

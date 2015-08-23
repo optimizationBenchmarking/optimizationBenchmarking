@@ -163,8 +163,7 @@ public abstract class StatisticalParameter implements
    * dimensions {@code timeDim} in any of the provided matrices and
    * aggregate the corresponding values in dimension {@code aggregateDim}.
    * The term "corresponding" is based on the behavior of the
-   * {@org.optimizationBenchmarking.utils.math.matrix.processing.iterator2D.MatrixIterator2D
-   * 
+   * {@link org.optimizationBenchmarking.utils.math.matrix.processing.iterator2D.MatrixIterator2D
    * matrix iterator}.
    *
    * @param matrices
@@ -193,8 +192,7 @@ public abstract class StatisticalParameter implements
    * dimensions {@code timeDim} in any of the provided matrices and
    * aggregate the corresponding values in dimension {@code aggregateDim}.
    * The term "corresponding" is based on the behavior of the
-   * {@org.optimizationBenchmarking.utils.math.matrix.processing.iterator2D.MatrixIterator2D
-   * 
+   * {@link org.optimizationBenchmarking.utils.math.matrix.processing.iterator2D.MatrixIterator2D
    * matrix iterator}.
    *
    * @param matrices

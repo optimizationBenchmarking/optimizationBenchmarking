@@ -22,7 +22,7 @@ public interface ISemanticComponent {
    * display mathematical} or
    * {@link org.optimizationBenchmarking.utils.document.spec.IComplexText#emphasize()
    * emphasized} text.
-   * <p>
+   * </p>
    * <p>
    * A short name might be something like "ECDF".
    * </p>
@@ -68,7 +68,7 @@ public interface ISemanticComponent {
   /**
    * Print the description of this semantic component. The description is
    * usually at least one sentence of text.
-   * 
+   *
    * @param textOut
    *          the text output device
    * @param textCase

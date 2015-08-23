@@ -684,11 +684,11 @@ public final class FontStyleBuilder extends
   /**
    * Some of the standard fonts for publications only support a weird
    * subset of the Unicode character set: The cmr fonts, for instance do
-   * not have glyphs for "<", the "less-or-equal"-symbol, "²", or "{" and
-   * "}". These symbols will be rendered as empty rectangles, which kind of
-   * messes up the experience. With the method call below, we obtain a
-   * composite font where these missing glyphs are replaced with glyphs of
-   * another font.
+   * not have glyphs for "&lt;", the "less-or-equal"-symbol, "&#xb2;", or
+   * "{" and "}". These symbols will be rendered as empty rectangles, which
+   * kind of messes up the experience. With the method call below, we
+   * obtain a composite font where these missing glyphs are replaced with
+   * glyphs of another font.
    *
    * @param font
    *          the original font

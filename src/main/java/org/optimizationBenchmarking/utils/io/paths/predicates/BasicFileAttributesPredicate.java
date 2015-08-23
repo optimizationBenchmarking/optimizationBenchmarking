@@ -18,13 +18,16 @@ public abstract class BasicFileAttributesPredicate implements
 
   /**
    * Check the predicate by obtaining the attributes from a path and
-   * passing them to {@link #check(BasicFileAttributes)}.
+   * passing them to
+   * {@link org.optimizationBenchmarking.utils.predicates.IPredicate#check(Object)}
+   * .
    *
    * @param path
    *          the path
    * @return {@code true} if the attributes of the path could successfully
-   *         be obtained and {@link #check(BasicFileAttributes)} returns
-   *         {@code true}, {@code false} otherwise
+   *         be obtained and
+   *         {@link org.optimizationBenchmarking.utils.predicates.IPredicate#check(Object)}
+   *         returns {@code true}, {@code false} otherwise
    */
   public final boolean check(final Path path) {
     final BasicFileAttributes bfa;
