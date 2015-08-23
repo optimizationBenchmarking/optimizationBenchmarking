@@ -443,6 +443,10 @@ public class ArrayListView<DT> extends BasicList<DT> implements IImmutable {
       return ((ArrayListView) (ArraySetView.EMPTY_SET_VIEW));
     }
 
+    if (collection instanceof ArrayListView) {
+      return ((ArrayListView) collection);
+    }
+
     l = new ArrayListView(collection.toArray(new Object[s]));
     return l;
   }
