@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.io.impl.edi;
 
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput;
 
 /**
@@ -8,8 +9,8 @@ import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput;
  * {@link org.optimizationBenchmarking.experimentation.data experiment data
  * structures}.
  */
-public final class EDIInput extends EDIInputToolBase implements
-IExperimentSetInput {
+public final class EDIInput extends EDIInputToolBase<ExperimentSetContext>
+    implements IExperimentSetInput {
 
   /** create */
   EDIInput() {

@@ -110,8 +110,8 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * </li>
  * </ol>
  */
-public final class CSVEDIInput extends EDIInputToolBase implements
-    IExperimentSetInput {
+public final class CSVEDIInput extends
+    EDIInputToolBase<ExperimentSetContext> implements IExperimentSetInput {
 
   /** the base name for dimensions files */
   private static final String DIMENSIONS_BASE = "dimensions"; //$NON-NLS-1$

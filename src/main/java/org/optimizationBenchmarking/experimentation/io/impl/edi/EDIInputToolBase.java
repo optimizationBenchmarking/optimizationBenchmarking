@@ -9,6 +9,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.io.impl.AbstractFlatExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.impl.FlatExperimentSetContext;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
@@ -22,9 +23,14 @@ import org.xml.sax.helpers.DefaultHandler;
  * {@link org.optimizationBenchmarking.experimentation.data experiment data
  * structures}. The goal of having this base class is to be able to combine
  * several different formats with EDI.
+ *
+ * @param <T>
+ *          the type of element to fill with data, usually a subclass of
+ *          {@link org.optimizationBenchmarking.experimentation.io.impl.AbstractFlatExperimentSetContext}
+ *          or
+ *          {@link org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext}
  */
-public abstract class EDIInputToolBase extends
-    XMLInputTool<ExperimentSetContext> {
+public abstract class EDIInputToolBase<T> extends XMLInputTool<T> {
 
   /** create */
   protected EDIInputToolBase() {
@@ -76,8 +82,7 @@ public abstract class EDIInputToolBase extends
    * @throws Throwable
    *           if something goes wrong
    */
-  protected boolean isEDI(final IOJob job,
-      final ExperimentSetContext data, final Path path,
+  protected boolean isEDI(final IOJob job, final T data, final Path path,
       final BasicFileAttributes attributes) throws Throwable {
     final String n;
     final char lm3, lm2, lm1, lm0;
@@ -109,8 +114,8 @@ public abstract class EDIInputToolBase extends
   /** {@inheritDoc} */
   @Override
   protected boolean isFileInDirectoryLoadable(final IOJob job,
-      final ExperimentSetContext data, final Path path,
-      final BasicFileAttributes attributes) throws Throwable {
+      final T data, final Path path, final BasicFileAttributes attributes)
+      throws Throwable {
     if (super.isFileInDirectoryLoadable(job, data, path, attributes)) {
       return this.isEDI(job, data, path, attributes);
     }
@@ -119,23 +124,31 @@ public abstract class EDIInputToolBase extends
 
   /** {@inheritDoc} */
   @Override
-  protected final DefaultHandler wrapDestination(
-      final ExperimentSetContext dataDestination, final IOJob job) {
+  protected final DefaultHandler wrapDestination(final T dataDestination,
+      final IOJob job) {
     return new _EDIContentHandler(null,
-        ((FlatExperimentSetContext) (job.getToken())), job);
+        ((AbstractFlatExperimentSetContext) (job.getToken())), job);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected FlatExperimentSetContext createToken(final IOJob job,
-      final ExperimentSetContext data) throws Throwable {
-    return new FlatExperimentSetContext(data);
+  protected AbstractFlatExperimentSetContext createToken(final IOJob job,
+      final T data) throws Throwable {
+    if (data instanceof ExperimentSetContext) {
+      return new FlatExperimentSetContext((ExperimentSetContext) data);
+    }
+    if (data instanceof AbstractFlatExperimentSetContext) {
+      return ((AbstractFlatExperimentSetContext) data);
+    }
+    throw new IllegalArgumentException(//
+        "Data element '" + data + //$NON-NLS-1$
+            "' is not supported as input destation by " + //$NON-NLS-1$
+            this.getClass().getSimpleName());
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void after(final IOJob job, final ExperimentSetContext data)
-      throws Throwable {
+  protected void after(final IOJob job, final T data) throws Throwable {
     ((FlatExperimentSetContext) (job.getToken())).flush();
     super.after(job, data);
   }

@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.io.impl.edi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.io.impl.FlatExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.io.impl.AbstractFlatExperimentSetContext;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;
@@ -21,7 +21,7 @@ import org.xml.sax.SAXParseException;
 final class _EDIContentHandler extends DelegatingHandler {
 
   /** the hierarchical fsm stack */
-  private final FlatExperimentSetContext m_context;
+  private final AbstractFlatExperimentSetContext m_context;
 
   /** the internal string builder */
   private final MemoryTextOutput m_sb;
@@ -45,7 +45,7 @@ final class _EDIContentHandler extends DelegatingHandler {
    *          the job
    */
   public _EDIContentHandler(final DelegatingHandler owner,
-      final FlatExperimentSetContext esb, final IOJob job) {
+      final AbstractFlatExperimentSetContext esb, final IOJob job) {
     super(owner);
     this.m_context = esb;
     this.m_sb = new MemoryTextOutput();
