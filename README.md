@@ -4,7 +4,7 @@
 [<img alt="Codeship Build Status" src="https://img.shields.io/codeship/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05.svg" height="20"/>](https://codeship.com/projects/40b0dfd0-b2aa-0132-9d6a-62be5ffebe05/status?branch=master)
 [<img alt="CircleCI Build Status" src="https://img.shields.io/circleci/project/optimizationBenchmarking/optimizationBenchmarking.svg" height="20"/>](https://circleci.com/gh/optimizationBenchmarking/optimizationBenchmarking)
 [<img alt="Semaphore Build Status" src="https://semaphoreci.com/api/v1/projects/7e98df8c-dc67-416f-a660-cb6f803fc3cf/380468/shields_badge.svg" height="20"/>](https://semaphoreci.com/thomasweise/optimizationbenchmarking)
-[<img alt="Snap CI Build Status" src="https://snap-ci.com/optimizationBenchmarking/optimizationBenchmarking/branch/master/build_image" height="20"/>](https://snap-ci.com/optimizationBenchmarking/optimizationBenchmarking/branch/master)
+[<img alt="Snap CI Build Status" src="https://img.shields.io/snap-ci/optimizationBenchmarking/optimizationBenchmarking/master.svg" height="20"/>](https://snap-ci.com/optimizationBenchmarking/optimizationBenchmarking/branch/master)
 
 
 
