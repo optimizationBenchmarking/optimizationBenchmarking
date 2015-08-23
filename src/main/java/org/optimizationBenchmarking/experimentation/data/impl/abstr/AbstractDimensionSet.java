@@ -11,7 +11,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IDimensionSet}
  * interface.
  */
-public class AbstractDimensionSet extends AbstractNamedElementSet
+public abstract class AbstractDimensionSet extends AbstractNamedElementSet
     implements IDimensionSet {
 
   /** the owning experiment set */
@@ -29,6 +29,28 @@ public class AbstractDimensionSet extends AbstractNamedElementSet
   protected AbstractDimensionSet(final IExperimentSet owner) {
     super();
     this.m_owner = owner;
+  }
+
+  /**
+   * Own an
+   * {@link org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractDimension}
+   * .
+   *
+   * @param dimension
+   *          the dimension to own
+   */
+  protected final void own(final AbstractDimension dimension) {
+    if (dimension == null) {
+      throw new IllegalArgumentException(//
+          "AbstractDimension to be owned by AbstractDimensionSet cannot be null."); //$NON-NLS-1$
+    }
+    synchronized (dimension) {
+      if (dimension.m_owner != null) {
+        throw new IllegalArgumentException(//
+            "AbstractDimension to be owned by AbstractDimensionSet already owned.");//$NON-NLS-1$
+      }
+      dimension.m_owner = this;
+    }
   }
 
   /** {@inheritDoc} */

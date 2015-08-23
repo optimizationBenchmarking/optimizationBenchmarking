@@ -7,6 +7,7 @@ import org.optimizationBenchmarking.utils.document.impl.SemanticComponentUtils;
 import org.optimizationBenchmarking.utils.document.spec.IMath;
 import org.optimizationBenchmarking.utils.math.text.IParameterRenderer;
 import org.optimizationBenchmarking.utils.text.ETextCase;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
 /**
@@ -14,12 +15,48 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.INamedElement}
  * interface.
  */
-public class AbstractNamedElement extends DataElement implements
+public abstract class AbstractNamedElement extends DataElement implements
     INamedElement {
 
   /** Create the abstract named element. */
   protected AbstractNamedElement() {
     super();
+  }
+
+  /**
+   * Validate and format a name.
+   *
+   * @param name
+   *          the name
+   * @return the formatted name
+   */
+  protected static final String formatName(final String name) {
+    final String ret;
+    ret = TextUtils.prepare(name);
+    if (name == null) {
+      throw new IllegalArgumentException(//
+          "The name cannot null, empty, or just consist of white space, but '" //$NON-NLS-1$
+              + name + "' is."); //$NON-NLS-1$
+    }
+    return ret;
+  }
+
+  /**
+   * Validate and format a description
+   *
+   * @param description
+   *          the description
+   * @return the formatted description
+   */
+  protected static final String formatDescription(final String description) {
+    final String ret;
+    ret = TextUtils.prepare(description);
+    if (description == null) {
+      throw new IllegalArgumentException(//
+          "The description cannot null, empty, or just consist of white space, but '" //$NON-NLS-1$
+              + description + "' is."); //$NON-NLS-1$
+    }
+    return ret;
   }
 
   /** {@inheritDoc} */

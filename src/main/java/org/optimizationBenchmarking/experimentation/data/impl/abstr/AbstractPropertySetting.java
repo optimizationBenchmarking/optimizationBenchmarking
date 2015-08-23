@@ -18,7 +18,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IPropertySetting}
  * interface.
  */
-public class AbstractPropertySetting extends
+public abstract class AbstractPropertySetting extends
     AbstractMap<IProperty, Object> implements IPropertySetting {
 
   /**

@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.comparison.EComparison;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IParameter}
  * interface.
  */
-public class AbstractParameter extends AbstractProperty implements
+public abstract class AbstractParameter extends AbstractProperty implements
     IParameter {
 
   /** the owner */

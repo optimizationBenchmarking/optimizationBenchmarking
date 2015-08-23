@@ -11,8 +11,8 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet}
  * interface.
  */
-public class AbstractInstanceSet extends AbstractNamedElementSet implements
-    IInstanceSet {
+public abstract class AbstractInstanceSet extends AbstractNamedElementSet
+    implements IInstanceSet {
 
   /** the owning experiment set */
   IExperimentSet m_owner;

@@ -8,8 +8,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IFeatureValue}
  * interface.
  */
-public class AbstractFeatureValue extends AbstractPropertyValue implements
-    IFeatureValue {
+public abstract class AbstractFeatureValue extends AbstractPropertyValue
+    implements IFeatureValue {
 
   /** the owning feature */
   IFeature m_owner;

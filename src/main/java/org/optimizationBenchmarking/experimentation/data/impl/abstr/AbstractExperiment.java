@@ -17,8 +17,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IExperiment}
  * interface.
  */
-public class AbstractExperiment extends AbstractElementSet implements
-    IExperiment {
+public abstract class AbstractExperiment extends AbstractElementSet
+implements IExperiment {
 
   /** the owner */
   IExperimentSet m_owner;

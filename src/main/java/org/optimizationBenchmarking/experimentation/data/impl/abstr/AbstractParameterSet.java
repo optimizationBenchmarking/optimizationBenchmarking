@@ -12,7 +12,7 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IParameterSet}
  * interface.
  */
-public class AbstractParameterSet extends
+public abstract class AbstractParameterSet extends
     _AbstractPropertySet<IParameterSetting> implements IParameterSet {
 
   /**

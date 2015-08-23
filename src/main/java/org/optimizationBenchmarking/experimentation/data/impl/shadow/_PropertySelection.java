@@ -30,7 +30,7 @@ abstract class _PropertySelection<PST extends IPropertySet, PT extends IProperty
   /** {@inheritDoc} */
   @Override
   final boolean _checkCanAddSub(final PVT value) {
-    return (super._checkCanAddSub(value) && _PropertyValueSelection
-        ._canAdd(value));
+    return (super._checkCanAddSub(value) && //
+    _PropertyValueSelection._canAdd(value));
   }
 }

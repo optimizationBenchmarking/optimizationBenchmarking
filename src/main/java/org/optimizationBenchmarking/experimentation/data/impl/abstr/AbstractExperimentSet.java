@@ -15,8 +15,8 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet}
  * interface.
  */
-public class AbstractExperimentSet extends AbstractNamedElementSet
-    implements IExperimentSet {
+public abstract class AbstractExperimentSet extends
+    AbstractNamedElementSet implements IExperimentSet {
 
   /** create */
   protected AbstractExperimentSet() {

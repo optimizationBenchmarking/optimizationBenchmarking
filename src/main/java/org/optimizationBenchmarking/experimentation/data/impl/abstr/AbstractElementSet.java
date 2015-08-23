@@ -11,7 +11,8 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IElementSet}
  * interface.
  */
-public class AbstractElementSet extends DataElement implements IElementSet {
+public abstract class AbstractElementSet extends DataElement implements
+IElementSet {
 
   /** create */
   protected AbstractElementSet() {

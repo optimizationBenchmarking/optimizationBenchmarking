@@ -10,8 +10,8 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.INamedElementSet}
  * interface.
  */
-public class AbstractNamedElementSet extends AbstractElementSet implements
-    INamedElementSet {
+public abstract class AbstractNamedElementSet extends AbstractElementSet
+    implements INamedElementSet {
 
   /** create */
   protected AbstractNamedElementSet() {

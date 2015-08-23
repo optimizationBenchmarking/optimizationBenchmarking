@@ -11,7 +11,8 @@ import org.optimizationBenchmarking.utils.collections.lists.ArraySetView;
  * {@link org.optimizationBenchmarking.experimentation.data.spec.IFeature}
  * interface.
  */
-public class AbstractFeature extends AbstractProperty implements IFeature {
+public abstract class AbstractFeature extends AbstractProperty implements
+    IFeature {
 
   /** the owner */
   IFeatureSet m_owner;
