@@ -1,6 +1,5 @@
 package org.optimizationBenchmarking.experimentation.io.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.optimizationBenchmarking.experimentation.data.impl.ref.DataPoint;
@@ -8,6 +7,7 @@ import org.optimizationBenchmarking.experimentation.data.impl.ref.Dimension;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionContext;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.DimensionSet;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentContext;
+import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.FeatureSet;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
@@ -27,7 +27,8 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
  * hierarchical experiment data API. It must be used strictly sequentially,
  * as opposed to the parallel hierarchical API.
  */
-public class FlatExperimentSetContext {
+public class FlatExperimentSetContext extends
+    AbstractFlatExperimentSetContext {
 
   /** we are in the experiment set */
   private static final int MODE_EXPERIMENT_SET = 0;
@@ -55,7 +56,7 @@ public class FlatExperimentSetContext {
   }
 
   /** the hierarchical fsm stack */
-  private final ExperimentSetContext m_main;
+  private ExperimentSetContext m_main;
 
   /** the current mode */
   private int m_mode;
@@ -87,8 +88,11 @@ public class FlatExperimentSetContext {
   /** the run context */
   private RunContext m_run;
 
-  /** the external object id */
-  private final ArrayList<Object> m_external;
+  /** Create the experiment data parser */
+  @SuppressWarnings("resource")
+  public FlatExperimentSetContext() {
+    this(new ExperimentSetContext());
+  }
 
   /**
    * Create the experiment data parser
@@ -106,44 +110,10 @@ public class FlatExperimentSetContext {
 
     this.m_main = context;
     this.m_mode = FlatExperimentSetContext.MODE_EXPERIMENT_SET;
-
-    this.m_external = new ArrayList<>();
   }
 
-  /**
-   * Push an external id onto the id stack
-   *
-   * @param id
-   *          the id to be pushed
-   */
-  public synchronized final void idPush(final Object id) {
-    if (id == null) {
-      throw new IllegalArgumentException(this.__errorLocation(
-          "Object id to be pushed cannot be null.", //$NON-NLS-1$
-          false));
-    }
-    this.m_external.add(id);
-  }
-
-  /**
-   * Pop an external id onto the id stack
-   */
-  public synchronized final void idPop() {
-    final int size;
-
-    size = this.m_external.size();
-    if (size <= 0) {
-      throw new IllegalArgumentException(this.__errorLocation(
-          "Cannot pop external id: id stack is empty.", //$NON-NLS-1$
-          false));
-    }
-    this.m_external.remove(size - 1);
-  }
-
-  /**
-   * Close all open contexts <em>except</em> the root experiment set
-   * context
-   */
+  /** {@inheritDoc} */
+  @Override
   @SuppressWarnings({ "incomplete-switch", "fallthrough" })
   public synchronized final void flush() {
 
@@ -241,7 +211,6 @@ public class FlatExperimentSetContext {
   private final String __errorLocation(final String error,
       final boolean hasCause) {
     final MemoryTextOutput mto;
-    int i;
 
     if (error != null) {
       mto = new MemoryTextOutput(error.length() + 512);
@@ -294,14 +263,6 @@ public class FlatExperimentSetContext {
         }
         break;
       }
-    }
-
-    i = this.m_external.size();
-    if (i > 0) {
-      mto.append(//
-      ". The id of the most recently used external data source is '");//$NON-NLS-1$
-      mto.append(this.m_external.get(i - 1));
-      mto.append('\'');
     }
 
     if (hasCause) {
@@ -365,19 +326,14 @@ public class FlatExperimentSetContext {
     return this.m_dimension;
   }
 
-  /**
-   * Begin a (new?) dimension
-   *
-   * @param forceNew
-   *          {@code true}: close a potentially existing dimension context
-   *          and open a new one, {@code false}: keep a potentially open
-   *          context
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionBegin(final boolean forceNew) {
     this.__dimensionEnsure(forceNew);
   }
 
-  /** End the current dimension */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionEnd() {
     switch (this.m_mode) {
       case MODE_EXPERIMENT_SET: {
@@ -407,13 +363,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the name of the current dimension. If we currently are not in a
-   * dimension context, try to create one.
-   *
-   * @param name
-   *          the name of the current dimension
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionSetName(final String name) {
     final DimensionContext context;
 
@@ -428,13 +379,8 @@ public class FlatExperimentSetContext {
     this.m_dimensionName = name;
   }
 
-  /**
-   * Set the description of the current dimension. If we currently are not
-   * in a dimension context, try to create one.
-   *
-   * @param description
-   *          the description of the current dimension
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionSetDescription(
       final String description) {
     final DimensionContext context;
@@ -449,13 +395,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Add some text to the description of the current dimension. If we
-   * currently are not in a dimension context, try to create one.
-   *
-   * @param description
-   *          the description to be added the current dimension
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionAddDescription(
       final String description) {
     final DimensionContext context;
@@ -470,13 +411,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the direction of the current dimension. If we currently are not in
-   * a dimension context, try to create one.
-   *
-   * @param direction
-   *          the direction of the current dimension
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionSetDirection(
       final String direction) {
     final DimensionContext context;
@@ -491,13 +427,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the direction of the current dimension. If we currently are not in
-   * a dimension context, try to create one.
-   *
-   * @param direction
-   *          the direction of the current dimension
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionSetDirection(
       final EDimensionDirection direction) {
     final DimensionContext context;
@@ -512,17 +443,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the parser of the current dimension. If we currently are not in a
-   * dimension context, try to create one.
-   *
-   * @param parserClass
-   *          the parser class: must take two numbers as parameter
-   * @param lowerBound
-   *          the lower boundary
-   * @param upperBound
-   *          the upper boundary
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionSetParser(
       final Class<? extends NumberParser<?>> parserClass,
       final Number lowerBound, final Number upperBound) {
@@ -541,13 +463,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the parser of the current dimension. If we currently are not in a
-   * dimension context, try to create one.
-   *
-   * @param parser
-   *          the parser of the current dimension
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionSetParser(
       final NumberParser<?> parser) {
     final DimensionContext context;
@@ -562,17 +479,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the parser of the current dimension. If we currently are not in a
-   * dimension context, try to create one.
-   *
-   * @param parserClass
-   *          the parser class: must take two numbers as parameter
-   * @param lowerBound
-   *          the lower boundary
-   * @param upperBound
-   *          the upper boundary
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionSetParser(
       final String parserClass, final String lowerBound,
       final String upperBound) {
@@ -590,13 +498,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the parser of the current dimension. If we currently are not in a
-   * dimension context, try to create one.
-   *
-   * @param parser
-   *          the parser of the current dimension
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionSetParser(final String parser) {
     final DimensionContext context;
 
@@ -610,13 +513,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the type of the current dimension. If we currently are not in a
-   * dimension context, try to create one.
-   *
-   * @param type
-   *          the type of the current dimension
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionSetType(final EDimensionType type) {
     final DimensionContext context;
 
@@ -630,13 +528,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the type of the current dimension. If we currently are not in a
-   * dimension context, try to create one.
-   *
-   * @param type
-   *          the type of the current dimension
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void dimensionSetType(final String type) {
     final DimensionContext context;
 
@@ -650,12 +543,9 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Obtain the set of all dimensions
-   *
-   * @return the set of all dimensions
-   */
-  public synchronized final DimensionSet dimensionGetAll() {
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final DimensionSet getDimensionSet() {
     try {
       return this.m_main.getDimensionSet();
     } catch (final Throwable error) {
@@ -665,14 +555,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Define an instance feature with a given name and description
-   *
-   * @param name
-   *          the feature name
-   * @param desc
-   *          the feature's description
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void featureDeclare(final String name,
       final String desc) {
 
@@ -712,14 +596,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Define a parameter with a given name and description
-   *
-   * @param name
-   *          the parameter name
-   * @param desc
-   *          the parameter's description
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void parameterDeclare(final String name,
       final String desc) {
 
@@ -851,19 +729,14 @@ public class FlatExperimentSetContext {
     return this.m_instance;
   }
 
-  /**
-   * Begin a (new?) instance
-   *
-   * @param forceNew
-   *          {@code true}: close a potentially existing instance context
-   *          and open a new one, {@code false}: keep a potentially open
-   *          context
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void instanceBegin(final boolean forceNew) {
     this.__instanceEnsure(forceNew);
   }
 
-  /** End the current instance */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void instanceEnd() {
     switch (this.m_mode) {
       case MODE_EXPERIMENT_SET: {
@@ -892,13 +765,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the name of the current instance. If we currently are not in a
-   * instance context, try to create one.
-   *
-   * @param name
-   *          the name of the current instance
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void instanceSetName(final String name) {
     final InstanceContext context;
 
@@ -913,13 +781,8 @@ public class FlatExperimentSetContext {
     this.m_instanceName = name;
   }
 
-  /**
-   * Set the description of the current instance. If we currently are not
-   * in a instance context, try to create one.
-   *
-   * @param description
-   *          the description of the current instance
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void instanceSetDescription(
       final String description) {
     final InstanceContext context;
@@ -934,13 +797,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Add some text to the description of the current instance. If we
-   * currently are not in a instance context, try to create one.
-   *
-   * @param description
-   *          the description to be added the current instance
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void instanceAddDescription(
       final String description) {
     final InstanceContext context;
@@ -955,15 +813,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set a feature value of the current instance. If we currently are not
-   * in a instance context, try to create one.
-   *
-   * @param featureName
-   *          the feature name
-   * @param featureValue
-   *          the feature value
-   */
+  /** {@inheritDoc} */
+  @Override
   public final synchronized void instanceSetFeatureValue(
       final String featureName, final Object featureValue) {
     final InstanceContext context;
@@ -980,17 +831,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set a feature value of the current instance. If we currently are not
-   * in a instance context, try to create one.
-   *
-   * @param featureName
-   *          the feature name
-   * @param featureValue
-   *          the feature value
-   * @param featureValueDescription
-   *          the feature value description
-   */
+  /** {@inheritDoc} */
+  @Override
   public final synchronized void instanceSetFeatureValue(
       final String featureName, final Object featureValue,
       final String featureValueDescription) {
@@ -1010,19 +852,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set a feature value of the current instance. If we currently are not
-   * in a instance context, try to create one.
-   *
-   * @param featureName
-   *          the feature name
-   * @param featureDescription
-   *          the feature description
-   * @param featureValue
-   *          the feature value
-   * @param featureValueDescription
-   *          the feature value description
-   */
+  /** {@inheritDoc} */
+  @Override
   public final synchronized void instanceSetFeatureValue(
       final String featureName, final String featureDescription,
       final Object featureValue, final String featureValueDescription) {
@@ -1044,16 +875,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the lower boundary for the given dimension of the current
-   * instance. If we currently are not in a instance context, try to create
-   * one.
-   *
-   * @param dim
-   *          the dimension
-   * @param bound
-   *          the lower bound
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void instanceSetLowerBound(
       final Dimension dim, final Number bound) {
     final InstanceContext context;
@@ -1070,16 +893,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the lower boundary for the given dimension of the current
-   * instance. If we currently are not in a instance context, try to create
-   * one.
-   *
-   * @param dim
-   *          the dimension
-   * @param bound
-   *          the lower bound
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void instanceSetLowerBound(final Object dim,
       final Object bound) {
     final InstanceContext context;
@@ -1096,16 +911,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the upper boundary for the given dimension of the current
-   * instance. If we currently are not in a instance context, try to create
-   * one.
-   *
-   * @param dim
-   *          the dimension
-   * @param bound
-   *          the upper bound
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void instanceSetUpperBound(
       final Dimension dim, final Number bound) {
     final InstanceContext context;
@@ -1122,16 +929,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the upper boundary for the given dimension of the current
-   * instance. If we currently are not in a instance context, try to create
-   * one.
-   *
-   * @param dim
-   *          the dimension
-   * @param bound
-   *          the upper bound
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void instanceSetUpperBound(final Object dim,
       final Object bound) {
     final InstanceContext context;
@@ -1148,13 +947,10 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Obtain the set of all instances
-   *
-   * @return the set of all instances
-   */
+  /** {@inheritDoc} */
+  @Override
   @SuppressWarnings("incomplete-switch")
-  public synchronized final InstanceSet instanceGetAll() {
+  public synchronized final InstanceSet getInstanceSet() {
 
     switch (this.m_mode) {
       case MODE_INSTANCE: {
@@ -1190,13 +986,10 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Obtain the set of all features
-   *
-   * @return the set of all features
-   */
+  /** {@inheritDoc} */
+  @Override
   @SuppressWarnings("incomplete-switch")
-  public synchronized final FeatureSet featureGetAll() {
+  public synchronized final FeatureSet getFeatureSet() {
 
     switch (this.m_mode) {
       case MODE_INSTANCE: {
@@ -1345,19 +1138,14 @@ public class FlatExperimentSetContext {
     return this.m_experiment;
   }
 
-  /**
-   * Begin a (new?) experiment
-   *
-   * @param forceNew
-   *          {@code true}: close a potentially existing experiment context
-   *          and open a new one, {@code false}: keep a potentially open
-   *          context
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void experimentBegin(final boolean forceNew) {
     this.__experimentEnsure(forceNew);
   }
 
-  /** End the current experiment */
+  /** {@inheritDoc} */
+  @Override
   @SuppressWarnings("fallthrough")
   public synchronized final void experimentEnd() {
 
@@ -1421,13 +1209,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the name of the current experiment. If we currently are not in a
-   * experiment context, try to create one.
-   *
-   * @param name
-   *          the name of the current experiment
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void experimentSetName(final String name) {
     final ExperimentContext context;
 
@@ -1442,13 +1225,8 @@ public class FlatExperimentSetContext {
     this.m_experimentName = name;
   }
 
-  /**
-   * Set the description of the current experiment. If we currently are not
-   * in a experiment context, try to create one.
-   *
-   * @param description
-   *          the description of the current experiment
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void experimentSetDescription(
       final String description) {
     final ExperimentContext context;
@@ -1463,13 +1241,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Add some text to the description of the current experiment. If we
-   * currently are not in a experiment context, try to create one.
-   *
-   * @param description
-   *          the description to be added the current experiment
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void experimentAddDescription(
       final String description) {
     final ExperimentContext context;
@@ -1484,15 +1257,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set a parameter value of the current experiment. If we currently are
-   * not in a experiment context, try to create one.
-   *
-   * @param parameterName
-   *          the parameter name
-   * @param parameterValue
-   *          the parameter value
-   */
+  /** {@inheritDoc} */
+  @Override
   @SuppressWarnings("fallthrough")
   public final synchronized void parameterSetValue(
       final String parameterName, final Object parameterValue) {
@@ -1548,17 +1314,8 @@ public class FlatExperimentSetContext {
         + parameterName) + '\'') + '.'), true), error);
   }
 
-  /**
-   * Set a parameter value of the current experiment. If we currently are
-   * not in a experiment context, try to create one.
-   *
-   * @param parameterName
-   *          the parameter name
-   * @param parameterValue
-   *          the parameter value
-   * @param parameterValueDescription
-   *          the parameter value description
-   */
+  /** {@inheritDoc} */
+  @Override
   @SuppressWarnings("fallthrough")
   public final synchronized void parameterSetValue(
       final String parameterName, final Object parameterValue,
@@ -1619,19 +1376,8 @@ public class FlatExperimentSetContext {
         + parameterName) + '\'') + '.'), true), error);
   }
 
-  /**
-   * Set a parameter value of the current experiment. If we currently are
-   * not in a experiment context, try to create one.
-   *
-   * @param parameterName
-   *          the parameter name
-   * @param parameterDescription
-   *          the parameter description
-   * @param parameterValue
-   *          the parameter value
-   * @param parameterValueDescription
-   *          the parameter value description
-   */
+  /** {@inheritDoc} */
+  @Override
   @SuppressWarnings("fallthrough")
   public final synchronized void parameterSetValue(
       final String parameterName, final String parameterDescription,
@@ -1772,19 +1518,14 @@ public class FlatExperimentSetContext {
     return this.m_runs;
   }
 
-  /**
-   * Begin a (new?) run set
-   *
-   * @param forceNew
-   *          {@code true}: close a potentially existing run set context
-   *          and open a new one, {@code false}: keep a potentially open
-   *          context
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void runsBegin(final boolean forceNew) {
     this.__runsEnsure(forceNew);
   }
 
-  /** End the current run set */
+  /** {@inheritDoc} */
+  @Override
   @SuppressWarnings("fallthrough")
   public synchronized final void runsEnd() {
 
@@ -1833,13 +1574,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Set the instance of this instance run context. If we currently are not
-   * in a run set context, try to create one.
-   *
-   * @param inst
-   *          the instance of this instance run context
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void runsSetInstance(final Instance inst) {
     final InstanceRunsContext context;
 
@@ -1857,13 +1593,8 @@ public class FlatExperimentSetContext {
         : TextUtils.NULL_STRING);
   }
 
-  /**
-   * Set the instance of this instance run context. If we currently are not
-   * in a run set context, try to create one.
-   *
-   * @param inst
-   *          the instance of this instance run context
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void runsSetInstance(final String inst) {
     final InstanceRunsContext context;
 
@@ -1930,19 +1661,14 @@ public class FlatExperimentSetContext {
     return this.m_run;
   }
 
-  /**
-   * Begin a (new?) run
-   *
-   * @param forceNew
-   *          {@code true}: close a potentially existing run context and
-   *          open a new one, {@code false}: keep a potentially open
-   *          context
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void runBegin(final boolean forceNew) {
     this.__runEnsure(forceNew);
   }
 
-  /** End the current run */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void runEnd() {
     switch (this.m_mode) {
       case MODE_EXPERIMENT_SET:
@@ -1972,13 +1698,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Add a data point to the current run. If we currently are not in a run
-   * context, try to create one.
-   *
-   * @param point
-   *          the data point to be added
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void runAddDataPoint(final DataPoint point) {
     final RunContext context;
 
@@ -1992,13 +1713,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Add a data point to the current run. If we currently are not in a run
-   * context, try to create one.
-   *
-   * @param point
-   *          the data point to be added
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void runAddDataPoint(final Object point) {
     final RunContext context;
 
@@ -2012,13 +1728,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Add a data point to the current run. If we currently are not in a run
-   * context, try to create one.
-   *
-   * @param values
-   *          the data point values to be added
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void runAddDataPoint(final Number... values) {
     final RunContext context;
 
@@ -2032,13 +1743,8 @@ public class FlatExperimentSetContext {
     }
   }
 
-  /**
-   * Add a data point to the current run. If we currently are not in a run
-   * context, try to create one.
-   *
-   * @param point
-   *          the data point to be added
-   */
+  /** {@inheritDoc} */
+  @Override
   public synchronized final void runAddDataPoint(final String point) {
     final RunContext context;
 
@@ -2050,5 +1756,26 @@ public class FlatExperimentSetContext {
           ((("Error while adding data point string '") //$NON-NLS-1$
           + point) + "' to run."), true), error);//$NON-NLS-1$
     }
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public synchronized final ExperimentSet getExperimentSet() {
+    final ExperimentSetContext main;
+    ExperimentSet res;
+
+    main = this.m_main;
+    if (main == null) {
+      throw new IllegalStateException("Experiment set already taken."); //$NON-NLS-1$
+    }
+
+    try {
+      this.flush();
+    } finally {
+      this.m_main = null;
+      res = main.create();
+      main.close();
+    }
+    return res;
   }
 }

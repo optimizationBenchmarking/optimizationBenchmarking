@@ -10,10 +10,10 @@ import javax.xml.validation.SchemaFactory;
 
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.io.impl.FlatExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetXMLInput;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLInputTool;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
@@ -23,7 +23,8 @@ import org.xml.sax.helpers.DefaultHandler;
  * structures}. The goal of having this base class is to be able to combine
  * several different formats with EDI.
  */
-public abstract class EDIInputToolBase extends ExperimentSetXMLInput {
+public abstract class EDIInputToolBase extends
+    XMLInputTool<ExperimentSetContext> {
 
   /** create */
   protected EDIInputToolBase() {

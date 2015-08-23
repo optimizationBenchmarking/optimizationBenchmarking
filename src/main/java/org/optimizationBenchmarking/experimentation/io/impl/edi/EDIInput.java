@@ -1,12 +1,15 @@
 package org.optimizationBenchmarking.experimentation.io.impl.edi;
 
+import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput;
+
 /**
  * A driver for Experiment Data Interchange (EDI) input. EDI is our
  * default, canonical format for storing and exchanging
  * {@link org.optimizationBenchmarking.experimentation.data experiment data
  * structures}.
  */
-public final class EDIInput extends EDIInputToolBase {
+public final class EDIInput extends EDIInputToolBase implements
+IExperimentSetInput {
 
   /** create */
   EDIInput() {

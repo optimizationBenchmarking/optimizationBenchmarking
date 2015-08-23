@@ -15,6 +15,7 @@ import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetC
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDI;
 import org.optimizationBenchmarking.experimentation.io.impl.edi.EDIInputToolBase;
+import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
@@ -109,7 +110,8 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * </li>
  * </ol>
  */
-public final class CSVEDIInput extends EDIInputToolBase {
+public final class CSVEDIInput extends EDIInputToolBase implements
+    IExperimentSetInput {
 
   /** the base name for dimensions files */
   private static final String DIMENSIONS_BASE = "dimensions"; //$NON-NLS-1$
@@ -396,7 +398,7 @@ public final class CSVEDIInput extends EDIInputToolBase {
 
         // check if we are in an instance run set
         if (context._hasInstances()) {
-          inst = context.instanceGetAll().find(PathUtils.getName(path));
+          inst = context.getInstanceSet().find(PathUtils.getName(path));
           if (inst != null) {
             context.runsBegin(true);
             context.runsSetInstance(inst);

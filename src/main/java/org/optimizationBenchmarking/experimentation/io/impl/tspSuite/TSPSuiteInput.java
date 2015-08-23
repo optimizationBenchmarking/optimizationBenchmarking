@@ -15,9 +15,10 @@ import org.optimizationBenchmarking.experimentation.data.impl.ref.InstanceContex
 import org.optimizationBenchmarking.experimentation.data.impl.ref.RunContext;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
-import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetFileInput;
+import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetInput;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.paths.PathUtils;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.FileInputTool;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
 import org.optimizationBenchmarking.utils.parsers.BoundedLooseDoubleParser;
@@ -30,7 +31,8 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * the {@link org.optimizationBenchmarking.experimentation.data experiment
  * data structures}.
  */
-public class TSPSuiteInput extends ExperimentSetFileInput {
+public class TSPSuiteInput extends FileInputTool<ExperimentSetContext>
+    implements IExperimentSetInput {
   /** the string indicating the begin of a comment: {@value} */
   private static final String COMMENT_START = "//"; //$NON-NLS-1$
   /**

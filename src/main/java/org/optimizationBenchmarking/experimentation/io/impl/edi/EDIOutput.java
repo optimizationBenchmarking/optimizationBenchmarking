@@ -18,11 +18,12 @@ import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameter;
 import org.optimizationBenchmarking.experimentation.data.spec.IParameterValue;
 import org.optimizationBenchmarking.experimentation.data.spec.IRun;
-import org.optimizationBenchmarking.experimentation.io.impl.abstr.ExperimentSetXMLOutput;
+import org.optimizationBenchmarking.experimentation.io.spec.IExperimentSetOutput;
 import org.optimizationBenchmarking.utils.collections.lists.ArrayListView;
 import org.optimizationBenchmarking.utils.io.encoding.StreamEncoding;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
+import org.optimizationBenchmarking.utils.io.structured.impl.abstr.XMLOutputTool;
 import org.optimizationBenchmarking.utils.io.xml.XMLBase;
 import org.optimizationBenchmarking.utils.io.xml.XMLElement;
 import org.optimizationBenchmarking.utils.parsers.NumberParser;
@@ -37,7 +38,8 @@ import org.optimizationBenchmarking.utils.text.numbers.XMLNumberAppender;
  * {@link org.optimizationBenchmarking.experimentation.data experiment data
  * structures}.
  */
-public final class EDIOutput extends ExperimentSetXMLOutput<Object> {
+public final class EDIOutput extends XMLOutputTool<Object> implements
+    IExperimentSetOutput<Object> {
 
   /** create */
   EDIOutput() {
