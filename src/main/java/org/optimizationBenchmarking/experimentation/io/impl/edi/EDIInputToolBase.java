@@ -8,9 +8,9 @@ import javax.xml.parsers.SAXParserFactory;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import org.optimizationBenchmarking.experimentation.data.impl.flat.AbstractFlatExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.flat.FlatExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.io.impl.AbstractFlatExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.io.impl.FlatExperimentSetContext;
 import org.optimizationBenchmarking.utils.error.ErrorUtils;
 import org.optimizationBenchmarking.utils.error.RethrowMode;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
@@ -26,7 +26,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  * @param <T>
  *          the type of element to fill with data, usually a subclass of
- *          {@link org.optimizationBenchmarking.experimentation.io.impl.AbstractFlatExperimentSetContext}
+ *          {@link org.optimizationBenchmarking.experimentation.data.impl.flat.AbstractFlatExperimentSetContext}
  *          or
  *          {@link org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext}
  */

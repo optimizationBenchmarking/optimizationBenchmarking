@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.io.impl;
+package org.optimizationBenchmarking.experimentation.data.impl.flat;
 
 import org.optimizationBenchmarking.experimentation.data.impl.ref.DataPoint;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Dimension;
@@ -10,6 +10,8 @@ import org.optimizationBenchmarking.experimentation.data.spec.IExperimentSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IFeatureSet;
 import org.optimizationBenchmarking.experimentation.data.spec.IInstanceSet;
 import org.optimizationBenchmarking.utils.parsers.NumberParser;
+import org.optimizationBenchmarking.utils.parsers.NumberParserParser;
+import org.optimizationBenchmarking.utils.text.TextUtils;
 
 /**
  * An abstract base class for building elements of the experiment set API
@@ -96,7 +98,7 @@ public abstract class AbstractFlatExperimentSetContext {
    *          the direction of the current dimension
    */
   public void dimensionSetDirection(final String direction) {
-    // this method does nothing, yet - implement it in a sub-class
+    this.dimensionSetDirection(EDimensionDirection.valueOf(direction));
   }
 
   /**
@@ -124,7 +126,19 @@ public abstract class AbstractFlatExperimentSetContext {
   public void dimensionSetParser(
       final Class<? extends NumberParser<?>> parserClass,
       final Number lowerBound, final Number upperBound) {
-    // this method does nothing, yet - implement it in a sub-class
+    final NumberParser<?> parser;
+
+    try {
+      parser = parserClass.getConstructor(Number.class, Number.class)
+          .newInstance(lowerBound, upperBound);
+    } catch (final Throwable t) {
+      throw new RuntimeException(((((((//
+          "Illegal parser class and configuration: " + //$NON-NLS-1$
+          TextUtils.className(parserClass)) + ", '") + //$NON-NLS-1$
+          lowerBound) + "', '") + upperBound) + '.'), t); //$NON-NLS-1$
+    }
+
+    this.dimensionSetParser(parser);
   }
 
   /**
@@ -151,18 +165,43 @@ public abstract class AbstractFlatExperimentSetContext {
    */
   public void dimensionSetParser(final String parserClass,
       final String lowerBound, final String upperBound) {
-    // this method does nothing, yet - implement it in a sub-class
+    final NumberParser<Number> parser;
+    try {
+      parser = NumberParserParser.getInstance().parse(parserClass,
+          lowerBound, upperBound);
+      if (parser == null) {
+        throw new IllegalArgumentException(//
+            "Parser description parses to null parser.");//$NON-NLS-1$
+      }
+    } catch (final Throwable error) {
+      throw new IllegalArgumentException((((((//
+          "Invalid parser description '" + //$NON-NLS-1$
+          parserClass) + ':') + lowerBound) + ':') + upperBound), error);
+    }
+    this.dimensionSetParser(parser);
   }
 
   /**
    * Set the parser of the current dimension. If we currently are not in a
    * dimension context, try to create one.
    *
-   * @param parser
-   *          the parser of the current dimension
+   * @param parserDesc
+   *          the parser description of the current dimension
    */
-  public void dimensionSetParser(final String parser) {
-    // this method does nothing, yet - implement it in a sub-class
+  public void dimensionSetParser(final String parserDesc) {
+    final NumberParser<Number> parser;
+    try {
+      parser = NumberParserParser.getInstance().parseString(parserDesc);
+      if (parser == null) {
+        throw new IllegalArgumentException(//
+            "Parser description parses to null parser.");//$NON-NLS-1$
+      }
+    } catch (final Throwable error) {
+      throw new IllegalArgumentException(((//
+          "Invalid parser description '" + //$NON-NLS-1$
+          parserDesc) + '\''), error);
+    }
+    this.dimensionSetParser(parser);
   }
 
   /**
@@ -184,7 +223,7 @@ public abstract class AbstractFlatExperimentSetContext {
    *          the type of the current dimension
    */
   public void dimensionSetType(final String type) {
-    // this method does nothing, yet - implement it in a sub-class
+    this.dimensionSetType(EDimensionType.valueOf(type));
   }
 
   /**

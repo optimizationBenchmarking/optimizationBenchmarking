@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
+import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
@@ -94,10 +95,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public synchronized final void setParser(final NumberParser<?> parser) {
-    if (parser == null) {
-      throw new IllegalArgumentException(//
-          "Cannot set parser to null."); //$NON-NLS-1$
-    }
+    AbstractDimension.validateParser(parser);
     if (this.m_parser != parser) {
       this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
           DimensionContext.FLAG_HAS_PARSER,
@@ -200,10 +198,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
    *          the dimension type
    */
   public synchronized final void setType(final EDimensionType type) {
-    if (type == null) {
-      throw new IllegalArgumentException(//
-          "Cannot set dimension type to null."); //$NON-NLS-1$
-    }
+    AbstractDimension.validateType(type);
     if (this.m_dimensionType != type) {
       this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
           DimensionContext.FLAG_HAS_TYPE, DimensionContext.FLAG_HAS_TYPE,
@@ -240,10 +235,7 @@ public final class DimensionContext extends _NamedContext<Dimension> {
    */
   public synchronized final void setDirection(
       final EDimensionDirection direction) {
-    if (direction == null) {
-      throw new IllegalArgumentException(//
-          "Cannot set dimension direction to null."); //$NON-NLS-1$
-    }
+    AbstractDimension.validateDirection(direction);
     if (this.m_direction != direction) {
       this.fsmFlagsAssertAndUpdate(FSM.FLAG_NOTHING,
           DimensionContext.FLAG_HAS_DIRECTION,

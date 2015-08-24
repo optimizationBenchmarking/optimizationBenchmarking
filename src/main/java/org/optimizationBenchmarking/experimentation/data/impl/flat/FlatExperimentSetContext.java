@@ -1,4 +1,4 @@
-package org.optimizationBenchmarking.experimentation.io.impl;
+package org.optimizationBenchmarking.experimentation.data.impl.flat;
 
 import java.util.Arrays;
 
@@ -500,16 +500,16 @@ public class FlatExperimentSetContext extends
 
   /** {@inheritDoc} */
   @Override
-  public synchronized final void dimensionSetParser(final String parser) {
+  public synchronized final void dimensionSetParser(final String parserDesc) {
     final DimensionContext context;
 
     context = this.__dimensionEnsure(false);
     try {
-      context.setParser(parser);
+      context.setParser(parserDesc);
     } catch (final Throwable error) {
       throw new IllegalStateException(this.__errorLocation(//
           (((("Error while setting dimension parser string '") //$NON-NLS-1$
-          + parser) + '\'') + '.'), true), error);
+          + parserDesc) + '\'') + '.'), true), error);
     }
   }
 

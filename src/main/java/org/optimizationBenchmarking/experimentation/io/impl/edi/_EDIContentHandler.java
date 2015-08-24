@@ -3,7 +3,7 @@ package org.optimizationBenchmarking.experimentation.io.impl.edi;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.optimizationBenchmarking.experimentation.io.impl.AbstractFlatExperimentSetContext;
+import org.optimizationBenchmarking.experimentation.data.impl.flat.AbstractFlatExperimentSetContext;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOJob;
 import org.optimizationBenchmarking.utils.io.structured.impl.abstr.IOTool;
 import org.optimizationBenchmarking.utils.io.xml.DelegatingHandler;

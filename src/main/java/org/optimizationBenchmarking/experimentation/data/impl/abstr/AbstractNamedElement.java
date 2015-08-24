@@ -30,7 +30,7 @@ public abstract class AbstractNamedElement extends DataElement implements
    *          the name
    * @return the formatted name
    */
-  protected static final String formatName(final String name) {
+  public static final String formatName(final String name) {
     final String ret;
     ret = TextUtils.prepare(name);
     if (name == null) {
@@ -48,7 +48,7 @@ public abstract class AbstractNamedElement extends DataElement implements
    *          the description
    * @return the formatted description
    */
-  protected static final String formatDescription(final String description) {
+  public static final String formatDescription(final String description) {
     final String ret;
     ret = TextUtils.prepare(description);
     if (description == null) {

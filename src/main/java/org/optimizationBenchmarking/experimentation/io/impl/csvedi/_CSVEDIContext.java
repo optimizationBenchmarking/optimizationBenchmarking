@@ -4,8 +4,8 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
 
+import org.optimizationBenchmarking.experimentation.data.impl.flat.FlatExperimentSetContext;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.ExperimentSetContext;
-import org.optimizationBenchmarking.experimentation.io.impl.FlatExperimentSetContext;
 
 /** The internal flat experiment set context for the CSV-EDI input driver */
 final class _CSVEDIContext extends FlatExperimentSetContext {

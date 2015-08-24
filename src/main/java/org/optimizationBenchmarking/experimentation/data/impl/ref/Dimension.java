@@ -1,5 +1,6 @@
 package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
+import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
 import org.optimizationBenchmarking.experimentation.data.spec.IDimension;
@@ -54,24 +55,14 @@ public class Dimension extends _NamedIDObject implements IDimension {
       final EDimensionType dimType, final EDimensionDirection direction) {
     super(name, desc);
 
-    final EPrimitiveType type;
+    this.m_primitiveType = AbstractDimension.validateParser(parser);
 
-    type = EPrimitiveType.getPrimitiveType(parser.getOutputClass());
-    if ((type != null) && (type.isNumber())) {
-      this.m_primitiveType = type;
-    } else {
-      throw new IllegalArgumentException(
-          "The basic type must be assignable to a primitive number, but " + //$NON-NLS-1$
-              String.valueOf(parser) + " with output class " + //$NON-NLS-1$
-              TextUtils.className(parser.getOutputClass()) + " is not."); //$NON-NLS-1$
-    }
-
-    if (type.isInteger() != parser.areBoundsInteger()) {
+    if (this.m_primitiveType.isInteger() != parser.areBoundsInteger()) {
       throw new IllegalArgumentException(
           "The isInteger feature of the dimension type must fit to the integer feature of the parser's bounds. However, the dimension type is " //$NON-NLS-1$
-              + type
+              + this.m_primitiveType
               + " with the isInteger feature "//$NON-NLS-1$
-              + type.isInteger()
+              + this.m_primitiveType.isInteger()
               + " and the parser ("//$NON-NLS-1$
               + TextUtils.className(parser.getClass())
               + " for "//$NON-NLS-1$
@@ -80,14 +71,8 @@ public class Dimension extends _NamedIDObject implements IDimension {
               + parser.areBoundsInteger() + '.');
     }
 
-    if (dimType == null) {
-      throw new IllegalArgumentException(//
-          "Dimension must not be null."); //$NON-NLS-1$
-    }
-    if (direction == null) {
-      throw new IllegalArgumentException(//
-          "Direction must not be null."); //$NON-NLS-1$
-    }
+    AbstractDimension.validateType(dimType);
+    AbstractDimension.validateDirection(direction);
 
     this.m_dimensionType = dimType;
     this.m_direction = direction;
