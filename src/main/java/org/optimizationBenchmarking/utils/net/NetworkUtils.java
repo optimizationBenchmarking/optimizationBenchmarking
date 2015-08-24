@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.URL;
 import java.net.URLConnection;
@@ -31,7 +33,7 @@ import org.optimizationBenchmarking.utils.text.TextUtils;
  * whether an incoming connection comes from the local computer or from
  * another one.
  */
-public final class LocalHost {
+public final class NetworkUtils {
 
   /** the local host address */
   public static final String LOCAL_HOST = "localhost"; //$NON-NLS-1$
@@ -99,7 +101,7 @@ public final class LocalHost {
     if (addr.isLoopbackAddress()) {
       return true;
     }
-    return LocalHost.getLocalAddresses().contains(addr);
+    return NetworkUtils.getLocalAddresses().contains(addr);
   }
 
   /**
@@ -117,13 +119,50 @@ public final class LocalHost {
     }
 
     if (addr.isLoopbackAddress()) {
-      return LocalHost.LOCAL_HOST;
+      return NetworkUtils.LOCAL_HOST;
     }
 
     try {
       return addr.getCanonicalHostName();
     } catch (final Throwable error) {
       return addr.getHostAddress();
+    }
+  }
+
+  /**
+   * Obtain the URL for a given host and port.
+   *
+   * @param host
+   *          the host
+   * @param port
+   *          the port
+   * @return the URL
+   */
+  public static final URL getServerBaseURL(final String host,
+      final int port) {
+    final InetAddress addr;
+    final String useHost;
+
+    try {
+      addr = InetAddress.getByName(host);
+    } catch (final Throwable error) {
+      throw new IllegalArgumentException("Host '" + host + //$NON-NLS-1$
+          "' is invalid."); //$NON-NLS-1$
+    }
+    if (addr instanceof Inet6Address) {
+      useHost = '[' + addr.getHostAddress() + ']';
+    } else {
+      useHost = host;
+    }
+
+    try {
+      return new URL((("http://" + useHost) + ':' + port) + '/'); //$NON-NLS-1$
+    } catch (final MalformedURLException error) {
+      throw new IllegalArgumentException(((((((//
+          "Error while creating URL for host '" + host) //$NON-NLS-1$
+          + " (represented as '") + useHost + //$NON-NLS-1$
+          "') and port ")//$NON-NLS-1$
+          + port) + '\'') + '.'), error);
     }
   }
 
@@ -387,8 +426,8 @@ public final class LocalHost {
     private static final InetAddress __getPublicAddress() {
       ArrayListView<InetAddress> local, global;
 
-      local = LocalHost.getLocalAddresses();
-      global = LocalHost.getGlobalAddresses();
+      local = NetworkUtils.getLocalAddresses();
+      global = NetworkUtils.getGlobalAddresses();
 
       for (final InetAddress addr : global) {
         if (local.contains(global)) {
@@ -416,7 +455,7 @@ public final class LocalHost {
   /** The holder class for the public name */
   private static final class __PublicName {
     /** the public name */
-    static final String PUBLIC_NAME = LocalHost
+    static final String PUBLIC_NAME = NetworkUtils
         .getInetAddressName(__PublicAddress.PUBLIC_ADDRESS);
   }
 
