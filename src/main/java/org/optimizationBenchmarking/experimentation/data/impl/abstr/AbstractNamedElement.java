@@ -74,13 +74,8 @@ public abstract class AbstractNamedElement extends DataElement implements
     final String a, b;
     final char x;
 
-    b = TextUtils.normalize(descB);
-    if (descB == null) {
-      throw new IllegalArgumentException(//
-          "Cannot add a description which is null, empty, or just consists of white space, but '" //$NON-NLS-1$
-              + descB + "' does."); //$NON-NLS-1$
-    }
     a = TextUtils.normalize(descA);
+    b = TextUtils.normalize(descB);
 
     if (a == null) {
       return b;
