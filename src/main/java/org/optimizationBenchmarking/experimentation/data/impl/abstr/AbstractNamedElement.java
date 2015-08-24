@@ -32,7 +32,7 @@ public abstract class AbstractNamedElement extends DataElement implements
    */
   public static final String formatName(final String name) {
     final String ret;
-    ret = TextUtils.prepare(name);
+    ret = TextUtils.normalize(name);
     if (name == null) {
       throw new IllegalArgumentException(//
           "The name cannot null, empty, or just consist of white space, but '" //$NON-NLS-1$
@@ -50,13 +50,77 @@ public abstract class AbstractNamedElement extends DataElement implements
    */
   public static final String formatDescription(final String description) {
     final String ret;
-    ret = TextUtils.prepare(description);
+    ret = TextUtils.normalize(description);
     if (description == null) {
       throw new IllegalArgumentException(//
           "The description cannot null, empty, or just consist of white space, but '" //$NON-NLS-1$
               + description + "' is."); //$NON-NLS-1$
     }
     return ret;
+  }
+
+  /**
+   * Merge descriptions.
+   *
+   * @param descA
+   *          description original description
+   * @param descB
+   *          description new description to add
+   * @return the merged result
+   */
+  public static final String mergeDescriptions(final String descA,
+      final String descB) {
+    final int len1, len2;
+    final String a, b;
+    final char x;
+
+    b = TextUtils.normalize(descB);
+    if (descB == null) {
+      throw new IllegalArgumentException(//
+          "Cannot add a description which is null, empty, or just consists of white space, but '" //$NON-NLS-1$
+              + descB + "' does."); //$NON-NLS-1$
+    }
+    a = TextUtils.normalize(descA);
+
+    if (a == null) {
+      return b;
+    }
+    if (b == null) {
+      return a;
+    }
+
+    if (a.equalsIgnoreCase(b)) {
+      return a;
+    }
+
+    len1 = a.length();
+    if (len1 <= 0) {
+      return b;
+    }
+
+    len2 = b.length();
+    if (len2 <= 0) {
+      return a;
+    }
+
+    x = a.charAt(len1 - 1);
+    if (x <= ' ') { // this should never happen...
+      return (a + b);
+    }
+    switch (x) {
+      case '.':
+      case '!':
+      case '?':
+      case ',':
+      case ';':
+      case ':':
+      case '-': {
+        return (a + ' ' + b);
+      }
+      default: {
+        return ((a + '.') + ' ' + b);
+      }
+    }
   }
 
   /** {@inheritDoc} */

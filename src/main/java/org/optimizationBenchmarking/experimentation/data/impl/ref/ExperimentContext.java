@@ -2,6 +2,7 @@ package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
 import java.util.ArrayList;
 
+import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractNamedElement;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
@@ -141,8 +142,8 @@ public final class ExperimentContext extends
    */
   public synchronized final void addDescription(final String description) {
     this.fsmStateAssert(_FSM.STATE_OPEN);
-    this.m_description = this.normalizeLocal(_NamedContext
-        ._mergeDescriptions(this.m_description,
+    this.m_description = this.normalizeLocal(AbstractNamedElement
+        .mergeDescriptions(this.m_description,
             this.normalizeLocal(description)));
   }
 

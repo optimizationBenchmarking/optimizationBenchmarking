@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
+import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractNamedElement;
+
 /**
  * A property value record which also allows us to keep track
  */
@@ -45,7 +47,7 @@ abstract class _PropertyFSMRecord {
       final String propertyDesc) {
 
     if (this.m_propertyName.equals(propertyName)) {
-      this.m_propertyDesc = _NamedContext._mergeDescriptions(
+      this.m_propertyDesc = AbstractNamedElement.mergeDescriptions(
           this.m_propertyDesc, propertyDesc);
     } else {
       this.m_dead = true;

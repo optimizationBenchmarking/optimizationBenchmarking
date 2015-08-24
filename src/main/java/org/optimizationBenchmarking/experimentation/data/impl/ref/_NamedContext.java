@@ -1,7 +1,7 @@
 package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
+import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractNamedElement;
 import org.optimizationBenchmarking.utils.hierarchy.FSM;
-import org.optimizationBenchmarking.utils.text.TextUtils;
 import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 
 /**
@@ -97,8 +97,8 @@ class _NamedContext<RT> extends _Context<RT> {
    */
   public synchronized final void addDescription(final String description) {
     this.fsmStateAssert(_FSM.STATE_OPEN);
-    this.m_description = this.normalizeLocal(_NamedContext
-        ._mergeDescriptions(this.m_description,
+    this.m_description = this.normalizeLocal(AbstractNamedElement
+        .mergeDescriptions(this.m_description,
             this.normalizeLocal(description)));
   }
 
@@ -109,65 +109,6 @@ class _NamedContext<RT> extends _Context<RT> {
    */
   public synchronized final String getDescription() {
     return this.m_description;
-  }
-
-  /**
-   * merge descriptions
-   *
-   * @param descA
-   *          description a
-   * @param descB
-   *          description b
-   * @return the merged result
-   */
-  static final String _mergeDescriptions(final String descA,
-      final String descB) {
-    final int len1, len2;
-    final String a, b;
-    final char x;
-
-    a = TextUtils.normalize(descA);
-    b = TextUtils.normalize(descB);
-
-    if (a == null) {
-      return b;
-    }
-    if (b == null) {
-      return a;
-    }
-
-    if (a.equalsIgnoreCase(b)) {
-      return a;
-    }
-
-    len1 = a.length();
-    if (len1 <= 0) {
-      return b;
-    }
-
-    len2 = b.length();
-    if (len2 <= 0) {
-      return a;
-    }
-
-    x = a.charAt(len1 - 1);
-    if (x <= ' ') { // this should never happen...
-      return (a + b);
-    }
-    switch (x) {
-      case '.':
-      case '!':
-      case '?':
-      case ',':
-      case ';':
-      case ':':
-      case '-': {
-        return (a + ' ' + b);
-      }
-      default: {
-        return ((a + '.') + ' ' + b);
-      }
-    }
   }
 
   /**

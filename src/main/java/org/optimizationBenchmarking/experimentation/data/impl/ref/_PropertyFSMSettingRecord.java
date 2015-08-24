@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
+import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractNamedElement;
+
 /**
  * A property value record which also allows us to keep track
  */
@@ -70,7 +72,7 @@ final class _PropertyFSMSettingRecord extends _PropertyFSMRecord {
       this.m_propertyValue = propertyValue;
     }
 
-    this.m_propertyValueDesc = _NamedContext._mergeDescriptions(
+    this.m_propertyValueDesc = AbstractNamedElement.mergeDescriptions(
         this.m_propertyValueDesc, propertyValueDesc);
   }
 }

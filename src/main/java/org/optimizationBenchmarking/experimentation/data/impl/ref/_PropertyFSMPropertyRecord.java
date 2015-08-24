@@ -2,6 +2,8 @@ package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
 import java.util.HashMap;
 
+import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractNamedElement;
+
 /**
  * A property value record which also allows us to keep track
  */
@@ -53,7 +55,7 @@ final class _PropertyFSMPropertyRecord extends _PropertyFSMRecord {
       hm.put(propertyValue, propertyValueDesc);
     } else {
       hm.put(propertyValue,
-          _NamedContext._mergeDescriptions(x, propertyValueDesc));
+          AbstractNamedElement.mergeDescriptions(x, propertyValueDesc));
     }
 
   }
