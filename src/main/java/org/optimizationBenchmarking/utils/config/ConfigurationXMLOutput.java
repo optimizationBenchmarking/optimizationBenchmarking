@@ -39,6 +39,7 @@ public final class ConfigurationXMLOutput extends XMLOutputTool<Object> {
   protected final void xml(final IOJob job, final Object data,
       final XMLBase xmlBase) throws Throwable {
     final Configuration config;
+    Object value;
 
     try (XMLElement root = xmlBase.element()) {
       root.namespaceSetPrefix(ConfigurationXML.NAMESPACE_URI,
@@ -72,16 +73,21 @@ public final class ConfigurationXMLOutput extends XMLOutputTool<Object> {
       if (data instanceof Dump) {
 
         for (final Map.Entry<Parameter<?>, Object> e : ((Dump) data)) {
-          try (final XMLElement param = root.element()) {
-            param.name(ConfigurationXML.NAMESPACE_URI,
-                ConfigurationXML.ELEMENT_CONFIGURATION_PARAMETER);
+          value = e.getValue();
+          if (value != null) {
+            try (final XMLElement param = root.element()) {
+              param.name(ConfigurationXML.NAMESPACE_URI,
+                  ConfigurationXML.ELEMENT_CONFIGURATION_PARAMETER);
 
-            param.attributeEncoded(ConfigurationXML.NAMESPACE_URI,
-                ConfigurationXML.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME,
-                e.getKey().m_name);
-            param.attributeEncoded(ConfigurationXML.NAMESPACE_URI,
-                ConfigurationXML.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE,
-                String.valueOf(e.getValue()));
+              param.attributeEncoded(ConfigurationXML.NAMESPACE_URI,
+                  ConfigurationXML.ATTRIBUTE_CONFIGURATION_PARAMETER_NAME,
+                  e.getKey().m_name);
+              param
+                  .attributeEncoded(
+                      ConfigurationXML.NAMESPACE_URI,
+                      ConfigurationXML.ATTRIBUTE_CONFIGURATION_PARAMETER_VALUE,
+                      String.valueOf(value));
+            }
           }
         }
         return;

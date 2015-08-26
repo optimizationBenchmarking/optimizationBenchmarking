@@ -59,6 +59,9 @@ public final class GraphicDriverParser extends
         "export".equalsIgnoreCase(string)) { //$NON-NLS-1$
       return EGraphicFormat.TEXT.getDefaultDriver();
     }
+    if ("jpg".equalsIgnoreCase(string)) { //$NON-NLS-1$
+      return EGraphicFormat.JPEG.getDefaultDriver();
+    }
 
     try {
       return this.m_formatParser.parseString(string).getDefaultDriver();
