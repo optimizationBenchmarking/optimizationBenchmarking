@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cd:configurationDefinition
 	xmlns:cd="http://www.optimizationBenchmarking.org/formats/configuration/configurationDef.1.0.xsd"
-	allowsMore="false">
+	allowsMore="true">
 
 	<cd:string name="groupBy"
 		description="The data should be grouped according to the specified benchmark instance feature or algorithm parameter. Based on the type and values of the feature/parameter, a division into a reasonable number of groups is performed. The heuristic for this grouping can be overridden via the 'defaultGrouping' parameter in general or for a specific parameter or feature with name 'zzz' with a parameter 'zzzGrouping'. You cannot specify both 'byInstance' and 'groupBy'." />
