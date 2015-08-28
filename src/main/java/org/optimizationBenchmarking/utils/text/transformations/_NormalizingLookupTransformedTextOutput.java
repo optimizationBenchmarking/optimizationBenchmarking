@@ -10,8 +10,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
  * which first normalizes a text and then transforms it according to a
  * lookup table and writes it to its output.
- *
- * @author Thomas Weise
  */
 class _NormalizingLookupTransformedTextOutput extends
     _LookupTransformedTextOutput {

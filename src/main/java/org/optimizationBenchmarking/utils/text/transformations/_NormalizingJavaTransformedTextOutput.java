@@ -8,11 +8,11 @@ import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 /**
  * An implementation of
  * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
- * which first normalizes a text and then transforms it to XML entities and
- * writes it to its output.
+ * which first normalizes a text and then transforms it to Java Unicode
+ * entities and writes it to its output.
  */
-final class _NormalizingXMLTransformedTextOutput extends
-    _XMLTransformedTextOutput {
+final class _NormalizingJavaTransformedTextOutput extends
+    _JavaTransformedTextOutput {
 
   /** the normalizer form */
   private final Normalizer.Form m_form;
@@ -25,7 +25,7 @@ final class _NormalizingXMLTransformedTextOutput extends
    * @param form
    *          the normalizer form
    */
-  _NormalizingXMLTransformedTextOutput(final ITextOutput out,
+  _NormalizingJavaTransformedTextOutput(final ITextOutput out,
       final Normalizer.Form form) {
     super(out);
     this.m_form = form;

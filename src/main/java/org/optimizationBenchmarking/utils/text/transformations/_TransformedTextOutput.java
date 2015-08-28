@@ -7,8 +7,6 @@ import org.optimizationBenchmarking.utils.text.textOutput.MemoryTextOutput;
 /**
  * An implementation of the text output which forwards all text to an
  * underlying output while applying a specific text transformation.
- *
- * @author Thomas Weise
  */
 class _TransformedTextOutput extends AbstractTextOutput {
 

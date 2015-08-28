@@ -2,9 +2,7 @@ package org.optimizationBenchmarking.utils.text.transformations;
 
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
-/**
- * A lookup text output for LaTeX.
- */
+/** A lookup text output for LaTeX. */
 class _LaTeXLookupTransformedTextOutput extends
     _LookupTransformedTextOutput {
 

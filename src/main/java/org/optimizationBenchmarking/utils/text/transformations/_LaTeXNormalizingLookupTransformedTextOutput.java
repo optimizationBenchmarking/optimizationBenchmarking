@@ -4,11 +4,7 @@ import java.text.Normalizer;
 
 import org.optimizationBenchmarking.utils.text.textOutput.ITextOutput;
 
-/**
- * A normalizing lookup transformator for LaTeX.
- *
- * @author Thomas Weise
- */
+/** A normalizing lookup transformator for LaTeX. */
 class _LaTeXNormalizingLookupTransformedTextOutput extends
     _NormalizingLookupTransformedTextOutput {
 

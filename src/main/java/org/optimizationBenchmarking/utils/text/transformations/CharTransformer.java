@@ -49,11 +49,7 @@ public abstract class CharTransformer {
   /**
    * Create a transformation wrapper around a given
    * {@link org.optimizationBenchmarking.utils.text.textOutput.ITextOutput}
-   * {@code out}. The new wrapper will transform all character data that it
-   * receives according to the rules of this character transformation
-   * definition and then pass them on to {@code out} using the
-   * {@linkplain org.optimizationBenchmarking.utils.text.TextUtils#DEFAULT_NORMALIZER_FORM
-   * default normalizer form}.
+   * {@code out}.
    *
    * @param out
    *          the
@@ -66,7 +62,7 @@ public abstract class CharTransformer {
    * @see #transform(ITextOutput, java.text.Normalizer.Form)
    */
   public final AbstractTextOutput transform(final ITextOutput out) {
-    return this.transform(out, TextUtils.DEFAULT_NORMALIZER_FORM);
+    return this.transform(out, null);
   }
 
   /**
@@ -110,9 +106,7 @@ public abstract class CharTransformer {
 
   /**
    * {@linkplain #transform(String, java.text.Normalizer.Form) Transform} a
-   * string using the
-   * {@linkplain org.optimizationBenchmarking.utils.text.TextUtils#DEFAULT_NORMALIZER_FORM
-   * default normalizer form}.
+   * string.
    *
    * @see #transform(String, java.text.Normalizer.Form)
    * @param s
@@ -120,6 +114,6 @@ public abstract class CharTransformer {
    * @return the transformed string
    */
   public final String transform(final String s) {
-    return this.transform(s, TextUtils.DEFAULT_NORMALIZER_FORM);
+    return this.transform(s, null);
   }
 }
