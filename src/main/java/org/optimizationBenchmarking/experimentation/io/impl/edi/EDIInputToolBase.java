@@ -149,7 +149,7 @@ public abstract class EDIInputToolBase<T> extends XMLInputTool<T> {
   /** {@inheritDoc} */
   @Override
   protected void after(final IOJob job, final T data) throws Throwable {
-    ((FlatExperimentSetContext) (job.getToken())).flush();
+    ((AbstractFlatExperimentSetContext) (job.getToken())).flush();
     super.after(job, data);
   }
 
