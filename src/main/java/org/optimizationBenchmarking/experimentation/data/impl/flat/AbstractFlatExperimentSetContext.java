@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.data.impl.flat;
 
+import org.optimizationBenchmarking.experimentation.data.impl.DimensionDirectionParser;
+import org.optimizationBenchmarking.experimentation.data.impl.DimensionTypeParser;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.DataPoint;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Dimension;
 import org.optimizationBenchmarking.experimentation.data.impl.ref.Instance;
@@ -98,7 +100,8 @@ public abstract class AbstractFlatExperimentSetContext {
    *          the direction of the current dimension
    */
   public void dimensionSetDirection(final String direction) {
-    this.dimensionSetDirection(EDimensionDirection.valueOf(direction));
+    this.dimensionSetDirection(//
+    DimensionDirectionParser.INSTANCE.parseString(direction));
   }
 
   /**
@@ -223,7 +226,7 @@ public abstract class AbstractFlatExperimentSetContext {
    *          the type of the current dimension
    */
   public void dimensionSetType(final String type) {
-    this.dimensionSetType(EDimensionType.valueOf(type));
+    this.dimensionSetType(DimensionTypeParser.INSTANCE.parseString(type));
   }
 
   /**

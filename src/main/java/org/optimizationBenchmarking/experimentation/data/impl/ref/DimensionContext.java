@@ -1,5 +1,7 @@
 package org.optimizationBenchmarking.experimentation.data.impl.ref;
 
+import org.optimizationBenchmarking.experimentation.data.impl.DimensionDirectionParser;
+import org.optimizationBenchmarking.experimentation.data.impl.DimensionTypeParser;
 import org.optimizationBenchmarking.experimentation.data.impl.abstr.AbstractDimension;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionDirection;
 import org.optimizationBenchmarking.experimentation.data.spec.EDimensionType;
@@ -215,7 +217,8 @@ public final class DimensionContext extends _NamedContext<Dimension> {
    *          the type
    */
   public final void setType(final String type) {
-    this.setType(EDimensionType.valueOf(this.normalizeLocal(type)));
+    this.setType(DimensionTypeParser.INSTANCE.parseString(//
+        this.normalizeLocal(type)));
   }
 
   /**
@@ -252,8 +255,8 @@ public final class DimensionContext extends _NamedContext<Dimension> {
    *          the direction
    */
   public final void setDirection(final String direction) {
-    this.setDirection(EDimensionDirection.valueOf(this
-        .normalizeLocal(direction)));
+    this.setDirection(DimensionDirectionParser.INSTANCE.parseString(//
+        this.normalizeLocal(direction)));
   }
 
   /**
