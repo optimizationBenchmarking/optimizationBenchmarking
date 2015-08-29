@@ -21,7 +21,7 @@ public class DefinitionElement extends HashObject {
    * @param description
    *          the description
    */
-  protected DefinitionElement(final String name, final String description) {
+  public DefinitionElement(final String name, final String description) {
     super();
     this.m_name = DefinitionElement._makeName(name);
     this.m_description = DefinitionElement._makeDescription(description);
