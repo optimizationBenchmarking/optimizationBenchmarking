@@ -213,8 +213,8 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
     parsed = new HashMap<>();
 
     // now we try to parse them into primitive types
-    primitiveTypes = new ArrayList<>(EPrimitiveType.TYPES.size());
-    primitiveTypes.addAll(EPrimitiveType.TYPES);
+    primitiveTypes = new ArrayList<>(EPrimitiveType.INSTANCES.size());
+    primitiveTypes.addAll(EPrimitiveType.INSTANCES);
     primitiveTypes.remove(EPrimitiveType.CHAR);
     primitiveTypes.add(EPrimitiveType.CHAR);
 
@@ -251,7 +251,7 @@ abstract class _PropertyFSMPropertiesBuilder<PVT extends PropertyValue<?>, PT ex
 
       // but we try to avoid booleans and floats, since loose parsing them
       // may lose us fidelity
-      primitiveTypes.addAll(EPrimitiveType.TYPES);
+      primitiveTypes.addAll(EPrimitiveType.INSTANCES);
       primitiveTypes.remove(EPrimitiveType.BOOLEAN);
       primitiveTypes.remove(EPrimitiveType.FLOAT);
       primitiveTypes.remove(EPrimitiveType.CHAR);

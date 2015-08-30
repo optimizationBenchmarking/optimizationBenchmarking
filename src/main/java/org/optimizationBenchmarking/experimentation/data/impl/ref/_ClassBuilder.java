@@ -244,7 +244,7 @@ final class _ClassBuilder implements Callable<Parser<DataPoint>>,
     // the private error function called when invalid indexes are accessed
 
     // the primitive-type based getters
-    for (final EPrimitiveType type : EPrimitiveType.TYPES) {
+    for (final EPrimitiveType type : EPrimitiveType.INSTANCES) {
       if (type.isNumber()) {
         // getter
         sb.append("@Override public final "); //$NON-NLS-1$

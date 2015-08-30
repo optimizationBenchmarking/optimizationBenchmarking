@@ -133,7 +133,7 @@ public enum EDI implements IXMLFileType {
   }
 
   static {
-    ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE = new String[EPrimitiveType.TYPES
+    ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE = new String[EPrimitiveType.INSTANCES
         .size()];
     EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[EPrimitiveType.BYTE.ordinal()] = "byte"; //$NON-NLS-1$
     EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[EPrimitiveType.SHORT.ordinal()] = "short"; //$NON-NLS-1$
@@ -337,7 +337,7 @@ public enum EDI implements IXMLFileType {
     for (i = EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE.length; (--i) >= 0;) {
       cur = EDI.ATTRIBUTE_VALUE_DIMENSION_DATA_TYPE[i];
       if ((cur != null) && cur.equalsIgnoreCase(text)) {
-        return EPrimitiveType.TYPES.get(i);
+        return EPrimitiveType.INSTANCES.get(i);
       }
     }
 

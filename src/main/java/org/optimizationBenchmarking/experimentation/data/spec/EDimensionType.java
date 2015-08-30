@@ -42,7 +42,7 @@ public enum EDimensionType {
    * step may be one generation. Generation counts are only comparable for
    * the same population sizes and operators. Instead of counting
    * generations, one would therefore rather measure runtime in terms of
-   * <code>{@link #ITERATION_FE FE}</code>s,
+   * <code>{@link #ITERATION_FE FE}</code>s.
    */
   ITERATION_ALGORITHM_STEP,
 

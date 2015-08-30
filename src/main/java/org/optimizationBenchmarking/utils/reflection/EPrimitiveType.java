@@ -55,10 +55,10 @@ public enum EPrimitiveType {
       LooseDoubleParser.INSTANCE), ;
 
   /** the type */
-  private static final EPrimitiveType[] _TYPES = EPrimitiveType.values();
+  static final EPrimitiveType[] _TYPES = EPrimitiveType.values();
 
   /** create */
-  public static final ArraySetView<EPrimitiveType> TYPES = new _PrimitiveTypeSet(
+  public static final ArraySetView<EPrimitiveType> INSTANCES = new ArraySetView<>(
       EPrimitiveType._TYPES);
 
   /** the serial version uid */
