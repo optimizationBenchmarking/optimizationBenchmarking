@@ -1264,7 +1264,16 @@ public abstract class FunctionJob extends ExperimentSetJob {
    */
   protected void afterPlots(final FunctionData data,
       final ISectionBody body, final Logger logger) {
-    //
+    body.appendLineBreak();
+    body.append("The corresponding plot"); //$NON-NLS-1$
+    if (data.getData().size() > 1) {
+      body.append("s are illustrated in "); //$NON-NLS-1$
+    } else {
+      body.append(" is illustrated in "); //$NON-NLS-1$
+    }
+    body.reference(ETextCase.IN_SENTENCE, ESequenceMode.AND,
+        data.getLabel());
+    body.append('.');
   }
 
   /** {@inheritDoc} */

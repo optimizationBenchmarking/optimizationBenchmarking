@@ -79,7 +79,6 @@ public final class EDIOutput extends XMLOutputTool<Object> implements
       final XMLBase xmlBase) throws Throwable {
     try (final XMLElement root = xmlBase.element()) {
       root.namespaceSetPrefix(EDI.NAMESPACE_URI, "e"); //$NON-NLS-1$
-      root.name(EDI.NAMESPACE_URI, EDI.ELEMENT_EXPERIMENT_DATA);
       EDIOutput.__write(data, root, job, new HashSet<>());
     }
   }
@@ -181,10 +180,18 @@ public final class EDIOutput extends XMLOutputTool<Object> implements
           ("Beginning to write experiment set " + experimentSet)); //$NON-NLS-1$
     }
 
-    EDIOutput
-        .__writeDimensionSet(experimentSet.getDimensions(), dest, job);
-    EDIOutput.__writeInstanceSet(experimentSet.getInstances(), dest, job);
-    EDIOutput.__writeExperiments(experimentSet.getData(), dest, job);
+    dest.name(EDI.NAMESPACE_URI, EDI.ELEMENT_EXPERIMENT_DATA);
+    try (final XMLElement dims = dest.element()) {
+      EDIOutput.__writeDimensionSet(experimentSet.getDimensions(), dims,
+          job);
+    }
+    try (final XMLElement insts = dest.element()) {
+      EDIOutput.__writeInstanceSet(experimentSet.getInstances(), insts,
+          job);
+    }
+    try (final XMLElement exps = dest.element()) {
+      EDIOutput.__writeExperiments(experimentSet.getData(), exps, job);
+    }
 
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
       logger.log(IOTool.FINE_LOG_LEVEL,//
@@ -218,115 +225,110 @@ public final class EDIOutput extends XMLOutputTool<Object> implements
           ("Beginning to write dimension set " + dimensionSet)); //$NON-NLS-1$
     }
 
-    try (final XMLElement root = dest.element()) {
-      root.name(EDI.NAMESPACE_URI, EDI.ELEMENT_DIMENSIONS);
+    dest.name(EDI.NAMESPACE_URI, EDI.ELEMENT_DIMENSIONS);
 
-      for (final IDimension dimension : dimensionSet.getData()) {
-        try (final XMLElement dim = root.element()) {
-          dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_DIMENSION);
+    for (final IDimension dimension : dimensionSet.getData()) {
+      try (final XMLElement dim = dest.element()) {
+        dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_DIMENSION);
 
-          dim.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
-              dimension.getName());
+        dim.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
+            dimension.getName());
 
-          string = dimension.getDescription();
-          if (string != null) {
-            dim.attributeEncoded(EDI.NAMESPACE_URI,
-                EDI.ATTRIBUTE_DESCRIPTION, string);
-          }
-
-          dim.attributeRaw(EDI.NAMESPACE_URI,
-              EDI.ATTRIBUTE_DIMENSION_TYPE,
-              EDI._getDimensionTypeName(dimension.getDimensionType()));
-
-          dim.attributeRaw(EDI.NAMESPACE_URI,
-              EDI.ATTRIBUTE_DIMENSION_DIRECTION,
-              EDI._getDimensionDirectionName(dimension.getDirection()));
-
-          type = dimension.getDataType();
-          dim.attributeRaw(EDI.NAMESPACE_URI,
-              EDI.ATTRIBUTE_DIMENSION_DATA_TYPE,
-              EDI._getDataTypeName(type));
-
-          parser = dimension.getParser();
-          switch (type) {
-            case BYTE: {
-              if ((integer = parser.getLowerBoundLong()) > Byte.MIN_VALUE) {
-                dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
-                    Long.toString(integer));
-              }
-              if ((integer = parser.getUpperBoundLong()) < Byte.MAX_VALUE) {
-                dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
-                    Long.toString(integer));
-              }
-              break;
-            }
-            case SHORT: {
-              if ((integer = parser.getLowerBoundLong()) > Short.MIN_VALUE) {
-                dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
-                    Long.toString(integer));
-              }
-              if ((integer = parser.getUpperBoundLong()) < Short.MAX_VALUE) {
-                dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
-                    Long.toString(integer));
-              }
-              break;
-            }
-            case INT: {
-              if ((integer = parser.getLowerBoundLong()) > Integer.MIN_VALUE) {
-                dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
-                    Long.toString(integer));
-              }
-              if ((integer = parser.getUpperBoundLong()) < Integer.MAX_VALUE) {
-                dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
-                    Long.toString(integer));
-              }
-              break;
-            }
-            case LONG: {
-              if ((integer = parser.getLowerBoundLong()) > Long.MIN_VALUE) {
-                dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
-                    Long.toString(integer));
-              }
-              if ((integer = parser.getUpperBoundLong()) < Long.MAX_VALUE) {
-                dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
-                    Long.toString(integer));
-              }
-              break;
-            }
-            case FLOAT:
-            case DOUBLE: {
-              if ((floating = parser.getLowerBoundDouble()) > Double.NEGATIVE_INFINITY) {
-                dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_FLOAT_LOWER_BOUND,
-                    XMLNumberAppender.INSTANCE.toString(floating,
-                        ETextCase.IN_SENTENCE));
-              }
-              if ((floating = parser.getUpperBoundDouble()) < Double.POSITIVE_INFINITY) {
-                dim.attributeRaw(EDI.NAMESPACE_URI,
-                    EDI.ATTRIBUTE_FLOAT_UPPER_BOUND,
-                    XMLNumberAppender.INSTANCE.toString(floating,
-                        ETextCase.IN_SENTENCE));
-              }
-              break;
-            }
-            default: {
-              throw new IllegalArgumentException(type + //
-                  " cannot be the data type of dimension " //$NON-NLS-1$
-                  + dimension);
-            }
-          }
-
+        string = dimension.getDescription();
+        if (string != null) {
+          dim.attributeEncoded(EDI.NAMESPACE_URI,
+              EDI.ATTRIBUTE_DESCRIPTION, string);
         }
-      }
 
+        dim.attributeRaw(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_DIMENSION_TYPE,
+            EDI._getDimensionTypeName(dimension.getDimensionType()));
+
+        dim.attributeRaw(EDI.NAMESPACE_URI,
+            EDI.ATTRIBUTE_DIMENSION_DIRECTION,
+            EDI._getDimensionDirectionName(dimension.getDirection()));
+
+        type = dimension.getDataType();
+        dim.attributeRaw(EDI.NAMESPACE_URI,
+            EDI.ATTRIBUTE_DIMENSION_DATA_TYPE, EDI._getDataTypeName(type));
+
+        parser = dimension.getParser();
+        switch (type) {
+          case BYTE: {
+            if ((integer = parser.getLowerBoundLong()) > Byte.MIN_VALUE) {
+              dim.attributeRaw(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
+                  Long.toString(integer));
+            }
+            if ((integer = parser.getUpperBoundLong()) < Byte.MAX_VALUE) {
+              dim.attributeRaw(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
+                  Long.toString(integer));
+            }
+            break;
+          }
+          case SHORT: {
+            if ((integer = parser.getLowerBoundLong()) > Short.MIN_VALUE) {
+              dim.attributeRaw(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
+                  Long.toString(integer));
+            }
+            if ((integer = parser.getUpperBoundLong()) < Short.MAX_VALUE) {
+              dim.attributeRaw(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
+                  Long.toString(integer));
+            }
+            break;
+          }
+          case INT: {
+            if ((integer = parser.getLowerBoundLong()) > Integer.MIN_VALUE) {
+              dim.attributeRaw(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
+                  Long.toString(integer));
+            }
+            if ((integer = parser.getUpperBoundLong()) < Integer.MAX_VALUE) {
+              dim.attributeRaw(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
+                  Long.toString(integer));
+            }
+            break;
+          }
+          case LONG: {
+            if ((integer = parser.getLowerBoundLong()) > Long.MIN_VALUE) {
+              dim.attributeRaw(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
+                  Long.toString(integer));
+            }
+            if ((integer = parser.getUpperBoundLong()) < Long.MAX_VALUE) {
+              dim.attributeRaw(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
+                  Long.toString(integer));
+            }
+            break;
+          }
+          case FLOAT:
+          case DOUBLE: {
+            if ((floating = parser.getLowerBoundDouble()) > Double.NEGATIVE_INFINITY) {
+              dim.attributeRaw(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_FLOAT_LOWER_BOUND,
+                  XMLNumberAppender.INSTANCE.toString(floating,
+                      ETextCase.IN_SENTENCE));
+            }
+            if ((floating = parser.getUpperBoundDouble()) < Double.POSITIVE_INFINITY) {
+              dim.attributeRaw(EDI.NAMESPACE_URI,
+                  EDI.ATTRIBUTE_FLOAT_UPPER_BOUND,
+                  XMLNumberAppender.INSTANCE.toString(floating,
+                      ETextCase.IN_SENTENCE));
+            }
+            break;
+          }
+          default: {
+            throw new IllegalArgumentException(type + //
+                " cannot be the data type of dimension " //$NON-NLS-1$
+                + dimension);
+          }
+        }
+
+      }
     }
 
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
@@ -362,107 +364,105 @@ public final class EDIOutput extends XMLOutputTool<Object> implements
           ("Beginning to write instance set " + instances)); //$NON-NLS-1$
     }
 
-    try (final XMLElement root = dest.element()) {
-      root.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INSTANCES);
+    dest.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INSTANCES);
 
-      hashSet = new HashSet<>();
-      dimensions = instances.getOwner().getDimensions().getData();
+    hashSet = new HashSet<>();
+    dimensions = instances.getOwner().getDimensions().getData();
 
-      for (final IInstance i : instances.getData()) {
+    for (final IInstance i : instances.getData()) {
 
-        try (XMLElement inst = root.element()) {
-          inst.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INSTANCE);
+      try (XMLElement inst = dest.element()) {
+        inst.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INSTANCE);
 
-          inst.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
-              i.getName());
+        inst.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
+            i.getName());
 
-          string = i.getDescription();
-          if (string != null) {
-            inst.attributeEncoded(EDI.NAMESPACE_URI,
-                EDI.ATTRIBUTE_DESCRIPTION, string);
-          }
+        string = i.getDescription();
+        if (string != null) {
+          inst.attributeEncoded(EDI.NAMESPACE_URI,
+              EDI.ATTRIBUTE_DESCRIPTION, string);
+        }
 
-          for (final IFeatureValue featureValue : i.getFeatureSetting()) {
-            try (final XMLElement feat = inst.element()) {
-              feat.name(EDI.NAMESPACE_URI, EDI.ELEMENT_FEATURE);
+        for (final IFeatureValue featureValue : i.getFeatureSetting()) {
+          try (final XMLElement feat = inst.element()) {
+            feat.name(EDI.NAMESPACE_URI, EDI.ELEMENT_FEATURE);
 
-              feature = featureValue.getOwner();
+            feature = featureValue.getOwner();
 
-              feat.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
-                  feature.getName());
-              string = feature.getDescription();
-              if (string != null) {
-                if (hashSet.add(feature)) {
-                  feat.attributeEncoded(EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_FEATURE_DESCRIPTION, string);
-                }
+            feat.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
+                feature.getName());
+            string = feature.getDescription();
+            if (string != null) {
+              if (hashSet.add(feature)) {
+                feat.attributeEncoded(EDI.NAMESPACE_URI,
+                    EDI.ATTRIBUTE_FEATURE_DESCRIPTION, string);
               }
+            }
 
-              feat.attributeEncoded(EDI.NAMESPACE_URI,
-                  EDI.ATTRIBUTE_FEATURE_VALUE, featureValue.getName());
-              string = featureValue.getDescription();
-              if (string != null) {
-                if (hashSet.add(featureValue)) {
-                  feat.attributeEncoded(EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_FEATURE_VALUE_DESCRIPTION, string);
+            feat.attributeEncoded(EDI.NAMESPACE_URI,
+                EDI.ATTRIBUTE_FEATURE_VALUE, featureValue.getName());
+            string = featureValue.getDescription();
+            if (string != null) {
+              if (hashSet.add(featureValue)) {
+                feat.attributeEncoded(EDI.NAMESPACE_URI,
+                    EDI.ATTRIBUTE_FEATURE_VALUE_DESCRIPTION, string);
+              }
+            }
+
+          }
+        }
+
+        for (final IDimension dimension : dimensions) {
+          lower = i.getLowerBound(dimension);
+          upper = i.getUpperBound(dimension);
+          parser = dimension.getParser();
+
+          if (dimension.getDataType().isInteger()) {
+            x = (lower.longValue() > parser.getLowerBoundLong());
+            y = (upper.longValue() < parser.getUpperBoundLong());
+            if (x || y) {
+              try (final XMLElement dim = inst.element()) {
+                dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_BOUNDS);
+
+                dim.attributeEncoded(EDI.NAMESPACE_URI,
+                    EDI.ATTRIBUTE_DIMENSION, dimension.getName());
+                if (x) {
+                  dim.attributeRaw(EDI.NAMESPACE_URI,
+                      EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
+                      Long.toString(lower.longValue()));
+                }
+                if (y) {
+                  dim.attributeRaw(EDI.NAMESPACE_URI,
+                      EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
+                      Long.toString(upper.longValue()));
                 }
               }
 
             }
-          }
 
-          for (final IDimension dimension : dimensions) {
-            lower = i.getLowerBound(dimension);
-            upper = i.getUpperBound(dimension);
-            parser = dimension.getParser();
+          } else {
 
-            if (dimension.getDataType().isInteger()) {
-              x = (lower.longValue() > parser.getLowerBoundLong());
-              y = (upper.longValue() < parser.getUpperBoundLong());
-              if (x || y) {
-                try (final XMLElement dim = inst.element()) {
-                  dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_BOUNDS);
+            x = (lower.doubleValue() > parser.getLowerBoundDouble());
+            y = (upper.doubleValue() < parser.getUpperBoundDouble());
+            if (x || y) {
+              try (final XMLElement dim = inst.element()) {
+                dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_BOUNDS);
 
-                  dim.attributeEncoded(EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_DIMENSION, dimension.getName());
-                  if (x) {
-                    dim.attributeRaw(EDI.NAMESPACE_URI,
-                        EDI.ATTRIBUTE_INTEGER_LOWER_BOUND,
-                        Long.toString(lower.longValue()));
-                  }
-                  if (y) {
-                    dim.attributeRaw(EDI.NAMESPACE_URI,
-                        EDI.ATTRIBUTE_INTEGER_UPPER_BOUND,
-                        Long.toString(upper.longValue()));
-                  }
+                dim.attributeEncoded(EDI.NAMESPACE_URI,
+                    EDI.ATTRIBUTE_DIMENSION, dimension.getName());
+                if (x) {
+                  dim.attributeRaw(
+                      EDI.NAMESPACE_URI,
+                      EDI.ATTRIBUTE_FLOAT_LOWER_BOUND,
+                      XMLNumberAppender.INSTANCE.toString(
+                          lower.doubleValue(), ETextCase.IN_SENTENCE));
                 }
-
-              }
-
-            } else {
-
-              x = (lower.doubleValue() > parser.getLowerBoundDouble());
-              y = (upper.doubleValue() < parser.getUpperBoundDouble());
-              if (x || y) {
-                try (final XMLElement dim = inst.element()) {
-                  dim.name(EDI.NAMESPACE_URI, EDI.ELEMENT_BOUNDS);
-
-                  dim.attributeEncoded(EDI.NAMESPACE_URI,
-                      EDI.ATTRIBUTE_DIMENSION, dimension.getName());
-                  if (x) {
-                    dim.attributeRaw(
-                        EDI.NAMESPACE_URI,
-                        EDI.ATTRIBUTE_FLOAT_LOWER_BOUND,
-                        XMLNumberAppender.INSTANCE.toString(
-                            lower.doubleValue(), ETextCase.IN_SENTENCE));
-                  }
-                  if (y) {
-                    dim.attributeRaw(
-                        EDI.NAMESPACE_URI,
-                        EDI.ATTRIBUTE_FLOAT_UPPER_BOUND,
-                        XMLNumberAppender.INSTANCE.toString(
-                            upper.doubleValue(), ETextCase.IN_SENTENCE));
-                  }
+                if (y) {
+                  dim.attributeRaw(
+                      EDI.NAMESPACE_URI,
+                      EDI.ATTRIBUTE_FLOAT_UPPER_BOUND,
+                      XMLNumberAppender.INSTANCE.toString(
+                          upper.doubleValue(), ETextCase.IN_SENTENCE));
                 }
               }
             }
@@ -506,101 +506,93 @@ public final class EDIOutput extends XMLOutputTool<Object> implements
           ("Beginning to write experiment " + experiment)); //$NON-NLS-1$
     }
 
-    try (final XMLElement root = dest.element()) {
-      root.name(EDI.NAMESPACE_URI, EDI.ELEMENT_EXPERIMENT);
+    dest.name(EDI.NAMESPACE_URI, EDI.ELEMENT_EXPERIMENT);
 
-      root.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
-          experiment.getName());
+    dest.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
+        experiment.getName());
 
-      string = experiment.getDescription();
-      if (string != null) {
-        root.attributeEncoded(EDI.NAMESPACE_URI,
-            EDI.ATTRIBUTE_DESCRIPTION, string);
+    string = experiment.getDescription();
+    if (string != null) {
+      dest.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_DESCRIPTION,
+          string);
+    }
+
+    for (final IParameterValue parameterValue : experiment
+        .getParameterSetting()) {
+      if (parameterValue.isUnspecified()) {
+        continue;
       }
+      try (final XMLElement point = dest.element()) {
+        point.name(EDI.NAMESPACE_URI, EDI.ELEMENT_PARAMETER);
+        parameter = parameterValue.getOwner();
 
-      for (final IParameterValue parameterValue : experiment
-          .getParameterSetting()) {
-        if (parameterValue.isUnspecified()) {
-          continue;
-        }
-        try (final XMLElement point = root.element()) {
-          point.name(EDI.NAMESPACE_URI, EDI.ELEMENT_PARAMETER);
-          parameter = parameterValue.getOwner();
-
-          point.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
-              parameter.getName());
-          string = parameter.getDescription();
-          if (string != null) {
-            if (described.add(parameter)) {
-              point.attributeEncoded(EDI.NAMESPACE_URI,
-                  EDI.ATTRIBUTE_PARAMETER_DESCRIPTION, string);
-            }
+        point.attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_NAME,
+            parameter.getName());
+        string = parameter.getDescription();
+        if (string != null) {
+          if (described.add(parameter)) {
+            point.attributeEncoded(EDI.NAMESPACE_URI,
+                EDI.ATTRIBUTE_PARAMETER_DESCRIPTION, string);
           }
-
-          point.attributeEncoded(EDI.NAMESPACE_URI,
-              EDI.ATTRIBUTE_PARAMETER_VALUE, parameterValue.getName());
-          string = parameterValue.getDescription();
-          if (string != null) {
-            if (described.add(parameterValue)) {
-              point.attributeEncoded(EDI.NAMESPACE_URI,
-                  EDI.ATTRIBUTE_PARAMETER_VALUE_DESCRIPTION, string);
-            }
-          }
-
         }
+
+        point.attributeEncoded(EDI.NAMESPACE_URI,
+            EDI.ATTRIBUTE_PARAMETER_VALUE, parameterValue.getName());
+        string = parameterValue.getDescription();
+        if (string != null) {
+          if (described.add(parameterValue)) {
+            point.attributeEncoded(EDI.NAMESPACE_URI,
+                EDI.ATTRIBUTE_PARAMETER_VALUE_DESCRIPTION, string);
+          }
+        }
+
       }
+    }
 
-      dimensions = experiment.getOwner().getDimensions().getData();
-      dimensionSize = dimensions.size();
-      isInt = new boolean[dimensionSize];
-      for (i = dimensionSize; (--i) >= 0;) {
-        isInt[i] = dimensions.get(i).getDataType().isInteger();
-      }
+    dimensions = experiment.getOwner().getDimensions().getData();
+    dimensionSize = dimensions.size();
+    isInt = new boolean[dimensionSize];
+    for (i = dimensionSize; (--i) >= 0;) {
+      isInt[i] = dimensions.get(i).getDataType().isInteger();
+    }
 
-      for (final IInstanceRuns instanceRuns : experiment.getData()) {
-        try (final XMLElement instanceRunsXML = root.element()) {
-          instanceRunsXML.name(EDI.NAMESPACE_URI,
-              EDI.ELEMENT_INSTANCE_RUNS);
+    for (final IInstanceRuns instanceRuns : experiment.getData()) {
+      try (final XMLElement instanceRunsXML = dest.element()) {
+        instanceRunsXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INSTANCE_RUNS);
 
-          instanceRunsXML
-              .attributeEncoded(EDI.NAMESPACE_URI, EDI.ATTRIBUTE_INSTANCE,
-                  instanceRuns.getInstance().getName());
-          for (final IRun run : instanceRuns.getData()) {
-            try (final XMLElement runXML = instanceRunsXML.element()) {
-              runXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_RUN);
+        instanceRunsXML.attributeEncoded(EDI.NAMESPACE_URI,
+            EDI.ATTRIBUTE_INSTANCE, instanceRuns.getInstance().getName());
+        for (final IRun run : instanceRuns.getData()) {
+          try (final XMLElement runXML = instanceRunsXML.element()) {
+            runXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_RUN);
 
-              for (final IDataPoint point : run.getData()) {
-                try (final XMLElement pointXML = runXML.element()) {
-                  pointXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_POINT);
-                  for (i = 0; i < dimensionSize; i++) {
-                    if (isInt[i]) {
-                      try (final XMLElement valueXML = pointXML.element()) {
-                        valueXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INT);
-                        valueXML.textRaw().append(point.getLong(i));
-                      }
-                    } else {
-                      try (final XMLElement valueXML = pointXML.element()) {
-                        valueXML
-                            .name(EDI.NAMESPACE_URI, EDI.ELEMENT_FLOAT);
-                        valueXML.textRaw()
-                            .append(
-                                XMLNumberAppender.INSTANCE.toString(
-                                    point.getDouble(i),
-                                    ETextCase.IN_SENTENCE));
-
-                      }
+            for (final IDataPoint point : run.getData()) {
+              try (final XMLElement pointXML = runXML.element()) {
+                pointXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_POINT);
+                for (i = 0; i < dimensionSize; i++) {
+                  if (isInt[i]) {
+                    try (final XMLElement valueXML = pointXML.element()) {
+                      valueXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_INT);
+                      valueXML.textRaw().append(point.getLong(i));
                     }
+                  } else {
+                    try (final XMLElement valueXML = pointXML.element()) {
+                      valueXML.name(EDI.NAMESPACE_URI, EDI.ELEMENT_FLOAT);
+                      valueXML.textRaw().append(
+                          XMLNumberAppender.INSTANCE.toString(
+                              point.getDouble(i), ETextCase.IN_SENTENCE));
 
+                    }
                   }
 
                 }
+
               }
             }
           }
-
         }
-      }
 
+      }
     }
 
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
@@ -631,14 +623,13 @@ public final class EDIOutput extends XMLOutputTool<Object> implements
           ("Beginning to write experiments.")); //$NON-NLS-1$
     }
 
-    try (final XMLElement root = dest.element()) {
-      root.name(EDI.NAMESPACE_URI, EDI.ELEMENT_EXPERIMENTS);
+    dest.name(EDI.NAMESPACE_URI, EDI.ELEMENT_EXPERIMENTS);
 
-      described = new HashSet<>();
-      for (final IExperiment e : es) {
-        EDIOutput.__writeExperiment(e, root, job, described);
+    described = new HashSet<>();
+    for (final IExperiment e : es) {
+      try (final XMLElement exp = dest.element()) {
+        EDIOutput.__writeExperiment(e, exp, job, described);
       }
-
     }
 
     if ((logger != null) && (logger.isLoggable(IOTool.FINE_LOG_LEVEL))) {
